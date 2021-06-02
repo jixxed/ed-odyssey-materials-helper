@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root  fx:id="box"  minHeight="30.0" prefHeight="30.0" prefWidth="300.0" style="-fx-border-color: black; -fx-background-color: #ffffff;"  type="javafx.scene.layout.HBox"  xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+    <Label fx:id="name" style="-fx-pref-width: 200; -fx-label-padding: 5;">test</Label>
+    <Label nodeOrientation="RIGHT_TO_LEFT"  fx:id="amount" style="-fx-pref-width: 50; -fx-padding: 5;-fx-text-alignment: right;">test</Label>
+    <Label nodeOrientation="RIGHT_TO_LEFT"  fx:id="amountAvailable" style="-fx-pref-width: 50; -fx-padding: 5;-fx-text-alignment: right;">test</Label>
+</fx:root >
