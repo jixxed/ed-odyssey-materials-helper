@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials;
+package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum Data {
     ACCIDENTLOGS("Accident Logs"),
@@ -91,7 +91,8 @@ public enum Data {
     SETTLEMENTASSAULTPLANS("Settlement Assault Plans"),
     SETTLEMENTDEFENCEPLANS("Settlement Defence Plans"),
     SHAREHOLDERINFORMATION("Shareholder Information"),
-    SPECTRALANALYSISDATA ("Spectral Analysis Data"),
+    SMEARCAMPAIGNPLANS("Smear Campaign Plans"),
+    SPECTRALANALYSISDATA("Spectral Analysis Data"),
     SPYWARE("Spyware"),
     STELLARACTIVITYLOGS("Stellar Activity Logs"),
     SURVEILLEANCELOGS("Surveillance Logs"),

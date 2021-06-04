@@ -1,6 +1,4 @@
-package nl.jixxed.eliteodysseymaterials;
-
-import java.util.Locale;
+package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum Component {
     AEROGEL("Aerogel", ComponentType.CHEMICAL),
@@ -46,14 +44,20 @@ public enum Component {
         this.name = name;
         this.type = type;
     }
-    public static Component forName(String name){
+
+    public static Component forName(String name) {
         try {
             return Component.valueOf(name.toUpperCase());
-        }catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             return Component.UNKNOWN;
         }
     }
+
     public String friendlyName() {
         return this.name;
+    }
+
+    public ComponentType getType() {
+        return type;
     }
 }

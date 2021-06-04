@@ -1,10 +1,10 @@
 package nl.jixxed.eliteodysseymaterials;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import nl.jixxed.eliteodysseymaterials.enums.Type;
 
 import java.io.IOException;
 
@@ -38,20 +38,20 @@ public class Ingredient extends HBox {
         this.type = type;
         this.code = code;
         this.amount.setText(amount);
-        this.amountAvailable.setText(amountAvailable);
         this.amountInt = Integer.valueOf(amount);
-        this.amountAvailableInt =Integer.valueOf(amountAvailable);
+        this.amountAvailableInt = Integer.valueOf(amountAvailable);
 
         update();
     }
-//    public void setName(String name) {
+
+    //    public void setName(String name) {
 //        this.name.setText(name);
 //    }
 //    public void setAmount(String amount){
 //        this.amount.setText(amount);
 //    }
-    public void setAmountAvailable(String amountAvailable){
-        this.amountAvailableInt = Integer.valueOf(amountAvailable);
+    public void setAmountAvailable(Integer amountAvailable) {
+        this.amountAvailableInt = amountAvailable;
     }
 
     public Type getType() {
@@ -63,11 +63,19 @@ public class Ingredient extends HBox {
     }
 
     public void update() {
-        this.amountAvailable.setText(this.amountAvailableInt.toString());
-        if (this.amountAvailableInt >= this.amountInt) {
+        if (Type.OTHER.equals(type)) {
+            this.amountAvailable.setText("");
+            this.amount.setText("");
+            this.setStyle("-fx-border-color: black; -fx-background-color: #fff;");
+            name.setStyle("-fx-pref-width: 300;-fx-label-padding: 5;");
+            amount.setStyle("-fx-pref-width: 0;");
+            amountAvailable.setStyle("-fx-pref-width: 0;");
+        } else if (this.amountAvailableInt >= this.amountInt) {
+            this.amountAvailable.setText(this.amountAvailableInt.toString());
             this.setStyle("-fx-border-color: black; -fx-background-color: #89d07f;");
         } else {
-            this.setStyle("-fx-border-color: black; -fx-background-color: #ab3f3f;");
+            this.amountAvailable.setText(this.amountAvailableInt.toString());
+            this.setStyle("-fx-border-color: black; -fx-background-color: #ff7c7c;");
         }
     }
 

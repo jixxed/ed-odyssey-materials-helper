@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials;
+package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum Goods {
     AGRICULTURALPROCESSSAMPLE("AGRICULTURALPROCESSSAMPLE"),

@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import nl.jixxed.eliteodysseymaterials.enums.Component;
+import nl.jixxed.eliteodysseymaterials.enums.Data;
+import nl.jixxed.eliteodysseymaterials.enums.Goods;
 
 import java.io.IOException;
 
@@ -25,20 +28,38 @@ public class MaterialCard extends HBox {
             throw new RuntimeException(exception);
         }
         this.name.setText(name);
-        this.name.setTooltip(new Tooltip(name));
         this.amount.setText(amount);
     }
 
-    public MaterialCard(Component component, String amount) {
+    public MaterialCard(Goods key, String name, String amount) {
+        this(name, amount);
+        this.name.setTooltip(new Tooltip(name + "\n" + "Used in recipes:\n" + RecipeConstants.findRecipesContaining(key)));
     }
 
-    public void setName(String name) {
-        this.name.setText(name);
+    public MaterialCard(Data key, String name, String amount) {
+        this(name, amount);
+        this.name.setTooltip(new Tooltip(name + "\n" + "Used in recipes:\n" + RecipeConstants.findRecipesContaining(key)));
     }
-    public void setAmount(String amount){
-        this.amount.setText(amount);
+
+    public MaterialCard(Component key, String name, String amount) {
+        this(name, amount);
+        this.name.setTooltip(new Tooltip(name + "\n" + "Used in recipes:\n" + RecipeConstants.findRecipesContaining(key)));
     }
-    public String getAmount(){
-       return this.amount.getText();
+//
+//    public MaterialCard(Component component, String amount) {
+//    }
+//
+//    public void setName(String name) {
+//        this.name.setText(name);
+//    }
+//    public void setAmount(String amount){
+//        this.amount.setText(amount);
+//    }
+//    public String getAmount(){
+//       return this.amount.getText();
+//    }
+
+    public Label getName() {
+        return name;
     }
 }

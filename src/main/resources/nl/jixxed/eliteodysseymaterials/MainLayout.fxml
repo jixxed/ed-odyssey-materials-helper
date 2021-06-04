@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
+
 <?import javafx.scene.layout.VBox?>
-
-
-<fx:root  prefHeight="30.0" prefWidth="600.0" type="javafx.scene.layout.VBox"  xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox minHeight="30.0" prefWidth="500.0">
-         <children>
-<!--            <Label text="Journal Folder: " style="-fx-pref-width: 100; -fx-label-padding: 5;" />-->
-<!--            <TextField  style="-fx-pref-width: 600; -fx-label-padding: 5;"/>-->
-<!--            <Button mnemonicParsing="false" text="Update" style="-fx-start-margin: 5;" />-->
-            <Label fx:id="label" text="Goods:" style="-fx-pref-width: 1000; -fx-label-padding: 5;" />
-             <CheckBox fx:id="checkBoxIrrelevant" mnemonicParsing="false" text="Hide Irrelevant Materials" style="-fx-pref-width: 200; -fx-label-padding: 5;" />
-             <CheckBox fx:id="checkBoxUnlock" mnemonicParsing="false" text="Hide Engineer Unlock Materials" style="-fx-pref-width: 200; -fx-label-padding: 5;" />
-         </children>
-      </HBox>
-   </children>
-</fx:root >
+<fx:root prefHeight="30.0" prefWidth="600.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11"
+         xmlns:fx="http://javafx.com/fxml/1">
+</fx:root>

@@ -7,9 +7,17 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Labeled;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.filewatcher.FileAdapter;
+import nl.jixxed.eliteodysseymaterials.filewatcher.FileEvent;
+import nl.jixxed.eliteodysseymaterials.filewatcher.FileWatcher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,11 +38,17 @@ public class Main extends Application {
     private final Map<Component, Integer> components = new HashMap<>();
     private final Map<Data, Integer> datas = new HashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
+    private MaterialCard goodsLabel;
+    private MaterialCard datasLabel;
+    private MaterialCard componentsLabel;
+    ;
+    private Settings settings = new Settings();
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         initCounts();
         primaryStage.setTitle("ED Odyssey Materials Helper");
+        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/rocket.png")));
         ScrollPane scrollPane = new ScrollPane();
         layout.setMaxWidth(2000);
         layout.setMaxHeight(2000);
@@ -58,24 +72,26 @@ public class Main extends Application {
 
         showRecipes();
         primaryStage.setScene(new Scene(layoutApp, 1920, 1080));
-        layoutApp.getCheckBoxIrrelevant().selectedProperty().addListener((observable, oldValue, newValue) -> {
+        settings.getCheckBoxIrrelevant().selectedProperty().addListener((observable, oldValue, newValue) -> {
             layout.getChildren().clear();
             showGoods(layout);
             showComponents(layout);
             showDatas(layout);
+            updateTotals();
         });
-        layoutApp.getCheckBoxUnlock().selectedProperty().addListener((observable, oldValue, newValue) -> {
+        settings.getCheckBoxUnlock().selectedProperty().addListener((observable, oldValue, newValue) -> {
             layout.getChildren().clear();
             showGoods(layout);
             showComponents(layout);
             showDatas(layout);
+            updateTotals();
         });
         primaryStage.show();
     }
 
     protected void watch(File folder) {
         findLatestFile(folder);
-        watchedFile.ifPresent(file -> process());
+        watchedFile.ifPresent(this::process);
         new FileWatcher(folder).addListener(new FileAdapter() {
             @Override
             public void onCreated(FileEvent event) {
@@ -85,7 +101,7 @@ public class Main extends Application {
                         System.out.println("File created: " + file.getName());
                         watchedFile = Optional.of(file);
                         lineNumber = 0;
-                        process();
+                        process(file);
                     }
                 }
             }
@@ -95,32 +111,29 @@ public class Main extends Application {
                 File file = event.getFile();
                 if (watchedFile.isPresent() && file.equals(watchedFile.get())) {
                     System.out.println("File modified: " + file.getName());
-                    process();
+                    process(file);
                 }
             }
         }).watch();
     }
 
     private void findLatestFile(File folder) {
-        final Optional<File> latest = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+        watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                 .filter(file -> file.getName().startsWith("Journal."))
                 .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20))));
-        watchedFile = latest;
 
         System.out.println("Registered watched file: " + watchedFile.map(File::getName).orElse("No file"));
     }
 
 
-    protected void process() {
-        try (Scanner scanner = new Scanner(watchedFile.get())) {
+    protected void process(File file) {
+        try (Scanner scanner = new Scanner(file)) {
             int cursor = 0;
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
                 cursor++;
                 if (cursor > this.lineNumber) {
                     this.lineNumber++;
-                    //something
-                    System.out.println("Read line: " + this.lineNumber);
                     System.out.println(line);
                     processMessage(line);
                 }
@@ -144,23 +157,12 @@ public class Main extends Application {
     private void updateIngredients() {
         this.ingredients.forEach(ingredient -> {
             switch (ingredient.getType()) {
-                case COMPONENT:
-                    final String amountAvailable = this.components.get(Component.forName(ingredient.getCode())).toString();
-                    System.out.println("set " + ingredient.getCode() + "/" + ingredient.getName() + " to " + amountAvailable);
-                    ingredient.setAmountAvailable(amountAvailable);
-                    break;
-                case GOODS:
-                    final String amountAvailable2 = this.goods.get(Goods.forName(ingredient.getCode())).toString();
-                    System.out.println("set " + ingredient.getCode() + "/" + ingredient.getName() + " to " + amountAvailable2);
-                    ingredient.setAmountAvailable(amountAvailable2);
-                    break;
-                case DATA:
-                    final String amountAvailable1 = this.datas.get(Data.forName(ingredient.getCode())).toString();
-                    System.out.println("set " + ingredient.getCode() + "/" + ingredient.getName() + " to " + amountAvailable1);
-                    ingredient.setAmountAvailable(amountAvailable1);
-                    break;
-                default:
-                    System.out.println("ERROR");
+                case COMPONENT -> ingredient.setAmountAvailable(this.components.get(Component.forName(ingredient.getCode())));
+                case GOODS -> ingredient.setAmountAvailable(this.goods.get(Goods.forName(ingredient.getCode())));
+                case DATA -> ingredient.setAmountAvailable(this.datas.get(Data.forName(ingredient.getCode())));
+                case OTHER -> {
+                }
+                default -> System.out.println("ERROR");
             }
 
 
@@ -192,9 +194,24 @@ public class Main extends Application {
                 .filter(data -> !RecipeConstants.isRecipeIngredient(data.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        layoutApp.setLabel("Goods(Recipe/Non-Recipe/Total): " + recipeGoods + "/" + nonRecipeGoods + "/" + (recipeGoods + nonRecipeGoods) + " | "
-                + "Component(Recipe/Non-Recipe/Total): " + recipeComponents + "/" + nonRecipeComponents + "/" + (recipeComponents + nonRecipeComponents) + " | "
-                + "Data(Recipe/Non-Recipe/Total): " + recipeDatas + "/" + nonRecipeDatas + "/" + (recipeDatas + nonRecipeDatas));
+        goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + nonRecipeGoods + " / Total: " + (recipeGoods + nonRecipeGoods) + ")", "");
+        goodsLabel.setStyle("-fx-font-weight: bold");
+        goodsLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
+        layout.add(goodsLabel, 0, 0, 2, 1);
+        GridPane.setMargin(goodsLabel, CARD_MARGIN);
+        componentsLabel = new MaterialCard("Component (Blueprint: " + recipeComponents + " / Irrelevant: " + nonRecipeComponents + " / Total: " + (recipeComponents + nonRecipeComponents) + ")", "");
+        componentsLabel.setStyle("-fx-font-weight: bold");
+        componentsLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
+        layout.add(componentsLabel, 2, 0, 2, 1);
+        GridPane.setMargin(componentsLabel, CARD_MARGIN);
+        datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + nonRecipeDatas + " / Total: " + (recipeDatas + nonRecipeDatas) + ")", "");
+        datasLabel.setStyle("-fx-font-weight: bold");
+        datasLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
+        layout.add(datasLabel, 4, 0, 2, 1);
+        GridPane.setMargin(datasLabel, CARD_MARGIN);
+//        layoutApp.setLabel("Goods (Recipe/Non-Recipe/Total): " + recipeGoods + "/" + nonRecipeGoods + "/" + (recipeGoods + nonRecipeGoods) + " | "
+//                + "Component(Recipe/Non-Recipe/Total): " + recipeComponents + "/" + nonRecipeComponents + "/" + (recipeComponents + nonRecipeComponents) + " | "
+//                + "Data(Recipe/Non-Recipe/Total): " + recipeDatas + "/" + nonRecipeDatas + "/" + (recipeDatas + nonRecipeDatas));
     }
 
     private void processMessage(final String message) {
@@ -212,17 +229,10 @@ public class Main extends Application {
                 {
                     final String cat = item.get("Category").asText();
                     switch (cat) {
-                        case "Component":
-                            updateComponents(item);
-                            break;
-                        case "Item":
-                            updateGoods(item);
-                            break;
-                        case "Data":
-                            updateDatas(item);
-                            break;
-                        default:
-                            System.out.println("unsupported category: " + cat);
+                        case "Component" -> updateComponents(item);
+                        case "Item" -> updateGoods(item);
+                        case "Data" -> updateDatas(item);
+                        default -> System.out.println("unsupported category: " + cat);
                     }
                 });
             }
@@ -232,11 +242,10 @@ public class Main extends Application {
     }
 
     private void showRecipes() {
-//        layoutMain.getChildren().remove(this.accordion);
         final List<TitledPane> mainTitledPanes = new ArrayList<>();
-        for (final Map.Entry<String, Map<String, Ingredients>> recipesEntry : RecipeConstants.RECIPES.entrySet()) {
+        final List<TitledPane> collect = RecipeConstants.RECIPES.entrySet().stream().map((Map.Entry<String, Map<String, Ingredients>> recipesEntry) -> {
 
-            final List<TitledPane> titledPanes = recipesEntry.getValue().entrySet().stream()
+            Accordion accordion = new Accordion(recipesEntry.getValue().entrySet().stream()
                     .map((recipe) -> {
                         final List<Ingredient> ingredients = new ArrayList<>();
                         ingredients.addAll(recipe.getValue().getComponents().entrySet().stream()
@@ -264,6 +273,14 @@ public class Main extends Application {
                                         }
                                 ).sorted(Comparator.comparing(Ingredient::getName))
                                 .collect(Collectors.toList()));
+                        ingredients.addAll(recipe.getValue().getOther().stream()
+                                .map(other -> {
+                                            final Ingredient newIngredient = new Ingredient(Type.OTHER, other, other, "0", "0");
+                                            this.ingredients.add(newIngredient);
+                                            return newIngredient;
+                                        }
+                                ).sorted(Comparator.comparing(Ingredient::getName))
+                                .collect(Collectors.toList()));
                         ingredients.forEach(ingredient -> {
 
                         });
@@ -273,21 +290,20 @@ public class Main extends Application {
                         titledPane.setStyle("-fx-font-weight: normal");
                         titledPane.setPrefHeight(150);
                         return titledPane;
-                    }).sorted(Comparator.comparing(Labeled::getText))
-                    .collect(Collectors.toList());
-            Accordion accordion = new Accordion(titledPanes.toArray(new TitledPane[0]));
+                    }).sorted(Comparator.comparing(Labeled::getText)).toArray(TitledPane[]::new));
             accordion.setPrefHeight(500);
             final TitledPane mainTitledPane = new TitledPane(recipesEntry.getKey(), accordion);
             mainTitledPane.setStyle("-fx-font-weight: bold");
-            mainTitledPanes.add(mainTitledPane);
-        }
+            return mainTitledPane;
+        }).sorted(Comparator.comparing(Labeled::getText)).collect(Collectors.toList());
+        mainTitledPanes.addAll(collect);
+        mainTitledPanes.add(new TitledPane("Settings", settings));
+        Accordion categoryAccordion = new Accordion(mainTitledPanes.toArray(new TitledPane[0]));
 
-        Accordion accordion1 = new Accordion(mainTitledPanes.toArray(new TitledPane[0]));
-
-        layoutMain.getChildren().add(accordion1);
-        AnchorPane.setTopAnchor(accordion1, 0.0);
-        AnchorPane.setBottomAnchor(accordion1, 0.0);
-        AnchorPane.setLeftAnchor(accordion1, 0.0);
+        layoutMain.getChildren().add(categoryAccordion);
+        AnchorPane.setTopAnchor(categoryAccordion, 0.0);
+        AnchorPane.setBottomAnchor(categoryAccordion, 0.0);
+        AnchorPane.setLeftAnchor(categoryAccordion, 0.0);
     }
 
     private void showGoods(GridPane layout) {
@@ -297,80 +313,72 @@ public class Main extends Application {
                 return;
             }
             final String name = entry.getKey().friendlyName() + ((RecipeConstants.isEngineeringOnlyIngredient(entry.getKey())) ? " (" + ENGINEER_UNLOCK + ")" : "");
-            final MaterialCard materialCard = new MaterialCard(name, entry.getValue().toString());
+            final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString());
             if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey())) {
-                if(layoutApp.getCheckBoxUnlock().selectedProperty().get()){
+                if (settings.getCheckBoxUnlock().selectedProperty().get()) {
                     return;
                 }
-                materialCard.setStyle("-fx-border-color: black; -fx-background-color: #804491;-fx-font-weight: bold");
+                materialCard.setStyle("-fx-border-color: black; -fx-background-color: #ffffff;-fx-font-weight: bold");
 
             } else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #cab951;-fx-font-weight: bold");
 
-            } else  {
-                if(layoutApp.getCheckBoxIrrelevant().selectedProperty().get()){
-                   return;
+            } else {
+                if (settings.getCheckBoxIrrelevant().selectedProperty().get()) {
+                    return;
                 }
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #9d8e05;-fx-font-weight: normal");
             }
-            layout.add(materialCard, 0 + counter.get() % 2, 1+ (counter.getAndIncrement() / 2));
+            layout.add(materialCard, counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
-        final MaterialCard label = new MaterialCard("Goods", "");
-        label.setStyle("-fx-font-weight: bold");
-        layout.add(label, 0,0);
-        GridPane.setMargin(label, CARD_MARGIN);
     }
 
     private void showComponents(GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.components.entrySet().stream().sorted(
-                Comparator.comparing((Map.Entry<Component, Integer> o) -> o.getKey().type)
+                Comparator.comparing((Map.Entry<Component, Integer> o) -> o.getKey().getType())
                         .thenComparing(o -> o.getKey().friendlyName()))
                 .forEach((entry) -> {
                     if (Component.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
                         return;
                     }
-                    final String name = entry.getKey().friendlyName() + " (" + entry.getKey().type.name().toLowerCase() + ")" + ((RecipeConstants.isEngineeringOnlyIngredient(entry.getKey())) ? " (" + ENGINEER_UNLOCK + ")" : "");
-                    final MaterialCard materialCard = new MaterialCard(name, entry.getValue().toString());
+                    final String name = entry.getKey().friendlyName() + " (" + entry.getKey().getType().name().toLowerCase() + ")" + ((RecipeConstants.isEngineeringOnlyIngredient(entry.getKey())) ? " (" + ENGINEER_UNLOCK + ")" : "");
+                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString());
                     if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey())) {
-                        if(layoutApp.getCheckBoxUnlock().selectedProperty().get()){
+                        if (settings.getCheckBoxUnlock().selectedProperty().get()) {
                             return;
                         }
-                        materialCard.setStyle("-fx-border-color: black; -fx-background-color: #804491;-fx-font-weight: bold");
+                        materialCard.setStyle("-fx-border-color: black; -fx-background-color: #ffffff;-fx-font-weight: bold");
 
-                    }else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
-                        if (entry.getKey().type.equals(ComponentType.TECH)) {
+                    } else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
+                        if (entry.getKey().getType().equals(ComponentType.TECH)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #78efd7;-fx-font-weight: bold");
-                        } else if (entry.getKey().type.equals(ComponentType.CHEMICAL)) {
+                        } else if (entry.getKey().getType().equals(ComponentType.CHEMICAL)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #98ef78;-fx-font-weight: bold");
-                        } else if (entry.getKey().type.equals(ComponentType.CIRCUIT)) {
+                        } else if (entry.getKey().getType().equals(ComponentType.CIRCUIT)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #efa278;-fx-font-weight: bold");
                         } else {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #bd78ef;-fx-font-weight: bold");
                         }
 
                     } else {
-                        if(layoutApp.getCheckBoxIrrelevant().selectedProperty().get()){
+                        if (settings.getCheckBoxIrrelevant().selectedProperty().get()) {
                             return;
                         }
-                        if (entry.getKey().type.equals(ComponentType.TECH)) {
-                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #2c7062;-fx-font-weight: bold");
-                        } else if (entry.getKey().type.equals(ComponentType.CHEMICAL)) {
-                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #488830;-fx-font-weight: bold");
-                        } else if (entry.getKey().type.equals(ComponentType.CIRCUIT)) {
-                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #a0603c;-fx-font-weight: bold");
+                        if (entry.getKey().getType().equals(ComponentType.TECH)) {
+                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #2c7062;-fx-font-weight: normal");
+                        } else if (entry.getKey().getType().equals(ComponentType.CHEMICAL)) {
+                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #488830;-fx-font-weight: normal");
+                        } else if (entry.getKey().getType().equals(ComponentType.CIRCUIT)) {
+                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #a0603c;-fx-font-weight: normal");
                         } else {
-                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #b13ee9;-fx-font-weight: bold");
+                            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #b13ee9;-fx-font-weight: normal");
                         }
                     }
-                    layout.add(materialCard, 2 + counter.get() % 2, 1+ (counter.getAndIncrement() / 2));
-                     GridPane.setMargin(materialCard, CARD_MARGIN);
+                    layout.add(materialCard, 2 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
+                    GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
-        final MaterialCard label = new MaterialCard("Components", "");
-        label.setStyle("-fx-font-weight: bold");
-        layout.add(label, 2,0);
-        GridPane.setMargin(label, CARD_MARGIN);
     }
 
     private void showDatas(GridPane layout) {
@@ -380,29 +388,25 @@ public class Main extends Application {
                 return;
             }
             final String name = entry.getKey().friendlyName() + ((RecipeConstants.isEngineeringOnlyIngredient(entry.getKey())) ? " (" + ENGINEER_UNLOCK + ")" : "");
-            final MaterialCard materialCard = new MaterialCard(name, entry.getValue().toString());
+            final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString());
             if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey())) {
-                if(layoutApp.getCheckBoxUnlock().selectedProperty().get()){
+                if (settings.getCheckBoxUnlock().selectedProperty().get()) {
                     return;
                 }
-                materialCard.setStyle("-fx-border-color: black; -fx-background-color: #804491;-fx-font-weight: bold");
+                materialCard.setStyle("-fx-border-color: black; -fx-background-color: #ffffff;-fx-font-weight: bold");
 
-            }else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
+            } else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #53e5ea;-fx-font-weight: bold");
 
-            } else  {
-                if(layoutApp.getCheckBoxIrrelevant().selectedProperty().get()){
+            } else {
+                if (settings.getCheckBoxIrrelevant().selectedProperty().get()) {
                     return;
                 }
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #05999d;-fx-font-weight: normal");
             }
-            layout.add(materialCard, 4 + counter.get() % 2, 1+ (counter.getAndIncrement() / 2));
+            layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
-        final MaterialCard label = new MaterialCard("Data", "");
-        label.setStyle("-fx-font-weight: bold");
-        layout.add(label, 4,0);
-        GridPane.setMargin(label, CARD_MARGIN);
     }
 
     private void parseComponents(Iterator<JsonNode> components) {
@@ -450,9 +454,7 @@ public class Main extends Application {
     }
 
     private void updateGoods(JsonNode item) {
-        final String name = item.get("Name").asText();
-        final Direction direction = Direction.valueOf(item.get("Direction").asText());
-        final Goods good = Goods.forName(name);
+        final Goods good = Goods.forName(item.get("Name").asText());
         if (Goods.UNKNOWN.equals(good)) {
             System.out.println("Unknown Good detected: " + item.toPrettyString());
         }
@@ -462,9 +464,7 @@ public class Main extends Application {
     }
 
     private void updateDatas(JsonNode item) {
-        final String name = item.get("Name").asText();
-        final Direction direction = Direction.valueOf(item.get("Direction").asText());
-        final Data data = Data.forName(name);
+        final Data data = Data.forName(item.get("Name").asText());
         if (Data.UNKNOWN.equals(data)) {
             System.out.println("Unknown Data detected: " + item.toPrettyString());
         }
@@ -474,9 +474,7 @@ public class Main extends Application {
     }
 
     private void updateComponents(JsonNode item) {
-        final String name = item.get("Name").asText();
-        final Direction direction = Direction.valueOf(item.get("Direction").asText());
-        final Component component = Component.forName(name);
+        final Component component = Component.forName(item.get("Name").asText());
         if (Component.UNKNOWN.equals(component)) {
             System.out.println("Unknown Component detected: " + item.toPrettyString());
         }
