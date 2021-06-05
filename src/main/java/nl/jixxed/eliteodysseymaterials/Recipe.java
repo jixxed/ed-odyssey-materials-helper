@@ -1,32 +1,32 @@
 package nl.jixxed.eliteodysseymaterials;
 
-import nl.jixxed.eliteodysseymaterials.enums.Component;
+import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Goods;
+import nl.jixxed.eliteodysseymaterials.enums.Good;
 
 import java.util.Map;
 
 public class Recipe {
-    private final Map<Component, Integer> components;
+    private final Map<Asset, Integer> assets;
     private final Map<Data, Integer> data;
-    private final Map<Goods, Integer> goods;
+    private final Map<Good, Integer> goods;
 
-    public Recipe(Map<Goods, Integer> goods, Map<Data, Integer> data, Map<Component, Integer> components) {
-        this.components = components;
+    public Recipe(final Map<Good, Integer> goods, final Map<Data, Integer> data, final Map<Asset, Integer> assets) {
+        this.assets = assets;
         this.data = data;
         this.goods = goods;
     }
 
-    public Map<Component, Integer> getComponents() {
-        return components;
+    public Map<Asset, Integer> getAssets() {
+        return this.assets;
     }
 
     public Map<Data, Integer> getData() {
-        return data;
+        return this.data;
     }
 
-    public Map<Goods, Integer> getGoods() {
-        return goods;
+    public Map<Good, Integer> getGoods() {
+        return this.goods;
     }
 
 }

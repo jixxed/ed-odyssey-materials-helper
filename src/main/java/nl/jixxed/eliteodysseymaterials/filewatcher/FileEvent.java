@@ -6,7 +6,7 @@ import java.util.EventObject;
 
 public class FileEvent extends EventObject {
 
-    public FileEvent(File file) {
+    public FileEvent(final File file) {
         super(file);
     }
 

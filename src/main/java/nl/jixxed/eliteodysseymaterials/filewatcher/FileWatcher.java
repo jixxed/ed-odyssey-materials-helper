@@ -16,13 +16,13 @@ public class FileWatcher implements Runnable {
     protected final File folder;
     protected static final List<WatchService> watchServices = new ArrayList<>();
 
-    public FileWatcher(File folder) {
+    public FileWatcher(final File folder) {
         this.folder = folder;
     }
 
     public void watch() {
-        if (folder.exists()) {
-            Thread thread = new Thread(this);
+        if (this.folder.exists()) {
+            final Thread thread = new Thread(this);
             thread.setDaemon(true);
             thread.start();
         }
@@ -30,63 +30,63 @@ public class FileWatcher implements Runnable {
 
     @Override
     public void run() {
-        try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
-            Path path = Paths.get(folder.getAbsolutePath());
+        try (final WatchService watchService = FileSystems.getDefault().newWatchService()) {
+            final Path path = Paths.get(this.folder.getAbsolutePath());
             path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
             watchServices.add(watchService);
             boolean poll = true;
             while (poll) {
                 poll = pollEvents(watchService);
             }
-        } catch (IOException | InterruptedException | ClosedWatchServiceException e) {
+        } catch (final IOException | InterruptedException | ClosedWatchServiceException e) {
             Thread.currentThread().interrupt();
         }
     }
 
-    protected boolean pollEvents(WatchService watchService) throws InterruptedException {
-        WatchKey key = watchService.take();
-        Path path = (Path) key.watchable();
-        for (WatchEvent<?> event : key.pollEvents()) {
+    protected boolean pollEvents(final WatchService watchService) throws InterruptedException {
+        final WatchKey key = watchService.take();
+        final Path path = (Path) key.watchable();
+        for (final WatchEvent<?> event : key.pollEvents()) {
             notifyListeners(event.kind(), path.resolve((Path) event.context()).toFile());
         }
         return key.reset();
     }
 
-    protected void notifyListeners(WatchEvent.Kind<?> kind, File file) {
-        FileEvent event = new FileEvent(file);
+    protected void notifyListeners(final WatchEvent.Kind<?> kind, final File file) {
+        final FileEvent event = new FileEvent(file);
         if (kind == ENTRY_CREATE) {
-            for (FileListener listener : listeners) {
+            for (final FileListener listener : this.listeners) {
                 listener.onCreated(event);
             }
             if (file.isDirectory()) {
-                new FileWatcher(file).setListeners(listeners).watch();
+                new FileWatcher(file).setListeners(this.listeners).watch();
             }
         } else if (kind == ENTRY_MODIFY) {
-            for (FileListener listener : listeners) {
+            for (final FileListener listener : this.listeners) {
                 listener.onModified(event);
             }
         } else if (kind == ENTRY_DELETE) {
-            for (FileListener listener : listeners) {
+            for (final FileListener listener : this.listeners) {
                 listener.onDeleted(event);
             }
         }
     }
 
-    public FileWatcher addListener(FileListener listener) {
-        listeners.add(listener);
+    public FileWatcher addListener(final FileListener listener) {
+        this.listeners.add(listener);
         return this;
     }
 
-    public FileWatcher removeListener(FileListener listener) {
-        listeners.remove(listener);
+    public FileWatcher removeListener(final FileListener listener) {
+        this.listeners.remove(listener);
         return this;
     }
 
     public List<FileListener> getListeners() {
-        return listeners;
+        return this.listeners;
     }
 
-    public FileWatcher setListeners(List<FileListener> listeners) {
+    public FileWatcher setListeners(final List<FileListener> listeners) {
         this.listeners = listeners;
         return this;
     }

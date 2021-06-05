@@ -43,13 +43,13 @@ public class Settings extends VBox {
 
 
     public Settings() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
         try {
             fxmlLoader.load();
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new RuntimeException(exception);
         }
 
@@ -57,7 +57,7 @@ public class Settings extends VBox {
         String latestVersion = "";
         try {
             latestVersion = getLatestVersion();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         if (getBuildVersion() == null) {
@@ -70,34 +70,35 @@ public class Settings extends VBox {
     }
 
     public CheckBox getCheckBoxIrrelevant() {
-        return checkBoxIrrelevant;
+        return this.checkBoxIrrelevant;
     }
 
     public CheckBox getCheckBoxUnlock() {
-        return checkBoxUnlock;
+        return this.checkBoxUnlock;
     }
 
-    public static boolean isEngineerKnown(Engineer engineer) {
+    public static boolean isEngineerKnown(final Engineer engineer) {
         final EngineerState engineerState = ENGINEER_STATES.get(engineer);
-        return EngineerState.KNOWN.equals(engineerState) || EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState);
+        return EngineerState.KNOWN.equals(engineerState) || isEngineerUnlocked(engineer);
 
     }
 
-    public static boolean isEngineerUnlocked(Engineer engineer) {
-        return EngineerState.UNLOCKED.equals(ENGINEER_STATES.get(engineer));
+    public static boolean isEngineerUnlocked(final Engineer engineer) {
+        final EngineerState engineerState = ENGINEER_STATES.get(engineer);
+        return EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState);
     }
 
-    public static void setEngineerState(Engineer engineer, EngineerState engineerState) {
+    public static void setEngineerState(final Engineer engineer, final EngineerState engineerState) {
         ENGINEER_STATES.put(engineer, engineerState);
     }
 
     private String getLatestVersion() throws IOException {
-        URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        final URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
+        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("accept", "application/json");
-        InputStream responseStream = connection.getInputStream();
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode response = objectMapper.readTree(responseStream);
+        final InputStream responseStream = connection.getInputStream();
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final JsonNode response = objectMapper.readTree(responseStream);
         return response.get("tag_name").asText();
     }
 

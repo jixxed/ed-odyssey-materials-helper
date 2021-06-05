@@ -14,26 +14,26 @@ import java.util.function.Consumer;
 public class JournalWatcher {
     private Optional<File> watchedFile = Optional.empty();
 
-    protected void watch(File folder, Consumer<File> fileModifiedProcessor, Consumer<File> fileCreatedProcessor) {
+    protected void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileCreatedProcessor) {
         findLatestFile(folder);
-        watchedFile.ifPresent(fileCreatedProcessor);
+        this.watchedFile.ifPresent(fileCreatedProcessor);
         new FileWatcher(folder).addListener(new FileAdapter() {
             @Override
-            public void onCreated(FileEvent event) {
-                File file = event.getFile();
+            public void onCreated(final FileEvent event) {
+                final File file = event.getFile();
                 if (file.isFile()) {
                     if (file.getName().startsWith("Journal.")) {
                         System.out.println("File created: " + file.getName());
-                        watchedFile = Optional.of(file);
+                        JournalWatcher.this.watchedFile = Optional.of(file);
                         fileCreatedProcessor.accept(file);
                     }
                 }
             }
 
             @Override
-            public void onModified(FileEvent event) {
-                File file = event.getFile();
-                if (watchedFile.isPresent() && file.equals(watchedFile.get())) {
+            public void onModified(final FileEvent event) {
+                final File file = event.getFile();
+                if (JournalWatcher.this.watchedFile.isPresent() && file.equals(JournalWatcher.this.watchedFile.get())) {
                     System.out.println("File modified: " + file.getName());
                     fileModifiedProcessor.accept(file);
                 }
@@ -41,11 +41,11 @@ public class JournalWatcher {
         }).watch();
     }
 
-    private void findLatestFile(File folder) {
-        watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+    private void findLatestFile(final File folder) {
+        this.watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                 .filter(file -> file.getName().startsWith("Journal."))
                 .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20))));
 
-        System.out.println("Registered watched file: " + watchedFile.map(File::getName).orElse("No file"));
+        System.out.println("Registered watched file: " + this.watchedFile.map(File::getName).orElse("No file"));
     }
 }

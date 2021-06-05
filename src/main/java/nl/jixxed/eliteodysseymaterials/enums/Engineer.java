@@ -15,14 +15,14 @@ public enum Engineer {
 
     String name;
 
-    private Engineer(String name) {
+    private Engineer(final String name) {
         this.name = name;
     }
 
-    public static Engineer forName(String name) {
+    public static Engineer forName(final String name) {
         try {
             return Engineer.valueOf(name.toUpperCase());
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return Engineer.UNKNOWN;
         }
     }

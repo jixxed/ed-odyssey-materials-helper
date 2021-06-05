@@ -2,9 +2,8 @@
 
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
 <fx:root minHeight="26.0" prefHeight="26.0" prefWidth="250.0" style="-fx-start-margin: 5;-fx-padding: 5;"
-         type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+         storageType="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <CheckBox fx:id="checkBoxIrrelevant" mnemonicParsing="false" text="Hide irrelevant materials"
                   style="-fx-pref-width: 400; -fx-label-padding: 5;"/>

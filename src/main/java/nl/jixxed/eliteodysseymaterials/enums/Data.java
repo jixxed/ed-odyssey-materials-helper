@@ -113,17 +113,19 @@ public enum Data {
     UNKNOWN("UNKNOWN");
 
     String name;
-    private Data(String name) {
+
+    private Data(final String name) {
         this.name = name;
     }
 
-    public static Data forName(String name){
+    public static Data forName(final String name) {
         try {
             return Data.valueOf(name.toUpperCase());
-        }catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return Data.UNKNOWN;
         }
     }
+
     public String friendlyName() {
         return this.name;
     }

@@ -1,9 +1,9 @@
 package nl.jixxed.eliteodysseymaterials;
 
-import nl.jixxed.eliteodysseymaterials.enums.Component;
+import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.Goods;
+import nl.jixxed.eliteodysseymaterials.enums.Good;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,29 +25,29 @@ public abstract class RecipeConstants {
             "Engineer Unlocks", ENGINEER_UNLOCK_REQUIREMENTS
     );
 
-    public static String findRecipesContaining(Goods goods) {
+    public static String findRecipesContaining(final Good good) {
         final List<String> recipesList = RECIPES.values().stream()
                 .map(recipes -> recipes.entrySet().stream()
-                        .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getGoods().containsKey(goods))
-                        .map(entry -> entry.getKey() + " (" + entry.getValue().getGoods().get(goods).toString() + ")")
+                        .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getGoods().containsKey(good))
+                        .map(entry -> entry.getKey() + " (" + entry.getValue().getGoods().get(good).toString() + ")")
                         .collect(Collectors.toList()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         return String.join("\n", recipesList);
     }
 
-    public static String findRecipesContaining(Component component) {
+    public static String findRecipesContaining(final Asset asset) {
         final List<String> recipesList = RECIPES.values().stream()
                 .map(recipes -> recipes.entrySet().stream()
-                        .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getComponents().containsKey(component))
-                        .map(entry -> entry.getKey() + " (" + entry.getValue().getComponents().get(component).toString() + ")")
+                        .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getAssets().containsKey(asset))
+                        .map(entry -> entry.getKey() + " (" + entry.getValue().getAssets().get(asset).toString() + ")")
                         .collect(Collectors.toList()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         return String.join("\n", recipesList);
     }
 
-    public static String findRecipesContaining(Data data) {
+    public static String findRecipesContaining(final Data data) {
         final List<String> recipesList = RECIPES.values().stream()
                 .map(recipes -> recipes.entrySet().stream()
                         .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getData().containsKey(data))
@@ -58,39 +58,39 @@ public abstract class RecipeConstants {
         return String.join("\n", recipesList);
     }
 
-    public static boolean isRecipeIngredient(Goods goods) {
-        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)) ||
-                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)) ||
-                WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)) ||
-                SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)) ||
-                WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods));
+    public static boolean isRecipeIngredient(final Good good) {
+        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)) ||
+                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)) ||
+                WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)) ||
+                SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)) ||
+                WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good));
     }
 
-    public static boolean isEngineeringOnlyIngredient(Goods goods, boolean onlyLockedEngineers) {
-        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(recipe -> !onlyLockedEngineers || !recipe.isCompleted()).anyMatch(recipe -> recipe.getGoods().containsKey(goods)) && !(
-                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)) ||
-                        WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)) ||
-                        SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)) ||
-                        WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(goods)));
+    public static boolean isEngineeringOnlyIngredient(final Good good, final boolean onlyLockedEngineers) {
+        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(recipe -> !onlyLockedEngineers || !recipe.isCompleted()).anyMatch(recipe -> recipe.getGoods().containsKey(good)) && !(
+                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)) ||
+                        WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)) ||
+                        SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)) ||
+                        WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getGoods().containsKey(good)));
     }
 
-    public static boolean isRecipeIngredient(Component component) {
-        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)) ||
-                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)) ||
-                WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)) ||
-                SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)) ||
-                WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component));
+    public static boolean isRecipeIngredient(final Asset asset) {
+        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)) ||
+                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)) ||
+                WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)) ||
+                SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)) ||
+                WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset));
     }
 
-    public static boolean isEngineeringOnlyIngredient(Component component, boolean onlyLockedEngineers) {
-        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(recipe -> !onlyLockedEngineers || !recipe.isCompleted()).anyMatch(recipe -> recipe.getComponents().containsKey(component)) && !(
-                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)) ||
-                        WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)) ||
-                        SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)) ||
-                        WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getComponents().containsKey(component)));
+    public static boolean isEngineeringOnlyIngredient(final Asset asset, final boolean onlyLockedEngineers) {
+        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(recipe -> !onlyLockedEngineers || !recipe.isCompleted()).anyMatch(recipe -> recipe.getAssets().containsKey(asset)) && !(
+                SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)) ||
+                        WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)) ||
+                        SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)) ||
+                        WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getAssets().containsKey(asset)));
     }
 
-    public static boolean isRecipeIngredient(Data data) {
+    public static boolean isRecipeIngredient(final Data data) {
         return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getData().containsKey(data)) ||
                 SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getData().containsKey(data)) ||
                 WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getData().containsKey(data)) ||
@@ -98,7 +98,7 @@ public abstract class RecipeConstants {
                 WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getData().containsKey(data));
     }
 
-    public static boolean isEngineeringOnlyIngredient(Data data, boolean onlyLockedEngineers) {
+    public static boolean isEngineeringOnlyIngredient(final Data data, final boolean onlyLockedEngineers) {
         return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(recipe -> !onlyLockedEngineers || !recipe.isCompleted()).anyMatch(recipe -> recipe.getData().containsKey(data)) && !(
                 SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getData().containsKey(data)) ||
                         WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getData().containsKey(data)) ||
@@ -119,7 +119,7 @@ public abstract class RecipeConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("A2. Domino Green -> Kit Fowler", new EngineerRecipe(
                 Map.of(
-                        Goods.PUSH, 5
+                        Good.PUSH, 5
                 ),
                 Map.of(
                 ),
@@ -143,7 +143,7 @@ public abstract class RecipeConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("A4. Kit Fowler -> Yarden Bond", new EngineerRecipe(
                 Map.of(
-                        Goods.SURVEILLANCEEQUIPMENT, 5
+                        Good.SURVEILLANCEEQUIPMENT, 5
                 ),
                 Map.of(
                 ),
@@ -203,7 +203,7 @@ public abstract class RecipeConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("B4. Wellington Beck -> Uma Laszlo", new EngineerRecipe(
                 Map.of(
-                        Goods.INSIGHTENTERTAINMENTSUITE, 5
+                        Good.INSIGHTENTERTAINMENTSUITE, 5
                 ),
                 Map.of(
                 ),
@@ -235,7 +235,7 @@ public abstract class RecipeConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C2. Jude Navarro -> Terra Velasquez", new EngineerRecipe(
                 Map.of(
-                        Goods.GENETICREPAIRMEDS, 5
+                        Good.GENETICREPAIRMEDS, 5
                 ),
                 Map.of(
                 ),
@@ -269,7 +269,7 @@ public abstract class RecipeConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C5. Oden Geiger (Sell 20 of one below)", new EngineerRecipe(
                 Map.of(
-                        Goods.BIOLOGICALSAMPLE, 20
+                        Good.BIOLOGICALSAMPLE, 20
                 ),
                 Map.of(
                         Data.EMPLOYEEGENETICDATA, 20,
@@ -284,170 +284,170 @@ public abstract class RecipeConstants {
         ));
         SUIT_UPGRADES.put("Maverick Suit Grade 1>2", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 1,
-                        Goods.HEALTHMONITOR, 1,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 1
+                        Good.SUITSCHEMATIC, 1,
+                        Good.HEALTHMONITOR, 1,
+                        Good.LARGECAPACITYPOWERREGULATOR, 1
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 1
                 ),
                 Map.of(
-                        Component.CARBONFIBREPLATING, 5,
-                        Component.GRAPHENE, 5
+                        Asset.CARBONFIBREPLATING, 5,
+                        Asset.GRAPHENE, 5
                 )
         ));
         SUIT_UPGRADES.put("Maverick Suit Grade 2>3", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 5,
-                        Goods.HEALTHMONITOR, 5,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 5
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Good.LARGECAPACITYPOWERREGULATOR, 5
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 5
                 ),
                 Map.of(
-                        Component.CARBONFIBREPLATING, 15,
-                        Component.GRAPHENE, 15
+                        Asset.CARBONFIBREPLATING, 15,
+                        Asset.GRAPHENE, 15
                 )
         ));
         SUIT_UPGRADES.put("Maverick Suit Grade 3>4", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 10,
-                        Goods.HEALTHMONITOR, 10,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 10
+                        Good.SUITSCHEMATIC, 10,
+                        Good.HEALTHMONITOR, 10,
+                        Good.LARGECAPACITYPOWERREGULATOR, 10
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 10
                 ),
                 Map.of(
-                        Component.CARBONFIBREPLATING, 25,
-                        Component.GRAPHENE, 25
+                        Asset.CARBONFIBREPLATING, 25,
+                        Asset.GRAPHENE, 25
                 )
         ));
         SUIT_UPGRADES.put("Maverick Suit Grade 4>5", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 15,
-                        Goods.HEALTHMONITOR, 15,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 15
+                        Good.SUITSCHEMATIC, 15,
+                        Good.HEALTHMONITOR, 15,
+                        Good.LARGECAPACITYPOWERREGULATOR, 15
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 15
                 ),
                 Map.of(
-                        Component.CARBONFIBREPLATING, 35,
-                        Component.GRAPHENE, 35
+                        Asset.CARBONFIBREPLATING, 35,
+                        Asset.GRAPHENE, 35
                 )
         ));
         SUIT_UPGRADES.put("Dominator Suit Grade 1>2", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 1,
-                        Goods.HEALTHMONITOR, 1,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 1
+                        Good.SUITSCHEMATIC, 1,
+                        Good.HEALTHMONITOR, 1,
+                        Good.LARGECAPACITYPOWERREGULATOR, 1
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 1
                 ),
                 Map.of(
-                        Component.TITANIUMPLATING, 5,
-                        Component.GRAPHENE, 5
+                        Asset.TITANIUMPLATING, 5,
+                        Asset.GRAPHENE, 5
                 )
         ));
         SUIT_UPGRADES.put("Dominator Suit Grade 2>3", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 5,
-                        Goods.HEALTHMONITOR, 5,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 5
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Good.LARGECAPACITYPOWERREGULATOR, 5
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 5
                 ),
                 Map.of(
-                        Component.TITANIUMPLATING, 15,
-                        Component.GRAPHENE, 15
+                        Asset.TITANIUMPLATING, 15,
+                        Asset.GRAPHENE, 15
                 )
         ));
         SUIT_UPGRADES.put("Dominator Suit Grade 3>4", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 10,
-                        Goods.HEALTHMONITOR, 10,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 10
+                        Good.SUITSCHEMATIC, 10,
+                        Good.HEALTHMONITOR, 10,
+                        Good.LARGECAPACITYPOWERREGULATOR, 10
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 10
                 ),
                 Map.of(
-                        Component.TITANIUMPLATING, 25,
-                        Component.GRAPHENE, 25
+                        Asset.TITANIUMPLATING, 25,
+                        Asset.GRAPHENE, 25
                 )
         ));
         SUIT_UPGRADES.put("Dominator Suit Grade 4>5", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 15,
-                        Goods.HEALTHMONITOR, 15,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 15
+                        Good.SUITSCHEMATIC, 15,
+                        Good.HEALTHMONITOR, 15,
+                        Good.LARGECAPACITYPOWERREGULATOR, 15
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 15
                 ),
                 Map.of(
-                        Component.TITANIUMPLATING, 35,
-                        Component.GRAPHENE, 35
+                        Asset.TITANIUMPLATING, 35,
+                        Asset.GRAPHENE, 35
                 )
         ));
         SUIT_UPGRADES.put("Artemis Suit Grade 1>2", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 1,
-                        Goods.HEALTHMONITOR, 1,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 1
+                        Good.SUITSCHEMATIC, 1,
+                        Good.HEALTHMONITOR, 1,
+                        Good.LARGECAPACITYPOWERREGULATOR, 1
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 1
                 ),
                 Map.of(
-                        Component.AEROGEL, 5,
-                        Component.GRAPHENE, 5
+                        Asset.AEROGEL, 5,
+                        Asset.GRAPHENE, 5
                 )
         ));
         SUIT_UPGRADES.put("Artemis Suit Grade 2>3", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 5,
-                        Goods.HEALTHMONITOR, 5,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 5
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Good.LARGECAPACITYPOWERREGULATOR, 5
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 5
                 ),
                 Map.of(
-                        Component.AEROGEL, 15,
-                        Component.GRAPHENE, 15
+                        Asset.AEROGEL, 15,
+                        Asset.GRAPHENE, 15
                 )
         ));
         SUIT_UPGRADES.put("Artemis Suit Grade 3>4", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 10,
-                        Goods.HEALTHMONITOR, 10,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 10
+                        Good.SUITSCHEMATIC, 10,
+                        Good.HEALTHMONITOR, 10,
+                        Good.LARGECAPACITYPOWERREGULATOR, 10
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 10
                 ),
                 Map.of(
-                        Component.AEROGEL, 25,
-                        Component.GRAPHENE, 25
+                        Asset.AEROGEL, 25,
+                        Asset.GRAPHENE, 25
                 )
         ));
         SUIT_UPGRADES.put("Artemis Suit Grade 4>5", new Recipe(
                 Map.of(
-                        Goods.SUITSCHEMATIC, 15,
-                        Goods.HEALTHMONITOR, 15,
-                        Goods.LARGECAPACITYPOWERREGULATOR, 15
+                        Good.SUITSCHEMATIC, 15,
+                        Good.HEALTHMONITOR, 15,
+                        Good.LARGECAPACITYPOWERREGULATOR, 15
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 15
                 ),
                 Map.of(
-                        Component.AEROGEL, 35,
-                        Component.GRAPHENE, 35
+                        Asset.AEROGEL, 35,
+                        Asset.GRAPHENE, 35
                 )
         ));
         SUIT_MODULE_BLUEPRINTS.put("Suit Added Melee Damage", new Recipe(
@@ -457,8 +457,8 @@ public abstract class RecipeConstants {
                         Data.COMBATANTPERFORMANCE, 10
                 ),
                 Map.of(
-                        Component.EPINEPHRINE, 10,
-                        Component.MICROTHRUSTERS, 15
+                        Asset.EPINEPHRINE, 10,
+                        Asset.MICROTHRUSTERS, 15
                 )
         ));
 //        10x Evacuation Protocols
@@ -473,8 +473,8 @@ public abstract class RecipeConstants {
                         Data.GENETICRESEARCH, 5
                 ),
                 Map.of(
-                        Component.EPINEPHRINE, 10,
-                        Component.PHNEUTRALISER, 15
+                        Asset.EPINEPHRINE, 10,
+                        Asset.PHNEUTRALISER, 15
                 )
         ));
         SUIT_MODULE_BLUEPRINTS.put("Suit Damage Resistance", new Recipe(
@@ -485,9 +485,9 @@ public abstract class RecipeConstants {
                         Data.BALLISTICSDATA, 10
                 ),
                 Map.of(
-                        Component.TITANIUMPLATING, 5,
-                        Component.EPOXYADHESIVE, 15,
-                        Component.CARBONFIBREPLATING, 5
+                        Asset.TITANIUMPLATING, 5,
+                        Asset.EPOXYADHESIVE, 15,
+                        Asset.CARBONFIBREPLATING, 5
                 )
         ));
 //        5x Transmitter
@@ -504,8 +504,8 @@ public abstract class RecipeConstants {
                         Data.SPECTRALANALYSISDATA, 10
                 ),
                 Map.of(
-                        Component.TRANSMITTER, 5,
-                        Component.CIRCUITBOARD, 5
+                        Asset.TRANSMITTER, 5,
+                        Asset.CIRCUITBOARD, 5
                 )
         ));
 //        5x Weapon Component
@@ -521,7 +521,7 @@ public abstract class RecipeConstants {
                         Data.PRODUCTIONREPORTS, 10
                 ),
                 Map.of(
-                        Component.WEAPONCOMPONENT, 5
+                        Asset.WEAPONCOMPONENT, 5
                 )
         ));
 
@@ -539,8 +539,8 @@ public abstract class RecipeConstants {
                         Data.DIGITALDESIGNS, 10
                 ),
                 Map.of(
-                        Component.EPOXYADHESIVE, 10,
-                        Component.MEMORYCHIP, 5
+                        Asset.EPOXYADHESIVE, 10,
+                        Asset.MEMORYCHIP, 5
                 )
         ));
 //        10x Reactor Output Review
@@ -554,9 +554,9 @@ public abstract class RecipeConstants {
                         Data.REACTOROUTPUTREVIEW, 10
                 ),
                 Map.of(
-                        Component.IONBATTERY, 5,
-                        Component.MICROTRANSFORMER, 15,
-                        Component.ELECTRICALWIRING, 15
+                        Asset.IONBATTERY, 5,
+                        Asset.MICROTRANSFORMER, 15,
+                        Asset.ELECTRICALWIRING, 15
                 )
         ));
 //        10x Reactor Output Review
@@ -572,9 +572,9 @@ public abstract class RecipeConstants {
                         Data.MAINTENANCELOGS, 15
                 ),
                 Map.of(
-                        Component.IONBATTERY, 5,
-                        Component.MICROSUPERCAPACITOR, 10,
-                        Component.ELECTRICALWIRING, 10
+                        Asset.IONBATTERY, 5,
+                        Asset.MICROSUPERCAPACITOR, 10,
+                        Asset.ELECTRICALWIRING, 10
                 )
         ));
 //        10x G-Meds
@@ -583,14 +583,14 @@ public abstract class RecipeConstants {
 //        10x Topographical Surveys
         SUIT_MODULE_BLUEPRINTS.put("Suit Improved Jump Assist", new Recipe(
                 Map.of(
-                        Goods.GMEDS, 10
+                        Good.GMEDS, 10
                 ),
                 Map.of(
                         Data.TOPOGRAPHICALSURVEYS, 10
                 ),
                 Map.of(
-                        Component.MICROTHRUSTERS, 5,
-                        Component.MOTOR, 10
+                        Asset.MICROTHRUSTERS, 5,
+                        Asset.MOTOR, 10
                 )
         ));
 //        10x Oxygenic Bacteria
@@ -605,8 +605,8 @@ public abstract class RecipeConstants {
                         Data.AIRQUALITYREPORTS, 15
                 ),
                 Map.of(
-                        Component.OXYGENICBACTERIA, 10,
-                        Component.PHNEUTRALISER, 15
+                        Asset.OXYGENICBACTERIA, 10,
+                        Asset.PHNEUTRALISER, 15
                 )
         ));
 //        10x Oxygenic Bacteria
@@ -623,8 +623,8 @@ public abstract class RecipeConstants {
                         Data.MEDICALTRIALRECORDS, 5
                 ),
                 Map.of(
-                        Component.OXYGENICBACTERIA, 10,
-                        Component.CHEMICALCATALYST, 15
+                        Asset.OXYGENICBACTERIA, 10,
+                        Asset.CHEMICALCATALYST, 15
                 )
         ));
 //        10x Surveillance Equipment
@@ -634,7 +634,7 @@ public abstract class RecipeConstants {
 //        10x Circuit Switch
         SUIT_MODULE_BLUEPRINTS.put("Suit Night Vision", new Recipe(
                 Map.of(
-                        Goods.SURVEILLANCEEQUIPMENT, 10
+                        Good.SURVEILLANCEEQUIPMENT, 10
                 ),
                 Map.of(
                         Data.SURVEILLEANCELOGS, 5,
@@ -642,7 +642,7 @@ public abstract class RecipeConstants {
                         Data.RADIOACTIVITYDATA, 5
                 ),
                 Map.of(
-                        Component.CIRCUITSWITCH, 10
+                        Asset.CIRCUITSWITCH, 10
                 )
         ));
 //        5x Settlement Assault Plans
@@ -659,8 +659,8 @@ public abstract class RecipeConstants {
                         Data.PATROLROUTES, 10
                 ),
                 Map.of(
-                        Component.MICROHYDRAULICS, 5,
-                        Component.VISCOELASTICPOLYMER, 15
+                        Asset.MICROHYDRAULICS, 5,
+                        Asset.VISCOELASTICPOLYMER, 15
                 )
         ));
 //        5x Electrical Fuse
@@ -674,172 +674,172 @@ public abstract class RecipeConstants {
                         Data.REACTOROUTPUTREVIEW, 10
                 ),
                 Map.of(
-                        Component.ELECTRICALWIRING, 15,
-                        Component.ELECTRICALFUSE, 5,
-                        Component.MICROTRANSFORMER, 10
+                        Asset.ELECTRICALWIRING, 15,
+                        Asset.ELECTRICALFUSE, 5,
+                        Asset.MICROTRANSFORMER, 10
                 )
         ));
 
 
         WEAPON_UPGRADES.put("Karma (AR-50, C-44, L-6, P-15) 1>2", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 1,
-                        Goods.COMPRESSIONLIQUEFIEDGAS, 1
+                        Good.WEAPONSCHEMATIC, 1,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 1
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 1
                 ),
                 Map.of(
-                        Component.WEAPONCOMPONENT, 5,
-                        Component.TUNGSTENCARBIDE, 5
+                        Asset.WEAPONCOMPONENT, 5,
+                        Asset.TUNGSTENCARBIDE, 5
                 )
         ));
 
         WEAPON_UPGRADES.put("Karma (AR-50, C-44, L-6, P-15) 2>3", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 5,
-                        Goods.COMPRESSIONLIQUEFIEDGAS, 5
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 5
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 5
                 ),
                 Map.of(
-                        Component.WEAPONCOMPONENT, 15,
-                        Component.TUNGSTENCARBIDE, 15
+                        Asset.WEAPONCOMPONENT, 15,
+                        Asset.TUNGSTENCARBIDE, 15
                 )
         ));
         WEAPON_UPGRADES.put("Karma (AR-50, C-44, L-6, P-15) 3>4", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 10,
-                        Goods.COMPRESSIONLIQUEFIEDGAS, 10
+                        Good.WEAPONSCHEMATIC, 10,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 10
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 10
                 ),
                 Map.of(
-                        Component.WEAPONCOMPONENT, 25,
-                        Component.TUNGSTENCARBIDE, 25
+                        Asset.WEAPONCOMPONENT, 25,
+                        Asset.TUNGSTENCARBIDE, 25
                 )
         ));
         WEAPON_UPGRADES.put("Karma (AR-50, C-44, L-6, P-15) 4>5", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 15,
-                        Goods.COMPRESSIONLIQUEFIEDGAS, 15
+                        Good.WEAPONSCHEMATIC, 15,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 15
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 15
                 ),
                 Map.of(
-                        Component.WEAPONCOMPONENT, 35,
-                        Component.TUNGSTENCARBIDE, 35
+                        Asset.WEAPONCOMPONENT, 35,
+                        Asset.TUNGSTENCARBIDE, 35
                 )
         ));
 
         WEAPON_UPGRADES.put("TK (Aphelion, Eclipse, Zenith) 1>2", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 1,
-                        Goods.IONISEDGAS, 1
+                        Good.WEAPONSCHEMATIC, 1,
+                        Good.IONISEDGAS, 1
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 1
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 5,
-                        Component.OPTICALFIBRE, 5
+                        Asset.MICROELECTRODE, 5,
+                        Asset.OPTICALFIBRE, 5
                 )
         ));
 
         WEAPON_UPGRADES.put("TK (Aphelion, Eclipse, Zenith) 2>3", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 5,
-                        Goods.IONISEDGAS, 5
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.IONISEDGAS, 5
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 5
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 15,
-                        Component.OPTICALFIBRE, 15
+                        Asset.MICROELECTRODE, 15,
+                        Asset.OPTICALFIBRE, 15
                 )
         ));
         WEAPON_UPGRADES.put("TK (Aphelion, Eclipse, Zenith) 3>4", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 10,
-                        Goods.IONISEDGAS, 10
+                        Good.WEAPONSCHEMATIC, 10,
+                        Good.IONISEDGAS, 10
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 10
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 25,
-                        Component.OPTICALFIBRE, 25
+                        Asset.MICROELECTRODE, 25,
+                        Asset.OPTICALFIBRE, 25
                 )
         ));
         WEAPON_UPGRADES.put("TK (Aphelion, Eclipse, Zenith) 4>5", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 15,
-                        Goods.IONISEDGAS, 15
+                        Good.WEAPONSCHEMATIC, 15,
+                        Good.IONISEDGAS, 15
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 15
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 35,
-                        Component.OPTICALFIBRE, 35
+                        Asset.MICROELECTRODE, 35,
+                        Asset.OPTICALFIBRE, 35
                 )
         ));
 
         WEAPON_UPGRADES.put("Manticore (Executioner, Intimidator, Oppressor, Tormentor) 1>2", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 1,
-                        Goods.IONISEDGAS, 1
+                        Good.WEAPONSCHEMATIC, 1,
+                        Good.IONISEDGAS, 1
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 1
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 5,
-                        Component.CHEMICALSUPERBASE, 5
+                        Asset.MICROELECTRODE, 5,
+                        Asset.CHEMICALSUPERBASE, 5
                 )
         ));
 
         WEAPON_UPGRADES.put("Manticore (Executioner, Intimidator, Oppressor, Tormentor) 2>3", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 5,
-                        Goods.IONISEDGAS, 5
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.IONISEDGAS, 5
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 5
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 15,
-                        Component.CHEMICALSUPERBASE, 15
+                        Asset.MICROELECTRODE, 15,
+                        Asset.CHEMICALSUPERBASE, 15
                 )
         ));
         WEAPON_UPGRADES.put("Manticore (Executioner, Intimidator, Oppressor, Tormentor) 3>4", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 10,
-                        Goods.IONISEDGAS, 10
+                        Good.WEAPONSCHEMATIC, 10,
+                        Good.IONISEDGAS, 10
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 10
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 25,
-                        Component.CHEMICALSUPERBASE, 25
+                        Asset.MICROELECTRODE, 25,
+                        Asset.CHEMICALSUPERBASE, 25
                 )
         ));
         WEAPON_UPGRADES.put("Manticore (Executioner, Intimidator, Oppressor, Tormentor) 4>5", new Recipe(
                 Map.of(
-                        Goods.WEAPONSCHEMATIC, 15,
-                        Goods.IONISEDGAS, 15
+                        Good.WEAPONSCHEMATIC, 15,
+                        Good.IONISEDGAS, 15
                 ),
                 Map.of(
                         Data.MANUFACTURINGINSTRUCTIONS, 15
                 ),
                 Map.of(
-                        Component.MICROELECTRODE, 35,
-                        Component.CHEMICALSUPERBASE, 35
+                        Asset.MICROELECTRODE, 35,
+                        Asset.CHEMICALSUPERBASE, 35
                 )
         ));
 //        5x Audio Logs
@@ -855,9 +855,9 @@ public abstract class RecipeConstants {
                         Data.PATROLROUTES, 10
                 ),
                 Map.of(
-                        Component.SCRAMBLER, 10,
-                        Component.TRANSMITTER, 15,
-                        Component.CIRCUITBOARD, 5
+                        Asset.SCRAMBLER, 10,
+                        Asset.TRANSMITTER, 15,
+                        Asset.CIRCUITBOARD, 5
                 )
         ));
 //        5x Viscoelastic Polymer
@@ -873,7 +873,7 @@ public abstract class RecipeConstants {
                         Data.COMBATTRAININGMATERIAL, 10
                 ),
                 Map.of(
-                        Component.VISCOELASTICPOLYMER, 5
+                        Asset.VISCOELASTICPOLYMER, 5
                 )
         ));
 //        Kinetic
@@ -891,9 +891,9 @@ public abstract class RecipeConstants {
                         Data.TOPOGRAPHICALSURVEYS, 10
                 ),
                 Map.of(
-                        Component.METALCOIL, 10,
-                        Component.RDX, 10,
-                        Component.WEAPONCOMPONENT, 5
+                        Asset.METALCOIL, 10,
+                        Asset.RDX, 10,
+                        Asset.WEAPONCOMPONENT, 5
 
                 )
         ));
@@ -908,17 +908,17 @@ public abstract class RecipeConstants {
 //        500 CR
         WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Laser)", new Recipe(
                 Map.of(
-                        Goods.IONISEDGAS, 1
+                        Good.IONISEDGAS, 1
                 ),
                 Map.of(
                         Data.STELLARACTIVITYLOGS, 10,
                         Data.RISKASSESSMENTS, 15
                 ),
                 Map.of(
-                        Component.OPTICALLENS, 5,
-                        Component.IONBATTERY, 20,
-                        Component.MICROTRANSFORMER, 15,
-                        Component.CIRCUITBOARD, 5
+                        Asset.OPTICALLENS, 5,
+                        Asset.IONBATTERY, 20,
+                        Asset.MICROTRANSFORMER, 15,
+                        Asset.CIRCUITBOARD, 5
                 )
         ));
 //                Plasma
@@ -931,17 +931,17 @@ public abstract class RecipeConstants {
 //        15x Mineral Survey
         WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Plasma)", new Recipe(
                 Map.of(
-                        Goods.IONISEDGAS, 1
+                        Good.IONISEDGAS, 1
                 ),
                 Map.of(
                         Data.CHEMICALFORMULAE, 10,
                         Data.MINERALSURVEY, 15
                 ),
                 Map.of(
-                        Component.METALCOIL, 10,
-                        Component.ELECTROMAGNET, 10,
-                        Component.MOTOR, 5,
-                        Component.ELECTRICALFUSE, 5
+                        Asset.METALCOIL, 10,
+                        Asset.ELECTROMAGNET, 10,
+                        Asset.MOTOR, 5,
+                        Asset.ELECTRICALFUSE, 5
 
                 )
         ));
@@ -960,9 +960,9 @@ public abstract class RecipeConstants {
                         Data.MEDICALRECORDS, 5
                 ),
                 Map.of(
-                        Component.CHEMICALCATALYST, 10,
-                        Component.RDX, 15,
-                        Component.WEAPONCOMPONENT, 5
+                        Asset.CHEMICALCATALYST, 10,
+                        Asset.RDX, 15,
+                        Asset.WEAPONCOMPONENT, 5
                 )
         ));
 //        Thermal Weapons
@@ -980,9 +980,9 @@ public abstract class RecipeConstants {
                         Data.BIOMETRICDATA, 5
                 ),
                 Map.of(
-                        Component.IONBATTERY, 10,
-                        Component.OPTICALLENS, 5,
-                        Component.SCRAMBLER, 10
+                        Asset.IONBATTERY, 10,
+                        Asset.OPTICALLENS, 5,
+                        Asset.SCRAMBLER, 10
                 )
         ));
 //        Plasma Weapons
@@ -1000,9 +1000,9 @@ public abstract class RecipeConstants {
                         Data.BLOODTESTRESULTS, 5
                 ),
                 Map.of(
-                        Component.IONBATTERY, 10,
-                        Component.ELECTROMAGNET, 10,
-                        Component.MICROSUPERCAPACITOR, 15
+                        Asset.IONBATTERY, 10,
+                        Asset.ELECTROMAGNET, 10,
+                        Asset.MICROSUPERCAPACITOR, 15
                 )
         ));
 //        Kinetic Weapons
@@ -1021,8 +1021,8 @@ public abstract class RecipeConstants {
                         Data.COMBATANTPERFORMANCE, 10
                 ),
                 Map.of(
-                        Component.VISCOELASTICPOLYMER, 10,
-                        Component.RDX, 10
+                        Asset.VISCOELASTICPOLYMER, 10,
+                        Asset.RDX, 10
                 )
         ));
 //        Thermal Weapons
@@ -1040,9 +1040,9 @@ public abstract class RecipeConstants {
                         Data.COMBATANTPERFORMANCE, 10
                 ),
                 Map.of(
-                        Component.OPTICALLENS, 5,
-                        Component.ELECTRICALWIRING, 15,
-                        Component.METALCOIL, 10
+                        Asset.OPTICALLENS, 5,
+                        Asset.ELECTRICALWIRING, 15,
+                        Asset.METALCOIL, 10
                 )
         ));
 //        Plasma Weapons
@@ -1060,9 +1060,9 @@ public abstract class RecipeConstants {
                         Data.COMBATANTPERFORMANCE, 10
                 ),
                 Map.of(
-                        Component.CHEMICALCATALYST, 10,
-                        Component.ELECTROMAGNET, 10,
-                        Component.METALCOIL, 10
+                        Asset.CHEMICALCATALYST, 10,
+                        Asset.ELECTROMAGNET, 10,
+                        Asset.METALCOIL, 10
                 )
         ));
 //        5x Weapon Component
@@ -1078,9 +1078,9 @@ public abstract class RecipeConstants {
                         Data.SECURITYEXPENSES, 5
                 ),
                 Map.of(
-                        Component.WEAPONCOMPONENT, 5,
-                        Component.TUNGSTENCARBIDE, 5,
-                        Component.METALCOIL, 10
+                        Asset.WEAPONCOMPONENT, 5,
+                        Asset.TUNGSTENCARBIDE, 5,
+                        Asset.METALCOIL, 10
 
                 )
         ));
@@ -1096,8 +1096,8 @@ public abstract class RecipeConstants {
                         Data.MININGANALYTICS, 10
                 ),
                 Map.of(
-                        Component.VISCOELASTICPOLYMER, 15,
-                        Component.WEAPONCOMPONENT, 5
+                        Asset.VISCOELASTICPOLYMER, 15,
+                        Asset.WEAPONCOMPONENT, 5
                 )
         ));
 //        10x Micro Hydraulics
@@ -1114,8 +1114,8 @@ public abstract class RecipeConstants {
                         Data.COMBATTRAININGMATERIAL, 10
                 ),
                 Map.of(
-                        Component.MICROHYDRAULICS, 10,
-                        Component.ELECTROMAGNET, 10
+                        Asset.MICROHYDRAULICS, 10,
+                        Asset.ELECTROMAGNET, 10
                 )
         ));
 //        10x Spectral Analysis Data
@@ -1131,8 +1131,8 @@ public abstract class RecipeConstants {
 
                 ),
                 Map.of(
-                        Component.OPTICALLENS, 10,
-                        Component.OPTICALFIBRE, 5
+                        Asset.OPTICALLENS, 10,
+                        Asset.OPTICALFIBRE, 5
                 )
         ));
 //        10x Viscoelastic Polymer
@@ -1147,8 +1147,8 @@ public abstract class RecipeConstants {
                         Data.RISKASSESSMENTS, 15
                 ),
                 Map.of(
-                        Component.VISCOELASTICPOLYMER, 10,
-                        Component.MICROHYDRAULICS, 10
+                        Asset.VISCOELASTICPOLYMER, 10,
+                        Asset.MICROHYDRAULICS, 10
                 )
         ));
 //        10x Digital Designs
@@ -1165,8 +1165,8 @@ public abstract class RecipeConstants {
                         Data.PRODUCTIONSCHEDULE, 10
                 ),
                 Map.of(
-                        Component.CIRCUITBOARD, 5,
-                        Component.ENCRYPTEDMEMORYCHIP, 15
+                        Asset.CIRCUITBOARD, 5,
+                        Asset.ENCRYPTEDMEMORYCHIP, 15
                 )
         ));
     }

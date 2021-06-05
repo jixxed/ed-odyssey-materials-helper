@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public enum Goods {
+public enum Good {
     AGRICULTURALPROCESSSAMPLE("Agricultural Process Sample"),
     BIOCHEMICALAGENT("Biochemical Agent"),
     BIOLOGICALSAMPLE("Biological Sample"),
@@ -49,15 +49,15 @@ public enum Goods {
 
     String name;
 
-    private Goods(String name) {
+    private Good(final String name) {
         this.name = name;
     }
 
-    public static Goods forName(String name) {
+    public static Good forName(final String name) {
         try {
-            return Goods.valueOf(name.toUpperCase());
-        } catch (IllegalArgumentException ex) {
-            return Goods.UNKNOWN;
+            return Good.valueOf(name.toUpperCase());
+        } catch (final IllegalArgumentException ex) {
+            return Good.UNKNOWN;
         }
     }
 

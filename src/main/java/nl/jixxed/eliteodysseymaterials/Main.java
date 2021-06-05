@@ -25,80 +25,76 @@ import java.util.stream.Collectors;
 public class Main extends Application {
     private static final Insets CARD_MARGIN = new Insets(2, 5, 2, 5);
     private static final String ENGINEER_UNLOCK = "E";
-    private Optional<File> watchedFile = Optional.empty();
     private int lineNumber = 0;
     private final MainLayout layoutApp = new MainLayout();
     private final AnchorPane layoutMain = new AnchorPane();
     private final GridPane layout = new GridPane();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Map<Goods, Integer> goods = new HashMap<>();
-    private final Map<Component, Integer> components = new HashMap<>();
+    private final Map<Good, Integer> goods = new HashMap<>();
+    private final Map<Asset, Integer> assets = new HashMap<>();
     private final Map<Data, Integer> datas = new HashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
-    private MaterialCard goodsLabel;
-    private MaterialCard datasLabel;
-    private MaterialCard componentsLabel;
-    JournalWatcher journalWatcher = new JournalWatcher();
-    private Settings settings = new Settings();
+    private final JournalWatcher journalWatcher = new JournalWatcher();
+    private final Settings settings = new Settings();
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         initCounts();
         primaryStage.setTitle("ED Odyssey Materials Helper");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/rocket.png")));
-        ScrollPane scrollPane = new ScrollPane();
-        layout.setMaxWidth(2000);
-        layout.setMaxHeight(2000);
-        scrollPane.setContent(layout);
-        layoutMain.getChildren().add(scrollPane);
+        final ScrollPane scrollPane = new ScrollPane();
+        this.layout.setMaxWidth(2000);
+        this.layout.setMaxHeight(2000);
+        scrollPane.setContent(this.layout);
+        this.layoutMain.getChildren().add(scrollPane);
         AnchorPane.setTopAnchor(scrollPane, 0.0);
         AnchorPane.setBottomAnchor(scrollPane, 0.0);
         AnchorPane.setLeftAnchor(scrollPane, 372.0);
         AnchorPane.setRightAnchor(scrollPane, 0.0);
-        layoutApp.getChildren().add(layoutMain);
-        layoutApp.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+        this.layoutApp.getChildren().add(this.layoutMain);
+        this.layoutApp.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
 
         for (int i = 0; i < 5; i++) {
-            ColumnConstraints column = new ColumnConstraints(250);
-            layout.getColumnConstraints().add(column);
+            final ColumnConstraints column = new ColumnConstraints(250);
+            this.layout.getColumnConstraints().add(column);
         }
-        for (int i = 0; i < datas.size() / 3; i++) {
-            RowConstraints row = new RowConstraints(30);
-            layout.getRowConstraints().add(row);
+        for (int i = 0; i < this.datas.size() / 3; i++) {
+            final RowConstraints row = new RowConstraints(30);
+            this.layout.getRowConstraints().add(row);
         }
-        String userprofile = System.getenv("USERPROFILE");
-        journalWatcher.watch(new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous"), this::process, this::resetAndProcess);
+        final String userprofile = System.getenv("USERPROFILE");
+        this.journalWatcher.watch(new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous"), this::process, this::resetAndProcess);
 
         showRecipes();
-        primaryStage.setScene(new Scene(layoutApp, 1920, 1080));
+        primaryStage.setScene(new Scene(this.layoutApp, 1920, 1080));
         addSettingsListeners();
         primaryStage.show();
     }
 
     private void addSettingsListeners() {
-        settings.getCheckBoxIrrelevant().selectedProperty().addListener((observable, oldValue, newValue) -> {
-            layout.getChildren().clear();
-            showGoods(layout);
-            showComponents(layout);
-            showDatas(layout);
+        this.settings.getCheckBoxIrrelevant().selectedProperty().addListener((observable, oldValue, newValue) -> {
+            this.layout.getChildren().clear();
+            showGoods(this.layout);
+            showComponents(this.layout);
+            showDatas(this.layout);
             updateTotals();
         });
-        settings.getCheckBoxUnlock().selectedProperty().addListener((observable, oldValue, newValue) -> {
-            layout.getChildren().clear();
-            showGoods(layout);
-            showComponents(layout);
-            showDatas(layout);
+        this.settings.getCheckBoxUnlock().selectedProperty().addListener((observable, oldValue, newValue) -> {
+            this.layout.getChildren().clear();
+            showGoods(this.layout);
+            showComponents(this.layout);
+            showDatas(this.layout);
             updateTotals();
         });
     }
 
-    protected void resetAndProcess(File file) {
-        lineNumber = 0;
+    protected void resetAndProcess(final File file) {
+        this.lineNumber = 0;
         process(file);
     }
 
-    protected void process(File file) {
-        try (Scanner scanner = new Scanner(file)) {
+    protected void process(final File file) {
+        try (final Scanner scanner = new Scanner(file)) {
             int cursor = 0;
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
@@ -109,16 +105,16 @@ public class Main extends Application {
                     processMessage(line);
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             e.printStackTrace();
         }
         updateIngredients();
 
         Platform.runLater(() -> {
-            layout.getChildren().clear();
-            showGoods(layout);
-            showComponents(layout);
-            showDatas(layout);
+            this.layout.getChildren().clear();
+            showGoods(this.layout);
+            showComponents(this.layout);
+            showDatas(this.layout);
 
             this.ingredients.forEach(Ingredient::update);
             updateTotals();
@@ -128,85 +124,83 @@ public class Main extends Application {
     private void updateIngredients() {
         this.ingredients.forEach(ingredient -> {
             switch (ingredient.getType()) {
-                case COMPONENT -> ingredient.setAmountAvailable(this.components.get(Component.forName(ingredient.getCode())));
-                case GOODS -> ingredient.setAmountAvailable(this.goods.get(Goods.forName(ingredient.getCode())));
+                case ASSET -> ingredient.setAmountAvailable(this.assets.get(Asset.forName(ingredient.getCode())));
+                case GOOD -> ingredient.setAmountAvailable(this.goods.get(Good.forName(ingredient.getCode())));
                 case DATA -> ingredient.setAmountAvailable(this.datas.get(Data.forName(ingredient.getCode())));
                 case OTHER -> {
                 }
             }
-
-
         });
     }
 
     private void updateTotals() {
         updateTotalsGoods();
-        updateTotalsComponents();
-        updateTotalsDatas();
+        updateTotalsAssets();
+        updateTotalsData();
     }
 
-    private void updateTotalsDatas() {
-        final Integer recipeDatas = datas.entrySet().stream()
+    private void updateTotalsData() {
+        final Integer recipeDatas = this.datas.entrySet().stream()
                 .filter(data -> RecipeConstants.isRecipeIngredient(data.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeDatas = datas.entrySet().stream()
+        final Integer nonRecipeDatas = this.datas.entrySet().stream()
                 .filter(data -> !RecipeConstants.isRecipeIngredient(data.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + nonRecipeDatas + " / Total: " + (recipeDatas + nonRecipeDatas) + ")", "");
+        final MaterialCard datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + nonRecipeDatas + " / Total: " + (recipeDatas + nonRecipeDatas) + ")", "");
         datasLabel.setStyle("-fx-font-weight: bold");
         datasLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
-        layout.add(datasLabel, 4, 0, 2, 1);
+        this.layout.add(datasLabel, 4, 0, 2, 1);
         GridPane.setMargin(datasLabel, CARD_MARGIN);
     }
 
-    private void updateTotalsComponents() {
-        final Integer recipeComponents = components.entrySet().stream()
-                .filter(component -> RecipeConstants.isRecipeIngredient(component.getKey()))
+    private void updateTotalsAssets() {
+        final Integer recipeAssets = this.assets.entrySet().stream()
+                .filter(assetEntry -> RecipeConstants.isRecipeIngredient(assetEntry.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeComponents = components.entrySet().stream()
-                .filter(component -> !RecipeConstants.isRecipeIngredient(component.getKey()))
+        final Integer nonRecipeAssets = this.assets.entrySet().stream()
+                .filter(assetEntry -> !RecipeConstants.isRecipeIngredient(assetEntry.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        componentsLabel = new MaterialCard("Component (Blueprint: " + recipeComponents + " / Irrelevant: " + nonRecipeComponents + " / Total: " + (recipeComponents + nonRecipeComponents) + ")", "");
-        componentsLabel.setStyle("-fx-font-weight: bold");
-        componentsLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
-        layout.add(componentsLabel, 2, 0, 2, 1);
-        GridPane.setMargin(componentsLabel, CARD_MARGIN);
+        final MaterialCard assetsLabel = new MaterialCard("Assets (Blueprint: " + recipeAssets + " / Irrelevant: " + nonRecipeAssets + " / Total: " + (recipeAssets + nonRecipeAssets) + ")", "");
+        assetsLabel.setStyle("-fx-font-weight: bold");
+        assetsLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
+        this.layout.add(assetsLabel, 2, 0, 2, 1);
+        GridPane.setMargin(assetsLabel, CARD_MARGIN);
     }
 
     private void updateTotalsGoods() {
-        final Integer recipeGoods = goods.entrySet().stream()
+        final Integer recipeGoods = this.goods.entrySet().stream()
                 .filter(good -> RecipeConstants.isRecipeIngredient(good.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeGoods = goods.entrySet().stream()
+        final Integer nonRecipeGoods = this.goods.entrySet().stream()
                 .filter(good -> !RecipeConstants.isRecipeIngredient(good.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + nonRecipeGoods + " / Total: " + (recipeGoods + nonRecipeGoods) + ")", "");
+        final MaterialCard goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + nonRecipeGoods + " / Total: " + (recipeGoods + nonRecipeGoods) + ")", "");
         goodsLabel.setStyle("-fx-font-weight: bold");
         goodsLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
-        layout.add(goodsLabel, 0, 0, 2, 1);
+        this.layout.add(goodsLabel, 0, 0, 2, 1);
         GridPane.setMargin(goodsLabel, CARD_MARGIN);
     }
 
     private void processMessage(final String message) {
         try {
-            JsonNode journalMessage = objectMapper.readTree(message);
+            final JsonNode journalMessage = this.objectMapper.readTree(message);
             switch (journalMessage.get("event").asText()) {
                 case "ShipLockerMaterials" -> processShipLockerMaterialsMessage(journalMessage);
                 case "TransferMicroResources" -> processTransferMicroResourcesMessage(journalMessage);
                 case "EngineerProgress" -> processEngineerProgressMessage(journalMessage);
             }
-        } catch (JsonProcessingException e) {
+        } catch (final JsonProcessingException e) {
             e.printStackTrace();
         }
     }
 
-    private void processEngineerProgressMessage(JsonNode journalMessage) {
+    private void processEngineerProgressMessage(final JsonNode journalMessage) {
         journalMessage.get("Engineers").elements().forEachRemaining(item ->
         {
             final String engineer = item.get("Engineer").asText();
@@ -226,7 +220,7 @@ public class Main extends Application {
         });
     }
 
-    private void processTransferMicroResourcesMessage(JsonNode journalMessage) {
+    private void processTransferMicroResourcesMessage(final JsonNode journalMessage) {
         journalMessage.get("Transfers").elements().forEachRemaining(item ->
         {
             final String cat = item.get("Category").asText();
@@ -239,7 +233,7 @@ public class Main extends Application {
         });
     }
 
-    private void processShipLockerMaterialsMessage(JsonNode journalMessage) {
+    private void processShipLockerMaterialsMessage(final JsonNode journalMessage) {
         resetCounts();
         parseGoods(journalMessage.get("Items").elements());
         parseComponents(journalMessage.get("Components").elements());
@@ -251,16 +245,16 @@ public class Main extends Application {
                 .map(this::createCategoryTitledPane)
                 .sorted(Comparator.comparing(Labeled::getText))
                 .collect(Collectors.toList());
-        titledPanes.add(new TitledPane("Settings", settings));
+        titledPanes.add(new TitledPane("Settings", this.settings));
         final Accordion categoryAccordion = new Accordion(titledPanes.toArray(new TitledPane[0]));
 
-        layoutMain.getChildren().add(categoryAccordion);
+        this.layoutMain.getChildren().add(categoryAccordion);
         AnchorPane.setTopAnchor(categoryAccordion, 0.0);
         AnchorPane.setBottomAnchor(categoryAccordion, 0.0);
         AnchorPane.setLeftAnchor(categoryAccordion, 0.0);
     }
 
-    private TitledPane createCategoryTitledPane(Map.Entry<String, Map<String, ? extends Recipe>> recipesEntry) {
+    private TitledPane createCategoryTitledPane(final Map.Entry<String, Map<String, ? extends Recipe>> recipesEntry) {
         final Accordion recipesAccordion = new Accordion(recipesEntry.getValue().entrySet().stream()
                 .map(this::createRecipeTitledPane)
                 .sorted(Comparator.comparing(Labeled::getText))
@@ -271,12 +265,12 @@ public class Main extends Application {
         return categoryTitledPane;
     }
 
-    private TitledPane createRecipeTitledPane(Map.Entry<String, ? extends Recipe> recipe) {
+    private TitledPane createRecipeTitledPane(final Map.Entry<String, ? extends Recipe> recipe) {
         final List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.addAll(recipe.getValue().getComponents().entrySet().stream()
+        ingredients.addAll(recipe.getValue().getAssets().entrySet().stream()
                 .map(component ->
                         {
-                            final Ingredient newIngredient = new Ingredient(Type.COMPONENT, component.getKey().toString(), component.getKey().friendlyName(), component.getValue().toString(), this.components.get(component.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(StorageType.ASSET, component.getKey().toString(), component.getKey().friendlyName(), component.getValue().toString(), this.assets.get(component.getKey()).toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -284,7 +278,7 @@ public class Main extends Application {
                 .collect(Collectors.toList()));
         ingredients.addAll(recipe.getValue().getData().entrySet().stream()
                 .map(data -> {
-                            final Ingredient newIngredient = new Ingredient(Type.DATA, data.getKey().toString(), data.getKey().friendlyName(), data.getValue().toString(), this.datas.get(data.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(StorageType.DATA, data.getKey().toString(), data.getKey().friendlyName(), data.getValue().toString(), this.datas.get(data.getKey()).toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -292,7 +286,7 @@ public class Main extends Application {
                 .collect(Collectors.toList()));
         ingredients.addAll(recipe.getValue().getGoods().entrySet().stream()
                 .map(good -> {
-                            final Ingredient newIngredient = new Ingredient(Type.GOODS, good.getKey().toString(), good.getKey().friendlyName(), good.getValue().toString(), this.goods.get(good.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(StorageType.GOOD, good.getKey().toString(), good.getKey().friendlyName(), good.getValue().toString(), this.goods.get(good.getKey()).toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -301,7 +295,7 @@ public class Main extends Application {
         if (recipe.getValue() instanceof EngineerRecipe) {
             ingredients.addAll(((EngineerRecipe) recipe.getValue()).getOther().stream()
                     .map(other -> {
-                                final Ingredient newIngredient = new Ingredient(Type.OTHER, other, other, "0", "0");
+                                final Ingredient newIngredient = new Ingredient(StorageType.OTHER, other, other, "0", "0");
                                 this.ingredients.add(newIngredient);
                                 return newIngredient;
                             }
@@ -320,24 +314,24 @@ public class Main extends Application {
         return recipeTitledPane;
     }
 
-    private void showGoods(GridPane layout) {
+    private void showGoods(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.goods.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
-            if (Goods.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
+            if (Good.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
                 return;
             }
             final String name = entry.getKey().friendlyName() + ((RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) ? " (" + ENGINEER_UNLOCK + ")" : "");
             final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString());
-            if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), settings.getCheckBoxUnlock().selectedProperty().get())) {
+            if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), this.settings.getCheckBoxUnlock().selectedProperty().get())) {
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #ffffff;-fx-font-weight: bold");
 
-            } else if (settings.getCheckBoxUnlock().selectedProperty().get() && RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) {
+            } else if (this.settings.getCheckBoxUnlock().selectedProperty().get() && RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) {
                 return;
             } else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #cab951;-fx-font-weight: bold");
 
             } else {
-                if (settings.getCheckBoxIrrelevant().selectedProperty().get()) {
+                if (this.settings.getCheckBoxIrrelevant().selectedProperty().get()) {
                     return;
                 }
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #9d8e05;-fx-font-weight: normal");
@@ -347,13 +341,13 @@ public class Main extends Application {
         });
     }
 
-    private void showComponents(GridPane layout) {
+    private void showComponents(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
-        this.components.entrySet().stream().sorted(
-                Comparator.comparing((Map.Entry<Component, Integer> o) -> o.getKey().getType())
+        this.assets.entrySet().stream().sorted(
+                Comparator.comparing((Map.Entry<Asset, Integer> o) -> o.getKey().getType())
                         .thenComparing(o -> o.getKey().friendlyName()))
                 .forEach((entry) -> {
-                    if (Component.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
+                    if (Asset.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
                         return;
                     }
                     final String name = entry.getKey().friendlyName() + " (" + entry.getKey().getType().name().toLowerCase() + ")" + ((RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) ? " (" + ENGINEER_UNLOCK + ")" : "");
@@ -361,28 +355,28 @@ public class Main extends Application {
                     if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) {
                         materialCard.setStyle("-fx-border-color: black; -fx-background-color: #ffffff;-fx-font-weight: bold");
 
-                    } else if (settings.getCheckBoxUnlock().selectedProperty().get() && RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) {
+                    } else if (this.settings.getCheckBoxUnlock().selectedProperty().get() && RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) {
                         return;
                     } else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
-                        if (entry.getKey().getType().equals(ComponentType.TECH)) {
+                        if (entry.getKey().getType().equals(AssetType.TECH)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #78efd7;-fx-font-weight: bold");
-                        } else if (entry.getKey().getType().equals(ComponentType.CHEMICAL)) {
+                        } else if (entry.getKey().getType().equals(AssetType.CHEMICAL)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #98ef78;-fx-font-weight: bold");
-                        } else if (entry.getKey().getType().equals(ComponentType.CIRCUIT)) {
+                        } else if (entry.getKey().getType().equals(AssetType.CIRCUIT)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #efa278;-fx-font-weight: bold");
                         } else {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #bd78ef;-fx-font-weight: bold");
                         }
 
                     } else {
-                        if (settings.getCheckBoxIrrelevant().selectedProperty().get()) {
+                        if (this.settings.getCheckBoxIrrelevant().selectedProperty().get()) {
                             return;
                         }
-                        if (entry.getKey().getType().equals(ComponentType.TECH)) {
+                        if (entry.getKey().getType().equals(AssetType.TECH)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #2c7062;-fx-font-weight: normal");
-                        } else if (entry.getKey().getType().equals(ComponentType.CHEMICAL)) {
+                        } else if (entry.getKey().getType().equals(AssetType.CHEMICAL)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #488830;-fx-font-weight: normal");
-                        } else if (entry.getKey().getType().equals(ComponentType.CIRCUIT)) {
+                        } else if (entry.getKey().getType().equals(AssetType.CIRCUIT)) {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #a0603c;-fx-font-weight: normal");
                         } else {
                             materialCard.setStyle("-fx-border-color: black; -fx-background-color: #b13ee9;-fx-font-weight: normal");
@@ -393,7 +387,7 @@ public class Main extends Application {
                 });
     }
 
-    private void showDatas(GridPane layout) {
+    private void showDatas(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.datas.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
             if (Data.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
@@ -401,16 +395,16 @@ public class Main extends Application {
             }
             final String name = entry.getKey().friendlyName() + ((RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) ? " (" + ENGINEER_UNLOCK + ")" : "");
             final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString());
-            if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), settings.getCheckBoxUnlock().selectedProperty().get())) {
+            if (RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), this.settings.getCheckBoxUnlock().selectedProperty().get())) {
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #ffffff;-fx-font-weight: bold");
 
-            } else if (settings.getCheckBoxUnlock().selectedProperty().get() && RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) {
+            } else if (this.settings.getCheckBoxUnlock().selectedProperty().get() && RecipeConstants.isEngineeringOnlyIngredient(entry.getKey(), false)) {
                 return;
             } else if (RecipeConstants.isRecipeIngredient(entry.getKey())) {
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #53e5ea;-fx-font-weight: bold");
 
             } else {
-                if (settings.getCheckBoxIrrelevant().selectedProperty().get()) {
+                if (this.settings.getCheckBoxIrrelevant().selectedProperty().get()) {
                     return;
                 }
                 materialCard.setStyle("-fx-border-color: black; -fx-background-color: #05999d;-fx-font-weight: normal");
@@ -420,22 +414,22 @@ public class Main extends Application {
         });
     }
 
-    private void parseComponents(Iterator<JsonNode> components) {
+    private void parseComponents(final Iterator<JsonNode> components) {
         components.forEachRemaining(componentNode ->
         {
             final String name = componentNode.get("Name").asText();
-            final Component component = Component.forName(name);
-            if (Component.UNKNOWN.equals(component)) {
+            final Asset asset = Asset.forName(name);
+            if (Asset.UNKNOWN.equals(asset)) {
                 System.out.println("Unknown Component detected: " + componentNode.toPrettyString());
             }
-            final Integer currentAmount = this.components.get(component);
-            this.components.put(component, currentAmount + componentNode.get("Count").asInt());
+            final Integer currentAmount = this.assets.get(asset);
+            this.assets.put(asset, currentAmount + componentNode.get("Count").asInt());
 
         });
 
     }
 
-    private void parseDatas(Iterator<JsonNode> datas) {
+    private void parseDatas(final Iterator<JsonNode> datas) {
         datas.forEachRemaining(dataNode ->
         {
             final String name = dataNode.get("Name").asText();
@@ -450,12 +444,12 @@ public class Main extends Application {
 
     }
 
-    private void parseGoods(Iterator<JsonNode> items) {
+    private void parseGoods(final Iterator<JsonNode> items) {
         items.forEachRemaining(itemNode ->
         {
             final String name = itemNode.get("Name").asText();
-            final Goods good = Goods.forName(name);
-            if (Goods.UNKNOWN.equals(good)) {
+            final Good good = Good.forName(name);
+            if (Good.UNKNOWN.equals(good)) {
                 System.out.println("Unknown Good detected: " + itemNode.toPrettyString());
             }
             final Integer currentAmount = this.goods.get(good);
@@ -464,9 +458,9 @@ public class Main extends Application {
         });
     }
 
-    private void updateGoods(JsonNode item) {
-        final Goods good = Goods.forName(item.get("Name").asText());
-        if (Goods.UNKNOWN.equals(good)) {
+    private void updateGoods(final JsonNode item) {
+        final Good good = Good.forName(item.get("Name").asText());
+        if (Good.UNKNOWN.equals(good)) {
             System.out.println("Unknown Good detected: " + item.toPrettyString());
         }
         final Integer currentAmount = this.goods.get(good);
@@ -474,7 +468,7 @@ public class Main extends Application {
         this.goods.put(good, newAmount);
     }
 
-    private void updateDatas(JsonNode item) {
+    private void updateDatas(final JsonNode item) {
         final Data data = Data.forName(item.get("Name").asText());
         if (Data.UNKNOWN.equals(data)) {
             System.out.println("Unknown Data detected: " + item.toPrettyString());
@@ -484,38 +478,38 @@ public class Main extends Application {
         this.datas.put(data, newAmount);
     }
 
-    private void updateComponents(JsonNode item) {
-        final Component component = Component.forName(item.get("Name").asText());
-        if (Component.UNKNOWN.equals(component)) {
-            System.out.println("Unknown Component detected: " + item.toPrettyString());
+    private void updateComponents(final JsonNode item) {
+        final Asset asset = Asset.forName(item.get("Name").asText());
+        if (Asset.UNKNOWN.equals(asset)) {
+            System.out.println("Unknown Asset detected: " + item.toPrettyString());
         }
-        final Integer currentAmount = this.components.get(component);
+        final Integer currentAmount = this.assets.get(asset);
         final int newAmount = currentAmount + item.get("LockerNewCount").asInt() - item.get("LockerOldCount").asInt();
-        this.components.put(component, newAmount);
+        this.assets.put(asset, newAmount);
     }
 
 
     private void resetCounts() {
-        this.components.keySet().forEach(component -> this.components.put(component, 0));
+        this.assets.keySet().forEach(component -> this.assets.put(component, 0));
         this.datas.keySet().forEach(data -> this.datas.put(data, 0));
         this.goods.keySet().forEach(good -> this.goods.put(good, 0));
     }
 
     private void initCounts() {
-        Arrays.stream(Component.values()).forEach(component ->
-                this.components.put(component, 0)
+        Arrays.stream(Asset.values()).forEach(component ->
+                this.assets.put(component, 0)
         );
         Arrays.stream(Data.values()).forEach(data ->
                 this.datas.put(data, 0)
         );
-        Arrays.stream(Goods.values()).forEach(good ->
+        Arrays.stream(Good.values()).forEach(good ->
                 this.goods.put(good, 0)
         );
 
     }
 
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 }
