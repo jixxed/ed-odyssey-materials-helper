@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <fx:root minHeight="26.0" prefHeight="26.0" prefWidth="250.0"
-         style="-fx-border-color: black; -fx-background-color: #05999d;" storageType="javafx.scene.layout.HBox"
+         style="-fx-border-color: black; -fx-background-color: #05999d;" type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
     <Label fx:id="name" style="-fx-pref-width: 200; -fx-label-padding: 2;">test</Label>
     <Label nodeOrientation="RIGHT_TO_LEFT" fx:id="amount"
