@@ -1,0 +1,12 @@
+.completed {
+    /*-fx-background-color: blue, yellow, linear-gradient(to bottom, derive(coral, +50%), coral);*/
+    -fx-font-weight: normal;
+}
+
+.completed > .title {
+    -fx-background-color: #acef9b, #86f669, linear-gradient(to bottom, derive(#86f669, +50%), #86f669);
+}
+
+.regular {
+    -fx-font-weight: normal;
+}

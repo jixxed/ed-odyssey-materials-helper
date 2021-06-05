@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum Goods {
-    AGRICULTURALPROCESSSAMPLE("AGRICULTURALPROCESSSAMPLE"),
+    AGRICULTURALPROCESSSAMPLE("Agricultural Process Sample"),
     BIOCHEMICALAGENT("Biochemical Agent"),
     BIOLOGICALSAMPLE("Biological Sample"),
     BUILDINGSCHEMATIC("Building Schematic"),
@@ -21,7 +21,7 @@ public enum Goods {
     HUSH("Hush"),
     INERTIACANISTER("Inertia Canister"),
     INFINITY("Infinity"),
-    INORGANICCONTAMINANT("INORGANICCONTAMINANT"),
+    INORGANICCONTAMINANT("Inorganic Contaminant"),
     INSIGHT("InSight"),
     INSIGHTDATABANK("InSight Data Bank"),
     INSIGHTENTERTAINMENTSUITE("InSight Entertainment Suite"),

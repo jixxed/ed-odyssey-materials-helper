@@ -44,12 +44,6 @@ public class Ingredient extends HBox {
         update();
     }
 
-    //    public void setName(String name) {
-//        this.name.setText(name);
-//    }
-//    public void setAmount(String amount){
-//        this.amount.setText(amount);
-//    }
     public void setAmountAvailable(Integer amountAvailable) {
         this.amountAvailableInt = amountAvailable;
     }
