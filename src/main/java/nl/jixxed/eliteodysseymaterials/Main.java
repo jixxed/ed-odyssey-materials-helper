@@ -468,8 +468,8 @@ public class Main extends Application {
             if (Data.UNKNOWN.equals(data)) {
                 System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
                 final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
-                final Integer currentAmount = this.unknownData.getOrDefault(nameLocalised, 0);
-                this.unknownData.put(nameLocalised, currentAmount + dataNode.get("Count").asInt());
+                final Integer currentAmount = this.unknownData.getOrDefault(name + ":" + nameLocalised, 0);
+                this.unknownData.put(name + ":" + nameLocalised, currentAmount + dataNode.get("Count").asInt());
             } else {
                 final Integer currentAmount = this.data.get(data);
                 this.data.put(data, currentAmount + dataNode.get("Count").asInt());

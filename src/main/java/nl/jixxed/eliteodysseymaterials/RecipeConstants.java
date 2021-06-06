@@ -1146,7 +1146,7 @@ public abstract class RecipeConstants {
                 Map.of(
                 ),
                 Map.of(
-                        Data.MINERALANALYTICS, 10,
+                        Data.MININGANALYTICS, 10,
                         Data.RISKASSESSMENTS, 15
                 ),
                 Map.of(
