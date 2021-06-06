@@ -40,19 +40,26 @@ public class MaterialCard extends HBox {
 
     public MaterialCard(final Good good, final String name, final String amount) {
         this(name, amount);
-        this.name.setTooltip(new Tooltip(name + "\n" + "Used in recipes:\n" + RecipeConstants.findRecipesContaining(good)));
+        final String recipesContaining = RecipeConstants.findRecipesContaining(good);
+        this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
         this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
     }
 
     public MaterialCard(final Data data, final String name, final String amount) {
         this(name, amount);
-        this.name.setTooltip(new Tooltip(name + "\n" + "Used in recipes:\n" + RecipeConstants.findRecipesContaining(data)));
+        if (Data.UNKNOWN.equals(data)) {
+            this.name.setTooltip(new Tooltip("Unknown data, please report to the developer."));
+        } else {
+            final String recipesContaining = RecipeConstants.findRecipesContaining(data);
+            this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
+        }
         this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
     }
 
     public MaterialCard(final Asset asset, final String name, final String amount) {
         this(name, amount);
-        this.name.setTooltip(new Tooltip(name + "\n" + "Used in recipes:\n" + RecipeConstants.findRecipesContaining(asset)));
+        final String recipesContaining = RecipeConstants.findRecipesContaining(asset);
+        this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
         switch (asset.getType()) {
             case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
             case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));

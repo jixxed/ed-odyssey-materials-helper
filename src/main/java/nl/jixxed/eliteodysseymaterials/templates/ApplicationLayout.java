@@ -6,9 +6,6 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class ApplicationLayout extends AnchorPane {
-//    @FXML
-//    VBox vbox;
-
     public ApplicationLayout() {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ApplicationLayout.fxml"));
         fxmlLoader.setRoot(this);
@@ -21,7 +18,4 @@ public class ApplicationLayout extends AnchorPane {
         }
     }
 
-//    public VBox getVbox() {
-//        return this.vbox;
-//    }
 }

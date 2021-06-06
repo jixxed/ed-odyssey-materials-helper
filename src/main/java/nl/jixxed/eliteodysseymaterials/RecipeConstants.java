@@ -670,7 +670,7 @@ public abstract class RecipeConstants {
 //        10x Micro Transformer
 //        15x Electrical Wiring
 //        10x Reactor Output Review
-        SUIT_MODULE_BLUEPRINTS.put("Suit Night Vision", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Reduced Tool Battery Consumption", new Recipe(
                 Map.of(
                 ),
                 Map.of(

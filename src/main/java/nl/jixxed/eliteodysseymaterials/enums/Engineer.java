@@ -15,19 +15,7 @@ public enum Engineer {
 
     String name;
 
-    private Engineer(final String name) {
+    Engineer(final String name) {
         this.name = name;
-    }
-
-    public static Engineer forName(final String name) {
-        try {
-            return Engineer.valueOf(name.toUpperCase());
-        } catch (final IllegalArgumentException ex) {
-            return Engineer.UNKNOWN;
-        }
-    }
-
-    public String friendlyName() {
-        return this.name;
     }
 }

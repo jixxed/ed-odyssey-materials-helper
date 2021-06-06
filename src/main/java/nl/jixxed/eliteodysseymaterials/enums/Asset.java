@@ -41,7 +41,7 @@ public enum Asset {
     String name;
     AssetType type;
 
-    private Asset(final String name, final AssetType type) {
+    Asset(final String name, final AssetType type) {
         this.name = name;
         this.type = type;
     }

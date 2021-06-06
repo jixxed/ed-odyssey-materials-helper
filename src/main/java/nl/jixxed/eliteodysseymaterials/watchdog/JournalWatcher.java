@@ -19,7 +19,6 @@ public class JournalWatcher {
                 final File file = event.getFile();
                 if (file.isFile()) {
                     if (file.getName().startsWith("Journal.")) {
-                        System.out.println("File created: " + file.getName());
                         JournalWatcher.this.watchedFile = Optional.of(file);
                         fileCreatedProcessor.accept(file);
                     }
@@ -29,10 +28,9 @@ public class JournalWatcher {
             @Override
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
-                if (JournalWatcher.this.watchedFile.isPresent() && file.equals(JournalWatcher.this.watchedFile.get())) {
-                    System.out.println("File modified: " + file.getName());
-                    fileModifiedProcessor.accept(file);
-                }
+                JournalWatcher.this.watchedFile
+                        .filter(file::equals)
+                        .ifPresent(fileModifiedProcessor);
             }
         }).watch();
     }

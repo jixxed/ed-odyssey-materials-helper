@@ -116,7 +116,7 @@ public enum Data {
 
     String name;
 
-    private Data(final String name) {
+    Data(final String name) {
         this.name = name;
     }
 

@@ -46,6 +46,7 @@ public class Main extends Application {
     private final Map<Good, Integer> goods = new HashMap<>();
     private final Map<Asset, Integer> assets = new HashMap<>();
     private final Map<Data, Integer> data = new HashMap<>();
+    private final Map<String, Integer> unknownData = new HashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings();
@@ -67,7 +68,7 @@ public class Main extends Application {
             final ColumnConstraints column = new ColumnConstraints(250);
             this.materialOverview.getColumnConstraints().add(column);
         }
-        
+
         final String userprofile = System.getenv("USERPROFILE");
         this.journalWatcher.watch(new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous"), this::process, this::resetAndProcess);
 
@@ -433,6 +434,15 @@ public class Main extends Application {
             layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
+        this.unknownData.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
+
+            final String name = entry.getKey() + " (unknown)";
+            final MaterialCard materialCard = new MaterialCard(Data.UNKNOWN, name, entry.getValue().toString());
+            materialCard.setStyle("-fx-border-color: black; -fx-background-color: #ba5efa;-fx-font-weight: normal");
+
+            layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
+            GridPane.setMargin(materialCard, CARD_MARGIN);
+        });
     }
 
     private void parseComponents(final Iterator<JsonNode> components) {
@@ -457,9 +467,13 @@ public class Main extends Application {
             final Data data = Data.forName(name);
             if (Data.UNKNOWN.equals(data)) {
                 System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
+                final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
+                final Integer currentAmount = this.unknownData.getOrDefault(nameLocalised, 0);
+                this.unknownData.put(nameLocalised, currentAmount + dataNode.get("Count").asInt());
+            } else {
+                final Integer currentAmount = this.data.get(data);
+                this.data.put(data, currentAmount + dataNode.get("Count").asInt());
             }
-            final Integer currentAmount = this.data.get(data);
-            this.data.put(data, currentAmount + dataNode.get("Count").asInt());
 
         });
 

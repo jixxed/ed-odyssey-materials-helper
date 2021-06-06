@@ -49,7 +49,7 @@ public enum Good {
 
     String name;
 
-    private Good(final String name) {
+    Good(final String name) {
         this.name = name;
     }
 

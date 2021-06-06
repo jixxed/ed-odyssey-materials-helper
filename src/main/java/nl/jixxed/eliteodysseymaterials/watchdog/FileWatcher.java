@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static java.nio.file.StandardWatchEventKinds.*;
@@ -77,21 +76,8 @@ public class FileWatcher implements Runnable {
         return this;
     }
 
-    public FileWatcher removeListener(final FileListener listener) {
-        this.listeners.remove(listener);
-        return this;
-    }
-
-    public List<FileListener> getListeners() {
-        return this.listeners;
-    }
-
     public FileWatcher setListeners(final List<FileListener> listeners) {
         this.listeners = listeners;
         return this;
-    }
-
-    public static List<WatchService> getWatchServices() {
-        return Collections.unmodifiableList(watchServices);
     }
 }
