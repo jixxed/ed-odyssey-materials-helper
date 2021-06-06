@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.filewatcher;
+package nl.jixxed.eliteodysseymaterials.watchdog;
 
 public abstract class FileAdapter implements FileListener {
 

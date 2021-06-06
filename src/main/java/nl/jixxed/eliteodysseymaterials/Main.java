@@ -5,19 +5,32 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
+import nl.jixxed.eliteodysseymaterials.models.Recipe;
+import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
+import nl.jixxed.eliteodysseymaterials.templates.Ingredient;
+import nl.jixxed.eliteodysseymaterials.templates.MaterialCard;
+import nl.jixxed.eliteodysseymaterials.templates.Settings;
+import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -26,13 +39,13 @@ public class Main extends Application {
     private static final Insets CARD_MARGIN = new Insets(2, 5, 2, 5);
     private static final String ENGINEER_UNLOCK = "E";
     private int lineNumber = 0;
-    private final MainLayout layoutApp = new MainLayout();
-    private final AnchorPane layoutMain = new AnchorPane();
-    private final GridPane layout = new GridPane();
+    private final ApplicationLayout applicationLayout = new ApplicationLayout();
+    private final AnchorPane content = new AnchorPane();
+    private final GridPane materialOverview = new GridPane();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Map<Good, Integer> goods = new HashMap<>();
     private final Map<Asset, Integer> assets = new HashMap<>();
-    private final Map<Data, Integer> datas = new HashMap<>();
+    private final Map<Data, Integer> data = new HashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings();
@@ -43,47 +56,51 @@ public class Main extends Application {
         primaryStage.setTitle("ED Odyssey Materials Helper");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/rocket.png")));
         final ScrollPane scrollPane = new ScrollPane();
-        this.layout.setMaxWidth(2000);
-        this.layout.setMaxHeight(2000);
-        scrollPane.setContent(this.layout);
-        this.layoutMain.getChildren().add(scrollPane);
-        AnchorPane.setTopAnchor(scrollPane, 0.0);
-        AnchorPane.setBottomAnchor(scrollPane, 0.0);
-        AnchorPane.setLeftAnchor(scrollPane, 372.0);
-        AnchorPane.setRightAnchor(scrollPane, 0.0);
-        this.layoutApp.getChildren().add(this.layoutMain);
-        this.layoutApp.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+        scrollPane.setContent(this.materialOverview);
+        setAnchor(this.content, 0.0, 0.0, 0.0, 0.0);
+        this.content.getChildren().add(scrollPane);
+        setAnchor(scrollPane, 0.0, 0.0, 372.0, 0.0);
+        this.applicationLayout.getChildren().add(this.content);
+        this.applicationLayout.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
 
         for (int i = 0; i < 5; i++) {
             final ColumnConstraints column = new ColumnConstraints(250);
-            this.layout.getColumnConstraints().add(column);
+            this.materialOverview.getColumnConstraints().add(column);
         }
-        for (int i = 0; i < this.datas.size() / 3; i++) {
-            final RowConstraints row = new RowConstraints(30);
-            this.layout.getRowConstraints().add(row);
-        }
+//        for (int i = 0; i < this.data.size() / 2; i++) {
+//            final RowConstraints row = new RowConstraints(30);
+//            this.materialOverview.getRowConstraints().add(row);
+//        }
         final String userprofile = System.getenv("USERPROFILE");
         this.journalWatcher.watch(new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous"), this::process, this::resetAndProcess);
 
         showRecipes();
-        primaryStage.setScene(new Scene(this.layoutApp, 1920, 1080));
+
+        primaryStage.setScene(new Scene(this.applicationLayout));
         addSettingsListeners();
         primaryStage.show();
     }
 
+    private void setAnchor(final Node child, final Double topValue, final Double bottomValue, final Double leftValue, final Double rightValue) {
+        AnchorPane.setTopAnchor(child, topValue);
+        AnchorPane.setBottomAnchor(child, bottomValue);
+        AnchorPane.setLeftAnchor(child, leftValue);
+        AnchorPane.setRightAnchor(child, rightValue);
+    }
+
     private void addSettingsListeners() {
         this.settings.getCheckBoxIrrelevant().selectedProperty().addListener((observable, oldValue, newValue) -> {
-            this.layout.getChildren().clear();
-            showGoods(this.layout);
-            showComponents(this.layout);
-            showDatas(this.layout);
+            this.materialOverview.getChildren().clear();
+            showGoods(this.materialOverview);
+            showComponents(this.materialOverview);
+            showDatas(this.materialOverview);
             updateTotals();
         });
         this.settings.getCheckBoxUnlock().selectedProperty().addListener((observable, oldValue, newValue) -> {
-            this.layout.getChildren().clear();
-            showGoods(this.layout);
-            showComponents(this.layout);
-            showDatas(this.layout);
+            this.materialOverview.getChildren().clear();
+            showGoods(this.materialOverview);
+            showComponents(this.materialOverview);
+            showDatas(this.materialOverview);
             updateTotals();
         });
     }
@@ -111,10 +128,10 @@ public class Main extends Application {
         updateIngredients();
 
         Platform.runLater(() -> {
-            this.layout.getChildren().clear();
-            showGoods(this.layout);
-            showComponents(this.layout);
-            showDatas(this.layout);
+            this.materialOverview.getChildren().clear();
+            showGoods(this.materialOverview);
+            showComponents(this.materialOverview);
+            showDatas(this.materialOverview);
 
             this.ingredients.forEach(Ingredient::update);
             updateTotals();
@@ -126,7 +143,7 @@ public class Main extends Application {
             switch (ingredient.getType()) {
                 case ASSET -> ingredient.setAmountAvailable(this.assets.get(Asset.forName(ingredient.getCode())));
                 case GOOD -> ingredient.setAmountAvailable(this.goods.get(Good.forName(ingredient.getCode())));
-                case DATA -> ingredient.setAmountAvailable(this.datas.get(Data.forName(ingredient.getCode())));
+                case DATA -> ingredient.setAmountAvailable(this.data.get(Data.forName(ingredient.getCode())));
                 case OTHER -> {
                 }
             }
@@ -140,18 +157,18 @@ public class Main extends Application {
     }
 
     private void updateTotalsData() {
-        final Integer recipeDatas = this.datas.entrySet().stream()
+        final Integer recipeDatas = this.data.entrySet().stream()
                 .filter(data -> RecipeConstants.isRecipeIngredient(data.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeDatas = this.datas.entrySet().stream()
+        final Integer nonRecipeDatas = this.data.entrySet().stream()
                 .filter(data -> !RecipeConstants.isRecipeIngredient(data.getKey()))
                 .map(Map.Entry::getValue)
                 .reduce(0, Integer::sum);
         final MaterialCard datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + nonRecipeDatas + " / Total: " + (recipeDatas + nonRecipeDatas) + ")", "");
         datasLabel.setStyle("-fx-font-weight: bold");
         datasLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
-        this.layout.add(datasLabel, 4, 0, 2, 1);
+        this.materialOverview.add(datasLabel, 4, 0, 2, 1);
         GridPane.setMargin(datasLabel, CARD_MARGIN);
     }
 
@@ -167,7 +184,7 @@ public class Main extends Application {
         final MaterialCard assetsLabel = new MaterialCard("Assets (Blueprint: " + recipeAssets + " / Irrelevant: " + nonRecipeAssets + " / Total: " + (recipeAssets + nonRecipeAssets) + ")", "");
         assetsLabel.setStyle("-fx-font-weight: bold");
         assetsLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
-        this.layout.add(assetsLabel, 2, 0, 2, 1);
+        this.materialOverview.add(assetsLabel, 2, 0, 2, 1);
         GridPane.setMargin(assetsLabel, CARD_MARGIN);
     }
 
@@ -183,7 +200,7 @@ public class Main extends Application {
         final MaterialCard goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + nonRecipeGoods + " / Total: " + (recipeGoods + nonRecipeGoods) + ")", "");
         goodsLabel.setStyle("-fx-font-weight: bold");
         goodsLabel.getName().setStyle("-fx-pref-width: 400; -fx-label-padding: 2;");
-        this.layout.add(goodsLabel, 0, 0, 2, 1);
+        this.materialOverview.add(goodsLabel, 0, 0, 2, 1);
         GridPane.setMargin(goodsLabel, CARD_MARGIN);
     }
 
@@ -248,7 +265,7 @@ public class Main extends Application {
         titledPanes.add(new TitledPane("Settings", this.settings));
         final Accordion categoryAccordion = new Accordion(titledPanes.toArray(new TitledPane[0]));
 
-        this.layoutMain.getChildren().add(categoryAccordion);
+        this.content.getChildren().add(categoryAccordion);
         AnchorPane.setTopAnchor(categoryAccordion, 0.0);
         AnchorPane.setBottomAnchor(categoryAccordion, 0.0);
         AnchorPane.setLeftAnchor(categoryAccordion, 0.0);
@@ -266,11 +283,12 @@ public class Main extends Application {
     }
 
     private TitledPane createRecipeTitledPane(final Map.Entry<String, ? extends Recipe> recipe) {
+        final VBox content = new VBox();
         final List<Ingredient> ingredients = new ArrayList<>();
         ingredients.addAll(recipe.getValue().getAssets().entrySet().stream()
-                .map(component ->
+                .map(asset ->
                         {
-                            final Ingredient newIngredient = new Ingredient(StorageType.ASSET, component.getKey().toString(), component.getKey().friendlyName(), component.getValue().toString(), this.assets.get(component.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(StorageType.ASSET, asset.getKey(), asset.getValue().toString(), this.assets.get(asset.getKey()).toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -278,7 +296,7 @@ public class Main extends Application {
                 .collect(Collectors.toList()));
         ingredients.addAll(recipe.getValue().getData().entrySet().stream()
                 .map(data -> {
-                            final Ingredient newIngredient = new Ingredient(StorageType.DATA, data.getKey().toString(), data.getKey().friendlyName(), data.getValue().toString(), this.datas.get(data.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(StorageType.DATA, data.getKey().toString(), data.getKey().friendlyName(), data.getValue().toString(), this.data.get(data.getKey()).toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -302,7 +320,13 @@ public class Main extends Application {
                     ).sorted(Comparator.comparing(Ingredient::getName))
                     .collect(Collectors.toList()));
         }
-        final VBox content = new VBox();
+        try {
+            if (!(recipe.getValue() instanceof EngineerRecipe) || ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {
+                content.getChildren().add(new FXMLLoader(getClass().getResource("templates/IngredientHeader.fxml")).load());
+            }
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
         content.getChildren().addAll(ingredients);
         final TitledPane recipeTitledPane = new TitledPane(recipe.getKey(), content);
         if (recipe.getValue() instanceof EngineerRecipe && ((EngineerRecipe) recipe.getValue()).isCompleted()) {
@@ -389,7 +413,7 @@ public class Main extends Application {
 
     private void showDatas(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
-        this.datas.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
+        this.data.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
             if (Data.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
                 return;
             }
@@ -437,8 +461,8 @@ public class Main extends Application {
             if (Data.UNKNOWN.equals(data)) {
                 System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
             }
-            final Integer currentAmount = this.datas.get(data);
-            this.datas.put(data, currentAmount + dataNode.get("Count").asInt());
+            final Integer currentAmount = this.data.get(data);
+            this.data.put(data, currentAmount + dataNode.get("Count").asInt());
 
         });
 
@@ -473,9 +497,9 @@ public class Main extends Application {
         if (Data.UNKNOWN.equals(data)) {
             System.out.println("Unknown Data detected: " + item.toPrettyString());
         }
-        final Integer currentAmount = this.datas.get(data);
+        final Integer currentAmount = this.data.get(data);
         final int newAmount = currentAmount + item.get("LockerNewCount").asInt() - item.get("LockerOldCount").asInt();
-        this.datas.put(data, newAmount);
+        this.data.put(data, newAmount);
     }
 
     private void updateComponents(final JsonNode item) {
@@ -491,7 +515,7 @@ public class Main extends Application {
 
     private void resetCounts() {
         this.assets.keySet().forEach(component -> this.assets.put(component, 0));
-        this.datas.keySet().forEach(data -> this.datas.put(data, 0));
+        this.data.keySet().forEach(data -> this.data.put(data, 0));
         this.goods.keySet().forEach(good -> this.goods.put(good, 0));
     }
 
@@ -500,7 +524,7 @@ public class Main extends Application {
                 this.assets.put(component, 0)
         );
         Arrays.stream(Data.values()).forEach(data ->
-                this.datas.put(data, 0)
+                this.data.put(data, 0)
         );
         Arrays.stream(Good.values()).forEach(good ->
                 this.goods.put(good, 0)

@@ -1,8 +1,4 @@
-package nl.jixxed.eliteodysseymaterials;
-
-import nl.jixxed.eliteodysseymaterials.filewatcher.FileAdapter;
-import nl.jixxed.eliteodysseymaterials.filewatcher.FileEvent;
-import nl.jixxed.eliteodysseymaterials.filewatcher.FileWatcher;
+package nl.jixxed.eliteodysseymaterials.watchdog;
 
 import java.io.File;
 import java.util.Arrays;
@@ -14,7 +10,7 @@ import java.util.function.Consumer;
 public class JournalWatcher {
     private Optional<File> watchedFile = Optional.empty();
 
-    protected void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileCreatedProcessor) {
+    public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileCreatedProcessor) {
         findLatestFile(folder);
         this.watchedFile.ifPresent(fileCreatedProcessor);
         new FileWatcher(folder).addListener(new FileAdapter() {

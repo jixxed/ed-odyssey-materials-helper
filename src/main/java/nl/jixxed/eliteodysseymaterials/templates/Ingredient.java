@@ -1,9 +1,12 @@
-package nl.jixxed.eliteodysseymaterials;
+package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 
 import java.io.IOException;
@@ -19,6 +22,8 @@ public class Ingredient extends HBox {
     private HBox box;
     @FXML
     private Label nameLabel;
+    @FXML
+    private ImageView image;
     @FXML
     private Label amountRequiredLabel;
     @FXML
@@ -41,6 +46,37 @@ public class Ingredient extends HBox {
         this.amountRequiredLabel.setText(amount);
         this.amountRequired = Integer.valueOf(amount);
         this.amountAvailable = Integer.valueOf(amountAvailable);
+        switch (storageType) {
+            case DATA -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
+            case GOOD -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
+            default -> this.image.setFitWidth(0);
+        }
+        update();
+    }
+
+    public Ingredient(final StorageType storageType, final Asset asset, final String amount, final String amountAvailable) {
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Ingredient.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+
+        try {
+            fxmlLoader.load();
+        } catch (final IOException exception) {
+            throw new RuntimeException(exception);
+        }
+        this.nameLabel.setText(asset.friendlyName());
+        this.storageType = storageType;
+        this.code = asset.toString();
+        this.amountRequiredLabel.setText(amount);
+        this.amountRequired = Integer.valueOf(amount);
+        this.amountAvailable = Integer.valueOf(amountAvailable);
+        switch (asset.getType()) {
+            case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
+            case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));
+            case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/chemical.png")));
+            default -> this.image.setFitWidth(0);
+        }
 
         update();
     }

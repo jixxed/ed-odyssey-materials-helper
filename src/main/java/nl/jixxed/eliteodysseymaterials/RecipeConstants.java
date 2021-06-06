@@ -4,6 +4,9 @@ import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
+import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
+import nl.jixxed.eliteodysseymaterials.models.Recipe;
+import nl.jixxed.eliteodysseymaterials.templates.Settings;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -153,7 +156,7 @@ public abstract class RecipeConstants {
                 ),
                 () -> Settings.isEngineerKnown(Engineer.YARDEN_BOND)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put("A5. Yarden Bond (Sell 8 of below)", new EngineerRecipe(
+        ENGINEER_UNLOCK_REQUIREMENTS.put("A5. Yarden Bond", new EngineerRecipe(
                 Map.of(
                 ),
                 Map.of(
@@ -220,7 +223,7 @@ public abstract class RecipeConstants {
                 ),
                 Map.of(
                 ),
-                List.of("Unfriendly reputation or lower with Sirius Corporation", "No outstanding donation requests"),
+                List.of("Unfriendly reputation or lower with Sirius Corporation"),
                 () -> Settings.isEngineerUnlocked(Engineer.UMA_LASZLO)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C1. Jude Navarro", new EngineerRecipe(
@@ -245,7 +248,7 @@ public abstract class RecipeConstants {
                 ),
                 () -> Settings.isEngineerKnown(Engineer.TERRA_VELASQUEZ)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put("C3. Terra Velasquez", new EngineerRecipe(
+        ENGINEER_UNLOCK_REQUIREMENTS.put("C3. Terra Velasquez (Complete one of below)", new EngineerRecipe(
                 Map.of(
                 ),
                 Map.of(

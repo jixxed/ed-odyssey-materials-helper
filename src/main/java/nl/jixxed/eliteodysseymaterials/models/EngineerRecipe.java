@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials;
+package nl.jixxed.eliteodysseymaterials.models;
 
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;

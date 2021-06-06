@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<HBox minHeight="30.0" prefHeight="30.0" prefWidth="300.0"
+      xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+    <Label style="-fx-pref-width: 150; -fx-label-padding: 5;">Material</Label>
+    <Label nodeOrientation="RIGHT_TO_LEFT"
+           style="-fx-pref-width: 100; -fx-padding: 5;-fx-text-alignment: right;">Required
+    </Label>
+    <Label nodeOrientation="RIGHT_TO_LEFT"
+           style="-fx-pref-width: 100; -fx-padding: 5;-fx-text-alignment: right;">Available
+    </Label>
+</HBox>

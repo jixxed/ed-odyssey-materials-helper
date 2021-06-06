@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials;
+package nl.jixxed.eliteodysseymaterials.templates;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

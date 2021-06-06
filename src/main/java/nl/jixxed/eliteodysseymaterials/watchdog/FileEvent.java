@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.filewatcher;
+package nl.jixxed.eliteodysseymaterials.watchdog;
 
 import java.io.File;
 import java.util.EventObject;
