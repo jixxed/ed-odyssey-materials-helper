@@ -16,7 +16,6 @@ public enum Good {
     GENETICREPAIRMEDS("Genetic Repair Meds"),
     GENETICSAMPLE("Genetic Sample"),
     GMEDS("G-Meds"),
-    HEALTHCANISTER("Health Canister"),
     HEALTHMONITOR("Health Monitor"),
     HUSH("Hush"),
     INERTIACANISTER("Inertia Canister"),
