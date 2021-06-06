@@ -67,10 +67,7 @@ public class Main extends Application {
             final ColumnConstraints column = new ColumnConstraints(250);
             this.materialOverview.getColumnConstraints().add(column);
         }
-//        for (int i = 0; i < this.data.size() / 2; i++) {
-//            final RowConstraints row = new RowConstraints(30);
-//            this.materialOverview.getRowConstraints().add(row);
-//        }
+        
         final String userprofile = System.getenv("USERPROFILE");
         this.journalWatcher.watch(new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous"), this::process, this::resetAndProcess);
 
