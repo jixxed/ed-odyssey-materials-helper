@@ -3,7 +3,6 @@ package nl.jixxed.eliteodysseymaterials.enums;
 public enum Good {
     AGRICULTURALPROCESSSAMPLE("Agricultural Process Sample"),
     BIOCHEMICALAGENT("Biochemical Agent"),
-    BIOLOGICALSAMPLE("Biological Sample"),
     BUILDINGSCHEMATIC("Building Schematic"),
     CALIFORNIUM("Californium"),
     CASTFOSSIL("Cast Fossil"),
@@ -14,7 +13,7 @@ public enum Good {
     DEEPMANTLESAMPLE("Deep Mantle Sample"),
     DEGRADEDPOWERREGULATOR("Degraded Power Regulator"),
     GENETICREPAIRMEDS("Genetic Repair Meds"),
-    GENETICSAMPLE("Genetic Sample"),
+    GENETICSAMPLE("Biological Sample"),
     GMEDS("G-Meds"),
     HEALTHCANISTER("Health Canister"),
     HEALTHMONITOR("Health Monitor"),

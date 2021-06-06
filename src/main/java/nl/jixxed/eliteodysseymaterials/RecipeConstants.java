@@ -272,7 +272,7 @@ public abstract class RecipeConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C5. Oden Geiger (Sell 20 of one below)", new EngineerRecipe(
                 Map.of(
-                        Good.BIOLOGICALSAMPLE, 20
+                        Good.GENETICSAMPLE, 20
                 ),
                 Map.of(
                         Data.EMPLOYEEGENETICDATA, 20,
