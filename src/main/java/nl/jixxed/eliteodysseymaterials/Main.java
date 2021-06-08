@@ -22,10 +22,7 @@ import javafx.stage.Stage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.models.Recipe;
-import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
-import nl.jixxed.eliteodysseymaterials.templates.Ingredient;
-import nl.jixxed.eliteodysseymaterials.templates.MaterialCard;
-import nl.jixxed.eliteodysseymaterials.templates.Settings;
+import nl.jixxed.eliteodysseymaterials.templates.*;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 
 import java.io.File;
@@ -50,6 +47,7 @@ public class Main extends Application {
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings(this);
+    private final Legend legend = new Legend();
 
     @Override
     public void start(final Stage primaryStage) {
@@ -261,6 +259,8 @@ public class Main extends Application {
                 .collect(Collectors.toList());
         final TitledPane settings = new TitledPane("Settings", this.settings);
         titledPanes.add(settings);
+        final TitledPane legend = new TitledPane("Legend", this.legend);
+        titledPanes.add(legend);
         final Accordion categoryAccordion = new Accordion(titledPanes.toArray(new TitledPane[0]));
         categoryAccordion.setExpandedPane(settings);
         this.content.getChildren().add(categoryAccordion);

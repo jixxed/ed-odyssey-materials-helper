@@ -179,3 +179,16 @@
 /*    -fx-padding: 5;*/
 /*    -fx-text-alignment: right;*/
 /*}*/
+
+.legend {
+    -fx-vgap: 10;
+}
+
+.legend > .materialcard-name {
+    -fx-pref-width: 320;
+    -fx-label-padding: 5;
+}
+
+.legend > .materialcard-amount {
+    -fx-pref-width: 0;
+}
