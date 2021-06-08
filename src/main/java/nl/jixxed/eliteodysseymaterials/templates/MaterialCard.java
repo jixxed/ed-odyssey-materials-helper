@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
+import nl.jixxed.eliteodysseymaterials.enums.Material;
 
 import java.io.IOException;
 
@@ -38,22 +39,34 @@ public class MaterialCard extends HBox {
         this.image.setFitWidth(0);
     }
 
-    public MaterialCard(final Good good, final String name, final String amount) {
+    public MaterialCard(final Material material, final String name, final String amount, final boolean isEngineerUnlockMaterial) {
         this(name, amount);
-        final String recipesContaining = RecipeConstants.findRecipesContaining(good);
-        this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
-        this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
-    }
-
-    public MaterialCard(final Data data, final String name, final String amount) {
-        this(name, amount);
-        if (Data.UNKNOWN.equals(data)) {
-            this.name.setTooltip(new Tooltip("Unknown data, please report to the developer."));
+        final boolean isUnknown = Data.UNKNOWN.equals(material) || Good.UNKNOWN.equals(material);
+        if (isUnknown) {
+            this.name.setTooltip(new Tooltip("Unknown material, please report to the developer."));
         } else {
-            final String recipesContaining = RecipeConstants.findRecipesContaining(data);
+            final String recipesContaining = RecipeConstants.findRecipesContaining(material);
             this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
         }
-        this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
+        if (isEngineerUnlockMaterial) {
+            this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer.png")));
+        } else if (material instanceof Data) {
+            this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
+        } else if (material instanceof Good) {
+            this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
+        }
+        final String materialType = material.getClass().getSimpleName().toLowerCase();
+        if (isUnknown) {
+            this.getStyleClass().addAll("material", "material-irrelevant", "material-" + materialType + "-unknown");
+        } else if (RecipeConstants.isEngineeringOnlyIngredient(material)) {
+            this.getStyleClass().addAll("material", "material-irrelevant", "material-" + materialType + "-engineer-irrelevant");
+        } else if (RecipeConstants.isEngineeringIngredient(material)) {
+            this.getStyleClass().addAll("material", "material-relevant", "material-" + materialType + "-engineer-relevant");
+        } else if (RecipeConstants.isBlueprintIngredient(material)) {
+            this.getStyleClass().addAll("material", "material-relevant", "material-" + materialType + "-relevant");
+        } else {
+            this.getStyleClass().addAll("material", "material-irrelevant", "material-" + materialType + "-irrelevant");
+        }
     }
 
     public MaterialCard(final Asset asset, final String name, final String amount) {
@@ -66,9 +79,11 @@ public class MaterialCard extends HBox {
             case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/chemical.png")));
             default -> this.image.setFitWidth(0);
         }
-    }
-
-    public Label getName() {
-        return this.name;
+        switch (asset.getType()) {
+            case TECH -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-tech");
+            case CIRCUIT -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-circuit");
+            case CHEMICAL -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-chemical");
+            default -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-unknown");
+        }
     }
 }

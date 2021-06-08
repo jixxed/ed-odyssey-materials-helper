@@ -4,9 +4,178 @@
 }
 
 .completed > .title {
-    -fx-background-color: #acef9b, #86f669, linear-gradient(to bottom, derive(#86f669, +50%), #86f669);
+    /*noinspection CssInvalidFunction*/
+    -fx-background-color: linear-gradient(to bottom, derive(#89d07f, +50%), #89d07f);
+}
+
+.blueprint-title-pane > .title > .arrow-button .arrow, .blueprint-title-pane > .title > .text {
+    -fx-translate-x: 5;
+}
+
+.category-title-pane {
+    -fx-font-weight: bold;
 }
 
 .regular {
     -fx-font-weight: normal;
 }
+
+.material {
+    -fx-border-color: black;
+}
+
+.material-relevant {
+    -fx-font-weight: bold;
+}
+
+.material-irrelevant {
+    -fx-font-weight: normal;
+}
+
+.material-good-relevant {
+    -fx-background-color: #cab951;
+}
+
+.material-good-irrelevant {
+    -fx-background-color: #9d8e05;
+}
+
+.material-good-engineer-relevant {
+    /*noinspection CssInvalidFunction*/
+    -fx-background-color: #ffffff, #cab951, linear-gradient(to right, derive(#ffffff, +1%), #cab951);
+}
+
+.material-good-engineer-irrelevant {
+    /*noinspection CssInvalidFunction*/
+    -fx-background-color: #ffffff, #9d8e05, linear-gradient(to right, derive(#ffffff, +1%), #9d8e05);
+}
+
+.material-good-unknown {
+    -fx-background-color: #ba5efa;
+}
+
+.material-data-relevant {
+    -fx-background-color: #53e5ea;
+}
+
+.material-data-irrelevant {
+    -fx-background-color: #05999d;
+}
+
+.material-data-engineer-relevant {
+    /*noinspection CssInvalidFunction*/
+    -fx-background-color: #ffffff, #53e5ea, linear-gradient(to right, derive(#ffffff, +1%), #53e5ea);
+}
+
+.material-data-engineer-irrelevant {
+    /*noinspection CssInvalidFunction*/
+    -fx-background-color: #ffffff, #05999d, linear-gradient(to right, derive(#ffffff, +1%), #05999d);
+}
+
+.material-data-unknown {
+    -fx-background-color: #ba5efa;
+}
+
+.material-asset-chemical {
+    -fx-background-color: #98ef78;
+}
+
+.material-asset-tech {
+    -fx-background-color: #78efd7;
+}
+
+.material-asset-circuit {
+    -fx-background-color: #efa278;
+}
+
+.material-asset-circuit {
+    -fx-background-color: #efa278;
+}
+
+.material-asset-unknown {
+    -fx-background-color: #ba5efa;
+}
+
+.category-label {
+    -fx-font-weight: bold;
+}
+
+.materialcard-name {
+    -fx-pref-width: 182;
+    -fx-label-padding: 5;
+}
+
+.materialcard-image {
+}
+
+.category-label > .materialcard-name {
+    -fx-pref-width: 400;
+    -fx-label-padding: 2;
+    -fx-font-size: 15;
+}
+
+.materialcard-amount {
+    -fx-pref-width: 40;
+    -fx-padding: 5;
+    -fx-text-alignment: right;
+}
+
+.ingredient {
+    -fx-border-color: black;
+    -fx-min-height: 30;
+    -fx-pref-height: 30;
+    -fx-pref-width: 300;
+}
+
+.ingredient-without-amount {
+    -fx-background-color: #fff;
+}
+
+.ingredient-filled {
+    -fx-background-color: #89d07f;
+}
+
+.ingredient-unfilled {
+    -fx-background-color: #ff7c7c;
+}
+
+.ingredient > .name {
+    -fx-pref-width: 300;
+    -fx-label-padding: 5;
+}
+
+.ingredient-with-amount > .name {
+    -fx-pref-width: 170;
+}
+
+.ingredient-without-amount > .available, .ingredient-without-amount > .required {
+    -fx-pref-width: 0;
+}
+
+/*{*/
+/*    -fx-pref-width: 0;*/
+/*}*/
+
+.ingredient-with-amount > .available {
+    -fx-pref-width: 100;
+    -fx-padding: 5;
+    -fx-text-alignment: right;
+}
+
+.ingredient-with-amount > .required {
+    -fx-pref-width: 50;
+    -fx-padding: 5;
+    -fx-text-alignment: right;
+}
+
+/*.ingredient > .value-amount-required {*/
+/*    -fx-pref-width: 50;*/
+/*    -fx-padding: 5;*/
+/*    -fx-text-alignment: right;*/
+/*}*/
+
+/*.ingredient > .value-amount-available {*/
+/*    -fx-pref-width: 100;*/
+/*    -fx-padding: 5;*/
+/*    -fx-text-alignment: right;*/
+/*}*/

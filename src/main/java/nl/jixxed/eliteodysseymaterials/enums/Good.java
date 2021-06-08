@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public enum Good {
+public enum Good implements Material {
     AGRICULTURALPROCESSSAMPLE("Agricultural Process Sample"),
     BIOCHEMICALAGENT("Biochemical Agent"),
     BUILDINGSCHEMATIC("Building Schematic"),

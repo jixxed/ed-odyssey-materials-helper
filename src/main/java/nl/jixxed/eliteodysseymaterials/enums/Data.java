@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public enum Data {
+public enum Data implements Material {
     ACCIDENTLOGS("Accident Logs"),
     AIRQUALITYREPORTS("Air Quality Reports"),
     ATMOSPHERICDATA("Atmospheric Data"),

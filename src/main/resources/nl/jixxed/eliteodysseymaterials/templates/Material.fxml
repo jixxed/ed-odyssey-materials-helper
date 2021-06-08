@@ -3,12 +3,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<fx:root minHeight="30.0" prefHeight="30.0" prefWidth="250.0"
-         style="-fx-border-color: black; -fx-background-color: #05999d;" type="javafx.scene.layout.HBox"
+<fx:root minHeight="30.0" prefHeight="30.0" prefWidth="250.0" type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
-    <ImageView fx:id="image" fitHeight="28" fitWidth="28"/>
-    <Label fx:id="name" style="-fx-pref-width: 170; -fx-label-padding: 5;">test</Label>
-    <Label nodeOrientation="RIGHT_TO_LEFT" fx:id="amount"
-           style="-fx-pref-width: 50; -fx-padding: 5; -fx-text-alignment: right;">test
+    <ImageView fx:id="image" styleClass="materialcard-image" fitHeight="28" fitWidth="28"/>
+    <Label fx:id="name" styleClass="materialcard-name">test</Label>
+    <Label nodeOrientation="RIGHT_TO_LEFT" fx:id="amount" styleClass="materialcard-amount">test
     </Label>
 </fx:root>

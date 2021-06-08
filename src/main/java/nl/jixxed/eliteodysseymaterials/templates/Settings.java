@@ -2,9 +2,11 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
@@ -20,12 +22,14 @@ import java.util.Map;
 public class Settings extends VBox {
 
     @FXML
-    CheckBox checkBoxIrrelevant;
+    CheckBox hideIrrelevant;
     @FXML
-    CheckBox checkBoxUnlock;
+    CheckBox hideUnlocked;
 
     @FXML
     Label version;
+    @FXML
+    Hyperlink link;
 
     private final static Map<Engineer, EngineerState> ENGINEER_STATES = new HashMap<>();
 
@@ -42,7 +46,7 @@ public class Settings extends VBox {
     }
 
 
-    public Settings() {
+    public Settings(final Application application) {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -62,19 +66,36 @@ public class Settings extends VBox {
         }
         if (getBuildVersion() == null) {
             this.version.setText("Version: dev");
+            this.link.setText("Download");
+            this.link.setOnAction((actionEvent) ->
+                    application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases"));
         } else if (getBuildVersion().equals(latestVersion)) {
             this.version.setText("Version: " + latestVersion);
+            this.link.setVisible(false);
         } else {
             this.version.setText("Version: " + buildVersion + " (" + latestVersion + " available!)");
+
+            this.link.setText("Download");
+            this.link.setOnAction((actionEvent) ->
+                    application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases"));
+
         }
     }
 
-    public CheckBox getCheckBoxIrrelevant() {
-        return this.checkBoxIrrelevant;
+    public CheckBox getHideIrrelevant() {
+        return this.hideIrrelevant;
     }
 
-    public CheckBox getCheckBoxUnlock() {
-        return this.checkBoxUnlock;
+    public CheckBox getHideUnlocked() {
+        return this.hideUnlocked;
+    }
+
+    public boolean hideIrrelevant() {
+        return this.hideIrrelevant.selectedProperty().get();
+    }
+
+    public boolean hideUnlocked() {
+        return this.hideUnlocked.selectedProperty().get();
     }
 
     public static boolean isEngineerKnown(final Engineer engineer) {

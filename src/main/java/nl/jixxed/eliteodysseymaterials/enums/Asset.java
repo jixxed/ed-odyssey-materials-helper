@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public enum Asset {
+public enum Asset implements Material {
     AEROGEL("Aerogel", AssetType.CHEMICAL),
     CHEMICALCATALYST("Chemical Catalyst", AssetType.CHEMICAL),
     CHEMICALSUPERBASE("Chemical Superbase", AssetType.CHEMICAL),

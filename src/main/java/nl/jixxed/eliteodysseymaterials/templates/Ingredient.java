@@ -7,15 +7,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
+import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 
 import java.io.IOException;
 
 public class Ingredient extends HBox {
     private final StorageType storageType;
-    private final String code;
+    private String code;
 
-    private final Integer amountRequired;
+    private Integer amountRequired;
     private Integer amountAvailable;
 
     @FXML
@@ -29,54 +30,45 @@ public class Ingredient extends HBox {
     @FXML
     private Label amountAvailableLabel;
 
-    public Ingredient(final StorageType storageType, final String code, final String name, final String amount, final String amountAvailable) {
+    private Ingredient(final StorageType storageType) {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Ingredient.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
-
         try {
             fxmlLoader.load();
         } catch (final IOException exception) {
             throw new RuntimeException(exception);
         }
-        this.nameLabel.setText(name);
         this.storageType = storageType;
-        this.code = code;
+    }
+
+    public Ingredient(final String text) {
+        this(StorageType.OTHER);
+        this.nameLabel.setText(text);
+    }
+
+    public Ingredient(final StorageType storageType, final Material material, final String amount, final String amountAvailable) {
+        this(storageType);
+        this.code = material.toString();
+        this.nameLabel.setText(material.friendlyName());
+        this.code = material.toString();
         this.amountRequiredLabel.setText(amount);
         this.amountRequired = Integer.valueOf(amount);
         this.amountAvailable = Integer.valueOf(amountAvailable);
         switch (storageType) {
             case DATA -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
             case GOOD -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
+            case ASSET -> {
+                switch (((Asset) material).getType()) {
+                    case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
+                    case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));
+                    case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/chemical.png")));
+                    default -> this.image.setFitWidth(0);
+                }
+            }
             default -> this.image.setFitWidth(0);
         }
-        update();
-    }
 
-    public Ingredient(final StorageType storageType, final Asset asset, final String amount, final String amountAvailable) {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Ingredient.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-
-        try {
-            fxmlLoader.load();
-        } catch (final IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        this.nameLabel.setText(asset.friendlyName());
-        this.storageType = storageType;
-        this.code = asset.toString();
-        this.amountRequiredLabel.setText(amount);
-        this.amountRequired = Integer.valueOf(amount);
-        this.amountAvailable = Integer.valueOf(amountAvailable);
-        switch (asset.getType()) {
-            case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
-            case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));
-            case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/chemical.png")));
-            default -> this.image.setFitWidth(0);
-        }
 
         update();
     }
@@ -94,19 +86,17 @@ public class Ingredient extends HBox {
     }
 
     public void update() {
+        this.getStyleClass().add("ingredient");
         if (StorageType.OTHER.equals(this.storageType)) {
             this.amountAvailableLabel.setText("");
             this.amountRequiredLabel.setText("");
-            this.setStyle("-fx-border-color: black; -fx-background-color: #fff;");
-            this.nameLabel.setStyle("-fx-pref-width: 300;-fx-label-padding: 5;");
-            this.amountRequiredLabel.setStyle("-fx-pref-width: 0;");
-            this.amountAvailableLabel.setStyle("-fx-pref-width: 0;");
+            this.getStyleClass().add("ingredient-without-amount");
         } else if (this.amountAvailable >= this.amountRequired) {
             this.amountAvailableLabel.setText(this.amountAvailable.toString());
-            this.setStyle("-fx-border-color: black; -fx-background-color: #89d07f;");
+            this.getStyleClass().addAll("ingredient-with-amount", "ingredient-filled");
         } else {
             this.amountAvailableLabel.setText(this.amountAvailable.toString());
-            this.setStyle("-fx-border-color: black; -fx-background-color: #ff7c7c;");
+            this.getStyleClass().addAll("ingredient-with-amount", "ingredient-unfilled");
         }
     }
 
