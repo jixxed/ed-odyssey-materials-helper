@@ -192,3 +192,11 @@
 .legend > .materialcard-amount {
     -fx-pref-width: 0;
 }
+
+.bottom-bar {
+    -fx-pref-height: 25;
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+    /*-fx-hgap: 10;*/
+    -fx-padding: 0 10 0 10;
+}

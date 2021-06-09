@@ -7,17 +7,12 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
@@ -26,8 +21,8 @@ import nl.jixxed.eliteodysseymaterials.templates.*;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -48,6 +43,8 @@ public class Main extends Application {
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings(this);
     private final Legend legend = new Legend();
+    final Label watchedFileLabel = new Label();
+    final Label lastTimeStampLabel = new Label();
 
     @Override
     public void start(final Stage primaryStage) {
@@ -56,19 +53,26 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/rocket.png")));
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(this.materialOverview);
-        setAnchor(this.content, 0.0, 0.0, 0.0, 0.0);
+        setAnchor(this.content, 0.0, 25.0, 0.0, 0.0);
         this.content.getChildren().add(scrollPane);
         setAnchor(scrollPane, 0.0, 0.0, 372.0, 0.0);
         this.applicationLayout.getChildren().add(this.content);
+        final HBox bottomBar = new HBox(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.lastTimeStampLabel);
+        bottomBar.getStyleClass().add("bottom-bar");
+        setAnchor(bottomBar, null, 0.0, 0.0, 0.0);
+        this.applicationLayout.getChildren().add(bottomBar);
+
         this.applicationLayout.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
 
+        final String userprofile = System.getenv("USERPROFILE");
+        final File watchedFolder = new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous");
+        this.watchedFileLabel.setText("Watching: None - No Odyssey journals found at " + watchedFolder.getAbsolutePath());
+        this.journalWatcher.watch(watchedFolder, this::process, this::resetAndProcess);
         for (int i = 0; i < 5; i++) {
             final ColumnConstraints column = new ColumnConstraints(250);
             this.materialOverview.getColumnConstraints().add(column);
         }
 
-        final String userprofile = System.getenv("USERPROFILE");
-        this.journalWatcher.watch(new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous"), this::process, this::resetAndProcess);
 
         showRecipes();
 
@@ -107,7 +111,8 @@ public class Main extends Application {
     }
 
     protected void process(final File file) {
-        try (final Scanner scanner = new Scanner(file)) {
+        this.watchedFileLabel.setText("Watching: " + file.getAbsoluteFile());
+        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
             int cursor = 0;
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
@@ -118,7 +123,7 @@ public class Main extends Application {
                     processMessage(line);
                 }
             }
-        } catch (final FileNotFoundException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
         updateIngredients();
@@ -213,6 +218,7 @@ public class Main extends Application {
     }
 
     private void processEngineerProgressMessage(final JsonNode journalMessage) {
+        this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
         journalMessage.get("Engineers").elements().forEachRemaining(item ->
         {
             final String engineer = item.get("Engineer").asText();
@@ -233,6 +239,7 @@ public class Main extends Application {
     }
 
     private void processTransferMicroResourcesMessage(final JsonNode journalMessage) {
+        this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
         journalMessage.get("Transfers").elements().forEachRemaining(item ->
         {
             final String cat = item.get("Category").asText();
@@ -246,6 +253,7 @@ public class Main extends Application {
     }
 
     private void processShipLockerMaterialsMessage(final JsonNode journalMessage) {
+        this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
         resetCounts();
         parseGoods(journalMessage.get("Items").elements());
         parseComponents(journalMessage.get("Components").elements());
