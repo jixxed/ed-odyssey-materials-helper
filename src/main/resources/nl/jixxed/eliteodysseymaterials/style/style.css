@@ -152,10 +152,6 @@
     -fx-pref-width: 0;
 }
 
-/*{*/
-/*    -fx-pref-width: 0;*/
-/*}*/
-
 .ingredient-with-amount > .available {
     -fx-pref-width: 100;
     -fx-padding: 5;
@@ -167,18 +163,6 @@
     -fx-padding: 5;
     -fx-text-alignment: right;
 }
-
-/*.ingredient > .value-amount-required {*/
-/*    -fx-pref-width: 50;*/
-/*    -fx-padding: 5;*/
-/*    -fx-text-alignment: right;*/
-/*}*/
-
-/*.ingredient > .value-amount-available {*/
-/*    -fx-pref-width: 100;*/
-/*    -fx-padding: 5;*/
-/*    -fx-text-alignment: right;*/
-/*}*/
 
 .legend {
     -fx-vgap: 10;
@@ -197,6 +181,44 @@
     -fx-pref-height: 25;
     -fx-alignment: center-left;
     -fx-spacing: 10;
-    /*-fx-hgap: 10;*/
     -fx-padding: 0 10 0 10;
+}
+
+.search {
+    -fx-min-height: 30;
+    -fx-max-height: 30;
+    /*noinspection CssInvalidFunction*/
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 0, 0;
+}
+
+.search:focused, .search:selected {
+}
+
+.search > .text {
+    -fx-pref-height: 20;
+}
+
+.scroll-pane {
+    -fx-focus-color: -fx-box-border;
+    -fx-faint-focus-color: transparent;
+}
+
+.card-grid {
+    -fx-min-width: 1510;
+}
+
+.donate-label {
+    -fx-padding: 20, 0, 0, 0;
+}
+
+.donate-label > .text {
+    -fx-min-width: 250;
+    -fx-text-alignment: center;
+}
+
+.donate {
+    -fx-text-alignment: center;
 }

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<fx:root minHeight="26.0" prefHeight="26.0" prefWidth="250.0" style="-fx-start-margin: 5;-fx-padding: 5;"
-         type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root style="-fx-start-margin: 5;-fx-padding: 5;" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11"
+         xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <CheckBox fx:id="hideIrrelevant" mnemonicParsing="false" text="Hide irrelevant materials"
-                  style="-fx-pref-width: 400; -fx-label-padding: 5;"/>
-        <CheckBox fx:id="hideUnlocked" mnemonicParsing="false" text="Hide unlocked engineer unlocking materials"
-                  style="-fx-pref-width: 400; -fx-label-padding: 5;"/>
-        <Label fx:id="version" style="-fx-pref-width: 400; -fx-label-padding: 5;"/>
-        <Hyperlink fx:id="link" style="-fx-pref-width: 400; -fx-label-padding: 5;"/>
+        <CheckBox fx:id="hideIrrelevant" mnemonicParsing="false" style="-fx-pref-width: 300; -fx-label-padding: 5;"
+                  text="Hide irrelevant materials"/>
+        <CheckBox fx:id="hideUnlocked" mnemonicParsing="false" style="-fx-pref-width: 300; -fx-label-padding: 5;"
+                  text="Hide unlocked engineer unlocking materials"/>
+        <Separator/>
+        <Label fx:id="version" style="-fx-pref-width: 350;" alignment="CENTER"/>
+        <Hyperlink fx:id="link" style="-fx-pref-width: 350;" alignment="CENTER"/>
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="350.0" styleClass="donate-label"
+               text="If you like to buy me a beer:" textAlignment="CENTER"/>
+        <Hyperlink fx:id="donate" prefWidth="350.0" alignment="CENTER" styleClass="donate" textAlignment="CENTER"/>
     </children>
 </fx:root>

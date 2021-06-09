@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
@@ -30,7 +32,9 @@ public class Settings extends VBox {
     Label version;
     @FXML
     Hyperlink link;
-
+    @FXML
+    Hyperlink donate;
+    ImageView donateImage = new ImageView();
     private final static Map<Engineer, EngineerState> ENGINEER_STATES = new HashMap<>();
 
     static {
@@ -80,6 +84,10 @@ public class Settings extends VBox {
                     application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases"));
 
         }
+        this.donateImage.setImage(new Image(getClass().getResourceAsStream("/images/donate.png")));
+        this.donate.setGraphic(this.donateImage);
+        this.donate.setOnAction((actionEvent) ->
+                application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper"));
     }
 
     public CheckBox getHideIrrelevant() {

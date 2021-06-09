@@ -3,6 +3,9 @@ package nl.jixxed.eliteodysseymaterials;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -40,11 +44,13 @@ public class Main extends Application {
     private final Map<Data, Integer> data = new HashMap<>();
     private final Map<String, Integer> unknownData = new HashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
+    private final List<EngineerTitledPane> engineerTitledPanes = new ArrayList<>();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings(this);
     private final Legend legend = new Legend();
     final Label watchedFileLabel = new Label();
     final Label lastTimeStampLabel = new Label();
+    private String search = "";
 
     @Override
     public void start(final Stage primaryStage) {
@@ -52,8 +58,34 @@ public class Main extends Application {
         primaryStage.setTitle("ED Odyssey Materials Helper");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/rocket.png")));
         final ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(this.materialOverview);
+        scrollPane.pannableProperty().set(true);
+        final TextField textField = new TextField();
+        textField.setAccessibleText("text");
+        textField.getStyleClass().add("search");
+        textField.setPromptText("Search");
+        textField.setFocusTraversable(false);
+        final Observable<String> searchChanged = Observable.create((ObservableEmitter<String> emitter) ->
+                textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                    emitter.onNext(newValue);
+                })
+        ).debounce(500, TimeUnit.MILLISECONDS).observeOn(Schedulers.io());
+        searchChanged.subscribe((newValue) -> {
+
+                    this.search = newValue;//
+                    Platform.runLater(() -> {
+                        this.materialOverview.getChildren().clear();
+                        showGoods(this.materialOverview);
+                        showComponents(this.materialOverview);
+                        showDatas(this.materialOverview);
+                        updateTotals();
+                    });
+                }
+        );
+        final VBox value = new VBox(textField, this.materialOverview);
+        scrollPane.setContent(value);
         setAnchor(this.content, 0.0, 25.0, 0.0, 0.0);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
         this.content.getChildren().add(scrollPane);
         setAnchor(scrollPane, 0.0, 0.0, 372.0, 0.0);
         this.applicationLayout.getChildren().add(this.content);
@@ -72,7 +104,7 @@ public class Main extends Application {
             final ColumnConstraints column = new ColumnConstraints(250);
             this.materialOverview.getColumnConstraints().add(column);
         }
-
+        this.materialOverview.getStyleClass().add("card-grid");
 
         showRecipes();
 
@@ -237,6 +269,15 @@ public class Main extends Application {
                 default -> {
                 }
             }
+            updateEngineerStyles();
+        });
+    }
+
+    private void updateEngineerStyles() {
+        this.engineerTitledPanes.forEach(titledPane -> {
+            if (titledPane.getEngineerRecipe().isCompleted() && !titledPane.getStyleClass().contains("completed")) {
+                titledPane.getStyleClass().add("completed");
+            }
         });
     }
 
@@ -300,15 +341,7 @@ public class Main extends Application {
     private TitledPane createRecipeTitledPane(final Map.Entry<String, ? extends Recipe> recipe) {
         final VBox content = new VBox();
         final List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.addAll(recipe.getValue().getMaterialCollection(Asset.class).entrySet().stream()
-                .map(asset ->
-                        {
-                            final Ingredient newIngredient = new Ingredient(StorageType.ASSET, asset.getKey(), asset.getValue().toString(), this.assets.get(asset.getKey()).toString());
-                            this.ingredients.add(newIngredient);
-                            return newIngredient;
-                        }
-                ).sorted(Comparator.comparing(Ingredient::getName))
-                .collect(Collectors.toList()));
+        ingredients.addAll(getRecipeIngredients(recipe, Asset.class, StorageType.ASSET, this.assets));
         ingredients.addAll(recipe.getValue().getMaterialCollection(Data.class).entrySet().stream()
                 .map(data -> {
                             final Ingredient newIngredient = new Ingredient(StorageType.DATA, data.getKey(), data.getValue().toString(), this.data.get(data.getKey()).toString());
@@ -343,7 +376,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         content.getChildren().addAll(ingredients);
-        final TitledPane recipeTitledPane = new TitledPane(recipe.getKey(), content);
+        final TitledPane recipeTitledPane = createTitledPane(recipe, content);
         recipeTitledPane.getStyleClass().add("blueprint-title-pane");
         if (recipe.getValue() instanceof EngineerRecipe && ((EngineerRecipe) recipe.getValue()).isCompleted()) {
             recipeTitledPane.getStyleClass().add("completed");
@@ -354,16 +387,39 @@ public class Main extends Application {
         return recipeTitledPane;
     }
 
+    private List<Ingredient> getRecipeIngredients(final Map.Entry<String, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Integer> materialMap) {
+        return recipe.getValue().getMaterialCollection(materialClass).entrySet().stream()
+                .map(material ->
+                        {
+                            final Ingredient newIngredient = new Ingredient(storageType, material.getKey(), material.getValue().toString(), materialMap.get(material.getKey()).toString());
+                            this.ingredients.add(newIngredient);
+                            return newIngredient;
+                        }
+                ).sorted(Comparator.comparing(Ingredient::getName))
+                .collect(Collectors.toList());
+    }
+
+    private TitledPane createTitledPane(final Map.Entry<String, ? extends Recipe> recipe, final VBox content) {
+        final TitledPane recipeTitledPane;
+        if (recipe.getValue() instanceof EngineerRecipe) {
+            recipeTitledPane = new EngineerTitledPane(recipe.getKey(), content, (EngineerRecipe) recipe.getValue());
+            this.engineerTitledPanes.add((EngineerTitledPane) recipeTitledPane);
+        } else {
+            recipeTitledPane = new TitledPane(recipe.getKey(), content);
+        }
+        return recipeTitledPane;
+    }
+
     private void showGoods(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.goods.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
+            final String name = entry.getKey().friendlyName();
             if ((Good.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
-                    || (this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
-                    || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))) {
+                    || (this.search.isBlank() && ((this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
+                    || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))))
+                    || (!this.search.isBlank() && (!name.toLowerCase().contains(this.search.toLowerCase())))) {
                 return;
             }
-
-            final String name = entry.getKey().friendlyName();
             final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
             layout.add(materialCard, counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
@@ -384,10 +440,17 @@ public class Main extends Application {
                 Comparator.comparing((Map.Entry<Asset, Integer> o) -> o.getKey().getType())
                         .thenComparing(o -> o.getKey().friendlyName()))
                 .forEach((entry) -> {
-                    if (Asset.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
+//                    if (Asset.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
+//                        return;
+//                    }
+//                    final String name = entry.getKey().friendlyName();
+
+                    final String name = entry.getKey().friendlyName();
+                    if ((Asset.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
+                            || (!this.search.isBlank() && (!name.toLowerCase().contains(this.search.toLowerCase())))) {
                         return;
                     }
-                    final String name = entry.getKey().friendlyName();
+
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString());
                     layout.add(materialCard, 2 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
                     GridPane.setMargin(materialCard, CARD_MARGIN);
@@ -397,13 +460,19 @@ public class Main extends Application {
     private void showDatas(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.data.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
+//            if ((Data.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
+//                    || (this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
+//                    || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))) {
+//                return;
+//            }
+//            final String name = entry.getKey().friendlyName();
+            final String name = entry.getKey().friendlyName();
             if ((Data.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
-                    || (this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
-                    || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))) {
+                    || (this.search.isBlank() && ((this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
+                    || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))))
+                    || (!this.search.isBlank() && (!name.toLowerCase().contains(this.search.toLowerCase())))) {
                 return;
             }
-
-            final String name = entry.getKey().friendlyName();
             final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
             layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
