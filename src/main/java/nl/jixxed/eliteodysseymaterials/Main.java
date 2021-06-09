@@ -111,7 +111,9 @@ public class Main extends Application {
     }
 
     protected void process(final File file) {
-        this.watchedFileLabel.setText("Watching: " + file.getAbsoluteFile());
+        Platform.runLater(() -> {
+            this.watchedFileLabel.setText("Watching: " + file.getAbsoluteFile());
+        });
         try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
             int cursor = 0;
             while (scanner.hasNextLine()) {
@@ -218,7 +220,7 @@ public class Main extends Application {
     }
 
     private void processEngineerProgressMessage(final JsonNode journalMessage) {
-        this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
+        updateLastTimeStamp(journalMessage);
         journalMessage.get("Engineers").elements().forEachRemaining(item ->
         {
             final String engineer = item.get("Engineer").asText();
@@ -238,8 +240,14 @@ public class Main extends Application {
         });
     }
 
+    private void updateLastTimeStamp(final JsonNode journalMessage) {
+        Platform.runLater(() -> {
+            this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
+        });
+    }
+
     private void processTransferMicroResourcesMessage(final JsonNode journalMessage) {
-        this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
+        updateLastTimeStamp(journalMessage);
         journalMessage.get("Transfers").elements().forEachRemaining(item ->
         {
             final String cat = item.get("Category").asText();
@@ -253,7 +261,7 @@ public class Main extends Application {
     }
 
     private void processShipLockerMaterialsMessage(final JsonNode journalMessage) {
-        this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
+        updateLastTimeStamp(journalMessage);
         resetCounts();
         parseGoods(journalMessage.get("Items").elements());
         parseComponents(journalMessage.get("Components").elements());

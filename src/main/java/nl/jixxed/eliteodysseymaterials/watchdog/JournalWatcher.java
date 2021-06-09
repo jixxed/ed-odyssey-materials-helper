@@ -31,9 +31,12 @@ public class JournalWatcher {
             @Override
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
-                JournalWatcher.this.watchedFile
-                        .filter(file::equals)
-                        .ifPresent(fileModifiedProcessor);
+                if (file.isFile()) {
+                    if (file.getName().startsWith("Journal.") && hasFileHeader(file)) {
+                        JournalWatcher.this.watchedFile = Optional.of(file);
+                        fileModifiedProcessor.accept(file);
+                    }
+                }
             }
         }).watch();
     }
@@ -42,6 +45,7 @@ public class JournalWatcher {
         try {
             this.watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith("Journal."))
+                    .filter(this::hasFileHeader)
                     .filter(this::isOdysseyJournal)
                     .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23))));
             System.out.println("Registered watched file: " + this.watchedFile.map(File::getName).orElse("No file"));
@@ -58,6 +62,16 @@ public class JournalWatcher {
             return journalMessage.get("Odyssey") != null && journalMessage.get("Odyssey").asBoolean(false);
 
         } catch (final FileNotFoundException | JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean hasFileHeader(final File file) {
+        try (final Scanner scanner = new Scanner(file)) {
+            scanner.nextLine();
+            return true;
+        } catch (final NoSuchElementException | FileNotFoundException e) {
             e.printStackTrace();
         }
         return false;
