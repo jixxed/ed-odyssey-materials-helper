@@ -93,9 +93,11 @@ public class Ingredient extends HBox {
             this.getStyleClass().add("ingredient-without-amount");
         } else if (this.amountAvailable >= this.amountRequired) {
             this.amountAvailableLabel.setText(this.amountAvailable.toString());
+            this.getStyleClass().removeAll("ingredient-with-amount", "ingredient-filled", "ingredient-unfilled");
             this.getStyleClass().addAll("ingredient-with-amount", "ingredient-filled");
         } else {
             this.amountAvailableLabel.setText(this.amountAvailable.toString());
+            this.getStyleClass().removeAll("ingredient-with-amount", "ingredient-filled", "ingredient-unfilled");
             this.getStyleClass().addAll("ingredient-with-amount", "ingredient-unfilled");
         }
     }
