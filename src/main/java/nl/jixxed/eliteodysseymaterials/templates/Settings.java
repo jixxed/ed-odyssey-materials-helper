@@ -33,6 +33,8 @@ public class Settings extends VBox {
     @FXML
     Hyperlink link;
     @FXML
+    Hyperlink bugs;
+    @FXML
     Hyperlink donate;
     ImageView donateImage = new ImageView();
     private final static Map<Engineer, EngineerState> ENGINEER_STATES = new HashMap<>();
@@ -88,6 +90,12 @@ public class Settings extends VBox {
         this.donate.setGraphic(this.donateImage);
         this.donate.setOnAction((actionEvent) ->
                 application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper"));
+
+        this.bugs.setText("Report a bug");
+        this.bugs.setOnAction((actionEvent) ->
+                application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues"));
+
+
     }
 
     public CheckBox getHideIrrelevant() {

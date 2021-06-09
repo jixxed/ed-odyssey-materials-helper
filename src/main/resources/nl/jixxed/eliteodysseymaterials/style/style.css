@@ -211,7 +211,7 @@
 }
 
 .donate-label {
-    -fx-padding: 20, 0, 0, 0;
+    /*-fx-padding: 20, 0, 0, 0;*/
 }
 
 .donate-label > .text {
@@ -221,4 +221,20 @@
 
 .donate {
     -fx-text-alignment: center;
+}
+
+.bugs {
+    -fx-min-height: 40;
+}
+
+.donate:hover {
+    -fx-background-color: #aaa;
+}
+
+.bugs:hover {
+    -fx-background-color: #aaa;
+}
+
+.download:hover {
+    -fx-background-color: #aaa;
 }
