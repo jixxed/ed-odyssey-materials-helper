@@ -15,7 +15,7 @@ apply plugin: "application"
 apply plugin: "org.openjfx.javafxplugin"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
-version '1.6'
+version '1.7'
 java {
     modularity.inferModulePath = true
 }
