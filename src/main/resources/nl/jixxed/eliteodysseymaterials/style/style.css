@@ -115,7 +115,7 @@
 }
 
 .materialcard-amount {
-    -fx-pref-width: 40;
+    -fx-pref-width: 90;
     -fx-padding: 5;
     -fx-text-alignment: right;
 }

@@ -18,14 +18,17 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.models.Container;
 import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.models.Recipe;
 import nl.jixxed.eliteodysseymaterials.templates.*;
+import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,13 +41,14 @@ public class Main extends Application {
     private final AnchorPane content = new AnchorPane();
     private final GridPane materialOverview = new GridPane();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Map<Good, Integer> goods = new HashMap<>();
-    private final Map<String, Integer> unknownGoods = new HashMap<>();
-    private final Map<Asset, Integer> assets = new HashMap<>();
-    private final Map<Data, Integer> data = new HashMap<>();
-    private final Map<String, Integer> unknownData = new HashMap<>();
+    private final Map<Good, Container> goods = new HashMap<>();
+    private final Map<String, Container> unknownGoods = new HashMap<>();
+    private final Map<Asset, Container> assets = new HashMap<>();
+    private final Map<Data, Container> data = new HashMap<>();
+    private final Map<String, Container> unknownData = new HashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final List<EngineerTitledPane> engineerTitledPanes = new ArrayList<>();
+    private final GameStateWatcher gameStateWatcher = new GameStateWatcher();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings(this);
     private final Legend legend = new Legend();
@@ -99,6 +103,8 @@ public class Main extends Application {
         final String userprofile = System.getenv("USERPROFILE");
         final File watchedFolder = new File(userprofile + "\\Saved Games\\Frontier Developments\\Elite Dangerous");
         this.watchedFileLabel.setText("Watching: None - No Odyssey journals found at " + watchedFolder.getAbsolutePath());
+        this.gameStateWatcher.watch(watchedFolder, this::processShipLockerBackPack, "ShipLocker.json");
+        this.gameStateWatcher.watch(watchedFolder, this::processShipLockerBackPack, "Backpack.json");
         this.journalWatcher.watch(watchedFolder, this::process, this::resetAndProcess);
         for (int i = 0; i < 5; i++) {
             final ColumnConstraints column = new ColumnConstraints(250);
@@ -154,7 +160,7 @@ public class Main extends Application {
                 if (cursor > this.lineNumber) {
                     this.lineNumber++;
                     System.out.println(line);
-                    processMessage(line);
+                    processJournalMessage(line);
                 }
             }
         } catch (final IOException e) {
@@ -173,12 +179,37 @@ public class Main extends Application {
         });
     }
 
+    protected void processShipLockerBackPack(final File file) {
+        Platform.runLater(() -> {
+            this.watchedFileLabel.setText("Watching: " + file.getAbsoluteFile());
+        });
+        try {
+            final String shipLocker = Files.readString(file.toPath());
+            System.out.println(shipLocker);
+            processShipLockerBackPackMessage(shipLocker);
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+
+        updateIngredients();
+
+        Platform.runLater(() -> {
+            this.materialOverview.getChildren().clear();
+            showGoods(this.materialOverview);
+            showComponents(this.materialOverview);
+            showDatas(this.materialOverview);
+
+            this.ingredients.forEach(Ingredient::update);
+            updateTotals();
+        });
+    }
+
     private void updateIngredients() {
         this.ingredients.forEach(ingredient -> {
             switch (ingredient.getType()) {
-                case ASSET -> ingredient.setAmountAvailable(this.assets.get(Asset.forName(ingredient.getCode())));
-                case GOOD -> ingredient.setAmountAvailable(this.goods.get(Good.forName(ingredient.getCode())));
-                case DATA -> ingredient.setAmountAvailable(this.data.get(Data.forName(ingredient.getCode())));
+                case ASSET -> ingredient.setAmountAvailable(this.assets.get(Asset.forName(ingredient.getCode())).getTotalValue());
+                case GOOD -> ingredient.setAmountAvailable(this.goods.get(Good.forName(ingredient.getCode())).getTotalValue());
+                case DATA -> ingredient.setAmountAvailable(this.data.get(Data.forName(ingredient.getCode())).getTotalValue());
                 case OTHER -> {
                 }
             }
@@ -194,14 +225,14 @@ public class Main extends Application {
     private void updateTotalsData() {
         final Integer recipeDatas = this.data.entrySet().stream()
                 .filter(data -> RecipeConstants.isBlueprintIngredient(data.getKey()))
-                .map(Map.Entry::getValue)
+                .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer nonRecipeDatas = this.data.entrySet().stream()
                 .filter(data -> !RecipeConstants.isBlueprintIngredient(data.getKey()))
-                .map(Map.Entry::getValue)
+                .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer unknownDatas = this.unknownData.size();
-        final MaterialCard datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + (nonRecipeDatas + unknownDatas) + " / Total: " + (recipeDatas + nonRecipeDatas + unknownDatas) + ")", "");
+        final MaterialCard datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + (nonRecipeDatas + unknownDatas) + " / Total: " + (recipeDatas + nonRecipeDatas + unknownDatas) + ")", null);
         datasLabel.getStyleClass().add("category-label");
         this.materialOverview.add(datasLabel, 4, 0, 2, 1);
         GridPane.setMargin(datasLabel, CARD_MARGIN);
@@ -210,13 +241,13 @@ public class Main extends Application {
     private void updateTotalsAssets() {
         final Integer recipeAssets = this.assets.entrySet().stream()
                 .filter(assetEntry -> RecipeConstants.isBlueprintIngredient(assetEntry.getKey()))
-                .map(Map.Entry::getValue)
+                .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer nonRecipeAssets = this.assets.entrySet().stream()
                 .filter(assetEntry -> !RecipeConstants.isBlueprintIngredient(assetEntry.getKey()))
-                .map(Map.Entry::getValue)
+                .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final MaterialCard assetsLabel = new MaterialCard("Assets (Blueprint: " + recipeAssets + " / Irrelevant: " + nonRecipeAssets + " / Total: " + (recipeAssets + nonRecipeAssets) + ")", "");
+        final MaterialCard assetsLabel = new MaterialCard("Assets (Blueprint: " + recipeAssets + " / Irrelevant: " + nonRecipeAssets + " / Total: " + (recipeAssets + nonRecipeAssets) + ")", null);
         assetsLabel.getStyleClass().add("category-label");
         this.materialOverview.add(assetsLabel, 2, 0, 2, 1);
         GridPane.setMargin(assetsLabel, CARD_MARGIN);
@@ -225,26 +256,38 @@ public class Main extends Application {
     private void updateTotalsGoods() {
         final Integer recipeGoods = this.goods.entrySet().stream()
                 .filter(good -> RecipeConstants.isBlueprintIngredient(good.getKey()))
-                .map(Map.Entry::getValue)
+                .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer nonRecipeGoods = this.goods.entrySet().stream()
                 .filter(good -> !RecipeConstants.isBlueprintIngredient(good.getKey()))
-                .map(Map.Entry::getValue)
+                .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer unknownGoods = this.unknownGoods.size();
-        final MaterialCard goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + (nonRecipeGoods + unknownGoods) + " / Total: " + (recipeGoods + nonRecipeGoods + unknownGoods) + ")", "");
+        final MaterialCard goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + (nonRecipeGoods + unknownGoods) + " / Total: " + (recipeGoods + nonRecipeGoods + unknownGoods) + ")", null);
         goodsLabel.getStyleClass().add("category-label");
         this.materialOverview.add(goodsLabel, 0, 0, 2, 1);
         GridPane.setMargin(goodsLabel, CARD_MARGIN);
     }
 
-    private void processMessage(final String message) {
+    private void processJournalMessage(final String message) {
         try {
             final JsonNode journalMessage = this.objectMapper.readTree(message);
-            switch (journalMessage.get("event").asText()) {
-                case "ShipLockerMaterials", "ShipLocker" -> processShipLockerMaterialsMessage(journalMessage);
-                case "TransferMicroResources" -> processTransferMicroResourcesMessage(journalMessage);
-                case "EngineerProgress" -> processEngineerProgressMessage(journalMessage);
+            if ("EngineerProgress".equals(journalMessage.get("event").asText())) {
+                processEngineerProgressMessage(journalMessage);
+            }
+        } catch (final JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void processShipLockerBackPackMessage(final String message) {
+        try {
+            final JsonNode messageJson = this.objectMapper.readTree(message);
+            if (messageJson.get("event") != null) {
+                switch (messageJson.get("event").asText()) {
+                    case "ShipLocker" -> processShipLockerMaterialsMessage(messageJson, ContainerTarget.SHIPLOCKER);
+                    case "Backpack" -> processShipLockerMaterialsMessage(messageJson, ContainerTarget.BACKPACK);
+                }
             }
         } catch (final JsonProcessingException e) {
             e.printStackTrace();
@@ -287,26 +330,18 @@ public class Main extends Application {
         });
     }
 
-    private void processTransferMicroResourcesMessage(final JsonNode journalMessage) {
+    private void processShipLockerMaterialsMessage(final JsonNode journalMessage, final ContainerTarget containerTarget) {
+        if (journalMessage.get("Items") == null || journalMessage.get("Components") == null || journalMessage.get("Data") == null) {
+            return;
+        }
+        switch (containerTarget) {
+            case SHIPLOCKER -> resetShipLockerCounts();
+            case BACKPACK -> resetBackPackCounts();
+        }
         updateLastTimeStamp(journalMessage);
-        journalMessage.get("Transfers").elements().forEachRemaining(item ->
-        {
-            final String cat = item.get("Category").asText();
-            switch (cat) {
-                case "Component" -> updateComponents(item);
-                case "Item" -> updateGoods(item);
-                case "Data" -> updateDatas(item);
-                default -> System.out.println("unsupported category: " + cat);
-            }
-        });
-    }
-
-    private void processShipLockerMaterialsMessage(final JsonNode journalMessage) {
-        updateLastTimeStamp(journalMessage);
-        resetCounts();
-        parseGoods(journalMessage.get("Items").elements());
-        parseComponents(journalMessage.get("Components").elements());
-        parseDatas(journalMessage.get("Data").elements());
+        parseGoods(journalMessage.get("Items").elements(), containerTarget);
+        parseComponents(journalMessage.get("Components").elements(), containerTarget);
+        parseDatas(journalMessage.get("Data").elements(), containerTarget);
     }
 
     private void showRecipes() {
@@ -344,7 +379,7 @@ public class Main extends Application {
         ingredients.addAll(getRecipeIngredients(recipe, Asset.class, StorageType.ASSET, this.assets));
         ingredients.addAll(recipe.getValue().getMaterialCollection(Data.class).entrySet().stream()
                 .map(data -> {
-                            final Ingredient newIngredient = new Ingredient(StorageType.DATA, data.getKey(), data.getValue().toString(), this.data.get(data.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(StorageType.DATA, data.getKey(), data.getValue().toString(), this.data.get(data.getKey()).getTotalValue().toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -352,7 +387,7 @@ public class Main extends Application {
                 .collect(Collectors.toList()));
         ingredients.addAll(recipe.getValue().getMaterialCollection(Good.class).entrySet().stream()
                 .map(good -> {
-                            final Ingredient newIngredient = new Ingredient(StorageType.GOOD, good.getKey(), good.getValue().toString(), this.goods.get(good.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(StorageType.GOOD, good.getKey(), good.getValue().toString(), this.goods.get(good.getKey()).getTotalValue().toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -387,11 +422,11 @@ public class Main extends Application {
         return recipeTitledPane;
     }
 
-    private List<Ingredient> getRecipeIngredients(final Map.Entry<String, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Integer> materialMap) {
+    private List<Ingredient> getRecipeIngredients(final Map.Entry<String, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Container> materialMap) {
         return recipe.getValue().getMaterialCollection(materialClass).entrySet().stream()
                 .map(material ->
                         {
-                            final Ingredient newIngredient = new Ingredient(storageType, material.getKey(), material.getValue().toString(), materialMap.get(material.getKey()).toString());
+                            final Ingredient newIngredient = new Ingredient(storageType, material.getKey(), material.getValue().toString(), materialMap.get(material.getKey()).getTotalValue().toString());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -414,20 +449,20 @@ public class Main extends Application {
         final AtomicInteger counter = new AtomicInteger(0);
         this.goods.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
             final String name = entry.getKey().friendlyName();
-            if ((Good.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
+            if ((Good.UNKNOWN.equals(entry.getKey()) && entry.getValue().getTotalValue().equals(0))
                     || (this.search.isBlank() && ((this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
                     || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))))
                     || (!this.search.isBlank() && (!name.toLowerCase().contains(this.search.toLowerCase())))) {
                 return;
             }
-            final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
+            final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
             layout.add(materialCard, counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
         this.unknownGoods.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
 
             final String name = entry.getKey() + " (unknown)";
-            final MaterialCard materialCard = new MaterialCard(Good.UNKNOWN, name, entry.getValue().toString(), false);
+            final MaterialCard materialCard = new MaterialCard(Good.UNKNOWN, name, entry.getValue(), false);
 
             layout.add(materialCard, counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
@@ -437,21 +472,16 @@ public class Main extends Application {
     private void showComponents(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.assets.entrySet().stream().sorted(
-                Comparator.comparing((Map.Entry<Asset, Integer> o) -> o.getKey().getType())
+                Comparator.comparing((Map.Entry<Asset, Container> o) -> o.getKey().getType())
                         .thenComparing(o -> o.getKey().friendlyName()))
                 .forEach((entry) -> {
-//                    if (Asset.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0) {
-//                        return;
-//                    }
-//                    final String name = entry.getKey().friendlyName();
-
                     final String name = entry.getKey().friendlyName();
-                    if ((Asset.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
+                    if ((Asset.UNKNOWN.equals(entry.getKey()) && entry.getValue().getTotalValue().equals(0))
                             || (!this.search.isBlank() && (!name.toLowerCase().contains(this.search.toLowerCase())))) {
                         return;
                     }
 
-                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString());
+                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue());
                     layout.add(materialCard, 2 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
                     GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
@@ -460,27 +490,21 @@ public class Main extends Application {
     private void showDatas(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.data.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().friendlyName())).forEach((entry) -> {
-//            if ((Data.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
-//                    || (this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
-//                    || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))) {
-//                return;
-//            }
-//            final String name = entry.getKey().friendlyName();
             final String name = entry.getKey().friendlyName();
-            if ((Data.UNKNOWN.equals(entry.getKey()) && entry.getValue() == 0)
+            if ((Data.UNKNOWN.equals(entry.getKey()) && entry.getValue().getTotalValue().equals(0))
                     || (this.search.isBlank() && ((this.settings.hideIrrelevant() && RecipeConstants.isNotRelevantAndNotEngineeringIngredient(entry.getKey()))
                     || (this.settings.hideUnlocked() && RecipeConstants.isNotRelevantAndCompletedEngineeringIngredient(entry.getKey()))))
                     || (!this.search.isBlank() && (!name.toLowerCase().contains(this.search.toLowerCase())))) {
                 return;
             }
-            final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue().toString(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
+            final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
             layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
         this.unknownData.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
 
             final String name = entry.getKey() + " (unknown)";
-            final MaterialCard materialCard = new MaterialCard(Data.UNKNOWN, name, entry.getValue().toString(), false);
+            final MaterialCard materialCard = new MaterialCard(Data.UNKNOWN, name, entry.getValue(), false);
 
             layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
@@ -488,7 +512,7 @@ public class Main extends Application {
     }
 
 
-    private void parseComponents(final Iterator<JsonNode> components) {
+    private void parseComponents(final Iterator<JsonNode> components, final ContainerTarget containerTarget) {
         components.forEachRemaining(componentNode ->
         {
             final String name = componentNode.get("Name").asText();
@@ -496,13 +520,11 @@ public class Main extends Application {
             if (Asset.UNKNOWN.equals(asset)) {
                 System.out.println("Unknown Component detected: " + componentNode.toPrettyString());
             }
-            final Integer currentAmount = this.assets.get(asset);
-            this.assets.put(asset, currentAmount + componentNode.get("Count").asInt());
-
+            this.assets.get(asset).setValue(componentNode.get("Count").asInt(), containerTarget);
         });
     }
 
-    private void parseDatas(final Iterator<JsonNode> datas) {
+    private void parseDatas(final Iterator<JsonNode> datas, final ContainerTarget containerTarget) {
         datas.forEachRemaining(dataNode ->
         {
             final String name = dataNode.get("Name").asText();
@@ -510,17 +532,15 @@ public class Main extends Application {
             if (Data.UNKNOWN.equals(data)) {
                 System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
                 final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
-                final Integer currentAmount = this.unknownData.getOrDefault(name + ":" + nameLocalised, 0);
-                this.unknownData.put(name + ":" + nameLocalised, currentAmount + dataNode.get("Count").asInt());
+                getOrCreateContainer(this.unknownData, name + ":" + nameLocalised).setValue(dataNode.get("Count").asInt(), containerTarget);
             } else {
-                final Integer currentAmount = this.data.get(data);
-                this.data.put(data, currentAmount + dataNode.get("Count").asInt());
+                this.data.get(data).setValue(dataNode.get("Count").asInt(), containerTarget);
             }
         });
 
     }
 
-    private void parseGoods(final Iterator<JsonNode> items) {
+    private void parseGoods(final Iterator<JsonNode> items, final ContainerTarget containerTarget) {
         items.forEachRemaining(itemNode ->
         {
             final String name = itemNode.get("Name").asText();
@@ -528,76 +548,49 @@ public class Main extends Application {
             if (Good.UNKNOWN.equals(good)) {
                 System.out.println("Unknown Good detected: " + itemNode.toPrettyString());
                 final String nameLocalised = itemNode.get("Name_Localised") != null ? itemNode.get("Name_Localised").asText() : name;
-                final Integer currentAmount = this.unknownGoods.getOrDefault(name + ":" + nameLocalised, 0);
-                this.unknownGoods.put(name + ":" + nameLocalised, currentAmount + itemNode.get("Count").asInt());
+                getOrCreateContainer(this.unknownGoods, name + ":" + nameLocalised).setValue(itemNode.get("Count").asInt(), containerTarget);
             } else {
-                final Integer currentAmount = this.goods.get(good);
-                this.goods.put(good, currentAmount + itemNode.get("Count").asInt());
+                this.goods.get(good).setValue(itemNode.get("Count").asInt(), containerTarget);
             }
 
         });
     }
 
-    private void updateGoods(final JsonNode goodNode) {
-        final String name = goodNode.get("Name").asText();
-        final Good good = Good.forName(name);
-        if (Good.UNKNOWN.equals(good)) {
-            System.out.println("Unknown Good detected: " + goodNode.toPrettyString());
-            final String nameLocalised = goodNode.get("Name_Localised") != null ? goodNode.get("Name_Localised").asText() : name;
-            final Integer currentAmount = this.unknownGoods.getOrDefault(name + ":" + nameLocalised, 0);
-            this.unknownGoods.put(name + ":" + nameLocalised, currentAmount + goodNode.get("LockerNewCount").asInt() - goodNode.get("LockerOldCount").asInt());
-        } else {
-            final Integer currentAmount = this.goods.get(good);
-            final int newAmount = currentAmount + goodNode.get("LockerNewCount").asInt() - goodNode.get("LockerOldCount").asInt();
-            this.goods.put(good, newAmount);
+    private <T> Container getOrCreateContainer(final Map<T, Container> map, final T key) {
+        if (!map.containsKey(key)) {
+            map.put(key, new Container());
         }
+        return map.get(key);
     }
 
-    private void updateDatas(final JsonNode dataNode) {
-        final String name = dataNode.get("Name").asText();
-        final Data data = Data.forName(name);
-        if (Data.UNKNOWN.equals(data)) {
-            System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
-            final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
-            final Integer currentAmount = this.unknownData.getOrDefault(name + ":" + nameLocalised, 0);
-            this.unknownData.put(name + ":" + nameLocalised, currentAmount + dataNode.get("LockerNewCount").asInt() - dataNode.get("LockerOldCount").asInt());
-        } else {
-            final Integer currentAmount = this.data.get(data);
-            final int newAmount = currentAmount + dataNode.get("LockerNewCount").asInt() - dataNode.get("LockerOldCount").asInt();
-            this.data.put(data, newAmount);
-        }
+    private void resetShipLockerCounts() {
+        this.assets.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
+        this.data.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
+        this.goods.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
+        this.unknownGoods.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
+        this.unknownData.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
     }
 
-    private void updateComponents(final JsonNode item) {
-        final Asset asset = Asset.forName(item.get("Name").asText());
-        if (Asset.UNKNOWN.equals(asset)) {
-            System.out.println("Unknown Asset detected: " + item.toPrettyString());
-        }
-        final Integer currentAmount = this.assets.get(asset);
-        final int newAmount = currentAmount + item.get("LockerNewCount").asInt() - item.get("LockerOldCount").asInt();
-        this.assets.put(asset, newAmount);
-    }
-
-
-    private void resetCounts() {
-        this.assets.keySet().forEach(component -> this.assets.put(component, 0));
-        this.data.keySet().forEach(data -> this.data.put(data, 0));
-        this.goods.keySet().forEach(good -> this.goods.put(good, 0));
+    private void resetBackPackCounts() {
+        this.assets.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
+        this.data.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
+        this.goods.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
+        this.unknownGoods.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
+        this.unknownData.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
     }
 
     private void initCounts() {
         Arrays.stream(Asset.values()).forEach(component ->
-                this.assets.put(component, 0)
+                this.assets.put(component, new Container())
         );
         Arrays.stream(Data.values()).forEach(data ->
-                this.data.put(data, 0)
+                this.data.put(data, new Container())
         );
         Arrays.stream(Good.values()).forEach(good ->
-                this.goods.put(good, 0)
+                this.goods.put(good, new Container())
         );
 
     }
-
 
     public static void main(final String[] args) {
         launch(args);

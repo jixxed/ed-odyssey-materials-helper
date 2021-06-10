@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.models.Container;
 
 import java.io.IOException;
 
@@ -23,7 +24,9 @@ public class MaterialCard extends HBox {
     @FXML
     private Label amount;
 
-    public MaterialCard(final String name, final String amount) {
+    private final Container amounts;
+
+    public MaterialCard(final String name, final Container amounts) {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Material.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -34,13 +37,16 @@ public class MaterialCard extends HBox {
         } catch (final IOException exception) {
             throw new RuntimeException(exception);
         }
+        this.amounts = amounts;
         this.name.setText(name);
-        this.amount.setText(amount);
+        final String amountText = this.amounts != null ? (!this.amounts.getBackPackValue().equals(0)) ? "(" + this.amounts.getBackPackValue() + ") " + this.amounts.getShipLockerValue().toString() :
+                this.amounts.getShipLockerValue().toString() : "";
+        this.amount.setText(amountText);
         this.image.setFitWidth(0);
     }
 
-    public MaterialCard(final Material material, final String name, final String amount, final boolean isEngineerUnlockMaterial) {
-        this(name, amount);
+    public MaterialCard(final Material material, final String name, final Container amounts, final boolean isEngineerUnlockMaterial) {
+        this(name, amounts);
         final boolean isUnknown = Data.UNKNOWN.equals(material) || Good.UNKNOWN.equals(material);
         if (isUnknown) {
             this.name.setTooltip(new Tooltip("Unknown material, please report to the developer."));
@@ -69,8 +75,8 @@ public class MaterialCard extends HBox {
         }
     }
 
-    public MaterialCard(final Asset asset, final String name, final String amount) {
-        this(name, amount);
+    public MaterialCard(final Asset asset, final String name, final Container amounts) {
+        this(name, amounts);
         final String recipesContaining = RecipeConstants.findRecipesContaining(asset);
         this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
         switch (asset.getType()) {
