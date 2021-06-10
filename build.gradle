@@ -15,7 +15,7 @@ apply plugin: "application"
 apply plugin: "org.openjfx.javafxplugin"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
-version '1.9'
+version '1.10'
 java {
     modularity.inferModulePath = true
 }
@@ -46,7 +46,8 @@ jlink {
                 '--description', 'Installer for ED Odyssey Materials Helper',
                 '--copyright', 'Copyright 2021 CMDR Jixxed',
                 '--name', 'Elite Dangerous Odyssey Materials Helper',
-                '--app-version', project.version
+                '--app-version', project.version,
+                '--win-upgrade-uuid', '60AAECE0-2E3A-4A25-A662-CABCD8D1CCCE'
         ]
         installerType = project.findProperty('installerType')
         // we will pass this from the command line (example: -PinstallerType=msi)
