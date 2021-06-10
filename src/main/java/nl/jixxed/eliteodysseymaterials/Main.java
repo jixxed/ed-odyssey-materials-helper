@@ -242,7 +242,7 @@ public class Main extends Application {
         try {
             final JsonNode journalMessage = this.objectMapper.readTree(message);
             switch (journalMessage.get("event").asText()) {
-                case "ShipLockerMaterials" -> processShipLockerMaterialsMessage(journalMessage);
+                case "ShipLockerMaterials", "ShipLocker" -> processShipLockerMaterialsMessage(journalMessage);
                 case "TransferMicroResources" -> processTransferMicroResourcesMessage(journalMessage);
                 case "EngineerProgress" -> processEngineerProgressMessage(journalMessage);
             }
