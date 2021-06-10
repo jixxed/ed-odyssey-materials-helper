@@ -21,6 +21,9 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.models.Container;
 import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.models.Recipe;
+import nl.jixxed.eliteodysseymaterials.parser.ComponentParser;
+import nl.jixxed.eliteodysseymaterials.parser.DataParser;
+import nl.jixxed.eliteodysseymaterials.parser.GoodParser;
 import nl.jixxed.eliteodysseymaterials.templates.*;
 import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
@@ -51,6 +54,9 @@ public class Main extends Application {
     private final GameStateWatcher gameStateWatcher = new GameStateWatcher();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings(this);
+    ComponentParser componentParser = new ComponentParser();
+    DataParser dataParser = new DataParser();
+    GoodParser goodParser = new GoodParser();
     private final Legend legend = new Legend();
     final Label watchedFileLabel = new Label();
     final Label lastTimeStampLabel = new Label();
@@ -166,6 +172,10 @@ public class Main extends Application {
         } catch (final IOException e) {
             e.printStackTrace();
         }
+        updateGui();
+    }
+
+    private void updateGui() {
         updateIngredients();
 
         Platform.runLater(() -> {
@@ -191,17 +201,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        updateIngredients();
-
-        Platform.runLater(() -> {
-            this.materialOverview.getChildren().clear();
-            showGoods(this.materialOverview);
-            showComponents(this.materialOverview);
-            showDatas(this.materialOverview);
-
-            this.ingredients.forEach(Ingredient::update);
-            updateTotals();
-        });
+        updateGui();
     }
 
     private void updateIngredients() {
@@ -339,9 +339,12 @@ public class Main extends Application {
             case BACKPACK -> resetBackPackCounts();
         }
         updateLastTimeStamp(journalMessage);
-        parseGoods(journalMessage.get("Items").elements(), containerTarget);
-        parseComponents(journalMessage.get("Components").elements(), containerTarget);
-        parseDatas(journalMessage.get("Data").elements(), containerTarget);
+        this.componentParser.parse(journalMessage.get("Components").elements(), containerTarget, this.assets, null);
+        this.goodParser.parse(journalMessage.get("Items").elements(), containerTarget, this.goods, this.unknownGoods);
+        this.dataParser.parse(journalMessage.get("Data").elements(), containerTarget, this.data, this.unknownData);
+//        parseGoods(journalMessage.get("Items").elements(), containerTarget);
+//        parseComponents(journalMessage.get("Components").elements(), containerTarget);
+//        parseDatas(journalMessage.get("Data").elements(), containerTarget);
     }
 
     private void showRecipes() {
@@ -509,58 +512,6 @@ public class Main extends Application {
             layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
-    }
-
-
-    private void parseComponents(final Iterator<JsonNode> components, final ContainerTarget containerTarget) {
-        components.forEachRemaining(componentNode ->
-        {
-            final String name = componentNode.get("Name").asText();
-            final Asset asset = Asset.forName(name);
-            if (Asset.UNKNOWN.equals(asset)) {
-                System.out.println("Unknown Component detected: " + componentNode.toPrettyString());
-            }
-            this.assets.get(asset).setValue(componentNode.get("Count").asInt(), containerTarget);
-        });
-    }
-
-    private void parseDatas(final Iterator<JsonNode> datas, final ContainerTarget containerTarget) {
-        datas.forEachRemaining(dataNode ->
-        {
-            final String name = dataNode.get("Name").asText();
-            final Data data = Data.forName(name);
-            if (Data.UNKNOWN.equals(data)) {
-                System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
-                final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
-                getOrCreateContainer(this.unknownData, name + ":" + nameLocalised).setValue(dataNode.get("Count").asInt(), containerTarget);
-            } else {
-                this.data.get(data).setValue(dataNode.get("Count").asInt(), containerTarget);
-            }
-        });
-
-    }
-
-    private void parseGoods(final Iterator<JsonNode> items, final ContainerTarget containerTarget) {
-        items.forEachRemaining(itemNode ->
-        {
-            final String name = itemNode.get("Name").asText();
-            final Good good = Good.forName(name);
-            if (Good.UNKNOWN.equals(good)) {
-                System.out.println("Unknown Good detected: " + itemNode.toPrettyString());
-                final String nameLocalised = itemNode.get("Name_Localised") != null ? itemNode.get("Name_Localised").asText() : name;
-                getOrCreateContainer(this.unknownGoods, name + ":" + nameLocalised).setValue(itemNode.get("Count").asInt(), containerTarget);
-            } else {
-                this.goods.get(good).setValue(itemNode.get("Count").asInt(), containerTarget);
-            }
-
-        });
-    }
-
-    private <T> Container getOrCreateContainer(final Map<T, Container> map, final T key) {
-        if (!map.containsKey(key)) {
-            map.put(key, new Container());
-        }
-        return map.get(key);
     }
 
     private void resetShipLockerCounts() {
