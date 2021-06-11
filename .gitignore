@@ -2,3 +2,11 @@
 .idea
 build
 out
+bootstrap/.gradle
+bootstrap/.idea
+bootstrap/build
+bootstrap/out
+application/.gradle
+application/.idea
+application/build
+application/out

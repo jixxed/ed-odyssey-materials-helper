@@ -1,0 +1,72 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.openjfx:javafx-plugin:0.0.10"
+        classpath "org.beryx:badass-jlink-plugin:2.24.0"
+    }
+}
+
+apply plugin: "java"
+apply plugin: "application"
+apply plugin: "org.openjfx.javafxplugin"
+apply plugin: "org.beryx.jlink"
+group 'nl.jixxed'
+java {
+    modularity.inferModulePath = true
+}
+jar {
+    manifest {
+        attributes 'Name': 'nl/jixxed/eliteodysseymaterials',
+                'Implementation-Title': 'Elite Dangerous Odyssey Materials Helper',
+                'Implementation-Version': project.version
+    }
+}
+repositories {
+    mavenCentral()
+}
+application {
+    mainModule = moduleName
+    mainClass = "nl.jixxed.eliteodysseymaterials.Main"
+}
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'Elite Dangerous Odyssey Materials Helper'
+        jvmArgs = [
+                '-Dapp.version=' + project.version
+        ]
+    }
+    jpackage {
+        installerOptions = [
+                '--description', 'Installer for ED Odyssey Materials Helper',
+                '--copyright', 'Copyright 2021 CMDR Jixxed',
+                '--name', 'Elite Dangerous Odyssey Materials Helper',
+                '--app-version', project.version,
+                '--win-upgrade-uuid', '60AAECE0-2E3A-4A25-A662-CABCD8D1CCCE',
+                '--win-per-user-install', '--win-dir-chooser',
+                '--win-menu', '--win-shortcut'
+        ]
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
+    implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
+}
+
+
+test {
+    useJUnitPlatform()
+}
+javafx {
+    modules = ['javafx.controls', 'javafx.fxml']
+    version = '11.0.2'
+}
+mainClassName = 'nl.jixxed.eliteodysseymaterials.Main'
