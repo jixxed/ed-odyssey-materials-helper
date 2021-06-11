@@ -342,9 +342,6 @@ public class Main extends Application {
         this.componentParser.parse(journalMessage.get("Components").elements(), containerTarget, this.assets, null);
         this.goodParser.parse(journalMessage.get("Items").elements(), containerTarget, this.goods, this.unknownGoods);
         this.dataParser.parse(journalMessage.get("Data").elements(), containerTarget, this.data, this.unknownData);
-//        parseGoods(journalMessage.get("Items").elements(), containerTarget);
-//        parseComponents(journalMessage.get("Components").elements(), containerTarget);
-//        parseDatas(journalMessage.get("Data").elements(), containerTarget);
     }
 
     private void showRecipes() {

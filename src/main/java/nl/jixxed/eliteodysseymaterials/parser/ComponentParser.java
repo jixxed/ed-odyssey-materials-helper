@@ -16,10 +16,13 @@ public class ComponentParser extends Parser {
         {
             final String name = componentNode.get("Name").asText();
             final Asset asset = Asset.forName(name);
+            final int amount = componentNode.get("Count").asInt();
             if (Asset.UNKNOWN.equals(asset)) {
                 System.out.println("Unknown Component detected: " + componentNode.toPrettyString());
             }
-            knownMap.get(asset).setValue(componentNode.get("Count").asInt(), containerTarget);
+            final Container container = knownMap.get(asset);
+            //stack values as items occur multiple times in the json
+            container.setValue(container.getValue(containerTarget) + amount, containerTarget);
         });
     }
 }

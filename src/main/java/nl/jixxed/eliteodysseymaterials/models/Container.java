@@ -29,4 +29,11 @@ public class Container {
     public Integer getTotalValue() {
         return this.backPack + this.shipLocker;
     }
+
+    public Integer getValue(final ContainerTarget target) {
+        return switch (target) {
+            case BACKPACK -> this.backPack;
+            case SHIPLOCKER -> this.shipLocker;
+        };
+    }
 }

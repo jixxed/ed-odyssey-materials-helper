@@ -16,12 +16,17 @@ public class DataParser extends Parser {
         {
             final String name = dataNode.get("Name").asText();
             final Data data = Data.forName(name);
+            final int amount = dataNode.get("Count").asInt();
             if (Data.UNKNOWN.equals(data)) {
                 System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
                 final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
-                getOrCreateContainer(unknownMap, name + ":" + nameLocalised).setValue(dataNode.get("Count").asInt(), containerTarget);
+                final Container container = getOrCreateContainer(unknownMap, name + ":" + nameLocalised);
+                //stack values as items occur multiple times in the json
+                container.setValue(container.getValue(containerTarget) + amount, containerTarget);
             } else {
-                knownMap.get(data).setValue(dataNode.get("Count").asInt(), containerTarget);
+                final Container container = knownMap.get(data);
+                //stack values as items occur multiple times in the json
+                container.setValue(container.getValue(containerTarget) + amount, containerTarget);
             }
         });
     }

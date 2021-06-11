@@ -16,14 +16,18 @@ public class GoodParser extends Parser {
         {
             final String name = itemNode.get("Name").asText();
             final Good good = Good.forName(name);
+            final int amount = itemNode.get("Count").asInt();
             if (Good.UNKNOWN.equals(good)) {
                 System.out.println("Unknown Good detected: " + itemNode.toPrettyString());
                 final String nameLocalised = itemNode.get("Name_Localised") != null ? itemNode.get("Name_Localised").asText() : name;
-                getOrCreateContainer(unknownMap, name + ":" + nameLocalised).setValue(itemNode.get("Count").asInt(), containerTarget);
+                final Container container = getOrCreateContainer(unknownMap, name + ":" + nameLocalised);
+                //stack values as items occur multiple times in the json
+                container.setValue(container.getValue(containerTarget) + amount, containerTarget);
             } else {
-                knownMap.get(good).setValue(itemNode.get("Count").asInt(), containerTarget);
+                final Container container = knownMap.get(good);
+                //stack values as items occur multiple times in the json
+                container.setValue(container.getValue(containerTarget) + amount, containerTarget);
             }
-
         });
     }
 }
