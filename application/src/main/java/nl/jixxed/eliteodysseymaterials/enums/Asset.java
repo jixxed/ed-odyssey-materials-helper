@@ -54,6 +54,7 @@ public enum Asset implements Material {
         }
     }
 
+    @Override
     public String friendlyName() {
         return this.name;
     }

@@ -61,6 +61,7 @@ public enum Good implements Material {
         }
     }
 
+    @Override
     public String friendlyName() {
         return this.name;
     }

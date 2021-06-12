@@ -1,9 +1,9 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.templates.Settings;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,12 +12,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class RecipeConstants {
-    static final Map<String, Recipe> SUIT_UPGRADES = new HashMap<>();
-    static final Map<String, Recipe> WEAPON_UPGRADES = new HashMap<>();
-    static final Map<String, Recipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
-    static final Map<String, Recipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
-    static final Map<String, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
-    static final Map<String, Map<String, ? extends Recipe>> RECIPES = Map.of(
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    public static final Map<String, Recipe> SUIT_UPGRADES = new HashMap<>();
+    public static final Map<String, Recipe> WEAPON_UPGRADES = new HashMap<>();
+    public static final Map<String, Recipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
+    public static final Map<String, Recipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
+    public static final Map<String, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
+    public static final Map<String, Map<String, ? extends Recipe>> RECIPES = Map.of(
             "Suit Grades", SUIT_UPGRADES,
             "Weapon Grades", WEAPON_UPGRADES,
             "Suit Modules", SUIT_MODULE_BLUEPRINTS,
@@ -63,44 +64,48 @@ public abstract class RecipeConstants {
         return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(EngineerRecipe::isCompleted).anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
     }
 
+    public static boolean isEngineeringIngredientAndNotCompleted(final Material material) {
+        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(engineerRecipe -> !engineerRecipe.isCompleted()).anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
+    }
+
     static {
         ENGINEER_UNLOCK_REQUIREMENTS.put("A1. Domino Green", new EngineerRecipe(
                 List.of("Fly 100 Ly in shuttles"),
-                () -> Settings.isEngineerUnlocked(Engineer.DOMINO_GREEN)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.DOMINO_GREEN)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("A2. Domino Green -> Kit Fowler", new EngineerRecipe(
                 Map.of(
                         Good.PUSH, 5
                 ),
-                () -> Settings.isEngineerKnown(Engineer.KIT_FOWLER)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.KIT_FOWLER)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("A3. Kit Fowler", new EngineerRecipe(
                 Map.of(
                         Data.OPINIONPOLLS, 40
                 ),
-                () -> Settings.isEngineerUnlocked(Engineer.KIT_FOWLER)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.KIT_FOWLER)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("A4. Kit Fowler -> Yarden Bond", new EngineerRecipe(
                 Map.of(
                         Good.SURVEILLANCEEQUIPMENT, 5
                 ),
-                () -> Settings.isEngineerKnown(Engineer.YARDEN_BOND)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.YARDEN_BOND)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("A5. Yarden Bond", new EngineerRecipe(
                 Map.of(
                         Data.SMEARCAMPAIGNPLANS, 8
                 ),
-                () -> Settings.isEngineerUnlocked(Engineer.YARDEN_BOND)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YARDEN_BOND)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("B1. Hero Ferrari", new EngineerRecipe(
                 List.of("10 Surface conflict zones"),
-                () -> Settings.isEngineerUnlocked(Engineer.HERO_FERRARI)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.HERO_FERRARI)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("B2. Hero Ferrari -> Wellington Beck", new EngineerRecipe(
                 Map.of(
                         Data.SETTLEMENTDEFENCEPLANS, 15
                 ),
-                () -> Settings.isEngineerKnown(Engineer.WELLINGTON_BECK)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.WELLINGTON_BECK)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("B3. Wellington Beck (Sell 25 of one below)", new EngineerRecipe(
                 Map.of(
@@ -108,37 +113,37 @@ public abstract class RecipeConstants {
                         Data.MULTIMEDIAENTERTAINMENT, 25,
                         Data.CATMEDIA, 25
                 ),
-                () -> Settings.isEngineerUnlocked(Engineer.WELLINGTON_BECK)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.WELLINGTON_BECK)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("B4. Wellington Beck -> Uma Laszlo", new EngineerRecipe(
                 Map.of(
                         Good.INSIGHTENTERTAINMENTSUITE, 5
                 ),
-                () -> Settings.isEngineerKnown(Engineer.UMA_LASZLO)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.UMA_LASZLO)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("B5. Uma Laszlo", new EngineerRecipe(
                 List.of("Unfriendly reputation or lower with Sirius Corporation"),
-                () -> Settings.isEngineerUnlocked(Engineer.UMA_LASZLO)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.UMA_LASZLO)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C1. Jude Navarro", new EngineerRecipe(
                 List.of("10 Restore or Reactivation Missions"),
-                () -> Settings.isEngineerUnlocked(Engineer.JUDE_NAVARRO)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.JUDE_NAVARRO)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C2. Jude Navarro -> Terra Velasquez", new EngineerRecipe(
                 Map.of(
                         Good.GENETICREPAIRMEDS, 5
                 ),
-                () -> Settings.isEngineerKnown(Engineer.TERRA_VELASQUEZ)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.TERRA_VELASQUEZ)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C3. Terra Velasquez (Complete one of below)", new EngineerRecipe(
                 List.of("6 Covert Theft Missions", "6 Covert Heist Missions"),
-                () -> Settings.isEngineerUnlocked(Engineer.TERRA_VELASQUEZ)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.TERRA_VELASQUEZ)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C4. Terra Velasquez -> Oden Geiger", new EngineerRecipe(
                 Map.of(
                         Data.FINANCIALPROJECTIONS, 15
                 ),
-                () -> Settings.isEngineerKnown(Engineer.ODEN_GEIGER)
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.ODEN_GEIGER)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put("C5. Oden Geiger (Sell 20 of one below)", new EngineerRecipe(
                 Map.of(
@@ -146,7 +151,7 @@ public abstract class RecipeConstants {
                         Data.EMPLOYEEGENETICDATA, 20,
                         Data.GENETICRESEARCH, 20
                 ),
-                () -> Settings.isEngineerUnlocked(Engineer.ODEN_GEIGER)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ODEN_GEIGER)
         ));
         SUIT_UPGRADES.put("Maverick Suit Grade 1>2", new Recipe(
                 Map.of(

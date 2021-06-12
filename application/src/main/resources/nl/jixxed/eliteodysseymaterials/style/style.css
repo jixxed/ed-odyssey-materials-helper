@@ -238,3 +238,13 @@
 .download:hover {
     -fx-background-color: #aaa;
 }
+
+.filter-and-sort {
+    -fx-min-height: 30;
+    -fx-max-height: 30;
+    /*noinspection CssInvalidFunction*/
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
+    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 0, 0;
+}

@@ -8,4 +8,6 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml;
     exports nl.jixxed.eliteodysseymaterials;
+    exports nl.jixxed.eliteodysseymaterials.enums;
+    exports nl.jixxed.eliteodysseymaterials.domain;
 }

@@ -132,6 +132,7 @@ public enum Data implements Material {
         }
     }
 
+    @Override
     public String friendlyName() {
         return this.name;
     }
