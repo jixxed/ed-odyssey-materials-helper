@@ -15,7 +15,6 @@ public enum Good implements Material {
     GENETICREPAIRMEDS("Genetic Repair Meds"),
     GENETICSAMPLE("Biological Sample"),
     GMEDS("G-Meds"),
-    HEALTHCANISTER("Health Canister"),
     HEALTHMONITOR("Health Monitor"),
     HUSH("Hush"),
     INERTIACANISTER("Inertia Canister"),
