@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.Node;
 import javafx.scene.control.TitledPane;
-import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
 
 public class EngineerTitledPane extends TitledPane {
     private final EngineerRecipe engineerRecipe;

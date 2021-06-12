@@ -7,4 +7,5 @@ module nl.jixxed.eliteodysseymaterials {
     requires io.reactivex.rxjava3;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml;
+    exports nl.jixxed.eliteodysseymaterials;
 }

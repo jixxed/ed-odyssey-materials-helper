@@ -1,17 +1,17 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import nl.jixxed.eliteodysseymaterials.enums.ContainerTarget;
+import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.models.Container;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 
 import java.util.Iterator;
 import java.util.Map;
 
 public class GoodParser extends Parser {
     @Override
-    public void parse(final Iterator<JsonNode> items, final ContainerTarget containerTarget, final Map<? extends Material, Container> knownMap, final Map<String, Container> unknownMap) {
+    public void parse(final Iterator<JsonNode> items, final StoragePool storagePool, final Map<? extends Material, Storage> knownMap, final Map<String, Storage> unknownMap) {
         items.forEachRemaining(itemNode ->
         {
             final String name = itemNode.get("Name").asText();
@@ -20,13 +20,13 @@ public class GoodParser extends Parser {
             if (Good.UNKNOWN.equals(good)) {
                 System.out.println("Unknown Good detected: " + itemNode.toPrettyString());
                 final String nameLocalised = itemNode.get("Name_Localised") != null ? itemNode.get("Name_Localised").asText() : name;
-                final Container container = getOrCreateContainer(unknownMap, name + ":" + nameLocalised);
+                final Storage storage = getOrCreateContainer(unknownMap, name + ":" + nameLocalised);
                 //stack values as items occur multiple times in the json
-                container.setValue(container.getValue(containerTarget) + amount, containerTarget);
+                storage.setValue(storage.getValue(storagePool) + amount, storagePool);
             } else {
-                final Container container = knownMap.get(good);
+                final Storage storage = knownMap.get(good);
                 //stack values as items occur multiple times in the json
-                container.setValue(container.getValue(containerTarget) + amount, containerTarget);
+                storage.setValue(storage.getValue(storagePool) + amount, storagePool);
             }
         });
     }

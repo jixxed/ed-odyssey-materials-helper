@@ -10,13 +10,14 @@ buildscript {
     }
 }
 
+apply plugin: 'idea' // optional (to generate IntelliJ IDEA project files)
 apply plugin: "java"
 apply plugin: "application"
 apply plugin: "org.openjfx.javafxplugin"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
-    modularity.inferModulePath = true
+    modularity.inferModulePath.set(true)
 }
 jar {
     manifest {
@@ -53,19 +54,46 @@ jlink {
         ]
     }
 }
-
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+//    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    testImplementation "org.junit.platform:junit-platform-suite-api:1.7.2"
+    testImplementation group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.7.2'
+//    testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.7.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
+    testCompile "org.assertj:assertj-core:3.19.0"
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
+//    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
 }
-
+jpackage { dependsOn test }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+
+    }
 }
+compileTestJava {
+    java {
+        modularity.inferModulePath.set(true)
+    }
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'org.junit.platform.suite.api',
+                '--add-modules', 'org.junit.platform.runner',
+                '--add-reads', "$moduleName=org.junit.platform.suite.api",
+                '--add-reads', "$moduleName=org.junit.platform.runner",
+        ]
+        classpath = files()
+    }
+}
+
 javafx {
     modules = ['javafx.controls', 'javafx.fxml']
     version = '11.0.2'

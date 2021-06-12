@@ -1,19 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import nl.jixxed.eliteodysseymaterials.enums.ContainerTarget;
+import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.models.Container;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 
 import java.util.Iterator;
 import java.util.Map;
 
 public abstract class Parser {
-    abstract void parse(final Iterator<JsonNode> items, final ContainerTarget containerTarget, Map<? extends Material, Container> knownMap, Map<String, Container> unknownMap);
+    abstract void parse(final Iterator<JsonNode> items, final StoragePool storagePool, Map<? extends Material, Storage> knownMap, Map<String, Storage> unknownMap);
 
-    <T> Container getOrCreateContainer(final Map<T, Container> map, final T key) {
+    <T> Storage getOrCreateContainer(final Map<T, Storage> map, final T key) {
         if (!map.containsKey(key)) {
-            map.put(key, new Container());
+            map.put(key, new Storage());
         }
         return map.get(key);
     }

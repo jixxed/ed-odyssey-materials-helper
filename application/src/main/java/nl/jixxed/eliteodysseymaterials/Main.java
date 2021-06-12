@@ -17,11 +17,11 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.Recipe;
+import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.models.Container;
-import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
-import nl.jixxed.eliteodysseymaterials.models.Recipe;
-import nl.jixxed.eliteodysseymaterials.parser.ComponentParser;
+import nl.jixxed.eliteodysseymaterials.parser.AssetParser;
 import nl.jixxed.eliteodysseymaterials.parser.DataParser;
 import nl.jixxed.eliteodysseymaterials.parser.GoodParser;
 import nl.jixxed.eliteodysseymaterials.templates.*;
@@ -44,17 +44,17 @@ public class Main extends Application {
     private final AnchorPane content = new AnchorPane();
     private final GridPane materialOverview = new GridPane();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Map<Good, Container> goods = new HashMap<>();
-    private final Map<String, Container> unknownGoods = new HashMap<>();
-    private final Map<Asset, Container> assets = new HashMap<>();
-    private final Map<Data, Container> data = new HashMap<>();
-    private final Map<String, Container> unknownData = new HashMap<>();
+    private final Map<Good, Storage> goods = new HashMap<>();
+    private final Map<String, Storage> unknownGoods = new HashMap<>();
+    private final Map<Asset, Storage> assets = new HashMap<>();
+    private final Map<Data, Storage> data = new HashMap<>();
+    private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final List<EngineerTitledPane> engineerTitledPanes = new ArrayList<>();
     private final GameStateWatcher gameStateWatcher = new GameStateWatcher();
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final Settings settings = new Settings(this);
-    ComponentParser componentParser = new ComponentParser();
+    AssetParser assetParser = new AssetParser();
     DataParser dataParser = new DataParser();
     GoodParser goodParser = new GoodParser();
     private final Legend legend = new Legend();
@@ -285,8 +285,8 @@ public class Main extends Application {
             final JsonNode messageJson = this.objectMapper.readTree(message);
             if (messageJson.get("event") != null) {
                 switch (messageJson.get("event").asText()) {
-                    case "ShipLocker" -> processShipLockerMaterialsMessage(messageJson, ContainerTarget.SHIPLOCKER);
-                    case "Backpack" -> processShipLockerMaterialsMessage(messageJson, ContainerTarget.BACKPACK);
+                    case "ShipLocker" -> processShipLockerMaterialsMessage(messageJson, StoragePool.SHIPLOCKER);
+                    case "Backpack" -> processShipLockerMaterialsMessage(messageJson, StoragePool.BACKPACK);
                 }
             }
         } catch (final JsonProcessingException e) {
@@ -330,18 +330,18 @@ public class Main extends Application {
         });
     }
 
-    private void processShipLockerMaterialsMessage(final JsonNode journalMessage, final ContainerTarget containerTarget) {
+    private void processShipLockerMaterialsMessage(final JsonNode journalMessage, final StoragePool storagePool) {
         if (journalMessage.get("Items") == null || journalMessage.get("Components") == null || journalMessage.get("Data") == null) {
             return;
         }
-        switch (containerTarget) {
+        switch (storagePool) {
             case SHIPLOCKER -> resetShipLockerCounts();
             case BACKPACK -> resetBackPackCounts();
         }
         updateLastTimeStamp(journalMessage);
-        this.componentParser.parse(journalMessage.get("Components").elements(), containerTarget, this.assets, null);
-        this.goodParser.parse(journalMessage.get("Items").elements(), containerTarget, this.goods, this.unknownGoods);
-        this.dataParser.parse(journalMessage.get("Data").elements(), containerTarget, this.data, this.unknownData);
+        this.assetParser.parse(journalMessage.get("Components").elements(), storagePool, this.assets, null);
+        this.goodParser.parse(journalMessage.get("Items").elements(), storagePool, this.goods, this.unknownGoods);
+        this.dataParser.parse(journalMessage.get("Data").elements(), storagePool, this.data, this.unknownData);
     }
 
     private void showRecipes() {
@@ -422,7 +422,7 @@ public class Main extends Application {
         return recipeTitledPane;
     }
 
-    private List<Ingredient> getRecipeIngredients(final Map.Entry<String, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Container> materialMap) {
+    private List<Ingredient> getRecipeIngredients(final Map.Entry<String, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Storage> materialMap) {
         return recipe.getValue().getMaterialCollection(materialClass).entrySet().stream()
                 .map(material ->
                         {
@@ -472,7 +472,7 @@ public class Main extends Application {
     private void showComponents(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
         this.assets.entrySet().stream().sorted(
-                Comparator.comparing((Map.Entry<Asset, Container> o) -> o.getKey().getType())
+                Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
                         .thenComparing(o -> o.getKey().friendlyName()))
                 .forEach((entry) -> {
                     final String name = entry.getKey().friendlyName();
@@ -512,30 +512,30 @@ public class Main extends Application {
     }
 
     private void resetShipLockerCounts() {
-        this.assets.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
-        this.data.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
-        this.goods.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
-        this.unknownGoods.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
-        this.unknownData.values().forEach(value -> value.setValue(0, ContainerTarget.SHIPLOCKER));
+        this.assets.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+        this.data.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+        this.goods.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+        this.unknownGoods.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+        this.unknownData.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
     }
 
     private void resetBackPackCounts() {
-        this.assets.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
-        this.data.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
-        this.goods.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
-        this.unknownGoods.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
-        this.unknownData.values().forEach(value -> value.setValue(0, ContainerTarget.BACKPACK));
+        this.assets.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
+        this.data.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
+        this.goods.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
+        this.unknownGoods.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
+        this.unknownData.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
     }
 
     private void initCounts() {
         Arrays.stream(Asset.values()).forEach(component ->
-                this.assets.put(component, new Container())
+                this.assets.put(component, new Storage())
         );
         Arrays.stream(Data.values()).forEach(data ->
-                this.data.put(data, new Container())
+                this.data.put(data, new Storage())
         );
         Arrays.stream(Good.values()).forEach(good ->
-                this.goods.put(good, new Container())
+                this.goods.put(good, new Storage())
         );
 
     }

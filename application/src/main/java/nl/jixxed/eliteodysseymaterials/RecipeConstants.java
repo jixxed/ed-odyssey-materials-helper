@@ -1,8 +1,8 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.models.EngineerRecipe;
-import nl.jixxed.eliteodysseymaterials.models.Recipe;
 import nl.jixxed.eliteodysseymaterials.templates.Settings;
 
 import java.util.Collection;

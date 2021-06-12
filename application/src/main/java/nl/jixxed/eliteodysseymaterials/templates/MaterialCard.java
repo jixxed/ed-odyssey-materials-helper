@@ -8,11 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.models.Container;
 
 import java.io.IOException;
 
@@ -24,9 +24,9 @@ public class MaterialCard extends HBox {
     @FXML
     private Label amount;
 
-    private final Container amounts;
+    private final Storage amounts;
 
-    public MaterialCard(final String name, final Container amounts) {
+    public MaterialCard(final String name, final Storage amounts) {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Material.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -45,7 +45,7 @@ public class MaterialCard extends HBox {
         this.image.setFitWidth(0);
     }
 
-    public MaterialCard(final Material material, final String name, final Container amounts, final boolean isEngineerUnlockMaterial) {
+    public MaterialCard(final Material material, final String name, final Storage amounts, final boolean isEngineerUnlockMaterial) {
         this(name, amounts);
         final boolean isUnknown = Data.UNKNOWN.equals(material) || Good.UNKNOWN.equals(material);
         if (isUnknown) {
@@ -75,7 +75,7 @@ public class MaterialCard extends HBox {
         }
     }
 
-    public MaterialCard(final Asset asset, final String name, final Container amounts) {
+    public MaterialCard(final Asset asset, final String name, final Storage amounts) {
         this(name, amounts);
         final String recipesContaining = RecipeConstants.findRecipesContaining(asset);
         this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
