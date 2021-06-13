@@ -18,4 +18,8 @@ public enum Engineer {
     Engineer(final String name) {
         this.name = name;
     }
+
+    public String friendlyName() {
+        return this.name;
+    }
 }

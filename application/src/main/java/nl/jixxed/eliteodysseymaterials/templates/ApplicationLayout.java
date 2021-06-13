@@ -15,10 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
-import nl.jixxed.eliteodysseymaterials.domain.Recipe;
-import nl.jixxed.eliteodysseymaterials.domain.Storage;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.io.IOException;
@@ -34,6 +31,7 @@ import java.util.stream.Collectors;
 public class ApplicationLayout extends AnchorPane {
     private static final Insets CARD_MARGIN = new Insets(2, 5, 2, 5);
     private final List<EngineerTitledPane> engineerTitledPanes = new ArrayList<>();
+    private final List<EngineerModuleLabel> moduleEngineerLabels = new ArrayList<>();
     private final AnchorPane content = new AnchorPane();
     private String search = "";
     private final GridPane materialOverview = new GridPane();
@@ -42,7 +40,7 @@ public class ApplicationLayout extends AnchorPane {
     private final Legend legend = new Legend();
     final Label watchedFileLabel = new Label();
     final Label lastTimeStampLabel = new Label();
-    private final ApplicationState applicationState = ApplicationState.getInstance();
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     public ApplicationLayout(final Application application) {
         this.settings = new Settings(application);
@@ -84,7 +82,7 @@ public class ApplicationLayout extends AnchorPane {
         showMaterialsComboBox.setPromptText("Show materials:");
         showMaterialsComboBox.setTooltip(new Tooltip("Show materials"));
         showMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            this.applicationState.setShow(newValue);
+            APPLICATION_STATE.setShow(newValue);
             updateGui();
         });
         final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>(sortOptions);
@@ -92,7 +90,7 @@ public class ApplicationLayout extends AnchorPane {
         sortMaterialsComboBox.setPromptText("Sort materials:");
         sortMaterialsComboBox.setTooltip(new Tooltip("Sort materials"));
         sortMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            this.applicationState.setSort(newValue);
+            APPLICATION_STATE.setSort(newValue);
             updateGui();
         });
         final Observable<String> searchChanged = Observable.create((ObservableEmitter<String> emitter) ->
@@ -161,9 +159,9 @@ public class ApplicationLayout extends AnchorPane {
     public void updateIngredients() {
         this.ingredients.forEach(ingredient -> {
             switch (ingredient.getType()) {
-                case ASSET -> ingredient.setAmountAvailable(this.applicationState.getAssets().get(Asset.forName(ingredient.getCode())).getTotalValue());
-                case GOOD -> ingredient.setAmountAvailable(this.applicationState.getGoods().get(Good.forName(ingredient.getCode())).getTotalValue());
-                case DATA -> ingredient.setAmountAvailable(this.applicationState.getData().get(Data.forName(ingredient.getCode())).getTotalValue());
+                case ASSET -> ingredient.setAmountAvailable(APPLICATION_STATE.getAssets().get(Asset.forName(ingredient.getCode())).getTotalValue());
+                case GOOD -> ingredient.setAmountAvailable(APPLICATION_STATE.getGoods().get(Good.forName(ingredient.getCode())).getTotalValue());
+                case DATA -> ingredient.setAmountAvailable(APPLICATION_STATE.getData().get(Data.forName(ingredient.getCode())).getTotalValue());
                 case OTHER -> {
                 }
             }
@@ -172,13 +170,13 @@ public class ApplicationLayout extends AnchorPane {
 
     private void showGoods(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
-        this.applicationState.getGoods().entrySet().stream().filter(getFilter()).filter(searchFilter()).filter(unknownFilter()).sorted(getSort()).forEach((entry) -> {
+        APPLICATION_STATE.getGoods().entrySet().stream().filter(getFilter()).filter(searchFilter()).filter(unknownFilter()).sorted(getSort()).forEach((entry) -> {
             final String name = entry.getKey().friendlyName();
             final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
             layout.add(materialCard, counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
-        this.applicationState.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
+        APPLICATION_STATE.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
 
             final String name = entry.getKey() + " (unknown)";
             final MaterialCard materialCard = new MaterialCard(Good.UNKNOWN, name, entry.getValue(), false);
@@ -190,7 +188,7 @@ public class ApplicationLayout extends AnchorPane {
 
     private void showAssets(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
-        this.applicationState.getAssets().entrySet().stream().filter(getFilter()).filter(searchFilter()).filter(unknownFilter()).sorted(
+        APPLICATION_STATE.getAssets().entrySet().stream().filter(getFilter()).filter(searchFilter()).filter(unknownFilter()).sorted(
                 Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
                         .thenComparing(o -> o.getKey().friendlyName()))
                 .forEach((entry) -> {
@@ -203,14 +201,14 @@ public class ApplicationLayout extends AnchorPane {
 
     private void showDatas(final GridPane layout) {
         final AtomicInteger counter = new AtomicInteger(0);
-        this.applicationState.getData().entrySet().stream().filter(getFilter()).filter(searchFilter()).filter(unknownFilter()).sorted(getSort()).forEach((entry) -> {
+        APPLICATION_STATE.getData().entrySet().stream().filter(getFilter()).filter(searchFilter()).filter(unknownFilter()).sorted(getSort()).forEach((entry) -> {
             final String name = entry.getKey().friendlyName();
 
             final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
             layout.add(materialCard, 4 + counter.get() % 2, 1 + (counter.getAndIncrement() / 2));
             GridPane.setMargin(materialCard, CARD_MARGIN);
         });
-        this.applicationState.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
+        APPLICATION_STATE.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
 
             final String name = entry.getKey() + " (unknown)";
             final MaterialCard materialCard = new MaterialCard(Data.UNKNOWN, name, entry.getValue(), false);
@@ -234,7 +232,7 @@ public class ApplicationLayout extends AnchorPane {
     }
 
     private Predicate<? super Map.Entry<? extends Material, Storage>> getFilter() {
-        return switch (this.applicationState.getShow()) {
+        return switch (APPLICATION_STATE.getShow()) {
             case ALL -> (Map.Entry<? extends Material, Storage> o) -> true;
             case ALL_WITH_STOCK -> (Map.Entry<? extends Material, Storage> o) -> o.getValue().getTotalValue() > 0;
             case BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey());
@@ -248,7 +246,7 @@ public class ApplicationLayout extends AnchorPane {
     }
 
     private Comparator<Map.Entry<? extends Material, Storage>> getSort() {
-        return switch (this.applicationState.getSort()) {
+        return switch (APPLICATION_STATE.getSort()) {
             case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> o.getKey().friendlyName());
             case RELEVANT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey()) || RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> o.getKey().friendlyName());
             case ENGINEER_BLUEPRINT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey())).thenComparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> o.getKey().friendlyName());
@@ -287,9 +285,9 @@ public class ApplicationLayout extends AnchorPane {
     private TitledPane createRecipeTitledPane(final Map.Entry<String, ? extends Recipe> recipe) {
         final VBox content = new VBox();
         final List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.addAll(getRecipeIngredients(recipe, Good.class, StorageType.GOOD, this.applicationState.getGoods()));
-        ingredients.addAll(getRecipeIngredients(recipe, Asset.class, StorageType.ASSET, this.applicationState.getAssets()));
-        ingredients.addAll(getRecipeIngredients(recipe, Data.class, StorageType.DATA, this.applicationState.getData()));
+        ingredients.addAll(getRecipeIngredients(recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
+        ingredients.addAll(getRecipeIngredients(recipe, Asset.class, StorageType.ASSET, APPLICATION_STATE.getAssets()));
+        ingredients.addAll(getRecipeIngredients(recipe, Data.class, StorageType.DATA, APPLICATION_STATE.getData()));
 
         if (recipe.getValue() instanceof EngineerRecipe) {
             ingredients.addAll(((EngineerRecipe) recipe.getValue()).getOther().stream()
@@ -309,6 +307,23 @@ public class ApplicationLayout extends AnchorPane {
             e.printStackTrace();
         }
         content.getChildren().addAll(ingredients);
+        if (recipe.getValue() instanceof ModuleRecipe) {
+            final Label engineerLabelHeader = new Label("Engineers crafting this blueprint:");
+            engineerLabelHeader.getStyleClass().add("engineerLabelHeader");
+            content.getChildren().addAll(engineerLabelHeader);
+
+            final Label[] engineerLabels = ((ModuleRecipe) recipe.getValue()).getEngineers().stream()
+                    .sorted(Comparator.comparing(Engineer::friendlyName))
+                    .map(engineer -> {
+                        final EngineerModuleLabel label = new EngineerModuleLabel(engineer);
+                        this.moduleEngineerLabels.add(label);
+                        return label;
+                    }).toArray(Label[]::new);
+
+            final FlowPane flowPane = new FlowPane(engineerLabels);
+            flowPane.getStyleClass().add("engineerFlow");
+            content.getChildren().addAll(flowPane);
+        }
         final TitledPane recipeTitledPane = createTitledPane(recipe, content);
         recipeTitledPane.getStyleClass().add("blueprint-title-pane");
         if (recipe.getValue() instanceof EngineerRecipe && ((EngineerRecipe) recipe.getValue()).isCompleted()) {
@@ -355,6 +370,7 @@ public class ApplicationLayout extends AnchorPane {
                 titledPane.getStyleClass().add("completed");
             }
         });
+        this.moduleEngineerLabels.forEach(label -> label.updateStyle(APPLICATION_STATE.isEngineerUnlocked(label.getEngineer())));
     }
 
     private void updateTotals() {
@@ -364,15 +380,15 @@ public class ApplicationLayout extends AnchorPane {
     }
 
     private void updateTotalsData() {
-        final Integer recipeDatas = this.applicationState.getData().entrySet().stream()
+        final Integer recipeDatas = APPLICATION_STATE.getData().entrySet().stream()
                 .filter(data -> RecipeConstants.isBlueprintIngredient(data.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeDatas = this.applicationState.getData().entrySet().stream()
+        final Integer nonRecipeDatas = APPLICATION_STATE.getData().entrySet().stream()
                 .filter(data -> !RecipeConstants.isBlueprintIngredient(data.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer unknownDatas = this.applicationState.getUnknownData().size();
+        final Integer unknownDatas = APPLICATION_STATE.getUnknownData().size();
         final MaterialCard datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + (nonRecipeDatas + unknownDatas) + " / Total: " + (recipeDatas + nonRecipeDatas + unknownDatas) + ")", null);
         datasLabel.getStyleClass().add("category-label");
         this.materialOverview.add(datasLabel, 4, 0, 2, 1);
@@ -380,11 +396,11 @@ public class ApplicationLayout extends AnchorPane {
     }
 
     private void updateTotalsAssets() {
-        final Integer recipeAssets = this.applicationState.getAssets().entrySet().stream()
+        final Integer recipeAssets = APPLICATION_STATE.getAssets().entrySet().stream()
                 .filter(assetEntry -> RecipeConstants.isBlueprintIngredient(assetEntry.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeAssets = this.applicationState.getAssets().entrySet().stream()
+        final Integer nonRecipeAssets = APPLICATION_STATE.getAssets().entrySet().stream()
                 .filter(assetEntry -> !RecipeConstants.isBlueprintIngredient(assetEntry.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
@@ -395,15 +411,15 @@ public class ApplicationLayout extends AnchorPane {
     }
 
     private void updateTotalsGoods() {
-        final Integer recipeGoods = this.applicationState.getGoods().entrySet().stream()
+        final Integer recipeGoods = APPLICATION_STATE.getGoods().entrySet().stream()
                 .filter(good -> RecipeConstants.isBlueprintIngredient(good.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeGoods = this.applicationState.getGoods().entrySet().stream()
+        final Integer nonRecipeGoods = APPLICATION_STATE.getGoods().entrySet().stream()
                 .filter(good -> !RecipeConstants.isBlueprintIngredient(good.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer unknownGoods = this.applicationState.getUnknownGoods().size();
+        final Integer unknownGoods = APPLICATION_STATE.getUnknownGoods().size();
         final MaterialCard goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + (nonRecipeGoods + unknownGoods) + " / Total: " + (recipeGoods + nonRecipeGoods + unknownGoods) + ")", null);
         goodsLabel.getStyleClass().add("category-label");
         this.materialOverview.add(goodsLabel, 0, 0, 2, 1);

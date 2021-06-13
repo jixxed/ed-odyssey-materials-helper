@@ -7,14 +7,18 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
+import nl.jixxed.eliteodysseymaterials.BarterConstants;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Good;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MaterialCard extends HBox {
     @FXML
@@ -25,6 +29,7 @@ public class MaterialCard extends HBox {
     private Label amount;
 
     private final Storage amounts;
+    NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
     public MaterialCard(final String name, final Storage amounts) {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Material.fxml"));
@@ -46,13 +51,17 @@ public class MaterialCard extends HBox {
     }
 
     public MaterialCard(final Material material, final String name, final Storage amounts, final boolean isEngineerUnlockMaterial) {
+        this(material, false, name, amounts, isEngineerUnlockMaterial);
+    }
+
+    public MaterialCard(final Material material, final boolean disableTooltip, final String name, final Storage amounts, final boolean isEngineerUnlockMaterial) {
         this(name, amounts);
-        final boolean isUnknown = Data.UNKNOWN.equals(material) || Good.UNKNOWN.equals(material);
-        if (isUnknown) {
-            this.name.setTooltip(new Tooltip("Unknown material, please report to the developer."));
-        } else {
-            final String recipesContaining = RecipeConstants.findRecipesContaining(material);
-            this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
+
+        final boolean isUnknown = Data.UNKNOWN.equals(material) || Good.UNKNOWN.equals(material) || Asset.UNKNOWN.equals(material);
+        if (!disableTooltip) {
+            final Tooltip tooltip = createTooltip(name, material);
+            this.name.setTooltip(tooltip);
+            tooltip.setShowDelay(Duration.millis(100));
         }
         if (isEngineerUnlockMaterial) {
             this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer.png")));
@@ -76,9 +85,14 @@ public class MaterialCard extends HBox {
     }
 
     public MaterialCard(final Asset asset, final String name, final Storage amounts) {
+        this(asset, false, name, amounts);
+    }
+
+    public MaterialCard(final Asset asset, final boolean disableTooltip, final String name, final Storage amounts) {
         this(name, amounts);
-        final String recipesContaining = RecipeConstants.findRecipesContaining(asset);
-        this.name.setTooltip(new Tooltip(name + (!recipesContaining.isBlank() ? "\n" + "Used in recipes:\n" + recipesContaining : "")));
+        if (!disableTooltip) {
+            this.name.setTooltip(createTooltip(name, asset));
+        }
         switch (asset.getType()) {
             case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
             case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));
@@ -90,6 +104,38 @@ public class MaterialCard extends HBox {
             case CIRCUIT -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-circuit");
             case CHEMICAL -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-chemical");
             default -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-unknown");
+        }
+    }
+
+    private Tooltip createTooltip(final String name, final Material material) {
+        final boolean isUnknown = Data.UNKNOWN.equals(material) || Good.UNKNOWN.equals(material) || Asset.UNKNOWN.equals(material);
+
+        if (isUnknown) {
+            return new Tooltip("Unknown material, please report to the developer.");
+        } else {
+            final String recipesContaining = RecipeConstants.findRecipesContaining(material);
+            final StringBuilder builder = new StringBuilder();
+            builder.append(name);
+            final Integer barterSellPrice = BarterConstants.getBarterSellPrice(material);
+            builder.append("\n\nBarter sell price: $").append(barterSellPrice == -1 ? "?" : this.numberFormat.format(barterSellPrice));
+            if (material instanceof Asset) {
+                builder.append("\nBarter trade buy/sell: ").append(BarterConstants.getBarterValues(material));
+            }
+            if (!recipesContaining.isBlank()) {
+                builder.append("\n\nUsed in recipes:\n");
+                builder.append(recipesContaining);
+            }
+            final Map<SpawnLocationType, List<? extends SpawnLocation>> spawnLocations = SpawnConstants.getSpawnLocations(material);
+            if (!spawnLocations.isEmpty()) {
+                spawnLocations.forEach((locationType, value) -> {
+                    final String locations = value.stream().map(SpawnLocation::friendlyName).collect(Collectors.joining(", "));
+                    if (!locations.isBlank()) {
+                        builder.append("\n\n").append(locationType.friendlyName()).append(":\n");
+                        builder.append(locations);
+                    }
+                });
+            }
+            return new Tooltip(builder.toString());
         }
     }
 }

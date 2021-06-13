@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials;
 
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
@@ -15,8 +16,8 @@ public abstract class RecipeConstants {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     public static final Map<String, Recipe> SUIT_UPGRADES = new HashMap<>();
     public static final Map<String, Recipe> WEAPON_UPGRADES = new HashMap<>();
-    public static final Map<String, Recipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
-    public static final Map<String, Recipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
+    public static final Map<String, ModuleRecipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
+    public static final Map<String, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
     public static final Map<String, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
     public static final Map<String, Map<String, ? extends Recipe>> RECIPES = Map.of(
             "Suit Grades", SUIT_UPGRADES,
@@ -34,7 +35,7 @@ public abstract class RecipeConstants {
                         .collect(Collectors.toList()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-        return String.join("\n", recipesList);
+        return recipesList.stream().sorted().collect(Collectors.joining("\n"));
     }
 
     public static boolean isBlueprintIngredient(final Material material) {
@@ -273,179 +274,124 @@ public abstract class RecipeConstants {
                         Asset.GRAPHENE, 35
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Added Melee Damage", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Added Melee Damage", new ModuleRecipe(
                 Map.of(
                         Data.COMBATTRAININGMATERIAL, 10,
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.EPINEPHRINE, 10,
                         Asset.MICROTHRUSTERS, 15
-                )
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER)
         ));
-//        10x Evacuation Protocols
-//        5x Genetic Research
-//        10x Epinephrine
-//        15x PH Neutraliser
-        SUIT_MODULE_BLUEPRINTS.put("Suit Combat Movement Speed", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Combat Movement Speed", new ModuleRecipe(
                 Map.of(
                         Data.EVACUATIONPROTOCOLS, 10,
                         Data.GENETICRESEARCH, 5,
                         Asset.EPINEPHRINE, 10,
                         Asset.PHNEUTRALISER, 15
-                )
+                ), List.of(Engineer.TERRA_VELASQUEZ)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Damage Resistance", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Damage Resistance", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONINVENTORY, 10,
                         Data.BALLISTICSDATA, 10,
                         Asset.TITANIUMPLATING, 5,
                         Asset.EPOXYADHESIVE, 15,
                         Asset.CARBONFIBREPLATING, 5
-                )
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO)
         ));
-//        5x Transmitter
-//        5x Circuit Board
-//        10x Topographical Surveys
-//        10x Stellar Activity Logs
-//        10x Spectral Analysis Data
-        SUIT_MODULE_BLUEPRINTS.put("Suit Enhanced Tracking", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Enhanced Tracking", new ModuleRecipe(
                 Map.of(
                         Data.TOPOGRAPHICALSURVEYS, 10,
                         Data.STELLARACTIVITYLOGS, 10,
                         Data.SPECTRALANALYSISDATA, 10,
                         Asset.TRANSMITTER, 5,
                         Asset.CIRCUITBOARD, 5
-                )
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER)
         ));
-//        5x Weapon Component
-//        15x Recycling Logs
-//        10x Weapon Test Data
-//        10x Production Reports
-        SUIT_MODULE_BLUEPRINTS.put("Suit Extra Ammo Capacity", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Extra Ammo Capacity", new ModuleRecipe(
                 Map.of(
                         Data.RECYCLINGLOGS, 15,
                         Data.WEAPONTESTDATA, 10,
                         Data.PRODUCTIONREPORTS, 10,
                         Asset.WEAPONCOMPONENT, 5
-                )
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER)
         ));
-
-//        10x Epoxy Adhesive
-//        5x Memory Chip
-//        10x Weapon Inventory
-//        10x Chemical Inventory
-//        10x Digital Designs
-        SUIT_MODULE_BLUEPRINTS.put("Suit Extra Backpack Capacity", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Extra Backpack Capacity", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONINVENTORY, 10,
                         Data.CHEMICALINVENTORY, 10,
                         Data.DIGITALDESIGNS, 10,
                         Asset.EPOXYADHESIVE, 10,
                         Asset.MEMORYCHIP, 5
-                )
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-//        10x Reactor Output Review
-//        5x Ion Battery
-//        15x Micro Transformer
-//        15x Electrical Wiring
-        SUIT_MODULE_BLUEPRINTS.put("Suit Faster Shield Regen", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Faster Shield Regen", new ModuleRecipe(
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 10,
                         Asset.IONBATTERY, 5,
                         Asset.MICROTRANSFORMER, 15,
                         Asset.ELECTRICALWIRING, 15
-                )
+                ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO)
         ));
-//        10x Reactor Output Review
-//        15x Maintenance Logs
-//        5x Ion Battery
-//        10x Micro Supercapacitor
-//        10x Electrical Wiring
-        SUIT_MODULE_BLUEPRINTS.put("Suit Improved Battery Capacity", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Improved Battery Capacity", new ModuleRecipe(
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 10,
                         Data.MAINTENANCELOGS, 15,
                         Asset.IONBATTERY, 5,
                         Asset.MICROSUPERCAPACITOR, 10,
                         Asset.ELECTRICALWIRING, 10
-                )
+                ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK)
         ));
-//        10x G-Meds
-//        5x Micro Thrusters
-//        10x Motor
-//        10x Topographical Surveys
-        SUIT_MODULE_BLUEPRINTS.put("Suit Improved Jump Assist", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Improved Jump Assist", new ModuleRecipe(
                 Map.of(
                         Good.GMEDS, 10,
                         Data.TOPOGRAPHICALSURVEYS, 10,
                         Asset.MICROTHRUSTERS, 5,
                         Asset.MOTOR, 10
-                )
+                ), List.of(Engineer.HERO_FERRARI)
         ));
-//        10x Oxygenic Bacteria
-//        15x PH Neutraliser
-//        5x Pharmaceutical Patents
-//        15x Air Quality Reports
-        SUIT_MODULE_BLUEPRINTS.put("Suit Increased Air Reserves", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Increased Air Reserves", new ModuleRecipe(
                 Map.of(
                         Data.PHARMACEUTICALPATENTS, 5,
                         Data.AIRQUALITYREPORTS, 15,
                         Asset.OXYGENICBACTERIA, 10,
                         Asset.PHNEUTRALISER, 15
-                )
+                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ)
         ));
-//        10x Oxygenic Bacteria
-//        15x Chemical Catalyst
-//        5x Troop Deployment Records
-//        5x Gene Sequencing Data
-//        5x Clinical Trial Records
-        SUIT_MODULE_BLUEPRINTS.put("Suit Increased Sprint Duration", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Increased Sprint Duration", new ModuleRecipe(
                 Map.of(
                         Data.TROOPDEPLOYMENTRECORDS, 5,
                         Data.GENESEQUENCINGDATA, 5,
                         Data.MEDICALTRIALRECORDS, 5,
                         Asset.OXYGENICBACTERIA, 10,
                         Asset.CHEMICALCATALYST, 15
-                )
+                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ)
         ));
-//        10x Surveillance Equipment
-//        5x Surveillance Logs
-//        5x Radioactivity Data
-//        5x NOC Data
-//        10x Circuit Switch
-        SUIT_MODULE_BLUEPRINTS.put("Suit Night Vision", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Night Vision", new ModuleRecipe(
                 Map.of(
                         Good.SURVEILLANCEEQUIPMENT, 10,
                         Data.SURVEILLEANCELOGS, 5,
                         Data.NOCDATA, 5,
                         Data.RADIOACTIVITYDATA, 5,
                         Asset.CIRCUITSWITCH, 10
-                )
+                ), List.of(Engineer.ODEN_GEIGER)
         ));
-//        5x Settlement Assault Plans
-//        10x Tactical Plans
-//        10x Patrol Routes
-//        5x Micro Hydraulics
-//        15x Viscoelastic Polymer
-        SUIT_MODULE_BLUEPRINTS.put("Suit Quieter Footsteps", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Quieter Footsteps", new ModuleRecipe(
                 Map.of(
                         Data.SETTLEMENTASSAULTPLANS, 5,
                         Data.TACTICALPLANS, 10,
                         Data.PATROLROUTES, 10,
                         Asset.MICROHYDRAULICS, 5,
                         Asset.VISCOELASTICPOLYMER, 15
-                )
+                ), List.of(Engineer.YARDEN_BOND)
         ));
-//        5x Electrical Fuse
-//        10x Micro Transformer
-//        15x Electrical Wiring
-//        10x Reactor Output Review
-        SUIT_MODULE_BLUEPRINTS.put("Suit Reduced Tool Battery Consumption", new Recipe(
+        SUIT_MODULE_BLUEPRINTS.put("Suit Reduced Tool Battery Consumption", new ModuleRecipe(
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 10,
                         Asset.ELECTRICALWIRING, 15,
                         Asset.ELECTRICALFUSE, 5,
                         Asset.MICROTRANSFORMER, 10
-                )
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
 
 
@@ -562,40 +508,24 @@ public abstract class RecipeConstants {
                         Asset.CHEMICALSUPERBASE, 35
                 )
         ));
-//        5x Audio Logs
-//        10x Patrol Routes
-//        10x Scrambler
-//        15x Transmitter
-//        5x Circuit Board
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Audio Masking", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Audio Masking", new ModuleRecipe(
                 Map.of(
                         Data.AUDIOLOGS, 5,
                         Data.PATROLROUTES, 10,
                         Asset.SCRAMBLER, 10,
                         Asset.TRANSMITTER, 15,
                         Asset.CIRCUITBOARD, 5
-                )
+                ), List.of(Engineer.YARDEN_BOND)
         ));
-//        5x Viscoelastic Polymer
-//        10x Operational Manual
-//        10x Combatant Performance
-//        10x Combat Training Material
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Faster Handling", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Faster Handling", new ModuleRecipe(
                 Map.of(
                         Data.OPERATIONALMANUAL, 10,
                         Data.COMBATANTPERFORMANCE, 10,
                         Data.COMBATTRAININGMATERIAL, 10,
                         Asset.VISCOELASTICPOLYMER, 5
-                )
+                ), List.of(Engineer.HERO_FERRARI)
         ));
-//        Kinetic
-//        10x Metal Coil
-//        10x RDX
-//        5x Weapon Component
-//        10x Ballistics Data
-//        10x Topographical Surveys
-//        500 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Kinetic)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Kinetic)", new ModuleRecipe(
                 Map.of(
                         Data.BALLISTICSDATA, 10,
                         Data.TOPOGRAPHICALSURVEYS, 10,
@@ -603,18 +533,9 @@ public abstract class RecipeConstants {
                         Asset.RDX, 10,
                         Asset.WEAPONCOMPONENT, 5
 
-                )
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-//                Laser
-//        5x Optical Lens
-//        20x Ion Battery
-//        1x Ionised Gas
-//        15x Micro Transformer
-//        5x Circuit Board
-//        10x Stellar Activity Logs
-//        15x Risk Assessments
-//        500 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Laser)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Laser)", new ModuleRecipe(
                 Map.of(
                         Good.IONISEDGAS, 1,
                         Data.STELLARACTIVITYLOGS, 10,
@@ -623,17 +544,9 @@ public abstract class RecipeConstants {
                         Asset.IONBATTERY, 20,
                         Asset.MICROTRANSFORMER, 15,
                         Asset.CIRCUITBOARD, 5
-                )
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-//                Plasma
-//        10x Metal Coil
-//        10x Electromagnet
-//        1x Ionised Gas
-//        5x Motor
-//        5x Electrical Fuse
-//        10x Chemical Formulae
-//        15x Mineral Survey
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Plasma)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Plasma)", new ModuleRecipe(
                 Map.of(
                         Good.IONISEDGAS, 1,
                         Data.CHEMICALFORMULAE, 10,
@@ -643,110 +556,73 @@ public abstract class RecipeConstants {
                         Asset.MOTOR, 5,
                         Asset.ELECTRICALFUSE, 5
 
-                )
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-//        Kinetic Weapons
-//        10x Weapon Test Data
-//        5x Medical Records
-//        10x Chemical Catalyst
-//        15x RDX
-//        5x Weapon Component
-//        500,000 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Kinetic)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Kinetic)", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONTESTDATA, 10,
                         Data.MEDICALRECORDS, 5,
                         Asset.CHEMICALCATALYST, 10,
                         Asset.RDX, 15,
                         Asset.WEAPONCOMPONENT, 5
-                )
+                ), List.of(Engineer.UMA_LASZLO)
         ));
-//        Thermal Weapons
-//        10x Spectral Analysis Data
-//        5x Biometric Data
-//        10x Ion Battery
-//        5x Optical Lens
-//        10x Scrambler
-//        750,000 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Laser)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Laser)", new ModuleRecipe(
                 Map.of(
                         Data.SPECTRALANALYSISDATA, 10,
                         Data.BIOMETRICDATA, 5,
                         Asset.IONBATTERY, 10,
                         Asset.OPTICALLENS, 5,
                         Asset.SCRAMBLER, 10
-                )
+                ), List.of(Engineer.UMA_LASZLO)
         ));
-//        Plasma Weapons
-//        10x Chemical Experiment Data
-//        5x Blood Test Results
-//        10x Ion Battery
-//        10x Electromagnet
-//        15x Micro Supercapacitor
-//        500,000 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Plasma)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Plasma)", new ModuleRecipe(
                 Map.of(
                         Data.CHEMICALEXPERIMENTDATA, 10,
                         Data.BLOODTESTRESULTS, 5,
                         Asset.IONBATTERY, 10,
                         Asset.ELECTROMAGNET, 10,
                         Asset.MICROSUPERCAPACITOR, 15
-                )
+                ), List.of(Engineer.UMA_LASZLO)
         ));
-//        Kinetic Weapons
-//        10x Extraction Yield Data
-//        5x Biometric Data
-//        10x Combatant Performance
-//        10x Viscoelastic Polymer
-//        10x RDX
-//        500,000 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Kinetic)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Kinetic)", new ModuleRecipe(
                 Map.of(
                         Data.EXTRACTIONYIELDDATA, 10,
                         Data.BIOMETRICDATA, 5,
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.VISCOELASTICPOLYMER, 10,
                         Asset.RDX, 10
-                )
+                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
-//        Thermal Weapons
-//        5x Radioactivity Data
-//        10x Combatant Performance
-//        10x Metal Coil
-//        5x Optical Lens
-//        15x Electrical Wiring
-//        500,000 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Laser)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Laser)", new ModuleRecipe(
                 Map.of(
                         Data.RADIOACTIVITYDATA, 5,
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.OPTICALLENS, 5,
                         Asset.ELECTRICALWIRING, 15,
                         Asset.METALCOIL, 10
-                )
+                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
-//        Plasma Weapons
-//        5x Chemical Patents
-//        10x Combatant Performance
-//        10x Chemical Catalyst
-//        10x Electromagnet
-//        10x Metal Coil
-//        500,000 CR
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Plasma)", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Plasma)", new ModuleRecipe(
                 Map.of(
                         Data.CHEMICALPATENTS, 5,
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.CHEMICALCATALYST, 10,
                         Asset.ELECTROMAGNET, 10,
                         Asset.METALCOIL, 10
-                )
+                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
-//        5x Weapon Component
-//        5x Tungsten Carbide
-//        10x Metal Coil
-//        10x Weapon Test Data
-//        5x Security Expenses
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Magazine Size", new Recipe(
+//        WEAPON_MODULE_BLUEPRINTS.put("Improved Hip Fire Accuracy", new ModuleRecipe(
+//                Map.of(
+//                        Asset.OPTICALLENS, 5,
+//                        Asset.AEROGEL, 20,
+//                        Asset.OPTICALFIBRE, 25,
+//                        Asset.METALCOIL, 10,
+//                        Asset.ELECTRICALWIRING, 15,
+//                        Data.RADIOACTIVITYDATA, 5
+//                ), List.of(Engineer.TERRA_VELASQUEZ)
+//        ));
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Magazine Size", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONTESTDATA, 10,
                         Data.SECURITYEXPENSES, 5,
@@ -754,71 +630,49 @@ public abstract class RecipeConstants {
                         Asset.TUNGSTENCARBIDE, 5,
                         Asset.METALCOIL, 10
 
-                )
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER)
         ));
-//        15x Viscoelastic Polymer
-//        5x Weapon Component
-//        10x Atmospheric Data
-//        10x Mining Analytics
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Noise Suppressor", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Noise Suppressor", new ModuleRecipe(
                 Map.of(
                         Data.ATMOSPHERICDATA, 10,
                         Data.MININGANALYTICS, 10,
                         Asset.VISCOELASTICPOLYMER, 15,
                         Asset.WEAPONCOMPONENT, 5
-                )
+                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ)
         ));
-//        10x Micro Hydraulics
-//        10x Electromagnet
-//        10x Operational Manual
-//        10x Production Reports
-//        10x Combat Training Material
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Reload Speed", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Reload Speed", new ModuleRecipe(
                 Map.of(
                         Data.OPERATIONALMANUAL, 10,
                         Data.PRODUCTIONREPORTS, 10,
                         Data.COMBATTRAININGMATERIAL, 10,
                         Asset.MICROHYDRAULICS, 10,
                         Asset.ELECTROMAGNET, 10
-                )
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO)
         ));
-//        10x Spectral Analysis Data
-//        5x Biometric Data
-//        10x Optical Lens
-//        5x Optical Fibre
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Scope", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Scope", new ModuleRecipe(
                 Map.of(
                         Data.SPECTRALANALYSISDATA, 10,
                         Data.BIOMETRICDATA, 5,
                         Asset.OPTICALLENS, 10,
                         Asset.OPTICALFIBRE, 5
-                )
+                ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK)
         ));
-//        10x Viscoelastic Polymer
-//        10x Micro Hydraulics
-//        10x Mining Analytics
-//        15x Risk Assessments
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Stability", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Stability", new ModuleRecipe(
                 Map.of(
                         Data.MININGANALYTICS, 10,
                         Data.RISKASSESSMENTS, 15,
                         Asset.VISCOELASTICPOLYMER, 10,
                         Asset.MICROHYDRAULICS, 10
-                )
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER)
         ));
-//        10x Digital Designs
-//        10x Operational Manual
-//        10x Production Schedule
-//        5x Circuit Board
-//        15x Encrypted Memory Chip
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Stowed Reloading", new Recipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Weapon Stowed Reloading", new ModuleRecipe(
                 Map.of(
                         Data.DIGITALDESIGNS, 10,
                         Data.OPERATIONALMANUAL, 10,
                         Data.PRODUCTIONSCHEDULE, 10,
                         Asset.CIRCUITBOARD, 5,
                         Asset.ENCRYPTEDMEMORYCHIP, 15
-                )
+                ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO)
         ));
     }
 
