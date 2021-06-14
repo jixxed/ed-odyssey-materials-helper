@@ -68,6 +68,7 @@ public class Ingredient extends HBox {
             }
             default -> this.image.setFitWidth(0);
         }
+        this.getStyleClass().add("ingredient");
 
 
         update();
@@ -86,7 +87,6 @@ public class Ingredient extends HBox {
     }
 
     public void update() {
-        this.getStyleClass().add("ingredient");
         if (StorageType.OTHER.equals(this.storageType)) {
             this.amountAvailableLabel.setText("");
             this.amountRequiredLabel.setText("");

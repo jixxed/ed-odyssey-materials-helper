@@ -91,7 +91,7 @@ public class ApplicationState {
         this.getUnknownData().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
     }
 
-    public void initCounts() {
+    private void initCounts() {
         Arrays.stream(Asset.values()).forEach(component ->
                 this.getAssets().put(component, new Storage())
         );
