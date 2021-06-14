@@ -43,7 +43,7 @@ public class ApplicationLayout extends AnchorPane {
 
     public void setWatchedFile(final String watchedFile) {
         Platform.runLater(() -> {
-            this.bottomBar.setWatchedFileLabel(watchedFile);
+            this.bottomBar.setWatchedFileLabel("Watching: " + watchedFile);
         });
     }
 

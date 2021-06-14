@@ -98,10 +98,11 @@
 
 .category-label {
     -fx-font-weight: bold;
+    -fx-min-width: 400;
 }
 
 .materialcard-name {
-    -fx-pref-width: 182;
+    -fx-pref-width: 200;
     -fx-label-padding: 5;
 }
 
@@ -109,7 +110,7 @@
 }
 
 .category-label > .materialcard-name {
-    -fx-pref-width: 400;
+    -fx-min-width: 400;
     -fx-label-padding: 2;
     -fx-font-size: 15;
 }
@@ -182,6 +183,9 @@
     -fx-alignment: center-left;
     -fx-spacing: 10;
     -fx-padding: 0 10 0 10;
+
+    -fx-border-width: 1;
+    -fx-border-color: #ccc;
 }
 
 .search {
@@ -207,7 +211,15 @@
 }
 
 .card-grid {
-    -fx-min-width: 1510;
+    /*-fx-min-width: 1510;*/
+    -fx-padding: 5, 0, 0, 0;
+    -fx-start-margin: 5;
+}
+
+.card-grid > .flow-pane {
+    /*-fx-min-width: 1510;*/
+    -fx-padding: 5, 0, 0, 0;
+    -fx-start-margin: 5;
 }
 
 .donate-label {
@@ -285,4 +297,22 @@
 .engineer-locked {
 
     -fx-background-color: #ff7c7c;
+}
+
+.menubutton {
+    /*-fx-background: rgb(255, 255, 255);*/
+    -fx-text-fill: white;
+    /*-fx-background-color: rgb(255, 255, 255);*/
+    -fx-background-radius: 0px;
+    -fx-background-insets: 0;
+    -fx-padding: 0, 0, 0, 0;
+    -fx-start-margin: -1;
+    -fx-end-margin: -1;
+    -fx-border-insets: -1, -1, -1, -1;
+    /*! *10px *! */ /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 3);*/ /*-fx-font-size: 0.85em;*/ /*-fx-font-weight: normal;*/
+}
+
+.menubar {
+    -fx-border-width: 1;
+    -fx-border-color: #ccc;
 }

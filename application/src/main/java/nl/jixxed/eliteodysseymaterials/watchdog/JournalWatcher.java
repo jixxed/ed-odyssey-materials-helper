@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.jixxed.eliteodysseymaterials.AppConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +22,7 @@ public class JournalWatcher {
             public void onCreated(final FileEvent event) {
                 final File file = event.getFile();
                 if (file.isFile()) {
-                    if (file.getName().startsWith("Journal.")) {
+                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX)) {
                         JournalWatcher.this.watchedFile = Optional.of(file);
                         fileCreatedProcessor.accept(file);
                     }
@@ -32,7 +33,7 @@ public class JournalWatcher {
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
                 if (file.isFile()) {
-                    if (file.getName().startsWith("Journal.") && hasFileHeader(file)) {
+                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file)) {
                         JournalWatcher.this.watchedFile = Optional.of(file);
                         fileModifiedProcessor.accept(file);
                     }
@@ -44,7 +45,7 @@ public class JournalWatcher {
     private void findLatestFile(final File folder) {
         try {
             this.watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
-                    .filter(file -> file.getName().startsWith("Journal."))
+                    .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(this::hasFileHeader)
                     .filter(this::isOdysseyJournal)
                     .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23))));
@@ -59,7 +60,8 @@ public class JournalWatcher {
             final String firstLine = scanner.nextLine();
 
             final JsonNode journalMessage = this.objectMapper.readTree(firstLine);
-            return journalMessage.get("Odyssey") != null && journalMessage.get("Odyssey").asBoolean(false);
+            final JsonNode isOdysseyNode = journalMessage.get("Odyssey");
+            return isOdysseyNode != null && isOdysseyNode.asBoolean(false);
 
         } catch (final FileNotFoundException | JsonProcessingException e) {
             e.printStackTrace();

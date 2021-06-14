@@ -274,7 +274,7 @@ public abstract class RecipeConstants {
                         Asset.GRAPHENE, 35
                 )
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Added Melee Damage", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Added Melee Damage", new ModuleRecipe(
                 Map.of(
                         Data.COMBATTRAININGMATERIAL, 10,
                         Data.COMBATANTPERFORMANCE, 10,
@@ -282,7 +282,7 @@ public abstract class RecipeConstants {
                         Asset.MICROTHRUSTERS, 15
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Combat Movement Speed", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Combat Movement Speed", new ModuleRecipe(
                 Map.of(
                         Data.EVACUATIONPROTOCOLS, 10,
                         Data.GENETICRESEARCH, 5,
@@ -290,7 +290,7 @@ public abstract class RecipeConstants {
                         Asset.PHNEUTRALISER, 15
                 ), List.of(Engineer.TERRA_VELASQUEZ)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Damage Resistance", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Damage Resistance", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONINVENTORY, 10,
                         Data.BALLISTICSDATA, 10,
@@ -299,7 +299,7 @@ public abstract class RecipeConstants {
                         Asset.CARBONFIBREPLATING, 5
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Enhanced Tracking", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Enhanced Tracking", new ModuleRecipe(
                 Map.of(
                         Data.TOPOGRAPHICALSURVEYS, 10,
                         Data.STELLARACTIVITYLOGS, 10,
@@ -308,7 +308,7 @@ public abstract class RecipeConstants {
                         Asset.CIRCUITBOARD, 5
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Extra Ammo Capacity", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Extra Ammo Capacity", new ModuleRecipe(
                 Map.of(
                         Data.RECYCLINGLOGS, 15,
                         Data.WEAPONTESTDATA, 10,
@@ -316,7 +316,7 @@ public abstract class RecipeConstants {
                         Asset.WEAPONCOMPONENT, 5
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Extra Backpack Capacity", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Extra Backpack Capacity", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONINVENTORY, 10,
                         Data.CHEMICALINVENTORY, 10,
@@ -325,7 +325,7 @@ public abstract class RecipeConstants {
                         Asset.MEMORYCHIP, 5
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Faster Shield Regen", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Faster Shield Regen", new ModuleRecipe(
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 10,
                         Asset.IONBATTERY, 5,
@@ -333,7 +333,7 @@ public abstract class RecipeConstants {
                         Asset.ELECTRICALWIRING, 15
                 ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Improved Battery Capacity", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Improved Battery Capacity", new ModuleRecipe(
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 10,
                         Data.MAINTENANCELOGS, 15,
@@ -342,7 +342,7 @@ public abstract class RecipeConstants {
                         Asset.ELECTRICALWIRING, 10
                 ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Improved Jump Assist", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Improved Jump Assist", new ModuleRecipe(
                 Map.of(
                         Good.GMEDS, 10,
                         Data.TOPOGRAPHICALSURVEYS, 10,
@@ -350,7 +350,7 @@ public abstract class RecipeConstants {
                         Asset.MOTOR, 10
                 ), List.of(Engineer.HERO_FERRARI)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Increased Air Reserves", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Increased Air Reserves", new ModuleRecipe(
                 Map.of(
                         Data.PHARMACEUTICALPATENTS, 5,
                         Data.AIRQUALITYREPORTS, 15,
@@ -358,7 +358,7 @@ public abstract class RecipeConstants {
                         Asset.PHNEUTRALISER, 15
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Increased Sprint Duration", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Increased Sprint Duration", new ModuleRecipe(
                 Map.of(
                         Data.TROOPDEPLOYMENTRECORDS, 5,
                         Data.GENESEQUENCINGDATA, 5,
@@ -367,7 +367,7 @@ public abstract class RecipeConstants {
                         Asset.CHEMICALCATALYST, 15
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Night Vision", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Night Vision", new ModuleRecipe(
                 Map.of(
                         Good.SURVEILLANCEEQUIPMENT, 10,
                         Data.SURVEILLEANCELOGS, 5,
@@ -376,7 +376,7 @@ public abstract class RecipeConstants {
                         Asset.CIRCUITSWITCH, 10
                 ), List.of(Engineer.ODEN_GEIGER)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Quieter Footsteps", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Quieter Footsteps", new ModuleRecipe(
                 Map.of(
                         Data.SETTLEMENTASSAULTPLANS, 5,
                         Data.TACTICALPLANS, 10,
@@ -385,7 +385,7 @@ public abstract class RecipeConstants {
                         Asset.VISCOELASTICPOLYMER, 15
                 ), List.of(Engineer.YARDEN_BOND)
         ));
-        SUIT_MODULE_BLUEPRINTS.put("Suit Reduced Tool Battery Consumption", new ModuleRecipe(
+        SUIT_MODULE_BLUEPRINTS.put("Reduced Tool Battery Consumption", new ModuleRecipe(
                 Map.of(
                         Data.REACTOROUTPUTREVIEW, 10,
                         Asset.ELECTRICALWIRING, 15,
@@ -508,7 +508,7 @@ public abstract class RecipeConstants {
                         Asset.CHEMICALSUPERBASE, 35
                 )
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Audio Masking", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Audio Masking", new ModuleRecipe(
                 Map.of(
                         Data.AUDIOLOGS, 5,
                         Data.PATROLROUTES, 10,
@@ -517,7 +517,7 @@ public abstract class RecipeConstants {
                         Asset.CIRCUITBOARD, 5
                 ), List.of(Engineer.YARDEN_BOND)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Faster Handling", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Faster Handling", new ModuleRecipe(
                 Map.of(
                         Data.OPERATIONALMANUAL, 10,
                         Data.COMBATANTPERFORMANCE, 10,
@@ -525,7 +525,7 @@ public abstract class RecipeConstants {
                         Asset.VISCOELASTICPOLYMER, 5
                 ), List.of(Engineer.HERO_FERRARI)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Kinetic)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Greater Range (Kinetic)", new ModuleRecipe(
                 Map.of(
                         Data.BALLISTICSDATA, 10,
                         Data.TOPOGRAPHICALSURVEYS, 10,
@@ -535,7 +535,7 @@ public abstract class RecipeConstants {
 
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Laser)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Greater Range (Laser)", new ModuleRecipe(
                 Map.of(
                         Good.IONISEDGAS, 1,
                         Data.STELLARACTIVITYLOGS, 10,
@@ -546,7 +546,7 @@ public abstract class RecipeConstants {
                         Asset.CIRCUITBOARD, 5
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Greater Range (Plasma)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Greater Range (Plasma)", new ModuleRecipe(
                 Map.of(
                         Good.IONISEDGAS, 1,
                         Data.CHEMICALFORMULAE, 10,
@@ -558,7 +558,7 @@ public abstract class RecipeConstants {
 
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Kinetic)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Headshot Damage (Kinetic)", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONTESTDATA, 10,
                         Data.MEDICALRECORDS, 5,
@@ -567,7 +567,7 @@ public abstract class RecipeConstants {
                         Asset.WEAPONCOMPONENT, 5
                 ), List.of(Engineer.UMA_LASZLO)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Laser)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Headshot Damage (Laser)", new ModuleRecipe(
                 Map.of(
                         Data.SPECTRALANALYSISDATA, 10,
                         Data.BIOMETRICDATA, 5,
@@ -576,7 +576,7 @@ public abstract class RecipeConstants {
                         Asset.SCRAMBLER, 10
                 ), List.of(Engineer.UMA_LASZLO)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Headshot Damage (Plasma)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Headshot Damage (Plasma)", new ModuleRecipe(
                 Map.of(
                         Data.CHEMICALEXPERIMENTDATA, 10,
                         Data.BLOODTESTRESULTS, 5,
@@ -585,7 +585,7 @@ public abstract class RecipeConstants {
                         Asset.MICROSUPERCAPACITOR, 15
                 ), List.of(Engineer.UMA_LASZLO)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Kinetic)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Higher Accuracy (Kinetic)", new ModuleRecipe(
                 Map.of(
                         Data.EXTRACTIONYIELDDATA, 10,
                         Data.BIOMETRICDATA, 5,
@@ -594,7 +594,7 @@ public abstract class RecipeConstants {
                         Asset.RDX, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Laser)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Higher Accuracy (Laser)", new ModuleRecipe(
                 Map.of(
                         Data.RADIOACTIVITYDATA, 5,
                         Data.COMBATANTPERFORMANCE, 10,
@@ -603,7 +603,7 @@ public abstract class RecipeConstants {
                         Asset.METALCOIL, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Higher Accuracy (Plasma)", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Higher Accuracy (Plasma)", new ModuleRecipe(
                 Map.of(
                         Data.CHEMICALPATENTS, 5,
                         Data.COMBATANTPERFORMANCE, 10,
@@ -622,7 +622,7 @@ public abstract class RecipeConstants {
 //                        Data.RADIOACTIVITYDATA, 5
 //                ), List.of(Engineer.TERRA_VELASQUEZ)
 //        ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Magazine Size", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Magazine Size", new ModuleRecipe(
                 Map.of(
                         Data.WEAPONTESTDATA, 10,
                         Data.SECURITYEXPENSES, 5,
@@ -632,7 +632,7 @@ public abstract class RecipeConstants {
 
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Noise Suppressor", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Noise Suppressor", new ModuleRecipe(
                 Map.of(
                         Data.ATMOSPHERICDATA, 10,
                         Data.MININGANALYTICS, 10,
@@ -640,7 +640,7 @@ public abstract class RecipeConstants {
                         Asset.WEAPONCOMPONENT, 5
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Reload Speed", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Reload Speed", new ModuleRecipe(
                 Map.of(
                         Data.OPERATIONALMANUAL, 10,
                         Data.PRODUCTIONREPORTS, 10,
@@ -649,7 +649,7 @@ public abstract class RecipeConstants {
                         Asset.ELECTROMAGNET, 10
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Scope", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Scope", new ModuleRecipe(
                 Map.of(
                         Data.SPECTRALANALYSISDATA, 10,
                         Data.BIOMETRICDATA, 5,
@@ -657,7 +657,7 @@ public abstract class RecipeConstants {
                         Asset.OPTICALFIBRE, 5
                 ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Stability", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Stability", new ModuleRecipe(
                 Map.of(
                         Data.MININGANALYTICS, 10,
                         Data.RISKASSESSMENTS, 15,
@@ -665,7 +665,7 @@ public abstract class RecipeConstants {
                         Asset.MICROHYDRAULICS, 10
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER)
         ));
-        WEAPON_MODULE_BLUEPRINTS.put("Weapon Stowed Reloading", new ModuleRecipe(
+        WEAPON_MODULE_BLUEPRINTS.put("Stowed Reloading", new ModuleRecipe(
                 Map.of(
                         Data.DIGITALDESIGNS, 10,
                         Data.OPERATIONALMANUAL, 10,

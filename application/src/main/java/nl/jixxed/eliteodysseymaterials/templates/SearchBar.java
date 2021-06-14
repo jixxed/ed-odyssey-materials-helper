@@ -11,11 +11,12 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Search;
+import nl.jixxed.eliteodysseymaterials.domain.SearchChangeListener;
 import nl.jixxed.eliteodysseymaterials.enums.Show;
 import nl.jixxed.eliteodysseymaterials.enums.Sort;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 public class SearchBar extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -39,7 +40,7 @@ public class SearchBar extends HBox {
                     Sort.ENGINEER_BLUEPRINT_IRRELEVANT, Sort.RELEVANT_IRRELEVANT, Sort.ALPHABETICAL
             );
 
-    public SearchBar(final Consumer<String> searchBarCallback, final Consumer<Show> showOptionCallback, final Consumer<Sort> sortOptionCallback) {
+    public SearchBar(final SearchChangeListener changeListener) {
         super();
         final TextField textField = new TextField();
         textField.setAccessibleText("text");
@@ -52,7 +53,7 @@ public class SearchBar extends HBox {
                 .observeOn(Schedulers.io())
                 .subscribe((newValue) -> {
                     this.query = newValue;
-                    searchBarCallback.accept(newValue);
+                    changeListener.changed(new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
                 });
 
         final ComboBox<Show> showMaterialsComboBox = new ComboBox<>(this.showOptions);
@@ -61,7 +62,7 @@ public class SearchBar extends HBox {
         showMaterialsComboBox.setTooltip(new Tooltip("Show materials"));
         showMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             APPLICATION_STATE.setShow(newValue);
-            showOptionCallback.accept(newValue);
+            changeListener.changed(new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
 
         });
         final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>(this.sortOptions);
@@ -70,7 +71,7 @@ public class SearchBar extends HBox {
         sortMaterialsComboBox.setTooltip(new Tooltip("Sort materials"));
         sortMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             APPLICATION_STATE.setSort(newValue);
-            sortOptionCallback.accept(newValue);
+            changeListener.changed(new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
         });
         HBox.setHgrow(textField, Priority.ALWAYS);//Added this line
         HBox.setHgrow(showMaterialsComboBox, Priority.ALWAYS);//Added this line
@@ -80,5 +81,9 @@ public class SearchBar extends HBox {
 
     public String getQuery() {
         return this.query;
+    }
+
+    public Search getSearch() {
+        return new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow());
     }
 }

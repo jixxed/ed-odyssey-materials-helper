@@ -40,6 +40,7 @@ public class Ingredient extends HBox {
             throw new RuntimeException(exception);
         }
         this.storageType = storageType;
+        this.getStyleClass().add("ingredient");
     }
 
     public Ingredient(final String text) {
@@ -68,7 +69,6 @@ public class Ingredient extends HBox {
             }
             default -> this.image.setFitWidth(0);
         }
-        this.getStyleClass().add("ingredient");
 
 
         update();
