@@ -1,10 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ApplicationState {
 
@@ -14,6 +13,7 @@ public class ApplicationState {
     private final Map<Asset, Storage> assets = new HashMap<>();
     private final Map<Data, Storage> data = new HashMap<>();
     private final Map<String, Storage> unknownData = new HashMap<>();
+    private final List<Material> favourites = new ArrayList<>();
     private Sort sort = Sort.ALPHABETICAL;
     private Show show = Show.ALL;
     private final Map<Engineer, EngineerState> engineerStates = new HashMap<>(Map.of(
@@ -30,6 +30,11 @@ public class ApplicationState {
 
     private ApplicationState() {
         this.initCounts();
+        final String fav = PreferencesService.getPreference("material.favourites", "");
+        Arrays.stream(fav.split(","))
+                .filter(material -> !material.isBlank())
+                .map(Material::subtypeForName)
+                .forEach(this.favourites::add);
     }
 
     public static ApplicationState getInstance() {
@@ -118,5 +123,22 @@ public class ApplicationState {
 
     public void setShow(final Show show) {
         this.show = show;
+    }
+
+    public <T extends Material> boolean toggleFavourite(final T material) {
+        final boolean newState;
+        if (this.favourites.contains(material)) {
+            this.favourites.remove(material);
+            newState = false;
+        } else {
+            this.favourites.add(material);
+            newState = true;
+        }
+        PreferencesService.setPreference("material.favourites", this.favourites);
+        return newState;
+    }
+
+    public boolean isFavourite(final Material material) {
+        return this.favourites.contains(material);
     }
 }

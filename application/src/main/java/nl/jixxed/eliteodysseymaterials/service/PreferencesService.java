@@ -2,10 +2,13 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import nl.jixxed.eliteodysseymaterials.enums.Material;
 
 import java.io.*;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class PreferencesService {
     private final static String PREFERENCES_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\pref.properties";
@@ -56,6 +59,14 @@ public class PreferencesService {
             throw new IllegalStateException("Couldn't load pref file: " + targetFile);
         }
 
+    }
+
+    public static void setPreference(final String key, final List<Material> value) {
+        if (value == null || value.isEmpty()) {
+            instance.prop.setProperty(key, "");
+        } else {
+            instance.prop.setProperty(key, value.stream().map(Material::toString).collect(Collectors.joining(",")));
+        }
     }
 
     public static void setPreference(final String key, final Object value) {

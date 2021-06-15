@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.layout.FlowPane;
@@ -52,16 +53,18 @@ public class MaterialOverview extends VBox {
     }
 
     void updateContent(final Search search) {
-        this.totals.getChildren().clear();
-        this.assetChemicalFlow.getChildren().clear();
-        this.assetTechFlow.getChildren().clear();
-        this.assetCircuitFlow.getChildren().clear();
-        this.goodFlow.getChildren().clear();
-        this.dataFlow.getChildren().clear();
-        showGoods(search);
-        showAssets(search);
-        showDatas(search);
-        updateTotals();
+        Platform.runLater(() -> {
+            this.totals.getChildren().clear();
+            this.assetChemicalFlow.getChildren().clear();
+            this.assetTechFlow.getChildren().clear();
+            this.assetCircuitFlow.getChildren().clear();
+            this.goodFlow.getChildren().clear();
+            this.dataFlow.getChildren().clear();
+            showGoods(search);
+            showAssets(search);
+            showDatas(search);
+            updateTotals();
+        });
     }
 
 
@@ -145,6 +148,7 @@ public class MaterialOverview extends VBox {
             case REQUIRED_ENGINEER -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredientAndNotCompleted(o.getKey());
             case ALL_ENGINEER_BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey()) || RecipeConstants.isEngineeringIngredient(o.getKey());
             case REQUIRED_ENGINEER_BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredientAndNotCompleted(o.getKey()) || RecipeConstants.isBlueprintIngredient(o.getKey());
+            case FAVOURITES -> (Map.Entry<? extends Material, Storage> o) -> APPLICATION_STATE.isFavourite(o.getKey());
         };
     }
 

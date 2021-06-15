@@ -11,6 +11,7 @@ import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.BarterConstants;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.SpawnConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MaterialCard extends HBox {
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @FXML
     private ImageView image;
     @FXML
@@ -55,7 +57,9 @@ public class MaterialCard extends HBox {
     }
 
     public MaterialCard(final Material material, final boolean disableTooltip, final String name, final Storage amounts, final boolean isEngineerUnlockMaterial) {
-        this(name, amounts);
+        this(name + (APPLICATION_STATE.isFavourite(material) ? " \u2605" : ""), amounts);
+        this.setOnMouseClicked((event) -> setFavourite(APPLICATION_STATE.toggleFavourite(material)));
+        this.setFavourite(APPLICATION_STATE.isFavourite(material));
 
         final boolean isUnknown = Data.UNKNOWN.equals(material) || Good.UNKNOWN.equals(material) || Asset.UNKNOWN.equals(material);
         if (!disableTooltip) {
@@ -89,7 +93,9 @@ public class MaterialCard extends HBox {
     }
 
     public MaterialCard(final Asset asset, final boolean disableTooltip, final String name, final Storage amounts) {
-        this(name, amounts);
+        this(name + (APPLICATION_STATE.isFavourite(asset) ? " \u2605" : ""), amounts);
+        this.setOnMouseClicked((event) -> setFavourite(APPLICATION_STATE.toggleFavourite(asset)));
+        this.setFavourite(APPLICATION_STATE.isFavourite(asset));
         if (!disableTooltip) {
             this.name.setTooltip(createTooltip(name, asset));
         }
@@ -136,6 +142,22 @@ public class MaterialCard extends HBox {
                 });
             }
             return new Tooltip(builder.toString());
+        }
+    }
+
+    private void setFavourite(final boolean isFavourite) {
+        if (isFavourite) {
+            if (!this.getStyleClass().contains("material-favourite")) {
+                this.getStyleClass().add("material-favourite");
+            }
+            if (!this.name.getText().endsWith(" \u2605")) {
+                this.name.setText(this.name.getText() + " \u2605");
+            }
+        } else {
+            this.getStyleClass().remove("material-favourite");
+            if (this.name.getText().endsWith(" \u2605")) {
+                this.name.setText(this.name.getText().substring(0, this.name.getText().length() - 2));
+            }
         }
     }
 }

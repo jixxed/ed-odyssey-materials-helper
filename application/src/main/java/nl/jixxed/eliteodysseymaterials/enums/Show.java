@@ -9,7 +9,8 @@ public enum Show {
     REQUIRED_ENGINEER("Only required engineer unlocking"),
     BLUEPRINT("Blueprint"),
     IRRELEVANT("Irrelevant"),
-    IRRELEVANT_WITH_STOCK("Irrelevant with stock");
+    IRRELEVANT_WITH_STOCK("Irrelevant with stock"),
+    FAVOURITES("Favourites");
 
     String name;
 

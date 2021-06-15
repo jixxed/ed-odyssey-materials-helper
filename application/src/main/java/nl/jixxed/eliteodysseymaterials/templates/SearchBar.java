@@ -33,7 +33,8 @@ public class SearchBar extends HBox {
                     Show.REQUIRED_ENGINEER,
                     Show.BLUEPRINT,
                     Show.IRRELEVANT,
-                    Show.IRRELEVANT_WITH_STOCK
+                    Show.IRRELEVANT_WITH_STOCK,
+                    Show.FAVOURITES
             );
     private final ObservableList<Sort> sortOptions =
             FXCollections.observableArrayList(
@@ -53,7 +54,7 @@ public class SearchBar extends HBox {
                 .observeOn(Schedulers.io())
                 .subscribe((newValue) -> {
                     this.query = newValue;
-                    changeListener.changed(new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
+                    changeListener.changed(new Search(newValue, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
                 });
 
         final ComboBox<Show> showMaterialsComboBox = new ComboBox<>(this.showOptions);

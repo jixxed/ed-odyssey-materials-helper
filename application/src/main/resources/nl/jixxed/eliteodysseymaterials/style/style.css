@@ -96,6 +96,10 @@
     -fx-background-color: #ba5efa;
 }
 
+.material-favourite > .materialcard-name {
+    -fx-font-style: italic;
+}
+
 .category-label {
     -fx-font-weight: bold;
     -fx-min-width: 400;
@@ -104,9 +108,6 @@
 .materialcard-name {
     -fx-pref-width: 200;
     -fx-label-padding: 5;
-}
-
-.materialcard-image {
 }
 
 .category-label > .materialcard-name {
