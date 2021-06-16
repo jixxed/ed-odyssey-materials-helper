@@ -66,8 +66,9 @@ public class FileProcessor {
         JsonNode jsonNode = null;
         try {
             jsonNode = OBJECT_MAPPER.readTree(message);
-            if ("EngineerProgress".equals(jsonNode.get("event").asText())) {
-                processEngineerProgressMessage(jsonNode);
+            switch (jsonNode.get("event").asText()) {
+                case "EngineerProgress" -> processEngineerProgressMessage(jsonNode);
+                case "Embark" -> APPLICATION_STATE.resetBackPackCounts();
             }
         } catch (final JsonProcessingException e) {
             e.printStackTrace();
