@@ -108,7 +108,7 @@ public abstract class RecipeConstants {
                 ),
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.WELLINGTON_BECK)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put("B3. Wellington Beck (Sell 25 of one below)", new EngineerRecipe(
+        ENGINEER_UNLOCK_REQUIREMENTS.put("B3. Wellington Beck (Sell 25 in total, any combination)", new EngineerRecipe(
                 Map.of(
                         Data.CLASSICENTERTAINMENT, 25,
                         Data.MULTIMEDIAENTERTAINMENT, 25,
@@ -136,7 +136,7 @@ public abstract class RecipeConstants {
                 ),
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.TERRA_VELASQUEZ)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put("C3. Terra Velasquez (Complete one of below)", new EngineerRecipe(
+        ENGINEER_UNLOCK_REQUIREMENTS.put("C3. Terra Velasquez (Complete all of below)", new EngineerRecipe(
                 List.of("6 Covert Theft Missions", "6 Covert Heist Missions"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.TERRA_VELASQUEZ)
         ));
@@ -146,7 +146,7 @@ public abstract class RecipeConstants {
                 ),
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.ODEN_GEIGER)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put("C5. Oden Geiger (Sell 20 of one below)", new EngineerRecipe(
+        ENGINEER_UNLOCK_REQUIREMENTS.put("C5. Oden Geiger (Sell 20 in total, any combination)", new EngineerRecipe(
                 Map.of(
                         Good.GENETICSAMPLE, 20,
                         Data.EMPLOYEEGENETICDATA, 20,
