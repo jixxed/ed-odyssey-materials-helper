@@ -48,9 +48,11 @@ public class ApplicationLayout extends AnchorPane {
     }
 
     public void updateLastTimeStamp(final JsonNode journalMessage) {
-        Platform.runLater(() -> {
-            this.bottomBar.setLastTimeStampLabel("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
-        });
+        if (journalMessage != null) {
+            Platform.runLater(() -> {
+                this.bottomBar.setLastTimeStampLabel("Latest observed relevant message: " + journalMessage.get("timestamp").asText() + " (" + journalMessage.get("event").asText() + ")");
+            });
+        }
     }
 
     public void updateGui() {
