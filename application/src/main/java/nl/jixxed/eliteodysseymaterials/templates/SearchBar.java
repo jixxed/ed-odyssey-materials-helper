@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -22,7 +23,7 @@ public class SearchBar extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     private String query = "";
-
+    final Button button = new Button();
     private final ObservableList<Show> showOptions =
             FXCollections.observableArrayList(
                     Show.ALL,
@@ -43,6 +44,10 @@ public class SearchBar extends HBox {
 
     public SearchBar(final SearchChangeListener changeListener) {
         super();
+
+        this.button.setText("<");
+        this.button.getStyleClass().add("menubutton");
+
         final TextField textField = new TextField();
         textField.setAccessibleText("text");
         textField.getStyleClass().add("search");
@@ -77,14 +82,14 @@ public class SearchBar extends HBox {
         HBox.setHgrow(textField, Priority.ALWAYS);//Added this line
         HBox.setHgrow(showMaterialsComboBox, Priority.ALWAYS);//Added this line
         HBox.setHgrow(sortMaterialsComboBox, Priority.ALWAYS);//Added this line
-        this.getChildren().addAll(textField, showMaterialsComboBox, sortMaterialsComboBox);
-    }
-
-    public String getQuery() {
-        return this.query;
+        this.getChildren().addAll(this.button, textField, showMaterialsComboBox, sortMaterialsComboBox);
     }
 
     public Search getSearch() {
         return new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow());
+    }
+
+    public Button getButton() {
+        return this.button;
     }
 }

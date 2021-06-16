@@ -5,7 +5,11 @@
 
 .completed > .title {
     /*noinspection CssInvalidFunction*/
-    -fx-background-color: linear-gradient(to bottom, derive(#89d07f, +50%), #89d07f);
+    /*-fx-background-color: linear-gradient(to bottom, derive(#89d07f, +50%), #89d07f);*/
+}
+
+.completed > .title > .text {
+    -fx-fill: #89d07f;
 }
 
 .blueprint-title-pane > .title > .arrow-button .arrow, .blueprint-title-pane > .title > .text {
@@ -22,6 +26,10 @@
 
 .material {
     -fx-border-color: black;
+}
+
+.material > .label {
+    -fx-text-fill: black;
 }
 
 .material-relevant {
@@ -129,6 +137,11 @@
     -fx-pref-width: 300;
 }
 
+
+.ingredient > .label {
+    -fx-text-fill: black;
+}
+
 .ingredient-without-amount {
     -fx-background-color: #fff;
 }
@@ -185,19 +198,10 @@
     -fx-spacing: 10;
     -fx-padding: 0 10 0 10;
 
-    -fx-border-width: 1;
-    -fx-border-color: #ccc;
+    /*-fx-border-width: 1;*/
+    /*-fx-border-color: #ccc;*/
 }
 
-.search {
-    -fx-min-height: 30;
-    -fx-max-height: 30;
-    /*noinspection CssInvalidFunction*/
-    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 0, 0;
-}
 
 .search:focused, .search:selected {
 }
@@ -206,25 +210,18 @@
     -fx-pref-height: 20;
 }
 
-.scroll-pane {
-    -fx-focus-color: -fx-box-border;
-    -fx-faint-focus-color: transparent;
-}
 
 .card-grid {
-    /*-fx-min-width: 1510;*/
     -fx-padding: 5, 0, 0, 0;
     -fx-start-margin: 5;
 }
 
 .card-grid > .flow-pane {
-    /*-fx-min-width: 1510;*/
     -fx-padding: 5, 0, 0, 0;
     -fx-start-margin: 5;
 }
 
 .donate-label {
-    /*-fx-padding: 20, 0, 0, 0;*/
 }
 
 .donate-label > .text {
@@ -252,16 +249,6 @@
     -fx-background-color: #aaa;
 }
 
-.filter-and-sort {
-    -fx-min-height: 30;
-    -fx-max-height: 30;
-    /*noinspection CssInvalidFunction*/
-    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -10%), -fx-text-box-border),
-    linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 0, 0;
-}
-
 .tooltip {
     -fx-background: rgba(30, 30, 30, 1.0);
     -fx-text-fill: white;
@@ -272,6 +259,8 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 3);
     -fx-font-size: 0.85em;
     -fx-font-weight: normal;
+    -fx-font-style: normal;
+
 }
 
 .engineerLabelHeader {
@@ -282,6 +271,7 @@
     -fx-border-color: black;
     -fx-border-width: 1;
     -fx-padding: 5;
+    -fx-text-fill: black;
 }
 
 .engineerFlow {
@@ -301,19 +291,101 @@
 }
 
 .menubutton {
-    /*-fx-background: rgb(255, 255, 255);*/
+    -fx-font-size: 16;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-color: #111111, #111111, #111111, #111111;
     -fx-text-fill: white;
-    /*-fx-background-color: rgb(255, 255, 255);*/
-    -fx-background-radius: 0px;
-    -fx-background-insets: 0;
+    -fx-max-width: 44;
+    -fx-max-height: 30;
+    -fx-pref-width: 44;
+    -fx-pref-height: 30;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-border-color: #2e2e2e, #2e2e2e, #2e2e2e, #2e2e2e;
     -fx-padding: 0, 0, 0, 0;
-    -fx-start-margin: -1;
-    -fx-end-margin: -1;
-    -fx-border-insets: -1, -1, -1, -1;
-    /*! *10px *! */ /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 3);*/ /*-fx-font-size: 0.85em;*/ /*-fx-font-weight: normal;*/
 }
 
-.menubar {
+.menubutton:focused {
     -fx-border-width: 1;
-    -fx-border-color: #ccc;
+    -fx-border-style: solid;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-border-color: #2e2e2e, #2e2e2e, #2e2e2e, #2e2e2e;
+}
+
+.menubutton:hover {
+    -fx-border-width: 1;
+    -fx-padding: 0, 0, 0, 0;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.menubutton:armed {
+
+    -fx-border-width: 1;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.menubutton:selected {
+    -fx-border-width: 1;
+    -fx-padding: 0, 0, 0, 0;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.filter-and-sort {
+    -fx-min-height: 30;
+    -fx-max-height: 30;
+    -fx-background-insets: 1;
+    -fx-background-radius: 0, 0;
+    -fx-border-width: 1;
+    -fx-border-color: #2e2e2e;
+}
+
+.search {
+    -fx-min-height: 30;
+    -fx-max-height: 30;
+    -fx-background-insets: 1;
+    -fx-background-radius: 0, 0;
+    -fx-border-width: 1;
+    -fx-border-color: #2e2e2e;
+}
+
+.scroll-pane {
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+
+}
+
+.app {
+
+    -fx-background-color: #111111;
+}
+
+.tab-pane:left *.tab-header-area {
+    -fx-background-insets: 0 0 0 0;
+}
+
+.tab-pane {
+    -fx-background-insets: 0 0 0 0;
+}
+
+.tab-pane:left > .tab-header-area > .tab-header-background {
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+}
+
+.tab-pane:left > .tab-header-area {
+    -fx-padding: 5 0 0 5; /* 5 0 2 5 */
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+
+}
+
+.tab {
+    -fx-background-insets: 0 0 0 0;
+    -fx-effect: none;
+    -fx-font-size: 16;
 }

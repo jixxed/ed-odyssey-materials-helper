@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
@@ -44,7 +46,8 @@ public class Main extends Application {
         primaryStage.setX(PreferencesService.getPreference(PreferenceConstants.APP_X, 0D));
         primaryStage.setY(PreferencesService.getPreference(PreferenceConstants.APP_Y, 0D));
         primaryStage.setMaximized(PreferencesService.getPreference(PreferenceConstants.APP_MAXIMIZED, Boolean.FALSE));
-
+        final JMetro jMetro = new JMetro(Style.DARK);
+        jMetro.setScene(scene);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

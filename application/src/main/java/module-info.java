@@ -5,6 +5,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires io.reactivex.rxjava3;
+    requires org.jfxtras.styles.jmetro;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml;
     exports nl.jixxed.eliteodysseymaterials;

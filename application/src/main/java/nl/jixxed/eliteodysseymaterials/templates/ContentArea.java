@@ -1,11 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
+import javafx.geometry.Side;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -25,25 +25,8 @@ public class ContentArea extends AnchorPane {
         this.materialOverview.setSpacing(10);
 
         this.recipeBar = new RecipeBar(application);
-        final Image img = new Image(getClass().getResourceAsStream("/images/menu.png"));
-        final ImageView view = new ImageView(img);
-        view.setFitHeight(40);
-        view.setFitWidth(40);
-        view.setPreserveRatio(true);
-        //Creating a Button
-        final Button button = new Button();
-        //Setting the size of the button
-        button.setPrefSize(40, 40);
-        button.setMaxSize(40, 40);
-        //Setting a graphic to the button
-        button.setGraphic(view);
-        button.getStyleClass().add("menubutton");
 
-        final VBox menuBar = new VBox(button);
-        menuBar.getStyleClass().add("menubar");
-        menuBar.setMaxWidth(40);
-        setAnchor(menuBar, 0.0, 0.0, 0.0, null);
-        setAnchor(this.recipeBar, 0.0, 0.0, 42.0, null);
+        setAnchor(this.recipeBar, 0.0, 0.0, 0.0, null);
 
         this.recipeBar.setVisible(PreferencesService.getPreference("recipes.visible", Boolean.TRUE));
         this.searchBar = new SearchBar(this.materialOverview::updateContent);
@@ -53,18 +36,24 @@ public class ContentArea extends AnchorPane {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        final VBox body = new VBox(this.searchBar, scrollPane);
+        final Tab overview = new Tab("overview", scrollPane);
+        overview.setClosable(false);
+        final TabPane tabs = new TabPane(overview);
+        setAnchor(tabs, 0.0, 0.0, 0.0, null);
+        tabs.setSide(Side.LEFT);
+        final VBox body = new VBox(this.searchBar, tabs);
         HBox.setHgrow(body, Priority.ALWAYS);
-        this.getChildren().addAll(menuBar, this.recipeBar, body);
-        VBox.setVgrow(scrollPane, Priority.ALWAYS);//Added this line
-        button.setOnAction(event -> {
+        this.getChildren().addAll(this.recipeBar, body);
+        VBox.setVgrow(tabs, Priority.ALWAYS);//Added this line
+        this.searchBar.getButton().setOnAction(event -> {
             final boolean visibility = !this.recipeBar.isVisible();
             this.recipeBar.setVisible(visibility);
+            this.searchBar.getButton().setText(visibility ? "<" : ">");
             PreferencesService.setPreference("recipes.visible", visibility);
-            setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? 414.0 : 42, 0.0);
+            setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? 373.0 : 0.0, 0.0);
         });
 
-        setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? 414.0 : 42, 0.0);
+        setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? 373.0 : 0.0, 0.0);
 
     }
 

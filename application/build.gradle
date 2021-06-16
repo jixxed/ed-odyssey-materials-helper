@@ -70,6 +70,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
 //    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
+    implementation 'org.jfxtras:jmetro:11.6.15'
 }
 jpackage { dependsOn test }
 
