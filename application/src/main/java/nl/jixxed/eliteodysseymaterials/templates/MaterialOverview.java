@@ -1,5 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -10,14 +13,15 @@ import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Good;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 public class MaterialOverview extends VBox {
@@ -32,6 +36,8 @@ public class MaterialOverview extends VBox {
     private final FlowPane goodFlow;
     private final FlowPane dataFlow;
 
+    private Search currentSearch = new Search("", Sort.ALPHABETICAL, Show.ALL);
+
     public MaterialOverview() {
         final Orientation flowPaneOrientation = Orientation.HORIZONTAL;
         this.totals = new FlowPane(flowPaneOrientation);
@@ -42,6 +48,21 @@ public class MaterialOverview extends VBox {
         this.dataFlow = new FlowPane(flowPaneOrientation);
         setGaps(this.assetCircuitFlow, this.assetTechFlow, this.assetChemicalFlow, this.goodFlow, this.dataFlow);
         this.getChildren().addAll(this.totals, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
+        Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> {
+            if (JournalEventType.BACKPACK.equals(journalProcessedEvent.getJournalEventType())
+                    || JournalEventType.EMBARK.equals(journalProcessedEvent.getJournalEventType())
+                    || JournalEventType.SHIPLOCKER.equals(journalProcessedEvent.getJournalEventType())) {
+                emitter.onNext(journalProcessedEvent);
+            }
+        }))
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe((journalProcessedEvent) -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
+        EventService.addListener(SearchEvent.class, (searchEvent) -> {
+            this.currentSearch = searchEvent.getSearch();
+            Platform.runLater(() -> this.updateContent(this.currentSearch));
+        });
+
 
     }
 

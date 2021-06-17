@@ -366,26 +366,96 @@
 
 .tab-pane:left *.tab-header-area {
     -fx-background-insets: 0 0 0 0;
+    -fx-background-color: #111111 !important;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: #111111 !important;
+    -fx-effect: none;
 }
 
 .tab-pane {
     -fx-background-insets: 0 0 0 0;
 }
 
+
 .tab-pane:left > .tab-header-area > .tab-header-background {
     -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
 }
 
 .tab-pane:left > .tab-header-area {
-    -fx-padding: 5 0 0 5; /* 5 0 2 5 */
+    -fx-padding: 10 0 0 3; /* 5 0 2 5 */
 }
 
-.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
-
+.tab-pane:left > .tab-header-area > .headers-region > .tab {
+    -fx-border-width: 1;
+    -fx-border-color: black;
 }
+
+.tab-pane:left > .tab-header-area > .headers-region > .tab:armed,
+.tab-pane:left > .tab-header-area > .headers-region > .tab:selected,
+.tab-pane:left > .tab-header-area > .headers-region > .tab:focused {
+
+    -fx-background-color: #252525 !important;
+    -fx-border-width: 0;
+}
+
 
 .tab {
     -fx-background-insets: 0 0 0 0;
     -fx-effect: none;
     -fx-font-size: 16;
+}
+
+.wishlist-button {
+    -fx-fit-to-width: true;
+}
+
+.wishlist-item > .text {
+    -fx-text-fill: black;
+}
+
+.wishlist-item {
+    -fx-background-radius: 5;
+    -fx-background-color: #fff;
+    -fx-text-fill: black;
+}
+
+.wishlist-item > .label {
+    -fx-label-padding: 5;
+    -fx-text-fill: black;
+}
+
+.wishlist-item > .button:hover,
+.wishlist-item > .button {
+    -fx-background-color: black;
+    -fx-background-radius: 0 4 4 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-radius: 0 4 4 0;
+    -fx-border-color: black;
+    -fx-text-fill: #fff;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+}
+
+.wishlist-item > .button:armed,
+.wishlist-item > .button:pressed,
+.wishlist-item > .button:selected,
+.wishlist-item > .button:visited,
+.wishlist-item > .button:selected:focused,
+.wishlist-item > .button:focused {
+    -fx-background-color: black;
+    -fx-background-radius: 0 4 4 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-radius: 0 4 4 0;
+    -fx-border-color: black;
+    -fx-text-fill: #fff;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+
+.wishlist-header {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-label-padding: 5;
 }

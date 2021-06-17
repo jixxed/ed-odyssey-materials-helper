@@ -1,6 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public interface Material {
+    default StorageType getStorageType() {
+        return StorageType.OTHER;
+    }
+
     String friendlyName();
 
     static Material subtypeForName(final String name) {

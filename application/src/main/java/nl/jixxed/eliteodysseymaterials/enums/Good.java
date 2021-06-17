@@ -61,6 +61,11 @@ public enum Good implements Material {
     }
 
     @Override
+    public StorageType getStorageType() {
+        return StorageType.GOOD;
+    }
+
+    @Override
     public String friendlyName() {
         return this.name;
     }

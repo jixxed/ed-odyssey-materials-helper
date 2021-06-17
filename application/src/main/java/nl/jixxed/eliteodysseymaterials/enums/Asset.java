@@ -55,6 +55,11 @@ public enum Asset implements Material {
     }
 
     @Override
+    public StorageType getStorageType() {
+        return StorageType.ASSET;
+    }
+
+    @Override
     public String friendlyName() {
         return this.name;
     }
@@ -62,4 +67,6 @@ public enum Asset implements Material {
     public AssetType getType() {
         return this.type;
     }
+
+
 }

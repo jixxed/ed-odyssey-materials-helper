@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
 import java.io.*;
 import java.util.List;
@@ -46,7 +47,6 @@ public class PreferencesService {
                 .observeOn(Schedulers.io())
                 .subscribe((newValue) -> {
                     try (final OutputStream output = new FileOutputStream(PREFERENCES_FILE)) {
-                        // save properties to project root folder
                         instance.prop.store(output, null);
                     } catch (final IOException io) {
                         io.printStackTrace();
@@ -59,6 +59,14 @@ public class PreferencesService {
             throw new IllegalStateException("Couldn't load pref file: " + targetFile);
         }
 
+    }
+
+    public static void setRecipePreference(final String key, final List<RecipeName> value) {
+        if (value == null || value.isEmpty()) {
+            instance.prop.setProperty(key, "");
+        } else {
+            instance.prop.setProperty(key, value.stream().map(RecipeName::name).collect(Collectors.joining(",")));
+        }
     }
 
     public static void setPreference(final String key, final List<Material> value) {

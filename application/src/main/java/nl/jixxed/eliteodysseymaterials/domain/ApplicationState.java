@@ -1,7 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import javafx.application.Platform;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
 import java.util.*;
 
@@ -14,8 +17,7 @@ public class ApplicationState {
     private final Map<Data, Storage> data = new HashMap<>();
     private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Material> favourites = new ArrayList<>();
-    private Sort sort = Sort.ALPHABETICAL;
-    private Show show = Show.ALL;
+    private final List<RecipeName> wishlist = new ArrayList<>();
     private final Map<Engineer, EngineerState> engineerStates = new HashMap<>(Map.of(
             Engineer.DOMINO_GREEN, EngineerState.UNKNOWN,
             Engineer.HERO_FERRARI, EngineerState.UNKNOWN,
@@ -35,6 +37,22 @@ public class ApplicationState {
                 .filter(material -> !material.isBlank())
                 .map(Material::subtypeForName)
                 .forEach(this.favourites::add);
+        final String recipes = PreferencesService.getPreference("wishlist.recipes", "");
+        Arrays.stream(recipes.split(","))
+                .filter(recipe -> !recipes.isBlank())
+                .map(RecipeName::forName)
+                .filter(Objects::nonNull)
+                .forEach(this.wishlist::add);
+
+        EventService.addListener(WishlistEvent.class,
+                (wishlistEvent) -> {
+                    Platform.runLater(() -> {
+                        switch (wishlistEvent.getAction()) {
+                            case ADDED -> addToWishList(wishlistEvent.getRecipeName());
+                            case REMOVED -> removeFromWishList(wishlistEvent.getRecipeName());
+                        }
+                    });
+                });
     }
 
     public static ApplicationState getInstance() {
@@ -109,22 +127,6 @@ public class ApplicationState {
 
     }
 
-    public Sort getSort() {
-        return this.sort;
-    }
-
-    public void setSort(final Sort sort) {
-        this.sort = sort;
-    }
-
-    public Show getShow() {
-        return this.show;
-    }
-
-    public void setShow(final Show show) {
-        this.show = show;
-    }
-
     public <T extends Material> boolean toggleFavourite(final T material) {
         final boolean newState;
         if (this.favourites.contains(material)) {
@@ -140,5 +142,19 @@ public class ApplicationState {
 
     public boolean isFavourite(final Material material) {
         return this.favourites.contains(material);
+    }
+
+    private void addToWishList(final RecipeName recipe) {
+        this.wishlist.add(recipe);
+        PreferencesService.setRecipePreference("wishlist.recipes", this.wishlist);
+    }
+
+    private void removeFromWishList(final RecipeName recipe) {
+        this.wishlist.remove(recipe);
+        PreferencesService.setRecipePreference("wishlist.recipes", this.wishlist);
+    }
+
+    public List<RecipeName> getWishlist() {
+        return this.wishlist;
     }
 }

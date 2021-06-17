@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -27,12 +26,10 @@ public class Main extends Application {
         PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
         final File watchedFolder = new File(AppConstants.WATCHED_FOLDER);
 
-        this.applicationLayout.setWatchedFile("None - No Odyssey journals found at " + watchedFolder.getAbsolutePath());
+        this.gameStateWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
+        this.gameStateWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
 
-        this.gameStateWatcher.watch(watchedFolder, this::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
-        this.gameStateWatcher.watch(watchedFolder, this::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
-
-        this.journalWatcher.watch(watchedFolder, this::processJournal, FileProcessor::resetAndProcessJournal);
+        this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
 
         final Scene scene = new Scene(this.applicationLayout, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
@@ -48,6 +45,7 @@ public class Main extends Application {
         primaryStage.setMaximized(PreferencesService.getPreference(PreferenceConstants.APP_MAXIMIZED, Boolean.FALSE));
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -58,21 +56,6 @@ public class Main extends Application {
             PreferencesService.setPreference(setting, Double.valueOf(value));
         }
     }
-
-    protected void processJournal(final File file) {
-        this.applicationLayout.setWatchedFile(file.getAbsoluteFile().toString());
-        final JsonNode message = FileProcessor.processJournal(file);
-        this.applicationLayout.updateLastTimeStamp(message);
-        this.applicationLayout.updateGui();
-    }
-
-    protected void processShipLockerBackPack(final File file) {
-        this.applicationLayout.setWatchedFile(file.getAbsoluteFile().toString());
-        final JsonNode message = FileProcessor.processShipLockerBackPack(file);
-        this.applicationLayout.updateLastTimeStamp(message);
-        this.applicationLayout.updateGui();
-    }
-
 
     public static void main(final String[] args) {
         launch(args);

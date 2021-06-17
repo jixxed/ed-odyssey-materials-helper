@@ -133,6 +133,11 @@ public enum Data implements Material {
     }
 
     @Override
+    public StorageType getStorageType() {
+        return StorageType.DATA;
+    }
+
+    @Override
     public String friendlyName() {
         return this.name;
     }

@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Ingredient extends HBox {
     private final StorageType storageType;
     private String code;
-
+    private Material material;
     private Integer amountRequired;
     private Integer amountAvailable;
 
@@ -46,16 +46,18 @@ public class Ingredient extends HBox {
     public Ingredient(final String text) {
         this(StorageType.OTHER);
         this.nameLabel.setText(text);
+        this.material = null;
     }
 
-    public Ingredient(final StorageType storageType, final Material material, final String amount, final String amountAvailable) {
+    public Ingredient(final StorageType storageType, final Material material, final Integer amount, final Integer amountAvailable) {
         this(storageType);
         this.code = material.toString();
         this.nameLabel.setText(material.friendlyName());
         this.code = material.toString();
-        this.amountRequiredLabel.setText(amount);
-        this.amountRequired = Integer.valueOf(amount);
-        this.amountAvailable = Integer.valueOf(amountAvailable);
+        this.amountRequiredLabel.setText(amount.toString());
+        this.amountRequired = amount;
+        this.amountAvailable = amountAvailable;
+        this.material = material;
         switch (storageType) {
             case DATA -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
             case GOOD -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
@@ -104,5 +106,9 @@ public class Ingredient extends HBox {
 
     public String getName() {
         return this.nameLabel.getText();
+    }
+
+    public Material getMaterial() {
+        return this.material;
     }
 }

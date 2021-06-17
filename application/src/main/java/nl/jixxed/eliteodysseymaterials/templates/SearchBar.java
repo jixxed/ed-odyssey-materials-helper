@@ -11,18 +11,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
-import nl.jixxed.eliteodysseymaterials.domain.SearchChangeListener;
 import nl.jixxed.eliteodysseymaterials.enums.Show;
 import nl.jixxed.eliteodysseymaterials.enums.Sort;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
 
 import java.util.concurrent.TimeUnit;
 
 public class SearchBar extends HBox {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    private String query = "";
     final Button button = new Button();
     private final ObservableList<Show> showOptions =
             FXCollections.observableArrayList(
@@ -42,13 +41,15 @@ public class SearchBar extends HBox {
                     Sort.ENGINEER_BLUEPRINT_IRRELEVANT, Sort.RELEVANT_IRRELEVANT, Sort.ALPHABETICAL
             );
 
-    public SearchBar(final SearchChangeListener changeListener) {
+    public SearchBar() {
         super();
 
-        this.button.setText("<");
+        this.button.setText((PreferencesService.getPreference("recipes.visible", Boolean.TRUE)) ? "<" : ">");
         this.button.getStyleClass().add("menubutton");
 
         final TextField textField = new TextField();
+        final ComboBox<Show> showMaterialsComboBox = new ComboBox<>(this.showOptions);
+        final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>(this.sortOptions);
         textField.setAccessibleText("text");
         textField.getStyleClass().add("search");
         textField.setPromptText("Search");
@@ -58,35 +59,38 @@ public class SearchBar extends HBox {
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe((newValue) -> {
-                    this.query = newValue;
-                    changeListener.changed(new Search(newValue, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
+                    EventService.publish(new SearchEvent(new Search(newValue, getSortOrDefault(sortMaterialsComboBox), getShowOrDefault(showMaterialsComboBox))));
                 });
 
-        final ComboBox<Show> showMaterialsComboBox = new ComboBox<>(this.showOptions);
         showMaterialsComboBox.getStyleClass().add("filter-and-sort");
         showMaterialsComboBox.setPromptText("Show materials:");
         showMaterialsComboBox.setTooltip(new Tooltip("Show materials"));
         showMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            APPLICATION_STATE.setShow(newValue);
-            changeListener.changed(new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
+            EventService.publish(new SearchEvent(new Search(getQueryOrDefault(textField), getSortOrDefault(sortMaterialsComboBox), newValue)));
 
         });
-        final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>(this.sortOptions);
         sortMaterialsComboBox.getStyleClass().add("filter-and-sort");
         sortMaterialsComboBox.setPromptText("Sort materials:");
         sortMaterialsComboBox.setTooltip(new Tooltip("Sort materials"));
         sortMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            APPLICATION_STATE.setSort(newValue);
-            changeListener.changed(new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow()));
+            EventService.publish(new SearchEvent(new Search(getQueryOrDefault(textField), newValue, getShowOrDefault(showMaterialsComboBox))));
         });
-        HBox.setHgrow(textField, Priority.ALWAYS);//Added this line
-        HBox.setHgrow(showMaterialsComboBox, Priority.ALWAYS);//Added this line
-        HBox.setHgrow(sortMaterialsComboBox, Priority.ALWAYS);//Added this line
+        HBox.setHgrow(textField, Priority.ALWAYS);
+        HBox.setHgrow(showMaterialsComboBox, Priority.ALWAYS);
+        HBox.setHgrow(sortMaterialsComboBox, Priority.ALWAYS);
         this.getChildren().addAll(this.button, textField, showMaterialsComboBox, sortMaterialsComboBox);
     }
 
-    public Search getSearch() {
-        return new Search(this.query, APPLICATION_STATE.getSort(), APPLICATION_STATE.getShow());
+    private String getQueryOrDefault(final TextField textField) {
+        return (textField.getText() != null) ? textField.getText() : "";
+    }
+
+    private Show getShowOrDefault(final ComboBox<Show> showMaterialsComboBox) {
+        return (showMaterialsComboBox.getValue() != null) ? showMaterialsComboBox.getValue() : Show.ALL;
+    }
+
+    private Sort getSortOrDefault(final ComboBox<Sort> sortMaterialsComboBox) {
+        return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : Sort.ALPHABETICAL;
     }
 
     public Button getButton() {

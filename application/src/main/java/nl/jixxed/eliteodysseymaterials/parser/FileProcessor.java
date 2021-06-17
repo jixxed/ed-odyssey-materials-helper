@@ -6,7 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
+import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +44,7 @@ public class FileProcessor {
                 if (cursor > lineNumber) {
                     lineNumber++;
                     System.out.println(line);
-                    jsonNode = processJournalMessage(line);
+                    jsonNode = processJournalMessage(line, file);
                 }
             }
         } catch (final IOException e) {
@@ -53,7 +58,7 @@ public class FileProcessor {
         try {
             final String shipLocker = Files.readString(file.toPath());
             System.out.println(shipLocker);
-            jsonNode = processShipLockerBackPackMessage(shipLocker);
+            jsonNode = processJournalMessage(shipLocker, file);
         } catch (final IOException e) {
             e.printStackTrace();
         }
@@ -62,28 +67,20 @@ public class FileProcessor {
     }
 
 
-    private static JsonNode processJournalMessage(final String message) {
-        JsonNode jsonNode = null;
-        try {
-            jsonNode = OBJECT_MAPPER.readTree(message);
-            switch (jsonNode.get("event").asText()) {
-                case "EngineerProgress" -> processEngineerProgressMessage(jsonNode);
-                case "Embark" -> APPLICATION_STATE.resetBackPackCounts();
-            }
-        } catch (final JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return jsonNode;
-    }
-
-    private static JsonNode processShipLockerBackPackMessage(final String message) {
+    private static JsonNode processJournalMessage(final String message, final File file) {
         JsonNode jsonNode = null;
         try {
             jsonNode = OBJECT_MAPPER.readTree(message);
             if (jsonNode.get("event") != null) {
-                switch (jsonNode.get("event").asText()) {
-                    case "ShipLocker" -> processShipLockerMaterialsMessage(jsonNode, StoragePool.SHIPLOCKER);
-                    case "Backpack" -> processShipLockerMaterialsMessage(jsonNode, StoragePool.BACKPACK);
+                final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get("event").asText());
+                switch (journalEventType) {
+                    case ENGINEERPROGRESS -> processEngineerProgressMessage(jsonNode);
+                    case EMBARK -> APPLICATION_STATE.resetBackPackCounts();
+                    case SHIPLOCKER -> processShipLockerMaterialsMessage(jsonNode, StoragePool.SHIPLOCKER);
+                    case BACKPACK -> processShipLockerMaterialsMessage(jsonNode, StoragePool.BACKPACK);
+                }
+                if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
+                    EventService.publish(new JournalProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
                 }
             }
         } catch (final JsonProcessingException e) {
@@ -109,6 +106,7 @@ public class FileProcessor {
                 default -> {
                 }
             }
+            EventService.publish(new EngineerEvent());
         });
     }
 
@@ -124,6 +122,7 @@ public class FileProcessor {
         ASSET_PARSER.parse(journalMessage.get("Components").elements(), storagePool, APPLICATION_STATE.getAssets(), null);
         GOOD_PARSER.parse(journalMessage.get("Items").elements(), storagePool, APPLICATION_STATE.getGoods(), APPLICATION_STATE.getUnknownGoods());
         DATA_PARSER.parse(journalMessage.get("Data").elements(), storagePool, APPLICATION_STATE.getData(), APPLICATION_STATE.getUnknownData());
+        EventService.publish(new StorageEvent(storagePool));
     }
 
 

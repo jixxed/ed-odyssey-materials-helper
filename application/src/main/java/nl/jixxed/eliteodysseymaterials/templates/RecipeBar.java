@@ -1,16 +1,20 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.TitledPane;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,10 +44,17 @@ public class RecipeBar extends Accordion {
         titledPanes.add(legend);
         this.getPanes().addAll(titledPanes.toArray(new TitledPane[0]));
         this.setExpandedPane(about);
+        EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> {
+            Platform.runLater(() -> {
+                this.updateIngredientsValues();
+                this.updateIngredients();
+                this.updateEngineerStyles();
+            });
+        });
     }
 
 
-    private TitledPane createCategoryTitledPane(final Map.Entry<String, Map<String, ? extends Recipe>> recipesEntry) {
+    private TitledPane createCategoryTitledPane(final Map.Entry<String, Map<RecipeName, ? extends Recipe>> recipesEntry) {
         final Accordion recipesAccordion = new Accordion(recipesEntry.getValue().entrySet().stream()
                 .map(this::createRecipeTitledPane)
                 .sorted(Comparator.comparing(Labeled::getText))
@@ -54,7 +65,7 @@ public class RecipeBar extends Accordion {
         return categoryTitledPane;
     }
 
-    private TitledPane createRecipeTitledPane(final Map.Entry<String, ? extends Recipe> recipe) {
+    private TitledPane createRecipeTitledPane(final Map.Entry<RecipeName, ? extends Recipe> recipe) {
         final VBox content = new VBox();
         final List<Ingredient> ingredients = new ArrayList<>();
         ingredients.addAll(getRecipeIngredients(recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
@@ -73,6 +84,15 @@ public class RecipeBar extends Accordion {
         }
         try {
             if (!(recipe.getValue() instanceof EngineerRecipe) || ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {
+                final Button addToWishlist = new Button("Add to wishlist");
+                addToWishlist.getStyleClass().add("wishlist-button");
+                addToWishlist.setOnAction(event -> {
+                    EventService.publish(new WishlistEvent(recipe.getKey(), Action.ADDED));
+                });
+                final HBox box = new HBox(addToWishlist);
+                HBox.setHgrow(addToWishlist, Priority.ALWAYS);
+                box.setAlignment(Pos.TOP_RIGHT);
+                content.getChildren().add(box);
                 content.getChildren().add(new FXMLLoader(getClass().getResource("IngredientHeader.fxml")).load());
             }
         } catch (final IOException e) {
@@ -83,7 +103,6 @@ public class RecipeBar extends Accordion {
             final Label engineerLabelHeader = new Label("Engineers crafting this blueprint:");
             engineerLabelHeader.getStyleClass().add("engineerLabelHeader");
             content.getChildren().addAll(engineerLabelHeader);
-
             final Label[] engineerLabels = ((ModuleRecipe) recipe.getValue()).getEngineers().stream()
                     .sorted(Comparator.comparing(Engineer::friendlyName))
                     .map(engineer -> {
@@ -107,11 +126,11 @@ public class RecipeBar extends Accordion {
         return recipeTitledPane;
     }
 
-    private List<Ingredient> getRecipeIngredients(final Map.Entry<String, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Storage> materialMap) {
+    private List<Ingredient> getRecipeIngredients(final Map.Entry<RecipeName, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Storage> materialMap) {
         return recipe.getValue().getMaterialCollection(materialClass).entrySet().stream()
                 .map(material ->
                         {
-                            final Ingredient newIngredient = new Ingredient(storageType, material.getKey(), material.getValue().toString(), materialMap.get(material.getKey()).getTotalValue().toString());
+                            final Ingredient newIngredient = new Ingredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue());
                             this.ingredients.add(newIngredient);
                             return newIngredient;
                         }
@@ -119,13 +138,13 @@ public class RecipeBar extends Accordion {
                 .collect(Collectors.toList());
     }
 
-    private TitledPane createTitledPane(final Map.Entry<String, ? extends Recipe> recipe, final VBox content) {
+    private TitledPane createTitledPane(final Map.Entry<RecipeName, ? extends Recipe> recipe, final VBox content) {
         final TitledPane recipeTitledPane;
         if (recipe.getValue() instanceof EngineerRecipe) {
             recipeTitledPane = new EngineerTitledPane(recipe.getKey(), content, (EngineerRecipe) recipe.getValue());
             this.engineerTitledPanes.add((EngineerTitledPane) recipeTitledPane);
         } else {
-            recipeTitledPane = new TitledPane(recipe.getKey(), content);
+            recipeTitledPane = new TitledPane(recipe.getKey().friendlyName(), content);
         }
         return recipeTitledPane;
     }

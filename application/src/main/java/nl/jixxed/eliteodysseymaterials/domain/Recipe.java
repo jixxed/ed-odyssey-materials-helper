@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Material;
 
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Recipe {
     private final Map<Material, Integer> assets;
@@ -26,6 +27,10 @@ public class Recipe {
             return (Map<T, Integer>) this.goods;
         } else if (clazz.equals(Asset.class)) {
             return (Map<T, Integer>) this.assets;
+        } else if (clazz.equals(Material.class)) {
+            final Map<Material, Integer> combined = Stream.concat(Stream.concat(this.goods.entrySet().stream(), this.assets.entrySet().stream()), this.data.entrySet().stream()).collect(
+                    Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            return (Map<T, Integer>) combined;
         }
         throw new ClassCastException("Invalid Material Collection Type");
 
