@@ -32,17 +32,12 @@ class RecipeTest {
         Assertions.assertThat(recipe.getMaterialCollection(Good.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Good.IONISEDGAS, 10
         ));
-    }
-
-    @Test
-    void getMaterialCollection_Bad() {
-        final Recipe recipe = new Recipe(Map.of(
+        Assertions.assertThat(recipe.getMaterialCollection(Material.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Good.IONISEDGAS, 10,
                 Data.BIOMETRICDATA, 5,
                 Data.COMBATANTPERFORMANCE, 10,
                 Asset.VISCOELASTICPOLYMER, 10,
                 Asset.RDX, 10
         ));
-        Assertions.assertThatExceptionOfType(ClassCastException.class).isThrownBy(() -> recipe.getMaterialCollection(Material.class));
     }
 }

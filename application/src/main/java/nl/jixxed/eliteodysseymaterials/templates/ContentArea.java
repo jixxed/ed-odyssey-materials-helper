@@ -31,7 +31,7 @@ public class ContentArea extends AnchorPane {
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.settingsTab.setClosable(false);
-        final TabPane tabs = new TabPane(this.overview, this.wishlistTab, this.settingsTab);
+        final TabPane tabs = new TabPane(this.overview, this.wishlistTab); //, this.settingsTab
 
         setAnchor(tabs, 0.0, 0.0, 0.0, null);
         tabs.setSide(Side.LEFT);
