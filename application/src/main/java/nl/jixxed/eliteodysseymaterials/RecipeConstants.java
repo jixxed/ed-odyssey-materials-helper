@@ -510,7 +510,7 @@ public abstract class RecipeConstants {
                         Asset.CHEMICALSUPERBASE, 15
                 )
         ));
-        WEAPON_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_3_4, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.MANTICORE_3_4, new Recipe(
                 Map.of(
                         Good.WEAPONSCHEMATIC, 10,
                         Good.IONISEDGAS, 10,
