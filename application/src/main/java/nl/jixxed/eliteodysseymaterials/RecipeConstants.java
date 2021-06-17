@@ -102,7 +102,7 @@ public abstract class RecipeConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_A3, new EngineerRecipe(
                 Map.of(
-                        Data.OPINIONPOLLS, 40
+                        Data.OPINIONPOLLS, 20
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.KIT_FOWLER)
         ));
