@@ -22,6 +22,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.concurrent.Executors;
 import java.util.stream.StreamSupport;
@@ -43,7 +44,8 @@ public class Main extends Application {
         primaryStage.setTitle("Elite Dangerous Odyssey Materials Helper");
 
 
-        final String currentDir = System.getProperty("user.dir") + "\\";
+        final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
+        final String currentDir = binDir.trim().replace("\"", "") + "\\";
         final StackPane root = new StackPane();
         root.setAlignment(Pos.CENTER);
         final Label label = new Label("Checking for updates...");
@@ -118,6 +120,13 @@ public class Main extends Application {
                 }
             } catch (final IOException | InterruptedException e) {
                 e.printStackTrace();
+                Platform.runLater(() -> label.setText(e.getMessage()));
+                try {
+                    Thread.sleep(5000);
+                } catch (final InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+                System.exit(0);
             }
 
         };
