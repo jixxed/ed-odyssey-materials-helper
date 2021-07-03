@@ -5,18 +5,16 @@
 <fx:root style="-fx-start-margin: 5;-fx-padding: 5;" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11"
          xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="version" style="-fx-pref-width: 360;" alignment="CENTER"/>
-        <Hyperlink fx:id="link" style="-fx-pref-width: 360;" styleClass="download" alignment="CENTER"/>
-        <Label fx:id="disclaimer"
-               text="DISCLAIMER: not all information under the tooltips"
-               style="-fx-pref-width: 360;" alignment="CENTER"/>
+        <Label fx:id="versionLabel" style="-fx-pref-width: 538;" alignment="CENTER"/>
+        <Hyperlink fx:id="link" style="-fx-pref-width: 538;" styleClass="download" alignment="CENTER"/>
+        <Label fx:id="disclaimer1"
+               style="-fx-pref-width: 538;" alignment="CENTER"/>
         <Label fx:id="disclaimer2"
-               text="are guaranteed to be complete or correct."
-               style="-fx-pref-width: 360;" alignment="CENTER"/>
-        <Label alignment="CENTER" minHeight="40.0" prefWidth="350.0" styleClass="donate-label"
+               style="-fx-pref-width: 538;" alignment="CENTER"/>
+        <Label fx:id="beer" alignment="CENTER" minHeight="40.0" prefWidth="538.0" styleClass="donate-label"
                text="If you like to buy me a beer:" textAlignment="CENTER"/>
-        <Hyperlink fx:id="donate" prefWidth="360.0" alignment="CENTER" styleClass="donate" textAlignment="CENTER"/>
-        <Hyperlink fx:id="bugs" prefWidth="360.0" alignment="CENTER" styleClass="bugs" textAlignment="CENTER"/>
+        <Hyperlink fx:id="donate" prefWidth="538.0" alignment="CENTER" styleClass="donate" textAlignment="CENTER"/>
+        <Hyperlink fx:id="bugs" prefWidth="538.0" alignment="CENTER" styleClass="bugs" textAlignment="CENTER"/>
 
     </children>
 </fx:root>

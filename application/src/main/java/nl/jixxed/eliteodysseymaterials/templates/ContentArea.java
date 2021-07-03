@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 
 public class ContentArea extends AnchorPane {
+    public static final double MENU_WIDTH = 550.0;
     private final SearchBar searchBar;
     private final RecipeBar recipeBar;
     final OverviewTab overview = new OverviewTab();
@@ -31,7 +32,7 @@ public class ContentArea extends AnchorPane {
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.settingsTab.setClosable(false);
-        final TabPane tabs = new TabPane(this.overview, this.wishlistTab); //, this.settingsTab
+        final TabPane tabs = new TabPane(this.overview, this.wishlistTab, this.settingsTab); //, this.settingsTab
 
         setAnchor(tabs, 0.0, 0.0, 0.0, null);
         tabs.setSide(Side.LEFT);
@@ -45,10 +46,10 @@ public class ContentArea extends AnchorPane {
             this.recipeBar.setVisible(visibility);
             this.searchBar.getButton().setText(visibility ? "<" : ">");
             PreferencesService.setPreference("recipes.visible", visibility);
-            setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? 373.0 : 0.0, 0.0);
+            setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? MENU_WIDTH : 0.0, 0.0);
         });
 
-        setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? 373.0 : 0.0, 0.0);
+        setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? MENU_WIDTH : 0.0, 0.0);
 
     }
 

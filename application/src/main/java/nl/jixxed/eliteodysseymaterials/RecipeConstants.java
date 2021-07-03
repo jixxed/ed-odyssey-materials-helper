@@ -6,11 +6,9 @@ import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public abstract class RecipeConstants {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -20,11 +18,11 @@ public abstract class RecipeConstants {
     public static final Map<RecipeName, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
     public static final Map<RecipeName, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
     public static final Map<String, Map<RecipeName, ? extends Recipe>> RECIPES = Map.of(
-            "Suit Grades", SUIT_UPGRADES,
-            "Weapon Grades", WEAPON_UPGRADES,
-            "Suit Modules", SUIT_MODULE_BLUEPRINTS,
-            "Weapon Modules", WEAPON_MODULE_BLUEPRINTS,
-            "Engineer Unlocks", ENGINEER_UNLOCK_REQUIREMENTS
+            "menu.suit.grades", SUIT_UPGRADES,
+            "menu.weapon.grades", WEAPON_UPGRADES,
+            "menu.suit.modules", SUIT_MODULE_BLUEPRINTS,
+            "menu.weapon.modules", WEAPON_MODULE_BLUEPRINTS,
+            "menu.engineer.unlocks", ENGINEER_UNLOCK_REQUIREMENTS
     );
 
     public static Recipe getRecipe(final RecipeName name) {
@@ -47,15 +45,13 @@ public abstract class RecipeConstants {
         return ENGINEER_UNLOCK_REQUIREMENTS.get(name);
     }
 
-    public static String findRecipesContaining(final Material material) {
-        final List<String> recipesList = RECIPES.values().stream()
-                .map(recipes -> recipes.entrySet().stream()
+    public static Map<RecipeName, Integer> findRecipesContaining(final Material material) {
+        final Map<RecipeName, Integer> newMap = new HashMap<>();
+        RECIPES.values()
+                .forEach(recipes -> recipes.entrySet().stream()
                         .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getMaterialCollection(material.getClass()).containsKey(material))
-                        .map(entry -> entry.getKey() + " (" + entry.getValue().getMaterialCollection(material.getClass()).get(material).toString() + ")")
-                        .collect(Collectors.toList()))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        return recipesList.stream().sorted().collect(Collectors.joining("\n"));
+                        .forEach(entry -> newMap.put(entry.getKey(), entry.getValue().getMaterialCollection(material.getClass()).get(material))));
+        return newMap;
     }
 
     public static boolean isBlueprintIngredient(final Material material) {
@@ -91,7 +87,7 @@ public abstract class RecipeConstants {
 
     static {
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_A1, new EngineerRecipe(
-                List.of("Fly 100 Ly in shuttles"),
+                List.of("ingredient.a1.fly"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.DOMINO_GREEN)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_A2, new EngineerRecipe(
@@ -119,7 +115,7 @@ public abstract class RecipeConstants {
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YARDEN_BOND)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_B1, new EngineerRecipe(
-                List.of("10 Surface conflict zones"),
+                List.of("ingredient.b1.conflict"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.HERO_FERRARI)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_B2, new EngineerRecipe(
@@ -143,11 +139,11 @@ public abstract class RecipeConstants {
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.UMA_LASZLO)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_B5, new EngineerRecipe(
-                List.of("Unfriendly reputation or lower with Sirius Corporation"),
+                List.of("ingredient.b5.sirius"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.UMA_LASZLO)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_C1, new EngineerRecipe(
-                List.of("10 Restore or Reactivation Missions"),
+                List.of("ingredient.c1.restore"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.JUDE_NAVARRO)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_C2, new EngineerRecipe(
@@ -157,7 +153,7 @@ public abstract class RecipeConstants {
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.TERRA_VELASQUEZ)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_C3, new EngineerRecipe(
-                List.of("6 Covert Theft Missions", "6 Covert Heist Missions"),
+                List.of("ingredient.c3.theft", "ingredient.c3.heist"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.TERRA_VELASQUEZ)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_C4, new EngineerRecipe(
@@ -610,14 +606,19 @@ public abstract class RecipeConstants {
                         Data.EXTRACTIONYIELDDATA, 10,
                         Data.BIOMETRICDATA, 5,
                         Data.COMBATANTPERFORMANCE, 10,
+                        Asset.ELECTROMAGNET, 20,
+                        Asset.METALCOIL, 20,
+                        Asset.RDX, 10,
                         Asset.VISCOELASTICPOLYMER, 10,
-                        Asset.RDX, 10
+                        Asset.WEAPONCOMPONENT, 5
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.HIGHER_ACCURACY_LASER, new ModuleRecipe(
                 Map.of(
                         Data.RADIOACTIVITYDATA, 5,
                         Data.COMBATANTPERFORMANCE, 10,
+                        Asset.AEROGEL, 20,
+                        Asset.OPTICALFIBRE, 25,
                         Asset.OPTICALLENS, 5,
                         Asset.ELECTRICALWIRING, 15,
                         Asset.METALCOIL, 10
@@ -628,20 +629,13 @@ public abstract class RecipeConstants {
                         Data.CHEMICALPATENTS, 5,
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.CHEMICALCATALYST, 10,
+                        Asset.ELECTRICALWIRING, 30,
                         Asset.ELECTROMAGNET, 10,
-                        Asset.METALCOIL, 10
+                        Asset.METALCOIL, 10,
+                        Asset.MICROELECTRODE, 20,
+                        Asset.WEAPONCOMPONENT, 5
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
-//        WEAPON_MODULE_BLUEPRINTS.put(RecipeName.IMPROVED_HIP_FIRE_ACCURACY, new ModuleRecipe(
-//                Map.of(
-//                        Asset.OPTICALLENS, 5,
-//                        Asset.AEROGEL, 20,
-//                        Asset.OPTICALFIBRE, 25,
-//                        Asset.METALCOIL, 10,
-//                        Asset.ELECTRICALWIRING, 15,
-//                        Data.RADIOACTIVITYDATA, 5
-//                ), List.of(Engineer.TERRA_VELASQUEZ)
-//        ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.MAGAZINE_SIZE, new ModuleRecipe(
                 Map.of(
                         Data.WEAPONTESTDATA, 10,

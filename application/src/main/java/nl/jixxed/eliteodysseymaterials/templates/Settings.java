@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +22,14 @@ public class Settings extends VBox {
 
     @FXML
     Label version;
+    @FXML
+    Label disclaimer1;
+    @FXML
+    Label disclaimer2;
+    @FXML
+    Label beer;
+    @FXML
+    Label versionLabel;
     @FXML
     Hyperlink link;
     @FXML
@@ -39,7 +48,9 @@ public class Settings extends VBox {
         } catch (final IOException exception) {
             throw new RuntimeException(exception);
         }
-
+        this.disclaimer1.textProperty().bind(LocaleService.getStringBinding("menu.about.disclaimer.1"));
+        this.disclaimer2.textProperty().bind(LocaleService.getStringBinding("menu.about.disclaimer.2"));
+        this.beer.textProperty().bind(LocaleService.getStringBinding("menu.about.beer"));
         final String buildVersion = getBuildVersion();
         String latestVersion = "";
         try {
@@ -48,17 +59,17 @@ public class Settings extends VBox {
             e.printStackTrace();
         }
         if (getBuildVersion() == null) {
-            this.version.setText("Version: dev");
-            this.link.setText("Download");
+            this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", "dev"));
+            this.link.textProperty().bind(LocaleService.getStringBinding("menu.about.download"));
             this.link.setOnAction((actionEvent) ->
                     application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases"));
-        } else if (getBuildVersion().equals(latestVersion)) {
-            this.version.setText("Version: " + latestVersion);
+        } else if (buildVersion.equals(latestVersion)) {
+            this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", buildVersion));
             this.link.setVisible(false);
         } else {
-            this.version.setText("Version: " + buildVersion + " (" + latestVersion + " available!)");
+            this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version.new", buildVersion, latestVersion));
 
-            this.link.setText("Download");
+            this.link.textProperty().bind(LocaleService.getStringBinding("menu.about.download"));
             this.link.setOnAction((actionEvent) ->
                     application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases"));
 
@@ -68,7 +79,7 @@ public class Settings extends VBox {
         this.donate.setOnAction((actionEvent) ->
                 application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper"));
 
-        this.bugs.setText("Report a bug");
+        this.bugs.textProperty().bind(LocaleService.getStringBinding("menu.about.report"));
         this.bugs.setOnAction((actionEvent) ->
                 application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues"));
 

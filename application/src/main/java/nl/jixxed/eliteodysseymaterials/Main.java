@@ -7,14 +7,18 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Main extends Application {
+
+    private final static String CUSTOM_STYLE_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
     private final ApplicationLayout applicationLayout = new ApplicationLayout(this);
     private final GameStateWatcher gameStateWatcher = new GameStateWatcher();
     private final JournalWatcher journalWatcher = new JournalWatcher();
@@ -46,6 +50,14 @@ public class Main extends Application {
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+        final File customCss = new File(CUSTOM_STYLE_FILE);
+        if (customCss.exists()) {
+            try {
+                scene.getStylesheets().add(customCss.toURI().toURL().toExternalForm());
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+        }
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -58,6 +70,7 @@ public class Main extends Application {
     }
 
     public static void main(final String[] args) {
+        LocaleService.setCurrentLocale(LocaleService.getCurrentLocale());
         launch(args);
     }
 }

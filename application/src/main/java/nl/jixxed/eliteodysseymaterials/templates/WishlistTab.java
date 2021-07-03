@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
@@ -38,7 +39,8 @@ public class WishlistTab extends Tab {
     private final FlowPane assetTechFlow = new FlowPane();
 
     public WishlistTab() {
-        super("Wishlist");
+        super();
+        this.textProperty().bind(LocaleService.getStringBinding("tabs.wishlist"));
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.pannableProperty().set(true);
         scrollPane.setFitToHeight(true);
@@ -57,8 +59,10 @@ public class WishlistTab extends Tab {
         this.assetCircuitFlow.setVgap(4);
         this.assetTechFlow.setHgap(4);
         this.assetTechFlow.setVgap(4);
-        final Label selected_blueprints = new Label("Selected blueprints");
-        final Label required_materials = new Label("Required materials");
+        final Label selected_blueprints = new Label();
+        selected_blueprints.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.selected.blueprints"));
+        final Label required_materials = new Label();
+        required_materials.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.required.materials"));
         selected_blueprints.getStyleClass().add("wishlist-header");
         required_materials.getStyleClass().add("wishlist-header");
         final VBox value = new VBox(selected_blueprints, this.recipes, required_materials, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
@@ -81,7 +85,8 @@ public class WishlistTab extends Tab {
 
     public void refreshContent() {
         final HBox[] labels = APPLICATION_STATE.getWishlist().stream().map(recipeName -> {
-            final Label label = new Label(recipeName.friendlyName());
+            final Label label = new Label();
+            label.textProperty().bind(LocaleService.getStringBinding(recipeName.getLocalizationKey()));
             final Button close = new Button("X");
             close.setOnAction(event -> EventService.publish(new WishlistEvent(recipeName, Action.REMOVED)));
             final HBox hBox = new HBox(label, close);
@@ -90,7 +95,7 @@ public class WishlistTab extends Tab {
         }).toArray(HBox[]::new);
         this.recipes.getChildren().clear();
         this.recipes.getChildren().addAll(labels);
-        
+
         this.goodFlow.getChildren().clear();
         this.assetChemicalFlow.getChildren().clear();
         this.dataFlow.getChildren().clear();

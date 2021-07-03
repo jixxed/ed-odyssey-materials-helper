@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
@@ -12,11 +11,11 @@ import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -38,9 +37,13 @@ public class RecipeBar extends Accordion {
                 .map(this::createCategoryTitledPane)
                 .sorted(Comparator.comparing(Labeled::getText))
                 .collect(Collectors.toList());
-        final TitledPane about = new TitledPane("About", this.settings);
+        final TitledPane about = new TitledPane();
+        about.textProperty().bind(LocaleService.getStringBinding("menu.about"));
+        about.setContent(this.settings);
         titledPanes.add(about);
-        final TitledPane legend = new TitledPane("Legend", this.legend);
+        final TitledPane legend = new TitledPane();
+        legend.textProperty().bind(LocaleService.getStringBinding("menu.legend"));
+        legend.setContent(this.legend);
         titledPanes.add(legend);
         this.getPanes().addAll(titledPanes.toArray(new TitledPane[0]));
         this.setExpandedPane(about);
@@ -60,7 +63,9 @@ public class RecipeBar extends Accordion {
                 .sorted(Comparator.comparing(Labeled::getText))
                 .toArray(TitledPane[]::new));
         recipesAccordion.setPrefHeight(500);
-        final TitledPane categoryTitledPane = new TitledPane(recipesEntry.getKey(), recipesAccordion);
+        final TitledPane categoryTitledPane = new TitledPane();
+        categoryTitledPane.textProperty().bind(LocaleService.getStringBinding(recipesEntry.getKey()));
+        categoryTitledPane.setContent(recipesAccordion);
         categoryTitledPane.getStyleClass().add("category-title-pane");
         return categoryTitledPane;
     }
@@ -82,25 +87,24 @@ public class RecipeBar extends Accordion {
                     ).sorted(Comparator.comparing(Ingredient::getName))
                     .collect(Collectors.toList()));
         }
-        try {
-            if (!(recipe.getValue() instanceof EngineerRecipe) || ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {
-                final Button addToWishlist = new Button("Add to wishlist");
-                addToWishlist.getStyleClass().add("wishlist-button");
-                addToWishlist.setOnAction(event -> {
-                    EventService.publish(new WishlistEvent(recipe.getKey(), Action.ADDED));
-                });
-                final HBox box = new HBox(addToWishlist);
-                HBox.setHgrow(addToWishlist, Priority.ALWAYS);
-                box.setAlignment(Pos.TOP_RIGHT);
-                content.getChildren().add(box);
-                content.getChildren().add(new FXMLLoader(getClass().getResource("IngredientHeader.fxml")).load());
-            }
-        } catch (final IOException e) {
-            e.printStackTrace();
+        if (!(recipe.getValue() instanceof EngineerRecipe) || ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {
+            final Button addToWishlist = new Button();
+            addToWishlist.textProperty().bind(LocaleService.getStringBinding("recipe.add.to.wishlist"));
+            addToWishlist.getStyleClass().add("wishlist-button");
+            addToWishlist.setOnAction(event -> {
+                EventService.publish(new WishlistEvent(recipe.getKey(), Action.ADDED));
+            });
+            final HBox box = new HBox(addToWishlist);
+            HBox.setHgrow(addToWishlist, Priority.ALWAYS);
+            box.setAlignment(Pos.TOP_RIGHT);
+            content.getChildren().add(box);
+            content.getChildren().add(new IngredientHeader());
         }
+
         content.getChildren().addAll(ingredients);
         if (recipe.getValue() instanceof ModuleRecipe) {
-            final Label engineerLabelHeader = new Label("Engineers crafting this blueprint:");
+            final Label engineerLabelHeader = new Label();
+            engineerLabelHeader.textProperty().bind(LocaleService.getStringBinding("recipe.label.engineers"));
             engineerLabelHeader.getStyleClass().add("engineerLabelHeader");
             content.getChildren().addAll(engineerLabelHeader);
             final Label[] engineerLabels = ((ModuleRecipe) recipe.getValue()).getEngineers().stream()
@@ -144,7 +148,9 @@ public class RecipeBar extends Accordion {
             recipeTitledPane = new EngineerTitledPane(recipe.getKey(), content, (EngineerRecipe) recipe.getValue());
             this.engineerTitledPanes.add((EngineerTitledPane) recipeTitledPane);
         } else {
-            recipeTitledPane = new TitledPane(recipe.getKey().friendlyName(), content);
+            recipeTitledPane = new TitledPane();
+            recipeTitledPane.setContent(content);
+            recipeTitledPane.textProperty().bind(LocaleService.getStringBinding(recipe.getKey().getLocalizationKey()));
         }
         return recipeTitledPane;
     }

@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.io.IOException;
 
@@ -45,14 +46,14 @@ public class Ingredient extends HBox {
 
     public Ingredient(final String text) {
         this(StorageType.OTHER);
-        this.nameLabel.setText(text);
+        this.nameLabel.textProperty().bind(LocaleService.getStringBinding(text));
         this.material = null;
     }
 
     public Ingredient(final StorageType storageType, final Material material, final Integer amount, final Integer amountAvailable) {
         this(storageType);
         this.code = material.toString();
-        this.nameLabel.setText(material.friendlyName());
+        this.nameLabel.textProperty().bind(LocaleService.getStringBinding(material.getLocalizationKey()));//setText(material.friendlyName());
         this.code = material.toString();
         this.amountRequiredLabel.setText(amount.toString());
         this.amountRequired = amount;

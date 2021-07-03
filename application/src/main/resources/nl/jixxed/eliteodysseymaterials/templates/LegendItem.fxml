@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<fx:root minHeight="30.0" prefHeight="30.0" type="javafx.scene.layout.HBox"
+         xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
+    <ImageView fx:id="image" styleClass="materialcard-image" fitHeight="28" fitWidth="28"/>
+    <Label fx:id="name" styleClass="materialcard-name">test</Label>
+</fx:root>

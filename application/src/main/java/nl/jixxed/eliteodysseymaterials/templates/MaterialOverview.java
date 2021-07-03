@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -14,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
@@ -92,12 +94,11 @@ public class MaterialOverview extends VBox {
     private void showGoods(final Search search) {
         APPLICATION_STATE.getGoods().entrySet().stream()
                 .filter(getFilter(search))
-                .filter(searchFilter(search))
-                .filter(unknownFilter())
+                .filter(searchQueryFilter(search))
+                .filter(knownFilter())
                 .sorted(getSort(search))
                 .forEach((entry) -> {
-                    final String name = entry.getKey().friendlyName();
-                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
+                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
                     this.goodFlow.getChildren().add(materialCard);
                     GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
@@ -111,13 +112,12 @@ public class MaterialOverview extends VBox {
     private void showAssets(final Search search) {
         APPLICATION_STATE.getAssets().entrySet().stream()
                 .filter(getFilter(search))
-                .filter(searchFilter(search))
-                .filter(unknownFilter())
+                .filter(searchQueryFilter(search))
+                .filter(knownFilter())
                 .sorted(Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
-                        .thenComparing(o -> o.getKey().friendlyName()))
+                        .thenComparing(o -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey())))
                 .forEach((entry) -> {
-                    final String name = entry.getKey().friendlyName();
-                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue());
+                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
                     switch (entry.getKey().getType()) {
                         case TECH -> this.assetTechFlow.getChildren().add(materialCard);
                         case CHEMICAL -> this.assetChemicalFlow.getChildren().add(materialCard);
@@ -129,12 +129,11 @@ public class MaterialOverview extends VBox {
     private void showDatas(final Search search) {
         APPLICATION_STATE.getData().entrySet().stream()
                 .filter(getFilter(search))
-                .filter(searchFilter(search))
-                .filter(unknownFilter())
+                .filter(searchQueryFilter(search))
+                .filter(knownFilter())
                 .sorted(getSort(search))
                 .forEach((entry) -> {
-                    final String name = entry.getKey().friendlyName();
-                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), name, entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
+                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
                     this.dataFlow.getChildren().add(materialCard);
                     GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
@@ -145,17 +144,12 @@ public class MaterialOverview extends VBox {
         });
     }
 
-    private Predicate<? super Map.Entry<? extends Material, Storage>> unknownFilter() {
-        return (Map.Entry<? extends Material, Storage> o) -> switch (o.getKey().getClass().getSimpleName()) {
-            case "Data" -> !Data.UNKNOWN.equals(o.getKey());
-            case "Good" -> !Good.UNKNOWN.equals(o.getKey());
-            case "Asset" -> !Asset.UNKNOWN.equals(o.getKey());
-            default -> throw new IllegalStateException("Unexpected value: " + o.getKey().getClass().getName());
-        };
+    private Predicate<? super Map.Entry<? extends Material, Storage>> knownFilter() {
+        return (Map.Entry<? extends Material, Storage> o) -> !o.getKey().isUnknown();
     }
 
-    private Predicate<? super Map.Entry<? extends Material, Storage>> searchFilter(final Search search) {
-        return (Map.Entry<? extends Material, Storage> o) -> search.getQuery().isBlank() || o.getKey().friendlyName().toLowerCase().contains(search.getQuery().toLowerCase());
+    private Predicate<? super Map.Entry<? extends Material, Storage>> searchQueryFilter(final Search search) {
+        return (Map.Entry<? extends Material, Storage> o) -> search.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()).toLowerCase().contains(search.getQuery().toLowerCase());
     }
 
     private Predicate<? super Map.Entry<? extends Material, Storage>> getFilter(final Search search) {
@@ -175,9 +169,9 @@ public class MaterialOverview extends VBox {
 
     private Comparator<Map.Entry<? extends Material, Storage>> getSort(final Search search) {
         return switch (search.getSort()) {
-            case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> o.getKey().friendlyName());
-            case RELEVANT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey()) || RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> o.getKey().friendlyName());
-            case ENGINEER_BLUEPRINT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey())).thenComparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> o.getKey().friendlyName());
+            case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
+            case RELEVANT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey()) || RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
+            case ENGINEER_BLUEPRINT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey())).thenComparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
         };
     }
 
@@ -197,9 +191,11 @@ public class MaterialOverview extends VBox {
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer unknownDatas = APPLICATION_STATE.getUnknownData().size();
-        final MaterialCard datasLabel = new MaterialCard("Data (Blueprint: " + recipeDatas + " / Irrelevant: " + (nonRecipeDatas + unknownDatas) + " / Total: " + (recipeDatas + nonRecipeDatas + unknownDatas) + ")", null);
-        datasLabel.getStyleClass().add("category-label");
-        this.totals.getChildren().add(datasLabel);
+
+        final Label label = new Label();
+        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.data", recipeDatas, nonRecipeDatas + unknownDatas, recipeDatas + nonRecipeDatas + unknownDatas));
+        label.getStyleClass().add("category-label");
+        this.totals.getChildren().add(label);
     }
 
     private void updateTotalsAssets() {
@@ -211,9 +207,11 @@ public class MaterialOverview extends VBox {
                 .filter(assetEntry -> !RecipeConstants.isBlueprintIngredient(assetEntry.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final MaterialCard assetsLabel = new MaterialCard("Assets (Blueprint: " + recipeAssets + " / Irrelevant: " + nonRecipeAssets + " / Total: " + (recipeAssets + nonRecipeAssets) + ")", null);
-        assetsLabel.getStyleClass().add("category-label");
-        this.totals.getChildren().add(assetsLabel);
+
+        final Label label = new Label();
+        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.assets", recipeAssets, nonRecipeAssets, recipeAssets + nonRecipeAssets));
+        label.getStyleClass().add("category-label");
+        this.totals.getChildren().add(label);
     }
 
     private void updateTotalsGoods() {
@@ -226,9 +224,11 @@ public class MaterialOverview extends VBox {
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer unknownGoods = APPLICATION_STATE.getUnknownGoods().size();
-        final MaterialCard goodsLabel = new MaterialCard("Goods (Blueprint: " + recipeGoods + " / Irrelevant: " + (nonRecipeGoods + unknownGoods) + " / Total: " + (recipeGoods + nonRecipeGoods + unknownGoods) + ")", null);
-        goodsLabel.getStyleClass().add("category-label");
-        this.totals.getChildren().add(goodsLabel);
+
+        final Label label = new Label();
+        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.goods", recipeGoods, nonRecipeGoods + unknownGoods, recipeGoods + nonRecipeGoods + unknownGoods));
+        label.getStyleClass().add("category-label");
+        this.totals.getChildren().add(label);
     }
 
 }

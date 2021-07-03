@@ -5,19 +5,31 @@ public interface Material {
         return StorageType.OTHER;
     }
 
-    String friendlyName();
-
     static Material subtypeForName(final String name) {
-        Material material = Data.forName(name);
-        if (Data.UNKNOWN.equals(material)) {
-            material = Good.forName(name);
-            if (Good.UNKNOWN.equals(material)) {
-                material = Asset.forName(name);
-                if (Asset.UNKNOWN.equals(material)) {
-                    throw new IllegalArgumentException("Unknown material type for name: " + name);
+        final String fixedName = hotfixName(name);
+        Material material = Data.forName(fixedName);
+        if (material.isUnknown()) {
+            material = Good.forName(fixedName);
+            if (material.isUnknown()) {
+                material = Asset.forName(fixedName);
+                if (material.isUnknown()) {
+                    throw new IllegalArgumentException("Unknown material type for name: " + fixedName);
                 }
             }
         }
         return material;
     }
+
+    static String hotfixName(final String name) {
+        if ("ENHANCEDINTERROGATION".equals(name)) {
+            return "ENHANCEDINTERROGATIONRECORDINGS";
+        } else if ("GEOGRAPHICALDATA".equals(name)) {
+            return "GEOLOGICALDATA";
+        }
+        return name;
+    }
+
+    String getLocalizationKey();
+
+    boolean isUnknown();
 }

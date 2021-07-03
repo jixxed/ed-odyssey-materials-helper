@@ -14,6 +14,7 @@ import javafx.scene.layout.Priority;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.enums.Show;
 import nl.jixxed.eliteodysseymaterials.enums.Sort;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
@@ -48,11 +49,21 @@ public class SearchBar extends HBox {
         this.button.getStyleClass().add("menubutton");
 
         final TextField textField = new TextField();
-        final ComboBox<Show> showMaterialsComboBox = new ComboBox<>(this.showOptions);
-        final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>(this.sortOptions);
-        textField.setAccessibleText("text");
-        textField.getStyleClass().add("search");
-        textField.setPromptText("Search");
+        final ComboBox<Show> showMaterialsComboBox = new ComboBox<>();//this.showOptions
+        final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>();//this.sortOptions
+        showMaterialsComboBox.itemsProperty().bind(LocaleService.getListBinding(Show.ALL,
+                Show.ALL_WITH_STOCK,
+                Show.ALL_ENGINEER_BLUEPRINT,
+                Show.REQUIRED_ENGINEER_BLUEPRINT,
+                Show.ALL_ENGINEER,
+                Show.REQUIRED_ENGINEER,
+                Show.BLUEPRINT,
+                Show.IRRELEVANT,
+                Show.IRRELEVANT_WITH_STOCK,
+                Show.FAVOURITES));
+        sortMaterialsComboBox.itemsProperty().bind(LocaleService.getListBinding(Sort.ENGINEER_BLUEPRINT_IRRELEVANT, Sort.RELEVANT_IRRELEVANT, Sort.ALPHABETICAL));
+        textField.getStyleClass().add("search-input");
+        textField.promptTextProperty().bind(LocaleService.getStringBinding("search.text.placeholder"));
         textField.setFocusTraversable(false);
 
         Observable.create((ObservableEmitter<String> emitter) -> textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
@@ -63,15 +74,19 @@ public class SearchBar extends HBox {
                 });
 
         showMaterialsComboBox.getStyleClass().add("filter-and-sort");
-        showMaterialsComboBox.setPromptText("Show materials:");
-        showMaterialsComboBox.setTooltip(new Tooltip("Show materials"));
+        showMaterialsComboBox.promptTextProperty().bind(LocaleService.getStringBinding("search.filter.placeholder"));
+        final Tooltip showMaterialsTooltip = new Tooltip();
+        showMaterialsTooltip.textProperty().bind(LocaleService.getStringBinding("search.filter.placeholder"));
+        showMaterialsComboBox.setTooltip(showMaterialsTooltip);
         showMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             EventService.publish(new SearchEvent(new Search(getQueryOrDefault(textField), getSortOrDefault(sortMaterialsComboBox), newValue)));
 
         });
         sortMaterialsComboBox.getStyleClass().add("filter-and-sort");
-        sortMaterialsComboBox.setPromptText("Sort materials:");
-        sortMaterialsComboBox.setTooltip(new Tooltip("Sort materials"));
+        sortMaterialsComboBox.promptTextProperty().bind(LocaleService.getStringBinding("search.sort.placeholder"));
+        final Tooltip sortMaterialsTooltip = new Tooltip();
+        sortMaterialsTooltip.textProperty().bind(LocaleService.getStringBinding("search.sort.placeholder"));
+        sortMaterialsComboBox.setTooltip(sortMaterialsTooltip);
         sortMaterialsComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
             EventService.publish(new SearchEvent(new Search(getQueryOrDefault(textField), newValue, getShowOrDefault(showMaterialsComboBox))));
         });

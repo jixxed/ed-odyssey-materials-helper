@@ -30,7 +30,7 @@ public class SpawnConstants {
         DATA_PORTS.put(Data.CHEMICALFORMULAE, List.of(IND));
         DATA_PORTS.put(Data.CHEMICALINVENTORY, List.of(IND, LAB, MED));
         DATA_PORTS.put(Data.CHEMICALPATENTS, List.of(CMD, IND, LAB, MED));
-        DATA_PORTS.put(Data.CHEMICALWEAPONDATA, List.of());
+        DATA_PORTS.put(Data.CHEMICALWEAPONDATA, List.of(SEC));
         DATA_PORTS.put(Data.CLASSICENTERTAINMENT, List.of(CMD, HAB));
         DATA_PORTS.put(Data.COCKTAILRECIPES, List.of(HAB));
         DATA_PORTS.put(Data.COMBATANTPERFORMANCE, List.of(HAB, SEC));
@@ -45,8 +45,8 @@ public class SpawnConstants {
         DATA_PORTS.put(Data.EMPLOYEEEXPENSES, List.of(CMD, HAB));
         DATA_PORTS.put(Data.EMPLOYEEGENETICDATA, List.of(LAB, MED, SEC));
         DATA_PORTS.put(Data.EMPLOYMENTHISTORY, List.of(CMD, HAB));
-        DATA_PORTS.put(Data.ENHANCEDINTERROGATION, List.of());
-        DATA_PORTS.put(Data.ESPIONAGEMATERIAL, List.of());
+        DATA_PORTS.put(Data.ENHANCEDINTERROGATIONRECORDINGS, List.of());
+        DATA_PORTS.put(Data.ESPIONAGEMATERIAL, List.of(CMD));
         DATA_PORTS.put(Data.EVACUATIONPROTOCOLS, List.of(EXT, HAB, LAB, MED, PWR, SEC));
         DATA_PORTS.put(Data.EXPLORATIONJOURNALS, List.of(CMD, HAB, IND));
         DATA_PORTS.put(Data.EXTRACTIONYIELDDATA, List.of(EXT));
@@ -57,7 +57,6 @@ public class SpawnConstants {
         DATA_PORTS.put(Data.FLEETREGISTRY, List.of(SEC));
         DATA_PORTS.put(Data.GENESEQUENCINGDATA, List.of(LAB, MED));
         DATA_PORTS.put(Data.GENETICRESEARCH, List.of(MED));
-        DATA_PORTS.put(Data.GEOGRAPHICALDATA, List.of());
         DATA_PORTS.put(Data.GEOLOGICALDATA, List.of(IND, LAB));
         DATA_PORTS.put(Data.HYDROPONICDATA, List.of(IND, LAB));
         DATA_PORTS.put(Data.INCIDENTLOGS, List.of(CMD, SEC));

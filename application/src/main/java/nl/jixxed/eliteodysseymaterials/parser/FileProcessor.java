@@ -41,9 +41,14 @@ public class FileProcessor {
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
                 cursor++;
+                //if multiple lines with the same timestamp are written, the lines can be blank until all lines are written.
+//                System.out.println(line.length() + ": " + line);
+                if (line.isBlank()) {
+                    System.out.println("BLANK LINE");
+                    break;
+                }
                 if (cursor > lineNumber) {
                     lineNumber++;
-                    System.out.println(line);
                     jsonNode = processJournalMessage(line, file);
                 }
             }
@@ -72,6 +77,7 @@ public class FileProcessor {
         try {
             jsonNode = OBJECT_MAPPER.readTree(message);
             if (jsonNode.get("event") != null) {
+                System.out.println("event: " + jsonNode.get("event").asText());
                 final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get("event").asText());
                 switch (journalEventType) {
                     case ENGINEERPROGRESS -> processEngineerProgressMessage(jsonNode);
@@ -82,6 +88,8 @@ public class FileProcessor {
                 if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
                     EventService.publish(new JournalProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
                 }
+            } else {
+                System.out.println("EVENT NULL: " + jsonNode.toPrettyString());
             }
         } catch (final JsonProcessingException e) {
             e.printStackTrace();

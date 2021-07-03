@@ -17,7 +17,7 @@ public class DataParser extends Parser {
             final String name = dataNode.get("Name").asText();
             final Data data = Data.forName(name);
             final int amount = dataNode.get("Count").asInt();
-            if (Data.UNKNOWN.equals(data)) {
+            if (data.isUnknown()) {
                 System.out.println("Unknown Data detected: " + dataNode.toPrettyString());
                 final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
                 final Storage storage = getOrCreateContainer(unknownMap, name + ":" + nameLocalised);

@@ -1,48 +1,45 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum Asset implements Material {
-    AEROGEL("Aerogel", AssetType.CHEMICAL),
-    CHEMICALCATALYST("Chemical Catalyst", AssetType.CHEMICAL),
-    CHEMICALSUPERBASE("Chemical Superbase", AssetType.CHEMICAL),
-    EPINEPHRINE("Epinephrine", AssetType.CHEMICAL),
-    EPOXYADHESIVE("Epoxy Adhesive", AssetType.CHEMICAL),
-    GRAPHENE("Graphene", AssetType.CHEMICAL),
-    OXYGENICBACTERIA("Oxygenic Bacteria", AssetType.CHEMICAL),
-    PHNEUTRALISER("PH Neutraliser", AssetType.CHEMICAL),
-    RDX("RDX", AssetType.CHEMICAL),
-    VISCOELASTICPOLYMER("Viscoelastic Polymer", AssetType.CHEMICAL),
+    AEROGEL(AssetType.CHEMICAL),
+    CHEMICALCATALYST(AssetType.CHEMICAL),
+    CHEMICALSUPERBASE(AssetType.CHEMICAL),
+    EPINEPHRINE(AssetType.CHEMICAL),
+    EPOXYADHESIVE(AssetType.CHEMICAL),
+    GRAPHENE(AssetType.CHEMICAL),
+    OXYGENICBACTERIA(AssetType.CHEMICAL),
+    PHNEUTRALISER(AssetType.CHEMICAL),
+    RDX(AssetType.CHEMICAL),
+    VISCOELASTICPOLYMER(AssetType.CHEMICAL),
+    CIRCUITBOARD(AssetType.CIRCUIT),
+    CIRCUITSWITCH(AssetType.CIRCUIT),
+    ELECTRICALFUSE(AssetType.CIRCUIT),
+    ELECTRICALWIRING(AssetType.CIRCUIT),
+    ELECTROMAGNET(AssetType.CIRCUIT),
+    IONBATTERY(AssetType.CIRCUIT),
+    METALCOIL(AssetType.CIRCUIT),
+    MICROELECTRODE(AssetType.CIRCUIT),
+    MICROSUPERCAPACITOR(AssetType.CIRCUIT),
+    MICROTRANSFORMER(AssetType.CIRCUIT),
+    MOTOR(AssetType.CIRCUIT),
+    OPTICALFIBRE(AssetType.CIRCUIT),
+    CARBONFIBREPLATING(AssetType.TECH),
+    ENCRYPTEDMEMORYCHIP(AssetType.TECH),
+    MICROHYDRAULICS(AssetType.TECH),
+    MICROTHRUSTERS(AssetType.TECH),
+    MEMORYCHIP(AssetType.TECH),
+    OPTICALLENS(AssetType.TECH),
+    SCRAMBLER(AssetType.TECH),
+    TITANIUMPLATING(AssetType.TECH),
+    TRANSMITTER(AssetType.TECH),
+    TUNGSTENCARBIDE(AssetType.TECH),
+    WEAPONCOMPONENT(AssetType.TECH),
+    UNKNOWN(AssetType.NONE);
 
-    CIRCUITBOARD("Circuit Board", AssetType.CIRCUIT),
-    CIRCUITSWITCH("Circuit Switch", AssetType.CIRCUIT),
-    ELECTRICALFUSE("Electrical Fuse", AssetType.CIRCUIT),
-    ELECTRICALWIRING("Electrical Wiring", AssetType.CIRCUIT),
-    ELECTROMAGNET("Electromagnet", AssetType.CIRCUIT),
-    IONBATTERY("Ion Battery", AssetType.CIRCUIT),
-    METALCOIL("Metal Coil", AssetType.CIRCUIT),
-    MICROELECTRODE("Microelectrode", AssetType.CIRCUIT),
-    MICROSUPERCAPACITOR("Micro Supercapacitor", AssetType.CIRCUIT),
-    MICROTRANSFORMER("Micro Transformer", AssetType.CIRCUIT),
-    MOTOR("Motor", AssetType.CIRCUIT),
-    OPTICALFIBRE("Optical Fibre", AssetType.CIRCUIT),
-
-    CARBONFIBREPLATING("Carbon Fibre Plating", AssetType.TECH),
-    ENCRYPTEDMEMORYCHIP("Encrypted Memory Chip", AssetType.TECH),
-    MICROHYDRAULICS("Micro Hydraulics", AssetType.TECH),
-    MICROTHRUSTERS("Micro Thrusters", AssetType.TECH),
-    MEMORYCHIP("Memory Chip", AssetType.TECH),
-    OPTICALLENS("Optical Lens", AssetType.TECH),
-    SCRAMBLER("Scrambler", AssetType.TECH),
-    TITANIUMPLATING("Titanium Plating", AssetType.TECH),
-    TRANSMITTER("Transmitter", AssetType.TECH),
-    TUNGSTENCARBIDE("Tungsten Carbide", AssetType.TECH),
-    WEAPONCOMPONENT("Weapon Component", AssetType.TECH),
-
-    UNKNOWN("UNKNOWN", AssetType.NONE);
-    String name;
     AssetType type;
 
-    Asset(final String name, final AssetType type) {
-        this.name = name;
+    Asset(final AssetType type) {
+
         this.type = type;
     }
 
@@ -54,18 +51,24 @@ public enum Asset implements Material {
         }
     }
 
+    public AssetType getType() {
+        return this.type;
+    }
+
     @Override
     public StorageType getStorageType() {
         return StorageType.ASSET;
     }
 
     @Override
-    public String friendlyName() {
-        return this.name;
+    public String getLocalizationKey() {
+        return "material.asset." + this.toString().toLowerCase();
     }
 
-    public AssetType getType() {
-        return this.type;
+
+    @Override
+    public boolean isUnknown() {
+        return this == Asset.UNKNOWN;
     }
 
 

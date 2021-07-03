@@ -7,6 +7,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import jfxtras.styles.jmetro.JMetroStyleClass;
 import nl.jixxed.eliteodysseymaterials.AppConstants;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 
@@ -25,12 +26,12 @@ public class BottomBar extends HBox {
 
         final File watchedFolder = new File(AppConstants.WATCHED_FOLDER);
 
-        this.watchedFileLabel.setText("None - No Odyssey journals found at " + watchedFolder.getAbsolutePath());
+        this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath()));
 
         EventService.addListener(JournalProcessedEvent.class, journalProcessedEvent -> {
             Platform.runLater(() -> {
-                this.watchedFileLabel.setText("Watching: " + journalProcessedEvent.getFile().getAbsolutePath());
-                this.lastTimeStampLabel.setText("Latest observed relevant message: " + journalProcessedEvent.getTimestamp() + " (" + journalProcessedEvent.getJournalEventType().friendlyName() + ")");
+                this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalProcessedEvent.getFile().getAbsolutePath()));
+                this.lastTimeStampLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.last.message", journalProcessedEvent.getTimestamp(), journalProcessedEvent.getJournalEventType().friendlyName()));
             });
         });
     }
