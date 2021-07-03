@@ -116,13 +116,42 @@
 }
 
 .materialcard-name {
-    -fx-pref-width: 200;
+    -fx-pref-width: 320;
     -fx-label-padding: 5;
 }
 
 
 .materialcard-amount {
     -fx-pref-width: 90;
+    -fx-padding: 5;
+    -fx-text-alignment: right;
+}
+
+.wishlist-ingredient {
+    -fx-border-color: black;
+    -fx-min-height: 30;
+    -fx-pref-height: 30;
+    -fx-pref-width: 400;
+}
+
+
+.wishlist-ingredient > .label {
+    -fx-text-fill: black;
+}
+
+.wishlist-ingredient > .name {
+    -fx-pref-width: 300;
+    -fx-label-padding: 5;
+}
+
+.wishlist-ingredient > .available {
+    -fx-pref-width: 50;
+    -fx-padding: 5;
+    -fx-text-alignment: right;
+}
+
+.wishlist-ingredient > .required {
+    -fx-pref-width: 50;
     -fx-padding: 5;
     -fx-text-alignment: right;
 }
@@ -139,6 +168,11 @@
     -fx-text-fill: black;
 }
 
+.ingredient > .name {
+    -fx-pref-width: 500;
+    -fx-label-padding: 5;
+}
+
 .ingredient-without-amount {
     -fx-background-color: #fff;
 }
@@ -149,11 +183,6 @@
 
 .ingredient-unfilled {
     -fx-background-color: #ff7c7c;
-}
-
-.ingredient > .name {
-    -fx-pref-width: 500;
-    -fx-label-padding: 5;
 }
 
 .ingredient-with-amount > .name {
