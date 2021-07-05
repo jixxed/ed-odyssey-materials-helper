@@ -3,9 +3,11 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
@@ -44,20 +46,18 @@ public class WishlistIngredient extends HBox {
         this.getStyleClass().add("wishlist-ingredient");
     }
 
-    public WishlistIngredient(final String text) {
-        this(StorageType.OTHER);
-        this.nameLabel.textProperty().bind(LocaleService.getStringBinding(text));
-        this.material = null;
-    }
-
     public WishlistIngredient(final StorageType storageType, final Material material, final Integer amount, final Integer amountAvailable) {
         this(storageType);
         this.code = material.toString();
-        this.nameLabel.textProperty().bind(LocaleService.getStringBinding(material.getLocalizationKey()));//setText(material.friendlyName());
+        this.nameLabel.textProperty().bind(LocaleService.getStringBinding(material.getLocalizationKey()));
         this.code = material.toString();
-        this.amountRequiredLabel.setText(amount.toString());
         this.amountRequired = amount;
         this.amountAvailable = amountAvailable;
+        this.amountRequiredLabel.setText(this.amountRequired.toString());
+        final Tooltip tooltip = new Tooltip();
+        tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(material));
+        Tooltip.install(this, tooltip);
+        tooltip.setShowDelay(Duration.millis(100));
         this.material = material;
         switch (storageType) {
             case DATA -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
@@ -77,20 +77,12 @@ public class WishlistIngredient extends HBox {
         update();
     }
 
-    public void setAmountAvailable(final Integer amountAvailable) {
-        this.amountAvailable = amountAvailable;
-    }
-
     public StorageType getType() {
         return this.storageType;
     }
 
-    public String getCode() {
-        return this.code;
-    }
-
     public void update() {
-        if (this.amountAvailable >= this.amountRequired) {
+        if (this.amountAvailable >= Integer.parseInt(this.amountRequiredLabel.getText())) {
             this.amountAvailableLabel.setText(this.amountAvailable.toString());
             this.getStyleClass().removeAll("ingredient-filled", "ingredient-unfilled");
             this.getStyleClass().addAll("ingredient-filled");
@@ -98,6 +90,25 @@ public class WishlistIngredient extends HBox {
             this.amountAvailableLabel.setText(this.amountAvailable.toString());
             this.getStyleClass().removeAll("ingredient-filled", "ingredient-unfilled");
             this.getStyleClass().addAll("ingredient-unfilled");
+        }
+    }
+
+    public void highlight(final boolean enable, final Integer amountRequiredForRecipe) {
+        if (enable) {
+            this.getStyleClass().add("wishlist-highlight");
+            this.amountRequiredLabel.setText(amountRequiredForRecipe.toString());
+        } else {
+            this.getStyleClass().removeAll("wishlist-highlight");
+            this.amountRequiredLabel.setText(this.amountRequired.toString());
+        }
+        update();
+    }
+
+    public void lowlight(final boolean enable) {
+        if (enable) {
+            this.getStyleClass().add("wishlist-lowlight");
+        } else {
+            this.getStyleClass().removeAll("wishlist-lowlight");
         }
     }
 

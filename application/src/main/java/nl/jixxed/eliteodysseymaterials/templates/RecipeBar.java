@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
 import java.util.ArrayList;
@@ -94,7 +95,23 @@ public class RecipeBar extends Accordion {
             addToWishlist.setOnAction(event -> {
                 EventService.publish(new WishlistEvent(recipe.getKey(), Action.ADDED));
             });
-            final HBox box = new HBox(addToWishlist);
+            final long initialCount = APPLICATION_STATE.getWishlist().stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count();
+            final Label countLabel = new Label();
+            if (initialCount > 0L) {
+                countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", initialCount));
+            }
+            EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
+                final long count = APPLICATION_STATE.getWishlist().stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count();
+                if (count > 0L) {
+                    countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
+                } else {
+                    countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
+                }
+            });
+
+            countLabel.getStyleClass().add("wishlist-count");
+            final HBox box = new HBox(countLabel, addToWishlist);
+            box.getStyleClass().add("wishlist-count-box");
             HBox.setHgrow(addToWishlist, Priority.ALWAYS);
             box.setAlignment(Pos.TOP_RIGHT);
             content.getChildren().add(box);

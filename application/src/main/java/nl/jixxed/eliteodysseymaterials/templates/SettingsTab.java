@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 
 public class SettingsTab extends Tab {
     public SettingsTab() {
@@ -28,12 +29,14 @@ public class SettingsTab extends Tab {
         languageLabel.getStyleClass().add("settings-label");
         final ComboBox<ApplicationLocale> languageSelect = new ComboBox<>();
         languageSelect.itemsProperty().bind(LocaleService.getListBinding(ApplicationLocale.values()));
-        languageSelect.setValue(ApplicationLocale.ENGLISH);
         languageSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
                 LocaleService.setCurrentLocale(newValue.getLocale());
+                PreferencesService.setPreference("language", newValue.name());
             }
         });
+        languageSelect.getSelectionModel().select(ApplicationLocale.valueOf(PreferencesService.getPreference("language", "ENGLISH")));
+
         final HBox langSetting = new HBox(languageLabel, languageSelect);
         final VBox value = new VBox(settingsLabel, langSetting);
         langSetting.setSpacing(10);

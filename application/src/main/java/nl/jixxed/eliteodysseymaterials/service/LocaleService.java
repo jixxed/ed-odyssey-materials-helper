@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.StringBinding;
+import javafx.beans.value.ObservableValue;
 import nl.jixxed.eliteodysseymaterials.BarterConstants;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.SpawnConstants;
@@ -42,6 +43,13 @@ public class LocaleService {
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {
         return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(key), parameters));
+    }
+
+    public static ObservableValue<String> getSupplierStringBinding(final String key, final Supplier<Object>... parameterSuppliers) {
+        return ObservableResourceFactory.getStringBinding(() -> {
+            final Object[] parameters = Arrays.stream(parameterSuppliers).map(Supplier::get).toArray(Object[]::new);
+            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), parameters);
+        });
     }
 
     public static StringBinding getStringBinding(final Material material) {
@@ -89,4 +97,5 @@ public class LocaleService {
     public static <T> ListBinding<T> getListBinding(final T... items) {
         return ObservableResourceFactory.getListBinding(items);
     }
+
 }

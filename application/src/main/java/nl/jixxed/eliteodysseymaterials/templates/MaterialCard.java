@@ -62,8 +62,8 @@ public class MaterialCard extends HBox {
 
         final Tooltip tooltip = new Tooltip();
         tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(material));
-        this.name.setTooltip(tooltip);
         tooltip.setShowDelay(Duration.millis(100));
+        Tooltip.install(this, tooltip);
 
         if (isEngineerUnlockMaterial) {
             this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer.png")));
@@ -87,19 +87,17 @@ public class MaterialCard extends HBox {
     }
 
     public MaterialCard(final Asset asset, final Storage amounts) {
-        this(asset, false, amounts);
-    }
-
-    public MaterialCard(final Asset asset, final boolean disableTooltip, final Storage amounts) {
         this(amounts);
         this.setOnMouseClicked((event) -> setFavourite(asset, APPLICATION_STATE.toggleFavourite(asset)));
         this.setFavourite(asset, APPLICATION_STATE.isFavourite(asset));
-        if (!disableTooltip) {
 
-            final Tooltip tooltip = new Tooltip();
-            tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(asset));
-            this.name.setTooltip(tooltip);
-        }
+
+        final Tooltip tooltip = new Tooltip();
+        tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(asset));
+        tooltip.setShowDelay(Duration.millis(100));
+        Tooltip.install(this, tooltip);
+
+
         switch (asset.getType()) {
             case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
             case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));

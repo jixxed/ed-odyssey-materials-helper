@@ -5,20 +5,18 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
 import java.util.Comparator;
@@ -37,10 +35,17 @@ public class WishlistTab extends Tab {
     private final FlowPane dataFlow = new FlowPane();
     private final FlowPane assetCircuitFlow = new FlowPane();
     private final FlowPane assetTechFlow = new FlowPane();
+    private int wishlistSize;
+    private final List<WishlistBlueprint> wishlistBlueprints;
 
     public WishlistTab() {
         super();
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.wishlist"));
+        this.wishlistSize = APPLICATION_STATE.getWishlist().size();
+        this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
+        EventService.addListener(WishlistChangedEvent.class, wishlistChangedEvent -> {
+            this.wishlistSize = wishlistChangedEvent.getWishlistSize();
+            this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
+        });
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.pannableProperty().set(true);
         scrollPane.setFitToHeight(true);
@@ -79,31 +84,40 @@ public class WishlistTab extends Tab {
                 .subscribe((newValue) -> {
                     Platform.runLater(this::refreshContent);
                 });
-
+        this.wishlistBlueprints = APPLICATION_STATE.getWishlist().stream()
+                .map(WishlistBlueprint::new)
+                .collect(Collectors.toList());
+        this.recipes.getChildren().clear();
+        this.recipes.getChildren().addAll(this.wishlistBlueprints);
+        EventService.addListener(WishlistEvent.class, (wishlistEvent) ->
+        {
+            if (Action.REMOVED.equals(wishlistEvent.getAction())) {
+                this.wishlistBlueprints.stream()
+                        .filter(wishlistBlueprint -> wishlistBlueprint.getRecipeName().equals(wishlistEvent.getRecipeName()))
+                        .findFirst()
+                        .ifPresent(wishlistBlueprint -> {
+                            this.recipes.getChildren().remove(wishlistBlueprint);
+                            this.wishlistBlueprints.remove(wishlistBlueprint);
+                        });
+            }
+            if (Action.ADDED.equals(wishlistEvent.getAction())) {
+                final WishlistBlueprint wishlistBlueprint = new WishlistBlueprint(wishlistEvent.getRecipeName());
+                this.wishlistBlueprints.add(wishlistBlueprint);
+                this.recipes.getChildren().add(wishlistBlueprint);
+            }
+        });
         refreshContent();
     }
 
     public void refreshContent() {
-        final HBox[] labels = APPLICATION_STATE.getWishlist().stream().map(recipeName -> {
-            final Label label = new Label();
-            label.textProperty().bind(LocaleService.getStringBinding(recipeName.getLocalizationKey()));
-            final Button close = new Button("X");
-            close.setOnAction(event -> EventService.publish(new WishlistEvent(recipeName, Action.REMOVED)));
-            final HBox hBox = new HBox(label, close);
-            hBox.getStyleClass().add("wishlist-item");
-            return hBox;
-        }).toArray(HBox[]::new);
-        this.recipes.getChildren().clear();
-        this.recipes.getChildren().addAll(labels);
-
         this.goodFlow.getChildren().clear();
         this.assetChemicalFlow.getChildren().clear();
         this.dataFlow.getChildren().clear();
         this.assetCircuitFlow.getChildren().clear();
         this.assetTechFlow.getChildren().clear();
         this.wishlistNeededMaterials.clear();
-        APPLICATION_STATE.getWishlist().stream()
-                .map(RecipeConstants::getRecipe)
+        this.wishlistBlueprints.stream()
+                .map(WishlistBlueprint::getRecipe)
                 .forEach(recipe ->
                         recipe.getMaterialCollection(Material.class).forEach((key, value1) -> this.wishlistNeededMaterials.merge(key, value1, Integer::sum))
                 );
@@ -117,6 +131,10 @@ public class WishlistTab extends Tab {
                             case OTHER -> null;
                         }
                 ).collect(Collectors.toList());
+
+        this.wishlistBlueprints.stream()
+                .forEach(wishlistBlueprint -> wishlistBlueprint.addWishlistIngredients(ingredients));
+
         this.goodFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.GOOD)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));
         this.dataFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.DATA)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));
         this.assetCircuitFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CIRCUIT)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));

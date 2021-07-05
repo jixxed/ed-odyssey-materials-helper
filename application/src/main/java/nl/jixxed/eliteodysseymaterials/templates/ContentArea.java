@@ -8,7 +8,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
 public class ContentArea extends AnchorPane {
     public static final double MENU_WIDTH = 550.0;
@@ -33,7 +36,11 @@ public class ContentArea extends AnchorPane {
         this.wishlistTab.setClosable(false);
         this.settingsTab.setClosable(false);
         final TabPane tabs = new TabPane(this.overview, this.wishlistTab, this.settingsTab); //, this.settingsTab
-
+        EventService.addListener(WishlistEvent.class, (wishlistEvent) -> {
+            if (Action.ADDED.equals(wishlistEvent.getAction())) {
+                tabs.getSelectionModel().select(this.wishlistTab);
+            }
+        });
         setAnchor(tabs, 0.0, 0.0, 0.0, null);
         tabs.setSide(Side.LEFT);
         final VBox body = new VBox(this.searchBar, tabs);

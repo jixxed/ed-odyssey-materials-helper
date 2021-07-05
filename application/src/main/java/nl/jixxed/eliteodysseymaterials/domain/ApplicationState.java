@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
 import java.util.*;
@@ -147,11 +148,13 @@ public class ApplicationState {
     private void addToWishList(final RecipeName recipe) {
         this.wishlist.add(recipe);
         PreferencesService.setRecipePreference("wishlist.recipes", this.wishlist);
+        EventService.publish(new WishlistChangedEvent(this.wishlist.size()));
     }
 
     private void removeFromWishList(final RecipeName recipe) {
         this.wishlist.remove(recipe);
         PreferencesService.setRecipePreference("wishlist.recipes", this.wishlist);
+        EventService.publish(new WishlistChangedEvent(this.wishlist.size()));
     }
 
     public List<RecipeName> getWishlist() {

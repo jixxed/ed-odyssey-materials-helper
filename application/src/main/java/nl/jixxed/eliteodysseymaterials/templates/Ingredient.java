@@ -3,9 +3,11 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
@@ -59,6 +61,10 @@ public class Ingredient extends HBox {
         this.amountRequired = amount;
         this.amountAvailable = amountAvailable;
         this.material = material;
+        final Tooltip tooltip = new Tooltip();
+        tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(material));
+        tooltip.setShowDelay(Duration.millis(100));
+        Tooltip.install(this, tooltip);
         switch (storageType) {
             case DATA -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
             case GOOD -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));

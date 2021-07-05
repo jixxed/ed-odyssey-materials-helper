@@ -481,6 +481,47 @@
     -fx-cursor: hand;
 }
 
+
+.wishlist-lowlight.ingredient-filled {
+    -fx-background-color: #677767;
+}
+
+.wishlist-lowlight.ingredient-unfilled {
+    -fx-background-color: #a59393;
+}
+
+.wishlist-item.wishlist-highlight {
+    -fx-background-color: #689ba7;
+}
+
+.wishlist-count {
+    -fx-background-radius: 15;
+    -fx-background-color: white;
+    -fx-label-padding: 6;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+.wishlist-count-box {
+    -fx-spacing: 10;
+
+}
+
+.wishlist-highlight > .required {
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
+.wishlist-highlight > .available {
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
+.wishlist-highlight > .name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
 .wishlist-header {
     -fx-font-size: 16;
     -fx-font-weight: bold;

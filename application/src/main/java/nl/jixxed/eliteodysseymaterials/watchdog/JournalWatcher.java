@@ -33,7 +33,7 @@ public class JournalWatcher {
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
                 if (file.isFile()) {
-                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file)) {
+                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file)) {
                         JournalWatcher.this.watchedFile = Optional.of(file);
                         fileModifiedProcessor.accept(file);
                     }
@@ -71,8 +71,7 @@ public class JournalWatcher {
 
     private boolean hasFileHeader(final File file) {
         try (final Scanner scanner = new Scanner(file)) {
-            scanner.nextLine();
-            return true;
+            return scanner.hasNext();
         } catch (final NoSuchElementException | FileNotFoundException e) {
             e.printStackTrace();
         }

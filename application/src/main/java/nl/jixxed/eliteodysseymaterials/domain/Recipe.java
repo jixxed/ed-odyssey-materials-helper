@@ -36,4 +36,12 @@ public class Recipe {
 
     }
 
+    public boolean hasIngredient(final Material material) {
+        return getMaterialCollection(Material.class).containsKey(material);
+    }
+
+    public Integer getRequiredAmount(final Material material) {
+        final Integer amount = getMaterialCollection(Material.class).get(material);
+        return amount != null ? amount : 0;
+    }
 }
