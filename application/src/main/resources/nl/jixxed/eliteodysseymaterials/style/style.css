@@ -207,13 +207,14 @@
 
 .legend {
     -fx-vgap: 10;
-    -fx-min-width: 538;
+    /*-fx-min-width: 538;*/
 }
 
 .legend > .materialcard-name {
-    -fx-pref-width: 500;
-    -fx-min-width: 500;
+    -fx-pref-width: 400;
+    /*-fx-min-width: 500;*/
     -fx-label-padding: 5;
+
 }
 
 .bottom-bar {
@@ -451,6 +452,7 @@
 .wishlist-item > .label {
     -fx-label-padding: 5;
     -fx-text-fill: black;
+    -fx-cursor: hand;
 }
 
 .wishlist-item > .button:hover,
@@ -509,17 +511,14 @@
 
 .wishlist-highlight > .required {
     -fx-font-weight: bold;
-    -fx-font-size: 14;
 }
 
 .wishlist-highlight > .available {
     -fx-font-weight: bold;
-    -fx-font-size: 14;
 }
 
 .wishlist-highlight > .name {
     -fx-font-weight: bold;
-    -fx-font-size: 14;
 }
 
 .wishlist-header {

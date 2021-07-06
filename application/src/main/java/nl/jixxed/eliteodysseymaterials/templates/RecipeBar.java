@@ -12,10 +12,7 @@ import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -59,19 +56,26 @@ public class RecipeBar extends Accordion {
 
 
     private TitledPane createCategoryTitledPane(final Map.Entry<String, Map<RecipeName, ? extends Recipe>> recipesEntry) {
-        final Accordion recipesAccordion = new Accordion(recipesEntry.getValue().entrySet().stream()
-                .map(this::createRecipeTitledPane)
-                .sorted(Comparator.comparing(Labeled::getText))
-                .toArray(TitledPane[]::new));
-        recipesAccordion.setPrefHeight(500);
         final TitledPane categoryTitledPane = new TitledPane();
+        final Accordion recipesAccordion = new Accordion();
+        final TitledPane[] titledPanes = recipesEntry.getValue().entrySet().stream()
+                .map(recipe -> createRecipeTitledPane(recipe, recipesAccordion, categoryTitledPane))
+                .sorted(Comparator.comparing(Labeled::getText))
+                .toArray(TitledPane[]::new);
+        recipesAccordion.getPanes().addAll(titledPanes);
+        recipesAccordion.setPrefHeight(500);
+        final ScrollPane scroll = new ScrollPane(recipesAccordion);
+        scroll.setPannable(true);
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.setFitToHeight(true);
+        scroll.setFitToWidth(true);
         categoryTitledPane.textProperty().bind(LocaleService.getStringBinding(recipesEntry.getKey()));
-        categoryTitledPane.setContent(recipesAccordion);
+        categoryTitledPane.setContent(scroll);
         categoryTitledPane.getStyleClass().add("category-title-pane");
         return categoryTitledPane;
     }
 
-    private TitledPane createRecipeTitledPane(final Map.Entry<RecipeName, ? extends Recipe> recipe) {
+    private TitledPane createRecipeTitledPane(final Map.Entry<RecipeName, ? extends Recipe> recipe, final Accordion recipesAccordion, final TitledPane parentPane) {
         final VBox content = new VBox();
         final List<Ingredient> ingredients = new ArrayList<>();
         ingredients.addAll(getRecipeIngredients(recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
@@ -144,6 +148,13 @@ public class RecipeBar extends Accordion {
             recipeTitledPane.getStyleClass().add("regular");
         }
         recipeTitledPane.setPrefHeight(150);
+
+        EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getRecipeName().equals(recipe.getKey())) {
+                recipesAccordion.setExpandedPane(recipeTitledPane);
+                this.setExpandedPane(parentPane);
+            }
+        });
         return recipeTitledPane;
     }
 

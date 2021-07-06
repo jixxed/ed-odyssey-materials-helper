@@ -4,13 +4,16 @@ import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
@@ -32,6 +35,7 @@ public class WishlistBlueprint extends HBox {
         this.recipeName = recipeName;
         this.recipe = RecipeConstants.getRecipe(recipeName);
         this.label.textProperty().bind(LocaleService.getStringBinding(recipeName.getLocalizationKey()));
+        this.label.setOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)));
         this.close.setOnAction(event -> EventService.publish(new WishlistEvent(recipeName, Action.REMOVED)));
         this.getChildren().addAll(this.label, this.close);
         this.getStyleClass().add("wishlist-item");
@@ -40,6 +44,13 @@ public class WishlistBlueprint extends HBox {
             this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
             this.highlight(newValue);
         });
+
+        if (this.recipe instanceof ModuleRecipe) {
+            final Tooltip tooltip = new Tooltip();
+            tooltip.textProperty().bind(LocaleService.getToolTipStringBinding((ModuleRecipe) this.recipe));
+            tooltip.setShowDelay(Duration.millis(100));
+            Tooltip.install(this.label, tooltip);
+        }
         final FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000));
         fadeTransition.setNode(this);
         fadeTransition.setFromValue(0.3);

@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.BarterConstants;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.text.MessageFormat;
@@ -91,6 +92,10 @@ public class LocaleService {
                 return builder.toString();
             }
         });
+    }
+
+    public static StringBinding getToolTipStringBinding(final ModuleRecipe recipe) {
+        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString("tab.wishlist.blueprint.tooltip") + "\n" + recipe.getEngineers().stream().map(Engineer::friendlyName).collect(Collectors.joining(", ")));
     }
 
     @SafeVarargs

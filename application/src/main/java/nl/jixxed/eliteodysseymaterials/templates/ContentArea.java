@@ -29,7 +29,6 @@ public class ContentArea extends AnchorPane {
 
         setAnchor(this.recipeBar, 0.0, 0.0, 0.0, null);
 
-        this.recipeBar.setVisible(PreferencesService.getPreference("recipes.visible", Boolean.TRUE));
         this.searchBar = new SearchBar();
 
         this.overview.setClosable(false);
@@ -53,11 +52,16 @@ public class ContentArea extends AnchorPane {
             this.recipeBar.setVisible(visibility);
             this.searchBar.getButton().setText(visibility ? "<" : ">");
             PreferencesService.setPreference("recipes.visible", visibility);
-            setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? MENU_WIDTH : 0.0, 0.0);
+//            setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? this.recipeBar.getWidth() : 0.0, 0.0);
         });
+        final Boolean isRecipeBarVisible = PreferencesService.getPreference("recipes.visible", Boolean.TRUE);
 
-        setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? MENU_WIDTH : 0.0, 0.0);
-
+        this.recipeBar.visibleProperty().addListener((observable, oldValue, newValue) ->
+                setAnchor(body, 0.0, 0.0, newValue ? this.recipeBar.getWidth() : 0.0, 0.0));
+        this.recipeBar.widthProperty().addListener((observable, oldValue, newValue) ->
+                setAnchor(body, 0.0, 0.0, isRecipeBarVisible ? newValue.doubleValue() : 0.0, 0.0));
+        this.recipeBar.visibleProperty().set(isRecipeBarVisible);
+        setAnchor(body, 0.0, 0.0, isRecipeBarVisible ? this.recipeBar.getWidth() : 0.0, 0.0);
     }
 
     private void setAnchor(final Node child, final Double topValue, final Double bottomValue, final Double leftValue, final Double rightValue) {

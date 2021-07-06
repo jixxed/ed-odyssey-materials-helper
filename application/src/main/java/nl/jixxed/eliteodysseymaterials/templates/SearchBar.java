@@ -75,7 +75,7 @@ public class SearchBar extends HBox {
 
     private ComboBox<Sort> createSortComboBox() {
         final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>();
-        sortMaterialsComboBox.itemsProperty().bind(LocaleService.getListBinding(Sort.ENGINEER_BLUEPRINT_IRRELEVANT, Sort.RELEVANT_IRRELEVANT, Sort.ALPHABETICAL));
+        sortMaterialsComboBox.itemsProperty().bind(LocaleService.getListBinding(Sort.ENGINEER_BLUEPRINT_IRRELEVANT, Sort.RELEVANT_IRRELEVANT, Sort.ALPHABETICAL, Sort.QUANTITY));
         sortMaterialsComboBox.getStyleClass().add("filter-and-sort");
         sortMaterialsComboBox.promptTextProperty().bind(LocaleService.getStringBinding("search.sort.placeholder"));
         final Tooltip sortMaterialsTooltip = new Tooltip();

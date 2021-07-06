@@ -170,6 +170,7 @@ public class MaterialOverview extends VBox {
     private Comparator<Map.Entry<? extends Material, Storage>> getSort(final Search search) {
         return switch (search.getSort()) {
             case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
+            case QUANTITY -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> o.getValue().getTotalValue()).reversed();
             case RELEVANT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey()) || RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
             case ENGINEER_BLUEPRINT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey())).thenComparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
         };
@@ -199,17 +200,21 @@ public class MaterialOverview extends VBox {
     }
 
     private void updateTotalsAssets() {
-        final Integer recipeAssets = APPLICATION_STATE.getAssets().entrySet().stream()
-                .filter(assetEntry -> RecipeConstants.isBlueprintIngredient(assetEntry.getKey()))
+        final Integer chemicalAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+                .filter(assetEntry -> AssetType.CHEMICAL.equals(assetEntry.getKey().getType()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer nonRecipeAssets = APPLICATION_STATE.getAssets().entrySet().stream()
-                .filter(assetEntry -> !RecipeConstants.isBlueprintIngredient(assetEntry.getKey()))
+        final Integer circuitAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+                .filter(assetEntry -> AssetType.CIRCUIT.equals(assetEntry.getKey().getType()))
+                .map(entry -> entry.getValue().getTotalValue())
+                .reduce(0, Integer::sum);
+        final Integer techAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+                .filter(assetEntry -> AssetType.TECH.equals(assetEntry.getKey().getType()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
 
         final Label label = new Label();
-        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.assets", recipeAssets, nonRecipeAssets, recipeAssets + nonRecipeAssets));
+        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.assets", chemicalAssets, circuitAssets, techAssets, chemicalAssets + circuitAssets + techAssets));
         label.getStyleClass().add("category-label");
         this.totals.getChildren().add(label);
     }
