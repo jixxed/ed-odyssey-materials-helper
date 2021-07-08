@@ -97,31 +97,37 @@ public class FileProcessor {
     }
 
     protected static void processEngineerProgressMessage(final JsonNode journalMessage) {
-        if (journalMessage.get("Engineers") == null) {
-            return;
+        if (journalMessage.get("Engineers") != null) {
+            journalMessage.get("Engineers").elements().forEachRemaining(item ->
+            {
+                processEngineerProgressItem(item);
+            });
+        } else if (journalMessage.get("Engineer") != null) {
+            processEngineerProgressItem(journalMessage);
         }
-        journalMessage.get("Engineers").elements().forEachRemaining(item ->
-        {
-            if (item.get("Engineer") != null && item.get("Progress") != null) {
-                final String engineer = item.get("Engineer").asText();
-                final EngineerState engineerState = EngineerState.valueOf(item.get("Progress").asText().toUpperCase());
-                switch (engineer) {
-                    case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, engineerState);
-                    case "Hero Ferrari" -> APPLICATION_STATE.setEngineerState(Engineer.HERO_FERRARI, engineerState);
-                    case "Jude Navarro" -> APPLICATION_STATE.setEngineerState(Engineer.JUDE_NAVARRO, engineerState);
-                    case "Kit Fowler" -> APPLICATION_STATE.setEngineerState(Engineer.KIT_FOWLER, engineerState);
-                    case "Oden Geiger" -> APPLICATION_STATE.setEngineerState(Engineer.ODEN_GEIGER, engineerState);
-                    case "Terra Velasquez" -> APPLICATION_STATE.setEngineerState(Engineer.TERRA_VELASQUEZ, engineerState);
-                    case "Uma Laszlo" -> APPLICATION_STATE.setEngineerState(Engineer.UMA_LASZLO, engineerState);
-                    case "Wellington Beck" -> APPLICATION_STATE.setEngineerState(Engineer.WELLINGTON_BECK, engineerState);
-                    case "Yarden Bond" -> APPLICATION_STATE.setEngineerState(Engineer.YARDEN_BOND, engineerState);
-                    default -> {
-                    }
-                }
-                EventService.publish(new EngineerEvent());
-            }
-        });
 
+
+    }
+
+    private static void processEngineerProgressItem(final JsonNode item) {
+        if (item.get("Engineer") != null && item.get("Progress") != null) {
+            final String engineer = item.get("Engineer").asText();
+            final EngineerState engineerState = EngineerState.forName(item.get("Progress").asText());
+            switch (engineer) {
+                case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, engineerState);
+                case "Hero Ferrari" -> APPLICATION_STATE.setEngineerState(Engineer.HERO_FERRARI, engineerState);
+                case "Jude Navarro" -> APPLICATION_STATE.setEngineerState(Engineer.JUDE_NAVARRO, engineerState);
+                case "Kit Fowler" -> APPLICATION_STATE.setEngineerState(Engineer.KIT_FOWLER, engineerState);
+                case "Oden Geiger" -> APPLICATION_STATE.setEngineerState(Engineer.ODEN_GEIGER, engineerState);
+                case "Terra Velasquez" -> APPLICATION_STATE.setEngineerState(Engineer.TERRA_VELASQUEZ, engineerState);
+                case "Uma Laszlo" -> APPLICATION_STATE.setEngineerState(Engineer.UMA_LASZLO, engineerState);
+                case "Wellington Beck" -> APPLICATION_STATE.setEngineerState(Engineer.WELLINGTON_BECK, engineerState);
+                case "Yarden Bond" -> APPLICATION_STATE.setEngineerState(Engineer.YARDEN_BOND, engineerState);
+                default -> {
+                }
+            }
+            EventService.publish(new EngineerEvent());
+        }
     }
 
 
