@@ -10,11 +10,13 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ApplicationLifeCycleEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
 public class ContentArea extends AnchorPane {
-    public static final double MENU_WIDTH = 550.0;
+
     private final SearchBar searchBar;
     private final RecipeBar recipeBar;
     final OverviewTab overview = new OverviewTab();
@@ -52,14 +54,16 @@ public class ContentArea extends AnchorPane {
             this.recipeBar.setVisible(visibility);
             this.searchBar.getButton().setText(visibility ? "<" : ">");
             PreferencesService.setPreference("recipes.visible", visibility);
-//            setAnchor(body, 0.0, 0.0, this.recipeBar.isVisible() ? this.recipeBar.getWidth() : 0.0, 0.0);
         });
-        final Boolean isRecipeBarVisible = PreferencesService.getPreference("recipes.visible", Boolean.TRUE);
+        EventService.addListener(ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setAnchor(body, 0.0, 0.0, PreferencesService.getPreference("recipes.visible", Boolean.TRUE) ? this.recipeBar.getWidth() : 0.0, 0.0));
+        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> setAnchor(body, 0.0, 0.0, PreferencesService.getPreference("recipes.visible", Boolean.TRUE) ? this.recipeBar.getWidth() : 0.0, 0.0));
 
         this.recipeBar.visibleProperty().addListener((observable, oldValue, newValue) ->
                 setAnchor(body, 0.0, 0.0, newValue ? this.recipeBar.getWidth() : 0.0, 0.0));
         this.recipeBar.widthProperty().addListener((observable, oldValue, newValue) ->
-                setAnchor(body, 0.0, 0.0, isRecipeBarVisible ? newValue.doubleValue() : 0.0, 0.0));
+                setAnchor(body, 0.0, 0.0, PreferencesService.getPreference("recipes.visible", Boolean.TRUE) ? newValue.doubleValue() : 0.0, 0.0));
+
+        final Boolean isRecipeBarVisible = PreferencesService.getPreference("recipes.visible", Boolean.TRUE);
         this.recipeBar.visibleProperty().set(isRecipeBarVisible);
         setAnchor(body, 0.0, 0.0, isRecipeBarVisible ? this.recipeBar.getWidth() : 0.0, 0.0);
     }

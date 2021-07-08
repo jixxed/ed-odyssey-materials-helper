@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.domain;
+package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 

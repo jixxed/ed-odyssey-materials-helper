@@ -9,11 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
+import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.Show;
 import nl.jixxed.eliteodysseymaterials.enums.Sort;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
 
@@ -30,10 +33,22 @@ public class SearchBar extends HBox {
 
     public SearchBar() {
         super();
-
+        this.getStyleClass().add("root");
         this.button.setText((PreferencesService.getPreference("recipes.visible", Boolean.TRUE)) ? "<" : ">");
-        this.button.getStyleClass().add("menubutton");
-
+        this.button.getStyleClass().addAll("root", "menubutton");
+        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            this.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            this.button.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            this.showMaterialsComboBox.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            this.textField.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            this.sortMaterialsComboBox.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+        });
+        final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
+        this.styleProperty().set("-fx-font-size: " + fontSize + "px");
+        this.button.styleProperty().set("-fx-font-size: " + fontSize + "px");
+        this.showMaterialsComboBox.styleProperty().set("-fx-font-size: " + fontSize + "px");
+        this.textField.styleProperty().set("-fx-font-size: " + fontSize + "px");
+        this.sortMaterialsComboBox.styleProperty().set("-fx-font-size: " + fontSize + "px");
 
         setDefaultOptions();
         HBox.setHgrow(this.textField, Priority.ALWAYS);
@@ -60,7 +75,7 @@ public class SearchBar extends HBox {
 
     private TextField createSearchTextField() {
         final TextField textField = new TextField();
-        textField.getStyleClass().add("search-input");
+        textField.getStyleClass().addAll("root", "search-input");
         textField.promptTextProperty().bind(LocaleService.getStringBinding("search.text.placeholder"));
         textField.setFocusTraversable(false);
 
@@ -76,7 +91,7 @@ public class SearchBar extends HBox {
     private ComboBox<Sort> createSortComboBox() {
         final ComboBox<Sort> sortMaterialsComboBox = new ComboBox<>();
         sortMaterialsComboBox.itemsProperty().bind(LocaleService.getListBinding(Sort.ENGINEER_BLUEPRINT_IRRELEVANT, Sort.RELEVANT_IRRELEVANT, Sort.ALPHABETICAL, Sort.QUANTITY));
-        sortMaterialsComboBox.getStyleClass().add("filter-and-sort");
+        sortMaterialsComboBox.getStyleClass().addAll("root", "filter-and-sort");
         sortMaterialsComboBox.promptTextProperty().bind(LocaleService.getStringBinding("search.sort.placeholder"));
         final Tooltip sortMaterialsTooltip = new Tooltip();
         sortMaterialsTooltip.textProperty().bind(LocaleService.getStringBinding("search.sort.placeholder"));
@@ -102,7 +117,7 @@ public class SearchBar extends HBox {
                 Show.IRRELEVANT,
                 Show.IRRELEVANT_WITH_STOCK,
                 Show.FAVOURITES));
-        showMaterialsComboBox.getStyleClass().add("filter-and-sort");
+        showMaterialsComboBox.getStyleClass().addAll("root", "filter-and-sort");
         showMaterialsComboBox.promptTextProperty().bind(LocaleService.getStringBinding("search.filter.placeholder"));
         final Tooltip showMaterialsTooltip = new Tooltip();
         showMaterialsTooltip.textProperty().bind(LocaleService.getStringBinding("search.filter.placeholder"));

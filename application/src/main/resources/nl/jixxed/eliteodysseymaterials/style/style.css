@@ -1,3 +1,7 @@
+.root {
+    fx-font-size: 12px;
+}
+
 .completed {
     /*-fx-background-color: blue, yellow, linear-gradient(to bottom, derive(coral, +50%), coral);*/
     -fx-font-weight: normal;
@@ -26,6 +30,8 @@
 
 .material {
     -fx-border-color: black;
+    -fx-pref-height: 2em;
+    -fx-alignment: center-left;
 }
 
 .material > .label {
@@ -110,7 +116,7 @@
 
 .category-label {
     -fx-min-width: 400;
-    -fx-font-size: 16;
+    -fx-font-size: 1.35em;
     -fx-font-weight: bold;
     -fx-label-padding: 5;
 }
@@ -130,8 +136,9 @@
 .wishlist-ingredient {
     -fx-border-color: black;
     -fx-min-height: 30;
-    -fx-pref-height: 30;
     -fx-pref-width: 400;
+    -fx-pref-height: 2em;
+    -fx-alignment: center-left;
 }
 
 
@@ -158,9 +165,9 @@
 
 .ingredient {
     -fx-border-color: black;
-    -fx-min-height: 30;
-    -fx-pref-height: 30;
     -fx-pref-width: 300;
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
 }
 
 
@@ -218,22 +225,24 @@
 }
 
 .bottom-bar {
-    -fx-pref-height: 25;
     -fx-alignment: center-left;
     -fx-spacing: 10;
     -fx-padding: 0 10 0 10;
 
     -fx-border-width: 1;
     -fx-border-color: #2e2e2e;
+    -fx-max-height: 2em;
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
 }
 
 
 .search:focused, .search:selected {
 }
 
-.search > .text {
-    -fx-pref-height: 20;
-}
+/*.search > .text {*/
+/*    -fx-pref-height: 20;*/
+/*}*/
 
 
 .card-grid {
@@ -316,20 +325,23 @@
 }
 
 .menubutton {
-    -fx-font-size: 16;
     -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
     -fx-background-color: #111111, #111111, #111111, #111111;
     -fx-text-fill: white;
-    -fx-max-width: 44;
-    -fx-max-height: 30;
-    -fx-min-width: 44;
-    -fx-min-height: 30;
-    -fx-pref-width: 44;
-    -fx-pref-height: 30;
+    -fx-max-width: 3.5em;
+    -fx-max-height: 2.5em;
+    -fx-min-width: 3.5em;
+    -fx-min-height: 2.5em;
+    -fx-pref-width: 3.5em;
+    -fx-pref-height: 2.5em;
     -fx-border-width: 1;
     -fx-border-style: solid;
     -fx-border-color: #2e2e2e, #2e2e2e, #2e2e2e, #2e2e2e;
     -fx-padding: 0, 0, 0, 0;
+}
+
+.menubutton > .text {
+    -fx-font-size: 1em;
 }
 
 .menubutton:focused {
@@ -364,22 +376,24 @@
 }
 
 .filter-and-sort {
-    -fx-min-height: 30;
-    -fx-max-height: 30;
     -fx-background-insets: 1;
     -fx-background-radius: 0, 0;
     -fx-border-width: 1;
     -fx-border-color: #2e2e2e;
+    -fx-max-height: 2.5em;
+    -fx-min-height: 2.5em;
+    -fx-pref-height: 2.5em;
 }
 
 .search-input {
-    -fx-min-height: 30;
     -fx-min-width: 100;
-    -fx-max-height: 30;
     -fx-background-insets: 1;
     -fx-background-radius: 0, 0;
     -fx-border-width: 1;
     -fx-border-color: #2e2e2e;
+    -fx-max-height: 2.5em;
+    -fx-min-height: 2.5em;
+    -fx-pref-height: 2.5em;
 }
 
 .scroll-pane {
@@ -412,7 +426,8 @@
 }
 
 .tab-pane:left > .tab-header-area {
-    -fx-padding: 10 0 0 3; /* 5 0 2 5 */
+    -fx-padding: 15px 0px 0 0px; /* 5 0 2 5  12 -> 1*/
+    -fx-pref-height: 3.5em;
 }
 
 .tab-pane:left > .tab-header-area > .headers-region > .tab {
@@ -432,7 +447,7 @@
 .tab {
     -fx-background-insets: 0 0 0 0;
     -fx-effect: none;
-    -fx-font-size: 16;
+    -fx-font-size: 1.35em;
 }
 
 .wishlist-button {
@@ -522,13 +537,13 @@
 }
 
 .wishlist-header {
-    -fx-font-size: 16;
+    -fx-font-size: 1.35em;
     -fx-font-weight: bold;
     -fx-label-padding: 5;
 }
 
 .settings-header {
-    -fx-font-size: 16;
+    -fx-font-size: 1.35em;
     -fx-font-weight: bold;
     -fx-label-padding: 5;
 }
@@ -536,5 +551,13 @@
 .settings-label {
     -fx-label-padding: 5;
     -fx-min-height: 20;
-    -fx-text-alignment: center;
+    -fx-min-width: 200px;
+    /*-fx-text-alignment: center;*/
+}
+
+.settings-dropdown {
+    -fx-min-width: 200px;
+    -fx-max-height: 2.5em;
+    -fx-min-height: 2.5em;
+    -fx-pref-height: 2.5em;
 }

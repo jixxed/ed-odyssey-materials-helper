@@ -6,9 +6,14 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ApplicationLifeCycleEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.FontSizeEvent;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
@@ -58,8 +63,15 @@ public class Main extends Application {
                 e.printStackTrace();
             }
         }
+        EventService.addListener(FontSizeEvent.class, fontSizeEvent -> {
+            this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
+        });
+        this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+
         primaryStage.setScene(scene);
         primaryStage.show();
+        EventService.publish(new ApplicationLifeCycleEvent());
     }
 
     private void setPreferenceIfNotMaximized(final Stage primaryStage, final String setting, final Double value) {
