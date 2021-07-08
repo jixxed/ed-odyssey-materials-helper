@@ -42,7 +42,6 @@ public class FileProcessor {
                 final String line = scanner.nextLine();
                 cursor++;
                 //if multiple lines with the same timestamp are written, the lines can be blank until all lines are written.
-//                System.out.println(line.length() + ": " + line);
                 if (line.isBlank()) {
                     System.out.println("BLANK LINE");
                     break;
@@ -72,7 +71,7 @@ public class FileProcessor {
     }
 
 
-    private static JsonNode processJournalMessage(final String message, final File file) {
+    protected static JsonNode processJournalMessage(final String message, final File file) {
         JsonNode jsonNode = null;
         try {
             jsonNode = OBJECT_MAPPER.readTree(message);
@@ -97,29 +96,36 @@ public class FileProcessor {
         return jsonNode;
     }
 
-    private static void processEngineerProgressMessage(final JsonNode journalMessage) {
+    protected static void processEngineerProgressMessage(final JsonNode journalMessage) {
+        if (journalMessage.get("Engineers") == null) {
+            return;
+        }
         journalMessage.get("Engineers").elements().forEachRemaining(item ->
         {
-            final String engineer = item.get("Engineer").asText();
-            switch (engineer) {
-                case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Hero Ferrari" -> APPLICATION_STATE.setEngineerState(Engineer.HERO_FERRARI, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Jude Navarro" -> APPLICATION_STATE.setEngineerState(Engineer.JUDE_NAVARRO, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Kit Fowler" -> APPLICATION_STATE.setEngineerState(Engineer.KIT_FOWLER, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Oden Geiger" -> APPLICATION_STATE.setEngineerState(Engineer.ODEN_GEIGER, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Terra Velasquez" -> APPLICATION_STATE.setEngineerState(Engineer.TERRA_VELASQUEZ, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Uma Laszlo" -> APPLICATION_STATE.setEngineerState(Engineer.UMA_LASZLO, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Wellington Beck" -> APPLICATION_STATE.setEngineerState(Engineer.WELLINGTON_BECK, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                case "Yarden Bond" -> APPLICATION_STATE.setEngineerState(Engineer.YARDEN_BOND, EngineerState.valueOf(item.get("Progress").asText().toUpperCase()));
-                default -> {
+            if (item.get("Engineer") != null && item.get("Progress") != null) {
+                final String engineer = item.get("Engineer").asText();
+                final EngineerState engineerState = EngineerState.valueOf(item.get("Progress").asText().toUpperCase());
+                switch (engineer) {
+                    case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, engineerState);
+                    case "Hero Ferrari" -> APPLICATION_STATE.setEngineerState(Engineer.HERO_FERRARI, engineerState);
+                    case "Jude Navarro" -> APPLICATION_STATE.setEngineerState(Engineer.JUDE_NAVARRO, engineerState);
+                    case "Kit Fowler" -> APPLICATION_STATE.setEngineerState(Engineer.KIT_FOWLER, engineerState);
+                    case "Oden Geiger" -> APPLICATION_STATE.setEngineerState(Engineer.ODEN_GEIGER, engineerState);
+                    case "Terra Velasquez" -> APPLICATION_STATE.setEngineerState(Engineer.TERRA_VELASQUEZ, engineerState);
+                    case "Uma Laszlo" -> APPLICATION_STATE.setEngineerState(Engineer.UMA_LASZLO, engineerState);
+                    case "Wellington Beck" -> APPLICATION_STATE.setEngineerState(Engineer.WELLINGTON_BECK, engineerState);
+                    case "Yarden Bond" -> APPLICATION_STATE.setEngineerState(Engineer.YARDEN_BOND, engineerState);
+                    default -> {
+                    }
                 }
+                EventService.publish(new EngineerEvent());
             }
-            EventService.publish(new EngineerEvent());
         });
+
     }
 
 
-    private static void processShipLockerMaterialsMessage(final JsonNode journalMessage, final StoragePool storagePool) {
+    protected static void processShipLockerMaterialsMessage(final JsonNode journalMessage, final StoragePool storagePool) {
         if (journalMessage.get("Items") == null || journalMessage.get("Components") == null || journalMessage.get("Data") == null) {
             return;
         }
