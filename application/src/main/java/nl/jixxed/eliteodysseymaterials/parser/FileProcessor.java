@@ -98,10 +98,7 @@ public class FileProcessor {
 
     protected static void processEngineerProgressMessage(final JsonNode journalMessage) {
         if (journalMessage.get("Engineers") != null) {
-            journalMessage.get("Engineers").elements().forEachRemaining(item ->
-            {
-                processEngineerProgressItem(item);
-            });
+            journalMessage.get("Engineers").elements().forEachRemaining(FileProcessor::processEngineerProgressItem);
         } else if (journalMessage.get("Engineer") != null) {
             processEngineerProgressItem(journalMessage);
         }

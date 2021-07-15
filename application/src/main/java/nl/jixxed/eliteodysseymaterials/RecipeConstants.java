@@ -553,21 +553,17 @@ public abstract class RecipeConstants {
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.GREATER_RANGE_LASER, new ModuleRecipe(
                 Map.of(
-                        Good.IONISEDGAS, 1,
                         Data.STELLARACTIVITYLOGS, 10,
                         Data.RISKASSESSMENTS, 15,
                         Asset.OPTICALLENS, 5,
-                        Asset.IONBATTERY, 20,
                         Asset.MICROTRANSFORMER, 15,
                         Asset.CIRCUITBOARD, 5
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.GREATER_RANGE_PLASMA, new ModuleRecipe(
                 Map.of(
-                        Good.IONISEDGAS, 1,
                         Data.CHEMICALFORMULAE, 10,
                         Data.MINERALSURVEY, 15,
-                        Asset.METALCOIL, 10,
                         Asset.ELECTROMAGNET, 10,
                         Asset.MOTOR, 5,
                         Asset.ELECTRICALFUSE, 5
@@ -606,19 +602,14 @@ public abstract class RecipeConstants {
                         Data.EXTRACTIONYIELDDATA, 10,
                         Data.BIOMETRICDATA, 5,
                         Data.COMBATANTPERFORMANCE, 10,
-                        Asset.ELECTROMAGNET, 20,
-                        Asset.METALCOIL, 20,
                         Asset.RDX, 10,
-                        Asset.VISCOELASTICPOLYMER, 10,
-                        Asset.WEAPONCOMPONENT, 5
+                        Asset.VISCOELASTICPOLYMER, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.HIGHER_ACCURACY_LASER, new ModuleRecipe(
                 Map.of(
                         Data.RADIOACTIVITYDATA, 5,
                         Data.COMBATANTPERFORMANCE, 10,
-                        Asset.AEROGEL, 20,
-                        Asset.OPTICALFIBRE, 25,
                         Asset.OPTICALLENS, 5,
                         Asset.ELECTRICALWIRING, 15,
                         Asset.METALCOIL, 10
@@ -629,11 +620,8 @@ public abstract class RecipeConstants {
                         Data.CHEMICALPATENTS, 5,
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.CHEMICALCATALYST, 10,
-                        Asset.ELECTRICALWIRING, 30,
                         Asset.ELECTROMAGNET, 10,
-                        Asset.METALCOIL, 10,
-                        Asset.MICROELECTRODE, 20,
-                        Asset.WEAPONCOMPONENT, 5
+                        Asset.METALCOIL, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.MAGAZINE_SIZE, new ModuleRecipe(
