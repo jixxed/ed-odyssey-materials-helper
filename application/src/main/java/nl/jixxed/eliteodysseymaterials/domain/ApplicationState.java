@@ -187,11 +187,11 @@ public class ApplicationState {
     public void addCommander(final String name) {
         if (!this.commanders.contains(name)) {
             this.commanders.add(name);
-            EventService.publish(new CommanderAddedEvent(name));
             final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
             if (preferredCommander.isBlank()) {
                 PreferencesService.setPreference(PreferenceConstants.COMMANDER, name);
             }
+            EventService.publish(new CommanderAddedEvent(name));
         }
     }
 
