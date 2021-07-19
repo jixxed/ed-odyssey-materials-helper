@@ -20,7 +20,7 @@ public class JournalWatcher {
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileCreatedProcessor) {
         this.watchedFolder = folder;
-        listCommanders(folder);
+//        listCommanders(folder);
         findLatestFile(folder);
         this.watchedFile.ifPresent(fileCreatedProcessor);
         this.fileWatcher = new FileWatcher(folder);
