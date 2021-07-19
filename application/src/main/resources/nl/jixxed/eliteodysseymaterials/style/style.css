@@ -552,10 +552,17 @@
     -fx-label-padding: 5;
     -fx-min-height: 20;
     -fx-min-width: 200px;
-    /*-fx-text-alignment: center;*/
+    -fx-text-alignment: center;
 }
 
 .settings-dropdown {
+    -fx-min-width: 200px;
+    -fx-max-height: 2.5em;
+    -fx-min-height: 2.5em;
+    -fx-pref-height: 2.5em;
+}
+
+.settings-button {
     -fx-min-width: 200px;
     -fx-max-height: 2.5em;
     -fx-min-height: 2.5em;

@@ -10,4 +10,6 @@ public class PreferenceConstants {
     public static final String APP_SETTINGS_VERSION = "app.settings.version";
     public static final String LANGUAGE = "language";
     public static final String TEXTSIZE = "text.size";
+    public static final String JOURNAL_FOLDER = "journal.folder";
+    public static final String COMMANDER = "commander";
 }

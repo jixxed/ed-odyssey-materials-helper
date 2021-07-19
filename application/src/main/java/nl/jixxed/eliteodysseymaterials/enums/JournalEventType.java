@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum JournalEventType {
+    COMMANDER("Commander"),
     ENGINEERPROGRESS("EngineerProgress"),
     EMBARK("Embark"),
     SHIPLOCKER("ShipLocker"),

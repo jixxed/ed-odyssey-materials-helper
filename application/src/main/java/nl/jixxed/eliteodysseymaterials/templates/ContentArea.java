@@ -21,11 +21,11 @@ public class ContentArea extends AnchorPane {
     private final RecipeBar recipeBar;
     final OverviewTab overview = new OverviewTab();
     final WishlistTab wishlistTab = new WishlistTab();
-    final SettingsTab settingsTab = new SettingsTab();
+    final SettingsTab settingsTab;
 
     public ContentArea(final Application application) {
         super();
-
+        this.settingsTab = new SettingsTab(application);
 
         this.recipeBar = new RecipeBar(application);
 

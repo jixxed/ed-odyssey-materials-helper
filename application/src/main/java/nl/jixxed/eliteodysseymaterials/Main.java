@@ -8,14 +8,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ApplicationLifeCycleEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.FontSizeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
@@ -28,24 +26,37 @@ import java.io.StringWriter;
 public class Main extends Application {
 
     private final static String CUSTOM_STYLE_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
+    public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final ApplicationLayout applicationLayout = new ApplicationLayout(this);
-    private final GameStateWatcher gameStateWatcher = new GameStateWatcher();
+    private final GameStateWatcher shipLockerWatcher = new GameStateWatcher();
+    private final GameStateWatcher backPackWatcher = new GameStateWatcher();
     private final JournalWatcher journalWatcher = new JournalWatcher();
+    private Stage primaryStage;
+
+    public Stage getPrimaryStage() {
+        return this.primaryStage;
+    }
 
     @Override
     public void start(final Stage primaryStage) {
+        this.primaryStage = primaryStage;
         try {
 
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
             PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
-            final File watchedFolder = new File(AppConstants.WATCHED_FOLDER);
+            final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, AppConstants.WATCHED_FOLDER));
 
-            this.gameStateWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
-            this.gameStateWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
-
+            this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
+            this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
             this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
 
+            EventService.addListener(WatchedFolderChangedEvent.class, (event) -> {
+                reset(new File(event.getPath()));
+            });
+            EventService.addListener(CommanderSelectedEvent.class, (event) -> {
+                reset(this.journalWatcher.getWatchedFolder());
+            });
             final Scene scene = new Scene(this.applicationLayout, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
             scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_WIDTH, (Double) newValue));
@@ -91,6 +102,20 @@ public class Main extends Application {
             alert.setContentText(stringWriter.toString());
             alert.showAndWait();
         }
+    }
+
+    private void reset(final File watchedFolder) {
+        APPLICATION_STATE.resetEngineerStates();
+        APPLICATION_STATE.resetShipLockerCounts();
+        APPLICATION_STATE.resetBackPackCounts();
+        APPLICATION_STATE.resetCommanders();
+        EventService.publish(new CommanderResetEvent());
+        this.shipLockerWatcher.stop();
+        this.backPackWatcher.stop();
+        this.journalWatcher.stop();
+        this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
+        this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
+        this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
     }
 
     private void setPreferenceIfNotMaximized(final Stage primaryStage, final String setting, final Double value) {

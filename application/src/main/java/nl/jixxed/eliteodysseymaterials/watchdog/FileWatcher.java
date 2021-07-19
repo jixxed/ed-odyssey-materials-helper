@@ -14,6 +14,7 @@ public class FileWatcher implements Runnable {
     protected List<FileListener> listeners = new ArrayList<>();
     protected final File folder;
     protected static final List<WatchService> watchServices = new ArrayList<>();
+    boolean poll = true;
 
     public FileWatcher(final File folder) {
         this.folder = folder;
@@ -33,9 +34,8 @@ public class FileWatcher implements Runnable {
             final Path path = Paths.get(this.folder.getAbsolutePath());
             path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
             watchServices.add(watchService);
-            boolean poll = true;
-            while (poll) {
-                poll = pollEvents(watchService);
+            while (this.poll) {
+                this.poll = pollEvents(watchService);
             }
         } catch (final IOException | InterruptedException | ClosedWatchServiceException e) {
             Thread.currentThread().interrupt();
@@ -79,5 +79,9 @@ public class FileWatcher implements Runnable {
     public FileWatcher setListeners(final List<FileListener> listeners) {
         this.listeners = listeners;
         return this;
+    }
+
+    public void stop() {
+        this.poll = false;
     }
 }

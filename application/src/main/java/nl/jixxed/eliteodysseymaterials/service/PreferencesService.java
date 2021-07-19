@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
@@ -85,7 +86,7 @@ public class PreferencesService {
         }
     }
 
-    public static <T> T getPreference(final String key, final T defaultValue) {
+    public static <T> T getPreference(final String key, @NonNull final T defaultValue) {
         final String value = instance.prop.getProperty(key);
         if (value == null) {
             return defaultValue;

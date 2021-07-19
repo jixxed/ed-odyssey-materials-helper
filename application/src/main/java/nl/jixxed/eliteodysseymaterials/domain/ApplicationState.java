@@ -1,11 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import javafx.application.Platform;
+import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.*;
 
@@ -19,6 +18,7 @@ public class ApplicationState {
     private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Material> favourites = new ArrayList<>();
     private final List<RecipeName> wishlist = new ArrayList<>();
+    private final Set<String> commanders = new HashSet<>();
     private final Map<Engineer, EngineerState> engineerStates = new HashMap<>(Map.of(
             Engineer.DOMINO_GREEN, EngineerState.UNKNOWN,
             Engineer.HERO_FERRARI, EngineerState.UNKNOWN,
@@ -99,6 +99,11 @@ public class ApplicationState {
     }
 
 
+    public void resetEngineerStates() {
+        this.engineerStates.forEach((engineer, engineerState) -> this.engineerStates.put(engineer, EngineerState.UNKNOWN));
+        EventService.publish(new EngineerEvent());
+    }
+
     public void resetShipLockerCounts() {
         this.getAssets().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
         this.getData().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
@@ -159,5 +164,38 @@ public class ApplicationState {
 
     public List<RecipeName> getWishlist() {
         return this.wishlist;
+    }
+
+    public Set<String> getCommanders() {
+        return this.commanders;
+    }
+
+    public Optional<String> getPreferredCommander() {
+        final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
+        if (!preferredCommander.isBlank() && this.commanders.contains(preferredCommander)) {
+            return Optional.of(preferredCommander);
+        }
+        final Iterator<String> commanderIterator = this.commanders.iterator();
+        if (commanderIterator.hasNext()) {
+            final String commander = commanderIterator.next();
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander);
+            return Optional.of(commander);
+        }
+        return Optional.empty();
+    }
+
+    public void addCommander(final String name) {
+        if (!this.commanders.contains(name)) {
+            this.commanders.add(name);
+            EventService.publish(new CommanderAddedEvent(name));
+            final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
+            if (preferredCommander.isBlank()) {
+                PreferencesService.setPreference(PreferenceConstants.COMMANDER, name);
+            }
+        }
+    }
+
+    public void resetCommanders() {
+        this.commanders.clear();
     }
 }

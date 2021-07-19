@@ -8,11 +8,13 @@ import java.util.function.Consumer;
 
 public class GameStateWatcher {
     private Optional<File> watchedFile = Optional.empty();
+    private FileWatcher fileWatcher;
 
     public void watch(final File folder, final Consumer<File> fileProcessor, final String filename) {
         findLatestFile(folder, filename);
         this.watchedFile.ifPresent(fileProcessor);
-        new FileWatcher(folder).addListener(new FileAdapter() {
+        this.fileWatcher = new FileWatcher(folder);
+        this.fileWatcher.addListener(new FileAdapter() {
             @Override
             public void onCreated(final FileEvent event) {
                 handleFile(event, fileProcessor);
@@ -44,5 +46,9 @@ public class GameStateWatcher {
         } catch (final NullPointerException ex) {
             System.out.println("Failed to Registered watched file at " + folder.getAbsolutePath());
         }
+    }
+
+    public void stop() {
+        this.fileWatcher.stop();
     }
 }

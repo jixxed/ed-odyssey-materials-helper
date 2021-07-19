@@ -204,6 +204,8 @@ public class RecipeBar extends Accordion {
         this.engineerTitledPanes.forEach(titledPane -> {
             if (titledPane.getEngineerRecipe().isCompleted() && !titledPane.getStyleClass().contains("completed")) {
                 titledPane.getStyleClass().add("completed");
+            } else if (!titledPane.getEngineerRecipe().isCompleted()) {
+                titledPane.getStyleClass().remove("completed");
             }
         });
         this.moduleEngineerLabels.forEach(label -> label.updateStyle(APPLICATION_STATE.isEngineerUnlocked(label.getEngineer())));

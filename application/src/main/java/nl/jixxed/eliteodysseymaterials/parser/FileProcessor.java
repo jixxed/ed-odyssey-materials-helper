@@ -79,6 +79,7 @@ public class FileProcessor {
                 System.out.println("event: " + jsonNode.get("event").asText());
                 final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get("event").asText());
                 switch (journalEventType) {
+                    case COMMANDER -> processCommander(jsonNode);
                     case ENGINEERPROGRESS -> processEngineerProgressMessage(jsonNode);
                     case EMBARK -> APPLICATION_STATE.resetBackPackCounts();
                     case SHIPLOCKER -> processShipLockerMaterialsMessage(jsonNode, StoragePool.SHIPLOCKER);
@@ -94,6 +95,12 @@ public class FileProcessor {
             e.printStackTrace();
         }
         return jsonNode;
+    }
+
+    private static void processCommander(final JsonNode journalMessage) {
+        if (journalMessage.get("Name") != null) {
+            APPLICATION_STATE.addCommander(journalMessage.get("Name").asText());
+        }
     }
 
     protected static void processEngineerProgressMessage(final JsonNode journalMessage) {
@@ -128,7 +135,8 @@ public class FileProcessor {
     }
 
 
-    protected static void processShipLockerMaterialsMessage(final JsonNode journalMessage, final StoragePool storagePool) {
+    protected static void processShipLockerMaterialsMessage(final JsonNode journalMessage,
+                                                            final StoragePool storagePool) {
         if (journalMessage.get("Items") == null || journalMessage.get("Components") == null || journalMessage.get("Data") == null) {
             return;
         }
