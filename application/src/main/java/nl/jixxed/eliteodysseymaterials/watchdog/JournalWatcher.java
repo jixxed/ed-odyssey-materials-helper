@@ -50,12 +50,16 @@ public class JournalWatcher {
     }
 
     private void listCommanders(final File folder) {
-        Arrays.stream(Objects.requireNonNull(folder.listFiles()))
-                .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
-                .filter(this::hasFileHeader)
-                .filter(this::isOdysseyJournal)
-                .filter(this::hasCommanderHeader)
-                .forEach(this::listCommander);
+        try {
+            Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+                    .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
+                    .filter(this::hasFileHeader)
+                    .filter(this::isOdysseyJournal)
+                    .filter(this::hasCommanderHeader)
+                    .forEach(this::listCommander);
+        } catch (final NullPointerException ex) {
+            System.out.println("Failed to list commanders at " + folder.getAbsolutePath());
+        }
     }
 
     private void listCommander(final File file) {
