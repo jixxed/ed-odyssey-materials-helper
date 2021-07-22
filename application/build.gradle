@@ -7,9 +7,10 @@ buildscript {
     dependencies {
         classpath "org.openjfx:javafx-plugin:0.0.10"
         classpath "org.beryx:badass-jlink-plugin:2.24.0"
+        classpath "io.freefair.gradle:lombok-plugin:5.3.3.3"
     }
 }
-
+apply plugin: "io.freefair.lombok"
 apply plugin: 'idea' // optional (to generate IntelliJ IDEA project files)
 apply plugin: "java"
 apply plugin: "application"
@@ -55,22 +56,21 @@ jlink {
     }
 }
 dependencies {
-//    testCompile group: 'junit', name: 'junit', version: '4.12'
-
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
     testImplementation "org.junit.platform:junit-platform-suite-api:1.7.2"
     testImplementation group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.7.2'
-//    testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: '1.7.2'
-
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
     testCompile "org.assertj:assertj-core:3.19.0"
+
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
-//    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
     implementation 'org.jfxtras:jmetro:11.6.15'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.slf4j:slf4j-simple:1.7.32'
+
 }
 jpackage { dependsOn test }
 

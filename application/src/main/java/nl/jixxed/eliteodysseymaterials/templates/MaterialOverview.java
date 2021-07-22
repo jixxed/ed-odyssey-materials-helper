@@ -4,20 +4,25 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.OrientationChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
 
 import java.util.Arrays;
@@ -30,7 +35,7 @@ public class MaterialOverview extends VBox {
 
     private static final Insets CARD_MARGIN = new Insets(2, 5, 2, 5);
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-
+    final ScrollPane scrollPane;
     private final FlowPane totals;
     private final FlowPane assetChemicalFlow;
     private final FlowPane assetCircuitFlow;
@@ -40,14 +45,43 @@ public class MaterialOverview extends VBox {
 
     private Search currentSearch = new Search("", Sort.ALPHABETICAL, Show.ALL);
 
-    public MaterialOverview() {
-        final Orientation flowPaneOrientation = Orientation.HORIZONTAL;
-        this.totals = new FlowPane(flowPaneOrientation);
+    public MaterialOverview(final ScrollPane scrollPane) {
+        this.scrollPane = scrollPane;
+        final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")).getOrientation();
+        this.totals = new FlowPane(Orientation.HORIZONTAL);
         this.assetChemicalFlow = new FlowPane(flowPaneOrientation);
         this.assetCircuitFlow = new FlowPane(flowPaneOrientation);
         this.assetTechFlow = new FlowPane(flowPaneOrientation);
         this.goodFlow = new FlowPane(flowPaneOrientation);
         this.dataFlow = new FlowPane(flowPaneOrientation);
+
+        this.setWidth(this.scrollPane.getWidth());
+        final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) ->
+        {
+            this.setWidth(newValue.doubleValue());
+            Platform.runLater(() -> {
+                setFlowPaneHeight(this.goodFlow, newValue);
+                setFlowPaneHeight(this.assetChemicalFlow, newValue);
+                setFlowPaneHeight(this.assetCircuitFlow, newValue);
+                setFlowPaneHeight(this.assetTechFlow, newValue);
+                setFlowPaneHeight(this.dataFlow, newValue);
+            });
+        };
+        EventService.addListener(OrientationChangeEvent.class, orientationChangeEvent -> {
+            final Orientation orientation = orientationChangeEvent.getMaterialOrientation().getOrientation();
+            this.assetChemicalFlow.setOrientation(orientation);
+            this.assetCircuitFlow.setOrientation(orientation);
+            this.assetTechFlow.setOrientation(orientation);
+            this.goodFlow.setOrientation(orientation);
+            this.dataFlow.setOrientation(orientation);
+            if (MaterialOrientation.VERTICAL.equals(orientationChangeEvent.getMaterialOrientation())) {
+                scrollPane.widthProperty().addListener(resizeListener);
+            } else {
+                scrollPane.widthProperty().removeListener(resizeListener);
+            }
+            Platform.runLater(() -> this.updateContent(this.currentSearch));
+        });
+
         setGaps(this.assetCircuitFlow, this.assetTechFlow, this.assetChemicalFlow, this.goodFlow, this.dataFlow);
         this.getChildren().addAll(this.totals, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
         Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> {
@@ -68,6 +102,30 @@ public class MaterialOverview extends VBox {
 
     }
 
+    private void setFlowPaneHeight(final FlowPane flowPane, final Number newValue) {
+        if (Orientation.VERTICAL.equals(flowPane.getOrientation())) {
+            if (!flowPane.getChildren().isEmpty()) {
+                final MaterialCard card = (MaterialCard) flowPane.getChildren().get(0);
+                final int size = flowPane.getChildren().size();
+                final double materialCardWidth = (card.getWidth() > 0 ? card.getWidth() : card.getPrefWidth()) + 4;
+                final double materialCardHeight = card.getHeight() > 0 ? card.getHeight() : card.getPrefHeight();
+                final int cardsPerRow = Math.max(1, (int) Math.floor((newValue.doubleValue() - 24) / materialCardWidth));
+                final double rows = cardsPerRow != 0 ? Math.ceil((double) size / cardsPerRow) : 0;
+                flowPane.setMaxHeight(rows * (materialCardHeight + 4) - 4);
+                flowPane.setPrefHeight(rows * (materialCardHeight + 4) - 4);
+                flowPane.setMinHeight(rows * (materialCardHeight + 4) - 4);
+            }
+        } else {
+            resetFlowPaneHeight(flowPane);
+        }
+    }
+
+    private void resetFlowPaneHeight(final FlowPane flowPane) {
+        flowPane.setMaxHeight(USE_COMPUTED_SIZE);
+        flowPane.setPrefHeight(USE_COMPUTED_SIZE);
+        flowPane.setMinHeight(USE_COMPUTED_SIZE);
+    }
+
     private void setGaps(final FlowPane... flowPanes) {
         Arrays.stream(flowPanes).forEach(flowPane -> {
             flowPane.setHgap(4);
@@ -76,20 +134,33 @@ public class MaterialOverview extends VBox {
     }
 
     void updateContent(final Search search) {
-        Platform.runLater(() -> {
-            this.totals.getChildren().clear();
-            this.assetChemicalFlow.getChildren().clear();
-            this.assetTechFlow.getChildren().clear();
-            this.assetCircuitFlow.getChildren().clear();
-            this.goodFlow.getChildren().clear();
-            this.dataFlow.getChildren().clear();
-            showGoods(search);
-            showAssets(search);
-            showDatas(search);
-            updateTotals();
-        });
+        this.totals.getChildren().clear();
+        this.assetChemicalFlow.getChildren().clear();
+        this.assetTechFlow.getChildren().clear();
+        this.assetCircuitFlow.getChildren().clear();
+        this.goodFlow.getChildren().clear();
+        this.dataFlow.getChildren().clear();
+        showGoods(search);
+        showAssets(search);
+        showDatas(search);
+        removeAndAddFlows();
+        setFlowPaneHeight(this.goodFlow, this.scrollPane.getWidth());
+        setFlowPaneHeight(this.assetChemicalFlow, this.scrollPane.getWidth());
+        setFlowPaneHeight(this.assetCircuitFlow, this.scrollPane.getWidth());
+        setFlowPaneHeight(this.assetTechFlow, this.scrollPane.getWidth());
+        setFlowPaneHeight(this.dataFlow, this.scrollPane.getWidth());
+
+        updateTotals();
     }
 
+    private void removeAndAddFlows() {
+        this.getChildren().removeAll(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
+        for (final FlowPane flowPane : new FlowPane[]{this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow}) {
+            if (!flowPane.getChildren().isEmpty()) {
+                this.getChildren().add(flowPane);
+            }
+        }
+    }
 
     private void showGoods(final Search search) {
         APPLICATION_STATE.getGoods().entrySet().stream()

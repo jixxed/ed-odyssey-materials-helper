@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -13,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.MaterialOrientation;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -40,11 +40,11 @@ public class SettingsTab extends Tab {
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting(application);
-//        final HBox commanderSetting = creatCommanderSetting();
-        final VBox settings = new VBox(settingsLabel, langSetting, fontSetting, customJournalFolderSetting);
+        final HBox readingDirectionSetting = creatReadingDirectionSetting();
+        final VBox settings = new VBox(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting);
         langSetting.setSpacing(10);
         fontSetting.setSpacing(10);
-//        commanderSetting.setSpacing(10);
+        readingDirectionSetting.setSpacing(10);
         customJournalFolderSetting.setSpacing(10);
         settings.setSpacing(10);
         scrollPane.setContent(settings);
@@ -119,42 +119,26 @@ public class SettingsTab extends Tab {
         return new HBox(languageLabel, languageSelect);
     }
 
-    private HBox creatCommanderSetting() {
-        final Label commanderLabel = new Label();
-        commanderLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.commander"));
-        commanderLabel.getStyleClass().add("settings-label");
-        final ComboBox<String> commanderSelect = new ComboBox<>();
-        commanderSelect.getStyleClass().add("settings-dropdown");
-        commanderSelect.itemsProperty().set(FXCollections.observableArrayList(
-                APPLICATION_STATE.getCommanders()
-        ));
-        EventService.addListener(CommanderAddedEvent.class, commanderAddedEvent -> {
-            commanderSelect.getItems().add(commanderAddedEvent.getName());
-            final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
-            if (preferredName.isBlank() || commanderAddedEvent.getName().equals(preferredName)) {
-                commanderSelect.getSelectionModel().select(commanderAddedEvent.getName());
-            }
+    private HBox creatReadingDirectionSetting() {
+        final Label readingDirectionLabel = new Label();
+        readingDirectionLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.reading.direction"));
+        readingDirectionLabel.getStyleClass().add("settings-label");
+        final ComboBox<MaterialOrientation> readingDirectionSelect = new ComboBox<>();
+        readingDirectionSelect.getStyleClass().add("settings-dropdown");
+        readingDirectionSelect.itemsProperty().bind(LocaleService.getListBinding(MaterialOrientation.values()));
+        readingDirectionSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
+            //update material layout
+            PreferencesService.setPreference(PreferenceConstants.ORIENTATION, newValue.name());
+            EventService.publish(new OrientationChangeEvent(newValue));
         });
-        EventService.addListener(0, WatchedFolderChangedEvent.class, event -> {
-            commanderSelect.getItems().clear();
-        });
-        EventService.addListener(0, CommanderResetEvent.class, event -> {
-            commanderSelect.getItems().clear();
-        });
-        commanderSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue != null) {
-                PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue);
-            }
-            if (oldValue != null && newValue != null) {
-                EventService.publish(new CommanderSelectedEvent(newValue));
-            }
-        });
-        commanderSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+        readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")));
+        readingDirectionSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
         EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            readingDirectionSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
         });
 
-        return new HBox(commanderLabel, commanderSelect);
+        return new HBox(readingDirectionLabel, readingDirectionSelect);
     }
+
 
 }

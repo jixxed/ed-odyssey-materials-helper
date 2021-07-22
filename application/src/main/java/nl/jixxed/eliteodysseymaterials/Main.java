@@ -10,13 +10,14 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
-import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
+import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +29,10 @@ public class Main extends Application {
     private final static String CUSTOM_STYLE_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final ApplicationLayout applicationLayout = new ApplicationLayout(this);
-    private final GameStateWatcher shipLockerWatcher = new GameStateWatcher();
-    private final GameStateWatcher backPackWatcher = new GameStateWatcher();
+    //    private final GameStateWatcher shipLockerWatcher = new GameStateWatcher();
+    //    private final GameStateWatcher backPackWatcher = new GameStateWatcher();
+    private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
+    private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private Stage primaryStage;
 
@@ -47,8 +50,11 @@ public class Main extends Application {
             PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
             final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, AppConstants.WATCHED_FOLDER));
 
-            this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
-            this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
+//            this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
+//            this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
+            this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
+            this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
+
             this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
 
             EventService.addListener(WatchedFolderChangedEvent.class, (event) -> {
@@ -110,11 +116,16 @@ public class Main extends Application {
         APPLICATION_STATE.resetBackPackCounts();
         APPLICATION_STATE.resetCommanders();
         EventService.publish(new CommanderResetEvent());
-        this.shipLockerWatcher.stop();
-        this.backPackWatcher.stop();
+//        this.shipLockerWatcher.stop();
+//        this.backPackWatcher.stop();
+        this.timeStampedShipLockerWatcher.stop();
+        this.timeStampedBackPackWatcher.stop();
         this.journalWatcher.stop();
-        this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
-        this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
+//        this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
+//        this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
+        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
+        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
+
         this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
     }
 

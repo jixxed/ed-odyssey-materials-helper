@@ -12,4 +12,5 @@ public class PreferenceConstants {
     public static final String TEXTSIZE = "text.size";
     public static final String JOURNAL_FOLDER = "journal.folder";
     public static final String COMMANDER = "commander";
+    public static final String ORIENTATION = "orientation";
 }

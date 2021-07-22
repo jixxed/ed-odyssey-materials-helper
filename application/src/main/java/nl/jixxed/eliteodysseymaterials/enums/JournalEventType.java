@@ -6,6 +6,8 @@ public enum JournalEventType {
     EMBARK("Embark"),
     SHIPLOCKER("ShipLocker"),
     BACKPACK("Backpack"),
+    BACKPACKCHANGE("BackpackChange"),
+    RESUPPLY("Resupply"),
     UNKNOWN("Unknown");
 
     String name;

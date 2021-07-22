@@ -1,11 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.watchdog;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+@Slf4j
 public class GameStateWatcher {
     private Optional<File> watchedFile = Optional.empty();
     private FileWatcher fileWatcher;
@@ -42,9 +45,9 @@ public class GameStateWatcher {
             this.watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().equals(filename))
                     .findFirst();
-            System.out.println("Registered watched file: " + this.watchedFile.map(File::getName).orElse(filename + " not found"));
+            log.info("Registered watched file: " + this.watchedFile.map(File::getName).orElse(filename + " not found"));
         } catch (final NullPointerException ex) {
-            System.out.println("Failed to Registered watched file at " + folder.getAbsolutePath());
+            log.error("Failed to Registered watched file at " + folder.getAbsolutePath());
         }
     }
 

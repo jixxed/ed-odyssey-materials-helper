@@ -5,20 +5,21 @@ import javafx.scene.control.Tab;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 public class OverviewTab extends Tab {
-    private final MaterialOverview materialOverview = new MaterialOverview();
 
     public OverviewTab() {
         super();
         this.textProperty().bind(LocaleService.getStringBinding("tabs.overview"));
 
-        this.materialOverview.getStyleClass().add("card-grid");
-        this.materialOverview.setSpacing(10);
         final ScrollPane scrollPane = new ScrollPane();
+        final MaterialOverview materialOverview = new MaterialOverview(scrollPane);
+        materialOverview.getStyleClass().add("card-grid");
+        materialOverview.setSpacing(10);
         scrollPane.pannableProperty().set(true);
-        scrollPane.setContent(this.materialOverview);
+        scrollPane.setContent(materialOverview);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.setContent(scrollPane);
 
     }

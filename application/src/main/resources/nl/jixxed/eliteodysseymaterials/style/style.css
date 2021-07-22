@@ -166,8 +166,8 @@
 .ingredient {
     -fx-border-color: black;
     -fx-pref-width: 300;
-    -fx-min-height: 2em;
     -fx-alignment: center-left;
+    -fx-min-height: 30px;
 }
 
 
@@ -227,7 +227,7 @@
 .bottom-bar {
     -fx-alignment: center-left;
     -fx-spacing: 10;
-    -fx-padding: 0 10 0 10;
+    -fx-padding: 0 0 0 10;
 
     -fx-border-width: 1;
     -fx-border-color: #2e2e2e;
@@ -567,4 +567,15 @@
     -fx-max-height: 2.5em;
     -fx-min-height: 2.5em;
     -fx-pref-height: 2.5em;
+}
+
+.bottombar-dropdown {
+
+    /*-fx-min-width: 200px;*/
+    -fx-pref-width: 300px;
+    -fx-max-height: 2em;
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-padding: 0 0 0 0;
+    -fx-border-insets: 0 0 0 0;
 }

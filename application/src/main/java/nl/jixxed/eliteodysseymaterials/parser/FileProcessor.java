@@ -3,15 +3,13 @@ package nl.jixxed.eliteodysseymaterials.parser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Scanner;
 
+@Slf4j
 public class FileProcessor {
 
     private static int lineNumber = 0;
@@ -41,9 +40,7 @@ public class FileProcessor {
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
                 cursor++;
-                //if multiple lines with the same timestamp are written, the lines can be blank until all lines are written.
                 if (line.isBlank()) {
-                    System.out.println("BLANK LINE");
                     break;
                 }
                 if (cursor > lineNumber) {
@@ -61,7 +58,6 @@ public class FileProcessor {
         JsonNode jsonNode = null;
         try {
             final String shipLocker = Files.readString(file.toPath());
-            System.out.println(shipLocker);
             jsonNode = processJournalMessage(shipLocker, file);
         } catch (final IOException e) {
             e.printStackTrace();
@@ -76,7 +72,7 @@ public class FileProcessor {
         try {
             jsonNode = OBJECT_MAPPER.readTree(message);
             if (jsonNode.get("event") != null) {
-                System.out.println("event: " + jsonNode.get("event").asText());
+                log.info("event: " + jsonNode.get("event").asText());
                 final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get("event").asText());
                 switch (journalEventType) {
                     case COMMANDER -> processCommander(jsonNode);
@@ -84,12 +80,13 @@ public class FileProcessor {
                     case EMBARK -> APPLICATION_STATE.resetBackPackCounts();
                     case SHIPLOCKER -> processShipLockerMaterialsMessage(jsonNode, StoragePool.SHIPLOCKER);
                     case BACKPACK -> processShipLockerMaterialsMessage(jsonNode, StoragePool.BACKPACK);
+                    case BACKPACKCHANGE, RESUPPLY -> processBackpackChangeMessage(jsonNode);
                 }
                 if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
                     EventService.publish(new JournalProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
                 }
             } else {
-                System.out.println("EVENT NULL: " + jsonNode.toPrettyString());
+                log.warn("EVENT NULL: " + jsonNode.toPrettyString());
             }
         } catch (final JsonProcessingException e) {
             e.printStackTrace();
@@ -134,10 +131,17 @@ public class FileProcessor {
         }
     }
 
+    protected static void processBackpackChangeMessage(final JsonNode journalMessage) {
+        EventService.publish(new BackpackEvent(journalMessage.get("timestamp").asText()));
+    }
 
     protected static void processShipLockerMaterialsMessage(final JsonNode journalMessage,
                                                             final StoragePool storagePool) {
         if (journalMessage.get("Items") == null || journalMessage.get("Components") == null || journalMessage.get("Data") == null) {
+            switch (storagePool) {
+                case SHIPLOCKER -> EventService.publish(new ShipLockerEvent(journalMessage.get("timestamp").asText()));
+                case BACKPACK -> EventService.publish(new BackpackEvent(journalMessage.get("timestamp").asText()));
+            }
             return;
         }
         switch (storagePool) {

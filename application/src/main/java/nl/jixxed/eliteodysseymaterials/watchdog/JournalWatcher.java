@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.AppConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.function.Consumer;
 
+@Slf4j
 public class JournalWatcher {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private Optional<File> watchedFile = Optional.empty();
@@ -20,7 +22,7 @@ public class JournalWatcher {
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileCreatedProcessor) {
         this.watchedFolder = folder;
-//        listCommanders(folder);
+        listCommanders(folder);
         findLatestFile(folder);
         this.watchedFile.ifPresent(fileCreatedProcessor);
         this.fileWatcher = new FileWatcher(folder);
@@ -29,7 +31,7 @@ public class JournalWatcher {
             public void onCreated(final FileEvent event) {
                 final File file = event.getFile();
                 if (file.isFile()) {
-                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file)) { //&& hasCommanderHeader(file) && isSelectedCommander(file)
+                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file)) {
                         JournalWatcher.this.watchedFile = Optional.of(file);
                         fileCreatedProcessor.accept(file);
                     }
@@ -40,7 +42,7 @@ public class JournalWatcher {
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
                 if (file.isFile()) {
-                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file)) { //&& hasCommanderHeader(file) && isSelectedCommander(file)
+                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file)) {
                         JournalWatcher.this.watchedFile = Optional.of(file);
                         fileModifiedProcessor.accept(file);
                     }
@@ -58,7 +60,7 @@ public class JournalWatcher {
                     .filter(this::hasCommanderHeader)
                     .forEach(this::listCommander);
         } catch (final NullPointerException ex) {
-            System.out.println("Failed to list commanders at " + folder.getAbsolutePath());
+            log.error("Failed to list commanders at " + folder.getAbsolutePath());
         }
     }
 
@@ -87,11 +89,11 @@ public class JournalWatcher {
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(this::hasFileHeader)
                     .filter(this::isOdysseyJournal)
-//                    .filter(this::isSelectedCommander)
+                    .filter(this::isSelectedCommander)
                     .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23))));
-            System.out.println("Registered watched file: " + this.watchedFile.map(File::getName).orElse("No file"));
+            log.info("Registered watched file: " + this.watchedFile.map(File::getName).orElse("No file"));
         } catch (final NullPointerException ex) {
-            System.out.println("Failed to Registered watched file at " + folder.getAbsolutePath());
+            log.error("Failed to Registered watched file at " + folder.getAbsolutePath());
         }
     }
 

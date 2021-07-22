@@ -37,6 +37,7 @@ public class WishlistTab extends Tab {
     private final FlowPane assetTechFlow = new FlowPane();
     private int wishlistSize;
     private final List<WishlistBlueprint> wishlistBlueprints;
+    private final VBox content;
 
     public WishlistTab() {
         super();
@@ -70,11 +71,11 @@ public class WishlistTab extends Tab {
         required_materials.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.required.materials"));
         selected_blueprints.getStyleClass().add("wishlist-header");
         required_materials.getStyleClass().add("wishlist-header");
-        final VBox value = new VBox(selected_blueprints, this.recipes, required_materials, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
-        value.setSpacing(10);
-        scrollPane.setContent(value);
+        this.content = new VBox(selected_blueprints, this.recipes, required_materials, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
+        this.content.setSpacing(10);
+        scrollPane.setContent(this.content);
         VBox.setVgrow(this.dataFlow, Priority.ALWAYS);
-        value.setPadding(new Insets(5));
+        this.content.setPadding(new Insets(5));
         this.setContent(scrollPane);
         EventService.addListener(WishlistEvent.class, (wishlistEvent) ->
                 Platform.runLater(this::refreshContent));
@@ -140,6 +141,15 @@ public class WishlistTab extends Tab {
         this.assetCircuitFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CIRCUIT)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));
         this.assetChemicalFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CHEMICAL)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));
         this.assetTechFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.TECH)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));
+        removeAndAddFlows();
+    }
 
+    private void removeAndAddFlows() {
+        this.content.getChildren().removeAll(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
+        for (final FlowPane flowPane : new FlowPane[]{this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow}) {
+            if (!flowPane.getChildren().isEmpty()) {
+                this.content.getChildren().add(flowPane);
+            }
+        }
     }
 }
