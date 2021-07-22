@@ -70,6 +70,12 @@ public class SettingsTab extends Tab {
                 EventService.publish(new WatchedFolderChangedEvent(selectedDirectory.getAbsolutePath()));
             }
         });
+        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            button.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px;");
+        });
+        button.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+
+
         final HBox customJournalFolderSetting = new HBox(journalFolderLabel, button, selectedFolderLabel);
         customJournalFolderSetting.setAlignment(Pos.CENTER_LEFT);
         return customJournalFolderSetting;
@@ -127,7 +133,6 @@ public class SettingsTab extends Tab {
         readingDirectionSelect.getStyleClass().add("settings-dropdown");
         readingDirectionSelect.itemsProperty().bind(LocaleService.getListBinding(MaterialOrientation.values()));
         readingDirectionSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
-            //update material layout
             PreferencesService.setPreference(PreferenceConstants.ORIENTATION, newValue.name());
             EventService.publish(new OrientationChangeEvent(newValue));
         });
