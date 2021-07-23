@@ -6,10 +6,8 @@
          type="javafx.scene.layout.HBox" minHeight="30.0" prefHeight="30.0" prefWidth="300.0"
          xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
     <Label fx:id="material" style="-fx-pref-width: 328; -fx-label-padding: 5;">Material</Label>
-    <Label fx:id="required" nodeOrientation="RIGHT_TO_LEFT"
-           style="-fx-pref-width: 100; -fx-padding: 5;-fx-text-alignment: right;">Required
+    <Label fx:id="required" styleClass="required">Required
     </Label>
-    <Label fx:id="available" nodeOrientation="RIGHT_TO_LEFT"
-           style="-fx-pref-width: 100; -fx-padding: 5;-fx-text-alignment: right;">Available
+    <Label fx:id="available" styleClass="available">Available
     </Label>
 </fx:root>

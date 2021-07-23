@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,15 +12,15 @@ public class EngineerRecipe extends Recipe {
     private final List<String> other;
     private final Supplier<Boolean> isCompletedSupplier;
 
-    public EngineerRecipe(final Map<? extends Material, Integer> materials, final Supplier<Boolean> isCompletedSupplier) {
-        super(materials);
+    public EngineerRecipe(final RecipeName recipeName, final Map<? extends Material, Integer> materials, final Supplier<Boolean> isCompletedSupplier) {
+        super(recipeName, materials);
         this.other = Collections.emptyList();
         this.isCompletedSupplier = isCompletedSupplier;
 
     }
 
-    public EngineerRecipe(final List<String> other, final Supplier<Boolean> isCompletedSupplier) {
-        super(Collections.emptyMap());
+    public EngineerRecipe(final RecipeName recipeName, final List<String> other, final Supplier<Boolean> isCompletedSupplier) {
+        super(recipeName, Collections.emptyMap());
         this.other = other;
         this.isCompletedSupplier = isCompletedSupplier;
 

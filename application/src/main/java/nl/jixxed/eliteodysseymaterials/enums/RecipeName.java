@@ -84,4 +84,8 @@ public enum RecipeName {
     public String getLocalizationKey() {
         return "recipe.name." + this.name().toLowerCase();
     }
+
+    public String getDescriptionLocalizationKey() {
+        return "recipe.description." + this.name().toLowerCase();
+    }
 }

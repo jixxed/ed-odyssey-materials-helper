@@ -8,8 +8,8 @@
          xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
     <ImageView fx:id="image" fitHeight="28" fitWidth="28"/>
     <Label fx:id="nameLabel" styleClass="name">test</Label>
-    <Label nodeOrientation="RIGHT_TO_LEFT" fx:id="amountRequiredLabel" styleClass="required">test
+    <Label fx:id="amountRequiredLabel" styleClass="required">test
     </Label>
-    <Label nodeOrientation="RIGHT_TO_LEFT" fx:id="amountAvailableLabel" styleClass="available">test
+    <Label fx:id="amountAvailableLabel" styleClass="available">test
     </Label>
 </fx:root>

@@ -1,9 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Good;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +11,7 @@ class RecipeTest {
     @Test
     void getMaterialCollection() {
 
-        final Recipe recipe = new Recipe(Map.of(
+        final Recipe recipe = new Recipe(RecipeName.ADDED_MELEE_DAMAGE, Map.of(
                 Good.IONISEDGAS, 10,
                 Data.BIOMETRICDATA, 5,
                 Data.COMBATANTPERFORMANCE, 10,

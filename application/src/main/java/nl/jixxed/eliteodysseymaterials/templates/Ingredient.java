@@ -7,6 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
@@ -60,6 +61,7 @@ public class Ingredient extends HBox {
         this.amountRequiredLabel.setText(amount.toString());
         this.amountRequired = amount;
         this.amountAvailable = amountAvailable;
+        HBox.setHgrow(this.amountRequiredLabel, Priority.ALWAYS);
         this.material = material;
         final Tooltip tooltip = new Tooltip();
         tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(material));

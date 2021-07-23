@@ -1,10 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Good;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,8 +11,16 @@ public class Recipe {
     private final Map<Material, Integer> assets;
     private final Map<Material, Integer> data;
     private final Map<Material, Integer> goods;
+    private final RecipeName recipeName;
+    private final Map<Modifier, String> modifiers;
 
-    public Recipe(final Map<? extends Material, Integer> materials) {
+    public Recipe(final RecipeName recipeName, final Map<? extends Material, Integer> materials) {
+        this(recipeName, materials, Collections.emptyMap());
+    }
+
+    public Recipe(final RecipeName recipeName, final Map<? extends Material, Integer> materials, final Map<Modifier, String> modifiers) {
+        this.recipeName = recipeName;
+        this.modifiers = modifiers;
         this.assets = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Asset).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.data = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Data).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.goods = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Good).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -43,5 +49,13 @@ public class Recipe {
     public Integer getRequiredAmount(final Material material) {
         final Integer amount = getMaterialCollection(Material.class).get(material);
         return amount != null ? amount : 0;
+    }
+
+    public RecipeName getRecipeName() {
+        return this.recipeName;
+    }
+
+    public Map<Modifier, String> getModifiers() {
+        return this.modifiers;
     }
 }

@@ -133,8 +133,10 @@ public class SettingsTab extends Tab {
         readingDirectionSelect.getStyleClass().add("settings-dropdown");
         readingDirectionSelect.itemsProperty().bind(LocaleService.getListBinding(MaterialOrientation.values()));
         readingDirectionSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
-            PreferencesService.setPreference(PreferenceConstants.ORIENTATION, newValue.name());
-            EventService.publish(new OrientationChangeEvent(newValue));
+            if (newValue != null) {
+                PreferencesService.setPreference(PreferenceConstants.ORIENTATION, newValue.name());
+                EventService.publish(new OrientationChangeEvent(newValue));
+            }
         });
         readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")));
         readingDirectionSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");

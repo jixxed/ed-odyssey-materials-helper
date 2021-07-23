@@ -21,6 +21,7 @@ public class ContentArea extends AnchorPane {
     private final RecipeBar recipeBar;
     final OverviewTab overview = new OverviewTab();
     final WishlistTab wishlistTab = new WishlistTab();
+    final EngineersTab engineersTab = new EngineersTab();
     final SettingsTab settingsTab;
 
     public ContentArea(final Application application) {
@@ -35,8 +36,9 @@ public class ContentArea extends AnchorPane {
 
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
+        this.engineersTab.setClosable(false);
         this.settingsTab.setClosable(false);
-        final TabPane tabs = new TabPane(this.overview, this.wishlistTab, this.settingsTab); //, this.settingsTab
+        final TabPane tabs = new TabPane(this.overview, this.wishlistTab, this.engineersTab, this.settingsTab); //, this.settingsTab
         EventService.addListener(WishlistEvent.class, (wishlistEvent) -> {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 tabs.getSelectionModel().select(this.wishlistTab);

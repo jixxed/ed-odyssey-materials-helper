@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +10,9 @@ class EngineerRecipeTest {
 
     @Test
     void isCompleted() {
-        final EngineerRecipe engineerRecipeTrue = new EngineerRecipe(List.of(), () -> true);
+        final EngineerRecipe engineerRecipeTrue = new EngineerRecipe(RecipeName.ENGINEER_B1, List.of(), () -> true);
         Assertions.assertTrue(engineerRecipeTrue.isCompleted());
-        final EngineerRecipe engineerRecipeFalse = new EngineerRecipe(List.of(), () -> false);
+        final EngineerRecipe engineerRecipeFalse = new EngineerRecipe(RecipeName.ENGINEER_B1, List.of(), () -> false);
         Assertions.assertFalse(engineerRecipeFalse.isCompleted());
     }
 }

@@ -2,6 +2,8 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
@@ -140,6 +142,36 @@ public class RecipeBar extends Accordion {
             flowPane.getStyleClass().add("engineerFlow");
             content.getChildren().addAll(flowPane);
         }
+
+        final Label descriptionTitle = new Label();
+        descriptionTitle.textProperty().bind(LocaleService.getStringBinding("recipe.label.description"));
+        descriptionTitle.getStyleClass().add("recipe-title-label");
+        content.getChildren().add(descriptionTitle);
+        final Label description = new Label();
+        description.textProperty().bind(LocaleService.getStringBinding(recipe.getKey().getDescriptionLocalizationKey()));
+        description.getStyleClass().add("recipe-description");
+        content.getChildren().add(description);
+        final Map<Modifier, String> modifierMap = recipe.getValue().getModifiers();
+        if (!modifierMap.isEmpty()) {
+            content.getChildren().add(new Separator(Orientation.HORIZONTAL));
+            final Label modifierTitle = new Label();
+            modifierTitle.textProperty().bind(LocaleService.getStringBinding("recipe.label.modifiers"));
+            modifierTitle.getStyleClass().add("recipe-title-label");
+//            modifierTitle.setStyle("-fx-font-size: 2.2em;-fx-min-height: 2.4em;");
+            content.getChildren().add(modifierTitle);
+            final List<HBox> modifiers = modifierMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(modifierStringEntry -> {
+                final Label modifier = new Label();
+                modifier.getStyleClass().add("recipe-modifier-name");
+                modifier.textProperty().bind(LocaleService.getStringBinding(modifierStringEntry.getKey().getLocalizationKey()));
+                final Label value = new Label(modifierStringEntry.getValue());
+                value.getStyleClass().add("recipe-modifier-value");
+                final HBox modifierBox = new HBox(modifier, value);
+                modifierBox.getStyleClass().add("recipe-modifier");
+                HBox.setHgrow(value, Priority.ALWAYS);
+                return modifierBox;
+            }).collect(Collectors.toList());
+            content.getChildren().addAll(modifiers);
+        }
         final TitledPane recipeTitledPane = createTitledPane(recipe, content);
         recipeTitledPane.getStyleClass().add("blueprint-title-pane");
         if (recipe.getValue() instanceof EngineerRecipe && ((EngineerRecipe) recipe.getValue()).isCompleted()) {
@@ -177,7 +209,12 @@ public class RecipeBar extends Accordion {
             this.engineerTitledPanes.add((EngineerTitledPane) recipeTitledPane);
         } else {
             recipeTitledPane = new TitledPane();
-            recipeTitledPane.setContent(content);
+            final ScrollPane scrollPane = new ScrollPane(content);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            content.setPadding(new Insets(5));
+            scrollPane.setFitToWidth(true);
+            recipeTitledPane.setContent(scrollPane);
             recipeTitledPane.textProperty().bind(LocaleService.getStringBinding(recipe.getKey().getLocalizationKey()));
         }
         return recipeTitledPane;
