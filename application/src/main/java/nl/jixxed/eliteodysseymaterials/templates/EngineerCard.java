@@ -19,15 +19,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class EngineerCard extends VBox {
-    ImageView image = new ImageView();
-    Engineer engineer;
-    List<RecipeName> suitRecipes;
-    List<RecipeName> weaponRecipes;
+    private final ImageView image = new ImageView();
+    private final Engineer engineer;
+    private final List<RecipeName> suitRecipes;
+    private final List<RecipeName> weaponRecipes;
 
     public EngineerCard(final Engineer engineer) {
-        super();
         this.engineer = engineer;
-        this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/" + engineer.name() + ".jpg")));
+        this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/" + engineer.name().toLowerCase() + ".jpg")));
         this.suitRecipes = RecipeConstants.getSuitModuleBlueprints().entrySet().stream()
                 .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(engineer))
                 .map(Map.Entry::getKey)
