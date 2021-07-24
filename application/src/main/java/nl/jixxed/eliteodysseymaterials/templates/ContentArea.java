@@ -10,10 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ApplicationLifeCycleEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 public class ContentArea extends AnchorPane {
 
@@ -50,7 +47,11 @@ public class ContentArea extends AnchorPane {
         HBox.setHgrow(body, Priority.ALWAYS);
         this.getChildren().addAll(this.recipeBar, body);
         VBox.setVgrow(tabs, Priority.ALWAYS);
-
+        EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {
+            this.recipeBar.setVisible(true);
+            this.searchBar.getButton().setText("<");
+            PreferencesService.setPreference("recipes.visible", true);
+        });
         this.searchBar.getButton().setOnAction(event -> {
             final boolean visibility = !this.recipeBar.isVisible();
             this.recipeBar.setVisible(visibility);

@@ -626,6 +626,11 @@
     -fx-text-fill: white;
     -fx-font-size: 1.2em;
     -fx-label-padding: 5px;
+    -fx-cursor: hand;
+}
+
+.engineer-name:hover {
+    -fx-text-fill: #2e92df;
 }
 
 .engineer-location {
@@ -633,10 +638,22 @@
     -fx-label-padding: 5px;
 }
 
-/*.engineer-location:hover {*/
-/*    -fx-text-fill: #2e92df;*/
-/*-fx-cursor: hand;*/
-/*}*/
+.engineer-location-line:hover {
+    -fx-cursor: hand;
+}
+
+.engineer-copy-icon {
+    -fx-alignment: center-left;
+}
+
+.engineer-distance {
+    -fx-text-fill: #777;
+    -fx-label-padding: 5px;
+}
+
+.engineer-location-line:hover > .engineer-location {
+    -fx-text-fill: #2e92df;
+}
 
 .engineer-category {
     -fx-text-fill: white;
@@ -654,6 +671,27 @@
 .engineer-blueprint:hover {
     -fx-text-fill: #2e92df;
     -fx-cursor: hand;
+}
+
+.specialisation-force {
+
+    -fx-text-fill: #ff3c00;
+    -fx-alignment: center-right;
+    -fx-min-height: 32px;
+}
+
+.specialisation-dynamic {
+
+    -fx-text-fill: #ff00e7;
+    -fx-alignment: center-right;
+    -fx-min-height: 32px;
+}
+
+.specialisation-strategic {
+
+    -fx-text-fill: #7cd429;
+    -fx-alignment: center-right;
+    -fx-min-height: 32px;
 }
 
 .recipe-description {

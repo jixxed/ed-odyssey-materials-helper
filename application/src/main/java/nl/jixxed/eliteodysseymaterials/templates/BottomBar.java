@@ -22,16 +22,19 @@ import java.io.File;
 
 public class BottomBar extends HBox {
 
-    final Label watchedFileLabel = new Label();
-    final Label lastTimeStampLabel = new Label();
-    public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private final Label watchedFileLabel = new Label();
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private String system = "";
+    private String body = "";
+    private String station = "";
 
     public BottomBar() {
         super();
         final Region region = new Region();
         final Label commanderLabel = new Label();
+        final Label locationLabel = new Label();
         commanderLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.commander"));
-        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.lastTimeStampLabel, region, commanderLabel, creatCommanderSetting());
+        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), region, locationLabel, new Separator(Orientation.VERTICAL), commanderLabel, creatCommanderSetting());
         HBox.setHgrow(region, Priority.ALWAYS);
         this.getStyleClass().add("bottom-bar");
         this.getStyleClass().add(JMetroStyleClass.BACKGROUND);
@@ -41,14 +44,35 @@ public class BottomBar extends HBox {
         this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath()));
         EventService.addListener(WatchedFolderChangedEvent.class, watchedFolderChangedEvent -> {
             this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolderChangedEvent.getPath()));
-            this.lastTimeStampLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.last.message", "none", "none"));
-
         });
 
+        EventService.addListener(SimpleLocationEvent.class, simpleLocationEvent -> {
+            this.system = simpleLocationEvent.getStarSystem().orElse(this.system);
+            switch (simpleLocationEvent.getLocationType()) {
+                case LOCATION:
+                    final String body = simpleLocationEvent.getBody().orElse("");
+                    final String station = simpleLocationEvent.getStation().orElse("");
+                    this.body = body.equals(station) ? "" : body;
+                    break;
+                case DOCKED:
+                    break;
+                case UNDOCKED:
+                    this.station = "";
+                    break;
+                default:
+                    this.body = simpleLocationEvent.getBody().orElse("");
+                    break;
+            }
+            this.station = simpleLocationEvent.getStation().orElse("");
+            Platform.runLater(() -> {
+                locationLabel.setText(this.system +
+                        (this.body.isBlank() ? "" : " | " + this.body) +
+                        (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + this.station));
+            });
+        });
         EventService.addListener(JournalProcessedEvent.class, journalProcessedEvent -> {
             Platform.runLater(() -> {
-                this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalProcessedEvent.getFile().getAbsolutePath()));
-                this.lastTimeStampLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.last.message", journalProcessedEvent.getTimestamp(), journalProcessedEvent.getJournalEventType().friendlyName()));
+                this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalProcessedEvent.getFile().getName()));
             });
         });
     }

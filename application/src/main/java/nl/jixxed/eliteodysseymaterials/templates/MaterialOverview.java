@@ -54,11 +54,12 @@ public class MaterialOverview extends VBox {
         this.assetTechFlow = new FlowPane(flowPaneOrientation);
         this.goodFlow = new FlowPane(flowPaneOrientation);
         this.dataFlow = new FlowPane(flowPaneOrientation);
-
         this.setWidth(this.scrollPane.getWidth());
         final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) ->
         {
             this.setWidth(newValue.doubleValue());
+            this.totals.setMaxWidth(newValue.doubleValue());
+
             Platform.runLater(() -> {
                 setFlowPaneHeight(this.goodFlow, newValue);
                 setFlowPaneHeight(this.assetChemicalFlow, newValue);
@@ -76,8 +77,10 @@ public class MaterialOverview extends VBox {
             this.dataFlow.setOrientation(orientation);
             if (MaterialOrientation.VERTICAL.equals(orientationChangeEvent.getMaterialOrientation())) {
                 scrollPane.widthProperty().addListener(resizeListener);
+                this.totals.setMaxWidth(this.getWidth());
             } else {
                 scrollPane.widthProperty().removeListener(resizeListener);
+                this.totals.setMaxWidth(-1);
             }
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         });

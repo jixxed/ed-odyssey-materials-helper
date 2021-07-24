@@ -564,7 +564,7 @@ public abstract class RecipeConstants {
                         Asset.PHNEUTRALISER, 15
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ),
                 Map.of(
-                        Modifier.AIR_CAPACITY, "+100%"
+                        Modifier.AIR_CAPACITY, "+400%"
                 )
         ));
         SUIT_MODULE_BLUEPRINTS.put(RecipeName.INCREASED_SPRINT_DURATION, new ModuleRecipe(

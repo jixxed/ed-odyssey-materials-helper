@@ -8,9 +8,17 @@ public enum JournalEventType {
     BACKPACK("Backpack"),
     BACKPACKCHANGE("BackpackChange"),
     RESUPPLY("Resupply"),
+    FSDJUMP("FSDJump"),
+    LOCATION("Location"),
+    DOCKED("Docked"),
+    TOUCHDOWN("Touchdown"),
+    UNDOCKED("Undocked"),
+    LIFTOFF("Liftoff"),
+    APPROACHBODY("ApproachBody"),
+    LEAVEBODY("LeaveBody"),
     UNKNOWN("Unknown");
 
-    String name;
+    private final String name;
 
     JournalEventType(final String name) {
         this.name = name;

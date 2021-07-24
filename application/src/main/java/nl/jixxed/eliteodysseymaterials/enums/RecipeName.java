@@ -88,4 +88,19 @@ public enum RecipeName {
     public String getDescriptionLocalizationKey() {
         return "recipe.description." + this.name().toLowerCase();
     }
+
+    public static RecipeName forEngineer(final Engineer engineer) {
+        return switch (engineer) {
+            case DOMINO_GREEN -> ENGINEER_A1;
+            case HERO_FERRARI -> ENGINEER_B1;
+            case JUDE_NAVARRO -> ENGINEER_C1;
+            case KIT_FOWLER -> ENGINEER_A3;
+            case ODEN_GEIGER -> ENGINEER_C5;
+            case TERRA_VELASQUEZ -> ENGINEER_C3;
+            case UMA_LASZLO -> ENGINEER_B5;
+            case WELLINGTON_BECK -> ENGINEER_B3;
+            case YARDEN_BOND -> ENGINEER_A5;
+            case UNKNOWN -> throw new IllegalArgumentException("unknown engineer");
+        };
+    }
 }

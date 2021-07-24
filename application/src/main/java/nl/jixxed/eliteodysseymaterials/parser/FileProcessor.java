@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Iterator;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Slf4j
@@ -81,6 +83,13 @@ public class FileProcessor {
                     case SHIPLOCKER -> processShipLockerMaterialsMessage(jsonNode, StoragePool.SHIPLOCKER);
                     case BACKPACK -> processShipLockerMaterialsMessage(jsonNode, StoragePool.BACKPACK);
                     case BACKPACKCHANGE, RESUPPLY -> processBackpackChangeMessage(jsonNode);
+                    case FSDJUMP, LOCATION -> processLocationMessage(jsonNode);
+                    case DOCKED -> processDockedMessage(jsonNode);
+                    case TOUCHDOWN -> processTouchdownMessage(jsonNode);
+                    case UNDOCKED -> processUndockedMessage();
+                    case LIFTOFF -> processLiftOffMessage(jsonNode);
+                    case APPROACHBODY -> processApproachBodyMessage(jsonNode);
+                    case LEAVEBODY -> processLeaveBodyMessage(jsonNode);
                 }
                 if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
                     EventService.publish(new JournalProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
@@ -92,6 +101,55 @@ public class FileProcessor {
             e.printStackTrace();
         }
         return jsonNode;
+    }
+
+    private static void processLeaveBodyMessage(final JsonNode journalMessage) {
+        final String starSystem = journalMessage.get("StarSystem").asText();
+        EventService.publish(new SimpleLocationEvent(Optional.of(starSystem), Optional.empty(), Optional.empty(), JournalEventType.LEAVEBODY));
+    }
+
+    private static void processApproachBodyMessage(final JsonNode journalMessage) {
+        final String starSystem = journalMessage.get("StarSystem").asText();
+        final String body = journalMessage.get("Body") != null ? journalMessage.get("Body").asText() : null;
+        EventService.publish(new SimpleLocationEvent(Optional.of(starSystem), Optional.ofNullable(body), Optional.empty(), JournalEventType.APPROACHBODY));
+    }
+
+    private static void processLiftOffMessage(final JsonNode journalMessage) {
+        final String starSystem = journalMessage.get("StarSystem").asText();
+        final String body = journalMessage.get("Body") != null ? journalMessage.get("Body").asText() : null;
+        EventService.publish(new SimpleLocationEvent(Optional.of(starSystem), Optional.ofNullable(body), Optional.empty(), JournalEventType.LIFTOFF));
+    }
+
+    private static void processUndockedMessage() {
+        EventService.publish(new SimpleLocationEvent(Optional.empty(), Optional.empty(), Optional.empty(), JournalEventType.UNDOCKED));
+    }
+
+    private static void processTouchdownMessage(final JsonNode journalMessage) {
+        final String starSystem = journalMessage.get("StarSystem").asText();
+        final String body = journalMessage.get("Body") != null ? journalMessage.get("Body").asText() : null;
+        final String station = journalMessage.get("NearestDestination") != null ? journalMessage.get("NearestDestination").asText() : null;
+        EventService.publish(new SimpleLocationEvent(Optional.of(starSystem), Optional.ofNullable(body), Optional.ofNullable(station), JournalEventType.TOUCHDOWN));
+    }
+
+    private static void processDockedMessage(final JsonNode journalMessage) {
+        final String starSystem = journalMessage.get("StarSystem").asText();
+        final String station = journalMessage.get("StationName") != null ? journalMessage.get("StationName").asText() : null;
+
+        EventService.publish(new SimpleLocationEvent(Optional.of(starSystem), Optional.empty(), Optional.ofNullable(station), JournalEventType.DOCKED));
+    }
+
+    private static void processLocationMessage(final JsonNode journalMessage) {
+        if (journalMessage.get("StarSystem") != null && journalMessage.get("StarPos") != null) {
+            final String system = journalMessage.get("StarSystem").asText();
+            final Iterator<JsonNode> starPos = journalMessage.get("StarPos").elements();
+            final double x = starPos.next().asDouble();
+            final double y = starPos.next().asDouble();
+            final double z = starPos.next().asDouble();
+            EventService.publish(new LocationEvent(system, x, y, z));
+            final String body = journalMessage.get("Body") != null ? journalMessage.get("Body").asText() : null;
+            final String station = journalMessage.get("StationName") != null ? journalMessage.get("StationName").asText() : null;
+            EventService.publish(new SimpleLocationEvent(Optional.of(system), Optional.ofNullable(body), Optional.ofNullable(station), JournalEventType.LOCATION));
+        }
     }
 
     private static void processCommander(final JsonNode journalMessage) {
