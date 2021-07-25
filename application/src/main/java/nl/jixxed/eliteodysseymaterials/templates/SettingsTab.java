@@ -2,7 +2,10 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -13,13 +16,14 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialOrientation;
+import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
 
-public class SettingsTab extends Tab {
+public class SettingsTab extends EDOTab {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     public SettingsTab(final Application application) {
@@ -147,5 +151,9 @@ public class SettingsTab extends Tab {
         return new HBox(readingDirectionLabel, readingDirectionSelect);
     }
 
+    @Override
+    public Tabs getTabType() {
+        return Tabs.SETTINGS;
+    }
 
 }

@@ -14,11 +14,13 @@ import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.Show;
 import nl.jixxed.eliteodysseymaterials.enums.Sort;
+import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.TabSelecetedEvent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -55,6 +57,17 @@ public class SearchBar extends HBox {
         HBox.setHgrow(this.showMaterialsComboBox, Priority.ALWAYS);
         HBox.setHgrow(this.sortMaterialsComboBox, Priority.ALWAYS);
         this.getChildren().addAll(this.button, this.textField, this.showMaterialsComboBox, this.sortMaterialsComboBox);
+        EventService.addListener(TabSelecetedEvent.class, event -> {
+            if (Tabs.OVERVIEW.equals(event.getSelectedTab())) {
+                this.textField.setDisable(false);
+                this.showMaterialsComboBox.setDisable(false);
+                this.sortMaterialsComboBox.setDisable(false);
+            } else {
+                this.textField.setDisable(true);
+                this.showMaterialsComboBox.setDisable(true);
+                this.sortMaterialsComboBox.setDisable(true);
+            }
+        });
     }
 
     private void setDefaultOptions() {

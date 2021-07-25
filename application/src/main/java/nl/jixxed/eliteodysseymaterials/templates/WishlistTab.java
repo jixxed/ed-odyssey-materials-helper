@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -26,7 +25,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class WishlistTab extends Tab {
+public class WishlistTab extends EDOTab {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final FlowPane recipes = new FlowPane();
     private final Map<Material, Integer> wishlistNeededMaterials = new HashMap<>();
@@ -151,5 +150,10 @@ public class WishlistTab extends Tab {
                 this.content.getChildren().add(flowPane);
             }
         }
+    }
+
+    @Override
+    public Tabs getTabType() {
+        return Tabs.WISHLIST;
     }
 }

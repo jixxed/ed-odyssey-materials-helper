@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -42,23 +41,24 @@ public class MaterialOverview extends VBox {
     private final FlowPane assetTechFlow;
     private final FlowPane goodFlow;
     private final FlowPane dataFlow;
-
+    private final MaterialTotal goodsTotal = new MaterialTotal(StorageType.GOOD, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
+    private final MaterialTotal assetsTotal = new MaterialTotal(StorageType.ASSET, MaterialTotalType.CHEMICAL, MaterialTotalType.CIRCUIT, MaterialTotalType.TECH);
+    private final MaterialTotal dataTotal = new MaterialTotal(StorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
     private Search currentSearch = new Search("", Sort.ALPHABETICAL, Show.ALL);
 
     public MaterialOverview(final ScrollPane scrollPane) {
         this.scrollPane = scrollPane;
         final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")).getOrientation();
-        this.totals = new FlowPane(Orientation.HORIZONTAL);
+        this.totals = new FlowPane(Orientation.HORIZONTAL, this.goodsTotal, this.assetsTotal, this.dataTotal);
         this.assetChemicalFlow = new FlowPane(flowPaneOrientation);
         this.assetCircuitFlow = new FlowPane(flowPaneOrientation);
         this.assetTechFlow = new FlowPane(flowPaneOrientation);
         this.goodFlow = new FlowPane(flowPaneOrientation);
         this.dataFlow = new FlowPane(flowPaneOrientation);
-        this.setWidth(this.scrollPane.getWidth());
+        setGaps(this.totals);
         final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) ->
         {
-            this.setWidth(newValue.doubleValue());
-            this.totals.setMaxWidth(newValue.doubleValue());
+            this.totals.setMaxWidth(newValue.doubleValue() - 28);
 
             Platform.runLater(() -> {
                 setFlowPaneHeight(this.goodFlow, newValue);
@@ -137,7 +137,6 @@ public class MaterialOverview extends VBox {
     }
 
     void updateContent(final Search search) {
-        this.totals.getChildren().clear();
         this.assetChemicalFlow.getChildren().clear();
         this.assetTechFlow.getChildren().clear();
         this.assetCircuitFlow.getChildren().clear();
@@ -267,10 +266,8 @@ public class MaterialOverview extends VBox {
                 .reduce(0, Integer::sum);
         final Integer unknownDatas = APPLICATION_STATE.getUnknownData().size();
 
-        final Label label = new Label();
-        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.data", recipeDatas, nonRecipeDatas + unknownDatas, recipeDatas + nonRecipeDatas + unknownDatas));
-        label.getStyleClass().add("category-label");
-        this.totals.getChildren().add(label);
+        this.dataTotal.update(MaterialTotalType.BLUEPRINT, recipeDatas);
+        this.dataTotal.update(MaterialTotalType.IRRELEVANT, nonRecipeDatas);
     }
 
     private void updateTotalsAssets() {
@@ -286,11 +283,9 @@ public class MaterialOverview extends VBox {
                 .filter(assetEntry -> AssetType.TECH.equals(assetEntry.getKey().getType()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-
-        final Label label = new Label();
-        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.assets", chemicalAssets, circuitAssets, techAssets, chemicalAssets + circuitAssets + techAssets));
-        label.getStyleClass().add("category-label");
-        this.totals.getChildren().add(label);
+        this.assetsTotal.update(MaterialTotalType.CHEMICAL, chemicalAssets);
+        this.assetsTotal.update(MaterialTotalType.CIRCUIT, circuitAssets);
+        this.assetsTotal.update(MaterialTotalType.TECH, techAssets);
     }
 
     private void updateTotalsGoods() {
@@ -303,11 +298,8 @@ public class MaterialOverview extends VBox {
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
         final Integer unknownGoods = APPLICATION_STATE.getUnknownGoods().size();
-
-        final Label label = new Label();
-        label.textProperty().bind(LocaleService.getStringBinding("tab.overview.goods", recipeGoods, nonRecipeGoods + unknownGoods, recipeGoods + nonRecipeGoods + unknownGoods));
-        label.getStyleClass().add("category-label");
-        this.totals.getChildren().add(label);
+        this.goodsTotal.update(MaterialTotalType.BLUEPRINT, recipeGoods);
+        this.goodsTotal.update(MaterialTotalType.IRRELEVANT, nonRecipeGoods);
     }
 
 }

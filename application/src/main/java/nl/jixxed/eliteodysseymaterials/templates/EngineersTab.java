@@ -2,16 +2,16 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.FlowPane;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EngineersTab extends Tab {
+public class EngineersTab extends EDOTab {
 
     public EngineersTab() {
         super();
@@ -38,4 +38,8 @@ public class EngineersTab extends Tab {
 
     }
 
+    @Override
+    public Tabs getTabType() {
+        return Tabs.ENGINEERS;
+    }
 }

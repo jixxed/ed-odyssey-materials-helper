@@ -1,55 +1,72 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import java.io.IOException;
-
-public class Ingredient extends HBox {
+public class Ingredient extends VBox {
     private final StorageType storageType;
     private String code;
     private Material material;
     private Integer amountRequired;
     private Integer amountAvailable;
 
-    @FXML
-    private HBox box;
-    @FXML
-    private Label nameLabel;
-    @FXML
-    private ImageView image;
-    @FXML
-    private Label amountRequiredLabel;
-    @FXML
-    private Label amountAvailableLabel;
+    private final Label nameLabel = new Label();
+    private final ImageView image = new ImageView();
+    private final Label amountRequiredLabel = new Label();
+    private final Label amountAvailableLabel = new Label();
+    private final Label requiredLabel = new Label();
+    private final Label availableLabel = new Label();
+    final HBox required = new HBox(this.requiredLabel, this.amountRequiredLabel);
+    final HBox available = new HBox(this.amountAvailableLabel, this.availableLabel);
+    private final HBox firstLine = new HBox(this.image, this.nameLabel);
+    final Region region = new Region();
+    private final HBox secondLine = new HBox(this.required, this.region, this.available);
+
+    //STYLE
+    {
+
+
+        this.nameLabel.getStyleClass().add("ingredient-name");
+        this.image.getStyleClass().add("ingredient-image");
+        this.image.setFitWidth(28);
+        this.image.setFitHeight(28);
+        this.amountRequiredLabel.getStyleClass().add("ingredient-required");
+        this.amountAvailableLabel.getStyleClass().add("ingredient-available");
+        this.requiredLabel.getStyleClass().add("ingredient-quantity-label");
+        this.availableLabel.getStyleClass().add("ingredient-quantity-label");
+        this.required.getStyleClass().add("ingredient-quantity-section");
+        this.available.getStyleClass().add("ingredient-quantity-section");
+        HBox.setHgrow(this.region, Priority.ALWAYS);
+
+    }
+
+    //LAYOUT
+    {
+        this.getChildren().add(this.firstLine);
+    }
 
     private Ingredient(final StorageType storageType) {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Ingredient.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (final IOException exception) {
-            throw new RuntimeException(exception);
-        }
         this.storageType = storageType;
+        this.requiredLabel.textProperty().bind(LocaleService.getStringBinding("recipe.header.required"));
+        this.availableLabel.textProperty().bind(LocaleService.getStringBinding("recipe.header.available"));
         this.getStyleClass().add("ingredient");
     }
 
     public Ingredient(final String text) {
         this(StorageType.OTHER);
         this.nameLabel.textProperty().bind(LocaleService.getStringBinding(text));
+        this.firstLine.getChildren().remove(this.image);
         this.material = null;
     }
 
@@ -61,6 +78,12 @@ public class Ingredient extends HBox {
         this.amountRequiredLabel.setText(amount.toString());
         this.amountRequired = amount;
         this.amountAvailable = amountAvailable;
+
+        final Region reg = new Region();
+        VBox.setVgrow(reg, Priority.ALWAYS);
+        this.getChildren().add(reg);
+        this.getChildren().add(this.secondLine);
+
         HBox.setHgrow(this.amountRequiredLabel, Priority.ALWAYS);
         this.material = material;
         final Tooltip tooltip = new Tooltip();
@@ -119,5 +142,13 @@ public class Ingredient extends HBox {
 
     public Material getMaterial() {
         return this.material;
+    }
+
+    public Label getAmountRequiredLabel() {
+        return this.amountRequiredLabel;
+    }
+
+    public Integer getAmountRequired() {
+        return this.amountRequired;
     }
 }

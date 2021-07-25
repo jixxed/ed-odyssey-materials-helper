@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum RecipeName {
 
     ENGINEER_A1,
@@ -102,5 +104,11 @@ public enum RecipeName {
             case YARDEN_BOND -> ENGINEER_A5;
             case UNKNOWN -> throw new IllegalArgumentException("unknown engineer");
         };
+    }
+
+
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 }

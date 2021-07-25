@@ -139,7 +139,8 @@ public class EngineerCard extends VBox {
     }
 
     private Label getEngineerName(final Engineer engineer) {
-        final Label engineerName = new Label(engineer.friendlyName());
+        final Label engineerName = new Label();
+        engineerName.textProperty().bind(LocaleService.getStringBinding(engineer.getLocalizationKey()));
         engineerName.getStyleClass().add("engineer-name");
         engineerName.setOnMouseClicked(event -> {
             EventService.publish(new BlueprintClickEvent(RecipeName.forEngineer(engineer)));

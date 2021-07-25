@@ -43,4 +43,8 @@ public enum Engineer {
     public Double getDistance(final double x, final double y, final double z) {
         return Math.sqrt(Math.pow(this.x - x, 2) + Math.pow(this.y - y, 2) + Math.pow(this.z - z, 2));
     }
+
+    public String getLocalizationKey() {
+        return "engineer.name." + this.name().toLowerCase();
+    }
 }

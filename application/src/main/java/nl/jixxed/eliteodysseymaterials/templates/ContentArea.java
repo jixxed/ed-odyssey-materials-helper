@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
+import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
@@ -36,6 +37,12 @@ public class ContentArea extends AnchorPane {
         this.engineersTab.setClosable(false);
         this.settingsTab.setClosable(false);
         final TabPane tabs = new TabPane(this.overview, this.wishlistTab, this.engineersTab, this.settingsTab); //, this.settingsTab
+        tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final Tabs tabType = ((EDOTab) newValue).getTabType();
+                EventService.publish(new TabSelecetedEvent(tabType));
+            }
+        });
         EventService.addListener(WishlistEvent.class, (wishlistEvent) -> {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 tabs.getSelectionModel().select(this.wishlistTab);

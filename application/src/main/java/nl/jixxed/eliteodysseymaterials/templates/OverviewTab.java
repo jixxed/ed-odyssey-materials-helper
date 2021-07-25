@@ -1,10 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-public class OverviewTab extends Tab {
+public class OverviewTab extends EDOTab {
 
     public OverviewTab() {
         super();
@@ -24,4 +24,8 @@ public class OverviewTab extends Tab {
 
     }
 
+    @Override
+    public Tabs getTabType() {
+        return Tabs.OVERVIEW;
+    }
 }

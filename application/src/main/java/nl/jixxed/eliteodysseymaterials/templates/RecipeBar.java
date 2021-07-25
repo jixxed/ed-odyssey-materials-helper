@@ -1,33 +1,29 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.Recipe;
+import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 
 public class RecipeBar extends Accordion {
-    private final List<Ingredient> ingredients = new ArrayList<>();
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EngineerTitledPane> engineerTitledPanes = new ArrayList<>();
-    private final List<EngineerModuleLabel> moduleEngineerLabels = new ArrayList<>();
     private final Settings settings;
     private final Legend legend = new Legend();
 
@@ -47,204 +43,89 @@ public class RecipeBar extends Accordion {
         titledPanes.add(legend);
         this.getPanes().addAll(titledPanes.toArray(new TitledPane[0]));
         this.setExpandedPane(about);
-        EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> {
-            Platform.runLater(() -> {
-                this.updateIngredientsValues();
-                this.updateIngredients();
-                this.updateEngineerStyles();
-            });
-        });
+
+        this.setMinWidth(500);
+        this.setPrefWidth(500);
+        this.setMaxWidth(500);
     }
 
 
     private TitledPane createCategoryTitledPane(final Map.Entry<String, Map<RecipeName, ? extends Recipe>> recipesEntry) {
         final TitledPane categoryTitledPane = new TitledPane();
-        final Accordion recipesAccordion = new Accordion();
-        final TitledPane[] titledPanes = recipesEntry.getValue().entrySet().stream()
-                .map(recipe -> createRecipeTitledPane(recipe, recipesAccordion, categoryTitledPane))
-                .sorted(Comparator.comparing(Labeled::getText))
-                .toArray(TitledPane[]::new);
-        recipesAccordion.getPanes().addAll(titledPanes);
-        recipesAccordion.setPrefHeight(500);
-        final ScrollPane scroll = new ScrollPane(recipesAccordion);
+        final ComboBox<RecipeName> recipes = new ComboBox<>();
+        final ScrollPane scroll = new ScrollPane();
+        final Map<RecipeName, Node> recipeContent = createRecipeContent(recipesEntry, recipes, categoryTitledPane);
+        recipes.itemsProperty().bind(LocaleService.getListBinding(recipesEntry.getValue().keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(RecipeName[]::new)));
+        recipes.valueProperty().addListener((obs, oldValue, newValue) -> {
+            scroll.setContent(recipeContent.get(newValue));
+        });
+        recipes.setCellFactory(getCellFactory());
+        recipes.getSelectionModel().select(recipes.getItems().get(0));
         scroll.setPannable(true);
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
         categoryTitledPane.textProperty().bind(LocaleService.getStringBinding(recipesEntry.getKey()));
-        categoryTitledPane.setContent(scroll);
+        final HBox hBox = new HBox(recipes);
+        recipes.setMinWidth(500);
+        recipes.setPrefWidth(500);
+        recipes.setMaxWidth(500);
+        HBox.setHgrow(recipes, Priority.ALWAYS);
+        final VBox value = new VBox(hBox, scroll);
+        value.setFillWidth(true);
+        value.setStyle("-fx-padding: 0;");
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+        categoryTitledPane.setContent(value);
         categoryTitledPane.getStyleClass().add("category-title-pane");
         return categoryTitledPane;
     }
 
-    private TitledPane createRecipeTitledPane(final Map.Entry<RecipeName, ? extends Recipe> recipe, final Accordion recipesAccordion, final TitledPane parentPane) {
-        final VBox content = new VBox();
-        final List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.addAll(getRecipeIngredients(recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
-        ingredients.addAll(getRecipeIngredients(recipe, Asset.class, StorageType.ASSET, APPLICATION_STATE.getAssets()));
-        ingredients.addAll(getRecipeIngredients(recipe, Data.class, StorageType.DATA, APPLICATION_STATE.getData()));
+    private Callback<ListView<RecipeName>, ListCell<RecipeName>> getCellFactory() {
+        return new Callback<>() {
+            @Override
+            public ListCell<RecipeName> call(final ListView<RecipeName> listView) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(final RecipeName item, final boolean empty) {
+                        super.updateItem(item, empty);
 
-        if (recipe.getValue() instanceof EngineerRecipe) {
-            ingredients.addAll(((EngineerRecipe) recipe.getValue()).getOther().stream()
-                    .map(other -> {
-                                final Ingredient newIngredient = new Ingredient(other);
-                                this.ingredients.add(newIngredient);
-                                return newIngredient;
-                            }
-                    ).sorted(Comparator.comparing(Ingredient::getName))
-                    .collect(Collectors.toList()));
-        }
-        if (!(recipe.getValue() instanceof EngineerRecipe) || ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {
-            final Button addToWishlist = new Button();
-            addToWishlist.textProperty().bind(LocaleService.getStringBinding("recipe.add.to.wishlist"));
-            addToWishlist.getStyleClass().add("wishlist-button");
-            addToWishlist.setOnAction(event -> {
-                EventService.publish(new WishlistEvent(recipe.getKey(), Action.ADDED));
-            });
-            final long initialCount = APPLICATION_STATE.getWishlist().stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count();
-            final Label countLabel = new Label();
-            if (initialCount > 0L) {
-                countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", initialCount));
-            }
-            EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
-                final long count = APPLICATION_STATE.getWishlist().stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count();
-                if (count > 0L) {
-                    countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
-                } else {
-                    countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
-                }
-            });
-
-            countLabel.getStyleClass().add("wishlist-count");
-            final HBox box = new HBox(countLabel, addToWishlist);
-            box.getStyleClass().add("wishlist-count-box");
-            HBox.setHgrow(addToWishlist, Priority.ALWAYS);
-            box.setAlignment(Pos.TOP_RIGHT);
-            content.getChildren().add(box);
-            content.getChildren().add(new IngredientHeader());
-        }
-
-        content.getChildren().addAll(ingredients);
-        if (recipe.getValue() instanceof ModuleRecipe) {
-            final Label engineerLabelHeader = new Label();
-            engineerLabelHeader.textProperty().bind(LocaleService.getStringBinding("recipe.label.engineers"));
-            engineerLabelHeader.getStyleClass().add("engineerLabelHeader");
-            content.getChildren().addAll(engineerLabelHeader);
-            final Label[] engineerLabels = ((ModuleRecipe) recipe.getValue()).getEngineers().stream()
-                    .sorted(Comparator.comparing(Engineer::friendlyName))
-                    .map(engineer -> {
-                        final EngineerModuleLabel label = new EngineerModuleLabel(engineer);
-                        this.moduleEngineerLabels.add(label);
-                        return label;
-                    }).toArray(Label[]::new);
-
-            final FlowPane flowPane = new FlowPane(engineerLabels);
-            flowPane.getStyleClass().add("engineerFlow");
-            content.getChildren().addAll(flowPane);
-        }
-
-        final Label descriptionTitle = new Label();
-        descriptionTitle.textProperty().bind(LocaleService.getStringBinding("recipe.label.description"));
-        descriptionTitle.getStyleClass().add("recipe-title-label");
-        content.getChildren().add(descriptionTitle);
-        final Label description = new Label();
-        description.textProperty().bind(LocaleService.getStringBinding(recipe.getKey().getDescriptionLocalizationKey()));
-        description.getStyleClass().add("recipe-description");
-        content.getChildren().add(description);
-        final Map<Modifier, String> modifierMap = recipe.getValue().getModifiers();
-        if (!modifierMap.isEmpty()) {
-            content.getChildren().add(new Separator(Orientation.HORIZONTAL));
-            final Label modifierTitle = new Label();
-            modifierTitle.textProperty().bind(LocaleService.getStringBinding("recipe.label.modifiers"));
-            modifierTitle.getStyleClass().add("recipe-title-label");
-//            modifierTitle.setStyle("-fx-font-size: 2.2em;-fx-min-height: 2.4em;");
-            content.getChildren().add(modifierTitle);
-            final List<HBox> modifiers = modifierMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(modifierStringEntry -> {
-                final Label modifier = new Label();
-                modifier.getStyleClass().add("recipe-modifier-name");
-                modifier.textProperty().bind(LocaleService.getStringBinding(modifierStringEntry.getKey().getLocalizationKey()));
-                final Label value = new Label(modifierStringEntry.getValue());
-                value.getStyleClass().add("recipe-modifier-value");
-                final HBox modifierBox = new HBox(modifier, value);
-                modifierBox.getStyleClass().add("recipe-modifier");
-                HBox.setHgrow(value, Priority.ALWAYS);
-                return modifierBox;
-            }).collect(Collectors.toList());
-            content.getChildren().addAll(modifiers);
-        }
-        final TitledPane recipeTitledPane = createTitledPane(recipe, content);
-        recipeTitledPane.getStyleClass().add("blueprint-title-pane");
-        if (recipe.getValue() instanceof EngineerRecipe && ((EngineerRecipe) recipe.getValue()).isCompleted()) {
-            recipeTitledPane.getStyleClass().add("completed");
-        } else {
-            recipeTitledPane.getStyleClass().add("regular");
-        }
-        recipeTitledPane.setPrefHeight(150);
-
-        EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getRecipeName().equals(recipe.getKey())) {
-                recipesAccordion.setExpandedPane(recipeTitledPane);
-                this.setExpandedPane(parentPane);
-            }
-        });
-        return recipeTitledPane;
-    }
-
-    private List<Ingredient> getRecipeIngredients(final Map.Entry<RecipeName, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Storage> materialMap) {
-        return recipe.getValue().getMaterialCollection(materialClass).entrySet().stream()
-                .map(material ->
-                        {
-                            final Ingredient newIngredient = new Ingredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue());
-                            this.ingredients.add(newIngredient);
-                            return newIngredient;
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            setText(item.toString());
                         }
-                ).sorted(Comparator.comparing(Ingredient::getName))
-                .collect(Collectors.toList());
+                        updateStyle(item);
+                        EventService.addListener(EngineerEvent.class, event -> {
+                            updateStyle(item);
+                        });
+                    }
+
+                    private void updateStyle(final RecipeName item) {
+                        if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe && ((EngineerRecipe) RecipeConstants.getRecipe(item)).isCompleted()) {
+                            this.setStyle("-fx-text-fill: #89d07f;");
+                        } else if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe) {
+                            this.setStyle("-fx-text-fill: white;");
+                        }
+                    }
+                };
+            }
+        };
     }
 
-    private TitledPane createTitledPane(final Map.Entry<RecipeName, ? extends Recipe> recipe, final VBox content) {
-        final TitledPane recipeTitledPane;
-        if (recipe.getValue() instanceof EngineerRecipe) {
-            recipeTitledPane = new EngineerTitledPane(recipe.getKey(), content, (EngineerRecipe) recipe.getValue());
-            this.engineerTitledPanes.add((EngineerTitledPane) recipeTitledPane);
-        } else {
-            recipeTitledPane = new TitledPane();
-            final ScrollPane scrollPane = new ScrollPane(content);
-            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            content.setPadding(new Insets(5));
-            scrollPane.setFitToWidth(true);
-            recipeTitledPane.setContent(scrollPane);
-            recipeTitledPane.textProperty().bind(LocaleService.getStringBinding(recipe.getKey().getLocalizationKey()));
-        }
-        return recipeTitledPane;
-    }
-
-
-    public void updateIngredients() {
-        this.ingredients.forEach(Ingredient::update);
-    }
-
-    public void updateIngredientsValues() {
-        this.ingredients.forEach(ingredient -> {
-            switch (ingredient.getType()) {
-                case ASSET -> ingredient.setAmountAvailable(APPLICATION_STATE.getAssets().get(Asset.forName(ingredient.getCode())).getTotalValue());
-                case GOOD -> ingredient.setAmountAvailable(APPLICATION_STATE.getGoods().get(Good.forName(ingredient.getCode())).getTotalValue());
-                case DATA -> ingredient.setAmountAvailable(APPLICATION_STATE.getData().get(Data.forName(ingredient.getCode())).getTotalValue());
-                case OTHER -> {
+    private Map<RecipeName, Node> createRecipeContent(final Map.Entry<String, Map<RecipeName, ? extends Recipe>> recipesEntry, final ComboBox<RecipeName> comboBox, final TitledPane categoryTitledPane) {
+        final Map<RecipeName, Node> contents = new HashMap<>();
+        recipesEntry.getValue().entrySet().forEach(recipe -> {
+            EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {
+                if (blueprintClickEvent.getRecipeName().equals(recipe.getKey())) {
+                    comboBox.getSelectionModel().select(recipe.getKey());
+                    this.setExpandedPane(categoryTitledPane);
                 }
-            }
+            });
+            final RecipeContent recipeContent = new RecipeContent(recipe);
+            contents.put(recipe.getKey(), recipeContent);
         });
-    }
-
-    public void updateEngineerStyles() {
-        this.engineerTitledPanes.forEach(titledPane -> {
-            if (titledPane.getEngineerRecipe().isCompleted() && !titledPane.getStyleClass().contains("completed")) {
-                titledPane.getStyleClass().add("completed");
-            } else if (!titledPane.getEngineerRecipe().isCompleted()) {
-                titledPane.getStyleClass().remove("completed");
-            }
-        });
-        this.moduleEngineerLabels.forEach(label -> label.updateStyle(APPLICATION_STATE.isEngineerUnlocked(label.getEngineer())));
+        return contents;
     }
 }
