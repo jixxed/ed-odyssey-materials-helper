@@ -13,6 +13,7 @@ public class FileWatcher implements Runnable {
 
     protected List<FileListener> listeners = new ArrayList<>();
     protected final File folder;
+    private String threadName;
     protected static final List<WatchService> watchServices = new ArrayList<>();
     boolean poll = true;
 
@@ -20,10 +21,12 @@ public class FileWatcher implements Runnable {
         this.folder = folder;
     }
 
-    public void watch() {
+    public void watch(final String threadName) {
+        this.threadName = threadName;
         if (this.folder.exists()) {
             final Thread thread = new Thread(this);
             thread.setDaemon(true);
+            thread.setName(threadName);
             thread.start();
         }
     }
@@ -56,9 +59,6 @@ public class FileWatcher implements Runnable {
         if (kind == ENTRY_CREATE) {
             for (final FileListener listener : this.listeners) {
                 listener.onCreated(event);
-            }
-            if (file.isDirectory()) {
-                new FileWatcher(file).setListeners(this.listeners).watch();
             }
         } else if (kind == ENTRY_MODIFY) {
             for (final FileListener listener : this.listeners) {

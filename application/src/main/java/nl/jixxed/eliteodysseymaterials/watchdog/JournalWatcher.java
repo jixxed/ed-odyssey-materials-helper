@@ -15,40 +15,37 @@ import java.util.function.Consumer;
 @Slf4j
 public class JournalWatcher {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private Optional<File> watchedFile = Optional.empty();
+    private Optional<File> currentlyWatchedFile = Optional.empty();
     private File watchedFolder;
     private FileWatcher fileWatcher;
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileCreatedProcessor) {
+    public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
         this.watchedFolder = folder;
         listCommanders(folder);
         findLatestFile(folder);
-        this.watchedFile.ifPresent(fileCreatedProcessor);
+        this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
         this.fileWatcher = new FileWatcher(folder);
         this.fileWatcher.addListener(new FileAdapter() {
-            @Override
-            public void onCreated(final FileEvent event) {
-                final File file = event.getFile();
-                if (file.isFile()) {
-                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file)) {
-                        JournalWatcher.this.watchedFile = Optional.of(file);
-                        fileCreatedProcessor.accept(file);
-                    }
-                }
-            }
-
             @Override
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
                 if (file.isFile()) {
                     if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file)) {
-                        JournalWatcher.this.watchedFile = Optional.of(file);
-                        fileModifiedProcessor.accept(file);
+                        final String currentFilePath = JournalWatcher.this.currentlyWatchedFile.map(File::getAbsolutePath).orElse("");
+                        if (currentFilePath.equals(file.getAbsolutePath())) {
+                            fileModifiedProcessor.accept(file);
+                        } else if (isNewerJournal(file)) {
+                            JournalWatcher.this.currentlyWatchedFile = Optional.of(file);
+                            fileSwitchedProcessor.accept(file);
+                            log.info("Switched to journal: " + file.getAbsolutePath());
+                        } else {
+                            log.info("Rejected journal: " + file.getAbsolutePath());
+                        }
                     }
                 }
             }
-        }).watch();
+        }).watch("Journal Watcher Thread");
     }
 
     private void listCommanders(final File folder) {
@@ -77,7 +74,6 @@ public class JournalWatcher {
                     break;
                 }
             }
-
         } catch (final FileNotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -85,17 +81,25 @@ public class JournalWatcher {
 
     private void findLatestFile(final File folder) {
         try {
-            this.watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+            this.currentlyWatchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(this::hasFileHeader)
                     .filter(this::isOdysseyJournal)
                     .filter(this::isSelectedCommander)
                     .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23))));
-            log.info("Registered watched file: " + this.watchedFile.map(File::getName).orElse("No file"));
+            log.info("Registered watched file: " + this.currentlyWatchedFile.map(File::getName).orElse("No file"));
         } catch (final NullPointerException ex) {
             log.error("Failed to Registered watched file at " + folder.getAbsolutePath());
         }
     }
+
+
+    private boolean isNewerJournal(final File file) {
+        final long fileTimestamp = Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23));
+        final long currentFileTimestamp = this.currentlyWatchedFile.map(currentFile -> Long.parseLong(currentFile.getName().substring(8, 20) + currentFile.getName().substring(21, 23))).orElse(0L);
+        return fileTimestamp > currentFileTimestamp;
+    }
+
 
     private boolean isSelectedCommander(final File file) {
         final Optional<String> preferredCommander = APPLICATION_STATE.getPreferredCommander();

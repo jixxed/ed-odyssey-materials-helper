@@ -44,7 +44,7 @@ public class TimeStampedGameStateWatcher {
         this.gameStateWatcher.stop();
     }
 
-    public void process(final File file) {
+    public synchronized void process(final File file) {
         this.file = file;
         if (this.file != null) {
             try {

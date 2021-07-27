@@ -30,12 +30,12 @@ public class FileProcessor {
     private static final DataParser DATA_PARSER = new DataParser();
     private static final GoodParser GOOD_PARSER = new GoodParser();
 
-    public static void resetAndProcessJournal(final File file) {
+    public static synchronized void resetAndProcessJournal(final File file) {
         lineNumber = 0;
         processJournal(file);
     }
 
-    public static JsonNode processJournal(final File file) {
+    public static synchronized JsonNode processJournal(final File file) {
         JsonNode jsonNode = null;
         try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
             int cursor = 0;
@@ -56,7 +56,7 @@ public class FileProcessor {
         return jsonNode;
     }
 
-    public static JsonNode processShipLockerBackPack(final File file) {
+    public static synchronized JsonNode processShipLockerBackPack(final File file) {
         JsonNode jsonNode = null;
         try {
             final String shipLocker = Files.readString(file.toPath());

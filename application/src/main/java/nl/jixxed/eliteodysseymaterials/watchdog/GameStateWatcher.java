@@ -37,7 +37,7 @@ public class GameStateWatcher {
                     }
                 }
             }
-        }).watch();
+        }).watch(filename + " Watcher Thread");
     }
 
     private void findLatestFile(final File folder, final String filename) {
