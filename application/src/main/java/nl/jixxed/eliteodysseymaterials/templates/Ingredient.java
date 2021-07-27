@@ -75,9 +75,10 @@ public class Ingredient extends VBox {
         this.code = material.toString();
         this.nameLabel.textProperty().bind(LocaleService.getStringBinding(material.getLocalizationKey()));//setText(material.friendlyName());
         this.code = material.toString();
-        this.amountRequiredLabel.setText(amount.toString());
         this.amountRequired = amount;
         this.amountAvailable = amountAvailable;
+        this.amountRequiredLabel.setText(this.amountRequired.toString());
+        this.amountAvailableLabel.setText(amountAvailable.toString());
 
         final Region reg = new Region();
         VBox.setVgrow(reg, Priority.ALWAYS);
@@ -91,13 +92,13 @@ public class Ingredient extends VBox {
         tooltip.setShowDelay(Duration.millis(100));
         Tooltip.install(this, tooltip);
         switch (storageType) {
-            case DATA -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
-            case GOOD -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
+            case DATA -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/data.png")));
+            case GOOD -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/good.png")));
             case ASSET -> {
                 switch (((Asset) material).getType()) {
-                    case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
-                    case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));
-                    case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/chemical.png")));
+                    case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/tech.png")));
+                    case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/circuit.png")));
+                    case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/chemical.png")));
                     default -> this.image.setFitWidth(0);
                 }
             }
@@ -150,5 +151,13 @@ public class Ingredient extends VBox {
 
     public Integer getAmountRequired() {
         return this.amountRequired;
+    }
+
+    public Integer getAmountAvailable() {
+        return this.amountAvailable;
+    }
+
+    public Label getAmountAvailableLabel() {
+        return this.amountAvailableLabel;
     }
 }

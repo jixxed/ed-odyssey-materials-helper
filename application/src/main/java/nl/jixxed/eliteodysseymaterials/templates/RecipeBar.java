@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 public class RecipeBar extends Accordion {
     private final Settings settings;
-    private final Legend legend = new Legend();
 
     public RecipeBar(final Application application) {
         this.settings = new Settings(application);
@@ -37,10 +36,6 @@ public class RecipeBar extends Accordion {
         about.textProperty().bind(LocaleService.getStringBinding("menu.about"));
         about.setContent(this.settings);
         titledPanes.add(about);
-        final TitledPane legend = new TitledPane();
-        legend.textProperty().bind(LocaleService.getStringBinding("menu.legend"));
-        legend.setContent(this.legend);
-        titledPanes.add(legend);
         this.getPanes().addAll(titledPanes.toArray(new TitledPane[0]));
         this.setExpandedPane(about);
 

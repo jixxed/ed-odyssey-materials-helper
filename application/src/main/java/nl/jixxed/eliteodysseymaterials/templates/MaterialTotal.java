@@ -29,11 +29,19 @@ public class MaterialTotal extends VBox {
                 throw new IllegalArgumentException("TOTAL not supported");
             }
             final Label value = new Label();
-            value.getStyleClass().add("material-total-value-row");
             value.textProperty().bind(LocaleService.getStringBinding(totalType.getLocalizationKey()));
             this.totals.put(totalType, value);
             final Label value1 = new Label("0");
             value1.getStyleClass().add("material-total-value-row");
+
+            if (MaterialTotalType.IRRELEVANT.equals(totalType)) {
+
+                value.getStyleClass().add("material-total-value-irrelevant-row");
+                value1.getStyleClass().add("material-total-value-irrelevant-row");
+            } else {
+                value.getStyleClass().add("material-total-value-row");
+                value1.getStyleClass().add("material-total-value-row");
+            }
             this.totalValues.put(totalType, value1);
         });
         this.getChildren().add(name);

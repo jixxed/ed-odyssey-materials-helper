@@ -66,11 +66,11 @@ public class MaterialCard extends HBox {
         Tooltip.install(this, tooltip);
 
         if (isEngineerUnlockMaterial) {
-            this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer.png")));
+            this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/engineer.png")));
         } else if (material instanceof Data) {
-            this.image.setImage(new Image(getClass().getResourceAsStream("/images/data.png")));
+            this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/data.png")));
         } else if (material instanceof Good) {
-            this.image.setImage(new Image(getClass().getResourceAsStream("/images/good.png")));
+            this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/good.png")));
         }
         final String materialType = material.getClass().getSimpleName().toLowerCase();
         if (material.isUnknown()) {
@@ -99,9 +99,9 @@ public class MaterialCard extends HBox {
 
 
         switch (asset.getType()) {
-            case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/tech.png")));
-            case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/circuit.png")));
-            case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/chemical.png")));
+            case TECH -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/tech.png")));
+            case CIRCUIT -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/circuit.png")));
+            case CHEMICAL -> this.image.setImage(new Image(getClass().getResourceAsStream("/images/material/chemical.png")));
             default -> this.image.setFitWidth(0);
         }
         switch (asset.getType()) {

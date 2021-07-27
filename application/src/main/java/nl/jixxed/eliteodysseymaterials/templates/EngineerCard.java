@@ -101,7 +101,7 @@ public class EngineerCard extends VBox {
         final Label engineerDistance = new Label("(0Ly)");
         engineerDistance.getStyleClass().add("engineer-distance");
 
-        final ImageView copyIcon = new ImageView(new Image(EngineerCard.class.getResourceAsStream("/images/copy.png")));
+        final ImageView copyIcon = new ImageView(new Image(EngineerCard.class.getResourceAsStream("/images/other/copy.png")));
         copyIcon.getStyleClass().add("engineer-copy-icon");
         copyIcon.setFitHeight(16);
         copyIcon.setFitWidth(16);

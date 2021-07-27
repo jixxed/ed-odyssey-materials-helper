@@ -14,10 +14,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RecipeContent extends VBox {
@@ -107,7 +104,9 @@ public class RecipeContent extends VBox {
             this.getChildren().add(materialHeader);
         }
 
-        this.getChildren().addAll(new FlowPane(ingredients.toArray(new Ingredient[0])));
+        final FlowPane ingredientFlow = new FlowPane(ingredients.toArray(new Ingredient[0]));
+        setGaps(ingredientFlow);
+        this.getChildren().addAll(ingredientFlow);
         if (recipe.getValue() instanceof ModuleRecipe) {
             final Label engineerLabelHeader = new Label();
             engineerLabelHeader.textProperty().bind(LocaleService.getStringBinding("recipe.label.engineers"));
@@ -146,7 +145,10 @@ public class RecipeContent extends VBox {
                 HBox.setHgrow(value, Priority.ALWAYS);
                 return modifierBox;
             }).collect(Collectors.toList());
-            this.getChildren().addAll(modifiers);
+
+            final FlowPane modifiersFlowPane = new FlowPane(modifiers.toArray(new HBox[0]));
+            setGaps(modifiersFlowPane);
+            this.getChildren().addAll(modifiersFlowPane);
         }
         this.setMaxHeight(Double.MAX_VALUE);
     }
@@ -161,6 +163,13 @@ public class RecipeContent extends VBox {
                         }
                 ).sorted(Comparator.comparing(Ingredient::getName))
                 .collect(Collectors.toList());
+    }
+
+    private void setGaps(final FlowPane... flowPanes) {
+        Arrays.stream(flowPanes).forEach(flowPane -> {
+            flowPane.setHgap(4);
+            flowPane.setVgap(4);
+        });
     }
 
     public void updateIngredients() {

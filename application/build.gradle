@@ -43,7 +43,7 @@ jlink {
         ]
     }
     jpackage {
-        imageOptions += ['--icon', 'src/main/resources/images/rocket.ico']
+        imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
         installerOptions = [
                 '--description', 'Installer for ED Odyssey Materials Helper',
                 '--copyright', 'Copyright 2021 CMDR Jixxed',

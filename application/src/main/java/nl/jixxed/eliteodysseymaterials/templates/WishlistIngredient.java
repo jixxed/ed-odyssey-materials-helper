@@ -9,6 +9,20 @@ public class WishlistIngredient extends Ingredient {
         super(storageType, material, amount, amountAvailable);
     }
 
+    @Override
+    public void update() {
+        if (this.getAmountAvailable() >= Integer.parseInt(this.getAmountRequiredLabel().getText())) {
+            this.getAmountAvailableLabel().setText(this.getAmountAvailable().toString());
+            this.getStyleClass().removeAll("ingredient-filled", "ingredient-unfilled");
+            this.getStyleClass().addAll("ingredient-filled");
+        } else {
+            this.getAmountAvailableLabel().setText(this.getAmountAvailable().toString());
+            this.getStyleClass().removeAll("ingredient-filled", "ingredient-unfilled");
+            this.getStyleClass().addAll("ingredient-unfilled");
+        }
+//        super(storageType, material, amount, amountAvailable);
+    }
+
     public void highlight(final boolean enable, final Integer amountRequiredForRecipe) {
         if (enable) {
             this.getStyleClass().add("wishlist-highlight");

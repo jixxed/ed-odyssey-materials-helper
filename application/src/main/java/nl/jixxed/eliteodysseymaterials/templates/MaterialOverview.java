@@ -5,11 +5,9 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
@@ -32,7 +30,7 @@ import java.util.function.Predicate;
 
 public class MaterialOverview extends VBox {
 
-    private static final Insets CARD_MARGIN = new Insets(2, 5, 2, 5);
+    //    private static final Insets CARD_MARGIN = new Insets(2, 5, 2, 5);
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     final ScrollPane scrollPane;
     private final FlowPane totals;
@@ -173,7 +171,7 @@ public class MaterialOverview extends VBox {
                 .forEach((entry) -> {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
                     this.goodFlow.getChildren().add(materialCard);
-                    GridPane.setMargin(materialCard, CARD_MARGIN);
+//                    GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
         APPLICATION_STATE.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
             final String name = entry.getKey() + " (unknown)";
@@ -208,7 +206,7 @@ public class MaterialOverview extends VBox {
                 .forEach((entry) -> {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
                     this.dataFlow.getChildren().add(materialCard);
-                    GridPane.setMargin(materialCard, CARD_MARGIN);
+//                    GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
         APPLICATION_STATE.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
             final String name = entry.getKey() + " (unknown)";
