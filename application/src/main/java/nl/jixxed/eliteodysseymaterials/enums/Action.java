@@ -1,5 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum Action {
-    ADDED, REMOVED
+    ADDED, REMOVED, VISIBILITY_CHANGED
 }

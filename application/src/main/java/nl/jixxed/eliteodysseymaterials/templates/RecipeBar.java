@@ -10,6 +10,7 @@ import javafx.util.Callback;
 import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
+import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
@@ -45,7 +46,7 @@ public class RecipeBar extends Accordion {
     }
 
 
-    private TitledPane createCategoryTitledPane(final Map.Entry<String, Map<RecipeName, ? extends Recipe>> recipesEntry) {
+    private TitledPane createCategoryTitledPane(final Map.Entry<RecipeCategory, Map<RecipeName, ? extends Recipe>> recipesEntry) {
         final TitledPane categoryTitledPane = new TitledPane();
         final ComboBox<RecipeName> recipes = new ComboBox<>();
         final ScrollPane scroll = new ScrollPane();
@@ -61,7 +62,7 @@ public class RecipeBar extends Accordion {
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
-        categoryTitledPane.textProperty().bind(LocaleService.getStringBinding(recipesEntry.getKey()));
+        categoryTitledPane.textProperty().bind(LocaleService.getStringBinding(recipesEntry.getKey().getLocalizationKey()));
         final HBox hBox = new HBox(recipes);
         recipes.setMinWidth(500);
         recipes.setPrefWidth(500);
@@ -109,7 +110,7 @@ public class RecipeBar extends Accordion {
         };
     }
 
-    private Map<RecipeName, Node> createRecipeContent(final Map.Entry<String, Map<RecipeName, ? extends Recipe>> recipesEntry, final ComboBox<RecipeName> comboBox, final TitledPane categoryTitledPane) {
+    private Map<RecipeName, Node> createRecipeContent(final Map.Entry<RecipeCategory, Map<RecipeName, ? extends Recipe>> recipesEntry, final ComboBox<RecipeName> comboBox, final TitledPane categoryTitledPane) {
         final Map<RecipeName, Node> contents = new HashMap<>();
         recipesEntry.getValue().entrySet().forEach(recipe -> {
             EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {

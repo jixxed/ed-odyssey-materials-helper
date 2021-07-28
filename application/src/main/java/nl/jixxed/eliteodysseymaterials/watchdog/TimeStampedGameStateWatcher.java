@@ -57,7 +57,7 @@ public class TimeStampedGameStateWatcher {
                         && jsonNode.get("timestamp").asText().equals(this.timeStamp)) {
                     this.fileProcessor.accept(file);
                     this.file = null;
-                    log.warn("Process " + jsonNode.get("event").asText());
+                    log.info("Process " + jsonNode.get("event").asText());
                 }
             } catch (final IOException e) {
                 e.printStackTrace();

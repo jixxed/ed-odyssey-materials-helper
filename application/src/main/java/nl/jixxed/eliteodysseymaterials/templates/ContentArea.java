@@ -43,7 +43,7 @@ public class ContentArea extends AnchorPane {
                 EventService.publish(new TabSelecetedEvent(tabType));
             }
         });
-        EventService.addListener(WishlistEvent.class, (wishlistEvent) -> {
+        EventService.addListener(WishlistRecipeEvent.class, (wishlistEvent) -> {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 tabs.getSelectionModel().select(this.wishlistTab);
             }

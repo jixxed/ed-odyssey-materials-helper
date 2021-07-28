@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.AppConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,6 +59,7 @@ public class JournalWatcher {
                     .filter(this::isOdysseyJournal)
                     .filter(this::hasCommanderHeader)
                     .forEach(this::listCommander);
+            EventService.publish(new CommanderAllListedEvent());
         } catch (final NullPointerException ex) {
             log.error("Failed to list commanders at " + folder.getAbsolutePath());
         }
@@ -70,7 +74,8 @@ public class JournalWatcher {
                 final JsonNode eventNode = journalMessage.get("event");
                 if (eventNode.asText().equals("Commander")) {
                     final JsonNode nameNode = journalMessage.get("Name");
-                    APPLICATION_STATE.addCommander(nameNode.asText());
+                    final JsonNode fidNode = journalMessage.get("FID");
+                    APPLICATION_STATE.addCommander(nameNode.asText(), fidNode.asText());
                     break;
                 }
             }
@@ -102,8 +107,8 @@ public class JournalWatcher {
 
 
     private boolean isSelectedCommander(final File file) {
-        final Optional<String> preferredCommander = APPLICATION_STATE.getPreferredCommander();
-        return preferredCommander.map(name -> {
+        final Optional<Commander> preferredCommander = APPLICATION_STATE.getPreferredCommander();
+        return preferredCommander.map(commander -> {
             try (final Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNext()) {
                     final String line = scanner.nextLine();
@@ -111,7 +116,7 @@ public class JournalWatcher {
                     final JsonNode eventNode = journalMessage.get("event");
                     if (eventNode.asText().equals("Commander")) {
                         final JsonNode nameNode = journalMessage.get("Name");
-                        return nameNode.asText().equals(name);
+                        return nameNode.asText().equals(commander.getName());
                     }
                 }
             } catch (final FileNotFoundException | JsonProcessingException e) {

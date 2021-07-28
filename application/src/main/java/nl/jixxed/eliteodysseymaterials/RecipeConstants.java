@@ -18,12 +18,12 @@ public abstract class RecipeConstants {
     public static final Map<RecipeName, ModuleRecipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
     public static final Map<RecipeName, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
     public static final Map<RecipeName, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
-    public static final Map<String, Map<RecipeName, ? extends Recipe>> RECIPES = Map.of(
-            "menu.suit.grades", SUIT_UPGRADES,
-            "menu.weapon.grades", WEAPON_UPGRADES,
-            "menu.suit.modules", SUIT_MODULE_BLUEPRINTS,
-            "menu.weapon.modules", WEAPON_MODULE_BLUEPRINTS,
-            "menu.engineer.unlocks", ENGINEER_UNLOCK_REQUIREMENTS
+    public static final Map<RecipeCategory, Map<RecipeName, ? extends Recipe>> RECIPES = Map.of(
+            RecipeCategory.SUIT_GRADES, SUIT_UPGRADES,
+            RecipeCategory.WEAPON_GRADES, WEAPON_UPGRADES,
+            RecipeCategory.SUIT_MODULES, SUIT_MODULE_BLUEPRINTS,
+            RecipeCategory.WEAPON_MODULES, WEAPON_MODULE_BLUEPRINTS,
+            RecipeCategory.ENGINEER_UNLOCKS, ENGINEER_UNLOCK_REQUIREMENTS
     );
 
     public static Recipe getRecipe(final RecipeName name) {
@@ -44,6 +44,14 @@ public abstract class RecipeConstants {
             return recipe;
         }
         return ENGINEER_UNLOCK_REQUIREMENTS.get(name);
+    }
+
+    public static RecipeCategory getRecipeCategory(final RecipeName recipeName) {
+        return RECIPES.entrySet().stream()
+                .filter(recipeCategoryMapEntry -> recipeCategoryMapEntry.getValue().containsKey(recipeName))
+                .findFirst()
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
     public static Map<RecipeName, Integer> findRecipesContaining(final Material material) {

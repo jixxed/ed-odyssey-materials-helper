@@ -3,8 +3,8 @@ package nl.jixxed.eliteodysseymaterials.service;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistRecipe;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
 import java.io.*;
 import java.util.List;
@@ -62,11 +62,11 @@ public class PreferencesService {
 
     }
 
-    public static void setRecipePreference(final String key, final List<RecipeName> value) {
+    public static void setRecipePreference(final String key, final List<WishlistRecipe> value) {
         if (value == null || value.isEmpty()) {
             instance.prop.setProperty(key, "");
         } else {
-            instance.prop.setProperty(key, value.stream().map(RecipeName::name).collect(Collectors.joining(",")));
+            instance.prop.setProperty(key, value.stream().map(recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible()).collect(Collectors.joining(",")));
         }
     }
 

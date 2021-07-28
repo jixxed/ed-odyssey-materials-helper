@@ -5,9 +5,11 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+@Slf4j
 public class Main extends Application {
 
     private final static String CUSTOM_STYLE_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
@@ -91,7 +94,20 @@ public class Main extends Application {
                 EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
             });
             this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+            EventService.addListener(SaveWishlistEvent.class, event -> {
+                final FileChooser fileChooser = new FileChooser();
 
+                //Set extension filter for text files
+                final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                fileChooser.getExtensionFilters().add(extFilter);
+
+                //Show save file dialog
+                final File file = fileChooser.showSaveDialog(primaryStage);
+
+                if (file != null) {
+                    saveTextToFile(event.getText(), file);
+                }
+            });
             primaryStage.setScene(scene);
             primaryStage.show();
             EventService.publish(new ApplicationLifeCycleEvent());
@@ -133,6 +149,17 @@ public class Main extends Application {
         // x y are processed before maximized, so excluding setting it if it's -8
         if (!primaryStage.isMaximized() && !Double.valueOf(-8.0D).equals(value)) {
             PreferencesService.setPreference(setting, Double.valueOf(value));
+        }
+    }
+
+    private void saveTextToFile(final String content, final File file) {
+        try {
+            final PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(content);
+            writer.close();
+        } catch (final IOException ex) {
+            log.error("Failed to write to file");
         }
     }
 

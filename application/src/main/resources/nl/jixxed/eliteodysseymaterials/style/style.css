@@ -513,7 +513,7 @@
     -fx-cursor: hand;
 }
 
-.wishlist-item > .button {
+.wishlist-item-close {
     -fx-background-color: #4f4f4f;
     /*-fx-background-radius: 0 4 4 0;*/
     -fx-background-insets: 0 0 0 0;
@@ -524,17 +524,17 @@
     -fx-cursor: hand;
 }
 
-.wishlist-item > .button:hover {
+.wishlist-item-close:hover {
     -fx-background-color: #fff;
     -fx-text-fill: black;
 }
 
-.wishlist-item > .button:armed,
-.wishlist-item > .button:pressed,
-.wishlist-item > .button:selected,
-.wishlist-item > .button:visited,
-.wishlist-item > .button:selected:focused,
-.wishlist-item > .button:focused {
+.wishlist-item-close:armed,
+.wishlist-item-close:pressed,
+.wishlist-item-close:selected,
+.wishlist-item-close:visited,
+.wishlist-item-close:selected:focused,
+.wishlist-item-close:focused {
     -fx-background-color: black;
     /*-fx-background-radius: 0 4 4 0;*/
     -fx-background-insets: 0 0 0 0;
@@ -606,6 +606,7 @@
 
 .wishlist-header {
     -fx-font-size: 1.35em;
+    -fx-min-height: 3em;
     -fx-font-weight: bold;
     -fx-label-padding: 5;
 }
@@ -814,4 +815,84 @@
     -fx-text-fill: #2e92df;
     -fx-label-padding: 2px;
 
+}
+
+.wishlist-visible-icon {
+    -fx-background-color: #0f0f0f;
+    -fx-cursor: hand;
+    -fx-background-insets: 0 0 0 0;
+    -fx-max-height: 24;
+    -fx-max-width: 24;
+    -fx-padding: 2;
+    -fx-border-color: black;
+    -fx-border-width: 0;
+}
+
+.wishlist-visible-icon:hover {
+    -fx-background-color: #0f0f0f;
+}
+
+.wishlist-visible-icon:armed,
+.wishlist-visible-icon:pressed,
+.wishlist-visible-icon:selected,
+.wishlist-visible-icon:visited,
+.wishlist-visible-icon:selected:focused,
+.wishlist-visible-icon:focused {
+    -fx-background-color: #0f0f0f;
+    -fx-cursor: hand;
+    -fx-background-insets: 0 0 0 0;
+    -fx-max-height: 24;
+    -fx-max-width: 24;
+    -fx-padding: 1;
+    -fx-border-color: black;
+    -fx-border-width: 0;
+}
+
+
+.wishlist-visible-icon.visible {
+    -fx-background-color: #0f0f0f;
+    -fx-cursor: hand;
+    -fx-background-insets: 0 0 0 0;
+    -fx-max-height: 24;
+    -fx-max-width: 24;
+    -fx-padding: 2;
+    -fx-border-color: black;
+    -fx-border-width: 0;
+}
+
+.wishlist-visible-icon:hover.visible {
+    -fx-background-color: #0f0f0f;
+}
+
+.wishlist-visible-icon:armed.visible,
+.wishlist-visible-icon:pressed.visible,
+.wishlist-visible-icon:selected.visible,
+.wishlist-visible-icon:visited.visible,
+.wishlist-visible-icon:selected:focused.visible,
+.wishlist-visible-icon:focused.visible {
+    -fx-background-color: #0f0f0f;
+    -fx-cursor: hand;
+    -fx-background-insets: 0 0 0 0;
+    -fx-max-height: 24;
+    -fx-max-width: 24;
+    -fx-padding: 1;
+    -fx-border-color: black;
+    -fx-border-width: 0;
+}
+
+.wishlist-category {
+    -fx-min-width: 246px;
+    -fx-padding: 5px;
+}
+
+.wishlist-item > .label.wishlist-craftable {
+    -fx-text-fill: #89d07f;
+}
+
+.wishlist-item > .label.wishlist-craftable:hover {
+    -fx-text-fill: #2e92df;
+}
+
+.wishlist-checkbox {
+    -fx-padding: 5;
 }

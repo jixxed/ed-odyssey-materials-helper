@@ -1,13 +1,18 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import javafx.application.Platform;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
+@Slf4j
 public class ApplicationState {
 
     private static ApplicationState applicationState;
@@ -17,8 +22,7 @@ public class ApplicationState {
     private final Map<Data, Storage> data = new HashMap<>();
     private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Material> favourites = new ArrayList<>();
-    private final List<RecipeName> wishlist = new ArrayList<>();
-    private final Set<String> commanders = new HashSet<>();
+    private final Set<Commander> commanders = new HashSet<>();
     private final Map<Engineer, EngineerState> engineerStates = new HashMap<>(Map.of(
             Engineer.DOMINO_GREEN, EngineerState.UNKNOWN,
             Engineer.HERO_FERRARI, EngineerState.UNKNOWN,
@@ -38,19 +42,14 @@ public class ApplicationState {
                 .filter(material -> !material.isBlank())
                 .map(Material::subtypeForName)
                 .forEach(this.favourites::add);
-        final String recipes = PreferencesService.getPreference("wishlist.recipes", "");
-        Arrays.stream(recipes.split(","))
-                .filter(recipe -> !recipes.isBlank())
-                .map(RecipeName::forName)
-                .filter(Objects::nonNull)
-                .forEach(this.wishlist::add);
 
-        EventService.addListener(WishlistEvent.class,
+        EventService.addListener(WishlistRecipeEvent.class,
                 (wishlistEvent) -> {
                     Platform.runLater(() -> {
                         switch (wishlistEvent.getAction()) {
-                            case ADDED -> addToWishList(wishlistEvent.getRecipeName());
-                            case REMOVED -> removeFromWishList(wishlistEvent.getRecipeName());
+                            case ADDED -> addToWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe().getRecipeName());
+                            case REMOVED -> removeFromWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
+                            case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
                         }
                     });
                 });
@@ -150,52 +149,108 @@ public class ApplicationState {
         return this.favourites.contains(material);
     }
 
-    private void addToWishList(final RecipeName recipe) {
-        this.wishlist.add(recipe);
-        PreferencesService.setRecipePreference("wishlist.recipes", this.wishlist);
-        EventService.publish(new WishlistChangedEvent(this.wishlist.size()));
+    private void addToWishList(final String fid, final RecipeName recipe) {
+        final List<WishlistRecipe> wishlist = getWishlist(fid);
+        wishlist.add(new WishlistRecipe(recipe, true));
+        PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
+        EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
-    private void removeFromWishList(final RecipeName recipe) {
-        this.wishlist.remove(recipe);
-        PreferencesService.setRecipePreference("wishlist.recipes", this.wishlist);
-        EventService.publish(new WishlistChangedEvent(this.wishlist.size()));
+    private void removeFromWishList(final String fid, final WishlistRecipe recipe) {
+        final List<WishlistRecipe> wishlist = getWishlist(fid);
+        final Optional<WishlistRecipe> found = wishlist.stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
+        found.ifPresent(wishlist::remove);
+        PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
+        EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
-    public List<RecipeName> getWishlist() {
-        return this.wishlist;
+    private void changeVisibility(final String fid, final WishlistRecipe wishlistRecipe) {
+        final List<WishlistRecipe> wishlist = getWishlist(fid);
+        final Optional<WishlistRecipe> existingRecipe = wishlist.stream().filter(recipe -> recipe.getRecipeName().equals(wishlistRecipe.getRecipeName()) && recipe.isVisible() == !wishlistRecipe.isVisible()).findFirst();
+        existingRecipe.ifPresent(recipe -> {
+            recipe.setVisible(wishlistRecipe.isVisible());
+        });
+        PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
+        EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
-    public Set<String> getCommanders() {
+    public List<WishlistRecipe> getWishlist(final String fid) {
+        final String recipes = PreferencesService.getPreference("wishlist.recipes." + fid, "N/A");
+        if (!recipes.equals("N/A")) {
+            final List<WishlistRecipe> wishlist = new ArrayList<>();
+            Arrays.stream(recipes.split(","))
+                    .filter(recipe -> !recipes.isBlank())
+                    .map(recipe -> {
+                        final String[] splittedRecipe = recipe.split(":");
+                        return new WishlistRecipe(RecipeName.forName(splittedRecipe[0]), Boolean.parseBoolean(splittedRecipe[1]));
+                    })
+                    .filter(Objects::nonNull)
+                    .forEach(wishlist::add);
+            return wishlist;
+        } else {
+            final String oldRecipes = PreferencesService.getPreference("wishlist.recipes", "");
+            final List<RecipeName> oldWishlist = new ArrayList<>();
+            Arrays.stream(oldRecipes.split(","))
+                    .filter(recipe -> !recipes.isBlank())
+                    .map(RecipeName::forName)
+                    .filter(Objects::nonNull)
+                    .forEach(oldWishlist::add);
+            final List<WishlistRecipe> wishlist = oldWishlist.stream().map(recipeName -> new WishlistRecipe(recipeName, true)).collect(Collectors.toList());
+            PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
+            PreferencesService.setRecipePreference("wishlist.recipes", new ArrayList<>());
+            return wishlist;
+        }
+    }
+
+    public Set<Commander> getCommanders() {
         return this.commanders;
     }
 
-    public Optional<String> getPreferredCommander() {
+    public Optional<Commander> getPreferredCommander() {
         final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
-        if (!preferredCommander.isBlank() && this.commanders.contains(preferredCommander)) {
-            return Optional.of(preferredCommander);
+        if (!preferredCommander.isBlank() && this.commanders.stream().anyMatch(commander -> commander.getName().equals(preferredCommander))) {
+            return this.commanders.stream().filter(commander -> commander.getName().equals(preferredCommander)).findFirst();
         }
-        final Iterator<String> commanderIterator = this.commanders.iterator();
+        final Iterator<Commander> commanderIterator = this.commanders.iterator();
         if (commanderIterator.hasNext()) {
-            final String commander = commanderIterator.next();
-            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander);
+            final Commander commander = commanderIterator.next();
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName());
             return Optional.of(commander);
         }
         return Optional.empty();
     }
 
-    public void addCommander(final String name) {
-        if (!this.commanders.contains(name)) {
-            this.commanders.add(name);
+    public void addCommander(final String name, final String fid) {
+        if (this.commanders.stream().noneMatch(commander -> commander.getName().equals(name))) {
+            final Commander commander = new Commander(name, fid);
+            this.commanders.add(commander);
             final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
             if (preferredCommander.isBlank()) {
                 PreferencesService.setPreference(PreferenceConstants.COMMANDER, name);
             }
-            EventService.publish(new CommanderAddedEvent(name));
+            EventService.publish(new CommanderAddedEvent(commander));
         }
     }
 
     public void resetCommanders() {
         this.commanders.clear();
+    }
+
+    public int amountCraftable(final RecipeName recipeName) {
+        final Recipe recipe = RecipeConstants.getRecipe(recipeName);
+        final AtomicInteger lowestAmount = new AtomicInteger(9999);
+        recipe.getMaterialCollection(Good.class).forEach((good, integer) -> {
+            final int amountCraftable = this.goods.get(good).getTotalValue() / integer;
+            lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
+        });
+        recipe.getMaterialCollection(Asset.class).forEach((asset, integer) -> {
+            final int amountCraftable = this.assets.get(asset).getTotalValue() / integer;
+            lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
+        });
+        recipe.getMaterialCollection(Data.class).forEach((data, integer) -> {
+            final int amountCraftable = this.data.get(data).getTotalValue() / integer;
+            lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
+        });
+        return lowestAmount.get();
     }
 }

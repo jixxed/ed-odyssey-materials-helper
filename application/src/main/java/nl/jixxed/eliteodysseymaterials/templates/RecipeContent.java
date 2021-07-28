@@ -12,7 +12,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistRecipeEvent;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -70,15 +70,15 @@ public class RecipeContent extends VBox {
             addToWishlist.textProperty().bind(LocaleService.getStringBinding("recipe.add.to.wishlist"));
             addToWishlist.getStyleClass().add("wishlist-button");
             addToWishlist.setOnAction(event -> {
-                EventService.publish(new WishlistEvent(recipe.getKey(), Action.ADDED));
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), new WishlistRecipe(recipe.getKey(), true), Action.ADDED)));
             });
-            final long initialCount = APPLICATION_STATE.getWishlist().stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count();
+            final long initialCount = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count()).orElse(0L);
             final Label countLabel = new Label();
             if (initialCount > 0L) {
                 countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", initialCount));
             }
             EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
-                final long count = APPLICATION_STATE.getWishlist().stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count();
+                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count()).orElse(0L);
                 if (count > 0L) {
                     countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
                 } else {

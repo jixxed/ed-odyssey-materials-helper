@@ -154,7 +154,7 @@ public class FileProcessor {
 
     private static void processCommander(final JsonNode journalMessage) {
         if (journalMessage.get("Name") != null) {
-            APPLICATION_STATE.addCommander(journalMessage.get("Name").asText());
+            APPLICATION_STATE.addCommander(journalMessage.get("Name").asText(), journalMessage.get("FID").asText());
         }
     }
 

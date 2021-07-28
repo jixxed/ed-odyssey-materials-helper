@@ -5,24 +5,22 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
 
 public class FileWatcher implements Runnable {
 
-    protected List<FileListener> listeners = new ArrayList<>();
-    protected final File folder;
-    private String threadName;
-    protected static final List<WatchService> watchServices = new ArrayList<>();
-    boolean poll = true;
+    private final List<FileListener> listeners = new ArrayList<>();
+    private final File folder;
+    private final AtomicBoolean poll = new AtomicBoolean(true);
 
     public FileWatcher(final File folder) {
         this.folder = folder;
     }
 
     public void watch(final String threadName) {
-        this.threadName = threadName;
         if (this.folder.exists()) {
             final Thread thread = new Thread(this);
             thread.setDaemon(true);
@@ -36,14 +34,14 @@ public class FileWatcher implements Runnable {
         try (final WatchService watchService = FileSystems.getDefault().newWatchService()) {
             final Path path = Paths.get(this.folder.getAbsolutePath());
             path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
-            watchServices.add(watchService);
-            while (this.poll) {
-                this.poll = pollEvents(watchService);
+            while (this.poll.get()) {
+                this.poll.set(pollEvents(watchService));
             }
         } catch (final IOException | InterruptedException | ClosedWatchServiceException e) {
             Thread.currentThread().interrupt();
         }
     }
+
 
     protected boolean pollEvents(final WatchService watchService) throws InterruptedException {
         final WatchKey key = watchService.take();
@@ -76,12 +74,7 @@ public class FileWatcher implements Runnable {
         return this;
     }
 
-    public FileWatcher setListeners(final List<FileListener> listeners) {
-        this.listeners = listeners;
-        return this;
-    }
-
     public void stop() {
-        this.poll = false;
+        this.poll.set(false);
     }
 }
