@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class LocaleService {
     private static final String RESOURCE_BUNDLE_NAME = "locale";
-    private static Locale CURRENT_LOCALE = Locale.ENGLISH;
+    private static Locale currentLocale = Locale.ENGLISH;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 
@@ -26,19 +26,19 @@ public class LocaleService {
     }
 
     public static Locale getCurrentLocale() {
-        return CURRENT_LOCALE;
+        return currentLocale;
     }
 
     public static void setCurrentLocale(final Locale locale) {
-        CURRENT_LOCALE = locale;
-        ObservableResourceFactory.setResources(ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, CURRENT_LOCALE));
+        currentLocale = locale;
+        ObservableResourceFactory.setResources(ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, currentLocale));
     }
 
     public static String getLocalizedStringForCurrentLocale(final String key, final Object... parameters) {
         return getLocalizedString(getCurrentLocale(), key, parameters);
     }
 
-    public static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
+    private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
         return MessageFormat.format(ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, locale).getString(key), parameters);
     }
 
@@ -66,36 +66,45 @@ public class LocaleService {
             if (material.isUnknown()) {
                 return ObservableResourceFactory.getResources().getString("material.tooltip.unknown");
             } else {
-                final Map<RecipeName, Integer> recipesContainingMaterial = RecipeConstants.findRecipesContaining(material);
                 final StringBuilder builder = new StringBuilder();
                 builder.append(ObservableResourceFactory.getResources().getString(material.getLocalizationKey()));
-                final Integer barterSellPrice = BarterConstants.getBarterSellPrice(material);
-
-                builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.barter.sell.price")).append(": $").append(barterSellPrice == -1 ? "?" : NUMBER_FORMAT.format(barterSellPrice));
-                if (material instanceof Asset) {
-                    builder.append("\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.barter.trade")).append(": ").append(BarterConstants.getBarterValues(material));
-                }
-                if (!recipesContainingMaterial.isEmpty()) {
-                    builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.used.in.recipes")).append(":\n");
-                    recipesContainingMaterial.entrySet().stream().sorted(Comparator.comparing(entry -> ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey()))).forEach(entry -> builder.append(ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey())).append(" (").append(entry.getValue()).append(")\n"));
-                }
-                final Map<SpawnLocationType, List<? extends SpawnLocation>> spawnLocations = SpawnConstants.getSpawnLocations(material);
-                if (!spawnLocations.isEmpty()) {
-                    spawnLocations.forEach((locationType, value) -> {
-                        final String locations = value.stream().map(spawnLocation -> ObservableResourceFactory.getResources().getString(spawnLocation.getLocalizationKey())).collect(Collectors.joining(", "));
-                        if (!locations.isBlank()) {
-                            builder.append("\n\n").append(ObservableResourceFactory.getResources().getString(locationType.getLocalizationKey())).append(":\n");
-                            builder.append(locations);
-                        }
-                    });
-                }
+                addBarterInfoToTooltip(material, builder);
+                addRecipesToTooltip(RecipeConstants.findRecipesContaining(material), builder);
+                addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(material), builder);
                 return builder.toString();
             }
         });
     }
 
+    private static void addBarterInfoToTooltip(final Material material, final StringBuilder builder) {
+        final Integer barterSellPrice = BarterConstants.getBarterSellPrice(material);
+        builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.barter.sell.price")).append(": $").append(barterSellPrice == -1 ? "?" : NUMBER_FORMAT.format(barterSellPrice));
+        if (material instanceof Asset) {
+            builder.append("\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.barter.trade")).append(": ").append(BarterConstants.getBarterValues(material));
+        }
+    }
+
+    private static void addRecipesToTooltip(final Map<RecipeName, Integer> recipesContainingMaterial, final StringBuilder builder) {
+        if (!recipesContainingMaterial.isEmpty()) {
+            builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.used.in.recipes")).append(":\n");
+            recipesContainingMaterial.entrySet().stream().sorted(Comparator.comparing(entry -> ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey()))).forEach(entry -> builder.append(ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey())).append(" (").append(entry.getValue()).append(")\n"));
+        }
+    }
+
+    private static void addSpawnLocationsToTooltip(final Map<SpawnLocationType, List<? extends SpawnLocation>> spawnLocations, final StringBuilder builder) {
+        if (!spawnLocations.isEmpty()) {
+            spawnLocations.forEach((locationType, value) -> {
+                final String locations = value.stream().map(spawnLocation -> ObservableResourceFactory.getResources().getString(spawnLocation.getLocalizationKey())).collect(Collectors.joining(", "));
+                if (!locations.isBlank()) {
+                    builder.append("\n\n").append(ObservableResourceFactory.getResources().getString(locationType.getLocalizationKey())).append(":\n");
+                    builder.append(locations);
+                }
+            });
+        }
+    }
+
     public static StringBinding getToolTipStringBinding(final ModuleRecipe recipe) {
-        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString("tab.wishlist.blueprint.tooltip") + "\n" + recipe.getEngineers().stream().map(Engineer::friendlyName).collect(Collectors.joining(", ")));
+        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString("tab.wishlist.blueprint.tooltip") + "\n" + recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", ")));
     }
 
     @SafeVarargs

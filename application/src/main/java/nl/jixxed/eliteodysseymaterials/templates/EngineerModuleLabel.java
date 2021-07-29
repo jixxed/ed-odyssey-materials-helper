@@ -2,13 +2,15 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.control.Label;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 public class EngineerModuleLabel extends Label {
     private final Engineer engineer;
 
-    public EngineerModuleLabel(final Engineer engineer) {
-        super(engineer.friendlyName());
+    EngineerModuleLabel(final Engineer engineer) {
+        super();
         this.engineer = engineer;
+        this.textProperty().bind(LocaleService.getStringBinding(engineer.getLocalizationKey()));
         this.getStyleClass().add("engineerLabel");
     }
 
@@ -16,7 +18,7 @@ public class EngineerModuleLabel extends Label {
         return this.engineer;
     }
 
-    public void updateStyle(final boolean unlocked) {
+    void updateStyle(final boolean unlocked) {
         this.getStyleClass().removeAll("engineer-unlocked", "engineer-locked");
         this.getStyleClass().add((unlocked) ? "engineer-unlocked" : "engineer-locked");
     }

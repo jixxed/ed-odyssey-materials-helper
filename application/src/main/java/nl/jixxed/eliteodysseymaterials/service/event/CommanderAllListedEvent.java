@@ -1,4 +1,4 @@
 package nl.jixxed.eliteodysseymaterials.service.event;
 
-public class CommanderAllListedEvent extends Event {
+public class CommanderAllListedEvent implements Event {
 }

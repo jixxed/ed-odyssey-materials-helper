@@ -12,15 +12,15 @@ import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
-public class MaterialTotal extends VBox {
-    private final Map<MaterialTotalType, Label> totals = new HashMap<>();
-    private final Map<MaterialTotalType, Label> totalValues = new HashMap<>();
+class MaterialTotal extends VBox {
+    private final Map<MaterialTotalType, Label> totals = new EnumMap<>(MaterialTotalType.class);
+    private final Map<MaterialTotalType, Label> totalValues = new EnumMap<>(MaterialTotalType.class);
     private Integer totalValue = 0;
 
-    public MaterialTotal(final StorageType storageType, final MaterialTotalType... totalTypes) {
+    MaterialTotal(final StorageType storageType, final MaterialTotalType... totalTypes) {
         final Label name = new Label();
         name.getStyleClass().add("material-total-name");
         name.textProperty().bind(LocaleService.getStringBinding(storageType.getLocalizationKey()));
@@ -72,7 +72,7 @@ public class MaterialTotal extends VBox {
         this.getStyleClass().add("material-total-" + storageType.name().toLowerCase());
     }
 
-    public void update(final MaterialTotalType type, final Integer amount) {
+    void update(final MaterialTotalType type, final Integer amount) {
         if (this.totalValues.containsKey(type)) {
             final Label label = this.totalValues.get(type);
             final Integer currentAmount = Integer.parseInt(label.getText());

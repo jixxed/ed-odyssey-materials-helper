@@ -27,10 +27,10 @@ public class Ingredient extends VBox {
     private final Label amountAvailableLabel = new Label();
     private final Label requiredLabel = new Label();
     private final Label availableLabel = new Label();
-    final HBox required = new HBox(this.requiredLabel, this.amountRequiredLabel);
-    final HBox available = new HBox(this.amountAvailableLabel, this.availableLabel);
+    private final HBox required = new HBox(this.requiredLabel, this.amountRequiredLabel);
+    private final HBox available = new HBox(this.amountAvailableLabel, this.availableLabel);
     private final HBox firstLine = new HBox(this.image, this.nameLabel);
-    final Region region = new Region();
+    private final Region region = new Region();
     private final HBox secondLine = new HBox(this.required, this.region, this.available);
 
     //STYLE
@@ -73,7 +73,7 @@ public class Ingredient extends VBox {
     public Ingredient(final StorageType storageType, final Material material, final Integer amount, final Integer amountAvailable) {
         this(storageType);
         this.code = material.toString();
-        this.nameLabel.textProperty().bind(LocaleService.getStringBinding(material.getLocalizationKey()));//setText(material.friendlyName());
+        this.nameLabel.textProperty().bind(LocaleService.getStringBinding(material.getLocalizationKey()));
         this.code = material.toString();
         this.amountRequired = amount;
         this.amountAvailable = amountAvailable;
@@ -109,7 +109,7 @@ public class Ingredient extends VBox {
         update();
     }
 
-    public void setAmountAvailable(final Integer amountAvailable) {
+    void setAmountAvailable(final Integer amountAvailable) {
         this.amountAvailable = amountAvailable;
     }
 
@@ -117,7 +117,7 @@ public class Ingredient extends VBox {
         return this.storageType;
     }
 
-    public String getCode() {
+    String getCode() {
         return this.code;
     }
 
@@ -145,19 +145,19 @@ public class Ingredient extends VBox {
         return this.material;
     }
 
-    public Label getAmountRequiredLabel() {
+    Label getAmountRequiredLabel() {
         return this.amountRequiredLabel;
     }
 
-    public Integer getAmountRequired() {
+    Integer getAmountRequired() {
         return this.amountRequired;
     }
 
-    public Integer getAmountAvailable() {
+    Integer getAmountAvailable() {
         return this.amountAvailable;
     }
 
-    public Label getAmountAvailableLabel() {
+    Label getAmountAvailableLabel() {
         return this.amountAvailableLabel;
     }
 }

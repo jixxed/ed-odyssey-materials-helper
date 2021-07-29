@@ -30,9 +30,10 @@ public class Storage {
     }
 
     public void setValue(final Integer value, final StoragePool pool) {
-        switch (pool) {
-            case BACKPACK -> this.backPack = value;
-            case SHIPLOCKER -> this.shipLocker = value;
+        if (pool == StoragePool.BACKPACK) {
+            this.backPack = value;
+        } else if (pool == StoragePool.SHIPLOCKER) {
+            this.shipLocker = value;
         }
     }
 

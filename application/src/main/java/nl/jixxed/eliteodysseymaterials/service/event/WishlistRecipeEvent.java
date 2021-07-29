@@ -7,7 +7,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Action;
 
 @AllArgsConstructor
 @Getter
-public class WishlistRecipeEvent extends Event {
+public class WishlistRecipeEvent implements Event {
     private final String fid;
     private final WishlistRecipe wishlistRecipe;
     private final Action action;

@@ -6,6 +6,6 @@ import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
 @AllArgsConstructor
 @Getter
-public class BlueprintClickEvent extends Event {
+public class BlueprintClickEvent implements Event {
     private final RecipeName recipeName;
 }

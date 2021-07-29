@@ -1,16 +1,19 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.enums.DataPortType.*;
 import static nl.jixxed.eliteodysseymaterials.enums.PlanetSignalSourceType.*;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SpawnConstants {
-    public static final HashMap<Data, List<DataPortType>> DATA_PORTS = new HashMap<>();
+    private static final Map<Data, List<DataPortType>> DATA_PORTS = new EnumMap<>(Data.class);
 
     static {
         DATA_PORTS.put(Data.ACCIDENTLOGS, List.of(AGR, CMD, EXT, HAB, IND, LAB, MED, PWR, SEC));
@@ -129,7 +132,7 @@ public class SpawnConstants {
         DATA_PORTS.put(Data.XENODEFENCEPROTOCOLS, List.of(SEC));
     }
 
-    public static final Map<Data, List<PlanetSignalSourceType>> DATA_PLANET_PORTS = Map.ofEntries(
+    private static final Map<Data, List<PlanetSignalSourceType>> DATA_PLANET_PORTS = Map.ofEntries(
             Map.entry(Data.ATMOSPHERICDATA, List.of(LARGE_SAT)),
             Map.entry(Data.BALLISTICSDATA, List.of(LARGE_SAT, SKIMMER)),
             Map.entry(Data.BLACKLISTDATA, List.of(SMALL_SAT, SKIMMER)),
@@ -151,10 +154,10 @@ public class SpawnConstants {
             Map.entry(Data.TOPOGRAPHICALSURVEYS, List.of(LARGE_SAT))
     );
 
-    public static final Map<Data, List<AlternateLocationType>> DATA_OTHER = Map.ofEntries(
+    private static final Map<Data, List<AlternateLocationType>> DATA_OTHER = Map.ofEntries(
             Map.entry(Data.SPYWARE, List.of(AlternateLocationType.MISSION))
     );
-    public static final Map<Asset, List<LockerType>> ASSET_LOCKERS = Map.ofEntries(
+    private static final Map<Asset, List<LockerType>> ASSET_LOCKERS = Map.ofEntries(
             Map.entry(Asset.AEROGEL, List.of(LockerType.LAB, LockerType.PROC)),
             Map.entry(Asset.CHEMICALCATALYST, List.of(LockerType.LAB, LockerType.MED)),
             Map.entry(Asset.CHEMICALSUPERBASE, List.of(LockerType.LAB, LockerType.MED)),
@@ -190,7 +193,7 @@ public class SpawnConstants {
             Map.entry(Asset.WEAPONCOMPONENT, List.of(LockerType.AGR, LockerType.CMD, LockerType.EXT, LockerType.HAB, LockerType.IND, LockerType.LAB, LockerType.MED, LockerType.PWR, LockerType.STO, LockerType.SEC, LockerType.OUT))
     );
 
-    public static final Map<Asset, List<PlanetSignalSourceType>> ASSET_PLANET = Map.ofEntries(
+    private static final Map<Asset, List<PlanetSignalSourceType>> ASSET_PLANET = Map.ofEntries(
             Map.entry(Asset.CIRCUITBOARD, List.of(LARGE_SAT, SMALL_SAT, CRASHED, SRV)),
             Map.entry(Asset.CIRCUITSWITCH, List.of(LARGE_SAT, SMALL_SAT, CRASHED, SRV)),
             Map.entry(Asset.ELECTRICALFUSE, List.of(LARGE_SAT, SMALL_SAT, CRASHED, SRV)),
@@ -204,7 +207,7 @@ public class SpawnConstants {
             Map.entry(Asset.MOTOR, List.of(LARGE_SAT, SMALL_SAT, CRASHED, SRV)),
             Map.entry(Asset.OPTICALFIBRE, List.of(LARGE_SAT, SMALL_SAT, CRASHED, SRV))
     );
-    public static final Map<Good, List<LockerType>> GOOD_LOCKERS = Map.ofEntries(
+    private static final Map<Good, List<LockerType>> GOOD_LOCKERS = Map.ofEntries(
             Map.entry(Good.AGRICULTURALPROCESSSAMPLE, List.of(LockerType.AGR)),
             Map.entry(Good.BIOCHEMICALAGENT, List.of(LockerType.IND)),
             Map.entry(Good.BUILDINGSCHEMATIC, List.of(LockerType.AGR, LockerType.STO)),
@@ -250,20 +253,20 @@ public class SpawnConstants {
             Map.entry(Good.WEAPONSCHEMATIC, List.of(LockerType.CMD, LockerType.PWR))
     );
 
-    public static final Map<Good, List<DeviceType>> GOOD_DEVICES = Map.ofEntries(
+    private static final Map<Good, List<DeviceType>> GOOD_DEVICES = Map.ofEntries(
             Map.entry(Good.LARGECAPACITYPOWERREGULATOR, List.of(DeviceType.PWR, DeviceType.SRV))
     );
-    public static final Map<Good, List<AlternateLocationType>> GOOD_OTHER = Map.ofEntries(
+    private static final Map<Good, List<AlternateLocationType>> GOOD_OTHER = Map.ofEntries(
             Map.entry(Good.LARGECAPACITYPOWERREGULATOR, List.of(AlternateLocationType.MISSION))
     );
-    public static final Map<Good, List<PlanetSignalSourceType>> GOOD_PLANET = Map.ofEntries(
+    private static final Map<Good, List<PlanetSignalSourceType>> GOOD_PLANET = Map.ofEntries(
             Map.entry(Good.LARGECAPACITYPOWERREGULATOR, List.of(LARGE_SAT)),
             Map.entry(Good.PUSH, List.of(SKIMMER, SRV)),
             Map.entry(Good.HUSH, List.of(SKIMMER, SRV))
     );
 
     public static Map<SpawnLocationType, List<? extends SpawnLocation>> getSpawnLocations(final Material material) {
-        final Map<SpawnLocationType, List<? extends SpawnLocation>> spawnLocations = new HashMap<>();
+        final Map<SpawnLocationType, List<? extends SpawnLocation>> spawnLocations = new EnumMap<>(SpawnLocationType.class);
         if (material instanceof Data) {
             spawnLocations.put(SpawnLocationType.DATAPORT, DATA_PORTS.getOrDefault(material, List.of()));
             spawnLocations.put(SpawnLocationType.PLANETARY, DATA_PLANET_PORTS.getOrDefault(material, List.of()));

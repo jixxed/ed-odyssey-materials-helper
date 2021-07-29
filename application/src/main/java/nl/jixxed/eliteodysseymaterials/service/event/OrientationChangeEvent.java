@@ -6,6 +6,6 @@ import nl.jixxed.eliteodysseymaterials.enums.MaterialOrientation;
 
 @AllArgsConstructor
 @Getter
-public class OrientationChangeEvent extends Event {
+public class OrientationChangeEvent implements Event {
     private final MaterialOrientation materialOrientation;
 }

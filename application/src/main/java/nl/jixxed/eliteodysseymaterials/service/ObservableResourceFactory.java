@@ -6,23 +6,26 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ObservableResourceFactory {
 
     private static final ObjectProperty<ResourceBundle> RESOURCES = new SimpleObjectProperty<>();
 
-    protected static ObjectProperty<ResourceBundle> resourcesProperty() {
+    private static ObjectProperty<ResourceBundle> resourcesProperty() {
         return RESOURCES;
     }
 
-    protected static ResourceBundle getResources() {
+    static ResourceBundle getResources() {
         return resourcesProperty().get();
     }
 
-    protected static void setResources(final ResourceBundle resources) {
+    static void setResources(final ResourceBundle resources) {
         resourcesProperty().set(resources);
     }
 
@@ -40,7 +43,7 @@ public class ObservableResourceFactory {
     }
 
     @SafeVarargs
-    protected static <T> ListBinding<T> getListBinding(final T... items) {
+    static <T> ListBinding<T> getListBinding(final T... items) {
         return new ListBinding<>() {
 
             {

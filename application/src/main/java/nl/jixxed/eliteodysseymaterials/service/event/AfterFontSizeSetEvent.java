@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class AfterFontSizeSetEvent extends Event {
+public class AfterFontSizeSetEvent implements Event {
     private final Integer fontSize;
 }

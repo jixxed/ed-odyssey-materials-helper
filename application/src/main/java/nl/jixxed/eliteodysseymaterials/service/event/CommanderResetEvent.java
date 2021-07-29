@@ -1,5 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.service.event;
 
-public class CommanderResetEvent extends Event {
+public class CommanderResetEvent implements Event {
 
 }

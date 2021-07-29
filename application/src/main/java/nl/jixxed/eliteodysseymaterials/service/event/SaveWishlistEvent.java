@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class SaveWishlistEvent extends Event {
+public class SaveWishlistEvent implements Event {
     private final String text;
 }

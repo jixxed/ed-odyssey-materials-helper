@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
@@ -7,17 +9,18 @@ import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class RecipeConstants {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final Map<RecipeName, Recipe> SUIT_UPGRADES = new HashMap<>();
-    private static final Map<RecipeName, Recipe> WEAPON_UPGRADES = new HashMap<>();
-    private static final Map<RecipeName, ModuleRecipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
-    private static final Map<RecipeName, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
-    private static final Map<RecipeName, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
+    private static final Map<RecipeName, Recipe> SUIT_UPGRADES = new EnumMap<>(RecipeName.class);
+    private static final Map<RecipeName, Recipe> WEAPON_UPGRADES = new EnumMap<>(RecipeName.class);
+    private static final Map<RecipeName, ModuleRecipe> SUIT_MODULE_BLUEPRINTS = new EnumMap<>(RecipeName.class);
+    private static final Map<RecipeName, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new EnumMap<>(RecipeName.class);
+    private static final Map<RecipeName, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new EnumMap<>(RecipeName.class);
     public static final Map<RecipeCategory, Map<RecipeName, ? extends Recipe>> RECIPES = Map.of(
             RecipeCategory.SUIT_GRADES, SUIT_UPGRADES,
             RecipeCategory.WEAPON_GRADES, WEAPON_UPGRADES,
@@ -55,7 +58,7 @@ public abstract class RecipeConstants {
     }
 
     public static Map<RecipeName, Integer> findRecipesContaining(final Material material) {
-        final Map<RecipeName, Integer> newMap = new HashMap<>();
+        final Map<RecipeName, Integer> newMap = new EnumMap<>(RecipeName.class);
         RECIPES.values()
                 .forEach(recipes -> recipes.entrySet().stream()
                         .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getMaterialCollection(material.getClass()).containsKey(material))

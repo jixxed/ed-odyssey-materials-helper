@@ -35,19 +35,19 @@ public class WishlistTab extends EDOTab {
     private final FlowPane dataFlow = new FlowPane();
     private final FlowPane assetCircuitFlow = new FlowPane();
     private final FlowPane assetTechFlow = new FlowPane();
-    final HBox engineerBlueprints;
-    final HBox suitUpgradeBlueprints;
-    final HBox suitModuleBlueprints;
-    final HBox weaponUpgradeBlueprints;
-    final HBox weaponModuleBlueprints;
-    final VBox blueprints;
-    final ScrollPane scrollPane = new ScrollPane();
+    private final HBox engineerBlueprints;
+    private final HBox suitUpgradeBlueprints;
+    private final HBox suitModuleBlueprints;
+    private final HBox weaponUpgradeBlueprints;
+    private final HBox weaponModuleBlueprints;
+    private final VBox blueprints;
+    private final ScrollPane scrollPane = new ScrollPane();
     private int wishlistSize;
     private List<WishlistBlueprint> wishlistBlueprints;
     private final VBox content;
     private final AtomicBoolean hideCompleted = new AtomicBoolean();
 
-    public WishlistTab() {
+    WishlistTab() {
         super();
         this.hideCompleted.set(PreferencesService.getPreference("blueprint.hide.completed", Boolean.FALSE));
         this.noBlueprint.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.no.blueprint"));
@@ -55,10 +55,7 @@ public class WishlistTab extends EDOTab {
         final Button exportButton = new Button();
         exportButton.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.export"));
         exportButton.getStyleClass().add("wishlist-button");
-        exportButton.setOnAction(event -> {
-            EventService.publish(new SaveWishlistEvent(createTextWishlist()));
-
-        });
+        exportButton.setOnAction(event -> EventService.publish(new SaveWishlistEvent(createTextWishlist())));
         final CheckBox hideCompleted = new CheckBox();
         hideCompleted.getStyleClass().add("wishlist-checkbox");
         hideCompleted.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.hide.completed"));
@@ -81,12 +78,12 @@ public class WishlistTab extends EDOTab {
         this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         setGaps(10, this.engineerRecipes, this.suitUpgradeRecipes, this.suitModuleRecipes, this.weaponUpgradeRecipes, this.weaponModuleRecipes);
         setGaps(4, this.goodFlow, this.dataFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow);
-        final Label selected_blueprints = new Label();
-        selected_blueprints.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.selected.blueprints"));
-        final Label required_materials = new Label();
-        required_materials.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.required.materials"));
-        selected_blueprints.getStyleClass().add("wishlist-header");
-        required_materials.getStyleClass().add("wishlist-header");
+        final Label selectedBlueprints = new Label();
+        selectedBlueprints.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.selected.blueprints"));
+        final Label requiredMaterials = new Label();
+        requiredMaterials.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.required.materials"));
+        selectedBlueprints.getStyleClass().add("wishlist-header");
+        requiredMaterials.getStyleClass().add("wishlist-header");
         final Label engineerRecipesLabel = new Label();
         final Label suitUpgradeRecipesLabel = new Label();
         final Label suitModuleRecipesLabel = new Label();
@@ -118,7 +115,7 @@ public class WishlistTab extends EDOTab {
         HBox.setHgrow(region, Priority.ALWAYS);
         final Region region2 = new Region();
         HBox.setHgrow(region2, Priority.ALWAYS);
-        this.content = new VBox(new HBox(selected_blueprints, region, exportButton), this.blueprints, new HBox(required_materials, region2, hideCompleted), this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
+        this.content = new VBox(new HBox(selectedBlueprints, region, exportButton), this.blueprints, new HBox(requiredMaterials, region2, hideCompleted), this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
         this.content.setSpacing(10);
         this.scrollPane.setContent(this.wishlistSize > 0 ? this.content : this.noBlueprint);
         VBox.setVgrow(this.dataFlow, Priority.ALWAYS);
@@ -127,9 +124,7 @@ public class WishlistTab extends EDOTab {
         Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, emitter::onNext))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe((newValue) -> {
-                    Platform.runLater(this::refreshContent);
-                });
+                .subscribe(newValue -> Platform.runLater(this::refreshContent));
         this.wishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream()
                         .map(WishlistBlueprint::new)
@@ -141,7 +136,7 @@ public class WishlistTab extends EDOTab {
         this.suitModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
         this.weaponUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
         this.weaponModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-        EventService.addListener(WishlistRecipeEvent.class, (wishlistEvent) ->
+        EventService.addListener(WishlistRecipeEvent.class, wishlistEvent ->
         {
             if (Action.REMOVED.equals(wishlistEvent.getAction())) {
                 this.wishlistBlueprints.stream()
@@ -208,7 +203,8 @@ public class WishlistTab extends EDOTab {
                 .map(item -> LocaleService.getLocalizedStringForCurrentLocale(item.getLocalizationKey()).length())
                 .max(Comparator.comparing(Integer::intValue)).orElse(0);
 
-        textBuilder.append(String.format("%-" + (maxNameLength + 5) + "s", "Material"));
+        final String materialColumnWidth = "%-" + (maxNameLength + 5) + "s";
+        textBuilder.append(String.format(materialColumnWidth, "Material"));
         textBuilder.append(String.format("%12s", "Available"));
         textBuilder.append(String.format("%12s", "Required"));
         textBuilder.append(String.format("%12s", "Need"));
@@ -216,7 +212,7 @@ public class WishlistTab extends EDOTab {
         this.wishlistNeededMaterials.entrySet().stream()
                 .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
                 .forEach(item -> {
-                    textBuilder.append(String.format("%-" + (maxNameLength + 5) + "s", LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
+                    textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
                     final Integer total = switch (item.getKey().getStorageType()) {
                         case GOOD -> APPLICATION_STATE.getGoods().get(item.getKey()).getTotalValue();
                         case DATA -> APPLICATION_STATE.getData().get(item.getKey()).getTotalValue();
@@ -269,8 +265,8 @@ public class WishlistTab extends EDOTab {
         }
     }
 
-    public void refreshContent() {
-        this.scrollPane.setContent(this.wishlistBlueprints.size() > 0 ? this.content : this.noBlueprint);
+    private void refreshContent() {
+        this.scrollPane.setContent(!this.wishlistBlueprints.isEmpty() ? this.content : this.noBlueprint);
         this.goodFlow.getChildren().clear();
         this.assetChemicalFlow.getChildren().clear();
         this.dataFlow.getChildren().clear();

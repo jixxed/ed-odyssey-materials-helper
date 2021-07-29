@@ -29,11 +29,9 @@ import java.io.StringWriter;
 @Slf4j
 public class Main extends Application {
 
-    private final static String CUSTOM_STYLE_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
+    private static final String CUSTOM_STYLE_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final ApplicationLayout applicationLayout = new ApplicationLayout(this);
-    //    private final GameStateWatcher shipLockerWatcher = new GameStateWatcher();
-    //    private final GameStateWatcher backPackWatcher = new GameStateWatcher();
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
@@ -53,19 +51,13 @@ public class Main extends Application {
             PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
             final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, AppConstants.WATCHED_FOLDER));
 
-//            this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
-//            this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
             this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
             this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
 
             this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
 
-            EventService.addListener(WatchedFolderChangedEvent.class, (event) -> {
-                reset(new File(event.getPath()));
-            });
-            EventService.addListener(CommanderSelectedEvent.class, (event) -> {
-                reset(this.journalWatcher.getWatchedFolder());
-            });
+            EventService.addListener(WatchedFolderChangedEvent.class, event -> reset(new File(event.getPath())));
+            EventService.addListener(CommanderSelectedEvent.class, event -> reset(this.journalWatcher.getWatchedFolder()));
             final Scene scene = new Scene(this.applicationLayout, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
             scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_WIDTH, (Double) newValue));
@@ -83,11 +75,7 @@ public class Main extends Application {
             scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
             final File customCss = new File(CUSTOM_STYLE_FILE);
             if (customCss.exists()) {
-                try {
-                    scene.getStylesheets().add(customCss.toURI().toURL().toExternalForm());
-                } catch (final IOException e) {
-                    log.error("Error loading stylesheet", e);
-                }
+                importCustomCss(scene, customCss);
             }
             EventService.addListener(FontSizeEvent.class, fontSizeEvent -> {
                 this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
@@ -126,19 +114,23 @@ public class Main extends Application {
         }
     }
 
+    private void importCustomCss(final Scene scene, final File customCss) {
+        try {
+            scene.getStylesheets().add(customCss.toURI().toURL().toExternalForm());
+        } catch (final IOException e) {
+            log.error("Error loading stylesheet", e);
+        }
+    }
+
     private void reset(final File watchedFolder) {
         APPLICATION_STATE.resetEngineerStates();
         APPLICATION_STATE.resetShipLockerCounts();
         APPLICATION_STATE.resetBackPackCounts();
         APPLICATION_STATE.resetCommanders();
         EventService.publish(new CommanderResetEvent());
-//        this.shipLockerWatcher.stop();
-//        this.backPackWatcher.stop();
         this.timeStampedShipLockerWatcher.stop();
         this.timeStampedBackPackWatcher.stop();
         this.journalWatcher.stop();
-//        this.shipLockerWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.SHIPLOCKER_FILE);
-//        this.backPackWatcher.watch(watchedFolder, FileProcessor::processShipLockerBackPack, AppConstants.BACKPACK_FILE);
         this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
         this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
 
@@ -148,7 +140,7 @@ public class Main extends Application {
     private void setPreferenceIfNotMaximized(final Stage primaryStage, final String setting, final Double value) {
         // x y are processed before maximized, so excluding setting it if it's -8
         if (!primaryStage.isMaximized() && !Double.valueOf(-8.0D).equals(value)) {
-            PreferencesService.setPreference(setting, Double.valueOf(value));
+            PreferencesService.setPreference(setting, value);
         }
     }
 

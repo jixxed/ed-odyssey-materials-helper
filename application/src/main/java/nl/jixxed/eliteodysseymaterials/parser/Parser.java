@@ -12,9 +12,7 @@ public abstract class Parser {
     abstract void parse(final Iterator<JsonNode> items, final StoragePool storagePool, Map<? extends Material, Storage> knownMap, Map<String, Storage> unknownMap);
 
     <T> Storage getOrCreateContainer(final Map<T, Storage> map, final T key) {
-        if (!map.containsKey(key)) {
-            map.put(key, new Storage());
-        }
+        map.computeIfAbsent(key, k -> map.put(k, new Storage()));
         return map.get(key);
     }
 }

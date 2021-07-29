@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class LocationEvent extends Event {
+public class LocationEvent implements Event {
     private final String starSystem;
     private final double x;
     private final double y;

@@ -1,31 +1,37 @@
 package nl.jixxed.eliteodysseymaterials.watchdog;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-@RequiredArgsConstructor
+@Slf4j
 public class FileWatcher implements Runnable {
 
-    private final List<FileListener> listeners = new ArrayList<>();
-    private final File folder;
-    private final AtomicBoolean run = new AtomicBoolean(true);
-    private boolean poll = true;
+    private FileListener listener;
+    private final Thread thread;
+    private File folder;
 
-    void watch(final String threadName) {
-        if (this.folder.exists()) {
-            final Thread thread = new Thread(this);
-            thread.setDaemon(true);
-            thread.setName(threadName);
-            thread.start();
+    FileWatcher(final String threadName) {
+        this.thread = new Thread(this);
+        this.thread.setName(threadName);
+        this.thread.setDaemon(true);
+    }
+
+    FileWatcher watch(final File folder) {
+        if (!this.thread.isAlive()) {
+            this.folder = folder;
+            if (this.folder.exists()) {
+                this.thread.start();
+                log.info("Thread started: " + this.thread.getName());
+            }
+        } else {
+            log.error("Blocked starting already running thread: " + this.thread.getName());
         }
+        return this;
     }
 
     @Override
@@ -33,12 +39,14 @@ public class FileWatcher implements Runnable {
         try (final WatchService watchService = FileSystems.getDefault().newWatchService()) {
             final Path path = Paths.get(this.folder.getAbsolutePath());
             path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
-            while (this.run.get() && this.poll) {
-                this.poll = pollEvents(watchService);
+            boolean poll = true;
+            while (!this.thread.isInterrupted() && poll) {
+                poll = pollEvents(watchService);
             }
         } catch (final IOException | InterruptedException | ClosedWatchServiceException e) {
             Thread.currentThread().interrupt();
         }
+        log.info("Thread finished: " + Thread.currentThread().getName());
     }
 
 
@@ -54,26 +62,22 @@ public class FileWatcher implements Runnable {
     private void notifyListeners(final WatchEvent.Kind<?> kind, final File file) {
         final FileEvent event = new FileEvent(file);
         if (kind == ENTRY_CREATE) {
-            for (final FileListener listener : this.listeners) {
-                listener.onCreated(event);
-            }
+            this.listener.onCreated(event);
+
         } else if (kind == ENTRY_MODIFY) {
-            for (final FileListener listener : this.listeners) {
-                listener.onModified(event);
-            }
+            this.listener.onModified(event);
+
         } else if (kind == ENTRY_DELETE) {
-            for (final FileListener listener : this.listeners) {
-                listener.onDeleted(event);
-            }
+            this.listener.onDeleted(event);
         }
     }
 
-    public FileWatcher addListener(final FileListener listener) {
-        this.listeners.add(listener);
+    FileWatcher withListener(final FileListener listener) {
+        this.listener = listener;
         return this;
     }
 
     void stop() {
-        this.run.set(false);
+        this.thread.interrupt();
     }
 }

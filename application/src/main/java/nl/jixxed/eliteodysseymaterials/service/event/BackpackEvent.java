@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class BackpackEvent extends Event {
+public class BackpackEvent implements Event {
     private final String timestamp;
 }

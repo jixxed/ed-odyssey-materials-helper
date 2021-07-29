@@ -1,10 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.service.event;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EventService {
     private static final List<EventListener<? extends Event>> LISTENERS = new ArrayList<>();
 
@@ -27,7 +31,7 @@ public class EventService {
         return listener;
     }
 
-    public static void removeListener(final EventListener<? extends Event> eventListener) {
-        LISTENERS.remove(eventListener);
+    public static void removeListener(final Consumer<? extends Event> eventConsumer) {
+        LISTENERS.removeIf(listener -> listener.getConsumer().equals(eventConsumer));
     }
 }

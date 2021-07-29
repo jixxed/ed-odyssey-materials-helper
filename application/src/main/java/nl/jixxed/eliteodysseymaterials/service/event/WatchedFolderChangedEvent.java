@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class WatchedFolderChangedEvent extends Event {
+public class WatchedFolderChangedEvent implements Event {
     private final String path;
 }

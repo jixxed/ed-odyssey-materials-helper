@@ -17,14 +17,14 @@ import nl.jixxed.eliteodysseymaterials.service.event.WishlistRecipeEvent;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class RecipeContent extends VBox {
+class RecipeContent extends VBox {
     private final List<Ingredient> ingredients = new ArrayList<>();
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final List<EngineerModuleLabel> moduleEngineerLabels = new ArrayList<>();
 
 
-    public RecipeContent(final Map.Entry<RecipeName, ? extends Recipe> recipe) {
+    RecipeContent(final Map.Entry<RecipeName, ? extends Recipe> recipe) {
 
         EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> {
             Platform.runLater(() -> {
@@ -72,13 +72,13 @@ public class RecipeContent extends VBox {
             addToWishlist.setOnAction(event -> {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), new WishlistRecipe(recipe.getKey(), true), Action.ADDED)));
             });
-            final long initialCount = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count()).orElse(0L);
+            final long initialCount = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(recipe.getKey())).count()).orElse(0L);
             final Label countLabel = new Label();
             if (initialCount > 0L) {
                 countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", initialCount));
             }
             EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
-                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(recipeName -> recipeName.equals(recipe.getKey())).count()).orElse(0L);
+                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(recipe.getKey())).count()).orElse(0L);
                 if (count > 0L) {
                     countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
                 } else {
@@ -113,12 +113,13 @@ public class RecipeContent extends VBox {
             engineerLabelHeader.getStyleClass().add("recipe-title-label");
             this.getChildren().addAll(engineerLabelHeader);
             final Label[] engineerLabels = ((ModuleRecipe) recipe.getValue()).getEngineers().stream()
-                    .sorted(Comparator.comparing(Engineer::friendlyName))
                     .map(engineer -> {
                         final EngineerModuleLabel label = new EngineerModuleLabel(engineer);
                         this.moduleEngineerLabels.add(label);
                         return label;
-                    }).toArray(Label[]::new);
+                    })
+                    .sorted(Comparator.comparing(EngineerModuleLabel::getText))
+                    .toArray(Label[]::new);
 
             final FlowPane flowPane = new FlowPane(engineerLabels);
             flowPane.getStyleClass().add("engineerFlow");
@@ -128,11 +129,9 @@ public class RecipeContent extends VBox {
 
         final Map<Modifier, String> modifierMap = recipe.getValue().getModifiers();
         if (!modifierMap.isEmpty()) {
-//            this.getChildren().add(new Separator(Orientation.HORIZONTAL));
             final Label modifierTitle = new Label();
             modifierTitle.textProperty().bind(LocaleService.getStringBinding("recipe.label.modifiers"));
             modifierTitle.getStyleClass().add("recipe-title-label");
-//            modifierTitle.setStyle("-fx-font-size: 2.2em;-fx-min-height: 2.4em;");
             this.getChildren().add(modifierTitle);
             final List<HBox> modifiers = modifierMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(modifierStringEntry -> {
                 final Label modifier = new Label();
@@ -172,23 +171,21 @@ public class RecipeContent extends VBox {
         });
     }
 
-    public void updateIngredients() {
+    private void updateIngredients() {
         this.ingredients.forEach(Ingredient::update);
     }
 
-    public void updateIngredientsValues() {
+    private void updateIngredientsValues() {
         this.ingredients.forEach(ingredient -> {
             switch (ingredient.getType()) {
                 case ASSET -> ingredient.setAmountAvailable(APPLICATION_STATE.getAssets().get(Asset.forName(ingredient.getCode())).getTotalValue());
                 case GOOD -> ingredient.setAmountAvailable(APPLICATION_STATE.getGoods().get(Good.forName(ingredient.getCode())).getTotalValue());
                 case DATA -> ingredient.setAmountAvailable(APPLICATION_STATE.getData().get(Data.forName(ingredient.getCode())).getTotalValue());
-                case OTHER -> {
-                }
             }
         });
     }
 
-    public void updateEngineerStyles() {
+    private void updateEngineerStyles() {
         this.moduleEngineerLabels.forEach(label -> label.updateStyle(APPLICATION_STATE.isEngineerUnlocked(label.getEngineer())));
     }
 }

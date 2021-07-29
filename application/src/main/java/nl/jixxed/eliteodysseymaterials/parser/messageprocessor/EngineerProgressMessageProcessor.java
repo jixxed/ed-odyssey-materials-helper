@@ -9,21 +9,24 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 public class EngineerProgressMessageProcessor implements MessageProcessor {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final String ENGINEER = "Engineer";
+    private static final String PROGRESS = "Progress";
+    private static final String ENGINEERS = "Engineers";
 
     @Override
     public void process(final JsonNode journalMessage) {
-        if (journalMessage.get("Engineers") != null) {
-            journalMessage.get("Engineers").elements().forEachRemaining(EngineerProgressMessageProcessor::processEngineerProgressItem);
-        } else if (journalMessage.get("Engineer") != null) {
+        if (journalMessage.get(ENGINEERS) != null) {
+            journalMessage.get(ENGINEERS).elements().forEachRemaining(EngineerProgressMessageProcessor::processEngineerProgressItem);
+        } else if (journalMessage.get(ENGINEER) != null) {
             processEngineerProgressItem(journalMessage);
         }
 
     }
 
     private static void processEngineerProgressItem(final JsonNode item) {
-        if (item.get("Engineer") != null && item.get("Progress") != null) {
-            final String engineer = item.get("Engineer").asText();
-            final EngineerState engineerState = EngineerState.forName(item.get("Progress").asText());
+        if (item.get(ENGINEER) != null && item.get(PROGRESS) != null) {
+            final String engineer = item.get(ENGINEER).asText();
+            final EngineerState engineerState = EngineerState.forName(item.get(PROGRESS).asText());
             switch (engineer) {
                 case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, engineerState);
                 case "Hero Ferrari" -> APPLICATION_STATE.setEngineerState(Engineer.HERO_FERRARI, engineerState);

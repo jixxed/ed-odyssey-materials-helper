@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class WishlistChangedEvent extends Event {
+public class WishlistChangedEvent implements Event {
     private final Integer wishlistSize;
 }

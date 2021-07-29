@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
@@ -24,19 +25,20 @@ import nl.jixxed.eliteodysseymaterials.service.event.TabSelecetedEvent;
 
 import java.util.concurrent.TimeUnit;
 
-public class SearchBar extends HBox {
+@Slf4j
+class SearchBar extends HBox {
 
-    final Button button = new Button();
-    final TextField textField = createSearchTextField();
+    private final Button button = new Button();
+    private final TextField textField = createSearchTextField();
 
 
-    final ComboBox<Show> showMaterialsComboBox = createShowComboBox();
-    final ComboBox<Sort> sortMaterialsComboBox = createSortComboBox();
+    private final ComboBox<Show> showMaterialsComboBox = createShowComboBox();
+    private final ComboBox<Sort> sortMaterialsComboBox = createSortComboBox();
 
-    public SearchBar() {
+    SearchBar() {
         super();
         this.getStyleClass().add("root");
-        this.button.setText((PreferencesService.getPreference("recipes.visible", Boolean.TRUE)) ? "<" : ">");
+        this.button.setText((PreferencesService.getPreference(PreferenceConstants.RECIPES_VISIBLE, Boolean.TRUE)) ? "<" : ">");
         this.button.getStyleClass().addAll("root", "menubutton");
         EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
             this.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
@@ -75,14 +77,14 @@ public class SearchBar extends HBox {
             final Sort sort = Sort.valueOf(PreferencesService.getPreference("search.sort", ""));
             this.sortMaterialsComboBox.getSelectionModel().select(sort);
         } catch (final IllegalArgumentException ex) {
-
+            log.error("sort error", ex);
         }
 
         try {
             final Show filter = Show.valueOf(PreferencesService.getPreference("search.filter", ""));
             this.showMaterialsComboBox.getSelectionModel().select(filter);
         } catch (final IllegalArgumentException ex) {
-
+            log.error("filter error", ex);
         }
     }
 
@@ -95,9 +97,7 @@ public class SearchBar extends HBox {
         Observable.create((ObservableEmitter<String> emitter) -> textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe((newValue) -> {
-                    EventService.publish(new SearchEvent(new Search(newValue, getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox))));
-                });
+                .subscribe(newValue -> EventService.publish(new SearchEvent(new Search(newValue, getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox)))));
         return textField;
     }
 
@@ -156,7 +156,7 @@ public class SearchBar extends HBox {
         return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : Sort.ALPHABETICAL;
     }
 
-    public Button getButton() {
+    Button getButton() {
         return this.button;
     }
 }

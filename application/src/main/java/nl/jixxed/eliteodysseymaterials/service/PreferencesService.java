@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class PreferencesService {
-    private final static String PREFERENCES_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\pref.properties";
-    private final static PreferencesService instance = new PreferencesService();
+    private static final String PREFERENCES_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\pref.properties";
+    private static final PreferencesService instance = new PreferencesService();
 
     private Properties prop;
 
@@ -29,25 +29,26 @@ public class PreferencesService {
         //create file if not exists
         if (!targetFile.exists()) {
             try {
-                targetFile.createNewFile();
+                final boolean created = targetFile.createNewFile();
+                if (!created) {
+                    throw new IllegalStateException("Couldn't create pref file: " + targetFile);
+                }
             } catch (final IOException e) {
                 throw new IllegalStateException("Couldn't create pref file: " + targetFile);
             }
         }
         Observable
-                .create(emitter -> {
-                    this.prop = new Properties() {
-                        @Override
-                        public synchronized Object setProperty(final String key, final String value) {
-                            final Object property = super.setProperty(key, value);
-                            emitter.onNext(value);
-                            return property;
-                        }
-                    };
+                .create(emitter -> this.prop = new Properties() {
+                    @Override
+                    public synchronized Object setProperty(final String key, final String value) {
+                        final Object property = super.setProperty(key, value);
+                        emitter.onNext(value);
+                        return property;
+                    }
                 })
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe((newValue) -> {
+                .subscribe(newValue -> {
                     try (final OutputStream output = new FileOutputStream(PREFERENCES_FILE)) {
                         instance.prop.store(output, null);
                     } catch (final IOException e) {

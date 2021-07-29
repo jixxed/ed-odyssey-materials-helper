@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Getter
-public class SimpleLocationEvent extends Event {
+public class SimpleLocationEvent implements Event {
     private final Optional<String> starSystem;
     private final Optional<String> body;
     private final Optional<String> station;

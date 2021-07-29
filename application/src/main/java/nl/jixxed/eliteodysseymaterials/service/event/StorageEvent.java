@@ -6,6 +6,6 @@ import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 
 @AllArgsConstructor
 @Getter
-public class StorageEvent extends Event {
+public class StorageEvent implements Event {
     private final StoragePool storagePool;
 }

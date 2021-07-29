@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
@@ -7,9 +9,10 @@ import nl.jixxed.eliteodysseymaterials.enums.Material;
 
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BarterConstants {
 
-    public static final Map<Asset, String> BARTER_TRADEVALUES = Map.ofEntries(
+    private static final Map<Asset, String> BARTER_TRADEVALUES = Map.ofEntries(
             Map.entry(Asset.AEROGEL, "9/5"),
             Map.entry(Asset.CHEMICALCATALYST, "7/4"),
             Map.entry(Asset.CHEMICALSUPERBASE, "9/5"),
@@ -44,7 +47,7 @@ public class BarterConstants {
             Map.entry(Asset.TUNGSTENCARBIDE, "11/6"),
             Map.entry(Asset.WEAPONCOMPONENT, "18/10")
     );
-    public static final Map<Material, Integer> BARTER_SELLVALUES = Map.ofEntries(
+    private static final Map<Material, Integer> BARTER_SELLVALUES = Map.ofEntries(
             Map.entry(Asset.AEROGEL, 500),
             Map.entry(Asset.CHEMICALCATALYST, 400),
             Map.entry(Asset.CHEMICALSUPERBASE, 500),

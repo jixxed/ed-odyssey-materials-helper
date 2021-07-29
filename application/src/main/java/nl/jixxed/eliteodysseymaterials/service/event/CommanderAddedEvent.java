@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Commander;
 
 @AllArgsConstructor
 @Getter
-public class CommanderAddedEvent extends Event {
+public class CommanderAddedEvent implements Event {
     private final Commander commander;
 
 }

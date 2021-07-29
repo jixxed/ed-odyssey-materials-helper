@@ -17,10 +17,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.OrientationChangeEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.SearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -28,11 +25,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
-public class MaterialOverview extends VBox {
+class MaterialOverview extends VBox {
 
-    //    private static final Insets CARD_MARGIN = new Insets(2, 5, 2, 5);
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    final ScrollPane scrollPane;
+    private final ScrollPane scrollPane;
     private final FlowPane totals;
     private final FlowPane assetChemicalFlow;
     private final FlowPane assetCircuitFlow;
@@ -44,7 +40,7 @@ public class MaterialOverview extends VBox {
     private final MaterialTotal dataTotal = new MaterialTotal(StorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
     private Search currentSearch = new Search("", Sort.ALPHABETICAL, Show.ALL);
 
-    public MaterialOverview(final ScrollPane scrollPane) {
+    MaterialOverview(final ScrollPane scrollPane) {
         this.scrollPane = scrollPane;
         final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")).getOrientation();
         this.totals = new FlowPane(Orientation.HORIZONTAL, this.goodsTotal, this.assetsTotal, this.dataTotal);
@@ -85,7 +81,7 @@ public class MaterialOverview extends VBox {
 
         setGaps(this.assetCircuitFlow, this.assetTechFlow, this.assetChemicalFlow, this.goodFlow, this.dataFlow);
         this.getChildren().addAll(this.totals, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
-        Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> {
+        Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, journalProcessedEvent -> {
             if (JournalEventType.BACKPACK.equals(journalProcessedEvent.getJournalEventType())
                     || JournalEventType.EMBARK.equals(journalProcessedEvent.getJournalEventType())
                     || JournalEventType.SHIPLOCKER.equals(journalProcessedEvent.getJournalEventType())) {
@@ -94,12 +90,12 @@ public class MaterialOverview extends VBox {
         }))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe((journalProcessedEvent) -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
-        EventService.addListener(SearchEvent.class, (searchEvent) -> {
+                .subscribe(journalProcessedEvent -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
+        EventService.addListener(SearchEvent.class, searchEvent -> {
             this.currentSearch = searchEvent.getSearch();
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         });
-
+        EventService.addListener(CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
 
     }
 
@@ -134,7 +130,7 @@ public class MaterialOverview extends VBox {
         });
     }
 
-    void updateContent(final Search search) {
+    private void updateContent(final Search search) {
         this.assetChemicalFlow.getChildren().clear();
         this.assetTechFlow.getChildren().clear();
         this.assetCircuitFlow.getChildren().clear();
@@ -168,12 +164,11 @@ public class MaterialOverview extends VBox {
                 .filter(searchQueryFilter(search))
                 .filter(knownFilter())
                 .sorted(getSort(search))
-                .forEach((entry) -> {
+                .forEach(entry -> {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
                     this.goodFlow.getChildren().add(materialCard);
-//                    GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
-        APPLICATION_STATE.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
+        APPLICATION_STATE.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             final String name = entry.getKey() + " (unknown)";
             final MaterialCard materialCard = new MaterialCard(Good.UNKNOWN, name, entry.getValue(), false);
             this.goodFlow.getChildren().add(materialCard);
@@ -187,7 +182,7 @@ public class MaterialOverview extends VBox {
                 .filter(knownFilter())
                 .sorted(Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
                         .thenComparing(o -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey())))
-                .forEach((entry) -> {
+                .forEach(entry -> {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
                     switch (entry.getKey().getType()) {
                         case TECH -> this.assetTechFlow.getChildren().add(materialCard);
@@ -203,12 +198,11 @@ public class MaterialOverview extends VBox {
                 .filter(searchQueryFilter(search))
                 .filter(knownFilter())
                 .sorted(getSort(search))
-                .forEach((entry) -> {
+                .forEach(entry -> {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue(), RecipeConstants.isEngineeringIngredient(entry.getKey()));
                     this.dataFlow.getChildren().add(materialCard);
-//                    GridPane.setMargin(materialCard, CARD_MARGIN);
                 });
-        APPLICATION_STATE.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach((entry) -> {
+        APPLICATION_STATE.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             final String name = entry.getKey() + " (unknown)";
             final MaterialCard materialCard = new MaterialCard(Data.UNKNOWN, name, entry.getValue(), false);
             this.dataFlow.getChildren().add(materialCard);
@@ -262,7 +256,6 @@ public class MaterialOverview extends VBox {
                 .filter(data -> !RecipeConstants.isBlueprintIngredient(data.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer unknownDatas = APPLICATION_STATE.getUnknownData().size();
 
         this.dataTotal.update(MaterialTotalType.BLUEPRINT, recipeDatas);
         this.dataTotal.update(MaterialTotalType.IRRELEVANT, nonRecipeDatas);
@@ -295,7 +288,6 @@ public class MaterialOverview extends VBox {
                 .filter(good -> !RecipeConstants.isBlueprintIngredient(good.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
-        final Integer unknownGoods = APPLICATION_STATE.getUnknownGoods().size();
         this.goodsTotal.update(MaterialTotalType.BLUEPRINT, recipeGoods);
         this.goodsTotal.update(MaterialTotalType.IRRELEVANT, nonRecipeGoods);
     }

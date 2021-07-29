@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
 import javafx.application.Platform;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -10,6 +12,7 @@ import java.nio.file.Files;
 import java.util.Scanner;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileProcessor {
 
     private static int lineNumber = 0;

@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 public class ApplicationState {
     private static ApplicationState applicationState;
     private final Function<WishlistRecipe, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
-    private final Map<Good, Storage> goods = new HashMap<>();
+    private final Map<Good, Storage> goods = new EnumMap<>(Good.class);
     private final Map<String, Storage> unknownGoods = new HashMap<>();
-    private final Map<Asset, Storage> assets = new HashMap<>();
-    private final Map<Data, Storage> data = new HashMap<>();
+    private final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
+    private final Map<Data, Storage> data = new EnumMap<>(Data.class);
     private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Material> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
-    private final Map<Engineer, EngineerState> engineerStates = new HashMap<>(Map.of(
+    private final Map<Engineer, EngineerState> engineerStates = new EnumMap<>(Map.of(
             Engineer.DOMINO_GREEN, EngineerState.UNKNOWN,
             Engineer.HERO_FERRARI, EngineerState.UNKNOWN,
             Engineer.JUDE_NAVARRO, EngineerState.UNKNOWN,
@@ -45,7 +45,7 @@ public class ApplicationState {
                 .forEach(this.favourites::add);
 
         EventService.addListener(WishlistRecipeEvent.class,
-                (wishlistEvent) -> Platform.runLater(() -> {
+                wishlistEvent -> Platform.runLater(() -> {
                     switch (wishlistEvent.getAction()) {
                         case ADDED -> addToWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe().getRecipeName());
                         case REMOVED -> removeFromWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
@@ -119,14 +119,14 @@ public class ApplicationState {
     }
 
     private void initCounts() {
-        Arrays.stream(Asset.values()).forEach(component ->
-                this.getAssets().put(component, new Storage())
+        Arrays.stream(Asset.values()).forEach(material ->
+                this.getAssets().put(material, new Storage())
         );
-        Arrays.stream(Data.values()).forEach(data ->
-                this.getData().put(data, new Storage())
+        Arrays.stream(Data.values()).forEach(material ->
+                this.getData().put(material, new Storage())
         );
-        Arrays.stream(Good.values()).forEach(good ->
-                this.getGoods().put(good, new Storage())
+        Arrays.stream(Good.values()).forEach(material ->
+                this.getGoods().put(material, new Storage())
         );
 
     }
@@ -151,7 +151,7 @@ public class ApplicationState {
     private void addToWishList(final String fid, final RecipeName recipe) {
         final List<WishlistRecipe> wishlist = getWishlist(fid);
         wishlist.add(new WishlistRecipe(recipe, true));
-        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
+        PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, wishlist, this.wishlistRecipeMapper);
         EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
@@ -159,7 +159,7 @@ public class ApplicationState {
         final List<WishlistRecipe> wishlist = getWishlist(fid);
         final Optional<WishlistRecipe> found = wishlist.stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
         found.ifPresent(wishlist::remove);
-        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
+        PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, wishlist, this.wishlistRecipeMapper);
         EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
@@ -167,12 +167,12 @@ public class ApplicationState {
         final List<WishlistRecipe> wishlist = getWishlist(fid);
         final Optional<WishlistRecipe> existingRecipe = wishlist.stream().filter(recipe -> recipe.getRecipeName().equals(wishlistRecipe.getRecipeName()) && recipe.isVisible() == !wishlistRecipe.isVisible()).findFirst();
         existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistRecipe.isVisible()));
-        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
+        PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, wishlist, this.wishlistRecipeMapper);
         EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
     public List<WishlistRecipe> getWishlist(final String fid) {
-        final String recipes = PreferencesService.getPreference("wishlist.recipes." + fid, "N/A");
+        final String recipes = PreferencesService.getPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, "N/A");
         if (!recipes.equals("N/A")) {
             return parseFIDWishlist(recipes);
         } else {
@@ -181,7 +181,7 @@ public class ApplicationState {
     }
 
     private List<WishlistRecipe> getOldStyleWishList(final String fid, final String recipes) {
-        final String oldRecipes = PreferencesService.getPreference("wishlist.recipes", "");
+        final String oldRecipes = PreferencesService.getPreference(PreferenceConstants.WISHLIST_RECIPES, "");
         final List<RecipeName> oldWishlist = new ArrayList<>();
         Arrays.stream(oldRecipes.split(","))
                 .filter(recipe -> !recipes.isBlank())
@@ -190,9 +190,9 @@ public class ApplicationState {
                 .forEach(oldWishlist::add);
         final List<WishlistRecipe> wishlist = oldWishlist.stream().map(recipeName -> new WishlistRecipe(recipeName, true)).collect(Collectors.toList());
         //transfer old style to new style
-        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
+        PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, wishlist, this.wishlistRecipeMapper);
         //reset old style to empty
-        PreferencesService.setPreference("wishlist.recipes", new ArrayList<>(), this.wishlistRecipeMapper);
+        PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES, new ArrayList<>(), this.wishlistRecipeMapper);
         return wishlist;
     }
 

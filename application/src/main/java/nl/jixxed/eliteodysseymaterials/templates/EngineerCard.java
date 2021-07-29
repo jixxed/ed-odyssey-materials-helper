@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class EngineerCard extends VBox {
+class EngineerCard extends VBox {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
@@ -36,7 +36,7 @@ public class EngineerCard extends VBox {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    public EngineerCard(final Engineer engineer) {
+    EngineerCard(final Engineer engineer) {
         this.getChildren().add(getEngineerImageView(engineer));
         this.getChildren().add(getEngineerName(engineer));
         this.getChildren().add(getEngineerSpecialisation(engineer));
@@ -113,9 +113,7 @@ public class EngineerCard extends VBox {
             content.putString(engineer.getSystem());
             clipboard.setContent(content);
         });
-        EventService.addListener(LocationEvent.class, locationEvent -> {
-            engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getX(), locationEvent.getY(), locationEvent.getZ())) + "Ly)");
-        });
+        EventService.addListener(LocationEvent.class, locationEvent -> engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getX(), locationEvent.getY(), locationEvent.getZ())) + "Ly)"));
         location.getStyleClass().add("engineer-location-line");
         return location;
     }
@@ -128,6 +126,8 @@ public class EngineerCard extends VBox {
             case FORCE -> engineerSpecialisation.getStyleClass().add("specialisation-force");
             case DYNAMIC -> engineerSpecialisation.getStyleClass().add("specialisation-dynamic");
             case STRATEGIC -> engineerSpecialisation.getStyleClass().add("specialisation-strategic");
+            case UNKNOWN -> {
+            }
         }
         final ImageView specialisationIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/engineer/specialisation/" + engineer.getSpecialisation().name().toLowerCase() + ".png")));
         specialisationIcon.setFitHeight(32);
@@ -142,9 +142,7 @@ public class EngineerCard extends VBox {
         final Label engineerName = new Label();
         engineerName.textProperty().bind(LocaleService.getStringBinding(engineer.getLocalizationKey()));
         engineerName.getStyleClass().add("engineer-name");
-        engineerName.setOnMouseClicked(event -> {
-            EventService.publish(new BlueprintClickEvent(RecipeName.forEngineer(engineer)));
-        });
+        engineerName.setOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(RecipeName.forEngineer(engineer))));
         return engineerName;
     }
 

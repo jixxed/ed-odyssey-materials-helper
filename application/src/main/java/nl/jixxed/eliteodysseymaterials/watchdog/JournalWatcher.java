@@ -28,8 +28,7 @@ public class JournalWatcher {
         listCommanders(folder);
         findLatestFile(folder);
         this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
-        this.fileWatcher = new FileWatcher(folder);
-        this.fileWatcher.addListener(new FileAdapter() {
+        this.fileWatcher = new FileWatcher("Journal Watcher Thread").withListener(new FileAdapter() {
             @Override
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
@@ -51,7 +50,7 @@ public class JournalWatcher {
             private boolean isValidOdysseyJournal(final File file) {
                 return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file);
             }
-        }).watch("Journal Watcher Thread");
+        }).watch(folder);
     }
 
     private synchronized String getCurrentFilePath() {
