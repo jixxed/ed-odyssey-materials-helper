@@ -10,7 +10,6 @@ class RecipeTest {
 
     @Test
     void getMaterialCollection() {
-
         final Recipe recipe = new Recipe(RecipeName.ADDED_MELEE_DAMAGE, Map.of(
                 Good.IONISEDGAS, 10,
                 Data.BIOMETRICDATA, 5,
@@ -18,18 +17,18 @@ class RecipeTest {
                 Asset.VISCOELASTICPOLYMER, 10,
                 Asset.RDX, 10
         ));
-        Assertions.assertThat(recipe.getMaterialCollection(Asset.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
+        Assertions.assertThat((Map<Material, Integer>) recipe.getMaterialCollection(Asset.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Asset.VISCOELASTICPOLYMER, 10,
                 Asset.RDX, 10
         ));
-        Assertions.assertThat(recipe.getMaterialCollection(Data.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
+        Assertions.assertThat((Map<Material, Integer>) recipe.getMaterialCollection(Data.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.BIOMETRICDATA, 5,
                 Data.COMBATANTPERFORMANCE, 10
         ));
-        Assertions.assertThat(recipe.getMaterialCollection(Good.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
+        Assertions.assertThat((Map<Material, Integer>) recipe.getMaterialCollection(Good.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Good.IONISEDGAS, 10
         ));
-        Assertions.assertThat(recipe.getMaterialCollection(Material.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
+        Assertions.assertThat((Map<Material, Integer>) recipe.getMaterialCollection(Material.class)).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Good.IONISEDGAS, 10,
                 Data.BIOMETRICDATA, 5,
                 Data.COMBATANTPERFORMANCE, 10,
