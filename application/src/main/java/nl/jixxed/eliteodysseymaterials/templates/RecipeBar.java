@@ -7,7 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import nl.jixxed.eliteodysseymaterials.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
@@ -24,10 +24,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public class RecipeBar extends Accordion {
+class RecipeBar extends Accordion {
     private final Settings settings;
 
-    public RecipeBar(final Application application) {
+    RecipeBar(final Application application) {
         this.settings = new Settings(application);
         final List<TitledPane> titledPanes = RecipeConstants.RECIPES.entrySet().stream()
                 .map(this::createCategoryTitledPane)

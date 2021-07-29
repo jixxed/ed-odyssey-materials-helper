@@ -2,8 +2,8 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;

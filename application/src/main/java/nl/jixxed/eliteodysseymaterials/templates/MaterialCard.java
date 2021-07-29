@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import nl.jixxed.eliteodysseymaterials.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
@@ -19,7 +19,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.io.IOException;
 
-public class MaterialCard extends HBox {
+class MaterialCard extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @FXML
     private ImageView image;
@@ -48,12 +48,12 @@ public class MaterialCard extends HBox {
         this.image.setFitWidth(0);
     }
 
-    public MaterialCard(final Material material, final String name, final Storage amounts, final boolean isEngineerUnlockMaterial) {
+    MaterialCard(final Material material, final String name, final Storage amounts, final boolean isEngineerUnlockMaterial) {
         this(material, amounts, isEngineerUnlockMaterial);
         this.name.textProperty().bind(LocaleService.getStringBinding(() -> name));
     }
 
-    public MaterialCard(final Material material, final Storage amounts, final boolean isEngineerUnlockMaterial) {
+    MaterialCard(final Material material, final Storage amounts, final boolean isEngineerUnlockMaterial) {
         this(amounts);
         this.name.textProperty().bind(LocaleService.getStringBinding(material));
         this.setOnMouseClicked((event) -> setFavourite(material, APPLICATION_STATE.toggleFavourite(material)));
@@ -86,7 +86,7 @@ public class MaterialCard extends HBox {
         }
     }
 
-    public MaterialCard(final Asset asset, final Storage amounts) {
+    MaterialCard(final Asset asset, final Storage amounts) {
         this(amounts);
         this.setOnMouseClicked((event) -> setFavourite(asset, APPLICATION_STATE.toggleFavourite(asset)));
         this.setFavourite(asset, APPLICATION_STATE.isFavourite(asset));

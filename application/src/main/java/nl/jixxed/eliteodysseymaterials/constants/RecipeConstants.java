@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials;
+package nl.jixxed.eliteodysseymaterials.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

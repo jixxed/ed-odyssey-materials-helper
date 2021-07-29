@@ -9,9 +9,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
-import nl.jixxed.eliteodysseymaterials.AppConstants;
 import nl.jixxed.eliteodysseymaterials.Main;
-import nl.jixxed.eliteodysseymaterials.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
@@ -26,7 +26,7 @@ import java.io.File;
 public class SettingsTab extends EDOTab {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    public SettingsTab(final Application application) {
+    SettingsTab(final Application application) {
         super();
         this.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
         final ScrollPane scrollPane = new ScrollPane();
