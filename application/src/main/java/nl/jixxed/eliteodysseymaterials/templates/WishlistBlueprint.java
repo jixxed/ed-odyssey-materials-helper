@@ -18,7 +18,10 @@ import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistRecipeEvent;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +43,7 @@ public class WishlistBlueprint extends HBox {
     private final Set<WishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<WishlistIngredient> otherIngredients = new HashSet<>();
 
-    public WishlistBlueprint(final WishlistRecipe wishlistRecipe) {
+    WishlistBlueprint(final WishlistRecipe wishlistRecipe) {
         super();
         this.wishlistRecipe = wishlistRecipe;
         this.sequenceID = counter++;
@@ -81,11 +84,7 @@ public class WishlistBlueprint extends HBox {
         fadeTransition.setFromValue(0.3);
         fadeTransition.setToValue(1.0);
         fadeTransition.play();
-        EventService.addListener(ShipLockerEvent.class, shipLockerEvent -> {
-            final int amountCraftable = APPLICATION_STATE.amountCraftable(this.getRecipeName());
-            this.canCraft(amountCraftable > 0);
-        });
-        EventService.addListener(BackpackEvent.class, backpackEvent -> {
+        EventService.addListener(StorageEvent.class, storageEvent -> {
             final int amountCraftable = APPLICATION_STATE.amountCraftable(this.getRecipeName());
             this.canCraft(amountCraftable > 0);
         });
@@ -109,12 +108,12 @@ public class WishlistBlueprint extends HBox {
         }
     }
 
-    public void addWishlistIngredients(final List<WishlistIngredient> wishlistIngredients) {
+    void addWishlistIngredients(final List<WishlistIngredient> wishlistIngredients) {
         this.wishlistIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> this.recipe.hasIngredient(wishlistIngredient.getMaterial())).collect(Collectors.toSet()));
         this.otherIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> !this.recipe.hasIngredient(wishlistIngredient.getMaterial())).collect(Collectors.toSet()));
     }
 
-    public void setVisibility(final boolean visible) {
+    private void setVisibility(final boolean visible) {
         this.visible = visible;
         this.wishlistRecipe.setVisible(this.visible);
         this.imageView.setImage(new Image(getClass().getResourceAsStream(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png")));
@@ -133,19 +132,19 @@ public class WishlistBlueprint extends HBox {
         return this.wishlistRecipe.getRecipeName();
     }
 
-    public RecipeCategory getRecipeCategory() {
+    RecipeCategory getRecipeCategory() {
         return this.recipeCategory;
     }
 
-    public Integer getSequenceID() {
+    Integer getSequenceID() {
         return this.sequenceID;
     }
 
-    public boolean isVisibleBlueprint() {
+    boolean isVisibleBlueprint() {
         return this.visible;
     }
 
-    public WishlistRecipe getWishlistRecipe() {
+    WishlistRecipe getWishlistRecipe() {
         return this.wishlistRecipe;
     }
 }
