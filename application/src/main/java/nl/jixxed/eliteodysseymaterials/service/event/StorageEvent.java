@@ -1,15 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.service.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 
+@AllArgsConstructor
+@Getter
 public class StorageEvent extends Event {
     private final StoragePool storagePool;
-
-    public StorageEvent(final StoragePool storagePool) {
-        this.storagePool = storagePool;
-    }
-
-    public StoragePool getStoragePool() {
-        return this.storagePool;
-    }
 }

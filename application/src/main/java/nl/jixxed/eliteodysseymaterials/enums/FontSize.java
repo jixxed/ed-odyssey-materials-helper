@@ -1,7 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+@AllArgsConstructor
+@Getter
 public enum FontSize {
     EXTRA_SMALL(10),
     SMALL(12),
@@ -10,11 +14,6 @@ public enum FontSize {
     EXTRA_LARGE(18);
 
     private final Integer size;
-
-    FontSize(final Integer size) {
-        this.size = size;
-    }
-
 
     public String getLocalizationKey() {
         return "application.font.size." + this.name().toLowerCase();
@@ -25,7 +24,4 @@ public enum FontSize {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
-    public Integer getSize() {
-        return this.size;
-    }
 }

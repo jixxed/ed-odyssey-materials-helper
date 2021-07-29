@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.io.IOException;
@@ -17,26 +18,34 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@Slf4j
 public class Settings extends VBox {
 
 
     @FXML
     Label version;
     @FXML
+    private
     Label disclaimer1;
     @FXML
+    private
     Label disclaimer2;
     @FXML
+    private
     Label beer;
     @FXML
+    private
     Label versionLabel;
     @FXML
+    private
     Hyperlink link;
     @FXML
+    private
     Hyperlink bugs;
     @FXML
+    private
     Hyperlink donate;
-    ImageView donateImage = new ImageView();
+    private ImageView donateImage = new ImageView();
 
     public Settings(final Application application) {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
@@ -56,7 +65,7 @@ public class Settings extends VBox {
         try {
             latestVersion = getLatestVersion();
         } catch (final IOException e) {
-            e.printStackTrace();
+            log.error("Error retrieving latest version", e);
         }
         if (getBuildVersion() == null) {
             this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", "dev"));
@@ -97,7 +106,7 @@ public class Settings extends VBox {
         return response.get("tag_name").asText();
     }
 
-    public static String getBuildVersion() {
+    private static String getBuildVersion() {
         return System.getProperty("app.version");
     }
 }

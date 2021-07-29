@@ -1,9 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Locale;
 
+@AllArgsConstructor
+@Getter
 public enum ApplicationLocale {
     ENGLISH(Locale.ENGLISH),
     GERMAN(Locale.GERMAN),
@@ -14,11 +18,6 @@ public enum ApplicationLocale {
 
     private final Locale locale;
 
-    ApplicationLocale(final Locale locale) {
-        this.locale = locale;
-    }
-
-
     public String getLocalizationKey() {
         return "application.language." + this.name().toLowerCase();
     }
@@ -28,7 +27,4 @@ public enum ApplicationLocale {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
-    public Locale getLocale() {
-        return this.locale;
-    }
 }

@@ -1,5 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum Asset implements Material {
     AEROGEL(AssetType.CHEMICAL),
     CHEMICALCATALYST(AssetType.CHEMICAL),
@@ -36,12 +41,7 @@ public enum Asset implements Material {
     WEAPONCOMPONENT(AssetType.TECH),
     UNKNOWN(AssetType.NONE);
 
-    AssetType type;
-
-    Asset(final AssetType type) {
-
-        this.type = type;
-    }
+    private final AssetType type;
 
     public static Asset forName(final String name) {
         try {
@@ -49,10 +49,6 @@ public enum Asset implements Material {
         } catch (final IllegalArgumentException ex) {
             return Asset.UNKNOWN;
         }
-    }
-
-    public AssetType getType() {
-        return this.type;
     }
 
     @Override

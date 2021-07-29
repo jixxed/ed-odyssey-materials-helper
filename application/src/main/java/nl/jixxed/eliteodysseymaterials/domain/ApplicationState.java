@@ -10,12 +10,13 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class ApplicationState {
-
     private static ApplicationState applicationState;
+    private final Function<WishlistRecipe, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
     private final Map<Good, Storage> goods = new HashMap<>();
     private final Map<String, Storage> unknownGoods = new HashMap<>();
     private final Map<Asset, Storage> assets = new HashMap<>();
@@ -44,15 +45,13 @@ public class ApplicationState {
                 .forEach(this.favourites::add);
 
         EventService.addListener(WishlistRecipeEvent.class,
-                (wishlistEvent) -> {
-                    Platform.runLater(() -> {
-                        switch (wishlistEvent.getAction()) {
-                            case ADDED -> addToWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe().getRecipeName());
-                            case REMOVED -> removeFromWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
-                            case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
-                        }
-                    });
-                });
+                (wishlistEvent) -> Platform.runLater(() -> {
+                    switch (wishlistEvent.getAction()) {
+                        case ADDED -> addToWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe().getRecipeName());
+                        case REMOVED -> removeFromWishList(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
+                        case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
+                    }
+                }));
     }
 
     public static ApplicationState getInstance() {
@@ -141,7 +140,7 @@ public class ApplicationState {
             this.favourites.add(material);
             newState = true;
         }
-        PreferencesService.setPreference("material.favourites", this.favourites);
+        PreferencesService.setPreference("material.favourites", this.favourites, Material::toString);
         return newState;
     }
 
@@ -152,7 +151,7 @@ public class ApplicationState {
     private void addToWishList(final String fid, final RecipeName recipe) {
         final List<WishlistRecipe> wishlist = getWishlist(fid);
         wishlist.add(new WishlistRecipe(recipe, true));
-        PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
+        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
         EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
@@ -160,46 +159,53 @@ public class ApplicationState {
         final List<WishlistRecipe> wishlist = getWishlist(fid);
         final Optional<WishlistRecipe> found = wishlist.stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
         found.ifPresent(wishlist::remove);
-        PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
+        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
         EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
     private void changeVisibility(final String fid, final WishlistRecipe wishlistRecipe) {
         final List<WishlistRecipe> wishlist = getWishlist(fid);
         final Optional<WishlistRecipe> existingRecipe = wishlist.stream().filter(recipe -> recipe.getRecipeName().equals(wishlistRecipe.getRecipeName()) && recipe.isVisible() == !wishlistRecipe.isVisible()).findFirst();
-        existingRecipe.ifPresent(recipe -> {
-            recipe.setVisible(wishlistRecipe.isVisible());
-        });
-        PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
+        existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistRecipe.isVisible()));
+        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
         EventService.publish(new WishlistChangedEvent(wishlist.size()));
     }
 
     public List<WishlistRecipe> getWishlist(final String fid) {
         final String recipes = PreferencesService.getPreference("wishlist.recipes." + fid, "N/A");
         if (!recipes.equals("N/A")) {
-            final List<WishlistRecipe> wishlist = new ArrayList<>();
-            Arrays.stream(recipes.split(","))
-                    .filter(recipe -> !recipes.isBlank())
-                    .map(recipe -> {
-                        final String[] splittedRecipe = recipe.split(":");
-                        return new WishlistRecipe(RecipeName.forName(splittedRecipe[0]), Boolean.parseBoolean(splittedRecipe[1]));
-                    })
-                    .filter(Objects::nonNull)
-                    .forEach(wishlist::add);
-            return wishlist;
+            return parseFIDWishlist(recipes);
         } else {
-            final String oldRecipes = PreferencesService.getPreference("wishlist.recipes", "");
-            final List<RecipeName> oldWishlist = new ArrayList<>();
-            Arrays.stream(oldRecipes.split(","))
-                    .filter(recipe -> !recipes.isBlank())
-                    .map(RecipeName::forName)
-                    .filter(Objects::nonNull)
-                    .forEach(oldWishlist::add);
-            final List<WishlistRecipe> wishlist = oldWishlist.stream().map(recipeName -> new WishlistRecipe(recipeName, true)).collect(Collectors.toList());
-            PreferencesService.setRecipePreference("wishlist.recipes." + fid, wishlist);
-            PreferencesService.setRecipePreference("wishlist.recipes", new ArrayList<>());
-            return wishlist;
+            return getOldStyleWishList(fid, recipes);
         }
+    }
+
+    private List<WishlistRecipe> getOldStyleWishList(final String fid, final String recipes) {
+        final String oldRecipes = PreferencesService.getPreference("wishlist.recipes", "");
+        final List<RecipeName> oldWishlist = new ArrayList<>();
+        Arrays.stream(oldRecipes.split(","))
+                .filter(recipe -> !recipes.isBlank())
+                .map(RecipeName::forName)
+                .filter(Objects::nonNull)
+                .forEach(oldWishlist::add);
+        final List<WishlistRecipe> wishlist = oldWishlist.stream().map(recipeName -> new WishlistRecipe(recipeName, true)).collect(Collectors.toList());
+        //transfer old style to new style
+        PreferencesService.setPreference("wishlist.recipes." + fid, wishlist, this.wishlistRecipeMapper);
+        //reset old style to empty
+        PreferencesService.setPreference("wishlist.recipes", new ArrayList<>(), this.wishlistRecipeMapper);
+        return wishlist;
+    }
+
+    private List<WishlistRecipe> parseFIDWishlist(final String recipes) {
+        final List<WishlistRecipe> wishlist = new ArrayList<>();
+        Arrays.stream(recipes.split(","))
+                .filter(recipe -> !recipes.isBlank())
+                .map(recipe -> {
+                    final String[] splittedRecipe = recipe.split(":");
+                    return new WishlistRecipe(RecipeName.forName(splittedRecipe[0]), Boolean.parseBoolean(splittedRecipe[1]));
+                })
+                .forEach(wishlist::add);
+        return wishlist;
     }
 
     public Set<Commander> getCommanders() {
@@ -239,18 +245,21 @@ public class ApplicationState {
     public int amountCraftable(final RecipeName recipeName) {
         final Recipe recipe = RecipeConstants.getRecipe(recipeName);
         final AtomicInteger lowestAmount = new AtomicInteger(9999);
-        recipe.getMaterialCollection(Good.class).forEach((good, integer) -> {
-            final int amountCraftable = this.goods.get(good).getTotalValue() / integer;
-            lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
-        });
-        recipe.getMaterialCollection(Asset.class).forEach((asset, integer) -> {
-            final int amountCraftable = this.assets.get(asset).getTotalValue() / integer;
-            lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
-        });
-        recipe.getMaterialCollection(Data.class).forEach((data, integer) -> {
-            final int amountCraftable = this.data.get(data).getTotalValue() / integer;
+        recipe.getMaterialCollection(Material.class).forEach((material, amountRequired) -> {
+            final int amountCraftable = getMaterialStorage(material).getTotalValue() / amountRequired;
             lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
         });
         return lowestAmount.get();
+    }
+
+    private Storage getMaterialStorage(final Material material) {
+        if (material instanceof Good) {
+            return this.goods.get(material);
+        } else if (material instanceof Asset) {
+            return this.assets.get(material);
+        } else if (material instanceof Data) {
+            return this.data.get(material);
+        }
+        throw new IllegalArgumentException("Unknown material type");
     }
 }

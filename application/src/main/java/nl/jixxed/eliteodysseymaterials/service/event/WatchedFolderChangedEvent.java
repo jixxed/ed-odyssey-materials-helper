@@ -1,13 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.service.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public class WatchedFolderChangedEvent extends Event {
     private final String path;
-
-    public WatchedFolderChangedEvent(final String path) {
-        this.path = path;
-    }
-
-    public String getPath() {
-        return this.path;
-    }
 }

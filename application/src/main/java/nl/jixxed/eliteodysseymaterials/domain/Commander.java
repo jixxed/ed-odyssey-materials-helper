@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class Commander {
-    String name;
-    String fid;
+    private final String name;
+    private final String fid;
 
     @Override
     public String toString() {

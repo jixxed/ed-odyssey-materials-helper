@@ -1,19 +1,17 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 import javafx.geometry.Orientation;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+@AllArgsConstructor
+@Getter
 public enum MaterialOrientation {
-    HORIZONTAL(Orientation.HORIZONTAL), VERTICAL(Orientation.VERTICAL);
+    HORIZONTAL(Orientation.HORIZONTAL),
+    VERTICAL(Orientation.VERTICAL);
+
     private final Orientation orientation;
-
-    MaterialOrientation(final Orientation orientation) {
-        this.orientation = orientation;
-    }
-
-    public Orientation getOrientation() {
-        return this.orientation;
-    }
 
     public String getLocalizationKey() {
         return "application.orientation." + this.name().toLowerCase();

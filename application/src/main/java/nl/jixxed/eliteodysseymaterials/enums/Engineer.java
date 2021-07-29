@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
 public enum Engineer {
@@ -16,28 +17,19 @@ public enum Engineer {
     YARDEN_BOND("Yarden Bond", "Salamander Bank", "Bayan", Specialisation.DYNAMIC, -19.96875, 117.625, -90.46875),
     UNKNOWN("UNKNOWN", "UNKNOWN", "UNKNOWN", Specialisation.UNKNOWN, 0, 0, 0);
 
-    String name;
-    String settlement;
-    String system;
-    Specialisation specialisation;
-    double x;
-    double y;
-    double z;
+    private final String name;
+    @Getter
+    private final String settlement;
+    @Getter
+    private final String system;
+    @Getter
+    private final Specialisation specialisation;
+    private final double x;
+    private final double y;
+    private final double z;
 
     public String friendlyName() {
         return this.name;
-    }
-
-    public String getSettlement() {
-        return this.settlement;
-    }
-
-    public String getSystem() {
-        return this.system;
-    }
-
-    public Specialisation getSpecialisation() {
-        return this.specialisation;
     }
 
     public Double getDistance(final double x, final double y, final double z) {

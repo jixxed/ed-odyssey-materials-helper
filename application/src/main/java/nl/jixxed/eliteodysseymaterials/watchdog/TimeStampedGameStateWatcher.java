@@ -16,11 +16,11 @@ import java.util.function.Consumer;
 @Slf4j
 public class TimeStampedGameStateWatcher {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    GameStateWatcher gameStateWatcher = new GameStateWatcher();
-    Consumer<File> fileProcessor;
-    String timeStamp = "";
-    File file = null;
-    final StoragePool storagePool;
+    private final GameStateWatcher gameStateWatcher = new GameStateWatcher();
+    private final Consumer<File> fileProcessor;
+    private String timeStamp = "";
+    private File file = null;
+    private final StoragePool storagePool;
 
     public TimeStampedGameStateWatcher(final File folder, final Consumer<File> fileProcessor, final String filename, final StoragePool storagePool) {
         this.storagePool = storagePool;
@@ -36,15 +36,13 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             });
         }
-
-
     }
 
     public void stop() {
         this.gameStateWatcher.stop();
     }
 
-    public synchronized void process(final File file) {
+    private synchronized void process(final File file) {
         this.file = file;
         if (this.file != null) {
             try {
@@ -60,9 +58,8 @@ public class TimeStampedGameStateWatcher {
                     log.info("Process " + jsonNode.get("event").asText());
                 }
             } catch (final IOException e) {
-                e.printStackTrace();
+                log.error("Error processing journal message", e);
             }
         }
-
     }
 }

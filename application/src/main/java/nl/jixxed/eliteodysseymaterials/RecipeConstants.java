@@ -13,11 +13,11 @@ import java.util.Map;
 
 public abstract class RecipeConstants {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    public static final Map<RecipeName, Recipe> SUIT_UPGRADES = new HashMap<>();
-    public static final Map<RecipeName, Recipe> WEAPON_UPGRADES = new HashMap<>();
-    public static final Map<RecipeName, ModuleRecipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
-    public static final Map<RecipeName, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
-    public static final Map<RecipeName, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
+    private static final Map<RecipeName, Recipe> SUIT_UPGRADES = new HashMap<>();
+    private static final Map<RecipeName, Recipe> WEAPON_UPGRADES = new HashMap<>();
+    private static final Map<RecipeName, ModuleRecipe> SUIT_MODULE_BLUEPRINTS = new HashMap<>();
+    private static final Map<RecipeName, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new HashMap<>();
+    private static final Map<RecipeName, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new HashMap<>();
     public static final Map<RecipeCategory, Map<RecipeName, ? extends Recipe>> RECIPES = Map.of(
             RecipeCategory.SUIT_GRADES, SUIT_UPGRADES,
             RecipeCategory.WEAPON_GRADES, WEAPON_UPGRADES,
@@ -86,7 +86,7 @@ public abstract class RecipeConstants {
         return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
     }
 
-    public static boolean isEngineeringIngredientAndCompleted(final Material material) {
+    private static boolean isEngineeringIngredientAndCompleted(final Material material) {
         return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(EngineerRecipe::isCompleted).anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
     }
 
@@ -118,7 +118,7 @@ public abstract class RecipeConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_A3, new EngineerRecipe(
                 RecipeName.ENGINEER_A3,
                 Map.of(
-                        Data.OPINIONPOLLS, 20
+                        Data.OPINIONPOLLS, 10
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.KIT_FOWLER)
         ));

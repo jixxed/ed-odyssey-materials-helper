@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.watchdog;
 
+import lombok.RequiredArgsConstructor;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
@@ -9,18 +11,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
-
+@RequiredArgsConstructor
 public class FileWatcher implements Runnable {
 
     private final List<FileListener> listeners = new ArrayList<>();
     private final File folder;
-    private final AtomicBoolean poll = new AtomicBoolean(true);
+    private final AtomicBoolean run = new AtomicBoolean(true);
+    private boolean poll = true;
 
-    public FileWatcher(final File folder) {
-        this.folder = folder;
-    }
-
-    public void watch(final String threadName) {
+    void watch(final String threadName) {
         if (this.folder.exists()) {
             final Thread thread = new Thread(this);
             thread.setDaemon(true);
@@ -34,8 +33,8 @@ public class FileWatcher implements Runnable {
         try (final WatchService watchService = FileSystems.getDefault().newWatchService()) {
             final Path path = Paths.get(this.folder.getAbsolutePath());
             path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
-            while (this.poll.get()) {
-                this.poll.set(pollEvents(watchService));
+            while (this.run.get() && this.poll) {
+                this.poll = pollEvents(watchService);
             }
         } catch (final IOException | InterruptedException | ClosedWatchServiceException e) {
             Thread.currentThread().interrupt();
@@ -43,7 +42,7 @@ public class FileWatcher implements Runnable {
     }
 
 
-    protected boolean pollEvents(final WatchService watchService) throws InterruptedException {
+    private boolean pollEvents(final WatchService watchService) throws InterruptedException {
         final WatchKey key = watchService.take();
         final Path path = (Path) key.watchable();
         for (final WatchEvent<?> event : key.pollEvents()) {
@@ -52,7 +51,7 @@ public class FileWatcher implements Runnable {
         return key.reset();
     }
 
-    protected void notifyListeners(final WatchEvent.Kind<?> kind, final File file) {
+    private void notifyListeners(final WatchEvent.Kind<?> kind, final File file) {
         final FileEvent event = new FileEvent(file);
         if (kind == ENTRY_CREATE) {
             for (final FileListener listener : this.listeners) {
@@ -74,7 +73,7 @@ public class FileWatcher implements Runnable {
         return this;
     }
 
-    public void stop() {
-        this.poll.set(false);
+    void stop() {
+        this.run.set(false);
     }
 }

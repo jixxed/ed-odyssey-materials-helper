@@ -3,20 +3,21 @@ package nl.jixxed.eliteodysseymaterials.service;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import nl.jixxed.eliteodysseymaterials.domain.WishlistRecipe;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class PreferencesService {
     private final static String PREFERENCES_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\pref.properties";
     private final static PreferencesService instance = new PreferencesService();
 
-    Properties prop;
+    private Properties prop;
 
     private PreferencesService() {
         //create folder if not exists
@@ -49,32 +50,25 @@ public class PreferencesService {
                 .subscribe((newValue) -> {
                     try (final OutputStream output = new FileOutputStream(PREFERENCES_FILE)) {
                         instance.prop.store(output, null);
-                    } catch (final IOException io) {
-                        io.printStackTrace();
+                    } catch (final IOException e) {
+                        log.error("Error writing preferences", e);
                     }
                 });
 
         try (final FileInputStream fis = new FileInputStream(targetFile)) {
             this.prop.load(fis);
         } catch (final IOException e) {
+            log.error("Error reading preferences", e);
             throw new IllegalStateException("Couldn't load pref file: " + targetFile);
         }
 
     }
 
-    public static void setRecipePreference(final String key, final List<WishlistRecipe> value) {
+    public static <T> void setPreference(final String key, final List<T> value, final Function<T, String> mapper) {
         if (value == null || value.isEmpty()) {
             instance.prop.setProperty(key, "");
         } else {
-            instance.prop.setProperty(key, value.stream().map(recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible()).collect(Collectors.joining(",")));
-        }
-    }
-
-    public static void setPreference(final String key, final List<Material> value) {
-        if (value == null || value.isEmpty()) {
-            instance.prop.setProperty(key, "");
-        } else {
-            instance.prop.setProperty(key, value.stream().map(Material::toString).collect(Collectors.joining(",")));
+            instance.prop.setProperty(key, value.stream().map(mapper).collect(Collectors.joining(",")));
         }
     }
 

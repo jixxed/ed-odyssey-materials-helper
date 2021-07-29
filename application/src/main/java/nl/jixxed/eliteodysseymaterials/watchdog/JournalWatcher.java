@@ -33,22 +33,33 @@ public class JournalWatcher {
             @Override
             public void onModified(final FileEvent event) {
                 final File file = event.getFile();
-                if (file.isFile()) {
-                    if (file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file)) {
-                        final String currentFilePath = JournalWatcher.this.currentlyWatchedFile.map(File::getAbsolutePath).orElse("");
-                        if (currentFilePath.equals(file.getAbsolutePath())) {
-                            fileModifiedProcessor.accept(file);
-                        } else if (isNewerJournal(file)) {
-                            JournalWatcher.this.currentlyWatchedFile = Optional.of(file);
-                            fileSwitchedProcessor.accept(file);
-                            log.info("Switched to journal: " + file.getAbsolutePath());
-                        } else {
-                            log.info("Rejected journal: " + file.getAbsolutePath());
-                        }
+                final String currentFilePath = getCurrentFilePath();
+                final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
+                if (isSameFile || isValidOdysseyJournal(file)) {
+                    if (isSameFile) {
+                        fileModifiedProcessor.accept(file);
+                    } else if (isNewerJournal(file)) {
+                        setCurrentlyWatchedFile(file);
+                        fileSwitchedProcessor.accept(file);
+                        log.info("Switched to journal: " + file.getAbsolutePath());
+                    } else {
+                        log.info("Rejected journal: " + file.getAbsolutePath());
                     }
                 }
             }
+
+            private boolean isValidOdysseyJournal(final File file) {
+                return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+            }
         }).watch("Journal Watcher Thread");
+    }
+
+    private synchronized String getCurrentFilePath() {
+        return this.currentlyWatchedFile.map(File::getAbsolutePath).orElse("");
+    }
+
+    private synchronized void setCurrentlyWatchedFile(final File file) {
+        this.currentlyWatchedFile = Optional.of(file);
     }
 
     private void listCommanders(final File folder) {
@@ -80,7 +91,7 @@ public class JournalWatcher {
                 }
             }
         } catch (final FileNotFoundException | JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Error listing commander", e);
         }
     }
 
@@ -99,14 +110,14 @@ public class JournalWatcher {
     }
 
 
-    private boolean isNewerJournal(final File file) {
+    private synchronized boolean isNewerJournal(final File file) {
         final long fileTimestamp = Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23));
         final long currentFileTimestamp = this.currentlyWatchedFile.map(currentFile -> Long.parseLong(currentFile.getName().substring(8, 20) + currentFile.getName().substring(21, 23))).orElse(0L);
         return fileTimestamp > currentFileTimestamp;
     }
 
 
-    private boolean isSelectedCommander(final File file) {
+    private synchronized boolean isSelectedCommander(final File file) {
         final Optional<Commander> preferredCommander = APPLICATION_STATE.getPreferredCommander();
         return preferredCommander.map(commander -> {
             try (final Scanner scanner = new Scanner(file)) {
@@ -120,13 +131,13 @@ public class JournalWatcher {
                     }
                 }
             } catch (final FileNotFoundException | JsonProcessingException e) {
-                e.printStackTrace();
+                log.error("Error checking for selected commander", e);
             }
             return false;
         }).orElse(true);
     }
 
-    private boolean isOdysseyJournal(final File file) {
+    private synchronized boolean isOdysseyJournal(final File file) {
         try (final Scanner scanner = new Scanner(file)) {
             final String firstLine = scanner.nextLine();
 
@@ -135,12 +146,12 @@ public class JournalWatcher {
             return isOdysseyNode != null && isOdysseyNode.asBoolean(false);
 
         } catch (final FileNotFoundException | JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Error checking if journal is odyssey", e);
         }
         return false;
     }
 
-    private boolean hasCommanderHeader(final File file) {
+    private synchronized boolean hasCommanderHeader(final File file) {
         try (final Scanner scanner = new Scanner(file)) {
 
             while (scanner.hasNext()) {
@@ -154,16 +165,16 @@ public class JournalWatcher {
             }
 
         } catch (final FileNotFoundException | JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Error checking for commander header", e);
         }
         return false;
     }
 
-    private boolean hasFileHeader(final File file) {
+    private synchronized boolean hasFileHeader(final File file) {
         try (final Scanner scanner = new Scanner(file)) {
             return scanner.hasNext();
         } catch (final NoSuchElementException | FileNotFoundException e) {
-            e.printStackTrace();
+            log.error("Error checking for file header", e);
         }
         return false;
     }

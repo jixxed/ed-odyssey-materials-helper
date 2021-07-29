@@ -26,17 +26,16 @@ public class Recipe {
         this.goods = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Good).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public <T extends Material> Map<T, Integer> getMaterialCollection(final Class<T> clazz) {
+    public <T extends Material> Map<? extends Material, Integer> getMaterialCollection(final Class<T> clazz) {
         if (clazz.equals(Data.class)) {
-            return (Map<T, Integer>) this.data;
+            return this.data;
         } else if (clazz.equals(Good.class)) {
-            return (Map<T, Integer>) this.goods;
+            return this.goods;
         } else if (clazz.equals(Asset.class)) {
-            return (Map<T, Integer>) this.assets;
+            return this.assets;
         } else if (clazz.equals(Material.class)) {
-            final Map<Material, Integer> combined = Stream.concat(Stream.concat(this.goods.entrySet().stream(), this.assets.entrySet().stream()), this.data.entrySet().stream()).collect(
+            return Stream.concat(Stream.concat(this.goods.entrySet().stream(), this.assets.entrySet().stream()), this.data.entrySet().stream()).collect(
                     Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            return (Map<T, Integer>) combined;
         }
         throw new ClassCastException("Invalid Material Collection Type");
 

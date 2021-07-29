@@ -1,5 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public enum JournalEventType {
     COMMANDER("Commander"),
     ENGINEERPROGRESS("EngineerProgress"),
@@ -19,10 +22,6 @@ public enum JournalEventType {
     UNKNOWN("Unknown");
 
     private final String name;
-
-    JournalEventType(final String name) {
-        this.name = name;
-    }
 
     public static JournalEventType forName(final String name) {
         try {
