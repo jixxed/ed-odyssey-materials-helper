@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 
 import java.io.*;
 import java.util.List;
@@ -14,14 +15,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class PreferencesService {
-    private static final String PREFERENCES_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\pref.properties";
     private static final PreferencesService instance = new PreferencesService();
 
     private Properties prop;
 
     private PreferencesService() {
         //create folder if not exists
-        final File targetFile = new File(PREFERENCES_FILE);
+        final File targetFile = new File(OsConstants.PREFERENCES);
         final File parent = targetFile.getParentFile();
         if (!parent.exists() && !parent.mkdirs()) {
             throw new IllegalStateException("Couldn't create dir: " + parent);
@@ -49,7 +49,7 @@ public class PreferencesService {
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> {
-                    try (final OutputStream output = new FileOutputStream(PREFERENCES_FILE)) {
+                    try (final OutputStream output = new FileOutputStream(OsConstants.PREFERENCES)) {
                         instance.prop.store(output, null);
                     } catch (final IOException e) {
                         log.error("Error writing preferences", e);

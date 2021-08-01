@@ -11,6 +11,7 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
@@ -31,7 +32,6 @@ import java.io.StringWriter;
 @Slf4j
 public class Main extends Application {
 
-    private static final String CUSTOM_STYLE_FILE = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final ApplicationLayout applicationLayout = new ApplicationLayout(this);
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
@@ -51,7 +51,7 @@ public class Main extends Application {
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
             PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
-            final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, AppConstants.WATCHED_FOLDER));
+            final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
 
             this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
             this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
@@ -75,7 +75,7 @@ public class Main extends Application {
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(scene);
             scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
-            final File customCss = new File(CUSTOM_STYLE_FILE);
+            final File customCss = new File(OsConstants.CUSTOM_CSS);
             if (customCss.exists()) {
                 importCustomCss(scene, customCss);
             }

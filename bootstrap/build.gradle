@@ -5,23 +5,18 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.openjfx:javafx-plugin:0.0.10"
+//        classpath "org.openjfx:javafx-plugin:0.0.10"
         classpath "org.beryx:badass-jlink-plugin:2.24.0"
     }
 }
 
 apply plugin: "java"
 apply plugin: "application"
-apply plugin: "org.openjfx.javafxplugin"
+//apply plugin: "org.openjfx.javafxplugin"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(14))
-    }
-}
-
+OperatingSystem os = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
 
 jar {
     manifest {
@@ -36,10 +31,15 @@ repositories {
 }
 
 application {
-    mainModule = moduleName
+    mainModule = "nl.jixxed.bootstrap"
     mainClass = "nl.jixxed.bootstrap.Main"
 }
 
+if (os.isWindows()) {
+    ext { packageType = "msi" }
+} else {
+    ext { packageType = "deb" }
+}
 jlink {
     addExtraDependencies("javafx")
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
@@ -51,6 +51,7 @@ jlink {
     }
     jpackage {
         imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
+        installerType = project.ext.packageType
         installerOptions = [
                 '--description', 'Installer for ED Odyssey Materials Helper',
                 '--copyright', 'Copyright 2021 CMDR Jixxed',
@@ -63,12 +64,20 @@ jlink {
     }
 }
 
+def platform = 'linux'
+if (os.isWindows()) {
+    platform = 'win'
+}
 
 dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
     implementation group: 'commons-io', name: 'commons-io', version: '2.9.0'
     implementation group: 'org.ini4j', name: 'ini4j', version: '0.5.4'
+    implementation("org.openjfx:javafx-base:11.0.2:${platform}")
+    implementation("org.openjfx:javafx-controls:11.0.2:${platform}")
+    implementation("org.openjfx:javafx-fxml:11.0.2:${platform}")
+    implementation("org.openjfx:javafx-graphics:11.0.2:${platform}")
 }
 
 
@@ -76,8 +85,4 @@ test {
     useJUnitPlatform()
 }
 
-javafx {
-    modules = ['javafx.controls', 'javafx.fxml']
-    version = '11.0.2'
-}
 mainClassName = 'nl.jixxed.bootstrap.Main'

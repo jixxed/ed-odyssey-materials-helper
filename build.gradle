@@ -4,7 +4,12 @@ task copyInstaller(type: Copy) {
     include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
     rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper-' + version + '.msi')
 }
-
+task copyDeb(type: Copy) {
+    from 'application/build/jpackage/'
+    into 'output'
+    include('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb')
+    rename('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb', 'elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
+}
 task makePortable(type: Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
@@ -13,7 +18,21 @@ task makePortable(type: Zip) {
     destinationDir(file('/output/'))
 }
 
+task makeLinuxPortable(type: Tar) {
+    compression = Compression.GZIP
+    from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
+    include '*'
+    include '**/*' //to include contents of a folder present inside Reports directory
+    archiveName 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.tar.gz'
+    destinationDir(file('/output/'))
+}
+
 tasks.register("createRelease") {
     dependsOn subprojects.jpackage
     finalizedBy makePortable, copyInstaller
+}
+
+tasks.register("createReleaseLinux") {
+    dependsOn(':application:jpackage')
+    finalizedBy makeLinuxPortable, copyDeb
 }

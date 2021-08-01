@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import nl.jixxed.eliteodysseymaterials.Main;
-import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
@@ -61,7 +61,7 @@ public class SettingsTab extends EDOTab {
         journalFolderLabel.getStyleClass().add("settings-label");
         final Label selectedFolderLabel = new Label();
         journalFolderLabel.getStyleClass().add("settings-label");
-        selectedFolderLabel.setText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, AppConstants.WATCHED_FOLDER));
+        selectedFolderLabel.setText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
         final DirectoryChooser journalFolderSelect = new DirectoryChooser();
         final Button button = new Button();
         button.textProperty().bind(LocaleService.getStringBinding("tab.settings.journal.folder.select"));
