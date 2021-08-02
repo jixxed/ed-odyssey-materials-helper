@@ -28,6 +28,9 @@ jar {
 
 repositories {
     mavenCentral()
+    maven{
+        url "https://dl.bintray.com/jetbrains/intellij-third-party-dependencies/"
+    }
 }
 
 application {
@@ -50,17 +53,26 @@ jlink {
         ]
     }
     jpackage {
-        imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
         installerType = project.ext.packageType
-        installerOptions = [
-                '--description', 'Installer for ED Odyssey Materials Helper',
-                '--copyright', 'Copyright 2021 CMDR Jixxed',
-                '--name', 'Elite Dangerous Odyssey Materials Helper',
-                '--app-version', project.version,
-                '--win-upgrade-uuid', '60AAECE0-2E3A-4A25-A662-CABCD8D1CCCE',
-                '--win-per-user-install', '--win-dir-chooser',
-                '--win-menu', '--win-shortcut', '--win-menu-group', 'Odyssey Material Helper'
-        ]
+        if (installerType == 'msi') {
+            imageOptions += ['--icon', 'src/main/resources/images/rocket.ico']
+            installerOptions = [
+                    '--description', 'Installer for ED Odyssey Materials Helper',
+                    '--copyright', 'Copyright 2021 CMDR Jixxed',
+                    '--name', 'Elite Dangerous Odyssey Materials Helper',
+                    '--app-version', project.version,
+                    '--win-upgrade-uuid', '60AAECE0-2E3A-4A25-A662-CABCD8D1CCCE',
+                    '--win-per-user-install', '--win-dir-chooser',
+                    '--win-menu', '--win-shortcut', '--win-menu-group', 'Odyssey Material Helper'
+            ]
+        }
+        if (installerType == 'deb') {
+            imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
+            installerOptions += [
+                    '--linux-menu-group', 'Other',
+                    '--linux-shortcut'
+            ]
+        }
     }
 }
 
@@ -73,7 +85,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
     implementation group: 'commons-io', name: 'commons-io', version: '2.9.0'
-    implementation group: 'org.ini4j', name: 'ini4j', version: '0.5.4'
+
     implementation("org.openjfx:javafx-base:11.0.2:${platform}")
     implementation("org.openjfx:javafx-controls:11.0.2:${platform}")
     implementation("org.openjfx:javafx-fxml:11.0.2:${platform}")

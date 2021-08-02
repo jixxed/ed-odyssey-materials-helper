@@ -6,6 +6,5 @@ module nl.jixxed.bootstrap {
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.io;
     requires java.prefs;
-    requires ini4j;
     opens nl.jixxed.bootstrap to javafx.graphics;
 }

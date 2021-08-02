@@ -23,15 +23,15 @@ class OsConstants {
         FILE_EXTENSION = "zip";
         UPDATE_FILE = "portable.zip";
         KILL_COMMAND = "taskkill /F /IM \"Elite Dangerous Odyssey Materials Helper.exe\"";
-        START_COMMAND = "cmd /c \"$0\\Elite Dangerous Odyssey Materials Helper.exe\"";
-        VERSION_FILE = "$0\\app\\Elite Dangerous Odyssey Materials Helper.cfg";
+        START_COMMAND = "cmd /c \"%s\\Elite Dangerous Odyssey Materials Helper.exe\"";
+        VERSION_FILE = "%s\\app\\Elite Dangerous Odyssey Materials Helper.cfg";
     }
 
     private static void setLinux() {
-        FILE_EXTENSION = "tar.gz";
-        UPDATE_FILE = "portable.tar.gz";
-        KILL_COMMAND = "";
-        START_COMMAND = "";
-        VERSION_FILE = "";
+        FILE_EXTENSION = "zip";
+        UPDATE_FILE = ".portable.linux.zip";
+        KILL_COMMAND = "ps aux | grep 'Elite Dangerous Odyssey Materials Helper' | grep -v 'grep' | awk '{ print $2 }' | xargs kill -SIGTERM";
+        START_COMMAND = "%s/bin/Elite Dangerous Odyssey Materials Helper";
+        VERSION_FILE = "%s/lib/app/Elite Dangerous Odyssey Materials Helper.cfg";
     }
 }

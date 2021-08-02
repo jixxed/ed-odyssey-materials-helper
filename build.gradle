@@ -7,8 +7,8 @@ task copyInstaller(type: Copy) {
 task copyDeb(type: Copy) {
     from 'bootstrap/build/jpackage/'
     into 'output'
-    include('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb')
-    rename('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb', 'elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
+    include('elite-dangerous-odyssey-materials-helper-launcher_' + version + '-1_amd64.deb')
+    rename('elite-dangerous-odyssey-materials-helper-launcher_' + version + '-1_amd64.deb', 'elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
 }
 task makePortable(type: Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
@@ -18,13 +18,12 @@ task makePortable(type: Zip) {
     destinationDir(file('/output/'))
 }
 
-task makeLinuxPortable(type: Tar) {
-    compression = Compression.GZIP
+task makeLinuxPortable(type: Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveName 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.tar.gz'
-    destinationDir(file('/output/'))
+    archiveName 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.linux.zip'
+    destinationDir(file('./output/'))
 }
 
 tasks.register("createRelease") {

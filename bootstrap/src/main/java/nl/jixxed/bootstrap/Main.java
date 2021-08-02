@@ -13,8 +13,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
-import org.ini4j.Ini;
-import org.ini4j.IniPreferences;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -24,8 +22,10 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.stream.StreamSupport;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -61,8 +61,13 @@ public class Main extends Application {
         primaryStage.show();
 
         final Runnable r = () -> {
-            this.appFolder = new File(currentDir + "program");
+            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)){
+                this.appFolder = new File(currentDir + "program");
+            }else{
+                this.appFolder = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/program");
+            }
             try {
+                this.appFolder.mkdirs();
                 final String latestVersion = getLatestVersion();
                 if ("ERROR".equals(latestVersion)) {
                     error(label, animation, "Unable to determine latest version. Trying to launch application...", true);
@@ -77,7 +82,12 @@ public class Main extends Application {
                         }
                         final URL url = new URL(latestUpdateUrl);
                         final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-                        final File updateFile = new File(currentDir + "update." + OsConstants.FILE_EXTENSION);
+                        final File updateFile;
+                        if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)){
+                            updateFile = new File(currentDir + "update." + OsConstants.FILE_EXTENSION);
+                        }else{
+                            updateFile = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/" + "update." + OsConstants.FILE_EXTENSION);
+                        }
                         try (final FileOutputStream fileOutputStream = new FileOutputStream(updateFile)) {
                             final FileChannel fileChannel = fileOutputStream.getChannel();
                             fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
@@ -89,7 +99,9 @@ public class Main extends Application {
 
                         } catch (final IOException ex) {
                             Platform.runLater(() -> label.setText("Terminating running application..."));
-                            Runtime.getRuntime().exec(OsConstants.KILL_COMMAND);
+                            String[] cmd = new String[1];
+                            cmd[0] = OsConstants.KILL_COMMAND;
+                            Runtime.getRuntime().exec(cmd);
                             Thread.sleep(3000);
                             Platform.runLater(() -> label.setText("Cleaning old files..."));
                             try {
@@ -102,7 +114,11 @@ public class Main extends Application {
                         Platform.runLater(() -> label.setText("Installing the update..."));
                         try {
                             unzipFile(updateFile, this.appFolder);
-                        } catch (final IOException ex) {
+                            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
+                               File file = new File(this.appFolder+ "/bin/Elite Dangerous Odyssey Materials Helper");
+                               file.setExecutable(true);
+                            }
+                            } catch (final IOException ex) {
                             error(label, animation, "Failed to install the update.", false);
                         }
                         //remove zip
@@ -114,7 +130,9 @@ public class Main extends Application {
                     }
                     //launch app
                     Platform.runLater(() -> label.setText("Launching the application..."));
-                    Runtime.getRuntime().exec(String.format(OsConstants.START_COMMAND, this.appFolder));
+                    String[] cmd = new String[1];
+                    cmd[0] = String.format(OsConstants.START_COMMAND, this.appFolder);
+                    Process exec = Runtime.getRuntime().exec(cmd);
                     //close this launcher
                     System.exit(0);
                 }
@@ -210,10 +228,14 @@ public class Main extends Application {
     private String getCurrentVersion(final File appFolder) {
         try {
             final File config = new File(String.format(OsConstants.VERSION_FILE, appFolder.getAbsolutePath()));
-            try (final FileInputStream input = new FileInputStream(config)) {
-                final Ini ini = new Ini(input);
-                final IniPreferences prefs = new IniPreferences(ini);
-                return prefs.node("Application").get("app.version", "");
+            try(Scanner scanner = new Scanner(config)){
+                while(scanner.hasNext()){
+                    String line = scanner.next();
+                    if(line.startsWith("app.version=")){
+                        return line.substring(line.indexOf("=") + 1);
+                    }
+                }
+                return "0";
             }
         } catch (final IOException ex) {
             return "0";
