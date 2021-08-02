@@ -28,7 +28,7 @@ jar {
 
 repositories {
     mavenCentral()
-    maven{
+    maven {
         url "https://dl.bintray.com/jetbrains/intellij-third-party-dependencies/"
     }
 }
@@ -68,7 +68,11 @@ jlink {
         }
         if (installerType == 'deb') {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
-            installerOptions += [
+            installerOptions = [
+                    '--description', 'Installer for ED Odyssey Materials Helper',
+                    '--copyright', 'Copyright 2021 CMDR Jixxed',
+                    '--name', 'Elite Dangerous Odyssey Materials Helper',
+                    '--app-version', project.version,
                     '--linux-menu-group', 'Other',
                     '--linux-shortcut'
             ]

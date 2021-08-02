@@ -53,21 +53,17 @@ jlink {
     jpackage {
         appVersion = project.version
         installerType = project.ext.packageType
+        installerOptions = [
+                '--description', 'Installer for ED Odyssey Materials Helper',
+                '--copyright', 'Copyright 2021 CMDR Jixxed',
+                '--name', 'Elite Dangerous Odyssey Materials Helper',
+                '--app-version', project.version
+        ]
         if (installerType == 'msi') {
             imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
-            installerOptions = [
-                    '--description', 'Installer for ED Odyssey Materials Helper',
-                    '--copyright', 'Copyright 2021 CMDR Jixxed',
-                    '--name', 'Elite Dangerous Odyssey Materials Helper',
-                    '--app-version', project.version
-            ]
         }
         if (installerType == 'deb') {
             imageOptions += ['--icon', 'src/main/resources/images/application/rocket.png']
-            installerOptions += [
-                    '--linux-menu-group', 'Other',
-                    '--linux-shortcut'
-            ]
         }
     }
 }
