@@ -4,12 +4,14 @@ task copyInstaller(type: Copy) {
     include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
     rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper-' + version + '.msi')
 }
+
 task copyDeb(type: Copy) {
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb')
     rename('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb', 'elite-dangerous-odyssey-materials-helper_' + version + '.deb')
 }
+
 task makePortable(type: Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
@@ -31,6 +33,7 @@ tasks.register("createRelease") {
     finalizedBy makePortable, copyInstaller
 }
 
+//run from WSL/Linux with clean command
 tasks.register("createReleaseLinux") {
     dependsOn subprojects.jpackage
     finalizedBy makeLinuxPortable, copyDeb

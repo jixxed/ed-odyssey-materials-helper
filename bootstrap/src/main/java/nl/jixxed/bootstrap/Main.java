@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.stream.StreamSupport;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -61,9 +60,9 @@ public class Main extends Application {
         primaryStage.show();
 
         final Runnable r = () -> {
-            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)){
+            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)) {
                 this.appFolder = new File(currentDir + "program");
-            }else{
+            } else {
                 this.appFolder = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/program");
             }
             try {
@@ -77,16 +76,16 @@ public class Main extends Application {
                         Platform.runLater(() -> label.setText("Downloading update..."));
                         //download zip
                         final String latestUpdateUrl = getLatestUpdateUrl();
-                        if (!latestUpdateUrl.endsWith(OsConstants.FILE_EXTENSION)) {
+                        if (!latestUpdateUrl.endsWith("zip")) {
                             error(label, animation, "Update file is invalid. Trying to launch application...", true);
                         }
                         final URL url = new URL(latestUpdateUrl);
                         final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
                         final File updateFile;
-                        if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)){
-                            updateFile = new File(currentDir + "update." + OsConstants.FILE_EXTENSION);
-                        }else{
-                            updateFile = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/" + "update." + OsConstants.FILE_EXTENSION);
+                        if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Windows)) {
+                            updateFile = new File(currentDir + "update.zip");
+                        } else {
+                            updateFile = new File(System.getProperty("user.home") + "/.ed-odyssey-materials-helper/update.zip");
                         }
                         try (final FileOutputStream fileOutputStream = new FileOutputStream(updateFile)) {
                             final FileChannel fileChannel = fileOutputStream.getChannel();
@@ -95,11 +94,18 @@ public class Main extends Application {
                         //remove old
                         Platform.runLater(() -> label.setText("Cleaning old files..."));
                         try {
+                            //linux does not put files in use so always kill existing instances
+                            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
+                                final String[] cmd = new String[1];
+                                cmd[0] = OsConstants.KILL_COMMAND;
+                                Runtime.getRuntime().exec(cmd);
+                                Thread.sleep(3000);
+                            }
                             FileUtils.deleteDirectory(this.appFolder);
 
                         } catch (final IOException ex) {
                             Platform.runLater(() -> label.setText("Terminating running application..."));
-                            String[] cmd = new String[1];
+                            final String[] cmd = new String[1];
                             cmd[0] = OsConstants.KILL_COMMAND;
                             Runtime.getRuntime().exec(cmd);
                             Thread.sleep(3000);
@@ -114,11 +120,11 @@ public class Main extends Application {
                         Platform.runLater(() -> label.setText("Installing the update..."));
                         try {
                             unzipFile(updateFile, this.appFolder);
-                            if(OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
-                               File file = new File(this.appFolder+ "/bin/Elite Dangerous Odyssey Materials Helper");
-                               file.setExecutable(true);
+                            if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
+                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
+                                file.setExecutable(true);
                             }
-                            } catch (final IOException ex) {
+                        } catch (final IOException ex) {
                             error(label, animation, "Failed to install the update.", false);
                         }
                         //remove zip
@@ -130,9 +136,9 @@ public class Main extends Application {
                     }
                     //launch app
                     Platform.runLater(() -> label.setText("Launching the application..."));
-                    String[] cmd = new String[1];
+                    final String[] cmd = new String[1];
                     cmd[0] = String.format(OsConstants.START_COMMAND, this.appFolder);
-                    Process exec = Runtime.getRuntime().exec(cmd);
+                    Runtime.getRuntime().exec(cmd);
                     //close this launcher
                     System.exit(0);
                 }
@@ -228,10 +234,10 @@ public class Main extends Application {
     private String getCurrentVersion(final File appFolder) {
         try {
             final File config = new File(String.format(OsConstants.VERSION_FILE, appFolder.getAbsolutePath()));
-            try(Scanner scanner = new Scanner(config)){
-                while(scanner.hasNext()){
-                    String line = scanner.next();
-                    if(line.startsWith("app.version=")){
+            try (final Scanner scanner = new Scanner(config)) {
+                while (scanner.hasNext()) {
+                    final String line = scanner.next();
+                    if (line.startsWith("app.version=")) {
                         return line.substring(line.indexOf("=") + 1);
                     }
                 }
@@ -250,7 +256,7 @@ public class Main extends Application {
             final Iterable<JsonNode> iterable = () -> assets;
             return StreamSupport.stream(iterable.spliterator(), false)
                     .map(node -> node.get("browser_download_url").asText())
-                    .filter(url -> url.endsWith(OsConstants.UPDATE_FILE))
+                    .filter(url -> url.endsWith(OsConstants.UPDATE_FILE_SUFFIX))
                     .findFirst()
                     .orElse("ERROR");
         } catch (final NullPointerException ex) {
