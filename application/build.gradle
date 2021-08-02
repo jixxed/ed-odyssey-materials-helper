@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 buildscript {
     repositories {
         maven {
@@ -16,7 +18,7 @@ apply plugin: "application"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 
-OperatingSystem os = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
+OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
 java {
     modularity.inferModulePath.set(true)
 }

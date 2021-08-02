@@ -5,7 +5,7 @@ task copyInstaller(type: Copy) {
     rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper-' + version + '.msi')
 }
 task copyDeb(type: Copy) {
-    from 'application/build/jpackage/'
+    from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb')
     rename('elite-dangerous-odyssey-materials-helper_' + version + '-1_amd64.deb', 'elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
@@ -33,6 +33,6 @@ tasks.register("createRelease") {
 }
 
 tasks.register("createReleaseLinux") {
-    dependsOn(':application:jpackage')
+    dependsOn subprojects.jpackage
     finalizedBy makeLinuxPortable, copyDeb
 }

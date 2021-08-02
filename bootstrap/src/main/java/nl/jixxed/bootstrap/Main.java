@@ -72,12 +72,12 @@ public class Main extends Application {
                         Platform.runLater(() -> label.setText("Downloading update..."));
                         //download zip
                         final String latestUpdateUrl = getLatestUpdateUrl();
-                        if (!latestUpdateUrl.endsWith("zip")) {
+                        if (!latestUpdateUrl.endsWith(OsConstants.FILE_EXTENSION)) {
                             error(label, animation, "Update file is invalid. Trying to launch application...", true);
                         }
                         final URL url = new URL(latestUpdateUrl);
                         final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());
-                        final File updateFile = new File(currentDir + "update.zip");
+                        final File updateFile = new File(currentDir + "update." + OsConstants.FILE_EXTENSION);
                         try (final FileOutputStream fileOutputStream = new FileOutputStream(updateFile)) {
                             final FileChannel fileChannel = fileOutputStream.getChannel();
                             fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
@@ -89,7 +89,7 @@ public class Main extends Application {
 
                         } catch (final IOException ex) {
                             Platform.runLater(() -> label.setText("Terminating running application..."));
-                            Runtime.getRuntime().exec("taskkill /F /IM \"Elite Dangerous Odyssey Materials Helper.exe\"");
+                            Runtime.getRuntime().exec(OsConstants.KILL_COMMAND);
                             Thread.sleep(3000);
                             Platform.runLater(() -> label.setText("Cleaning old files..."));
                             try {
@@ -114,7 +114,7 @@ public class Main extends Application {
                     }
                     //launch app
                     Platform.runLater(() -> label.setText("Launching the application..."));
-                    Runtime.getRuntime().exec("cmd /c \"" + this.appFolder + "\\Elite Dangerous Odyssey Materials Helper.exe\"");
+                    Runtime.getRuntime().exec(String.format(OsConstants.START_COMMAND, this.appFolder));
                     //close this launcher
                     System.exit(0);
                 }
@@ -142,7 +142,7 @@ public class Main extends Application {
         });
         Thread.sleep(3000);
         if (launch) {
-            Runtime.getRuntime().exec("cmd /c \"" + this.appFolder + "\\Elite Dangerous Odyssey Materials Helper.exe\"");
+            Runtime.getRuntime().exec(String.format(OsConstants.START_COMMAND, this.appFolder));
             //close this launcher
 
         }
@@ -150,7 +150,7 @@ public class Main extends Application {
     }
 
 
-    public void unzipFile(final File updateFile, final File destDir) throws IOException {
+    private void unzipFile(final File updateFile, final File destDir) throws IOException {
 
         final byte[] buffer = new byte[1024];
         try (final ZipInputStream zis = new ZipInputStream(new FileInputStream(updateFile))) {
@@ -183,7 +183,7 @@ public class Main extends Application {
 
     }
 
-    public static File newFile(final File destinationDir, final ZipEntry zipEntry) throws IOException {
+    private static File newFile(final File destinationDir, final ZipEntry zipEntry) throws IOException {
         final File destFile = new File(destinationDir, zipEntry.getName());
 
         final String destDirPath = destinationDir.getCanonicalPath();
@@ -209,7 +209,7 @@ public class Main extends Application {
 
     private String getCurrentVersion(final File appFolder) {
         try {
-            final File config = new File(appFolder.getAbsolutePath() + "\\app\\Elite Dangerous Odyssey Materials Helper.cfg");
+            final File config = new File(String.format(OsConstants.VERSION_FILE, appFolder.getAbsolutePath()));
             try (final FileInputStream input = new FileInputStream(config)) {
                 final Ini ini = new Ini(input);
                 final IniPreferences prefs = new IniPreferences(ini);
@@ -228,7 +228,7 @@ public class Main extends Application {
             final Iterable<JsonNode> iterable = () -> assets;
             return StreamSupport.stream(iterable.spliterator(), false)
                     .map(node -> node.get("browser_download_url").asText())
-                    .filter(url -> url.endsWith("portable.zip"))
+                    .filter(url -> url.endsWith(OsConstants.UPDATE_FILE))
                     .findFirst()
                     .orElse("ERROR");
         } catch (final NullPointerException ex) {
