@@ -69,6 +69,7 @@ jlink {
         if (installerType == 'deb') {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
             installerOptions = [
+                    '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
                     '--description', 'Installer for ED Odyssey Materials Helper',
                     '--copyright', 'Copyright 2021 CMDR Jixxed',
                     '--name', 'Elite Dangerous Odyssey Materials Helper',
