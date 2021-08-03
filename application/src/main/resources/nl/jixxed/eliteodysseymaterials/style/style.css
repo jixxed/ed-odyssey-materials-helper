@@ -37,16 +37,14 @@
 
 .material {
     -fx-border-color: black;
-    /*-fx-min-height: 30;*/
     -fx-pref-height: 2em;
     -fx-min-height: 2em;
     -fx-max-height: 2em;
     -fx-alignment: center-left;
     -fx-background-color: #0f0f0f;
-    /*-fx-min-width: 380;*/
-    -fx-pref-width: 27.5em;
-    -fx-min-width: 27.5em;
-    -fx-max-width: 27.5em;
+    -fx-pref-width: 32em;
+    -fx-min-width: 32em;
+    -fx-max-width: 32em;
 }
 
 .material:hover {
@@ -745,9 +743,9 @@
     -fx-border-color: black;
     -fx-background-color: #0f0f0f;
     -fx-padding: 5px;
-    -fx-pref-width: 27.5em;
-    -fx-min-width: 27.5em;
-    -fx-max-width: 27.5em;
+    -fx-pref-width: 32em;
+    -fx-min-width: 32em;
+    -fx-max-width: 32em;
 }
 
 .material-total .separator *.line {
