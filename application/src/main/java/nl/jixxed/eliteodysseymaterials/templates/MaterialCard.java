@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -17,35 +16,28 @@ import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import java.io.IOException;
-
 class MaterialCard extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    @FXML
-    private ImageView image;
-    @FXML
-    private Label name;
-    @FXML
-    private Label amount;
+    private final ImageView image = new ImageView();
+    private final Label name = new Label();
+    private final Label amount = new Label();
 
     private final Storage amounts;
 
     private MaterialCard(final Storage amounts) {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Material.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
 
-
-        try {
-            fxmlLoader.load();
-        } catch (final IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        this.getStyleClass().add("material");
+        this.image.getStyleClass().add("materialcard-image");
+        this.name.getStyleClass().add("materialcard-name");
+        this.amount.getStyleClass().add("materialcard-amount");
+        this.getChildren().addAll(this.image, this.name, this.amount);
+        this.amount.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         this.amounts = amounts;
         final String amountText = this.amounts != null ? (!this.amounts.getBackPackValue().equals(0)) ? "(" + this.amounts.getBackPackValue() + ") " + this.amounts.getShipLockerValue().toString() :
                 this.amounts.getShipLockerValue().toString() : "";
         this.amount.setText(amountText);
         this.image.setFitWidth(0);
+        this.image.setFitHeight(28);
     }
 
     MaterialCard(final Material material, final String name, final Storage amounts, final boolean isEngineerUnlockMaterial) {
@@ -74,15 +66,15 @@ class MaterialCard extends HBox {
         }
         final String materialType = material.getClass().getSimpleName().toLowerCase();
         if (material.isUnknown()) {
-            this.getStyleClass().addAll("material", "material-irrelevant", "material-" + materialType + "-unknown");
+            this.getStyleClass().addAll("material-irrelevant", "material-" + materialType + "-unknown");
         } else if (RecipeConstants.isEngineeringOnlyIngredient(material)) {
-            this.getStyleClass().addAll("material", "material-irrelevant", "material-" + materialType + "-engineer-irrelevant");
+            this.getStyleClass().addAll("material-irrelevant", "material-" + materialType + "-engineer-irrelevant");
         } else if (RecipeConstants.isEngineeringIngredient(material)) {
-            this.getStyleClass().addAll("material", "material-relevant", "material-" + materialType + "-engineer-relevant");
+            this.getStyleClass().addAll("material-relevant", "material-" + materialType + "-engineer-relevant");
         } else if (RecipeConstants.isBlueprintIngredient(material)) {
-            this.getStyleClass().addAll("material", "material-relevant", "material-" + materialType + "-relevant");
+            this.getStyleClass().addAll("material-relevant", "material-" + materialType + "-relevant");
         } else {
-            this.getStyleClass().addAll("material", "material-irrelevant", "material-" + materialType + "-irrelevant");
+            this.getStyleClass().addAll("material-irrelevant", "material-" + materialType + "-irrelevant");
         }
     }
 
@@ -105,10 +97,10 @@ class MaterialCard extends HBox {
             default -> this.image.setFitWidth(0);
         }
         switch (asset.getType()) {
-            case TECH -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-tech");
-            case CIRCUIT -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-circuit");
-            case CHEMICAL -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-chemical");
-            default -> this.getStyleClass().addAll("material", "material-relevant", "material-asset-unknown");
+            case TECH -> this.getStyleClass().addAll("material-relevant", "material-asset-tech");
+            case CIRCUIT -> this.getStyleClass().addAll("material-relevant", "material-asset-circuit");
+            case CHEMICAL -> this.getStyleClass().addAll("material-relevant", "material-asset-chemical");
+            default -> this.getStyleClass().addAll("material-relevant", "material-asset-unknown");
         }
     }
 

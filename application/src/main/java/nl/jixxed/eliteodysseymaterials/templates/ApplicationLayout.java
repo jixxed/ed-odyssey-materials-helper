@@ -1,28 +1,17 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import nl.jixxed.eliteodysseymaterials.service.event.ApplicationLifeCycleEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
-import java.io.IOException;
-
 public class ApplicationLayout extends AnchorPane {
-    final BottomBar bottomBar;
-    final ContentArea contentArea;
+    private final BottomBar bottomBar;
+    private final ContentArea contentArea;
 
     public ApplicationLayout(final Application application) {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ApplicationLayout.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (final IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        this.getStyleClass().add("app");
         this.bottomBar = new BottomBar();
         this.contentArea = new ContentArea(application);
 

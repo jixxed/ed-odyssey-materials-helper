@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.VBox?>
-<fx:root minHeight="26.0" prefHeight="26.0" prefWidth="250.0" style="-fx-start-margin: 5;-fx-padding: 5;" spacing="4"
-         type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
-</fx:root>

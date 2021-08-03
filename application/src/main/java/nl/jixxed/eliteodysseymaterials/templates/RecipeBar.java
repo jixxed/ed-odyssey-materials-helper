@@ -25,17 +25,17 @@ import java.util.stream.Collectors;
 
 
 class RecipeBar extends Accordion {
-    private final Settings settings;
+    private final About about;
 
     RecipeBar(final Application application) {
-        this.settings = new Settings(application);
+        this.about = new About(application);
         final List<TitledPane> titledPanes = RecipeConstants.RECIPES.entrySet().stream()
                 .map(this::createCategoryTitledPane)
                 .sorted(Comparator.comparing(Labeled::getText))
                 .collect(Collectors.toList());
         final TitledPane about = new TitledPane();
         about.textProperty().bind(LocaleService.getStringBinding("menu.about"));
-        about.setContent(this.settings);
+        about.setContent(this.about);
         titledPanes.add(about);
         this.getPanes().addAll(titledPanes.toArray(new TitledPane[0]));
         this.setExpandedPane(about);

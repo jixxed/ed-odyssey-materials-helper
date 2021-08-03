@@ -2,6 +2,11 @@
     fx-font-size: 12px;
 }
 
+.app {
+    -fx-pref-height: 600;
+    -fx-pref-width: 800;
+}
+
 .completed {
     /*-fx-background-color: blue, yellow, linear-gradient(to bottom, derive(coral, +50%), coral);*/
     -fx-font-weight: normal;
@@ -35,6 +40,8 @@
     -fx-pref-height: 2em;
     -fx-alignment: center-left;
     -fx-background-color: #0f0f0f;
+    -fx-min-height: 30;
+    -fx-pref-width: 380;
 }
 
 .material:hover {
@@ -56,73 +63,14 @@
     -fx-text-fill: #2e92df;
 }
 
-.material-good-relevant {
-    /*-fx-background-color: #cab951;*/
-}
-
-.material-good-irrelevant {
-    /*-fx-background-color: #9d8e05;*/
-}
-
-.material-good-engineer-relevant {
-    /*noinspection CssInvalidFunction*/
-    /*-fx-background-color: #ffffff, #cab951, linear-gradient(to right, derive(#ffffff, +1%), #cab951);*/
-}
-
-.material-good-engineer-irrelevant {
-    /*noinspection CssInvalidFunction*/
-    /*-fx-background-color: #ffffff, #9d8e05, linear-gradient(to right, derive(#ffffff, +1%), #9d8e05);*/
-}
-
-.material-good-unknown {
-    -fx-background-color: #ba5efa;
-}
-
-.material-data-relevant {
-    /*-fx-background-color: #53e5ea;*/
-}
-
-.material-data-irrelevant {
-    /*-fx-background-color: #05999d;*/
-}
-
-.material-data-engineer-relevant {
-    /*noinspection CssInvalidFunction*/
-    /*    -fx-background-color: #ffffff, #53e5ea, linear-gradient(to right, derive(#ffffff, +1%), #53e5ea);*/
-}
-
-.material-data-engineer-irrelevant {
-    /*noinspection CssInvalidFunction*/
-    /*-fx-background-color: #ffffff, #05999d, linear-gradient(to right, derive(#ffffff, +1%), #05999d);*/
-}
-
-.material-data-unknown {
-    -fx-background-color: #ba5efa;
-}
-
-.material-asset-chemical {
-    /*-fx-background-color: #98ef78;*/
-}
-
-.material-asset-tech {
-    /*-fx-background-color: #78efd7;*/
-}
-
-.material-asset-circuit {
-    /*-fx-background-color: #efa278;*/
-}
-
-.material-asset-circuit {
-    /*-fx-background-color: #efa278;*/
-}
-
-.material-asset-unknown {
+.material-unknown {
     -fx-background-color: #ba5efa;
 }
 
 .material-favourite > .materialcard-name {
     -fx-font-style: italic;
 }
+
 
 .category-label {
     -fx-min-width: 400;
@@ -141,6 +89,10 @@
     -fx-pref-width: 90;
     -fx-padding: 5;
     -fx-text-alignment: right;
+}
+
+.materialcard-image {
+
 }
 
 .wishlist-ingredient {
@@ -253,17 +205,17 @@
     -fx-text-alignment: right;
 }
 
-.legend {
-    -fx-vgap: 10;
-    /*-fx-min-width: 538;*/
-}
+/*.legend {*/
+/*    -fx-vgap: 10;*/
+/*    !*-fx-min-width: 538;*!*/
+/*}*/
 
-.legend > .materialcard-name {
-    -fx-pref-width: 400;
-    /*-fx-min-width: 500;*/
-    -fx-label-padding: 5;
+/*.legend > .materialcard-name {*/
+/*    -fx-pref-width: 400;*/
+/*    !*-fx-min-width: 500;*!*/
+/*    -fx-label-padding: 5;*/
 
-}
+/*}*/
 
 .bottom-bar {
     -fx-alignment: center-left;
@@ -895,4 +847,41 @@
 
 .wishlist-checkbox {
     -fx-padding: 5;
+}
+
+
+.about-version {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
+}
+
+.about-download-link {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
+}
+
+.about-disclaimer1 {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
+}
+
+.about-disclaimer2 {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
+}
+
+.about-beer {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
+    -fx-min-height: 40;
+}
+
+.about-donate {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
+}
+
+.about-bugs {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
 }
