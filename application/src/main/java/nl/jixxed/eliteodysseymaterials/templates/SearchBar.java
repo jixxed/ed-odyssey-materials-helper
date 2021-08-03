@@ -129,6 +129,7 @@ class SearchBar extends HBox {
                 Show.BLUEPRINT,
                 Show.IRRELEVANT,
                 Show.IRRELEVANT_WITH_STOCK,
+                Show.PROHIBITED,
                 Show.FAVOURITES));
         showMaterialsComboBox.getStyleClass().addAll("root", "filter-and-sort");
         showMaterialsComboBox.promptTextProperty().bind(LocaleService.getStringBinding("search.filter.placeholder"));

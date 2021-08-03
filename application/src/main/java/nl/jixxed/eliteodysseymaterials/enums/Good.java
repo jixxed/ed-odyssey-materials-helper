@@ -1,50 +1,55 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum Good implements Material {
-    AGRICULTURALPROCESSSAMPLE,
-    BIOCHEMICALAGENT,
-    BUILDINGSCHEMATIC,
-    CALIFORNIUM,
-    CASTFOSSIL,
-    CHEMICALPROCESSSAMPLE,
-    CHEMICALSAMPLE,
-    COMPACTLIBRARY,
-    COMPRESSIONLIQUEFIEDGAS,
-    DEEPMANTLESAMPLE,
-    DEGRADEDPOWERREGULATOR,
-    GENETICREPAIRMEDS,
-    GENETICSAMPLE,
-    GMEDS,
-    HEALTHMONITOR,
-    HUSH,
-    INERTIACANISTER,
-    INFINITY,
-    INORGANICCONTAMINANT,
-    INSIGHT,
-    INSIGHTDATABANK,
-    INSIGHTENTERTAINMENTSUITE,
-    IONISEDGAS,
-    LARGECAPACITYPOWERREGULATOR,
-    LAZARUS,
-    MICROBIALINHIBITOR,
-    MUTAGENICCATALYST,
-    NUTRITIONALCONCENTRATE,
-    PERSONALCOMPUTER,
-    PERSONALDOCUMENTS,
-    PETRIFIEDFOSSIL,
-    PUSH,
-    PYROLYTICCATALYST,
-    REFINEMENTPROCESSSAMPLE,
-    SHIPSCHEMATIC,
-    SUITSCHEMATIC,
-    SURVEILLANCEEQUIPMENT,
-    SYNTHETICGENOME,
-    SYNTHETICPATHOGEN,
-    TRUEFORMFOSSIL,
-    UNIVERSALTRANSLATOR,
-    VEHICLESCHEMATIC,
-    WEAPONSCHEMATIC,
-    UNKNOWN;
+    AGRICULTURALPROCESSSAMPLE(false),
+    BIOCHEMICALAGENT(true),
+    BUILDINGSCHEMATIC(false),
+    CALIFORNIUM(false),
+    CASTFOSSIL(false),
+    CHEMICALPROCESSSAMPLE(false),
+    CHEMICALSAMPLE(false),
+    COMPACTLIBRARY(false),
+    COMPRESSIONLIQUEFIEDGAS(false),
+    DEEPMANTLESAMPLE(false),
+    DEGRADEDPOWERREGULATOR(false),
+    GENETICREPAIRMEDS(false),
+    GENETICSAMPLE(false),
+    GMEDS(false),
+    HEALTHMONITOR(false),
+    HUSH(true),
+    INERTIACANISTER(false),
+    INFINITY(false),
+    INORGANICCONTAMINANT(true),
+    INSIGHT(false),
+    INSIGHTDATABANK(false),
+    INSIGHTENTERTAINMENTSUITE(false),
+    IONISEDGAS(false),
+    LARGECAPACITYPOWERREGULATOR(false),
+    LAZARUS(true),
+    MICROBIALINHIBITOR(false),
+    MUTAGENICCATALYST(true),
+    NUTRITIONALCONCENTRATE(false),
+    PERSONALCOMPUTER(false),
+    PERSONALDOCUMENTS(false),
+    PETRIFIEDFOSSIL(false),
+    PUSH(true),
+    PYROLYTICCATALYST(true),
+    REFINEMENTPROCESSSAMPLE(false),
+    SHIPSCHEMATIC(false),
+    SUITSCHEMATIC(false),
+    SURVEILLANCEEQUIPMENT(false),
+    SYNTHETICGENOME(false),
+    SYNTHETICPATHOGEN(true),
+    TRUEFORMFOSSIL(false),
+    UNIVERSALTRANSLATOR(false),
+    VEHICLESCHEMATIC(false),
+    WEAPONSCHEMATIC(false),
+    UNKNOWN(false);
+    private final boolean illegal;
+
+    Good(final boolean illegal) {
+        this.illegal = illegal;
+    }
 
     public static Good forName(final String name) {
         try {
@@ -68,4 +73,10 @@ public enum Good implements Material {
     public boolean isUnknown() {
         return this == Good.UNKNOWN;
     }
+
+    @Override
+    public boolean isIllegal() {
+        return this.illegal;
+    }
+
 }

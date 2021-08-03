@@ -12,6 +12,7 @@ public enum Show {
     BLUEPRINT,
     IRRELEVANT,
     IRRELEVANT_WITH_STOCK,
+    PROHIBITED,
     FAVOURITES;
 
     public String getLocalizationKey() {

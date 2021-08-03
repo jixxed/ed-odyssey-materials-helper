@@ -32,4 +32,6 @@ public interface Material {
     String getLocalizationKey();
 
     boolean isUnknown();
+
+    boolean isIllegal();
 }

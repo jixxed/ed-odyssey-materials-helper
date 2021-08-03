@@ -54,7 +54,7 @@ public class LocaleService {
     }
 
     public static StringBinding getStringBinding(final Material material) {
-        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString(material.getLocalizationKey()) + (APPLICATION_STATE.isFavourite(material) ? " \u2605" : ""));
+        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString(material.getLocalizationKey()) + (material.isIllegal() ? " \u26D4" : "") + (APPLICATION_STATE.isFavourite(material) ? " \u2605" : ""));
     }
 
     public static StringBinding getStringBinding(final Supplier<String> supplier) {
@@ -68,6 +68,9 @@ public class LocaleService {
             } else {
                 final StringBuilder builder = new StringBuilder();
                 builder.append(ObservableResourceFactory.getResources().getString(material.getLocalizationKey()));
+                if (material.isIllegal()) {
+                    builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.illegal"));
+                }
                 addBarterInfoToTooltip(material, builder);
                 addRecipesToTooltip(RecipeConstants.findRecipesContaining(material), builder);
                 addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(material), builder);

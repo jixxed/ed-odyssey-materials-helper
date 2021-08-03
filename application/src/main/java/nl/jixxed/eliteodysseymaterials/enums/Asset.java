@@ -68,4 +68,9 @@ public enum Asset implements Material {
     }
 
 
+    @Override
+    public boolean isIllegal() {
+        return false;
+    }
+
 }
