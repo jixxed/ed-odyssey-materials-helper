@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
@@ -40,7 +41,10 @@ class MaterialOverview extends VBox {
     private final MaterialTotal dataTotal = new MaterialTotal(StorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
     private Search currentSearch = new Search("", Sort.ALPHABETICAL, Show.ALL);
 
+
     MaterialOverview(final ScrollPane scrollPane) {
+        this.getStyleClass().add("card-grid");
+        this.setSpacing(10);
         this.scrollPane = scrollPane;
         final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")).getOrientation();
         this.totals = new FlowPane(Orientation.HORIZONTAL, this.goodsTotal, this.assetsTotal, this.dataTotal);
@@ -49,10 +53,16 @@ class MaterialOverview extends VBox {
         this.assetTechFlow = new FlowPane(flowPaneOrientation);
         this.goodFlow = new FlowPane(flowPaneOrientation);
         this.dataFlow = new FlowPane(flowPaneOrientation);
+
         setGaps(this.totals);
+        this.setMaxWidth(this.scrollPane.getWidth() - 28);
+
         final ChangeListener<Number> resizeListener = (observable, oldValue, newValue) ->
         {
+            this.setMaxWidth(newValue.doubleValue() - 28);
             this.totals.setMaxWidth(newValue.doubleValue() - 28);
+            this.totals.setPrefWidth(newValue.doubleValue() - 28);
+            this.totals.setMinWidth(newValue.doubleValue() - 28);
 
             Platform.runLater(() -> {
                 setFlowPaneHeight(this.goodFlow, newValue);
@@ -76,7 +86,8 @@ class MaterialOverview extends VBox {
                 scrollPane.widthProperty().removeListener(resizeListener);
                 this.totals.setMaxWidth(-1);
             }
-            Platform.runLater(() -> this.updateContent(this.currentSearch));
+
+            Platform.runLater(() -> this.updateContent(this.currentSearch, 50));
         });
 
         setGaps(this.assetCircuitFlow, this.assetTechFlow, this.assetChemicalFlow, this.goodFlow, this.dataFlow);
@@ -90,16 +101,24 @@ class MaterialOverview extends VBox {
         }))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(journalProcessedEvent -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
+                .subscribe(journalProcessedEvent -> Platform.runLater(() -> {
+
+                    this.updateContent(this.currentSearch, 500);
+                }));
         EventService.addListener(SearchEvent.class, searchEvent -> {
             this.currentSearch = searchEvent.getSearch();
-            Platform.runLater(() -> this.updateContent(this.currentSearch));
+            Platform.runLater(() -> this.updateContent(this.currentSearch, 50));
         });
-        EventService.addListener(CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
+        EventService.addListener(CommanderResetEvent.class, event -> Platform.runLater(() -> {
 
+            this.updateContent(this.currentSearch, 50);
+        }));
     }
 
     private void setFlowPaneHeight(final FlowPane flowPane, final Number newValue) {
+        flowPane.setPrefWidth(newValue.intValue() - 38);
+        flowPane.setMinWidth(newValue.intValue() - 38);
+        flowPane.setMaxWidth(newValue.intValue() - 38);
         if (Orientation.VERTICAL.equals(flowPane.getOrientation())) {
             if (!flowPane.getChildren().isEmpty()) {
                 final MaterialCard card = (MaterialCard) flowPane.getChildren().get(0);
@@ -130,7 +149,7 @@ class MaterialOverview extends VBox {
         });
     }
 
-    private void updateContent(final Search search) {
+    private void updateContent(final Search search, final long updateDelay) {
         this.assetChemicalFlow.getChildren().clear();
         this.assetTechFlow.getChildren().clear();
         this.assetCircuitFlow.getChildren().clear();
@@ -140,11 +159,21 @@ class MaterialOverview extends VBox {
         showAssets(search);
         showDatas(search);
         removeAndAddFlows();
-        setFlowPaneHeight(this.goodFlow, this.scrollPane.getWidth());
-        setFlowPaneHeight(this.assetChemicalFlow, this.scrollPane.getWidth());
-        setFlowPaneHeight(this.assetCircuitFlow, this.scrollPane.getWidth());
-        setFlowPaneHeight(this.assetTechFlow, this.scrollPane.getWidth());
-        setFlowPaneHeight(this.dataFlow, this.scrollPane.getWidth());
+        Observable.just(Optional.empty())
+                .delay(updateDelay, TimeUnit.MILLISECONDS)
+                .subscribe(v -> {
+                    setFlowPaneHeight(this.goodFlow, this.scrollPane.getWidth());
+                    setFlowPaneHeight(this.assetChemicalFlow, this.scrollPane.getWidth());
+                    setFlowPaneHeight(this.assetCircuitFlow, this.scrollPane.getWidth());
+                    setFlowPaneHeight(this.assetTechFlow, this.scrollPane.getWidth());
+                    setFlowPaneHeight(this.dataFlow, this.scrollPane.getWidth());
+                });
+
+//        setFlowPaneHeight(this.goodFlow, this.scrollPane.getWidth());
+//        setFlowPaneHeight(this.assetChemicalFlow, this.scrollPane.getWidth());
+//        setFlowPaneHeight(this.assetCircuitFlow, this.scrollPane.getWidth());
+//        setFlowPaneHeight(this.assetTechFlow, this.scrollPane.getWidth());
+//        setFlowPaneHeight(this.dataFlow, this.scrollPane.getWidth());
 
         updateTotals();
     }

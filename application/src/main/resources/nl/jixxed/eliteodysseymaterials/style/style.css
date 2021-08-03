@@ -37,11 +37,16 @@
 
 .material {
     -fx-border-color: black;
+    /*-fx-min-height: 30;*/
     -fx-pref-height: 2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
     -fx-alignment: center-left;
     -fx-background-color: #0f0f0f;
-    -fx-min-height: 30;
-    -fx-pref-width: 380;
+    /*-fx-min-width: 380;*/
+    -fx-pref-width: 27.5em;
+    -fx-min-width: 27.5em;
+    -fx-max-width: 27.5em;
 }
 
 .material:hover {
@@ -80,19 +85,26 @@
 }
 
 .materialcard-name {
-    -fx-pref-width: 320;
-    -fx-label-padding: 5;
+    /*-fx-pref-width: 23em;*/
+    -fx-label-padding: 0 0 0 5;
 }
 
 
 .materialcard-amount {
-    -fx-pref-width: 90;
+    /*-fx-pref-width: 3em;*/
     -fx-padding: 5;
     -fx-text-alignment: right;
 }
 
 .materialcard-image {
-
+    -fx-max-height: 2em;
+    -fx-max-width: 2em;
+    -fx-pref-height: 2em;
+    -fx-pref-width: 2em;
+    -fx-min-height: 2em;
+    -fx-min-width: 2em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
 }
 
 .wishlist-ingredient {
@@ -729,11 +741,13 @@
 }
 
 .material-total {
-    -fx-min-width: 380;
     -fx-border-width: 1px;
     -fx-border-color: black;
     -fx-background-color: #0f0f0f;
     -fx-padding: 5px;
+    -fx-pref-width: 27.5em;
+    -fx-min-width: 27.5em;
+    -fx-max-width: 27.5em;
 }
 
 .material-total .separator *.line {
