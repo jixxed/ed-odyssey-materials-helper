@@ -31,10 +31,27 @@ class About extends VBox {
     private ImageView donateImage;
 
     About(final Application application) {
-        this.getStyleClass().add("about");
         initComponents(application);
-        this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, this.donate, this.bugs);
+        versionCheck();
+    }
 
+    private void initComponents(final Application application) {
+        this.getStyleClass().add("about");
+        this.versionLabel = LabelBuilder.builder().withStyleClass("about-version").build();
+        this.disclaimer1 = LabelBuilder.builder().withStyleClass("about-disclaimer1").withText(LocaleService.getStringBinding("menu.about.disclaimer.1")).build();
+        this.disclaimer2 = LabelBuilder.builder().withStyleClass("about-disclaimer2").withText(LocaleService.getStringBinding("menu.about.disclaimer.2")).build();
+        this.beer = LabelBuilder.builder().withStyleClass("about-beer").withText(LocaleService.getStringBinding("menu.about.beer")).build();
+        this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withAction((actionEvent) ->
+                application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases")).build();
+        this.bugs = HyperlinkBuilder.builder().withStyleClass("about-bugs").withText(LocaleService.getStringBinding("menu.about.report")).withAction((actionEvent) ->
+                application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues")).build();
+        this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/donate.png").build();
+        this.donate = HyperlinkBuilder.builder().withStyleClass("about-donate").withAction((actionEvent) ->
+                application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper")).withGraphic(this.donateImage).build();
+        this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, this.donate, this.bugs);
+    }
+
+    private void versionCheck() {
         final String buildVersion = getBuildVersion();
         String latestVersion = "";
         try {
@@ -51,20 +68,6 @@ class About extends VBox {
         } else {
             this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version.new", buildVersion, latestVersion));
         }
-    }
-
-    private void initComponents(final Application application) {
-        this.versionLabel = LabelBuilder.builder().withStyleClass("about-version").build();
-        this.disclaimer1 = LabelBuilder.builder().withStyleClass("about-disclaimer1").withText(LocaleService.getStringBinding("menu.about.disclaimer.1")).build();
-        this.disclaimer2 = LabelBuilder.builder().withStyleClass("about-disclaimer2").withText(LocaleService.getStringBinding("menu.about.disclaimer.2")).build();
-        this.beer = LabelBuilder.builder().withStyleClass("about-beer").withText(LocaleService.getStringBinding("menu.about.beer")).build();
-        this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withAction((actionEvent) ->
-                application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases")).build();
-        this.bugs = HyperlinkBuilder.builder().withStyleClass("about-bugs").withText(LocaleService.getStringBinding("menu.about.report")).withAction((actionEvent) ->
-                application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues")).build();
-        this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/donate.png").build();
-        this.donate = HyperlinkBuilder.builder().withStyleClass("about-donate").withAction((actionEvent) ->
-                application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper")).withGraphic(this.donateImage).build();
     }
 
 

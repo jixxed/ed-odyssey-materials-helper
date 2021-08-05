@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -12,6 +11,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
@@ -26,137 +26,167 @@ import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class EngineerCard extends VBox {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final Function<RecipeName, Label> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> LabelBuilder.builder()
+            .withStyleClass("engineer-blueprint")
+            .withText(LocaleService.getStringBinding(recipeName.getLocalizationKey()))
+            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
+            .build();
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
+    private final Engineer engineer;
+
+    private ImageView image;
+    private Label name;
+    private HBox specialisation;
+    private Label engineerLocation;
+    private Label engineerDistance;
+    private ResizableImageView copyIcon;
+    private FlowPane location;
+    private Label suitModulesTitle;
+    private List<Label> suitBlueprintLabels;
+    private Label weaponModulesTitle;
+    private List<Label> weaponBlueprintLabels;
+
     EngineerCard(final Engineer engineer) {
-        this.getChildren().add(getEngineerImageView(engineer));
-        this.getChildren().add(getEngineerName(engineer));
-        this.getChildren().add(getEngineerSpecialisation(engineer));
-        this.getChildren().add(getEngineerLocation(engineer));
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.getChildren().add(getSuitModulesTitle());
-        this.getChildren().addAll(getSuitBlueprints(engineer));
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.getChildren().add(getWeaponModulesTitle());
-        this.getChildren().addAll(getWeaponBlueprints(engineer));
+        this.engineer = engineer;
+        initComponents();
+        initEventHandling(engineer);
     }
 
-    private List<Label> getWeaponBlueprints(final Engineer engineer) {
-        final List<RecipeName> weaponRecipes = RecipeConstants.getWeaponModuleBlueprints().entrySet().stream()
-                .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(engineer))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+    private void initEventHandling(final Engineer engineer) {
+        EventService.addListener(LocationEvent.class, locationEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getX(), locationEvent.getY(), locationEvent.getZ())) + "Ly)"));
+        EventService.addListener(EngineerEvent.class, engineerEvent -> {
+            if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
+                this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/" + engineer.name().toLowerCase() + ".jpg")));
+            } else {
+                this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")));
+            }
+        });
+    }
+
+    private void initComponents() {
+        this.image = getEngineerImageView();
+        this.name = getEngineerName();
+        this.specialisation = getEngineerSpecialisation();
+        this.location = getEngineerLocation();
+        this.suitModulesTitle = getSuitModulesTitle();
+        this.suitBlueprintLabels = getSuitBlueprints();
+        this.weaponModulesTitle = getWeaponModulesTitle();
+        this.weaponBlueprintLabels = getWeaponBlueprints();
+        this.getChildren().addAll(this.image, this.name, this.specialisation, this.location, new Separator(Orientation.HORIZONTAL), this.suitModulesTitle);
+        this.getChildren().addAll(this.suitBlueprintLabels);
+        this.getChildren().addAll(new Separator(Orientation.HORIZONTAL), this.weaponModulesTitle);
+        this.getChildren().addAll(this.weaponBlueprintLabels);
         this.getStyleClass().add("engineer-card");
-
-        return weaponRecipes.stream().sorted(Comparator.comparing(RecipeName::name)).map(recipeName -> {
-            final Label label = new Label();
-            label.getStyleClass().add("engineer-blueprint");
-            label.textProperty().bind(LocaleService.getStringBinding(recipeName.getLocalizationKey()));
-            label.setOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)));
-            return label;
-        }).collect(Collectors.toList());
     }
 
-    private List<Label> getSuitBlueprints(final Engineer engineer) {
-
-        final List<RecipeName> suitRecipes = RecipeConstants.getSuitModuleBlueprints().entrySet().stream()
-                .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(engineer))
+    private List<Label> getWeaponBlueprints() {
+        return RecipeConstants.getWeaponModuleBlueprints().entrySet().stream()
+                .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
                 .map(Map.Entry::getKey)
+                .sorted(Comparator.comparing(RecipeName::name))
+                .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
                 .collect(Collectors.toList());
+    }
 
-        return suitRecipes.stream().sorted(Comparator.comparing(RecipeName::name)).map(recipeName -> {
-            final Label label = new Label();
-            label.getStyleClass().add("engineer-blueprint");
-            label.textProperty().bind(LocaleService.getStringBinding(recipeName.getLocalizationKey()));
-            label.setOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)));
-            return label;
-        }).collect(Collectors.toList());
+    private List<Label> getSuitBlueprints() {
+        return RecipeConstants.getSuitModuleBlueprints().entrySet().stream()
+                .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
+                .map(Map.Entry::getKey)
+                .sorted(Comparator.comparing(RecipeName::name))
+                .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
+                .collect(Collectors.toList());
     }
 
     private Label getWeaponModulesTitle() {
-        final Label weaponModules = new Label();
-        weaponModules.getStyleClass().add("engineer-category");
-        weaponModules.textProperty().bind(LocaleService.getStringBinding("tab.engineer.weapon.modules"));
-        return weaponModules;
+        return LabelBuilder.builder()
+                .withStyleClass("engineer-category")
+                .withText(LocaleService.getStringBinding("tab.engineer.weapon.modules"))
+                .build();
     }
 
     private Label getSuitModulesTitle() {
-        final Label suitModules = new Label();
-        suitModules.getStyleClass().add("engineer-category");
-        suitModules.textProperty().bind(LocaleService.getStringBinding("tab.engineer.suit.modules"));
-        return suitModules;
+        return LabelBuilder.builder()
+                .withStyleClass("engineer-category")
+                .withText(LocaleService.getStringBinding("tab.engineer.suit.modules"))
+                .build();
     }
 
-    private FlowPane getEngineerLocation(final Engineer engineer) {
-        final Label engineerLocation = new Label(engineer.getSettlement() + " | " + engineer.getSystem());
-        engineerLocation.getStyleClass().add("engineer-location");
-        final Label engineerDistance = new Label("(0Ly)");
-        engineerDistance.getStyleClass().add("engineer-distance");
+    private FlowPane getEngineerLocation() {
+        this.engineerLocation = LabelBuilder.builder()
+                .withStyleClass("engineer-location")
+                .withNonLocalizedText(this.engineer.getSettlement() + " | " + this.engineer.getSystem())
+                .build();
 
-        final ImageView copyIcon = new ImageView(new Image(EngineerCard.class.getResourceAsStream("/images/other/copy.png")));
-        copyIcon.getStyleClass().add("engineer-copy-icon");
-        copyIcon.setFitHeight(16);
-        copyIcon.setFitWidth(16);
-        final FlowPane location = new FlowPane(engineerLocation, new StackPane(copyIcon), engineerDistance);
-        location.setMaxWidth(285);
-        location.setOnMouseClicked(event -> {
-            final Clipboard clipboard = Clipboard.getSystemClipboard();
-            final ClipboardContent content = new ClipboardContent();
-            content.putString(engineer.getSystem());
-            clipboard.setContent(content);
-        });
-        EventService.addListener(LocationEvent.class, locationEvent -> engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getX(), locationEvent.getY(), locationEvent.getZ())) + "Ly)"));
-        location.getStyleClass().add("engineer-location-line");
-        return location;
+        this.engineerDistance = LabelBuilder.builder()
+                .withStyleClass("engineer-distance")
+                .withNonLocalizedText("(0Ly)")
+                .build();
+
+        this.copyIcon = ResizableImageViewBuilder.builder()
+                .withStyleClass("engineer-copy-icon")
+                .withImage("/images/other/copy.png")
+                .build();
+
+        return FlowPaneBuilder.builder().withStyleClass("engineer-location-line")
+                .withOnMouseClicked(event -> copyLocationToClipboard())
+                .withNodes(this.engineerLocation, new StackPane(this.copyIcon), this.engineerDistance)
+                .build();
+
     }
 
-    private HBox getEngineerSpecialisation(final Engineer engineer) {
-        final Label engineerSpecialisation = new Label();
-        engineerSpecialisation.textProperty().bind(LocaleService.getStringBinding(engineer.getSpecialisation().getLocalizationKey()));
-
-        switch (engineer.getSpecialisation()) {
-            case FORCE -> engineerSpecialisation.getStyleClass().add("specialisation-force");
-            case DYNAMIC -> engineerSpecialisation.getStyleClass().add("specialisation-dynamic");
-            case STRATEGIC -> engineerSpecialisation.getStyleClass().add("specialisation-strategic");
-            case UNKNOWN -> {
-            }
-        }
-        final ImageView specialisationIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/engineer/specialisation/" + engineer.getSpecialisation().name().toLowerCase() + ".png")));
-        specialisationIcon.setFitHeight(32);
-        specialisationIcon.setFitWidth(32);
-
-        final HBox specialisationBox = new HBox(new StackPane(specialisationIcon), engineerSpecialisation);
-        specialisationBox.setPadding(new Insets(0, 0, 0, 5));
-        return specialisationBox;
+    private void copyLocationToClipboard() {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(this.engineer.getSystem());
+        clipboard.setContent(content);
     }
 
-    private Label getEngineerName(final Engineer engineer) {
-        final Label engineerName = new Label();
-        engineerName.textProperty().bind(LocaleService.getStringBinding(engineer.getLocalizationKey()));
-        engineerName.getStyleClass().add("engineer-name");
-        engineerName.setOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(RecipeName.forEngineer(engineer))));
-        return engineerName;
+    private HBox getEngineerSpecialisation() {
+        LabelBuilder engineerSpecialisationLabelBuilder = LabelBuilder.builder().withText(LocaleService.getStringBinding(this.engineer.getSpecialisation().getLocalizationKey()));
+
+        engineerSpecialisationLabelBuilder = switch (this.engineer.getSpecialisation()) {
+            case FORCE -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-force");
+            case DYNAMIC -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-dynamic");
+            case STRATEGIC -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-strategic");
+            case UNKNOWN -> engineerSpecialisationLabelBuilder;
+        };
+
+        final Label engineerSpecialisation = engineerSpecialisationLabelBuilder.build();
+
+        final ResizableImageView specialisationIcon = ResizableImageViewBuilder.builder()
+                .withStyleClass("specialisation-image")
+                .withImage("/images/engineer/specialisation/" + this.engineer.getSpecialisation().name().toLowerCase() + ".png")
+                .build();
+
+        return BoxBuilder.builder()
+                .withStyleClass("specialisation-line")
+                .withNodes(new StackPane(specialisationIcon), engineerSpecialisation)
+                .buildHBox();
     }
 
-    private ImageView getEngineerImageView(final Engineer engineer) {
-        final ImageView image = new ImageView();
-        image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")));
-        image.getStyleClass().add("engineer-image");
-        EventService.addListener(EngineerEvent.class, engineerEvent -> {
-            if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
-                image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/" + engineer.name().toLowerCase() + ".jpg")));
-            } else {
-                image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")));
-            }
-        });
-        return image;
+    private Label getEngineerName() {
+        return LabelBuilder.builder()
+                .withStyleClass("engineer-name")
+                .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
+                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(RecipeName.forEngineer(this.engineer))))
+                .build();
+    }
+
+    private ImageView getEngineerImageView() {
+        return ImageViewBuilder.builder()
+                .withStyleClass("engineer-image")
+                .withImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")))
+                .build();
+
     }
 }

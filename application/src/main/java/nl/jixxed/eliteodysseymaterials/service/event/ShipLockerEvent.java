@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class ShipLockerEvent implements Event {
-    String timestamp;
+    private final String timestamp;
 }

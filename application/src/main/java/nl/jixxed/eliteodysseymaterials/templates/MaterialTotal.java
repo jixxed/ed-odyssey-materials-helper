@@ -7,47 +7,80 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.enums.AssetType;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
 class MaterialTotal extends VBox {
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private Integer subtotalValue = 0;
+
     private final Map<MaterialTotalType, Label> totals = new EnumMap<>(MaterialTotalType.class);
     private final Map<MaterialTotalType, Label> totalValues = new EnumMap<>(MaterialTotalType.class);
-    private Integer totalValue = 0;
+    private Label name;
+    private final StorageType storageType;
+    private final MaterialTotalType[] totalTypes;
 
     MaterialTotal(final StorageType storageType, final MaterialTotalType... totalTypes) {
-        final Label name = new Label();
-        name.getStyleClass().add("material-total-name");
-        name.textProperty().bind(LocaleService.getStringBinding(storageType.getLocalizationKey()));
-        Arrays.stream(totalTypes).forEach(totalType -> {
+        this.storageType = storageType;
+        this.totalTypes = totalTypes;
+        initComponents();
+        initEventHandling();
+    }
+
+    private void initComponents() {
+        initTotalHeader();
+        initTotals();
+        initSubTotal();
+
+        this.getStyleClass().add("material-total");
+        this.getStyleClass().add("material-total-" + this.storageType.name().toLowerCase());
+    }
+
+    private void initSubTotal() {
+        final Label total = LabelBuilder.builder().withStyleClass("material-total-total-row").withText(LocaleService.getStringBinding(MaterialTotalType.TOTAL.getLocalizationKey())).build();
+        this.totals.put(MaterialTotalType.TOTAL, total);
+
+        final Label totalValueLabel = LabelBuilder.builder().withStyleClass("material-total-total-row").withNonLocalizedText("0").build();
+        final Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+        this.totalValues.put(MaterialTotalType.TOTAL, totalValueLabel);
+
+        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        final HBox totalBox = BoxBuilder.builder().withNodes(total, region, totalValueLabel).buildHBox();
+        this.getChildren().add(totalBox);
+    }
+
+    private void initTotals() {
+        Arrays.stream(this.totalTypes).forEach(totalType -> {
             if (MaterialTotalType.TOTAL.equals(totalType)) {
                 throw new IllegalArgumentException("TOTAL not supported");
             }
-            final Label value = new Label();
-            value.textProperty().bind(LocaleService.getStringBinding(totalType.getLocalizationKey()));
-            this.totals.put(totalType, value);
-            final Label value1 = new Label("0");
-            value1.getStyleClass().add("material-total-value-row");
-
-            if (MaterialTotalType.IRRELEVANT.equals(totalType)) {
-
-                value.getStyleClass().add("material-total-value-irrelevant-row");
-                value1.getStyleClass().add("material-total-value-irrelevant-row");
-            } else {
-                value.getStyleClass().add("material-total-value-row");
-                value1.getStyleClass().add("material-total-value-row");
-            }
-            this.totalValues.put(totalType, value1);
+            final Label totalName = LabelBuilder.builder()
+                    .withText(LocaleService.getStringBinding(totalType.getLocalizationKey()))
+                    .withStyleClass(MaterialTotalType.IRRELEVANT.equals(totalType) ? "material-total-value-irrelevant-row" : "material-total-value-row")
+                    .build();
+            this.totals.put(totalType, totalName);
+            final Label totalValue = LabelBuilder.builder()
+                    .withStyleClass("material-total-value-row")
+                    .withStyleClass(MaterialTotalType.IRRELEVANT.equals(totalType) ? "material-total-value-irrelevant-row" : "material-total-value-row")
+                    .withNonLocalizedText("0")
+                    .build();
+            this.totalValues.put(totalType, totalValue);
         });
-        this.getChildren().add(name);
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.totals.keySet().forEach(key ->
-        {
+
+        this.totals.keySet().forEach(key -> {
             final Region region = new Region();
             HBox.setHgrow(region, Priority.ALWAYS);
             this.getChildren().add(new HBox(this.totals.get(key), region, this.totalValues.get(key)));
@@ -55,31 +88,64 @@ class MaterialTotal extends VBox {
         final Region vRegion = new Region();
         VBox.setVgrow(vRegion, Priority.ALWAYS);
         this.getChildren().add(vRegion);
-
-        final Label total = new Label();
-        total.getStyleClass().add("material-total-total-row");
-        total.textProperty().bind(LocaleService.getStringBinding(MaterialTotalType.TOTAL.getLocalizationKey()));
-        this.totals.put(MaterialTotalType.TOTAL, total);
-        final Label totalValueLabel = new Label("0");
-        totalValueLabel.getStyleClass().add("material-total-total-row");
-        final Region region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
-        this.totalValues.put(MaterialTotalType.TOTAL, totalValueLabel);
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.getChildren().add(new HBox(total, region, totalValueLabel));
-
-        this.getStyleClass().add("material-total");
-        this.getStyleClass().add("material-total-" + storageType.name().toLowerCase());
     }
 
-    void update(final MaterialTotalType type, final Integer amount) {
+    private void initTotalHeader() {
+        this.name = LabelBuilder.builder()
+                .withStyleClass("material-total-name")
+                .withText(LocaleService.getStringBinding(this.storageType.getLocalizationKey()))
+                .build();
+
+        this.getChildren().addAll(this.name, new Separator(Orientation.HORIZONTAL));
+    }
+
+    private void initEventHandling() {
+        EventService.addListener(JournalProcessedEvent.class, journalProcessedEvent -> {
+            updateTotals();
+        });
+    }
+
+    private void updateTotals() {
+        if (StorageType.DATA.equals(this.storageType) || StorageType.GOOD.equals(this.storageType)) {
+            final Integer blueprintTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
+                    .filter(material -> RecipeConstants.isBlueprintIngredient(material.getKey()))
+                    .map(entry -> entry.getValue().getTotalValue())
+                    .reduce(0, Integer::sum);
+            final Integer irrelevantTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
+                    .filter(material -> !RecipeConstants.isBlueprintIngredient(material.getKey()))
+                    .map(entry -> entry.getValue().getTotalValue())
+                    .reduce(0, Integer::sum);
+
+            update(MaterialTotalType.BLUEPRINT, blueprintTotal);
+            update(MaterialTotalType.IRRELEVANT, irrelevantTotal);
+        } else if (StorageType.ASSET.equals(this.storageType)) {
+            final Integer chemicalAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+                    .filter(assetEntry -> AssetType.CHEMICAL.equals(assetEntry.getKey().getType()))
+                    .map(entry -> entry.getValue().getTotalValue())
+                    .reduce(0, Integer::sum);
+            final Integer circuitAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+                    .filter(assetEntry -> AssetType.CIRCUIT.equals(assetEntry.getKey().getType()))
+                    .map(entry -> entry.getValue().getTotalValue())
+                    .reduce(0, Integer::sum);
+            final Integer techAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+                    .filter(assetEntry -> AssetType.TECH.equals(assetEntry.getKey().getType()))
+                    .map(entry -> entry.getValue().getTotalValue())
+                    .reduce(0, Integer::sum);
+            update(MaterialTotalType.CHEMICAL, chemicalAssets);
+            update(MaterialTotalType.CIRCUIT, circuitAssets);
+            update(MaterialTotalType.TECH, techAssets);
+        }
+    }
+
+    private void update(final MaterialTotalType type, final Integer amount) {
         if (this.totalValues.containsKey(type)) {
             final Label label = this.totalValues.get(type);
             final Integer currentAmount = Integer.parseInt(label.getText());
             label.setText(amount.toString());
             final Label totalLabel = this.totalValues.get(MaterialTotalType.TOTAL);
-            this.totalValue += (amount - currentAmount);
-            totalLabel.setText(this.totalValue + "/1000");
+            this.subtotalValue += (amount - currentAmount);
+            totalLabel.setText(this.subtotalValue + "/1000");
         }
     }
+
 }

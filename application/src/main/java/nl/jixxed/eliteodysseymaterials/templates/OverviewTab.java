@@ -6,21 +6,22 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 public class OverviewTab extends EDOTab {
 
+    private ScrollPane scrollPane;
+    private MaterialOverview materialOverview;
+
     OverviewTab() {
-        super();
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.overview"));
-
-        final ScrollPane scrollPane = new ScrollPane();
-        final MaterialOverview materialOverview = new MaterialOverview(scrollPane);
-        scrollPane.pannableProperty().set(true);
-        scrollPane.setContent(materialOverview);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        this.setContent(scrollPane);
-
+        initComponents();
     }
+
+    private void initComponents() {
+        this.textProperty().bind(LocaleService.getStringBinding("tabs.overview"));
+        this.scrollPane = new ScrollPane();
+        setupScrollPane(this.scrollPane);
+        this.materialOverview = new MaterialOverview(this.scrollPane);
+        this.scrollPane.setContent(this.materialOverview);
+        this.setContent(this.scrollPane);
+    }
+
 
     @Override
     public Tabs getTabType() {

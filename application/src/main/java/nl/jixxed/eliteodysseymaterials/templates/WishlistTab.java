@@ -4,14 +4,18 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -23,44 +27,72 @@ import java.util.stream.Collectors;
 
 public class WishlistTab extends EDOTab {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final Label noBlueprint = new Label();
-    private final FlowPane engineerRecipes = new FlowPane();
-    private final FlowPane suitUpgradeRecipes = new FlowPane();
-    private final FlowPane suitModuleRecipes = new FlowPane();
-    private final FlowPane weaponUpgradeRecipes = new FlowPane();
-    private final FlowPane weaponModuleRecipes = new FlowPane();
-    private final Map<Material, Integer> wishlistNeededMaterials = new HashMap<>();
-    private final FlowPane goodFlow = new FlowPane();
-    private final FlowPane assetChemicalFlow = new FlowPane();
-    private final FlowPane dataFlow = new FlowPane();
-    private final FlowPane assetCircuitFlow = new FlowPane();
-    private final FlowPane assetTechFlow = new FlowPane();
-    private final HBox engineerBlueprints;
-    private final HBox suitUpgradeBlueprints;
-    private final HBox suitModuleBlueprints;
-    private final HBox weaponUpgradeBlueprints;
-    private final HBox weaponModuleBlueprints;
-    private final VBox blueprints;
-    private final ScrollPane scrollPane = new ScrollPane();
+    private static final String WISHLIST_HEADER_CLASS = "wishlist-header";
+    private static final String WISHLIST_CATEGORY_CLASS = "wishlist-category";
     private int wishlistSize;
     private List<WishlistBlueprint> wishlistBlueprints;
-    private final VBox content;
     private final AtomicBoolean hideCompleted = new AtomicBoolean();
+    private final Map<Material, Integer> wishlistNeededMaterials = new HashMap<>();
+
+    private Label noBlueprint;
+    private HBox engineerBlueprintsLine;
+    private HBox suitUpgradeBlueprintsLine;
+    private HBox suitModuleBlueprintsLine;
+    private HBox weaponUpgradeBlueprintsLine;
+    private HBox weaponModuleBlueprintsLine;
+    private FlowPane engineerRecipes;
+    private FlowPane suitUpgradeRecipes;
+    private FlowPane suitModuleRecipes;
+    private FlowPane weaponUpgradeRecipes;
+    private FlowPane weaponModuleRecipes;
+    private FlowPane goodFlow;
+    private FlowPane assetChemicalFlow;
+    private FlowPane dataFlow;
+    private FlowPane assetCircuitFlow;
+    private FlowPane assetTechFlow;
+    private VBox blueprints;
+    private ScrollPane scrollPane;
+    private VBox content;
+    private CheckBox hideCompletedCheckBox;
+    private Label selectedBlueprintsLabel;
+    private Label requiredMaterialsLabel;
+    private Label engineerRecipesLabel;
+    private Label suitUpgradeRecipesLabel;
+    private Label suitModuleRecipesLabel;
+    private Label weaponUpgradeRecipesLabel;
+    private Label weaponModuleRecipesLabel;
 
     WishlistTab() {
-        super();
+        initComponents();
+        initEventHandling();
+
+    }
+
+    private void initComponents() {
+        this.scrollPane = new ScrollPane();
+        setupScrollPane(this.scrollPane);
+        initLabels();
+
+        this.engineerRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
+        this.suitUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
+        this.suitModuleRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
+        this.weaponUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
+        this.weaponModuleRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
+        this.goodFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
+        this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
+        this.dataFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
+        this.assetCircuitFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
+        this.assetTechFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
+
         this.hideCompleted.set(PreferencesService.getPreference("blueprint.hide.completed", Boolean.FALSE));
-        this.noBlueprint.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.no.blueprint"));
-        this.noBlueprint.getStyleClass().add("wishlist-header");
-        final Button exportButton = new Button();
-        exportButton.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.export"));
-        exportButton.getStyleClass().add("wishlist-button");
-        exportButton.setOnAction(event -> EventService.publish(new SaveWishlistEvent(createTextWishlist())));
-        final CheckBox hideCompleted = new CheckBox();
-        hideCompleted.getStyleClass().add("wishlist-checkbox");
-        hideCompleted.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.hide.completed"));
-        hideCompleted.setSelected(this.hideCompleted.get());
-        hideCompleted.selectedProperty().addListener((observable, oldValue, newValue) ->
+
+        final Button exportButton = ButtonBuilder.builder().withStyleClass("wishlist-button").withText(LocaleService.getStringBinding("tab.wishlist.export"))
+                .withOnAction(event -> EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededMaterials)))).build();
+        this.hideCompletedCheckBox = new CheckBox();
+        this.hideCompletedCheckBox.getStyleClass().add("wishlist-checkbox");
+        this.hideCompletedCheckBox.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.hide.completed"));
+        this.hideCompletedCheckBox.setSelected(this.hideCompleted.get());
+        this.hideCompletedCheckBox.selectedProperty().addListener((observable, oldValue, newValue) ->
         {
             this.hideCompleted.set(newValue);
             PreferencesService.setPreference("blueprint.hide.completed", newValue);
@@ -68,74 +100,63 @@ public class WishlistTab extends EDOTab {
         });
         this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).size()).orElse(0);
         this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
-        EventService.addListener(WishlistChangedEvent.class, wishlistChangedEvent -> {
-            this.wishlistSize = wishlistChangedEvent.getWishlistSize();
-            this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
-        });
-        this.scrollPane.pannableProperty().set(true);
-        this.scrollPane.setFitToHeight(true);
-        this.scrollPane.setFitToWidth(true);
-        this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        setGaps(10, this.engineerRecipes, this.suitUpgradeRecipes, this.suitModuleRecipes, this.weaponUpgradeRecipes, this.weaponModuleRecipes);
-        setGaps(4, this.goodFlow, this.dataFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow);
-        final Label selectedBlueprints = new Label();
-        selectedBlueprints.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.selected.blueprints"));
-        final Label requiredMaterials = new Label();
-        requiredMaterials.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.required.materials"));
-        selectedBlueprints.getStyleClass().add("wishlist-header");
-        requiredMaterials.getStyleClass().add("wishlist-header");
-        final Label engineerRecipesLabel = new Label();
-        final Label suitUpgradeRecipesLabel = new Label();
-        final Label suitModuleRecipesLabel = new Label();
-        final Label weaponUpgradeRecipesLabel = new Label();
-        final Label weaponModuleRecipesLabel = new Label();
-        engineerRecipesLabel.textProperty().bind(LocaleService.getStringBinding("recipe.category.name.engineer_unlocks"));
-        suitUpgradeRecipesLabel.textProperty().bind(LocaleService.getStringBinding("recipe.category.name.suit_grades"));
-        suitModuleRecipesLabel.textProperty().bind(LocaleService.getStringBinding("recipe.category.name.suit_modules"));
-        weaponUpgradeRecipesLabel.textProperty().bind(LocaleService.getStringBinding("recipe.category.name.weapon_grades"));
-        weaponModuleRecipesLabel.textProperty().bind(LocaleService.getStringBinding("recipe.category.name.weapon_modules"));
-        engineerRecipesLabel.getStyleClass().add("wishlist-category");
-        suitUpgradeRecipesLabel.getStyleClass().add("wishlist-category");
-        suitModuleRecipesLabel.getStyleClass().add("wishlist-category");
-        weaponUpgradeRecipesLabel.getStyleClass().add("wishlist-category");
-        weaponModuleRecipesLabel.getStyleClass().add("wishlist-category");
-        this.engineerBlueprints = new HBox(engineerRecipesLabel, this.engineerRecipes);
-        this.suitUpgradeBlueprints = new HBox(suitUpgradeRecipesLabel, this.suitUpgradeRecipes);
-        this.suitModuleBlueprints = new HBox(suitModuleRecipesLabel, this.suitModuleRecipes);
-        this.weaponUpgradeBlueprints = new HBox(weaponUpgradeRecipesLabel, this.weaponUpgradeRecipes);
-        this.weaponModuleBlueprints = new HBox(weaponModuleRecipesLabel, this.weaponModuleRecipes);
+
+        this.engineerBlueprintsLine = BoxBuilder.builder().withNodes(this.engineerRecipesLabel, this.engineerRecipes).buildHBox();
+        this.suitUpgradeBlueprintsLine = BoxBuilder.builder().withNodes(this.suitUpgradeRecipesLabel, this.suitUpgradeRecipes).buildHBox();
+        this.suitModuleBlueprintsLine = BoxBuilder.builder().withNodes(this.suitModuleRecipesLabel, this.suitModuleRecipes).buildHBox();
+        this.weaponUpgradeBlueprintsLine = BoxBuilder.builder().withNodes(this.weaponUpgradeRecipesLabel, this.weaponUpgradeRecipes).buildHBox();
+        this.weaponModuleBlueprintsLine = BoxBuilder.builder().withNodes(this.weaponModuleRecipesLabel, this.weaponModuleRecipes).buildHBox();
         HBox.setHgrow(this.engineerRecipes, Priority.ALWAYS);
         HBox.setHgrow(this.suitUpgradeRecipes, Priority.ALWAYS);
         HBox.setHgrow(this.suitModuleRecipes, Priority.ALWAYS);
         HBox.setHgrow(this.weaponUpgradeRecipes, Priority.ALWAYS);
         HBox.setHgrow(this.weaponModuleRecipes, Priority.ALWAYS);
-        this.blueprints = new VBox();
-        this.blueprints.setSpacing(4);
+        this.blueprints = BoxBuilder.builder().withStyleClass("wishlist-blueprints").buildVBox();
+
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
         final Region region2 = new Region();
         HBox.setHgrow(region2, Priority.ALWAYS);
-        this.content = new VBox(new HBox(selectedBlueprints, region, exportButton), this.blueprints, new HBox(requiredMaterials, region2, hideCompleted), this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
-        this.content.setSpacing(10);
+
+        final HBox hBox = BoxBuilder.builder().withNodes(this.selectedBlueprintsLabel, region, exportButton).buildHBox();
+        final HBox hBox1 = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, region2, this.hideCompletedCheckBox).buildHBox();
+        this.content = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(hBox, this.blueprints, hBox1, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
         this.scrollPane.setContent(this.wishlistSize > 0 ? this.content : this.noBlueprint);
         VBox.setVgrow(this.dataFlow, Priority.ALWAYS);
-        this.content.setPadding(new Insets(5));
         this.setContent(this.scrollPane);
         Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, emitter::onNext))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(this::refreshContent));
+
         this.wishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream()
                         .map(WishlistBlueprint::new)
                         .collect(Collectors.toList())
                 )
                 .orElse(new ArrayList<>());
-        this.engineerRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.ENGINEER_UNLOCKS.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-        this.suitUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-        this.suitModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-        this.weaponUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-        this.weaponModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
+
+        refreshWishlistRecipes();
+        refreshBlueprintOverview();
+        refreshContent();
+    }
+
+    private void initLabels() {
+        this.noBlueprint = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.no.blueprint")).build();
+        this.selectedBlueprintsLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints")).build();
+        this.requiredMaterialsLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.required.materials")).build();
+        this.engineerRecipesLabel = LabelBuilder.builder().withStyleClass(WISHLIST_CATEGORY_CLASS).withText(LocaleService.getStringBinding("recipe.category.name.engineer_unlocks")).build();
+        this.suitUpgradeRecipesLabel = LabelBuilder.builder().withStyleClass(WISHLIST_CATEGORY_CLASS).withText(LocaleService.getStringBinding("recipe.category.name.suit_grades")).build();
+        this.suitModuleRecipesLabel = LabelBuilder.builder().withStyleClass(WISHLIST_CATEGORY_CLASS).withText(LocaleService.getStringBinding("recipe.category.name.suit_modules")).build();
+        this.weaponUpgradeRecipesLabel = LabelBuilder.builder().withStyleClass(WISHLIST_CATEGORY_CLASS).withText(LocaleService.getStringBinding("recipe.category.name.weapon_grades")).build();
+        this.weaponModuleRecipesLabel = LabelBuilder.builder().withStyleClass(WISHLIST_CATEGORY_CLASS).withText(LocaleService.getStringBinding("recipe.category.name.weapon_modules")).build();
+    }
+
+    private void initEventHandling() {
+        EventService.addListener(WishlistChangedEvent.class, wishlistChangedEvent -> {
+            this.wishlistSize = wishlistChangedEvent.getWishlistSize();
+            this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
+        });
         EventService.addListener(WishlistRecipeEvent.class, wishlistEvent ->
         {
             if (Action.REMOVED.equals(wishlistEvent.getAction())) {
@@ -160,16 +181,7 @@ public class WishlistTab extends EDOTab {
             this.wishlistBlueprints = APPLICATION_STATE.getWishlist(fid).stream()
                     .map(WishlistBlueprint::new)
                     .collect(Collectors.toList());
-            this.engineerRecipes.getChildren().clear();
-            this.suitUpgradeRecipes.getChildren().clear();
-            this.suitModuleRecipes.getChildren().clear();
-            this.weaponUpgradeRecipes.getChildren().clear();
-            this.weaponModuleRecipes.getChildren().clear();
-            this.engineerRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.ENGINEER_UNLOCKS.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.suitUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.suitModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.weaponUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.weaponModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
+            refreshWishlistRecipes();
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.wishlistBlueprints.size()));
@@ -179,53 +191,26 @@ public class WishlistTab extends EDOTab {
             this.wishlistBlueprints = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream()
                     .map(WishlistBlueprint::new)
                     .collect(Collectors.toList())).orElse(new ArrayList<>());
-            this.engineerRecipes.getChildren().clear();
-            this.suitUpgradeRecipes.getChildren().clear();
-            this.suitModuleRecipes.getChildren().clear();
-            this.weaponUpgradeRecipes.getChildren().clear();
-            this.weaponModuleRecipes.getChildren().clear();
-            this.engineerRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.ENGINEER_UNLOCKS.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.suitUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.suitModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.weaponUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
-            this.weaponModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
+            refreshWishlistRecipes();
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.wishlistBlueprints.size()));
         });
-        refreshBlueprintOverview();
-        refreshContent();
     }
 
-    private String createTextWishlist() {
-        final StringBuilder textBuilder = new StringBuilder();
-        final Integer maxNameLength = this.wishlistNeededMaterials.keySet().stream()
-                .map(item -> LocaleService.getLocalizedStringForCurrentLocale(item.getLocalizationKey()).length())
-                .max(Comparator.comparing(Integer::intValue)).orElse(0);
-
-        final String materialColumnWidth = "%-" + (maxNameLength + 5) + "s";
-        textBuilder.append(String.format(materialColumnWidth, "Material"));
-        textBuilder.append(String.format("%12s", "Available"));
-        textBuilder.append(String.format("%12s", "Required"));
-        textBuilder.append(String.format("%12s", "Need"));
-        textBuilder.append("\n\n");
-        this.wishlistNeededMaterials.entrySet().stream()
-                .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
-                .forEach(item -> {
-                    textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
-                    final Integer total = switch (item.getKey().getStorageType()) {
-                        case GOOD -> APPLICATION_STATE.getGoods().get(item.getKey()).getTotalValue();
-                        case DATA -> APPLICATION_STATE.getData().get(item.getKey()).getTotalValue();
-                        case ASSET -> APPLICATION_STATE.getAssets().get(item.getKey()).getTotalValue();
-                        case OTHER -> 0;
-                    };
-                    textBuilder.append(String.format("%12s", total));
-                    textBuilder.append(String.format("%12s", item.getValue()));
-                    textBuilder.append(String.format("%12s", Math.max(0, item.getValue() - total)));
-                    textBuilder.append("\r\n");
-                });
-        return textBuilder.toString();
+    private void refreshWishlistRecipes() {
+        this.engineerRecipes.getChildren().clear();
+        this.suitUpgradeRecipes.getChildren().clear();
+        this.suitModuleRecipes.getChildren().clear();
+        this.weaponUpgradeRecipes.getChildren().clear();
+        this.weaponModuleRecipes.getChildren().clear();
+        this.engineerRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.ENGINEER_UNLOCKS.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
+        this.suitUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
+        this.suitModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.SUIT_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
+        this.weaponUpgradeRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_GRADES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
+        this.weaponModuleRecipes.getChildren().addAll(this.wishlistBlueprints.stream().filter(wishlistBlueprint -> RecipeCategory.WEAPON_MODULES.equals(wishlistBlueprint.getRecipeCategory())).collect(Collectors.toList()));
     }
+
 
     private void addBluePrint(final WishlistBlueprint wishlistBlueprint) {
         switch (wishlistBlueprint.getRecipeCategory()) {
@@ -251,7 +236,7 @@ public class WishlistTab extends EDOTab {
 
     private void refreshBlueprintOverview() {
         this.blueprints.getChildren().clear();
-        for (final HBox blueprintList : List.of(this.engineerBlueprints, this.suitUpgradeBlueprints, this.suitModuleBlueprints, this.weaponUpgradeBlueprints, this.weaponModuleBlueprints)) {
+        for (final HBox blueprintList : List.of(this.engineerBlueprintsLine, this.suitUpgradeBlueprintsLine, this.suitModuleBlueprintsLine, this.weaponUpgradeBlueprintsLine, this.weaponModuleBlueprintsLine)) {
             if (!((FlowPane) blueprintList.getChildren().get(1)).getChildren().isEmpty()) {
                 this.blueprints.getChildren().add(blueprintList);
                 final ArrayList<WishlistBlueprint> wishlistItems = (ArrayList<WishlistBlueprint>) (ArrayList<?>) new ArrayList<>(((FlowPane) blueprintList.getChildren().get(1)).getChildren());
@@ -314,13 +299,6 @@ public class WishlistTab extends EDOTab {
                 this.content.getChildren().add(flowPane);
             }
         }
-    }
-
-    private void setGaps(final int size, final FlowPane... flowPanes) {
-        Arrays.stream(flowPanes).forEach(flowPane -> {
-            flowPane.setHgap(size);
-            flowPane.setVgap(size);
-        });
     }
 
     @Override

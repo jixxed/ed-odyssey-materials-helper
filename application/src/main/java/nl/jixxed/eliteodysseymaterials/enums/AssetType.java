@@ -1,5 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum AssetType {
-    CHEMICAL, CIRCUIT, TECH, NONE
+    CHEMICAL, CIRCUIT, TECH
 }

@@ -7,6 +7,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TitledPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
@@ -18,109 +21,115 @@ import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.EnumMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 class RecipeBar extends Accordion {
-    private final About about;
+    private About about;
+    private TitledPane[] categoryTitledPanes;
+    private TitledPane aboutTitledPane;
+    private final Application application;
 
     RecipeBar(final Application application) {
-        this.about = new About(application);
-        final List<TitledPane> titledPanes = RecipeConstants.RECIPES.entrySet().stream()
-                .map(this::createCategoryTitledPane)
-                .sorted(Comparator.comparing(Labeled::getText))
-                .collect(Collectors.toList());
-        final TitledPane about = new TitledPane();
-        about.textProperty().bind(LocaleService.getStringBinding("menu.about"));
-        about.setContent(this.about);
-        titledPanes.add(about);
-        this.getPanes().addAll(titledPanes.toArray(new TitledPane[0]));
-        this.setExpandedPane(about);
+        this.application = application;
+        initComponents();
 
-        this.setMinWidth(500);
-        this.setPrefWidth(500);
-        this.setMaxWidth(500);
     }
 
+    private void initComponents() {
+        this.getStyleClass().add("recipe");
+        this.categoryTitledPanes = RecipeConstants.RECIPES.entrySet().stream()
+                .map(this::createCategoryTitledPane)
+                .sorted(Comparator.comparing(Labeled::getText))
+                .toArray(TitledPane[]::new);
+        initAboutTitledPane();
+        this.getPanes().addAll(this.categoryTitledPanes);
+        this.getPanes().add(this.aboutTitledPane);
+        this.setExpandedPane(this.aboutTitledPane);
+    }
+
+    private void initAboutTitledPane() {
+        this.about = new About(this.application);
+        this.aboutTitledPane = TitledPaneBuilder.builder().withContent(this.about).withText(LocaleService.getStringBinding("menu.about")).build();
+    }
 
     private TitledPane createCategoryTitledPane(final Map.Entry<RecipeCategory, Map<RecipeName, ? extends Recipe>> recipesEntry) {
-        final TitledPane categoryTitledPane = new TitledPane();
-        final ComboBox<RecipeName> recipes = new ComboBox<>();
         final ScrollPane scroll = new ScrollPane();
-        final Map<RecipeName, Node> recipeContent = createRecipeContent(recipesEntry, recipes, categoryTitledPane);
-        recipes.itemsProperty().bind(LocaleService.getListBinding(recipesEntry.getValue().keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(RecipeName[]::new)));
-        recipes.valueProperty().addListener((obs, oldValue, newValue) -> {
-            scroll.setContent(recipeContent.get(newValue));
-        });
-        recipes.setCellFactory(getCellFactory());
-        recipes.getSelectionModel().select(recipes.getItems().get(0));
-        scroll.setPannable(true);
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.setPannable(true);
         scroll.setFitToHeight(true);
         scroll.setFitToWidth(true);
-        categoryTitledPane.textProperty().bind(LocaleService.getStringBinding(recipesEntry.getKey().getLocalizationKey()));
-        final HBox hBox = new HBox(recipes);
-        recipes.setMinWidth(500);
-        recipes.setPrefWidth(500);
-        recipes.setMaxWidth(500);
+
+        final ComboBox<RecipeName> recipes = ComboBoxBuilder.builder(RecipeName.class)
+                .withStyleClass("recipes-list")
+                .withItemsProperty(LocaleService.getListBinding(recipesEntry.getValue().keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(RecipeName[]::new)))
+                .build();
+
+        final HBox hBox = BoxBuilder.builder().withNode(recipes).buildHBox();
         HBox.setHgrow(recipes, Priority.ALWAYS);
-        final VBox value = new VBox(hBox, scroll);
-        value.setFillWidth(true);
-        value.setStyle("-fx-padding: 0;");
+
+        final VBox content = BoxBuilder.builder()
+                .withStyleClass("recipe-titled-pane-content")
+                .withNodes(hBox, scroll)
+                .buildVBox();
         VBox.setVgrow(scroll, Priority.ALWAYS);
-        categoryTitledPane.setContent(value);
-        categoryTitledPane.getStyleClass().add("category-title-pane");
+
+        final TitledPane categoryTitledPane = TitledPaneBuilder.builder()
+                .withStyleClass("category-title-pane")
+                .withText(LocaleService.getStringBinding(recipesEntry.getKey().getLocalizationKey()))
+                .withContent(content)
+                .build();
+
+        final Map<RecipeName, Node> recipeContent = createRecipeContent(recipesEntry, recipes, categoryTitledPane);
+        recipes.valueProperty().addListener((obs, oldValue, newValue) -> scroll.setContent(recipeContent.get(newValue)));
+        recipes.setCellFactory(getCellFactory());
+        recipes.getSelectionModel().select(recipes.getItems().get(0));
+
         return categoryTitledPane;
     }
 
     private Callback<ListView<RecipeName>, ListCell<RecipeName>> getCellFactory() {
-        return new Callback<>() {
+        return listView -> new ListCell<>() {
             @Override
-            public ListCell<RecipeName> call(final ListView<RecipeName> listView) {
-                return new ListCell<>() {
-                    @Override
-                    protected void updateItem(final RecipeName item, final boolean empty) {
-                        super.updateItem(item, empty);
+            protected void updateItem(final RecipeName item, final boolean empty) {
+                super.updateItem(item, empty);
 
-                        if (empty || item == null) {
-                            setText(null);
-                            setGraphic(null);
-                        } else {
-                            setText(item.toString());
-                        }
-                        updateStyle(item);
-                        EventService.addListener(EngineerEvent.class, event -> {
-                            updateStyle(item);
-                        });
-                    }
-
-                    private void updateStyle(final RecipeName item) {
-                        if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe && ((EngineerRecipe) RecipeConstants.getRecipe(item)).isCompleted()) {
-                            this.setStyle("-fx-text-fill: #89d07f;");
-                        } else if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe) {
-                            this.setStyle("-fx-text-fill: white;");
-                        }
-                    }
-                };
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item.toString());
+                }
+                updateStyle(item);
+                EventService.addListener(EngineerEvent.class, event -> {
+                    updateStyle(item);
+                });
             }
+
+            private void updateStyle(final RecipeName item) {
+                if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe && ((EngineerRecipe) RecipeConstants.getRecipe(item)).isCompleted()) {
+                    this.setStyle("-fx-text-fill: #89d07f;");
+                } else if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe) {
+                    this.setStyle("-fx-text-fill: white;");
+                }
+            }
+
         };
     }
 
     private Map<RecipeName, Node> createRecipeContent(final Map.Entry<RecipeCategory, Map<RecipeName, ? extends Recipe>> recipesEntry, final ComboBox<RecipeName> comboBox, final TitledPane categoryTitledPane) {
-        final Map<RecipeName, Node> contents = new HashMap<>();
-        recipesEntry.getValue().entrySet().forEach(recipe -> {
+        final Map<RecipeName, Node> contents = new EnumMap<>(RecipeName.class);
+        recipesEntry.getValue().forEach((key, value) -> {
             EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {
-                if (blueprintClickEvent.getRecipeName().equals(recipe.getKey())) {
-                    comboBox.getSelectionModel().select(recipe.getKey());
+                if (blueprintClickEvent.getRecipeName().equals(key)) {
+                    comboBox.getSelectionModel().select(key);
                     this.setExpandedPane(categoryTitledPane);
                 }
             });
-            final RecipeContent recipeContent = new RecipeContent(recipe);
-            contents.put(recipe.getKey(), recipeContent);
+            final RecipeContent recipeContent = new RecipeContent(value);
+            contents.put(key, recipeContent);
         });
         return contents;
     }

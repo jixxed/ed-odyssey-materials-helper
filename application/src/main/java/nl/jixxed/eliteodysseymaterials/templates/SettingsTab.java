@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -10,9 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import nl.jixxed.eliteodysseymaterials.Main;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialOrientation;
@@ -24,131 +26,165 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import java.io.File;
 
 public class SettingsTab extends EDOTab {
-    public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final String SETTINGS_LABEL_CLASS = "settings-label";
+    private static final String SETTINGS_DROPDOWN_CLASS = "settings-dropdown";
+    private static final String SETTINGS_SPACING_10_CLASS = "settings-spacing-10";
+    private final Application application;
+    private ScrollPane scrollPane;
+    private Label journalFolderLabel;
+    private Label selectedFolderLabel;
+    private Button journalSelectButton;
+    private Label fontsizeLabel;
+    private ComboBox<FontSize> fontsizeSelect;
+    private ComboBox<ApplicationLocale> languageSelect;
+    private Label languageLabel;
+    private Label readingDirectionLabel;
+    private ComboBox<MaterialOrientation> readingDirectionSelect;
 
     SettingsTab(final Application application) {
-        super();
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
-        final ScrollPane scrollPane = new ScrollPane();
-        scrollPane.pannableProperty().set(true);
-        scrollPane.setContent(new VBox());
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        this.setContent(scrollPane);
-        final Label settingsLabel = new Label();
-        settingsLabel.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
-        settingsLabel.getStyleClass().add("settings-header");
+        this.application = application;
+        initComponents();
+        initEventHandling();
+        applyFontSizingHack();
+    }
 
+    private void applyFontSizingHack() {
+        final String fontSizeStyle = "-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px";
+        this.journalSelectButton.styleProperty().set(fontSizeStyle);
+        this.fontsizeSelect.styleProperty().set(fontSizeStyle);
+        this.languageSelect.styleProperty().set(fontSizeStyle);
+        this.readingDirectionSelect.styleProperty().set(fontSizeStyle);
+
+    }
+
+    private void initEventHandling() {
+        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            final String fontSizeStyle = "-fx-font-size: " + fontSizeEvent.getFontSize() + "px;";
+            this.journalSelectButton.styleProperty().set(fontSizeStyle);
+            this.fontsizeSelect.styleProperty().set(fontSizeStyle);
+            this.languageSelect.styleProperty().set(fontSizeStyle);
+            this.readingDirectionSelect.styleProperty().set(fontSizeStyle);
+        });
+    }
+
+    private void initComponents() {
+        this.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
+        this.scrollPane = new ScrollPane();
+        setupScrollPane(this.scrollPane);
+        final Label settingsLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tabs.settings"))
+                .build();
 
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
-        final HBox customJournalFolderSetting = createCustomJournalFolderSetting(application);
+        final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final HBox readingDirectionSetting = creatReadingDirectionSetting();
-        final VBox settings = new VBox(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting);
-        langSetting.setSpacing(10);
-        fontSetting.setSpacing(10);
-        readingDirectionSetting.setSpacing(10);
-        customJournalFolderSetting.setSpacing(10);
-        settings.setSpacing(10);
-        scrollPane.setContent(settings);
 
+        final VBox settings = BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting)
+                .buildVBox();
+
+        this.scrollPane.setContent(settings);
+        this.setContent(this.scrollPane);
     }
 
-    private HBox createCustomJournalFolderSetting(final Application application) {
-        final Label journalFolderLabel = new Label();
-        journalFolderLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.journal.folder"));
-        journalFolderLabel.getStyleClass().add("settings-label");
-        final Label selectedFolderLabel = new Label();
-        journalFolderLabel.getStyleClass().add("settings-label");
-        selectedFolderLabel.setText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
+    private HBox createCustomJournalFolderSetting() {
+        this.journalFolderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.journal.folder")).build();
+        this.selectedFolderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER)).build();
+
         final DirectoryChooser journalFolderSelect = new DirectoryChooser();
-        final Button button = new Button();
-        button.textProperty().bind(LocaleService.getStringBinding("tab.settings.journal.folder.select"));
-        button.getStyleClass().add("settings-button");
-        button.setOnAction(e -> {
-            final File selectedDirectory = journalFolderSelect.showDialog(((Main) application).getPrimaryStage());
-            if (selectedDirectory != null) {
-                selectedFolderLabel.setText(selectedDirectory.getAbsolutePath());
-                PreferencesService.setPreference(PreferenceConstants.JOURNAL_FOLDER, selectedDirectory.getAbsolutePath());
-                EventService.publish(new WatchedFolderChangedEvent(selectedDirectory.getAbsolutePath()));
-            }
-        });
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            button.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px;");
-        });
-        button.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+        this.journalSelectButton = ButtonBuilder.builder()
+                .withStyleClass("settings-button")
+                .withText(LocaleService.getStringBinding("tab.settings.journal.folder.select"))
+                .withOnAction(e -> {
+                    final File selectedDirectory = journalFolderSelect.showDialog(((Main) this.application).getPrimaryStage());
+                    if (selectedDirectory != null) {
+                        this.selectedFolderLabel.setText(selectedDirectory.getAbsolutePath());
+                        PreferencesService.setPreference(PreferenceConstants.JOURNAL_FOLDER, selectedDirectory.getAbsolutePath());
+                        EventService.publish(new WatchedFolderChangedEvent(selectedDirectory.getAbsolutePath()));
+                    }
+                })
+                .build();
 
-
-        final HBox customJournalFolderSetting = new HBox(journalFolderLabel, button, selectedFolderLabel);
-        customJournalFolderSetting.setAlignment(Pos.CENTER_LEFT);
-        return customJournalFolderSetting;
+        return BoxBuilder.builder()
+                .withStyleClasses("settings-journal-line", SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.journalFolderLabel, this.journalSelectButton, this.selectedFolderLabel)
+                .buildHBox();
     }
 
     private HBox creatFontSetting() {
-        final Label fontsizeLabel = new Label();
-        fontsizeLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.textsize"));
-        fontsizeLabel.getStyleClass().add("settings-label");
-        final ComboBox<FontSize> fontsizeSelect = new ComboBox<>();
-        fontsizeSelect.getStyleClass().add("settings-dropdown");
-        fontsizeSelect.itemsProperty().bind(LocaleService.getListBinding(FontSize.values()));
-        fontsizeSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue != null) {
-                PreferencesService.setPreference(PreferenceConstants.TEXTSIZE, newValue.name());
-                EventService.publish(new FontSizeEvent(newValue.getSize()));
-            }
-        });
-        fontsizeSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            fontsizeSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
-        });
-        fontsizeSelect.getSelectionModel().select(FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")));
+        this.fontsizeLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.textsize"))
+                .build();
+        this.fontsizeSelect = ComboBoxBuilder.builder(FontSize.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(FontSize.values()))
+                .withValueChangeListener((obs, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        PreferencesService.setPreference(PreferenceConstants.TEXTSIZE, newValue.name());
+                        EventService.publish(new FontSizeEvent(newValue.getSize()));
+                    }
+                })
+                .build();
 
-        return new HBox(fontsizeLabel, fontsizeSelect);
+        this.fontsizeSelect.getSelectionModel().select(FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")));
+
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.fontsizeLabel, this.fontsizeSelect)
+                .buildHBox();
     }
 
     private HBox createLangSetting() {
-        final Label languageLabel = new Label();
-        languageLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.language"));
-        languageLabel.getStyleClass().add("settings-label");
-        final ComboBox<ApplicationLocale> languageSelect = new ComboBox<>();
-        languageSelect.getStyleClass().add("settings-dropdown");
-        languageSelect.itemsProperty().bind(LocaleService.getListBinding(ApplicationLocale.values()));
-        languageSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue != null) {
-                LocaleService.setCurrentLocale(newValue.getLocale());
-                PreferencesService.setPreference(PreferenceConstants.LANGUAGE, newValue.name());
-            }
-        });
-        languageSelect.getSelectionModel().select(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH")));
-        languageSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            languageSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
-        });
+        this.languageLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.language"))
+                .build();
+        this.languageSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(ApplicationLocale.values()))
+                .withValueChangeListener((obs, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        LocaleService.setCurrentLocale(newValue.getLocale());
+                        PreferencesService.setPreference(PreferenceConstants.LANGUAGE, newValue.name());
+                    }
+                })
+                .build();
 
-        return new HBox(languageLabel, languageSelect);
+        this.languageSelect.getSelectionModel().select(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH")));
+
+
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.languageLabel, this.languageSelect)
+                .buildHBox();
     }
 
     private HBox creatReadingDirectionSetting() {
-        final Label readingDirectionLabel = new Label();
-        readingDirectionLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.reading.direction"));
-        readingDirectionLabel.getStyleClass().add("settings-label");
-        final ComboBox<MaterialOrientation> readingDirectionSelect = new ComboBox<>();
-        readingDirectionSelect.getStyleClass().add("settings-dropdown");
-        readingDirectionSelect.itemsProperty().bind(LocaleService.getListBinding(MaterialOrientation.values()));
-        readingDirectionSelect.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue != null) {
-                PreferencesService.setPreference(PreferenceConstants.ORIENTATION, newValue.name());
-                EventService.publish(new OrientationChangeEvent(newValue));
-            }
-        });
-        readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")));
-        readingDirectionSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            readingDirectionSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
-        });
+        this.readingDirectionLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.reading.direction"))
+                .build();
+        this.readingDirectionSelect = ComboBoxBuilder.builder(MaterialOrientation.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(MaterialOrientation.values()))
+                .withValueChangeListener((obs, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        PreferencesService.setPreference(PreferenceConstants.ORIENTATION, newValue.name());
+                        EventService.publish(new OrientationChangeEvent(newValue));
+                    }
+                })
+                .build();
 
-        return new HBox(readingDirectionLabel, readingDirectionSelect);
+        this.readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")));
+
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.readingDirectionLabel, this.readingDirectionSelect)
+                .buildHBox();
     }
 
     @Override

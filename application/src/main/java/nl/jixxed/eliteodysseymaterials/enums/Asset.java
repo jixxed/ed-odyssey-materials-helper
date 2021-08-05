@@ -39,7 +39,7 @@ public enum Asset implements Material {
     TRANSMITTER(AssetType.TECH),
     TUNGSTENCARBIDE(AssetType.TECH),
     WEAPONCOMPONENT(AssetType.TECH),
-    UNKNOWN(AssetType.NONE);
+    UNKNOWN(AssetType.TECH);//add it to tech if it is unknown
 
     private final AssetType type;
 

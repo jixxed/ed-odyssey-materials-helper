@@ -77,6 +77,15 @@ public class ApplicationState {
         return this.data;
     }
 
+    public Map<Material, Storage> getMaterials(final StorageType storageType) {
+        return (Map<Material, Storage>) switch (storageType) {
+            case GOOD -> this.goods;
+            case DATA -> this.data;
+            case ASSET -> this.assets;
+            case OTHER -> Collections.emptyMap();
+        };
+    }
+
     public Map<String, Storage> getUnknownData() {
         return this.unknownData;
     }

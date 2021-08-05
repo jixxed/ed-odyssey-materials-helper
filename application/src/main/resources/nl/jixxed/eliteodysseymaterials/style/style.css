@@ -105,6 +105,25 @@
     -fx-fit-to-width: true;
 }
 
+.wishlist-content {
+    -fx-spacing: 10;
+    -fx-padding: 5;
+}
+
+.wishlist-recipes {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+.wishlist-ingredients {
+    -fx-hgap: 4;
+    -fx-vgap: 4;
+}
+
+.wishlist-blueprints {
+    -fx-spacing: 4;
+}
+
 .wishlist-ingredient {
     -fx-border-color: black;
     -fx-min-height: 30px;
@@ -226,8 +245,13 @@
 /*    -fx-label-padding: 5;*/
 
 /*}*/
+.engineer-grid {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+    -fx-padding: 5;
+}
 
-.bottom-bar {
+.bottombar {
     -fx-alignment: center-left;
     -fx-spacing: 10;
     -fx-padding: 0 0 0 10;
@@ -248,14 +272,17 @@
 /*}*/
 
 
-.card-grid {
+.material-overview {
     -fx-padding: 5, 0, 0, 0;
     -fx-start-margin: 5;
+    -fx-spacing: 10;
 }
 
-.card-grid > .flow-pane {
-    -fx-padding: 5, 0, 0, 0;
-    -fx-start-margin: 5;
+.material-overview .flow-pane {
+    /*-fx-padding: 5, 0, 0, 0;*/
+    /*-fx-start-margin: 5;*/
+    -fx-hgap: 4;
+    -fx-vgap: 4;
 }
 
 .donate-label {
@@ -304,14 +331,25 @@
     -fx-padding: 5;
 }
 
-.engineerLabel {
+.engineer-label {
     -fx-border-color: black;
     -fx-border-width: 1;
     -fx-padding: 5;
     -fx-text-fill: black;
 }
 
-.engineerFlow {
+.recipe-titled-pane-content {
+    -fx-fill-width: true;
+    -fx-padding: 0;
+}
+
+.recipes-list {
+    -fx-min-width: 500;
+    -fx-pref-width: 500;
+    -fx-max-width: 500;
+}
+
+.recipe-engineer-flow {
     -fx-hgap: 10;
     -fx-vgap: 10;
     -fx-max-width: 300;
@@ -455,13 +493,14 @@
     -fx-font-size: 1.35em;
 }
 
-.wishlist-button {
+.recipe-wishlist-button {
     -fx-fit-to-width: true;
 }
 
 .wishlist-item > .text {
     -fx-text-fill: black;
 }
+
 
 .wishlist-item {
     /*-fx-background-radius: 5;*/
@@ -541,7 +580,7 @@
     -fx-text-fill: #2e92df;
 }
 
-.wishlist-count {
+.recipe-wishlist-count {
     -fx-background-radius: 15;
     -fx-background-color: white;
     -fx-label-padding: 6;
@@ -549,8 +588,9 @@
     -fx-text-fill: black;
 }
 
-.wishlist-count-box {
+.recipe-wishlist-count-box {
     -fx-spacing: 10;
+    -fx-alignment: top-right;
 
 }
 
@@ -584,6 +624,14 @@
     -fx-min-height: 20;
     -fx-min-width: 200px;
     -fx-text-alignment: center;
+}
+
+.settings-journal-line {
+    -fx-alignment: center-left;
+}
+
+.settings-spacing-10 {
+    -fx-spacing: 10;
 }
 
 .settings-dropdown {
@@ -645,12 +693,26 @@
     -fx-label-padding: 5px;
 }
 
+.engineer-location-line {
+    -fx-max-width: 285;
+}
+
 .engineer-location-line:hover {
     -fx-cursor: hand;
 }
 
 .engineer-copy-icon {
-    -fx-alignment: center-left;
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.ingredient-image {
+    -fx-max-width: 2em;
+    -fx-max-height: 2em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
 }
 
 .engineer-distance {
@@ -684,21 +746,48 @@
 
     -fx-text-fill: #ff3c00;
     -fx-alignment: center-right;
-    -fx-min-height: 32px;
+    -fx-max-height: 2.2em;
 }
 
 .specialisation-dynamic {
 
     -fx-text-fill: #ff00e7;
     -fx-alignment: center-right;
-    -fx-min-height: 32px;
+    -fx-max-height: 2.2em;
 }
 
 .specialisation-strategic {
 
     -fx-text-fill: #7cd429;
     -fx-alignment: center-right;
-    -fx-min-height: 32px;
+    -fx-max-height: 2.2em;
+}
+
+.specialisation-image {
+    -fx-max-width: 2.2em;
+    -fx-max-height: 2.2em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.specialisation-line {
+    -fx-padding: 0 0 0 5;
+}
+
+.recipe-content {
+    -fx-padding: 5px;
+    -fx-max-height: 9999;
+}
+
+.recipe-ingredient-flow {
+    -fx-hgap: 4;
+    -fx-vgap: 4;
+}
+
+.recipe-modifier-flow {
+    -fx-hgap: 4;
+    -fx-vgap: 4;
+
 }
 
 .recipe-description {
@@ -736,6 +825,12 @@
     -fx-min-height: 3em;
     -fx-label-padding: 5px;
     -fx-font-weight: bold;
+}
+
+.recipe {
+    -fx-min-width: 500px;
+    -fx-pref-width: 500px;
+    -fx-max-width: 500px;
 }
 
 .material-total {
@@ -781,15 +876,30 @@
 
 }
 
+.wishlist-visible-image {
+    -fx-max-width: 2em;
+    -fx-max-height: 2em;
+    -fx-pref-width: 2em;
+    -fx-pref-height: 2em;
+    -fx-min-width: 2em;
+    -fx-min-height: 2em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+    -fx-alignment: center;
+}
+
 .wishlist-visible-icon {
     -fx-background-color: #0f0f0f;
+    /*-fx-background-color: #861919;*/
     -fx-cursor: hand;
     -fx-background-insets: 0 0 0 0;
-    -fx-max-height: 24;
-    -fx-max-width: 24;
+    -fx-max-height: 2em;
+    -fx-max-width: 2em;
     -fx-padding: 2;
     -fx-border-color: black;
     -fx-border-width: 0;
+    -fx-alignment: center-left;
+
 }
 
 .wishlist-visible-icon:hover {

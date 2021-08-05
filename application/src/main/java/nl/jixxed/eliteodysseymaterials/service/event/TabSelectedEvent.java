@@ -6,6 +6,6 @@ import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 
 @AllArgsConstructor
 @Getter
-public class TabSelecetedEvent implements Event {
+public class TabSelectedEvent implements Event {
     private final Tabs selectedTab;
 }

@@ -10,6 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import jfxtras.styles.jmetro.JMetroStyleClass;
+import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -23,92 +25,114 @@ import java.io.File;
 
 class BottomBar extends HBox {
 
-    private final Label watchedFileLabel = new Label();
-    private final Label login = new Label();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+
     private String system = "";
     private String body = "";
     private String station = "";
 
+    private Label watchedFileLabel;
+    private Label login;
+    private Label commanderLabel;
+    private Label locationLabel;
+    private Region region;
+    private ComboBox<Commander> commanderSelect;
+
     BottomBar() {
-        super();
-        final Region region = new Region();
-        final Label commanderLabel = new Label();
-        final Label locationLabel = new Label();
-        commanderLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.commander"));
-        this.login.textProperty().bind(LocaleService.getStringBinding("statusbar.login"));
-        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.login, region, locationLabel, new Separator(Orientation.VERTICAL), commanderLabel, createCommanderSetting());
-        HBox.setHgrow(region, Priority.ALWAYS);
-        this.getStyleClass().add("bottom-bar");
+        initComponents();
+        initEventHandling();
+    }
+
+    private void initComponents() {
+        this.getStyleClass().add("bottombar");
         this.getStyleClass().add(JMetroStyleClass.BACKGROUND);
+        this.region = new Region();
+        HBox.setHgrow(this.region, Priority.ALWAYS);
+        this.locationLabel = LabelBuilder.builder().build();
+        this.commanderLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.commander")).build();
+        this.login = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.login")).build();
+        this.commanderSelect = ComboBoxBuilder.builder(Commander.class)
+                .withStyleClass("bottombar-dropdown")
+                .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders()))
+                .withValueChangeListener((obs, oldValue, newValue) -> Platform.runLater(() -> {
+                    if (newValue != null) {
+                        PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue);
+                    }
+                    if (oldValue != null && newValue != null) {
+                        EventService.publish(new CommanderSelectedEvent(newValue));
+                    }
+                }))
+                .build();
+        this.commanderSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
 
         final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
-
-        this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath()));
-        EventService.addListener(WatchedFolderChangedEvent.class, watchedFolderChangedEvent -> this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolderChangedEvent.getPath())));
-
-        EventService.addListener(SimpleLocationEvent.class, simpleLocationEvent -> {
-            this.system = simpleLocationEvent.getStarSystem().orElse(this.system);
-            switch (simpleLocationEvent.getLocationType()) {
-                case LOCATION:
-                    final String systemBody = simpleLocationEvent.getBody().orElse("");
-                    final String systemStation = simpleLocationEvent.getStation().orElse("");
-                    this.body = systemBody.equals(systemStation) ? "" : systemBody;
-                    break;
-                case DOCKED:
-                    break;
-                case UNDOCKED:
-                    this.station = "";
-                    break;
-                default:
-                    this.body = simpleLocationEvent.getBody().orElse("");
-                    break;
-            }
-            this.station = simpleLocationEvent.getStation().orElse("");
-            Platform.runLater(() -> locationLabel.setText(this.system +
-                    (this.body.isBlank() ? "" : " | " + this.body) +
-                    (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + this.station)));
-        });
-        EventService.addListener(JournalProcessedEvent.class, journalProcessedEvent -> Platform.runLater(() -> this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalProcessedEvent.getFile().getName()))));
-        EventService.addListener(CommanderAddedEvent.class, event -> this.login.setVisible(true));
-        EventService.addListener(EngineerEvent.class, event -> this.login.setVisible(false));
-
+        this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath())).build();
+        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.login, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
     }
 
-    private ComboBox<Commander> createCommanderSetting() {
-
-        final ComboBox<Commander> commanderSelect = new ComboBox<>();
-        commanderSelect.getStyleClass().add("bottombar-dropdown");
-        commanderSelect.itemsProperty().set(FXCollections.observableArrayList(
-                APPLICATION_STATE.getCommanders()
-        ));
-        EventService.addListener(CommanderAddedEvent.class, commanderAddedEvent -> {
-            commanderSelect.getItems().add(commanderAddedEvent.getCommander());
-            final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
-            if (preferredName.isBlank() || commanderAddedEvent.getCommander().getName().equals(preferredName)) {
-                commanderSelect.getSelectionModel().select(commanderAddedEvent.getCommander());
-            }
-        });
-        EventService.addListener(CommanderAllListedEvent.class, event -> {
-            if (!commanderSelect.getItems().isEmpty() && commanderSelect.getSelectionModel().getSelectedIndex() == -1) {
-                commanderSelect.getSelectionModel().select(commanderSelect.getItems().get(0));
-                PreferencesService.setPreference(PreferenceConstants.COMMANDER, commanderSelect.getItems().get(0));
-                EventService.publish(new CommanderSelectedEvent(commanderSelect.getItems().get(0)));
-            }
-        });
-        EventService.addListener(0, WatchedFolderChangedEvent.class, event -> commanderSelect.getItems().clear());
-        EventService.addListener(0, CommanderResetEvent.class, event -> commanderSelect.getItems().clear());
-        commanderSelect.valueProperty().addListener((obs, oldValue, newValue) -> Platform.runLater(() -> {
-            if (newValue != null) {
-                PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue);
-            }
-            if (oldValue != null && newValue != null) {
-                EventService.publish(new CommanderSelectedEvent(newValue));
-            }
-        }));
-        commanderSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px"));
-
-        return commanderSelect;
+    private void initEventHandling() {
+        EventService.addListener(0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged);
+        EventService.addListener(SimpleLocationEvent.class, this::updateLocationLabel);
+        EventService.addListener(JournalProcessedEvent.class, this::updateWatchedFileLabel);
+        EventService.addListener(EngineerEvent.class, event -> hideLoginRequest());
+        EventService.addListener(CommanderAddedEvent.class, this::handleAddedCommander);
+        EventService.addListener(CommanderAllListedEvent.class, event -> afterAllCommandersListed());
+        EventService.addListener(0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear());
+        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px"));
     }
+
+    private void afterAllCommandersListed() {
+        if (!this.commanderSelect.getItems().isEmpty() && this.commanderSelect.getSelectionModel().getSelectedIndex() == -1) {
+            this.commanderSelect.getSelectionModel().select(this.commanderSelect.getItems().get(0));
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, this.commanderSelect.getItems().get(0));
+            EventService.publish(new CommanderSelectedEvent(this.commanderSelect.getItems().get(0)));
+        }
+    }
+
+    private void handleAddedCommander(final CommanderAddedEvent commanderAddedEvent) {
+        this.login.setVisible(true);
+        this.commanderSelect.getItems().add(commanderAddedEvent.getCommander());
+        final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
+        if (preferredName.isBlank() || commanderAddedEvent.getCommander().getName().equals(preferredName)) {
+            this.commanderSelect.getSelectionModel().select(commanderAddedEvent.getCommander());
+        }
+    }
+
+    private void hideLoginRequest() {
+        this.login.setVisible(false);
+    }
+
+    private void resetAfterWatchedFolderChanged(final WatchedFolderChangedEvent watchedFolderChangedEvent) {
+        this.commanderSelect.getItems().clear();
+        this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolderChangedEvent.getPath()));
+    }
+
+    private void updateWatchedFileLabel(final JournalProcessedEvent journalProcessedEvent) {
+        Platform.runLater(() -> this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalProcessedEvent.getFile().getName())));
+    }
+
+    private void updateLocationLabel(final SimpleLocationEvent simpleLocationEvent) {
+        this.system = simpleLocationEvent.getStarSystem().orElse(this.system);
+        switch (simpleLocationEvent.getLocationType()) {
+            case LOCATION:
+                final String systemBody = simpleLocationEvent.getBody().orElse("");
+                final String systemStation = simpleLocationEvent.getStation().orElse("");
+                this.body = systemBody.equals(systemStation) ? "" : systemBody;
+                break;
+            case DOCKED:
+                break;
+            case UNDOCKED:
+                this.station = "";
+                break;
+            default:
+                this.body = simpleLocationEvent.getBody().orElse("");
+                break;
+        }
+        this.station = simpleLocationEvent.getStation().orElse("");
+        Platform.runLater(() -> this.locationLabel.setText(this.system +
+                (this.body.isBlank() ? "" : " | " + this.body) +
+                (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + this.station)));
+    }
+
+
 }

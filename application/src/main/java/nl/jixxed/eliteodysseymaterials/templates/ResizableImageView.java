@@ -7,19 +7,18 @@ import javafx.scene.layout.Pane;
 
 public class ResizableImageView extends Pane {
 
-    private ImageView iv;
+    private final ImageView iv;
 
-    ResizableImageView(final String styleClass) {
-        this.getStyleClass().add(styleClass);
+    public ResizableImageView() {
+        this.iv = new ImageView();
+        getChildren().add(this.iv);
     }
 
     public final void setImage(final Image image) {
-        this.iv = new ImageView(image);
+        this.iv.setImage(image);
         setPrefSize(image.getWidth(), image.getHeight());
         this.iv.fitWidthProperty().bind(widthProperty());
         this.iv.fitHeightProperty().bind(heightProperty());
-        this.iv.setPreserveRatio(true);
-        getChildren().add(this.iv);
     }
 
     public final void setPreserveRatio(final boolean preserveRatio) {

@@ -86,7 +86,7 @@ public abstract class RecipeConstants {
     }
 
     public static boolean isEngineeringIngredient(final Material material) {
-        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
+        return !material.isUnknown() && ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
     }
 
     private static boolean isEngineeringIngredientAndCompleted(final Material material) {

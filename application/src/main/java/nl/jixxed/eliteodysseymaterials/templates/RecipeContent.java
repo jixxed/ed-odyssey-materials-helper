@@ -1,191 +1,177 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.WishlistRecipeEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 class RecipeContent extends VBox {
     private final List<Ingredient> ingredients = new ArrayList<>();
-
+    private final Recipe recipe;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EngineerModuleLabel> moduleEngineerLabels = new ArrayList<>();
+    private Label countLabel;
+    private HBox recipeHeader;
 
 
-    RecipeContent(final Map.Entry<RecipeName, ? extends Recipe> recipe) {
+    RecipeContent(final Recipe recipe) {
+        this.recipe = recipe;
+        initComponents();
+        initEventHandling();
+    }
 
-        EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> {
-            Platform.runLater(() -> {
-                this.updateIngredientsValues();
-                this.updateIngredients();
-                this.updateEngineerStyles();
-            });
-        });
-        this.setStyle("-fx-padding: 5;");
-        final List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.addAll(getRecipeIngredients(recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
-        ingredients.addAll(getRecipeIngredients(recipe, Asset.class, StorageType.ASSET, APPLICATION_STATE.getAssets()));
-        ingredients.addAll(getRecipeIngredients(recipe, Data.class, StorageType.DATA, APPLICATION_STATE.getData()));
+    private void initComponents() {
+        this.getStyleClass().add("recipe-content");
+        loadIngredients();
+        initDescription();
 
-        if (recipe.getValue() instanceof EngineerRecipe) {
-            ingredients.addAll(((EngineerRecipe) recipe.getValue()).getOther().stream()
-                    .map(other -> {
-                                final Ingredient newIngredient = new Ingredient(other);
-                                this.ingredients.add(newIngredient);
-                                return newIngredient;
-                            }
-                    ).sorted(Comparator.comparing(Ingredient::getName))
+        if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+            initAsRecipe();
+        } else {//mission based recipes
+            initAsEngineerMission();
+        }
+        initIngredients();
+
+        if (this.recipe instanceof ModuleRecipe) {
+            initEngineers();
+        }
+        initModifiers();
+    }
+
+    private void loadIngredients() {
+        this.ingredients.addAll(getRecipeIngredients(this.recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
+        this.ingredients.addAll(getRecipeIngredients(this.recipe, Asset.class, StorageType.ASSET, APPLICATION_STATE.getAssets()));
+        this.ingredients.addAll(getRecipeIngredients(this.recipe, Data.class, StorageType.DATA, APPLICATION_STATE.getData()));
+        if (this.recipe instanceof EngineerRecipe) {
+            this.ingredients.addAll(((EngineerRecipe) this.recipe).getOther().stream()
+                    .map(MissionIngredient::new)
+                    .sorted(Comparator.comparing(MissionIngredient::getName))
                     .collect(Collectors.toList()));
         }
-        final Label descriptionTitle = new Label();
-        descriptionTitle.textProperty().bind(LocaleService.getStringBinding("recipe.label.description"));
-        descriptionTitle.getStyleClass().add("recipe-title-label");
+    }
+
+    private void initIngredients() {
+        final FlowPane ingredientFlow = FlowPaneBuilder.builder().withStyleClass("recipe-ingredient-flow").withNodes(this.ingredients).build();
+        this.getChildren().add(ingredientFlow);
+    }
+
+    private void initDescription() {
+        final Label descriptionTitle = LabelBuilder.builder()
+                .withStyleClass("recipe-title-label")
+                .withText(LocaleService.getStringBinding("recipe.label.description"))
+                .build();
 
         final Region descriptionRegion = new Region();
         HBox.setHgrow(descriptionRegion, Priority.ALWAYS);
-        final HBox descriptionBox = new HBox(descriptionTitle, descriptionRegion);
-        this.getChildren().add(descriptionBox);
-        final Text description = new Text();
-        description.setWrappingWidth(465);
-        description.textProperty().bind(LocaleService.getStringBinding(recipe.getKey().getDescriptionLocalizationKey()));
-        description.getStyleClass().add("recipe-description");
 
-        this.getChildren().add(description);
+        this.recipeHeader = BoxBuilder.builder().withNodes(descriptionTitle, descriptionRegion).buildHBox();
+        final Text description = TextBuilder.builder()
+                .withStyleClass("recipe-description")
+                .withWrappingWidth(465D)
+                .withText(LocaleService.getStringBinding(this.recipe.getRecipeName().getDescriptionLocalizationKey()))
+                .build();
 
+        this.getChildren().addAll(this.recipeHeader, description);
+    }
 
-        if (!(recipe.getValue() instanceof EngineerRecipe) || ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {
-            final Button addToWishlist = new Button();
-            addToWishlist.textProperty().bind(LocaleService.getStringBinding("recipe.add.to.wishlist"));
-            addToWishlist.getStyleClass().add("wishlist-button");
-            addToWishlist.setOnAction(event -> {
-                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), new WishlistRecipe(recipe.getKey(), true), Action.ADDED)));
-            });
-            final long initialCount = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(recipe.getKey())).count()).orElse(0L);
-            final Label countLabel = new Label();
-            if (initialCount > 0L) {
-                countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", initialCount));
-            }
-            EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
-                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(recipe.getKey())).count()).orElse(0L);
-                if (count > 0L) {
-                    countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
-                } else {
-                    countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
-                }
-            });
+    private void initAsRecipe() {
+        final Button addToWishlist = ButtonBuilder.builder()
+                .withStyleClass("recipe-wishlist-button")
+                .withText(LocaleService.getStringBinding("recipe.add.to.wishlist"))
+                .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), new WishlistRecipe(this.recipe.getRecipeName(), true), Action.ADDED))))
+                .build();
 
-            countLabel.getStyleClass().add("wishlist-count");
-            final HBox box = new HBox(countLabel, addToWishlist);
-            box.getStyleClass().add("wishlist-count-box");
-            HBox.setHgrow(addToWishlist, Priority.ALWAYS);
-            box.setAlignment(Pos.TOP_RIGHT);
-            descriptionBox.getChildren().add(box);
-            final Label materialHeader = new Label();
-            materialHeader.textProperty().bind(LocaleService.getStringBinding("recipe.header.material"));
-            materialHeader.getStyleClass().add("recipe-title-label");
-            this.getChildren().add(materialHeader);
-        } else {
-
-            final Label materialHeader = new Label();
-            materialHeader.textProperty().bind(LocaleService.getStringBinding("recipe.header.objective"));
-            materialHeader.getStyleClass().add("recipe-title-label");
-            this.getChildren().add(materialHeader);
+        final long initialCount = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count()).orElse(0L);
+        this.countLabel = LabelBuilder.builder().withStyleClass("recipe-wishlist-count").build();
+        if (initialCount > 0L) {
+            this.countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", initialCount));
         }
+        final HBox box = BoxBuilder.builder()
+                .withStyleClass("recipe-wishlist-count-box")
+                .withNodes(this.countLabel, addToWishlist)
+                .buildHBox();
+        HBox.setHgrow(addToWishlist, Priority.ALWAYS);
+        this.recipeHeader.getChildren().add(box);
+        final Label materialHeader = LabelBuilder.builder()
+                .withStyleClass("recipe-title-label")
+                .withText(LocaleService.getStringBinding("recipe.header.material"))
+                .build();
+        this.getChildren().add(materialHeader);
+    }
 
-        final FlowPane ingredientFlow = new FlowPane(ingredients.toArray(new Ingredient[0]));
-        setGaps(ingredientFlow);
-        this.getChildren().addAll(ingredientFlow);
-        if (recipe.getValue() instanceof ModuleRecipe) {
-            final Label engineerLabelHeader = new Label();
-            engineerLabelHeader.textProperty().bind(LocaleService.getStringBinding("recipe.label.engineers"));
-            engineerLabelHeader.getStyleClass().add("recipe-title-label");
-            this.getChildren().addAll(engineerLabelHeader);
-            final Label[] engineerLabels = ((ModuleRecipe) recipe.getValue()).getEngineers().stream()
-                    .map(engineer -> {
-                        final EngineerModuleLabel label = new EngineerModuleLabel(engineer);
-                        this.moduleEngineerLabels.add(label);
-                        return label;
-                    })
-                    .sorted(Comparator.comparing(EngineerModuleLabel::getText))
-                    .toArray(Label[]::new);
+    private void initAsEngineerMission() {
+        final Label materialHeader = LabelBuilder.builder()
+                .withStyleClass("recipe-title-label")
+                .withText(LocaleService.getStringBinding("recipe.header.objective"))
+                .build();
+        this.getChildren().add(materialHeader);
+    }
 
-            final FlowPane flowPane = new FlowPane(engineerLabels);
-            flowPane.getStyleClass().add("engineerFlow");
-            this.getChildren().addAll(flowPane);
-        }
+    private void initEngineers() {
+        final Label engineerLabelHeader = LabelBuilder.builder()
+                .withStyleClass("recipe-title-label")
+                .withText(LocaleService.getStringBinding("recipe.label.engineers"))
+                .build();
+        this.getChildren().add(engineerLabelHeader);
+        final Label[] engineerLabels = ((ModuleRecipe) this.recipe).getEngineers().stream()
+                .map(EngineerModuleLabel::new)
+                .sorted(Comparator.comparing(EngineerModuleLabel::getText))
+                .toArray(Label[]::new);
+        final FlowPane flowPane = FlowPaneBuilder.builder().withStyleClass("recipe-engineer-flow").withNodes(engineerLabels).build();
+        this.getChildren().add(flowPane);
 
+    }
 
-        final Map<Modifier, String> modifierMap = recipe.getValue().getModifiers();
+    private void initModifiers() {
+        final Map<Modifier, String> modifierMap = this.recipe.getModifiers();
         if (!modifierMap.isEmpty()) {
-            final Label modifierTitle = new Label();
-            modifierTitle.textProperty().bind(LocaleService.getStringBinding("recipe.label.modifiers"));
-            modifierTitle.getStyleClass().add("recipe-title-label");
+            final Label modifierTitle = LabelBuilder.builder().withStyleClass("recipe-title-label").withText(LocaleService.getStringBinding("recipe.label.modifiers")).build();
             this.getChildren().add(modifierTitle);
+
             final List<HBox> modifiers = modifierMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(modifierStringEntry -> {
-                final Label modifier = new Label();
-                modifier.getStyleClass().add("recipe-modifier-name");
-                modifier.textProperty().bind(LocaleService.getStringBinding(modifierStringEntry.getKey().getLocalizationKey()));
-                final Label value = new Label(modifierStringEntry.getValue());
-                value.getStyleClass().add("recipe-modifier-value");
-                final HBox modifierBox = new HBox(modifier, value);
-                modifierBox.getStyleClass().add("recipe-modifier");
+                final Label modifier = LabelBuilder.builder().withStyleClass("recipe-modifier-name").withText(LocaleService.getStringBinding(modifierStringEntry.getKey().getLocalizationKey())).build();
+                final Label value = LabelBuilder.builder().withStyleClass("recipe-modifier-value").withNonLocalizedText(modifierStringEntry.getValue()).build();
+                final HBox modifierBox = BoxBuilder.builder().withStyleClass("recipe-modifier").withNodes(modifier, value).buildHBox();
                 HBox.setHgrow(value, Priority.ALWAYS);
                 return modifierBox;
             }).collect(Collectors.toList());
 
-            final FlowPane modifiersFlowPane = new FlowPane(modifiers.toArray(new HBox[0]));
-            setGaps(modifiersFlowPane);
+            final FlowPane modifiersFlowPane = FlowPaneBuilder.builder().withStyleClass("recipe-modifier-flow").withNodes(modifiers).build();
             this.getChildren().addAll(modifiersFlowPane);
         }
-        this.setMaxHeight(Double.MAX_VALUE);
     }
 
-    private List<Ingredient> getRecipeIngredients(final Map.Entry<RecipeName, ? extends Recipe> recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Storage> materialMap) {
-        return recipe.getValue().getMaterialCollection(materialClass).entrySet().stream()
-                .map(material ->
-                        {
-                            final Ingredient newIngredient = new Ingredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue());
-                            this.ingredients.add(newIngredient);
-                            return newIngredient;
-                        }
-                ).sorted(Comparator.comparing(Ingredient::getName))
-                .collect(Collectors.toList());
-    }
-
-    private void setGaps(final FlowPane... flowPanes) {
-        Arrays.stream(flowPanes).forEach(flowPane -> {
-            flowPane.setHgap(4);
-            flowPane.setVgap(4);
-        });
-    }
-
-    private void updateIngredients() {
-        this.ingredients.forEach(Ingredient::update);
-    }
-
-    private void updateIngredientsValues() {
-        this.ingredients.forEach(ingredient -> {
-            switch (ingredient.getType()) {
-                case ASSET -> ingredient.setAmountAvailable(APPLICATION_STATE.getAssets().get(Asset.forName(ingredient.getCode())).getTotalValue());
-                case GOOD -> ingredient.setAmountAvailable(APPLICATION_STATE.getGoods().get(Good.forName(ingredient.getCode())).getTotalValue());
-                case DATA -> ingredient.setAmountAvailable(APPLICATION_STATE.getData().get(Data.forName(ingredient.getCode())).getTotalValue());
+    private void initEventHandling() {
+        EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
+            if (this.countLabel != null) {
+                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count()).orElse(0L);
+                if (count > 0L) {
+                    this.countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
+                } else {
+                    this.countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
+                }
             }
         });
     }
 
-    private void updateEngineerStyles() {
-        this.moduleEngineerLabels.forEach(label -> label.updateStyle(APPLICATION_STATE.isEngineerUnlocked(label.getEngineer())));
+    private List<MaterialIngredient> getRecipeIngredients(final Recipe recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Storage> materialMap) {
+        return recipe.getMaterialCollection(materialClass).entrySet().stream()
+                .map(material -> new MaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue()))
+                .sorted(Comparator.comparing(MaterialIngredient::getName))
+                .collect(Collectors.toList());
     }
+
+
 }

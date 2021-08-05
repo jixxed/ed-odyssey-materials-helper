@@ -3,22 +3,25 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 
-public class WishlistIngredient extends Ingredient {
+class WishlistIngredient extends MaterialIngredient {
+
+    private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
+    private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
 
     WishlistIngredient(final StorageType storageType, final Material material, final Integer amount, final Integer amountAvailable) {
         super(storageType, material, amount, amountAvailable);
     }
 
     @Override
-    public void update() {
+    protected void update() {
         if (this.getAmountAvailable() >= Integer.parseInt(this.getAmountRequiredLabel().getText())) {
             this.getAmountAvailableLabel().setText(this.getAmountAvailable().toString());
-            this.getStyleClass().removeAll("ingredient-filled", "ingredient-unfilled");
-            this.getStyleClass().addAll("ingredient-filled");
+            this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
+            this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
         } else {
             this.getAmountAvailableLabel().setText(this.getAmountAvailable().toString());
-            this.getStyleClass().removeAll("ingredient-filled", "ingredient-unfilled");
-            this.getStyleClass().addAll("ingredient-unfilled");
+            this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
+            this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
         }
     }
 
