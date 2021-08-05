@@ -35,6 +35,7 @@ repositories {
 application {
     mainModule = "nl.jixxed.eliteodysseymaterials"
     mainClass = "nl.jixxed.eliteodysseymaterials.Main"
+    version = project.version
 }
 
 if (os.isWindows()) {
