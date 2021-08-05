@@ -237,8 +237,8 @@ public class Main extends Application {
             try (final Scanner scanner = new Scanner(config)) {
                 while (scanner.hasNext()) {
                     final String line = scanner.next();
-                    if (line.startsWith("app.version=")) {
-                        return line.substring(line.indexOf("=") + 1);
+                    if (line.contains("app.version=")) {
+                        return line.substring(line.lastIndexOf("=") + 1);
                     }
                 }
                 return "0";
@@ -246,7 +246,6 @@ public class Main extends Application {
         } catch (final IOException ex) {
             return "0";
         }
-
     }
 
     private String getLatestUpdateUrl() throws IOException {
