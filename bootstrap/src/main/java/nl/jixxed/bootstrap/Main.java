@@ -98,8 +98,12 @@ public class Main extends Application {
                             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
                                 final String[] cmd = new String[1];
                                 cmd[0] = OsConstants.KILL_COMMAND;
-                                Runtime.getRuntime().exec(cmd);
-                                Thread.sleep(3000);
+                                try {
+                                    Runtime.getRuntime().exec(cmd);
+                                    Thread.sleep(3000);
+                                } catch (final Exception ex) {
+
+                                }
                             }
                             FileUtils.deleteDirectory(this.appFolder);
 
