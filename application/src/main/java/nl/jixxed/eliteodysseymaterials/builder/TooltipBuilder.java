@@ -42,7 +42,7 @@ public class TooltipBuilder {
             tooltip.textProperty().bind(this.stringBinding);
         }
         if (this.duration != null) {
-            tooltip.setShowDuration(this.duration);
+            tooltip.setShowDelay(this.duration);
         }
         return tooltip;
     }

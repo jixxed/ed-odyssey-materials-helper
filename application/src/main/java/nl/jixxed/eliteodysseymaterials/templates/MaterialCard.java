@@ -10,6 +10,7 @@ import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
@@ -70,9 +71,7 @@ class MaterialCard extends HBox {
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
 
-        final Tooltip tooltip = new Tooltip();
-        tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(material));
-        tooltip.setShowDelay(Duration.millis(100));
+        final Tooltip tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(material)).withShowDelay(Duration.millis(100)).build();
         Tooltip.install(this, tooltip);
 
         initMaterialCardStyle();
