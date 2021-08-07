@@ -2,10 +2,7 @@ package nl.jixxed.eliteodysseymaterials.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
-import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
-import nl.jixxed.eliteodysseymaterials.domain.Recipe;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.Collections;
@@ -16,8 +13,8 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class RecipeConstants {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final Map<RecipeName, Recipe> SUIT_UPGRADES = new EnumMap<>(RecipeName.class);
-    private static final Map<RecipeName, Recipe> WEAPON_UPGRADES = new EnumMap<>(RecipeName.class);
+    private static final Map<RecipeName, UpgradeRecipe> SUIT_UPGRADES = new EnumMap<>(RecipeName.class);
+    private static final Map<RecipeName, UpgradeRecipe> WEAPON_UPGRADES = new EnumMap<>(RecipeName.class);
     private static final Map<RecipeName, ModuleRecipe> SUIT_MODULE_BLUEPRINTS = new EnumMap<>(RecipeName.class);
     private static final Map<RecipeName, ModuleRecipe> WEAPON_MODULE_BLUEPRINTS = new EnumMap<>(RecipeName.class);
     private static final Map<RecipeName, EngineerRecipe> ENGINEER_UNLOCK_REQUIREMENTS = new EnumMap<>(RecipeName.class);
@@ -77,20 +74,12 @@ public abstract class RecipeConstants {
         return !isBlueprintIngredient(material) && !isEngineeringIngredient(material);
     }
 
-    public static boolean isNotRelevantAndCompletedEngineeringIngredient(final Material material) {
-        return !isBlueprintIngredient(material) && isEngineeringIngredientAndCompleted(material);
-    }
-
     public static boolean isEngineeringOnlyIngredient(final Material material) {
         return isEngineeringIngredient(material) && !isBlueprintIngredient(material);
     }
 
     public static boolean isEngineeringIngredient(final Material material) {
         return !material.isUnknown() && ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
-    }
-
-    private static boolean isEngineeringIngredientAndCompleted(final Material material) {
-        return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(EngineerRecipe::isCompleted).anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
     }
 
     public static boolean isEngineeringIngredientAndNotCompleted(final Material material) {
@@ -205,7 +194,7 @@ public abstract class RecipeConstants {
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ODEN_GEIGER)
         ));
-        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_1_2, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_1_2, new UpgradeRecipe(
                 RecipeName.MAVERICK_SUIT_GRADE_1_2,
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
@@ -225,7 +214,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "16%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_2_3, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_2_3, new UpgradeRecipe(
                 RecipeName.MAVERICK_SUIT_GRADE_2_3,
                 Map.of(
                         Good.SUITSCHEMATIC, 5,
@@ -245,7 +234,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "29%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_3_4, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_3_4, new UpgradeRecipe(
                 RecipeName.MAVERICK_SUIT_GRADE_3_4,
                 Map.of(
                         Good.SUITSCHEMATIC, 10,
@@ -265,7 +254,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "41%"
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_4_5, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_4_5, new UpgradeRecipe(
                 RecipeName.MAVERICK_SUIT_GRADE_4_5,
                 Map.of(
                         Good.SUITSCHEMATIC, 15,
@@ -285,7 +274,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "50%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_1_2, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_1_2, new UpgradeRecipe(
                 RecipeName.DOMINATOR_SUIT_GRADE_1_2,
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
@@ -305,7 +294,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "16%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_2_3, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_2_3, new UpgradeRecipe(
                 RecipeName.DOMINATOR_SUIT_GRADE_2_3,
                 Map.of(
                         Good.SUITSCHEMATIC, 5,
@@ -325,7 +314,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "29%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_3_4, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_3_4, new UpgradeRecipe(
                 RecipeName.DOMINATOR_SUIT_GRADE_3_4,
                 Map.of(
                         Good.SUITSCHEMATIC, 10,
@@ -345,7 +334,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "46%"
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_4_5, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.DOMINATOR_SUIT_GRADE_4_5, new UpgradeRecipe(
                 RecipeName.DOMINATOR_SUIT_GRADE_4_5,
                 Map.of(
                         Good.SUITSCHEMATIC, 15,
@@ -365,7 +354,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "50%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_1_2, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_1_2, new UpgradeRecipe(
                 RecipeName.ARTEMIS_SUIT_GRADE_1_2,
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
@@ -385,7 +374,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "16%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_2_3, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_2_3, new UpgradeRecipe(
                 RecipeName.ARTEMIS_SUIT_GRADE_2_3,
                 Map.of(
                         Good.SUITSCHEMATIC, 5,
@@ -405,7 +394,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "29%"//OK
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_3_4, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_3_4, new UpgradeRecipe(
                 RecipeName.ARTEMIS_SUIT_GRADE_3_4,
                 Map.of(
                         Good.SUITSCHEMATIC, 10,
@@ -425,7 +414,7 @@ public abstract class RecipeConstants {
                         Modifier.EXPLOSIVE_DAMAGE_RESISTANCE, "41%"
                 )
         ));
-        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_4_5, new Recipe(
+        SUIT_UPGRADES.put(RecipeName.ARTEMIS_SUIT_GRADE_4_5, new UpgradeRecipe(
                 RecipeName.ARTEMIS_SUIT_GRADE_4_5,
                 Map.of(
                         Good.SUITSCHEMATIC, 15,
@@ -629,7 +618,7 @@ public abstract class RecipeConstants {
         ));
 
 
-        WEAPON_UPGRADES.put(RecipeName.KARMA_1_2, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.KARMA_1_2, new UpgradeRecipe(
                 RecipeName.KARMA_1_2,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 1,
@@ -643,7 +632,7 @@ public abstract class RecipeConstants {
                 )
         ));
 
-        WEAPON_UPGRADES.put(RecipeName.KARMA_2_3, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.KARMA_2_3, new UpgradeRecipe(
                 RecipeName.KARMA_2_3,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 5,
@@ -656,7 +645,7 @@ public abstract class RecipeConstants {
                         Modifier.ENGINEER_MODIFICATION_SLOTS, "2"
                 )
         ));
-        WEAPON_UPGRADES.put(RecipeName.KARMA_3_4, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.KARMA_3_4, new UpgradeRecipe(
                 RecipeName.KARMA_3_4,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 10,
@@ -669,7 +658,7 @@ public abstract class RecipeConstants {
                         Modifier.ENGINEER_MODIFICATION_SLOTS, "3"
                 )
         ));
-        WEAPON_UPGRADES.put(RecipeName.KARMA_4_5, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.KARMA_4_5, new UpgradeRecipe(
                 RecipeName.KARMA_4_5,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 15,
@@ -683,7 +672,7 @@ public abstract class RecipeConstants {
                 )
         ));
 
-        WEAPON_UPGRADES.put(RecipeName.TK_1_2, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.TK_1_2, new UpgradeRecipe(
                 RecipeName.TK_1_2,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 1,
@@ -697,7 +686,7 @@ public abstract class RecipeConstants {
                 )
         ));
 
-        WEAPON_UPGRADES.put(RecipeName.TK_2_3, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.TK_2_3, new UpgradeRecipe(
                 RecipeName.TK_2_3,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 5,
@@ -710,7 +699,7 @@ public abstract class RecipeConstants {
                         Modifier.ENGINEER_MODIFICATION_SLOTS, "2"
                 )
         ));
-        WEAPON_UPGRADES.put(RecipeName.TK_3_4, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.TK_3_4, new UpgradeRecipe(
                 RecipeName.TK_3_4,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 10,
@@ -723,7 +712,7 @@ public abstract class RecipeConstants {
                         Modifier.ENGINEER_MODIFICATION_SLOTS, "3"
                 )
         ));
-        WEAPON_UPGRADES.put(RecipeName.TK_4_5, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.TK_4_5, new UpgradeRecipe(
                 RecipeName.TK_4_5,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 15,
@@ -737,7 +726,7 @@ public abstract class RecipeConstants {
                 )
         ));
 
-        WEAPON_UPGRADES.put(RecipeName.MANTICORE_1_2, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.MANTICORE_1_2, new UpgradeRecipe(
                 RecipeName.MANTICORE_1_2,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 1,
@@ -751,7 +740,7 @@ public abstract class RecipeConstants {
                 )
         ));
 
-        WEAPON_UPGRADES.put(RecipeName.MANTICORE_2_3, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.MANTICORE_2_3, new UpgradeRecipe(
                 RecipeName.MANTICORE_2_3,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 5,
@@ -764,7 +753,7 @@ public abstract class RecipeConstants {
                         Modifier.ENGINEER_MODIFICATION_SLOTS, "2"
                 )
         ));
-        WEAPON_UPGRADES.put(RecipeName.MANTICORE_3_4, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.MANTICORE_3_4, new UpgradeRecipe(
                 RecipeName.MANTICORE_3_4,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 10,
@@ -777,7 +766,7 @@ public abstract class RecipeConstants {
                         Modifier.ENGINEER_MODIFICATION_SLOTS, "3"
                 )
         ));
-        WEAPON_UPGRADES.put(RecipeName.MANTICORE_4_5, new Recipe(
+        WEAPON_UPGRADES.put(RecipeName.MANTICORE_4_5, new UpgradeRecipe(
                 RecipeName.MANTICORE_4_5,
                 Map.of(
                         Good.WEAPONSCHEMATIC, 15,

@@ -7,18 +7,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Recipe {
+public abstract class Recipe {
     private final Map<Material, Integer> assets;
     private final Map<Material, Integer> data;
     private final Map<Material, Integer> goods;
     private final RecipeName recipeName;
     private final Map<Modifier, String> modifiers;
 
-    public Recipe(final RecipeName recipeName, final Map<? extends Material, Integer> materials) {
+    protected Recipe(final RecipeName recipeName, final Map<? extends Material, Integer> materials) {
         this(recipeName, materials, Collections.emptyMap());
     }
 
-    public Recipe(final RecipeName recipeName, final Map<? extends Material, Integer> materials, final Map<Modifier, String> modifiers) {
+    protected Recipe(final RecipeName recipeName, final Map<? extends Material, Integer> materials, final Map<Modifier, String> modifiers) {
         this.recipeName = recipeName;
         this.modifiers = modifiers;
         this.assets = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Asset).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -26,7 +26,7 @@ public class Recipe {
         this.goods = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Good).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public <T extends Material> Map<? extends Material, Integer> getMaterialCollection(final Class<T> clazz) {
+    public <T extends Material> Map<Material, Integer> getMaterialCollection(final Class<T> clazz) {
         if (clazz.equals(Data.class)) {
             return this.data;
         } else if (clazz.equals(Good.class)) {

@@ -11,14 +11,14 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TitledPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
-import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
-import nl.jixxed.eliteodysseymaterials.domain.Recipe;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
 import java.util.Comparator;
 import java.util.EnumMap;
@@ -26,6 +26,7 @@ import java.util.Map;
 
 
 class RecipeBar extends Accordion {
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private About about;
     private TitledPane[] categoryTitledPanes;
     private TitledPane aboutTitledPane;
@@ -66,6 +67,7 @@ class RecipeBar extends Accordion {
                 .withStyleClass("recipes-list")
                 .withItemsProperty(LocaleService.getListBinding(recipesEntry.getValue().keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(RecipeName[]::new)))
                 .build();
+        recipes.setVisibleRowCount(recipes.getItems().size());
 
         final HBox hBox = BoxBuilder.builder().withNode(recipes).buildHBox();
         HBox.setHgrow(recipes, Priority.ALWAYS);
@@ -103,13 +105,12 @@ class RecipeBar extends Accordion {
                     setText(item.toString());
                 }
                 updateStyle(item);
-                EventService.addListener(EngineerEvent.class, event -> {
-                    updateStyle(item);
-                });
+                EventService.addListener(EngineerEvent.class, event -> updateStyle(item));
+                EventService.addListener(StorageEvent.class, event -> updateStyle(item));
             }
 
             private void updateStyle(final RecipeName item) {
-                if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe && ((EngineerRecipe) RecipeConstants.getRecipe(item)).isCompleted()) {
+                if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe && ((EngineerRecipe) RecipeConstants.getRecipe(item)).isCompleted() || (RecipeConstants.getRecipe(item) instanceof ModuleRecipe || RecipeConstants.getRecipe(item) instanceof UpgradeRecipe) && APPLICATION_STATE.amountCraftable(item) > 0) {
                     this.setStyle("-fx-text-fill: #89d07f;");
                 } else if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe) {
                     this.setStyle("-fx-text-fill: white;");
