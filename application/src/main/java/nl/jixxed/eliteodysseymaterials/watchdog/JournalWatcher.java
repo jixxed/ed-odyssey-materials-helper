@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.watchdog;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +10,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -76,7 +76,7 @@ public class JournalWatcher {
     }
 
     private void listCommander(final File file) {
-        try (final Scanner scanner = new Scanner(file)) {
+        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
             while (scanner.hasNext()) {
                 final String line = scanner.nextLine();
 
@@ -89,7 +89,7 @@ public class JournalWatcher {
                     break;
                 }
             }
-        } catch (final FileNotFoundException | JsonProcessingException e) {
+        } catch (final IOException e) {
             log.error("Error listing commander", e);
         }
     }
@@ -119,7 +119,7 @@ public class JournalWatcher {
     private synchronized boolean isSelectedCommander(final File file) {
         final Optional<Commander> preferredCommander = APPLICATION_STATE.getPreferredCommander();
         return preferredCommander.map(commander -> {
-            try (final Scanner scanner = new Scanner(file)) {
+            try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
                 while (scanner.hasNext()) {
                     final String line = scanner.nextLine();
                     final JsonNode journalMessage = this.objectMapper.readTree(line);
@@ -129,7 +129,7 @@ public class JournalWatcher {
                         return nameNode.asText().equals(commander.getName());
                     }
                 }
-            } catch (final FileNotFoundException | JsonProcessingException e) {
+            } catch (final IOException e) {
                 log.error("Error checking for selected commander", e);
             }
             return false;
@@ -137,21 +137,21 @@ public class JournalWatcher {
     }
 
     private synchronized boolean isOdysseyJournal(final File file) {
-        try (final Scanner scanner = new Scanner(file)) {
+        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
             final String firstLine = scanner.nextLine();
 
             final JsonNode journalMessage = this.objectMapper.readTree(firstLine);
             final JsonNode isOdysseyNode = journalMessage.get("Odyssey");
             return isOdysseyNode != null && isOdysseyNode.asBoolean(false);
 
-        } catch (final FileNotFoundException | JsonProcessingException e) {
+        } catch (final IOException e) {
             log.error("Error checking if journal is odyssey", e);
         }
         return false;
     }
 
     private synchronized boolean hasCommanderHeader(final File file) {
-        try (final Scanner scanner = new Scanner(file)) {
+        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
 
             while (scanner.hasNext()) {
                 final String line = scanner.nextLine();
@@ -163,16 +163,16 @@ public class JournalWatcher {
                 }
             }
 
-        } catch (final FileNotFoundException | JsonProcessingException e) {
+        } catch (final IOException e) {
             log.error("Error checking for commander header", e);
         }
         return false;
     }
 
     private synchronized boolean hasFileHeader(final File file) {
-        try (final Scanner scanner = new Scanner(file)) {
+        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
             return scanner.hasNext();
-        } catch (final NoSuchElementException | FileNotFoundException e) {
+        } catch (final NoSuchElementException | IOException e) {
             log.error("Error checking for file header", e);
         }
         return false;

@@ -20,6 +20,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -238,7 +239,7 @@ public class Main extends Application {
     private String getCurrentVersion(final File appFolder) {
         try {
             final File config = new File(String.format(OsConstants.VERSION_FILE, appFolder.getAbsolutePath()));
-            try (final Scanner scanner = new Scanner(config)) {
+            try (final Scanner scanner = new Scanner(config, StandardCharsets.UTF_8)) {
                 while (scanner.hasNext()) {
                     final String line = scanner.next();
                     if (line.contains("app.version=")) {
