@@ -13,6 +13,14 @@
     -fx-fill: #89d07f;
 }
 
+.recipe-complete {
+    -fx-text-fill: #89d07f;
+}
+
+.recipe-incomplete {
+    -fx-text-fill: white;
+}
+
 /*.completed > .title {*/
 /*    !*noinspection CssInvalidFunction*!*/
 /*    !*-fx-background-color: linear-gradient(to bottom, derive(#89d07f, +50%), #89d07f);*!*/

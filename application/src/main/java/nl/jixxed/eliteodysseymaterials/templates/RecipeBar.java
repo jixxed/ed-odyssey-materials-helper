@@ -7,13 +7,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TitledPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
+import nl.jixxed.eliteodysseymaterials.helper.RecipeHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
@@ -24,7 +27,7 @@ import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.Map;
 
-
+@Slf4j
 class RecipeBar extends Accordion {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private About about;
@@ -88,7 +91,43 @@ class RecipeBar extends Accordion {
         recipes.valueProperty().addListener((obs, oldValue, newValue) -> scroll.setContent(recipeContent.get(newValue)));
         recipes.setCellFactory(getCellFactory());
         recipes.getSelectionModel().select(recipes.getItems().get(0));
+        recipes.setButtonCell(new ListCell<>() {
 
+            @Override
+            protected void updateItem(final RecipeName item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+                updateStyle(item);
+                EventService.addListener(EngineerEvent.class, event -> {
+                    updateStyle(getItem());
+                    updateText(getItem(), this.emptyProperty().get());
+                });
+                EventService.addListener(StorageEvent.class, event -> {
+                    updateStyle(getItem());
+                    updateText(getItem(), this.emptyProperty().get());
+                });
+            }
+
+
+            private void updateText(final RecipeName item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(item.toString() + (RecipeHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
+                }
+            }
+
+
+            private void updateStyle(final RecipeName item) {
+                if (RecipeHelper.isCompletedEngineerRecipe(item) || RecipeHelper.isCraftableModuleOrUpgradeRecipe(item)) {
+                    this.setStyle("-fx-text-fill: #89d07f;");
+                } else {
+                    this.setStyle("-fx-text-fill: white;");
+                }
+            }
+
+        });
         return categoryTitledPane;
     }
 
@@ -98,21 +137,31 @@ class RecipeBar extends Accordion {
             protected void updateItem(final RecipeName item, final boolean empty) {
                 super.updateItem(item, empty);
 
+                updateText(item, empty);
+                updateStyle(item);
+                EventService.addListener(EngineerEvent.class, event -> {
+                    updateStyle(getItem());
+                    updateText(getItem(), this.emptyProperty().get());
+                });
+                EventService.addListener(StorageEvent.class, event -> {
+                    updateStyle(getItem());
+                    updateText(getItem(), this.emptyProperty().get());
+                });
+            }
+
+            private void updateText(final RecipeName item, final boolean empty) {
                 if (empty || item == null) {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    setText(item.toString());
+                    setText(item.toString() + (RecipeHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
                 }
-                updateStyle(item);
-                EventService.addListener(EngineerEvent.class, event -> updateStyle(item));
-                EventService.addListener(StorageEvent.class, event -> updateStyle(item));
             }
 
             private void updateStyle(final RecipeName item) {
-                if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe && ((EngineerRecipe) RecipeConstants.getRecipe(item)).isCompleted() || (RecipeConstants.getRecipe(item) instanceof ModuleRecipe || RecipeConstants.getRecipe(item) instanceof UpgradeRecipe) && APPLICATION_STATE.amountCraftable(item) > 0) {
+                if (RecipeHelper.isCompletedEngineerRecipe(item) || RecipeHelper.isCraftableModuleOrUpgradeRecipe(item)) {
                     this.setStyle("-fx-text-fill: #89d07f;");
-                } else if (RecipeConstants.getRecipe(item) instanceof EngineerRecipe) {
+                } else {
                     this.setStyle("-fx-text-fill: white;");
                 }
             }
