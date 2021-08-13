@@ -97,10 +97,9 @@ public class Main extends Application {
                         try {
                             //linux does not put files in use so always kill existing instances
                             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
-                                final String[] cmd = new String[1];
-                                cmd[0] = OsConstants.KILL_COMMAND;
+  
                                 try {
-                                    Runtime.getRuntime().exec(cmd);
+                                    runCommand(OsConstants.KILL_COMMAND);
                                     Thread.sleep(3000);
                                 } catch (final Exception ex) {
 
@@ -110,9 +109,7 @@ public class Main extends Application {
 
                         } catch (final IOException ex) {
                             Platform.runLater(() -> label.setText("Terminating running application..."));
-                            final String[] cmd = new String[1];
-                            cmd[0] = OsConstants.KILL_COMMAND;
-                            Runtime.getRuntime().exec(cmd);
+                            runCommand(OsConstants.KILL_COMMAND);
                             Thread.sleep(3000);
                             Platform.runLater(() -> label.setText("Cleaning old files..."));
                             try {
@@ -141,9 +138,7 @@ public class Main extends Application {
                     }
                     //launch app
                     Platform.runLater(() -> label.setText("Launching the application..."));
-                    final String[] cmd = new String[1];
-                    cmd[0] = String.format(OsConstants.START_COMMAND, this.appFolder);
-                    Runtime.getRuntime().exec(cmd);
+                    runCommand(String.format(OsConstants.START_COMMAND, this.appFolder));
                     //close this launcher
                     System.exit(0);
                 }
@@ -162,6 +157,16 @@ public class Main extends Application {
         Executors.newSingleThreadExecutor().execute(r);
 
 
+    }
+
+    private void runCommand(final String cmd) throws IOException {
+        if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
+            final String[] linuxCMD = new String[1];
+            linuxCMD[0] = cmd;
+            Runtime.getRuntime().exec(linuxCMD);
+        } else {
+            Runtime.getRuntime().exec(cmd);
+        }
     }
 
     private void error(final Label label, final ImageView animation, final String errorMessage, final boolean launch) throws InterruptedException, IOException {

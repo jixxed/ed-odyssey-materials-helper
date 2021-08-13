@@ -60,10 +60,10 @@ public class SettingsTab extends EDOTab {
     private void initEventHandling() {
         EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontSizeStyle = "-fx-font-size: " + fontSizeEvent.getFontSize() + "px;";
-            this.journalSelectButton.styleProperty().set(fontSizeStyle);
-            this.fontsizeSelect.styleProperty().set(fontSizeStyle);
-            this.languageSelect.styleProperty().set(fontSizeStyle);
-            this.readingDirectionSelect.styleProperty().set(fontSizeStyle);
+            this.journalSelectButton.setStyle(fontSizeStyle);
+            this.fontsizeSelect.setStyle(fontSizeStyle);
+            this.languageSelect.setStyle(fontSizeStyle);
+            this.readingDirectionSelect.setStyle(fontSizeStyle);
         });
     }
 
