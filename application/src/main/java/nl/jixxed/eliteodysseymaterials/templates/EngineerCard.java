@@ -4,14 +4,16 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
@@ -32,11 +34,17 @@ import java.util.stream.Collectors;
 class EngineerCard extends VBox {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final Function<RecipeName, Label> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> LabelBuilder.builder()
-            .withStyleClass("engineer-blueprint")
-            .withText(LocaleService.getStringBinding(recipeName.getLocalizationKey()))
-            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
-            .build();
+    private static final Function<RecipeName, HBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
+            .withNodes(LabelBuilder.builder()
+                            .withStyleClass("engineer-bullet")
+                            .withNonLocalizedText("\u2022")
+                            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
+                            .build(),
+                    LabelBuilder.builder()
+                            .withStyleClass("engineer-blueprint")
+                            .withText(LocaleService.getStringBinding(recipeName.getLocalizationKey()))
+                            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
+                            .build()).buildHBox();
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -44,7 +52,7 @@ class EngineerCard extends VBox {
 
     private final Engineer engineer;
 
-    private ImageView image;
+    private ResizableImageView image;
     private Label name;
     private HBox specialisation;
     private Label engineerLocation;
@@ -52,9 +60,12 @@ class EngineerCard extends VBox {
     private ResizableImageView copyIcon;
     private FlowPane location;
     private Label suitModulesTitle;
-    private List<Label> suitBlueprintLabels;
+    private List<HBox> suitBlueprintLabels;
     private Label weaponModulesTitle;
-    private List<Label> weaponBlueprintLabels;
+    private List<HBox> weaponBlueprintLabels;
+    private Label unlockRequirementsTitle;
+    private List<HBox> unlockRequirementsLabels;
+    private Separator unlockSeparator;
 
     EngineerCard(final Engineer engineer) {
         this.engineer = engineer;
@@ -65,10 +76,15 @@ class EngineerCard extends VBox {
     private void initEventHandling(final Engineer engineer) {
         EventService.addListener(LocationEvent.class, locationEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getX(), locationEvent.getY(), locationEvent.getZ())) + "Ly)"));
         EventService.addListener(EngineerEvent.class, engineerEvent -> {
+            this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
+            this.getChildren().removeAll(this.unlockRequirementsLabels);
             if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
                 this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/" + engineer.name().toLowerCase() + ".jpg")));
             } else {
                 this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")));
+                this.unlockRequirementsLabels = getUnlockRequirements();
+                this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
+                this.getChildren().addAll(this.unlockRequirementsLabels);
             }
         });
     }
@@ -82,14 +98,42 @@ class EngineerCard extends VBox {
         this.suitBlueprintLabels = getSuitBlueprints();
         this.weaponModulesTitle = getWeaponModulesTitle();
         this.weaponBlueprintLabels = getWeaponBlueprints();
+        this.unlockRequirementsTitle = getUnlockRequirementsTitle();
+        this.unlockRequirementsLabels = getUnlockRequirements();
+        this.unlockSeparator = new Separator(Orientation.HORIZONTAL);
         this.getChildren().addAll(this.image, this.name, this.specialisation, this.location, new Separator(Orientation.HORIZONTAL), this.suitModulesTitle);
         this.getChildren().addAll(this.suitBlueprintLabels);
         this.getChildren().addAll(new Separator(Orientation.HORIZONTAL), this.weaponModulesTitle);
         this.getChildren().addAll(this.weaponBlueprintLabels);
+        this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
+        this.getChildren().addAll(this.unlockRequirementsLabels);
         this.getStyleClass().add("engineer-card");
     }
 
-    private List<Label> getWeaponBlueprints() {
+    private List<HBox> getUnlockRequirements() {
+        return this.engineer.getPrerequisites().stream()
+                .map(prerequisite -> BoxBuilder.builder()
+                        .withNodes(LabelBuilder.builder()
+                                        .withStyleClass("engineer-bullet")
+                                        .withNonLocalizedText((prerequisite.isCompleted()) ? "\u2714" : "\u2022")
+                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getRecipeName())))
+                                        .build(),
+                                LabelBuilder.builder()
+                                        .withStyleClass("engineer-prerequisite")
+                                        .withText(LocaleService.getStringBinding(prerequisite.getLocalisationKey()))
+                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getRecipeName())))
+                                        .build()).buildHBox())
+                .collect(Collectors.toList());
+    }
+
+    private Label getUnlockRequirementsTitle() {
+        return LabelBuilder.builder()
+                .withStyleClass("engineer-category")
+                .withText(LocaleService.getStringBinding("tab.engineer.unlock.prerequisites"))
+                .build();
+    }
+
+    private List<HBox> getWeaponBlueprints() {
         return RecipeConstants.getWeaponModuleBlueprints().entrySet().stream()
                 .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
                 .map(Map.Entry::getKey)
@@ -98,7 +142,7 @@ class EngineerCard extends VBox {
                 .collect(Collectors.toList());
     }
 
-    private List<Label> getSuitBlueprints() {
+    private List<HBox> getSuitBlueprints() {
         return RecipeConstants.getSuitModuleBlueprints().entrySet().stream()
                 .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
                 .map(Map.Entry::getKey)
@@ -182,9 +226,10 @@ class EngineerCard extends VBox {
                 .build();
     }
 
-    private ImageView getEngineerImageView() {
-        return ImageViewBuilder.builder()
+    private ResizableImageView getEngineerImageView() {
+        return ResizableImageViewBuilder.builder()
                 .withStyleClass("engineer-image")
+                .withPreserveRatio(true)
                 .withImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")))
                 .build();
 

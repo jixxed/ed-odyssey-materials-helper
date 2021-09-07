@@ -668,7 +668,7 @@
 }
 
 .engineer-card {
-    -fx-min-width: 285;
+    -fx-min-width: 21em;
     -fx-background-color: #0f0f0f;
     -fx-padding: 0 0 10 0;
 }
@@ -678,11 +678,10 @@
 }
 
 .engineer-image {
-    -fx-min-width: 285;
-    -fx-pref-width: 285;
-    -fx-max-width: 285;
-    -fx-fit-to-width: 285px;
-    -fx-fit-to-height: 285px;
+    -fx-min-width: 21em;
+    -fx-pref-width: 21em;
+    -fx-max-width: 21em;
+    -fx-pref-height: 15.47em;
 }
 
 .engineer-name {
@@ -702,7 +701,7 @@
 }
 
 .engineer-location-line {
-    -fx-max-width: 285;
+    -fx-max-width: 21em;
 }
 
 .engineer-location-line:hover {
@@ -738,11 +737,31 @@
     -fx-label-padding: 5px;
 }
 
+.engineer-prerequisite {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0 5px 0 2px;
+    -fx-max-width: 19.7em;
+    -fx-wrap-text: true;
+}
+
+.engineer-prerequisite:hover {
+    -fx-text-fill: #2e92df;
+    -fx-cursor: hand;
+}
+
 .engineer-blueprint {
     -fx-text-fill: #0078d6;
-    -fx-label-padding: 0 0 0 5px;
-    -fx-max-width: 285;
+    -fx-label-padding: 0 5px 0 2px;
+    -fx-max-width: 19.7em;
     -fx-wrap-text: true;
+}
+
+.engineer-bullet {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0 0 0 0.3em;
+    -fx-text-alignment: center;
+    -fx-min-width: 1.3em;
+    -fx-max-width: 1.3em;
 }
 
 .engineer-blueprint:hover {

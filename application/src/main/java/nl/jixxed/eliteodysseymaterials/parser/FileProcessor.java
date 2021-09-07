@@ -18,42 +18,36 @@ public class FileProcessor {
     private static int lineNumber = 0;
 
     public static synchronized void resetAndProcessJournal(final File file) {
-        Platform.runLater(() -> {
-            lineNumber = 0;
-            processJournal(file);
-        });
+        lineNumber = 0;
+        processJournal(file);
     }
 
     public static synchronized void processJournal(final File file) {
-        Platform.runLater(() -> {
-            try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
-                int cursor = 0;
-                while (scanner.hasNextLine()) {
-                    final String line = scanner.nextLine();
-                    cursor++;
-                    if (line.isBlank()) {
-                        break;
-                    }
-                    if (cursor > lineNumber) {
-                        lineNumber++;
-                        MessageHandler.handleMessage(line, file);
-                    }
+        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
+            int cursor = 0;
+            while (scanner.hasNextLine()) {
+                final String line = scanner.nextLine();
+                cursor++;
+                if (line.isBlank()) {
+                    break;
                 }
-            } catch (final IOException e) {
-                log.error("Error processing Journal", e);
+                if (cursor > lineNumber) {
+                    lineNumber++;
+                    Platform.runLater(() -> MessageHandler.handleMessage(line, file));
+                }
             }
-        });
+        } catch (final IOException e) {
+            log.error("Error processing Journal", e);
+        }
     }
 
     public static synchronized void processShipLockerBackpack(final File file) {
-        Platform.runLater(() -> {
-            try {
-                final String message = Files.readString(file.toPath());
-                MessageHandler.handleMessage(message, file);
-            } catch (final IOException e) {
-                log.error("Error processing ShipLocker or Backpack", e);
-            }
-        });
+        try {
+            final String message = Files.readString(file.toPath());
+            Platform.runLater(() -> MessageHandler.handleMessage(message, file));
+        } catch (final IOException e) {
+            log.error("Error processing ShipLocker or Backpack", e);
+        }
     }
 
 
