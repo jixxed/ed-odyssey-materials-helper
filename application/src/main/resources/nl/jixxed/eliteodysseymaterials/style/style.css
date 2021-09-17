@@ -618,7 +618,7 @@
     -fx-font-size: 1.35em;
     -fx-min-height: 3em;
     -fx-font-weight: bold;
-    -fx-label-padding: 5;
+    /*-fx-label-padding: 5;*/
 }
 
 .settings-header {
@@ -1033,4 +1033,39 @@
 .about-bugs {
     -fx-pref-width: 538;
     -fx-alignment: center;
+}
+
+.wishlist-travel-path-table {
+    -fx-fixed-cell-size: 2.5em;
+    -fx-spacing: 5;
+}
+
+.import-header {
+    -fx-font-size: 1.35em;
+    -fx-font-weight: bold;
+    -fx-label-padding: 5;
+}
+
+.import-error {
+    -fx-text-fill: #ff3c00;
+    -fx-label-padding: 5;
+}
+
+.import-input {
+}
+
+.import-button {
+}
+
+.import-content {
+    -fx-spacing: 10;
+    -fx-padding: 5;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .imported-wishlist-tab:selected > .tab-container > .tab-label {
+    -fx-padding: 0 10 0 0;
+}
+
+.tab-close-button {
+    -fx-cursor: hand;
 }

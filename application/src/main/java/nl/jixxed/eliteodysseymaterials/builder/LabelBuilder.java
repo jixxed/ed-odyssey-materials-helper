@@ -21,6 +21,7 @@ public class LabelBuilder {
     private String nonLocalizedText;
     private NodeOrientation nodeOrientation;
     private ChangeListener<? super Boolean> hoverPropertyChangeListener;
+    private boolean visibility = true;
 
     public static LabelBuilder builder() {
         return new LabelBuilder();
@@ -38,6 +39,11 @@ public class LabelBuilder {
 
     public LabelBuilder withText(final StringBinding stringBinding) {
         this.stringBinding = stringBinding;
+        return this;
+    }
+
+    public LabelBuilder withVisibility(final boolean visibility) {
+        this.visibility = visibility;
         return this;
     }
 
@@ -78,6 +84,7 @@ public class LabelBuilder {
         if (this.hoverPropertyChangeListener != null) {
             label.hoverProperty().addListener(this.hoverPropertyChangeListener);
         }
+        label.setVisible(this.visibility);
         return label;
     }
 }

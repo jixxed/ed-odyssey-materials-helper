@@ -7,14 +7,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
+import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 @SuppressWarnings("java:S110")
+@Slf4j
 class ContentArea extends AnchorPane {
 
     private SearchBar searchBar;
@@ -23,6 +26,7 @@ class ContentArea extends AnchorPane {
     private WishlistTab wishlistTab;
     private EngineersTab engineersTab;
     private SettingsTab settingsTab;
+    private ImportWishlistTab importWishlistTab;
     private TabPane tabs;
     private VBox body;
 
@@ -36,13 +40,15 @@ class ContentArea extends AnchorPane {
         this.wishlistTab = new WishlistTab();
         this.engineersTab = new EngineersTab();
         this.settingsTab = new SettingsTab(application);
+        this.importWishlistTab = new ImportWishlistTab();
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.engineersTab.setClosable(false);
         this.settingsTab.setClosable(false);
+        this.importWishlistTab.setClosable(false);
 
         this.searchBar = new SearchBar();
-        this.tabs = new TabPane(this.overview, this.wishlistTab, this.engineersTab, this.settingsTab);
+        this.tabs = new TabPane(this.overview, this.wishlistTab, this.engineersTab, this.settingsTab, this.importWishlistTab);
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 final Tabs tabType = ((EDOTab) newValue).getTabType();
@@ -59,7 +65,6 @@ class ContentArea extends AnchorPane {
         this.recipeBar.visibleProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(newValue, this.recipeBar.getWidth()));
         this.recipeBar.widthProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(isRecipeBarVisible(), newValue.doubleValue()));
         this.recipeBar.visibleProperty().set(isRecipeBarVisible());
-
 
         AnchorPaneHelper.setAnchor(this.recipeBar, 0.0, 0.0, 0.0, null);
         setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth());
@@ -85,7 +90,20 @@ class ContentArea extends AnchorPane {
             this.recipeBar.setVisible(visibility);
             PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, visibility);
         });
-
+        EventService.addListener(ImportWishlistEvent.class, event -> {
+            try {
+                final String wishlist = event.getWishlist().trim();
+                if (wishlist.isEmpty()) {
+                    throw new IllegalArgumentException("import string is empty");
+                }
+                final SharedWishlistTab sharedWishlistTab = new SharedWishlistTab(wishlist);
+                this.tabs.getTabs().add(this.tabs.getTabs().size() - 1, sharedWishlistTab);
+                EventService.publish(new ImportResultEvent(ImportResult.SUCCESS));
+            } catch (final RuntimeException ex) {
+                log.error("failed to import wishlist", ex);
+                EventService.publish(new ImportResultEvent(ImportResult.ERROR));
+            }
+        });
     }
 
     private boolean isRecipeBarVisible() {

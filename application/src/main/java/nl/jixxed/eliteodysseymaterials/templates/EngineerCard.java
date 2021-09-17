@@ -74,7 +74,7 @@ class EngineerCard extends VBox {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        EventService.addListener(LocationEvent.class, locationEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getX(), locationEvent.getY(), locationEvent.getZ())) + "Ly)"));
+        EventService.addListener(LocationEvent.class, locationEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getLocation().getX(), locationEvent.getLocation().getY(), locationEvent.getLocation().getZ())) + "Ly)"));
         EventService.addListener(EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
@@ -168,7 +168,7 @@ class EngineerCard extends VBox {
     private FlowPane getEngineerLocation() {
         this.engineerLocation = LabelBuilder.builder()
                 .withStyleClass("engineer-location")
-                .withNonLocalizedText(this.engineer.getSettlement() + " | " + this.engineer.getSystem())
+                .withNonLocalizedText(this.engineer.getSettlement().getSettlementName() + " | " + this.engineer.getLocation().getStarSystem())
                 .build();
 
         this.engineerDistance = LabelBuilder.builder()
@@ -191,7 +191,7 @@ class EngineerCard extends VBox {
     private void copyLocationToClipboard() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
-        content.putString(this.engineer.getSystem());
+        content.putString(this.engineer.getLocation().getStarSystem());
         clipboard.setContent(content);
     }
 

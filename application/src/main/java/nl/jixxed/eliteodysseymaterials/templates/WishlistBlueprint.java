@@ -20,10 +20,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistRecipeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -48,16 +45,19 @@ public class WishlistBlueprint extends HBox {
     private final Set<WishlistIngredient> otherIngredients = new HashSet<>();
 
     WishlistBlueprint(final WishlistRecipe wishlistRecipe) {
+        this(wishlistRecipe, false);
+    }
+
+    WishlistBlueprint(final WishlistRecipe wishlistRecipe, final boolean viewOnly) {
         this.wishlistRecipe = wishlistRecipe;
         this.sequenceID = counter++;
         this.recipeCategory = RecipeConstants.getRecipeCategory(wishlistRecipe.getRecipeName());
         this.recipe = RecipeConstants.getRecipe(wishlistRecipe.getRecipeName());
-        initComponents();
+        initComponents(viewOnly);
         initEventHandling();
-
     }
 
-    private void initComponents() {
+    private void initComponents(final boolean viewOnly) {
         this.visibilityImage = ResizableImageViewBuilder.builder()
                 .withStyleClass("wishlist-visible-image")
                 .withImage("/images/other/visible_blue.png")
@@ -66,7 +66,11 @@ public class WishlistBlueprint extends HBox {
                 .withStyleClasses("wishlist-visible-icon", "visible")
                 .withOnAction(event -> {
                     setVisibility(!this.visible);
-                    APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistRecipe, Action.VISIBILITY_CHANGED)));
+                    if (!viewOnly) {
+                        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistRecipe, Action.VISIBILITY_CHANGED)));
+                    } else {
+                        EventService.publish(new ViewOnlyWishlistRecipeEvent(this.wishlistRecipe, Action.VISIBILITY_CHANGED));
+                    }
                 })
                 .build();
         this.visibilityButton.setGraphic(this.visibilityImage);
@@ -81,13 +85,16 @@ public class WishlistBlueprint extends HBox {
                     this.highlight(newValue);
                 })
                 .build();
+        this.getChildren().addAll(this.visibilityButton, this.wishlistRecipeName);
+        if (!viewOnly) {
+            this.removeBlueprint = ButtonBuilder.builder()
+                    .withStyleClass("wishlist-item-close").withNonLocalizedText("X")
+                    .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistRecipe, Action.REMOVED))))
+                    .build();
+            this.getChildren().add(this.removeBlueprint);
+        }
 
-        this.removeBlueprint = ButtonBuilder.builder()
-                .withStyleClass("wishlist-item-close").withNonLocalizedText("X")
-                .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistRecipe, Action.REMOVED))))
-                .build();
 
-        this.getChildren().addAll(this.visibilityButton, this.wishlistRecipeName, this.removeBlueprint);
         this.getStyleClass().add("wishlist-item");
 
 
