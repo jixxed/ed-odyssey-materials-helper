@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum EngineerState {
-    UNKNOWN, KNOWN, INVITED, UNLOCKED;
+    UNKNOWN, KNOWN, INVITED, UNLOCKED, UNDEFINED;
 
     public static EngineerState forName(final String name) {
         try {

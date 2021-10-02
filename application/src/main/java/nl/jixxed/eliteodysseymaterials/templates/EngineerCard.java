@@ -202,7 +202,7 @@ class EngineerCard extends VBox {
             case FORCE -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-force");
             case DYNAMIC -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-dynamic");
             case STRATEGIC -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-strategic");
-            case UNKNOWN -> engineerSpecialisationLabelBuilder;
+            case UNKNOWN -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-unknown");
         };
 
         final Label engineerSpecialisation = engineerSpecialisationLabelBuilder.build();

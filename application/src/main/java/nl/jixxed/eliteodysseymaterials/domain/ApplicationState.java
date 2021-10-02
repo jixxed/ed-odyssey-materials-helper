@@ -24,16 +24,20 @@ public class ApplicationState {
     private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Material> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
-    private final Map<Engineer, EngineerState> engineerStates = new EnumMap<>(Map.of(
-            Engineer.DOMINO_GREEN, EngineerState.UNKNOWN,
-            Engineer.HERO_FERRARI, EngineerState.UNKNOWN,
-            Engineer.JUDE_NAVARRO, EngineerState.UNKNOWN,
-            Engineer.KIT_FOWLER, EngineerState.UNKNOWN,
-            Engineer.ODEN_GEIGER, EngineerState.UNKNOWN,
-            Engineer.TERRA_VELASQUEZ, EngineerState.UNKNOWN,
-            Engineer.UMA_LASZLO, EngineerState.UNKNOWN,
-            Engineer.WELLINGTON_BECK, EngineerState.UNKNOWN,
-            Engineer.YARDEN_BOND, EngineerState.UNKNOWN
+    private final Map<Engineer, EngineerState> engineerStates = new EnumMap<>(Map.ofEntries(
+            Map.entry(Engineer.DOMINO_GREEN, EngineerState.UNKNOWN),
+            Map.entry(Engineer.HERO_FERRARI, EngineerState.UNKNOWN),
+            Map.entry(Engineer.JUDE_NAVARRO, EngineerState.UNKNOWN),
+            Map.entry(Engineer.KIT_FOWLER, EngineerState.UNKNOWN),
+            Map.entry(Engineer.ODEN_GEIGER, EngineerState.UNKNOWN),
+            Map.entry(Engineer.TERRA_VELASQUEZ, EngineerState.UNKNOWN),
+            Map.entry(Engineer.UMA_LASZLO, EngineerState.UNKNOWN),
+            Map.entry(Engineer.WELLINGTON_BECK, EngineerState.UNKNOWN),
+            Map.entry(Engineer.YARDEN_BOND, EngineerState.UNKNOWN),
+            Map.entry(Engineer.BALTANOS, EngineerState.UNDEFINED),
+            Map.entry(Engineer.ELEANOR_BRESA, EngineerState.UNDEFINED),
+            Map.entry(Engineer.ROSA_DAYETTE, EngineerState.UNDEFINED),
+            Map.entry(Engineer.YI_SHEN, EngineerState.UNDEFINED)
     ));
 
     private ApplicationState() {
@@ -102,7 +106,7 @@ public class ApplicationState {
 
     public boolean isEngineerUnlocked(final Engineer engineer) {
         final EngineerState engineerState = this.engineerStates.get(engineer);
-        return EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState);
+        return EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState) || EngineerState.UNDEFINED.equals(engineerState);
     }
 
     public void setEngineerState(final Engineer engineer, final EngineerState engineerState) {
@@ -111,7 +115,11 @@ public class ApplicationState {
 
 
     public void resetEngineerStates() {
-        this.engineerStates.forEach((engineer, engineerState) -> this.engineerStates.put(engineer, EngineerState.UNKNOWN));
+        this.engineerStates.forEach((engineer, engineerState) -> {
+            if (!EngineerState.UNDEFINED.equals(engineerState)) {
+                this.engineerStates.put(engineer, EngineerState.UNKNOWN);
+            }
+        });
         EventService.publish(new EngineerEvent());
     }
 

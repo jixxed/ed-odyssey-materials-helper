@@ -18,6 +18,10 @@ public enum Engineer {
     JUDE_NAVARRO(Settlement.MARSHALLS_DRIFT, Specialisation.FORCE, new Location("Aurai", 0.9375, -47.8125, 46.28125), List.of(EngineerPrerequisite.C1)),
     TERRA_VELASQUEZ(Settlement.RASCALS_CHOICE, Specialisation.DYNAMIC, new Location("Shou Xing", -16.28125, -44.53125, 94.375), List.of(EngineerPrerequisite.C2, EngineerPrerequisite.C3)),
     ODEN_GEIGER(Settlement.ANKHS_PROMISE, Specialisation.STRATEGIC, new Location("Candiaei", -113.5, -4.9375, 66.84375), List.of(EngineerPrerequisite.C4, EngineerPrerequisite.C5)),
+    BALTANOS(Settlement.THE_DIVINE_APARATUS, Specialisation.UNKNOWN, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
+    ELEANOR_BRESA(Settlement.BRESA_MODIFICATIONS, Specialisation.FORCE, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
+    ROSA_DAYETTE(Settlement.UNKNOWN, Specialisation.UNKNOWN, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
+    YI_SHEN(Settlement.EIDOLON_HOLD, Specialisation.UNKNOWN, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
     UNKNOWN(Settlement.UNKNOWN, Specialisation.UNKNOWN, new Location("UNKNOWN", 0, 0, 0), List.of());
 
     @Getter

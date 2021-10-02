@@ -445,7 +445,7 @@ public abstract class RecipeConstants {
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.EPINEPHRINE, 10,
                         Asset.MICROTHRUSTERS, 15
-                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER),
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER, Engineer.ELEANOR_BRESA),
                 Map.of(
                         Modifier.WEAPON_MELEE_DAMAGE_MULTIPLIER, "+150%",
                         Modifier.FISTS_MELEE_DAMAGE_MULTIPLIER, "+150%"
@@ -471,7 +471,7 @@ public abstract class RecipeConstants {
                         Asset.TITANIUMPLATING, 5,
                         Asset.EPOXYADHESIVE, 15,
                         Asset.CARBONFIBREPLATING, 5
-                ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO),
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA),
                 Map.of(
                         Modifier.EXPLOSIVE_DAMAGE_REDUCTION, "+10%",
                         Modifier.PLASMA_DAMAGE_REDUCTION, "+10%",
@@ -500,7 +500,7 @@ public abstract class RecipeConstants {
                         Data.WEAPONTESTDATA, 10,
                         Data.PRODUCTIONREPORTS, 10,
                         Asset.WEAPONCOMPONENT, 5
-                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER),
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER, Engineer.ELEANOR_BRESA),
                 Map.of(
                         Modifier.AMMO_CAPACITY_MULTIPLIER, "+50%"
                 )
@@ -527,7 +527,7 @@ public abstract class RecipeConstants {
                         Asset.IONBATTERY, 5,
                         Asset.MICROTRANSFORMER, 15,
                         Asset.ELECTRICALWIRING, 15
-                ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO),
+                ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA),
                 Map.of(
                         Modifier.SHIELD_REGENERATION_RATE, "+25%"
                 )
@@ -933,7 +933,7 @@ public abstract class RecipeConstants {
                         Asset.TUNGSTENCARBIDE, 5,
                         Asset.METALCOIL, 10
 
-                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER),
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER, Engineer.ELEANOR_BRESA),
                 Map.of(
                         Modifier.MAGAZINE_SIZE, "+50%"
                 )
@@ -955,7 +955,7 @@ public abstract class RecipeConstants {
                         Data.COMBATTRAININGMATERIAL, 10,
                         Asset.MICROHYDRAULICS, 10,
                         Asset.ELECTROMAGNET, 10
-                ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO),
+                ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA),
                 Map.of(
                         Modifier.RELOAD_SPEED, "+25%"
                 )
@@ -989,7 +989,7 @@ public abstract class RecipeConstants {
                         Data.PRODUCTIONSCHEDULE, 10,
                         Asset.CIRCUITBOARD, 5,
                         Asset.ENCRYPTEDMEMORYCHIP, 15
-                ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO)
+                ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA)
         ));
     }
 

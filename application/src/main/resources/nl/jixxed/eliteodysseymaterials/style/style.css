@@ -790,6 +790,13 @@
     -fx-max-height: 2.2em;
 }
 
+.specialisation-unknown {
+
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center-right;
+    -fx-max-height: 2.2em;
+}
+
 .specialisation-image {
     -fx-max-width: 2.2em;
     -fx-max-height: 2.2em;

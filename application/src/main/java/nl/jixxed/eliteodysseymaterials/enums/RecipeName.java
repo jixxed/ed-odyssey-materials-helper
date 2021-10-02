@@ -102,6 +102,10 @@ public enum RecipeName {
             case UMA_LASZLO -> ENGINEER_B5;
             case WELLINGTON_BECK -> ENGINEER_B3;
             case YARDEN_BOND -> ENGINEER_A5;
+            case BALTANOS -> null;
+            case ELEANOR_BRESA -> null;
+            case ROSA_DAYETTE -> null;
+            case YI_SHEN -> null;
             case UNKNOWN -> throw new IllegalArgumentException("unknown engineer");
         };
     }
