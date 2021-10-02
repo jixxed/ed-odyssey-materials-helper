@@ -76,7 +76,7 @@ class MaterialOverview extends VBox {
                 setFlowPaneHeight(this.dataFlow, newValue);
             });
         };
-
+        this.scrollPane.widthProperty().addListener(this.resizeListener);
         this.getChildren().addAll(this.totals, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
 
 
@@ -90,13 +90,6 @@ class MaterialOverview extends VBox {
             this.assetTechFlow.setOrientation(orientation);
             this.goodFlow.setOrientation(orientation);
             this.dataFlow.setOrientation(orientation);
-            if (MaterialOrientation.VERTICAL.equals(orientationChangeEvent.getMaterialOrientation())) {
-                this.scrollPane.widthProperty().addListener(this.resizeListener);
-                this.totals.setMaxWidth(this.getWidth());
-            } else {
-                this.scrollPane.widthProperty().removeListener(this.resizeListener);
-                this.totals.setMaxWidth(-1);
-            }
 
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         });
