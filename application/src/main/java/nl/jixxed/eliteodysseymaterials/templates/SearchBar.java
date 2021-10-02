@@ -158,6 +158,9 @@ class SearchBar extends HBox {
                 this.sortMaterialsComboBox.setDisable(true);
             }
         });
+        EventService.addListener(SoloModeEvent.class, soloModeEvent ->
+                EventService.publish(new SearchEvent(new Search(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox))))
+        );
     }
 
     private void setDefaultOptions() {

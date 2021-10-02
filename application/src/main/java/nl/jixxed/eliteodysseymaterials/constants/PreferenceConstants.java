@@ -20,6 +20,7 @@ public class PreferenceConstants {
     public static final String WISHLIST_RECIPES_PREFIX = "wishlist.recipes.";
     public static final String WISHLIST_RECIPES = "wishlist.recipes";
     public static final String RECIPES_VISIBLE = "recipes.visible";
+    public static final String SOLO_MODE = "solo.mode";
 
 
 }

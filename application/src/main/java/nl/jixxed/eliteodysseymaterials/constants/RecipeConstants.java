@@ -74,6 +74,10 @@ public abstract class RecipeConstants {
         return !isBlueprintIngredient(material) && !isEngineeringIngredient(material);
     }
 
+    public static boolean isNotRelevantAndNotRequiredEngineeringIngredient(final Material material) {
+        return !isBlueprintIngredient(material) && !isEngineeringIngredientAndNotCompleted(material);
+    }
+
     public static boolean isEngineeringOnlyIngredient(final Material material) {
         return isEngineeringIngredient(material) && !isBlueprintIngredient(material);
     }

@@ -77,6 +77,10 @@ public class ApplicationState {
         return this.data;
     }
 
+    public boolean getSoloMode() {
+        return PreferencesService.getPreference(PreferenceConstants.SOLO_MODE, Boolean.FALSE);
+    }
+
     public Map<Material, Storage> getMaterials(final StorageType storageType) {
         return (Map<Material, Storage>) switch (storageType) {
             case GOOD -> this.goods;
@@ -271,4 +275,5 @@ public class ApplicationState {
         }
         throw new IllegalArgumentException("Unknown material type");
     }
+
 }

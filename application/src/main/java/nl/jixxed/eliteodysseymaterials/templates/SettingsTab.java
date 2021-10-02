@@ -1,18 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import nl.jixxed.eliteodysseymaterials.Main;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
@@ -40,6 +34,9 @@ public class SettingsTab extends EDOTab {
     private Label languageLabel;
     private Label readingDirectionLabel;
     private ComboBox<MaterialOrientation> readingDirectionSelect;
+    private CheckBox soloModeCheckBox;
+    private Label soloModeLabel;
+    private Label soloModeExplainLabel;
 
     SettingsTab(final Application application) {
         this.application = application;
@@ -79,15 +76,31 @@ public class SettingsTab extends EDOTab {
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
-        final HBox readingDirectionSetting = creatReadingDirectionSetting();
-
+        final HBox readingDirectionSetting = createReadingDirectionSetting();
+        final HBox soloModeSetting = createSoloModeSetting();
         final VBox settings = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting)
+                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting)
                 .buildVBox();
 
         this.scrollPane.setContent(settings);
         this.setContent(this.scrollPane);
+    }
+
+    private HBox createSoloModeSetting() {
+        this.soloModeLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.solo.mode")).build();
+        this.soloModeExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.solo.mode.explain")).build();
+        this.soloModeCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.SOLO_MODE, Boolean.FALSE))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.SOLO_MODE, newValue);
+                    EventService.publish(new SoloModeEvent(newValue));
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses("settings-journal-line", SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.soloModeLabel, this.soloModeCheckBox, this.soloModeExplainLabel)
+                .buildHBox();
     }
 
     private HBox createCustomJournalFolderSetting() {
@@ -163,7 +176,7 @@ public class SettingsTab extends EDOTab {
                 .buildHBox();
     }
 
-    private HBox creatReadingDirectionSetting() {
+    private HBox createReadingDirectionSetting() {
         this.readingDirectionLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.reading.direction"))
