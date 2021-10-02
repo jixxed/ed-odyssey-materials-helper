@@ -15,6 +15,11 @@ apply plugin: "application"
 //apply plugin: "org.openjfx.javafxplugin"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
 
 OperatingSystem os = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
 
