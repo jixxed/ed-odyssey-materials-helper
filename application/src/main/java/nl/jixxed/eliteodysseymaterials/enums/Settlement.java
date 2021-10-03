@@ -15,7 +15,7 @@ public enum Settlement {
     MARSHALLS_DRIFT("Marshall's Drift"),
     RASCALS_CHOICE("Rascal's Choice"),
     ANKHS_PROMISE("Ankh's Promise"),
-    THE_DIVINE_APARATUS("The Divine Aparatus"),
+    THE_DIVINE_APPARATUS("The Divine Apparatus"),
     EIDOLON_HOLD("Eidolon Hold"),
     BRESA_MODIFICATIONS("Bresa Modifications"),
     UNKNOWN("UNKNOWN");
