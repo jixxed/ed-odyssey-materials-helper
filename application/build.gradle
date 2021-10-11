@@ -90,7 +90,6 @@ dependencies {
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'org.slf4j:slf4j-simple:1.7.32'
-
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }

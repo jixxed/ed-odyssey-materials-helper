@@ -7,11 +7,11 @@ import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistEvent;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class ApplicationState {
@@ -56,6 +56,8 @@ public class ApplicationState {
                         case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
                     }
                 }));
+
+        EventService.addListener(EnlistEvent.class, (event) -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getToken()));
     }
 
     public static ApplicationState getInstance() {
@@ -209,7 +211,7 @@ public class ApplicationState {
                 .map(RecipeName::forName)
                 .filter(Objects::nonNull)
                 .forEach(oldWishlist::add);
-        final List<WishlistRecipe> wishlist = oldWishlist.stream().map(recipeName -> new WishlistRecipe(recipeName, true)).collect(Collectors.toList());
+        final List<WishlistRecipe> wishlist = oldWishlist.stream().map(recipeName -> new WishlistRecipe(recipeName, true)).toList();
         //transfer old style to new style
         PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, wishlist, this.wishlistRecipeMapper);
         //reset old style to empty
@@ -284,4 +286,7 @@ public class ApplicationState {
         throw new IllegalArgumentException("Unknown material type");
     }
 
+    public String getMarketPlaceToken() {
+        return PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN, "");
+    }
 }
