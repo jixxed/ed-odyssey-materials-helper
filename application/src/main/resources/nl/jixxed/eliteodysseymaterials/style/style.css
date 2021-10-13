@@ -1037,6 +1037,11 @@
     -fx-alignment: center;
 }
 
+.about-discord {
+    -fx-pref-width: 538;
+    -fx-alignment: center;
+}
+
 .about-bugs {
     -fx-pref-width: 538;
     -fx-alignment: center;

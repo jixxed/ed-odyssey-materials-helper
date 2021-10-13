@@ -28,7 +28,9 @@ class About extends VBox {
     private Label beer;
     private Hyperlink bugs;
     private Hyperlink donate;
+    private Hyperlink discord;
     private ImageView donateImage;
+    private ImageView discordImage;
 
     About(final Application application) {
         initComponents(application);
@@ -46,9 +48,12 @@ class About extends VBox {
         this.bugs = HyperlinkBuilder.builder().withStyleClass("about-bugs").withText(LocaleService.getStringBinding("menu.about.report")).withAction((actionEvent) ->
                 application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues")).build();
         this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/donate.png").build();
+        this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
         this.donate = HyperlinkBuilder.builder().withStyleClass("about-donate").withAction((actionEvent) ->
                 application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper")).withGraphic(this.donateImage).build();
-        this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, this.donate, this.bugs);
+        this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withAction((actionEvent) ->
+                application.getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA")).withGraphic(this.discordImage).build();
+        this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, this.donate, this.bugs, this.discord);
     }
 
     private void versionCheck() {
