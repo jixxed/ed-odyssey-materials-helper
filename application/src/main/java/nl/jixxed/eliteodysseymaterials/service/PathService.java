@@ -9,11 +9,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PathService {
+    //TODO remove with update 8
+    private final static List<Engineer> EXCLUDED_ENGINEERS = List.of(Engineer.BALTANOS, Engineer.ELEANOR_BRESA, Engineer.ROSA_DAYETTE, Engineer.YI_SHEN);
+
     public static List<PathItem> calculateShortestPath(final Set<ModuleRecipe> recipes) {
         final List<PathItem> sortedPathItems = new ArrayList<>();
         final List<PathItem> pathItems = new ArrayList<>();
         final Map<Engineer, Integer> engineerPreference = new EnumMap<>(Engineer.class);
-        recipes.forEach(recipe -> recipe.getEngineers().forEach(engineer -> engineerPreference.put(engineer, 1 + engineerPreference.getOrDefault(engineer, 0))));
+        recipes.forEach(recipe -> recipe.getEngineers().stream()
+                .filter(engineer -> !EXCLUDED_ENGINEERS.contains(engineer))
+                .forEach(engineer -> engineerPreference.put(engineer, 1 + engineerPreference.getOrDefault(engineer, 0))));
         recipes.forEach(recipe -> {
             if (pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().contains(recipe))) {
                 final Engineer engineer = mostPreferredEngineer(engineerPreference, recipe);
@@ -35,6 +40,7 @@ public class PathService {
 
     private static Engineer mostPreferredEngineer(final Map<Engineer, Integer> engineerPreference, final ModuleRecipe recipe) {
         return recipe.getEngineers().stream()
+                .filter(engineer -> !EXCLUDED_ENGINEERS.contains(engineer))
                 .max(Comparator.comparingInt(engineerPreference::get))
                 .orElseThrow(IllegalArgumentException::new);
     }
