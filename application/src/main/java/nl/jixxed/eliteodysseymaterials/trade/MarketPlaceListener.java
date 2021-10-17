@@ -3,12 +3,15 @@ package nl.jixxed.eliteodysseymaterials.trade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.service.event.Event;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistEvent;
-import nl.jixxed.eliteodysseymaterials.trade.message.inbound.EnlistMessage;
+import nl.jixxed.eliteodysseymaterials.service.event.trade.*;
+import nl.jixxed.eliteodysseymaterials.trade.message.inbound.*;
 
 import java.net.http.WebSocket;
+import java.nio.ByteBuffer;
 import java.util.concurrent.CompletionStage;
 
 @Slf4j
@@ -25,6 +28,37 @@ public class MarketPlaceListener implements WebSocket.Listener {
     public void onOpen(final WebSocket webSocket) {
         log.info("connected");
         webSocket.request(1);
+        Platform.runLater(() -> {
+            EventService.publish(new ConnectionWebSocketEvent(true));
+        });
+    }
+
+    @Override
+    public CompletionStage<?> onClose(final WebSocket webSocket, final int statusCode, final String reason) {
+        Platform.runLater(() -> {
+            EventService.publish(new ConnectionWebSocketEvent(false));
+        });
+        log.info("websocket closed. statuscode: " + statusCode + " reason: " + reason);
+        return null;
+    }
+
+    @Override
+    public void onError(final WebSocket webSocket, final Throwable error) {
+        log.error("websocket error", error);
+        webSocket.request(1);
+    }
+
+    @Override
+    public CompletionStage<?> onPing(final WebSocket webSocket, final ByteBuffer message) {
+        log.info("ping " + message.toString());
+        return null;
+    }
+
+    @Override
+    public CompletionStage<?> onPong(final WebSocket webSocket, final ByteBuffer message) {
+        log.info("pong " + message.toString());
+        webSocket.request(1);
+        return null;
     }
 
     @Override
@@ -38,20 +72,61 @@ public class MarketPlaceListener implements WebSocket.Listener {
             try {
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(data);
                 final String code = jsonNode.get("code").asText();
-                switch (code) {
-                    case "enlist" -> {
-                        final EnlistMessage enlistMessage = OBJECT_MAPPER.readValue(data, EnlistMessage.class);
-                        EventService.publish(new EnlistEvent(enlistMessage.getTrace().getToken(), enlistMessage.getTrace().getConnectionId()));
-                    }
-                    default -> log.error("Unexpected message with code: " + code);
-                }
+                log.debug(data);
+                handleMessage(MessageType.valueOf(code.toUpperCase()), data);
             } catch (final JsonProcessingException e) {
                 log.error("mapping error", e);
+            } catch (final IllegalArgumentException e) {
+                log.error("unknown messagetype/code", e);
             }
             this.text = new StringBuilder();
         }
         webSocket.request(1);
         return null;
+    }
+
+    private void handleMessage(final MessageType messageType, final String data) throws JsonProcessingException {
+        final Event event = switch (messageType) {
+            case ENLIST -> {
+                final EnlistMessage enlistMessage = OBJECT_MAPPER.readValue(data, EnlistMessage.class);
+                yield new EnlistWebSocketEvent(enlistMessage);
+            }
+            case GETOFFERS -> {
+                final GetOffersMessage getOffersMessage = OBJECT_MAPPER.readValue(data, GetOffersMessage.class);
+                yield new GetOffersWebSocketEvent(getOffersMessage);
+            }
+            case PUBLISHOFFER -> {
+                final PublishOfferMessage publishOfferMessage = OBJECT_MAPPER.readValue(data, PublishOfferMessage.class);
+                yield new PublishOfferWebSocketEvent(publishOfferMessage);
+            }
+            case DROPOFFERS -> {
+                final DropOffersMessage dropOffersMessage = OBJECT_MAPPER.readValue(data, DropOffersMessage.class);
+                yield new DropOffersWebSocketEvent(dropOffersMessage);
+            }
+            case BIDPUSH -> {
+                final BidPushMessage bidPushMessage = OBJECT_MAPPER.readValue(data, BidPushMessage.class);
+                yield new BidPushWebSocketEvent(bidPushMessage);
+            }
+            case BIDPULL -> {
+                final BidPullMessage bidPullMessage = OBJECT_MAPPER.readValue(data, BidPullMessage.class);
+                yield new BidPullWebSocketEvent(bidPullMessage);
+            }
+            case MESSAGE -> {
+                final MessageMessage messageMessage = OBJECT_MAPPER.readValue(data, MessageMessage.class);
+                yield new MessageWebSocketEvent(messageMessage);
+            }
+            case ONLINEOFFERS -> {
+                final OnlineOffersMessage onlineOffersMessage = OBJECT_MAPPER.readValue(data, OnlineOffersMessage.class);
+                yield new OnlineOffersWebSocketEvent(onlineOffersMessage);
+            }
+            case OFFLINEOFFERS -> {
+                final OfflineOffersMessage offlineOffersMessage = OBJECT_MAPPER.readValue(data, OfflineOffersMessage.class);
+                yield new OfflineOffersWebSocketEvent(offlineOffersMessage);
+            }
+        };
+        Platform.runLater(() -> {
+            EventService.publish(event);
+        });
     }
 
 }

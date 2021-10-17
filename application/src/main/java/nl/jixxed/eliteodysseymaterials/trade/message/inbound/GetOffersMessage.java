@@ -8,7 +8,9 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class EnlistMessage extends InboundMessage {
-    private Trace trace;
+public class GetOffersMessage extends InboundMessage {
+
     private List<Offer> offers;
+    private Integer page;
+    private Integer ofpages;
 }

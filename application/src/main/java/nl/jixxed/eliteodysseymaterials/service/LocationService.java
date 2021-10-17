@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.LocationEvent;
 public class LocationService {
     private static Location currentLocation = new Location("Sol", 0, 0, 0);
 
+
     public LocationService() {
         EventService.addListener(LocationEvent.class, locationEvent -> {
             currentLocation = locationEvent.getLocation();

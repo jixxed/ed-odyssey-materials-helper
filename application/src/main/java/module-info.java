@@ -13,6 +13,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.trade.message.common to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.trade.message.inbound to com.fasterxml.jackson.databind;
     exports nl.jixxed.eliteodysseymaterials;
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.domain;

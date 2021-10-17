@@ -3,11 +3,11 @@ package nl.jixxed.eliteodysseymaterials.service.event.trade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.service.event.Event;
+import nl.jixxed.eliteodysseymaterials.trade.message.inbound.DropOffersMessage;
 
 @AllArgsConstructor
 @Getter
-public class EnlistEvent implements Event {
-    private final String token;
-    private final String connectionId;
+public class DropOffersWebSocketEvent implements Event {
+    private final DropOffersMessage dropOffersMessage;
 
 }

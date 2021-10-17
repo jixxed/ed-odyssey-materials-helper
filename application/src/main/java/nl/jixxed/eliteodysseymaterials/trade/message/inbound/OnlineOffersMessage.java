@@ -5,11 +5,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Data
 @NoArgsConstructor
-public class Trace {
-    private String token;
+public class OnlineOffersMessage extends InboundMessage {
+    private List<String> offerIds;
     private String connectionId;
-    private List<String> offers;
 }

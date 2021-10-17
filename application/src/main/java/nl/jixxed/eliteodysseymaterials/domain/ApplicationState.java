@@ -5,9 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,6 +16,8 @@ import java.util.function.Function;
 
 @Slf4j
 public class ApplicationState {
+
+    private final LocationService locationService = new LocationService();
     private static ApplicationState applicationState;
     private final Function<WishlistRecipe, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
     private final Map<Good, Storage> goods = new EnumMap<>(Good.class);
@@ -57,7 +60,7 @@ public class ApplicationState {
                     }
                 }));
 
-        EventService.addListener(EnlistEvent.class, (event) -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getToken()));
+        EventService.addListener(EnlistWebSocketEvent.class, (event) -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getEnlistMessage().getTrace().getToken()));
     }
 
     public static ApplicationState getInstance() {
