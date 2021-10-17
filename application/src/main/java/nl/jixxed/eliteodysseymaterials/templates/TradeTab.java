@@ -1,7 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.beans.binding.ListBinding;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +24,7 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Item;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Offer;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 public class TradeTab extends EDOTab {
@@ -34,6 +35,15 @@ public class TradeTab extends EDOTab {
     private VBox tradeRequests;
     private Label status;
     private final Set<Trade> allTrades = new HashSet<>();
+    private Button connectButton;
+    private Button disconnectButton;
+    private HBox tradeStatusRow;
+    private Label otherTradesLabel;
+    private Label myTradesLabel;
+    private Button createTradeButton;
+    private HBox newTradeReceive;
+    private HBox newTradeOffer;
+    private Label newTradeLabel;
 
     @Override
     public Tabs getTabType() {
@@ -50,12 +60,17 @@ public class TradeTab extends EDOTab {
         this.scrollPane = new ScrollPane();
         setupScrollPane(this.scrollPane);
         this.textProperty().bind(LocaleService.getStringBinding("tabs.trade"));
-        final Label newTradeLabel = LabelBuilder.builder()
+        this.newTradeLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.trade.new.trade"))
                 .build();
-        this.status = LabelBuilder.builder().withNonLocalizedText("not connected").build();
-        final Button connectButton = ButtonBuilder.builder()
+        final Label tradeLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withNonLocalizedText("Trade")
+                .build();
+
+        this.status = LabelBuilder.builder().withStyleClass("trade-status-label").withNonLocalizedText("not connected").build();
+        this.connectButton = ButtonBuilder.builder()
                 .withNonLocalizedText("connect")
                 .withOnAction(event -> {
                     this.marketPlaceClient.connect();
@@ -63,18 +78,19 @@ public class TradeTab extends EDOTab {
                     this.marketPlaceClient.getOffers();
                 })
                 .build();
-        final Button disconnectButton = ButtonBuilder.builder()
+        this.disconnectButton = ButtonBuilder.builder()
                 .withNonLocalizedText("disconnect")
                 .withOnAction(event -> this.marketPlaceClient.close())
                 .build();
-        final Label offer = LabelBuilder.builder().withNonLocalizedText("offer").build();
-        final ComboBox<Material> offerItems = ComboBoxBuilder.builder(Material.class).withItemsProperty(LocaleService.getListBinding(Material.getAllMaterials())).build();
-        final Label offerAmount = LabelBuilder.builder().withNonLocalizedText("Amount").build();
-        final IntField offerAmountInput = new IntField(0, 1000, 0);
-        final Label receive = LabelBuilder.builder().withNonLocalizedText("receive").build();
-        final ComboBox<Material> receiveItems = ComboBoxBuilder.builder(Material.class).withItemsProperty(LocaleService.getListBinding(Material.getAllMaterials())).build();
-        final Label receiveAmount = LabelBuilder.builder().withNonLocalizedText("Amount").build();
-        final IntField receiveAmountInput = new IntField(0, 1000, 0);
+        final Label offer = LabelBuilder.builder().withStyleClass("trade-new-offer-offer").withNonLocalizedText("Offer").build();
+        final ListBinding<Material> materialListBinding = LocaleService.getListBinding(Material.getAllRelevantMaterials());
+        final ComboBox<Material> offerItems = ComboBoxBuilder.builder(Material.class).withItemsProperty(materialListBinding).build();
+        final Label offerAmount = LabelBuilder.builder().withStyleClass("trade-new-offer-offer-amount").withNonLocalizedText("Amount").build();
+        final IntField offerAmountInput = new IntField(1, 1000, 1);
+        final Label receive = LabelBuilder.builder().withStyleClass("trade-new-offer-receive").withNonLocalizedText("In exchange for").build();
+        final ComboBox<Material> receiveItems = ComboBoxBuilder.builder(Material.class).withItemsProperty(materialListBinding).build();
+        final Label receiveAmount = LabelBuilder.builder().withStyleClass("trade-new-offer-receive-amount").withNonLocalizedText("Amount").build();
+        final IntField receiveAmountInput = new IntField(1, 1000, 1);
         final Callback<ListView<Material>, ListCell<Material>> factory = lv -> new ListCell<>() {
             @Override
             protected void updateItem(final Material item, final boolean empty) {
@@ -86,37 +102,45 @@ public class TradeTab extends EDOTab {
         receiveItems.setButtonCell(factory.call(null));
         offerItems.setCellFactory(factory);
         offerItems.setButtonCell(factory.call(null));
-        final Button createTradeButton = ButtonBuilder.builder().withOnAction(event -> {
+        this.createTradeButton = ButtonBuilder.builder().withOnAction(event -> {
             this.marketPlaceClient.publishOffer(offerItems.getSelectionModel().getSelectedItem(), offerAmountInput.getValue(), receiveItems.getSelectionModel().getSelectedItem(), receiveAmountInput.getValue());
             clearCreateTrade();
         }).withNonLocalizedText("create trade offer").build();
-        final HBox newTradeOffer = BoxBuilder.builder()
+        this.newTradeOffer = BoxBuilder.builder()
+                .withStyleClass("trade-new-offer-row")
                 .withNodes(offer, offerItems, offerAmount, offerAmountInput)
                 .buildHBox();
-        final HBox newTradeReceive = BoxBuilder.builder()
+        this.newTradeReceive = BoxBuilder.builder()
+                .withStyleClass("trade-new-offer-row")
                 .withNodes(receive, receiveItems, receiveAmount, receiveAmountInput)
                 .buildHBox();
 
-        final Label myTradesLabel = LabelBuilder.builder()
+        this.myTradesLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.trade.my.trades"))
                 .build();
 
-        final Label otherTradesLabel = LabelBuilder.builder()
+        this.otherTradesLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.trade.other.trades"))
                 .build();
         this.tradeOffers = BoxBuilder.builder()
-                //.withStyleClass("")
+                .withStyleClass("trade-offer-list")
                 .buildVBox();
         this.tradeRequests = BoxBuilder.builder()
-                //.withStyleClass("")
+                .withStyleClass("trade-request-list")
                 .buildVBox();
 
+        final Region spacing = new Region();
+        HBox.setHgrow(spacing, Priority.ALWAYS);
+        this.tradeStatusRow = BoxBuilder.builder().withStyleClass("trade-status-row").withNodes(this.status, this.connectButton).buildHBox();
+        final HBox titleRow = BoxBuilder.builder().withNodes(tradeLabel, spacing, this.tradeStatusRow).buildHBox();
         final VBox trade = BoxBuilder.builder()
-                //.withStyleClass("")
-                .withNodes(newTradeLabel, BoxBuilder.builder().withNodes(connectButton, disconnectButton, this.status).buildHBox(), newTradeOffer, newTradeReceive, createTradeButton, myTradesLabel, this.tradeOffers, otherTradesLabel, this.tradeRequests)
+                .withStyleClass("trade")
+                .withNodes(titleRow, this.newTradeLabel, this.newTradeOffer, this.newTradeReceive, this.createTradeButton, this.myTradesLabel, this.tradeOffers, this.otherTradesLabel, this.tradeRequests)
                 .buildVBox();
+        setVisible(false, this.newTradeLabel, this.newTradeOffer, this.newTradeReceive, this.createTradeButton, this.myTradesLabel, this.tradeOffers, this.otherTradesLabel, this.tradeRequests);
+
         this.scrollPane.setContent(trade);
         this.setContent(this.scrollPane);
 
@@ -144,12 +168,20 @@ public class TradeTab extends EDOTab {
         EventService.addListener(ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
             final boolean connected = connectionWebSocketEvent.isConnected();
             if (connected) {
-                this.status.setText("connected");
+                this.status.setText("Connected");
+                this.status.getStyleClass().add("connected");
+                this.tradeStatusRow.getChildren().remove(this.connectButton);
+                this.tradeStatusRow.getChildren().add(this.disconnectButton);
+                setVisible(true, this.newTradeLabel, this.newTradeOffer, this.newTradeReceive, this.createTradeButton, this.myTradesLabel, this.tradeOffers, this.otherTradesLabel, this.tradeRequests);
             } else {
-                this.status.setText("not connected");
+                this.status.setText("Not connected");
+                this.status.getStyleClass().remove("connected");
                 this.tradeOffers.getChildren().clear();
                 this.tradeRequests.getChildren().clear();
                 this.allTrades.clear();
+                this.tradeStatusRow.getChildren().remove(this.disconnectButton);
+                this.tradeStatusRow.getChildren().add(this.connectButton);
+                setVisible(false, this.newTradeLabel, this.newTradeOffer, this.newTradeReceive, this.createTradeButton, this.myTradesLabel, this.tradeOffers, this.otherTradesLabel, this.tradeRequests);
             }
         });
         EventService.addListener(PublishOfferWebSocketEvent.class, publishOfferWebSocketEvent -> {
@@ -251,6 +283,10 @@ public class TradeTab extends EDOTab {
         });
         EventService.addListener(MessageWebSocketEvent.class, messageWebSocketEvent -> {
         });
+    }
+
+    private void setVisible(final boolean visible, final Node... nodes) {
+        Arrays.stream(nodes).forEach(node -> node.setVisible(visible));
     }
 
     private void push(final Trade trade, final String bidId) {

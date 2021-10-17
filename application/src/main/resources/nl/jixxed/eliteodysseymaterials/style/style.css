@@ -1081,3 +1081,139 @@
 .tab-close-button {
     -fx-cursor: hand;
 }
+
+.trade {
+    -fx-spacing: 10;
+    -fx-padding: 5;
+}
+
+.trade-offer-list {
+    -fx-spacing: 5;
+    -fx-padding: 5;
+}
+
+.trade-offer {
+    -fx-border-color: black;
+    -fx-pref-height: 2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-alignment: center-left;
+    -fx-background-color: #0f0f0f;
+    /*-fx-pref-width: 96em;*/
+    -fx-min-width: 32em;
+    -fx-max-width: 96em;
+    -fx-spacing: 10;
+    -fx-padding: 5;
+}
+
+
+.trade-offer:hover {
+    -fx-background-color: rgba(30, 30, 30, 1.0);
+}
+
+.trade-offer-material-label {
+    -fx-pref-width: 20em;
+    -fx-min-width: 20em;
+    -fx-max-width: 20em;
+}
+
+.trade-offer-amount-label {
+    -fx-pref-width: 4em;
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+}
+
+.trade-offer-status-label {
+    -fx-pref-width: 10em;
+    -fx-min-width: 10em;
+    -fx-max-width: 10em;
+}
+
+.trade-request-list {
+    -fx-spacing: 5;
+    -fx-padding: 5;
+}
+
+.trade-request {
+    -fx-border-color: black;
+    -fx-pref-height: 2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-alignment: center-left;
+    -fx-background-color: #0f0f0f;
+    /*-fx-pref-width: 96em;*/
+    -fx-min-width: 32em;
+    -fx-max-width: 96em;
+    -fx-spacing: 10;
+    -fx-padding: 5;
+}
+
+
+.trade-request:hover {
+    -fx-background-color: rgba(30, 30, 30, 1.0);
+}
+
+.trade-request-material-label {
+    -fx-pref-width: 20em;
+    -fx-min-width: 20em;
+    -fx-max-width: 20em;
+}
+
+.trade-request-amount-label {
+    -fx-pref-width: 4em;
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+}
+
+.trade-request-status-label {
+    -fx-pref-width: 10em;
+    -fx-min-width: 10em;
+    -fx-max-width: 10em;
+}
+
+.trade-status-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.5em;
+    -fx-text-fill: #ff7c7c;
+}
+
+.trade-status-label.connected {
+    -fx-text-fill: #89d07f;
+}
+
+.trade-status-row {
+
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+    -fx-padding: 5;
+}
+
+.trade-new-offer-row {
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+    -fx-padding: 5;
+}
+
+.trade-new-offer-offer {
+    -fx-pref-width: 7em;
+    -fx-min-width: 7em;
+    -fx-max-width: 7em;
+}
+
+.trade-new-offer-offer-amount {
+    -fx-pref-width: 7em;
+    -fx-min-width: 7em;
+    -fx-max-width: 7em;
+}
+
+.trade-new-offer-receive {
+    -fx-pref-width: 7em;
+    -fx-min-width: 7em;
+    -fx-max-width: 7em;
+}
+
+.trade-new-offer-receive-amount {
+    -fx-pref-width: 7em;
+    -fx-min-width: 7em;
+    -fx-max-width: 7em;
+}

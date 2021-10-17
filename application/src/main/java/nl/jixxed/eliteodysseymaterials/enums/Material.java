@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -36,6 +38,14 @@ public interface Material {
     static <T extends Material> T[] getAllMaterials() {
         final T[] materials = Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
                 .filter(material -> !material.isUnknown())
+                .toArray(size -> (T[]) Array.newInstance(Material.class, size));
+        return materials;
+    }
+
+    static <T extends Material> T[] getAllRelevantMaterials() {
+        final T[] materials = Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
+                .filter(material -> !material.isUnknown())
+                .filter(material -> RecipeConstants.isEngineeringOrBlueprintIngredient(material))
                 .toArray(size -> (T[]) Array.newInstance(Material.class, size));
         return materials;
     }

@@ -82,6 +82,10 @@ public abstract class RecipeConstants {
         return isEngineeringIngredient(material) && !isBlueprintIngredient(material);
     }
 
+    public static boolean isEngineeringOrBlueprintIngredient(final Material material) {
+        return isEngineeringIngredient(material) || isBlueprintIngredient(material);
+    }
+
     public static boolean isEngineeringIngredient(final Material material) {
         return !material.isUnknown() && ENGINEER_UNLOCK_REQUIREMENTS.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
     }

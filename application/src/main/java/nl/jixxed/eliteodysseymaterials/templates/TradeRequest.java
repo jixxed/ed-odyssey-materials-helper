@@ -2,6 +2,9 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
@@ -24,20 +27,22 @@ class TradeRequest extends Trade {
     }
 
     private void initComponents() {
+
+        this.getStyleClass().add("trade-request");
         this.offerMaterialLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-label")
+                .withStyleClass("trade-request-material-label")
                 .withText(LocaleService.getStringBinding(getOfferMaterial().getLocalizationKey()))
                 .build();
         this.offerAmountLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-label")
+                .withStyleClass("trade-request-amount-label")
                 .withNonLocalizedText(getOfferAmount().toString())
                 .build();
         this.receiveMaterialLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-label")
+                .withStyleClass("trade-request-material-label")
                 .withText(LocaleService.getStringBinding(getReceiveMaterial().getLocalizationKey()))
                 .build();
         this.receiveAmountLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-label")
+                .withStyleClass("trade-request-amount-label")
                 .withNonLocalizedText(getReceiveAmount().toString())
                 .build();
         this.contactButton = ButtonBuilder.builder()
@@ -51,19 +56,23 @@ class TradeRequest extends Trade {
                 })
                 .build();
         this.statusLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-label")
+                .withStyleClass("trade-request-status-label")
                 .withNonLocalizedText("")
                 .build();
-        this.getChildren().addAll(this.offerMaterialLabel, this.offerAmountLabel, this.receiveMaterialLabel, this.receiveAmountLabel, this.contactButton, this.statusLabel);
+        final Region spacing2 = new Region();
+        HBox.setHgrow(spacing2, Priority.ALWAYS);
+        this.getChildren().addAll(this.offerMaterialLabel, this.offerAmountLabel, this.receiveMaterialLabel, this.receiveAmountLabel, spacing2, this.statusLabel, this.contactButton);
     }
 
     public void push(final String bidId) {
-        this.statusLabel.setText("waiting for a response");
+        this.statusLabel.setText("waiting for a response...");
+        this.contactButton.setVisible(false);
         this.bid = true;
     }
 
     void pull(final String bidId) {
         this.statusLabel.setText("");
+        this.contactButton.setVisible(true);
         this.bid = false;
     }
 
