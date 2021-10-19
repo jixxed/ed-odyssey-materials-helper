@@ -4,16 +4,19 @@ import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationEvent;
 
-public class LocationService {
+class LocationService {
     private static Location currentLocation = new Location("Sol", 0, 0, 0);
 
-    public LocationService() {
+    private LocationService() {
+    }
+
+    static {
         EventService.addListener(LocationEvent.class, locationEvent -> {
             currentLocation = locationEvent.getLocation();
         });
     }
 
-    public static Location getCurrentLocation() {
+    static Location getCurrentLocation() {
         return currentLocation;
     }
 }

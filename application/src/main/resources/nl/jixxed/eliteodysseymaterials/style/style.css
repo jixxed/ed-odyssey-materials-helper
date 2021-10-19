@@ -1050,6 +1050,24 @@
 .wishlist-travel-path-table {
     -fx-fixed-cell-size: 2.5em;
     -fx-spacing: 5;
+    -fx-hbar-policy: never;
+}
+
+.wishlist-travel-path-table *.scroll-bar:horizontal *.increment-button,
+.wishlist-travel-path-table *.scroll-bar:horizontal *.decrement-button {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.wishlist-travel-path-table *.scroll-bar:horizontal *.increment-arrow,
+.wishlist-travel-path-table *.scroll-bar:horizontal *.decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-shape: null;
 }
 
 .import-header {

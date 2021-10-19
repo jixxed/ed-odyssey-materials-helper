@@ -15,7 +15,6 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistRecipe;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -160,8 +159,8 @@ public class SharedWishlistTab extends EDOTab {
         this.wishlistBlueprints = this.wishlistRecipes.stream()
                 .map(wishlistRecipe -> new WishlistBlueprint(wishlistRecipe, true))
                 .collect(Collectors.toList());
-        final Set<ModuleRecipe> collect = (Set<ModuleRecipe>) (Set<?>) this.wishlistBlueprints.stream().filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleRecipe).map(wishlistBlueprint -> wishlistBlueprint.getRecipe()).collect(Collectors.toSet());
-        final List<PathItem> pathItems = PathService.calculateShortestPath(collect);
+//        final Set<ModuleRecipe> collect = (Set<ModuleRecipe>) (Set<?>) this.wishlistBlueprints.stream().filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleRecipe).map(wishlistBlueprint -> wishlistBlueprint.getRecipe()).collect(Collectors.toSet());
+        final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);
         this.tableView.getItems().addAll(pathItems);
         log.info("PATHS");
         pathItems.forEach(item -> log.info("item {}", item.toString()));
@@ -176,7 +175,7 @@ public class SharedWishlistTab extends EDOTab {
         final TableColumn<PathItem, String> columnEngineer = new TableColumn<>("Engineer");
         columnEngineer.setCellValueFactory(param -> LocaleService.getStringBinding(param.getValue().getEngineer().getLocalizationKey()));
         final TableColumn<PathItem, String> columnBlueprint = new TableColumn<>("Blueprint");
-        columnBlueprint.setCellValueFactory(param -> LocaleService.getStringBinding(() -> param.getValue().getRecipes().stream().map(recipe -> LocaleService.getLocalizedStringForCurrentLocale(recipe.getRecipeName().getLocalizationKey())).collect(Collectors.joining(", "))));
+        columnBlueprint.setCellValueFactory(param -> LocaleService.getStringBinding(() -> param.getValue().getRecipesString()));
         columnEngineer.setMaxWidth(175);
         columnEngineer.setPrefWidth(175);
         columnEngineer.setMinWidth(175);
@@ -279,8 +278,7 @@ public class SharedWishlistTab extends EDOTab {
         this.assetTechFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.TECH)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));
         removeAndAddFlows();
         this.tableView.getItems().clear();
-        final Set<ModuleRecipe> collect = (Set<ModuleRecipe>) (Set<?>) this.wishlistBlueprints.stream().filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleRecipe).map(wishlistBlueprint -> wishlistBlueprint.getRecipe()).collect(Collectors.toSet());
-        final List<PathItem> pathItems = PathService.calculateShortestPath(collect);
+        final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);
         this.tableView.getItems().addAll(pathItems);
 
     }

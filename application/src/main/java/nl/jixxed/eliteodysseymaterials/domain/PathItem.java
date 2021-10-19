@@ -2,11 +2,12 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import java.util.Set;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 @ToString
 public class PathItem {
     private final Engineer engineer;
-    private final Set<ModuleRecipe> recipes;
+    private final Map<ModuleRecipe, Integer> recipes;
+    @Setter
+    private double distance;
 
     public String getRecipesString() {
-        return this.recipes.stream().map(recipe -> LocaleService.getLocalizedStringForCurrentLocale(recipe.getRecipeName().getLocalizationKey())).collect(Collectors.joining(","));
+        return this.recipes.entrySet().stream().map(recipe -> LocaleService.getLocalizedStringForCurrentLocale(recipe.getKey().getRecipeName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "")).collect(Collectors.joining(", "));
     }
 }

@@ -89,7 +89,7 @@ public class WishlistBlueprint extends HBox {
         if (!viewOnly) {
             this.removeBlueprint = ButtonBuilder.builder()
                     .withStyleClass("wishlist-item-close").withNonLocalizedText("X")
-                    .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistRecipe, Action.REMOVED))))
+                    .withOnAction(event -> remove())
                     .build();
             this.getChildren().add(this.removeBlueprint);
         }
@@ -107,6 +107,10 @@ public class WishlistBlueprint extends HBox {
         initFadeTransition();
         final boolean isCraftable = APPLICATION_STATE.amountCraftable(this.getRecipeName()) > 0;
         this.canCraft(isCraftable);
+    }
+
+    public void remove() {
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistRecipe, Action.REMOVED)));
     }
 
     private void initFadeTransition() {
@@ -145,7 +149,7 @@ public class WishlistBlueprint extends HBox {
         this.otherIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> !this.recipe.hasIngredient(wishlistIngredient.getMaterial())).collect(Collectors.toSet()));
     }
 
-    private void setVisibility(final boolean visible) {
+    void setVisibility(final boolean visible) {
         this.visible = visible;
         this.wishlistRecipe.setVisible(this.visible);
         this.visibilityImage.setImage(new Image(getClass().getResourceAsStream(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png")));
@@ -172,7 +176,7 @@ public class WishlistBlueprint extends HBox {
         return this.sequenceID;
     }
 
-    boolean isVisibleBlueprint() {
+    public boolean isVisibleBlueprint() {
         return this.visible;
     }
 

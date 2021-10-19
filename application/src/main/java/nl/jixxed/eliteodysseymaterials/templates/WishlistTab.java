@@ -5,10 +5,14 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
+import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -27,6 +31,7 @@ import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -34,6 +39,9 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class WishlistTab extends EDOTab {
+
+
+    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String WISHLIST_HEADER_CLASS = "wishlist-header";
     private static final String WISHLIST_CATEGORY_CLASS = "wishlist-category";
@@ -72,6 +80,10 @@ public class WishlistTab extends EDOTab {
     private Label suitModuleRecipesLabel;
     private Label weaponUpgradeRecipesLabel;
     private Label weaponModuleRecipesLabel;
+
+    static {
+        NUMBER_FORMAT.setMaximumFractionDigits(2);
+    }
 
     WishlistTab() {
         initComponents();
@@ -162,10 +174,15 @@ public class WishlistTab extends EDOTab {
                 )
                 .orElse(new ArrayList<>());
         final Set<ModuleRecipe> collect = (Set<ModuleRecipe>) (Set<?>) this.wishlistBlueprints.stream().filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleRecipe).map(wishlistBlueprint -> wishlistBlueprint.getRecipe()).collect(Collectors.toSet());
-        final List<PathItem> pathItems = PathService.calculateShortestPath(collect);
-        this.tableView.getItems().addAll(pathItems);
-        log.info("PATHS");
-        pathItems.forEach(item -> log.info("item {}", item.toString()));
+        try {
+            final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);
+            this.tableView.getItems().addAll(pathItems);
+            log.info("PATHS");
+            pathItems.forEach(item -> log.info("item {}", item.toString()));
+        } catch (final IllegalArgumentException ex) {
+            log.error("Failed to generate path", ex);
+        }
+
 
         refreshWishlistRecipes();
         refreshBlueprintOverview();
@@ -174,22 +191,118 @@ public class WishlistTab extends EDOTab {
 
     private void initShortestPathTable() {
         this.tableView = new TableView<>();
+        final TableColumn<PathItem, String> columnIndex = new TableColumn<>("#");
+        columnIndex.setCellFactory(col -> {
+            final TableCell<PathItem, String> cell = new TableCell<>();
+            cell.textProperty().bind(Bindings.createStringBinding(() -> {
+                if (cell.isEmpty()) {
+                    return null;
+                } else {
+                    return Integer.toString(cell.getIndex() + 1);
+                }
+            }, cell.emptyProperty(), cell.indexProperty()));
+            return cell;
+        });
+        columnIndex.setSortable(false);
+        columnIndex.getStyleClass().add("wishlist-travel-path-index");
+        columnIndex.setMaxWidth(50);
+        columnIndex.setPrefWidth(50);
+        columnIndex.setMinWidth(50);
+
         final TableColumn<PathItem, String> columnEngineer = new TableColumn<>("Engineer");
         columnEngineer.setCellValueFactory(param -> LocaleService.getStringBinding(param.getValue().getEngineer().getLocalizationKey()));
-        final TableColumn<PathItem, String> columnBlueprint = new TableColumn<>("Blueprint");
-        columnBlueprint.setCellValueFactory(param -> LocaleService.getStringBinding(() -> param.getValue().getRecipes().stream().map(recipe -> LocaleService.getLocalizedStringForCurrentLocale(recipe.getRecipeName().getLocalizationKey())).collect(Collectors.joining(", "))));
         columnEngineer.setMaxWidth(175);
         columnEngineer.setPrefWidth(175);
         columnEngineer.setMinWidth(175);
-        this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        columnEngineer.setSortable(false);
+        columnEngineer.getStyleClass().add("wishlist-travel-path-engineer");
+
+        final TableColumn<PathItem, Void> columnButtons = createButtonsColumn();
+
+        final TableColumn<PathItem, String> columnDistance = new TableColumn<>("Distance");
+        columnDistance.setCellValueFactory(param -> new SimpleStringProperty(NUMBER_FORMAT.format(param.getValue().getDistance()) + "Ly"));
+        columnDistance.setSortable(false);
+        columnDistance.getStyleClass().add("wishlist-travel-path-distance");
+        columnDistance.setMaxWidth(120);
+        columnDistance.setPrefWidth(120);
+        columnDistance.setMinWidth(120);
+
+        final TableColumn<PathItem, String> columnBlueprint = new TableColumn<>("Blueprint");
+        columnBlueprint.setCellValueFactory(param -> LocaleService.getStringBinding(() -> param.getValue().getRecipesString()));
+        columnBlueprint.setSortable(false);
+        final DoubleBinding usedWidth = columnEngineer.widthProperty().add(columnDistance.widthProperty()).add(columnIndex.widthProperty()).add(columnButtons.widthProperty()).add(10);
+        columnBlueprint.prefWidthProperty().bind(this.tableView.widthProperty().subtract(usedWidth));
+        columnIndex.getStyleClass().add("wishlist-travel-path-blueprint");
+
+
+//        this.tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         this.tableView.getStyleClass().add("wishlist-travel-path-table");
         this.tableView.prefHeightProperty().bind(this.tableView.fixedCellSizeProperty().multiply(Bindings.size(this.tableView.getItems()).add(1.05)));
         this.tableView.minHeightProperty().bind(this.tableView.prefHeightProperty());
         this.tableView.maxHeightProperty().bind(this.tableView.prefHeightProperty());
+        this.tableView.getColumns().add(columnIndex);
         this.tableView.getColumns().add(columnEngineer);
         this.tableView.getColumns().add(columnBlueprint);
+        this.tableView.getColumns().add(columnDistance);
+        this.tableView.getColumns().add(columnButtons);
         this.tableView.visibleProperty().bind(Bindings.greaterThan(Bindings.size(this.tableView.getItems()), 0));
         this.travelPathLabel.visibleProperty().bind(Bindings.greaterThan(Bindings.size(this.tableView.getItems()), 0));
+    }
+
+    private TableColumn<PathItem, Void> createButtonsColumn() {
+        final TableColumn<PathItem, Void> colBtn = new TableColumn<>("Remove");
+
+        final Callback<TableColumn<PathItem, Void>, TableCell<PathItem, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<PathItem, Void> call(final TableColumn<PathItem, Void> param) {
+                return new TableCell<>() {
+
+                    private final Button btn = new Button("Remove blueprints");
+                    private final Button btn2 = new Button("Hide blueprints");
+
+                    {
+                        this.btn.setOnAction((ActionEvent event) -> {
+                            final PathItem pathItem = getTableView().getItems().get(getIndex());
+                            log.info("to remove: " + pathItem.getRecipesString());
+                            final List<WishlistBlueprint> blueprints = pathItem.getRecipes().entrySet().stream()
+                                    .flatMap(recipeEntry -> WishlistTab.this.wishlistBlueprints.stream()
+                                            .filter(WishlistBlueprint::isVisibleBlueprint)
+                                            .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe().equals(recipeEntry.getKey()))
+                                            .limit(recipeEntry.getValue())
+                                    ).toList();
+                            blueprints.forEach(WishlistBlueprint::remove);
+                        });
+                        this.btn2.setOnAction((ActionEvent event) -> {
+                            final PathItem pathItem = getTableView().getItems().get(getIndex());
+                            log.info("to hide: " + pathItem.getRecipesString());
+                            final List<WishlistBlueprint> blueprints = pathItem.getRecipes().entrySet().stream()
+                                    .flatMap(recipeEntry -> WishlistTab.this.wishlistBlueprints.stream()
+                                            .filter(WishlistBlueprint::isVisibleBlueprint)
+                                            .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe().equals(recipeEntry.getKey()))
+                                            .limit(recipeEntry.getValue())
+                                    ).toList();
+                            blueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setVisibility(false));
+                            refreshContent();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(final Void item, final boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(new HBox(this.btn, this.btn2));
+                        }
+                    }
+                };
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        return colBtn;
+
     }
 
     private void initLabels() {
@@ -247,6 +360,9 @@ public class WishlistTab extends EDOTab {
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.wishlistBlueprints.size()));
+        });
+        EventService.addListener(LocationEvent.class, locationEvent -> {
+            refreshContent();
         });
     }
 
@@ -342,9 +458,12 @@ public class WishlistTab extends EDOTab {
         this.assetTechFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.TECH)).sorted(Comparator.comparing(WishlistIngredient::getName)).collect(Collectors.toList()));
         removeAndAddFlows();
         this.tableView.getItems().clear();
-        final Set<ModuleRecipe> collect = (Set<ModuleRecipe>) (Set<?>) this.wishlistBlueprints.stream().filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleRecipe).map(wishlistBlueprint -> wishlistBlueprint.getRecipe()).collect(Collectors.toSet());
-        final List<PathItem> pathItems = PathService.calculateShortestPath(collect);
-        this.tableView.getItems().addAll(pathItems);
+        try {
+            final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);
+            this.tableView.getItems().addAll(pathItems);
+        } catch (final IllegalArgumentException ex) {
+            log.error("Failed to generate path", ex);
+        }
 
     }
 
