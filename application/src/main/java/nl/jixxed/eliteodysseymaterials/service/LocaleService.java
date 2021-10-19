@@ -72,11 +72,19 @@ public class LocaleService {
                     builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.illegal"));
                 }
                 addBarterInfoToTooltip(material, builder);
+                if (material instanceof Data data) {
+                    addTransferTimeToTooltip(data, builder);
+                }
                 addRecipesToTooltip(RecipeConstants.findRecipesContaining(material), builder);
                 addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(material), builder);
                 return builder.toString();
             }
         });
+    }
+
+    private static void addTransferTimeToTooltip(final Data data, final StringBuilder builder) {
+        builder.append("\n\n")
+                .append(LocaleService.getLocalizedStringForCurrentLocale((data.isUpload()) ? "material.tooltip.data.upload" : "material.tooltip.data.download", data.getTransferTime()));
     }
 
     private static void addBarterInfoToTooltip(final Material material, final StringBuilder builder) {
