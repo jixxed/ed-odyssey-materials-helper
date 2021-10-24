@@ -7,10 +7,12 @@ module nl.jixxed.eliteodysseymaterials {
     requires io.reactivex.rxjava3;
     requires org.jfxtras.styles.jmetro;
     requires org.slf4j;
+    requires com.google.common;
     requires static lombok;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml;
     exports nl.jixxed.eliteodysseymaterials;
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.domain;
+    opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind;
 }

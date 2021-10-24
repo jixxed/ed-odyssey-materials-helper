@@ -90,18 +90,10 @@ class ContentArea extends AnchorPane {
             this.recipeBar.setVisible(visibility);
             PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, visibility);
         });
-        EventService.addListener(ImportWishlistEvent.class, event -> {
-            try {
-                final String wishlist = event.getWishlist().trim();
-                if (wishlist.isEmpty()) {
-                    throw new IllegalArgumentException("import string is empty");
-                }
-                final SharedWishlistTab sharedWishlistTab = new SharedWishlistTab(wishlist);
-                this.tabs.getTabs().add(this.tabs.getTabs().size() - 1, sharedWishlistTab);
-                EventService.publish(new ImportResultEvent(ImportResult.SUCCESS));
-            } catch (final RuntimeException ex) {
-                log.error("failed to import wishlist", ex);
-                EventService.publish(new ImportResultEvent(ImportResult.ERROR));
+
+        EventService.addListener(ImportResultEvent.class, importResultEvent -> {
+            if (importResultEvent.getResult().equals(ImportResult.SUCCESS)) {
+                this.tabs.getSelectionModel().select(this.wishlistTab);
             }
         });
     }

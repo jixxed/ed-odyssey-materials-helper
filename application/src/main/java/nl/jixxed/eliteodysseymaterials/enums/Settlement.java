@@ -18,6 +18,7 @@ public enum Settlement {
     THE_DIVINE_APPARATUS("The Divine Apparatus"),
     EIDOLON_HOLD("Eidolon Hold"),
     BRESA_MODIFICATIONS("Bresa Modifications"),
+    SHOP("Shop"),
     UNKNOWN("UNKNOWN");
     private final String settlementName;
 

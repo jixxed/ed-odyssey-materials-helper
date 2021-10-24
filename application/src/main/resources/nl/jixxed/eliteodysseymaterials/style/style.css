@@ -360,7 +360,7 @@
 .recipe-engineer-flow {
     -fx-hgap: 10;
     -fx-vgap: 10;
-    -fx-max-width: 300;
+    -fx-max-width: 500;
 }
 
 .engineer-unlocked {
@@ -503,6 +503,23 @@
 
 .recipe-wishlist-button {
     -fx-fit-to-width: true;
+}
+
+.wishlist-select {
+    -fx-min-width: 10em;
+    -fx-pref-width: 35em;
+    -fx-max-width: 35em;
+}
+
+.wishlist-newname {
+    -fx-min-width: 20em;
+    -fx-background-insets: 1;
+    -fx-background-radius: 0, 0;
+    -fx-border-width: 1;
+    -fx-border-color: #2e2e2e;
+    /*-fx-max-height: 2.4em;*/
+    /*-fx-min-height: 2.4em;*/
+    /*-fx-pref-height: 2.4em;*/
 }
 
 .wishlist-item > .text {
@@ -791,6 +808,13 @@
 }
 
 .specialisation-unknown {
+
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center-right;
+    -fx-max-height: 2.2em;
+}
+
+.specialisation-hybrid {
 
     -fx-text-fill: #ffffff;
     -fx-alignment: center-right;

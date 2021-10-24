@@ -15,7 +15,7 @@ public class EventService {
     public static <T extends Event> void publish(final T event) {
         LISTENERS.stream()
                 .filter(eventListener -> eventListener.getEventClass().equals(event.getClass()))
-                .sorted(Comparator.comparing(EventListener::getPriority))
+                .sorted(Comparator.comparingInt(EventListener::getPriority))
                 .forEach(eventListener -> ((EventListener<T>) eventListener).getConsumer().accept(event));
     }
 

@@ -458,7 +458,7 @@ public abstract class RecipeConstants {
                         Data.GENETICRESEARCH, 5,
                         Asset.EPINEPHRINE, 10,
                         Asset.PHNEUTRALISER, 15
-                ), List.of(Engineer.TERRA_VELASQUEZ, Engineer.YARDEN_BOND),
+                ), List.of(Engineer.TERRA_VELASQUEZ, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
                         Modifier.MOVEMENT_SPEED_PENALTY, "-100%"
                 )
@@ -487,7 +487,7 @@ public abstract class RecipeConstants {
                         Data.SPECTRALANALYSISDATA, 10,
                         Asset.TRANSMITTER, 5,
                         Asset.CIRCUITBOARD, 5
-                ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER),
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.LOS_ANALYSIS_RANGE, "+100%",
                         Modifier.LOS_ANALYSIS_TIME, "-100%"
@@ -513,7 +513,7 @@ public abstract class RecipeConstants {
                         Data.DIGITALDESIGNS, 10,
                         Asset.EPOXYADHESIVE, 10,
                         Asset.MEMORYCHIP, 5
-                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK),
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.BACKPACK_COMPONENT_CAPACITY, "+100%",
                         Modifier.BACKPACK_ITEM_CAPACITY, "+100%",
@@ -540,7 +540,7 @@ public abstract class RecipeConstants {
                         Asset.IONBATTERY, 5,
                         Asset.MICROSUPERCAPACITOR, 10,
                         Asset.ELECTRICALWIRING, 10
-                ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK),
+                ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.BATTERY_ENERGY_CAPACITY, "+50%"
                 )
@@ -552,7 +552,7 @@ public abstract class RecipeConstants {
                         Data.TOPOGRAPHICALSURVEYS, 10,
                         Asset.MICROTHRUSTERS, 5,
                         Asset.MOTOR, 10
-                ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND),
+                ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
                         Modifier.JUMP_ASSIST_BOOST_DRAIN, "-25%",
                         Modifier.JUMP_ASSIST_BOOST_RECHARGE_RATE, "+25%",
@@ -566,7 +566,7 @@ public abstract class RecipeConstants {
                         Data.AIRQUALITYREPORTS, 15,
                         Asset.OXYGENICBACTERIA, 10,
                         Asset.PHNEUTRALISER, 15
-                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ),
+                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         Modifier.AIR_CAPACITY, "+400%"
                 )
@@ -579,7 +579,7 @@ public abstract class RecipeConstants {
                         Data.MEDICALTRIALRECORDS, 5,
                         Asset.OXYGENICBACTERIA, 10,
                         Asset.CHEMICALCATALYST, 15
-                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ),
+                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         Modifier.SPRINT_DURATION, "+100%"
                 )
@@ -592,7 +592,7 @@ public abstract class RecipeConstants {
                         Data.NOCDATA, 5,
                         Data.RADIOACTIVITYDATA, 5,
                         Asset.CIRCUITSWITCH, 10
-                ), List.of(Engineer.ODEN_GEIGER),
+                ), List.of(Engineer.ODEN_GEIGER, Engineer.YI_SHEN),
                 Collections.emptyMap()
         ));
         SUIT_MODULE_BLUEPRINTS.put(RecipeName.QUIETER_FOOTSTEPS, new ModuleRecipe(
@@ -603,7 +603,7 @@ public abstract class RecipeConstants {
                         Data.PATROLROUTES, 10,
                         Asset.MICROHYDRAULICS, 5,
                         Asset.VISCOELASTICPOLYMER, 15
-                ), List.of(Engineer.YARDEN_BOND),
+                ), List.of(Engineer.YARDEN_BOND, Engineer.YI_SHEN),
                 Map.of(
                         Modifier.FOOTSTEP_AUDIBLE_RANGE_MULTIPLIER, "-50%"
                 )
@@ -615,7 +615,7 @@ public abstract class RecipeConstants {
                         Asset.ELECTRICALWIRING, 15,
                         Asset.ELECTRICALFUSE, 5,
                         Asset.MICROTRANSFORMER, 10
-                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK),
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.TOOL_ENERGY_DRAIN_MULTIPLIER, "-50%"
                 )
@@ -791,7 +791,7 @@ public abstract class RecipeConstants {
                         Asset.SCRAMBLER, 10,
                         Asset.TRANSMITTER, 15,
                         Asset.CIRCUITBOARD, 5
-                ), List.of(Engineer.YARDEN_BOND)
+                ), List.of(Engineer.YARDEN_BOND, Engineer.YI_SHEN)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.FASTER_HANDLING, new ModuleRecipe(
                 RecipeName.FASTER_HANDLING,
@@ -800,7 +800,7 @@ public abstract class RecipeConstants {
                         Data.COMBATANTPERFORMANCE, 10,
                         Data.COMBATTRAININGMATERIAL, 10,
                         Asset.VISCOELASTICPOLYMER, 5
-                ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND),
+                ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
                         Modifier.HANDLING_SPEED, "+10%"
                 )
@@ -814,7 +814,7 @@ public abstract class RecipeConstants {
                         Asset.RDX, 10,
                         Asset.WEAPONCOMPONENT, 5
 
-                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK),
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.WEAPON_EFFECTIVE_RANGE, "+50%"
                 )
@@ -827,7 +827,7 @@ public abstract class RecipeConstants {
                         Asset.OPTICALLENS, 5,
                         Asset.MICROTRANSFORMER, 15,
                         Asset.CIRCUITBOARD, 5
-                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK),
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.WEAPON_EFFECTIVE_RANGE, "+50%"
                 )
@@ -841,7 +841,7 @@ public abstract class RecipeConstants {
                         Asset.MOTOR, 5,
                         Asset.ELECTRICALFUSE, 5
 
-                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK),
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.WEAPON_EFFECTIVE_RANGE, "+50%"
                 )
@@ -854,7 +854,7 @@ public abstract class RecipeConstants {
                         Asset.CHEMICALCATALYST, 10,
                         Asset.RDX, 15,
                         Asset.WEAPONCOMPONENT, 5
-                ), List.of(Engineer.UMA_LASZLO),
+                ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         Modifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
                 )
@@ -867,7 +867,7 @@ public abstract class RecipeConstants {
                         Asset.IONBATTERY, 10,
                         Asset.OPTICALLENS, 5,
                         Asset.SCRAMBLER, 10
-                ), List.of(Engineer.UMA_LASZLO),
+                ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         Modifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
                 )
@@ -880,7 +880,7 @@ public abstract class RecipeConstants {
                         Asset.IONBATTERY, 10,
                         Asset.ELECTROMAGNET, 10,
                         Asset.MICROSUPERCAPACITOR, 15
-                ), List.of(Engineer.UMA_LASZLO),
+                ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         Modifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
                 )
@@ -893,7 +893,7 @@ public abstract class RecipeConstants {
                         Data.COMBATANTPERFORMANCE, 10,
                         Asset.RDX, 10,
                         Asset.VISCOELASTICPOLYMER, 10
-                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ),
+                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         Modifier.HIP_FIRE_ACCURACY, "+10%"
                 )
@@ -906,7 +906,7 @@ public abstract class RecipeConstants {
                         Asset.OPTICALLENS, 5,
                         Asset.ELECTRICALWIRING, 15,
                         Asset.METALCOIL, 10
-                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ),
+                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         Modifier.HIP_FIRE_ACCURACY, "+15%"
                 )
@@ -919,7 +919,7 @@ public abstract class RecipeConstants {
                         Asset.CHEMICALCATALYST, 10,
                         Asset.ELECTROMAGNET, 10,
                         Asset.METALCOIL, 10
-                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ),
+                ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         Modifier.HIP_FIRE_ACCURACY, "+30%"
                 )
@@ -945,7 +945,7 @@ public abstract class RecipeConstants {
                         Data.MININGANALYTICS, 10,
                         Asset.VISCOELASTICPOLYMER, 15,
                         Asset.WEAPONCOMPONENT, 5
-                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ)
+                ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.RELOAD_SPEED, new ModuleRecipe(
                 RecipeName.RELOAD_SPEED,
@@ -967,7 +967,7 @@ public abstract class RecipeConstants {
                         Data.BIOMETRICDATA, 5,
                         Asset.OPTICALLENS, 10,
                         Asset.OPTICALFIBRE, 5
-                ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK)
+                ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.STABILITY, new ModuleRecipe(
                 RecipeName.STABILITY,
@@ -976,7 +976,7 @@ public abstract class RecipeConstants {
                         Data.RISKASSESSMENTS, 15,
                         Asset.VISCOELASTICPOLYMER, 10,
                         Asset.MICROHYDRAULICS, 10
-                ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER),
+                ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER, Engineer.ROSA_DAYETTE),
                 Map.of(
                         Modifier.INSTABILITY, "-50%"
                 )

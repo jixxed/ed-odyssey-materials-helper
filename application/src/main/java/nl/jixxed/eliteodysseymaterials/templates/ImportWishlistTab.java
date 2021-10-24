@@ -10,18 +10,23 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
+import nl.jixxed.eliteodysseymaterials.domain.Wishlists;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ImportResultEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ImportWishlistEvent;
 
 import java.util.Base64;
 
 @Slf4j
 public class ImportWishlistTab extends EDOTab {
 
+    public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private ScrollPane scrollPane;
     private TextArea textArea;
     private Button button;
@@ -56,7 +61,7 @@ public class ImportWishlistTab extends EDOTab {
                 .withVisibility(false)
                 .build();
         this.note = LabelBuilder.builder()
-                .withNonLocalizedText("This feature is partially implemented. Imported wishlists are view-only, not persisted and lost after restart.")
+                .withText(LocaleService.getStringBindingLocalizedParameters("tab.import.text", "tab.wishlist.copy"))
                 .build();
         this.setText("+");
         this.scrollPane = new ScrollPane();
@@ -72,9 +77,21 @@ public class ImportWishlistTab extends EDOTab {
                     throw new IllegalArgumentException("import string is empty");
                 }
                 final String decoded = new String(Base64.getDecoder().decode(this.textArea.getText().trim()));
-                EventService.publish(new ImportWishlistEvent(decoded));
 
-            } catch (final IllegalArgumentException ex) {
+                if (decoded.isEmpty()) {
+                    throw new IllegalArgumentException("import string is empty");
+                }
+                final Wishlist wishlist = new Wishlist();
+                wishlist.setName("Imported wishlist");
+                wishlist.setItems(WishlistHelper.convertWishlist(decoded));
+
+                final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
+                final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+                wishlists.addWishlist(wishlist);
+                wishlists.setSelectedWishlistUUID(wishlist.getUuid());
+                APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
+                EventService.publish(new ImportResultEvent(ImportResult.SUCCESS));
+            } catch (final RuntimeException ex) {
                 log.error("failed to import wishlist", ex);
                 EventService.publish(new ImportResultEvent(ImportResult.ERROR));
             }

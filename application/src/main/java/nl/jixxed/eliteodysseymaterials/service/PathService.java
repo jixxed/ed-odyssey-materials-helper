@@ -31,19 +31,27 @@ public class PathService {
                 .forEach(engineer -> engineerPreference.put(engineer, 1 + engineerPreference.getOrDefault(engineer, 0))));
         distinctRecipes.stream().filter(recipe -> recipe.getEngineers().stream().anyMatch(engineerPreference::containsKey)).forEach(recipe -> {
             if (pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(recipe))) {
-                final Engineer engineer = mostPreferredEngineer(engineerPreference, recipe, tooFarAwayEngineers);
-                final Map<ModuleRecipe, Integer> recipesForEngineer = getRecipesForEngineer(wishlistBlueprints, pathItems, engineer);
-                pathItems.add(new PathItem(engineer, recipesForEngineer));
+                final List<Engineer> engineers = mostPreferredEngineer(engineerPreference, recipe, tooFarAwayEngineers);
+                final Map<ModuleRecipe, Integer> recipesForEngineer = getRecipesForEngineer(wishlistBlueprints, pathItems, engineers.get(0));
+                pathItems.add(new PathItem(engineers, recipesForEngineer));
             }
         });
         final int systemsToVisit = pathItems.size();
         for (int i = 0; i < systemsToVisit; i++) {
             final Location finalCurrentLocation = currentLocation;
-            final PathItem closest = pathItems.stream().min((pathItem1, pathItem2) -> (int) (pathItem1.getEngineer().getDistance(finalCurrentLocation) - pathItem2.getEngineer().getDistance(finalCurrentLocation))).orElseThrow(IllegalArgumentException::new);
-            closest.setDistance(closest.getEngineer().getDistance(currentLocation));
-            sortedPathItems.add(closest);
-            currentLocation = closest.getEngineer().getLocation();
-            pathItems.remove(closest);
+            if (pathItems.size() > 1) {
+                final PathItem closest = pathItems.stream()
+                        .min((pathItem1, pathItem2) -> (int) (pathItem1.getAndSetDistanceToClosestEngineer(finalCurrentLocation) - pathItem2.getAndSetDistanceToClosestEngineer(finalCurrentLocation)))
+                        .orElseThrow(IllegalArgumentException::new);
+                sortedPathItems.add(closest);
+                currentLocation = closest.getEngineer().getLocation();
+                pathItems.remove(closest);
+            } else if (pathItems.size() == 1) {
+                final PathItem closest = pathItems.get(0);
+                closest.getAndSetDistanceToClosestEngineer(currentLocation);
+                sortedPathItems.add(closest);
+            }
+
         }
         return sortedPathItems;
     }
@@ -63,10 +71,17 @@ public class PathService {
                 );
     }
 
-    private static Engineer mostPreferredEngineer(final Map<Engineer, Integer> engineerPreference, final ModuleRecipe recipe, final List<Engineer> tooFarAwayEngineers) {
-        return recipe.getEngineers().stream()
+    private static List<Engineer> mostPreferredEngineer(final Map<Engineer, Integer> engineerPreference, final ModuleRecipe recipe, final List<Engineer> tooFarAwayEngineers) {
+        final Integer highestPreference = recipe.getEngineers().stream()
                 .filter(engineer -> !tooFarAwayEngineers.contains(engineer))
                 .max(Comparator.comparingInt(engineerPreference::get))
+                .map(engineerPreference::get)
                 .orElseThrow(IllegalArgumentException::new);
+        return recipe.getEngineers().stream()
+                .filter(engineer -> !tooFarAwayEngineers.contains(engineer))
+                .filter(engineer -> Objects.equals(engineerPreference.get(engineer), highestPreference))
+                .toList();
+
+
     }
 }
