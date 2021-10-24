@@ -15,11 +15,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class PreferencesService {
-    private static final PreferencesService instance = new PreferencesService();
 
-    private Properties prop;
+    private static Properties prop;
 
-    private PreferencesService() {
+    static {
         //create folder if not exists
         final File targetFile = new File(OsConstants.PREFERENCES);
         final File parent = targetFile.getParentFile();
@@ -38,7 +37,7 @@ public class PreferencesService {
             }
         }
         Observable
-                .create(emitter -> this.prop = new Properties() {
+                .create(emitter -> prop = new Properties() {
                     @Override
                     public synchronized Object setProperty(final String key, final String value) {
                         final Object property = super.setProperty(key, value);
@@ -50,14 +49,14 @@ public class PreferencesService {
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> {
                     try (final OutputStream output = new FileOutputStream(OsConstants.PREFERENCES)) {
-                        instance.prop.store(output, null);
+                        prop.store(output, null);
                     } catch (final IOException e) {
                         log.error("Error writing preferences", e);
                     }
                 });
 
         try (final FileInputStream fis = new FileInputStream(targetFile)) {
-            this.prop.load(fis);
+            prop.load(fis);
         } catch (final IOException e) {
             log.error("Error reading preferences", e);
             throw new IllegalStateException("Couldn't load pref file: " + targetFile);
@@ -67,22 +66,22 @@ public class PreferencesService {
 
     public static <T> void setPreference(final String key, final List<T> value, final Function<T, String> mapper) {
         if (value == null || value.isEmpty()) {
-            instance.prop.setProperty(key, "");
+            prop.setProperty(key, "");
         } else {
-            instance.prop.setProperty(key, value.stream().map(mapper).collect(Collectors.joining(",")));
+            prop.setProperty(key, value.stream().map(mapper).collect(Collectors.joining(",")));
         }
     }
 
     public static void setPreference(final String key, final Object value) {
         if (value == null) {
-            instance.prop.setProperty(key, "");
+            prop.setProperty(key, "");
         } else {
-            instance.prop.setProperty(key, value.toString());
+            prop.setProperty(key, value.toString());
         }
     }
 
     public static <T> T getPreference(final String key, @NonNull final T defaultValue) {
-        final String value = instance.prop.getProperty(key);
+        final String value = prop.getProperty(key);
         if (value == null) {
             return defaultValue;
         }

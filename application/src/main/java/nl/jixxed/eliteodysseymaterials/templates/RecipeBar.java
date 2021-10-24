@@ -44,8 +44,8 @@ class RecipeBar extends Accordion {
     private void initComponents() {
         this.getStyleClass().add("recipe");
         this.categoryTitledPanes = RecipeConstants.RECIPES.entrySet().stream()
+                .sorted(Comparator.comparing(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().toString()))
                 .map(this::createCategoryTitledPane)
-                .sorted(Comparator.comparing(Labeled::getText))
                 .toArray(TitledPane[]::new);
         initAboutTitledPane();
         this.getPanes().addAll(this.categoryTitledPanes);

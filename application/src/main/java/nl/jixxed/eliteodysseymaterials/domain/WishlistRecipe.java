@@ -1,17 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
 @AllArgsConstructor
-@Getter
-@EqualsAndHashCode
+@Data
+@NoArgsConstructor
 public class WishlistRecipe {
-    private final RecipeName recipeName;
-    @Setter
+    private RecipeName recipeName;
     private boolean visible;
-
 }

@@ -52,7 +52,8 @@ jlink {
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
-                '-Dapp.version=' + project.version
+                '-Dapp.version=' + project.version,
+                os.isWindows() ? '-Djavafx.cachedir=javafx-cache' : ''
         ]
     }
     jpackage {
@@ -86,10 +87,18 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
     testImplementation "org.assertj:assertj-core:3.19.0"
 
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'org.slf4j:slf4j-simple:1.7.32'
+    implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
+
+
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }

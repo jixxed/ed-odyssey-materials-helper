@@ -165,14 +165,14 @@ class SearchBar extends HBox {
 
     private void setDefaultOptions() {
         try {
-            final Sort sort = Sort.valueOf(PreferencesService.getPreference("search.sort", ""));
+            final Sort sort = Sort.valueOf(PreferencesService.getPreference("search.sort", "ALPHABETICAL"));
             this.sortMaterialsComboBox.getSelectionModel().select(sort);
         } catch (final IllegalArgumentException ex) {
             log.error("sort error", ex);
         }
 
         try {
-            final Show filter = Show.valueOf(PreferencesService.getPreference("search.filter", ""));
+            final Show filter = Show.valueOf(PreferencesService.getPreference("search.filter", "ALL"));
             this.showMaterialsComboBox.getSelectionModel().select(filter);
         } catch (final IllegalArgumentException ex) {
             log.error("filter error", ex);

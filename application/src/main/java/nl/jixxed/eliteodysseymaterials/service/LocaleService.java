@@ -46,6 +46,13 @@ public class LocaleService {
         return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(key), parameters));
     }
 
+    public static StringBinding getStringBindingLocalizedParameters(final String key, final String... parameters) {
+        return ObservableResourceFactory.getStringBinding(() -> {
+            final String[] localizedParams = Arrays.stream(parameters).map(parameter -> ObservableResourceFactory.getResources().getString(parameter)).toArray(String[]::new);
+            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), localizedParams);
+        });
+    }
+
     public static ObservableValue<String> getSupplierStringBinding(final String key, final Supplier<Object>... parameterSuppliers) {
         return ObservableResourceFactory.getStringBinding(() -> {
             final Object[] parameters = Arrays.stream(parameterSuppliers).map(Supplier::get).toArray(Object[]::new);
@@ -72,11 +79,19 @@ public class LocaleService {
                     builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.illegal"));
                 }
                 addBarterInfoToTooltip(material, builder);
+                if (material instanceof Data data) {
+                    addTransferTimeToTooltip(data, builder);
+                }
                 addRecipesToTooltip(RecipeConstants.findRecipesContaining(material), builder);
                 addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(material), builder);
                 return builder.toString();
             }
         });
+    }
+
+    private static void addTransferTimeToTooltip(final Data data, final StringBuilder builder) {
+        builder.append("\n\n")
+                .append(LocaleService.getLocalizedStringForCurrentLocale((data.isUpload()) ? "material.tooltip.data.upload" : "material.tooltip.data.download", data.getTransferTime()));
     }
 
     private static void addBarterInfoToTooltip(final Material material, final StringBuilder builder) {

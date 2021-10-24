@@ -155,7 +155,8 @@ public class SpawnConstants {
     );
 
     private static final Map<Data, List<AlternateLocationType>> DATA_OTHER = Map.ofEntries(
-            Map.entry(Data.SPYWARE, List.of(AlternateLocationType.MISSION))
+            Map.entry(Data.SPYWARE, List.of(AlternateLocationType.MISSION)),
+            Map.entry(Data.VIRUS, List.of(AlternateLocationType.MISSION))
     );
     private static final Map<Asset, List<LockerType>> ASSET_LOCKERS = Map.ofEntries(
             Map.entry(Asset.AEROGEL, List.of(LockerType.LAB, LockerType.PROC)),

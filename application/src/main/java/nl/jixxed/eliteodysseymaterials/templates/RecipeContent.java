@@ -1,16 +1,18 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TextBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistChangedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistRecipeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,7 +26,7 @@ class RecipeContent extends VBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private Label countLabel;
     private HBox recipeHeader;
-
+    private MenuButton addToWishlist;
 
     RecipeContent(final Recipe recipe) {
         this.recipe = recipe;
@@ -87,28 +89,49 @@ class RecipeContent extends VBox {
     }
 
     private void initAsRecipe() {
-        final Button addToWishlist = ButtonBuilder.builder()
-                .withStyleClass("recipe-wishlist-button")
-                .withText(LocaleService.getStringBinding("recipe.add.to.wishlist"))
-                .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), new WishlistRecipe(this.recipe.getRecipeName(), true), Action.ADDED))))
-                .build();
-
-        final long initialCount = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count()).orElse(0L);
+        this.addToWishlist = new MenuButton();
+        this.addToWishlist.getStyleClass().add("recipe-wishlist-button");
+        this.addToWishlist.textProperty().bind(LocaleService.getStringBinding("recipe.add.to.wishlist"));
+        this.addToWishlist.getItems().addAll(new ArrayList<>());
         this.countLabel = LabelBuilder.builder().withStyleClass("recipe-wishlist-count").build();
-        if (initialCount > 0L) {
-            this.countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", initialCount));
-        }
+        this.countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", 0));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+            final Wishlists wishlists = loadCommanderWishlists(commander);
+            loadInitialCount(wishlists);
+        });
         final HBox box = BoxBuilder.builder()
                 .withStyleClass("recipe-wishlist-count-box")
-                .withNodes(this.countLabel, addToWishlist)
+                .withNodes(this.countLabel, this.addToWishlist)
                 .buildHBox();
-        HBox.setHgrow(addToWishlist, Priority.ALWAYS);
+        HBox.setHgrow(this.addToWishlist, Priority.ALWAYS);
         this.recipeHeader.getChildren().add(box);
         final Label materialHeader = LabelBuilder.builder()
                 .withStyleClass("recipe-title-label")
                 .withText(LocaleService.getStringBinding("recipe.header.material"))
                 .build();
         this.getChildren().add(materialHeader);
+    }
+
+    private void loadInitialCount(final Wishlists wishlists) {
+        final long count = wishlists.getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count();
+        if (count > 0L) {
+            this.countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
+        } else {
+            this.countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
+        }
+    }
+
+    private Wishlists loadCommanderWishlists(final Commander commander) {
+        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+        this.addToWishlist.getItems().clear();
+        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().map(wishlist -> {
+            final MenuItem menuItem = new MenuItem();
+            menuItem.setOnAction(event -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), wishlist.getUuid(), new WishlistRecipe(this.recipe.getRecipeName(), true), Action.ADDED)));
+            menuItem.setText(wishlist.getName());
+            return menuItem;
+        }).toList();
+        this.addToWishlist.getItems().addAll(menuItems);
+        return wishlists;
     }
 
     private void initAsEngineerMission() {
@@ -154,9 +177,31 @@ class RecipeContent extends VBox {
     }
 
     private void initEventHandling() {
+        EventService.addListener(WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    final Wishlists wishlists = loadCommanderWishlists(commander);
+                    loadInitialCount(wishlists);
+                });
+            }
+        });
+        EventService.addListener(CommanderSelectedEvent.class, commanderSelectedEvent -> {
+            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+                final Wishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
+                loadInitialCount(wishlists);
+            }
+        });
+        EventService.addListener(CommanderAllListedEvent.class, commanderAllListedEvent -> {
+            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    final Wishlists wishlists = loadCommanderWishlists(commander);
+                    loadInitialCount(wishlists);
+                });
+            }
+        });
         EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
-                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlist(commander.getFid()).stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count()).orElse(0L);
+                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count()).orElse(0L);
                 if (count > 0L) {
                     this.countLabel.textProperty().bind(LocaleService.getStringBinding("recipe.on.wishlist", count));
                 } else {

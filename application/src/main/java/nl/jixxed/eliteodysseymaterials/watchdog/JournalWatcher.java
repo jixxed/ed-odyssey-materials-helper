@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -24,33 +25,35 @@ public class JournalWatcher {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
-        this.watchedFolder = folder;
-        listCommanders(folder);
-        findLatestFile(folder);
-        this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
-        this.fileWatcher = new FileWatcher("Journal Watcher Thread").withListener(new FileAdapter() {
-            @Override
-            public void onModified(final FileEvent event) {
-                final File file = event.getFile();
-                final String currentFilePath = getCurrentFilePath();
-                final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
-                if (isSameFile || isValidOdysseyJournal(file)) {
-                    if (isSameFile) {
-                        fileModifiedProcessor.accept(file);
-                    } else if (isNewerJournal(file)) {
-                        setCurrentlyWatchedFile(file);
-                        fileSwitchedProcessor.accept(file);
-                        log.info("Switched to journal: " + file.getAbsolutePath());
-                    } else {
-                        log.info("Rejected journal: " + file.getAbsolutePath());
+        Platform.runLater(() -> {
+            this.watchedFolder = folder;
+            listCommanders(folder);
+            findLatestFile(folder);
+            this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
+            this.fileWatcher = new FileWatcher("Journal Watcher Thread").withListener(new FileAdapter() {
+                @Override
+                public void onModified(final FileEvent event) {
+                    final File file = event.getFile();
+                    final String currentFilePath = getCurrentFilePath();
+                    final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
+                    if (isSameFile || isValidOdysseyJournal(file)) {
+                        if (isSameFile) {
+                            fileModifiedProcessor.accept(file);
+                        } else if (isNewerJournal(file)) {
+                            setCurrentlyWatchedFile(file);
+                            fileSwitchedProcessor.accept(file);
+                            log.info("Switched to journal: " + file.getAbsolutePath());
+                        } else {
+                            log.info("Rejected journal: " + file.getAbsolutePath());
+                        }
                     }
                 }
-            }
 
-            private boolean isValidOdysseyJournal(final File file) {
-                return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file);
-            }
-        }).watch(folder);
+                private boolean isValidOdysseyJournal(final File file) {
+                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+                }
+            }).watch(folder);
+        });
     }
 
     private synchronized String getCurrentFilePath() {

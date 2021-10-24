@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Action;
 @Getter
 public class WishlistRecipeEvent implements Event {
     private final String fid;
+    private final String wishlistUUID;
     private final WishlistRecipe wishlistRecipe;
     private final Action action;
 }

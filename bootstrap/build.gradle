@@ -54,7 +54,8 @@ jlink {
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper Launcher'
         jvmArgs = [
-                '-Dapp.version=' + project.version
+                '-Dapp.version=' + project.version,
+                os.isWindows() ? '-Djavafx.cachedir=javafx-cache' : ''
         ]
     }
     jpackage {
