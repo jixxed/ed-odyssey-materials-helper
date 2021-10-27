@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.LocationService;
+import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
@@ -19,7 +19,6 @@ import java.util.function.Function;
 @Slf4j
 public class ApplicationState {
 
-    private final LocationService locationService = new LocationService();
     private static ApplicationState applicationState;
     private final Function<WishlistRecipe, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
     private final Map<Good, Storage> goods = new EnumMap<>(Good.class);
@@ -258,32 +257,8 @@ public class ApplicationState {
         return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
     }
 
-//    private List<WishlistRecipe> getOldStyleWishList(final String fid, final String recipes) {
-//        final String oldRecipes = PreferencesService.getPreference(PreferenceConstants.WISHLIST_RECIPES, "");
-//        final List<RecipeName> oldWishlist = new ArrayList<>();
-//        Arrays.stream(oldRecipes.split(","))
-//                .filter(recipe -> !recipes.isBlank())
-//                .map(RecipeName::forName)
-//                .filter(Objects::nonNull)
-//                .forEach(oldWishlist::add);
-//        final List<WishlistRecipe> wishlist = oldWishlist.stream().map(recipeName -> new WishlistRecipe(recipeName, true)).collect(Collectors.toList());
-//        //transfer old style to new style
-//        PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, wishlist, this.wishlistRecipeMapper);
-//        //reset old style to empty
-//        PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES, new ArrayList<>(), this.wishlistRecipeMapper);
-//        return wishlist;
-//    }
-
     private List<WishlistRecipe> parseFIDWishlist(final String recipes) {
-        final List<WishlistRecipe> wishlist = new ArrayList<>();
-        Arrays.stream(recipes.split(","))
-                .filter(recipe -> !recipes.isBlank())
-                .map(recipe -> {
-                    final String[] splittedRecipe = recipe.split(":");
-                    return new WishlistRecipe(RecipeName.forName(splittedRecipe[0]), Boolean.parseBoolean(splittedRecipe[1]));
-                })
-                .forEach(wishlist::add);
-        return wishlist;
+        return WishlistHelper.convertWishlist(recipes);
     }
 
     public Set<Commander> getCommanders() {
@@ -341,7 +316,9 @@ public class ApplicationState {
         throw new IllegalArgumentException("Unknown material type");
     }
 
+    private static String tokenTest = UUID.randomUUID().toString();
+
     public String getMarketPlaceToken() {
-        return PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN, "");
+        return tokenTest;//PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN, "");
     }
 }

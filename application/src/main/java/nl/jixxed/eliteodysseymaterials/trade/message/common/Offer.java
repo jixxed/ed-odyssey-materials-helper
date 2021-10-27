@@ -23,9 +23,15 @@ public class Offer {
     @Builder.Default
     private String token = "";
     @Builder.Default
+    private String tokenHash = "";
+    @Builder.Default
+    private Boolean accept = false;
+    @Builder.Default
     private String connectionId = "";
     @Builder.Default
     private List<String> bids = new ArrayList<>();
+    @Builder.Default
+    private List<XBid> xbids = new ArrayList<>();
     @Builder.Default
     private List<Item> items = new ArrayList<>();
 

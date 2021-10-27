@@ -6,11 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Info;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Item;
-import nl.jixxed.eliteodysseymaterials.trade.message.common.Message;
+import nl.jixxed.eliteodysseymaterials.trade.message.common.XMessage;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.Data;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.OutboundMessage;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload.*;
@@ -40,7 +39,7 @@ public class MarketPlaceClient {
     public static MarketPlaceClient getInstance() {
         try {
             if (marketPlaceClient == null) {
-                marketPlaceClient = new MarketPlaceClient(new URI("wss://nl707aj4oh.execute-api.eu-central-1.amazonaws.com/Prod"));
+                marketPlaceClient = new MarketPlaceClient(new URI("wss://fgj7vgiy85.execute-api.eu-central-1.amazonaws.com/Prod"));
             }
         } catch (final URISyntaxException e) {
             log.error("failed to connect Websocket", e);
@@ -123,8 +122,8 @@ public class MarketPlaceClient {
                                         .demand(receiveAmount)
                                         .supply(offerAmount)
                                         .build()))
-                                .created(ZonedDateTime.now().toEpochSecond())
-                                .expired(ZonedDateTime.now().plusDays(1).toEpochSecond())
+                                .created(ZonedDateTime.now().toEpochSecond() * 1000)
+                                .expired(ZonedDateTime.now().plusDays(1).toEpochSecond() * 1000)
                                 .build())
                         .build())
                 .build();
@@ -160,32 +159,9 @@ public class MarketPlaceClient {
         final OutboundMessage message = OutboundMessage.builder()
                 .action("comms")
                 .data(Data.builder()
-                        .method("bidpush")
-                        .payload(BidPullPayload.builder()
-                                .token(APPLICATION_STATE.getMarketPlaceToken())
+                        .method("xbidpush")
+                        .payload(XBidPushPayload.builder()
                                 .offerId(offerId)
-                                .myOfferId(CryptoHelper.sha256(offerId, APPLICATION_STATE.getMarketPlaceToken()))
-                                .build())
-                        .build())
-                .build();
-        try {
-            final String data = OBJECT_MAPPER.writeValueAsString(message);
-            log.debug(data);
-            this.webSocket.sendText(data, true);
-        } catch (final JsonProcessingException e) {
-            log.error("bidPush error", e);
-        }
-    }
-
-    public void bidPush2(final String offerId, final String bidId) {
-        final OutboundMessage message = OutboundMessage.builder()
-                .action("comms")
-                .data(Data.builder()
-                        .method("bidpush")
-                        .payload(BidPullPayload.builder()
-                                .token(APPLICATION_STATE.getMarketPlaceToken())
-                                .offerId(offerId)
-                                .myOfferId(bidId)
                                 .build())
                         .build())
                 .build();
@@ -202,11 +178,9 @@ public class MarketPlaceClient {
         final OutboundMessage message = OutboundMessage.builder()
                 .action("comms")
                 .data(Data.builder()
-                        .method("bidpull")
-                        .payload(BidPushPayload.builder()
-                                .token(APPLICATION_STATE.getMarketPlaceToken())
+                        .method("xbidpull")
+                        .payload(XBidPullPayload.builder()
                                 .offerId(offerId)
-                                .myOfferId(CryptoHelper.sha256(offerId, APPLICATION_STATE.getMarketPlaceToken()))
                                 .build())
                         .build())
                 .build();
@@ -219,15 +193,15 @@ public class MarketPlaceClient {
         }
     }
 
-    public void bidPull2(final String offerId, final String bidId) {
+    public void bidAccept(final String offerId, final String tokenHash, final boolean accept) {
         final OutboundMessage message = OutboundMessage.builder()
                 .action("comms")
                 .data(Data.builder()
-                        .method("bidpull")
-                        .payload(BidPullPayload.builder()
-                                .token(APPLICATION_STATE.getMarketPlaceToken())
+                        .method("xbidaccept")
+                        .payload(XBidAcceptPayload.builder()
                                 .offerId(offerId)
-                                .myOfferId(bidId)
+                                .tokenhash(tokenHash)
+                                .accept(accept)
                                 .build())
                         .build())
                 .build();
@@ -236,21 +210,29 @@ public class MarketPlaceClient {
             log.debug(data);
             this.webSocket.sendText(data, true);
         } catch (final JsonProcessingException e) {
-            log.error("bidPush error", e);
+            log.error("bidPull error", e);
         }
     }
 
-    public void message(final String offerId, final String text) {
+    public void message(final String offerId, final String messageRef, final String tokenHash, final String text) {
+        final Location location = LocationService.getCurrentLocation();
         final OutboundMessage message = OutboundMessage.builder()
                 .action("comms")
                 .data(Data.builder()
-                        .method("message")
+                        .method("xmessage")
                         .payload(MessagePayload.builder()
                                 .token(APPLICATION_STATE.getMarketPlaceToken())
-                                .message(Message.builder()
+                                .message(XMessage.builder()
+                                        .messageRef(messageRef)
                                         .offerId(offerId)
-                                        .myOfferId(CryptoHelper.sha256(offerId, APPLICATION_STATE.getMarketPlaceToken()))
-                                        .inbound(true)
+                                        .info(Info.builder()
+                                                .nickname(APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new).getName())
+                                                .location(location.getStarSystem())
+                                                .x(location.getX())
+                                                .y(location.getY())
+                                                .z(location.getZ())
+                                                .build())
+                                        .tokenhash(tokenHash)
                                         .text(text)
                                         .date(ZonedDateTime.now().toEpochSecond())
                                         .build())
@@ -267,6 +249,9 @@ public class MarketPlaceClient {
     }
 
     public void close() {
-        this.webSocket.sendClose(1000, "finished");
+        if (MarketPlaceClient.this.webSocket != null && !MarketPlaceClient.this.webSocket.isInputClosed()) {
+            this.webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "finished");
+        }
     }
+
 }

@@ -21,14 +21,89 @@
     -fx-text-fill: white;
 }
 
-/*.completed > .title {*/
-/*    !*noinspection CssInvalidFunction*!*/
-/*    !*-fx-background-color: linear-gradient(to bottom, derive(#89d07f, +50%), #89d07f);*!*/
+/*.text-input {*/
+/*    border_color: #666;*/
+/*    border_hover_color: #999;*/
+/*    border_disabled_color: #333;*/
+
+/*    text_input_background_color: #111;*/
+/*    background_focused_color: #fff;*/
+/*    background_hover_color: #111;*/
+/*    background_disabled_color: #111;*/
+
+/*    text_color: white;*/
+/*    text_focused_color: #111;*/
+/*    text_disabled_color: #333;*/
+/*    prompt_text_color: #777;*/
+
+/*    highlight_color: accent_color;*/
+/*    highlighted_text_color: white;*/
+
+/*    graphic_color: #747474;*/
+/*}*/
+/*.text-area .content {*/
+/*    -fx-background-color: border_color, text_input_background_color;*/
+/*    -fx-background-radius: 0;*/
+/*    -fx-background-insets: 0, 1;*/
 /*}*/
 
-/*.completed > .title > .text {*/
-/*    -fx-fill: #89d07f;*/
+/*.text-area:hover .content {*/
+/*    -fx-background-color: border_color, background_hover_color;*/
+/*    -fx-background-radius: 0;*/
+/*    -fx-background-insets: 0, 1;*/
 /*}*/
+
+/*.text-area:focused .content {*/
+/*    -fx-background-color: accent_color, background_focused_color;*/
+/*    -fx-background-radius: 0;*/
+/*    -fx-background-insets: 0, 1;*/
+/*}*/
+
+/*.text-area:disabled .content {*/
+/*    -fx-background-color: border_disabled_color, background_disabled_color;*/
+/*    -fx-background-radius: 0;*/
+/*    -fx-background-insets: 0, 1;*/
+/*}*/
+
+/*!* TODO: below not working *!*/
+/*.text-area:disabled .content .text {*/
+/*    -fx-fill: text_disabled_color;*/
+/*}*/
+.trade-chat-log {
+    -fx-min-height: 400px;
+}
+
+.trade-chat-log .content, .trade-chat-log:hover .content, .trade-chat-log:focused .content, .trade-chat-log:disabled .content, .trade-chat-log, .trade-chat-log:hover, .trade-chat-log:focused, .trade-chat-log:disabled {
+    -fx-background-color: #666, #0f0f0f;
+    -fx-text-fill: white;
+}
+
+.trade-chat-input {
+    -fx-min-height: 80px;
+    -fx-max-height: 80px;
+    -fx-pref-height: 80px;
+}
+
+.trade-chat-input .content, .trade-chat-input:hover .content, .trade-chat-input:focused .content, .trade-chat-input:disabled .content, .trade-chat-input, .trade-chat-input:hover, .trade-chat-input:focused, .trade-chat-input:disabled {
+    -fx-background-color: #666, #0f0f0f;
+    -fx-text-fill: white;
+}
+
+.trade-chat-input {
+    -fx-min-height: 80px;
+    -fx-max-height: 80px;
+    -fx-pref-height: 80px;
+}
+
+.trade-chat-send {
+    -fx-min-height: 80px;
+    -fx-max-height: 80px;
+    -fx-pref-height: 80px;
+    -fx-min-width: 80px;
+    -fx-max-width: 80px;
+    -fx-pref-width: 80px;
+
+}
 
 .blueprint-title-pane > .title > .arrow-button .arrow, .blueprint-title-pane > .title > .text {
     -fx-translate-x: 5;

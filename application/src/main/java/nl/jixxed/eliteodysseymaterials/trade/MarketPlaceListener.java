@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.*;
 import nl.jixxed.eliteodysseymaterials.trade.message.inbound.*;
 
+import java.io.IOException;
 import java.net.http.WebSocket;
 import java.nio.ByteBuffer;
 import java.util.concurrent.CompletionStage;
@@ -45,6 +46,11 @@ public class MarketPlaceListener implements WebSocket.Listener {
     @Override
     public void onError(final WebSocket webSocket, final Throwable error) {
         log.error("websocket error", error);
+        if (error instanceof IOException) {
+            Platform.runLater(() -> {
+                EventService.publish(new ConnectionWebSocketEvent(false));
+            });
+        }
         webSocket.request(1);
     }
 
@@ -103,17 +109,21 @@ public class MarketPlaceListener implements WebSocket.Listener {
                 final DropOffersMessage dropOffersMessage = OBJECT_MAPPER.readValue(data, DropOffersMessage.class);
                 yield new DropOffersWebSocketEvent(dropOffersMessage);
             }
-            case BIDPUSH -> {
-                final BidPushMessage bidPushMessage = OBJECT_MAPPER.readValue(data, BidPushMessage.class);
-                yield new BidPushWebSocketEvent(bidPushMessage);
+            case XBIDPUSH -> {
+                final XBidPushMessage xBidPushMessage = OBJECT_MAPPER.readValue(data, XBidPushMessage.class);
+                yield new XBidPushWebSocketEvent(xBidPushMessage);
             }
-            case BIDPULL -> {
-                final BidPullMessage bidPullMessage = OBJECT_MAPPER.readValue(data, BidPullMessage.class);
-                yield new BidPullWebSocketEvent(bidPullMessage);
+            case XBIDPULL -> {
+                final XBidPullMessage xBidPullMessage = OBJECT_MAPPER.readValue(data, XBidPullMessage.class);
+                yield new XBidPullWebSocketEvent(xBidPullMessage);
             }
-            case MESSAGE -> {
-                final MessageMessage messageMessage = OBJECT_MAPPER.readValue(data, MessageMessage.class);
-                yield new MessageWebSocketEvent(messageMessage);
+            case XBIDACCEPT -> {
+                final XBidAcceptMessage xBidAcceptMessage = OBJECT_MAPPER.readValue(data, XBidAcceptMessage.class);
+                yield new XBidAcceptWebSocketEvent(xBidAcceptMessage);
+            }
+            case XMESSAGE -> {
+                final XMessageMessage xMessageMessage = OBJECT_MAPPER.readValue(data, XMessageMessage.class);
+                yield new XMessageWebSocketEvent(xMessageMessage);
             }
             case ONLINEOFFERS -> {
                 final OnlineOffersMessage onlineOffersMessage = OBJECT_MAPPER.readValue(data, OnlineOffersMessage.class);
@@ -122,6 +132,14 @@ public class MarketPlaceListener implements WebSocket.Listener {
             case OFFLINEOFFERS -> {
                 final OfflineOffersMessage offlineOffersMessage = OBJECT_MAPPER.readValue(data, OfflineOffersMessage.class);
                 yield new OfflineOffersWebSocketEvent(offlineOffersMessage);
+            }
+            case ACCEPTEDOFFERS -> {
+                final AcceptedOffersMessage acceptedOffersMessage = OBJECT_MAPPER.readValue(data, AcceptedOffersMessage.class);
+                yield new AcceptedOffersWebSocketEvent(acceptedOffersMessage);
+            }
+            case DECLINEDOFFERS -> {
+                final DeclinedOffersMessage declinedOffersMessage = OBJECT_MAPPER.readValue(data, DeclinedOffersMessage.class);
+                yield new DeclinedOffersWebSocketEvent(declinedOffersMessage);
             }
         };
         Platform.runLater(() -> {

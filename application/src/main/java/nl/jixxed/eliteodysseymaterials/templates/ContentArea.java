@@ -40,7 +40,7 @@ class ContentArea extends AnchorPane {
         this.overview = new OverviewTab();
         this.wishlistTab = new WishlistTab();
         this.engineersTab = new EngineersTab();
-        this.tradeTab = new TradeTab();
+        this.tradeTab = new TradeTab(application);
         this.settingsTab = new SettingsTab(application);
         this.importWishlistTab = new ImportWishlistTab();
         this.overview.setClosable(false);

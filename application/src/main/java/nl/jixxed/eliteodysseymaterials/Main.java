@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
+import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
 
@@ -101,6 +102,12 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
             EventService.publish(new ApplicationLifeCycleEvent());
+            primaryStage.setOnCloseRequest(event -> {
+                MarketPlaceClient.getInstance().close();
+                this.timeStampedShipLockerWatcher.stop();
+                this.timeStampedBackPackWatcher.stop();
+                this.journalWatcher.stop();
+            });
         } catch (final Exception ex) {
             final Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setResizable(true);

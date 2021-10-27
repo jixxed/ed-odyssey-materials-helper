@@ -5,8 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BidPushPayload implements Payload {
-    private final String token;
+public class XBidPushPayload implements Payload {
     private final String offerId;
-    private final String myOfferId;
 }

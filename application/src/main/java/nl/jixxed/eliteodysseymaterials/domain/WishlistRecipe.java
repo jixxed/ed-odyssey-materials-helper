@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class WishlistRecipe {
     private RecipeName recipeName;
     private boolean visible;

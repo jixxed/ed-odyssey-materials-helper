@@ -6,10 +6,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder
-public class Message {
-    private String offerId;
-    private String myOfferId;
-    private String text;
-    private Boolean inbound;
-    private Long date;
+public class XBid {
+    private String token;
+    private String tokenhash;
+    private Long timestamp;
+    private Boolean accepted;
 }

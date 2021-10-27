@@ -14,7 +14,8 @@ import java.util.List;
 public class TooltipBuilder {
     private final List<String> styleClasses = new ArrayList<>();
     private StringBinding stringBinding;
-    private Duration duration;
+    private Duration showDelay;
+    private Duration showDuration;
 
     public static TooltipBuilder builder() {
         return new TooltipBuilder();
@@ -35,20 +36,29 @@ public class TooltipBuilder {
         return this;
     }
 
+    public TooltipBuilder withShowDelay(final Duration showDelay) {
+        this.showDelay = showDelay;
+        return this;
+    }
+    
+    public TooltipBuilder withShowDuration(final Duration showDuration) {
+        this.showDuration = showDuration;
+        return this;
+    }
+
     public Tooltip build() {
         final Tooltip tooltip = new Tooltip();
         tooltip.getStyleClass().addAll(this.styleClasses);
         if (this.stringBinding != null) {
             tooltip.textProperty().bind(this.stringBinding);
         }
-        if (this.duration != null) {
-            tooltip.setShowDelay(this.duration);
+        if (this.showDelay != null) {
+            tooltip.setShowDelay(this.showDelay);
+        }
+        if (this.showDuration != null) {
+            tooltip.setShowDuration(this.showDuration);
         }
         return tooltip;
     }
 
-    public TooltipBuilder withShowDelay(final Duration duration) {
-        this.duration = duration;
-        return this;
-    }
 }

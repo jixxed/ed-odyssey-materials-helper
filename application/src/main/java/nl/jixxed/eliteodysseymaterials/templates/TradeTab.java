@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.application.Application;
 import javafx.beans.binding.ListBinding;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -14,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
@@ -21,8 +23,10 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.*;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
+import nl.jixxed.eliteodysseymaterials.trade.message.common.Info;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Item;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Offer;
+import nl.jixxed.eliteodysseymaterials.trade.message.common.XBid;
 
 import java.util.*;
 
@@ -30,6 +34,7 @@ import java.util.*;
 public class TradeTab extends EDOTab {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
+    private final Application application;
     private ScrollPane scrollPane;
     private VBox tradeOffers;
     private VBox tradeRequests;
@@ -50,8 +55,8 @@ public class TradeTab extends EDOTab {
         return Tabs.TRADE;
     }
 
-    TradeTab() {
-
+    TradeTab(final Application application) {
+        this.application = application;
         initComponents();
         initEventHandling();
     }
@@ -207,9 +212,7 @@ public class TradeTab extends EDOTab {
                     .map(this::mapOffer)
                     .filter(Objects::nonNull)
                     .toList();
-//            this.tradeOffers.getChildren().clear();
             this.tradeRequests.getChildren().clear();
-//            this.tradeOffers.getChildren().addAll(allTradeOffers.stream().filter(TradeOffer.class::isInstance).toList());
             this.tradeRequests.getChildren().addAll(allTradeOffers.stream().filter(TradeRequest.class::isInstance).toList());
             this.allTrades.removeAll(allTradeOffers);
             this.allTrades.addAll(allTradeOffers);
@@ -262,26 +265,48 @@ public class TradeTab extends EDOTab {
             );
         });
 
-        EventService.addListener(BidPushWebSocketEvent.class, bidPushWebSocketEvent -> {
-            final Offer bidOffer = bidPushWebSocketEvent.getBidPushMessage().getOffer();
+        EventService.addListener(XBidPushWebSocketEvent.class, xBidPushWebSocketEvent -> {
+            final Offer bidOffer = xBidPushWebSocketEvent.getXBidPushMessage().getOffer();
             final String offerId = bidOffer.getOfferId();
-            final String bidId = bidOffer.getBids().stream().findFirst().orElse("");
+            final String bidId = bidOffer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).map(XBid::getTokenhash).findFirst().orElse("");
             this.allTrades.stream()
-                    .filter(trade -> trade.getOfferId().equals(offerId) || (bidOffer.getBids().contains(bidId) && trade.getOfferId().equals(bidOffer.getOfferId())))
+                    .filter(trade -> trade.getOfferId().equals(offerId))
                     .findFirst()
-                    .ifPresent(trade -> push(trade, bidId));
+                    .ifPresent(trade -> {
+                        if (trade instanceof TradeOffer tradeOffer && tradeOffer.hasBid() && bidOffer.getXbids().size() > 1) {
+                            bidOffer.getXbids().stream()
+                                    .filter(xBid -> !xBid.getTokenhash().equals(bidId))
+                                    .forEach(xBid -> this.marketPlaceClient.bidAccept(offerId, xBid.getTokenhash(), false));
+                        }
+                        push(trade, bidId);
+                    });
 
         });
-        EventService.addListener(BidPullWebSocketEvent.class, bidPullWebSocketEvent -> {
-            final Offer bidOffer = bidPullWebSocketEvent.getBidPullMessage().getOffer();
+
+        EventService.addListener(XBidPullWebSocketEvent.class, xBidPullWebSocketEvent -> {
+            final Offer bidOffer = xBidPullWebSocketEvent.getXBidPullMessage().getOffer();
             final String offerId = bidOffer.getOfferId();
-            final String bidId = CryptoHelper.sha256(offerId, APPLICATION_STATE.getMarketPlaceToken());
+            final List<String> bids = bidOffer.getXbids().stream().map(XBid::getTokenhash).toList();
             this.allTrades.stream()
-                    .filter(trade -> trade.getOfferId().equals(offerId) || (bidOffer.getBids().contains(bidId) && trade.getOfferId().equals(bidOffer.getOfferId())))
+                    .filter(trade -> trade.getOfferId().equals(offerId))
                     .findFirst()
-                    .ifPresent(trade -> pull(trade, bidId));
+                    .ifPresent(trade -> pull(trade, bids));
         });
-        EventService.addListener(MessageWebSocketEvent.class, messageWebSocketEvent -> {
+
+        EventService.addListener(XBidAcceptWebSocketEvent.class, xBidAcceptWebSocketEvent -> {
+            final Offer bidOffer = xBidAcceptWebSocketEvent.getXBidAcceptMessage().getOffer();
+            final String offerId = bidOffer.getOfferId();
+            final Optional<XBid> acceptedBid = bidOffer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).filter(XBid::getAccepted).findFirst();
+            final String acceptedTokenHash = acceptedBid.map(XBid::getTokenhash).orElse("");
+            final String ownerHash = bidOffer.getToken();
+            final boolean accepted = acceptedBid.map(XBid::getAccepted).orElse(Boolean.FALSE);
+            this.allTrades.stream()
+                    .filter(trade -> trade.getOfferId().equals(offerId))
+                    .findFirst()
+                    .ifPresent(trade -> accept(trade, accepted, acceptedTokenHash, ownerHash));
+        });
+
+        EventService.addListener(XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
         });
     }
 
@@ -293,27 +318,37 @@ public class TradeTab extends EDOTab {
         if (trade instanceof TradeOffer tradeOffer) {
             tradeOffer.push(bidId);
         } else if (trade instanceof TradeRequest tradeRequest) {
-            tradeRequest.push(bidId);
+            tradeRequest.push();
         }
     }
 
-    private void pull(final Trade trade, final String bidId) {
+    private void pull(final Trade trade, final List<String> bids) {
         if (trade instanceof TradeOffer tradeOffer) {
-            tradeOffer.pull(bidId);
+            tradeOffer.pull(bids);
         } else if (trade instanceof TradeRequest tradeRequest) {
-            tradeRequest.pull(bidId);
+            tradeRequest.pull(bids);
+        }
+    }
+
+    private void accept(final Trade trade, final boolean accept, final String acceptedTokenHash, final String ownerHash) {
+        if (trade instanceof TradeOffer tradeOffer) {
+            tradeOffer.accept(accept, acceptedTokenHash);
+        } else if (trade instanceof TradeRequest tradeRequest) {
+            tradeRequest.accept(accept, acceptedTokenHash, ownerHash);
         }
     }
 
     private Trade mapOffer(final Offer offer) {
         try {
             final Item item = offer.getItems().stream().findFirst().orElseThrow(IllegalArgumentException::new);
+            final Info info = offer.getInfo();
             final Material offerMaterial = Material.subtypeForName(item.getSid().substring(item.getSid().lastIndexOf(".") + 1));
             final Material receiveMaterial = Material.subtypeForName(item.getDid().substring(item.getDid().lastIndexOf(".") + 1));
+            final Location location = new Location(info.getLocation(), info.getX(), info.getY(), info.getZ());
             if (Objects.equals(offer.getToken(), CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()))) {
-                return createTradeOffer(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand());
+                return createTradeOffer(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), location);
             } else {
-                return createTradeRequest(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand());
+                return createTradeRequest(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), location);
             }
         } catch (final IllegalArgumentException ex) {
             log.error("failed to fetch items for offer");
@@ -321,11 +356,11 @@ public class TradeTab extends EDOTab {
         return null;
     }
 
-    private TradeOffer createTradeOffer(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount) {
-        return new TradeOffer(offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount);
+    private TradeOffer createTradeOffer(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final Location location) {
+        return new TradeOffer(this.application, offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, location);
     }
 
-    private TradeRequest createTradeRequest(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount) {
-        return new TradeRequest(offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount);
+    private TradeRequest createTradeRequest(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final Location location) {
+        return new TradeRequest(this.application, offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, location);
     }
 }

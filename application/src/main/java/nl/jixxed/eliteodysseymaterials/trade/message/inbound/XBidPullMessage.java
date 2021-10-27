@@ -6,6 +6,6 @@ import nl.jixxed.eliteodysseymaterials.trade.message.common.Offer;
 
 @Data
 @NoArgsConstructor
-public class BidPullMessage extends InboundMessage {
+public class XBidPullMessage extends InboundMessage {
     private Offer offer;
 }
