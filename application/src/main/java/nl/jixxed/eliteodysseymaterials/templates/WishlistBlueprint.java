@@ -48,7 +48,7 @@ public class WishlistBlueprint extends HBox {
     private final Set<WishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<WishlistIngredient> otherIngredients = new HashSet<>();
 
-    WishlistBlueprint(final String wishlistUUID, final WishlistRecipe wishlistRecipe) {
+    public WishlistBlueprint(final String wishlistUUID, final WishlistRecipe wishlistRecipe) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistRecipe = wishlistRecipe;
         this.sequenceID = counter++;
