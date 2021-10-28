@@ -18,10 +18,10 @@ public enum Engineer {
     JUDE_NAVARRO(Settlement.MARSHALLS_DRIFT, Specialisation.FORCE, new Location("Aurai", 0.9375, -47.8125, 46.28125), List.of(EngineerPrerequisite.C1)),
     TERRA_VELASQUEZ(Settlement.RASCALS_CHOICE, Specialisation.DYNAMIC, new Location("Shou Xing", -16.28125, -44.53125, 94.375), List.of(EngineerPrerequisite.C2, EngineerPrerequisite.C3)),
     ODEN_GEIGER(Settlement.ANKHS_PROMISE, Specialisation.STRATEGIC, new Location("Candiaei", -113.5, -4.9375, 66.84375), List.of(EngineerPrerequisite.C4, EngineerPrerequisite.C5)),
-    BALTANOS(Settlement.THE_DIVINE_APPARATUS, Specialisation.DYNAMIC, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
-    ELEANOR_BRESA(Settlement.BRESA_MODIFICATIONS, Specialisation.FORCE, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
-    ROSA_DAYETTE(Settlement.SHOP, Specialisation.STRATEGIC, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
-    YI_SHEN(Settlement.EIDOLON_HOLD, Specialisation.HYBRID, new Location("Colonia Region", -9530.5, -910.28125, 19808.125), List.of()),
+    BALTANOS(Settlement.THE_DIVINE_APPARATUS, Specialisation.DYNAMIC, new Location("Deriso", -9520.3125, -909.5, 19808.75), List.of(EngineerPrerequisite.D1_1)),
+    ROSA_DAYETTE(Settlement.ROSAS_SHOP, Specialisation.STRATEGIC, new Location("Kojeara", -9513.09375, -908.84375, 19814.28125), List.of(EngineerPrerequisite.D1_2)),
+    ELEANOR_BRESA(Settlement.BRESA_MODIFICATIONS, Specialisation.FORCE, new Location("Desy", -9534.21875, -912.21875, 19792.375), List.of(EngineerPrerequisite.D1_3)),
+    YI_SHEN(Settlement.EIDOLON_HOLD, Specialisation.STRATEGIC, new Location("Einheriar", -9557.8125, -880.1875, 19801.5625), List.of(EngineerPrerequisite.D2, EngineerPrerequisite.D3)),
     UNKNOWN(Settlement.UNKNOWN, Specialisation.UNKNOWN, new Location("UNKNOWN", 0, 0, 0), List.of());
 
     @Getter

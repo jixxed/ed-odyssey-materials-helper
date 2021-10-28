@@ -35,10 +35,10 @@ public class ApplicationState {
             Map.entry(Engineer.UMA_LASZLO, EngineerState.UNKNOWN),
             Map.entry(Engineer.WELLINGTON_BECK, EngineerState.UNKNOWN),
             Map.entry(Engineer.YARDEN_BOND, EngineerState.UNKNOWN),
-            Map.entry(Engineer.BALTANOS, EngineerState.UNDEFINED),
-            Map.entry(Engineer.ELEANOR_BRESA, EngineerState.UNDEFINED),
-            Map.entry(Engineer.ROSA_DAYETTE, EngineerState.UNDEFINED),
-            Map.entry(Engineer.YI_SHEN, EngineerState.UNDEFINED)
+            Map.entry(Engineer.BALTANOS, EngineerState.UNKNOWN),
+            Map.entry(Engineer.ELEANOR_BRESA, EngineerState.UNKNOWN),
+            Map.entry(Engineer.ROSA_DAYETTE, EngineerState.UNKNOWN),
+            Map.entry(Engineer.YI_SHEN, EngineerState.UNKNOWN)
     ));
 
     private ApplicationState() {
@@ -108,7 +108,12 @@ public class ApplicationState {
 
     public boolean isEngineerUnlocked(final Engineer engineer) {
         final EngineerState engineerState = this.engineerStates.get(engineer);
-        return EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState) || EngineerState.UNDEFINED.equals(engineerState);
+        return EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState);
+    }
+
+    public boolean isEngineerUnlockedExact(final Engineer engineer) {
+        final EngineerState engineerState = this.engineerStates.get(engineer);
+        return EngineerState.UNLOCKED.equals(engineerState);
     }
 
     public void setEngineerState(final Engineer engineer, final EngineerState engineerState) {
@@ -117,11 +122,7 @@ public class ApplicationState {
 
 
     public void resetEngineerStates() {
-        this.engineerStates.forEach((engineer, engineerState) -> {
-            if (!EngineerState.UNDEFINED.equals(engineerState)) {
-                this.engineerStates.put(engineer, EngineerState.UNKNOWN);
-            }
-        });
+        this.engineerStates.forEach((engineer, engineerState) -> this.engineerStates.put(engineer, EngineerState.UNKNOWN));
         EventService.publish(new EngineerEvent());
     }
 

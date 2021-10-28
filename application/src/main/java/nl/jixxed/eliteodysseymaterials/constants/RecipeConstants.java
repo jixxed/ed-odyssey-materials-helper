@@ -198,6 +198,42 @@ public abstract class RecipeConstants {
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ODEN_GEIGER)
         ));
+        ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_D1_1, new EngineerRecipe(
+                RecipeName.ENGINEER_D1_1,
+                List.of("ingredient.d1.1.colonia.rep"),
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.BALTANOS)
+        ));
+        ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_D1_2, new EngineerRecipe(
+                RecipeName.ENGINEER_D1_2,
+                Map.of(
+                        Data.CULINARYRECIPES, 10,
+                        Data.COCKTAILRECIPES, 10
+                ),
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ROSA_DAYETTE)
+        ));
+        ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_D1_3, new EngineerRecipe(
+                RecipeName.ENGINEER_D1_3,
+                List.of("ingredient.d1.3.colonia.travel"),
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ELEANOR_BRESA)
+        ));
+        ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_D2, new EngineerRecipe(
+                RecipeName.ENGINEER_D2,
+                Map.of(
+                        Data.FACTIONASSOCIATES, 10,
+                        Data.MANUFACTURINGINSTRUCTIONS, 10,
+                        Data.DIGITALDESIGNS, 10
+                ),
+                () -> APPLICATION_STATE.isEngineerKnown(Engineer.YI_SHEN)
+        ));
+        ENGINEER_UNLOCK_REQUIREMENTS.put(RecipeName.ENGINEER_D3, new EngineerRecipe(
+                RecipeName.ENGINEER_D3,
+                Map.of(
+                        Data.FACTIONASSOCIATES, 10,
+                        Data.MANUFACTURINGINSTRUCTIONS, 10,
+                        Data.DIGITALDESIGNS, 10
+                ),
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YI_SHEN)
+        ));
         SUIT_UPGRADES.put(RecipeName.MAVERICK_SUIT_GRADE_1_2, new UpgradeRecipe(
                 RecipeName.MAVERICK_SUIT_GRADE_1_2,
                 Map.of(
