@@ -66,8 +66,7 @@ public class SettingsTab extends EDOTab {
 
     private void initComponents() {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
-        this.scrollPane = new ScrollPane();
-        setupScrollPane(this.scrollPane);
+
         final Label settingsLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tabs.settings"))
@@ -82,8 +81,9 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
                 .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting)
                 .buildVBox();
-
-        this.scrollPane.setContent(settings);
+        this.scrollPane = ScrollPaneBuilder.builder()
+                .withContent(settings)
+                .build();
         this.setContent(this.scrollPane);
     }
 

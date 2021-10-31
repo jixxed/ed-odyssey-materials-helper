@@ -10,10 +10,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
@@ -62,8 +59,6 @@ public class TradeTab extends EDOTab {
     }
 
     private void initComponents() {
-        this.scrollPane = new ScrollPane();
-        setupScrollPane(this.scrollPane);
         this.textProperty().bind(LocaleService.getStringBinding("tabs.trade"));
         this.newTradeLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
@@ -145,8 +140,9 @@ public class TradeTab extends EDOTab {
                 .withNodes(titleRow, this.newTradeLabel, this.newTradeOffer, this.newTradeReceive, this.createTradeButton, this.myTradesLabel, this.tradeOffers, this.otherTradesLabel, this.tradeRequests)
                 .buildVBox();
         setVisible(false, this.newTradeLabel, this.newTradeOffer, this.newTradeReceive, this.createTradeButton, this.myTradesLabel, this.tradeOffers, this.otherTradesLabel, this.tradeRequests);
-
-        this.scrollPane.setContent(trade);
+        this.scrollPane = ScrollPaneBuilder.builder()
+                .withContent(trade)
+                .build();
         this.setContent(this.scrollPane);
 
     }

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
@@ -64,8 +65,6 @@ public class ImportWishlistTab extends EDOTab {
                 .withText(LocaleService.getStringBindingLocalizedParameters("tab.import.text", "tab.wishlist.copy"))
                 .build();
         this.setText("+");
-        this.scrollPane = new ScrollPane();
-        setupScrollPane(this.scrollPane);
         this.textArea = new TextArea();
         this.textArea.getStyleClass().add("import-input");
         this.textArea.setWrapText(true);
@@ -98,7 +97,9 @@ public class ImportWishlistTab extends EDOTab {
         }).build();
         final HBox importButtonAndLabel = BoxBuilder.builder().withNodes(this.button, this.errorLabel).buildHBox();
         final VBox content = BoxBuilder.builder().withNodes(this.importLabel, this.note, this.textArea, importButtonAndLabel).withStyleClass("import-content").buildVBox();
-        this.scrollPane.setContent(content);
+        this.scrollPane = ScrollPaneBuilder.builder()
+                .withContent(content)
+                .build();
         this.setContent(this.scrollPane);
     }
 
