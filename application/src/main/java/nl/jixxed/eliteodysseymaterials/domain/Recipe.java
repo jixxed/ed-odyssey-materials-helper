@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.Collections;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@ToString
 public abstract class Recipe {
     private final Map<Material, Integer> assets;
     private final Map<Material, Integer> data;

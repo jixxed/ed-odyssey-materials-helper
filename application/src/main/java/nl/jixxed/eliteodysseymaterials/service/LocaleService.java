@@ -49,7 +49,7 @@ public class LocaleService {
     public static StringBinding getStringBindingLocalizedParameters(final String key, final String... parameters) {
         return ObservableResourceFactory.getStringBinding(() -> {
             final String[] localizedParams = Arrays.stream(parameters).map(parameter -> ObservableResourceFactory.getResources().getString(parameter)).toArray(String[]::new);
-            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), localizedParams);
+            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), (Object[]) localizedParams);
         });
     }
 

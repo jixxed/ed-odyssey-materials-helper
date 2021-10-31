@@ -9,6 +9,7 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -25,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PathService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import org.controlsfx.control.Notifications;
 
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
@@ -204,7 +206,14 @@ public class WishlistTab extends EDOTab {
         this.exportButton = ButtonBuilder.builder().withStyleClass("wishlist-button").withText(LocaleService.getStringBinding("tab.wishlist.export"))
                 .withOnAction(event -> EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededMaterials)))).build();
         this.clipboardButton = ButtonBuilder.builder().withStyleClass("wishlist-button").withText(LocaleService.getStringBinding("tab.wishlist.copy"))
-                .withOnAction(event -> copyWishListToClipboard()).build();
+                .withOnAction(event -> {
+                    copyWishListToClipboard();
+                    Notifications.create()
+                            .darkStyle()
+                            .title("Wishlists")
+                            .text("The wishlist has been copied to your clipboard")
+                            .showInformation();
+                }).build();
 
         final double minButtonWidth = 110.0;
         this.removeWishlistButton.setMinWidth(minButtonWidth);
@@ -253,7 +262,12 @@ public class WishlistTab extends EDOTab {
         region6.setMinWidth(5);
         final Region region7 = new Region();
         region7.setMinWidth(5);
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, region, this.wishlistName, region3, this.renameWishlistButton, region4, this.createWishlistButton, region5, this.removeWishlistButton, region6, this.clipboardButton, region7, this.exportButton).buildHBox();
+        final FlowPane flowPane = FlowPaneBuilder.builder().withNodes(this.renameWishlistButton, this.createWishlistButton, this.removeWishlistButton, this.clipboardButton, this.exportButton).build();
+        flowPane.setHgap(4);
+        flowPane.setVgap(4);
+        flowPane.prefWrapLengthProperty().bind(this.renameWishlistButton.widthProperty().add(this.createWishlistButton.widthProperty()).add(this.removeWishlistButton.widthProperty()).add(this.clipboardButton.widthProperty()).add(this.exportButton.widthProperty()).add(20));
+        flowPane.setColumnHalignment(HPos.RIGHT);
+        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, region, this.wishlistName, region3, flowPane).buildHBox();
         final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, region2, this.hideCompletedCheckBox).buildHBox();
         this.flows = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
         this.contentChild = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestRoute).buildVBox();
@@ -312,7 +326,7 @@ public class WishlistTab extends EDOTab {
         final TableColumn<PathItem, String> columnEngineer = new TableColumn<>();
         columnEngineer.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.travel.path.column.engineer"));
         columnEngineer.setCellValueFactory(param -> LocaleService.getStringBinding(param.getValue().getEngineer().getLocalizationKey()));
-        columnEngineer.setMaxWidth(175);
+        columnEngineer.setMaxWidth(500);
         columnEngineer.setPrefWidth(175);
         columnEngineer.setMinWidth(175);
         columnEngineer.setSortable(false);
@@ -326,7 +340,11 @@ public class WishlistTab extends EDOTab {
 
         final TableColumn<PathItem, String> columnDistance = new TableColumn<>();
         columnDistance.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.travel.path.column.distance"));
-        columnDistance.setCellValueFactory(param -> new SimpleStringProperty(NUMBER_FORMAT.format(param.getValue().getDistance()) + "Ly"));
+        columnDistance.setCellValueFactory(param -> {
+            final PathItem item = param.getValue();
+            final int index = param.getTableView().getItems().indexOf(item);
+            return new SimpleStringProperty(((index > 0) ? "+" : "") + NUMBER_FORMAT.format(item.getDistance()) + "Ly");
+        });
         columnDistance.setSortable(false);
         columnDistance.getStyleClass().add("wishlist-travel-path-distance");
         columnDistance.setMaxWidth(120);

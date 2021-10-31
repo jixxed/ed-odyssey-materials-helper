@@ -1,7 +1,9 @@
 module nl.jixxed.eliteodysseymaterials {
     requires jdk.crypto.ec;
     requires javafx.fxml;
-    requires javafx.controls;
+    requires transitive javafx.controls;
+    requires transitive javafx.media;
+    requires org.controlsfx.controls;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires io.reactivex.rxjava3;
@@ -10,7 +12,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires com.google.common;
     requires static lombok;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
-    opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml;
+    opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials;
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.domain;
