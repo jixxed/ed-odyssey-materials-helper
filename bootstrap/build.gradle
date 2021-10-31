@@ -97,10 +97,10 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
     implementation group: 'commons-io', name: 'commons-io', version: '2.9.0'
 
-    implementation("org.openjfx:javafx-base:11.0.2:${platform}")
-    implementation("org.openjfx:javafx-controls:11.0.2:${platform}")
-    implementation("org.openjfx:javafx-fxml:11.0.2:${platform}")
-    implementation("org.openjfx:javafx-graphics:11.0.2:${platform}")
+    implementation("org.openjfx:javafx-base:16:${platform}")
+    implementation("org.openjfx:javafx-controls:16:${platform}")
+    implementation("org.openjfx:javafx-fxml:16:${platform}")
+    implementation("org.openjfx:javafx-graphics:16:${platform}")
 }
 
 

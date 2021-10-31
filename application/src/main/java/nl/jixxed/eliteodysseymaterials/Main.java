@@ -76,6 +76,7 @@ public class Main extends Application {
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(scene);
             scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
             final File customCss = new File(OsConstants.CUSTOM_CSS);
             if (customCss.exists()) {
                 importCustomCss(scene, customCss);

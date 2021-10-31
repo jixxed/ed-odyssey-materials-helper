@@ -22,7 +22,12 @@ public enum EngineerPrerequisite {
     C2(RecipeName.ENGINEER_C2, "recipe.description.engineer_c2", () -> ApplicationState.getInstance().isEngineerKnown(Engineer.TERRA_VELASQUEZ)),
     C3(RecipeName.ENGINEER_C3, "recipe.description.engineer_c3", () -> ApplicationState.getInstance().isEngineerUnlocked(Engineer.TERRA_VELASQUEZ)),
     C4(RecipeName.ENGINEER_C4, "recipe.description.engineer_c4", () -> ApplicationState.getInstance().isEngineerKnown(Engineer.ODEN_GEIGER)),
-    C5(RecipeName.ENGINEER_C5, "recipe.description.engineer_c5", () -> ApplicationState.getInstance().isEngineerUnlocked(Engineer.ODEN_GEIGER));
+    C5(RecipeName.ENGINEER_C5, "recipe.description.engineer_c5", () -> ApplicationState.getInstance().isEngineerUnlocked(Engineer.ODEN_GEIGER)),
+    D1_1(RecipeName.ENGINEER_D1_1, "recipe.description.engineer_d1_1", () -> ApplicationState.getInstance().isEngineerUnlocked(Engineer.BALTANOS)),
+    D1_2(RecipeName.ENGINEER_D1_2, "recipe.description.engineer_d1_2", () -> ApplicationState.getInstance().isEngineerUnlocked(Engineer.ROSA_DAYETTE)),
+    D1_3(RecipeName.ENGINEER_D1_3, "recipe.description.engineer_d1_3", () -> ApplicationState.getInstance().isEngineerUnlocked(Engineer.ELEANOR_BRESA)),
+    D2(RecipeName.ENGINEER_D2, "recipe.description.engineer_d2", () -> ApplicationState.getInstance().isEngineerKnown(Engineer.YI_SHEN)),
+    D3(RecipeName.ENGINEER_D3, "recipe.description.engineer_d3", () -> ApplicationState.getInstance().isEngineerUnlocked(Engineer.YI_SHEN));
 
     @Getter
     private final RecipeName recipeName;

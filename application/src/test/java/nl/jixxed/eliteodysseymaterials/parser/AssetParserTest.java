@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-class AseetParserTest {
+class AssetParserTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test

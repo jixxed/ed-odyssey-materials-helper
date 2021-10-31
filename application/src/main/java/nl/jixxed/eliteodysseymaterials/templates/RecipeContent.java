@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class RecipeContent extends VBox {
     private final List<Ingredient> ingredients = new ArrayList<>();
@@ -45,11 +46,27 @@ class RecipeContent extends VBox {
             initAsEngineerMission();
         }
         initIngredients();
-
+        if (this.recipe instanceof EngineerRecipe engineerRecipe && engineerRecipe.getRecipeName().equals(RecipeName.ENGINEER_D3)) {
+            initSteps();
+        }
         if (this.recipe instanceof ModuleRecipe) {
             initEngineers();
         }
         initModifiers();
+    }
+
+    private void initSteps() {
+        final Label referralLabelHeader = LabelBuilder.builder()
+                .withStyleClass("recipe-title-label")
+                .withText(LocaleService.getStringBinding("recipe.label.completed.referrals"))
+                .build();
+        this.getChildren().add(referralLabelHeader);
+        final Label[] engineerLabels = Stream.of(Engineer.BALTANOS, Engineer.ROSA_DAYETTE, Engineer.ELEANOR_BRESA)
+                .map(engineer -> new EngineerModuleLabel(engineer, true))
+                .sorted(Comparator.comparing(EngineerModuleLabel::getText))
+                .toArray(Label[]::new);
+        final FlowPane flowPane = FlowPaneBuilder.builder().withStyleClass("recipe-engineer-flow").withNodes(engineerLabels).build();
+        this.getChildren().add(flowPane);
     }
 
     private void loadIngredients() {

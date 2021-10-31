@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.Modifier;
@@ -8,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import java.util.List;
 import java.util.Map;
 
+@ToString(callSuper = true)
 public class ModuleRecipe extends Recipe {
     private final List<Engineer> engineers;
 
@@ -25,4 +27,7 @@ public class ModuleRecipe extends Recipe {
         return this.engineers;
     }
 
+    public boolean hasSingleEngineerPerRegion() {
+        return this.engineers != null && this.engineers.size() == 2;
+    }
 }

@@ -37,6 +37,10 @@ public class EngineerProgressMessageProcessor implements MessageProcessor {
                 case "Uma Laszlo" -> APPLICATION_STATE.setEngineerState(Engineer.UMA_LASZLO, engineerState);
                 case "Wellington Beck" -> APPLICATION_STATE.setEngineerState(Engineer.WELLINGTON_BECK, engineerState);
                 case "Yarden Bond" -> APPLICATION_STATE.setEngineerState(Engineer.YARDEN_BOND, engineerState);
+                case "Baltanos" -> APPLICATION_STATE.setEngineerState(Engineer.BALTANOS, engineerState);
+                case "Rosa Dayette" -> APPLICATION_STATE.setEngineerState(Engineer.ROSA_DAYETTE, engineerState);
+                case "Eleanor Bresa" -> APPLICATION_STATE.setEngineerState(Engineer.ELEANOR_BRESA, engineerState);
+                case "Yi Shen" -> APPLICATION_STATE.setEngineerState(Engineer.YI_SHEN, engineerState);
                 default -> {
                 }
             }
