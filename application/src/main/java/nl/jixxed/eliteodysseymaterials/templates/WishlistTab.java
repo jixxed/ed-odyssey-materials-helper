@@ -33,7 +33,6 @@ import java.text.NumberFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class WishlistTab extends EDOTab {
@@ -124,8 +123,6 @@ public class WishlistTab extends EDOTab {
     }
 
     private void initComponents() {
-        this.scrollPane = new ScrollPane();
-        setupScrollPane(this.scrollPane);
         initLabels();
         initShortestPathTable();
         final Set<Wishlist> items = APPLICATION_STATE.getPreferredCommander()
@@ -272,7 +269,9 @@ public class WishlistTab extends EDOTab {
         this.flows = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
         this.contentChild = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestRoute).buildVBox();
         this.content = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint).buildVBox();
-        this.scrollPane.setContent(this.content);
+        this.scrollPane = ScrollPaneBuilder.builder()
+                .withContent(this.content)
+                .build();
         this.setContent(this.scrollPane);
         Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, emitter::onNext))
                 .debounce(500, TimeUnit.MILLISECONDS)
@@ -286,12 +285,9 @@ public class WishlistTab extends EDOTab {
                         .toList()
                 )
                 .orElse(new ArrayList<>()));
-        final Set<ModuleRecipe> collect = (Set<ModuleRecipe>) (Set<?>) this.wishlistBlueprints.stream().filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleRecipe).map(wishlistBlueprint -> wishlistBlueprint.getRecipe()).collect(Collectors.toSet());
         try {
             final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);
             this.shortestRoute.getItems().addAll(pathItems);
-            log.info("PATHS");
-            pathItems.forEach(item -> log.info("item {}", item.toString()));
         } catch (final IllegalArgumentException ex) {
             log.error("Failed to generate path", ex);
         }

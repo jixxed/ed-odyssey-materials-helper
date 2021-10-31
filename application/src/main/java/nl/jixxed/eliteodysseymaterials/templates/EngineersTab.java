@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -20,8 +21,6 @@ public class EngineersTab extends EDOTab {
 
     private void initComponents() {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.engineers"));
-        this.scrollPane = new ScrollPane();
-        setupScrollPane(this.scrollPane);
         final EngineerCard[] engineerCards = Arrays.stream(Engineer.values())
                 .filter(engineer -> !Engineer.UNKNOWN.equals(engineer))
                 .map(EngineerCard::new)
@@ -30,7 +29,9 @@ public class EngineersTab extends EDOTab {
                 .withStyleClass("engineer-grid")
                 .withNodes(engineerCards)
                 .build();
-        this.scrollPane.setContent(this.flowPane);
+        this.scrollPane = ScrollPaneBuilder.builder()
+                .withContent(this.flowPane)
+                .build();
         this.setContent(this.scrollPane);
     }
 
