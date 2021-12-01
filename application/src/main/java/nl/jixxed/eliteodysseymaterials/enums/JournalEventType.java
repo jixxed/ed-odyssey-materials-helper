@@ -19,7 +19,8 @@ public enum JournalEventType {
     LIFTOFF("Liftoff"),
     APPROACHBODY("ApproachBody"),
     LEAVEBODY("LeaveBody"),
-    UNKNOWN("Unknown");
+    UNKNOWN("Unknown"),
+    COLLECTITEMS("CollectItems");
 
     private final String name;
 

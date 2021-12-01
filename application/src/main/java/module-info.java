@@ -11,6 +11,8 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.jfxtras.styles.jmetro;
     requires org.slf4j;
     requires com.google.common;
+    requires java.naming;
+    requires jdk.naming.dns;
     requires static lombok;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
@@ -22,4 +24,5 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.domain;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
 }

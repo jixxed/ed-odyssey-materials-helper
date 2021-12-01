@@ -30,7 +30,7 @@ public class TextExporter {
                         case GOOD -> APPLICATION_STATE.getGoods().get(item.getKey()).getTotalValue();
                         case DATA -> APPLICATION_STATE.getData().get(item.getKey()).getTotalValue();
                         case ASSET -> APPLICATION_STATE.getAssets().get(item.getKey()).getTotalValue();
-                        case OTHER -> 0;
+                        case TRADE, OTHER -> 0;
                     };
                     textBuilder.append(String.format("%12s", total));
                     textBuilder.append(String.format("%12s", item.getValue()));

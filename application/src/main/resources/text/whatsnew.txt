@@ -1,0 +1,18 @@
+Version 1.49
+-------------
+New privacy policy & what's new dialog shows on start once for every new version
+New Trading tab added to the app (Beta)
+Notifications expanded
+- configurable sound/volume
+- notification on irrelevant item pickup
+- notifications for trading
+extended tooltip display timeout
+faster journal scan on startup - only process last of every event type, instead of every event
+RAM tweaks
+- limit ram usage to approx. 1GB.
+- fix minor memory leak in wishlist - unregistering event listeners
+UI fixes
+- comboboxes no longer clear on language change
+- better sizing/alignment of blueprints
+- add highlight to blueprint visibility button
+- totals calculation takes solo mode into account

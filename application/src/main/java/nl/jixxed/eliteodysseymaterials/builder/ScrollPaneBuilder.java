@@ -39,7 +39,7 @@ public class ScrollPaneBuilder {
         scrollPane.getStyleClass().addAll(this.styleClasses);
         scrollPane.setContent(this.content);
         scrollPane.pannableProperty().set(true);
-        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToHeight(false);
         scrollPane.setFitToWidth(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

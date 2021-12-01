@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ public class LabelBuilder {
     private NodeOrientation nodeOrientation;
     private ChangeListener<? super Boolean> hoverPropertyChangeListener;
     private boolean visibility = true;
+    private ObservableValue<Boolean> visibilityObservable;
 
     public static LabelBuilder builder() {
         return new LabelBuilder();
@@ -67,6 +69,11 @@ public class LabelBuilder {
         return this;
     }
 
+    public LabelBuilder withVisibilityProperty(final ObservableValue<Boolean> observable) {
+        this.visibilityObservable = observable;
+        return this;
+    }
+
     public Label build() {
         final Label label = new Label();
         label.getStyleClass().addAll(this.styleClasses);
@@ -85,6 +92,9 @@ public class LabelBuilder {
             label.hoverProperty().addListener(this.hoverPropertyChangeListener);
         }
         label.setVisible(this.visibility);
+        if (this.visibilityObservable != null) {
+            label.visibleProperty().bind(this.visibilityObservable);
+        }
         return label;
     }
 }

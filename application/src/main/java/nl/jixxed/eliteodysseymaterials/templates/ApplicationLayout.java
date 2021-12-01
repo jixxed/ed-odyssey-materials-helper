@@ -16,7 +16,7 @@ public class ApplicationLayout extends AnchorPane {
     }
 
     private void initEventHandling() {
-        EventService.addListener(ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.contentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
+        EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.contentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
         this.bottomBar.heightProperty().addListener(observable -> AnchorPaneHelper.setAnchor(this.contentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
     }
 

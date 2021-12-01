@@ -41,7 +41,7 @@ public class ImportWishlistTab extends EDOTab {
     }
 
     private void initEventHandling() {
-        EventService.addListener(ImportResultEvent.class, importResultEvent -> {
+        EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (ImportResult.ERROR.equals(importResultEvent.getResult())) {
                 this.errorLabel.setVisible(true);
             }
@@ -62,7 +62,7 @@ public class ImportWishlistTab extends EDOTab {
                 .withVisibility(false)
                 .build();
         this.note = LabelBuilder.builder()
-                .withText(LocaleService.getStringBindingLocalizedParameters("tab.import.text", "tab.wishlist.copy"))
+                .withText(LocaleService.getStringBinding("tab.import.text", LocaleService.LocalizationKey.of("tab.wishlist.copy")))
                 .build();
         this.setText("+");
         this.textArea = new TextArea();

@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 
 import java.util.function.Consumer;
 
@@ -14,7 +14,7 @@ class EngineerModuleLabel extends Label {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final Engineer engineer;
     @Setter
-    private Consumer<JournalProcessedEvent> journalProcessedEventConsumer;
+    private Consumer<JournalLineProcessedEvent> journalProcessedEventConsumer;
 
     EngineerModuleLabel(final Engineer engineer) {
         this(engineer, false);
@@ -34,7 +34,7 @@ class EngineerModuleLabel extends Label {
     }
 
     private void initEventHandling() {
-        EventService.addListener(JournalProcessedEvent.class, this.journalProcessedEventConsumer);
+        EventService.addListener(this, JournalLineProcessedEvent.class, this.journalProcessedEventConsumer);
     }
 
     private void initComponents() {

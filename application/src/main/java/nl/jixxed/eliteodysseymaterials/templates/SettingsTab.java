@@ -4,7 +4,11 @@ import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.Main;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
@@ -14,11 +18,16 @@ import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialOrientation;
 import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Objects;
 
+@Slf4j
 public class SettingsTab extends EDOTab {
     private static final String SETTINGS_LABEL_CLASS = "settings-label";
     private static final String SETTINGS_DROPDOWN_CLASS = "settings-dropdown";
@@ -37,6 +46,16 @@ public class SettingsTab extends EDOTab {
     private CheckBox soloModeCheckBox;
     private Label soloModeLabel;
     private Label soloModeExplainLabel;
+    private CheckBox notificationSoundCheckBox;
+    private Label notificationSoundLabel;
+    private Label customNotificationSoundLabel;
+    private Label selectedNotificationSoundLabel;
+    private Button customNotificationSoundSelectButton;
+    private Button customNotificationSoundClearButton;
+    private Label notificationVolumeLabel;
+    private Slider notificationVolumeSlider;
+    private Button playNotificationButton;
+
 
     SettingsTab(final Application application) {
         this.application = application;
@@ -55,7 +74,7 @@ public class SettingsTab extends EDOTab {
     }
 
     private void initEventHandling() {
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontSizeStyle = "-fx-font-size: " + fontSizeEvent.getFontSize() + "px;";
             this.journalSelectButton.setStyle(fontSizeStyle);
             this.fontsizeSelect.setStyle(fontSizeStyle);
@@ -77,14 +96,107 @@ public class SettingsTab extends EDOTab {
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final HBox readingDirectionSetting = createReadingDirectionSetting();
         final HBox soloModeSetting = createSoloModeSetting();
+        final HBox notificationSetting = createNotificationSetting();
+        final HBox customNotificationSoundSetting = createCustomNotificationSoundSetting();
+        final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
+
         final VBox settings = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting)
+                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
                 .build();
         this.setContent(this.scrollPane);
+    }
+
+    private HBox createNotificationVolumeSetting() {
+        this.notificationVolumeLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.volume")).build();
+        this.notificationVolumeSlider = SliderBuilder.builder()
+                .withMin(0)
+                .withMax(100)
+                .withValue(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_VOLUME, 50))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_VOLUME, newValue.intValue());
+                })
+                .build();
+        this.playNotificationButton = ButtonBuilder.builder()
+                .withText(LocaleService.getStringBinding("tab.settings.notification.play"))
+                .withOnAction(event -> {
+                    final double volume = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_VOLUME, 50);
+                    final String customSoundPath = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, "");
+                    try {
+                        final URI resource;
+                        if (Objects.equals(customSoundPath, "")) {
+                            resource = NotificationService.class.getResource("/audio/tweet.mp3").toURI();
+                        } else {
+                            resource = new File(customSoundPath).toURI();     // For example
+                        }
+
+                        final Media sound = new Media(resource.toString());
+                        final MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                        mediaPlayer.setVolume(volume / 100);
+                        mediaPlayer.play();
+                    } catch (final URISyntaxException | NullPointerException ex) {
+                        log.error("Failed to play notification sound", ex);
+                    }
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses("settings-journal-line", SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.notificationVolumeLabel, this.notificationVolumeSlider, this.playNotificationButton)
+                .buildHBox();
+
+    }
+
+    private HBox createNotificationSetting() {
+        this.notificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification")).build();
+        this.notificationSoundCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND, Boolean.TRUE))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND, newValue);
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses("settings-journal-line", SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.notificationSoundLabel, this.notificationSoundCheckBox)
+                .buildHBox();
+
+    }
+
+    private HBox createCustomNotificationSoundSetting() {
+        this.customNotificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.sound.custom")).build();
+        this.selectedNotificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, "")).build();
+
+        final FileChooser notificationSoundSelect = new FileChooser();
+        //Set extension filter for mp3 files
+        final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MP3 files (*.mp3)", "*.mp3");
+        notificationSoundSelect.getExtensionFilters().add(extFilter);
+
+        this.customNotificationSoundSelectButton = ButtonBuilder.builder()
+                .withStyleClass("settings-button")
+                .withText(LocaleService.getStringBinding("tab.settings.notification.sound.select"))
+                .withOnAction(e -> {
+                    final File selectedFile = notificationSoundSelect.showOpenDialog(((Main) this.application).getPrimaryStage());
+                    if (selectedFile != null) {
+                        this.selectedNotificationSoundLabel.setText(selectedFile.getAbsolutePath());
+                        PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, selectedFile.getAbsolutePath());
+                    }
+                })
+                .build();
+        this.customNotificationSoundClearButton = ButtonBuilder.builder()
+                .withStyleClass("settings-button")
+                .withText(LocaleService.getStringBinding("tab.settings.notification.sound.clear"))
+                .withOnAction(e -> {
+                    this.selectedNotificationSoundLabel.setText("");
+                    PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, "");
+                })
+                .build();
+
+        return BoxBuilder.builder()
+                .withStyleClasses("settings-journal-line", SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.customNotificationSoundLabel, this.customNotificationSoundSelectButton, this.customNotificationSoundClearButton, this.selectedNotificationSoundLabel)
+                .buildHBox();
     }
 
     private HBox createSoloModeSetting() {
@@ -134,13 +246,15 @@ public class SettingsTab extends EDOTab {
                 .build();
         this.fontsizeSelect = ComboBoxBuilder.builder(FontSize.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
-                .withItemsProperty(LocaleService.getListBinding(FontSize.values()))
+                .withItemsProperty(LocaleService.getListBinding(() -> FontSize.values()))
                 .withValueChangeListener((obs, oldValue, newValue) -> {
+                    log.info("o: " + oldValue + " n: " + newValue);
                     if (newValue != null) {
                         PreferencesService.setPreference(PreferenceConstants.TEXTSIZE, newValue.name());
                         EventService.publish(new FontSizeEvent(newValue.getSize()));
                     }
                 })
+                .asLocalized()
                 .build();
 
         this.fontsizeSelect.getSelectionModel().select(FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")));
@@ -165,6 +279,7 @@ public class SettingsTab extends EDOTab {
                         PreferencesService.setPreference(PreferenceConstants.LANGUAGE, newValue.name());
                     }
                 })
+                .asLocalized()
                 .build();
 
         this.languageSelect.getSelectionModel().select(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.LANGUAGE, "ENGLISH")));
@@ -190,6 +305,7 @@ public class SettingsTab extends EDOTab {
                         EventService.publish(new OrientationChangeEvent(newValue));
                     }
                 })
+                .asLocalized()
                 .build();
 
         this.readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")));

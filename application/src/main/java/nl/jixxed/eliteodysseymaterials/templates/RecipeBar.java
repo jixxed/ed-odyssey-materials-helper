@@ -18,10 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.helper.RecipeHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.Comparator;
 import java.util.EnumMap;
@@ -69,6 +66,7 @@ class RecipeBar extends Accordion {
         final ComboBox<RecipeName> recipes = ComboBoxBuilder.builder(RecipeName.class)
                 .withStyleClass("recipes-list")
                 .withItemsProperty(LocaleService.getListBinding(recipesEntry.getValue().keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(RecipeName[]::new)))
+                .asLocalized()
                 .build();
         recipes.setVisibleRowCount(recipes.getItems().size());
 
@@ -93,19 +91,20 @@ class RecipeBar extends Accordion {
         recipes.getSelectionModel().select(recipes.getItems().get(0));
         recipes.setButtonCell(new ListCell<>() {
 
+            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(RecipeBar.this, StorageEvent.class, event -> {
+                updateStyle(getItem());
+                updateText(getItem(), this.emptyProperty().get());
+            });
+            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(RecipeBar.this, EngineerEvent.class, event -> {
+                updateStyle(getItem());
+                updateText(getItem(), this.emptyProperty().get());
+            });
+
             @Override
             protected void updateItem(final RecipeName item, final boolean empty) {
                 super.updateItem(item, empty);
                 updateText(item, empty);
                 updateStyle(item);
-                EventService.addListener(EngineerEvent.class, event -> {
-                    updateStyle(getItem());
-                    updateText(getItem(), this.emptyProperty().get());
-                });
-                EventService.addListener(StorageEvent.class, event -> {
-                    updateStyle(getItem());
-                    updateText(getItem(), this.emptyProperty().get());
-                });
             }
 
 
@@ -133,20 +132,22 @@ class RecipeBar extends Accordion {
 
     private Callback<ListView<RecipeName>, ListCell<RecipeName>> getCellFactory() {
         return listView -> new ListCell<>() {
+
+            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(RecipeBar.this, StorageEvent.class, event -> {
+                updateStyle(getItem());
+                updateText(getItem(), this.emptyProperty().get());
+            });
+            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(RecipeBar.this, EngineerEvent.class, event -> {
+                updateStyle(getItem());
+                updateText(getItem(), this.emptyProperty().get());
+            });
+
+
             @Override
             protected void updateItem(final RecipeName item, final boolean empty) {
                 super.updateItem(item, empty);
-
                 updateText(item, empty);
                 updateStyle(item);
-                EventService.addListener(EngineerEvent.class, event -> {
-                    updateStyle(getItem());
-                    updateText(getItem(), this.emptyProperty().get());
-                });
-                EventService.addListener(StorageEvent.class, event -> {
-                    updateStyle(getItem());
-                    updateText(getItem(), this.emptyProperty().get());
-                });
             }
 
             private void updateText(final RecipeName item, final boolean empty) {
@@ -154,7 +155,7 @@ class RecipeBar extends Accordion {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    setText(item.toString() + (RecipeHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
+                    setText(item + (RecipeHelper.isCompletedEngineerRecipe(item) ? " \u2714" : ""));
                 }
             }
 
@@ -172,7 +173,7 @@ class RecipeBar extends Accordion {
     private Map<RecipeName, Node> createRecipeContent(final Map.Entry<RecipeCategory, Map<RecipeName, ? extends Recipe>> recipesEntry, final ComboBox<RecipeName> comboBox, final TitledPane categoryTitledPane) {
         final Map<RecipeName, Node> contents = new EnumMap<>(RecipeName.class);
         recipesEntry.getValue().forEach((key, value) -> {
-            EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {
+            EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
                 if (blueprintClickEvent.getRecipeName().equals(key)) {
                     comboBox.getSelectionModel().select(key);
                     this.setExpandedPane(categoryTitledPane);

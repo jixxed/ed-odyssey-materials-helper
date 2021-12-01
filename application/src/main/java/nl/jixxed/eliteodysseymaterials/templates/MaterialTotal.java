@@ -16,7 +16,8 @@ import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -100,7 +101,10 @@ class MaterialTotal extends VBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(JournalProcessedEvent.class, journalProcessedEvent -> {
+        EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
+            updateTotals();
+        });
+        EventService.addListener(this, SoloModeEvent.class, soloModeEvent -> {
             updateTotals();
         });
     }
@@ -108,11 +112,15 @@ class MaterialTotal extends VBox {
     private void updateTotals() {
         if (StorageType.DATA.equals(this.storageType) || StorageType.GOOD.equals(this.storageType)) {
             final Integer blueprintTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
-                    .filter(material -> RecipeConstants.isBlueprintIngredient(material.getKey()))
+                    .filter(material -> (APPLICATION_STATE.getSoloMode())
+                            ? RecipeConstants.isBlueprintIngredient(material.getKey()) || RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                            : RecipeConstants.isBlueprintIngredient(material.getKey()) || RecipeConstants.isEngineeringIngredient(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
             final Integer irrelevantTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
-                    .filter(material -> !RecipeConstants.isBlueprintIngredient(material.getKey()))
+                    .filter(material -> (APPLICATION_STATE.getSoloMode())
+                            ? !RecipeConstants.isBlueprintIngredient(material.getKey()) && !RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                            : !RecipeConstants.isBlueprintIngredient(material.getKey()) && !RecipeConstants.isEngineeringIngredient(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
 

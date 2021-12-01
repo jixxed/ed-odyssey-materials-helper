@@ -74,8 +74,8 @@ class EngineerCard extends VBox {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        EventService.addListener(LocationEvent.class, locationEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getLocation().getX(), locationEvent.getLocation().getY(), locationEvent.getLocation().getZ())) + "Ly)"));
-        EventService.addListener(EngineerEvent.class, engineerEvent -> {
+        EventService.addListener(this, LocationEvent.class, locationEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getLocation().getX(), locationEvent.getLocation().getY(), locationEvent.getLocation().getZ())) + "Ly)"));
+        EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
             if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {

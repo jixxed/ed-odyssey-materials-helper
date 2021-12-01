@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 
 import java.io.File;
 import java.util.Map;
@@ -32,7 +32,8 @@ class MessageHandler {
             Map.entry(JournalEventType.UNDOCKED, new UndockedMessageProcessor()),
             Map.entry(JournalEventType.LIFTOFF, new LiftOffMessageProcessor()),
             Map.entry(JournalEventType.APPROACHBODY, new ApproachBodyMessageProcessor()),
-            Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor())
+            Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor()),
+            Map.entry(JournalEventType.COLLECTITEMS, new CollectItemsMessageProcessor())
     );
     private static final String EVENT = "event";
 
@@ -45,7 +46,7 @@ class MessageHandler {
                 final MessageProcessor messageProcessor = messageProcessors.get(journalEventType);
                 if (messageProcessor != null) {
                     messageProcessor.process(jsonNode);
-                    EventService.publish(new JournalProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
+                    EventService.publish(new JournalLineProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
                 }
             } else {
                 log.warn("EVENT NULL: " + jsonNode.toPrettyString());

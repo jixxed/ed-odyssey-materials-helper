@@ -40,7 +40,7 @@ class ContentArea extends AnchorPane {
         this.overview = new OverviewTab();
         this.wishlistTab = new WishlistTab();
         this.engineersTab = new EngineersTab();
-        this.tradeTab = new TradeTab(application);
+        this.tradeTab = new TradeTab();
         this.settingsTab = new SettingsTab(application);
         this.importWishlistTab = new ImportWishlistTab();
         this.overview.setClosable(false);
@@ -77,24 +77,24 @@ class ContentArea extends AnchorPane {
     }
 
     private void initEventHandling() {
-        EventService.addListener(WishlistRecipeEvent.class, wishlistEvent -> {
+        EventService.addListener(this, WishlistRecipeEvent.class, wishlistEvent -> {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 this.tabs.getSelectionModel().select(this.wishlistTab);
             }
         });
-        EventService.addListener(BlueprintClickEvent.class, blueprintClickEvent -> {
+        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
             this.recipeBar.setVisible(true);
             PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, true);
         });
-        EventService.addListener(ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth()));
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth()));
-        EventService.addListener(MenuButtonClickedEvent.class, event -> {
+        EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth()));
+        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth()));
+        EventService.addListener(this, MenuButtonClickedEvent.class, event -> {
             final boolean visibility = !this.recipeBar.isVisible();
             this.recipeBar.setVisible(visibility);
             PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, visibility);
         });
 
-        EventService.addListener(ImportResultEvent.class, importResultEvent -> {
+        EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().equals(ImportResult.SUCCESS)) {
                 this.tabs.getSelectionModel().select(this.wishlistTab);
             }

@@ -8,18 +8,18 @@ class WishlistIngredient extends MaterialIngredient {
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
 
-    WishlistIngredient(final StorageType storageType, final Material material, final Integer amount, final Integer amountAvailable) {
-        super(storageType, material, amount, amountAvailable);
+    WishlistIngredient(final StorageType storageType, final Material material, final Integer amountRequired, final Integer amountAvailable) {
+        super(storageType, material, amountRequired, amountAvailable);
     }
 
     @Override
     protected void update() {
-        if (this.getAmountAvailable() >= Integer.parseInt(this.getAmountRequiredLabel().getText())) {
-            this.getAmountAvailableLabel().setText(this.getAmountAvailable().toString());
+        if (this.getRightAmount() >= Integer.parseInt(this.getLeftAmountLabel().getText())) {
+            this.getRightAmountLabel().setText(this.getRightAmount().toString());
             this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
         } else {
-            this.getAmountAvailableLabel().setText(this.getAmountAvailable().toString());
+            this.getRightAmountLabel().setText(this.getRightAmount().toString());
             this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
         }
@@ -28,10 +28,10 @@ class WishlistIngredient extends MaterialIngredient {
     void highlight(final boolean enable, final Integer amountRequiredForRecipe) {
         if (enable) {
             this.getStyleClass().add("wishlist-highlight");
-            this.getAmountRequiredLabel().setText(amountRequiredForRecipe.toString());
+            this.getLeftAmountLabel().setText(amountRequiredForRecipe.toString());
         } else {
             this.getStyleClass().removeAll("wishlist-highlight");
-            this.getAmountRequiredLabel().setText(this.getAmountRequired().toString());
+            this.getLeftAmountLabel().setText(this.getLeftAmount().toString());
         }
         update();
     }

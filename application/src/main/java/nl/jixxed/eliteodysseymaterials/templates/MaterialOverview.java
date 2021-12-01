@@ -37,7 +37,7 @@ class MaterialOverview extends VBox {
     private MaterialTotal goodsTotal;
     private MaterialTotal assetsTotal;
     private MaterialTotal dataTotal;
-    private Search currentSearch = new Search("", Sort.ALPHABETICAL, Show.ALL);
+    private Search currentSearch = new Search("", MaterialSort.ALPHABETICAL, MaterialShow.ALL);
     private ChangeListener<Number> resizeListener;
 
     MaterialOverview(final ScrollPane scrollPane) {
@@ -83,7 +83,7 @@ class MaterialOverview extends VBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(OrientationChangeEvent.class, orientationChangeEvent -> {
+        EventService.addListener(this, OrientationChangeEvent.class, orientationChangeEvent -> {
             final Orientation orientation = orientationChangeEvent.getMaterialOrientation().getOrientation();
             this.assetChemicalFlow.setOrientation(orientation);
             this.assetCircuitFlow.setOrientation(orientation);
@@ -93,16 +93,16 @@ class MaterialOverview extends VBox {
 
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         });
-        EventService.addListener(SearchEvent.class, searchEvent -> {
+        EventService.addListener(this, SearchEvent.class, searchEvent -> {
             this.currentSearch = searchEvent.getSearch();
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         });
-        EventService.addListener(CommanderResetEvent.class, event -> Platform.runLater(() -> {
+        EventService.addListener(this, CommanderResetEvent.class, event -> Platform.runLater(() -> {
 
             this.updateContent(this.currentSearch);
         }));
         Observable
-                .create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, journalProcessedEvent -> {
+                .create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
                     if (JournalEventType.BACKPACK.equals(journalProcessedEvent.getJournalEventType())
                             || JournalEventType.EMBARK.equals(journalProcessedEvent.getJournalEventType())
                             || JournalEventType.SHIPLOCKER.equals(journalProcessedEvent.getJournalEventType())) {
@@ -176,10 +176,10 @@ class MaterialOverview extends VBox {
 
     private void addGoods(final Search search) {
         APPLICATION_STATE.getGoods().entrySet().stream()
-                .filter(Show.getFilter(search))
+                .filter(MaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
-                .sorted(Sort.getSort(search))
+                .sorted(MaterialSort.getSort(search))
                 .forEach(entry -> {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
                     this.goodFlow.getChildren().add(materialCard);
@@ -193,7 +193,7 @@ class MaterialOverview extends VBox {
 
     private void addAssets(final Search search) {
         APPLICATION_STATE.getAssets().entrySet().stream()
-                .filter(Show.getFilter(search))
+                .filter(MaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
                 .sorted(Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
@@ -210,10 +210,10 @@ class MaterialOverview extends VBox {
 
     private void addDatas(final Search search) {
         APPLICATION_STATE.getData().entrySet().stream()
-                .filter(Show.getFilter(search))
+                .filter(MaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
-                .sorted(Sort.getSort(search))
+                .sorted(MaterialSort.getSort(search))
                 .forEach(entry -> {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
                     this.dataFlow.getChildren().add(materialCard);

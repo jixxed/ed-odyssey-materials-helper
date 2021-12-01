@@ -8,7 +8,7 @@ import java.io.File;
 
 @AllArgsConstructor
 @Getter
-public class JournalProcessedEvent implements Event {
+public class JournalLineProcessedEvent implements Event {
     private final String timestamp;
     private final JournalEventType journalEventType;
     private final File file;

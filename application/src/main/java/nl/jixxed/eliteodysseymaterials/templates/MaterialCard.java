@@ -91,7 +91,9 @@ class MaterialCard extends HBox {
                 case CIRCUIT -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-circuit");
                 case CHEMICAL -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-chemical");
             }
-        } else if (RecipeConstants.isEngineeringOnlyIngredient(this.material)) {
+        } else if (RecipeConstants.isEngineeringIngredientAndNotCompleted(this.material)) {
+            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
+        } else if (APPLICATION_STATE.getSoloMode() && RecipeConstants.isEngineeringOnlyIngredient(this.material)) {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-irrelevant");
         } else if (RecipeConstants.isEngineeringIngredient(this.material)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
@@ -103,7 +105,8 @@ class MaterialCard extends HBox {
     }
 
     private ResizableImageView createMaterialImage(final Material material) {
-        final boolean isEngineerUnlockMaterial = RecipeConstants.isEngineeringIngredient(material);
+
+        final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? RecipeConstants.isEngineeringIngredientAndNotCompleted(material) : RecipeConstants.isEngineeringIngredient(material);
         ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder().withStyleClass("materialcard-image");
         if (material.isUnknown()) {
             imageViewBuilder.withImage("/images/material/unknown.png");

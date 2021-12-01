@@ -9,7 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public enum Show {
+public enum MaterialShow {
     ALL,
     ALL_WITH_STOCK,
     ALL_ENGINEER_BLUEPRINT,
@@ -34,7 +34,7 @@ public enum Show {
     }
 
     public static Predicate<? super Map.Entry<? extends Material, Storage>> getFilter(final Search search) {
-        return switch (search.getShow()) {
+        return switch (search.getMaterialShow()) {
             case ALL -> (Map.Entry<? extends Material, Storage> o) -> true;
             case ALL_WITH_STOCK -> (Map.Entry<? extends Material, Storage> o) -> o.getValue().getTotalValue() > 0;
             case BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey());

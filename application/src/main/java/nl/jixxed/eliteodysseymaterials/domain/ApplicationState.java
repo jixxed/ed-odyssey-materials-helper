@@ -52,7 +52,7 @@ public class ApplicationState {
                 .map(Material::subtypeForName)
                 .forEach(this.favourites::add);
 
-        EventService.addListener(0, WishlistRecipeEvent.class,
+        EventService.addListener(this, 0, WishlistRecipeEvent.class,
                 wishlistEvent -> Platform.runLater(() -> {
                     switch (wishlistEvent.getAction()) {
                         case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe().getRecipeName());
@@ -61,7 +61,7 @@ public class ApplicationState {
                     }
                 }));
 
-        EventService.addListener(EnlistWebSocketEvent.class, (event) -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getEnlistMessage().getTrace().getToken()));
+        EventService.addListener(this, EnlistWebSocketEvent.class, (event) -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getEnlistMessage().getTrace().getToken()));
     }
 
     public static ApplicationState getInstance() {
@@ -96,6 +96,7 @@ public class ApplicationState {
             case GOOD -> this.goods;
             case DATA -> this.data;
             case ASSET -> this.assets;
+            case TRADE -> Map.of(TradeMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeMaterial.NOTHING, new Storage(0, 0));
             case OTHER -> Collections.emptyMap();
         };
     }
@@ -317,9 +318,7 @@ public class ApplicationState {
         throw new IllegalArgumentException("Unknown material type");
     }
 
-    private static String tokenTest = UUID.randomUUID().toString();
-
     public String getMarketPlaceToken() {
-        return tokenTest;//PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN, "");
+        return PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN, "");
     }
 }

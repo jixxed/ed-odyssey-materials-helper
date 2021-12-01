@@ -35,6 +35,8 @@ public abstract class Recipe {
             return this.goods;
         } else if (clazz.equals(Asset.class)) {
             return this.assets;
+        } else if (clazz.equals(TradeMaterial.class)) {
+            return Collections.emptyMap();
         } else if (clazz.equals(Material.class)) {
             return Stream.concat(Stream.concat(this.goods.entrySet().stream(), this.assets.entrySet().stream()), this.data.entrySet().stream()).collect(
                     Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

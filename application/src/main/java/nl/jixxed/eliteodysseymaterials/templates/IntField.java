@@ -7,11 +7,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import lombok.Setter;
 
 public class IntField extends TextField {
-    final private IntegerProperty value;
-    final private int minValue;
-    final private int maxValue;
+    private final IntegerProperty value;
+    @Setter
+    private int minValue;
+    @Setter
+    private int maxValue;
 
     // expose an integer value property for the text field.
     public int getValue() {
@@ -26,7 +29,7 @@ public class IntField extends TextField {
         return this.value;
     }
 
-    IntField(final int minValue, final int maxValue, final int initialValue) {
+    public IntField(final int minValue, final int maxValue, final int initialValue) {
         if (minValue > maxValue) {
             throw new IllegalArgumentException(
                     "IntField min value " + minValue + " greater than max value " + maxValue

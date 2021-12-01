@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import java.util.Comparator;
 import java.util.Map;
 
-public enum Sort {
+public enum MaterialSort {
     ENGINEER_BLUEPRINT_IRRELEVANT,
     RELEVANT_IRRELEVANT,
     ALPHABETICAL,
@@ -24,7 +24,7 @@ public enum Sort {
     }
 
     public static Comparator<Map.Entry<? extends Material, Storage>> getSort(final Search search) {
-        return switch (search.getSort()) {
+        return switch (search.getMaterialSort()) {
             case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
             case QUANTITY -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> o.getValue().getTotalValue()).reversed();
             case RELEVANT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey()) || RecipeConstants.isBlueprintIngredient(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));

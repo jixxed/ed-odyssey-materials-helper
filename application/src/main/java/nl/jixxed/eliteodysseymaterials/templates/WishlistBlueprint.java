@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.WeakChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -20,10 +21,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.WishlistRecipeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +45,8 @@ public class WishlistBlueprint extends HBox {
     private Button removeBlueprint;
     private final Set<WishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<WishlistIngredient> otherIngredients = new HashSet<>();
+    private ChangeListener<? super Boolean> booleanChangeListener;
+    private EventListener<StorageEvent> storageEventEventListener;
 
     public WishlistBlueprint(final String wishlistUUID, final WishlistRecipe wishlistRecipe) {
         this.wishlistUUID = wishlistUUID;
@@ -68,18 +68,20 @@ public class WishlistBlueprint extends HBox {
                 .withOnAction(event -> {
                     setVisibility(!this.visible);
                 })
+                .withGraphic(this.visibilityImage)
                 .build();
-        this.visibilityButton.setGraphic(this.visibilityImage);
         setVisibility(this.wishlistRecipe.isVisible());
 
+        this.booleanChangeListener = (observable, oldValue, newValue) -> {
+            this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.recipe.getRequiredAmount(wishlistIngredient.getMaterial())));
+            this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
+            this.highlight(newValue);
+        };
         this.wishlistRecipeName = LabelBuilder.builder()
+                .withStyleClass("wishlist-label")
                 .withText(LocaleService.getStringBinding(this.wishlistRecipe.getRecipeName().getLocalizationKey()))
                 .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.wishlistRecipe.getRecipeName())))
-                .withHoverProperty((ChangeListener<? super Boolean>) (observable, oldValue, newValue) -> {
-                    this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.recipe.getRequiredAmount(wishlistIngredient.getMaterial())));
-                    this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
-                    this.highlight(newValue);
-                })
+                .withHoverProperty(new WeakChangeListener<>(this.booleanChangeListener))
                 .build();
         this.getChildren().addAll(this.visibilityButton, this.wishlistRecipeName);
 
@@ -105,6 +107,7 @@ public class WishlistBlueprint extends HBox {
     }
 
     public void remove() {
+        EventService.removeListener(this.storageEventEventListener);
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, this.wishlistRecipe, Action.REMOVED)));
     }
 
@@ -117,7 +120,7 @@ public class WishlistBlueprint extends HBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(StorageEvent.class, storageEvent -> {
+        this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
             final int amountCraftable = APPLICATION_STATE.amountCraftable(this.getRecipeName());
             this.canCraft(amountCraftable > 0);
         });
@@ -178,5 +181,9 @@ public class WishlistBlueprint extends HBox {
 
     WishlistRecipe getWishlistRecipe() {
         return this.wishlistRecipe;
+    }
+
+    void onDestroy() {
+        EventService.removeListener(this.storageEventEventListener);
     }
 }

@@ -71,14 +71,14 @@ class BottomBar extends HBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged);
-        EventService.addListener(SimpleLocationEvent.class, this::updateLocationLabel);
-        EventService.addListener(JournalProcessedEvent.class, this::updateWatchedFileLabel);
-        EventService.addListener(EngineerEvent.class, event -> hideLoginRequest());
-        EventService.addListener(CommanderAddedEvent.class, this::handleAddedCommander);
-        EventService.addListener(CommanderAllListedEvent.class, event -> afterAllCommandersListed());
-        EventService.addListener(0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear());
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px"));
+        EventService.addListener(this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged);
+        EventService.addListener(this, SimpleLocationEvent.class, this::updateLocationLabel);
+        EventService.addListener(this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel);
+        EventService.addListener(this, EngineerEvent.class, event -> hideLoginRequest());
+        EventService.addListener(this, CommanderAddedEvent.class, this::handleAddedCommander);
+        EventService.addListener(this, CommanderAllListedEvent.class, event -> afterAllCommandersListed());
+        EventService.addListener(this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear());
+        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px"));
     }
 
     private void afterAllCommandersListed() {
@@ -107,8 +107,8 @@ class BottomBar extends HBox {
         this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching.none", watchedFolderChangedEvent.getPath()));
     }
 
-    private void updateWatchedFileLabel(final JournalProcessedEvent journalProcessedEvent) {
-        Platform.runLater(() -> this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalProcessedEvent.getFile().getName())));
+    private void updateWatchedFileLabel(final JournalLineProcessedEvent journalLineProcessedEvent) {
+        Platform.runLater(() -> this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalLineProcessedEvent.getFile().getName())));
     }
 
     private void updateLocationLabel(final SimpleLocationEvent simpleLocationEvent) {

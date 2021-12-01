@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
@@ -16,72 +17,76 @@ import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MaterialIngredient extends Ingredient {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
-    public static final String INGREDIENT_WITHOUT_AMOUNT_CLASS = "ingredient-without-amount";
     private final StorageType storageType;
     private final Material material;
-    private final Integer amountRequired;
-    private Integer amountAvailable;
+    private final Integer leftAmount;
+    private Integer rightAmount;
 
     private Label nameLabel;
     private ResizableImageView image;
-    private Label amountRequiredLabel;
-    private Label amountAvailableLabel;
-    private Label requiredLabel;
-    private Label availableLabel;
-    private HBox requiredHBox;
-    private HBox availableHBox;
+    private Label leftAmountLabel;
+    private Label rightAmountLabel;
+    private Label leftDescriptionLabel;
+    private Label rightDescriptionLabel;
+    private HBox leftHBox;
+    private HBox rightHBox;
     private HBox firstLine;
     private Region region;
     private HBox secondLine;
     private Region region2;
     private Tooltip tooltip;
+    List<EventListener> eventListeners = new ArrayList<>();
 
 
-    MaterialIngredient(final StorageType storageType, final Material material, final Integer amount, final Integer amountAvailable) {
+    MaterialIngredient(final StorageType storageType, final Material material, final Integer leftAmount, final Integer rightAmount) {
         if (storageType.equals(StorageType.OTHER)) {
             throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
         this.storageType = storageType;
-        this.amountRequired = amount;
+        this.leftAmount = leftAmount;
         this.material = material;
-        this.amountAvailable = amountAvailable;
+        this.rightAmount = rightAmount;
         initComponents();
         initEventHandling();
     }
 
     private void initEventHandling() {
-        EventService.addListener(JournalProcessedEvent.class, (journalProcessedEvent) -> this.update());
+        this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, (journalProcessedEvent) -> this.update()));
     }
 
     private void initComponents() {
         this.nameLabel = LabelBuilder.builder().withStyleClass("ingredient-name").withText(LocaleService.getStringBinding(this.material.getLocalizationKey())).build();
         initImage();
 
-        this.amountRequiredLabel = LabelBuilder.builder().withStyleClass("ingredient-required").build();
-        this.amountAvailableLabel = LabelBuilder.builder().withStyleClass("ingredient-available").build();
-        this.requiredLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("recipe.header.required")).build();
-        this.availableLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("recipe.header.available")).build();
+        this.leftAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-required").build();
+        this.rightAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-available").build();
+        this.leftDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("recipe.header.required")).build();
+        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("recipe.header.available")).build();
 
-        this.requiredHBox = BoxBuilder.builder().withNodes(this.requiredLabel, this.amountRequiredLabel).withStyleClass("ingredient-quantity-section").buildHBox();
-        this.availableHBox = BoxBuilder.builder().withNodes(this.amountAvailableLabel, this.availableLabel).withStyleClass("ingredient-quantity-section").buildHBox();
-        this.amountRequiredLabel.setText(this.amountRequired.toString());
-        HBox.setHgrow(this.amountRequiredLabel, Priority.ALWAYS);
-        this.amountAvailableLabel.setText(this.amountAvailable.toString());
+        this.leftHBox = BoxBuilder.builder().withNodes(this.leftDescriptionLabel, this.leftAmountLabel).withStyleClass("ingredient-quantity-section").buildHBox();
+        this.rightHBox = BoxBuilder.builder().withNodes(this.rightAmountLabel, this.rightDescriptionLabel).withStyleClass("ingredient-quantity-section").buildHBox();
+        this.leftAmountLabel.setText(this.leftAmount.toString());
+        HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
+        this.rightAmountLabel.setText(this.rightAmount.toString());
         this.region = new Region();
         HBox.setHgrow(this.region, Priority.ALWAYS);
         this.region2 = new Region();
         VBox.setVgrow(this.region2, Priority.ALWAYS);
 
         this.firstLine = BoxBuilder.builder().withNodes(this.image, this.nameLabel).buildHBox();
-        this.secondLine = new HBox(this.requiredHBox, this.region, this.availableHBox);
+        this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
         this.tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(this.material)).withShowDelay(Duration.millis(100)).build();
@@ -104,24 +109,25 @@ public class MaterialIngredient extends Ingredient {
                     case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");
                 }
             }
+            case TRADE -> imageViewBuilder.withImage("/images/material/unknown.png");
             case OTHER -> throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
         this.image = imageViewBuilder.build();
     }
 
-    private void setAmountAvailable(final Integer amountAvailable) {
-        this.amountAvailable = amountAvailable;
+    private void setRightAmount(final Integer rightAmount) {
+        this.rightAmount = rightAmount;
     }
 
 
     protected void update() {
-        setAmountAvailable(APPLICATION_STATE.getMaterials(this.storageType).get(this.material).getTotalValue());
-        if (this.amountAvailable >= this.amountRequired) {
-            this.amountAvailableLabel.setText(this.amountAvailable.toString());
+        setRightAmount(APPLICATION_STATE.getMaterials(this.storageType).get(this.material).getTotalValue());
+        if (this.rightAmount >= this.leftAmount) {
+            this.rightAmountLabel.setText(this.rightAmount.toString());
             this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS);
         } else {
-            this.amountAvailableLabel.setText(this.amountAvailable.toString());
+            this.rightAmountLabel.setText(this.rightAmount.toString());
             this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_UNFILLED_CLASS);
         }
@@ -141,19 +147,40 @@ public class MaterialIngredient extends Ingredient {
         return this.material;
     }
 
-    Label getAmountRequiredLabel() {
-        return this.amountRequiredLabel;
+    Label getLeftAmountLabel() {
+        return this.leftAmountLabel;
     }
 
-    Integer getAmountRequired() {
-        return this.amountRequired;
+    Integer getLeftAmount() {
+        return this.leftAmount;
     }
 
-    Integer getAmountAvailable() {
-        return this.amountAvailable;
+    Integer getRightAmount() {
+        return this.rightAmount;
     }
 
-    Label getAmountAvailableLabel() {
-        return this.amountAvailableLabel;
+    Label getRightAmountLabel() {
+        return this.rightAmountLabel;
+    }
+
+
+    void setLeftDescriptionLabel(final StringBinding leftDescriptionLabel) {
+        this.leftDescriptionLabel.textProperty().bind(leftDescriptionLabel);
+    }
+
+    void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
+        this.rightDescriptionLabel.textProperty().bind(rightDescriptionLabel);
+    }
+
+    Label getLeftDescriptionLabel() {
+        return this.leftDescriptionLabel;
+    }
+
+    Label getRightDescriptionLabel() {
+        return this.rightDescriptionLabel;
+    }
+
+    void onDestroy() {
+        this.eventListeners.forEach(EventService::removeListener);
     }
 }

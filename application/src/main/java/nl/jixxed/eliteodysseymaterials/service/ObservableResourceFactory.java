@@ -58,4 +58,20 @@ public class ObservableResourceFactory {
             }
         };
     }
+
+    static <T> ListBinding<T> getListBinding(final Supplier<T[]> supplier) {
+        return new ListBinding<>() {
+
+            {
+                bind(resourcesProperty());
+            }
+
+            @Override
+            protected ObservableList<T> computeValue() {
+                return FXCollections.observableArrayList(
+                        supplier.get()
+                );
+            }
+        };
+    }
 }

@@ -1,17 +1,16 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
+import nl.jixxed.eliteodysseymaterials.domain.TradeSpec;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -19,120 +18,132 @@ import nl.jixxed.eliteodysseymaterials.service.event.LocationEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
 import java.text.NumberFormat;
-import java.util.List;
-import java.util.Objects;
 
+@Slf4j
 class TradeRequest extends Trade {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
-    private Label offerMaterialLabel;
-    private Label receiveMaterialLabel;
-    private Label offerAmountLabel;
-    private Label receiveAmountLabel;
     private Label distanceLabel;
-    private Button contactButton;
-    private Button cancelContactButton;
-    private boolean bid = false;
+    private Button requestTradeButton;
+    private Button cancelTradeButton;
     private Label statusLabel;
-    private String ownerTokenHash = "";
+    private HBox buttonBox;
 
-    TradeRequest(final Application application, final String offerId, final Material offerMaterial, final Integer offerAmount, final Material receiveMaterial, final Integer receiveAmount, final Location location) {
-        super(application, offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, location);
+    TradeRequest(final TradeSpec tradeSpec) {
+        super(tradeSpec);
         initComponents();
         initEventHandling();
+        handleTradeSpecStatus(getTradeSpec().getTradeStatus());
+        log.info("TradeRequest " + tradeSpec.getOfferId());
+    }
+
+    @Override
+    protected void available() {
+        setVisibleButtons(this.requestTradeButton);
+        this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.available"));
+    }
+
+    @Override
+    protected void pushed() {
+        if (getTradeSpec().isBidFromMe()) {
+            this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.waiting.for.a.response"));
+            setVisibleButtons(this.cancelTradeButton);
+        } else {
+            this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.unavailable"));
+            clearVisibleButtons();
+        }
+    }
+
+    @Override
+    protected void accepted() {
+        if (getTradeSpec().isBidFromMe()) {
+            setVisibleButtons(getContactButton());
+            this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.accepted"));
+            this.fadeTransition.play();
+        } else {
+            clearVisibleButtons();
+            this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.unavailable"));
+        }
+    }
+
+    @Override
+    protected void offline() {
+        clearVisibleButtons();
+        this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.offline"));
+    }
+
+    @Override
+    protected void removed() {
+        clearVisibleButtons();
+        this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.removed"));
+    }
+
+    @Override
+    protected void rejected() {
+        clearVisibleButtons();
+        this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.refused"));
+    }
+
+    @Override
+    protected void pulled() {
+        clearVisibleButtons();
+        this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.cancelled"));
+    }
+
+    private void setVisibleButtons(final Button... buttons) {
+        clearVisibleButtons();
+        this.buttonBox.getChildren().addAll(buttons);
+    }
+
+    private void clearVisibleButtons() {
+        this.buttonBox.getChildren().clear();
     }
 
     private void initComponents() {
 
         this.getStyleClass().add("trade-request");
-        this.offerMaterialLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-material-label")
-                .withText(LocaleService.getStringBinding(getOfferMaterial().getLocalizationKey()))
-                .build();
-        this.offerAmountLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-amount-label")
-                .withNonLocalizedText(getOfferAmount().toString())
-                .build();
-        this.receiveMaterialLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-material-label")
-                .withText(LocaleService.getStringBinding(getReceiveMaterial().getLocalizationKey()))
-                .build();
-        this.receiveAmountLabel = LabelBuilder.builder()
-                .withStyleClass("trade-request-amount-label")
-                .withNonLocalizedText(getReceiveAmount().toString())
-                .build();
+        this.offerIngredient = new TradeIngredient(getOfferMaterial().getStorageType(), getOfferMaterial(), APPLICATION_STATE.getMaterials(getOfferMaterial().getStorageType()).get(getOfferMaterial()).getTotalValue(), getOfferAmount(), true);
+        this.receiveIngredient = new TradeIngredient(getReceiveMaterial().getStorageType(), getReceiveMaterial(), APPLICATION_STATE.getMaterials(getReceiveMaterial().getStorageType()).get(getReceiveMaterial()).getTotalValue(), getReceiveAmount(), false);
+
+
         this.distanceLabel = LabelBuilder.builder()
                 .withStyleClass("trade-request-distance-label")
-                .withNonLocalizedText("(" + NUMBER_FORMAT.format(LocationService.calculateDistance(LocationService.getCurrentLocation(), getLocation())) + "Ly)")
+                .withText(LocaleService.getStringBinding("trade.request.distance", getLocation().getStarSystem(), NUMBER_FORMAT.format(LocationService.calculateDistance(LocationService.getCurrentLocation(), getLocation()))))
                 .build();
-        this.contactButton = ButtonBuilder.builder()
+        this.requestTradeButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.request.button.request.trade"))
                 .withOnAction(event -> {
                     this.marketPlaceClient.bidPush(getOfferId());
                 })
                 .build();
-        this.cancelContactButton = ButtonBuilder.builder()
+        this.requestTradeButton.visibleProperty().bind(this.offerIngredient.canTradeProperty());
+        this.cancelTradeButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.request.button.request.cancel"))
                 .withOnAction(event -> {
                     this.marketPlaceClient.bidPull(getOfferId());
-
                 })
                 .build();
         this.statusLabel = LabelBuilder.builder()
                 .withStyleClass("trade-request-status-label")
                 .withNonLocalizedText("")
                 .build();
-        final Region spacing2 = new Region();
-        HBox.setHgrow(spacing2, Priority.ALWAYS);
-        this.getChildren().addAll(this.offerMaterialLabel, this.offerAmountLabel, this.receiveMaterialLabel, this.receiveAmountLabel, spacing2, this.distanceLabel, this.statusLabel, this.contactButton, getContactButton());
+        this.setHgap(4);
+        this.setVgap(4);
+        this.buttonBox = BoxBuilder.builder().withNodes(this.requestTradeButton).buildHBox();
+        this.buttonBox.setSpacing(4);
+        final VBox statusContactBox = BoxBuilder.builder().withStyleClass("trade-info-box").withNodes(this.distanceLabel, this.statusLabel, this.buttonBox).buildVBox();
+        this.prefWidthProperty().bind(this.offerIngredient.widthProperty().multiply(this.widthProperty().divide(this.offerIngredient.widthProperty().add(4)).intValue()).add(4));
+        this.getChildren().addAll(this.offerIngredient, this.receiveIngredient, statusContactBox);
     }
 
     private void initEventHandling() {
-        EventService.addListener(LocationEvent.class, locationEvent -> {
+        this.listeners.add(EventService.addListener(this, LocationEvent.class, locationEvent -> {
             final Location currentLocation = locationEvent.getLocation();
             final Double distance = LocationService.calculateDistance(currentLocation, getLocation());
-            this.distanceLabel.setText("(" + NUMBER_FORMAT.format(distance) + "Ly)");
-        });
+            this.distanceLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.distance", getLocation().getStarSystem(), NUMBER_FORMAT.format(distance)));
+        }));
+
     }
 
-    public void push() {
-        this.statusLabel.setText("waiting for a response...");
-        this.contactButton.setVisible(false);
-        this.cancelContactButton.setVisible(true);
-        this.bid = true;
-    }
-
-    void pull(final List<String> bids) {
-        if (!bids.contains(CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()))) {
-            this.statusLabel.setText("");
-            this.contactButton.setVisible(true);
-            this.cancelContactButton.setVisible(false);
-            this.bid = false;
-        }
-    }
-
-    void accept(final boolean accept, final String acceptedTokenHash, final String ownerTokenHash) {
-        final String tokenHash = CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken());
-        if (Objects.equals(tokenHash, acceptedTokenHash)) {
-            if (accept) {
-                this.statusLabel.setText("Accepted.");
-                this.getContactButton().setVisible(true);
-                this.contactButton.setVisible(false);
-                this.cancelContactButton.setVisible(false);
-            } else {
-                this.statusLabel.setText("Refused.");
-                this.bid = false;
-                this.getContactButton().setVisible(false);
-                this.contactButton.setVisible(true);
-                this.cancelContactButton.setVisible(false);
-            }
-            this.ownerTokenHash = ownerTokenHash;
-        }
-    }
-
-    @Override
-    String getTokenHash() {
-        return this.ownerTokenHash;
-    }
 }

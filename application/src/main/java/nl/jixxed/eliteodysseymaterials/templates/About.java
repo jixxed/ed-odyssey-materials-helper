@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.HyperlinkBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -28,8 +29,10 @@ class About extends VBox {
     private Label beer;
     private Hyperlink bugs;
     private Hyperlink donate;
+    private Hyperlink donate2;
     private Hyperlink discord;
     private ImageView donateImage;
+    private ImageView donate2Image;
     private ImageView discordImage;
 
     About(final Application application) {
@@ -48,12 +51,15 @@ class About extends VBox {
         this.bugs = HyperlinkBuilder.builder().withStyleClass("about-bugs").withText(LocaleService.getStringBinding("menu.about.report")).withAction((actionEvent) ->
                 application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues")).build();
         this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/donate.png").build();
+        this.donate2Image = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/github_sponsors.png").build();
         this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
-        this.donate = HyperlinkBuilder.builder().withStyleClass("about-donate").withAction((actionEvent) ->
+        this.donate = HyperlinkBuilder.builder().withAction((actionEvent) ->
                 application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper")).withGraphic(this.donateImage).build();
+        this.donate2 = HyperlinkBuilder.builder().withAction((actionEvent) ->
+                application.getHostServices().showDocument("https://github.com/sponsors/jixxed")).withGraphic(this.donate2Image).build();
         this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withAction((actionEvent) ->
                 application.getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA")).withGraphic(this.discordImage).build();
-        this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, this.donate, this.bugs, this.discord);
+        this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, BoxBuilder.builder().withStyleClass("about-donate").withNodes(this.donate, this.donate2).buildHBox(), this.bugs, this.discord);
     }
 
     private void versionCheck() {

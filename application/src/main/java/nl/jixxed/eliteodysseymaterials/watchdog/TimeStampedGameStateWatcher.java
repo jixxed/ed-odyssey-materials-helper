@@ -35,14 +35,14 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumer = consumer;
-            EventService.addListener(ShipLockerEvent.class, consumer);
+            EventService.addListener(this, ShipLockerEvent.class, consumer);
         } else if (storagePool == StoragePool.BACKPACK) {
             final Consumer<BackpackEvent> consumer = (BackpackEvent backpackEvent) -> {
                 this.timeStamp.set(backpackEvent.getTimestamp());
                 this.process(this.file);
             };
             this.eventConsumer = consumer;
-            EventService.addListener(BackpackEvent.class, consumer);
+            EventService.addListener(this, BackpackEvent.class, consumer);
         }
     }
 

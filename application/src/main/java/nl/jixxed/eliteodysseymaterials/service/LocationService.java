@@ -11,7 +11,7 @@ public class LocationService {
     }
 
     static {
-        EventService.addListener(LocationEvent.class, locationEvent -> {
+        EventService.addStaticListener(LocationEvent.class, locationEvent -> {
             currentLocation = locationEvent.getLocation();
         });
     }

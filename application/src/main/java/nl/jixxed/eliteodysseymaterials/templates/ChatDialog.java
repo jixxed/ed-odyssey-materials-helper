@@ -10,6 +10,8 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextAreaBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.XMessageWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
@@ -27,15 +29,18 @@ class ChatDialog extends VBox {
     private TextArea input;
     private Button send;
     private String messageRef;
+    private final Stage stage;
+    private EventListener<XMessageWebSocketEvent> xMessageWebSocketEventEventListener;
 
     ChatDialog(final Stage stage, final String chat, final String offerId, final String tokenHash) {
         this.offerId = offerId;
+        this.stage = stage;
         initComponents(stage, chat, tokenHash);
         initEventHandling();
     }
 
     private void initEventHandling() {
-        EventService.addListener(XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
+        this.xMessageWebSocketEventEventListener = EventService.addListener(this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
             final XMessage message = xMessageWebSocketEvent.getXMessageMessage().getMessage();
             if (message.getOfferId().equals(this.offerId)) {
                 this.chat.appendText(message.getInfo().getNickname() + "(" + message.getInfo().getLocation() + "): " + message.getText() + "\n");
@@ -69,7 +74,7 @@ class ChatDialog extends VBox {
         stage.widthProperty().addListener((observable, oldValue, newValue) -> this.input.setPrefWidth(newValue.doubleValue() - 80));
         this.send = ButtonBuilder.builder()
                 .withStyleClass("trade-chat-send")
-                .withNonLocalizedText("send")
+                .withText(LocaleService.getStringBinding("trade.message.chat.send"))
                 .withOnAction(event -> {
                     sendMessage(tokenHash);
                 })
@@ -86,5 +91,9 @@ class ChatDialog extends VBox {
             this.send.setDisable(true);
             this.input.setDisable(true);
         });
+    }
+
+    void onDestroy() {
+        EventService.removeListener(this.xMessageWebSocketEventEventListener);
     }
 }

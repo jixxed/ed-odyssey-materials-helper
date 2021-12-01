@@ -14,14 +14,21 @@ import nl.jixxed.eliteodysseymaterials.trade.message.outbound.Data;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.OutboundMessage;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload.*;
 
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.InitialDirContext;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,9 +46,20 @@ public class MarketPlaceClient {
     public static MarketPlaceClient getInstance() {
         try {
             if (marketPlaceClient == null) {
-                marketPlaceClient = new MarketPlaceClient(new URI("wss://fgj7vgiy85.execute-api.eu-central-1.amazonaws.com/Prod"));
+                final Properties p = new Properties();
+                p.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.dns.DnsContextFactory");
+                final InitialDirContext idc = new InitialDirContext(p);
+
+                final Attributes attrs = idc.getAttributes("edmarketplace.jixxed.nl", new String[]{"CNAME"});
+                final Attribute attr = attrs.get("CNAME");
+                if (attr != null) {
+                    final String targetCName = attr.get(0).toString();
+                    final String domainName = (targetCName.endsWith(".")) ? targetCName.substring(0, targetCName.length() - 1) : targetCName;
+                    marketPlaceClient = new MarketPlaceClient(new URI("wss://" + domainName + "/Prod"));
+                }
+
             }
-        } catch (final URISyntaxException e) {
+        } catch (final URISyntaxException | NamingException e) {
             log.error("failed to connect Websocket", e);
         }
         return marketPlaceClient;
@@ -122,8 +140,8 @@ public class MarketPlaceClient {
                                         .demand(receiveAmount)
                                         .supply(offerAmount)
                                         .build()))
-                                .created(ZonedDateTime.now().toEpochSecond() * 1000)
-                                .expired(ZonedDateTime.now().plusDays(1).toEpochSecond() * 1000)
+                                .created(ZonedDateTime.now(ZoneOffset.UTC).toEpochSecond() * 1000)
+                                .expired(ZonedDateTime.now(ZoneOffset.UTC).plusDays(14).toEpochSecond() * 1000)
                                 .build())
                         .build())
                 .build();

@@ -194,7 +194,7 @@ class RecipeContent extends VBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
             if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
@@ -202,13 +202,13 @@ class RecipeContent extends VBox {
                 });
             }
         });
-        EventService.addListener(CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 final Wishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
                 loadInitialCount(wishlists);
             }
         });
-        EventService.addListener(CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
@@ -216,7 +216,7 @@ class RecipeContent extends VBox {
                 });
             }
         });
-        EventService.addListener(WishlistChangedEvent.class, wishlistEvent -> {
+        EventService.addListener(this, WishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
                 final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count()).orElse(0L);
                 if (count > 0L) {

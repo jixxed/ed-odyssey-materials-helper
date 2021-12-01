@@ -23,6 +23,8 @@ public class Offer {
     @Builder.Default
     private String token = "";
     @Builder.Default
+    private String state = "";
+    @Builder.Default
     private String tokenHash = "";
     @Builder.Default
     private Boolean accept = false;

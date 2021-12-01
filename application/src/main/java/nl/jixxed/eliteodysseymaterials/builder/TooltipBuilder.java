@@ -15,7 +15,7 @@ public class TooltipBuilder {
     private final List<String> styleClasses = new ArrayList<>();
     private StringBinding stringBinding;
     private Duration showDelay;
-    private Duration showDuration;
+    private Duration showDuration = Duration.seconds(30);
 
     public static TooltipBuilder builder() {
         return new TooltipBuilder();
@@ -40,7 +40,7 @@ public class TooltipBuilder {
         this.showDelay = showDelay;
         return this;
     }
-    
+
     public TooltipBuilder withShowDuration(final Duration showDuration) {
         this.showDuration = showDuration;
         return this;

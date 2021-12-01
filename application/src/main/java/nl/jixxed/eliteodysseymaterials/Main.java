@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -21,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
+import nl.jixxed.eliteodysseymaterials.templates.StartDialog;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
@@ -34,7 +36,8 @@ import java.io.StringWriter;
 public class Main extends Application {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final ApplicationLayout applicationLayout = new ApplicationLayout(this);
+
+    private ApplicationLayout applicationLayout;
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
@@ -46,12 +49,31 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
+        PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
+        final boolean whatsNewSeen = PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "").equals(PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
+        if (!whatsNewSeen || !PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
+            final Stage policyStage = new Stage();
+
+            final Scene policyScene = new Scene(new StartDialog(policyStage), 640, 480);
+            policyStage.initModality(Modality.APPLICATION_MODAL);
+            final JMetro jMetro = new JMetro(Style.DARK);
+            jMetro.setScene(policyScene);
+            policyScene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+            policyStage.setScene(policyScene);
+            policyStage.titleProperty().set("What's new & privacy policy");
+            policyStage.showAndWait();
+            if (!PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
+                System.exit(0);
+            } else {
+                PreferencesService.setPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, StartDialog.POLICY_LEVEL_REQUIRED);
+            }
+        }
+        this.applicationLayout = new ApplicationLayout(this);
         this.primaryStage = primaryStage;
         try {
 
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
-            PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
             final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
 
             this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
@@ -59,8 +81,10 @@ public class Main extends Application {
 
             this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
 
-            EventService.addListener(WatchedFolderChangedEvent.class, event -> reset(new File(event.getPath())));
-            EventService.addListener(CommanderSelectedEvent.class, event -> reset(this.journalWatcher.getWatchedFolder()));
+            EventService.addListener(this, WatchedFolderChangedEvent.class, event -> reset(new File(event.getPath())));
+            EventService.addListener(this, CommanderSelectedEvent.class, event -> reset(this.journalWatcher.getWatchedFolder()));
+
+
             final Scene scene = new Scene(this.applicationLayout, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
             scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_WIDTH, (Double) newValue));
@@ -81,12 +105,12 @@ public class Main extends Application {
             if (customCss.exists()) {
                 importCustomCss(scene, customCss);
             }
-            EventService.addListener(FontSizeEvent.class, fontSizeEvent -> {
+            EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
                 this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
                 EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
             });
             this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-            EventService.addListener(SaveWishlistEvent.class, event -> {
+            EventService.addListener(this, SaveWishlistEvent.class, event -> {
                 final FileChooser fileChooser = new FileChooser();
 
                 //Set extension filter for text files
@@ -104,7 +128,9 @@ public class Main extends Application {
             primaryStage.show();
             EventService.publish(new ApplicationLifeCycleEvent());
             primaryStage.setOnCloseRequest(event -> {
-                MarketPlaceClient.getInstance().close();
+                if (MarketPlaceClient.getInstance() != null) {
+                    MarketPlaceClient.getInstance().close();
+                }
                 this.timeStampedShipLockerWatcher.stop();
                 this.timeStampedBackPackWatcher.stop();
                 this.journalWatcher.stop();

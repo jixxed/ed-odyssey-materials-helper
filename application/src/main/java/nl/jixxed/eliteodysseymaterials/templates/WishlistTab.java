@@ -23,10 +23,10 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PathService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import org.controlsfx.control.Notifications;
 
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
@@ -205,11 +205,7 @@ public class WishlistTab extends EDOTab {
         this.clipboardButton = ButtonBuilder.builder().withStyleClass("wishlist-button").withText(LocaleService.getStringBinding("tab.wishlist.copy"))
                 .withOnAction(event -> {
                     copyWishListToClipboard();
-                    Notifications.create()
-                            .darkStyle()
-                            .title("Wishlists")
-                            .text("The wishlist has been copied to your clipboard")
-                            .showInformation();
+                    NotificationService.showInformation("Wishlists", "The wishlist has been copied to your clipboard");
                 }).build();
 
         final double minButtonWidth = 110.0;
@@ -246,8 +242,8 @@ public class WishlistTab extends EDOTab {
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
         region.setMinWidth(5);
-        final Region region2 = new Region();
-        HBox.setHgrow(region2, Priority.ALWAYS);
+//        final Region region2 = new Region();
+//        HBox.setHgrow(region2, Priority.ALWAYS);
 
         final Region region3 = new Region();
         region3.setMinWidth(5);
@@ -265,7 +261,8 @@ public class WishlistTab extends EDOTab {
         flowPane.prefWrapLengthProperty().bind(this.renameWishlistButton.widthProperty().add(this.createWishlistButton.widthProperty()).add(this.removeWishlistButton.widthProperty()).add(this.clipboardButton.widthProperty()).add(this.exportButton.widthProperty()).add(20));
         flowPane.setColumnHalignment(HPos.RIGHT);
         final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, region, this.wishlistName, region3, flowPane).buildHBox();
-        final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, region2, this.hideCompletedCheckBox).buildHBox();
+        final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.hideCompletedCheckBox).buildHBox();
+        hBoxMaterials.setSpacing(10);
         this.flows = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
         this.contentChild = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestRoute).buildVBox();
         this.content = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint).buildVBox();
@@ -273,7 +270,7 @@ public class WishlistTab extends EDOTab {
                 .withContent(this.content)
                 .build();
         this.setContent(this.scrollPane);
-        Observable.create((ObservableEmitter<JournalProcessedEvent> emitter) -> EventService.addListener(JournalProcessedEvent.class, emitter::onNext))
+        Observable.create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> EventService.addListener(this, JournalLineProcessedEvent.class, emitter::onNext))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(this::refreshContent));
@@ -425,17 +422,17 @@ public class WishlistTab extends EDOTab {
     }
 
     private void initEventHandling() {
-        EventService.addListener(AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             applyFontSizingHack(fontSizeEvent.getFontSize());
         });
-        EventService.addListener(WishlistSelectedEvent.class, wishlistChangedEvent -> {
+        EventService.addListener(this, WishlistSelectedEvent.class, wishlistChangedEvent -> {
             refreshWishlistBlueprints();
             refreshWishlistRecipes();
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.activeWishlistUUID));
         });
-        EventService.addListener(WishlistChangedEvent.class, wishlistChangedEvent -> {
+        EventService.addListener(this, WishlistChangedEvent.class, wishlistChangedEvent -> {
             this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                 this.wishlistSize = APPLICATION_STATE.getWishlists(commander.getFid()).getWishlist(this.activeWishlistUUID).getItems().size();
@@ -443,7 +440,7 @@ public class WishlistTab extends EDOTab {
 
             this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
         });
-        EventService.addListener(WishlistRecipeEvent.class, wishlistEvent ->
+        EventService.addListener(this, WishlistRecipeEvent.class, wishlistEvent ->
         {
             if (Action.REMOVED.equals(wishlistEvent.getAction())) {
                 this.wishlistBlueprints.stream()
@@ -469,7 +466,7 @@ public class WishlistTab extends EDOTab {
             }
             refreshContent();
         });
-        EventService.addListener(CommanderSelectedEvent.class, commanderSelectedEvent ->
+        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
             final String fid = commanderSelectedEvent.getCommander().getFid();
             final Wishlist selectedWishlist = APPLICATION_STATE.getWishlists(fid).getSelectedWishlist();
@@ -484,14 +481,14 @@ public class WishlistTab extends EDOTab {
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.activeWishlistUUID));
         });
-        EventService.addListener(CommanderAllListedEvent.class, commanderAllListedEvent ->
+        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent ->
         {
             refreshWishlistBlueprints();
         });
-        EventService.addListener(LocationEvent.class, locationEvent -> {
+        EventService.addListener(this, LocationEvent.class, locationEvent -> {
             refreshContent();
         });
-        EventService.addListener(ImportResultEvent.class, importResultEvent -> {
+        EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().equals(ImportResult.SUCCESS)) {
                 refreshWishlistBlueprints();
             }
@@ -499,6 +496,7 @@ public class WishlistTab extends EDOTab {
     }
 
     private void refreshWishlistBlueprints() {
+        this.wishlistBlueprints.forEach(WishlistBlueprint::onDestroy);
         this.wishlistBlueprints.clear();
         final List<WishlistBlueprint> newWishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> {
@@ -591,6 +589,11 @@ public class WishlistTab extends EDOTab {
                 this.content.getChildren().add(this.contentChild);
             }
         }
+        this.goodFlow.getChildren().forEach(node -> ((WishlistIngredient) node).onDestroy());
+        this.assetChemicalFlow.getChildren().forEach(node -> ((WishlistIngredient) node).onDestroy());
+        this.dataFlow.getChildren().forEach(node -> ((WishlistIngredient) node).onDestroy());
+        this.assetCircuitFlow.getChildren().forEach(node -> ((WishlistIngredient) node).onDestroy());
+        this.assetTechFlow.getChildren().forEach(node -> ((WishlistIngredient) node).onDestroy());
         this.goodFlow.getChildren().clear();
         this.assetChemicalFlow.getChildren().clear();
         this.dataFlow.getChildren().clear();
@@ -610,6 +613,7 @@ public class WishlistTab extends EDOTab {
                     case GOOD -> APPLICATION_STATE.getGoods().get(entry.getKey()).getTotalValue() >= entry.getValue();
                     case DATA -> APPLICATION_STATE.getData().get(entry.getKey()).getTotalValue() >= entry.getValue();
                     case ASSET -> APPLICATION_STATE.getAssets().get(entry.getKey()).getTotalValue() >= entry.getValue();
+                    case TRADE -> false;
                     case OTHER -> false;
                 }))
                 .map(wishlistItem ->
@@ -617,6 +621,7 @@ public class WishlistTab extends EDOTab {
                             case GOOD -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getGoods().get(wishlistItem.getKey()).getTotalValue());
                             case DATA -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getData().get(wishlistItem.getKey()).getTotalValue());
                             case ASSET -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getAssets().get(wishlistItem.getKey()).getTotalValue());
+                            case TRADE -> null;
                             case OTHER -> null;
                         }
                 ).toList();
