@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 @Slf4j
-public class AssetParser extends Parser {
+public class AssetParser implements Parser {
     @Override
     public void parse(final Iterator<JsonNode> components, final StoragePool storagePool, final Map<? extends Material, Storage> knownMap, final Map<String, Storage> unknownMap) {
         components.forEachRemaining(componentNode ->

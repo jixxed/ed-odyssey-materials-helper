@@ -97,10 +97,7 @@ class MaterialOverview extends VBox {
             this.currentSearch = searchEvent.getSearch();
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         });
-        EventService.addListener(this, CommanderResetEvent.class, event -> Platform.runLater(() -> {
-
-            this.updateContent(this.currentSearch);
-        }));
+        EventService.addListener(this, CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
         Observable
                 .create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
                     if (JournalEventType.BACKPACK.equals(journalProcessedEvent.getJournalEventType())

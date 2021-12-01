@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
@@ -7,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.UpgradeRecipe;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecipeHelper {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 

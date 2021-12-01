@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 @Slf4j
-public class GoodParser extends Parser {
+public class GoodParser implements Parser {
     @Override
     public void parse(final Iterator<JsonNode> items, final StoragePool storagePool, final Map<? extends Material, Storage> knownMap, final Map<String, Storage> unknownMap) {
         items.forEachRemaining(itemNode ->

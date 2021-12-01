@@ -11,7 +11,9 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SliderBuilder {
-    private double value, min, max;
+    private double value;
+    private double min;
+    private double max;
     private final List<String> styleClasses = new ArrayList<>();
     private ChangeListener<Number> changeListener;
 

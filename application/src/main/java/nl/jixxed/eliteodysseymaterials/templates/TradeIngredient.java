@@ -25,7 +25,7 @@ class TradeIngredient extends MaterialIngredient {
     private void initComponents() {
         this.getStyleClass().add("trade-ingredient");
         setLeftDescriptionLabel(LocaleService.getStringBinding("recipe.header.available"));
-        if (this.isGiven) {
+        if (Boolean.TRUE.equals(this.isGiven)) {
             setRightDescriptionLabel(LocaleService.getStringBinding("recipe.header.give"));
         } else {
             setRightDescriptionLabel(LocaleService.getStringBinding("recipe.header.receive"));
@@ -40,8 +40,8 @@ class TradeIngredient extends MaterialIngredient {
     }
 
     private void initEventHandling() {
-        if (this.isGiven) {
-            this.eventListeners.add(EventService.addListener(this, StorageEvent.class, (storageEvent) -> this.update()));
+        if (Boolean.TRUE.equals(this.isGiven)) {
+            this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> this.update()));
         }
     }
 
@@ -63,7 +63,7 @@ class TradeIngredient extends MaterialIngredient {
 
     private BooleanProperty canTrade;
 
-    private final void setCanTrade(final boolean value) {
+    private void setCanTrade(final boolean value) {
         canTradeProperty().set(value);
     }
 

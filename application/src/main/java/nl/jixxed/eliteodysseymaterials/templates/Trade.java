@@ -1,14 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import lombok.EqualsAndHashCode;
@@ -36,7 +33,6 @@ import java.util.function.Consumer;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 abstract class Trade extends FlowPane {
-    //    private final Application application;
     @EqualsAndHashCode.Include
     private String offerId;
     private Material offerMaterial;
@@ -47,10 +43,9 @@ abstract class Trade extends FlowPane {
     private Location location;
     private TradeSpec tradeSpec;
 
-    List<EventListener> listeners = new ArrayList<>();
-    TradeIngredient offerIngredient;
-    TradeIngredient receiveIngredient;
-    protected FadeTransition fadeTransition;
+    protected List<EventListener<?>> listeners = new ArrayList<>();
+    protected TradeIngredient offerIngredient;
+    protected TradeIngredient receiveIngredient;
 
     @Setter
     private Optional<Consumer<TradeSpec>> callback = Optional.empty();
@@ -67,9 +62,7 @@ abstract class Trade extends FlowPane {
         initComponents();
         initEventHandling();
         this.setPrefWrapLength(300);
-        tradeSpec.setCallback(Optional.of(tradeSpec1 -> {
-            handleTradeSpecStatus(tradeSpec.getTradeStatus());
-        }));
+        tradeSpec.setCallback(Optional.of(tradeSpec1 -> handleTradeSpecStatus(tradeSpec.getTradeStatus())));
     }
 
     void handleTradeSpecStatus(final TradeStatus tradeStatus) {
@@ -82,8 +75,6 @@ abstract class Trade extends FlowPane {
                 case PULLED -> pulled();
                 case ACCEPTED -> accepted();
                 case REJECTED -> rejected();
-                default -> {
-                }
             }
             this.callback.ifPresent(c -> c.accept(this.tradeSpec));
         });
@@ -96,15 +87,19 @@ abstract class Trade extends FlowPane {
     protected abstract void accepted();
 
     protected void offline() {
+        //NOOP
     }
 
     protected void removed() {
+        //NOOP
     }
 
     protected void rejected() {
+        //NOOP
     }
 
     protected void pulled() {
+        //NOOP
     }
 
     private void initEventHandling() {
@@ -124,16 +119,8 @@ abstract class Trade extends FlowPane {
     private void initComponents() {
         this.contactButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.button.chat"))
-                .withOnAction(event -> {
-                    this.fadeTransition.stop();
-                    createModal();
-                })
+                .withOnAction(event -> createModal())
                 .build();
-        this.fadeTransition = new FadeTransition(Duration.millis(500), this.contactButton);
-        this.fadeTransition.setFromValue(1.0);
-        this.fadeTransition.setToValue(0.3);
-        this.fadeTransition.setCycleCount(Animation.INDEFINITE);
-        this.fadeTransition.setAutoReverse(true);
     }
 
     private void createModal() {

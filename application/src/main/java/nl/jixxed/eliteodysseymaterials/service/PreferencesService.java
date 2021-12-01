@@ -3,6 +3,8 @@ package nl.jixxed.eliteodysseymaterials.service;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 
@@ -14,6 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PreferencesService {
 
     private static Properties prop;

@@ -25,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationEvent;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ class EngineerCard extends VBox {
                             .withText(LocaleService.getStringBinding(recipeName.getLocalizationKey()))
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
                             .build()).buildHBox();
+    private static final String ENGINEER_CATEGORY_STYLE_CLASS = "engineer-category";
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -123,12 +125,12 @@ class EngineerCard extends VBox {
                                         .withText(LocaleService.getStringBinding(prerequisite.getLocalisationKey()))
                                         .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getRecipeName())))
                                         .build()).buildHBox())
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private Label getUnlockRequirementsTitle() {
         return LabelBuilder.builder()
-                .withStyleClass("engineer-category")
+                .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.engineer.unlock.prerequisites"))
                 .build();
     }
@@ -139,7 +141,7 @@ class EngineerCard extends VBox {
                 .map(Map.Entry::getKey)
                 .sorted(Comparator.comparing(RecipeName::name))
                 .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private List<HBox> getSuitBlueprints() {
@@ -148,19 +150,19 @@ class EngineerCard extends VBox {
                 .map(Map.Entry::getKey)
                 .sorted(Comparator.comparing(RecipeName::name))
                 .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private Label getWeaponModulesTitle() {
         return LabelBuilder.builder()
-                .withStyleClass("engineer-category")
+                .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.engineer.weapon.modules"))
                 .build();
     }
 
     private Label getSuitModulesTitle() {
         return LabelBuilder.builder()
-                .withStyleClass("engineer-category")
+                .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.engineer.suit.modules"))
                 .build();
     }

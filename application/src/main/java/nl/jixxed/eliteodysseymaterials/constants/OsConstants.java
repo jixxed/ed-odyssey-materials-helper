@@ -13,9 +13,9 @@ public class OsConstants {
 
     static {
         switch (OsCheck.getOperatingSystemType()) {
-            case MacOS, Other -> throw new IllegalArgumentException("OS not supported.");
-            case Linux -> setLinux();
-            case Windows -> setWindows();
+            case MACOS, OTHER -> throw new IllegalArgumentException("OS not supported.");
+            case LINUX -> setLinux();
+            case WINDOWS -> setWindows();
         }
     }
 

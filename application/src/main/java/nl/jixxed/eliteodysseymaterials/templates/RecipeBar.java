@@ -12,7 +12,6 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TitledPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
@@ -26,7 +25,6 @@ import java.util.Map;
 
 @Slf4j
 class RecipeBar extends Accordion {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private About about;
     private TitledPane[] categoryTitledPanes;
     private TitledPane aboutTitledPane;

@@ -47,7 +47,7 @@ public class MaterialIngredient extends Ingredient {
     private HBox secondLine;
     private Region region2;
     private Tooltip tooltip;
-    List<EventListener> eventListeners = new ArrayList<>();
+    List<EventListener<?>> eventListeners = new ArrayList<>();
 
 
     MaterialIngredient(final StorageType storageType, final Material material, final Integer leftAmount, final Integer rightAmount) {

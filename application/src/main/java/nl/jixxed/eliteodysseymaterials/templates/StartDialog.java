@@ -72,9 +72,7 @@ public class StartDialog extends VBox implements Template {
                     PreferencesService.setPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, POLICY_LEVEL_REQUIRED);
                     this.stage.close();
                 }).build(),
-                ButtonBuilder.builder().withNonLocalizedText("Close application").withOnAction(event -> {
-                    this.stage.close();
-                }).build()
+                ButtonBuilder.builder().withNonLocalizedText("Close application").withOnAction(event -> this.stage.close()).build()
         ).buildHBox()
                 : BoxBuilder.builder().withNodes(region,
                 ButtonBuilder.builder().withNonLocalizedText("Continue").withOnAction(event -> this.stage.close()).build()
@@ -86,6 +84,6 @@ public class StartDialog extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-
+        //NOOP
     }
 }

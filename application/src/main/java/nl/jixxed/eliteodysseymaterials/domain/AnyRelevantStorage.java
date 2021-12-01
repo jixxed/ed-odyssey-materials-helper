@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -8,11 +9,9 @@ import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import java.util.HashMap;
 import java.util.Map;
 
+@NoArgsConstructor
 public class AnyRelevantStorage extends Storage {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-
-    public AnyRelevantStorage() {
-    }
 
     @Override
     public Integer getBackPackValue() {
@@ -26,7 +25,7 @@ public class AnyRelevantStorage extends Storage {
 
     @Override
     public void setValue(final Integer value, final StoragePool pool) {
-
+        //NOOP
     }
 
     @Override
@@ -47,8 +46,7 @@ public class AnyRelevantStorage extends Storage {
     @Override
     public Integer getValue(final StoragePool target) {
         return switch (target) {
-            case BACKPACK -> 0;
-            case SHIPLOCKER -> 0;
+            case BACKPACK, SHIPLOCKER -> 0;
         };
     }
 }

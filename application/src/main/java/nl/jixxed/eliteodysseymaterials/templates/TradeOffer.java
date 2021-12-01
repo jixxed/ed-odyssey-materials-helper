@@ -50,7 +50,6 @@ class TradeOffer extends Trade {
     protected void accepted() {
         this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.status.bid.accepted"));
         setVisibleButtons(this.removeOfferButton, getContactButton());
-        this.fadeTransition.play();
 
     }
 

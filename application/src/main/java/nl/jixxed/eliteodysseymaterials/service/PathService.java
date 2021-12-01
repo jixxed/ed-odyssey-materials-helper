@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint;
@@ -7,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PathService {
 
     private static final int MAX_ENGINEER_DISTANCE = 10000;//Ly

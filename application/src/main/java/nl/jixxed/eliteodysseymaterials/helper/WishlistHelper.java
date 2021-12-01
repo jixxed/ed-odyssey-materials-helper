@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistRecipe;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
@@ -8,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WishlistHelper {
     public static List<WishlistRecipe> convertWishlist(final String recipes) {
         final List<WishlistRecipe> wishlist = new ArrayList<>();

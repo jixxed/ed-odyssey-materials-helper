@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public interface Material {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
                 .filter(material -> !material.isUnknown())
                 .map(Material.class::cast)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     static List<Material> getAllRelevantMaterials() {
@@ -53,7 +54,7 @@ public interface Material {
                 .filter(material -> !material.isUnknown())
                 .filter(RecipeConstants::isEngineeringOrBlueprintIngredient)
                 .map(Material.class::cast)
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     static Material forLocalizedName(final String name) {

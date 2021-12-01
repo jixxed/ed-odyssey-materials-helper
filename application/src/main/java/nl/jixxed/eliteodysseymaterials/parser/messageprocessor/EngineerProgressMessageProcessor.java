@@ -1,12 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
+@Slf4j
 public class EngineerProgressMessageProcessor implements MessageProcessor {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String ENGINEER = "Engineer";
@@ -41,8 +43,7 @@ public class EngineerProgressMessageProcessor implements MessageProcessor {
                 case "Rosa Dayette" -> APPLICATION_STATE.setEngineerState(Engineer.ROSA_DAYETTE, engineerState);
                 case "Eleanor Bresa" -> APPLICATION_STATE.setEngineerState(Engineer.ELEANOR_BRESA, engineerState);
                 case "Yi Shen" -> APPLICATION_STATE.setEngineerState(Engineer.YI_SHEN, engineerState);
-                default -> {
-                }
+                default -> log.warn("Unknown engineer: " + engineer);
             }
             EventService.publish(new EngineerEvent());
         }

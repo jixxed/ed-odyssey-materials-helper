@@ -52,13 +52,6 @@ public class LocaleService {
         });
     }
 
-//    public static StringBinding getStringBindingLocalizedParameters(final String key, final String... parameters) {
-//        return ObservableResourceFactory.getStringBinding(() -> {
-//            final String[] localizedParams = Arrays.stream(parameters).map(parameter -> ObservableResourceFactory.getResources().getString(parameter)).toArray(String[]::new);
-//            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), (Object[]) localizedParams);
-//        });
-//    }
-
     public static ObservableValue<String> getSupplierStringBinding(final String key, final Supplier<Object>... parameterSuppliers) {
         return ObservableResourceFactory.getStringBinding(() -> {
             final Object[] parameters = Arrays.stream(parameterSuppliers).map(Supplier::get).toArray(Object[]::new);

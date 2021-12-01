@@ -65,9 +65,7 @@ public class WishlistBlueprint extends HBox {
                 .build();
         this.visibilityButton = ButtonBuilder.builder()
                 .withStyleClasses("wishlist-visible-icon", "visible")
-                .withOnAction(event -> {
-                    setVisibility(!this.visible);
-                })
+                .withOnAction(event -> setVisibility(!this.visible))
                 .withGraphic(this.visibilityImage)
                 .build();
         setVisibility(this.wishlistRecipe.isVisible());
@@ -95,9 +93,9 @@ public class WishlistBlueprint extends HBox {
         this.getStyleClass().add("wishlist-item");
 
 
-        if (this.recipe instanceof ModuleRecipe) {
+        if (this.recipe instanceof ModuleRecipe moduleRecipe) {
             final Tooltip tooltip = new Tooltip();
-            tooltip.textProperty().bind(LocaleService.getToolTipStringBinding((ModuleRecipe) this.recipe));
+            tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe));
             tooltip.setShowDelay(Duration.millis(100));
             Tooltip.install(this.wishlistRecipeName, tooltip);
         }

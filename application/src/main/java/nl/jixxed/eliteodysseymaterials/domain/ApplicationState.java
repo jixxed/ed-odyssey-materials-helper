@@ -61,7 +61,7 @@ public class ApplicationState {
                     }
                 }));
 
-        EventService.addListener(this, EnlistWebSocketEvent.class, (event) -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getEnlistMessage().getTrace().getToken()));
+        EventService.addListener(this, EnlistWebSocketEvent.class, event -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getEnlistMessage().getTrace().getToken()));
     }
 
     public static ApplicationState getInstance() {

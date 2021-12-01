@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -13,11 +13,11 @@ public class CryptoHelper {
     public static String sha256(final String key, final String data) {
         try {
             final Mac sha256Hmac = Mac.getInstance("HmacSHA256");
-            final SecretKeySpec secretKey = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
+            final SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
             sha256Hmac.init(secretKey);
 
-            return hex(sha256Hmac.doFinal(data.getBytes("UTF-8")));
-        } catch (final UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
+            return hex(sha256Hmac.doFinal(data.getBytes(StandardCharsets.UTF_8)));
+        } catch (final NoSuchAlgorithmException | InvalidKeyException ex) {
             log.error("crypto error", ex);
         }
         return "";

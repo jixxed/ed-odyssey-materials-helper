@@ -27,9 +27,9 @@ public class EventService {
 
     public static <T extends Event> EventListener<T> addListener(final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         final NonStaticEventListener<T> listener = new NonStaticEventListener<>(owner, priority, eventClass, consumer);
-        log.debug("register listener: " + listener.getEventClass() + ", " + listener.hashCode());
+        logListener(listener, "register");
         LISTENERS.add(listener);
-        log.debug("listener size: " + LISTENERS.size());
+        logListenerSize();
         return listener;
     }
 
@@ -39,9 +39,9 @@ public class EventService {
 
     private static <T extends Event> EventListener<T> addStaticListener(final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         final EventListener<T> listener = new EventListener<>(priority, eventClass, consumer);
-        log.debug("register static listener: " + listener.getEventClass() + ", " + listener.hashCode());
+        logListener(listener, "register static");
         LISTENERS.add(listener);
-        log.debug("listener size: " + LISTENERS.size());
+        logListenerSize();
         return listener;
     }
 
@@ -50,8 +50,16 @@ public class EventService {
     }
 
     public static void removeListener(final EventListener<? extends Event> eventListener) {
-        log.debug("deregister listener: " + eventListener.getEventClass() + ", " + eventListener.hashCode());
+        logListener(eventListener, "deregister");
         LISTENERS.remove(eventListener);
+        logListenerSize();
+    }
+
+    private static <T extends Event> void logListener(final EventListener<T> listener, final String action) {
+        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode());
+    }
+
+    private static void logListenerSize() {
         log.debug("listener size: " + LISTENERS.size());
     }
 }

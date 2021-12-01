@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class RecipeContent extends VBox {
+    private static final String RECIPE_TITLE_LABEL_STYLE_CLASS = "recipe-title-label";
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final Recipe recipe;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -57,7 +58,7 @@ class RecipeContent extends VBox {
 
     private void initSteps() {
         final Label referralLabelHeader = LabelBuilder.builder()
-                .withStyleClass("recipe-title-label")
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("recipe.label.completed.referrals"))
                 .build();
         this.getChildren().add(referralLabelHeader);
@@ -73,11 +74,11 @@ class RecipeContent extends VBox {
         this.ingredients.addAll(getRecipeIngredients(this.recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
         this.ingredients.addAll(getRecipeIngredients(this.recipe, Asset.class, StorageType.ASSET, APPLICATION_STATE.getAssets()));
         this.ingredients.addAll(getRecipeIngredients(this.recipe, Data.class, StorageType.DATA, APPLICATION_STATE.getData()));
-        if (this.recipe instanceof EngineerRecipe) {
-            this.ingredients.addAll(((EngineerRecipe) this.recipe).getOther().stream()
+        if (this.recipe instanceof EngineerRecipe engineerRecipe) {
+            this.ingredients.addAll(engineerRecipe.getOther().stream()
                     .map(MissionIngredient::new)
                     .sorted(Comparator.comparing(MissionIngredient::getName))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toCollection(ArrayList::new)));
         }
     }
 
@@ -88,7 +89,7 @@ class RecipeContent extends VBox {
 
     private void initDescription() {
         final Label descriptionTitle = LabelBuilder.builder()
-                .withStyleClass("recipe-title-label")
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("recipe.label.description"))
                 .build();
 
@@ -123,7 +124,7 @@ class RecipeContent extends VBox {
         HBox.setHgrow(this.addToWishlist, Priority.ALWAYS);
         this.recipeHeader.getChildren().add(box);
         final Label materialHeader = LabelBuilder.builder()
-                .withStyleClass("recipe-title-label")
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("recipe.header.material"))
                 .build();
         this.getChildren().add(materialHeader);
@@ -153,7 +154,7 @@ class RecipeContent extends VBox {
 
     private void initAsEngineerMission() {
         final Label materialHeader = LabelBuilder.builder()
-                .withStyleClass("recipe-title-label")
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("recipe.header.objective"))
                 .build();
         this.getChildren().add(materialHeader);
@@ -161,7 +162,7 @@ class RecipeContent extends VBox {
 
     private void initEngineers() {
         final Label engineerLabelHeader = LabelBuilder.builder()
-                .withStyleClass("recipe-title-label")
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("recipe.label.engineers"))
                 .build();
         this.getChildren().add(engineerLabelHeader);
@@ -177,16 +178,17 @@ class RecipeContent extends VBox {
     private void initModifiers() {
         final Map<Modifier, String> modifierMap = this.recipe.getModifiers();
         if (!modifierMap.isEmpty()) {
-            final Label modifierTitle = LabelBuilder.builder().withStyleClass("recipe-title-label").withText(LocaleService.getStringBinding("recipe.label.modifiers")).build();
+            final Label modifierTitle = LabelBuilder.builder().withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("recipe.label.modifiers")).build();
             this.getChildren().add(modifierTitle);
 
             final List<HBox> modifiers = modifierMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(modifierStringEntry -> {
-                final Label modifier = LabelBuilder.builder().withStyleClass("recipe-modifier-name").withText(LocaleService.getStringBinding(modifierStringEntry.getKey().getLocalizationKey())).build();
-                final Label value = LabelBuilder.builder().withStyleClass("recipe-modifier-value").withNonLocalizedText(modifierStringEntry.getValue()).build();
-                final HBox modifierBox = BoxBuilder.builder().withStyleClass("recipe-modifier").withNodes(modifier, value).buildHBox();
-                HBox.setHgrow(value, Priority.ALWAYS);
-                return modifierBox;
-            }).collect(Collectors.toList());
+                        final Label modifier = LabelBuilder.builder().withStyleClass("recipe-modifier-name").withText(LocaleService.getStringBinding(modifierStringEntry.getKey().getLocalizationKey())).build();
+                        final Label value = LabelBuilder.builder().withStyleClass("recipe-modifier-value").withNonLocalizedText(modifierStringEntry.getValue()).build();
+                        final HBox modifierBox = BoxBuilder.builder().withStyleClass("recipe-modifier").withNodes(modifier, value).buildHBox();
+                        HBox.setHgrow(value, Priority.ALWAYS);
+                        return modifierBox;
+                    })
+                    .collect(Collectors.toCollection(ArrayList::new));
 
             final FlowPane modifiersFlowPane = FlowPaneBuilder.builder().withStyleClass("recipe-modifier-flow").withNodes(modifiers).build();
             this.getChildren().addAll(modifiersFlowPane);
@@ -232,7 +234,7 @@ class RecipeContent extends VBox {
         return recipe.getMaterialCollection(materialClass).entrySet().stream()
                 .map(material -> new MaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue()))
                 .sorted(Comparator.comparing(MaterialIngredient::getName))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 

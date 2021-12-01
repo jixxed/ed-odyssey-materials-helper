@@ -176,28 +176,24 @@ public class WishlistTab extends EDOTab {
         this.renameWishlistButton = ButtonBuilder.builder()
                 .withStyleClass("wishlist-button")
                 .withText(LocaleService.getStringBinding("tab.wishlist.rename"))
-                .withOnAction(event -> {
-                    APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
-                        wishlists.renameWishlist(this.activeWishlistUUID, this.wishlistName.getText());
-                        APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
-                        this.wishlistName.clear();
-                        refreshWishlistSelect();
-                    });
-                })
+                .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+                    wishlists.renameWishlist(this.activeWishlistUUID, this.wishlistName.getText());
+                    APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
+                    this.wishlistName.clear();
+                    refreshWishlistSelect();
+                }))
                 .build();
         this.createWishlistButton = ButtonBuilder.builder()
                 .withStyleClass("wishlist-button")
                 .withText(LocaleService.getStringBinding("tab.wishlist.create"))
-                .withOnAction(event -> {
-                    APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
-                        wishlists.createWishlist(this.wishlistName.getText());
-                        APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
-                        this.wishlistName.clear();
-                        refreshWishlistSelect();
-                    });
-                })
+                .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+                    wishlists.createWishlist(this.wishlistName.getText());
+                    APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
+                    this.wishlistName.clear();
+                    refreshWishlistSelect();
+                }))
                 .build();
         this.wishlistName = TextFieldBuilder.builder().withStyleClasses("root", "wishlist-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt")).build();
         this.exportButton = ButtonBuilder.builder().withStyleClass("wishlist-button").withText(LocaleService.getStringBinding("tab.wishlist.export"))
@@ -242,8 +238,6 @@ public class WishlistTab extends EDOTab {
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
         region.setMinWidth(5);
-//        final Region region2 = new Region();
-//        HBox.setHgrow(region2, Priority.ALWAYS);
 
         final Region region3 = new Region();
         region3.setMinWidth(5);
@@ -422,9 +416,7 @@ public class WishlistTab extends EDOTab {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            applyFontSizingHack(fontSizeEvent.getFontSize());
-        });
+        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize()));
         EventService.addListener(this, WishlistSelectedEvent.class, wishlistChangedEvent -> {
             refreshWishlistBlueprints();
             refreshWishlistRecipes();
@@ -434,9 +426,7 @@ public class WishlistTab extends EDOTab {
         });
         EventService.addListener(this, WishlistChangedEvent.class, wishlistChangedEvent -> {
             this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                this.wishlistSize = APPLICATION_STATE.getWishlists(commander.getFid()).getWishlist(this.activeWishlistUUID).getItems().size();
-            });
+            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = APPLICATION_STATE.getWishlists(commander.getFid()).getWishlist(this.activeWishlistUUID).getItems().size());
 
             this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
         });
@@ -455,9 +445,7 @@ public class WishlistTab extends EDOTab {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final WishlistBlueprint wishlistBlueprint = new WishlistBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getWishlistRecipe());
                     if (!wishlistEvent.getWishlistUUID().equals(this.activeWishlistUUID)) {
-                        Platform.runLater(() -> {
-                            this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null));
-                        });
+                        Platform.runLater(() -> this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null)));
                     } else {
                         this.wishlistBlueprints.add(wishlistBlueprint);
                         addBluePrint(wishlistBlueprint);
@@ -481,13 +469,8 @@ public class WishlistTab extends EDOTab {
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.activeWishlistUUID));
         });
-        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent ->
-        {
-            refreshWishlistBlueprints();
-        });
-        EventService.addListener(this, LocationEvent.class, locationEvent -> {
-            refreshContent();
-        });
+        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
+        EventService.addListener(this, LocationEvent.class, locationEvent -> refreshContent());
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().equals(ImportResult.SUCCESS)) {
                 refreshWishlistBlueprints();
@@ -626,8 +609,7 @@ public class WishlistTab extends EDOTab {
                         }
                 ).toList();
 
-        this.wishlistBlueprints.stream()
-                .forEach(wishlistBlueprint -> wishlistBlueprint.addWishlistIngredients(ingredients));
+        this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.addWishlistIngredients(ingredients));
         this.goodFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.GOOD)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
         this.dataFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.DATA)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
         this.assetCircuitFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CIRCUIT)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());

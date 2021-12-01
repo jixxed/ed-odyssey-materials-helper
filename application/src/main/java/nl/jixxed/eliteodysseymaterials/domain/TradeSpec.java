@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -24,6 +25,7 @@ import java.util.function.Consumer;
 @Slf4j
 public class TradeSpec {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    public static final String SHA_KEY = "xt23s778RHY";
     private final String offerId;
     private final Material offerMaterial;
     private final int offerAmount;
@@ -35,7 +37,7 @@ public class TradeSpec {
     private String bid;
     private String acceptedTokenHash;
     private final String ownerHash;
-    private final List<EventListener> listeners = new ArrayList<>();
+    private final List<EventListener<?>> listeners = new ArrayList<>();
     private String chat = "";
     @Setter
     private Optional<Consumer<TradeSpec>> callback = Optional.empty();
@@ -52,7 +54,6 @@ public class TradeSpec {
         this.acceptedTokenHash = acceptedTokenHash;
         this.ownerHash = ownerHash;
         this.tradeStatus = tradeStatus;
-        log.info(offerId + ": tradespec create");
 
         initEventHandling();
     }
@@ -85,11 +86,9 @@ public class TradeSpec {
         this.listeners.add(EventService.addListener(this, 1, XBidPullWebSocketEvent.class, xBidPullWebSocketEvent -> {
             final Offer bidOffer = xBidPullWebSocketEvent.getXBidPullMessage().getOffer();
             if (getOfferId().equals(bidOffer.getOfferId())) {
-                final List<String> bids = bidOffer.getXbids().stream().map(XBid::getTokenhash).toList();
-                //if (bids.contains(CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()))) {//may be redundant
                 if (isBidFromMe()) {
                     this.tradeStatus = TradeStatus.PULLED;
-                    NotificationService.showInformation("Trade", "Your bid was pulled.");
+                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.title"), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.was.pulled"));
                     final TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
@@ -106,13 +105,12 @@ public class TradeSpec {
                     timer.schedule(task, delay);
                 } else {
                     if (isOwnedByMe()) {
-                        NotificationService.showInformation("Trade", "A bid was pulled.");
+                        NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.title"), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.a.bid.was.pulled"));
                     }
                     this.tradeStatus = TradeStatus.AVAILABLE;
                     this.bid = "";
                 }
                 this.callback.ifPresent(c -> c.accept(this));
-                //}
             }
         }));
 
@@ -122,9 +120,9 @@ public class TradeSpec {
                 this.bid = bidOffer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).map(XBid::getTokenhash).findFirst().orElse("");
                 this.tradeStatus = TradeStatus.PUSHED;
                 if (isBidFromMe()) {
-                    NotificationService.showInformation("Trade", "Your bid is placed.");
+                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.title"), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.is.placed"));
                 } else if (isOwnedByMe()) {
-                    NotificationService.showInformation("Trade", "You received a bid on an offer.");
+                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.title"), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.you.received.a.bid.on.an.offer"));
                 }
                 this.callback.ifPresent(c -> c.accept(this));
             }
@@ -139,14 +137,14 @@ public class TradeSpec {
                     this.tradeStatus = TradeStatus.ACCEPTED;
                     this.acceptedTokenHash = acceptedBid.map(XBid::getTokenhash).orElse("");
                     if (isOwnedByMe()) {
-                        NotificationService.showInformation("Trade", "You accepted a bid.");
+                        NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.title"), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.you.accepted.a.bid"));
                     } else if (isBidFromMe()) {
-                        NotificationService.showInformation("Trade", "Your bid has been accepted.");
+                        NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.title"), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.has.been.accepted"));
                     }
                 } else if (isBidFromMe()) {
                     this.tradeStatus = TradeStatus.REJECTED;
                     this.bid = "";
-                    NotificationService.showInformation("Trade", "Your bid has been rejected.");
+                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.title"), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.has.been.rejected"));
                     final TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
@@ -206,15 +204,15 @@ public class TradeSpec {
     }
 
     private boolean isOwnedByMe() {
-        return Objects.equals(this.ownerHash, CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()));
+        return Objects.equals(this.ownerHash, CryptoHelper.sha256(SHA_KEY, APPLICATION_STATE.getMarketPlaceToken()));
     }
 
     public boolean isBidFromMe() {
-        return Objects.equals(this.bid, CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()));
+        return Objects.equals(this.bid, CryptoHelper.sha256(SHA_KEY, APPLICATION_STATE.getMarketPlaceToken()));
     }
 
     private boolean isBidAcceptedFromMe() {
-        return Objects.equals(this.acceptedTokenHash, CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()));
+        return Objects.equals(this.acceptedTokenHash, CryptoHelper.sha256(SHA_KEY, APPLICATION_STATE.getMarketPlaceToken()));
     }
 
     private boolean isAccepted() {
@@ -224,7 +222,6 @@ public class TradeSpec {
     public void onDestroy() {
         this.listeners.forEach(EventService::removeListener);
         setCallback(Optional.empty());
-        log.info(this.offerId + ": tradespec ondestroy");
     }
 
 }

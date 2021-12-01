@@ -248,15 +248,11 @@ class TradePagination extends VBox {
                 final List<Trade> tradesToShow = filteredTradeSpecs.subList(fromIndex, toIndex).stream().map(tradeSpec -> {
                     if (tradeSpec.getTradeType().equals(TradeType.OFFER)) {
                         final TradeOffer tradeOffer = new TradeOffer(tradeSpec);
-                        tradeOffer.setCallback(Optional.of((spec) -> {
-                            refresh();
-                        }));
+                        tradeOffer.setCallback(Optional.of((spec) -> refresh()));
                         return tradeOffer;
                     } else {
                         final TradeRequest tradeRequest = new TradeRequest(tradeSpec);
-                        tradeRequest.setCallback(Optional.of((spec) -> {
-                            refresh();
-                        }));
+                        tradeRequest.setCallback(Optional.of((spec) -> refresh()));
                         return tradeRequest;
                     }
                 }).toList();

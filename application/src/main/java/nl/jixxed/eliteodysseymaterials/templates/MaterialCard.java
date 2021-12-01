@@ -85,8 +85,8 @@ class MaterialCard extends HBox {
         final String materialType = this.material.getClass().getSimpleName().toLowerCase();
         if (this.material.isUnknown()) {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-unknown");
-        } else if (this.material instanceof Asset) {
-            switch (((Asset) this.material).getType()) {
+        } else if (this.material instanceof Asset asset) {
+            switch (asset.getType()) {
                 case TECH -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-tech");
                 case CIRCUIT -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-circuit");
                 case CHEMICAL -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-chemical");
@@ -116,8 +116,8 @@ class MaterialCard extends HBox {
             imageViewBuilder = imageViewBuilder.withImage("/images/material/data.png");
         } else if (material instanceof Good) {
             imageViewBuilder = imageViewBuilder.withImage("/images/material/good.png");
-        } else if (material instanceof Asset) {
-            imageViewBuilder = switch (((Asset) material).getType()) {
+        } else if (material instanceof Asset asset) {
+            imageViewBuilder = switch (asset.getType()) {
                 case TECH -> imageViewBuilder.withImage("/images/material/tech.png");
                 case CIRCUIT -> imageViewBuilder.withImage("/images/material/circuit.png");
                 case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");

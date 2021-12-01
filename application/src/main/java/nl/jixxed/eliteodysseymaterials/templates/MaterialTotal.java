@@ -25,6 +25,8 @@ import java.util.Map;
 
 class MaterialTotal extends VBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final String MATERIAL_TOTAL_VALUE_ROW_STYLE_CLASS = "material-total-value-row";
+    private static final String MATERIAL_TOTAL_VALUE_IRRELEVANT_ROW_STYLE_CLASS = "material-total-value-irrelevant-row";
     private Integer subtotalValue = 0;
 
     private final Map<MaterialTotalType, Label> totals = new EnumMap<>(MaterialTotalType.class);
@@ -70,12 +72,12 @@ class MaterialTotal extends VBox {
             }
             final Label totalName = LabelBuilder.builder()
                     .withText(LocaleService.getStringBinding(totalType.getLocalizationKey()))
-                    .withStyleClass(MaterialTotalType.IRRELEVANT.equals(totalType) ? "material-total-value-irrelevant-row" : "material-total-value-row")
+                    .withStyleClass(MaterialTotalType.IRRELEVANT.equals(totalType) ? MATERIAL_TOTAL_VALUE_IRRELEVANT_ROW_STYLE_CLASS : MATERIAL_TOTAL_VALUE_ROW_STYLE_CLASS)
                     .build();
             this.totals.put(totalType, totalName);
             final Label totalValue = LabelBuilder.builder()
-                    .withStyleClass("material-total-value-row")
-                    .withStyleClass(MaterialTotalType.IRRELEVANT.equals(totalType) ? "material-total-value-irrelevant-row" : "material-total-value-row")
+                    .withStyleClass(MATERIAL_TOTAL_VALUE_ROW_STYLE_CLASS)
+                    .withStyleClass(MaterialTotalType.IRRELEVANT.equals(totalType) ? MATERIAL_TOTAL_VALUE_IRRELEVANT_ROW_STYLE_CLASS : MATERIAL_TOTAL_VALUE_ROW_STYLE_CLASS)
                     .withNonLocalizedText("0")
                     .build();
             this.totalValues.put(totalType, totalValue);
@@ -101,12 +103,8 @@ class MaterialTotal extends VBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
-            updateTotals();
-        });
-        EventService.addListener(this, SoloModeEvent.class, soloModeEvent -> {
-            updateTotals();
-        });
+        EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> updateTotals());
+        EventService.addListener(this, SoloModeEvent.class, soloModeEvent -> updateTotals());
     }
 
     private void updateTotals() {

@@ -60,7 +60,6 @@ class TradeRequest extends Trade {
         if (getTradeSpec().isBidFromMe()) {
             setVisibleButtons(getContactButton());
             this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.accepted"));
-            this.fadeTransition.play();
         } else {
             clearVisibleButtons();
             this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.status.unavailable"));

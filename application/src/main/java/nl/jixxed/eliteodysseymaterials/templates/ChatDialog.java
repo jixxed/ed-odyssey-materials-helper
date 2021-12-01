@@ -75,9 +75,7 @@ class ChatDialog extends VBox {
         this.send = ButtonBuilder.builder()
                 .withStyleClass("trade-chat-send")
                 .withText(LocaleService.getStringBinding("trade.message.chat.send"))
-                .withOnAction(event -> {
-                    sendMessage(tokenHash);
-                })
+                .withOnAction(event -> sendMessage(tokenHash))
                 .build();
         this.getChildren().addAll(this.chat, BoxBuilder.builder().withNodes(this.input, this.send).buildHBox());
     }

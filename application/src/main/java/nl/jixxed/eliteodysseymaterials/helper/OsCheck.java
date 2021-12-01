@@ -16,7 +16,7 @@ public final class OsCheck {
      * types of Operating Systems
      */
     public enum OSType {
-        Windows, MacOS, Linux, Other
+        WINDOWS, MACOS, LINUX, OTHER
     }
 
     // cached result of OS detection
@@ -31,14 +31,14 @@ public final class OsCheck {
     public static OSType getOperatingSystemType() {
         if (detectedOS == null) {
             final String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
-            if ((OS.indexOf("mac") >= 0) || (OS.indexOf("darwin") >= 0)) {
-                detectedOS = OSType.MacOS;
-            } else if (OS.indexOf("win") >= 0) {
-                detectedOS = OSType.Windows;
-            } else if (OS.indexOf("nux") >= 0) {
-                detectedOS = OSType.Linux;
+            if ((OS.contains("mac")) || (OS.contains("darwin"))) {
+                detectedOS = OSType.MACOS;
+            } else if (OS.contains("win")) {
+                detectedOS = OSType.WINDOWS;
+            } else if (OS.contains("nux")) {
+                detectedOS = OSType.LINUX;
             } else {
-                detectedOS = OSType.Other;
+                detectedOS = OSType.OTHER;
             }
         }
         return detectedOS;

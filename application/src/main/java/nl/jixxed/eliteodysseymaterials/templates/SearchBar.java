@@ -56,9 +56,7 @@ class SearchBar extends HBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
-            this.button.setText("<");
-        });
+        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<"));
         //hack for component resizing on other fontsizes
         EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());

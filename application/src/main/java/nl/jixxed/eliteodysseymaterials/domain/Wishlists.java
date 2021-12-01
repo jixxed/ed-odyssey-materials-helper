@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class Wishlists {
+    @SuppressWarnings("java:S1700")
     private Set<Wishlist> wishlists = new HashSet<>();
     private String selectedWishlistUUID;
 

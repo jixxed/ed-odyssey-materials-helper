@@ -29,6 +29,7 @@ public class ObservableResourceFactory {
         resourcesProperty().set(resources);
     }
 
+    @SuppressWarnings("java:S1171")
     protected static StringBinding getStringBinding(final Supplier<String> stringSupplier) {
         return new StringBinding() {
             {
@@ -43,9 +44,9 @@ public class ObservableResourceFactory {
     }
 
     @SafeVarargs
+    @SuppressWarnings("java:S1171")
     static <T> ListBinding<T> getListBinding(final T... items) {
         return new ListBinding<>() {
-
             {
                 bind(resourcesProperty());
             }
@@ -59,6 +60,7 @@ public class ObservableResourceFactory {
         };
     }
 
+    @SuppressWarnings("java:S1171")
     static <T> ListBinding<T> getListBinding(final Supplier<T[]> supplier) {
         return new ListBinding<>() {
 

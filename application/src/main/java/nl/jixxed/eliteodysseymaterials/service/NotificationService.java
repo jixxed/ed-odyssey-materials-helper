@@ -2,6 +2,8 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -14,13 +16,12 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NotificationService {
     private static boolean enabled = true;
 
     static {
-        EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> {
-            enabled = journalInitEvent.isInitialised();
-        });
+        EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised());
     }
 
     public static void showInformation(final String title, final String text) {

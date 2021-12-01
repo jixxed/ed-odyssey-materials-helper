@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.export;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -7,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import java.util.Comparator;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TextExporter {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
