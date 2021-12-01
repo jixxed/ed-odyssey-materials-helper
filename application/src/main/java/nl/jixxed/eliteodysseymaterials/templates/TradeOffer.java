@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -16,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import java.util.Collections;
 
 @Slf4j
+@EqualsAndHashCode
 class TradeOffer extends Trade {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
@@ -29,7 +31,6 @@ class TradeOffer extends Trade {
     TradeOffer(final TradeSpec tradeSpec) {
         super(tradeSpec);
         initComponents();
-        initEventHandling();
         handleTradeSpecStatus(getTradeSpec().getTradeStatus());
         log.info("TradeOffer " + tradeSpec.getOfferId());
     }
@@ -62,6 +63,7 @@ class TradeOffer extends Trade {
         this.buttonBox.getChildren().clear();
     }
 
+    @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("trade-offer");
         this.offerIngredient = new TradeIngredient(getOfferMaterial().getStorageType(), getOfferMaterial(), APPLICATION_STATE.getMaterials(getOfferMaterial().getStorageType()).get(getOfferMaterial()).getTotalValue(), getOfferAmount(), true);
@@ -101,9 +103,6 @@ class TradeOffer extends Trade {
         final VBox statusContactBox = BoxBuilder.builder().withStyleClass("trade-info-box").withNodes(this.statusLabel, this.otherLabel, this.buttonBox).buildVBox();
 
         this.getChildren().addAll(this.offerIngredient, this.receiveIngredient, statusContactBox);
-    }
-
-    private void initEventHandling() {
     }
 
 }

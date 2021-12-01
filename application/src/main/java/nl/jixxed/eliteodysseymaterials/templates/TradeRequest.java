@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -20,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import java.text.NumberFormat;
 
 @Slf4j
+@EqualsAndHashCode
 class TradeRequest extends Trade {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
@@ -99,6 +101,7 @@ class TradeRequest extends Trade {
         this.buttonBox.getChildren().clear();
     }
 
+    @SuppressWarnings("java:S2177")
     private void initComponents() {
 
         this.getStyleClass().add("trade-request");
@@ -112,16 +115,13 @@ class TradeRequest extends Trade {
                 .build();
         this.requestTradeButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.request.button.request.trade"))
-                .withOnAction(event -> {
-                    this.marketPlaceClient.bidPush(getOfferId());
-                })
+                .withOnAction(event -> this.marketPlaceClient.bidPush(getOfferId()))
                 .build();
         this.requestTradeButton.visibleProperty().bind(this.offerIngredient.canTradeProperty());
         this.cancelTradeButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.request.button.request.cancel"))
-                .withOnAction(event -> {
-                    this.marketPlaceClient.bidPull(getOfferId());
-                })
+                .withOnAction(event ->
+                        this.marketPlaceClient.bidPull(getOfferId()))
                 .build();
         this.statusLabel = LabelBuilder.builder()
                 .withStyleClass("trade-request-status-label")
@@ -136,6 +136,7 @@ class TradeRequest extends Trade {
         this.getChildren().addAll(this.offerIngredient, this.receiveIngredient, statusContactBox);
     }
 
+    @SuppressWarnings("java:S2177")
     private void initEventHandling() {
         this.listeners.add(EventService.addListener(this, LocationEvent.class, locationEvent -> {
             final Location currentLocation = locationEvent.getLocation();

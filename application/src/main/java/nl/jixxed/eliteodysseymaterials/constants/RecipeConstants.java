@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("java:S1192")
 public abstract class RecipeConstants {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final Map<RecipeName, UpgradeRecipe> SUIT_UPGRADES = new EnumMap<>(RecipeName.class);

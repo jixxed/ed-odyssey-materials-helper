@@ -36,6 +36,7 @@ public class FileProcessor {
         processJournalFast(file);
     }
 
+    @SuppressWarnings("java:S2674")
     private static synchronized void processJournalFast(final File file) {
         EventService.publish(new JournalInitEvent(false));
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
@@ -71,6 +72,7 @@ public class FileProcessor {
         EventService.publish(new JournalInitEvent(true));
     }
 
+    @SuppressWarnings("java:S2674")
     public static synchronized void processJournal(final File file) {
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
             if (file.length() >= position) {

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class DataTest {
+class DataTest {
     @Test
     void testForName_Unknown() {
         final Data unknown = Data.forName("f493ft30cmg075hmx87h");

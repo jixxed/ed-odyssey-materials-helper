@@ -51,6 +51,7 @@ public class TimeStampedGameStateWatcher {
         EventService.removeListener(this.eventConsumer);
     }
 
+    @SuppressWarnings("java:S1192")
     private synchronized void process(final File file) {
         this.file = file;
         if (this.file != null) {

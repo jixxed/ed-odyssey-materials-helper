@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.Mac;
@@ -9,6 +11,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CryptoHelper {
     public static String sha256(final String key, final String data) {
         try {

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class AssetTest {
+class AssetTest {
     @Test
     void testForName_Unknown() {
         final Asset unknown = Asset.forName("f493ft30cmg075hmx87h");

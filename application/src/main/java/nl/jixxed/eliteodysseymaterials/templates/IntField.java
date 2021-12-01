@@ -44,35 +44,62 @@ public class IntField extends TextField {
         this.value = new SimpleIntegerProperty(initialValue);
         setText(initialValue + "");
 
-        final IntField intField = this;
 
         // make sure the value property is clamped to the required range
         // and update the field's text to be in sync with the value.
+        addValueListener();
+
+        // restrict key input to numerals.
+        restrictInputToNumerals();
+
+        // ensure any entered values lie inside the required range.
+        addTextListener();
+    }
+
+    private void addTextListener() {
+        this.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue == null || "".equals(newValue) || (this.minValue < 0 && "-".equals(newValue))) {
+                IntField.this.value.setValue(0);
+                return;
+            }
+
+            final int intValue = Integer.parseInt(newValue);
+
+            if (this.minValue > intValue || intValue > this.maxValue) {
+                textProperty().setValue(oldValue);
+            }
+
+            IntField.this.value.set(Integer.parseInt(textProperty().get()));
+        });
+    }
+
+    private void addValueListener() {
         this.value.addListener((observableValue, oldValue, newValue) -> {
             if (newValue == null) {
-                intField.setText("");
+                this.setText("");
             } else {
-                if (newValue.intValue() < intField.minValue) {
-                    IntField.this.value.setValue(intField.minValue);
+                if (newValue.intValue() < this.minValue) {
+                    IntField.this.value.setValue(this.minValue);
                     return;
                 }
 
-                if (newValue.intValue() > intField.maxValue) {
-                    IntField.this.value.setValue(intField.maxValue);
+                if (newValue.intValue() > this.maxValue) {
+                    IntField.this.value.setValue(this.maxValue);
                     return;
                 }
 
                 if (newValue.intValue() == 0 && (textProperty().get() == null || "".equals(textProperty().get()))) {
                     // no action required, text property is already blank, we don't need to set it to 0.
                 } else {
-                    intField.setText(newValue.toString());
+                    this.setText(newValue.toString());
                 }
             }
         });
+    }
 
-        // restrict key input to numerals.
+    private void restrictInputToNumerals() {
         this.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
-            if (intField.minValue < 0) {
+            if (this.minValue < 0) {
                 if (!"-0123456789".contains(keyEvent.getCharacter())) {
                     keyEvent.consume();
                 }
@@ -81,22 +108,6 @@ public class IntField extends TextField {
                     keyEvent.consume();
                 }
             }
-        });
-
-        // ensure any entered values lie inside the required range.
-        this.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue == null || "".equals(newValue) || (intField.minValue < 0 && "-".equals(newValue))) {
-                IntField.this.value.setValue(0);
-                return;
-            }
-
-            final int intValue = Integer.parseInt(newValue);
-
-            if (intField.minValue > intValue || intValue > intField.maxValue) {
-                textProperty().setValue(oldValue);
-            }
-
-            IntField.this.value.set(Integer.parseInt(textProperty().get()));
         });
     }
 }

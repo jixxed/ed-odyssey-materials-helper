@@ -105,11 +105,15 @@ public class PathService {
                     shortestPath = engineers;
                 }
             }
-            for (int i = 0; i < sortedPathItems.size(); i++) {
-                final Engineer engineer = shortestPath.get(i);
-                final Location location = (i == 0) ? LocationService.getCurrentLocation() : sortedPathItems.get(i - 1).getEngineer().getLocation();
-                sortedPathItems.get(i).setEngineerAndCalculateDistance(engineer, location);
-            }
+            setShortestPath(sortedPathItems, shortestPath);
+        }
+    }
+
+    private static void setShortestPath(final List<PathItem> sortedPathItems, final List<Engineer> shortestPath) {
+        for (int i = 0; i < sortedPathItems.size(); i++) {
+            final Engineer engineer = shortestPath.get(i);
+            final Location location = (i == 0) ? LocationService.getCurrentLocation() : sortedPathItems.get(i - 1).getEngineer().getLocation();
+            sortedPathItems.get(i).setEngineerAndCalculateDistance(engineer, location);
         }
     }
 

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings({"java:S1104", "java:S1444", "java:S3008"})
 public class OsConstants {
     private static String USER_HOME;
     public static String DEFAULT_WATCHED_FOLDER;
@@ -13,9 +14,9 @@ public class OsConstants {
 
     static {
         switch (OsCheck.getOperatingSystemType()) {
-            case MACOS, OTHER -> throw new IllegalArgumentException("OS not supported.");
             case LINUX -> setLinux();
             case WINDOWS -> setWindows();
+            default -> throw new IllegalArgumentException("OS not supported.");
         }
     }
 

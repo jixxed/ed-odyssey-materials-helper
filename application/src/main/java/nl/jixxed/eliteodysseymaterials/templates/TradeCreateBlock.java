@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -85,28 +86,7 @@ class TradeCreateBlock extends VBox {
                 .withInitialValue(1)
                 .withVisibilityProperty(this.offerItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey())))
                 .build();
-        this.offerItems.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                final Material offerMaterial = Material.forLocalizedName(this.offerItems.getValue());
-                final int maxOfferAmountValue;
-                if (TradeMaterial.NOTHING.equals(offerMaterial)) {
-                    maxOfferAmountValue = 0;
-                } else if (TradeMaterial.ANY_RELEVANT.equals(offerMaterial)) {
-                    maxOfferAmountValue = getRelevantMaterialsTotal();
-                } else {
-                    maxOfferAmountValue = APPLICATION_STATE.getMaterials(offerMaterial.getStorageType()).get(offerMaterial).getTotalValue();
-                }
-                if (!TradeMaterial.NOTHING.equals(offerMaterial)) {
-                    this.offerAmountInput.setMaxValue(maxOfferAmountValue);
-                    if (this.offerAmountInput.getValue() > maxOfferAmountValue) {
-                        this.offerAmountInput.setValue(maxOfferAmountValue);
-                    }
-                    this.maxOfferAmount.textProperty().bind(LocaleService.getStringBinding("trade.create.max", maxOfferAmountValue));
-                }
-            } catch (final IllegalArgumentException ex) {
-                this.maxOfferAmount.setText("");
-            }
-        });
+        this.offerItems.getSelectionModel().selectedItemProperty().addListener(getOfferItemsChangeListener());
         this.receive = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-receive")
                 .withText(LocaleService.getStringBinding("trade.create.in.exchange.for"))
@@ -152,6 +132,31 @@ class TradeCreateBlock extends VBox {
                 .buildHBox();
         this.visibleProperty().bind(isConnectedProperty());
         this.getChildren().addAll(this.newTradeLabel, this.newTradeOffer, this.newTradeReceive, this.createTradeButton);
+    }
+
+    private ChangeListener<String> getOfferItemsChangeListener() {
+        return (observable, oldValue, newValue) -> {
+            try {
+                final Material offerMaterial = Material.forLocalizedName(this.offerItems.getValue());
+                final int maxOfferAmountValue;
+                if (TradeMaterial.NOTHING.equals(offerMaterial)) {
+                    maxOfferAmountValue = 0;
+                } else if (TradeMaterial.ANY_RELEVANT.equals(offerMaterial)) {
+                    maxOfferAmountValue = getRelevantMaterialsTotal();
+                } else {
+                    maxOfferAmountValue = APPLICATION_STATE.getMaterials(offerMaterial.getStorageType()).get(offerMaterial).getTotalValue();
+                }
+                if (!TradeMaterial.NOTHING.equals(offerMaterial)) {
+                    this.offerAmountInput.setMaxValue(maxOfferAmountValue);
+                    if (this.offerAmountInput.getValue() > maxOfferAmountValue) {
+                        this.offerAmountInput.setValue(maxOfferAmountValue);
+                    }
+                    this.maxOfferAmount.textProperty().bind(LocaleService.getStringBinding("trade.create.max", maxOfferAmountValue));
+                }
+            } catch (final IllegalArgumentException ex) {
+                this.maxOfferAmount.setText("");
+            }
+        };
     }
 
     private int getRelevantMaterialsTotal() {

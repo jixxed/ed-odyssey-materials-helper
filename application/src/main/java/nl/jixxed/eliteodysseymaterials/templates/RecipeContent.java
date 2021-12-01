@@ -106,6 +106,7 @@ class RecipeContent extends VBox {
         this.getChildren().addAll(this.recipeHeader, description);
     }
 
+    @SuppressWarnings("java:S1192")
     private void initAsRecipe() {
         this.addToWishlist = new MenuButton();
         this.addToWishlist.getStyleClass().add("recipe-wishlist-button");

@@ -22,6 +22,7 @@ class TradeIngredient extends MaterialIngredient {
         initEventHandling();
     }
 
+    @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("trade-ingredient");
         setLeftDescriptionLabel(LocaleService.getStringBinding("recipe.header.available"));
@@ -39,6 +40,7 @@ class TradeIngredient extends MaterialIngredient {
         update();
     }
 
+    @SuppressWarnings("java:S2177")
     private void initEventHandling() {
         if (Boolean.TRUE.equals(this.isGiven)) {
             this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> this.update()));

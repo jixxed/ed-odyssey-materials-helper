@@ -78,6 +78,7 @@ public class JournalWatcher {
         }
     }
 
+    @SuppressWarnings("java:S1192")
     private void listCommander(final File file) {
         try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
             while (scanner.hasNext()) {

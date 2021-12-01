@@ -266,6 +266,7 @@ public class SpawnConstants {
             Map.entry(Good.HUSH, List.of(SKIMMER, SRV))
     );
 
+    @SuppressWarnings("java:S1452")
     public static Map<SpawnLocationType, List<? extends SpawnLocation>> getSpawnLocations(final Material material) {
         final Map<SpawnLocationType, List<? extends SpawnLocation>> spawnLocations = new EnumMap<>(SpawnLocationType.class);
         if (material instanceof Data) {

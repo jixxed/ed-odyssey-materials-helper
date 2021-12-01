@@ -18,6 +18,6 @@ public class RecipeHelper {
     }
 
     public static boolean isCompletedEngineerRecipe(final RecipeName recipeName) {
-        return RecipeConstants.getRecipe(recipeName) instanceof EngineerRecipe && ((EngineerRecipe) RecipeConstants.getRecipe(recipeName)).isCompleted();
+        return RecipeConstants.getRecipe(recipeName) instanceof EngineerRecipe engineerRecipe && engineerRecipe.isCompleted();
     }
 }

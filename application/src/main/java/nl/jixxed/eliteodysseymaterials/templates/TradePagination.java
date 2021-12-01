@@ -90,6 +90,7 @@ class TradePagination extends VBox {
         VBox.setVgrow(this.tradePaginationTitle, Priority.ALWAYS);
     }
 
+    @SuppressWarnings({"java:S1192", "java:S3776"})
     private void initEventHandling() {
         EventService.addListener(this, TradeSearchEvent.class, tradeSearchEvent -> {
             this.tradeSearch = tradeSearchEvent.getTradeSearch();
@@ -172,10 +173,8 @@ class TradePagination extends VBox {
                                     .map(Trade::getTradeSpec)
                                     .orElseGet(() -> mapOffer(offer));
                             if (tradeSpec != null && tradeSpec.getTradeType().equals(TradeType.REQUEST)) {
-                                if (this.tradeType.equals(tradeSpec.getTradeType())) {
-                                    this.trades.removeIf(trade -> trade.getOfferId().equals(offer.getOfferId()));
-                                    this.trades.add(tradeSpec);
-                                }
+                                this.trades.removeIf(trade -> trade.getOfferId().equals(offer.getOfferId()));
+                                this.trades.add(tradeSpec);
                             }
                         } catch (final IllegalArgumentException ex) {
                             log.error("failed to fetch items for offer", ex);
@@ -248,11 +247,11 @@ class TradePagination extends VBox {
                 final List<Trade> tradesToShow = filteredTradeSpecs.subList(fromIndex, toIndex).stream().map(tradeSpec -> {
                     if (tradeSpec.getTradeType().equals(TradeType.OFFER)) {
                         final TradeOffer tradeOffer = new TradeOffer(tradeSpec);
-                        tradeOffer.setCallback(Optional.of((spec) -> refresh()));
+                        tradeOffer.setCallback(Optional.of(spec -> refresh()));
                         return tradeOffer;
                     } else {
                         final TradeRequest tradeRequest = new TradeRequest(tradeSpec);
-                        tradeRequest.setCallback(Optional.of((spec) -> refresh()));
+                        tradeRequest.setCallback(Optional.of(spec -> refresh()));
                         return tradeRequest;
                     }
                 }).toList();
@@ -276,7 +275,7 @@ class TradePagination extends VBox {
             if (Objects.equals(offer.getToken(), CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()))) {
                 return createTradeOffer(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), location, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
             } else {
-                return createTradeRequest(offer.getOfferId(), receiveMaterial, item.getDemand(), offerMaterial, item.getSupply(), location, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
+                return createTradeRequest(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), location, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
             }
         } catch (final IllegalArgumentException ex) {
             log.error("failed to fetch items for offer");
@@ -284,12 +283,14 @@ class TradePagination extends VBox {
         return null;
     }
 
+    @SuppressWarnings("java:S107")
     private TradeSpec createTradeOffer(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final Location location, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
         return new TradeSpec(offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, location, TradeType.OFFER, tradeStatus, bid, acceptedTokenHash, ownerHash);
     }
 
+    @SuppressWarnings("java:S107")
     private TradeSpec createTradeRequest(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final Location location, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
-        return new TradeSpec(offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, location, TradeType.REQUEST, tradeStatus, bid, acceptedTokenHash, ownerHash);
+        return new TradeSpec(offerId, receiveMaterial, receiveAmount, offerMaterial, offerAmount, location, TradeType.REQUEST, tradeStatus, bid, acceptedTokenHash, ownerHash);
     }
 
     private UpdatesProperty updateProperty() {
@@ -317,10 +318,6 @@ class TradePagination extends VBox {
             return "updates";
         }
 
-        @Override
-        protected void fireValueChangedEvent() {
-            super.fireValueChangedEvent();
-        }
     }
 
 

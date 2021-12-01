@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 
 public class WishlistBlueprint extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final String VISIBLE_STYLE_CLASS = "visible";
+    private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
     private static int counter = 0;
 
     private boolean visible;
@@ -64,7 +66,7 @@ public class WishlistBlueprint extends HBox {
                 .withImage("/images/other/visible_blue.png")
                 .build();
         this.visibilityButton = ButtonBuilder.builder()
-                .withStyleClasses("wishlist-visible-icon", "visible")
+                .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
                 .withOnAction(event -> setVisibility(!this.visible))
                 .withGraphic(this.visibilityImage)
                 .build();
@@ -150,9 +152,9 @@ public class WishlistBlueprint extends HBox {
         this.wishlistRecipe.setVisible(this.visible);
         this.visibilityImage.setImage(new Image(getClass().getResourceAsStream(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png")));
         if (this.visible) {
-            this.visibilityButton.getStyleClass().add("visible");
+            this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
         } else {
-            this.visibilityButton.getStyleClass().remove("visible");
+            this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
         }
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, this.wishlistRecipe, Action.VISIBILITY_CHANGED)));
     }

@@ -23,6 +23,7 @@ public enum MaterialSort {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
+    @SuppressWarnings("java:S1452")
     public static Comparator<Map.Entry<? extends Material, Storage>> getSort(final Search search) {
         return switch (search.getMaterialSort()) {
             case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));

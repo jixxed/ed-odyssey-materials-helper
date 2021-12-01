@@ -63,7 +63,7 @@ public class MaterialIngredient extends Ingredient {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, (journalProcessedEvent) -> this.update()));
+        this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
     }
 
     private void initComponents() {
@@ -97,6 +97,7 @@ public class MaterialIngredient extends Ingredient {
         update();
     }
 
+    @SuppressWarnings("java:S6205")
     private void initImage() {
         final ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder().withStyleClass("ingredient-image");
         switch (this.storageType) {

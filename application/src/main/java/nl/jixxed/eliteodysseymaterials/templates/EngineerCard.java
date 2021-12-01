@@ -117,7 +117,7 @@ class EngineerCard extends VBox {
                 .map(prerequisite -> BoxBuilder.builder()
                         .withNodes(LabelBuilder.builder()
                                         .withStyleClass("engineer-bullet")
-                                        .withNonLocalizedText((prerequisite.isCompleted()) ? "\u2714" : "\u2022")
+                                        .withNonLocalizedText(Boolean.TRUE.equals((prerequisite.isCompleted())) ? "\u2714" : "\u2022")
                                         .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getRecipeName())))
                                         .build(),
                                 LabelBuilder.builder()

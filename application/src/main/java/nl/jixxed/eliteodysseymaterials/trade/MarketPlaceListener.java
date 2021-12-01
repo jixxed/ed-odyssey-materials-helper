@@ -29,16 +29,12 @@ public class MarketPlaceListener implements WebSocket.Listener {
     public void onOpen(final WebSocket webSocket) {
         log.info("connected");
         webSocket.request(1);
-        Platform.runLater(() -> {
-            EventService.publish(new ConnectionWebSocketEvent(true));
-        });
+        Platform.runLater(() -> EventService.publish(new ConnectionWebSocketEvent(true)));
     }
 
     @Override
     public CompletionStage<?> onClose(final WebSocket webSocket, final int statusCode, final String reason) {
-        Platform.runLater(() -> {
-            EventService.publish(new ConnectionWebSocketEvent(false));
-        });
+        Platform.runLater(() -> EventService.publish(new ConnectionWebSocketEvent(false)));
         log.info("websocket closed. statuscode: " + statusCode + " reason: " + reason);
         return null;
     }
@@ -47,9 +43,7 @@ public class MarketPlaceListener implements WebSocket.Listener {
     public void onError(final WebSocket webSocket, final Throwable error) {
         log.error("websocket error", error);
         if (error instanceof IOException) {
-            Platform.runLater(() -> {
-                EventService.publish(new ConnectionWebSocketEvent(false));
-            });
+            Platform.runLater(() -> EventService.publish(new ConnectionWebSocketEvent(false)));
         }
         webSocket.request(1);
     }
@@ -142,9 +136,7 @@ public class MarketPlaceListener implements WebSocket.Listener {
                 yield new DeclinedOffersWebSocketEvent(declinedOffersMessage);
             }
         };
-        Platform.runLater(() -> {
-            EventService.publish(event);
-        });
+        Platform.runLater(() -> EventService.publish(event));
     }
 
 }

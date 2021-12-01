@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Info;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Item;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.XMessage;
+import nl.jixxed.eliteodysseymaterials.trade.message.outbound.Action;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.Data;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.OutboundMessage;
 import nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload.*;
@@ -27,10 +28,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Properties;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 @Slf4j
 public class MarketPlaceClient {
@@ -77,7 +75,7 @@ public class MarketPlaceClient {
             }
         };
         this.timer = new Timer("Websocket-keep-alive", true);
-        this.timer.scheduleAtFixedRate(this.task, 0, 59 * 1000);
+        this.timer.scheduleAtFixedRate(this.task, 0, 59L * 1000L);
     }
 
     public void connect() {
@@ -87,7 +85,7 @@ public class MarketPlaceClient {
 
     public void enlist() {
         final OutboundMessage message = OutboundMessage.builder()
-                .action("offer")
+                .action(Action.OFFER.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("enlist")
                         .payload(EnlistPayload.builder()
@@ -106,7 +104,7 @@ public class MarketPlaceClient {
 
     public void getOffers() {
         final OutboundMessage message = OutboundMessage.builder()
-                .action("offer")
+                .action(Action.OFFER.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("getoffers")
                         .build())
@@ -123,7 +121,7 @@ public class MarketPlaceClient {
     public void publishOffer(final Material offerMaterial, final Integer offerAmount, final Material receiveMaterial, final Integer receiveAmount) {
         final Location location = LocationService.getCurrentLocation();
         final OutboundMessage message = OutboundMessage.builder()
-                .action("offer")
+                .action(Action.OFFER.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("publishoffer")
                         .payload(PublishOfferPayload.builder()
@@ -156,7 +154,7 @@ public class MarketPlaceClient {
 
     public void dropOffers(final List<String> offerIds) {
         final OutboundMessage message = OutboundMessage.builder()
-                .action("offer")
+                .action(Action.OFFER.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("dropoffers")
                         .payload(DropOffersPayload.builder()
@@ -175,7 +173,7 @@ public class MarketPlaceClient {
 
     public void bidPush(final String offerId) {
         final OutboundMessage message = OutboundMessage.builder()
-                .action("comms")
+                .action(Action.COMMS.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("xbidpush")
                         .payload(XBidPushPayload.builder()
@@ -194,7 +192,7 @@ public class MarketPlaceClient {
 
     public void bidPull(final String offerId) {
         final OutboundMessage message = OutboundMessage.builder()
-                .action("comms")
+                .action(Action.COMMS.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("xbidpull")
                         .payload(XBidPullPayload.builder()
@@ -213,7 +211,7 @@ public class MarketPlaceClient {
 
     public void bidAccept(final String offerId, final String tokenHash, final boolean accept) {
         final OutboundMessage message = OutboundMessage.builder()
-                .action("comms")
+                .action(Action.COMMS.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("xbidaccept")
                         .payload(XBidAcceptPayload.builder()
@@ -235,7 +233,7 @@ public class MarketPlaceClient {
     public void message(final String offerId, final String messageRef, final String tokenHash, final String text) {
         final Location location = LocationService.getCurrentLocation();
         final OutboundMessage message = OutboundMessage.builder()
-                .action("comms")
+                .action(Action.COMMS.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
                         .method("xmessage")
                         .payload(MessagePayload.builder()

@@ -42,6 +42,10 @@ public class WishlistTab extends EDOTab {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String WISHLIST_HEADER_CLASS = "wishlist-header";
     private static final String WISHLIST_CATEGORY_CLASS = "wishlist-category";
+    private static final String WISHLIST_RECIPES_STYLE_CLASS = "wishlist-recipes";
+    private static final String WISHLIST_INGREDIENTS_STYLE_CLASS = "wishlist-ingredients";
+    private static final String WISHLIST_BUTTON_STYLE_CLASS = "wishlist-button";
+    private static final String WISHLIST_CONTENT_STYLE_CLASS = "wishlist-content";
     private int wishlistSize;
     private final List<WishlistBlueprint> wishlistBlueprints = new ArrayList<>();
     private final AtomicBoolean hideCompleted = new AtomicBoolean();
@@ -141,21 +145,21 @@ public class WishlistTab extends EDOTab {
                     }
                 })
                 .build();
-        this.engineerRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
-        this.suitUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
-        this.suitModuleRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
-        this.weaponUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
-        this.weaponModuleRecipes = FlowPaneBuilder.builder().withStyleClass("wishlist-recipes").build();
-        this.goodFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
-        this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
-        this.dataFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
-        this.assetCircuitFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
-        this.assetTechFlow = FlowPaneBuilder.builder().withStyleClass("wishlist-ingredients").build();
+        this.engineerRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
+        this.suitUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
+        this.suitModuleRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
+        this.weaponUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
+        this.weaponModuleRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
+        this.goodFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
+        this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
+        this.dataFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
+        this.assetCircuitFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
+        this.assetTechFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
 
         this.hideCompleted.set(PreferencesService.getPreference("blueprint.hide.completed", Boolean.FALSE));
 
         this.removeWishlistButton = ButtonBuilder.builder()
-                .withStyleClass("wishlist-button")
+                .withStyleClass(WISHLIST_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.wishlist.delete"))
                 .withOnAction(event -> {
                     final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -174,7 +178,7 @@ public class WishlistTab extends EDOTab {
                 })
                 .build();
         this.renameWishlistButton = ButtonBuilder.builder()
-                .withStyleClass("wishlist-button")
+                .withStyleClass(WISHLIST_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.wishlist.rename"))
                 .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
@@ -185,7 +189,7 @@ public class WishlistTab extends EDOTab {
                 }))
                 .build();
         this.createWishlistButton = ButtonBuilder.builder()
-                .withStyleClass("wishlist-button")
+                .withStyleClass(WISHLIST_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.wishlist.create"))
                 .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
@@ -196,9 +200,9 @@ public class WishlistTab extends EDOTab {
                 }))
                 .build();
         this.wishlistName = TextFieldBuilder.builder().withStyleClasses("root", "wishlist-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt")).build();
-        this.exportButton = ButtonBuilder.builder().withStyleClass("wishlist-button").withText(LocaleService.getStringBinding("tab.wishlist.export"))
+        this.exportButton = ButtonBuilder.builder().withStyleClass(WISHLIST_BUTTON_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.export"))
                 .withOnAction(event -> EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededMaterials)))).build();
-        this.clipboardButton = ButtonBuilder.builder().withStyleClass("wishlist-button").withText(LocaleService.getStringBinding("tab.wishlist.copy"))
+        this.clipboardButton = ButtonBuilder.builder().withStyleClass(WISHLIST_BUTTON_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.copy"))
                 .withOnAction(event -> {
                     copyWishListToClipboard();
                     NotificationService.showInformation("Wishlists", "The wishlist has been copied to your clipboard");
@@ -257,9 +261,9 @@ public class WishlistTab extends EDOTab {
         final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, region, this.wishlistName, region3, flowPane).buildHBox();
         final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.hideCompletedCheckBox).buildHBox();
         hBoxMaterials.setSpacing(10);
-        this.flows = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
-        this.contentChild = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestRoute).buildVBox();
-        this.content = BoxBuilder.builder().withStyleClass("wishlist-content").withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint).buildVBox();
+        this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
+        this.contentChild = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestRoute).buildVBox();
+        this.content = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint).buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(this.content)
                 .build();
@@ -362,7 +366,7 @@ public class WishlistTab extends EDOTab {
     private TableColumn<PathItem, Void> createButtonsColumn() {
         final TableColumn<PathItem, Void> colBtn = new TableColumn<>();
         colBtn.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions"));
-        final Callback<TableColumn<PathItem, Void>, TableCell<PathItem, Void>> cellFactory = param -> new TableCell<>() {
+        @SuppressWarnings("java:S1171") final Callback<TableColumn<PathItem, Void>, TableCell<PathItem, Void>> cellFactory = param -> new TableCell<>() {
 
             private final Button removeButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove")).build();
             private final Button hideButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide")).build();
@@ -404,7 +408,7 @@ public class WishlistTab extends EDOTab {
     }
 
     private void initLabels() {
-        this.noBlueprint = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withStyleClass("wishlist-content").withText(LocaleService.getStringBinding("tab.wishlist.no.blueprint")).build();
+        this.noBlueprint = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.no.blueprint")).build();
         this.selectedBlueprintsLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints")).build();
         this.requiredMaterialsLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.required.materials")).build();
         this.travelPathLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path")).build();

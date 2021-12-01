@@ -33,6 +33,7 @@ public enum MaterialShow {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
+    @SuppressWarnings("java:S1452")
     public static Predicate<? super Map.Entry<? extends Material, Storage>> getFilter(final Search search) {
         return switch (search.getMaterialShow()) {
             case ALL -> (Map.Entry<? extends Material, Storage> o) -> true;

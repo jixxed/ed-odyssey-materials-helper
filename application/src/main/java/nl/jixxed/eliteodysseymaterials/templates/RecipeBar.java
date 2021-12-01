@@ -88,11 +88,12 @@ class RecipeBar extends Accordion {
         recipes.setCellFactory(getCellFactory());
         recipes.getSelectionModel().select(recipes.getItems().get(0));
         recipes.setButtonCell(new ListCell<>() {
-
+            @SuppressWarnings("java:S1068")
             private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(RecipeBar.this, StorageEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
+            @SuppressWarnings("java:S1068")
             private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(RecipeBar.this, EngineerEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
@@ -131,10 +132,12 @@ class RecipeBar extends Accordion {
     private Callback<ListView<RecipeName>, ListCell<RecipeName>> getCellFactory() {
         return listView -> new ListCell<>() {
 
+            @SuppressWarnings("java:S1068")
             private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(RecipeBar.this, StorageEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
+            @SuppressWarnings("java:S1068")
             private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(RecipeBar.this, EngineerEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());

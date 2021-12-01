@@ -46,18 +46,18 @@ class About extends VBox {
         this.disclaimer1 = LabelBuilder.builder().withStyleClass("about-disclaimer1").withText(LocaleService.getStringBinding("menu.about.disclaimer.1")).build();
         this.disclaimer2 = LabelBuilder.builder().withStyleClass("about-disclaimer2").withText(LocaleService.getStringBinding("menu.about.disclaimer.2")).build();
         this.beer = LabelBuilder.builder().withStyleClass("about-beer").withText(LocaleService.getStringBinding("menu.about.beer")).build();
-        this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withAction((actionEvent) ->
+        this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withAction(actionEvent ->
                 application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases")).build();
-        this.bugs = HyperlinkBuilder.builder().withStyleClass("about-bugs").withText(LocaleService.getStringBinding("menu.about.report")).withAction((actionEvent) ->
+        this.bugs = HyperlinkBuilder.builder().withStyleClass("about-bugs").withText(LocaleService.getStringBinding("menu.about.report")).withAction(actionEvent ->
                 application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues")).build();
         this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/donate.png").build();
         this.donate2Image = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/github_sponsors.png").build();
         this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
-        this.donate = HyperlinkBuilder.builder().withAction((actionEvent) ->
+        this.donate = HyperlinkBuilder.builder().withAction(actionEvent ->
                 application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper")).withGraphic(this.donateImage).build();
-        this.donate2 = HyperlinkBuilder.builder().withAction((actionEvent) ->
+        this.donate2 = HyperlinkBuilder.builder().withAction(actionEvent ->
                 application.getHostServices().showDocument("https://github.com/sponsors/jixxed")).withGraphic(this.donate2Image).build();
-        this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withAction((actionEvent) ->
+        this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withAction(actionEvent ->
                 application.getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA")).withGraphic(this.discordImage).build();
         this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, BoxBuilder.builder().withStyleClass("about-donate").withNodes(this.donate, this.donate2).buildHBox(), this.bugs, this.discord);
     }
