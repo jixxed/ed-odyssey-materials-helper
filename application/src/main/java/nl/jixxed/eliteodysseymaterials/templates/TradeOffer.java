@@ -17,7 +17,7 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import java.util.Collections;
 
 @Slf4j
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 class TradeOffer extends Trade {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();

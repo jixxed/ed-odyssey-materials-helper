@@ -10,6 +10,11 @@ class WishlistIngredient extends MaterialIngredient {
 
     WishlistIngredient(final StorageType storageType, final Material material, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, material, amountRequired, amountAvailable);
+        initComponents();
+    }
+
+    private void initComponents() {
+        this.getStyleClass().add("wishlist-ingredient");
     }
 
     @Override

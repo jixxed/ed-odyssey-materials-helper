@@ -90,8 +90,7 @@ class TradeSearchBar extends HBox {
         final Tooltip showMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("trade.search.filter.placeholder")).build();
         this.showTradeComboBox = ComboBoxBuilder.builder(TradeShow.class)
                 .withStyleClasses("root", "filter-and-sort")
-                .withItemsProperty(LocaleService.getListBinding(TradeShow.ALL,
-                        TradeShow.CAN_TRADE))
+                .withItemsProperty(LocaleService.getListBinding(TradeShow.ALL, TradeShow.CAN_TRADE, TradeShow.ACTIVE))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new TradeSearchEvent(new TradeSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortTradeComboBox), newValue)));

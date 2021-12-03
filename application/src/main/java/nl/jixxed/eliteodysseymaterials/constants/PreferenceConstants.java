@@ -28,7 +28,7 @@ public class PreferenceConstants {
     public static final String POLICY_ACCEPT_VERSION = "privacy.policy.version";
     public static final String WHATS_NEW_VERSION = "whats.new.version";
 
-    public static final String MARKETPLACE_TOKEN = "marketplace.token";
+    public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
 
 
 }

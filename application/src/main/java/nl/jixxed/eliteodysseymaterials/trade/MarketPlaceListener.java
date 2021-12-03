@@ -68,7 +68,6 @@ public class MarketPlaceListener implements WebSocket.Listener {
         this.text.append(message);
         if (last) {
             final String data = this.text.toString();
-            log.info(data);
             try {
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(data);
                 final String code = jsonNode.get("code").asText();

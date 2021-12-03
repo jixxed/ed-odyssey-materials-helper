@@ -273,6 +273,7 @@ public class WishlistTab extends EDOTab {
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(this::refreshContent));
 
+        this.wishlistBlueprints.forEach(WishlistBlueprint::onDestroy);
         this.wishlistBlueprints.clear();
         this.wishlistBlueprints.addAll(APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
@@ -463,6 +464,7 @@ public class WishlistTab extends EDOTab {
             final String fid = commanderSelectedEvent.getCommander().getFid();
             final Wishlist selectedWishlist = APPLICATION_STATE.getWishlists(fid).getSelectedWishlist();
             this.activeWishlistUUID = selectedWishlist.getUuid();
+            this.wishlistBlueprints.forEach(WishlistBlueprint::onDestroy);
             this.wishlistBlueprints.clear();
             this.wishlistBlueprints.addAll(selectedWishlist.getItems().stream()
                     .map(wishlistRecipe -> new WishlistBlueprint(this.activeWishlistUUID, wishlistRecipe))

@@ -9,7 +9,8 @@ import java.util.function.Predicate;
 
 public enum TradeShow {
     ALL,
-    CAN_TRADE;
+    CAN_TRADE,
+    ACTIVE;
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
@@ -26,6 +27,7 @@ public enum TradeShow {
         return switch (search.getTradeShow()) {
             case ALL -> (TradeSpec o) -> true;
             case CAN_TRADE -> (TradeSpec o) -> !o.getTradeType().equals(TradeType.REQUEST) || o.getOfferAmount() <= APPLICATION_STATE.getMaterials(o.getOfferMaterial().getStorageType()).get(o.getOfferMaterial()).getTotalValue();
+            case ACTIVE -> (TradeSpec o) -> !o.getTradeType().equals(TradeType.REQUEST) || o.isBidFromMe();
         };
     }
 }

@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.ConnectionWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
@@ -128,6 +129,7 @@ public class TradeTab extends EDOTab {
                 }
             }
         });
+        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.close());
     }
 
     private void connect() {

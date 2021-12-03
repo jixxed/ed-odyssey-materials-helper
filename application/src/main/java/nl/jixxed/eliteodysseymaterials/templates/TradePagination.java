@@ -37,6 +37,7 @@ import java.util.*;
 
 @Slf4j
 class TradePagination extends VBox {
+    private static final String SHA_KEY = "xt23s778RHY";
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final int PAGE_SIZE = 5;
     @Getter
@@ -114,6 +115,7 @@ class TradePagination extends VBox {
             this.trades.stream().filter(trade -> offers.contains(trade.getOfferId())).forEach(TradeSpec::onDestroy);
             this.trades.removeIf(trade -> offers.contains(trade.getOfferId()));
             if (TradeType.OFFER.equals(this.tradeType)) {
+                this.visibleTrades.stream().filter(trade -> offers.contains(trade.getOfferId())).forEach(Trade::onDestroy);
                 final boolean visibleTradesRemoved = this.visibleTrades.removeIf(trade -> offers.contains(trade.getOfferId()));
                 if (visibleTradesRemoved) {
                     reload();
@@ -165,19 +167,21 @@ class TradePagination extends VBox {
                 final List<Offer> offers = onlineOffersWebSocketEvent.getOnlineOffersMessage().getOffers();
                 if (offers != null) {
                     for (final Offer offer : offers) {
-                        this.updateProperty().increase();
-                        try {
-                            final TradeSpec tradeSpec = this.visibleTrades.stream()
-                                    .filter(trade -> Objects.equals(trade.getTradeSpec().getOfferId(), offer.getOfferId()))
-                                    .findFirst()
-                                    .map(Trade::getTradeSpec)
-                                    .orElseGet(() -> mapOffer(offer));
-                            if (tradeSpec != null && tradeSpec.getTradeType().equals(TradeType.REQUEST)) {
-                                this.trades.removeIf(trade -> trade.getOfferId().equals(offer.getOfferId()));
-                                this.trades.add(tradeSpec);
+                        if (!Objects.equals(offer.getToken(), CryptoHelper.sha256(SHA_KEY, APPLICATION_STATE.getMarketPlaceToken()))) {
+                            this.updateProperty().increase();
+                            try {
+                                final TradeSpec tradeSpec = this.visibleTrades.stream()
+                                        .filter(trade -> Objects.equals(trade.getTradeSpec().getOfferId(), offer.getOfferId()))
+                                        .findFirst()
+                                        .map(Trade::getTradeSpec)
+                                        .orElseGet(() -> mapOffer(offer));
+                                if (tradeSpec != null && tradeSpec.getTradeType().equals(TradeType.REQUEST)) {
+                                    this.trades.removeIf(trade -> trade.getOfferId().equals(offer.getOfferId()));
+                                    this.trades.add(tradeSpec);
+                                }
+                            } catch (final IllegalArgumentException ex) {
+                                log.error("failed to fetch items for offer", ex);
                             }
-                        } catch (final IllegalArgumentException ex) {
-                            log.error("failed to fetch items for offer", ex);
                         }
                     }
                 }

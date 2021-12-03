@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.*;
+import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Offer;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.XBid;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.XMessage;
@@ -24,6 +25,7 @@ import java.util.function.Consumer;
 @ToString
 @Slf4j
 public class TradeSpec {
+    private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     public static final String SHA_KEY = "xt23s778RHY";
     public static final String NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY = "notification.trade.title";
@@ -102,7 +104,7 @@ public class TradeSpec {
                             }
                         }
                     };
-                    final Timer timer = new Timer("Timer pulled offer");
+                    final Timer timer = new Timer("Timer pulled offer reset to available");
 
                     final long delay = 60_000L;
                     timer.schedule(task, delay);
@@ -126,6 +128,18 @@ public class TradeSpec {
                     NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.is.placed"));
                 } else if (isOwnedByMe()) {
                     NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.you.received.a.bid.on.an.offer"));
+                    final TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (TradeStatus.PUSHED.equals(TradeSpec.this.tradeStatus)) {
+                                TradeSpec.this.marketPlaceClient.bidAccept(getOfferId(), getBid(), false);
+                            }
+                        }
+                    };
+                    final Timer timer = new Timer("Timer auto reject offer 60s");
+
+                    final long delay = 60_000L;
+                    timer.schedule(task, delay);
                 }
                 this.callback.ifPresent(c -> c.accept(this));
             }
@@ -157,7 +171,7 @@ public class TradeSpec {
                             }
                         }
                     };
-                    final Timer timer = new Timer("Timer rejected offer");
+                    final Timer timer = new Timer("Timer rejected offer reset to available");
 
                     final long delay = 60_000L;
                     timer.schedule(task, delay);

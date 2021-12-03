@@ -61,7 +61,7 @@ public class ApplicationState {
                     }
                 }));
 
-        EventService.addListener(this, EnlistWebSocketEvent.class, event -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN, event.getEnlistMessage().getTrace().getToken()));
+        EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken())));
     }
 
     public static ApplicationState getInstance() {
@@ -319,6 +319,6 @@ public class ApplicationState {
     }
 
     public String getMarketPlaceToken() {
-        return PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN, "");
+        return getPreferredCommander().map(commander -> PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), "")).orElse("");
     }
 }

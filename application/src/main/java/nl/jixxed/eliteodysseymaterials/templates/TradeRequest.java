@@ -21,7 +21,7 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import java.text.NumberFormat;
 
 @Slf4j
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 class TradeRequest extends Trade {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
