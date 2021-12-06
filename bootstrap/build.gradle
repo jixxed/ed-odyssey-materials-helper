@@ -57,6 +57,11 @@ jlink {
                 '-Dapp.version=' + project.version,
                 os.isWindows() ? '-Djavafx.cachedir=javafx-cache' : ''
         ]
+        if (os.isWindows()) {
+            jvmArgs += [
+                    '-Djavafx.cachedir=javafx-cache'
+            ]
+        }
     }
     jpackage {
         installerType = project.ext.packageType

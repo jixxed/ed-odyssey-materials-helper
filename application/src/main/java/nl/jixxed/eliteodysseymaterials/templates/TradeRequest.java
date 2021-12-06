@@ -32,6 +32,10 @@ class TradeRequest extends Trade {
     private Label statusLabel;
     private HBox buttonBox;
 
+    static {
+        NUMBER_FORMAT.setMaximumFractionDigits(2);
+    }
+
     TradeRequest(final TradeSpec tradeSpec) {
         super(tradeSpec);
         initComponents();

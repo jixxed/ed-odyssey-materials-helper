@@ -132,7 +132,7 @@ class TradeSearchBar extends HBox {
 
     private void setDefaultOptions() {
         try {
-            final TradeSort tradeSort = TradeSort.valueOf(PreferencesService.getPreference("trade.search.sort", "NAME"));
+            final TradeSort tradeSort = TradeSort.valueOf(PreferencesService.getPreference("trade.search.sort", "NAME_OFFER"));
             this.sortTradeComboBox.getSelectionModel().select(tradeSort);
         } catch (final IllegalArgumentException ex) {
             log.error("sort error", ex);

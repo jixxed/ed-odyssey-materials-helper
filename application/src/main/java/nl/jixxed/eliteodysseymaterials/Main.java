@@ -49,28 +49,28 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
-        PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
-        final boolean whatsNewSeen = PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "").equals(PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
-        if (!whatsNewSeen || !PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
-            final Stage policyStage = new Stage();
-
-            final Scene policyScene = new Scene(new StartDialog(policyStage), 640, 480);
-            policyStage.initModality(Modality.APPLICATION_MODAL);
-            final JMetro jMetro = new JMetro(Style.DARK);
-            jMetro.setScene(policyScene);
-            policyScene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
-            policyStage.setScene(policyScene);
-            policyStage.titleProperty().set("What's new & privacy policy");
-            policyStage.showAndWait();
-            if (!PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
-                System.exit(0);
-            } else {
-                PreferencesService.setPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, StartDialog.POLICY_LEVEL_REQUIRED);
-            }
-        }
-        this.applicationLayout = new ApplicationLayout(this);
-        this.primaryStage = primaryStage;
         try {
+            PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
+            final boolean whatsNewSeen = PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "").equals(PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
+            if (!whatsNewSeen || !PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
+                final Stage policyStage = new Stage();
+
+                final Scene policyScene = new Scene(new StartDialog(policyStage), 640, 480);
+                policyStage.initModality(Modality.APPLICATION_MODAL);
+                final JMetro jMetro = new JMetro(Style.DARK);
+                jMetro.setScene(policyScene);
+                policyScene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+                policyStage.setScene(policyScene);
+                policyStage.titleProperty().set("What's new & privacy policy");
+                policyStage.showAndWait();
+                if (!PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
+                    System.exit(0);
+                } else {
+                    PreferencesService.setPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, StartDialog.POLICY_LEVEL_REQUIRED);
+                }
+            }
+            this.applicationLayout = new ApplicationLayout(this);
+            this.primaryStage = primaryStage;
 
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));

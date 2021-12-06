@@ -54,11 +54,15 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
-                os.isWindows() ? '-Djavafx.cachedir=javafx-cache' : '',
                 '-Xmx1024M',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
                 '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming'
         ]
+        if (os.isWindows()) {
+            jvmArgs += [
+                    '-Djavafx.cachedir=javafx-cache'
+            ]
+        }
     }
     jpackage {
         appVersion = project.version
@@ -101,7 +105,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'org.slf4j:slf4j-simple:1.7.32'
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
-    implementation 'org.apache.tomcat:tomcat-catalina:10.0.13'
+
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }

@@ -1,3 +1,9 @@
+Version 1.50
+-------------
+fix for linux app not starting
+fix default trade sorting
+set trade distance fractional digits 3 > 2
+
 Version 1.49
 -------------
 New privacy policy & what's new dialog shows on start once for every new version
