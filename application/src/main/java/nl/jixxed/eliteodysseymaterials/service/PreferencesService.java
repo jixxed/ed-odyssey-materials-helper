@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
 
 import java.io.*;
 import java.util.List;
@@ -30,10 +31,14 @@ public class PreferencesService {
         }
         //create file if not exists
         if (!targetFile.exists()) {
+            final File oldTargetFile = new File(OsConstants.OLD_PREFERENCES);
             try {
                 final boolean created = targetFile.createNewFile();
                 if (!created) {
                     throw new IllegalStateException("Couldn't create pref file: " + targetFile);
+                }
+                if (oldTargetFile.exists()) {
+                    FileHelper.copyFileContents(oldTargetFile, targetFile);
                 }
             } catch (final IOException e) {
                 throw new IllegalStateException("Couldn't create pref file: " + targetFile);
@@ -66,6 +71,7 @@ public class PreferencesService {
         }
 
     }
+
 
     public static <T> void setPreference(final String key, final List<T> value, final Function<T, String> mapper) {
         if (value == null || value.isEmpty()) {

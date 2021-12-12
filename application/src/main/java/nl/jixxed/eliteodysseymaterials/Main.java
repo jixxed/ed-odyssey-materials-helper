@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -102,6 +103,11 @@ public class Main extends Application {
             scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
             final File customCss = new File(OsConstants.CUSTOM_CSS);
+            final File oldCustomCss = new File(OsConstants.OLD_CUSTOM_CSS);
+            if (!customCss.exists() && oldCustomCss.exists()) {
+                customCss.createNewFile();
+                FileHelper.copyFileContents(oldCustomCss, customCss);
+            }
             if (customCss.exists()) {
                 importCustomCss(scene, customCss);
             }
