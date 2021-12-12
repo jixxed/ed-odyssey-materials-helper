@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Info;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Item;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.XMessage;
@@ -20,6 +21,7 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.InitialDirContext;
+import java.io.UncheckedIOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -44,16 +46,20 @@ public class MarketPlaceClient {
     public static MarketPlaceClient getInstance() {
         try {
             if (marketPlaceClient == null) {
-                final Properties p = new Properties();
-                p.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.dns.DnsContextFactory");
-                final InitialDirContext idc = new InitialDirContext(p);
-
-                final Attributes attrs = idc.getAttributes("edmarketplace.jixxed.nl", new String[]{"CNAME"});
-                final Attribute attr = attrs.get("CNAME");
-                if (attr != null) {
-                    final String targetCName = attr.get(0).toString();
-                    final String domainName = (targetCName.endsWith(".")) ? targetCName.substring(0, targetCName.length() - 1) : targetCName;
-                    marketPlaceClient = new MarketPlaceClient(new URI("wss://" + domainName + "/Prod"));
+                final String dns = PreferencesService.getPreference("marketplace.url".toUpperCase(), "");
+                if (dns.isEmpty()) {
+                    final Properties p = new Properties();
+                    p.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.dns.DnsContextFactory");
+                    final InitialDirContext idc = new InitialDirContext(p);
+                    final Attributes attrs = getAttributes(idc);
+                    final Attribute attr = attrs.get("CNAME");
+                    if (attr != null) {
+                        final String targetCName = attr.get(0).toString();
+                        final String domainName = (targetCName.endsWith(".")) ? targetCName.substring(0, targetCName.length() - 1) : targetCName;
+                        marketPlaceClient = new MarketPlaceClient(new URI("wss://" + domainName + "/Prod"));
+                    }
+                } else {
+                    marketPlaceClient = new MarketPlaceClient(new URI("wss://" + dns + "/Prod"));
                 }
 
             }
@@ -61,6 +67,16 @@ public class MarketPlaceClient {
             log.error("failed to connect Websocket", e);
         }
         return marketPlaceClient;
+    }
+
+    private static Attributes getAttributes(final InitialDirContext idc) throws NamingException {
+        Attributes attrs;
+        try {
+            attrs = idc.getAttributes("edmarketplace.jixxed.nl", new String[]{"CNAME"});
+        } catch (final UncheckedIOException ex) {
+            attrs = idc.getAttributes("dns://1.1.1.1/edmarketplace.jixxed.nl", new String[]{"CNAME"});
+        }
+        return attrs;
     }
 
     private MarketPlaceClient(final URI serverURI) {
