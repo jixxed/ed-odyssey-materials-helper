@@ -111,6 +111,7 @@ public class MaterialIngredient extends Ingredient {
                 }
             }
             case TRADE -> imageViewBuilder.withImage("/images/material/unknown.png");
+            case CONSUMABLE -> imageViewBuilder.withImage("/images/material/unknown.png");
             case OTHER -> throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
         this.image = imageViewBuilder.build();

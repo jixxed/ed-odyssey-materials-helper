@@ -33,7 +33,7 @@ class MessageHandler {
             Map.entry(JournalEventType.LIFTOFF, new LiftOffMessageProcessor()),
             Map.entry(JournalEventType.APPROACHBODY, new ApproachBodyMessageProcessor()),
             Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor()),
-            Map.entry(JournalEventType.COLLECTITEMS, new CollectItemsMessageProcessor())
+            Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );
     private static final String EVENT = "event";
 

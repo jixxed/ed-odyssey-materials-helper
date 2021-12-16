@@ -1,8 +1,18 @@
+Version 1.51
+-------------
+Added material tracking for SOLO mode
+- Uploads data after you have collected materials and fly away
+- Future release will add functionality based on uploaded data (most popular/best collecting locations)
+Improvements in DNS handling, specifically IPv6
+Implement multi Windows user support
+- Auto migrate stored preferences to user specific folder
+Fix for notification playing when collecting irrelevant materials by other members in a wing
+
 Version 1.50
 -------------
-fix for linux app not starting
-fix default trade sorting
-set trade distance fractional digits 3 > 2
+Fix for linux app not starting
+Fix default trade sorting
+Set trade distance fractional digits 3 > 2
 
 Version 1.49
 -------------

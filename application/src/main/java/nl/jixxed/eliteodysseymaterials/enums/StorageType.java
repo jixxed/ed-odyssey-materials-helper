@@ -5,6 +5,7 @@ public enum StorageType {
     DATA,
     ASSET,
     TRADE,
+    CONSUMABLE,
     OTHER;
 
     public static StorageType forMaterial(final Material material) {

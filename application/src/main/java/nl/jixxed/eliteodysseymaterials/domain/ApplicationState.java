@@ -25,6 +25,7 @@ public class ApplicationState {
     private final Map<String, Storage> unknownGoods = new HashMap<>();
     private final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
     private final Map<Data, Storage> data = new EnumMap<>(Data.class);
+    private final Map<Consumable, Storage> consumables = new EnumMap<>(Consumable.class);
     private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Material> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
@@ -43,6 +44,7 @@ public class ApplicationState {
             Map.entry(Engineer.ROSA_DAYETTE, EngineerState.UNKNOWN),
             Map.entry(Engineer.YI_SHEN, EngineerState.UNKNOWN)
     ));
+    private GameMode gameMode = GameMode.NONE;
 
     private ApplicationState() {
         this.initCounts();
@@ -62,6 +64,7 @@ public class ApplicationState {
                 }));
 
         EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken())));
+        EventService.addListener(this, LoadGameEvent.class, event -> this.gameMode = event.getGameMode());
     }
 
     public static ApplicationState getInstance() {
@@ -69,6 +72,10 @@ public class ApplicationState {
             applicationState = new ApplicationState();
         }
         return applicationState;
+    }
+
+    public GameMode getGameMode() {
+        return this.gameMode;
     }
 
     public Map<Good, Storage> getGoods() {
@@ -97,7 +104,8 @@ public class ApplicationState {
             case DATA -> this.data;
             case ASSET -> this.assets;
             case TRADE -> Map.of(TradeMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeMaterial.NOTHING, new Storage(0, 0));
-            case OTHER -> Collections.emptyMap();
+            case CONSUMABLE -> Collections.emptyMap();
+            case OTHER -> this.consumables;
         };
     }
 

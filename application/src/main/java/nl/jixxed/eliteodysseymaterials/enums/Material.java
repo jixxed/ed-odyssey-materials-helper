@@ -23,9 +23,12 @@ public interface Material {
             if (material.isUnknown()) {
                 material = Asset.forName(fixedName);
                 if (material.isUnknown()) {
-                    material = TradeMaterial.forName(fixedName);
+                    material = Consumable.forName(fixedName);
                     if (material.isUnknown()) {
-                        throw new IllegalArgumentException("Unknown material type for name: " + fixedName);
+                        material = TradeMaterial.forName(fixedName);
+                        if (material.isUnknown()) {
+                            throw new IllegalArgumentException("Unknown material type for name: " + fixedName);
+                        }
                     }
                 }
             }

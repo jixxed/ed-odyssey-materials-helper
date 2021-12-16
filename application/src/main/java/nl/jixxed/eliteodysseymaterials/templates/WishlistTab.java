@@ -409,7 +409,7 @@ public class WishlistTab extends EDOTab {
     }
 
     private void initLabels() {
-        this.noBlueprint = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.no.blueprint")).build();
+        this.noBlueprint = LabelBuilder.builder().withStyleClasses(WISHLIST_HEADER_CLASS, WISHLIST_CONTENT_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.no.blueprint")).build();
         this.selectedBlueprintsLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints")).build();
         this.requiredMaterialsLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.required.materials")).build();
         this.travelPathLabel = LabelBuilder.builder().withStyleClass(WISHLIST_HEADER_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path")).build();
@@ -603,6 +603,7 @@ public class WishlistTab extends EDOTab {
                     case DATA -> APPLICATION_STATE.getData().get(entry.getKey()).getTotalValue() >= entry.getValue();
                     case ASSET -> APPLICATION_STATE.getAssets().get(entry.getKey()).getTotalValue() >= entry.getValue();
                     case TRADE -> false;
+                    case CONSUMABLE -> false;
                     case OTHER -> false;
                 }))
                 .map(wishlistItem ->
@@ -611,6 +612,7 @@ public class WishlistTab extends EDOTab {
                             case DATA -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getData().get(wishlistItem.getKey()).getTotalValue());
                             case ASSET -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getAssets().get(wishlistItem.getKey()).getTotalValue());
                             case TRADE -> null;
+                            case CONSUMABLE -> null;
                             case OTHER -> null;
                         }
                 ).toList();

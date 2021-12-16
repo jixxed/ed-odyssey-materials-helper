@@ -20,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialTrackingService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
@@ -71,8 +72,8 @@ public class Main extends Application {
                 }
             }
             this.applicationLayout = new ApplicationLayout(this);
+            MaterialTrackingService.initialize();
             this.primaryStage = primaryStage;
-
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
             final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
@@ -137,6 +138,7 @@ public class Main extends Application {
                 if (MarketPlaceClient.getInstance() != null) {
                     MarketPlaceClient.getInstance().close();
                 }
+                MaterialTrackingService.close();
                 this.timeStampedShipLockerWatcher.stop();
                 this.timeStampedBackPackWatcher.stop();
                 this.journalWatcher.stop();

@@ -69,7 +69,7 @@ public class FileProcessor {
         } catch (final IOException e) {
             log.error("Error processing journal", e);
         }
-        EventService.publish(new JournalInitEvent(true));
+        Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
     }
 
     @SuppressWarnings("java:S2674")

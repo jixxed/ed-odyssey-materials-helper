@@ -4,6 +4,10 @@ When using the application the following information can be shared
 - IP address
 - Commander name
 
+UPLOADING OF DATA TO ED:MATERIALTRACKING (HOSTED IN AWS).
+- When playing in SOLO mode the application will upload the following information on materials collected in settlements: material name, material amount, event timestamp, commander name, system name, body name, settlement name, system coordinates
+- This data will be used to compile an overview of which materials can be best collected where.
+
 DOWNLOADING OF DATA FROM GITHUB.COM.
 - Upon launch of the application a version check is performed by requesting the latest version information on Github
 - When installed with the MSI package, an auto updater is included that can download and install the latest version of the application from Github on launch

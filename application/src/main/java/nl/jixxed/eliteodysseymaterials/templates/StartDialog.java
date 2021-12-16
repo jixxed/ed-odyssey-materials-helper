@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class StartDialog extends VBox implements Template {
-    public static final String POLICY_LEVEL_REQUIRED = "v1";
+    public static final String POLICY_LEVEL_REQUIRED = "v2";
     private final Stage stage;
 
     public StartDialog(final Stage stage) {

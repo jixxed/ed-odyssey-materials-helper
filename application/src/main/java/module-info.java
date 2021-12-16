@@ -15,6 +15,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires jdk.naming.dns;
     requires static lombok;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
+    opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.common to com.fasterxml.jackson.databind;
