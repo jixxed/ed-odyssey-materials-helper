@@ -11,7 +11,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.LocationEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
 import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,9 +57,9 @@ class PathServiceTest {
                 new WishlistBlueprint("TEST", new WishlistRecipe(RecipeName.SCOPE, true)),
                 new WishlistBlueprint("TEST", new WishlistRecipe(RecipeName.STABILITY, true))
         );
-        LocationService.getCurrentLocation();
+        LocationService.getCurrentStarSystem();
 
-        EventService.publish(new LocationEvent(Engineer.ODEN_GEIGER.getLocation()));
+        EventService.publish(new LocationJournalEvent("", Engineer.ODEN_GEIGER.getStarSystem(), "", ""));
 
         final List<PathItem> pathItems = PathService.calculateShortestPath(wishlistBlueprints);
 
@@ -86,9 +86,9 @@ class PathServiceTest {
                 new WishlistBlueprint("TEST", new WishlistRecipe(RecipeName.SCOPE, true)),
                 new WishlistBlueprint("TEST", new WishlistRecipe(RecipeName.STABILITY, true))
         );
-        LocationService.getCurrentLocation();
+        LocationService.getCurrentStarSystem();
 
-        EventService.publish(new LocationEvent(Engineer.DOMINO_GREEN.getLocation()));
+        EventService.publish(new LocationJournalEvent("", Engineer.DOMINO_GREEN.getStarSystem(), "", ""));
         final List<PathItem> pathItems = PathService.calculateShortestPath(wishlistBlueprints);
 
         assertAll(() -> {

@@ -35,7 +35,8 @@ public class MaterialTrackingService {
         close();
         BACKPACK_CHANGE_EVENTS.clear();
         eventListeners.add(EventService.addStaticListener(BackpackChangeEvent.class, MaterialTrackingService::processEvent));
-        eventListeners.add(EventService.addStaticListener(SuperCruiseEntryJournalEvent.class, superCruiseEntryJournalEvent -> publish()));
+        eventListeners.add(EventService.addStaticListener(SuperCruiseEntryJournalEvent.class, superCruiseEntryJournalEvent -> publish()));//send on SC entry
+        eventListeners.add(EventService.addStaticListener(LocationJournalEvent.class, locationJournalEvent -> publish()));//send on relog or respawn
         eventListeners.add(EventService.addStaticListener(CommanderSelectedEvent.class, commanderSelectedEvent -> publish()));
         eventListeners.add(EventService.addStaticListener(ShipLockerEvent.class, shipLockerEvent -> clearChanges(shipLockerEvent.getTimestamp())));
         eventListeners.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> isEnabled = journalInitEvent.isInitialised()));
