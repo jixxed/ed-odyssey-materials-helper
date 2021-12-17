@@ -1,3 +1,8 @@
+Version 1.53
+-------------
+Fixed a memory leak in the wishlist. Became apparent over time while playing and having lots of blueprints selected.
+Added appversion information to material tracking
+
 Version 1.52
 -------------
 Improved location detection
