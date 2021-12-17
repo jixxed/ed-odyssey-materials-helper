@@ -19,7 +19,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.Location;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.TradeSearch;
 import nl.jixxed.eliteodysseymaterials.domain.TradeSpec;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -272,14 +272,14 @@ class TradePagination extends VBox {
             final Info info = offer.getInfo();
             final Material offerMaterial = Material.subtypeForName(item.getSid().substring(item.getSid().lastIndexOf(".") + 1));
             final Material receiveMaterial = Material.subtypeForName(item.getDid().substring(item.getDid().lastIndexOf(".") + 1));
-            final Location location = new Location(info.getLocation(), info.getX(), info.getY(), info.getZ());
+            final StarSystem starSystem = new StarSystem(info.getLocation(), info.getX(), info.getY(), info.getZ());
             final Optional<XBid> firstBid = offer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).findFirst();
             final Optional<XBid> acceptedBid = offer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).filter(XBid::getAccepted).findFirst();
 
             if (Objects.equals(offer.getToken(), CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()))) {
-                return createTradeOffer(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), location, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
+                return createTradeOffer(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), starSystem, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
             } else {
-                return createTradeRequest(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), location, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
+                return createTradeRequest(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), starSystem, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
             }
         } catch (final IllegalArgumentException ex) {
             log.error("failed to fetch items for offer");
@@ -288,13 +288,13 @@ class TradePagination extends VBox {
     }
 
     @SuppressWarnings("java:S107")
-    private TradeSpec createTradeOffer(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final Location location, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
-        return new TradeSpec(offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, location, TradeType.OFFER, tradeStatus, bid, acceptedTokenHash, ownerHash);
+    private TradeSpec createTradeOffer(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final StarSystem starSystem, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
+        return new TradeSpec(offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, starSystem, TradeType.OFFER, tradeStatus, bid, acceptedTokenHash, ownerHash);
     }
 
     @SuppressWarnings("java:S107")
-    private TradeSpec createTradeRequest(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final Location location, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
-        return new TradeSpec(offerId, receiveMaterial, receiveAmount, offerMaterial, offerAmount, location, TradeType.REQUEST, tradeStatus, bid, acceptedTokenHash, ownerHash);
+    private TradeSpec createTradeRequest(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final StarSystem starSystem, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
+        return new TradeSpec(offerId, receiveMaterial, receiveAmount, offerMaterial, offerAmount, starSystem, TradeType.REQUEST, tradeStatus, bid, acceptedTokenHash, ownerHash);
     }
 
     private UpdatesProperty updateProperty() {

@@ -22,7 +22,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.LocationEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ class EngineerCard extends VBox {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        EventService.addListener(this, LocationEvent.class, locationEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationEvent.getLocation().getX(), locationEvent.getLocation().getY(), locationEvent.getLocation().getZ())) + "Ly)"));
+        EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationChangedEvent.getCurrentStarSystem().getX(), locationChangedEvent.getCurrentStarSystem().getY(), locationChangedEvent.getCurrentStarSystem().getZ())) + "Ly)"));
         EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
@@ -170,7 +170,7 @@ class EngineerCard extends VBox {
     private FlowPane getEngineerLocation() {
         this.engineerLocation = LabelBuilder.builder()
                 .withStyleClass("engineer-location")
-                .withNonLocalizedText(this.engineer.getSettlement().getSettlementName() + " | " + this.engineer.getLocation().getStarSystem())
+                .withNonLocalizedText(this.engineer.getSettlement().getSettlementName() + " | " + this.engineer.getStarSystem().getName())
                 .build();
 
         this.engineerDistance = LabelBuilder.builder()
@@ -193,7 +193,7 @@ class EngineerCard extends VBox {
     private void copyLocationToClipboard() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
-        content.putString(this.engineer.getLocation().getStarSystem());
+        content.putString(this.engineer.getStarSystem().getName());
         clipboard.setContent(content);
     }
 

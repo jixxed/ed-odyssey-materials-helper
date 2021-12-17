@@ -34,7 +34,7 @@ public class TradeSpec {
     private final int offerAmount;
     private final Material receiveMaterial;
     private final int receiveAmount;
-    private final Location location;
+    private final StarSystem starSystem;
     private final TradeType tradeType;
     private TradeStatus tradeStatus;
     private String bid;
@@ -46,13 +46,13 @@ public class TradeSpec {
     private Optional<Consumer<TradeSpec>> callback = Optional.empty();
 
     @SuppressWarnings("java:S107")
-    public TradeSpec(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final Location location, final TradeType tradeType, final TradeStatus tradeStatus, final String bid, final String acceptedTokenHash, final String ownerHash) {
+    public TradeSpec(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final StarSystem starSystem, final TradeType tradeType, final TradeStatus tradeStatus, final String bid, final String acceptedTokenHash, final String ownerHash) {
         this.offerId = offerId;
         this.offerMaterial = offerMaterial;
         this.offerAmount = offerAmount;
         this.receiveMaterial = receiveMaterial;
         this.receiveAmount = receiveAmount;
-        this.location = location;
+        this.starSystem = starSystem;
         this.tradeType = tradeType;
         this.bid = bid;
         this.acceptedTokenHash = acceptedTokenHash;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.Location;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
@@ -116,7 +116,7 @@ public class MarketPlaceClient {
     }
 
     public void publishOffer(final Material offerMaterial, final Integer offerAmount, final Material receiveMaterial, final Integer receiveAmount) {
-        final Location location = LocationService.getCurrentLocation();
+        final StarSystem starSystem = LocationService.getCurrentStarSystem();
         final OutboundMessage message = OutboundMessage.builder()
                 .action(Action.OFFER.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
@@ -124,10 +124,10 @@ public class MarketPlaceClient {
                         .payload(PublishOfferPayload.builder()
                                 .info(Info.builder()
                                         .nickname(APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new).getName())
-                                        .location(location.getStarSystem())
-                                        .x(location.getX())
-                                        .y(location.getY())
-                                        .z(location.getZ())
+                                        .location(starSystem.getName())
+                                        .x(starSystem.getX())
+                                        .y(starSystem.getY())
+                                        .z(starSystem.getZ())
                                         .build())
                                 .items(List.of(Item.builder()
                                         .did(receiveMaterial.getLocalizationKey())
@@ -228,7 +228,7 @@ public class MarketPlaceClient {
     }
 
     public void message(final String offerId, final String messageRef, final String tokenHash, final String text) {
-        final Location location = LocationService.getCurrentLocation();
+        final StarSystem starSystem = LocationService.getCurrentStarSystem();
         final OutboundMessage message = OutboundMessage.builder()
                 .action(Action.COMMS.toString().toLowerCase(Locale.ENGLISH))
                 .data(Data.builder()
@@ -240,10 +240,10 @@ public class MarketPlaceClient {
                                         .offerId(offerId)
                                         .info(Info.builder()
                                                 .nickname(APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new).getName())
-                                                .location(location.getStarSystem())
-                                                .x(location.getX())
-                                                .y(location.getY())
-                                                .z(location.getZ())
+                                                .location(starSystem.getName())
+                                                .x(starSystem.getX())
+                                                .y(starSystem.getY())
+                                                .z(starSystem.getZ())
                                                 .build())
                                         .tokenhash(tokenHash)
                                         .text(text)

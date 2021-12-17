@@ -32,7 +32,11 @@ class MessageHandler {
             Map.entry(JournalEventType.UNDOCKED, new UndockedMessageProcessor()),
             Map.entry(JournalEventType.LIFTOFF, new LiftOffMessageProcessor()),
             Map.entry(JournalEventType.APPROACHBODY, new ApproachBodyMessageProcessor()),
+            Map.entry(JournalEventType.APPROACHSETTLEMENT, new ApproachSettlementMessageProcessor()),
+            Map.entry(JournalEventType.SUPERCRUISE_ENTRY, new SupercruiseEntryMessageProcessor()),
             Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor()),
+            Map.entry(JournalEventType.DOCKED, new DockedMessageProcessor()),
+
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );
     private static final String EVENT = "event";

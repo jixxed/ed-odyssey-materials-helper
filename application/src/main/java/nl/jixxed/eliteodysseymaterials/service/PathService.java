@@ -28,10 +28,10 @@ public class PathService {
         final List<PathItem> sortedPathItems = new ArrayList<>();
         final List<PathItem> pathItems = new ArrayList<>();
         final Map<Engineer, Integer> engineerPreference = new EnumMap<>(Engineer.class);
-        Location currentLocation = LocationService.getCurrentLocation();
-        final Location finalCurrentLocation1 = currentLocation;
+        StarSystem currentStarSystem = LocationService.getCurrentStarSystem();
+        final StarSystem finalCurrentStarSystem1 = currentStarSystem;
         final List<Engineer> allowedEngineers = Arrays.stream(Engineer.values())
-                .filter(engineer -> engineer.getDistance(finalCurrentLocation1) < MAX_ENGINEER_DISTANCE)
+                .filter(engineer -> engineer.getDistance(finalCurrentStarSystem1) < MAX_ENGINEER_DISTANCE)
                 .filter(APPLICATION_STATE::isEngineerUnlocked)
                 .toList();
         distinctRecipes.forEach(recipe -> recipe.getEngineers().stream()
@@ -61,17 +61,17 @@ public class PathService {
                 });
         final int systemsToVisit = pathItems.size();
         for (int i = 0; i < systemsToVisit; i++) {
-            final Location finalCurrentLocation = currentLocation;
+            final StarSystem finalCurrentStarSystem = currentStarSystem;
             if (pathItems.size() > 1) {
                 final PathItem closest = pathItems.stream()
-                        .min((pathItem1, pathItem2) -> (int) (pathItem1.getAndSetDistanceToClosestEngineer(finalCurrentLocation) - pathItem2.getAndSetDistanceToClosestEngineer(finalCurrentLocation)))
+                        .min((pathItem1, pathItem2) -> (int) (pathItem1.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem) - pathItem2.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem)))
                         .orElseThrow(IllegalArgumentException::new);
                 sortedPathItems.add(closest);
-                currentLocation = closest.getEngineer().getLocation();
+                currentStarSystem = closest.getEngineer().getStarSystem();
                 pathItems.remove(closest);
             } else if (pathItems.size() == 1) {
                 final PathItem closest = pathItems.get(0);
-                closest.getAndSetDistanceToClosestEngineer(currentLocation);
+                closest.getAndSetDistanceToClosestEngineer(currentStarSystem);
                 sortedPathItems.add(closest);
             }
         }
@@ -97,8 +97,8 @@ public class PathService {
             for (final List<Engineer> engineers : paths) {
                 double total = 0D;
                 for (final Engineer engineer : engineers) {
-                    final Location location = (engineers.indexOf(engineer) == 0) ? LocationService.getCurrentLocation() : engineers.get(engineers.indexOf(engineer) - 1).getLocation();
-                    total += engineer.getDistance(location);
+                    final StarSystem starSystem = (engineers.indexOf(engineer) == 0) ? LocationService.getCurrentStarSystem() : engineers.get(engineers.indexOf(engineer) - 1).getStarSystem();
+                    total += engineer.getDistance(starSystem);
                 }
                 if (total < shortestLength) {
                     shortestLength = total;
@@ -112,8 +112,8 @@ public class PathService {
     private static void setShortestPath(final List<PathItem> sortedPathItems, final List<Engineer> shortestPath) {
         for (int i = 0; i < sortedPathItems.size(); i++) {
             final Engineer engineer = shortestPath.get(i);
-            final Location location = (i == 0) ? LocationService.getCurrentLocation() : sortedPathItems.get(i - 1).getEngineer().getLocation();
-            sortedPathItems.get(i).setEngineerAndCalculateDistance(engineer, location);
+            final StarSystem starSystem = (i == 0) ? LocationService.getCurrentStarSystem() : sortedPathItems.get(i - 1).getEngineer().getStarSystem();
+            sortedPathItems.get(i).setEngineerAndCalculateDistance(engineer, starSystem);
         }
     }
 

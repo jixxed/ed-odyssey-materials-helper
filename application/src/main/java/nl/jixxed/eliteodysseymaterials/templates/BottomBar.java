@@ -72,7 +72,7 @@ class BottomBar extends HBox {
 
     private void initEventHandling() {
         EventService.addListener(this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged);
-        EventService.addListener(this, SimpleLocationEvent.class, this::updateLocationLabel);
+        EventService.addListener(this, LocationChangedEvent.class, this::updateLocationLabel);
         EventService.addListener(this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel);
         EventService.addListener(this, EngineerEvent.class, event -> hideLoginRequest());
         EventService.addListener(this, CommanderAddedEvent.class, this::handleAddedCommander);
@@ -111,27 +111,13 @@ class BottomBar extends HBox {
         Platform.runLater(() -> this.watchedFileLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.watching", journalLineProcessedEvent.getFile().getName())));
     }
 
-    private void updateLocationLabel(final SimpleLocationEvent simpleLocationEvent) {
-        this.system = simpleLocationEvent.getStarSystem().orElse(this.system);
-        switch (simpleLocationEvent.getLocationType()) {
-            case LOCATION:
-                final String systemBody = simpleLocationEvent.getBody().orElse("");
-                final String systemStation = simpleLocationEvent.getStation().orElse("");
-                this.body = systemBody.equals(systemStation) ? "" : systemBody;
-                break;
-            case DOCKED:
-                break;
-            case UNDOCKED:
-                this.station = "";
-                break;
-            default:
-                this.body = simpleLocationEvent.getBody().orElse("");
-                break;
-        }
-        this.station = simpleLocationEvent.getStation().orElse("");
+    private void updateLocationLabel(final LocationChangedEvent locationChangedEvent) {
+        this.system = locationChangedEvent.getCurrentStarSystem().getName();
+        this.body = locationChangedEvent.getCurrentBody();
+        this.station = locationChangedEvent.getCurrentSettlement();
         Platform.runLater(() -> this.locationLabel.setText(this.system +
                 (this.body.isBlank() ? "" : " | " + this.body) +
-                (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + this.station)));
+                (this.station.isBlank() || this.station.equals(this.body) || this.station.startsWith("$") ? "" : " | " + this.station)));
     }
 
 

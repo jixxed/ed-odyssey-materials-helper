@@ -476,7 +476,7 @@ public class WishlistTab extends EDOTab {
             EventService.publish(new WishlistChangedEvent(this.activeWishlistUUID));
         });
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
-        EventService.addListener(this, LocationEvent.class, locationEvent -> refreshContent());
+        EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent());
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().equals(ImportResult.SUCCESS)) {
                 refreshWishlistBlueprints();

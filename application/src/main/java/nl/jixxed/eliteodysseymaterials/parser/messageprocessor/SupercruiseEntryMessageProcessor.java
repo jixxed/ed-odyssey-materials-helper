@@ -2,13 +2,14 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.UndockedJournalEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.SuperCruiseEntryJournalEvent;
 
-public class UndockedMessageProcessor implements MessageProcessor {
+public class SupercruiseEntryMessageProcessor implements MessageProcessor {
+
     @Override
     public void process(final JsonNode journalMessage) {
         final String timestamp = journalMessage.get("timestamp").asText();
-        final String stationName = asTextOrBlank(journalMessage, "StationName");
-        EventService.publish(new UndockedJournalEvent(timestamp, stationName));
+        final String starSystem = journalMessage.get("StarSystem").asText();
+        EventService.publish(new SuperCruiseEntryJournalEvent(timestamp, starSystem));
     }
 }

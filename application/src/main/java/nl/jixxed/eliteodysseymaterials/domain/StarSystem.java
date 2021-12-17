@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class Location {
-    private final StarSystem starSystem;
-    private final String body;
-    private final String station;
-
+public class StarSystem {
+    private final String name;
+    private final double x;
+    private final double y;
+    private final double z;
 }

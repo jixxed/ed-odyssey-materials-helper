@@ -10,12 +10,12 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.Location;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.TradeSpec;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.LocationEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
 import java.text.NumberFormat;
@@ -115,7 +115,7 @@ class TradeRequest extends Trade {
 
         this.distanceLabel = LabelBuilder.builder()
                 .withStyleClass("trade-request-distance-label")
-                .withText(LocaleService.getStringBinding("trade.request.distance", getLocation().getStarSystem(), NUMBER_FORMAT.format(LocationService.calculateDistance(LocationService.getCurrentLocation(), getLocation()))))
+                .withText(LocaleService.getStringBinding("trade.request.distance", getStarSystem().getName(), NUMBER_FORMAT.format(LocationService.calculateDistance(LocationService.getCurrentStarSystem(), getStarSystem()))))
                 .build();
         this.requestTradeButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.request.button.request.trade"))
@@ -142,10 +142,10 @@ class TradeRequest extends Trade {
 
     @SuppressWarnings("java:S2177")
     private void initEventHandling() {
-        this.listeners.add(EventService.addListener(this, LocationEvent.class, locationEvent -> {
-            final Location currentLocation = locationEvent.getLocation();
-            final Double distance = LocationService.calculateDistance(currentLocation, getLocation());
-            this.distanceLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.distance", getLocation().getStarSystem(), NUMBER_FORMAT.format(distance)));
+        this.listeners.add(EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> {
+            final StarSystem currentStarSystem = locationChangedEvent.getCurrentStarSystem();
+            final Double distance = LocationService.calculateDistance(currentStarSystem, getStarSystem());
+            this.distanceLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.distance", getStarSystem().getName(), NUMBER_FORMAT.format(distance)));
         }));
 
     }

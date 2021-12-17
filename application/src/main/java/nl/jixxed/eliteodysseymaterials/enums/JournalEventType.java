@@ -18,7 +18,9 @@ public enum JournalEventType {
     UNDOCKED("Undocked"),
     LIFTOFF("Liftoff"),
     APPROACHBODY("ApproachBody"),
+    APPROACHSETTLEMENT("ApproachSettlement"),
     LEAVEBODY("LeaveBody"),
+    SUPERCRUISE_ENTRY("SupercruiseEntry"),
     LOADGAME("LoadGame"),
     UNKNOWN("Unknown");
 

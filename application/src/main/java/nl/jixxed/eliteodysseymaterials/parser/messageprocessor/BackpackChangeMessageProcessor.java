@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.domain.FullLocation;
+import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.enums.Consumable;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
@@ -61,19 +61,19 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
     }
 
     private BackpackChangeEvent createEvent(final Operation operation, final JsonNode jsonNode, final String timestamp) {
-        final FullLocation currentFullLocation = LocationService.getCurrentFullLocation();
+        final Location currentLocation = LocationService.getCurrentLocation();
         return BackpackChangeEvent.builder()
                 .material(Material.subtypeForName(jsonNode.get("Name").asText()))
                 .amount(jsonNode.get("Count").asInt())
                 .operation(operation)
                 .timestamp(timestamp)
                 .commander(APPLICATION_STATE.getPreferredCommander().map(Commander::getName).orElse(""))
-                .system(currentFullLocation.getStarSystem())
-                .body(currentFullLocation.getBody())
-                .settlement(currentFullLocation.getStation())
-                .x(currentFullLocation.getX())
-                .y(currentFullLocation.getY())
-                .z(currentFullLocation.getZ())
+                .system(currentLocation.getStarSystem().getName())
+                .body(currentLocation.getBody())
+                .settlement(currentLocation.getStation())
+                .x(currentLocation.getStarSystem().getX())
+                .y(currentLocation.getStarSystem().getY())
+                .z(currentLocation.getStarSystem().getZ())
                 .build();
     }
 }

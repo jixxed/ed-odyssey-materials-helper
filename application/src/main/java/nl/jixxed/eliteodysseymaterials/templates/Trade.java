@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.Location;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.TradeSpec;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
@@ -40,7 +40,7 @@ abstract class Trade extends FlowPane {
     private Integer offerAmount;
     private Integer receiveAmount;
     private Button contactButton;
-    private Location location;
+    private StarSystem starSystem;
     private TradeSpec tradeSpec;
 
     protected List<EventListener<?>> listeners = new ArrayList<>();
@@ -57,7 +57,7 @@ abstract class Trade extends FlowPane {
         this.receiveMaterial = tradeSpec.getReceiveMaterial();
         this.offerAmount = tradeSpec.getOfferAmount();
         this.receiveAmount = tradeSpec.getReceiveAmount();
-        this.location = tradeSpec.getLocation();
+        this.starSystem = tradeSpec.getStarSystem();
         this.tradeSpec = tradeSpec;
         initComponents();
         initEventHandling();
