@@ -20,7 +20,7 @@ public enum JournalEventType {
     APPROACHBODY("ApproachBody"),
     APPROACHSETTLEMENT("ApproachSettlement"),
     LEAVEBODY("LeaveBody"),
-    SUPERCRUISE_ENTRY("SupercruiseEntry"),
+    SUPERCRUISEENTRY("SupercruiseEntry"),
     LOADGAME("LoadGame"),
     UNKNOWN("Unknown");
 
