@@ -47,7 +47,6 @@ public class WishlistBlueprint extends HBox {
     private Button removeBlueprint;
     private final Set<WishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<WishlistIngredient> otherIngredients = new HashSet<>();
-    private ChangeListener<? super Boolean> booleanChangeListener;
     private EventListener<StorageEvent> storageEventEventListener;
 
     public WishlistBlueprint(final String wishlistUUID, final WishlistRecipe wishlistRecipe) {
@@ -72,7 +71,8 @@ public class WishlistBlueprint extends HBox {
                 .build();
         setVisibility(this.wishlistRecipe.isVisible());
 
-        this.booleanChangeListener = (observable, oldValue, newValue) -> {
+
+        final ChangeListener<? super Boolean> booleanChangeListener = (observable, oldValue, newValue) -> {
             this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.recipe.getRequiredAmount(wishlistIngredient.getMaterial())));
             this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
             this.highlight(newValue);
@@ -81,7 +81,7 @@ public class WishlistBlueprint extends HBox {
                 .withStyleClass("wishlist-label")
                 .withText(LocaleService.getStringBinding(this.wishlistRecipe.getRecipeName().getLocalizationKey()))
                 .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.wishlistRecipe.getRecipeName())))
-                .withHoverProperty(new WeakChangeListener<>(this.booleanChangeListener))
+                .withHoverProperty(new WeakChangeListener<>(booleanChangeListener))
                 .build();
         this.getChildren().addAll(this.visibilityButton, this.wishlistRecipeName);
 

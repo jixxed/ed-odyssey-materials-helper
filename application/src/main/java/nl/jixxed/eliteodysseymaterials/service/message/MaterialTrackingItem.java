@@ -18,4 +18,5 @@ public class MaterialTrackingItem {
     private String body;
     private String settlement;
     private String session;
+    private String version;
 }

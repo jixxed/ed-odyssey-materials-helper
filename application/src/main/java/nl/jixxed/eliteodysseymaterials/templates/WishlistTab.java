@@ -49,7 +49,10 @@ public class WishlistTab extends EDOTab {
     private int wishlistSize;
     private final List<WishlistBlueprint> wishlistBlueprints = new ArrayList<>();
     private final AtomicBoolean hideCompleted = new AtomicBoolean();
-    private final Map<Material, Integer> wishlistNeededMaterials = new HashMap<>();
+    //    private final Map<Material, Integer> wishlistNeededMaterials = new HashMap<>();
+    private final Map<Data, Integer> wishlistNeededDatas = new EnumMap<>(Data.class);
+    private final Map<Good, Integer> wishlistNeededGoods = new EnumMap<>(Good.class);
+    private final Map<Asset, Integer> wishlistNeededAssets = new EnumMap<>(Asset.class);
 
     private ComboBox<Wishlist> wishlistSelect;
     private Label noBlueprint;
@@ -201,7 +204,7 @@ public class WishlistTab extends EDOTab {
                 .build();
         this.wishlistName = TextFieldBuilder.builder().withStyleClasses("root", "wishlist-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt")).build();
         this.exportButton = ButtonBuilder.builder().withStyleClass(WISHLIST_BUTTON_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.export"))
-                .withOnAction(event -> EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededMaterials)))).build();
+                .withOnAction(event -> EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededDatas, this.wishlistNeededGoods, this.wishlistNeededAssets)))).build();
         this.clipboardButton = ButtonBuilder.builder().withStyleClass(WISHLIST_BUTTON_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.copy"))
                 .withOnAction(event -> {
                     copyWishListToClipboard();
@@ -588,41 +591,44 @@ public class WishlistTab extends EDOTab {
         this.dataFlow.getChildren().clear();
         this.assetCircuitFlow.getChildren().clear();
         this.assetTechFlow.getChildren().clear();
-        this.wishlistNeededMaterials.clear();
+        this.wishlistNeededGoods.clear();
+        this.wishlistNeededAssets.clear();
+        this.wishlistNeededDatas.clear();
         this.shortestRoute.getItems().clear();
         this.wishlistBlueprints.stream()
                 .filter(WishlistBlueprint::isVisibleBlueprint)
                 .map(WishlistBlueprint::getRecipe)
-                .forEach(recipe ->
-                        recipe.getMaterialCollection(Material.class).forEach((key, value1) -> this.wishlistNeededMaterials.merge(key, value1, Integer::sum))
-                );
-
-        final List<WishlistIngredient> ingredients = this.wishlistNeededMaterials.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || !(switch (entry.getKey().getStorageType()) {
-                    case GOOD -> APPLICATION_STATE.getGoods().get(entry.getKey()).getTotalValue() >= entry.getValue();
-                    case DATA -> APPLICATION_STATE.getData().get(entry.getKey()).getTotalValue() >= entry.getValue();
-                    case ASSET -> APPLICATION_STATE.getAssets().get(entry.getKey()).getTotalValue() >= entry.getValue();
-                    case TRADE -> false;
-                    case CONSUMABLE -> false;
-                    case OTHER -> false;
-                }))
-                .map(wishlistItem ->
-                        switch (wishlistItem.getKey().getStorageType()) {
-                            case GOOD -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getGoods().get(wishlistItem.getKey()).getTotalValue());
-                            case DATA -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getData().get(wishlistItem.getKey()).getTotalValue());
-                            case ASSET -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getAssets().get(wishlistItem.getKey()).getTotalValue());
-                            case TRADE -> null;
-                            case CONSUMABLE -> null;
-                            case OTHER -> null;
+                .forEach(recipe -> {
+                            recipe.getMaterialCollection(Data.class).forEach((key, value1) -> this.wishlistNeededDatas.merge((Data) key, value1, Integer::sum));
+                            recipe.getMaterialCollection(Good.class).forEach((key, value1) -> this.wishlistNeededGoods.merge((Good) key, value1, Integer::sum));
+                            recipe.getMaterialCollection(Asset.class).forEach((key, value1) -> this.wishlistNeededAssets.merge((Asset) key, value1, Integer::sum));
                         }
-                ).toList();
+                );
+        final List<WishlistIngredient> ingredientsData = this.wishlistNeededDatas.entrySet().stream()
+                .filter(entry -> !this.hideCompleted.get() || !(APPLICATION_STATE.getData().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .map(wishlistItem -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getData().get(wishlistItem.getKey()).getTotalValue()))
+                .toList();
+        final List<WishlistIngredient> ingredientsGood = this.wishlistNeededGoods.entrySet().stream()
+                .filter(entry -> !this.hideCompleted.get() || !(APPLICATION_STATE.getGoods().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .map(wishlistItem -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getGoods().get(wishlistItem.getKey()).getTotalValue()))
+                .toList();
+        final List<WishlistIngredient> ingredientsAsset = this.wishlistNeededAssets.entrySet().stream()
+                .filter(entry -> !this.hideCompleted.get() || !(APPLICATION_STATE.getAssets().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .map(wishlistItem -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getAssets().get(wishlistItem.getKey()).getTotalValue()))
+                .toList();
+        final List<WishlistIngredient> allIngredients = new ArrayList<>();
+        allIngredients.addAll(ingredientsData);
+        allIngredients.addAll(ingredientsGood);
+        allIngredients.addAll(ingredientsAsset);
 
-        this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.addWishlistIngredients(ingredients));
-        this.goodFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.GOOD)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
-        this.dataFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.DATA)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
-        this.assetCircuitFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CIRCUIT)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
-        this.assetChemicalFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CHEMICAL)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
-        this.assetTechFlow.getChildren().addAll(ingredients.stream().filter(ingredient -> ingredient.getType().equals(StorageType.ASSET) && ((Asset) ingredient.getMaterial()).getType().equals(AssetType.TECH)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
+        this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.addWishlistIngredients(allIngredients));
+        this.goodFlow.getChildren().addAll(ingredientsGood.stream().sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
+        this.dataFlow.getChildren().addAll(ingredientsData.stream().sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
+        this.assetCircuitFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CIRCUIT)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
+        this.assetChemicalFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getMaterial()).getType().equals(AssetType.CHEMICAL)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
+        this.assetTechFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getMaterial()).getType().equals(AssetType.TECH)).sorted(Comparator.comparing(WishlistIngredient::getName)).toList());
+
+
         removeAndAddFlows();
         try {
             final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);

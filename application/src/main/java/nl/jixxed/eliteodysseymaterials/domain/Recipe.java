@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
@@ -9,10 +10,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Recipe {
     private final Map<Material, Integer> assets;
     private final Map<Material, Integer> data;
     private final Map<Material, Integer> goods;
+    @EqualsAndHashCode.Include
     private final RecipeName recipeName;
     private final Map<Modifier, String> modifiers;
 

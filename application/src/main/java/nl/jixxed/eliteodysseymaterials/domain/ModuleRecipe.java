@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class ModuleRecipe extends Recipe {
     private final List<Engineer> engineers;
 

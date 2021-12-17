@@ -1,8 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 class WishlistIngredient extends MaterialIngredient {
 
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";

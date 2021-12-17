@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class EngineerRecipe extends Recipe {
     private final List<String> other;
     private final Supplier<Boolean> isCompletedSupplier;

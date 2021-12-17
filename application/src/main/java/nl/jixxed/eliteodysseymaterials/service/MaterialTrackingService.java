@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
@@ -76,6 +77,7 @@ public class MaterialTrackingService {
 
     private static synchronized void publishMaterialTracking(final List<BackpackChangeEvent> backpackChangeEvents) {
         if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode())) {
+            final String appVersion = PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "");
             final ArrayList<MaterialTrackingItem> items = backpackChangeEvents.stream()
                     .map(backpackChangeEvent -> MaterialTrackingItem.builder()
                             .material(backpackChangeEvent.getMaterial())
@@ -89,6 +91,7 @@ public class MaterialTrackingService {
                             .y(backpackChangeEvent.getY())
                             .z(backpackChangeEvent.getZ())
                             .session(session.toString())
+                            .version(appVersion)
                             .build())
                     .collect(Collectors.toCollection(ArrayList::new));
             final Runnable run = () -> {

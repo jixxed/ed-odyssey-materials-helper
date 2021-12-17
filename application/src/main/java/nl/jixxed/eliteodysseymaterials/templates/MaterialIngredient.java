@@ -8,6 +8,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -24,12 +25,15 @@ import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class MaterialIngredient extends Ingredient {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
+    @EqualsAndHashCode.Include
     private final StorageType storageType;
+    @EqualsAndHashCode.Include
     private final Material material;
     private final Integer leftAmount;
     private Integer rightAmount;
