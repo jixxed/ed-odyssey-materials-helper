@@ -1,3 +1,7 @@
+Version 1.54
+-------------
+bugfix not sending material data on entering supercruise
+
 Version 1.53
 -------------
 Fixed a memory leak in the wishlist. Became apparent over time while playing and having lots of blueprints selected.
