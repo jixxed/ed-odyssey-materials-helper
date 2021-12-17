@@ -1,3 +1,7 @@
+Version 1.52
+-------------
+Improved location detection
+
 Version 1.51
 -------------
 Added material tracking for SOLO mode
