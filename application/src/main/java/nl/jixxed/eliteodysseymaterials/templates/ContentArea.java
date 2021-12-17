@@ -26,6 +26,7 @@ class ContentArea extends AnchorPane {
     private WishlistTab wishlistTab;
     private EngineersTab engineersTab;
     private SettingsTab settingsTab;
+    private LoadoutEditorTab loadoutEditorTab;
     private TradeTab tradeTab;
     private ImportWishlistTab importWishlistTab;
     private TabPane tabs;
@@ -39,19 +40,21 @@ class ContentArea extends AnchorPane {
     private void initComponents(final Application application) {
         this.overview = new OverviewTab();
         this.wishlistTab = new WishlistTab();
+        this.loadoutEditorTab = new LoadoutEditorTab();
         this.engineersTab = new EngineersTab();
         this.tradeTab = new TradeTab();
         this.settingsTab = new SettingsTab(application);
         this.importWishlistTab = new ImportWishlistTab();
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
+        this.loadoutEditorTab.setClosable(false);
         this.engineersTab.setClosable(false);
         this.settingsTab.setClosable(false);
         this.importWishlistTab.setClosable(false);
         this.tradeTab.setClosable(false);
 
         this.searchBar = new SearchBar();
-        this.tabs = new TabPane(this.overview, this.wishlistTab, this.tradeTab, this.engineersTab, this.settingsTab, this.importWishlistTab);
+        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.engineersTab, this.settingsTab, this.importWishlistTab);
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 final Tabs tabType = ((EDOTab) newValue).getTabType();
