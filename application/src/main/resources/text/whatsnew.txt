@@ -1,6 +1,10 @@
+Version 1.55
+-------------
+Bugfix for wishlist materials not consistently highlighting when hovering over blueprints
+
 Version 1.54
 -------------
-bugfix not sending material data on entering supercruise
+Bugfix for not sending material data on entering supercruise
 
 Version 1.53
 -------------
