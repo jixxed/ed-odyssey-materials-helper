@@ -1,8 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.WeakChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -47,7 +45,6 @@ public class WishlistBlueprint extends HBox {
     private Button removeBlueprint;
     private final Set<WishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<WishlistIngredient> otherIngredients = new HashSet<>();
-    private ChangeListener<? super Boolean> booleanChangeListener;
     private EventListener<StorageEvent> storageEventEventListener;
 
     public WishlistBlueprint(final String wishlistUUID, final WishlistRecipe wishlistRecipe) {
@@ -72,16 +69,15 @@ public class WishlistBlueprint extends HBox {
                 .build();
         setVisibility(this.wishlistRecipe.isVisible());
 
-        this.booleanChangeListener = (observable, oldValue, newValue) -> {
-            this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.recipe.getRequiredAmount(wishlistIngredient.getMaterial())));
-            this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
-            this.highlight(newValue);
-        };
         this.wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("wishlist-label")
                 .withText(LocaleService.getStringBinding(this.wishlistRecipe.getRecipeName().getLocalizationKey()))
                 .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.wishlistRecipe.getRecipeName())))
-                .withHoverProperty(new WeakChangeListener<>(this.booleanChangeListener))
+                .withHoverProperty((observable, oldValue, newValue) -> {
+                    this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.recipe.getRequiredAmount(wishlistIngredient.getMaterial())));
+                    this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
+                    this.highlight(newValue);
+                })
                 .build();
         this.getChildren().addAll(this.visibilityButton, this.wishlistRecipeName);
 
@@ -90,8 +86,6 @@ public class WishlistBlueprint extends HBox {
                 .withOnAction(event -> remove())
                 .build();
         this.getChildren().add(this.removeBlueprint);
-
-
         this.getStyleClass().add("wishlist-item");
 
 
@@ -143,6 +137,8 @@ public class WishlistBlueprint extends HBox {
     }
 
     void addWishlistIngredients(final List<WishlistIngredient> wishlistIngredients) {
+        this.wishlistIngredients.clear();
+        this.otherIngredients.clear();
         this.wishlistIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> this.recipe.hasIngredient(wishlistIngredient.getMaterial())).collect(Collectors.toSet()));
         this.otherIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> !this.recipe.hasIngredient(wishlistIngredient.getMaterial())).collect(Collectors.toSet()));
     }

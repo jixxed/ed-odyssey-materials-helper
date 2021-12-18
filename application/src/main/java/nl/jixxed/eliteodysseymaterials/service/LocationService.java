@@ -49,7 +49,7 @@ public class LocationService {
             station = event.getStationName();
             notifyListeners();
         });
-        EventService.addStaticListener(SuperCruiseEntryJournalEvent.class, event -> {//on entering SC
+        EventService.addStaticListener(SupercruiseEntryJournalEvent.class, event -> {//on entering SC
             station = "";
             notifyListeners();
         });

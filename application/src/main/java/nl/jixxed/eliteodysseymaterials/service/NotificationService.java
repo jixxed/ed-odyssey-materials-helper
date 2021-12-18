@@ -74,6 +74,7 @@ public class NotificationService {
                 final Media sound = new Media(resource.toString());
                 final MediaPlayer mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.setVolume(volume / 100);
+                mediaPlayer.setOnEndOfMedia(mediaPlayer::dispose);
                 mediaPlayer.play();
             } catch (final URISyntaxException | NullPointerException ex) {
                 log.error("Failed to play notification sound", ex);

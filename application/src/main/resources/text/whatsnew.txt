@@ -1,3 +1,20 @@
+Version 1.55
+-------------
+Bugfix for wishlist materials not consistently highlighting when hovering over blueprints
+
+Version 1.54
+-------------
+Bugfix for not sending material data on entering supercruise
+
+Version 1.53
+-------------
+Fixed a memory leak in the wishlist. Became apparent over time while playing and having lots of blueprints selected.
+Added appversion information to material tracking
+
+Version 1.52
+-------------
+Improved location detection
+
 Version 1.51
 -------------
 Added material tracking for SOLO mode
