@@ -89,11 +89,11 @@ public class Main extends Application {
 
             final Scene scene = new Scene(this.applicationLayout, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
-            scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_WIDTH, (Double) newValue));
-            scene.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_HEIGHT, (Double) newValue));
+            scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));
+            scene.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_HEIGHT, Math.max((Double) newValue, 175.0D)));
 
-            primaryStage.xProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_X, (Double) newValue));
-            primaryStage.yProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_Y, (Double) newValue));
+            primaryStage.xProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_X, Math.max((Double) newValue, -8.0D)));
+            primaryStage.yProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(primaryStage, PreferenceConstants.APP_Y, Math.max((Double) newValue, -8.0D)));
             primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.APP_MAXIMIZED, newValue));
 
             primaryStage.setX(PreferencesService.getPreference(PreferenceConstants.APP_X, 0D));
@@ -104,10 +104,12 @@ public class Main extends Application {
             scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
             scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
             final File customCss = new File(OsConstants.CUSTOM_CSS);
-            final File oldCustomCss = new File(OsConstants.OLD_CUSTOM_CSS);
-            if (!customCss.exists() && oldCustomCss.exists()) {
-                customCss.createNewFile();
-                FileHelper.copyFileContents(oldCustomCss, customCss);
+            if (OsConstants.OLD_CUSTOM_CSS != null) {
+                final File oldCustomCss = new File(OsConstants.OLD_CUSTOM_CSS);
+                if (!customCss.exists() && oldCustomCss.exists()) {
+                    customCss.createNewFile();
+                    FileHelper.copyFileContents(oldCustomCss, customCss);
+                }
             }
             if (customCss.exists()) {
                 importCustomCss(scene, customCss);

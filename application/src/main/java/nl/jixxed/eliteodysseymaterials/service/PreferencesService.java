@@ -31,14 +31,16 @@ public class PreferencesService {
         }
         //create file if not exists
         if (!targetFile.exists()) {
-            final File oldTargetFile = new File(OsConstants.OLD_PREFERENCES);
             try {
                 final boolean created = targetFile.createNewFile();
                 if (!created) {
                     throw new IllegalStateException("Couldn't create pref file: " + targetFile);
                 }
-                if (oldTargetFile.exists()) {
-                    FileHelper.copyFileContents(oldTargetFile, targetFile);
+                if (OsConstants.OLD_PREFERENCES != null) {
+                    final File oldTargetFile = new File(OsConstants.OLD_PREFERENCES);
+                    if (oldTargetFile.exists()) {
+                        FileHelper.copyFileContents(oldTargetFile, targetFile);
+                    }
                 }
             } catch (final IOException e) {
                 throw new IllegalStateException("Couldn't create pref file: " + targetFile);
