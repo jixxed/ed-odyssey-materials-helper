@@ -16,7 +16,7 @@ public class ResizableImageView extends Pane {
 
     public final void setImage(final Image image) {
         this.iv.setImage(image);
-        setPrefSize(image.getWidth(), image.getHeight());
+//        setPrefSize(image.getWidth(), image.getHeight());
         this.iv.fitWidthProperty().bind(widthProperty());
         this.iv.fitHeightProperty().bind(heightProperty());
     }

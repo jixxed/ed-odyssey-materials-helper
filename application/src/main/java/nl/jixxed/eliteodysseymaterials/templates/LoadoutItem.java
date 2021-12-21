@@ -1,19 +1,21 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.enums.Equipment;
 import nl.jixxed.eliteodysseymaterials.enums.EquipmentLevel;
 
 public class LoadoutItem extends VBox implements Template {
-    LoadoutItem() {
+    private final Equipment equipment;
 
+    LoadoutItem(final Equipment equipment) {
+        this.equipment = equipment;
         initComponents();
         initEventHandling();
     }
@@ -26,7 +28,9 @@ public class LoadoutItem extends VBox implements Template {
     @Override
     public void initComponents() {
         this.getStyleClass().add("loadout-item");
+        this.setSpacing(5);
         //image
+        final ResizableImageView image = ResizableImageViewBuilder.builder().withStyleClass("loadout-item-image").withImage(this.equipment.getImage()).build();
         //title
         final Label title = LabelBuilder.builder().withStyleClass("loadout-item-title").withNonLocalizedText("TITLE").build();
         //current level
@@ -42,10 +46,18 @@ public class LoadoutItem extends VBox implements Template {
         HBox.setHgrow(regionTarget, Priority.ALWAYS);
         final HBox targetLevelBox = BoxBuilder.builder().withNodes(targetLevelLabel, regionTarget, targetLevel).buildHBox();
         //modifications
+        final HBox modifications = BoxBuilder.builder().withNodes(new LoadoutModification(this.equipment), createRegion(), new LoadoutModification(this.equipment), createRegion(), new LoadoutModification(this.equipment), createRegion(), new LoadoutModification(this.equipment)).buildHBox();
         //stats
         //button
+        final Button addToWishlist = ButtonBuilder.builder().withNonLocalizedText("ADD TO WISHLIST").build();
 
 
-        this.getChildren().addAll(title, currentLevelBox, targetLevelBox);
+        this.getChildren().addAll(image, title, currentLevelBox, targetLevelBox, modifications, addToWishlist);
+    }
+
+    private Region createRegion() {
+        final Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+        return region;
     }
 }
