@@ -1,3 +1,8 @@
+Version 1.56
+-------------
+Added minimum values storing screen position, so screen doesn't get positioned offscreen.
+Bugfix for Windows specific migration logic also applying to linux.
+
 Version 1.55
 -------------
 Bugfix for wishlist materials not consistently highlighting when hovering over blueprints
