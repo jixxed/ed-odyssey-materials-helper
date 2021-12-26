@@ -143,7 +143,7 @@ class RecipeContent extends VBox {
     private Wishlists loadCommanderWishlists(final Commander commander) {
         final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
         this.addToWishlist.getItems().clear();
-        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().map(wishlist -> {
+        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
             final MenuItem menuItem = new MenuItem();
             menuItem.setOnAction(event -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), wishlist.getUuid(), new WishlistRecipe(this.recipe.getRecipeName(), true), Action.ADDED)));
             menuItem.setText(wishlist.getName());

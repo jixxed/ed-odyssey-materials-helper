@@ -137,7 +137,7 @@ public class WishlistTab extends EDOTab {
                 .orElse(Collections.emptySet());
         this.wishlistSelect = ComboBoxBuilder.builder(Wishlist.class)
                 .withStyleClass("wishlist-select")
-                .withItemsProperty(FXCollections.observableArrayList(items))
+                .withItemsProperty(FXCollections.observableArrayList(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList()))
                 .withValueChangeListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
@@ -512,7 +512,7 @@ public class WishlistTab extends EDOTab {
             final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
             final Set<Wishlist> items = wishlists.getAllWishlists();
             this.wishlistSelect.getItems().clear();
-            this.wishlistSelect.getItems().addAll(items);
+            this.wishlistSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList());
             this.wishlistSelect.getSelectionModel().select(wishlists.getSelectedWishlist());
         });
     }
