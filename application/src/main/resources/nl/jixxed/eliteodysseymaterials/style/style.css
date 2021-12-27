@@ -1355,66 +1355,171 @@
 .loadout-item {
     -fx-background-color: #0f0f0f;
     -fx-padding: 1em;
+    -fx-max-width: 31em;
+    /*-fx-min-width: 31em;*/
+    /*-fx-pref-width: 31em;*/
 }
 
 .loadout-item-image {
-    -fx-max-width: 25em;
-    -fx-max-height: 15em;
-    -fx-min-width: 25em;
-    -fx-min-height: 15em;
+    -fx-max-width: 29.5em;
+    -fx-min-width: 29.5em;
+    -fx-pref-width: 29.5em;
+}
+
+loadout-item-image-container {
+    -fx-min-height: 25em;
+    -fx-alignment: center;
 }
 
 .loadout-item-title {
+    -fx-font-size: 1.4em;
+}
+
+.loadout-item-subtitle {
+    -fx-font-size: 1.2em;
 }
 
 .loadout-item-level-label {
+    -fx-label-padding: 5;
 }
 
 
 .loadout-modification-image {
-    -fx-max-width: 80px;
-    -fx-max-height: 67px;
+    -fx-max-width: 6.66em;
+    -fx-max-height: 5.583em;
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
+.loadout-modification-image:hover {
+    -fx-opacity: 1;
+}
+
+.loadout-modification-image-consumed {
+
+    -fx-cursor: default;
+    -fx-opacity: 0.2;
+}
+
+.loadout-modification-image-consumed:hover {
+    -fx-opacity: 0.2;
+}
+
+.loadout-item-stats-name {
+    -fx-wrap-text: true;
+    -fx-pref-width: 14.9em;
+}
+
+.loadout-item-stats-wide {
+    -fx-pref-width: 25em;
+}
+
+.loadout-item-stats-value {
+    -fx-wrap-text: true;
+    -fx-min-width: 5em;
+    -fx-pref-width: 5em;
+    -fx-max-width: 5em;
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+}
+
+.loadout-item-stats-value-wide {
+    -fx-wrap-text: true;
+    -fx-min-width: 15.1em !important;
+    -fx-pref-width: 15.1em !important;
+    -fx-max-width: 15.1em !important;
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+}
+
+.loadout-item-stats-value-modded {
+    -fx-wrap-text: true;
+    -fx-min-width: 5.1em;
+    -fx-pref-width: 5.1em;
+    -fx-max-width: 5.1em;
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+}
+
+.loadout-item-stats-value.changed {
+    -fx-text-fill: #2e92df;
+}
+
+.loadout-item-stats-value.modded {
+    -fx-font-weight: bold;
+}
+
+.loadout-wishlist-button {
+    -fx-wrap-text: true;
+    -fx-min-width: 30em;
+    -fx-pref-width: 30em;
+    -fx-max-width: 30em;
+}
+
+.loadout-warning {
+    -fx-wrap-text: true;
+    -fx-text-fill: crimson;
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+    -fx-min-width: 30em;
+    -fx-pref-width: 30em;
+    -fx-max-width: 30em;
+}
+
+.loadout-newname {
+    -fx-min-width: 20em;
+    -fx-background-insets: 1;
+    -fx-background-radius: 0, 0;
+    -fx-border-width: 1;
+    -fx-border-color: #2e2e2e;
+}
+
+.loadout-navbar .label {
+    -fx-opacity: 0.2;
+    -fx-label-padding: 3 10 3 10;
+}
+
+.loadout-navbar:hover .label {
+    -fx-opacity: 0.6;
+}
+
+.loadout-navbar .label:hover {
+    -fx-opacity: 1.0;
     -fx-cursor: hand;
 }
 
 .loadout-modification-label {
     -fx-wrap-text: true;
-    -fx-min-width: 80px;
-    -fx-pref-width: 80px;
-    -fx-max-width: 80px;
+    -fx-min-width: 6.66em;
+    -fx-pref-width: 6.66em;
+    -fx-max-width: 6.66em;
     -fx-text-alignment: center;
     -fx-alignment: center;
 }
 
-/*.loadout-modification-image > .image {*/
-/*    -fx-pref-width: 80px;*/
-/*    -fx-pref-height: 67px;*/
-/*    -fx-max-width: 80px;*/
-/*    -fx-max-height: 67px;*/
-/*    -fx-fit-to-width: true;*/
-/*    -fx-fit-to-height: true;*/
-/*}*/
+.loadout-modification-popover {
+    -fx-background-color: #fff;
+}
 
-/*.loadout-modification-select-dialog {*/
-/*    -fx-background-color: transparent;*/
-/*}*/
-
-.loadout-modification-select-dialogpane {
-    -fx-background-color: #0f0f0f;
-    -fx-padding: 0;
-    -fx-border-color: #0f0f0f;
-    -fx-border-width: 3px;
-    -fx-border-style: solid;
+.loadout-modification-popover > .border {
+    -fx-stroke: #fff !important;
+    -fx-stroke-width: 0.5 !important;
+    -fx-fill: #fff !important;
 }
 
 .loadout-modification-grid {
+    -fx-border-color: #fff;
     -fx-background-color: #0f0f0f;
+    -fx-border-radius: 5px;
+    -fx-border-width: 3px;
+    -fx-border-style: solid;
+    -fx-padding: 0.3em;
 }
 
 .loadout-modification {
     -fx-background-color: #0f0f0f;
 }
 
-.loadout-modification-select-dialogpane > .button-bar > .container {
-    -fx-padding: 0;
+.loadout-modification-grid .loadout-modification {
+    -fx-background-color: #0f0f0f;
 }

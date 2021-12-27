@@ -246,8 +246,6 @@ public class WishlistTab extends EDOTab {
         HBox.setHgrow(region, Priority.ALWAYS);
         region.setMinWidth(5);
 
-        final Region region3 = new Region();
-        region3.setMinWidth(5);
         final Region region4 = new Region();
         region4.setMinWidth(5);
         final Region region5 = new Region();
@@ -261,8 +259,9 @@ public class WishlistTab extends EDOTab {
         flowPane.setVgap(4);
         flowPane.prefWrapLengthProperty().bind(this.renameWishlistButton.widthProperty().add(this.createWishlistButton.widthProperty()).add(this.removeWishlistButton.widthProperty()).add(this.clipboardButton.widthProperty()).add(this.exportButton.widthProperty()).add(20));
         flowPane.setColumnHalignment(HPos.RIGHT);
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, region, this.wishlistName, region3, flowPane).buildHBox();
+        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, region, this.wishlistName, flowPane).buildHBox();
         final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.hideCompletedCheckBox).buildHBox();
+        hBoxBlueprints.setSpacing(5);
         hBoxMaterials.setSpacing(10);
         this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
         this.contentChild = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestRoute).buildVBox();
@@ -442,7 +441,7 @@ public class WishlistTab extends EDOTab {
         {
             if (Action.REMOVED.equals(wishlistEvent.getAction())) {
                 this.wishlistBlueprints.stream()
-                        .filter(wishlistBlueprint -> wishlistBlueprint.getWishlistRecipe().equals(wishlistEvent.getWishlistRecipe()))
+                        .filter(wishlistBlueprint -> wishlistEvent.getWishlistRecipes().contains(wishlistBlueprint.getWishlistRecipe()))
                         .findFirst()
                         .ifPresent(wishlistBlueprint -> {
                             this.wishlistBlueprints.remove(wishlistBlueprint);
@@ -451,13 +450,16 @@ public class WishlistTab extends EDOTab {
             }
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final WishlistBlueprint wishlistBlueprint = new WishlistBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getWishlistRecipe());
-                    if (!wishlistEvent.getWishlistUUID().equals(this.activeWishlistUUID)) {
-                        Platform.runLater(() -> this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null)));
-                    } else {
-                        this.wishlistBlueprints.add(wishlistBlueprint);
-                        addBluePrint(wishlistBlueprint);
-                    }
+                    wishlistEvent.getWishlistRecipes().forEach(wishlistRecipe -> {
+                        final WishlistBlueprint wishlistBlueprint = new WishlistBlueprint(wishlistEvent.getWishlistUUID(), wishlistRecipe);
+                        if (!wishlistEvent.getWishlistUUID().equals(this.activeWishlistUUID)) {
+                            Platform.runLater(() -> this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null)));
+                        } else {
+                            this.wishlistBlueprints.add(wishlistBlueprint);
+                            addBluePrint(wishlistBlueprint);
+                        }
+
+                    });
                 });
             }
             refreshContent();
@@ -481,7 +483,7 @@ public class WishlistTab extends EDOTab {
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
         EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent());
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().equals(ImportResult.SUCCESS)) {
+            if (importResultEvent.getResult().equals(ImportResult.SUCCESS_WISHLIST)) {
                 refreshWishlistBlueprints();
             }
         });

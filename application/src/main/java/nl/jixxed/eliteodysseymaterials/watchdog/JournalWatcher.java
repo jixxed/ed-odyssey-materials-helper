@@ -74,7 +74,7 @@ public class JournalWatcher {
                     .forEach(this::listCommander);
             EventService.publish(new CommanderAllListedEvent());
         } catch (final NullPointerException ex) {
-            log.error("Failed to list commanders at " + folder.getAbsolutePath());
+            log.error("Failed to list commanders at " + folder.getAbsolutePath(), ex);
         }
     }
 

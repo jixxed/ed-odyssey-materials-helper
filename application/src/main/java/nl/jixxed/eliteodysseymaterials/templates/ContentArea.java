@@ -28,7 +28,7 @@ class ContentArea extends AnchorPane {
     private SettingsTab settingsTab;
     private LoadoutEditorTab loadoutEditorTab;
     private TradeTab tradeTab;
-    private ImportWishlistTab importWishlistTab;
+    private ImportTab importTab;
     private TabPane tabs;
     private VBox body;
 
@@ -44,17 +44,17 @@ class ContentArea extends AnchorPane {
         this.engineersTab = new EngineersTab();
         this.tradeTab = new TradeTab();
         this.settingsTab = new SettingsTab(application);
-        this.importWishlistTab = new ImportWishlistTab();
+        this.importTab = new ImportTab();
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.loadoutEditorTab.setClosable(false);
         this.engineersTab.setClosable(false);
         this.settingsTab.setClosable(false);
-        this.importWishlistTab.setClosable(false);
+        this.importTab.setClosable(false);
         this.tradeTab.setClosable(false);
 
         this.searchBar = new SearchBar();
-        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.engineersTab, this.settingsTab, this.importWishlistTab);
+        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.engineersTab, this.settingsTab, this.importTab);
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 final Tabs tabType = ((EDOTab) newValue).getTabType();
@@ -98,8 +98,10 @@ class ContentArea extends AnchorPane {
         });
 
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().equals(ImportResult.SUCCESS)) {
+            if (importResultEvent.getResult().equals(ImportResult.SUCCESS_WISHLIST)) {
                 this.tabs.getSelectionModel().select(this.wishlistTab);
+            } else if (importResultEvent.getResult().equals(ImportResult.SUCCESS_LOADOUT)) {
+                this.tabs.getSelectionModel().select(this.loadoutEditorTab);
             }
         });
     }

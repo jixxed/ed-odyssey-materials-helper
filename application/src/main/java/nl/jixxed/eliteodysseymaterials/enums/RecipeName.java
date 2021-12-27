@@ -78,7 +78,8 @@ public enum RecipeName {
     RELOAD_SPEED,
     SCOPE,
     STABILITY,
-    STOWED_RELOADING;
+    STOWED_RELOADING,
+    NONE;
 
     public static RecipeName forName(final String name) {
         try {

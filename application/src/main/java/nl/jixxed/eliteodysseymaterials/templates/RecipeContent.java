@@ -145,7 +145,7 @@ class RecipeContent extends VBox {
         this.addToWishlist.getItems().clear();
         final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
             final MenuItem menuItem = new MenuItem();
-            menuItem.setOnAction(event -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), wishlist.getUuid(), new WishlistRecipe(this.recipe.getRecipeName(), true), Action.ADDED)));
+            menuItem.setOnAction(event -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), wishlist.getUuid(), List.of(new WishlistRecipe(this.recipe.getRecipeName(), true)), Action.ADDED)));
             menuItem.setText(wishlist.getName());
             return menuItem;
         }).toList();

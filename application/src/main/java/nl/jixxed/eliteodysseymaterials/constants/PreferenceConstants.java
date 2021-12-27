@@ -17,6 +17,7 @@ public class PreferenceConstants {
     public static final String JOURNAL_FOLDER = "journal.folder";
     public static final String COMMANDER = "commander";
     public static final String ORIENTATION = "orientation";
+    public static final String LOADOUTS_PREFIX = "loadouts.";
     public static final String WISHLISTS_PREFIX = "wishlists.";
     public static final String WISHLIST_RECIPES_PREFIX = "wishlist.recipes.";
     public static final String WISHLIST_RECIPES = "wishlist.recipes";

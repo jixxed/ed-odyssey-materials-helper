@@ -11,6 +11,7 @@ public class ResizableImageView extends Pane {
 
     public ResizableImageView() {
         this.iv = new ImageView();
+        this.iv.setSmooth(true);
         getChildren().add(this.iv);
     }
 

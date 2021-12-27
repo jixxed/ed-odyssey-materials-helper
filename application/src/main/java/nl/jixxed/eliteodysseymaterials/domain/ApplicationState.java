@@ -56,11 +56,14 @@ public class ApplicationState {
 
         EventService.addListener(this, 0, WishlistRecipeEvent.class,
                 wishlistEvent -> Platform.runLater(() -> {
-                    switch (wishlistEvent.getAction()) {
-                        case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe().getRecipeName());
-                        case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
-                        case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistEvent.getWishlistRecipe());
-                    }
+                    wishlistEvent.getWishlistRecipes().forEach(wishlistRecipe -> {
+                        switch (wishlistEvent.getAction()) {
+                            case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
+                            case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                            case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                        }
+
+                    });
                 }));
 
         EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken())));
@@ -328,5 +331,55 @@ public class ApplicationState {
 
     public String getMarketPlaceToken() {
         return getPreferredCommander().map(commander -> PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), "")).orElse("");
+    }
+
+    public LoadoutSetList getLoadoutSetList(final String fid) {
+        final String loadoutSetList = PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + fid, "N/A");
+        try {
+            if (!loadoutSetList.equals("N/A")) {
+                return OBJECT_MAPPER.readValue(loadoutSetList, LoadoutSetList.class);
+            } else {
+                return OBJECT_MAPPER.readValue(createLoadoutSetList(fid), LoadoutSetList.class);
+            }
+        } catch (final JsonProcessingException e) {
+            log.error("Failed to load loadouts", e);
+        }
+        throw new IllegalStateException("Unable to load loadouts from configuration.");
+    }
+
+    private String createLoadoutSetList(final String fid) {
+        final LoadoutSetList loadoutSetList = new LoadoutSetList();
+        final LoadoutSet defaultLoadoutSet = new LoadoutSet();
+        defaultLoadoutSet.setName("Default Loadout");
+        defaultLoadoutSet.setLoadouts(List.of());
+        loadoutSetList.addLoadoutSet(defaultLoadoutSet);
+        saveLoadoutSetList(fid, loadoutSetList);
+        return PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + fid, "N/A");
+    }
+
+    public void selectLoadoutSet(final String activeLoadoutSetUUID, final String fid) {
+        final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
+        loadoutSetList.setSelectedLoadoutSetUUID(activeLoadoutSetUUID);
+        saveLoadoutSetList(fid, loadoutSetList);
+    }
+
+    public void deleteLoadoutSet(final String activeLoadoutSetUUID, final String fid) {
+        final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
+        loadoutSetList.delete(activeLoadoutSetUUID);
+        saveLoadoutSetList(fid, loadoutSetList);
+    }
+
+    public void saveLoadoutSetList(final String fid, final LoadoutSetList loadoutSetList) {
+        try {
+            PreferencesService.setPreference(PreferenceConstants.LOADOUTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(loadoutSetList));
+        } catch (final JsonProcessingException e) {
+            log.error("Failed to save loadouts", e);
+        }
+    }
+
+    public void saveLoadoutSet(final String fid, final LoadoutSet loadoutSet) {
+        final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
+        loadoutSetList.updateLoadoutSet(loadoutSet);
+        saveLoadoutSetList(fid, loadoutSetList);
     }
 }

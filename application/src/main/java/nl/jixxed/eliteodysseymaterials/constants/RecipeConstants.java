@@ -936,7 +936,7 @@ public abstract class RecipeConstants {
                         Asset.VISCOELASTICPOLYMER, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
-                        Modifier.HIP_FIRE_ACCURACY, "+10%"
+                        Modifier.HIP_FIRE_ACCURACY, "40-43%"
                 )
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.HIGHER_ACCURACY_LASER, new ModuleRecipe(
@@ -949,7 +949,7 @@ public abstract class RecipeConstants {
                         Asset.METALCOIL, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
-                        Modifier.HIP_FIRE_ACCURACY, "+15%"
+                        Modifier.HIP_FIRE_ACCURACY, "40-43%"
                 )
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.HIGHER_ACCURACY_PLASMA, new ModuleRecipe(
@@ -962,7 +962,7 @@ public abstract class RecipeConstants {
                         Asset.METALCOIL, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
-                        Modifier.HIP_FIRE_ACCURACY, "+30%"
+                        Modifier.HIP_FIRE_ACCURACY, "40-43%"
                 )
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.MAGAZINE_SIZE, new ModuleRecipe(

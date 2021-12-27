@@ -274,6 +274,7 @@ public class SettingsTab extends EDOTab {
                     if (newValue != null) {
                         LocaleService.setCurrentLocale(newValue.getLocale());
                         PreferencesService.setPreference(PreferenceConstants.LANGUAGE, newValue.name());
+                        EventService.publish(new LanguageChangedEvent(newValue.getLocale()));
                     }
                 })
                 .asLocalized()

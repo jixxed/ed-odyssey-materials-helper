@@ -102,7 +102,7 @@ public class WishlistBlueprint extends HBox {
 
     public void remove() {
         EventService.removeListener(this.storageEventEventListener);
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, this.wishlistRecipe, Action.REMOVED)));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistRecipe), Action.REMOVED)));
     }
 
     private void initFadeTransition() {
@@ -152,7 +152,7 @@ public class WishlistBlueprint extends HBox {
         } else {
             this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
         }
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, this.wishlistRecipe, Action.VISIBILITY_CHANGED)));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistRecipe), Action.VISIBILITY_CHANGED)));
     }
 
     public Recipe getRecipe() {

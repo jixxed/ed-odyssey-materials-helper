@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.WeakChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
@@ -69,11 +70,11 @@ public class ComboBoxBuilder<T> {
         }
         if (this.localized) {
             //this sets the old value back after a locale change, instead of blanking it
-            comboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            comboBox.valueProperty().addListener(new WeakChangeListener<>((observable, oldValue, newValue) -> {
                 if (newValue == null && oldValue != null) {
                     comboBox.selectionModelProperty().getValue().select(oldValue);
                 }
-            });
+            }));
         }
         if (this.promptTextBinding != null) {
             comboBox.promptTextProperty().bind(this.promptTextBinding);
