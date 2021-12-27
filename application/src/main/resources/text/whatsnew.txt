@@ -1,3 +1,13 @@
+Version 1.57
+-------------
+Sorting of wishlists in dropdowns by name
+Added Loadout Editor tab
+- Create and plan your own loadouts
+- Easily see the effect of modules and upgrades
+- Quick add all blueprints to the wishlist
+- Share loadouts with others
+Journal doesn't log loadouts properly, so no loading of existing loadouts (yet)
+
 Version 1.56
 -------------
 Added minimum values storing screen position, so screen doesn't get positioned offscreen.
