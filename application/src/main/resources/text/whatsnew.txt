@@ -1,3 +1,7 @@
+Version 1.58
+-------------
+Bugfix for loadout disappearing when adding certain weapons
+
 Version 1.57
 -------------
 Sorting of wishlists in dropdowns by name
