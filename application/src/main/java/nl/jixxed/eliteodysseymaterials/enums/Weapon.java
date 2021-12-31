@@ -126,7 +126,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.DAMAGE, new LevelValue(0.9, 1.1, 1.5, 1.9, 2.5)),
             Map.entry(StaticStat.RATE_OF_FIRE, 10.0),
             Map.entry(DynamicStat.MAGAZINE_SIZE, 40),
-            Map.entry(DynamicStat.HEADSHOT_DAMAGE, 200),
+            Map.entry(DynamicStat.HEADSHOT_DAMAGE, 100),
             Map.entry(DynamicStat.EFFECTIVE_RANGE, 25),
             Map.entry(DynamicStat.HIP_FIRE_ACCURACY, 78.3),
             Map.entry(DynamicStat.STABILITY, 79.0),
