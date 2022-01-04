@@ -1,3 +1,8 @@
+Version 1.59
+-------------
+Localization fixes
+Corrections for Eclipse and Zenith: Effective range, Headshot damage and Magazine size
+
 Version 1.58
 -------------
 Bugfix for loadout disappearing when adding certain weapons
