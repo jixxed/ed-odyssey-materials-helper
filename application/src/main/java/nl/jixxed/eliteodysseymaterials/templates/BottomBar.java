@@ -37,6 +37,8 @@ class BottomBar extends HBox {
     private Label locationLabel;
     private Region region;
     private ComboBox<Commander> commanderSelect;
+    private Double latitude;
+    private Double longitude;
 
     BottomBar() {
         initComponents();
@@ -115,10 +117,12 @@ class BottomBar extends HBox {
         this.system = locationChangedEvent.getCurrentStarSystem().getName();
         this.body = locationChangedEvent.getCurrentBody();
         this.station = locationChangedEvent.getCurrentSettlement();
+        this.latitude = locationChangedEvent.getCurrentLatitude();
+        this.longitude = locationChangedEvent.getCurrentLongitude();
         Platform.runLater(() -> this.locationLabel.setText(this.system +
                 (this.body.isBlank() ? "" : " | " + this.body) +
-                (this.station.isBlank() || this.station.equals(this.body) || this.station.startsWith("$") ? "" : " | " + this.station)));
+                (this.station.isBlank() || this.station.equals(this.body) || this.station.startsWith("$") ? "" : " | " + this.station) +
+                (this.latitude != null && !this.latitude.equals(999.9) ? " (" + this.latitude + ", " + this.longitude + ")" : "")
+        ));
     }
-
-
 }
