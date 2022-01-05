@@ -10,4 +10,6 @@ public class LocationChangedEvent implements Event {
     private final StarSystem currentStarSystem;
     private final String currentBody;
     private final String currentSettlement;
+    private final Double currentLatitude;
+    private final Double currentLongitude;
 }

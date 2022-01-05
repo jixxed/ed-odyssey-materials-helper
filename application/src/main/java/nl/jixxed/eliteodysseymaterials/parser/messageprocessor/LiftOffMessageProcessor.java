@@ -12,7 +12,9 @@ public class LiftOffMessageProcessor implements MessageProcessor {
         final String body = asTextOrBlank(journalMessage, "Body");
         final String nearestDestination = asTextOrBlank(journalMessage, "NearestDestination");
         final Boolean playerControlled = journalMessage.get("PlayerControlled").asBoolean(false);
-        EventService.publish(new LiftOffJournalEvent(timestamp, starSystem, body, nearestDestination, playerControlled));
-
+        final Boolean taxi = journalMessage.get("Taxi").asBoolean(false);
+        final Double latitude = journalMessage.get("Latitude").asDouble(999.9);
+        final Double longitude = journalMessage.get("Longitude").asDouble(999.9);
+        EventService.publish(new LiftOffJournalEvent(timestamp, starSystem, body, nearestDestination, playerControlled, taxi, latitude, longitude));
     }
 }

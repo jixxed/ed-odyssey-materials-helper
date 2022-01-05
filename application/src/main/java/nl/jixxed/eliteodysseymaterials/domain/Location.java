@@ -9,5 +9,7 @@ public class Location {
     private final StarSystem starSystem;
     private final String body;
     private final String station;
+    private final Double latitude;
+    private final Double longitude;
 
 }

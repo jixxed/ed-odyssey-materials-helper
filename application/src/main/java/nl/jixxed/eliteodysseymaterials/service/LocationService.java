@@ -5,9 +5,13 @@ import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 public class LocationService {
+    private static final Double DEFAULT_LATITUDE = 999.9;
+    private static final Double DEFAULT_LONGITUDE = 999.9;
     private static StarSystem currentStarSystem = new StarSystem("Sol", 0, 0, 0);
     private static String body = "";
     private static String station = "";
+    private static Double latitude = DEFAULT_LATITUDE;
+    private static Double longitude = DEFAULT_LONGITUDE;
 
     private LocationService() {
     }
@@ -38,8 +42,10 @@ public class LocationService {
             notifyListeners();
         });
         EventService.addStaticListener(LiftOffJournalEvent.class, event -> {//can be either player or AI controlled
-            if (event.getPlayerControlled()) {
+            if (event.getPlayerControlled() || event.getTaxi()) {// both false means ship sent away
                 station = "";
+                latitude = DEFAULT_LATITUDE;
+                longitude = DEFAULT_LONGITUDE;
             }
             notifyListeners();
         });
@@ -51,16 +57,21 @@ public class LocationService {
         });
         EventService.addStaticListener(SupercruiseEntryJournalEvent.class, event -> {//on entering SC
             station = "";
+            latitude = DEFAULT_LATITUDE;
+            longitude = DEFAULT_LONGITUDE;
             notifyListeners();
         });
         EventService.addStaticListener(TouchdownJournalEvent.class, event -> {//can be either player or AI controlled
-            if (event.getPlayerControlled()) {
-                station = event.getNearestDestination();
-            }
+            station = event.getNearestDestination();
+            latitude = event.getLatitude() != null ? event.getLatitude() : DEFAULT_LATITUDE;
+            longitude = event.getLongitude() != null ? event.getLongitude() : DEFAULT_LONGITUDE;
+
             notifyListeners();
         });
         EventService.addStaticListener(UndockedJournalEvent.class, event -> {//Always player controlled
             station = "";
+            latitude = DEFAULT_LATITUDE;
+            longitude = DEFAULT_LONGITUDE;
             notifyListeners();
         });
     }
@@ -70,11 +81,11 @@ public class LocationService {
     }
 
     private static void notifyListeners() {
-        EventService.publish(new LocationChangedEvent(currentStarSystem, body, station));
+        EventService.publish(new LocationChangedEvent(currentStarSystem, body, station, latitude, longitude));
     }
 
     public static Location getCurrentLocation() {
-        return new Location(currentStarSystem, body, station);
+        return new Location(currentStarSystem, body, station, latitude, longitude);
     }
 
     public static Double calculateDistance(final StarSystem currentStarSystem, final StarSystem starSystem) {
