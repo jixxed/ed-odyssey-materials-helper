@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class MaterialTrackingService {
     private static UUID session = UUID.randomUUID();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final List<BackpackChangeEvent> BACKPACK_CHANGE_EVENTS = new ArrayList<>();
+    static final List<BackpackChangeEvent> BACKPACK_CHANGE_EVENTS = new ArrayList<>();
     private static boolean isEnabled = false;
     private static final List<EventListener<?>> eventListeners = new ArrayList<>();
 
@@ -50,8 +51,12 @@ public class MaterialTrackingService {
     }
 
     private static synchronized void clearChanges(final String timestamp) {
-        log.debug("Clear changes for: " + timestamp);
-        BACKPACK_CHANGE_EVENTS.removeIf(backpackChangeEvent -> timestamp.equals(backpackChangeEvent.getTimestamp()));
+        log.debug("Clear changes for (-2s, +2s): " + timestamp);
+        final ZonedDateTime time = ZonedDateTime.parse(timestamp);
+        //remove items within range of a timestamp
+        BACKPACK_CHANGE_EVENTS.removeIf(backpackChangeEvent -> ZonedDateTime.parse(backpackChangeEvent.getTimestamp()).isAfter(time.minusSeconds(3))
+                && ZonedDateTime.parse(backpackChangeEvent.getTimestamp()).isBefore(time.plusSeconds(3))
+        );
     }
 
     private static synchronized void resetSession() {
