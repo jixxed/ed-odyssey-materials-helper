@@ -1,3 +1,9 @@
+Version 1.60
+-------------
+Show latitude/longitude in statusbar on touchdown events
+Improve material tracking settlement detection
+Fix values weapon stability values
+
 Version 1.59
 -------------
 Localization fixes
