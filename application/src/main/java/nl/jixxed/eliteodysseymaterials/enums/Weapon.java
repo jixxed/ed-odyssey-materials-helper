@@ -244,17 +244,17 @@ public enum Weapon implements Equipment {
     );
     @Getter
     private final static Map<Weapon, Double> HIP_FIRE_FACTORS = Map.ofEntries(
-            Map.entry(Weapon.KINEMATIC_AR50, 43.00),
+            Map.entry(Weapon.KINEMATIC_P15, 43.00),
             Map.entry(Weapon.KINEMATIC_C44, 41.25),
-            Map.entry(Weapon.KINEMATIC_L6, 41.25),
-            Map.entry(Weapon.KINEMATIC_P15, 40.75),
+            Map.entry(Weapon.KINEMATIC_AR50, 41.25),
+            Map.entry(Weapon.KINEMATIC_L6, 40.75),
             Map.entry(Weapon.TAKADA_APHELION, 40.75),
-            Map.entry(Weapon.TAKADA_ECLIPSE, 43.00),
-            Map.entry(Weapon.TAKADA_ZENITH, 41.25),
+            Map.entry(Weapon.TAKADA_ZENITH, 43.00),
+            Map.entry(Weapon.TAKADA_ECLIPSE, 41.25),
             Map.entry(Weapon.MANTICORE_EXECUTIONER, 42.25),
-            Map.entry(Weapon.MANTICORE_OPPRESSOR, 43.00),
+            Map.entry(Weapon.MANTICORE_TORMENTOR, 43.00),
             Map.entry(Weapon.MANTICORE_INTIMIDATOR, 40.75),
-            Map.entry(Weapon.MANTICORE_TORMENTOR, 41.25)
+            Map.entry(Weapon.MANTICORE_OPPRESSOR, 41.25)
     );
 
     public boolean isKinetic() {

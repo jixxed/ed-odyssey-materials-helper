@@ -4,6 +4,8 @@ import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
+import java.util.Objects;
+
 public class LocationService {
     private static final Double DEFAULT_LATITUDE = 999.9;
     private static final Double DEFAULT_LONGITUDE = 999.9;
@@ -52,7 +54,12 @@ public class LocationService {
         EventService.addStaticListener(LocationJournalEvent.class, event -> {//at startup or upon respawn
             currentStarSystem = event.getStarSystem();
             body = event.getBody();
-            station = event.getStationName();
+            //on relog station is empty for POI's.
+            //on respawn after death there is a station?
+            //if we already have a station from before the relog, we keep the station
+            if (!Objects.equals(event.getStationName(), "")) {
+                station = event.getStationName();
+            }
             notifyListeners();
         });
         EventService.addStaticListener(SupercruiseEntryJournalEvent.class, event -> {//on entering SC

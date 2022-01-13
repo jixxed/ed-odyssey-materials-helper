@@ -22,6 +22,8 @@ public class BackpackChangeEvent implements Event {
     private final Double x;
     private final Double y;
     private final Double z;
+    private final Double latitude;
+    private final Double longitude;
     private final String body;
     private final String settlement;
 }

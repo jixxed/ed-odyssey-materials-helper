@@ -74,6 +74,8 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                 .x(currentLocation.getStarSystem().getX())
                 .y(currentLocation.getStarSystem().getY())
                 .z(currentLocation.getStarSystem().getZ())
+                .latitude(currentLocation.getLatitude())
+                .longitude(currentLocation.getLongitude())
                 .build();
     }
 }

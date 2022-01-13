@@ -1,3 +1,8 @@
+Version 1.61
+-------------
+Improvements to location tracking
+Fix for Hip Fire Accuracy calculation
+
 Version 1.60
 -------------
 Show latitude/longitude in statusbar on touchdown events

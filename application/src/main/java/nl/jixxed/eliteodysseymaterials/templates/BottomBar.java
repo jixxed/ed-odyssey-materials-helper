@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -121,7 +122,7 @@ class BottomBar extends HBox {
         this.longitude = locationChangedEvent.getCurrentLongitude();
         Platform.runLater(() -> this.locationLabel.setText(this.system +
                 (this.body.isBlank() ? "" : " | " + this.body) +
-                (this.station.isBlank() || this.station.equals(this.body) || this.station.startsWith("$") ? "" : " | " + this.station) +
+                (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + POIHelper.map(this.station)) +
                 (this.latitude != null && !this.latitude.equals(999.9) ? " (" + this.latitude + ", " + this.longitude + ")" : "")
         ));
     }

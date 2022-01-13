@@ -3,11 +3,22 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
 
 import java.util.Iterator;
 
 public class LocationMessageProcessor implements MessageProcessor {
+    private Boolean isFirstLocationEventInJournal = Boolean.TRUE;
+
+    public LocationMessageProcessor() {
+        EventService.addListener(this, JournalInitEvent.class, journalInitEvent -> {
+            if (!journalInitEvent.isInitialised()) {
+                this.isFirstLocationEventInJournal = Boolean.FALSE;
+            }
+        });
+    }
+
     @Override
     public void process(final JsonNode journalMessage) {
         final String timestamp = asTextOrBlank(journalMessage, "timestamp");
@@ -19,7 +30,8 @@ public class LocationMessageProcessor implements MessageProcessor {
             final double x = starPos.next().asDouble();
             final double y = starPos.next().asDouble();
             final double z = starPos.next().asDouble();
-            EventService.publish(new LocationJournalEvent(timestamp, new StarSystem(starSystem, x, y, z), body, station));
+            EventService.publish(new LocationJournalEvent(timestamp, new StarSystem(starSystem, x, y, z), body, station, this.isFirstLocationEventInJournal));
+            this.isFirstLocationEventInJournal = Boolean.FALSE;
         }
     }
 }

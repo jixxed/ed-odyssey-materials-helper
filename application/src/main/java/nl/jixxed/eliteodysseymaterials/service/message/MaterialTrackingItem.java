@@ -15,6 +15,8 @@ public class MaterialTrackingItem {
     private Double x;
     private Double y;
     private Double z;
+    private Double latitude;
+    private Double longitude;
     private String body;
     private String settlement;
     private String session;
