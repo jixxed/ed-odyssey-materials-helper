@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
@@ -318,6 +319,23 @@ public class ApplicationState {
         return lowestAmount.get();
     }
 
+    public Craftability getCraftability(final RecipeName recipeName) {
+        final Recipe recipe = RecipeConstants.getRecipe(recipeName);
+        final AtomicBoolean hasGoods = new AtomicBoolean(true);
+        final AtomicBoolean hasData = new AtomicBoolean(true);
+        final AtomicBoolean hasAssets = new AtomicBoolean(true);
+        recipe.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+        recipe.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+        recipe.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+        if (!hasGoods.get() || !hasData.get()) {
+            return Craftability.NOT_CRAFTABLE;
+        } else if (hasGoods.get() && hasData.get() && !hasAssets.get()) {
+            return Craftability.CRAFTABLE_WITH_TRADE;
+        } else {
+            return Craftability.CRAFTABLE;
+        }
+    }
+
     private Storage getMaterialStorage(final Material material) {
         if (material instanceof Good) {
             return this.goods.get(material);
@@ -382,4 +400,5 @@ public class ApplicationState {
         loadoutSetList.updateLoadoutSet(loadoutSet);
         saveLoadoutSetList(fid, loadoutSetList);
     }
+
 }

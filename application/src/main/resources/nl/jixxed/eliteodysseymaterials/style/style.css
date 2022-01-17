@@ -1058,6 +1058,14 @@
     -fx-text-fill: #2e92df;
 }
 
+.wishlist-item > .label.wishlist-craftable-with-trade {
+    -fx-text-fill: #dcc030;
+}
+
+.wishlist-item > .label.wishlist-craftable-with-trade:hover {
+    -fx-text-fill: #2e92df;
+}
+
 .wishlist-checkbox {
     -fx-padding: 5;
     -fx-min-height: 3em;

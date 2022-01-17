@@ -120,8 +120,8 @@ public class LocaleService {
         }
     }
 
-    public static StringBinding getToolTipStringBinding(final ModuleRecipe recipe) {
-        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString("tab.wishlist.blueprint.tooltip") + "\n" + recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", ")));
+    public static StringBinding getToolTipStringBinding(final ModuleRecipe recipe, final String localizationKey) {
+        return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", "))));
     }
 
     @SafeVarargs

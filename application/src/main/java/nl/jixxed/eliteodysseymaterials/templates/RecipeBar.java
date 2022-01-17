@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TitledPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
+import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.helper.RecipeHelper;
@@ -118,8 +119,10 @@ class RecipeBar extends Accordion {
 
 
             private void updateStyle(final RecipeName item) {
-                if (RecipeHelper.isCompletedEngineerRecipe(item) || RecipeHelper.isCraftableModuleOrUpgradeRecipe(item)) {
+                if (RecipeHelper.isCompletedEngineerRecipe(item) || RecipeHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE)) {
                     this.setStyle("-fx-text-fill: #89d07f;");
+                } else if (RecipeHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE_WITH_TRADE)) {
+                    this.setStyle("-fx-text-fill: #dcc030;");
                 } else {
                     this.setStyle("-fx-text-fill: white;");
                 }
@@ -161,8 +164,10 @@ class RecipeBar extends Accordion {
             }
 
             private void updateStyle(final RecipeName item) {
-                if (RecipeHelper.isCompletedEngineerRecipe(item) || RecipeHelper.isCraftableModuleOrUpgradeRecipe(item)) {
+                if (RecipeHelper.isCompletedEngineerRecipe(item) || RecipeHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE)) {
                     this.setStyle("-fx-text-fill: #89d07f;");
+                } else if (RecipeHelper.getCraftabilityForModuleOrUpgradeRecipe(item).equals(Craftability.CRAFTABLE_WITH_TRADE)) {
+                    this.setStyle("-fx-text-fill: #dcc030;");
                 } else {
                     this.setStyle("-fx-text-fill: white;");
                 }

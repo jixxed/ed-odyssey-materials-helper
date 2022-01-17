@@ -7,14 +7,18 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.EngineerRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.UpgradeRecipe;
+import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecipeHelper {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    public static boolean isCraftableModuleOrUpgradeRecipe(final RecipeName recipeName) {
-        return (RecipeConstants.getRecipe(recipeName) instanceof ModuleRecipe || RecipeConstants.getRecipe(recipeName) instanceof UpgradeRecipe) && APPLICATION_STATE.amountCraftable(recipeName) > 0;
+    public static Craftability getCraftabilityForModuleOrUpgradeRecipe(final RecipeName recipeName) {
+        if (!(RecipeConstants.getRecipe(recipeName) instanceof ModuleRecipe) && !(RecipeConstants.getRecipe(recipeName) instanceof UpgradeRecipe)) {
+            return Craftability.NOT_CRAFTABLE;
+        }
+        return APPLICATION_STATE.getCraftability(recipeName);
     }
 
     public static boolean isCompletedEngineerRecipe(final RecipeName recipeName) {

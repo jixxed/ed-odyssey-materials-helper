@@ -10,12 +10,14 @@ import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
 import nl.jixxed.eliteodysseymaterials.domain.Recipe;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistRecipe;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
+import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -46,6 +48,7 @@ public class WishlistBlueprint extends HBox {
     private final Set<WishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<WishlistIngredient> otherIngredients = new HashSet<>();
     private EventListener<StorageEvent> storageEventEventListener;
+    private Tooltip tooltip;
 
     public WishlistBlueprint(final String wishlistUUID, final WishlistRecipe wishlistRecipe) {
         this.wishlistUUID = wishlistUUID;
@@ -90,14 +93,15 @@ public class WishlistBlueprint extends HBox {
 
 
         if (this.recipe instanceof ModuleRecipe moduleRecipe) {
-            final Tooltip tooltip = new Tooltip();
-            tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe));
-            tooltip.setShowDelay(Duration.millis(100));
-            Tooltip.install(this.wishlistRecipeName, tooltip);
+            this.tooltip = TooltipBuilder.builder()
+                    .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
+                    .withShowDelay(Duration.millis(100))
+                    .build();
+            Tooltip.install(this.wishlistRecipeName, this.tooltip);
         }
         initFadeTransition();
-        final boolean isCraftable = APPLICATION_STATE.amountCraftable(this.getRecipeName()) > 0;
-        this.canCraft(isCraftable);
+        final Craftability craftability = APPLICATION_STATE.getCraftability(this.getRecipeName());
+        this.canCraft(craftability);
     }
 
     public void remove() {
@@ -115,8 +119,8 @@ public class WishlistBlueprint extends HBox {
 
     private void initEventHandling() {
         this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
-            final int amountCraftable = APPLICATION_STATE.amountCraftable(this.getRecipeName());
-            this.canCraft(amountCraftable > 0);
+            final Craftability craftability = APPLICATION_STATE.getCraftability(this.getRecipeName());
+            this.canCraft(craftability);
         });
     }
 
@@ -128,11 +132,18 @@ public class WishlistBlueprint extends HBox {
         }
     }
 
-    private void canCraft(final boolean isCraftable) {
-        if (isCraftable) {
+    private void canCraft(final Craftability craftability) {
+        this.wishlistRecipeName.getStyleClass().removeAll("wishlist-craftable", "wishlist-craftable-with-trade");
+        if (Craftability.CRAFTABLE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable");
-        } else {
-            this.wishlistRecipeName.getStyleClass().removeAll("wishlist-craftable");
+            if (this.recipe instanceof ModuleRecipe moduleRecipe) {
+                this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"));
+            }
+        } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
+            this.wishlistRecipeName.getStyleClass().add("wishlist-craftable-with-trade");
+            if (this.recipe instanceof ModuleRecipe moduleRecipe) {
+                this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip.craftable"));
+            }
         }
     }
 
