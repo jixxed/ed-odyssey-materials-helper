@@ -1,3 +1,20 @@
+Version 1.63
+-------------
+Implemented statistics feedback in material overview
+- Statistics report generated daily. Downloaded by the app if report is 1 day old.
+- Show how many materials were found:
+  - Per economy
+  - Top 5 raided locations
+  - Top 5 collected during a single run
+- Removed old location hints (probably not accurate anymore since rebalance)
+- New style tooltip (ability for different text sizes, images, links)
+- Clickable locations to copy system names
+Implemented improved suit and weapon statistics and info
+- More accurately measured statistics like: movement speed, reload speed, power consumption (WIP)
+- Added modifier information for Aphelion reload speed -> only 20%!
+Implemented irrelevant override option for materials
+- Allows you to mark irrelevant materials as relevant, because you believe these will become relevant in the future
+
 Version 1.62
 -------------
 Add starsystem information to location tracking
