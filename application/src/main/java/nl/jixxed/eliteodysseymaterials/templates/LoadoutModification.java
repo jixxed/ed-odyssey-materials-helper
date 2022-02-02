@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.Loadout;
+import nl.jixxed.eliteodysseymaterials.domain.ModificationChange;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import org.controlsfx.control.PopOver;
@@ -29,10 +30,10 @@ class LoadoutModification extends VBox implements Template {
     private Label label;
     private final Loadout loadout;
     private final Integer position;
-    private final Consumer<Modification> callback;
+    private final Consumer<ModificationChange> callback;
     private PopOver popOver;
 
-    LoadoutModification(final Loadout loadout, final Integer position, final Consumer<Modification> callback) {
+    LoadoutModification(final Loadout loadout, final Integer position, final Consumer<ModificationChange> callback) {
         this.loadout = loadout;
         this.position = position;
         this.callback = callback;
@@ -177,8 +178,9 @@ class LoadoutModification extends VBox implements Template {
     private void clear() {
         this.imageView.setImage(new Image(getClass().getResourceAsStream("/images/modification/empty.png")));
         this.label.textProperty().bind(LocaleService.getStringBinding("loadout.modification.name.none"));
+        final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], null);
         this.loadout.getModifications()[this.position] = null;
-        this.callback.accept(null);
+        this.callback.accept(modificationChange);
     }
 
     private EventHandler<MouseEvent> getModificationSelectedEventHandler(final Modification modification) {
@@ -186,8 +188,9 @@ class LoadoutModification extends VBox implements Template {
             this.imageView.setImage(new Image(getClass().getResourceAsStream(modification.getImage())));
             this.label.textProperty().bind(LocaleService.getStringBinding(modification.getLocalizationKey()));
             this.label.setWrapText(true);
+            final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], modification);
             this.loadout.getModifications()[this.position] = modification;
-            this.callback.accept(modification);
+            this.callback.accept(modificationChange);
             this.popOver.hide();
             resetPopOver();
         };

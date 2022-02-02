@@ -32,7 +32,6 @@ public enum SystemGovernment {
     private final String key;
 
     public static SystemGovernment forKey(final String name) {
-        log.info("SystemGovernment: " + name);
         return Arrays.stream(SystemGovernment.values()).filter(systemGovernment -> systemGovernment.key.equals(name.toUpperCase())).findFirst().orElse(SystemGovernment.UNKNOWN);
     }
 }

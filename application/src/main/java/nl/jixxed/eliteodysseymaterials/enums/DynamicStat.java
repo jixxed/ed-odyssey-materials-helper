@@ -1,57 +1,64 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.LevelValue;
 
-import java.text.NumberFormat;
 import java.util.List;
 
+@RequiredArgsConstructor
 public enum DynamicStat implements Stat {
     //both
-    MODIFICATION_SLOTS,
+    MODIFICATION_SLOTS(StatGroup.GENERAL),
     //suits
-    SHIELD_STRENGTH,
-    SHIELD_REGEN,
-    KINETIC_RESIST,
-    THERMAL_RESIST,
-    PLASMA_RESIST,
-    EXPLOSIVE_RESIST,
-    BATTERY,
-    EMERGENCY_AIR,
-    AMMO_CAPACITY,
-    GOODS_CAPACITY,
-    ASSETS_CAPACITY,
-    DATA_CAPACITY,
-    SPRINT_DURATION,
-    NIGHT_VISION,
-    FOOTSTEPS_AUDIBLE_RANGE,
-    REMOVE_MOVEMENT_SPEED_PENALTY,
-    LOS_ANALYSIS_RANGE,
-    LOS_ANALYSIS_TIME,
-    TOOL_ENERGY_DRAIN_MULTIPLIER,
-    MELEE_DAMAGE,
-    JUMP_ASSIST_BATTERY_CONSUMPTION,
-    JUMP_ASSIST_DRAIN,
-    JUMP_ASSIST_RECHARGE,
+    SHIELD_STRENGTH(StatGroup.SHIELD),
+    SHIELD_REGEN(StatGroup.SHIELD),
+    KINETIC_RESIST(StatGroup.RESISTANCE),
+    THERMAL_RESIST(StatGroup.RESISTANCE),
+    PLASMA_RESIST(StatGroup.RESISTANCE),
+    EXPLOSIVE_RESIST(StatGroup.RESISTANCE),
+    BATTERY(StatGroup.POWER),
+    EMERGENCY_AIR(StatGroup.CAPACITY),
+    AMMO_CAPACITY(StatGroup.CAPACITY),
+    GOODS_CAPACITY(StatGroup.CAPACITY),
+    ASSETS_CAPACITY(StatGroup.CAPACITY),
+    DATA_CAPACITY(StatGroup.CAPACITY),
+    SPRINT_DURATION(StatGroup.MOVEMENT),
+    NIGHT_VISION(StatGroup.POWER),
+    FOOTSTEPS_AUDIBLE_RANGE(StatGroup.OTHER),
+    SPRINT_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT),
+    SPRINT_SPEED_RIFLE(StatGroup.MOVEMENT),
+    SPRINT_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT),
+    WALK_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT),
+    WALK_SPEED_RIFLE(StatGroup.MOVEMENT),
+    WALK_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT),
+    ADS_SPEED_PISTOL(StatGroup.MOVEMENT),
+    ADS_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT),
+    ADS_SPEED_RIFLE(StatGroup.MOVEMENT),
+    ADS_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT),
+    LOS_ANALYSIS_RANGE(StatGroup.OTHER),
+    LOS_ANALYSIS_TIME(StatGroup.OTHER),
+    ARCCUTTER_POWER_USAGE(StatGroup.POWER),
+    ENERGYLINK_OVERLOAD_POWER_USAGE(StatGroup.POWER),
+    MELEE_DAMAGE(StatGroup.OTHER),
+    JUMP_ASSIST_BATTERY_CONSUMPTION(StatGroup.POWER),
+    JUMP_ASSIST_DRAIN(StatGroup.POWER),
+    JUMP_ASSIST_RECHARGE(StatGroup.POWER),
     //weapons
-    DAMAGE,
-    MAGAZINE_SIZE,
-    HEADSHOT_DAMAGE,
-    EFFECTIVE_RANGE,
-    HIP_FIRE_ACCURACY,
-    STABILITY,
-    HANDLING,
-    SILENCED_INSIDE,
-    SILENCED_OUTSIDE,
-    RELOAD_SPEED,
-    SCOPE,
-    STOWED_RELOADING;
-    private static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
-    private static final NumberFormat NUMBER_FORMAT_0 = NumberFormat.getNumberInstance();
+    DAMAGE(StatGroup.DAMAGE),
+    MAGAZINE_SIZE(StatGroup.CAPACITY),
+    RESERVE_AMMO(StatGroup.CAPACITY),
+    HEADSHOT_DAMAGE(StatGroup.DAMAGE),
+    EFFECTIVE_RANGE(StatGroup.OTHER),
+    HIP_FIRE_ACCURACY(StatGroup.OTHER),
+    STABILITY(StatGroup.OTHER),
+    HANDLING(StatGroup.OTHER),
+    SILENCED_INSIDE(StatGroup.NOISE),
+    SILENCED_OUTSIDE(StatGroup.NOISE),
+    RELOAD_SPEED(StatGroup.DAMAGE),
+    SCOPE(StatGroup.OTHER),
+    STOWED_RELOADING(StatGroup.OTHER);
+    private final StatGroup statGroup;
 
-    static {
-        NUMBER_FORMAT_2.setMaximumFractionDigits(2);
-        NUMBER_FORMAT_0.setMaximumFractionDigits(0);
-    }
 
     @Override
     public String formatValue(final Object value, final Equipment equipment, final Integer level, final List<Modification> modifications) {
@@ -71,6 +78,7 @@ public enum DynamicStat implements Stat {
             case BATTERY -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.IMPROVED_BATTERY_CAPACITY) ? (Double) value * 1.5 : value) + "MW";
             case SHIELD_STRENGTH -> ((LevelValue) value).getValueForLevel(level).toString() + "MW";
             case SHIELD_REGEN -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.FASTER_SHIELD_REGEN) ? (Double) ((LevelValue) value).getValueForLevel(level) * 1.25 : ((LevelValue) value).getValueForLevel(level)) + "MW/s";
+            case RESERVE_AMMO -> (modifications.contains(SuitModification.EXTRA_AMMO_CAPACITY)) ? String.valueOf(Math.round((Integer) value * 1.5)) : value.toString();
             case KINETIC_RESIST, THERMAL_RESIST, PLASMA_RESIST, EXPLOSIVE_RESIST -> {
                 if (modifications.contains(SuitModification.DAMAGE_RESISTANCE)) {
                     final Integer resistance = (Integer) ((LevelValue) value).getValueForLevel(level);
@@ -84,16 +92,19 @@ public enum DynamicStat implements Stat {
             case SPRINT_DURATION -> (modifications.contains(SuitModification.INCREASED_SPRINT_DURATION) ? String.valueOf((Integer) value * 2) : value.toString()) + "s";
             case HEADSHOT_DAMAGE -> (modifications.contains(WeaponModification.HEADSHOT_DAMAGE_KINETIC) || modifications.contains(WeaponModification.HEADSHOT_DAMAGE_LASER) || modifications.contains(WeaponModification.HEADSHOT_DAMAGE_PLASMA) ? String.valueOf(Math.round((Integer) value * 1.5)) : value) + "%";
             case EFFECTIVE_RANGE -> (modifications.contains(WeaponModification.GREATER_RANGE_KINETIC) || modifications.contains(WeaponModification.GREATER_RANGE_LASER) || modifications.contains(WeaponModification.GREATER_RANGE_PLASMA) ? String.valueOf(Math.round((Integer) value * 1.5)) : value) + "m";
-            case NIGHT_VISION -> (modifications.contains(SuitModification.NIGHT_VISION) || (boolean) value) ? "\u2714" : "\u2718";
+            case NIGHT_VISION -> (modifications.contains(SuitModification.NIGHT_VISION)) ? value + "kW/s" : "\u2718";
             case FOOTSTEPS_AUDIBLE_RANGE -> ((modifications.contains(SuitModification.QUIETER_FOOTSTEPS)) ? ((Integer) value) / 2 : ((Integer) value)) + "m";
+            case SPRINT_SPEED_CARBINE_SHOTGUN, SPRINT_SPEED_RIFLE, SPRINT_SPEED_SNIPER_LAUNCHER -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.COMBAT_MOVEMENT_SPEED) ? 7.0 : value) + "m/s";
+            case WALK_SPEED_CARBINE_SHOTGUN, WALK_SPEED_RIFLE, WALK_SPEED_SNIPER_LAUNCHER -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.COMBAT_MOVEMENT_SPEED) ? 4.0 : value) + "m/s";
+            case ADS_SPEED_PISTOL, ADS_SPEED_CARBINE_SHOTGUN, ADS_SPEED_RIFLE, ADS_SPEED_SNIPER_LAUNCHER -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.COMBAT_MOVEMENT_SPEED) ? 4.0 : value) + "m/s";
             case LOS_ANALYSIS_RANGE -> (modifications.contains(SuitModification.ENHANCED_TRACKING) ? (Integer) value * 2 : value) + "m";
             case LOS_ANALYSIS_TIME -> (modifications.contains(SuitModification.ENHANCED_TRACKING) ? 0 : value) + "s";
-            case TOOL_ENERGY_DRAIN_MULTIPLIER -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION)) ? (Integer) value * 0.5 : value) + "%";
+            case ARCCUTTER_POWER_USAGE -> NUMBER_FORMAT_2.format((modifications.contains(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION) ? (Double) value / 2 : value)) + "kW/s";
+            case ENERGYLINK_OVERLOAD_POWER_USAGE -> NUMBER_FORMAT_2.format((modifications.contains(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION) ? (Double) value / 2 : value)) + "MW";
             case MELEE_DAMAGE -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.ADDED_MELEE_DAMAGE)) ? (Integer) value * 2.5 : value) + "%";
-            case REMOVE_MOVEMENT_SPEED_PENALTY -> (modifications.contains(SuitModification.COMBAT_MOVEMENT_SPEED) && (boolean) value) ? "\u2714" : "\u2718";
             case SILENCED_INSIDE -> (modifications.contains(WeaponModification.NOISE_SUPPRESSOR) || (boolean) value) ? "\u2714" : "\u2718";
             case SILENCED_OUTSIDE -> (modifications.contains(WeaponModification.AUDIO_MASKING) || (boolean) value) ? "\u2714" : "\u2718";
-            case RELOAD_SPEED -> (modifications.contains(WeaponModification.RELOAD_SPEED) || (boolean) value) ? "\u2714" : "\u2718";
+            case RELOAD_SPEED -> ((modifications.contains(WeaponModification.RELOAD_SPEED)) ? NUMBER_FORMAT_2.format((Double) value / (equipment.equals(Weapon.TAKADA_APHELION) ? 1.20 : 1.25)) : value) + "s";
             case SCOPE -> (modifications.contains(WeaponModification.SCOPE) || (boolean) value) ? "\u2714" : "\u2718";
             case STOWED_RELOADING -> (modifications.contains(WeaponModification.STOWED_RELOADING) || (boolean) value) ? "\u2714" : "\u2718";
         };
@@ -120,4 +131,11 @@ public enum DynamicStat implements Stat {
     public String getLocalizationKey() {
         return "loadout.stat.name." + this.name().toLowerCase();
     }
+
+    @Override
+    public StatGroup getStatGroup() {
+        return this.statGroup;
+    }
+
+
 }

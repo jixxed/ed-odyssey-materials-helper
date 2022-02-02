@@ -1431,13 +1431,34 @@ loadout-item-image-container {
     -fx-text-alignment: right;
 }
 
-.loadout-item-stats-value-wide {
-    -fx-wrap-text: true;
+.loadout-item-stats-value-wide-box {
+
     -fx-min-width: 15.1em !important;
     -fx-pref-width: 15.1em !important;
     -fx-max-width: 15.1em !important;
+}
+
+.loadout-item-stats-value-wide-box .separator {
+    -fx-padding: 0.6em 0 0 0;
+
+}
+
+.loadout-item-stats-value-wide-box .separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 7; /* trick to set the thickness of only one of the borders */
+    -fx-border-color: white;
+}
+
+.loadout-item-stats-value-wide {
+    /*-fx-wrap-text: true;*/
+    /*-fx-min-width: 15.1em !important;*/
+    /*-fx-pref-width: 15.1em !important;*/
+    /*-fx-max-width: 15.1em !important;*/
     -fx-alignment: center-right;
-    -fx-text-alignment: right;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-padding: 0 5 0 5;
+
 }
 
 .loadout-item-stats-value-modded {
@@ -1530,4 +1551,39 @@ loadout-item-image-container {
 
 .loadout-modification-grid .loadout-modification {
     -fx-background-color: #0f0f0f;
+}
+
+.material-popover {
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 5px;
+}
+
+.material-popover .label {
+    -fx-font-weight: normal;
+    -fx-text-fill: white;
+}
+
+.material-tooltip-location-line {
+    -fx-cursor: hand;
+}
+
+.material-tooltip-location-line:hover .label {
+    -fx-underline: true;
+}
+
+.material-tooltip-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.material-tooltip-title {
+    -fx-font-weight: bold !important;
+    -fx-font-size: 1.2em;
+}
+
+.material-tooltip-subtitle {
+    -fx-font-weight: bold !important;
+    -fx-font-size: 1.1em;
 }

@@ -30,7 +30,6 @@ public enum SystemEconomy {
     private final String key;
 
     public static SystemEconomy forKey(final String name) {
-        log.info("SystemEconomy: " + name);
         return Arrays.stream(SystemEconomy.values()).filter(systemEconomy -> systemEconomy.key.equals(name.toUpperCase())).findFirst().orElse(SystemEconomy.UNKNOWN);
 
     }

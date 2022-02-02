@@ -21,7 +21,6 @@ public enum SystemSecurity {
     private final String key;
 
     public static SystemSecurity forKey(final String name) {
-        log.info("SystemSecurity: " + name);
         return Arrays.stream(SystemSecurity.values()).filter(systemSecurity -> systemSecurity.key.equals(name.toUpperCase())).findFirst().orElse(SystemSecurity.UNKNOWN);
     }
 }

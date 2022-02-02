@@ -10,7 +10,9 @@ import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.text.MessageFormat;
@@ -83,9 +85,32 @@ public class LocaleService {
                 }
                 addRecipesToTooltip(RecipeConstants.findRecipesContaining(material), builder);
                 addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(material), builder);
+                addStatisticsToTooltip(material, builder);
                 return builder.toString();
             }
         });
+    }
+
+    private static void addStatisticsToTooltip(final Material material, final StringBuilder builder) {
+        final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(material);
+        builder.append("\n\n")
+                .append("Economies:")
+                .append("\n")
+                .append(statistic.getEconomies().stream().map(economyStatistic -> economyStatistic.getEconomy() + "(" + economyStatistic.getAmount() + ")").collect(Collectors.joining(",")))
+                .append("\n\n")
+                .append("Most collected in settlements:")
+                .append("\n")
+                .append(statistic.getMostcollected().stream().map(settlementStatistic -> settlementStatistic.getAmount() + " - " + settlementStatistic.getSettlement() + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + "(" + LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ())) + ")").collect(Collectors.joining("\n")))
+                .append("\n\n")
+                .append("Best runs:")
+                .append("\n")
+                .append(statistic.getBestrun().stream().map(settlementStatistic -> settlementStatistic.getAmount() + " - " + settlementStatistic.getSettlement() + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + "(" + LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ())) + ")").collect(Collectors.joining("\n")));
+//        final Clipboard clipboard = Clipboard.getSystemClipboard();
+//        final ClipboardContent clipboardContent = new ClipboardContent();
+//        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+//            try {
+//                clipboardContent.putString(Base64.getEncoder().encodeToString(OBJECT_MAPPER.writeValueAsString(APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getSelectedLoadoutSet()).getBytes(StandardCharsets.UTF_8)));
+
     }
 
     private static void addTransferTimeToTooltip(final Data data, final StringBuilder builder) {

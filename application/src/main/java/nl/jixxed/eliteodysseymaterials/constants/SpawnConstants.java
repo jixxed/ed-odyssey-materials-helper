@@ -155,8 +155,51 @@ public class SpawnConstants {
     );
 
     private static final Map<Data, List<AlternateLocationType>> DATA_OTHER = Map.ofEntries(
-            Map.entry(Data.SPYWARE, List.of(AlternateLocationType.MISSION)),
-            Map.entry(Data.VIRUS, List.of(AlternateLocationType.MISSION))
+            Map.entry(Data.SPYWARE, List.of(AlternateLocationType.MISSION_OBJECTIVE)),
+            Map.entry(Data.VIRUS, List.of(AlternateLocationType.MISSION_OBJECTIVE)),
+            Map.entry(Data.AIRQUALITYREPORTS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.ATMOSPHERICDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.AUDIOLOGS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.BALLISTICSDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.BIOMETRICDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.BLOODTESTRESULTS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.CHEMICALEXPERIMENTDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.CHEMICALFORMULAE, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.CHEMICALINVENTORY, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.CHEMICALPATENTS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.COMBATANTPERFORMANCE, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.COMBATTRAININGMATERIAL, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.DIGITALDESIGNS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.EVACUATIONPROTOCOLS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.EXTRACTIONYIELDDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.GENESEQUENCINGDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.GENETICRESEARCH, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.MAINTENANCELOGS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.MANUFACTURINGINSTRUCTIONS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.MEDICALRECORDS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.MEDICALTRIALRECORDS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.MINERALSURVEY, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.MININGANALYTICS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.NOCDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.OPERATIONALMANUAL, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.PATROLROUTES, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.PHARMACEUTICALPATENTS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.PRODUCTIONREPORTS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.PRODUCTIONSCHEDULE, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.RADIOACTIVITYDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.REACTOROUTPUTREVIEW, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.RECYCLINGLOGS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.RISKASSESSMENTS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.SECURITYEXPENSES, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.SETTLEMENTASSAULTPLANS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.SPECTRALANALYSISDATA, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.STELLARACTIVITYLOGS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.SURVEILLEANCELOGS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.TACTICALPLANS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.TOPOGRAPHICALSURVEYS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.TROOPDEPLOYMENTRECORDS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.WEAPONINVENTORY, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Data.WEAPONTESTDATA, List.of(AlternateLocationType.MISSION_REWARD))
     );
     private static final Map<Asset, List<LockerType>> ASSET_LOCKERS = Map.ofEntries(
             Map.entry(Asset.AEROGEL, List.of(LockerType.LAB, LockerType.PROC)),
@@ -258,7 +301,14 @@ public class SpawnConstants {
             Map.entry(Good.LARGECAPACITYPOWERREGULATOR, List.of(DeviceType.PWR, DeviceType.SRV))
     );
     private static final Map<Good, List<AlternateLocationType>> GOOD_OTHER = Map.ofEntries(
-            Map.entry(Good.LARGECAPACITYPOWERREGULATOR, List.of(AlternateLocationType.MISSION))
+            Map.entry(Good.COMPRESSIONLIQUEFIEDGAS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Good.GMEDS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Good.HEALTHMONITOR, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Good.IONISEDGAS, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Good.LARGECAPACITYPOWERREGULATOR, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Good.SUITSCHEMATIC, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Good.SURVEILLANCEEQUIPMENT, List.of(AlternateLocationType.MISSION_REWARD)),
+            Map.entry(Good.WEAPONSCHEMATIC, List.of(AlternateLocationType.MISSION_REWARD))
     );
     private static final Map<Good, List<PlanetSignalSourceType>> GOOD_PLANET = Map.ofEntries(
             Map.entry(Good.LARGECAPACITYPOWERREGULATOR, List.of(LARGE_SAT)),

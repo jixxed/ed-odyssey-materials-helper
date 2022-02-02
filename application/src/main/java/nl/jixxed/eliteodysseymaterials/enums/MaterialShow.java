@@ -38,19 +38,19 @@ public enum MaterialShow {
         return switch (search.getMaterialShow()) {
             case ALL -> (Map.Entry<? extends Material, Storage> o) -> true;
             case ALL_WITH_STOCK -> (Map.Entry<? extends Material, Storage> o) -> o.getValue().getTotalValue() > 0;
-            case BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey());
+            case BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredientWithOverride(o.getKey());
             case IRRELEVANT -> (Map.Entry<? extends Material, Storage> o) -> getIrrelevantFilter(o.getKey());
             case IRRELEVANT_WITH_STOCK -> (Map.Entry<? extends Material, Storage> o) -> getIrrelevantFilter(o.getKey()) && o.getValue().getTotalValue() > 0;
             case PROHIBITED -> (Map.Entry<? extends Material, Storage> o) -> o.getKey().isIllegal();
             case ALL_ENGINEER -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey());
             case REQUIRED_ENGINEER -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredientAndNotCompleted(o.getKey());
-            case ALL_ENGINEER_BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredient(o.getKey()) || RecipeConstants.isEngineeringIngredient(o.getKey());
-            case REQUIRED_ENGINEER_BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredientAndNotCompleted(o.getKey()) || RecipeConstants.isBlueprintIngredient(o.getKey());
+            case ALL_ENGINEER_BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredientWithOverride(o.getKey()) || RecipeConstants.isEngineeringIngredient(o.getKey());
+            case REQUIRED_ENGINEER_BLUEPRINT -> (Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredientAndNotCompleted(o.getKey()) || RecipeConstants.isBlueprintIngredientWithOverride(o.getKey());
             case FAVOURITES -> (Map.Entry<? extends Material, Storage> o) -> APPLICATION_STATE.isFavourite(o.getKey());
         };
     }
 
     private static boolean getIrrelevantFilter(final Material material) {
-        return APPLICATION_STATE.getSoloMode() ? RecipeConstants.isNotRelevantAndNotRequiredEngineeringIngredient(material) : RecipeConstants.isNotRelevantAndNotEngineeringIngredient(material);
+        return APPLICATION_STATE.getSoloMode() ? RecipeConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material) : RecipeConstants.isNotRelevantAndNotEngineeringIngredient(material);
     }
 }

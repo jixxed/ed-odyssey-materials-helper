@@ -47,7 +47,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                     .map(jsonNode -> Material.subtypeForName(jsonNode.get("Name").asText()))
                     .filter(material -> !(material instanceof Consumable))
                     .forEach(material -> {
-                        if ((APPLICATION_STATE.getSoloMode() && RecipeConstants.isNotRelevantAndNotRequiredEngineeringIngredient(material))
+                        if ((APPLICATION_STATE.getSoloMode() && RecipeConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
                                 || (!APPLICATION_STATE.getSoloMode() && !RecipeConstants.isEngineeringOrBlueprintIngredient(material))) {
                             NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
                         }

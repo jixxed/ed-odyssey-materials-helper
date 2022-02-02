@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum AlternateLocationType implements SpawnLocation {
-    MISSION;
+    MISSION_OBJECTIVE, MISSION_REWARD;
 
     public static AlternateLocationType forName(final String name) {
         return AlternateLocationType.valueOf(name.toUpperCase());

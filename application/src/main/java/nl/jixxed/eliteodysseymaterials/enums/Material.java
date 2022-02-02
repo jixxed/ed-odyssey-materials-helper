@@ -60,6 +60,14 @@ public interface Material {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    static List<Material> getAllIrrelevantMaterialsWithoutOverride() {
+        return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
+                .filter(material -> !material.isUnknown())
+                .filter(RecipeConstants::isNotRelevantAndNotRequiredEngineeringIngredient)
+                .map(Material.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     static Material forLocalizedName(final String name) {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Stream.concat(Arrays.stream(Good.values()), Arrays.stream(TradeMaterial.values()))))
                 .filter((Material material) -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()).equals(name))
@@ -72,4 +80,8 @@ public interface Material {
     boolean isUnknown();
 
     boolean isIllegal();
+
+    String name();
+
+
 }

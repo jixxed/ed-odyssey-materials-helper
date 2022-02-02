@@ -59,7 +59,7 @@ class TradeCreateBlock extends VBox {
         final List<Material> tradeMaterials = new ArrayList<>();
         tradeMaterials.add(TradeMaterial.NOTHING);
         tradeMaterials.add(TradeMaterial.ANY_RELEVANT);
-        tradeMaterials.addAll(Material.getAllRelevantMaterials());
+        tradeMaterials.addAll(Material.getAllIrrelevantMaterialsWithoutOverride());
         final ListBinding<String> materialListBinding = LocaleService.getListBinding(() -> tradeMaterials.stream().map(material -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey())).toArray(String[]::new));
         this.offer = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-offer")
@@ -154,6 +154,7 @@ class TradeCreateBlock extends VBox {
                     this.maxOfferAmount.textProperty().bind(LocaleService.getStringBinding("trade.create.max", maxOfferAmountValue));
                 }
             } catch (final IllegalArgumentException ex) {
+                this.maxOfferAmount.textProperty().unbind();
                 this.maxOfferAmount.setText("");
             }
         };
@@ -163,7 +164,7 @@ class TradeCreateBlock extends VBox {
         Integer total = 0;
         for (final StorageType storageType : List.of(StorageType.DATA, StorageType.GOOD, StorageType.ASSET)) {
             total += APPLICATION_STATE.getMaterials(storageType).entrySet().stream()
-                    .filter(material -> RecipeConstants.isBlueprintIngredient(material.getKey()))
+                    .filter(material -> RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
         }

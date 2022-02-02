@@ -7,17 +7,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
@@ -93,8 +92,9 @@ public class MaterialIngredient extends Ingredient {
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
-        this.tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(this.material)).withShowDelay(Duration.millis(100)).build();
-        Tooltip.install(this, this.tooltip);
+//        this.tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(this.material)).withShowDelay(Duration.millis(100)).build();
+//        Tooltip.install(this, this.tooltip);
+        MaterialService.addMaterialInfoPopOver(this, this.material);
 
         this.getStyleClass().add("ingredient");
 

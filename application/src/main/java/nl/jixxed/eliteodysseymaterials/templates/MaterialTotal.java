@@ -111,14 +111,14 @@ class MaterialTotal extends VBox {
         if (StorageType.DATA.equals(this.storageType) || StorageType.GOOD.equals(this.storageType)) {
             final Integer blueprintTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
                     .filter(material -> (APPLICATION_STATE.getSoloMode())
-                            ? RecipeConstants.isBlueprintIngredient(material.getKey()) || RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
-                            : RecipeConstants.isBlueprintIngredient(material.getKey()) || RecipeConstants.isEngineeringIngredient(material.getKey()))
+                            ? RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) || RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                            : RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) || RecipeConstants.isEngineeringIngredient(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
             final Integer irrelevantTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
                     .filter(material -> (APPLICATION_STATE.getSoloMode())
-                            ? !RecipeConstants.isBlueprintIngredient(material.getKey()) && !RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
-                            : !RecipeConstants.isBlueprintIngredient(material.getKey()) && !RecipeConstants.isEngineeringIngredient(material.getKey()))
+                            ? !RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) && !RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                            : !RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) && !RecipeConstants.isEngineeringIngredient(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
 

@@ -3,14 +3,11 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.beans.binding.StringBinding;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
@@ -19,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 
 class MaterialCard extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -71,15 +69,60 @@ class MaterialCard extends HBox {
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
 
-        final Tooltip tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(material)).withShowDelay(Duration.millis(100)).build();
-        Tooltip.install(this, tooltip);
+//        final Tooltip tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(material)).withShowDelay(Duration.millis(100)).build();
+//        Tooltip.install(this, tooltip);
 
+//        final PopOver popOver = new PopOver(LabelBuilder.builder().withText(LocaleService.getToolTipStringBinding(material)).build());
+//        popOver.setStyle("-fx-background-color:black");
+//        final Label build = LabelBuilder.builder().withText(LocaleService.getToolTipStringBinding(material)).build();
+        MaterialService.addMaterialInfoPopOver(this, material);
+//        this.setOnMouseEntered(event -> {
+//            popOver.show(this);
+//        });
+//        this.setOnMouseExited(event -> {
+//            if (popOver.isShowing()) {
+//                popOver.hide();
+//            }
+//        });
+//        popOver.setOnMouseExited(event -> {
+//            if (popOver.isShowing()) {
+//                popOver.hide();
+//            }
+//        });
         initMaterialCardStyle();
 
         this.setFavourite(material, APPLICATION_STATE.isFavourite(material));
         this.setOnMouseClicked(event -> setFavourite(material, APPLICATION_STATE.toggleFavourite(material)));
         this.getChildren().addAll(this.image, this.name, region, this.amount);
     }
+
+//    private static void addAutoHidingPopOver(final Node hoverableNode, final Node contentNode) {
+//        //Creating PopOver
+//        final PopOver popOver = new PopOver(hoverableNode);
+//        popOver.setDetachable(false);
+//        popOver.setHeaderAlwaysVisible(false);
+//        contentNode.setStyle("-fx-background-color: #0f0f0f; -fx-label-padding: 5px");
+//        popOver.setContentNode(contentNode);
+//        //Here you can set custom parameters of your PopOver
+//        //...
+//
+//        //Mouse Actions handling
+//        final Timeline timeline = new Timeline();
+//        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
+//        timeline.setOnFinished(finishEvent -> {
+//            if (hoverableNode.isHover() || contentNode.isHover()) {
+//                timeline.play();
+//            } else {
+//                popOver.hide();
+//            }
+//        });
+//        hoverableNode.setOnMouseEntered(mouseEvent -> {
+//            if (!popOver.isShowing()) {
+//                popOver.show(hoverableNode);
+//            }
+//        });
+//        hoverableNode.setOnMouseExited(mouseEvent -> timeline.play());
+//    }
 
     private void initMaterialCardStyle() {
         final String materialType = this.material.getClass().getSimpleName().toLowerCase();
@@ -97,7 +140,7 @@ class MaterialCard extends HBox {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-irrelevant");
         } else if (RecipeConstants.isEngineeringIngredient(this.material)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
-        } else if (RecipeConstants.isBlueprintIngredient(this.material)) {
+        } else if (RecipeConstants.isBlueprintIngredientWithOverride(this.material)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-relevant");
         } else {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-irrelevant");
