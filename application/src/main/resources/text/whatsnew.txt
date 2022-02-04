@@ -1,3 +1,9 @@
+Version 1.64
+-------------
+Improve memory consumption of new tooltips
+Fix tooltips information not visible
+German localization fix
+
 Version 1.63
 -------------
 Implemented statistics feedback in material overview

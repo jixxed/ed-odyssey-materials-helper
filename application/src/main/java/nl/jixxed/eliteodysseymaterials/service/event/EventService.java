@@ -55,6 +55,10 @@ public class EventService {
         logListenerSize();
     }
 
+    public static void removeListener(final Object owner) {
+        LISTENERS.removeIf(listener -> listener instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.hasOwner(owner));
+    }
+
     private static <T extends Event> void logListener(final Object owner, final EventListener<T> listener, final String action) {
 //        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode() + (owner != null ? ", " + owner.getClass().getName() : ""));
     }

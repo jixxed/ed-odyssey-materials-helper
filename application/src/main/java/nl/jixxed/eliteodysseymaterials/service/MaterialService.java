@@ -60,29 +60,26 @@ public class MaterialService {
     }
 
     public static void addMaterialInfoPopOver(final Node hoverableNode, final Material material) {
-        final Node contentNode = getMaterialPopOverContent(material);
-        final PopOver popOver = new PopOver(hoverableNode);
-        popOver.setDetachable(false);
-        popOver.setHeaderAlwaysVisible(false);
-        contentNode.getStyleClass().add("material-popover");
-        popOver.setContentNode(contentNode);
-
-        //Mouse Actions handling
-        final Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
-        timeline.setOnFinished(finishEvent -> {
-            if (hoverableNode.isHover() || contentNode.isHover()) {
-                timeline.play();
-            } else {
-                popOver.hide();
-            }
-        });
         hoverableNode.setOnMouseEntered(mouseEvent -> {
-            if (!popOver.isShowing()) {
-                popOver.show(hoverableNode);
-            }
+            final Node contentNode = getMaterialPopOverContent(material);
+            contentNode.getStyleClass().add("material-popover");
+            final PopOver popOver = new PopOver(contentNode);
+            popOver.setDetachable(false);
+            popOver.setHeaderAlwaysVisible(false);
+            popOver.show(hoverableNode);
+            final Timeline timeline = new Timeline();
+            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
+            timeline.setOnFinished(finishEvent -> {
+                if (hoverableNode.isHover() || contentNode.isHover()) {
+                    timeline.play();
+                } else {
+                    popOver.hide(Duration.ZERO);
+                    popOver.setContentNode(null);
+                    timeline.stop();
+                }
+            });
+            hoverableNode.setOnMouseExited(mouseEvent2 -> timeline.play());
         });
-        hoverableNode.setOnMouseExited(mouseEvent -> timeline.play());
     }
 
     private static void addStatisticsToTooltip(final Material material, final VBox vBox) {

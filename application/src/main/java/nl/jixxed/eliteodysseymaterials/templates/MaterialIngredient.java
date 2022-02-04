@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -49,7 +48,6 @@ public class MaterialIngredient extends Ingredient {
     private Region region;
     private HBox secondLine;
     private Region region2;
-    private Tooltip tooltip;
     List<EventListener<?>> eventListeners = new ArrayList<>();
 
 
@@ -92,10 +90,7 @@ public class MaterialIngredient extends Ingredient {
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
-//        this.tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(this.material)).withShowDelay(Duration.millis(100)).build();
-//        Tooltip.install(this, this.tooltip);
         MaterialService.addMaterialInfoPopOver(this, this.material);
-
         this.getStyleClass().add("ingredient");
 
         update();
