@@ -137,7 +137,7 @@ public class MaterialTrackingService {
     }
 
     private static synchronized void publishMaterialTracking(final List<BackpackChangeEvent> backpackChangeEvents) {
-        if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode())) {
+        if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode()) && !PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, Boolean.FALSE)) {
             final String appVersion = PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "");
             final ArrayList<MaterialTrackingItem> items = backpackChangeEvents.stream()
                     .map(backpackChangeEvent -> MaterialTrackingItem.builder()

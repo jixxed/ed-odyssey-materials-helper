@@ -68,6 +68,9 @@ public class SettingsTab extends EDOTab {
     private Label overrideListLabel;
     private ListView<Material> overrideListView;
     private Button overrideRemoveButton;
+    private Label trackingOptOutLabel;
+    private Label trackingOptOutExplainLabel;
+    private CheckBox trackingOptOutCheckBox;
 
 
     SettingsTab(final Application application) {
@@ -109,6 +112,7 @@ public class SettingsTab extends EDOTab {
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final HBox readingDirectionSetting = createReadingDirectionSetting();
         final HBox soloModeSetting = createSoloModeSetting();
+        final HBox trackingOptOutSetting = createTrackingOptOutSetting();
         final HBox notificationSetting = createNotificationSetting();
         final HBox customNotificationSoundSetting = createCustomNotificationSoundSetting();
         final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
@@ -117,7 +121,7 @@ public class SettingsTab extends EDOTab {
 
         final VBox settings = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList)
+                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList, trackingOptOutSetting)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
@@ -223,6 +227,21 @@ public class SettingsTab extends EDOTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.soloModeLabel, this.soloModeCheckBox, this.soloModeExplainLabel)
+                .buildHBox();
+    }
+
+    private HBox createTrackingOptOutSetting() {
+        this.trackingOptOutLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.tracking.opt.out")).build();
+        this.trackingOptOutExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.tracking.opt.out.explain")).build();
+        this.trackingOptOutCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, Boolean.FALSE))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.TRACKING_OPT_OUT, newValue);
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.trackingOptOutLabel, this.trackingOptOutCheckBox, this.trackingOptOutExplainLabel)
                 .buildHBox();
     }
 
