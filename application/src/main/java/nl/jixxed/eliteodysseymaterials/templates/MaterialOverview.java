@@ -27,7 +27,7 @@ import java.util.function.Predicate;
 class MaterialOverview extends VBox {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    public static final String FLOW_PANE_STYLE_CLASS = "flow-pane";
+    private static final String FLOW_PANE_STYLE_CLASS = "flow-pane";
     private final ScrollPane scrollPane;
     private FlowPane totals;
     private FlowPane assetChemicalFlow;
@@ -84,6 +84,10 @@ class MaterialOverview extends VBox {
     }
 
     private void initEventHandling() {
+
+        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event -> {
+            Platform.runLater(() -> this.updateContent(this.currentSearch));
+        });
         EventService.addListener(this, OrientationChangeEvent.class, orientationChangeEvent -> {
             final Orientation orientation = orientationChangeEvent.getMaterialOrientation().getOrientation();
             this.assetChemicalFlow.setOrientation(orientation);

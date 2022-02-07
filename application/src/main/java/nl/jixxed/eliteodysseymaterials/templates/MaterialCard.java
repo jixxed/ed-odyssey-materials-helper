@@ -3,14 +3,12 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.beans.binding.StringBinding;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.util.Duration;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
@@ -19,7 +17,9 @@ import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 
+@Slf4j
 class MaterialCard extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String MATERIAL_IRRELEVANT_CLASS = "material-irrelevant";
@@ -70,10 +70,7 @@ class MaterialCard extends HBox {
 
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
-
-        final Tooltip tooltip = TooltipBuilder.builder().withText(LocaleService.getToolTipStringBinding(material)).withShowDelay(Duration.millis(100)).build();
-        Tooltip.install(this, tooltip);
-
+        MaterialService.addMaterialInfoPopOver(this, material);
         initMaterialCardStyle();
 
         this.setFavourite(material, APPLICATION_STATE.isFavourite(material));
@@ -97,7 +94,7 @@ class MaterialCard extends HBox {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-irrelevant");
         } else if (RecipeConstants.isEngineeringIngredient(this.material)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
-        } else if (RecipeConstants.isBlueprintIngredient(this.material)) {
+        } else if (RecipeConstants.isBlueprintIngredientWithOverride(this.material)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-relevant");
         } else {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-irrelevant");

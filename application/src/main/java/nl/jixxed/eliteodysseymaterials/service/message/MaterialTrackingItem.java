@@ -12,6 +12,11 @@ public class MaterialTrackingItem {
     private Material material;
     private Integer amount;
     private String system;
+    private String primaryEconomy;
+    private String secondaryEconomy;
+    private String government;
+    private String security;
+    private String state;
     private Double x;
     private Double y;
     private Double z;

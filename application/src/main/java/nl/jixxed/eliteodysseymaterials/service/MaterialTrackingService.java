@@ -1,25 +1,41 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Platform;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.message.MaterialTrackingItem;
 import nl.jixxed.eliteodysseymaterials.service.message.MaterialTrackingMessage;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,6 +47,13 @@ public class MaterialTrackingService {
     static final List<BackpackChangeEvent> BACKPACK_CHANGE_EVENTS = new ArrayList<>();
     private static boolean isEnabled = false;
     private static final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private static final Map<Material, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
+
+    static {
+        Material.getAllMaterials().forEach(material -> {
+            MATERIAL_STATISTICS.put(material, new MaterialStatistic());
+        });
+    }
 
     public static synchronized void initialize() {
         log.debug("Initialize MaterialTrackingService");
@@ -42,6 +65,39 @@ public class MaterialTrackingService {
         eventListeners.add(EventService.addStaticListener(CommanderSelectedEvent.class, commanderSelectedEvent -> publish()));
         eventListeners.add(EventService.addStaticListener(ShipLockerEvent.class, shipLockerEvent -> clearChanges(shipLockerEvent.getTimestamp())));
         eventListeners.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> isEnabled = journalInitEvent.isInitialised()));
+
+        //check if statistics file exists
+        new Thread(() -> {
+            log.info("Start load material statistics");
+            final File statisticsFile = new File(OsConstants.STATISTICS);
+            try {
+                if (!statisticsFile.exists() || ZonedDateTime.now().minus(1, ChronoUnit.DAYS).isAfter(ZonedDateTime.ofInstant(Instant.ofEpochMilli(statisticsFile.lastModified()), ZoneId.systemDefault()))) {
+
+                    log.info("Start download of material statistics");
+                    final URL url = new URL("https://material-tracking-report.s3.eu-west-1.amazonaws.com/material-report.json");
+                    try (final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream()); final FileOutputStream fileOutputStream = new FileOutputStream(statisticsFile)) {
+                        fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                    }
+                }
+                log.info("Load material statistics from file");
+                //map file to MATERIAL_STATISTICS
+                final JsonNode jsonNode = OBJECT_MAPPER.readTree(Files.readString(statisticsFile.toPath()));
+                for (final Material material : MATERIAL_STATISTICS.keySet()) {
+                    final JsonNode materialStat = jsonNode.get(material.name());
+                    MATERIAL_STATISTICS.put(material, OBJECT_MAPPER.readValue(materialStat.toString(), MaterialStatistic.class));
+                }
+                log.info("Load material statistics finished");
+            } catch (final IOException ex) {
+                log.error("Load material statistics failed", ex);
+                Platform.runLater(() -> {
+                    NotificationService.showError("Error", "Failed to download material statistics.");
+                });
+            }
+        }, "Material Statistics Loader Thread").start();
+    }
+
+    static MaterialStatistic getMaterialStatistic(final Material material) {
+        return MATERIAL_STATISTICS.get(material);
     }
 
     public static synchronized void close() {
@@ -81,7 +137,7 @@ public class MaterialTrackingService {
     }
 
     private static synchronized void publishMaterialTracking(final List<BackpackChangeEvent> backpackChangeEvents) {
-        if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode())) {
+        if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode()) && !PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, Boolean.FALSE)) {
             final String appVersion = PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "");
             final ArrayList<MaterialTrackingItem> items = backpackChangeEvents.stream()
                     .map(backpackChangeEvent -> MaterialTrackingItem.builder()
@@ -90,6 +146,11 @@ public class MaterialTrackingService {
                             .timestamp(backpackChangeEvent.getTimestamp())
                             .commander(backpackChangeEvent.getCommander())
                             .system(backpackChangeEvent.getSystem())
+                            .primaryEconomy(backpackChangeEvent.getPrimaryEconomy())
+                            .secondaryEconomy(backpackChangeEvent.getSecondaryEconomy())
+                            .government(backpackChangeEvent.getGovernment())
+                            .security(backpackChangeEvent.getSecurity())
+                            .state(backpackChangeEvent.getState())
                             .body(backpackChangeEvent.getBody())
                             .settlement(backpackChangeEvent.getSettlement())
                             .x(backpackChangeEvent.getX())

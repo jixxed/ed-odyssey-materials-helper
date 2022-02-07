@@ -71,8 +71,8 @@ public class Main extends Application {
                     PreferencesService.setPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, StartDialog.POLICY_LEVEL_REQUIRED);
                 }
             }
-            this.applicationLayout = new ApplicationLayout(this);
             MaterialTrackingService.initialize();
+            this.applicationLayout = new ApplicationLayout(this);
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));

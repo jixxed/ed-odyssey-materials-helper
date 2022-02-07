@@ -38,7 +38,7 @@ public class AnyRelevantStorage extends Storage {
         data.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         assets.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         return materials.entrySet().stream()
-                .filter(material -> RecipeConstants.isBlueprintIngredient(material.getKey()))
+                .filter(material -> RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
     }

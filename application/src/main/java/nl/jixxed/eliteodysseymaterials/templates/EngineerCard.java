@@ -19,6 +19,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -184,7 +185,10 @@ class EngineerCard extends VBox {
                 .build();
 
         return FlowPaneBuilder.builder().withStyleClass("engineer-location-line")
-                .withOnMouseClicked(event -> copyLocationToClipboard())
+                .withOnMouseClicked(event -> {
+                    copyLocationToClipboard();
+                    NotificationService.showInformation("Clipboard", "System name copied.");
+                })
                 .withNodes(this.engineerLocation, new StackPane(this.copyIcon), this.engineerDistance)
                 .build();
 

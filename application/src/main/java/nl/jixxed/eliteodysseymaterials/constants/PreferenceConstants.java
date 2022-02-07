@@ -23,8 +23,10 @@ public class PreferenceConstants {
     public static final String WISHLIST_RECIPES = "wishlist.recipes";
     public static final String RECIPES_VISIBLE = "recipes.visible";
     public static final String SOLO_MODE = "solo.mode";
+    public static final String TRACKING_OPT_OUT = "tracking.opt.out";
     public static final String NOTIFICATION_SOUND = "notification.sound.enabled";
     public static final String NOTIFICATION_SOUND_CUSTOM_FILE = "settings.notification.sounds.file";
+    public static final String IRRELEVANT_OVERRIDE = "settings.material.irrelevant.override";
     public static final String NOTIFICATION_VOLUME = "settings.notification.sounds.volume";
     public static final String POLICY_ACCEPT_VERSION = "privacy.policy.version";
     public static final String WHATS_NEW_VERSION = "whats.new.version";

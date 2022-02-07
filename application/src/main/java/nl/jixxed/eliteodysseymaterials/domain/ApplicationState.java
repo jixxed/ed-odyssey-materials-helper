@@ -181,7 +181,7 @@ public class ApplicationState {
             this.favourites.add(material);
             newState = true;
         }
-        PreferencesService.setPreference("material.favourites", this.favourites, Material::toString);
+        PreferencesService.setPreference("material.favourites", this.favourites, Material::name);
         return newState;
     }
 

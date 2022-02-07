@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum Data implements Material {
     ACCIDENTLOGS(false, 3),
     AIRQUALITYREPORTS(false, 3),
@@ -146,7 +148,7 @@ public enum Data implements Material {
 
     @Override
     public String getLocalizationKey() {
-        return "material.data." + this.toString().toLowerCase();
+        return "material.data." + this.name().toLowerCase();
     }
 
     @Override
@@ -165,5 +167,10 @@ public enum Data implements Material {
 
     public boolean isUpload() {
         return this.isUpload;
+    }
+
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 }

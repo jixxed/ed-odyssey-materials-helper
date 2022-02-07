@@ -1,6 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
+import javafx.beans.binding.ListBinding;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -8,15 +12,13 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.Main;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
-import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialOrientation;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -25,7 +27,10 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class SettingsTab extends EDOTab {
@@ -57,6 +62,15 @@ public class SettingsTab extends EDOTab {
     private Label notificationVolumeLabel;
     private Slider notificationVolumeSlider;
     private Button playNotificationButton;
+    private Label overrideLabel;
+    private ComboBox<Material> overrideSelect;
+    private Button overrideAddButton;
+    private Label overrideListLabel;
+    private ListView<Material> overrideListView;
+    private Button overrideRemoveButton;
+    private Label trackingOptOutLabel;
+    private Label trackingOptOutExplainLabel;
+    private CheckBox trackingOptOutCheckBox;
 
 
     SettingsTab(final Application application) {
@@ -98,13 +112,16 @@ public class SettingsTab extends EDOTab {
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final HBox readingDirectionSetting = createReadingDirectionSetting();
         final HBox soloModeSetting = createSoloModeSetting();
+        final HBox trackingOptOutSetting = createTrackingOptOutSetting();
         final HBox notificationSetting = createNotificationSetting();
         final HBox customNotificationSoundSetting = createCustomNotificationSoundSetting();
         final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
+        final HBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
+        final HBox irrelevantOverrideList = createIrrelevantOverrideList();
 
         final VBox settings = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting)
+                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList, trackingOptOutSetting)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
@@ -213,6 +230,21 @@ public class SettingsTab extends EDOTab {
                 .buildHBox();
     }
 
+    private HBox createTrackingOptOutSetting() {
+        this.trackingOptOutLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.tracking.opt.out")).build();
+        this.trackingOptOutExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.tracking.opt.out.explain")).build();
+        this.trackingOptOutCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, Boolean.FALSE))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.TRACKING_OPT_OUT, newValue);
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.trackingOptOutLabel, this.trackingOptOutCheckBox, this.trackingOptOutExplainLabel)
+                .buildHBox();
+    }
+
     private HBox createCustomJournalFolderSetting() {
         this.journalFolderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.journal.folder")).build();
         this.selectedFolderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER)).build();
@@ -287,6 +319,113 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.languageLabel, this.languageSelect)
                 .buildHBox();
+    }
+
+    private HBox createIrrelevantOverrideSetting() {
+        this.overrideLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.material.override"))
+                .build();
+
+        final ListBinding<Material> materialListBinding = LocaleService.getListBinding(Material.getAllIrrelevantMaterialsWithoutOverride().toArray(Material[]::new));
+        this.overrideSelect = ComboBoxBuilder.builder(Material.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(materialListBinding)
+                .withValueChangeListener((observable, oldValue, newValue) -> {
+                    this.overrideAddButton.setDisable(newValue == null || this.overrideListView.getItems().contains(newValue));
+                })
+                .asLocalized()
+                .build();
+
+        this.overrideAddButton = ButtonBuilder.builder()
+                .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.material.override.add"))
+                .withOnAction(e -> {
+                    if (this.overrideSelect.getSelectionModel().getSelectedItem() != null) {
+                        final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
+                        final List<Material> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).collect(Collectors.toList());
+                        items.add(this.overrideSelect.getSelectionModel().getSelectedItem());
+                        PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, items.stream().map(Material::name).collect(Collectors.joining(",")));
+                        this.overrideListView.getItems().add(this.overrideSelect.getSelectionModel().getSelectedItem());
+                        this.overrideAddButton.setDisable(true);
+                        EventService.publish(new IrrelevantMaterialOverrideEvent());
+                    }
+                })
+                .build();
+        this.overrideAddButton.setDisable(true);
+
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.overrideLabel, this.overrideSelect, this.overrideAddButton)
+                .buildHBox();
+    }
+
+    private HBox createIrrelevantOverrideList() {
+        this.overrideListLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.material.override.list"))
+                .build();
+        this.overrideListView = new ListView<>();
+        final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
+        final ObservableList<Material> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        this.overrideListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            this.overrideRemoveButton.setDisable(newValue == null);
+        });
+        this.overrideListView.getItems().addListener((ListChangeListener<Material>) c -> {
+            SettingsTab.this.overrideAddButton.setDisable(SettingsTab.this.overrideListView.getItems().contains(SettingsTab.this.overrideSelect.getSelectionModel().getSelectedItem()));
+        });
+        this.overrideListView.setItems(items);
+        this.overrideListView.setCellFactory(getCellFactory());
+        this.overrideRemoveButton = ButtonBuilder.builder()
+                .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.material.override.remove"))
+                .withOnAction(e -> {
+                    final String currentIrrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
+                    final ObservableList<Material> currentItems = Arrays.stream(currentIrrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
+                    currentItems.remove(this.overrideListView.getSelectionModel().getSelectedItem());
+                    PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, currentItems.stream().map(Material::name).collect(Collectors.joining(",")));
+                    this.overrideListView.getItems().remove(this.overrideListView.getSelectionModel().getSelectedItem());
+                    this.overrideAddButton.setDisable(this.overrideSelect.getSelectionModel().getSelectedItem() == null || this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()));
+                    EventService.publish(new IrrelevantMaterialOverrideEvent());
+                })
+                .build();
+        this.overrideRemoveButton.setDisable(true);
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.overrideListLabel, this.overrideListView, this.overrideRemoveButton)
+                .buildHBox();
+    }
+
+    private Callback<ListView<Material>, ListCell<Material>> getCellFactory() {
+        return listView -> new ListCell<>() {
+            //
+//            @SuppressWarnings("java:S1068")
+//            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(RecipeBar.this, StorageEvent.class, event -> {
+//                updateStyle(getItem());
+//                updateText(getItem(), this.emptyProperty().get());
+//            });
+            @SuppressWarnings("java:S1068")
+            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(this, LanguageChangedEvent.class, event -> {
+                updateText(getItem(), this.emptyProperty().get());
+            });
+
+
+            @Override
+            protected void updateItem(final Material item, final boolean empty) {
+                super.updateItem(item, empty);
+                updateText(item, empty);
+            }
+
+            private void updateText(final Material item, final boolean empty) {
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(LocaleService.getLocalizedStringForCurrentLocale(item.getLocalizationKey()));
+                }
+            }
+
+        };
     }
 
     private HBox createReadingDirectionSetting() {

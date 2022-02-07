@@ -4,11 +4,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -64,15 +62,23 @@ public abstract class RecipeConstants {
         return newMap;
     }
 
-    public static boolean isBlueprintIngredient(final Material material) {
+    private static boolean isBlueprintIngredient(final Material material) {
         return SUIT_UPGRADES.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material)) ||
                 WEAPON_UPGRADES.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material)) ||
                 SUIT_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material)) ||
                 WEAPON_MODULE_BLUEPRINTS.values().stream().anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
     }
 
+    public static boolean isBlueprintIngredientWithOverride(final Material material) {
+        return isBlueprintIngredient(material) || isRelevantOverride(material);
+    }
+
     public static boolean isNotRelevantAndNotEngineeringIngredient(final Material material) {
-        return !isBlueprintIngredient(material) && !isEngineeringIngredient(material);
+        return !isBlueprintIngredientWithOverride(material) && !isEngineeringIngredient(material);
+    }
+
+    public static boolean isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(final Material material) {
+        return !isBlueprintIngredientWithOverride(material) && !isEngineeringIngredientAndNotCompleted(material);
     }
 
     public static boolean isNotRelevantAndNotRequiredEngineeringIngredient(final Material material) {
@@ -80,11 +86,11 @@ public abstract class RecipeConstants {
     }
 
     public static boolean isEngineeringOnlyIngredient(final Material material) {
-        return isEngineeringIngredient(material) && !isBlueprintIngredient(material);
+        return isEngineeringIngredient(material) && !isBlueprintIngredientWithOverride(material);
     }
 
     public static boolean isEngineeringOrBlueprintIngredient(final Material material) {
-        return isEngineeringIngredient(material) || isBlueprintIngredient(material);
+        return isEngineeringIngredient(material) || isBlueprintIngredientWithOverride(material);
     }
 
     public static boolean isEngineeringIngredient(final Material material) {
@@ -93,6 +99,11 @@ public abstract class RecipeConstants {
 
     public static boolean isEngineeringIngredientAndNotCompleted(final Material material) {
         return ENGINEER_UNLOCK_REQUIREMENTS.values().stream().filter(engineerRecipe -> !engineerRecipe.isCompleted()).anyMatch(recipe -> recipe.getMaterialCollection(material.getClass()).containsKey(material));
+    }
+
+    private static boolean isRelevantOverride(final Material material) {
+        final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
+        return Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).anyMatch(mat -> mat.equals(material));
     }
 
     public static Map<RecipeName, ModuleRecipe> getSuitModuleBlueprints() {
@@ -998,7 +1009,8 @@ public abstract class RecipeConstants {
                         Asset.ELECTROMAGNET, 10
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA),
                 Map.of(
-                        Modifier.RELOAD_SPEED, "+25%"
+                        Modifier.RELOAD_SPEED, "+25%",
+                        Modifier.RELOAD_SPEED_APHELION, "+20%"
                 )
         ));
         WEAPON_MODULE_BLUEPRINTS.put(RecipeName.SCOPE, new ModuleRecipe(

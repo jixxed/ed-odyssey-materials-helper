@@ -47,7 +47,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                     .map(jsonNode -> Material.subtypeForName(jsonNode.get("Name").asText()))
                     .filter(material -> !(material instanceof Consumable))
                     .forEach(material -> {
-                        if ((APPLICATION_STATE.getSoloMode() && RecipeConstants.isNotRelevantAndNotRequiredEngineeringIngredient(material))
+                        if ((APPLICATION_STATE.getSoloMode() && RecipeConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
                                 || (!APPLICATION_STATE.getSoloMode() && !RecipeConstants.isEngineeringOrBlueprintIngredient(material))) {
                             NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
                         }
@@ -69,6 +69,11 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                 .timestamp(timestamp)
                 .commander(APPLICATION_STATE.getPreferredCommander().map(Commander::getName).orElse(""))
                 .system(currentLocation.getStarSystem().getName())
+                .primaryEconomy(currentLocation.getStarSystem().getPrimaryEconomy().name())
+                .secondaryEconomy(currentLocation.getStarSystem().getSecondaryEconomy().name())
+                .government(currentLocation.getStarSystem().getGovernment().name())
+                .security(currentLocation.getStarSystem().getSecurity().name())
+                .state(currentLocation.getStarSystem().getState())
                 .body(currentLocation.getBody())
                 .settlement(currentLocation.getStation())
                 .x(currentLocation.getStarSystem().getX())

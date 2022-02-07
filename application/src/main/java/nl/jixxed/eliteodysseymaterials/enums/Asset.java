@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 @AllArgsConstructor
 @Getter
@@ -60,7 +61,7 @@ public enum Asset implements Material {
 
     @Override
     public String getLocalizationKey() {
-        return "material.asset." + this.toString().toLowerCase();
+        return "material.asset." + this.name().toLowerCase();
     }
 
 
@@ -73,6 +74,11 @@ public enum Asset implements Material {
     @Override
     public boolean isIllegal() {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
 }

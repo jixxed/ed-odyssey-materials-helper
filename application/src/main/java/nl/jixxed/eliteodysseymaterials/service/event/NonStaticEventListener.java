@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 @Getter
@@ -23,6 +24,10 @@ class NonStaticEventListener<T extends Event> extends EventListener<T> {
         } else {
             this.consumer.accept(event);
         }
+    }
+
+    boolean hasOwner(final Object owner) {
+        return Objects.equals(this.ownerRef.get(), owner);
     }
 
     private void dispose() {

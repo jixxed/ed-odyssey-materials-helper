@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum Good implements Material {
     AGRICULTURALPROCESSSAMPLE(false),
     BIOCHEMICALAGENT(true),
@@ -66,7 +68,7 @@ public enum Good implements Material {
 
     @Override
     public String getLocalizationKey() {
-        return "material.good." + this.toString().toLowerCase();
+        return "material.good." + this.name().toLowerCase();
     }
 
     @Override
@@ -79,4 +81,8 @@ public enum Good implements Material {
         return this.illegal;
     }
 
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
+    }
 }
