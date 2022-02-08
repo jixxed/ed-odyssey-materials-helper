@@ -10,12 +10,12 @@ import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
@@ -25,12 +25,11 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class MaterialIngredient extends Ingredient {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
     @EqualsAndHashCode.Include
-    private final StorageType storageType;
+    private final OdysseyStorageType storageType;
     @EqualsAndHashCode.Include
     private final Material material;
     private final Integer leftAmount;
@@ -51,8 +50,8 @@ public class MaterialIngredient extends Ingredient {
     List<EventListener<?>> eventListeners = new ArrayList<>();
 
 
-    MaterialIngredient(final StorageType storageType, final Material material, final Integer leftAmount, final Integer rightAmount) {
-        if (storageType.equals(StorageType.OTHER)) {
+    MaterialIngredient(final OdysseyStorageType storageType, final Material material, final Integer leftAmount, final Integer rightAmount) {
+        if (storageType.equals(OdysseyStorageType.OTHER)) {
             throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
         this.storageType = storageType;
@@ -122,7 +121,7 @@ public class MaterialIngredient extends Ingredient {
 
 
     protected void update() {
-        setRightAmount(APPLICATION_STATE.getMaterials(this.storageType).get(this.material).getTotalValue());
+        setRightAmount(StorageService.getMaterials(this.storageType).get(this.material).getTotalValue());
         if (this.rightAmount >= this.leftAmount) {
             this.rightAmountLabel.setText(this.rightAmount.toString());
             this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
@@ -135,7 +134,7 @@ public class MaterialIngredient extends Ingredient {
     }
 
     @Override
-    public StorageType getType() {
+    public OdysseyStorageType getType() {
         return this.storageType;
     }
 

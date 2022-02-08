@@ -1,13 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 public class EmbarkMessageProcessor implements MessageProcessor {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     @Override
     public void process(final JsonNode journalMessage) {
-        APPLICATION_STATE.resetBackPackCounts();
+        StorageService.resetBackPackCounts();
     }
 }

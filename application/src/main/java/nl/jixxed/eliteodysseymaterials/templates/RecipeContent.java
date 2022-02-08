@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.builder.TextBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ class RecipeContent extends VBox {
         loadIngredients();
         initDescription();
 
-        if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+        if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
             initAsRecipe();
         } else {//mission based recipes
             initAsEngineerMission();
@@ -71,9 +72,9 @@ class RecipeContent extends VBox {
     }
 
     private void loadIngredients() {
-        this.ingredients.addAll(getRecipeIngredients(this.recipe, Good.class, StorageType.GOOD, APPLICATION_STATE.getGoods()));
-        this.ingredients.addAll(getRecipeIngredients(this.recipe, Asset.class, StorageType.ASSET, APPLICATION_STATE.getAssets()));
-        this.ingredients.addAll(getRecipeIngredients(this.recipe, Data.class, StorageType.DATA, APPLICATION_STATE.getData()));
+        this.ingredients.addAll(getRecipeIngredients(this.recipe, Good.class, OdysseyStorageType.GOOD, StorageService.getGoods()));
+        this.ingredients.addAll(getRecipeIngredients(this.recipe, Asset.class, OdysseyStorageType.ASSET, StorageService.getAssets()));
+        this.ingredients.addAll(getRecipeIngredients(this.recipe, Data.class, OdysseyStorageType.DATA, StorageService.getData()));
         if (this.recipe instanceof EngineerRecipe engineerRecipe) {
             this.ingredients.addAll(engineerRecipe.getOther().stream()
                     .map(MissionIngredient::new)
@@ -198,7 +199,7 @@ class RecipeContent extends VBox {
 
     private void initEventHandling() {
         EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
-            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
                     loadInitialCount(wishlists);
@@ -206,13 +207,13 @@ class RecipeContent extends VBox {
             }
         });
         EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
-            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 final Wishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
                 loadInitialCount(wishlists);
             }
         });
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
-            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> StorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
+            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
                     loadInitialCount(wishlists);
@@ -231,7 +232,7 @@ class RecipeContent extends VBox {
         });
     }
 
-    private List<MaterialIngredient> getRecipeIngredients(final Recipe recipe, final Class<? extends Material> materialClass, final StorageType storageType, final Map<? extends Material, Storage> materialMap) {
+    private List<MaterialIngredient> getRecipeIngredients(final Recipe recipe, final Class<? extends Material> materialClass, final OdysseyStorageType storageType, final Map<? extends Material, Storage> materialMap) {
         return recipe.getMaterialCollection(materialClass).entrySet().stream()
                 .map(material -> new MaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue()))
                 .sorted(Comparator.comparing(MaterialIngredient::getName))

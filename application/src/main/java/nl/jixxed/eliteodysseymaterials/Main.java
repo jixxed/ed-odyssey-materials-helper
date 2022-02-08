@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialTrackingService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.StartDialog;
@@ -170,8 +171,8 @@ public class Main extends Application {
 
     private void reset(final File watchedFolder) {
         APPLICATION_STATE.resetEngineerStates();
-        APPLICATION_STATE.resetShipLockerCounts();
-        APPLICATION_STATE.resetBackPackCounts();
+        StorageService.resetShipLockerCounts();
+        StorageService.resetBackPackCounts();
         APPLICATION_STATE.resetCommanders();
         EventService.publish(new CommanderResetEvent());
         this.timeStampedShipLockerWatcher.stop();

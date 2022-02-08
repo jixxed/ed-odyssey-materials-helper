@@ -13,10 +13,11 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.TradeMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.ConnectionWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
@@ -144,7 +145,7 @@ class TradeCreateBlock extends VBox {
                 } else if (TradeMaterial.ANY_RELEVANT.equals(offerMaterial)) {
                     maxOfferAmountValue = getRelevantMaterialsTotal();
                 } else {
-                    maxOfferAmountValue = APPLICATION_STATE.getMaterials(offerMaterial.getStorageType()).get(offerMaterial).getTotalValue();
+                    maxOfferAmountValue = StorageService.getMaterials(offerMaterial.getStorageType()).get(offerMaterial).getTotalValue();
                 }
                 if (!TradeMaterial.NOTHING.equals(offerMaterial)) {
                     this.offerAmountInput.setMaxValue(maxOfferAmountValue);
@@ -162,8 +163,8 @@ class TradeCreateBlock extends VBox {
 
     private int getRelevantMaterialsTotal() {
         Integer total = 0;
-        for (final StorageType storageType : List.of(StorageType.DATA, StorageType.GOOD, StorageType.ASSET)) {
-            total += APPLICATION_STATE.getMaterials(storageType).entrySet().stream()
+        for (final OdysseyStorageType storageType : List.of(OdysseyStorageType.DATA, OdysseyStorageType.GOOD, OdysseyStorageType.ASSET)) {
+            total += StorageService.getMaterials(storageType).entrySet().stream()
                     .filter(material -> RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);

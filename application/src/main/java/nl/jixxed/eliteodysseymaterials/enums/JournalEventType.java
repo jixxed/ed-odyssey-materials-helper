@@ -22,7 +22,9 @@ public enum JournalEventType {
     LEAVEBODY("LeaveBody"),
     SUPERCRUISEENTRY("SupercruiseEntry"),
     LOADGAME("LoadGame"),
-    UNKNOWN("Unknown");
+    UNKNOWN("Unknown"),
+    MATERIALS("Materials"),
+    MATERIALCOLLECTED("MaterialCollected");
 
     private final String name;
 

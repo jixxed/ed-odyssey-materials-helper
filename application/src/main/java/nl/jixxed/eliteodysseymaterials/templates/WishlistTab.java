@@ -22,10 +22,7 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.PathService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.nio.charset.StandardCharsets;
@@ -49,7 +46,6 @@ public class WishlistTab extends EDOTab {
     private int wishlistSize;
     private final List<WishlistBlueprint> wishlistBlueprints = new ArrayList<>();
     private final AtomicBoolean hideCompleted = new AtomicBoolean();
-    //    private final Map<Material, Integer> wishlistNeededMaterials = new HashMap<>();
     private final Map<Data, Integer> wishlistNeededDatas = new EnumMap<>(Data.class);
     private final Map<Good, Integer> wishlistNeededGoods = new EnumMap<>(Good.class);
     private final Map<Asset, Integer> wishlistNeededAssets = new EnumMap<>(Asset.class);
@@ -607,16 +603,16 @@ public class WishlistTab extends EDOTab {
                         }
                 );
         final List<WishlistIngredient> ingredientsData = this.wishlistNeededDatas.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || !(APPLICATION_STATE.getData().get(entry.getKey()).getTotalValue() >= entry.getValue()))
-                .map(wishlistItem -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getData().get(wishlistItem.getKey()).getTotalValue()))
+                .filter(entry -> !this.hideCompleted.get() || !(StorageService.getData().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .map(wishlistItem -> new WishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getData().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<WishlistIngredient> ingredientsGood = this.wishlistNeededGoods.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || !(APPLICATION_STATE.getGoods().get(entry.getKey()).getTotalValue() >= entry.getValue()))
-                .map(wishlistItem -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getGoods().get(wishlistItem.getKey()).getTotalValue()))
+                .filter(entry -> !this.hideCompleted.get() || !(StorageService.getGoods().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .map(wishlistItem -> new WishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getGoods().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<WishlistIngredient> ingredientsAsset = this.wishlistNeededAssets.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || !(APPLICATION_STATE.getAssets().get(entry.getKey()).getTotalValue() >= entry.getValue()))
-                .map(wishlistItem -> new WishlistIngredient(StorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), APPLICATION_STATE.getAssets().get(wishlistItem.getKey()).getTotalValue()))
+                .filter(entry -> !this.hideCompleted.get() || !(StorageService.getAssets().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .map(wishlistItem -> new WishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getAssets().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<WishlistIngredient> allIngredients = new ArrayList<>();
         allIngredients.addAll(ingredientsData);

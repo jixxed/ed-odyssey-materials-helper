@@ -71,6 +71,9 @@ public class SettingsTab extends EDOTab {
     private Label trackingOptOutLabel;
     private Label trackingOptOutExplainLabel;
     private CheckBox trackingOptOutCheckBox;
+    private Label wipLabel;
+    private Label wipExplainLabel;
+    private CheckBox wipCheckBox;
 
 
     SettingsTab(final Application application) {
@@ -113,6 +116,7 @@ public class SettingsTab extends EDOTab {
         final HBox readingDirectionSetting = createReadingDirectionSetting();
         final HBox soloModeSetting = createSoloModeSetting();
         final HBox trackingOptOutSetting = createTrackingOptOutSetting();
+        final HBox wipSetting = createWIPSetting();
         final HBox notificationSetting = createNotificationSetting();
         final HBox customNotificationSoundSetting = createCustomNotificationSoundSetting();
         final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
@@ -121,7 +125,7 @@ public class SettingsTab extends EDOTab {
 
         final VBox settings = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList, trackingOptOutSetting)
+                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList, trackingOptOutSetting, wipSetting)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
@@ -242,6 +246,22 @@ public class SettingsTab extends EDOTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.trackingOptOutLabel, this.trackingOptOutCheckBox, this.trackingOptOutExplainLabel)
+                .buildHBox();
+    }
+
+    private HBox createWIPSetting() {
+        this.wipLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip")).build();
+        this.wipExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip.explain")).build();
+        this.wipCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.WIP, Boolean.FALSE))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.WIP, newValue);
+                    EventService.publish(new WipVisibilityEvent(newValue));
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.wipLabel, this.wipCheckBox, this.wipExplainLabel)
                 .buildHBox();
     }
 

@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 
 public interface Material {
 
-    default StorageType getStorageType() {
-        return StorageType.OTHER;
+    default OdysseyStorageType getStorageType() {
+        return OdysseyStorageType.OTHER;
     }
 
     static Material subtypeForName(final String name) {

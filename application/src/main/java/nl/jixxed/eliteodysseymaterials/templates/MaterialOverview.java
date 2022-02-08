@@ -11,12 +11,12 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.util.Comparator;
@@ -26,7 +26,6 @@ import java.util.function.Predicate;
 
 class MaterialOverview extends VBox {
 
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String FLOW_PANE_STYLE_CLASS = "flow-pane";
     private final ScrollPane scrollPane;
     private FlowPane totals;
@@ -49,9 +48,9 @@ class MaterialOverview extends VBox {
 
     private void initComponents() {
         this.getStyleClass().add("material-overview");
-        this.goodsTotal = new MaterialTotal(StorageType.GOOD, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
-        this.assetsTotal = new MaterialTotal(StorageType.ASSET, MaterialTotalType.CHEMICAL, MaterialTotalType.CIRCUIT, MaterialTotalType.TECH);
-        this.dataTotal = new MaterialTotal(StorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
+        this.goodsTotal = new MaterialTotal(OdysseyStorageType.GOOD, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
+        this.assetsTotal = new MaterialTotal(OdysseyStorageType.ASSET, MaterialTotalType.CHEMICAL, MaterialTotalType.CIRCUIT, MaterialTotalType.TECH);
+        this.dataTotal = new MaterialTotal(OdysseyStorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
         final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")).getOrientation();
         this.totals = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(Orientation.HORIZONTAL).withNodes(this.goodsTotal, this.assetsTotal, this.dataTotal).build();
         this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
@@ -177,7 +176,7 @@ class MaterialOverview extends VBox {
     }
 
     private void addGoods(final Search search) {
-        APPLICATION_STATE.getGoods().entrySet().stream()
+        StorageService.getGoods().entrySet().stream()
                 .filter(MaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
@@ -186,7 +185,7 @@ class MaterialOverview extends VBox {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
                     this.goodFlow.getChildren().add(materialCard);
                 });
-        APPLICATION_STATE.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+        StorageService.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             final String name = entry.getKey() + " (unknown)";
             final MaterialCard materialCard = new MaterialCard(Good.UNKNOWN, name, entry.getValue());
             this.goodFlow.getChildren().add(materialCard);
@@ -194,7 +193,7 @@ class MaterialOverview extends VBox {
     }
 
     private void addAssets(final Search search) {
-        APPLICATION_STATE.getAssets().entrySet().stream()
+        StorageService.getAssets().entrySet().stream()
                 .filter(MaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
@@ -211,7 +210,7 @@ class MaterialOverview extends VBox {
     }
 
     private void addDatas(final Search search) {
-        APPLICATION_STATE.getData().entrySet().stream()
+        StorageService.getData().entrySet().stream()
                 .filter(MaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
@@ -220,7 +219,7 @@ class MaterialOverview extends VBox {
                     final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
                     this.dataFlow.getChildren().add(materialCard);
                 });
-        APPLICATION_STATE.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+        StorageService.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             final String name = entry.getKey() + " (unknown)";
             final MaterialCard materialCard = new MaterialCard(Data.UNKNOWN, name, entry.getValue());
             this.dataFlow.getChildren().add(materialCard);

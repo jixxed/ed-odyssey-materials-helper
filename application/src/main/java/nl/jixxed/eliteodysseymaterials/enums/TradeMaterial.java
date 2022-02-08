@@ -12,8 +12,8 @@ public enum TradeMaterial implements Material {
     }
 
     @Override
-    public StorageType getStorageType() {
-        return StorageType.TRADE;
+    public OdysseyStorageType getStorageType() {
+        return OdysseyStorageType.TRADE;
     }
 
     @Override

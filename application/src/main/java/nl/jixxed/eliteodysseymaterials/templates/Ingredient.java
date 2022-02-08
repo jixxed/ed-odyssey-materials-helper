@@ -1,11 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.layout.VBox;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 
 public abstract class Ingredient extends VBox {
 
-    public abstract StorageType getType();
+    public abstract OdysseyStorageType getType();
 
     public abstract String getName();
 }

@@ -24,8 +24,8 @@ public enum Consumable implements Material {
     }
 
     @Override
-    public StorageType getStorageType() {
-        return StorageType.CONSUMABLE;
+    public OdysseyStorageType getStorageType() {
+        return OdysseyStorageType.CONSUMABLE;
     }
 
 

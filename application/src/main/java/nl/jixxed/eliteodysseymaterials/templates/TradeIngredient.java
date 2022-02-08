@@ -3,7 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.TradeMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -15,7 +15,7 @@ class TradeIngredient extends MaterialIngredient {
     private static final String INGREDIENT_UNFILLED_CLASS = "trade-ingredient-unfilled";
     private final Boolean isGiven;
 
-    TradeIngredient(final StorageType storageType, final Material material, final Integer amountAvailable, final Integer tradeAmount, final boolean isGiven) {
+    TradeIngredient(final OdysseyStorageType storageType, final Material material, final Integer amountAvailable, final Integer tradeAmount, final boolean isGiven) {
         super(storageType, material, amountAvailable, tradeAmount);
         this.isGiven = isGiven;
         initComponents();

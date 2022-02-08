@@ -141,8 +141,8 @@ public enum Data implements Material {
     }
 
     @Override
-    public StorageType getStorageType() {
-        return StorageType.DATA;
+    public OdysseyStorageType getStorageType() {
+        return OdysseyStorageType.DATA;
     }
 
 

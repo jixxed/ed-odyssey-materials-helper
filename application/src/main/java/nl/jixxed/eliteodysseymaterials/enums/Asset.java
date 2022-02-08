@@ -55,8 +55,8 @@ public enum Asset implements Material {
     }
 
     @Override
-    public StorageType getStorageType() {
-        return StorageType.ASSET;
+    public OdysseyStorageType getStorageType() {
+        return OdysseyStorageType.ASSET;
     }
 
     @Override

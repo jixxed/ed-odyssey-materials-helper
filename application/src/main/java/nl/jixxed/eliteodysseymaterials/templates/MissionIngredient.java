@@ -6,11 +6,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 public class MissionIngredient extends Ingredient {
-    private final StorageType storageType;
+    private final OdysseyStorageType storageType;
     private final String text;
 
     private Label nameLabel;
@@ -18,7 +18,7 @@ public class MissionIngredient extends Ingredient {
     private Region region;
 
     MissionIngredient(final String text) {
-        this.storageType = StorageType.OTHER;
+        this.storageType = OdysseyStorageType.OTHER;
         this.text = text;
         initComponents();
     }
@@ -39,7 +39,7 @@ public class MissionIngredient extends Ingredient {
 
 
     @Override
-    public StorageType getType() {
+    public OdysseyStorageType getType() {
         return this.storageType;
     }
 

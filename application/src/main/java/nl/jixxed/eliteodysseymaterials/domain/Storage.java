@@ -45,6 +45,7 @@ public class Storage {
         return switch (target) {
             case BACKPACK -> this.backPack;
             case SHIPLOCKER -> this.shipLocker;
+            case SHIP -> null;
         };
     }
 }

@@ -3,15 +3,15 @@ package nl.jixxed.eliteodysseymaterials.domain;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @NoArgsConstructor
 public class AnyRelevantStorage extends Storage {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     @Override
     public Integer getBackPackValue() {
@@ -30,9 +30,9 @@ public class AnyRelevantStorage extends Storage {
 
     @Override
     public Integer getTotalValue() {
-        final Map<Material, Storage> goods = APPLICATION_STATE.getMaterials(StorageType.GOOD);
-        final Map<Material, Storage> data = APPLICATION_STATE.getMaterials(StorageType.DATA);
-        final Map<Material, Storage> assets = APPLICATION_STATE.getMaterials(StorageType.ASSET);
+        final Map<Material, Storage> goods = StorageService.getMaterials(OdysseyStorageType.GOOD);
+        final Map<Material, Storage> data = StorageService.getMaterials(OdysseyStorageType.DATA);
+        final Map<Material, Storage> assets = StorageService.getMaterials(OdysseyStorageType.ASSET);
         final Map<Material, Storage> materials = new HashMap<>();
         goods.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         data.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
@@ -46,7 +46,7 @@ public class AnyRelevantStorage extends Storage {
     @Override
     public Integer getValue(final StoragePool target) {
         return switch (target) {
-            case BACKPACK, SHIPLOCKER -> 0;
+            case BACKPACK, SHIPLOCKER, SHIP -> 0;
         };
     }
 }

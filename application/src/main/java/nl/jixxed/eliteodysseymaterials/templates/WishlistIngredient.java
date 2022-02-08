@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 class WishlistIngredient extends MaterialIngredient {
@@ -10,7 +10,7 @@ class WishlistIngredient extends MaterialIngredient {
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
 
-    WishlistIngredient(final StorageType storageType, final Material material, final Integer amountRequired, final Integer amountAvailable) {
+    WishlistIngredient(final OdysseyStorageType storageType, final Material material, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, material, amountRequired, amountAvailable);
         initComponents();
     }

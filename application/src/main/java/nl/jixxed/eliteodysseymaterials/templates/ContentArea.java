@@ -55,6 +55,7 @@ class ContentArea extends AnchorPane {
 
         this.searchBar = new SearchBar();
         this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.engineersTab, this.settingsTab, this.importTab);
+        this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 final Tabs tabType = ((EDOTab) newValue).getTabType();

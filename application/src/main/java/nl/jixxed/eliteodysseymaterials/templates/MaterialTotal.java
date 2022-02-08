@@ -13,8 +13,9 @@ import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.AssetType;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
@@ -32,10 +33,10 @@ class MaterialTotal extends VBox {
     private final Map<MaterialTotalType, Label> totals = new EnumMap<>(MaterialTotalType.class);
     private final Map<MaterialTotalType, Label> totalValues = new EnumMap<>(MaterialTotalType.class);
     private Label name;
-    private final StorageType storageType;
+    private final OdysseyStorageType storageType;
     private final MaterialTotalType[] totalTypes;
 
-    MaterialTotal(final StorageType storageType, final MaterialTotalType... totalTypes) {
+    MaterialTotal(final OdysseyStorageType storageType, final MaterialTotalType... totalTypes) {
         this.storageType = storageType;
         this.totalTypes = totalTypes;
         initComponents();
@@ -108,14 +109,14 @@ class MaterialTotal extends VBox {
     }
 
     private void updateTotals() {
-        if (StorageType.DATA.equals(this.storageType) || StorageType.GOOD.equals(this.storageType)) {
-            final Integer blueprintTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
+        if (OdysseyStorageType.DATA.equals(this.storageType) || OdysseyStorageType.GOOD.equals(this.storageType)) {
+            final Integer blueprintTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
                     .filter(material -> (APPLICATION_STATE.getSoloMode())
                             ? RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) || RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
                             : RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) || RecipeConstants.isEngineeringIngredient(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
-            final Integer irrelevantTotal = APPLICATION_STATE.getMaterials(this.storageType).entrySet().stream()
+            final Integer irrelevantTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
                     .filter(material -> (APPLICATION_STATE.getSoloMode())
                             ? !RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) && !RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
                             : !RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) && !RecipeConstants.isEngineeringIngredient(material.getKey()))
@@ -124,16 +125,16 @@ class MaterialTotal extends VBox {
 
             update(MaterialTotalType.BLUEPRINT, blueprintTotal);
             update(MaterialTotalType.IRRELEVANT, irrelevantTotal);
-        } else if (StorageType.ASSET.equals(this.storageType)) {
-            final Integer chemicalAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+        } else if (OdysseyStorageType.ASSET.equals(this.storageType)) {
+            final Integer chemicalAssets = StorageService.getAssets().entrySet().stream()
                     .filter(assetEntry -> AssetType.CHEMICAL.equals(assetEntry.getKey().getType()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
-            final Integer circuitAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+            final Integer circuitAssets = StorageService.getAssets().entrySet().stream()
                     .filter(assetEntry -> AssetType.CIRCUIT.equals(assetEntry.getKey().getType()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
-            final Integer techAssets = APPLICATION_STATE.getAssets().entrySet().stream()
+            final Integer techAssets = StorageService.getAssets().entrySet().stream()
                     .filter(assetEntry -> AssetType.TECH.equals(assetEntry.getKey().getType()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);

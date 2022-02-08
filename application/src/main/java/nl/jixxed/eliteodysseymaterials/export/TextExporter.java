@@ -2,11 +2,11 @@ package nl.jixxed.eliteodysseymaterials.export;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -14,7 +14,6 @@ import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TextExporter {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     public static String createTextWishlist(final Map<Data, Integer> wishlistNeededDatas, final Map<Good, Integer> wishlistNeededGoods, final Map<Asset, Integer> wishlistNeededAssets) {
         final StringBuilder textBuilder = new StringBuilder();
@@ -40,9 +39,9 @@ public class TextExporter {
                     .forEach(item -> {
                         textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
                         final Integer total = switch (item.getKey().getStorageType()) {
-                            case GOOD -> APPLICATION_STATE.getGoods().get(item.getKey()).getTotalValue();
-                            case DATA -> APPLICATION_STATE.getData().get(item.getKey()).getTotalValue();
-                            case ASSET -> APPLICATION_STATE.getAssets().get(item.getKey()).getTotalValue();
+                            case GOOD -> StorageService.getGoods().get(item.getKey()).getTotalValue();
+                            case DATA -> StorageService.getData().get(item.getKey()).getTotalValue();
+                            case ASSET -> StorageService.getAssets().get(item.getKey()).getTotalValue();
                             case TRADE, CONSUMABLE, OTHER -> 0;
                         };
                         textBuilder.append(String.format("%12s", total));

@@ -36,6 +36,8 @@ class MessageHandler {
             Map.entry(JournalEventType.SUPERCRUISEENTRY, new SupercruiseEntryMessageProcessor()),
             Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor()),
             Map.entry(JournalEventType.DOCKED, new DockedMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALS, new MaterialsMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALCOLLECTED, new MaterialCollectedMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

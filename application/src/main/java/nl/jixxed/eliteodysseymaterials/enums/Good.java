@@ -62,8 +62,8 @@ public enum Good implements Material {
     }
 
     @Override
-    public StorageType getStorageType() {
-        return StorageType.GOOD;
+    public OdysseyStorageType getStorageType() {
+        return OdysseyStorageType.GOOD;
     }
 
     @Override

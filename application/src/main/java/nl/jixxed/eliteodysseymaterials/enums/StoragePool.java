@@ -1,5 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum StoragePool {
-    BACKPACK, SHIPLOCKER
+    BACKPACK, SHIPLOCKER, SHIP
 }

@@ -30,6 +30,8 @@ public class PreferenceConstants {
     public static final String NOTIFICATION_VOLUME = "settings.notification.sounds.volume";
     public static final String POLICY_ACCEPT_VERSION = "privacy.policy.version";
     public static final String WHATS_NEW_VERSION = "whats.new.version";
+    public static final String WIP = "wip.visible";
+
 
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
 
