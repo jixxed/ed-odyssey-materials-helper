@@ -3,12 +3,11 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.WeakChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,22 +58,22 @@ public class ComboBoxBuilder<T> {
     }
 
 
-    public ComboBox<T> build() {
-        final ComboBox<T> comboBox = new ComboBox<>();
+    public DestroyableComboBox<T> build() {
+        final DestroyableComboBox<T> comboBox = new DestroyableComboBox<>();
         comboBox.getStyleClass().addAll(this.styleClasses);
         if (this.items != null) {
             comboBox.itemsProperty().set(new SimpleListProperty<>(this.items));
         }
         if (this.listener != null) {
-            comboBox.valueProperty().addListener(this.listener);
+            comboBox.addChangeListener(comboBox.valueProperty(), this.listener);
         }
         if (this.localized) {
             //this sets the old value back after a locale change, instead of blanking it
-            comboBox.valueProperty().addListener(new WeakChangeListener<>((observable, oldValue, newValue) -> {
+            comboBox.addChangeListener(comboBox.valueProperty(), (observable, oldValue, newValue) -> {
                 if (newValue == null && oldValue != null) {
-                    comboBox.selectionModelProperty().getValue().select(oldValue);
+                    comboBox.selectionModelProperty().getValue().select((T) oldValue);
                 }
-            }));
+            });
         }
         if (this.promptTextBinding != null) {
             comboBox.promptTextProperty().bind(this.promptTextBinding);

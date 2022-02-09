@@ -92,7 +92,7 @@ public class LoadoutEditorTab extends EDOTab implements Template {
             final String fid = commander.getFid();
             final LoadoutSet selectedLoadoutSet = APPLICATION_STATE.getLoadoutSetList(fid).getSelectedLoadoutSet();
             this.activeLoadoutSetUUID = selectedLoadoutSet.getUuid();
-            this.loadoutItemsFlow.getChildren().stream().map(LoadoutItem.class::cast).forEach(LoadoutItem::onDestroy);
+            this.loadoutItemsFlow.getChildren().stream().map(LoadoutItem.class::cast).forEach(LoadoutItem::destroy);
             this.loadoutItemsFlow.getChildren().clear();
             this.loadoutItemsFlow.getChildren().addAll(selectedLoadoutSet.getLoadouts().stream()
                     .map(loadout -> new LoadoutItem(selectedLoadoutSet, loadout))

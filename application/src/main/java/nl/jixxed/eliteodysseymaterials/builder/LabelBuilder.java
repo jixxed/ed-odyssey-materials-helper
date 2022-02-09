@@ -5,10 +5,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,8 +74,8 @@ public class LabelBuilder {
         return this;
     }
 
-    public Label build() {
-        final Label label = new Label();
+    public DestroyableLabel build() {
+        final DestroyableLabel label = new DestroyableLabel();
         label.getStyleClass().addAll(this.styleClasses);
         if (this.stringBinding != null) {
             label.textProperty().bind(this.stringBinding);
@@ -89,11 +89,12 @@ public class LabelBuilder {
             label.setNodeOrientation(this.nodeOrientation);
         }
         if (this.hoverPropertyChangeListener != null) {
-            label.hoverProperty().addListener(this.hoverPropertyChangeListener);
+            label.addChangeListener(label.hoverProperty(), this.hoverPropertyChangeListener);
         }
-        label.setVisible(this.visibility);
         if (this.visibilityObservable != null) {
             label.visibleProperty().bind(this.visibilityObservable);
+        } else {
+            label.setVisible(this.visibility);
         }
         return label;
     }

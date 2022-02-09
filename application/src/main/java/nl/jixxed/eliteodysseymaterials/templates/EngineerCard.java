@@ -24,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -55,12 +56,12 @@ class EngineerCard extends VBox {
 
     private final Engineer engineer;
 
-    private ResizableImageView image;
+    private DestroyableResizableImageView image;
     private Label name;
     private HBox specialisation;
     private Label engineerLocation;
     private Label engineerDistance;
-    private ResizableImageView copyIcon;
+    private DestroyableResizableImageView copyIcon;
     private FlowPane location;
     private Label suitModulesTitle;
     private List<HBox> suitBlueprintLabels;
@@ -213,7 +214,7 @@ class EngineerCard extends VBox {
 
         final Label engineerSpecialisation = engineerSpecialisationLabelBuilder.build();
 
-        final ResizableImageView specialisationIcon = ResizableImageViewBuilder.builder()
+        final DestroyableResizableImageView specialisationIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("specialisation-image")
                 .withImage("/images/engineer/specialisation/" + this.engineer.getSpecialisation().name().toLowerCase() + ".png")
                 .build();
@@ -232,7 +233,7 @@ class EngineerCard extends VBox {
                 .build();
     }
 
-    private ResizableImageView getEngineerImageView() {
+    private DestroyableResizableImageView getEngineerImageView() {
         return ResizableImageViewBuilder.builder()
                 .withStyleClass("engineer-image")
                 .withPreserveRatio(true)

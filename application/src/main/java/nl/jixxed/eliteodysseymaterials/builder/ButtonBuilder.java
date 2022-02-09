@@ -6,7 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.templates.ResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ public class ButtonBuilder {
     private EventHandler<ActionEvent> onAction;
     private ObservableValue<String> observableValue;
     private String nonLocalizedText;
-    private ResizableImageView imageView;
+    private DestroyableResizableImageView imageView;
 
     public static ButtonBuilder builder() {
         return new ButtonBuilder();
@@ -44,7 +44,7 @@ public class ButtonBuilder {
         return this;
     }
 
-    public ButtonBuilder withGraphic(final ResizableImageView imageView) {
+    public ButtonBuilder withGraphic(final DestroyableResizableImageView imageView) {
         this.imageView = imageView;
         return this;
     }
