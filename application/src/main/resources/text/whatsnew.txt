@@ -1,6 +1,7 @@
 Version 1.65
 -------------
 add material tracking opt-out
+fix memory leak issue in loadouts
 
 Version 1.64
 -------------
