@@ -1,6 +1,8 @@
 Version 1.65
 -------------
 add material tracking opt-out
+fix memory leak issue in loadouts
+fix zenith Rate of fire
 
 Version 1.64
 -------------

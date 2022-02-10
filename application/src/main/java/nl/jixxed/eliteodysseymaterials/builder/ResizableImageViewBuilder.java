@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.templates.ResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,13 +52,13 @@ public class ResizableImageViewBuilder {
         return this;
     }
 
-    public ResizableImageView build() {
-        final ResizableImageView imageView = new ResizableImageView();
+    public DestroyableResizableImageView build() {
+        final DestroyableResizableImageView imageView = new DestroyableResizableImageView();
         imageView.getStyleClass().addAll(this.styleClasses);
         imageView.setImage(this.image);
         imageView.setPreserveRatio(this.preserveRatio);
         if (this.onMouseClicked != null) {
-            imageView.setOnMouseClicked(this.onMouseClicked);
+            imageView.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);
         }
         return imageView;
 

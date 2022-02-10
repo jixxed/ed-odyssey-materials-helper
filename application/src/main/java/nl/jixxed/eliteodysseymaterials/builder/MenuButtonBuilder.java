@@ -3,12 +3,12 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import javafx.beans.binding.StringBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,8 +66,8 @@ public class MenuButtonBuilder {
         return this;
     }
 
-    public MenuButton build() {
-        final MenuButton menuButton = new MenuButton();
+    public DestroyableMenuButton build() {
+        final DestroyableMenuButton menuButton = new DestroyableMenuButton();
         menuButton.getStyleClass().addAll(this.styleClasses);
         if (this.items != null) {
             menuButton.getItems().addAll(this.items);

@@ -5,41 +5,32 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import org.controlsfx.control.ToggleSwitch;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
-public class LoadoutItem extends VBox implements Template {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final LoadoutSet loadoutSet;
-    private final Loadout loadout;
+public class LoadoutItem extends VBox implements DestroyableTemplate {
+    private final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private LoadoutSet loadoutSet;
+    private Loadout loadout;
     private final List<HBox> statsList;
-    private final List<HBox> staticStatsList;
     private VBox stats;
-    private MenuButton addToWishlist;
-    private final List<EventListener<?>> listeners = new ArrayList<>();
-    private ToggleSwitch statsToggle;
+    private DestroyableMenuButton addToWishlist;
+    private DestroyableToggleSwitch statsToggle;
     private BooleanProperty isValid;
-    private LoadoutModification loadoutModification1;
-    private LoadoutModification loadoutModification2;
-    private LoadoutModification loadoutModification3;
-    private LoadoutModification loadoutModification4;
+    private final List<Destroyable> destroyables = new ArrayList<>();
 
     private final void setValid(final boolean value) {
         isValidProperty().set(value);
@@ -51,18 +42,7 @@ public class LoadoutItem extends VBox implements Template {
 
     private final BooleanProperty isValidProperty() {
         if (this.isValid == null) {
-            this.isValid = new SimpleBooleanProperty(false) {
-
-                @Override
-                public Object getBean() {
-                    return LoadoutItem.this;
-                }
-
-                @Override
-                public String getName() {
-                    return "isValid";
-                }
-            };
+            this.isValid = new SimpleBooleanProperty(false);
         }
         return this.isValid;
     }
@@ -71,29 +51,35 @@ public class LoadoutItem extends VBox implements Template {
         this.loadoutSet = loadoutSet;
         this.loadout = loadout;
         this.statsList = new ArrayList<>();
-        this.staticStatsList = new ArrayList<>();
         initComponents();
         initEventHandling();
+        System.gc();
     }
 
     @Override
     public void initEventHandling() {
         if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
 
-            this.listeners.add(EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent ->
-                    APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists))
-            );
-            this.listeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+            EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent ->
+                    this.APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists))
+            ;
+            EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
                     loadCommanderWishlists(commanderSelectedEvent.getCommander())
-            ));
-            this.listeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent ->
-                    APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)
-            ));
+            );
+            EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent ->
+                    this.APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)
+            );
+            EventService.addListener(this, ModificationChangedEvent.class, modificationChangedEvent -> {
+                if (modificationChangedEvent.getLoadoutItem() == this) {
+                    handleModificationChange(modificationChangedEvent.getModificationChange());
+                }
+            });
+
         }
         if (this.loadout.getEquipment() instanceof Weapon) {
-            this.listeners.add(EventService.addListener(this, AmmoCapacityModEvent.class, ammoCapacityModEvent -> {
+            EventService.addListener(this, AmmoCapacityModEvent.class, ammoCapacityModEvent -> {
                 updateStatsList();
-            }));
+            });
         }
     }
 
@@ -102,68 +88,76 @@ public class LoadoutItem extends VBox implements Template {
         this.getStyleClass().add("loadout-item");
         this.setSpacing(5);
         this.stats = BoxBuilder.builder().withNodes().buildVBox();
-        this.statsToggle = new ToggleSwitch();
-        this.statsToggle.setSelected(this.loadout.isShowChanged());
-        this.statsToggle.textProperty().bind(LocaleService.getStringBinding(this.loadout.isShowChanged() ? "loadout.equipment.stats.toggle.changed" : "loadout.equipment.stats.toggle.all"));
-        this.statsToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && newValue) {
-                this.statsToggle.textProperty().bind(LocaleService.getStringBinding("loadout.equipment.stats.toggle.changed"));
-                this.loadout.setShowChanged(true);
-                saveLoadoutSet();
-            } else {
-                this.statsToggle.textProperty().bind(LocaleService.getStringBinding("loadout.equipment.stats.toggle.all"));
-                this.loadout.setShowChanged(false);
-                saveLoadoutSet();
-            }
-            updateStatsList();
-        });
+        this.statsToggle = ToggleSwitchBuilder.builder()
+                .withSelected(this.loadout.isShowChanged())
+                .withText(LocaleService.getStringBinding(this.loadout.isShowChanged() ? "loadout.equipment.stats.toggle.changed" : "loadout.equipment.stats.toggle.all"))
+                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+                    if (newValue != null && newValue) {
+                        this.statsToggle.textProperty().bind(LocaleService.getStringBinding("loadout.equipment.stats.toggle.changed"));
+                        this.loadout.setShowChanged(true);
+                        saveLoadoutSet();
+                    } else {
+                        this.statsToggle.textProperty().bind(LocaleService.getStringBinding("loadout.equipment.stats.toggle.all"));
+                        this.loadout.setShowChanged(false);
+                        saveLoadoutSet();
+                    }
+                    updateStatsList();
+                })
+                .build();
+        addDestroyableNode(this.statsToggle);
         //navbar
-        final Label left = LabelBuilder.builder().withNonLocalizedText("<").withOnMouseClicked(event -> {
+        final DestroyableLabel left = LabelBuilder.builder().withNonLocalizedText("<").withOnMouseClicked(event -> {
             this.loadoutSet.moveDown(this.loadout);
             saveLoadoutSet();
             EventService.publish(new LoadoutMovedEvent());
         }).build();
+        addDestroyableNode(left);
         if (this.loadoutSet.getLoadouts().indexOf(this.loadout) <= 0) {
             left.setVisible(false);
         }
         final Region regionL = new Region();
         HBox.setHgrow(regionL, Priority.ALWAYS);
-        final Label delete = LabelBuilder.builder().withNonLocalizedText("delete").withOnMouseClicked(event -> {
-            this.onDestroy();
+        final DestroyableLabel delete = LabelBuilder.builder().withNonLocalizedText("delete").withOnMouseClicked(event -> {
+//            this.onDestroy();
             this.loadoutSet.removeLoadout(this.loadout);
             saveLoadoutSet();
             EventService.publish(new LoadoutRemovedEvent(this));
         }).build();
+        addDestroyableNode(delete);
         final Region regionR = new Region();
         HBox.setHgrow(regionR, Priority.ALWAYS);
-        final Label right = LabelBuilder.builder().withNonLocalizedText(">").withOnMouseClicked(event -> {
+        final DestroyableLabel right = LabelBuilder.builder().withNonLocalizedText(">").withOnMouseClicked(event -> {
             this.loadoutSet.moveUp(this.loadout);
             saveLoadoutSet();
             EventService.publish(new LoadoutMovedEvent());
         }).build();
+        addDestroyableNode(right);
         if (this.loadoutSet.getLoadouts().indexOf(this.loadout) == this.loadoutSet.getLoadouts().size() - 1) {
             right.setVisible(false);
         }
         final HBox navBar = BoxBuilder.builder().withStyleClass("loadout-navbar").withNodes(left, regionL, delete, regionR, right).buildHBox();
         //image
-        final ResizableImageView image = ResizableImageViewBuilder.builder()
+        final DestroyableResizableImageView image = ResizableImageViewBuilder.builder()
                 .withStyleClass("loadout-item-image")
                 .withImage(this.loadout.getEquipment().getImage())
                 .build();
+        this.destroyables.add(image);
         //title
-        final Label title = LabelBuilder.builder()
+        final DestroyableLabel title = LabelBuilder.builder()
                 .withStyleClass("loadout-item-title")
                 .withText(LocaleService.getStringBinding(this.loadout.getEquipment().getLocalizationKey()))
                 .build();
+        this.destroyables.add(title);
         final HBox imageBox = centerImage(image);
         this.getChildren().addAll(navBar, imageBox, title);
         if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
             //current level
-            final Label currentLevelLabel = LabelBuilder.builder()
+            final DestroyableLabel currentLevelLabel = LabelBuilder.builder()
                     .withStyleClass("loadout-item-level-label")
                     .withText(LocaleService.getStringBinding("loadout.equipment.level.current"))
                     .build();
-            final ComboBox<Integer> currentLevel = ComboBoxBuilder.builder(Integer.class)
+            this.destroyables.add(currentLevelLabel);
+            final DestroyableComboBox<Integer> currentLevel = ComboBoxBuilder.builder(Integer.class)
                     .withItemsProperty(FXCollections.observableArrayList(1, 2, 3, 4, 5))
                     .withValueChangeListener((observable, oldValue, newValue) -> {
                         if (newValue != null) {
@@ -173,6 +167,7 @@ public class LoadoutItem extends VBox implements Template {
                         }
                     })
                     .build();
+            this.destroyables.add(currentLevel);
             currentLevel.getSelectionModel().select(this.loadout.getCurrentLevel());
             final Region regionCurrent = new Region();
             HBox.setHgrow(regionCurrent, Priority.ALWAYS);
@@ -181,11 +176,12 @@ public class LoadoutItem extends VBox implements Template {
                     .withNodes(currentLevelLabel, regionCurrent, currentLevel)
                     .buildHBox();
             //target level
-            final Label targetLevelLabel = LabelBuilder.builder()
+            final DestroyableLabel targetLevelLabel = LabelBuilder.builder()
                     .withStyleClass("loadout-item-level-label")
                     .withText(LocaleService.getStringBinding("loadout.equipment.level.target"))
                     .build();
-            final ComboBox<Integer> targetLevel = ComboBoxBuilder.builder(Integer.class)
+            this.destroyables.add(targetLevelLabel);
+            final DestroyableComboBox<Integer> targetLevel = ComboBoxBuilder.builder(Integer.class)
                     .withItemsProperty(FXCollections.observableArrayList(1, 2, 3, 4, 5))
                     .withValueChangeListener((observable, oldValue, newValue) -> {
                         if (newValue != null) {
@@ -196,6 +192,7 @@ public class LoadoutItem extends VBox implements Template {
                         }
                     })
                     .build();
+            this.destroyables.add(targetLevel);
             targetLevel.getSelectionModel().select(this.loadout.getTargetLevel());
             final Region regionTarget = new Region();
             HBox.setHgrow(regionTarget, Priority.ALWAYS);
@@ -204,29 +201,35 @@ public class LoadoutItem extends VBox implements Template {
                     .withNodes(targetLevelLabel, regionTarget, targetLevel)
                     .buildHBox();
             //auto set correct levels on change
-            currentLevel.valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null && newValue > this.loadout.getTargetLevel()) {
-                    targetLevel.getSelectionModel().select(newValue);
+            currentLevel.addChangeListener(currentLevel.valueProperty(), (observable, oldValue, newValue) -> {
+                if (newValue != null && (Integer) newValue > this.loadout.getTargetLevel()) {
+                    targetLevel.getSelectionModel().select((Integer) newValue);
                 }
             });
-            targetLevel.valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null && newValue < this.loadout.getCurrentLevel()) {
-                    currentLevel.getSelectionModel().select(newValue);
+            targetLevel.addChangeListener(targetLevel.valueProperty(), (observable, oldValue, newValue) -> {
+                if (newValue != null && (Integer) newValue < this.loadout.getCurrentLevel()) {
+                    currentLevel.getSelectionModel().select((Integer) newValue);
                 }
             });
 
             //modifications
-            final Label modificationsLabel = LabelBuilder
+            final DestroyableLabel modificationsLabel = LabelBuilder
                     .builder().withStyleClass("loadout-item-subtitle")
                     .withText(LocaleService.getStringBinding("loadout.equipment.modifications"))
                     .build();
-            this.loadoutModification1 = new LoadoutModification(this.loadout, 0, getModificationChangeCallback());
-            this.loadoutModification2 = new LoadoutModification(this.loadout, 1, getModificationChangeCallback());
-            this.loadoutModification3 = new LoadoutModification(this.loadout, 2, getModificationChangeCallback());
-            this.loadoutModification4 = new LoadoutModification(this.loadout, 3, getModificationChangeCallback());
+            this.destroyables.add(modificationsLabel);
+            final LoadoutModification loadoutModification1 = new LoadoutModification(this.loadout, 0, this);
+            final LoadoutModification loadoutModification2 = new LoadoutModification(this.loadout, 1, this);
+            final LoadoutModification loadoutModification3 = new LoadoutModification(this.loadout, 2, this);
+            final LoadoutModification loadoutModification4 = new LoadoutModification(this.loadout, 3, this);
+
+            this.destroyables.add(loadoutModification1);
+            this.destroyables.add(loadoutModification2);
+            this.destroyables.add(loadoutModification3);
+            this.destroyables.add(loadoutModification4);
 
             final HBox modifications = BoxBuilder.builder()
-                    .withNodes(this.loadoutModification1, createRegion(), this.loadoutModification2, createRegion(), this.loadoutModification3, createRegion(), this.loadoutModification4)
+                    .withNodes(loadoutModification1, createRegion(), loadoutModification2, createRegion(), loadoutModification3, createRegion(), loadoutModification4)
                     .buildHBox();
             this.getChildren().addAll(currentLevelBox, targetLevelBox, modificationsLabel, modifications);
 
@@ -244,45 +247,37 @@ public class LoadoutItem extends VBox implements Template {
 
         this.getChildren().addAll(statsLine, this.stats);
         if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
-            this.addToWishlist = new MenuButton();
-            this.addToWishlist.getStyleClass().add("loadout-wishlist-button");
-            this.addToWishlist.textProperty().bind(LocaleService.getStringBinding("recipe.add.to.wishlist"));
-            this.addToWishlist.getItems().addAll(new ArrayList<>());
-            final Label warning = LabelBuilder.builder().withStyleClass("loadout-warning").withText(LocaleService.getStringBinding("loadout.equipment.warning")).build();
-            warning.visibleProperty().bind(isValidProperty());
-            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
+            this.addToWishlist = MenuButtonBuilder.builder().withStyleClass("loadout-wishlist-button").withText(LocaleService.getStringBinding("recipe.add.to.wishlist")).build();
+//            this.addToWishlist.getItems().addAll(new ArrayList<>());
+            final Label warning = LabelBuilder.builder().withStyleClass("loadout-warning").withText(LocaleService.getStringBinding("loadout.equipment.warning")).withVisibilityProperty(isValidProperty()).build();
+            this.APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
             final Region region1 = new Region();
             VBox.setVgrow(region1, Priority.ALWAYS);
             this.getChildren().addAll(region1, this.addToWishlist, warning);
         }
     }
 
-    private Consumer<ModificationChange> getModificationChangeCallback() {
-        return modification -> {
-            setValid(Arrays.stream(this.loadout.getModifications()).filter(Objects::nonNull).count() >= this.loadout.getTargetLevel());
-            saveLoadoutSet();
-            updateStatsList();
-            this.loadoutModification1.resetPopOver();
-            this.loadoutModification2.resetPopOver();
-            this.loadoutModification3.resetPopOver();
-            this.loadoutModification4.resetPopOver();
-            if (Objects.equals(modification.getNewModification(), SuitModification.EXTRA_AMMO_CAPACITY) || Objects.equals(modification.getOldModification(), SuitModification.EXTRA_AMMO_CAPACITY)) {
-                EventService.publish(new AmmoCapacityModEvent());
-            }
-        };
+    private void handleModificationChange(final ModificationChange modificationChange) {
+        setValid(Arrays.stream(this.loadout.getModifications()).filter(Objects::nonNull).count() >= this.loadout.getTargetLevel());
+        saveLoadoutSet();
+        updateStatsList();
+        if (Objects.equals(modificationChange.getNewModification(), SuitModification.EXTRA_AMMO_CAPACITY) || Objects.equals(modificationChange.getOldModification(), SuitModification.EXTRA_AMMO_CAPACITY)) {
+            EventService.publish(new AmmoCapacityModEvent());
+        }
     }
 
     private void saveLoadoutSet() {
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            APPLICATION_STATE.saveLoadoutSet(commander.getFid(), this.loadoutSet);
+        this.APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+            this.APPLICATION_STATE.saveLoadoutSet(commander.getFid(), this.loadoutSet);
         });
     }
 
     private Wishlists loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+        final Wishlists wishlists = this.APPLICATION_STATE.getWishlists(commander.getFid());
+        this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
         this.addToWishlist.getItems().clear();
-        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
-            final MenuItem menuItem = new MenuItem();
+        final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
+            final DestroyableMenuItem menuItem = new DestroyableMenuItem();
             menuItem.setOnAction(event -> {
                 final List<WishlistRecipe> wishlistRecipes = getRequiredWishlistRecipes();
                 EventService.publish(new WishlistRecipeEvent(commander.getFid(), wishlist.getUuid(), wishlistRecipes, Action.ADDED));
@@ -309,35 +304,9 @@ public class LoadoutItem extends VBox implements Template {
 
     private void updateStatsList() {
         this.statsList.clear();
-        this.staticStatsList.clear();
 
-//        this.staticStatsList.addAll(this.loadout.getEquipment().getStats().entrySet().stream()
-//                .filter(statObjectEntry -> statObjectEntry.getKey() instanceof StaticStat)
-//                .map(statObjectEntry ->
-//                {
-//                    final Stat stat = statObjectEntry.getKey();
-//                    final Object value = statObjectEntry.getValue();
-//                    final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
-//                    final Label nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
-//                    final Label build = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value-wide").withNonLocalizedText(currentLevelValue).build();
-//
-//                    final Separator separator = new Separator(Orientation.HORIZONTAL);
-//                    final Separator separator1 = new Separator(Orientation.HORIZONTAL);
-//                    HBox.setHgrow(separator, Priority.ALWAYS);
-//                    HBox.setHgrow(build, Priority.ALWAYS);
-//                    HBox.setHgrow(separator1, Priority.ALWAYS);
-//                    return BoxBuilder.builder().withNodes(
-//                            nameColumn,
-//                            BoxBuilder.builder().withStyleClass("loadout-item-stats-value-wide-box").withNodes(separator,
-//                                    build,
-//                                    separator1).buildHBox()
-//                    ).buildHBox();
-//                })
-//                .filter(Objects::nonNull)
-//                .toList());
         final AtomicReference<StatGroup> currentGroup = new AtomicReference<>();
         this.loadout.getEquipment().getStats().entrySet().stream()
-//                .filter(statObjectEntry -> statObjectEntry.getKey() instanceof DynamicStat)
                 .sorted(Comparator.comparing(statObjectEntry -> statObjectEntry.getKey().getStatGroup()))
                 .forEach(statObjectEntry ->
                 {
@@ -349,13 +318,13 @@ public class LoadoutItem extends VBox implements Template {
 
                         currentGroup.set(statObjectEntry.getKey().getStatGroup());
                         final StatGroup group = statObjectEntry.getKey().getStatGroup();
-                        final Label nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(group.getLocalizationKey())).build();
+                        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(group.getLocalizationKey())).build();
+                        this.destroyables.add(nameColumn);
                         this.statsList.add(BoxBuilder.builder().withNodes(
                                 nameColumn
                         ).buildHBox());
                     }
                     if (statObjectEntry.getKey() instanceof DynamicStat stat) {
-//                        final DynamicStat stat = (DynamicStat) statObjectEntry.getKey();
                         final Object value = statObjectEntry.getValue();
                         final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
                         final String targetLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel());
@@ -368,18 +337,17 @@ public class LoadoutItem extends VBox implements Template {
                             return;
                         }
                         final Label nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
-                        final HBox valueRow = BoxBuilder.builder().withNodes(
-                                nameColumn,
-                                LabelBuilder.builder().withStyleClasses("loadout-item-stats-value").withNonLocalizedText(currentLevelValue).build()).buildHBox();
+                        final DestroyableLabel currentValueLabel = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value").withNonLocalizedText(currentLevelValue).build();
+                        this.destroyables.add(currentValueLabel);
+                        final HBox valueRow = BoxBuilder.builder().withNodes(nameColumn, currentValueLabel).buildHBox();
                         if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
                             nameColumn.getStyleClass().add("loadout-item-stats-wide");
                         } else {
-                            final Label targetValue = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value").withNonLocalizedText(targetLevelValue).build();
-                            final Label moddedValue = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value", "loadout-item-stats-value-modded").withNonLocalizedText(moddedLevelValue).build();
-                            valueRow.getChildren().addAll(
-                                    targetValue,
-                                    moddedValue
-                            );
+                            final DestroyableLabel targetValue = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value").withNonLocalizedText(targetLevelValue).build();
+                            final DestroyableLabel moddedValue = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value", "loadout-item-stats-value-modded").withNonLocalizedText(moddedLevelValue).build();
+                            this.destroyables.add(targetValue);
+                            this.destroyables.add(moddedValue);
+                            valueRow.getChildren().addAll(targetValue, moddedValue);
                             if (!currentLevelValue.equals(targetLevelValue)) {
                                 targetValue.getStyleClass().add("changed");
                             }
@@ -398,40 +366,41 @@ public class LoadoutItem extends VBox implements Template {
                         final StaticStat stat = (StaticStat) statObjectEntry.getKey();
                         final Object value = statObjectEntry.getValue();
                         final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
-                        final Label nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
-                        final Label build = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value-wide").withNonLocalizedText(currentLevelValue).build();
-
+                        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
+                        final DestroyableLabel currentLevelValueLabel = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value-wide").withNonLocalizedText(currentLevelValue).build();
+                        this.destroyables.add(nameColumn);
+                        this.destroyables.add(currentLevelValueLabel);
                         final Separator separator = new Separator(Orientation.HORIZONTAL);
                         final Separator separator1 = new Separator(Orientation.HORIZONTAL);
                         HBox.setHgrow(separator, Priority.ALWAYS);
-                        HBox.setHgrow(build, Priority.ALWAYS);
+                        HBox.setHgrow(currentLevelValueLabel, Priority.ALWAYS);
                         HBox.setHgrow(separator1, Priority.ALWAYS);
                         this.statsList.add(BoxBuilder.builder().withNodes(
                                 nameColumn,
                                 BoxBuilder.builder().withStyleClass("loadout-item-stats-value-wide-box").withNodes(separator,
-                                        build,
+                                        currentLevelValueLabel,
                                         separator1).buildHBox()
                         ).buildHBox());
                     }
                 });
         if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {//|| Suit.FLIGHTSUIT.equals(this.loadout.getEquipment()) && !this.statsToggle.isSelected()
-            final Label valueColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-name").withNonLocalizedText("").build();
-            final HBox headerRow = BoxBuilder.builder().withNodes(
-                    valueColumn,
-                    LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.current")).build()).buildHBox();
+            final DestroyableLabel valueColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-name").withNonLocalizedText("").build();
+            final DestroyableLabel headerCurrent = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.current")).build();
+            this.destroyables.add(headerCurrent);
+            this.destroyables.add(valueColumn);
+            final HBox headerRow = BoxBuilder.builder().withNodes(valueColumn, headerCurrent).buildHBox();
             if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
                 valueColumn.getStyleClass().add("loadout-item-stats-wide");
             } else {
-                headerRow.getChildren().addAll(
-                        LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.target")).build(),
-                        LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value", "loadout-item-stats-value-modded").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.modded")).build()
-                );
+                final DestroyableLabel headerTarget = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.target")).build();
+                final DestroyableLabel headerModded = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value", "loadout-item-stats-value-modded").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.modded")).build();
+                this.destroyables.add(headerTarget);
+                this.destroyables.add(headerModded);
+                headerRow.getChildren().addAll(headerTarget, headerModded);
             }
             this.statsList.add(0, headerRow);
         }
         this.stats.getChildren().clear();
-//        this.stats.getChildren().addAll(this.staticStatsList);
-//        this.stats.getChildren().add(new Separator(Orientation.HORIZONTAL));
         this.stats.getChildren().addAll(this.statsList);
     }
 
@@ -441,7 +410,7 @@ public class LoadoutItem extends VBox implements Template {
         return region;
     }
 
-    private HBox centerImage(final ResizableImageView resizableImageView) {
+    private HBox centerImage(final DestroyableResizableImageView resizableImageView) {
         final HBox hBox = BoxBuilder.builder().buildHBox();
         final VBox vBox = BoxBuilder.builder().buildVBox();
         hBox.setStyle("-fx-alignment: center;-fx-min-height: 22em");
@@ -452,7 +421,21 @@ public class LoadoutItem extends VBox implements Template {
     }
 
 
-    void onDestroy() {
-        this.listeners.forEach(EventService::removeListener);
+    @Override
+    public List<Destroyable> getDestroyablesList() {
+        return this.destroyables;
     }
+
+    @Override
+    public void destroyInternal() {
+        EventService.removeListener(this);
+        this.statsList.clear();
+        this.loadoutSet = null;
+        this.loadout = null;
+        this.stats = null;
+        this.addToWishlist = null;
+        this.statsToggle = null;
+        this.isValid = null;
+    }
+
 }

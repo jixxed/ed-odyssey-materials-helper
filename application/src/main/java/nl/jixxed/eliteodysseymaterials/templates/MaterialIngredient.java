@@ -19,6 +19,7 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class MaterialIngredient extends Ingredient {
     private Integer rightAmount;
 
     private Label nameLabel;
-    private ResizableImageView image;
+    private DestroyableResizableImageView image;
     private Label leftAmountLabel;
     private Label rightAmountLabel;
     private Label leftDescriptionLabel;

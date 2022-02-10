@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Good;
 import nl.jixxed.eliteodysseymaterials.enums.Material;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 @Slf4j
 class MaterialCard extends HBox {
@@ -29,7 +30,7 @@ class MaterialCard extends HBox {
 
     private final Material material;
     private final Storage amounts;
-    private ResizableImageView image;
+    private DestroyableResizableImageView image;
     private Label name;
     private Label amount;
 
@@ -101,7 +102,7 @@ class MaterialCard extends HBox {
         }
     }
 
-    private ResizableImageView createMaterialImage(final Material material) {
+    private DestroyableResizableImageView createMaterialImage(final Material material) {
 
         final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? RecipeConstants.isEngineeringIngredientAndNotCompleted(material) : RecipeConstants.isEngineeringIngredient(material);
         ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder().withStyleClass("materialcard-image");

@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
 import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,7 +43,7 @@ public class WishlistBlueprint extends HBox {
     private final String wishlistUUID;
 
     private Button visibilityButton;
-    private ResizableImageView visibilityImage;
+    private DestroyableResizableImageView visibilityImage;
     private Label wishlistRecipeName;
     private Button removeBlueprint;
     private final Set<WishlistIngredient> wishlistIngredients = new HashSet<>();

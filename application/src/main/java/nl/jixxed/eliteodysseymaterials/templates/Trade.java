@@ -19,13 +19,10 @@ import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.XMessageWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.XMessage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -43,7 +40,6 @@ abstract class Trade extends FlowPane {
     private StarSystem starSystem;
     private TradeSpec tradeSpec;
 
-    protected List<EventListener<?>> listeners = new ArrayList<>();
     protected TradeIngredient offerIngredient;
     protected TradeIngredient receiveIngredient;
 
@@ -103,7 +99,7 @@ abstract class Trade extends FlowPane {
     }
 
     private void initEventHandling() {
-        this.listeners.add(EventService.addListener(this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
+        EventService.addListener(this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
             final XMessage message = xMessageWebSocketEvent.getXMessageMessage().getMessage();
             if (message.getOfferId().equals(this.offerId)) {
                 if (this.chatStage != null && this.chatStage.isShowing()) {
@@ -113,7 +109,7 @@ abstract class Trade extends FlowPane {
                     NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.message.from", message.getInfo().getNickname()), message.getText());
                 }
             }
-        }));
+        });
     }
 
     private void initComponents() {
@@ -144,7 +140,7 @@ abstract class Trade extends FlowPane {
 
     void onDestroy() {
         this.tradeSpec.setCallback(Optional.empty());
-        this.listeners.forEach(EventService::removeListener);
+        EventService.removeListener(this);
         this.offerIngredient.onDestroy();
         this.receiveIngredient.onDestroy();
     }
