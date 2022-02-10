@@ -1,3 +1,8 @@
+Version 1.66
+-------------
+Super secret setting to show Work In Progress
+Added Horizons materials overview(WIP)
+
 Version 1.65
 -------------
 add material tracking opt-out
