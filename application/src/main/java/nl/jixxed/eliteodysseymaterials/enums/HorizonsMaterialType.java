@@ -46,4 +46,9 @@ public enum HorizonsMaterialType {
     public static HorizonsMaterialType[] getManufacturedTypes() {
         return new HorizonsMaterialType[]{CONDUCTIVE, COMPOSITE, CHEMICAL, CRYSTALS, SHIELDING, MECHANICAL_COMPONENTS, HEAT, THERMIC, CAPACITORS, ALLOYS, GUARDIAN, THARGOID};
     }
+
+    public String getLocalizationKey() {
+        return "material.category." + this.name().toLowerCase();
+    }
+
 }

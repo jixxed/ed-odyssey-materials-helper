@@ -1651,3 +1651,107 @@ loadout-item-image-container {
     -fx-pref-height: 0em;
     visibility: hidden;
 }
+
+.horizons-material-overview {
+    -fx-padding: 5, 0, 0, 0;
+    -fx-start-margin: 5;
+}
+
+.horizons-materialcard {
+    -fx-background-color: #0f0f0f;
+    -fx-pref-height: 4em;
+    -fx-min-height: 4em;
+    -fx-max-height: 4em;
+    -fx-alignment: center-left;
+    -fx-background-color: #0f0f0f;
+    -fx-pref-width: 16em;
+    -fx-min-width: 16em;
+    -fx-max-width: 16em;
+}
+
+.horizons-materialcard-thargoid {
+    -fx-background-color: #3b1b00;
+
+}
+
+.horizons-materialcard-guardian {
+    -fx-background-color: #270136;
+
+}
+
+.horizons-materialcard-image {
+    -fx-pref-height: 2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-pref-width: 2em;
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+
+}
+
+.horizons-materialcard-textline {
+    -fx-pref-height: 3em;
+    -fx-min-height: 3em;
+    -fx-max-height: 3em;
+
+}
+
+.horizons-materialcard-name {
+    -fx-label-padding: 0.2em;
+    -fx-wrap-text: true;
+    -fx-pref-width: 14em;
+    -fx-min-width: 14em;
+    -fx-max-width: 14em;
+}
+
+.horizons-materialcard-amount {
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f0f0f;
+    -fx-text-overrun: clip;
+    -fx-alignment: center-left;
+}
+
+.horizons-material-overview-row-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-pref-width: 10em;
+    -fx-min-width: 10em;
+    -fx-max-width: 10em;
+    -fx-pref-height: 3em;
+    -fx-min-height: 3em;
+    -fx-max-height: 3em;
+    -fx-text-alignment: left;
+    -fx-alignment: center-left;
+    -fx-wrap-text: true;
+}
+
+.horizons-materialcard .segmented-bar {
+    -fx-pref-width: 16em;
+    -fx-min-width: 16em;
+    -fx-max-width: 16em;
+    -fx-pref-height: 1em;
+    -fx-min-height: 1em;
+    -fx-max-height: 1em;
+
+}
+
+.horizons-materialcard .segmented-bar:horizontal > .only-segment {
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.horizons-materialcard .segmented-bar:horizontal > .first-segment {
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.horizons-materialcard .segmented-bar:horizontal > .middle-segment {
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.horizons-materialcard .segmented-bar:horizontal > .last-segment {
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius: 0 0 0 0;
+}

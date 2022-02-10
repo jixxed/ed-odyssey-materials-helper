@@ -49,9 +49,7 @@ public class ApplicationLayout extends AnchorPane {
         this.odyssey = new Tab();
         this.odyssey.setText("On foot");
         this.odyssey.setClosable(false);
-        this.horizons = new Tab();
-        this.horizons.setText("Ships");
-        this.horizons.setClosable(false);
+        this.horizons = new HorizonsMaterialOverviewTab();
         this.tabsMain = new TabPane(this.odyssey, this.horizons);
         this.tabsMain.getStyleClass().add("tab-main");
         if (!PreferencesService.getPreference(PreferenceConstants.WIP, Boolean.FALSE)) {

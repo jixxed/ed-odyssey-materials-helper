@@ -61,9 +61,9 @@ public enum Raw implements HorizonsMaterial {
     }
 
     public static Raw[] materialsForTypeSorted(final HorizonsMaterialType materialType) {
-        return (Raw[]) Arrays.stream(Raw.values())
+        return Arrays.stream(Raw.values())
                 .filter(raw -> raw.getMaterialType().equals(materialType))
                 .sorted(Comparator.comparing(Raw::getRarity))
-                .toArray();
+                .toList().toArray(Raw[]::new);
     }
 }

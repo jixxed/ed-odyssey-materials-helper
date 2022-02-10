@@ -96,9 +96,9 @@ public enum Manufactured implements HorizonsMaterial {
     }
 
     public static Manufactured[] materialsForTypeSorted(final HorizonsMaterialType materialType) {
-        return (Manufactured[]) Arrays.stream(Manufactured.values())
+        return Arrays.stream(Manufactured.values())
                 .filter(manufactured -> manufactured.getMaterialType().equals(materialType))
                 .sorted(Comparator.comparing(Manufactured::getRarity))
-                .toArray();
+                .toList().toArray(Manufactured[]::new);
     }
 }

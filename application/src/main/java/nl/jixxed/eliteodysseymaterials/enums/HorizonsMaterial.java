@@ -45,7 +45,11 @@ public interface HorizonsMaterial {
 
     String getLocalizationKey();
 
+    HorizonsMaterialType getMaterialType();
+
     boolean isUnknown();
+
+    Rarity getRarity();
 
     String name();
 

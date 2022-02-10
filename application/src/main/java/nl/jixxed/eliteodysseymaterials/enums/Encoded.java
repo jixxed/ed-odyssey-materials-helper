@@ -78,9 +78,9 @@ public enum Encoded implements HorizonsMaterial {
     }
 
     public static Encoded[] materialsForTypeSorted(final HorizonsMaterialType materialType) {
-        return (Encoded[]) Arrays.stream(Encoded.values())
+        return Arrays.stream(Encoded.values())
                 .filter(encoded -> encoded.getMaterialType().equals(materialType))
                 .sorted(Comparator.comparing(Encoded::getRarity))
-                .toArray();
+                .toList().toArray(Encoded[]::new);
     }
 }
