@@ -16,7 +16,7 @@ public class HorizonsMaterialOverviewTab extends Tab implements Template {
     @Override
     public void initComponents() {
         this.materialOverview = new HorizonsMaterialOverview();
-        this.setText("Ships");
+        this.setText("Horizons");
         this.setClosable(false);
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(this.materialOverview)

@@ -47,7 +47,7 @@ public class ApplicationLayout extends AnchorPane {
         AnchorPaneHelper.setAnchor(this.bottomBar, null, 0.0, 0.0, 0.0);
         this.contentArea = new ContentArea(application);
         this.odyssey = new Tab();
-        this.odyssey.setText("On foot");
+        this.odyssey.setText("Odyssey");
         this.odyssey.setClosable(false);
         this.horizons = new HorizonsMaterialOverviewTab();
         this.tabsMain = new TabPane(this.odyssey, this.horizons);

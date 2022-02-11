@@ -90,6 +90,10 @@ public abstract class RecipeConstants {
     }
 
     public static boolean isEngineeringOrBlueprintIngredient(final Material material) {
+        return isEngineeringIngredient(material) || isBlueprintIngredient(material);
+    }
+
+    public static boolean isEngineeringOrBlueprintIngredientWithOverride(final Material material) {
         return isEngineeringIngredient(material) || isBlueprintIngredientWithOverride(material);
     }
 

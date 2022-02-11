@@ -52,7 +52,7 @@ public interface Material {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    static List<Material> getAllRelevantMaterials() {
+    static List<Material> getAllRelevantMaterialsWithoutOverride() {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
                 .filter(material -> !material.isUnknown())
                 .filter(RecipeConstants::isEngineeringOrBlueprintIngredient)

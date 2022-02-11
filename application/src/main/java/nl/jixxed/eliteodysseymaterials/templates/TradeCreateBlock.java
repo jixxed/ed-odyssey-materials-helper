@@ -60,7 +60,7 @@ class TradeCreateBlock extends VBox {
         final List<Material> tradeMaterials = new ArrayList<>();
         tradeMaterials.add(TradeMaterial.NOTHING);
         tradeMaterials.add(TradeMaterial.ANY_RELEVANT);
-        tradeMaterials.addAll(Material.getAllIrrelevantMaterialsWithoutOverride());
+        tradeMaterials.addAll(Material.getAllRelevantMaterialsWithoutOverride());
         final ListBinding<String> materialListBinding = LocaleService.getListBinding(() -> tradeMaterials.stream().map(material -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey())).toArray(String[]::new));
         this.offer = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-offer")

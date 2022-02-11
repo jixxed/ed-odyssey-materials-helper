@@ -48,7 +48,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                     .filter(material -> !(material instanceof Consumable))
                     .forEach(material -> {
                         if ((APPLICATION_STATE.getSoloMode() && RecipeConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
-                                || (!APPLICATION_STATE.getSoloMode() && !RecipeConstants.isEngineeringOrBlueprintIngredient(material))) {
+                                || (!APPLICATION_STATE.getSoloMode() && !RecipeConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
                             NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
                         }
                     });
