@@ -34,8 +34,8 @@ public enum Manufactured implements HorizonsMaterial {
     GUARDIAN_POWERCELL(Rarity.VERY_COMMON, HorizonsMaterialType.GUARDIAN),//guardian_powercell
     GUARDIAN_POWERCONDUIT(Rarity.COMMON, HorizonsMaterialType.GUARDIAN),//guardian_powerconduit
     GUARDIAN_SENTINEL_WEAPONPARTS(Rarity.STANDARD, HorizonsMaterialType.GUARDIAN),//guardian_sentinel_weaponparts
-    GUARDIAN_SENTINEL_WRECKAGECOMPONENTS(Rarity.COMMON, HorizonsMaterialType.GUARDIAN),//guardian_techcomponent
-    GUARDIAN_TECHCOMPONENT(Rarity.VERY_COMMON, HorizonsMaterialType.GUARDIAN),//guardian_sentinel_wreckagecomponents
+    GUARDIAN_SENTINEL_WRECKAGECOMPONENTS(Rarity.VERY_COMMON, HorizonsMaterialType.GUARDIAN),//guardian_techcomponent
+    GUARDIAN_TECHCOMPONENT(Rarity.STANDARD, HorizonsMaterialType.GUARDIAN),//guardian_sentinel_wreckagecomponents
     HEATCONDUCTIONWIRING(Rarity.VERY_COMMON, HorizonsMaterialType.HEAT),
     HEATDISPERSIONPLATE(Rarity.COMMON, HorizonsMaterialType.HEAT),
     HEATEXCHANGERS(Rarity.STANDARD, HorizonsMaterialType.HEAT),
@@ -55,7 +55,7 @@ public enum Manufactured implements HorizonsMaterial {
     POLYMERCAPACITORS(Rarity.RARE, HorizonsMaterialType.CAPACITORS),
     PRECIPITATEDALLOYS(Rarity.STANDARD, HorizonsMaterialType.THERMIC),
     FEDPROPRIETARYCOMPOSITES(Rarity.RARE, HorizonsMaterialType.COMPOSITE),//fedproprietarycomposites
-    TG_PROPULSIONELEMENT(Rarity.STANDARD, HorizonsMaterialType.THARGOID),//tg_propulsionelement
+    TG_PROPULSIONELEMENT(Rarity.VERY_RARE, HorizonsMaterialType.THARGOID),//tg_propulsionelement
     PROTOHEATRADIATORS(Rarity.VERY_RARE, HorizonsMaterialType.HEAT),
     PROTOLIGHTALLOYS(Rarity.RARE, HorizonsMaterialType.ALLOYS),
     PROTORADIOLICALLOYS(Rarity.VERY_RARE, HorizonsMaterialType.ALLOYS),
@@ -70,7 +70,7 @@ public enum Manufactured implements HorizonsMaterial {
     UNKNOWNORGANICCIRCUITRY(Rarity.VERY_RARE, HorizonsMaterialType.THARGOID),
     UNKNOWNTECHNOLOGYCOMPONENTS(Rarity.RARE, HorizonsMaterialType.THARGOID),
     THERMICALLOYS(Rarity.RARE, HorizonsMaterialType.THERMIC),
-    TG_WEAPONPARTS(Rarity.STANDARD, HorizonsMaterialType.THARGOID),//tg_weaponparts
+    TG_WEAPONPARTS(Rarity.RARE, HorizonsMaterialType.THARGOID),//tg_weaponparts
     WORNSHIELDEMITTERS(Rarity.VERY_COMMON, HorizonsMaterialType.SHIELDING),
     TG_WRECKAGECOMPONENTS(Rarity.STANDARD, HorizonsMaterialType.THARGOID),//tg_wreckagecomponents
     UNKNOWN(Rarity.UNKNOWN, HorizonsMaterialType.UNKNOWN);

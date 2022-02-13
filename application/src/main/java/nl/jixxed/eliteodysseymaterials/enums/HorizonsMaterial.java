@@ -53,5 +53,7 @@ public interface HorizonsMaterial {
 
     String name();
 
-
+    default int getMaxAmount() {
+        return this.getRarity().getMaxAmount();
+    }
 }

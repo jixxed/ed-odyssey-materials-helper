@@ -20,7 +20,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -41,6 +43,7 @@ public class FileProcessor {
         EventService.publish(new JournalInitEvent(false));
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
             final Map<JournalEventType, String> messages = new EnumMap<>(JournalEventType.class);
+            final List<String> horizonsMaterialMessages = new ArrayList<>();
             if (file.length() >= position) {
                 // Skip over already processed bytes.
                 is.skip(position);
@@ -56,13 +59,19 @@ public class FileProcessor {
 
                 if (jsonNode.get(EVENT) != null) {
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
-                    if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
+                    if (JournalEventType.MATERIALCOLLECTED.equals(journalEventType) || JournalEventType.MATERIALTRADE.equals(journalEventType)) {
+                        horizonsMaterialMessages.add(line);
+                    } else if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
+                        if (JournalEventType.MATERIALS.equals(journalEventType)) {
+                            horizonsMaterialMessages.clear();
+                        }
                         messages.put(journalEventType, line);
                     }
                 }
                 position = is.getCount();
             }
             messages.values().stream().sorted().forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
+            horizonsMaterialMessages.forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
 
         } catch (final JsonProcessingException e) {
             log.error("Read error", e);

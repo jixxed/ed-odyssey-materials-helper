@@ -33,15 +33,15 @@ public enum Encoded implements HorizonsMaterial {
     CONSUMERFIRMWARE(Rarity.COMMON, HorizonsMaterialType.ENCODED_FIRMWARE),
     EMBEDDEDFIRMWARE(Rarity.VERY_RARE, HorizonsMaterialType.ENCODED_FIRMWARE),
     SYMMETRICKEYS(Rarity.STANDARD, HorizonsMaterialType.ENCRYPTION_FILES),
-    ANCIENTBIOLOGICALDATA(Rarity.STANDARD, HorizonsMaterialType.GUARDIAN),
-    ANCIENTCULTURALDATA(Rarity.COMMON, HorizonsMaterialType.GUARDIAN),
-    ANCIENTLANGUAGEDATA(Rarity.RARE, HorizonsMaterialType.GUARDIAN),
-    ANCIENTTECHNOLOGICALDATA(Rarity.VERY_RARE, HorizonsMaterialType.GUARDIAN),
-    ANCIENTHISTORICALDATA(Rarity.VERY_COMMON, HorizonsMaterialType.GUARDIAN),
+    ANCIENTBIOLOGICALDATA(Rarity.STANDARD, HorizonsMaterialType.GUARDIAN),//Pattern Alpha Obelisk Data
+    ANCIENTCULTURALDATA(Rarity.COMMON, HorizonsMaterialType.GUARDIAN),//Pattern Beta Obelisk Data
+    ANCIENTLANGUAGEDATA(Rarity.RARE, HorizonsMaterialType.GUARDIAN),//Pattern Delta Obelisk Data
+    ANCIENTTECHNOLOGICALDATA(Rarity.RARE, HorizonsMaterialType.GUARDIAN),//Pattern Epsilon Obelisk Data
+    ANCIENTHISTORICALDATA(Rarity.VERY_COMMON, HorizonsMaterialType.GUARDIAN),//Pattern Gamma Obelisk Data
     SHIELDFREQUENCYDATA(Rarity.VERY_RARE, HorizonsMaterialType.SHIELD_DATA),
     SECURITYFIRMWARE(Rarity.RARE, HorizonsMaterialType.ENCODED_FIRMWARE),
     TG_SHIPFLIGHTDATA(Rarity.STANDARD, HorizonsMaterialType.THARGOID),
-    TG_SHIPSYSTEMSDATA(Rarity.STANDARD, HorizonsMaterialType.THARGOID),
+    TG_SHIPSYSTEMSDATA(Rarity.RARE, HorizonsMaterialType.THARGOID),
     LEGACYFIRMWARE(Rarity.VERY_COMMON, HorizonsMaterialType.ENCODED_FIRMWARE),
     WAKESOLUTIONS(Rarity.STANDARD, HorizonsMaterialType.WAKE_SCANS),
     ENCRYPTIONCODES(Rarity.COMMON, HorizonsMaterialType.ENCRYPTION_FILES),
@@ -82,5 +82,13 @@ public enum Encoded implements HorizonsMaterial {
                 .filter(encoded -> encoded.getMaterialType().equals(materialType))
                 .sorted(Comparator.comparing(Encoded::getRarity))
                 .toList().toArray(Encoded[]::new);
+    }
+
+    @Override
+    public int getMaxAmount() {
+        if (HorizonsMaterialType.GUARDIAN.equals(this.materialType) /*|| HorizonsMaterialType.THARGOID.equals(this.materialType)*/) {
+            return 150;
+        }
+        return this.getRarity().getMaxAmount();
     }
 }

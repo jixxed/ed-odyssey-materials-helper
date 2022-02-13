@@ -24,7 +24,8 @@ public enum JournalEventType {
     LOADGAME("LoadGame"),
     UNKNOWN("Unknown"),
     MATERIALS("Materials"),
-    MATERIALCOLLECTED("MaterialCollected");
+    MATERIALCOLLECTED("MaterialCollected"),
+    MATERIALTRADE("MaterialTrade");
 
     private final String name;
 

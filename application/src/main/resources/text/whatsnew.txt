@@ -1,3 +1,10 @@
+Version 1.68
+-------------
+Fix horizons material grades and storage limits
+Handle material trade journal messages for Horizons materials
+Add support for reading Horizons journals. (Odyssey content won't be available until your latest journal is Odyssey again)
+Added some POI's
+
 Version 1.67
 -------------
 Add Horizons materials overview(WIP) translations

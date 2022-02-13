@@ -32,6 +32,7 @@ class BottomBar extends HBox {
     private String body = "";
     private String station = "";
 
+    private Label gameModeLabel;
     private Label watchedFileLabel;
     private Label login;
     private Label commanderLabel;
@@ -52,6 +53,7 @@ class BottomBar extends HBox {
         this.region = new Region();
         HBox.setHgrow(this.region, Priority.ALWAYS);
         this.locationLabel = LabelBuilder.builder().build();
+        this.gameModeLabel = LabelBuilder.builder().build();
         this.commanderLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.commander")).build();
         this.login = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.login")).build();
         this.commanderSelect = ComboBoxBuilder.builder(Commander.class)
@@ -70,7 +72,7 @@ class BottomBar extends HBox {
 
         final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
         this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath())).build();
-        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.login, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.login, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
     }
 
     private void initEventHandling() {
@@ -82,6 +84,7 @@ class BottomBar extends HBox {
         EventService.addListener(this, CommanderAllListedEvent.class, event -> afterAllCommandersListed());
         EventService.addListener(this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear());
         EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px"));
+        EventService.addListener(this, LoadGameEvent.class, this::handleLoadGame);
     }
 
     private void afterAllCommandersListed() {
@@ -99,6 +102,10 @@ class BottomBar extends HBox {
         if (preferredName.isBlank() || commanderAddedEvent.getCommander().getName().equals(preferredName)) {
             this.commanderSelect.getSelectionModel().select(commanderAddedEvent.getCommander());
         }
+    }
+
+    private void handleLoadGame(final LoadGameEvent loadGameEvent) {
+        this.gameModeLabel.textProperty().bind(LocaleService.getStringBinding(loadGameEvent.getExpansion().getLocalizationKey()));
     }
 
     private void hideLoginRequest() {

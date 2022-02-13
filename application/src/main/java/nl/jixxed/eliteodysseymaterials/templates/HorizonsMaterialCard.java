@@ -50,7 +50,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
 
 
         final Integer materialCount = StorageService.getMaterialCount(this.material);
-        final Integer maxAmount = this.material.getRarity().getMaxAmount();
+        final Integer maxAmount = this.material.getMaxAmount();
         this.segmentedBar = new SegmentedBar();
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
@@ -71,11 +71,11 @@ public class HorizonsMaterialCard extends VBox implements Template {
         EventService.addListener(this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 final Integer materialCount = StorageService.getMaterialCount(this.material);
-                final Integer maxAmount = this.material.getRarity().getMaxAmount();
-                this.present.setValue(materialCount.equals(0) ? materialCount : Math.max(materialCount, this.material.getRarity().getMaxAmount() / 8));
+                final Integer maxAmount = this.material.getMaxAmount();
+                this.present.setValue(materialCount.equals(0) ? materialCount : Math.max(materialCount, this.material.getMaxAmount() / 7));
                 this.present.setText(materialCount.toString());
                 final Integer availableStorage = maxAmount - materialCount;
-                this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getRarity().getMaxAmount() / 8));
+                this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getMaxAmount() / 7));
                 this.notPresent.setText(String.valueOf(availableStorage));
             }
         });
@@ -94,12 +94,13 @@ public class HorizonsMaterialCard extends VBox implements Template {
             this.setPadding(new Insets(5.0));
             this.setPrefHeight(30.0);
             this.getChildren().add(this.label);
+            this.label.visibleProperty().bind(segment.textProperty().isNotEqualTo("0"));
         }
 
         @Override
         protected void layoutChildren() {
             super.layoutChildren();
-            this.label.setVisible(this.label.prefWidth(-1.0) < this.getWidth() - this.getPadding().getLeft() - this.getPadding().getRight());
+//            this.label.setVisible(this.label.prefWidth(-1.0) < this.getWidth() - this.getPadding().getLeft() - this.getPadding().getRight());
         }
     }
 

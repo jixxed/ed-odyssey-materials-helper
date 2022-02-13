@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
+import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.GameMode;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -21,7 +22,7 @@ class MaterialTrackingServiceTest {
     @BeforeAll
     static void beforeAll() {
         final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-        EventService.publish(new LoadGameEvent(GameMode.SOLO));
+        EventService.publish(new LoadGameEvent(GameMode.SOLO, Expansion.ODYSSEY));
     }
 
     @BeforeEach

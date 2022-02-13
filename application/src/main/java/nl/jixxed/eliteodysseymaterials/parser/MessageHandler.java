@@ -38,6 +38,7 @@ class MessageHandler {
             Map.entry(JournalEventType.DOCKED, new DockedMessageProcessor()),
             Map.entry(JournalEventType.MATERIALS, new MaterialsMessageProcessor()),
             Map.entry(JournalEventType.MATERIALCOLLECTED, new MaterialCollectedMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALTRADE, new MaterialTradeMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

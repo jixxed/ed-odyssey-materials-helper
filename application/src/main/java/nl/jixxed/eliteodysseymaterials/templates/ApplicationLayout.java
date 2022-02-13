@@ -7,13 +7,10 @@ import javafx.geometry.Side;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ApplicationLifeCycleEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.WipVisibilityEvent;
 
 public class ApplicationLayout extends AnchorPane {
     private BottomBar bottomBar;
@@ -31,13 +28,6 @@ public class ApplicationLayout extends AnchorPane {
     private void initEventHandling() {
         EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.fontSize.set(fontSizeEvent.getFontSize()));
         EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
-        EventService.addListener(this, WipVisibilityEvent.class, wipVisibilityEvent -> {
-            if (wipVisibilityEvent.isEnabled()) {
-                this.tabsMain.getStyleClass().remove("tab-main-hidden");
-            } else if (!this.tabsMain.getStyleClass().contains("tab-main-hidden")) {
-                this.tabsMain.getStyleClass().add("tab-main-hidden");
-            }
-        });
         this.bottomBar.heightProperty().addListener(observable -> AnchorPaneHelper.setAnchor(this.contentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
     }
 
@@ -52,9 +42,6 @@ public class ApplicationLayout extends AnchorPane {
         this.horizons = new HorizonsMaterialOverviewTab();
         this.tabsMain = new TabPane(this.odyssey, this.horizons);
         this.tabsMain.getStyleClass().add("tab-main");
-        if (!PreferencesService.getPreference(PreferenceConstants.WIP, Boolean.FALSE)) {
-            this.tabsMain.getStyleClass().add("tab-main-hidden");
-        }
         this.tabsMain.setSide(Side.LEFT);
         this.tabsMain.tabMaxWidthProperty().bind(this.tabsMain.heightProperty().divide(2).subtract(this.fontSize.multiply(5.14)));
         this.tabsMain.tabMinWidthProperty().bind(this.tabsMain.heightProperty().divide(2).subtract(this.fontSize.multiply(5.14)));

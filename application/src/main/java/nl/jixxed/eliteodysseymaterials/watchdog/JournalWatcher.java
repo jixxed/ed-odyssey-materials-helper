@@ -141,17 +141,18 @@ public class JournalWatcher {
     }
 
     private synchronized boolean isOdysseyJournal(final File file) {
-        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
-            final String firstLine = scanner.nextLine();
-
-            final JsonNode journalMessage = this.objectMapper.readTree(firstLine);
-            final JsonNode isOdysseyNode = journalMessage.get("Odyssey");
-            return isOdysseyNode != null && isOdysseyNode.asBoolean(false);
-
-        } catch (final IOException e) {
-            log.error("Error checking if journal is odyssey", e);
-        }
-        return false;
+        return true;
+//        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
+//            final String firstLine = scanner.nextLine();
+//
+//            final JsonNode journalMessage = this.objectMapper.readTree(firstLine);
+//            final JsonNode isOdysseyNode = journalMessage.get("Odyssey");
+//            return isOdysseyNode != null && isOdysseyNode.asBoolean(false);
+//
+//        } catch (final IOException e) {
+//            log.error("Error checking if journal is odyssey", e);
+//        }
+//        return false;
     }
 
     private synchronized boolean hasCommanderHeader(final File file) {

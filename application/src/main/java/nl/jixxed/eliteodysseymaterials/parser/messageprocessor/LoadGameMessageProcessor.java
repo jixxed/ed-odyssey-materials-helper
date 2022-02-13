@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.GameMode;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LoadGameEvent;
@@ -33,6 +34,7 @@ public class LoadGameMessageProcessor implements MessageProcessor {
     @Override
     public void process(final JsonNode journalMessage) {
         final String gameMode = journalMessage.get("GameMode").asText();
-        EventService.publish(new LoadGameEvent(GameMode.valueOf(gameMode.toUpperCase())));
+        final Expansion expansion = journalMessage.get("Odyssey") != null && journalMessage.get("Odyssey").asBoolean() ? Expansion.ODYSSEY : Expansion.HORIZONS;
+        EventService.publish(new LoadGameEvent(GameMode.valueOf(gameMode.toUpperCase()), expansion));
     }
 }
