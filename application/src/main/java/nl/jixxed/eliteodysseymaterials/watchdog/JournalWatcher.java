@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class JournalWatcher {
@@ -23,6 +25,7 @@ public class JournalWatcher {
     private File watchedFolder;
     private FileWatcher fileWatcher;
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private final Pattern p = Pattern.compile("(Journal\\.)+(\\d{2})(.*)");
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
         Platform.runLater(() -> {
@@ -50,7 +53,7 @@ public class JournalWatcher {
                 }
 
                 private boolean isValidOdysseyJournal(final File file) {
-                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && isOlderThan2020(file) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file);
                 }
             }).watch(folder);
         });
@@ -68,6 +71,7 @@ public class JournalWatcher {
         try {
             Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
+                    .filter(this::isOlderThan2020)
                     .filter(this::hasFileHeader)
                     .filter(this::isOdysseyJournal)
                     .filter(this::hasCommanderHeader)
@@ -102,6 +106,7 @@ public class JournalWatcher {
         try {
             this.currentlyWatchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
+                    .filter(this::isOlderThan2020)
                     .filter(this::hasFileHeader)
                     .filter(this::isOdysseyJournal)
                     .filter(this::isSelectedCommander)
@@ -138,6 +143,14 @@ public class JournalWatcher {
             }
             return false;
         }).orElse(true);
+    }
+
+    private synchronized boolean isOlderThan2020(final File file) {
+
+        final Matcher matcher = this.p.matcher(file.getName());
+        return matcher.matches()
+                && Integer.parseInt(matcher.group(2)) > 20;
+
     }
 
     private synchronized boolean isOdysseyJournal(final File file) {
