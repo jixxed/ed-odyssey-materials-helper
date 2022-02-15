@@ -1,3 +1,8 @@
+Version 1.69
+-------------
+Fix exceptions caused by Horizons journals
+Added some POI's (thanks to texaspete)
+
 Version 1.68
 -------------
 Fix horizons material grades and storage limits
