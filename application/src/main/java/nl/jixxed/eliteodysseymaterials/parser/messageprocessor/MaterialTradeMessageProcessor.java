@@ -28,11 +28,3 @@ public class MaterialTradeMessageProcessor implements MessageProcessor {
         EventService.publish(new StorageEvent(StoragePool.SHIP));
     }
 }
-//{
-//        "timestamp": "2022-02-07T12:09:22Z",
-//        "event": "MaterialCollected",
-//        "Category": "Manufactured",
-//        "Name": "guardian_sentinel_wreckagecomponents",
-//        "Name_Localised": "Guardian Wreckage Components",
-//        "Count": 3
-//        }

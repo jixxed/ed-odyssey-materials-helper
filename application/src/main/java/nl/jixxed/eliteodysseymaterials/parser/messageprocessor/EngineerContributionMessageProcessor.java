@@ -7,13 +7,15 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
-public class MaterialCollectedMessageProcessor implements MessageProcessor {
+public class EngineerContributionMessageProcessor implements MessageProcessor {
 
     @Override
     public void process(final JsonNode journalMessage) {
-        final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(journalMessage.get("Name").asText());
-        if (!horizonsMaterial.isUnknown()) {
-            StorageService.addMaterial(horizonsMaterial, journalMessage.get("Count").asInt());
+        if (journalMessage.has("Material")) {
+            final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(journalMessage.get("Material").asText());
+            if (!horizonsMaterial.isUnknown()) {
+                StorageService.addMaterial(horizonsMaterial, -journalMessage.get("Quantity").asInt());
+            }
             EventService.publish(new StorageEvent(StoragePool.SHIP));
         }
     }

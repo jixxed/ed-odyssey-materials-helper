@@ -25,7 +25,13 @@ public enum JournalEventType {
     UNKNOWN("Unknown"),
     MATERIALS("Materials"),
     MATERIALCOLLECTED("MaterialCollected"),
-    MATERIALTRADE("MaterialTrade");
+    MATERIALTRADE("MaterialTrade"),
+    MATERIALDISCARDED("MaterialDiscarded"),
+    ENGINEERCONTRIBUTION("EngineerContribution"),
+    ENGINEERCRAFT("EngineerCraft"),
+    MISSIONCOMPLETED("MissionCompleted"),
+    SYNTHESIS("Synthesis"),
+    TECHNOLOGYBROKER("TechnologyBroker");
 
     private final String name;
 

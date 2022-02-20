@@ -39,6 +39,12 @@ class MessageHandler {
             Map.entry(JournalEventType.MATERIALS, new MaterialsMessageProcessor()),
             Map.entry(JournalEventType.MATERIALCOLLECTED, new MaterialCollectedMessageProcessor()),
             Map.entry(JournalEventType.MATERIALTRADE, new MaterialTradeMessageProcessor()),
+            Map.entry(JournalEventType.MATERIALDISCARDED, new MaterialDiscardedMessageProcessor()),
+            Map.entry(JournalEventType.ENGINEERCONTRIBUTION, new EngineerContributionMessageProcessor()),
+            Map.entry(JournalEventType.ENGINEERCRAFT, new EngineerCraftMessageProcessor()),
+            Map.entry(JournalEventType.MISSIONCOMPLETED, new MissionCompletedMessageProcessor()),
+            Map.entry(JournalEventType.SYNTHESIS, new SynthesisMessageProcessor()),
+            Map.entry(JournalEventType.TECHNOLOGYBROKER, new TechnologyBrokerMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

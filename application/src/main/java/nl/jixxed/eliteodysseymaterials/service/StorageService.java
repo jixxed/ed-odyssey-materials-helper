@@ -61,6 +61,16 @@ public class StorageService {
         throw new IllegalArgumentException("Unknown material type");
     }
 
+    public static void addMaterial(final HorizonsMaterial material, final Integer amount) {
+        if (material instanceof Raw rawMaterial) {
+            raw.put(rawMaterial, raw.get(material) + amount);
+        } else if (material instanceof Encoded encodedMaterial) {
+            encoded.put(encodedMaterial, encoded.get(material) + amount);
+        } else if (material instanceof Manufactured manufacturedMaterial) {
+            manufactured.put(manufacturedMaterial, manufactured.get(material) + amount);
+        }
+    }
+
     public static Integer getMaterialCount(final HorizonsMaterial material) {
         if (material instanceof Raw) {
             return raw.get(material);

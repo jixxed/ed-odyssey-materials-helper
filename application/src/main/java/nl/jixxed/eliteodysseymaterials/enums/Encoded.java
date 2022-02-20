@@ -86,7 +86,9 @@ public enum Encoded implements HorizonsMaterial {
 
     @Override
     public int getMaxAmount() {
-        if (HorizonsMaterialType.GUARDIAN.equals(this.materialType) /*|| HorizonsMaterialType.THARGOID.equals(this.materialType)*/) {
+        if (this == GUARDIAN_VESSELBLUEPRINT) {
+            return 100;// might actually be bugged like raw materials, but too much to verify
+        } else if (HorizonsMaterialType.GUARDIAN.equals(this.materialType)) {
             return 150;
         }
         return this.getRarity().getMaxAmount();
