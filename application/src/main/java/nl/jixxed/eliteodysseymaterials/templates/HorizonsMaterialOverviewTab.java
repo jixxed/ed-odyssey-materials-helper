@@ -27,7 +27,7 @@ public class HorizonsMaterialOverviewTab extends Tab implements Template {
 
     @Override
     public void initEventHandling() {
-
+        //NOOP
     }
 
 }

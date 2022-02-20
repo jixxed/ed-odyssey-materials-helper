@@ -29,7 +29,7 @@ public class LoadoutSetList {
             return this.loadoutSets.stream()
                     .filter(loadoutSet -> loadoutSet.getUuid().equals(this.selectedLoadoutSetUUID))
                     .findFirst()
-                    .orElseGet(() -> selectFirstloadoutSet());
+                    .orElseGet(this::selectFirstloadoutSet);
         }
     }
 
@@ -80,7 +80,9 @@ public class LoadoutSetList {
     public void renameLoadoutSet(final String uuid, final String name) {
         if (name != null && !name.isEmpty()) {
             final LoadoutSet loadoutSet = getLoadoutSet(uuid);
-            loadoutSet.setName((name.length() > 50) ? name.substring(0, 50) : name);
+            if (loadoutSet != null) {
+                loadoutSet.setName((name.length() > 50) ? name.substring(0, 50) : name);
+            }
         }
     }
 

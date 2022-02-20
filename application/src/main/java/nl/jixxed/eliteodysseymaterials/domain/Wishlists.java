@@ -26,7 +26,7 @@ public class Wishlists {
         if (this.selectedWishlistUUID == null || this.selectedWishlistUUID.isEmpty()) {
             return selectFirstWishlist();
         } else {
-            return this.wishlists.stream().filter(wishlist -> wishlist.getUuid().equals(this.selectedWishlistUUID)).findFirst().orElseGet(() -> selectFirstWishlist());
+            return this.wishlists.stream().filter(wishlist -> wishlist.getUuid().equals(this.selectedWishlistUUID)).findFirst().orElseGet(this::selectFirstWishlist);
         }
     }
 

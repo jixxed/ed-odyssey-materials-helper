@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Getter
+@SuppressWarnings("java:S1192")
 public enum Weapon implements Equipment {
 
 
@@ -254,7 +255,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     );
     @Getter
-    private final static Map<Weapon, Double> HIP_FIRE_FACTORS = Map.ofEntries(
+    private static final Map<Weapon, Double> HIP_FIRE_FACTORS = Map.ofEntries(
             Map.entry(Weapon.KINEMATIC_P15, 43.00),
             Map.entry(Weapon.KINEMATIC_C44, 41.25),
             Map.entry(Weapon.KINEMATIC_AR50, 41.25),

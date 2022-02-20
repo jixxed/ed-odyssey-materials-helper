@@ -53,7 +53,7 @@ public class JournalWatcher {
                 }
 
                 private boolean isValidOdysseyJournal(final File file) {
-                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && isOlderThan2020(file) && hasFileHeader(file) && isOdysseyJournal(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && isOlderThan2020(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
                 }
             }).watch(folder);
         });
@@ -73,7 +73,6 @@ public class JournalWatcher {
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(this::isOlderThan2020)
                     .filter(this::hasFileHeader)
-                    .filter(this::isOdysseyJournal)
                     .filter(this::hasCommanderHeader)
                     .forEach(this::listCommander);
             EventService.publish(new CommanderAllListedEvent());
@@ -108,7 +107,6 @@ public class JournalWatcher {
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(this::isOlderThan2020)
                     .filter(this::hasFileHeader)
-                    .filter(this::isOdysseyJournal)
                     .filter(this::isSelectedCommander)
                     .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23))));
             log.info("Registered watched file: " + this.currentlyWatchedFile.map(File::getName).orElse("No file"));
@@ -151,21 +149,6 @@ public class JournalWatcher {
         return matcher.matches()
                 && Integer.parseInt(matcher.group(2)) > 20;
 
-    }
-
-    private synchronized boolean isOdysseyJournal(final File file) {
-        return true;
-//        try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
-//            final String firstLine = scanner.nextLine();
-//
-//            final JsonNode journalMessage = this.objectMapper.readTree(firstLine);
-//            final JsonNode isOdysseyNode = journalMessage.get("Odyssey");
-//            return isOdysseyNode != null && isOdysseyNode.asBoolean(false);
-//
-//        } catch (final IOException e) {
-//            log.error("Error checking if journal is odyssey", e);
-//        }
-//        return false;
     }
 
     private synchronized boolean hasCommanderHeader(final File file) {

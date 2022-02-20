@@ -1,12 +1,15 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.AnyRelevantStorage;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.*;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StorageService {
     @Getter
     private static final Map<Raw, Integer> raw = new EnumMap<>(Raw.class);
@@ -39,14 +42,6 @@ public class StorageService {
             case TRADE -> Map.of(TradeMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeMaterial.NOTHING, new Storage(0, 0));
             case CONSUMABLE -> Collections.emptyMap();
             case OTHER -> consumables;
-        };
-    }
-
-    public static Map<? extends HorizonsMaterial, Integer> getMaterials(final HorizonsStorageType storageType) {
-        return switch (storageType) {
-            case RAW -> raw;
-            case ENCODED -> encoded;
-            case MANUFACURED -> manufactured;
         };
     }
 

@@ -33,23 +33,23 @@ public class TextExporter {
         textBuilder.append(String.format("%12s", "Required"));
         textBuilder.append(String.format("%12s", "Need"));
         textBuilder.append("\n\n");
-        List.of(wishlistNeededDatas, wishlistNeededGoods, wishlistNeededAssets).forEach(wishlistNeededMaterials -> {
-            wishlistNeededMaterials.entrySet().stream()
-                    .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
-                    .forEach(item -> {
-                        textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
-                        final Integer total = switch (item.getKey().getStorageType()) {
-                            case GOOD -> StorageService.getGoods().get(item.getKey()).getTotalValue();
-                            case DATA -> StorageService.getData().get(item.getKey()).getTotalValue();
-                            case ASSET -> StorageService.getAssets().get(item.getKey()).getTotalValue();
-                            case TRADE, CONSUMABLE, OTHER -> 0;
-                        };
-                        textBuilder.append(String.format("%12s", total));
-                        textBuilder.append(String.format("%12s", item.getValue()));
-                        textBuilder.append(String.format("%12s", Math.max(0, item.getValue() - total)));
-                        textBuilder.append("\n");
-                    });
-        });
+        List.of(wishlistNeededDatas, wishlistNeededGoods, wishlistNeededAssets).forEach(wishlistNeededMaterials ->
+                wishlistNeededMaterials.entrySet().stream()
+                        .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
+                        .forEach(item -> {
+                            textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
+                            final Integer total = switch (item.getKey().getStorageType()) {
+                                case GOOD -> StorageService.getGoods().get(item.getKey()).getTotalValue();
+                                case DATA -> StorageService.getData().get(item.getKey()).getTotalValue();
+                                case ASSET -> StorageService.getAssets().get(item.getKey()).getTotalValue();
+                                case TRADE, CONSUMABLE, OTHER -> 0;
+                            };
+                            textBuilder.append(String.format("%12s", total));
+                            textBuilder.append(String.format("%12s", item.getValue()));
+                            textBuilder.append(String.format("%12s", Math.max(0, item.getValue() - total)));
+                            textBuilder.append("\n");
+                        })
+        );
         return textBuilder.toString();
     }
 }

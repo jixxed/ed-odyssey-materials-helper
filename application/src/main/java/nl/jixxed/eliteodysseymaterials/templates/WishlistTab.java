@@ -445,18 +445,17 @@ public class WishlistTab extends EDOTab {
                         });
             }
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
-                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    wishlistEvent.getWishlistRecipes().forEach(wishlistRecipe -> {
-                        final WishlistBlueprint wishlistBlueprint = new WishlistBlueprint(wishlistEvent.getWishlistUUID(), wishlistRecipe);
-                        if (!wishlistEvent.getWishlistUUID().equals(this.activeWishlistUUID)) {
-                            Platform.runLater(() -> this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null)));
-                        } else {
-                            this.wishlistBlueprints.add(wishlistBlueprint);
-                            addBluePrint(wishlistBlueprint);
-                        }
-
-                    });
-                });
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander ->
+                        wishlistEvent.getWishlistRecipes().forEach(wishlistRecipe -> {
+                            final WishlistBlueprint wishlistBlueprint = new WishlistBlueprint(wishlistEvent.getWishlistUUID(), wishlistRecipe);
+                            if (!wishlistEvent.getWishlistUUID().equals(this.activeWishlistUUID)) {
+                                Platform.runLater(() -> this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null)));
+                            } else {
+                                this.wishlistBlueprints.add(wishlistBlueprint);
+                                addBluePrint(wishlistBlueprint);
+                            }
+                        })
+                );
             }
             refreshContent();
         });
@@ -603,15 +602,15 @@ public class WishlistTab extends EDOTab {
                         }
                 );
         final List<WishlistIngredient> ingredientsData = this.wishlistNeededDatas.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || !(StorageService.getData().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getData().get(entry.getKey()).getTotalValue() < entry.getValue())
                 .map(wishlistItem -> new WishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getData().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<WishlistIngredient> ingredientsGood = this.wishlistNeededGoods.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || !(StorageService.getGoods().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getGoods().get(entry.getKey()).getTotalValue() < entry.getValue())
                 .map(wishlistItem -> new WishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getGoods().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<WishlistIngredient> ingredientsAsset = this.wishlistNeededAssets.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || !(StorageService.getAssets().get(entry.getKey()).getTotalValue() >= entry.getValue()))
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getAssets().get(entry.getKey()).getTotalValue() < entry.getValue())
                 .map(wishlistItem -> new WishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getAssets().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<WishlistIngredient> allIngredients = new ArrayList<>();

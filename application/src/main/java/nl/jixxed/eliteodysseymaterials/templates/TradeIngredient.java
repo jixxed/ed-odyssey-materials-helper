@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
+@SuppressWarnings("java:S2160")
 class TradeIngredient extends MaterialIngredient {
 
     private static final String INGREDIENT_FILLED_CLASS = "trade-ingredient-filled";

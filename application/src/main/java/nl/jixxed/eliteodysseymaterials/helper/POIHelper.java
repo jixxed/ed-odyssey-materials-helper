@@ -1,7 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class POIHelper {
     private static final Map<String, String> TRANSLATION = Map.ofEntries(
             Map.entry("Smugglers_Cache_01", "Irregular Marker (Smugglers Cache, 2 Container + Skimmer)"),
@@ -49,6 +53,7 @@ public class POIHelper {
             Map.entry("SAA_SignalType_Other", "Signal (Other)"),
             Map.entry("CrashedShip", "Crashed Ship")
     );
+    private static final String INDEX = ":#index=";
 
     public static String map(final String poi) {
         if (poi.startsWith("$")) {
@@ -74,11 +79,11 @@ public class POIHelper {
                 poiBuilder.append(" [Threat 3]");
                 tidiedPoi = tidiedPoi.replace("_Hard", "");
             }
-            if (poi.contains(":#index=")) {
+            if (poi.contains(INDEX)) {
                 poiBuilder.append(" (")
-                        .append(tidiedPoi.substring(tidiedPoi.indexOf(":#index=") + 8))
+                        .append(tidiedPoi.substring(tidiedPoi.indexOf(INDEX) + 8))
                         .append(")");
-                tidiedPoi = tidiedPoi.substring(0, tidiedPoi.indexOf(":#index="));
+                tidiedPoi = tidiedPoi.substring(0, tidiedPoi.indexOf(INDEX));
             }
             if (poi.contains("$USS_ThreatLevel")) {
                 poiBuilder.append(" (Mission)");

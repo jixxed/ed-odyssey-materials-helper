@@ -22,7 +22,16 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class LoadoutItem extends VBox implements DestroyableTemplate {
-    private final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final String STYLECLASS_LOADOUT_ITEM_STATS_NAME = "loadout-item-stats-name";
+    private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE = "loadout-item-stats-value";
+    private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED = "loadout-item-stats-value-modded";
+    private static final String STYLECLASS_LOADOUT_ITEM_STATS_WIDE = "loadout-item-stats-wide";
+    private static final String STYLECLASS_CHANGED = "changed";
+    private static final String STYLECLASS_MODDED = "modded";
+    private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE = "loadout-item-stats-value-wide";
+    private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE_BOX = "loadout-item-stats-value-wide-box";
+    private static final String STYLECLASS_LOADOUT_ITEM_STATS_HEADER = "loadout-item-stats-header";
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private LoadoutSet loadoutSet;
     private Loadout loadout;
     private final List<HBox> statsList;
@@ -53,7 +62,6 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         this.statsList = new ArrayList<>();
         initComponents();
         initEventHandling();
-        System.gc();
     }
 
     @Override
@@ -61,13 +69,13 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
 
             EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent ->
-                    this.APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists))
+                    APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists))
             ;
             EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
                     loadCommanderWishlists(commanderSelectedEvent.getCommander())
             );
             EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent ->
-                    this.APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)
+                    APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)
             );
             EventService.addListener(this, ModificationChangedEvent.class, modificationChangedEvent -> {
                 if (modificationChangedEvent.getLoadoutItem() == this) {
@@ -77,13 +85,14 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
 
         }
         if (this.loadout.getEquipment() instanceof Weapon) {
-            EventService.addListener(this, AmmoCapacityModEvent.class, ammoCapacityModEvent -> {
-                updateStatsList();
-            });
+            EventService.addListener(this, AmmoCapacityModEvent.class, ammoCapacityModEvent ->
+                    updateStatsList()
+            );
         }
     }
 
     @Override
+    @SuppressWarnings("java:S3776")
     public void initComponents() {
         this.getStyleClass().add("loadout-item");
         this.setSpacing(5);
@@ -118,7 +127,6 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         final Region regionL = new Region();
         HBox.setHgrow(regionL, Priority.ALWAYS);
         final DestroyableLabel delete = LabelBuilder.builder().withNonLocalizedText("delete").withOnMouseClicked(event -> {
-//            this.onDestroy();
             this.loadoutSet.removeLoadout(this.loadout);
             saveLoadoutSet();
             EventService.publish(new LoadoutRemovedEvent(this));
@@ -248,9 +256,8 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         this.getChildren().addAll(statsLine, this.stats);
         if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
             this.addToWishlist = MenuButtonBuilder.builder().withStyleClass("loadout-wishlist-button").withText(LocaleService.getStringBinding("recipe.add.to.wishlist")).build();
-//            this.addToWishlist.getItems().addAll(new ArrayList<>());
             final Label warning = LabelBuilder.builder().withStyleClass("loadout-warning").withText(LocaleService.getStringBinding("loadout.equipment.warning")).withVisibilityProperty(isValidProperty()).build();
-            this.APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
+            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
             final Region region1 = new Region();
             VBox.setVgrow(region1, Priority.ALWAYS);
             this.getChildren().addAll(region1, this.addToWishlist, warning);
@@ -267,13 +274,13 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
     }
 
     private void saveLoadoutSet() {
-        this.APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            this.APPLICATION_STATE.saveLoadoutSet(commander.getFid(), this.loadoutSet);
-        });
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander ->
+                APPLICATION_STATE.saveLoadoutSet(commander.getFid(), this.loadoutSet)
+        );
     }
 
     private Wishlists loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = this.APPLICATION_STATE.getWishlists(commander.getFid());
+        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
         this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
         this.addToWishlist.getItems().clear();
         final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
@@ -318,90 +325,100 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
 
                         currentGroup.set(statObjectEntry.getKey().getStatGroup());
                         final StatGroup group = statObjectEntry.getKey().getStatGroup();
-                        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(group.getLocalizationKey())).build();
+                        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME).withText(LocaleService.getStringBinding(group.getLocalizationKey())).build();
                         this.destroyables.add(nameColumn);
                         this.statsList.add(BoxBuilder.builder().withNodes(
                                 nameColumn
                         ).buildHBox());
                     }
                     if (statObjectEntry.getKey() instanceof DynamicStat stat) {
-                        final Object value = statObjectEntry.getValue();
-                        final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
-                        final String targetLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel());
-                        final List<Modification> modifications = new ArrayList<>(Arrays.asList(this.loadout.getModifications()));
-                        if (this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit).anyMatch(loadoutItem -> Arrays.asList(loadoutItem.getModifications()).contains(SuitModification.EXTRA_AMMO_CAPACITY))) {
-                            modifications.add(SuitModification.EXTRA_AMMO_CAPACITY);
-                        }
-                        final String moddedLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel(), modifications);
-                        if (this.statsToggle.isSelected() && Objects.equals(currentLevelValue, targetLevelValue) && Objects.equals(targetLevelValue, moddedLevelValue)) {
-                            return;
-                        }
-                        final Label nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
-                        final DestroyableLabel currentValueLabel = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value").withNonLocalizedText(currentLevelValue).build();
-                        this.destroyables.add(currentValueLabel);
-                        final HBox valueRow = BoxBuilder.builder().withNodes(nameColumn, currentValueLabel).buildHBox();
-                        if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
-                            nameColumn.getStyleClass().add("loadout-item-stats-wide");
-                        } else {
-                            final DestroyableLabel targetValue = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value").withNonLocalizedText(targetLevelValue).build();
-                            final DestroyableLabel moddedValue = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value", "loadout-item-stats-value-modded").withNonLocalizedText(moddedLevelValue).build();
-                            this.destroyables.add(targetValue);
-                            this.destroyables.add(moddedValue);
-                            valueRow.getChildren().addAll(targetValue, moddedValue);
-                            if (!currentLevelValue.equals(targetLevelValue)) {
-                                targetValue.getStyleClass().add("changed");
-                            }
-                            if (!currentLevelValue.equals(moddedLevelValue)) {
-                                moddedValue.getStyleClass().add("changed");
-                            }
-                            if (!targetLevelValue.equals(moddedLevelValue)) {
-                                moddedValue.getStyleClass().add("modded");
-                            }
-                        }
-                        this.statsList.add(valueRow);
+                        handleDynamicStat(statObjectEntry, stat);
                     } else {
-                        if (this.statsToggle.isSelected()) {
-                            return;
-                        }
-                        final StaticStat stat = (StaticStat) statObjectEntry.getKey();
-                        final Object value = statObjectEntry.getValue();
-                        final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
-                        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-name").withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
-                        final DestroyableLabel currentLevelValueLabel = LabelBuilder.builder().withStyleClasses("loadout-item-stats-value-wide").withNonLocalizedText(currentLevelValue).build();
-                        this.destroyables.add(nameColumn);
-                        this.destroyables.add(currentLevelValueLabel);
-                        final Separator separator = new Separator(Orientation.HORIZONTAL);
-                        final Separator separator1 = new Separator(Orientation.HORIZONTAL);
-                        HBox.setHgrow(separator, Priority.ALWAYS);
-                        HBox.setHgrow(currentLevelValueLabel, Priority.ALWAYS);
-                        HBox.setHgrow(separator1, Priority.ALWAYS);
-                        this.statsList.add(BoxBuilder.builder().withNodes(
-                                nameColumn,
-                                BoxBuilder.builder().withStyleClass("loadout-item-stats-value-wide-box").withNodes(separator,
-                                        currentLevelValueLabel,
-                                        separator1).buildHBox()
-                        ).buildHBox());
+                        handleStaticStat(statObjectEntry);
                     }
                 });
-        if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {//|| Suit.FLIGHTSUIT.equals(this.loadout.getEquipment()) && !this.statsToggle.isSelected()
-            final DestroyableLabel valueColumn = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-name").withNonLocalizedText("").build();
-            final DestroyableLabel headerCurrent = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.current")).build();
-            this.destroyables.add(headerCurrent);
-            this.destroyables.add(valueColumn);
-            final HBox headerRow = BoxBuilder.builder().withNodes(valueColumn, headerCurrent).buildHBox();
-            if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
-                valueColumn.getStyleClass().add("loadout-item-stats-wide");
-            } else {
-                final DestroyableLabel headerTarget = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.target")).build();
-                final DestroyableLabel headerModded = LabelBuilder.builder().withStyleClasses("loadout-item-stats-header", "loadout-item-stats-value", "loadout-item-stats-value-modded").withText(LocaleService.getStringBinding("loadout.equipment.stats.header.modded")).build();
-                this.destroyables.add(headerTarget);
-                this.destroyables.add(headerModded);
-                headerRow.getChildren().addAll(headerTarget, headerModded);
-            }
-            this.statsList.add(0, headerRow);
-        }
+        addHeader();
         this.stats.getChildren().clear();
         this.stats.getChildren().addAll(this.statsList);
+    }
+
+    private void addHeader() {
+        final DestroyableLabel valueColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_NAME).withNonLocalizedText("").build();
+        final DestroyableLabel headerCurrent = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withText(LocaleService.getStringBinding("loadout.equipment.stats.header.current")).build();
+        this.destroyables.add(headerCurrent);
+        this.destroyables.add(valueColumn);
+        final HBox headerRow = BoxBuilder.builder().withNodes(valueColumn, headerCurrent).buildHBox();
+        if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
+            valueColumn.getStyleClass().add(STYLECLASS_LOADOUT_ITEM_STATS_WIDE);
+        } else {
+            final DestroyableLabel headerTarget = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withText(LocaleService.getStringBinding("loadout.equipment.stats.header.target")).build();
+            final DestroyableLabel headerModded = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE, STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED).withText(LocaleService.getStringBinding("loadout.equipment.stats.header.modded")).build();
+            this.destroyables.add(headerTarget);
+            this.destroyables.add(headerModded);
+            headerRow.getChildren().addAll(headerTarget, headerModded);
+        }
+        this.statsList.add(0, headerRow);
+    }
+
+    private void handleStaticStat(final Map.Entry<Stat, Object> statObjectEntry) {
+        if (this.statsToggle.isSelected()) {
+            return;
+        }
+        final StaticStat stat = (StaticStat) statObjectEntry.getKey();
+        final Object value = statObjectEntry.getValue();
+        final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
+        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME).withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
+        final DestroyableLabel currentLevelValueLabel = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE).withNonLocalizedText(currentLevelValue).build();
+        this.destroyables.add(nameColumn);
+        this.destroyables.add(currentLevelValueLabel);
+        final Separator separator = new Separator(Orientation.HORIZONTAL);
+        final Separator separator1 = new Separator(Orientation.HORIZONTAL);
+        HBox.setHgrow(separator, Priority.ALWAYS);
+        HBox.setHgrow(currentLevelValueLabel, Priority.ALWAYS);
+        HBox.setHgrow(separator1, Priority.ALWAYS);
+        this.statsList.add(BoxBuilder.builder().withNodes(
+                nameColumn,
+                BoxBuilder.builder().withStyleClass(STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE_BOX).withNodes(separator,
+                        currentLevelValueLabel,
+                        separator1).buildHBox()
+        ).buildHBox());
+    }
+
+    private void handleDynamicStat(final Map.Entry<Stat, Object> statObjectEntry, final DynamicStat stat) {
+        final Object value = statObjectEntry.getValue();
+        final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
+        final String targetLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel());
+        final List<Modification> modifications = new ArrayList<>(Arrays.asList(this.loadout.getModifications()));
+        if (this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit).anyMatch(loadoutItem -> Arrays.asList(loadoutItem.getModifications()).contains(SuitModification.EXTRA_AMMO_CAPACITY))) {
+            modifications.add(SuitModification.EXTRA_AMMO_CAPACITY);
+        }
+        final String moddedLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel(), modifications);
+        if (this.statsToggle.isSelected() && Objects.equals(currentLevelValue, targetLevelValue) && Objects.equals(targetLevelValue, moddedLevelValue)) {
+            return;
+        }
+        final Label nameColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME).withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
+        final DestroyableLabel currentValueLabel = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withNonLocalizedText(currentLevelValue).build();
+        this.destroyables.add(currentValueLabel);
+        final HBox valueRow = BoxBuilder.builder().withNodes(nameColumn, currentValueLabel).buildHBox();
+        if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
+            nameColumn.getStyleClass().add(STYLECLASS_LOADOUT_ITEM_STATS_WIDE);
+        } else {
+            final DestroyableLabel targetValue = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withNonLocalizedText(targetLevelValue).build();
+            final DestroyableLabel moddedValue = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE, STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED).withNonLocalizedText(moddedLevelValue).build();
+            this.destroyables.add(targetValue);
+            this.destroyables.add(moddedValue);
+            valueRow.getChildren().addAll(targetValue, moddedValue);
+            if (!currentLevelValue.equals(targetLevelValue)) {
+                targetValue.getStyleClass().add(STYLECLASS_CHANGED);
+            }
+            if (!currentLevelValue.equals(moddedLevelValue)) {
+                moddedValue.getStyleClass().add(STYLECLASS_CHANGED);
+            }
+            if (!targetLevelValue.equals(moddedLevelValue)) {
+                moddedValue.getStyleClass().add(STYLECLASS_MODDED);
+            }
+        }
+        this.statsList.add(valueRow);
     }
 
     private Region createRegion() {

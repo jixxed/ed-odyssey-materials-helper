@@ -50,6 +50,7 @@ public class Main extends Application {
         return this.primaryStage;
     }
 
+    @SuppressWarnings("java:S899")
     @Override
     public void start(final Stage primaryStage) {
         try {

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("java:S3740")
 public class DestroyableResizableImageView extends Pane implements DestroyableComponent {
 
     private final ImageView iv;
@@ -27,7 +28,6 @@ public class DestroyableResizableImageView extends Pane implements DestroyableCo
 
     public final void setImage(final Image image) {
         this.iv.setImage(image);
-//        setPrefSize(image.getWidth(), image.getHeight());
         this.iv.fitWidthProperty().bind(widthProperty());
         this.iv.fitHeightProperty().bind(heightProperty());
     }

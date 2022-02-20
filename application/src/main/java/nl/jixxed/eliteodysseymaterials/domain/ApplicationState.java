@@ -23,12 +23,6 @@ public class ApplicationState {
 
     private static ApplicationState applicationState;
     private final Function<WishlistRecipe, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
-    //    private final Map<Good, Storage> goods = new EnumMap<>(Good.class);
-//    private final Map<String, Storage> unknownGoods = new HashMap<>();
-//    private final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
-//    private final Map<Data, Storage> data = new EnumMap<>(Data.class);
-//    private final Map<Consumable, Storage> consumables = new EnumMap<>(Consumable.class);
-//    private final Map<String, Storage> unknownData = new HashMap<>();
     private final List<Material> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
     private final Map<Engineer, EngineerState> engineerStates = new EnumMap<>(Map.ofEntries(
@@ -56,16 +50,14 @@ public class ApplicationState {
                 .forEach(this.favourites::add);
 
         EventService.addListener(this, 0, WishlistRecipeEvent.class,
-                wishlistEvent -> Platform.runLater(() -> {
-                    wishlistEvent.getWishlistRecipes().forEach(wishlistRecipe -> {
-                        switch (wishlistEvent.getAction()) {
-                            case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
-                            case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
-                            case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
-                        }
-
-                    });
-                }));
+                wishlistEvent -> Platform.runLater(() ->
+                        wishlistEvent.getWishlistRecipes().forEach(wishlistRecipe -> {
+                            switch (wishlistEvent.getAction()) {
+                                case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
+                                case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                                case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                            }
+                        })));
 
         EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken())));
         EventService.addListener(this, LoadGameEvent.class, event -> this.gameMode = event.getGameMode());
@@ -81,41 +73,10 @@ public class ApplicationState {
     public GameMode getGameMode() {
         return this.gameMode;
     }
-//
-//    public Map<Good, Storage> getGoods() {
-//        return this.goods;
-//    }
-//
-//    public Map<String, Storage> getUnknownGoods() {
-//        return this.unknownGoods;
-//    }
-//
-//    public Map<Asset, Storage> getAssets() {
-//        return this.assets;
-//    }
-//
-//    public Map<Data, Storage> getData() {
-//        return this.data;
-//    }
 
     public boolean getSoloMode() {
         return PreferencesService.getPreference(PreferenceConstants.SOLO_MODE, Boolean.FALSE);
     }
-//
-//    public Map<Material, Storage> getMaterials(final StorageType storageType) {
-//        return (Map<Material, Storage>) switch (storageType) {
-//            case GOOD -> this.goods;
-//            case DATA -> this.data;
-//            case ASSET -> this.assets;
-//            case TRADE -> Map.of(TradeMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeMaterial.NOTHING, new Storage(0, 0));
-//            case CONSUMABLE -> Collections.emptyMap();
-//            case OTHER -> this.consumables;
-//        };
-//    }
-//
-//    public Map<String, Storage> getUnknownData() {
-//        return this.unknownData;
-//    }
 
     public boolean isEngineerKnown(final Engineer engineer) {
         final EngineerState engineerState = this.engineerStates.get(engineer);
@@ -142,35 +103,6 @@ public class ApplicationState {
         this.engineerStates.forEach((engineer, engineerState) -> this.engineerStates.put(engineer, EngineerState.UNKNOWN));
         EventService.publish(new EngineerEvent());
     }
-//
-//    public void resetShipLockerCounts() {
-//        this.getAssets().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-//        this.getData().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-//        this.getGoods().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-//        this.getUnknownGoods().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-//        this.getUnknownData().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-//    }
-//
-//    public void resetBackPackCounts() {
-//        this.getAssets().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-//        this.getData().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-//        this.getGoods().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-//        this.getUnknownGoods().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-//        this.getUnknownData().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-//    }
-//
-//    private void initCounts() {
-//        Arrays.stream(Asset.values()).forEach(material ->
-//                this.getAssets().put(material, new Storage())
-//        );
-//        Arrays.stream(Data.values()).forEach(material ->
-//                this.getData().put(material, new Storage())
-//        );
-//        Arrays.stream(Good.values()).forEach(material ->
-//                this.getGoods().put(material, new Storage())
-//        );
-//
-//    }
 
     public <T extends Material> boolean toggleFavourite(final T material) {
         final boolean newState;
@@ -335,17 +267,6 @@ public class ApplicationState {
             return Craftability.CRAFTABLE;
         }
     }
-//
-//    private Storage getMaterialStorage(final Material material) {
-//        if (material instanceof Good) {
-//            return this.goods.get(material);
-//        } else if (material instanceof Asset) {
-//            return this.assets.get(material);
-//        } else if (material instanceof Data) {
-//            return this.data.get(material);
-//        }
-//        throw new IllegalArgumentException("Unknown material type");
-//    }
 
     public String getMarketPlaceToken() {
         return getPreferredCommander().map(commander -> PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), "")).orElse("");

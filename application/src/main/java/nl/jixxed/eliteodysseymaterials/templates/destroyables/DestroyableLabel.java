@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("java:S3740")
 public class DestroyableLabel extends Label implements DestroyableComponent {
     private final HashMap<ObservableValue, List<ChangeListener>> listenersMap = new HashMap<>();
 

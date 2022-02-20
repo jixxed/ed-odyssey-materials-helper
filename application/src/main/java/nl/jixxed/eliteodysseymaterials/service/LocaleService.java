@@ -105,12 +105,6 @@ public class LocaleService {
                 .append("Best runs:")
                 .append("\n")
                 .append(statistic.getBestrun().stream().map(settlementStatistic -> settlementStatistic.getAmount() + " - " + settlementStatistic.getSettlement() + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + "(" + LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ())) + ")").collect(Collectors.joining("\n")));
-//        final Clipboard clipboard = Clipboard.getSystemClipboard();
-//        final ClipboardContent clipboardContent = new ClipboardContent();
-//        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-//            try {
-//                clipboardContent.putString(Base64.getEncoder().encodeToString(OBJECT_MAPPER.writeValueAsString(APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getSelectedLoadoutSet()).getBytes(StandardCharsets.UTF_8)));
-
     }
 
     private static void addTransferTimeToTooltip(final Data data, final StringBuilder builder) {

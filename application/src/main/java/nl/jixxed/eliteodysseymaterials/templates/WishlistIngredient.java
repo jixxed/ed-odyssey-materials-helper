@@ -15,6 +15,7 @@ class WishlistIngredient extends MaterialIngredient {
         initComponents();
     }
 
+    @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
     }

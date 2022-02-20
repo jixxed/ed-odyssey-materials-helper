@@ -1,5 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -8,6 +11,7 @@ import javax.naming.directory.InitialDirContext;
 import java.io.UncheckedIOException;
 import java.util.Properties;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DnsHelper {
 
     public static String resolveCname(final String fqdn) throws NamingException {

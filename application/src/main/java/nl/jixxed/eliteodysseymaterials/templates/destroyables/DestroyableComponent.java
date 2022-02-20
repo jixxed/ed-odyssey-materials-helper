@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("java:S3740")
 public interface DestroyableComponent extends Destroyable {
 
     HashMap<ObservableValue, List<ChangeListener>> getListenersMap();

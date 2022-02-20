@@ -18,6 +18,7 @@ public class MaterialTradeMessageProcessor implements MessageProcessor {
     private static final ManufacturedTradeParser MANUFACTURED_TRADE_PARSER = new ManufacturedTradeParser();
 
     @Override
+    @SuppressWarnings("java:S131")
     public void process(final JsonNode journalMessage) {
         final String category = journalMessage.get("TraderType").asText();
         switch (category) {

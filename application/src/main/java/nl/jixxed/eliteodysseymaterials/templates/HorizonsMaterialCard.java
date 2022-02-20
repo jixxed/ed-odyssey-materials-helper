@@ -22,10 +22,10 @@ public class HorizonsMaterialCard extends VBox implements Template {
 
     private DestroyableResizableImageView gradeImage;
     private Label nameLabel;
-    private SegmentedBar segmentedBar;
+    private SegmentedBar<TypeSegment> segmentedBar;
     private final HorizonsMaterial material;
-    private SegmentedBar.Segment present;
-    private SegmentedBar.Segment notPresent;
+    private TypeSegment present;
+    private TypeSegment notPresent;
 
     HorizonsMaterialCard(final HorizonsMaterial material) {
         this.material = material;
@@ -44,17 +44,16 @@ public class HorizonsMaterialCard extends VBox implements Template {
         this.gradeImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(this.material.getRarity().getImagePath()).build();
         this.nameLabel = LabelBuilder.builder()
                 .withStyleClass("horizons-materialcard-name")
-//                .withNonLocalizedText(this.material.toString())
                 .withText(LocaleService.getStringBinding(this.material.getLocalizationKey()))
                 .build();
 
 
         final Integer materialCount = StorageService.getMaterialCount(this.material);
         final Integer maxAmount = this.material.getMaxAmount();
-        this.segmentedBar = new SegmentedBar();
+        this.segmentedBar = new SegmentedBar<>();
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
-        this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView((TypeSegment) segment));
+        this.segmentedBar.setSegmentViewFactory(TypeSegmentView::new);
         this.present = new TypeSegment(materialCount, SegmentType.PRESENT);
         this.notPresent = new TypeSegment(maxAmount - materialCount, SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
@@ -83,10 +82,8 @@ public class HorizonsMaterialCard extends VBox implements Template {
 
     class TypeSegmentView extends StackPane {
         private final Label label;
-        private final TypeSegment segment;
 
         TypeSegmentView(final TypeSegment segment) {
-            this.segment = segment;
             this.label = LabelBuilder.builder().build();
             this.label.textProperty().bind(segment.textProperty());
             this.label.getStyleClass().add("horizons-materialcard-amount");
@@ -95,12 +92,6 @@ public class HorizonsMaterialCard extends VBox implements Template {
             this.setPrefHeight(30.0);
             this.getChildren().add(this.label);
             this.label.visibleProperty().bind(segment.textProperty().isNotEqualTo("0"));
-        }
-
-        @Override
-        protected void layoutChildren() {
-            super.layoutChildren();
-//            this.label.setVisible(this.label.prefWidth(-1.0) < this.getWidth() - this.getPadding().getLeft() - this.getPadding().getRight());
         }
     }
 

@@ -28,6 +28,7 @@ public class ImportTab extends EDOTab {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    public static final String ERROR_IMPORT_STRING_IS_EMPTY = "import string is empty";
     private ScrollPane scrollPane;
     private TextArea textAreaWishlist;
     private Button buttonWishlist;
@@ -84,12 +85,12 @@ public class ImportTab extends EDOTab {
             this.errorLabelWishlist.setVisible(false);
             try {
                 if (this.textAreaWishlist.getText().isEmpty()) {
-                    throw new IllegalArgumentException("import string is empty");
+                    throw new IllegalArgumentException(ERROR_IMPORT_STRING_IS_EMPTY);
                 }
                 final String decoded = new String(Base64.getDecoder().decode(this.textAreaWishlist.getText().trim()));
 
                 if (decoded.isEmpty()) {
-                    throw new IllegalArgumentException("import string is empty");
+                    throw new IllegalArgumentException(ERROR_IMPORT_STRING_IS_EMPTY);
                 }
                 final Wishlist wishlist = new Wishlist();
                 wishlist.setName("Imported wishlist");
@@ -128,12 +129,12 @@ public class ImportTab extends EDOTab {
             this.errorLabelLoadout.setVisible(false);
             try {
                 if (this.textAreaLoadout.getText().isEmpty()) {
-                    throw new IllegalArgumentException("import string is empty");
+                    throw new IllegalArgumentException(ERROR_IMPORT_STRING_IS_EMPTY);
                 }
                 final String decoded = new String(Base64.getDecoder().decode(this.textAreaLoadout.getText().trim()));
 
                 if (decoded.isEmpty()) {
-                    throw new IllegalArgumentException("import string is empty");
+                    throw new IllegalArgumentException(ERROR_IMPORT_STRING_IS_EMPTY);
                 }
                 final LoadoutSet loadoutSet = OBJECT_MAPPER.readValue(decoded, LoadoutSet.class);
 

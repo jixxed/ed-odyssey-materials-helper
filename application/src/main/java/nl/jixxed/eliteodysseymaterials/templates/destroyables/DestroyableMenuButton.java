@@ -7,6 +7,7 @@ import javafx.scene.control.MenuButton;
 import java.util.HashMap;
 import java.util.List;
 
+@SuppressWarnings("java:S3740")
 public class DestroyableMenuButton extends MenuButton implements DestroyableComponent {
     private final HashMap<ObservableValue, List<ChangeListener>> listenersMap = new HashMap<>();
 

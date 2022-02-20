@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.UnitConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.List;
@@ -35,14 +36,14 @@ public enum StaticStat implements Stat {
     @Override
     public String formatValue(final Object value, final Equipment equipment, final Integer level, final List<Modification> modifications) {
         return switch (this) {
-            case RATE_OF_FIRE -> value + "/s";
+            case RATE_OF_FIRE -> value + UnitConstants.PER_SECOND;
             case HEALTH, PRIMARY_SLOTS, SECONDARY_SLOTS -> value.toString();
             case CLASS, TYPE, DAMAGE_TYPE, FIRE_MODE -> LocaleService.getLocalizedStringForCurrentLocale(value.toString());
-            case MASS -> value.toString() + "kg";
-            case SHIELD_POWER_USAGE, LIGHTS_POWER_USAGE -> NUMBER_FORMAT_2.format(value) + "kW/s";
-            case ENERGYLINK_RECHARGE_TIME -> NUMBER_FORMAT_2.format(value) + "s";
-            case SPRINT_SPEED, SPRINT_SPEED_PISTOL, WALK_SPEED, WALK_SPEED_PISTOL -> NUMBER_FORMAT_2.format(value) + "m/s";
-            case LATERAL_SPEED -> value + "%";
+            case MASS -> value.toString() + UnitConstants.KILOGRAM;
+            case SHIELD_POWER_USAGE, LIGHTS_POWER_USAGE -> NUMBER_FORMAT_2.format(value) + UnitConstants.KILOWATT_PER_SECOND;
+            case ENERGYLINK_RECHARGE_TIME -> NUMBER_FORMAT_2.format(value) + UnitConstants.SECOND;
+            case SPRINT_SPEED, SPRINT_SPEED_PISTOL, WALK_SPEED, WALK_SPEED_PISTOL -> NUMBER_FORMAT_2.format(value) + UnitConstants.METER_PER_SECOND;
+            case LATERAL_SPEED -> value + UnitConstants.PERCENT;
 
         };
     }

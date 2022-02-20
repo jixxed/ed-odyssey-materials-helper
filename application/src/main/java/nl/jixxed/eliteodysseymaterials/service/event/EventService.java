@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("java:S3740")
 @Slf4j
 public class EventService {
     private static final List<EventListener<? extends Event>> LISTENERS = new ArrayList<>();

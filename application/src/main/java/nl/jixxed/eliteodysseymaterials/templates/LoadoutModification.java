@@ -29,10 +29,10 @@ import java.util.Arrays;
 import java.util.List;
 
 class LoadoutModification extends VBox implements DestroyableTemplate {
-    private final String LOADOUT_MODIFICATION_STYLE_CLASS = "loadout-modification";
-    private final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "loadout-modification-image";
-    private final String LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS = "loadout-modification-image-consumed";
-    private final String LOADOUT_MODIFICATION_LABEL_STYLE_CLASS = "loadout-modification-label";
+    private static final String LOADOUT_MODIFICATION_STYLE_CLASS = "loadout-modification";
+    private static final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "loadout-modification-image";
+    private static final String LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS = "loadout-modification-image-consumed";
+    private static final String LOADOUT_MODIFICATION_LABEL_STYLE_CLASS = "loadout-modification-label";
     private DestroyableResizableImageView imageView;
     private DestroyableLabel label;
     private Loadout loadout;
@@ -49,40 +49,18 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
         initEventHandling();
     }
 
-    //    public static void addMaterialInfoPopOver(final Node hoverableNode, final Material material) {
-//        hoverableNode.setOnMouseEntered(mouseEvent -> {
-//            final Node contentNode = getMaterialPopOverContent(material);
-//            contentNode.getStyleClass().add("material-popover");
-//            final PopOver popOver = new PopOver(contentNode);
-//            popOver.setDetachable(false);
-//            popOver.setHeaderAlwaysVisible(false);
-//            popOver.show(hoverableNode);
-//            final Timeline timeline = new Timeline();
-//            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
-//            timeline.setOnFinished(finishEvent -> {
-//                if (hoverableNode.isHover() || contentNode.isHover()) {
-//                    timeline.play();
-//                } else {
-//                    popOver.hide(Duration.ZERO);
-//                    popOver.setContentNode(null);
-//                    timeline.stop();
-//                }
-//            });
-//            hoverableNode.setOnMouseExited(mouseEvent2 -> timeline.play());
-//        });
-//    }
     @Override
     public void initComponents() {
-        this.getStyleClass().add(this.LOADOUT_MODIFICATION_STYLE_CLASS);
+        this.getStyleClass().add(LOADOUT_MODIFICATION_STYLE_CLASS);
         this.imageView = ResizableImageViewBuilder.builder()
-                .withStyleClass(this.LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
+                .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
                 .withImage((this.loadout.getModifications()[this.position] != null) ? this.loadout.getModifications()[this.position].getImage() : "/images/modification/empty.png")
                 .build();
-        this.label = LabelBuilder.builder().withStyleClass(this.LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding((this.loadout.getModifications()[this.position] != null) ? this.loadout.getModifications()[this.position].getLocalizationKey() : "loadout.modification.name.none")).build();
+        this.label = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding((this.loadout.getModifications()[this.position] != null) ? this.loadout.getModifications()[this.position].getLocalizationKey() : "loadout.modification.name.none")).build();
         this.destroyables.add(this.label);
         this.destroyables.add(this.imageView);
 
-        final EventHandler<MouseEvent> imageMouseEventHandler = (event) -> {
+        final EventHandler<MouseEvent> imageMouseEventHandler = event -> {
             if (this.popOver != null && this.popOver.isShowing()) {
                 this.popOver.hide(Duration.ZERO);
                 this.popOver.setContentNode(null);
@@ -188,25 +166,25 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
     }
 
     private void createGridPaneCell(final Modification modification, final int col, final int row, final GridPane gridPane) {
-        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder().withStyleClass(this.LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS).withImage(modification.getImage()).build();
+        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS).withImage(modification.getImage()).build();
         this.destroyables.add(modSelectImage);
         if (Arrays.asList(this.loadout.getModifications()).contains(modification)) {
-            modSelectImage.getStyleClass().add(this.LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS);
+            modSelectImage.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS);
         } else {
             modSelectImage.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, getModificationSelectedEventHandler(modification));
         }
-        final DestroyableLabel modLabel = LabelBuilder.builder().withStyleClass(this.LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding(modification.getLocalizationKey())).build();
+        final DestroyableLabel modLabel = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding(modification.getLocalizationKey())).build();
         this.destroyables.add(modLabel);
-        final VBox modVBox = BoxBuilder.builder().withStyleClass(this.LOADOUT_MODIFICATION_STYLE_CLASS).withNodes(modSelectImage, modLabel).buildVBox();
+        final VBox modVBox = BoxBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS).withNodes(modSelectImage, modLabel).buildVBox();
         gridPane.add(modVBox, col, row);
     }
 
     private void createCancelCell(final int col, final int row, final GridPane gridPane) {
-        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder().withStyleClass(this.LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS).withImage("/images/modification/cancel.png").withOnMouseClicked(getClearEventHandler()).build();
-        final DestroyableLabel modLabel = LabelBuilder.builder().withStyleClass(this.LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("loadout.modification.clear")).build();
+        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS).withImage("/images/modification/cancel.png").withOnMouseClicked(getClearEventHandler()).build();
+        final DestroyableLabel modLabel = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("loadout.modification.clear")).build();
         this.destroyables.add(modSelectImage);
         this.destroyables.add(modLabel);
-        final VBox modVBox = BoxBuilder.builder().withStyleClass(this.LOADOUT_MODIFICATION_STYLE_CLASS).withNodes(modSelectImage, modLabel).buildVBox();
+        final VBox modVBox = BoxBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS).withNodes(modSelectImage, modLabel).buildVBox();
         gridPane.add(modVBox, col, row);
     }
 
@@ -238,17 +216,13 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
             this.popOver.hide(Duration.ZERO);
             this.popOver.setContentNode(null);
             this.popOver = null;
-//            resetPopOver();
         };
     }
 
-//    void resetPopOver() {
-//        this.popOver.setContentNode(createModificationOptionsGrid(this.popOver));
-//    }
 
     @Override
     public void initEventHandling() {
-
+        //NOOP
     }
 
     @Override

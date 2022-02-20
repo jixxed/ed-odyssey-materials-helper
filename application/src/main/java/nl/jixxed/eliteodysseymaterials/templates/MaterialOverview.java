@@ -84,9 +84,9 @@ class MaterialOverview extends VBox {
 
     private void initEventHandling() {
 
-        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event -> {
-            Platform.runLater(() -> this.updateContent(this.currentSearch));
-        });
+        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event ->
+                Platform.runLater(() -> this.updateContent(this.currentSearch))
+        );
         EventService.addListener(this, OrientationChangeEvent.class, orientationChangeEvent -> {
             final Orientation orientation = orientationChangeEvent.getMaterialOrientation().getOrientation();
             this.assetChemicalFlow.setOrientation(orientation);

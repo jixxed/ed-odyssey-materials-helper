@@ -9,10 +9,7 @@ import java.util.Map;
 public interface HorizonsParser {
 
     default void parse(final Iterator<JsonNode> items, final Map<HorizonsMaterial, Integer> storage) {
-        items.forEachRemaining(item ->
-        {
-            parse(item, storage);
-        });
+        items.forEachRemaining(item -> parse(item, storage));
     }
 
     void parse(final JsonNode item, Map<HorizonsMaterial, Integer> storage);

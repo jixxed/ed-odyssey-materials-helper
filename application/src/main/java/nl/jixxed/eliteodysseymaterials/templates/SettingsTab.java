@@ -239,9 +239,9 @@ public class SettingsTab extends EDOTab {
         this.trackingOptOutExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.tracking.opt.out.explain")).build();
         this.trackingOptOutCheckBox = CheckBoxBuilder.builder()
                 .withValue(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, Boolean.FALSE))
-                .withChangeListener((observable, oldValue, newValue) -> {
-                    PreferencesService.setPreference(PreferenceConstants.TRACKING_OPT_OUT, newValue);
-                })
+                .withChangeListener((observable, oldValue, newValue) ->
+                        PreferencesService.setPreference(PreferenceConstants.TRACKING_OPT_OUT, newValue)
+                )
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
@@ -351,9 +351,9 @@ public class SettingsTab extends EDOTab {
         this.overrideSelect = ComboBoxBuilder.builder(Material.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withItemsProperty(materialListBinding)
-                .withValueChangeListener((observable, oldValue, newValue) -> {
-                    this.overrideAddButton.setDisable(newValue == null || this.overrideListView.getItems().contains(newValue));
-                })
+                .withValueChangeListener((observable, oldValue, newValue) ->
+                        this.overrideAddButton.setDisable(newValue == null || this.overrideListView.getItems().contains(newValue))
+                )
                 .asLocalized()
                 .build();
 
@@ -388,12 +388,12 @@ public class SettingsTab extends EDOTab {
         this.overrideListView = new ListView<>();
         final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
         final ObservableList<Material> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        this.overrideListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            this.overrideRemoveButton.setDisable(newValue == null);
-        });
-        this.overrideListView.getItems().addListener((ListChangeListener<Material>) c -> {
-            SettingsTab.this.overrideAddButton.setDisable(SettingsTab.this.overrideListView.getItems().contains(SettingsTab.this.overrideSelect.getSelectionModel().getSelectedItem()));
-        });
+        this.overrideListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                this.overrideRemoveButton.setDisable(newValue == null)
+        );
+        this.overrideListView.getItems().addListener((ListChangeListener<Material>) c ->
+                SettingsTab.this.overrideAddButton.setDisable(SettingsTab.this.overrideListView.getItems().contains(SettingsTab.this.overrideSelect.getSelectionModel().getSelectedItem()))
+        );
         this.overrideListView.setItems(items);
         this.overrideListView.setCellFactory(getCellFactory());
         this.overrideRemoveButton = ButtonBuilder.builder()
@@ -418,16 +418,11 @@ public class SettingsTab extends EDOTab {
 
     private Callback<ListView<Material>, ListCell<Material>> getCellFactory() {
         return listView -> new ListCell<>() {
-            //
-//            @SuppressWarnings("java:S1068")
-//            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(RecipeBar.this, StorageEvent.class, event -> {
-//                updateStyle(getItem());
-//                updateText(getItem(), this.emptyProperty().get());
-//            });
+
             @SuppressWarnings("java:S1068")
-            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(this, LanguageChangedEvent.class, event -> {
-                updateText(getItem(), this.emptyProperty().get());
-            });
+            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(this, LanguageChangedEvent.class, event ->
+                    updateText(getItem(), this.emptyProperty().get())
+            );
 
 
             @Override

@@ -12,6 +12,7 @@ public class LiftOffJournalEvent extends JournalEvent {
     private final Double latitude;
     private final Double longitude;
 
+    @SuppressWarnings("java:S107")
     public LiftOffJournalEvent(final String timeStamp, final String starSystem, final String body, final String nearestDestination, final Boolean playerControlled, final Boolean taxi, final Double latitude, final Double longitude) {
         super(timeStamp);
         this.starSystem = starSystem;

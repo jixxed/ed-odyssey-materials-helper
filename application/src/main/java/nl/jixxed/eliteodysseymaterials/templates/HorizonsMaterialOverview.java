@@ -58,6 +58,6 @@ public class HorizonsMaterialOverview extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-
+        //NOOP
     }
 }

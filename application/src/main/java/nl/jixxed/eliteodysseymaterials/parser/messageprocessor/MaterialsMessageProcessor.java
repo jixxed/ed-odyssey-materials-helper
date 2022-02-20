@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 public class MaterialsMessageProcessor implements MessageProcessor {
 
     @Override
+    @SuppressWarnings("java:S1192")
     public void process(final JsonNode journalMessage) {
         StorageService.resetHorizonsMaterialCounts();
         journalMessage.get("Raw").elements().forEachRemaining(jsonNode -> {
@@ -24,6 +25,6 @@ public class MaterialsMessageProcessor implements MessageProcessor {
             StorageService.addMaterial(horizonsMaterial, jsonNode.get("Count").asInt());
         });
         EventService.publish(new StorageEvent(StoragePool.SHIP));
-        
+
     }
 }

@@ -16,7 +16,6 @@ public class FSDJumpMessageProcessor implements MessageProcessor {
         final String timestamp = asTextOrBlank(journalMessage, "timestamp");
         final String body = asTextOrBlank(journalMessage, "Body");
         final String starSystem = asTextOrBlank(journalMessage, "StarSystem");
-        final String allegiance = asTextOrBlank(journalMessage, "SystemAllegiance");
         final String economy = asTextOrBlank(journalMessage, "SystemEconomy");
         final String secondEconomy = asTextOrBlank(journalMessage, "SystemSecondEconomy");
         final String government = asTextOrBlank(journalMessage, "SystemGovernment");

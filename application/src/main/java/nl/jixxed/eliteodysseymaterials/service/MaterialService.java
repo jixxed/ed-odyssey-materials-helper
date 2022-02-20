@@ -9,6 +9,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -30,9 +32,12 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MaterialService {
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
+    private static final String STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE = "material-tooltip-subtitle";
+    private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -86,16 +91,16 @@ public class MaterialService {
         final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(material);
         //economies
         vBox.getChildren().add(LabelBuilder.builder().build());
-        vBox.getChildren().add(LabelBuilder.builder().withStyleClass("material-tooltip-subtitle").withText(LocaleService.getStringBinding("material.tooltip.statistics.economies")).build());
+        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.economies")).build());
         vBox.getChildren().add(LabelBuilder.builder()
                 .withText(ObservableResourceFactory.getStringBinding(() -> statistic.getEconomies().stream().sorted(Comparator.comparing(EconomyStatistic::getAmount).reversed()).map(economyStatistic -> economyStatistic.getEconomy() + "(" + economyStatistic.getAmount() + ")").collect(Collectors.joining(", ")))).build());
         //most collected
         vBox.getChildren().add(LabelBuilder.builder().build());
-        vBox.getChildren().add(LabelBuilder.builder().withStyleClass("material-tooltip-subtitle").withText(LocaleService.getStringBinding("material.tooltip.statistics.settlements")).build());
+        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.settlements")).build());
         statistic.getMostcollected().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
         //best runs
         vBox.getChildren().add(LabelBuilder.builder().build());
-        vBox.getChildren().add(LabelBuilder.builder().withStyleClass("material-tooltip-subtitle").withText(LocaleService.getStringBinding("material.tooltip.statistics.runs")).build());
+        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.runs")).build());
         statistic.getBestrun().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
 
     }
@@ -104,7 +109,7 @@ public class MaterialService {
         final Double distance = LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ()));
         final String settlement = POIHelper.map(settlementStatistic.getSettlement());
         final Label label = LabelBuilder.builder().withNonLocalizedText(settlementStatistic.getAmount() + " - " + settlement + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + " (" + NUMBER_FORMAT.format(distance) + "Ly) ").build();
-        vBox.getChildren().add(BoxBuilder.builder().withStyleClass("material-tooltip-location-line")
+        vBox.getChildren().add(BoxBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
                 .withOnMouseClicked(event -> {
                     copyLocationToClipboard(settlementStatistic.getSystem());
                     NotificationService.showInformation("Clipboard", "System name copied.");
@@ -138,7 +143,7 @@ public class MaterialService {
     private static void addRecipesToTooltip(final Map<RecipeName, Integer> recipesContainingMaterial, final VBox vBox) {
         if (!recipesContainingMaterial.isEmpty()) {
             vBox.getChildren().add(LabelBuilder.builder().build());
-            vBox.getChildren().add(LabelBuilder.builder().withStyleClass("material-tooltip-subtitle").withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes")).build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes")).build());
             recipesContainingMaterial.entrySet().stream()
                     .sorted(Comparator.comparing(entry -> ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey())))
                     .forEach(entry -> vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()) + " (" + entry.getValue() + ")")).build()));

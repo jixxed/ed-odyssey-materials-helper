@@ -50,9 +50,9 @@ public class MaterialTrackingService {
     private static final Map<Material, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
 
     static {
-        Material.getAllMaterials().forEach(material -> {
-            MATERIAL_STATISTICS.put(material, new MaterialStatistic());
-        });
+        Material.getAllMaterials().forEach(material ->
+                MATERIAL_STATISTICS.put(material, new MaterialStatistic())
+        );
     }
 
     public static synchronized void initialize() {
@@ -89,9 +89,9 @@ public class MaterialTrackingService {
                 log.info("Load material statistics finished");
             } catch (final IOException ex) {
                 log.error("Load material statistics failed", ex);
-                Platform.runLater(() -> {
-                    NotificationService.showError("Error", "Failed to download material statistics.");
-                });
+                Platform.runLater(() ->
+                        NotificationService.showError("Error", "Failed to download material statistics.")
+                );
             }
         }, "Material Statistics Loader Thread").start();
     }
@@ -136,6 +136,7 @@ public class MaterialTrackingService {
         resetSession();
     }
 
+    @SuppressWarnings("java:S5411")
     private static synchronized void publishMaterialTracking(final List<BackpackChangeEvent> backpackChangeEvents) {
         if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode()) && !PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, Boolean.FALSE)) {
             final String appVersion = PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "");
@@ -175,6 +176,8 @@ public class MaterialTrackingService {
                             .build();
                     final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
                     log.info(send.body());
+                } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 } catch (final Exception e) {
                     log.error("publish material tracking error", e);
                 }

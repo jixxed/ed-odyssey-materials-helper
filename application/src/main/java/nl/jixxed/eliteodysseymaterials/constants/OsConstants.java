@@ -7,6 +7,8 @@ import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings({"java:S1104", "java:S1444", "java:S3008"})
 public class OsConstants {
+    private static final String LOCALAPPDATA = "LOCALAPPDATA";
+    private static final String PROGRAMDATA = "PROGRAMDATA";
     private static String USER_HOME;
     public static String DEFAULT_WATCHED_FOLDER;
     public static String PREFERENCES;
@@ -26,11 +28,11 @@ public class OsConstants {
     private static void setWindows() {
         USER_HOME = System.getenv("USERPROFILE");
         DEFAULT_WATCHED_FOLDER = USER_HOME + "\\Saved Games\\Frontier Developments\\Elite Dangerous";
-        PREFERENCES = System.getenv("LOCALAPPDATA") + "\\odyssey-materials-helper\\pref.properties";
-        STATISTICS = System.getenv("LOCALAPPDATA") + "\\odyssey-materials-helper\\material-report.json";
-        CUSTOM_CSS = System.getenv("LOCALAPPDATA") + "\\odyssey-materials-helper\\style.css";
-        OLD_PREFERENCES = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\pref.properties";
-        OLD_CUSTOM_CSS = System.getenv("PROGRAMDATA") + "\\odyssey-materials-helper\\style.css";
+        PREFERENCES = System.getenv(LOCALAPPDATA) + "\\odyssey-materials-helper\\pref.properties";
+        STATISTICS = System.getenv(LOCALAPPDATA) + "\\odyssey-materials-helper\\material-report.json";
+        CUSTOM_CSS = System.getenv(LOCALAPPDATA) + "\\odyssey-materials-helper\\style.css";
+        OLD_PREFERENCES = System.getenv(PROGRAMDATA) + "\\odyssey-materials-helper\\pref.properties";
+        OLD_CUSTOM_CSS = System.getenv(PROGRAMDATA) + "\\odyssey-materials-helper\\style.css";
     }
 
     private static void setLinux() {

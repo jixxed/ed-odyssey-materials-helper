@@ -58,22 +58,11 @@ public class LoadoutEditorTab extends EDOTab implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, AfterFontSizeSetEvent.class, event -> {
-            refreshContent();
-        });
-        EventService.addListener(this, LanguageChangedEvent.class, event -> {
-            refreshContent();
-        });
-        EventService.addListener(this, LoadoutSetSelectedEvent.class, loadoutSetSelectedEvent -> {
-            refreshContent();
-        });
-        EventService.addListener(this, LoadoutRemovedEvent.class, loadoutRemovedEvent -> {
-            refreshContent();
-        });
-        EventService.addListener(this, LoadoutMovedEvent.class, loadoutMovedEvent -> {
-            refreshContent();
-        });
-
+        EventService.addListener(this, AfterFontSizeSetEvent.class, event -> refreshContent());
+        EventService.addListener(this, LanguageChangedEvent.class, event -> refreshContent());
+        EventService.addListener(this, LoadoutSetSelectedEvent.class, loadoutSetSelectedEvent -> refreshContent());
+        EventService.addListener(this, LoadoutRemovedEvent.class, loadoutRemovedEvent -> refreshContent());
+        EventService.addListener(this, LoadoutMovedEvent.class, loadoutMovedEvent -> refreshContent());
         EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
             refreshLoadoutSetSelect();
@@ -132,25 +121,23 @@ public class LoadoutEditorTab extends EDOTab implements Template {
                     }
                 })
                 .build();
-        final Map<String, EventHandler<ActionEvent>> suitMenuItems = Arrays.stream(Suit.values()).collect(Collectors.toMap(Suit::getLocalizationKey, suit -> event -> {
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
-                final Loadout loadout = new Loadout(suit, 1, 5);
-                loadoutSetList.getSelectedLoadoutSet().addLoadout(loadout);
-                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
-                refreshContent();
-            });
-        }));
+        final Map<String, EventHandler<ActionEvent>> suitMenuItems = Arrays.stream(Suit.values()).collect(Collectors.toMap(Suit::getLocalizationKey, suit -> event ->
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                    final Loadout loadout = new Loadout(suit, 1, 5);
+                    loadoutSetList.getSelectedLoadoutSet().addLoadout(loadout);
+                    APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                    refreshContent();
+                })));
         final MenuButton addSuitButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.add.suit")).withMenuItems(suitMenuItems).build();
-        final Map<String, EventHandler<ActionEvent>> weaponMenuItems = Arrays.stream(Weapon.values()).collect(Collectors.toMap(Weapon::getLocalizationKey, weapon -> event -> {
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
-                final Loadout loadout = new Loadout(weapon, 1, 5);
-                loadoutSetList.getSelectedLoadoutSet().addLoadout(loadout);
-                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
-                refreshContent();
-            });
-        }));
+        final Map<String, EventHandler<ActionEvent>> weaponMenuItems = Arrays.stream(Weapon.values()).collect(Collectors.toMap(Weapon::getLocalizationKey, weapon -> event ->
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                    final Loadout loadout = new Loadout(weapon, 1, 5);
+                    loadoutSetList.getSelectedLoadoutSet().addLoadout(loadout);
+                    APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                    refreshContent();
+                })));
         final MenuButton addWeaponButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.add.weapon")).withMenuItems(weaponMenuItems).build();
         this.removeLoadoutSetButton = ButtonBuilder.builder()
                 .withStyleClass(LOADOUT_BUTTON_STYLE_CLASS)
