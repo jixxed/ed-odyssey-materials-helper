@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-public enum Good implements Material {
+public enum Good implements OdysseyMaterial {
     AGRICULTURALPROCESSSAMPLE(false),
     BIOCHEMICALAGENT(true),
     BUILDINGSCHEMATIC(false),

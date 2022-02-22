@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public interface HorizonsMaterial {
+public interface HorizonsMaterial extends Material {
 
-    default OdysseyStorageType getStorageType() {
-        return OdysseyStorageType.OTHER;
+    default HorizonsStorageType getStorageType() {
+        return HorizonsStorageType.OTHER;
     }
 
     static HorizonsMaterial subtypeForName(final String name) {

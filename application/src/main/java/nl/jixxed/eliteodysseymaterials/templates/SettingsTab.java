@@ -63,10 +63,10 @@ public class SettingsTab extends EDOTab {
     private Slider notificationVolumeSlider;
     private Button playNotificationButton;
     private Label overrideLabel;
-    private ComboBox<Material> overrideSelect;
+    private ComboBox<OdysseyMaterial> overrideSelect;
     private Button overrideAddButton;
     private Label overrideListLabel;
-    private ListView<Material> overrideListView;
+    private ListView<OdysseyMaterial> overrideListView;
     private Button overrideRemoveButton;
     private Label trackingOptOutLabel;
     private Label trackingOptOutExplainLabel;
@@ -347,10 +347,10 @@ public class SettingsTab extends EDOTab {
                 .withText(LocaleService.getStringBinding("tab.settings.material.override"))
                 .build();
 
-        final ListBinding<Material> materialListBinding = LocaleService.getListBinding(Material.getAllIrrelevantMaterialsWithoutOverride().toArray(Material[]::new));
-        this.overrideSelect = ComboBoxBuilder.builder(Material.class)
+        final ListBinding<OdysseyMaterial> odysseyMaterialListBinding = LocaleService.getListBinding(OdysseyMaterial.getAllIrrelevantMaterialsWithoutOverride().toArray(OdysseyMaterial[]::new));
+        this.overrideSelect = ComboBoxBuilder.builder(OdysseyMaterial.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
-                .withItemsProperty(materialListBinding)
+                .withItemsProperty(odysseyMaterialListBinding)
                 .withValueChangeListener((observable, oldValue, newValue) ->
                         this.overrideAddButton.setDisable(newValue == null || this.overrideListView.getItems().contains(newValue))
                 )
@@ -363,9 +363,9 @@ public class SettingsTab extends EDOTab {
                 .withOnAction(e -> {
                     if (this.overrideSelect.getSelectionModel().getSelectedItem() != null) {
                         final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
-                        final List<Material> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).collect(Collectors.toList());
+                        final List<OdysseyMaterial> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(OdysseyMaterial::subtypeForName).collect(Collectors.toList());
                         items.add(this.overrideSelect.getSelectionModel().getSelectedItem());
-                        PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, items.stream().map(Material::name).collect(Collectors.joining(",")));
+                        PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, items.stream().map(OdysseyMaterial::name).collect(Collectors.joining(",")));
                         this.overrideListView.getItems().add(this.overrideSelect.getSelectionModel().getSelectedItem());
                         this.overrideAddButton.setDisable(true);
                         EventService.publish(new IrrelevantMaterialOverrideEvent());
@@ -387,11 +387,11 @@ public class SettingsTab extends EDOTab {
                 .build();
         this.overrideListView = new ListView<>();
         final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
-        final ObservableList<Material> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        final ObservableList<OdysseyMaterial> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(OdysseyMaterial::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
         this.overrideListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 this.overrideRemoveButton.setDisable(newValue == null)
         );
-        this.overrideListView.getItems().addListener((ListChangeListener<Material>) c ->
+        this.overrideListView.getItems().addListener((ListChangeListener<OdysseyMaterial>) c ->
                 SettingsTab.this.overrideAddButton.setDisable(SettingsTab.this.overrideListView.getItems().contains(SettingsTab.this.overrideSelect.getSelectionModel().getSelectedItem()))
         );
         this.overrideListView.setItems(items);
@@ -401,9 +401,9 @@ public class SettingsTab extends EDOTab {
                 .withText(LocaleService.getStringBinding("tab.settings.material.override.remove"))
                 .withOnAction(e -> {
                     final String currentIrrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
-                    final ObservableList<Material> currentItems = Arrays.stream(currentIrrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(Material::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
+                    final ObservableList<OdysseyMaterial> currentItems = Arrays.stream(currentIrrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(OdysseyMaterial::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
                     currentItems.remove(this.overrideListView.getSelectionModel().getSelectedItem());
-                    PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, currentItems.stream().map(Material::name).collect(Collectors.joining(",")));
+                    PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, currentItems.stream().map(OdysseyMaterial::name).collect(Collectors.joining(",")));
                     this.overrideListView.getItems().remove(this.overrideListView.getSelectionModel().getSelectedItem());
                     this.overrideAddButton.setDisable(this.overrideSelect.getSelectionModel().getSelectedItem() == null || this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()));
                     EventService.publish(new IrrelevantMaterialOverrideEvent());
@@ -416,7 +416,7 @@ public class SettingsTab extends EDOTab {
                 .buildHBox();
     }
 
-    private Callback<ListView<Material>, ListCell<Material>> getCellFactory() {
+    private Callback<ListView<OdysseyMaterial>, ListCell<OdysseyMaterial>> getCellFactory() {
         return listView -> new ListCell<>() {
 
             @SuppressWarnings("java:S1068")
@@ -426,12 +426,12 @@ public class SettingsTab extends EDOTab {
 
 
             @Override
-            protected void updateItem(final Material item, final boolean empty) {
+            protected void updateItem(final OdysseyMaterial item, final boolean empty) {
                 super.updateItem(item, empty);
                 updateText(item, empty);
             }
 
-            private void updateText(final Material item, final boolean empty) {
+            private void updateText(final OdysseyMaterial item, final boolean empty) {
                 if (empty || item == null) {
                     setText(null);
                     setGraphic(null);
@@ -469,8 +469,8 @@ public class SettingsTab extends EDOTab {
     }
 
     @Override
-    public Tabs getTabType() {
-        return Tabs.SETTINGS;
+    public OdysseyTabs getTabType() {
+        return OdysseyTabs.SETTINGS;
     }
 
 }

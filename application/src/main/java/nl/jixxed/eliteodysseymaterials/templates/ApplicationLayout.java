@@ -14,7 +14,9 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 public class ApplicationLayout extends AnchorPane {
     private BottomBar bottomBar;
-    private ContentArea contentArea;
+    private OdysseyContentArea odysseyContentArea;
+    private HorizonsContentArea horizonsContentArea;
+
     private TabPane tabsMain;
     private Tab odyssey;
     private Tab horizons;
@@ -28,24 +30,28 @@ public class ApplicationLayout extends AnchorPane {
     private void initEventHandling() {
         EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.fontSize.set(fontSizeEvent.getFontSize()));
         EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
-        this.bottomBar.heightProperty().addListener(observable -> AnchorPaneHelper.setAnchor(this.contentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
+        this.bottomBar.heightProperty().addListener(observable -> AnchorPaneHelper.setAnchor(this.odysseyContentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
     }
 
     private void initComponents(final Application application) {
         this.getStyleClass().add("app");
         this.bottomBar = new BottomBar();
         AnchorPaneHelper.setAnchor(this.bottomBar, null, 0.0, 0.0, 0.0);
-        this.contentArea = new ContentArea(application);
+        this.odysseyContentArea = new OdysseyContentArea(application);
+        this.horizonsContentArea = new HorizonsContentArea(application);
         this.odyssey = new Tab();
         this.odyssey.setText("Odyssey");
         this.odyssey.setClosable(false);
-        this.horizons = new HorizonsMaterialOverviewTab();
+        this.horizons = new Tab();
+        this.horizons.setText("Horizons");
+        this.horizons.setClosable(false);
         this.tabsMain = new TabPane(this.odyssey, this.horizons);
         this.tabsMain.getStyleClass().add("tab-main");
         this.tabsMain.setSide(Side.LEFT);
         this.tabsMain.tabMaxWidthProperty().bind(this.tabsMain.heightProperty().divide(2).subtract(this.fontSize.multiply(5.14)));
         this.tabsMain.tabMinWidthProperty().bind(this.tabsMain.heightProperty().divide(2).subtract(this.fontSize.multiply(5.14)));
-        this.odyssey.setContent(this.contentArea);
+        this.odyssey.setContent(this.odysseyContentArea);
+        this.horizons.setContent(this.horizonsContentArea);
         this.getChildren().addAll(this.tabsMain, this.bottomBar);
     }
 }

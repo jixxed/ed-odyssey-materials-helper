@@ -9,7 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.AssetType;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
@@ -112,14 +112,14 @@ class MaterialTotal extends VBox {
         if (OdysseyStorageType.DATA.equals(this.storageType) || OdysseyStorageType.GOOD.equals(this.storageType)) {
             final Integer blueprintTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
                     .filter(material -> (APPLICATION_STATE.getSoloMode())
-                            ? RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) || RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
-                            : RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) || RecipeConstants.isEngineeringIngredient(material.getKey()))
+                            ? BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) || BlueprintConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                            : BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) || BlueprintConstants.isEngineeringIngredient(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
             final Integer irrelevantTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
                     .filter(material -> (APPLICATION_STATE.getSoloMode())
-                            ? !RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) && !RecipeConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
-                            : !RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()) && !RecipeConstants.isEngineeringIngredient(material.getKey()))
+                            ? !BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) && !BlueprintConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                            : !BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) && !BlueprintConstants.isEngineeringIngredient(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
 

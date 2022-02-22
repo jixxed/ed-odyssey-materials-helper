@@ -5,8 +5,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
@@ -51,7 +52,7 @@ class SearchBar extends HBox {
         this.button.getStyleClass().addAll("root", "menubutton");
         this.button.setOnAction(event -> {
             this.button.setText(isRecipeBarVisible() ? ">" : "<");
-            EventService.publish(new MenuButtonClickedEvent());
+            EventService.publish(new MenuButtonClickedEvent(Expansion.ODYSSEY));
         });
     }
 
@@ -63,8 +64,8 @@ class SearchBar extends HBox {
             this.styleProperty().set(fontStyle);
             this.button.styleProperty().set(fontStyle);
         });
-        EventService.addListener(this, TabSelectedEvent.class, event -> {
-            if (Tabs.TRADE.equals(event.getSelectedTab())) {
+        EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
+            if (OdysseyTabs.TRADE.equals(event.getSelectedTab())) {
                 if (this.getChildren().contains(this.materialSearchBar)) {
                     this.getChildren().remove(this.materialSearchBar);
                     this.getChildren().add(this.tradeSearchBar);

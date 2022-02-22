@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
@@ -29,9 +29,9 @@ public class TradeSpec {
     public static final String SHA_KEY = "xt23s778RHY";
     public static final String NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY = "notification.trade.title";
     private final String offerId;
-    private final Material offerMaterial;
+    private final OdysseyMaterial offerOdysseyMaterial;
     private final int offerAmount;
-    private final Material receiveMaterial;
+    private final OdysseyMaterial receiveOdysseyMaterial;
     private final int receiveAmount;
     private final StarSystem starSystem;
     private final TradeType tradeType;
@@ -44,11 +44,11 @@ public class TradeSpec {
     private Optional<Consumer<TradeSpec>> callback = Optional.empty();
 
     @SuppressWarnings("java:S107")
-    public TradeSpec(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final StarSystem starSystem, final TradeType tradeType, final TradeStatus tradeStatus, final String bid, final String acceptedTokenHash, final String ownerHash) {
+    public TradeSpec(final String offerId, final OdysseyMaterial offerOdysseyMaterial, final int offerAmount, final OdysseyMaterial receiveOdysseyMaterial, final int receiveAmount, final StarSystem starSystem, final TradeType tradeType, final TradeStatus tradeStatus, final String bid, final String acceptedTokenHash, final String ownerHash) {
         this.offerId = offerId;
-        this.offerMaterial = offerMaterial;
+        this.offerOdysseyMaterial = offerOdysseyMaterial;
         this.offerAmount = offerAmount;
-        this.receiveMaterial = receiveMaterial;
+        this.receiveOdysseyMaterial = receiveOdysseyMaterial;
         this.receiveAmount = receiveAmount;
         this.starSystem = starSystem;
         this.tradeType = tradeType;

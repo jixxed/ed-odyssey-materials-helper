@@ -3,7 +3,7 @@ package nl.jixxed.eliteodysseymaterials.service.event;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
 
 /**
@@ -14,7 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Operation;
 @Getter
 public class BackpackChangeEvent implements Event {
     private final String timestamp;
-    private final Material material;
+    private final OdysseyMaterial odysseyMaterial;
     private final Integer amount;
     private final Operation operation;
     private final String commander;

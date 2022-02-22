@@ -48,7 +48,7 @@ public class TimeStampedGameStateWatcher {
 
     public void stop() {
         this.gameStateWatcher.stop();
-        EventService.removeListener(this.eventConsumer);
+        EventService.removeListener(this.eventConsumer, this.storagePool == StoragePool.SHIPLOCKER ? ShipLockerEvent.class : BackpackEvent.class);
     }
 
     @SuppressWarnings("java:S1192")

@@ -17,7 +17,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialShow;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialSort;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -132,8 +132,8 @@ class MaterialSearchBar extends HBox {
             this.textField.styleProperty().set(fontStyle);
             this.sortMaterialsComboBox.styleProperty().set(fontStyle);
         });
-        EventService.addListener(this, TabSelectedEvent.class, event -> {
-            if (Tabs.OVERVIEW.equals(event.getSelectedTab())) {
+        EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
+            if (OdysseyTabs.OVERVIEW.equals(event.getSelectedTab())) {
                 this.textField.setDisable(false);
                 this.showMaterialsComboBox.setDisable(false);
                 this.sortMaterialsComboBox.setDisable(false);

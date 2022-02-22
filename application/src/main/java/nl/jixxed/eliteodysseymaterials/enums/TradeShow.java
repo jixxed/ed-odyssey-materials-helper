@@ -25,7 +25,7 @@ public enum TradeShow {
     public static Predicate<TradeSpec> getFilter(final TradeSearch search) {
         return switch (search.getTradeShow()) {
             case ALL -> (TradeSpec o) -> true;
-            case CAN_TRADE -> (TradeSpec o) -> !o.getTradeType().equals(TradeType.REQUEST) || o.getOfferAmount() <= StorageService.getMaterials(o.getOfferMaterial().getStorageType()).get(o.getOfferMaterial()).getTotalValue();
+            case CAN_TRADE -> (TradeSpec o) -> !o.getTradeType().equals(TradeType.REQUEST) || o.getOfferAmount() <= StorageService.getMaterials(o.getOfferOdysseyMaterial().getStorageType()).get(o.getOfferOdysseyMaterial()).getTotalValue();
             case ACTIVE -> (TradeSpec o) -> !o.getTradeType().equals(TradeType.REQUEST) || o.isBidFromMe();
         };
     }

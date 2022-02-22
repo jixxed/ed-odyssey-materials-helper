@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -24,12 +24,12 @@ public enum MaterialSort {
     }
 
     @SuppressWarnings("java:S1452")
-    public static Comparator<Map.Entry<? extends Material, Storage>> getSort(final Search search) {
+    public static Comparator<Map.Entry<? extends OdysseyMaterial, Storage>> getSort(final Search search) {
         return switch (search.getMaterialSort()) {
-            case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
-            case QUANTITY -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> o.getValue().getTotalValue()).reversed();
-            case RELEVANT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey()) || RecipeConstants.isBlueprintIngredientWithOverride(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
-            case ENGINEER_BLUEPRINT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isEngineeringIngredient(o.getKey())).thenComparing((Map.Entry<? extends Material, Storage> o) -> RecipeConstants.isBlueprintIngredientWithOverride(o.getKey())).reversed().thenComparing((Map.Entry<? extends Material, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
+            case ALPHABETICAL -> Comparator.comparing((Map.Entry<? extends OdysseyMaterial, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
+            case QUANTITY -> Comparator.comparing((Map.Entry<? extends OdysseyMaterial, Storage> o) -> o.getValue().getTotalValue()).reversed();
+            case RELEVANT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isEngineeringIngredient(o.getKey()) || BlueprintConstants.isBlueprintIngredientWithOverride(o.getKey())).reversed().thenComparing((Map.Entry<? extends OdysseyMaterial, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
+            case ENGINEER_BLUEPRINT_IRRELEVANT -> Comparator.comparing((Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isEngineeringIngredient(o.getKey())).thenComparing((Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isBlueprintIngredientWithOverride(o.getKey())).reversed().thenComparing((Map.Entry<? extends OdysseyMaterial, Storage> o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()));
         };
     }
 }

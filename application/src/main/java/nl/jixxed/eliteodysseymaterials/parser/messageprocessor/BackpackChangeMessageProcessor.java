@@ -2,12 +2,12 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.enums.Consumable;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
@@ -44,11 +44,11 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
         publishBackpackChangeEvents(removed, Operation.REMOVED, timestamp);
         if (added != null && !added.isEmpty()) {
             StreamSupport.stream(added.spliterator(), false)
-                    .map(jsonNode -> Material.subtypeForName(jsonNode.get("Name").asText()))
+                    .map(jsonNode -> OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText()))
                     .filter(material -> !(material instanceof Consumable))
                     .forEach(material -> {
-                        if ((APPLICATION_STATE.getSoloMode() && RecipeConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
-                                || (!APPLICATION_STATE.getSoloMode() && !RecipeConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
+                        if ((APPLICATION_STATE.getSoloMode() && BlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
+                                || (!APPLICATION_STATE.getSoloMode() && !BlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
                             NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
                         }
                     });
@@ -63,7 +63,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
     private BackpackChangeEvent createEvent(final Operation operation, final JsonNode jsonNode, final String timestamp) {
         final Location currentLocation = LocationService.getCurrentLocation();
         return BackpackChangeEvent.builder()
-                .material(Material.subtypeForName(jsonNode.get("Name").asText()))
+                .odysseyMaterial(OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText()))
                 .amount(jsonNode.get("Count").asInt())
                 .operation(operation)
                 .timestamp(timestamp)

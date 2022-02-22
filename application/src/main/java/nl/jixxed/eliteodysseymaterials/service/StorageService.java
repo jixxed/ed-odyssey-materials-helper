@@ -34,24 +34,24 @@ public class StorageService {
         initCounts();
     }
 
-    public static Map<Material, Storage> getMaterials(final OdysseyStorageType storageType) {
-        return (Map<Material, Storage>) switch (storageType) {
+    public static Map<OdysseyMaterial, Storage> getMaterials(final OdysseyStorageType storageType) {
+        return (Map<OdysseyMaterial, Storage>) switch (storageType) {
             case GOOD -> goods;
             case DATA -> data;
             case ASSET -> assets;
-            case TRADE -> Map.of(TradeMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeMaterial.NOTHING, new Storage(0, 0));
+            case TRADE -> Map.of(TradeOdysseyMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeOdysseyMaterial.NOTHING, new Storage(0, 0));
             case CONSUMABLE -> Collections.emptyMap();
             case OTHER -> consumables;
         };
     }
 
-    public static Storage getMaterialStorage(final Material material) {
-        if (material instanceof Good) {
-            return goods.get(material);
-        } else if (material instanceof Asset) {
-            return assets.get(material);
-        } else if (material instanceof Data) {
-            return data.get(material);
+    public static Storage getMaterialStorage(final OdysseyMaterial odysseyMaterial) {
+        if (odysseyMaterial instanceof Good) {
+            return goods.get(odysseyMaterial);
+        } else if (odysseyMaterial instanceof Asset) {
+            return assets.get(odysseyMaterial);
+        } else if (odysseyMaterial instanceof Data) {
+            return data.get(odysseyMaterial);
         }
         throw new IllegalArgumentException("Unknown material type");
     }

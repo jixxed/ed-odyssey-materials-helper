@@ -2,9 +2,9 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
-import nl.jixxed.eliteodysseymaterials.enums.TradeMaterial;
+import nl.jixxed.eliteodysseymaterials.enums.TradeOdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
@@ -16,8 +16,8 @@ class TradeIngredient extends MaterialIngredient {
     private static final String INGREDIENT_UNFILLED_CLASS = "trade-ingredient-unfilled";
     private final Boolean isGiven;
 
-    TradeIngredient(final OdysseyStorageType storageType, final Material material, final Integer amountAvailable, final Integer tradeAmount, final boolean isGiven) {
-        super(storageType, material, amountAvailable, tradeAmount);
+    TradeIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountAvailable, final Integer tradeAmount, final boolean isGiven) {
+        super(storageType, odysseyMaterial, amountAvailable, tradeAmount);
         this.isGiven = isGiven;
         initComponents();
         initEventHandling();
@@ -26,14 +26,14 @@ class TradeIngredient extends MaterialIngredient {
     @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("trade-ingredient");
-        setLeftDescriptionLabel(LocaleService.getStringBinding("recipe.header.available"));
+        setLeftDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
         if (Boolean.TRUE.equals(this.isGiven)) {
-            setRightDescriptionLabel(LocaleService.getStringBinding("recipe.header.give"));
+            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.give"));
         } else {
-            setRightDescriptionLabel(LocaleService.getStringBinding("recipe.header.receive"));
+            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.receive"));
         }
 
-        final boolean isNothing = getMaterial().equals(TradeMaterial.NOTHING);
+        final boolean isNothing = getOdysseyMaterial().equals(TradeOdysseyMaterial.NOTHING);
         getLeftAmountLabel().setVisible(!isNothing);
         getRightAmountLabel().setVisible(!isNothing);
         getLeftDescriptionLabel().setVisible(!isNothing);

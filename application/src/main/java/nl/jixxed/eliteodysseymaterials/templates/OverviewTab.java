@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.control.ScrollPane;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 public class OverviewTab extends EDOTab {
@@ -29,7 +29,7 @@ public class OverviewTab extends EDOTab {
 
 
     @Override
-    public Tabs getTabType() {
-        return Tabs.OVERVIEW;
+    public OdysseyTabs getTabType() {
+        return OdysseyTabs.OVERVIEW;
     }
 }

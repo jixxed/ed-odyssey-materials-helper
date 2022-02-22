@@ -11,8 +11,9 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
+import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -32,7 +33,7 @@ public class MaterialIngredient extends Ingredient {
     @EqualsAndHashCode.Include
     private final OdysseyStorageType storageType;
     @EqualsAndHashCode.Include
-    private final Material material;
+    private final OdysseyMaterial odysseyMaterial;
     private final Integer leftAmount;
     private Integer rightAmount;
 
@@ -51,13 +52,13 @@ public class MaterialIngredient extends Ingredient {
     List<EventListener<?>> eventListeners = new ArrayList<>();
 
 
-    MaterialIngredient(final OdysseyStorageType storageType, final Material material, final Integer leftAmount, final Integer rightAmount) {
+    MaterialIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer leftAmount, final Integer rightAmount) {
         if (storageType.equals(OdysseyStorageType.OTHER)) {
             throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }
         this.storageType = storageType;
         this.leftAmount = leftAmount;
-        this.material = material;
+        this.odysseyMaterial = odysseyMaterial;
         this.rightAmount = rightAmount;
         initComponents();
         initEventHandling();
@@ -68,13 +69,13 @@ public class MaterialIngredient extends Ingredient {
     }
 
     private void initComponents() {
-        this.nameLabel = LabelBuilder.builder().withStyleClass("ingredient-name").withText(LocaleService.getStringBinding(this.material.getLocalizationKey())).build();
+        this.nameLabel = LabelBuilder.builder().withStyleClass("ingredient-name").withText(LocaleService.getStringBinding(this.odysseyMaterial.getLocalizationKey())).build();
         initImage();
 
         this.leftAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-required").build();
         this.rightAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-available").build();
-        this.leftDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("recipe.header.required")).build();
-        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("recipe.header.available")).build();
+        this.leftDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.required")).build();
+        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.available")).build();
 
         this.leftHBox = BoxBuilder.builder().withNodes(this.leftDescriptionLabel, this.leftAmountLabel).withStyleClass("ingredient-quantity-section").buildHBox();
         this.rightHBox = BoxBuilder.builder().withNodes(this.rightAmountLabel, this.rightDescriptionLabel).withStyleClass("ingredient-quantity-section").buildHBox();
@@ -90,7 +91,7 @@ public class MaterialIngredient extends Ingredient {
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
-        MaterialService.addMaterialInfoPopOver(this, this.material);
+        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial);
         this.getStyleClass().add("ingredient");
 
         update();
@@ -103,7 +104,7 @@ public class MaterialIngredient extends Ingredient {
             case DATA -> imageViewBuilder.withImage("/images/material/data.png");
             case GOOD -> imageViewBuilder.withImage("/images/material/good.png");
             case ASSET -> {
-                switch (((Asset) this.material).getType()) {
+                switch (((Asset) this.odysseyMaterial).getType()) {
                     case TECH -> imageViewBuilder.withImage("/images/material/tech.png");
                     case CIRCUIT -> imageViewBuilder.withImage("/images/material/circuit.png");
                     case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");
@@ -122,7 +123,7 @@ public class MaterialIngredient extends Ingredient {
 
 
     protected void update() {
-        setRightAmount(StorageService.getMaterials(this.storageType).get(this.material).getTotalValue());
+        setRightAmount(StorageService.getMaterials(this.storageType).get(this.odysseyMaterial).getTotalValue());
         if (this.rightAmount >= this.leftAmount) {
             this.rightAmountLabel.setText(this.rightAmount.toString());
             this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
@@ -135,7 +136,7 @@ public class MaterialIngredient extends Ingredient {
     }
 
     @Override
-    public OdysseyStorageType getType() {
+    public StorageType getType() {
         return this.storageType;
     }
 
@@ -144,8 +145,8 @@ public class MaterialIngredient extends Ingredient {
         return this.nameLabel.getText();
     }
 
-    public Material getMaterial() {
-        return this.material;
+    public OdysseyMaterial getOdysseyMaterial() {
+        return this.odysseyMaterial;
     }
 
     Label getLeftAmountLabel() {

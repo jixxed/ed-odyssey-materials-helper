@@ -12,6 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -255,7 +256,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
 
         this.getChildren().addAll(statsLine, this.stats);
         if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
-            this.addToWishlist = MenuButtonBuilder.builder().withStyleClass("loadout-wishlist-button").withText(LocaleService.getStringBinding("recipe.add.to.wishlist")).build();
+            this.addToWishlist = MenuButtonBuilder.builder().withStyleClass("loadout-wishlist-button").withText(LocaleService.getStringBinding("blueprint.add.to.wishlist")).build();
             final Label warning = LabelBuilder.builder().withStyleClass("loadout-warning").withText(LocaleService.getStringBinding("loadout.equipment.warning")).withVisibilityProperty(isValidProperty()).build();
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
             final Region region1 = new Region();
@@ -286,8 +287,8 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
             final DestroyableMenuItem menuItem = new DestroyableMenuItem();
             menuItem.setOnAction(event -> {
-                final List<WishlistRecipe> wishlistRecipes = getRequiredWishlistRecipes();
-                EventService.publish(new WishlistRecipeEvent(commander.getFid(), wishlist.getUuid(), wishlistRecipes, Action.ADDED));
+                final List<WishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
+                EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
             });
             menuItem.setText(wishlist.getName());
             return menuItem;
@@ -296,17 +297,17 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         return wishlists;
     }
 
-    private List<WishlistRecipe> getRequiredWishlistRecipes() {
+    private List<WishlistBlueprint> getRequiredWishlistRecipes() {
         final LevelValue recipes = this.loadout.getEquipment().getRecipes();
-        final List<WishlistRecipe> wishlistRecipes = new ArrayList<>();
+        final List<WishlistBlueprint> wishlistBlueprints = new ArrayList<>();
         for (int level = this.loadout.getCurrentLevel() + 1; level <= this.loadout.getTargetLevel(); level++) {
             final Object recipe = recipes.getValueForLevel(level);
-            if (!RecipeName.NONE.equals(recipe)) {
-                wishlistRecipes.add(new WishlistRecipe((RecipeName) recipe, true));
+            if (!BlueprintName.NONE.equals(recipe)) {
+                wishlistBlueprints.add(new WishlistBlueprint((BlueprintName) recipe, true));
             }
         }
-        wishlistRecipes.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification != null && !WeaponModification.NONE.equals(modification)).map(modification -> new WishlistRecipe(modification.getRecipe(), true)).toList());
-        return wishlistRecipes;
+        wishlistBlueprints.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification != null && !WeaponModification.NONE.equals(modification)).map(modification -> new WishlistBlueprint(modification.getRecipe(), true)).toList());
+        return wishlistBlueprints;
     }
 
     private void updateStatsList() {

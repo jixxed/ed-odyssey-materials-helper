@@ -14,10 +14,10 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 class EngineerCard extends VBox {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final Function<RecipeName, HBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
+    private static final Function<BlueprintName, HBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
             .withNodes(LabelBuilder.builder()
                             .withStyleClass("engineer-bullet")
                             .withNonLocalizedText("\u2022")
@@ -120,12 +120,12 @@ class EngineerCard extends VBox {
                         .withNodes(LabelBuilder.builder()
                                         .withStyleClass("engineer-bullet")
                                         .withNonLocalizedText(Boolean.TRUE.equals((prerequisite.isCompleted())) ? "\u2714" : "\u2022")
-                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getRecipeName())))
+                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getBlueprintName())))
                                         .build(),
                                 LabelBuilder.builder()
                                         .withStyleClass("engineer-prerequisite")
                                         .withText(LocaleService.getStringBinding(prerequisite.getLocalisationKey()))
-                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getRecipeName())))
+                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(prerequisite.getBlueprintName())))
                                         .build()).buildHBox())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -138,19 +138,19 @@ class EngineerCard extends VBox {
     }
 
     private List<HBox> getWeaponBlueprints() {
-        return RecipeConstants.getWeaponModuleBlueprints().entrySet().stream()
+        return BlueprintConstants.getWeaponModuleBlueprints().entrySet().stream()
                 .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
                 .map(Map.Entry::getKey)
-                .sorted(Comparator.comparing(RecipeName::name))
+                .sorted(Comparator.comparing(BlueprintName::name))
                 .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private List<HBox> getSuitBlueprints() {
-        return RecipeConstants.getSuitModuleBlueprints().entrySet().stream()
+        return BlueprintConstants.getSuitModuleBlueprints().entrySet().stream()
                 .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
                 .map(Map.Entry::getKey)
-                .sorted(Comparator.comparing(RecipeName::name))
+                .sorted(Comparator.comparing(BlueprintName::name))
                 .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -229,7 +229,7 @@ class EngineerCard extends VBox {
         return LabelBuilder.builder()
                 .withStyleClass("engineer-name")
                 .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
-                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(RecipeName.forEngineer(this.engineer))))
+                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(BlueprintName.forEngineer(this.engineer))))
                 .build();
     }
 

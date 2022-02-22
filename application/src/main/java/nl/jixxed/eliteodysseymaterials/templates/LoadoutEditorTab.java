@@ -18,8 +18,8 @@ import nl.jixxed.eliteodysseymaterials.domain.Loadout;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSetList;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.enums.Suit;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
 import nl.jixxed.eliteodysseymaterials.enums.Weapon;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
@@ -52,8 +52,8 @@ public class LoadoutEditorTab extends EDOTab implements Template {
     }
 
     @Override
-    public Tabs getTabType() {
-        return Tabs.LOADOUT;
+    public OdysseyTabs getTabType() {
+        return OdysseyTabs.LOADOUT;
     }
 
     @Override

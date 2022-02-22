@@ -15,7 +15,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -28,7 +28,7 @@ public class ImportTab extends EDOTab {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    public static final String ERROR_IMPORT_STRING_IS_EMPTY = "import string is empty";
+    private static final String ERROR_IMPORT_STRING_IS_EMPTY = "import string is empty";
     private ScrollPane scrollPane;
     private TextArea textAreaWishlist;
     private Button buttonWishlist;
@@ -160,7 +160,7 @@ public class ImportTab extends EDOTab {
     }
 
     @Override
-    public Tabs getTabType() {
-        return Tabs.ENGINEERS;
+    public OdysseyTabs getTabType() {
+        return OdysseyTabs.ENGINEERS;
     }
 }

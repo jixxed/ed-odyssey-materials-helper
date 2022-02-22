@@ -26,8 +26,8 @@ public enum TradeSort {
 
     public static Comparator<TradeSpec> getSort(final TradeSearch search) {
         return switch (search.getTradeSort()) {
-            case NAME_OFFER -> Comparator.comparing((TradeSpec o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getOfferMaterial().getLocalizationKey()));
-            case NAME_RECEIVE -> Comparator.comparing((TradeSpec o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getReceiveMaterial().getLocalizationKey()));
+            case NAME_OFFER -> Comparator.comparing((TradeSpec o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getOfferOdysseyMaterial().getLocalizationKey()));
+            case NAME_RECEIVE -> Comparator.comparing((TradeSpec o) -> LocaleService.getLocalizedStringForCurrentLocale(o.getReceiveOdysseyMaterial().getLocalizationKey()));
             case QUANTITY_OFFER -> Comparator.comparing(TradeSpec::getOfferAmount).reversed();
             case QUANTITY_RECEIVE -> Comparator.comparing(TradeSpec::getReceiveAmount).reversed();
         };

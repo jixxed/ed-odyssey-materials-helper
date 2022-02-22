@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-public enum Data implements Material {
+public enum Data implements OdysseyMaterial {
     ACCIDENTLOGS(false, 3),
     AIRQUALITYREPORTS(false, 3),
     ATMOSPHERICDATA(false, 5),

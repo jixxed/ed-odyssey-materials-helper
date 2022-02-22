@@ -10,11 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
-import nl.jixxed.eliteodysseymaterials.enums.TradeMaterial;
+import nl.jixxed.eliteodysseymaterials.enums.TradeOdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -57,11 +57,11 @@ class TradeCreateBlock extends VBox {
     }
 
     private void initComponents() {
-        final List<Material> tradeMaterials = new ArrayList<>();
-        tradeMaterials.add(TradeMaterial.NOTHING);
-        tradeMaterials.add(TradeMaterial.ANY_RELEVANT);
-        tradeMaterials.addAll(Material.getAllRelevantMaterialsWithoutOverride());
-        final ListBinding<String> materialListBinding = LocaleService.getListBinding(() -> tradeMaterials.stream().map(material -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey())).toArray(String[]::new));
+        final List<OdysseyMaterial> tradeOdysseyMaterials = new ArrayList<>();
+        tradeOdysseyMaterials.add(TradeOdysseyMaterial.NOTHING);
+        tradeOdysseyMaterials.add(TradeOdysseyMaterial.ANY_RELEVANT);
+        tradeOdysseyMaterials.addAll(OdysseyMaterial.getAllRelevantMaterialsWithoutOverride());
+        final ListBinding<String> materialListBinding = LocaleService.getListBinding(() -> tradeOdysseyMaterials.stream().map(material -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey())).toArray(String[]::new));
         this.offer = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-offer")
                 .withText(LocaleService.getStringBinding("trade.create.offer"))
@@ -74,18 +74,18 @@ class TradeCreateBlock extends VBox {
         this.offerAmount = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-offer-amount")
                 .withText(LocaleService.getStringBinding("trade.create.amount"))
-                .withVisibilityProperty(this.offerItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey())))
+                .withVisibilityProperty(this.offerItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeOdysseyMaterial.NOTHING.getLocalizationKey())))
                 .build();
         this.maxOfferAmount = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-max-offer-amount")
                 .withText(LocaleService.getStringBinding("trade.create.max", 0))
-                .withVisibilityProperty(this.offerItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey())))
+                .withVisibilityProperty(this.offerItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeOdysseyMaterial.NOTHING.getLocalizationKey())))
                 .build();
         this.offerAmountInput = IntFieldBuilder.builder()
                 .withMinValue(1)
                 .withMaxValue(1000)
                 .withInitialValue(1)
-                .withVisibilityProperty(this.offerItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey())))
+                .withVisibilityProperty(this.offerItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeOdysseyMaterial.NOTHING.getLocalizationKey())))
                 .build();
         this.offerItems.getSelectionModel().selectedItemProperty().addListener(getOfferItemsChangeListener());
         this.receive = LabelBuilder.builder()
@@ -100,13 +100,13 @@ class TradeCreateBlock extends VBox {
         this.receiveAmount = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-receive-amount")
                 .withText(LocaleService.getStringBinding("trade.create.amount"))
-                .withVisibilityProperty(this.receiveItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey())))
+                .withVisibilityProperty(this.receiveItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeOdysseyMaterial.NOTHING.getLocalizationKey())))
                 .build();
         this.receiveAmountInput = IntFieldBuilder.builder()
                 .withMinValue(1)
                 .withMaxValue(1000)
                 .withInitialValue(1)
-                .withVisibilityProperty(this.receiveItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey())))
+                .withVisibilityProperty(this.receiveItems.selectionModelProperty().getValue().selectedItemProperty().isNotEqualTo(LocaleService.getLocalizedStringForCurrentLocale(TradeOdysseyMaterial.NOTHING.getLocalizationKey())))
                 .build();
 
         this.newTradeLabel = LabelBuilder.builder()
@@ -115,11 +115,11 @@ class TradeCreateBlock extends VBox {
                 .build();
         this.createTradeButton = ButtonBuilder.builder().withOnAction(event -> {
             if (validate()) {
-                final Material offerMaterial = Material.forLocalizedName(this.offerItems.getValue());
-                final int offerAmountValue = TradeMaterial.NOTHING.equals(offerMaterial) ? 0 : this.offerAmountInput.getValue();
-                final Material receiveMaterial = Material.forLocalizedName(this.receiveItems.getValue());
-                final int receiveAmountValue = TradeMaterial.NOTHING.equals(receiveMaterial) ? 0 : this.receiveAmountInput.getValue();
-                this.marketPlaceClient.publishOffer(offerMaterial, offerAmountValue, receiveMaterial, receiveAmountValue);
+                final OdysseyMaterial offerOdysseyMaterial = OdysseyMaterial.forLocalizedName(this.offerItems.getValue());
+                final int offerAmountValue = TradeOdysseyMaterial.NOTHING.equals(offerOdysseyMaterial) ? 0 : this.offerAmountInput.getValue();
+                final OdysseyMaterial receiveOdysseyMaterial = OdysseyMaterial.forLocalizedName(this.receiveItems.getValue());
+                final int receiveAmountValue = TradeOdysseyMaterial.NOTHING.equals(receiveOdysseyMaterial) ? 0 : this.receiveAmountInput.getValue();
+                this.marketPlaceClient.publishOffer(offerOdysseyMaterial, offerAmountValue, receiveOdysseyMaterial, receiveAmountValue);
                 clearCreateTrade();
             }
         }).withText(LocaleService.getStringBinding("create.trade.offer.button")).build();
@@ -138,16 +138,16 @@ class TradeCreateBlock extends VBox {
     private ChangeListener<String> getOfferItemsChangeListener() {
         return (observable, oldValue, newValue) -> {
             try {
-                final Material offerMaterial = Material.forLocalizedName(this.offerItems.getValue());
+                final OdysseyMaterial offerOdysseyMaterial = OdysseyMaterial.forLocalizedName(this.offerItems.getValue());
                 final int maxOfferAmountValue;
-                if (TradeMaterial.NOTHING.equals(offerMaterial)) {
+                if (TradeOdysseyMaterial.NOTHING.equals(offerOdysseyMaterial)) {
                     maxOfferAmountValue = 0;
-                } else if (TradeMaterial.ANY_RELEVANT.equals(offerMaterial)) {
+                } else if (TradeOdysseyMaterial.ANY_RELEVANT.equals(offerOdysseyMaterial)) {
                     maxOfferAmountValue = getRelevantMaterialsTotal();
                 } else {
-                    maxOfferAmountValue = StorageService.getMaterials(offerMaterial.getStorageType()).get(offerMaterial).getTotalValue();
+                    maxOfferAmountValue = StorageService.getMaterials(offerOdysseyMaterial.getStorageType()).get(offerOdysseyMaterial).getTotalValue();
                 }
-                if (!TradeMaterial.NOTHING.equals(offerMaterial)) {
+                if (!TradeOdysseyMaterial.NOTHING.equals(offerOdysseyMaterial)) {
                     this.offerAmountInput.setMaxValue(maxOfferAmountValue);
                     if (this.offerAmountInput.getValue() > maxOfferAmountValue) {
                         this.offerAmountInput.setValue(maxOfferAmountValue);
@@ -165,7 +165,7 @@ class TradeCreateBlock extends VBox {
         Integer total = 0;
         for (final OdysseyStorageType storageType : List.of(OdysseyStorageType.DATA, OdysseyStorageType.GOOD, OdysseyStorageType.ASSET)) {
             total += StorageService.getMaterials(storageType).entrySet().stream()
-                    .filter(material -> RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()))
+                    .filter(material -> BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
         }
@@ -174,8 +174,8 @@ class TradeCreateBlock extends VBox {
 
     private boolean validate() {
         try {
-            final Material offerItem = Material.forLocalizedName(this.offerItems.getValue());
-            final Material receiveItem = Material.forLocalizedName(this.receiveItems.getValue());
+            final OdysseyMaterial offerItem = OdysseyMaterial.forLocalizedName(this.offerItems.getValue());
+            final OdysseyMaterial receiveItem = OdysseyMaterial.forLocalizedName(this.receiveItems.getValue());
             if (Objects.equals(offerItem, receiveItem)) {
                 NotificationService.showError(LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.offer"), LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.duplicate"));
                 return false;
@@ -189,8 +189,8 @@ class TradeCreateBlock extends VBox {
     }
 
     private void clearCreateTrade() {
-        this.offerItems.getSelectionModel().select(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey()));
-        this.receiveItems.getSelectionModel().select(LocaleService.getLocalizedStringForCurrentLocale(TradeMaterial.NOTHING.getLocalizationKey()));
+        this.offerItems.getSelectionModel().select(LocaleService.getLocalizedStringForCurrentLocale(TradeOdysseyMaterial.NOTHING.getLocalizationKey()));
+        this.receiveItems.getSelectionModel().select(LocaleService.getLocalizedStringForCurrentLocale(TradeOdysseyMaterial.NOTHING.getLocalizationKey()));
         this.offerAmountInput.setValue(1);
         this.receiveAmountInput.setValue(1);
     }

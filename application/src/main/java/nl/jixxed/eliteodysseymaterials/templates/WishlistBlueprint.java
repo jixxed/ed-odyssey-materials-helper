@@ -11,15 +11,14 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
-import nl.jixxed.eliteodysseymaterials.domain.Recipe;
-import nl.jixxed.eliteodysseymaterials.domain.WishlistRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
+import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
+import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
+import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Craftability;
-import nl.jixxed.eliteodysseymaterials.enums.RecipeCategory;
-import nl.jixxed.eliteodysseymaterials.enums.RecipeName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -37,9 +36,9 @@ public class WishlistBlueprint extends HBox {
 
     private boolean visible;
     private final Integer sequenceID;
-    private final WishlistRecipe wishlistRecipe;
-    private final RecipeCategory recipeCategory;
-    private final Recipe recipe;
+    private final nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint wishlistBlueprint;
+    private final BlueprintCategory blueprintCategory;
+    private final Blueprint blueprint;
     private final String wishlistUUID;
 
     private Button visibilityButton;
@@ -51,12 +50,12 @@ public class WishlistBlueprint extends HBox {
     private EventListener<StorageEvent> storageEventEventListener;
     private Tooltip tooltip;
 
-    public WishlistBlueprint(final String wishlistUUID, final WishlistRecipe wishlistRecipe) {
+    public WishlistBlueprint(final String wishlistUUID, final nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
-        this.wishlistRecipe = wishlistRecipe;
+        this.wishlistBlueprint = wishlistBlueprint;
         this.sequenceID = counter++;
-        this.recipeCategory = RecipeConstants.getRecipeCategory(wishlistRecipe.getRecipeName());
-        this.recipe = RecipeConstants.getRecipe(wishlistRecipe.getRecipeName());
+        this.blueprintCategory = BlueprintConstants.getRecipeCategory(wishlistBlueprint.getRecipeName());
+        this.blueprint = BlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName());
         initComponents();
         initEventHandling();
     }
@@ -71,14 +70,14 @@ public class WishlistBlueprint extends HBox {
                 .withOnAction(event -> setVisibility(!this.visible))
                 .withGraphic(this.visibilityImage)
                 .build();
-        setVisibility(this.wishlistRecipe.isVisible());
+        setVisibility(this.wishlistBlueprint.isVisible());
 
         this.wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("wishlist-label")
-                .withText(LocaleService.getStringBinding(this.wishlistRecipe.getRecipeName().getLocalizationKey()))
-                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.wishlistRecipe.getRecipeName())))
+                .withText(LocaleService.getStringBinding(this.wishlistBlueprint.getRecipeName().getLocalizationKey()))
+                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.wishlistBlueprint.getRecipeName())))
                 .withHoverProperty((observable, oldValue, newValue) -> {
-                    this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.recipe.getRequiredAmount(wishlistIngredient.getMaterial())));
+                    this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.blueprint.getRequiredAmount(wishlistIngredient.getOdysseyMaterial())));
                     this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
                     this.highlight(newValue);
                 })
@@ -93,7 +92,7 @@ public class WishlistBlueprint extends HBox {
         this.getStyleClass().add("wishlist-item");
 
 
-        if (this.recipe instanceof ModuleRecipe moduleRecipe) {
+        if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
             this.tooltip = TooltipBuilder.builder()
                     .withText(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"))
                     .withShowDelay(Duration.millis(100))
@@ -107,7 +106,7 @@ public class WishlistBlueprint extends HBox {
 
     public void remove() {
         EventService.removeListener(this.storageEventEventListener);
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistRecipe), Action.REMOVED)));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
     }
 
     private void initFadeTransition() {
@@ -137,12 +136,12 @@ public class WishlistBlueprint extends HBox {
         this.wishlistRecipeName.getStyleClass().removeAll("wishlist-craftable", "wishlist-craftable-with-trade");
         if (Craftability.CRAFTABLE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable");
-            if (this.recipe instanceof ModuleRecipe moduleRecipe) {
+            if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
                 this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"));
             }
         } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable-with-trade");
-            if (this.recipe instanceof ModuleRecipe moduleRecipe) {
+            if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
                 this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip.craftable"));
             }
         }
@@ -151,32 +150,32 @@ public class WishlistBlueprint extends HBox {
     void addWishlistIngredients(final List<WishlistIngredient> wishlistIngredients) {
         this.wishlistIngredients.clear();
         this.otherIngredients.clear();
-        this.wishlistIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> this.recipe.hasIngredient(wishlistIngredient.getMaterial())).collect(Collectors.toSet()));
-        this.otherIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> !this.recipe.hasIngredient(wishlistIngredient.getMaterial())).collect(Collectors.toSet()));
+        this.wishlistIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> this.blueprint.hasIngredient(wishlistIngredient.getOdysseyMaterial())).collect(Collectors.toSet()));
+        this.otherIngredients.addAll(wishlistIngredients.stream().filter(wishlistIngredient -> !this.blueprint.hasIngredient(wishlistIngredient.getOdysseyMaterial())).collect(Collectors.toSet()));
     }
 
     void setVisibility(final boolean visible) {
         this.visible = visible;
-        this.wishlistRecipe.setVisible(this.visible);
+        this.wishlistBlueprint.setVisible(this.visible);
         this.visibilityImage.setImage(new Image(getClass().getResourceAsStream(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png")));
         if (this.visible) {
             this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
         } else {
             this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
         }
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistRecipe), Action.VISIBILITY_CHANGED)));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }
 
-    public Recipe getRecipe() {
-        return this.recipe;
+    public Blueprint getRecipe() {
+        return this.blueprint;
     }
 
-    public RecipeName getRecipeName() {
-        return this.wishlistRecipe.getRecipeName();
+    public BlueprintName getRecipeName() {
+        return this.wishlistBlueprint.getRecipeName();
     }
 
-    RecipeCategory getRecipeCategory() {
-        return this.recipeCategory;
+    BlueprintCategory getRecipeCategory() {
+        return this.blueprintCategory;
     }
 
     Integer getSequenceID() {
@@ -187,8 +186,8 @@ public class WishlistBlueprint extends HBox {
         return this.visible;
     }
 
-    WishlistRecipe getWishlistRecipe() {
-        return this.wishlistRecipe;
+    nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint getWishlistRecipe() {
+        return this.wishlistBlueprint;
     }
 
     void onDestroy() {

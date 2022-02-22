@@ -18,12 +18,12 @@ public class PathService {
 
     public static List<PathItem> calculateShortestPath(final List<WishlistBlueprint> wishlistBlueprints) {
 
-        final LinkedHashSet<ModuleRecipe> distinctRecipes = wishlistBlueprints.stream()
-                .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleRecipe)
+        final LinkedHashSet<ModuleBlueprint> distinctRecipes = wishlistBlueprints.stream()
+                .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleBlueprint)
                 .filter(WishlistBlueprint::isVisibleBlueprint)
                 .map(WishlistBlueprint::getRecipe)
-                .map(ModuleRecipe.class::cast)
-                .sorted(Comparator.comparing(ModuleRecipe::hasSingleEngineerPerRegion).thenComparing(Recipe::getRecipeName))
+                .map(ModuleBlueprint.class::cast)
+                .sorted(Comparator.comparing(ModuleBlueprint::hasSingleEngineerPerRegion).thenComparing(Blueprint::getBlueprintName))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
         final List<PathItem> sortedPathItems = new ArrayList<>();
         final List<PathItem> pathItems = new ArrayList<>();
@@ -55,7 +55,7 @@ public class PathService {
                                         engineerPreference.put(engineer, engineerPreference.get(engineer) - 1);
                                     }
                                 });
-                        final Map<ModuleRecipe, Integer> recipesForEngineer = getRecipesForEngineer(wishlistBlueprints, pathItems, selectedEngineer);
+                        final Map<ModuleBlueprint, Integer> recipesForEngineer = getRecipesForEngineer(wishlistBlueprints, pathItems, selectedEngineer);
                         pathItems.add(new PathItem(engineers, recipesForEngineer));
                     }
                 });
@@ -76,7 +76,7 @@ public class PathService {
             }
         }
         tryOptimizePath(sortedPathItems);
-        final Map<ModuleRecipe, Integer> unCraftable = distinctRecipes.stream().filter(recipe -> recipe.getEngineers().stream().noneMatch(engineerPreference::containsKey)).collect(Collectors.groupingBy(
+        final Map<ModuleBlueprint, Integer> unCraftable = distinctRecipes.stream().filter(recipe -> recipe.getEngineers().stream().noneMatch(engineerPreference::containsKey)).collect(Collectors.groupingBy(
                 recipe -> recipe,
                 Collectors.summingInt(value -> 1))
         );
@@ -149,12 +149,12 @@ public class PathService {
         return paths;
     }
 
-    private static Map<ModuleRecipe, Integer> getRecipesForEngineer(final List<WishlistBlueprint> wishlistBlueprints, final List<PathItem> pathItems, final Engineer engineer) {
-        final List<ModuleRecipe> recipes = wishlistBlueprints.stream()
+    private static Map<ModuleBlueprint, Integer> getRecipesForEngineer(final List<WishlistBlueprint> wishlistBlueprints, final List<PathItem> pathItems, final Engineer engineer) {
+        final List<ModuleBlueprint> recipes = wishlistBlueprints.stream()
                 .filter(WishlistBlueprint::isVisibleBlueprint)
                 .map(WishlistBlueprint::getRecipe)
-                .filter(ModuleRecipe.class::isInstance)
-                .map(ModuleRecipe.class::cast)
+                .filter(ModuleBlueprint.class::isInstance)
+                .map(ModuleBlueprint.class::cast)
                 .toList();
         return recipes.stream()
                 .filter(recipe -> recipe.getEngineers().contains(engineer))
@@ -165,7 +165,7 @@ public class PathService {
                 );
     }
 
-    private static List<Engineer> mostPreferredEngineers(final Map<Engineer, Integer> engineerPreference, final ModuleRecipe recipe, final List<Engineer> allowedEngineers) {
+    private static List<Engineer> mostPreferredEngineers(final Map<Engineer, Integer> engineerPreference, final ModuleBlueprint recipe, final List<Engineer> allowedEngineers) {
         final Integer highestPreference = recipe.getEngineers().stream()
                 .filter(allowedEngineers::contains)
                 .map(engineerPreference::get)

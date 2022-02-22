@@ -1,0 +1,52 @@
+package nl.jixxed.eliteodysseymaterials.enums;
+
+public enum OdysseyModifier {
+    AIR_CAPACITY,
+    AMMO_CAPACITY_MULTIPLIER,
+    BACKPACK_COMPONENT_CAPACITY,
+    BACKPACK_DATA_CAPACITY,
+    BACKPACK_ITEM_CAPACITY,
+    BATTERY_CONSUMPTION,
+    BATTERY_ENERGY_CAPACITY,
+    ENGINEER_MODIFICATION_SLOTS,
+    EXPLOSIVE_DAMAGE_REDUCTION,
+    EXPLOSIVE_DAMAGE_RESISTANCE,
+    FISTS_MELEE_DAMAGE_MULTIPLIER,
+    FOOTSTEP_AUDIBLE_RANGE_MULTIPLIER,
+    HANDLING_SPEED,
+    HIP_FIRE_ACCURACY,
+    HEADSHOT_DAMAGE_MULTIPLIER,
+    JUMP_ASSIST_BOOST_DRAIN,
+    JUMP_ASSIST_BOOST_RECHARGE_RATE,
+    KINETIC_DAMAGE_REDUCTION,
+    KINETIC_DAMAGE_RESISTANCE,
+    LOS_ANALYSIS_RANGE,
+    LOS_ANALYSIS_TIME,
+    MOVEMENT_SPEED_PENALTY,
+    MAGAZINE_SIZE,
+    PLASMA_DAMAGE_REDUCTION,
+    PLASMA_DAMAGE_RESISTANCE,
+    RELOAD_SPEED,
+    RELOAD_SPEED_APHELION,
+    SHIELD_HEALTH,
+    SHIELD_REGENERATION_RATE,
+    SPRINT_DURATION,
+    INSTABILITY,
+    THERMAL_DAMAGE_REDUCTION,
+    THERMAL_DAMAGE_RESISTANCE,
+    TOOL_ENERGY_DRAIN_MULTIPLIER,
+    WEAPON_EFFECTIVE_RANGE,
+    WEAPON_MELEE_DAMAGE_MULTIPLIER;
+
+    public static OdysseyModifier forName(final String name) {
+        try {
+            return OdysseyModifier.valueOf(name.toUpperCase());
+        } catch (final IllegalArgumentException ex) {
+            return null;
+        }
+    }
+
+    public String getLocalizationKey() {
+        return "modifier.name." + this.name().toLowerCase();
+    }
+}

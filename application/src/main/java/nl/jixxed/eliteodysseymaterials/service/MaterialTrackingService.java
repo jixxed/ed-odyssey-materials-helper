@@ -47,10 +47,10 @@ public class MaterialTrackingService {
     static final List<BackpackChangeEvent> BACKPACK_CHANGE_EVENTS = new ArrayList<>();
     private static boolean isEnabled = false;
     private static final List<EventListener<?>> eventListeners = new ArrayList<>();
-    private static final Map<Material, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
+    private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
 
     static {
-        Material.getAllMaterials().forEach(material ->
+        OdysseyMaterial.getAllMaterials().forEach(material ->
                 MATERIAL_STATISTICS.put(material, new MaterialStatistic())
         );
     }
@@ -82,9 +82,9 @@ public class MaterialTrackingService {
                 log.info("Load material statistics from file");
                 //map file to MATERIAL_STATISTICS
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(Files.readString(statisticsFile.toPath()));
-                for (final Material material : MATERIAL_STATISTICS.keySet()) {
-                    final JsonNode materialStat = jsonNode.get(material.name());
-                    MATERIAL_STATISTICS.put(material, OBJECT_MAPPER.readValue(materialStat.toString(), MaterialStatistic.class));
+                for (final OdysseyMaterial odysseyMaterial : MATERIAL_STATISTICS.keySet()) {
+                    final JsonNode materialStat = jsonNode.get(odysseyMaterial.name());
+                    MATERIAL_STATISTICS.put(odysseyMaterial, OBJECT_MAPPER.readValue(materialStat.toString(), MaterialStatistic.class));
                 }
                 log.info("Load material statistics finished");
             } catch (final IOException ex) {
@@ -96,8 +96,8 @@ public class MaterialTrackingService {
         }, "Material Statistics Loader Thread").start();
     }
 
-    static MaterialStatistic getMaterialStatistic(final Material material) {
-        return MATERIAL_STATISTICS.get(material);
+    static MaterialStatistic getMaterialStatistic(final OdysseyMaterial odysseyMaterial) {
+        return MATERIAL_STATISTICS.get(odysseyMaterial);
     }
 
     public static synchronized void close() {
@@ -121,7 +121,7 @@ public class MaterialTrackingService {
     }
 
     private static synchronized void processEvent(final BackpackChangeEvent backpackChangeEvent) {
-        if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode()) && (backpackChangeEvent.getMaterial() instanceof Data || backpackChangeEvent.getMaterial() instanceof Good || backpackChangeEvent.getMaterial() instanceof Asset)) {
+        if (isEnabled && GameMode.SOLO.equals(APPLICATION_STATE.getGameMode()) && (backpackChangeEvent.getOdysseyMaterial() instanceof Data || backpackChangeEvent.getOdysseyMaterial() instanceof Good || backpackChangeEvent.getOdysseyMaterial() instanceof Asset)) {
             log.debug("Process backpackchange event: " + backpackChangeEvent.getTimestamp());
             BACKPACK_CHANGE_EVENTS.add(backpackChangeEvent);
         }
@@ -142,7 +142,7 @@ public class MaterialTrackingService {
             final String appVersion = PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "");
             final ArrayList<MaterialTrackingItem> items = backpackChangeEvents.stream()
                     .map(backpackChangeEvent -> MaterialTrackingItem.builder()
-                            .material(backpackChangeEvent.getMaterial())
+                            .odysseyMaterial(backpackChangeEvent.getOdysseyMaterial())
                             .amount(Operation.ADDED.equals(backpackChangeEvent.getOperation()) ? backpackChangeEvent.getAmount() : -backpackChangeEvent.getAmount())
                             .timestamp(backpackChangeEvent.getTimestamp())
                             .commander(backpackChangeEvent.getCommander())

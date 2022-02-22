@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public enum Consumable implements Material {
+public enum Consumable implements OdysseyMaterial {
     BYPASS(true),
     HEALTHPACK(false),
     ENERGYCELL(false),

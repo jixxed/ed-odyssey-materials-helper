@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -115,7 +115,7 @@ public class MarketPlaceClient {
         }
     }
 
-    public void publishOffer(final Material offerMaterial, final Integer offerAmount, final Material receiveMaterial, final Integer receiveAmount) {
+    public void publishOffer(final OdysseyMaterial offerOdysseyMaterial, final Integer offerAmount, final OdysseyMaterial receiveOdysseyMaterial, final Integer receiveAmount) {
         final StarSystem starSystem = LocationService.getCurrentStarSystem();
         final OutboundMessage message = OutboundMessage.builder()
                 .action(Action.OFFER.toString().toLowerCase(Locale.ENGLISH))
@@ -130,8 +130,8 @@ public class MarketPlaceClient {
                                         .z(starSystem.getZ())
                                         .build())
                                 .items(List.of(Item.builder()
-                                        .did(receiveMaterial.getLocalizationKey())
-                                        .sid(offerMaterial.getLocalizationKey())
+                                        .did(receiveOdysseyMaterial.getLocalizationKey())
+                                        .sid(offerOdysseyMaterial.getLocalizationKey())
                                         .demand(receiveAmount)
                                         .supply(offerAmount)
                                         .build()))

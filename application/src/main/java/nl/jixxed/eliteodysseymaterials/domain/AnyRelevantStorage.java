@@ -1,8 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -30,15 +30,15 @@ public class AnyRelevantStorage extends Storage {
 
     @Override
     public Integer getTotalValue() {
-        final Map<Material, Storage> goods = StorageService.getMaterials(OdysseyStorageType.GOOD);
-        final Map<Material, Storage> data = StorageService.getMaterials(OdysseyStorageType.DATA);
-        final Map<Material, Storage> assets = StorageService.getMaterials(OdysseyStorageType.ASSET);
-        final Map<Material, Storage> materials = new HashMap<>();
+        final Map<OdysseyMaterial, Storage> goods = StorageService.getMaterials(OdysseyStorageType.GOOD);
+        final Map<OdysseyMaterial, Storage> data = StorageService.getMaterials(OdysseyStorageType.DATA);
+        final Map<OdysseyMaterial, Storage> assets = StorageService.getMaterials(OdysseyStorageType.ASSET);
+        final Map<OdysseyMaterial, Storage> materials = new HashMap<>();
         goods.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         data.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         assets.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         return materials.entrySet().stream()
-                .filter(material -> RecipeConstants.isBlueprintIngredientWithOverride(material.getKey()))
+                .filter(material -> BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
     }

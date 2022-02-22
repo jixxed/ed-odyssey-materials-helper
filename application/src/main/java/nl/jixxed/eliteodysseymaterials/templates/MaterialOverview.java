@@ -226,12 +226,12 @@ class MaterialOverview extends VBox {
         });
     }
 
-    private Predicate<? super Map.Entry<? extends Material, Storage>> onKnownMaterial() {
-        return (Map.Entry<? extends Material, Storage> o) -> !o.getKey().isUnknown();
+    private Predicate<? super Map.Entry<? extends OdysseyMaterial, Storage>> onKnownMaterial() {
+        return (Map.Entry<? extends OdysseyMaterial, Storage> o) -> !o.getKey().isUnknown();
     }
 
-    private Predicate<? super Map.Entry<? extends Material, Storage>> onSearchQuery(final Search search) {
-        return (Map.Entry<? extends Material, Storage> o) -> search.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()).toLowerCase().contains(search.getQuery().toLowerCase());
+    private Predicate<? super Map.Entry<? extends OdysseyMaterial, Storage>> onSearchQuery(final Search search) {
+        return (Map.Entry<? extends OdysseyMaterial, Storage> o) -> search.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()).toLowerCase().contains(search.getQuery().toLowerCase());
     }
 
 

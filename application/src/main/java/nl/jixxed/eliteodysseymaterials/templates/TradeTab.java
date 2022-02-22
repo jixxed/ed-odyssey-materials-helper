@@ -13,7 +13,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
@@ -36,8 +36,8 @@ public class TradeTab extends EDOTab {
     private boolean reconnect = true;
 
     @Override
-    public Tabs getTabType() {
-        return Tabs.TRADE;
+    public OdysseyTabs getTabType() {
+        return OdysseyTabs.TRADE;
     }
 
     TradeTab() {

@@ -14,7 +14,7 @@ import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.TradeSpec;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -32,8 +32,8 @@ import java.util.function.Consumer;
 abstract class Trade extends FlowPane {
     @EqualsAndHashCode.Include
     private String offerId;
-    private Material offerMaterial;
-    private Material receiveMaterial;
+    private OdysseyMaterial offerOdysseyMaterial;
+    private OdysseyMaterial receiveOdysseyMaterial;
     private Integer offerAmount;
     private Integer receiveAmount;
     private Button contactButton;
@@ -49,8 +49,8 @@ abstract class Trade extends FlowPane {
 
     Trade(final TradeSpec tradeSpec) {
         this.offerId = tradeSpec.getOfferId();
-        this.offerMaterial = tradeSpec.getOfferMaterial();
-        this.receiveMaterial = tradeSpec.getReceiveMaterial();
+        this.offerOdysseyMaterial = tradeSpec.getOfferOdysseyMaterial();
+        this.receiveOdysseyMaterial = tradeSpec.getReceiveOdysseyMaterial();
         this.offerAmount = tradeSpec.getOfferAmount();
         this.receiveAmount = tradeSpec.getReceiveAmount();
         this.starSystem = tradeSpec.getStarSystem();
@@ -130,7 +130,7 @@ abstract class Trade extends FlowPane {
         chatScene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
         this.contactButton.setDisable(true);
         this.chatStage.setScene(chatScene);
-        this.chatStage.titleProperty().bind(LocaleService.getStringBinding("trade.chat.title", LocaleService.getLocalizedStringForCurrentLocale(this.offerMaterial.getLocalizationKey()), this.offerAmount, LocaleService.getLocalizedStringForCurrentLocale(this.receiveMaterial.getLocalizationKey()), this.receiveAmount));
+        this.chatStage.titleProperty().bind(LocaleService.getStringBinding("trade.chat.title", LocaleService.getLocalizedStringForCurrentLocale(this.offerOdysseyMaterial.getLocalizationKey()), this.offerAmount, LocaleService.getLocalizedStringForCurrentLocale(this.receiveOdysseyMaterial.getLocalizationKey()), this.receiveAmount));
         this.chatStage.show();
         this.chatStage.setOnCloseRequest(event -> {
             this.contactButton.setDisable(false);

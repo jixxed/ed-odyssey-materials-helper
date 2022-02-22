@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import java.util.Map;
 @Slf4j
 public class AssetParser implements Parser {
     @Override
-    public void parse(final Iterator<JsonNode> components, final StoragePool storagePool, final Map<? extends Material, Storage> knownMap, final Map<String, Storage> unknownMap) {
+    public void parse(final Iterator<JsonNode> components, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap, final Map<String, Storage> unknownMap) {
         components.forEachRemaining(componentNode ->
         {
             final String name = componentNode.get("Name").asText();

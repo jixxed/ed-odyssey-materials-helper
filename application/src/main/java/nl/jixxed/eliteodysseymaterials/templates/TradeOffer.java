@@ -67,8 +67,8 @@ class TradeOffer extends Trade {
     @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("trade-offer");
-        this.offerIngredient = new TradeIngredient(getOfferMaterial().getStorageType(), getOfferMaterial(), StorageService.getMaterials(getOfferMaterial().getStorageType()).get(getOfferMaterial()).getTotalValue(), getOfferAmount(), true);
-        this.receiveIngredient = new TradeIngredient(getReceiveMaterial().getStorageType(), getReceiveMaterial(), StorageService.getMaterials(getReceiveMaterial().getStorageType()).get(getReceiveMaterial()).getTotalValue(), getReceiveAmount(), false);
+        this.offerIngredient = new TradeIngredient(getOfferOdysseyMaterial().getStorageType(), getOfferOdysseyMaterial(), StorageService.getMaterials(getOfferOdysseyMaterial().getStorageType()).get(getOfferOdysseyMaterial()).getTotalValue(), getOfferAmount(), true);
+        this.receiveIngredient = new TradeIngredient(getReceiveOdysseyMaterial().getStorageType(), getReceiveOdysseyMaterial(), StorageService.getMaterials(getReceiveOdysseyMaterial().getStorageType()).get(getReceiveOdysseyMaterial()).getTotalValue(), getReceiveAmount(), false);
 
         this.removeOfferButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.offer.button.remove"))

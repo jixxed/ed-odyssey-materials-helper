@@ -240,8 +240,8 @@ class TradePagination extends VBox {
         this.visibleTrades.clear();
         final List<TradeSpec> filteredTradeSpecs = this.trades.stream()
                 .filter(TradeShow.getFilter(this.tradeSearch))
-                .filter(tradeSpec -> LocaleService.getLocalizedStringForCurrentLocale(tradeSpec.getOfferMaterial().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.tradeSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale()))
-                        || LocaleService.getLocalizedStringForCurrentLocale(tradeSpec.getReceiveMaterial().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.tradeSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())))
+                .filter(tradeSpec -> LocaleService.getLocalizedStringForCurrentLocale(tradeSpec.getOfferOdysseyMaterial().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.tradeSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale()))
+                        || LocaleService.getLocalizedStringForCurrentLocale(tradeSpec.getReceiveOdysseyMaterial().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.tradeSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())))
                 .sorted(TradeSort.getSort(this.tradeSearch))
                 .toList();
         final int toIndex = Math.min(filteredTradeSpecs.size(), (pageIndex * PAGE_SIZE + PAGE_SIZE));
@@ -270,16 +270,16 @@ class TradePagination extends VBox {
         try {
             final Item item = offer.getItems().stream().findFirst().orElseThrow(IllegalArgumentException::new);
             final Info info = offer.getInfo();
-            final Material offerMaterial = Material.subtypeForName(item.getSid().substring(item.getSid().lastIndexOf(".") + 1));
-            final Material receiveMaterial = Material.subtypeForName(item.getDid().substring(item.getDid().lastIndexOf(".") + 1));
+            final OdysseyMaterial offerOdysseyMaterial = OdysseyMaterial.subtypeForName(item.getSid().substring(item.getSid().lastIndexOf(".") + 1));
+            final OdysseyMaterial receiveOdysseyMaterial = OdysseyMaterial.subtypeForName(item.getDid().substring(item.getDid().lastIndexOf(".") + 1));
             final StarSystem starSystem = new StarSystem(info.getLocation(), info.getX(), info.getY(), info.getZ());
             final Optional<XBid> firstBid = offer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).findFirst();
             final Optional<XBid> acceptedBid = offer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).filter(XBid::getAccepted).findFirst();
 
             if (Objects.equals(offer.getToken(), CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()))) {
-                return createTradeOffer(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), starSystem, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
+                return createTradeOffer(offer.getOfferId(), offerOdysseyMaterial, item.getSupply(), receiveOdysseyMaterial, item.getDemand(), starSystem, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
             } else {
-                return createTradeRequest(offer.getOfferId(), offerMaterial, item.getSupply(), receiveMaterial, item.getDemand(), starSystem, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
+                return createTradeRequest(offer.getOfferId(), offerOdysseyMaterial, item.getSupply(), receiveOdysseyMaterial, item.getDemand(), starSystem, acceptedBid.map(XBid::getTokenhash).orElse(firstBid.map(XBid::getTokenhash).orElse("")), acceptedBid.map(XBid::getTokenhash).orElse(""), offer.getToken(), TradeStatus.valueOf(offer.getState()));
             }
         } catch (final IllegalArgumentException ex) {
             log.error("failed to fetch items for offer");
@@ -288,13 +288,13 @@ class TradePagination extends VBox {
     }
 
     @SuppressWarnings("java:S107")
-    private TradeSpec createTradeOffer(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final StarSystem starSystem, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
-        return new TradeSpec(offerId, offerMaterial, offerAmount, receiveMaterial, receiveAmount, starSystem, TradeType.OFFER, tradeStatus, bid, acceptedTokenHash, ownerHash);
+    private TradeSpec createTradeOffer(final String offerId, final OdysseyMaterial offerOdysseyMaterial, final int offerAmount, final OdysseyMaterial receiveOdysseyMaterial, final int receiveAmount, final StarSystem starSystem, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
+        return new TradeSpec(offerId, offerOdysseyMaterial, offerAmount, receiveOdysseyMaterial, receiveAmount, starSystem, TradeType.OFFER, tradeStatus, bid, acceptedTokenHash, ownerHash);
     }
 
     @SuppressWarnings("java:S107")
-    private TradeSpec createTradeRequest(final String offerId, final Material offerMaterial, final int offerAmount, final Material receiveMaterial, final int receiveAmount, final StarSystem starSystem, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
-        return new TradeSpec(offerId, receiveMaterial, receiveAmount, offerMaterial, offerAmount, starSystem, TradeType.REQUEST, tradeStatus, bid, acceptedTokenHash, ownerHash);
+    private TradeSpec createTradeRequest(final String offerId, final OdysseyMaterial offerOdysseyMaterial, final int offerAmount, final OdysseyMaterial receiveOdysseyMaterial, final int receiveAmount, final StarSystem starSystem, final String bid, final String acceptedTokenHash, final String ownerHash, final TradeStatus tradeStatus) {
+        return new TradeSpec(offerId, receiveOdysseyMaterial, receiveAmount, offerOdysseyMaterial, offerAmount, starSystem, TradeType.REQUEST, tradeStatus, bid, acceptedTokenHash, ownerHash);
     }
 
     private UpdatesProperty updateProperty() {

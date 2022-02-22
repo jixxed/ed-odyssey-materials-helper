@@ -317,22 +317,22 @@ public class SpawnConstants {
     );
 
     @SuppressWarnings("java:S1452")
-    public static Map<SpawnLocationType, List<? extends SpawnLocation>> getSpawnLocations(final Material material) {
+    public static Map<SpawnLocationType, List<? extends SpawnLocation>> getSpawnLocations(final OdysseyMaterial odysseyMaterial) {
         final Map<SpawnLocationType, List<? extends SpawnLocation>> spawnLocations = new EnumMap<>(SpawnLocationType.class);
-        if (material instanceof Data) {
-            spawnLocations.put(SpawnLocationType.DATAPORT, DATA_PORTS.getOrDefault(material, List.of()));
-            spawnLocations.put(SpawnLocationType.PLANETARY, DATA_PLANET_PORTS.getOrDefault(material, List.of()));
-            spawnLocations.put(SpawnLocationType.OTHER, DATA_OTHER.getOrDefault(material, List.of()));
+        if (odysseyMaterial instanceof Data) {
+            spawnLocations.put(SpawnLocationType.DATAPORT, DATA_PORTS.getOrDefault(odysseyMaterial, List.of()));
+            spawnLocations.put(SpawnLocationType.PLANETARY, DATA_PLANET_PORTS.getOrDefault(odysseyMaterial, List.of()));
+            spawnLocations.put(SpawnLocationType.OTHER, DATA_OTHER.getOrDefault(odysseyMaterial, List.of()));
         }
-        if (material instanceof Asset) {
-            spawnLocations.put(SpawnLocationType.OPENLOCKER, ASSET_LOCKERS.getOrDefault(material, List.of()));
-            spawnLocations.put(SpawnLocationType.PLANETARY, ASSET_PLANET.getOrDefault(material, List.of()));
+        if (odysseyMaterial instanceof Asset) {
+            spawnLocations.put(SpawnLocationType.OPENLOCKER, ASSET_LOCKERS.getOrDefault(odysseyMaterial, List.of()));
+            spawnLocations.put(SpawnLocationType.PLANETARY, ASSET_PLANET.getOrDefault(odysseyMaterial, List.of()));
         }
-        if (material instanceof Good) {
-            spawnLocations.put(SpawnLocationType.CLOSEDLOCKER, GOOD_LOCKERS.getOrDefault(material, List.of()));
-            spawnLocations.put(SpawnLocationType.PLANETARY, GOOD_PLANET.getOrDefault(material, List.of()));
-            spawnLocations.put(SpawnLocationType.DEVICE, GOOD_DEVICES.getOrDefault(material, List.of()));
-            spawnLocations.put(SpawnLocationType.OTHER, GOOD_OTHER.getOrDefault(material, List.of()));
+        if (odysseyMaterial instanceof Good) {
+            spawnLocations.put(SpawnLocationType.CLOSEDLOCKER, GOOD_LOCKERS.getOrDefault(odysseyMaterial, List.of()));
+            spawnLocations.put(SpawnLocationType.PLANETARY, GOOD_PLANET.getOrDefault(odysseyMaterial, List.of()));
+            spawnLocations.put(SpawnLocationType.DEVICE, GOOD_DEVICES.getOrDefault(odysseyMaterial, List.of()));
+            spawnLocations.put(SpawnLocationType.OTHER, GOOD_OTHER.getOrDefault(odysseyMaterial, List.of()));
         }
         return spawnLocations;
     }

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -22,8 +22,8 @@ import java.util.function.Function;
 public class ApplicationState {
 
     private static ApplicationState applicationState;
-    private final Function<WishlistRecipe, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
-    private final List<Material> favourites = new ArrayList<>();
+    private final Function<WishlistBlueprint, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
+    private final List<OdysseyMaterial> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
     private final Map<Engineer, EngineerState> engineerStates = new EnumMap<>(Map.ofEntries(
             Map.entry(Engineer.DOMINO_GREEN, EngineerState.UNKNOWN),
@@ -46,12 +46,12 @@ public class ApplicationState {
         final String fav = PreferencesService.getPreference("material.favourites", "");
         Arrays.stream(fav.split(","))
                 .filter(material -> !material.isBlank())
-                .map(Material::subtypeForName)
+                .map(OdysseyMaterial::subtypeForName)
                 .forEach(this.favourites::add);
 
-        EventService.addListener(this, 0, WishlistRecipeEvent.class,
+        EventService.addListener(this, 0, WishlistBlueprintEvent.class,
                 wishlistEvent -> Platform.runLater(() ->
-                        wishlistEvent.getWishlistRecipes().forEach(wishlistRecipe -> {
+                        wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
                             switch (wishlistEvent.getAction()) {
                                 case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
                                 case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
@@ -104,7 +104,7 @@ public class ApplicationState {
         EventService.publish(new EngineerEvent());
     }
 
-    public <T extends Material> boolean toggleFavourite(final T material) {
+    public <T extends OdysseyMaterial> boolean toggleFavourite(final T material) {
         final boolean newState;
         if (this.favourites.contains(material)) {
             this.favourites.remove(material);
@@ -113,36 +113,36 @@ public class ApplicationState {
             this.favourites.add(material);
             newState = true;
         }
-        PreferencesService.setPreference("material.favourites", this.favourites, Material::name);
+        PreferencesService.setPreference("material.favourites", this.favourites, OdysseyMaterial::name);
         return newState;
     }
 
-    public boolean isFavourite(final Material material) {
-        return this.favourites.contains(material);
+    public boolean isFavourite(final OdysseyMaterial odysseyMaterial) {
+        return this.favourites.contains(odysseyMaterial);
     }
 
-    private void addToWishList(final String wishlistUUID, final String fid, final RecipeName recipe) {
+    private void addToWishList(final String wishlistUUID, final String fid, final BlueprintName recipe) {
         final Wishlists wishlists = getWishlists(fid);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        wishlist.getItems().add(new WishlistRecipe(recipe, true));
+        wishlist.getItems().add(new WishlistBlueprint(recipe, true));
         saveWishlists(fid, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
 
-    private void removeFromWishList(final String wishlistUUID, final String fid, final WishlistRecipe recipe) {
+    private void removeFromWishList(final String wishlistUUID, final String fid, final WishlistBlueprint recipe) {
         final Wishlists wishlists = getWishlists(fid);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<WishlistRecipe> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
+        final Optional<WishlistBlueprint> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
         found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
         saveWishlists(fid, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
 
-    private void changeVisibility(final String wishlistUUID, final String fid, final WishlistRecipe wishlistRecipe) {
+    private void changeVisibility(final String wishlistUUID, final String fid, final WishlistBlueprint wishlistBlueprint) {
         final Wishlists wishlists = getWishlists(fid);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<WishlistRecipe> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistRecipe.getRecipeName()) && recipe.isVisible() == !wishlistRecipe.isVisible()).findFirst();
-        existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistRecipe.isVisible()));
+        final Optional<WishlistBlueprint> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistBlueprint.getRecipeName()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).findFirst();
+        existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
         saveWishlists(fid, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
@@ -203,7 +203,7 @@ public class ApplicationState {
         return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
     }
 
-    private List<WishlistRecipe> parseFIDWishlist(final String recipes) {
+    private List<WishlistBlueprint> parseFIDWishlist(final String recipes) {
         return WishlistHelper.convertWishlist(recipes);
     }
 
@@ -241,24 +241,24 @@ public class ApplicationState {
         this.commanders.clear();
     }
 
-    public int amountCraftable(final RecipeName recipeName) {
-        final Recipe recipe = RecipeConstants.getRecipe(recipeName);
+    public int amountCraftable(final BlueprintName blueprintName) {
+        final Blueprint blueprint = BlueprintConstants.getRecipe(blueprintName);
         final AtomicInteger lowestAmount = new AtomicInteger(9999);
-        recipe.getMaterialCollection(Material.class).forEach((material, amountRequired) -> {
+        blueprint.getMaterialCollection(OdysseyMaterial.class).forEach((material, amountRequired) -> {
             final int amountCraftable = StorageService.getMaterialStorage(material).getTotalValue() / amountRequired;
             lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
         });
         return lowestAmount.get();
     }
 
-    public Craftability getCraftability(final RecipeName recipeName) {
-        final Recipe recipe = RecipeConstants.getRecipe(recipeName);
+    public Craftability getCraftability(final BlueprintName blueprintName) {
+        final Blueprint blueprint = BlueprintConstants.getRecipe(blueprintName);
         final AtomicBoolean hasGoods = new AtomicBoolean(true);
         final AtomicBoolean hasData = new AtomicBoolean(true);
         final AtomicBoolean hasAssets = new AtomicBoolean(true);
-        recipe.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-        recipe.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-        recipe.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+        blueprint.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+        blueprint.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+        blueprint.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
         if (!hasGoods.get() || !hasData.get()) {
             return Craftability.NOT_CRAFTABLE;
         } else if (hasGoods.get() && hasData.get() && !hasAssets.get()) {

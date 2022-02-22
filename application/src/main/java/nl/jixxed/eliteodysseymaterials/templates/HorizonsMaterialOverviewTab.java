@@ -1,10 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 
-public class HorizonsMaterialOverviewTab extends Tab implements Template {
+public class HorizonsMaterialOverviewTab extends EDHTab implements Template {
     private ScrollPane scrollPane;
     private HorizonsMaterialOverview materialOverview;
 
@@ -16,7 +16,7 @@ public class HorizonsMaterialOverviewTab extends Tab implements Template {
     @Override
     public void initComponents() {
         this.materialOverview = new HorizonsMaterialOverview();
-        this.setText("Horizons");
+        this.setText("Materials");
         this.setClosable(false);
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(this.materialOverview)
@@ -30,4 +30,8 @@ public class HorizonsMaterialOverviewTab extends Tab implements Template {
         //NOOP
     }
 
+    @Override
+    public HorizonsTabs getTabType() {
+        return HorizonsTabs.MATERIALS;
+    }
 }

@@ -110,8 +110,8 @@ class TradeRequest extends Trade {
     private void initComponents() {
 
         this.getStyleClass().add("trade-request");
-        this.offerIngredient = new TradeIngredient(getOfferMaterial().getStorageType(), getOfferMaterial(), StorageService.getMaterials(getOfferMaterial().getStorageType()).get(getOfferMaterial()).getTotalValue(), getOfferAmount(), true);
-        this.receiveIngredient = new TradeIngredient(getReceiveMaterial().getStorageType(), getReceiveMaterial(), StorageService.getMaterials(getReceiveMaterial().getStorageType()).get(getReceiveMaterial()).getTotalValue(), getReceiveAmount(), false);
+        this.offerIngredient = new TradeIngredient(getOfferOdysseyMaterial().getStorageType(), getOfferOdysseyMaterial(), StorageService.getMaterials(getOfferOdysseyMaterial().getStorageType()).get(getOfferOdysseyMaterial()).getTotalValue(), getOfferAmount(), true);
+        this.receiveIngredient = new TradeIngredient(getReceiveOdysseyMaterial().getStorageType(), getReceiveOdysseyMaterial(), StorageService.getMaterials(getReceiveOdysseyMaterial().getStorageType()).get(getReceiveOdysseyMaterial()).getTotalValue(), getReceiveAmount(), false);
 
 
         this.distanceLabel = LabelBuilder.builder()

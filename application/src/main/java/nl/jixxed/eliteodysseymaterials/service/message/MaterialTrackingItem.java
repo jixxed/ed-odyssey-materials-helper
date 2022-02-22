@@ -2,14 +2,14 @@ package nl.jixxed.eliteodysseymaterials.service.message;
 
 import lombok.Builder;
 import lombok.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Material;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 
 @Data
 @Builder
 public class MaterialTrackingItem {
     private String commander;
     private String timestamp;
-    private Material material;
+    private OdysseyMaterial odysseyMaterial;
     private Integer amount;
     private String system;
     private String primaryEconomy;

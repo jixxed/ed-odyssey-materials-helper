@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 @AllArgsConstructor
 @Getter
-public enum Asset implements Material {
+public enum Asset implements OdysseyMaterial {
     AEROGEL(AssetType.CHEMICAL, 9, 5),
     CHEMICALCATALYST(AssetType.CHEMICAL, 7, 4),
     CHEMICALSUPERBASE(AssetType.CHEMICAL, 9, 5),

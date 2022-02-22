@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @ToString
 public class PathItem {
     private final List<Engineer> engineers;
-    private final Map<ModuleRecipe, Integer> recipes;
+    private final Map<ModuleBlueprint, Integer> recipes;
     @Setter
     private Engineer engineer;
     private List<Engineer> alternateEngineers = new ArrayList<>();
@@ -26,7 +26,7 @@ public class PathItem {
     private double distance;
 
     public String getRecipesString() {
-        return this.recipes.entrySet().stream().map(recipe -> LocaleService.getLocalizedStringForCurrentLocale(recipe.getKey().getRecipeName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "")).collect(Collectors.joining(", "));
+        return this.recipes.entrySet().stream().map(recipe -> LocaleService.getLocalizedStringForCurrentLocale(recipe.getKey().getBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "")).collect(Collectors.joining(", "));
     }
 
     public Double getAndSetDistanceToClosestEngineer(final StarSystem starSystem) {

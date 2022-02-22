@@ -7,11 +7,11 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
-import nl.jixxed.eliteodysseymaterials.constants.RecipeConstants;
+import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
-import nl.jixxed.eliteodysseymaterials.domain.ModuleRecipe;
+import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
@@ -61,38 +61,38 @@ public class LocaleService {
         });
     }
 
-    public static StringBinding getStringBinding(final Material material) {
-        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString(material.getLocalizationKey()) + (material.isIllegal() ? "   \u20E0 " : "") + (APPLICATION_STATE.isFavourite(material) ? " \u2605" : ""));
+    public static StringBinding getStringBinding(final OdysseyMaterial odysseyMaterial) {
+        return ObservableResourceFactory.getStringBinding(() -> ObservableResourceFactory.getResources().getString(odysseyMaterial.getLocalizationKey()) + (odysseyMaterial.isIllegal() ? "   \u20E0 " : "") + (APPLICATION_STATE.isFavourite(odysseyMaterial) ? " \u2605" : ""));
     }
 
     public static StringBinding getStringBinding(final Supplier<String> supplier) {
         return ObservableResourceFactory.getStringBinding(supplier);
     }
 
-    public static StringBinding getToolTipStringBinding(final Material material) {
+    public static StringBinding getToolTipStringBinding(final OdysseyMaterial odysseyMaterial) {
         return ObservableResourceFactory.getStringBinding(() -> {
-            if (material.isUnknown()) {
+            if (odysseyMaterial.isUnknown()) {
                 return ObservableResourceFactory.getResources().getString("material.tooltip.unknown");
             } else {
                 final StringBuilder builder = new StringBuilder();
-                builder.append(ObservableResourceFactory.getResources().getString(material.getLocalizationKey()));
-                if (material.isIllegal()) {
+                builder.append(ObservableResourceFactory.getResources().getString(odysseyMaterial.getLocalizationKey()));
+                if (odysseyMaterial.isIllegal()) {
                     builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.illegal"));
                 }
-                addBarterInfoToTooltip(material, builder);
-                if (material instanceof Data data) {
+                addBarterInfoToTooltip(odysseyMaterial, builder);
+                if (odysseyMaterial instanceof Data data) {
                     addTransferTimeToTooltip(data, builder);
                 }
-                addRecipesToTooltip(RecipeConstants.findRecipesContaining(material), builder);
-                addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(material), builder);
-                addStatisticsToTooltip(material, builder);
+                addRecipesToTooltip(BlueprintConstants.findRecipesContaining(odysseyMaterial), builder);
+                addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(odysseyMaterial), builder);
+                addStatisticsToTooltip(odysseyMaterial, builder);
                 return builder.toString();
             }
         });
     }
 
-    private static void addStatisticsToTooltip(final Material material, final StringBuilder builder) {
-        final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(material);
+    private static void addStatisticsToTooltip(final OdysseyMaterial odysseyMaterial, final StringBuilder builder) {
+        final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(odysseyMaterial);
         builder.append("\n\n")
                 .append("Economies:")
                 .append("\n")
@@ -112,15 +112,15 @@ public class LocaleService {
                 .append(LocaleService.getLocalizedStringForCurrentLocale((data.isUpload()) ? "material.tooltip.data.upload" : "material.tooltip.data.download", data.getTransferTime()));
     }
 
-    private static void addBarterInfoToTooltip(final Material material, final StringBuilder builder) {
-        final Integer barterSellPrice = BarterConstants.getBarterSellPrice(material);
+    private static void addBarterInfoToTooltip(final OdysseyMaterial odysseyMaterial, final StringBuilder builder) {
+        final Integer barterSellPrice = BarterConstants.getBarterSellPrice(odysseyMaterial);
         builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.barter.sell.price")).append(": $").append(barterSellPrice == -1 ? "?" : NUMBER_FORMAT.format(barterSellPrice));
-        if (material instanceof Asset) {
-            builder.append("\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.barter.trade")).append(": ").append(BarterConstants.getBarterValues(material));
+        if (odysseyMaterial instanceof Asset) {
+            builder.append("\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.barter.trade")).append(": ").append(BarterConstants.getBarterValues(odysseyMaterial));
         }
     }
 
-    private static void addRecipesToTooltip(final Map<RecipeName, Integer> recipesContainingMaterial, final StringBuilder builder) {
+    private static void addRecipesToTooltip(final Map<BlueprintName, Integer> recipesContainingMaterial, final StringBuilder builder) {
         if (!recipesContainingMaterial.isEmpty()) {
             builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.used.in.recipes")).append(":\n");
             recipesContainingMaterial.entrySet().stream().sorted(Comparator.comparing(entry -> ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey()))).forEach(entry -> builder.append(ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey())).append(" (").append(entry.getValue()).append(")\n"));
@@ -139,7 +139,7 @@ public class LocaleService {
         }
     }
 
-    public static StringBinding getToolTipStringBinding(final ModuleRecipe recipe, final String localizationKey) {
+    public static StringBinding getToolTipStringBinding(final ModuleBlueprint recipe, final String localizationKey) {
         return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", "))));
     }
 
@@ -155,8 +155,8 @@ public class LocaleService {
     private static String localizeParameter(final Object parameter) {
         if (parameter instanceof LocalizationKey localizationKey) {
             return ObservableResourceFactory.getResources().getString(localizationKey.getKey());
-        } else if (parameter instanceof Material material) {
-            return ObservableResourceFactory.getResources().getString(material.getLocalizationKey());
+        } else if (parameter instanceof OdysseyMaterial odysseyMaterial) {
+            return ObservableResourceFactory.getResources().getString(odysseyMaterial.getLocalizationKey());
         }
         return parameter.toString();
     }

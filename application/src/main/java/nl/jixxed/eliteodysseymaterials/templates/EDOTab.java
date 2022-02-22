@@ -1,8 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.scene.control.Tab;
-import nl.jixxed.eliteodysseymaterials.enums.Tabs;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 
 public abstract class EDOTab extends Tab {
-    public abstract Tabs getTabType();
+    public abstract OdysseyTabs getTabType();
 }

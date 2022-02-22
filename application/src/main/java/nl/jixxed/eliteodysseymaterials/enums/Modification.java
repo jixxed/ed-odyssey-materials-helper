@@ -16,5 +16,5 @@ public interface Modification {
 
     String getLocalizationKey();
 
-    RecipeName getRecipe();
+    BlueprintName getRecipe();
 }
