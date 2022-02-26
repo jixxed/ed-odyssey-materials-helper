@@ -2,8 +2,12 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.PathItem;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint;
 
 import java.util.*;
@@ -23,7 +27,7 @@ public class PathService {
                 .filter(WishlistBlueprint::isVisibleBlueprint)
                 .map(WishlistBlueprint::getRecipe)
                 .map(ModuleBlueprint.class::cast)
-                .sorted(Comparator.comparing(ModuleBlueprint::hasSingleEngineerPerRegion).thenComparing(Blueprint::getBlueprintName))
+                .sorted(Comparator.comparing(ModuleBlueprint::hasSingleEngineerPerRegion).thenComparing((ModuleBlueprint moduleBlueprint) -> (OdysseyBlueprintName) moduleBlueprint.getBlueprintName()))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
         final List<PathItem> sortedPathItems = new ArrayList<>();
         final List<PathItem> pathItems = new ArrayList<>();

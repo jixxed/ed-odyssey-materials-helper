@@ -7,13 +7,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.CSVResourceBundle;
 
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -36,7 +37,7 @@ public class LocaleService {
 
     public static void setCurrentLocale(final Locale locale) {
         currentLocale = locale;
-        ObservableResourceFactory.setResources(ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, currentLocale));
+        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle(RESOURCE_BUNDLE_NAME, currentLocale));
     }
 
     public static String getLocalizedStringForCurrentLocale(final String key, final Object... parameters) {
@@ -44,7 +45,7 @@ public class LocaleService {
     }
 
     private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
-        return MessageFormat.format(ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, locale).getString(key), parameters);
+        return MessageFormat.format(CSVResourceBundle.getResourceBundle(RESOURCE_BUNDLE_NAME, locale).getString(key), parameters);
     }
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {
@@ -83,7 +84,7 @@ public class LocaleService {
                 if (odysseyMaterial instanceof Data data) {
                     addTransferTimeToTooltip(data, builder);
                 }
-                addRecipesToTooltip(BlueprintConstants.findRecipesContaining(odysseyMaterial), builder);
+                addRecipesToTooltip(OdysseyBlueprintConstants.findRecipesContaining(odysseyMaterial), builder);
                 addSpawnLocationsToTooltip(SpawnConstants.getSpawnLocations(odysseyMaterial), builder);
                 addStatisticsToTooltip(odysseyMaterial, builder);
                 return builder.toString();
@@ -120,7 +121,7 @@ public class LocaleService {
         }
     }
 
-    private static void addRecipesToTooltip(final Map<BlueprintName, Integer> recipesContainingMaterial, final StringBuilder builder) {
+    private static void addRecipesToTooltip(final Map<OdysseyBlueprintName, Integer> recipesContainingMaterial, final StringBuilder builder) {
         if (!recipesContainingMaterial.isEmpty()) {
             builder.append("\n\n").append(ObservableResourceFactory.getResources().getString("material.tooltip.used.in.recipes")).append(":\n");
             recipesContainingMaterial.entrySet().stream().sorted(Comparator.comparing(entry -> ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey()))).forEach(entry -> builder.append(ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey())).append(" (").append(entry.getValue()).append(")\n"));

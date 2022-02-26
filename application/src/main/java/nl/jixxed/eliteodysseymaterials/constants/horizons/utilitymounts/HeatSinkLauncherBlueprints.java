@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class HeatSinkLauncherBlueprints {
-    public static final Map<HorizonsBlueprintModificationType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
-            HorizonsBlueprintModificationType.AMMO_CAPACITY,
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+            HorizonsBlueprintType.AMMO_CAPACITY,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.AMMO_CAPACITY, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.AMMO_CAPACITY, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1,
                                     Raw.NIOBIUM, 1,
@@ -23,9 +23,9 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.AMMO_MAXIMUM, new HorizonsModifierValue("+50%", true)
                             ),
                             List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA))),
-            HorizonsBlueprintModificationType.LIGHTWEIGHT,
+            HorizonsBlueprintType.LIGHTWEIGHT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -34,7 +34,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
                             ),
                             List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
@@ -44,7 +44,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-56%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
@@ -55,7 +55,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-65%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.PHASEALLOYS, 1,
@@ -66,7 +66,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-75%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.PROTOLIGHTALLOYS, 1,
@@ -77,9 +77,9 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-85%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH))),
-            HorizonsBlueprintModificationType.REINFORCED,
+            HorizonsBlueprintType.REINFORCED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -88,7 +88,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+30%", false)
                             ),
                             List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -98,7 +98,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1,
@@ -109,7 +109,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+90%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
                                     Raw.TUNGSTEN, 1,
@@ -120,7 +120,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+120%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Raw.MOLYBDENUM, 1,
@@ -131,9 +131,9 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+150%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH))),
-            HorizonsBlueprintModificationType.SHIELDED,
+            HorizonsBlueprintType.SHIELDED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.WORNSHIELDEMITTERS, 1
                             ),
@@ -142,7 +142,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+60%", true)
                             ),
                             List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -152,7 +152,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+120%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -163,7 +163,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+180%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -174,7 +174,7 @@ public class HeatSinkLauncherBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+240%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HEAT_SINK_LAUNCHER, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.COMPOUNDSHIELDING, 1,
                                     Manufactured.FEDCORECOMPOSITES, 1,

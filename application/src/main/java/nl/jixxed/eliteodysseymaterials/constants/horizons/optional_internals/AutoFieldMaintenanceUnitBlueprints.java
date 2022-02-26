@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class AutoFieldMaintenanceUnitBlueprints {
-    public static final Map<HorizonsBlueprintModificationType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
-            HorizonsBlueprintModificationType.SHIELDED,
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+            HorizonsBlueprintType.SHIELDED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.WORNSHIELDEMITTERS, 1
                             ),
@@ -20,7 +20,7 @@ public class AutoFieldMaintenanceUnitBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+60%", true)
                             ),
                             List.of(Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.PETRA_OLMANOVA)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -30,7 +30,7 @@ public class AutoFieldMaintenanceUnitBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+120%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -41,7 +41,7 @@ public class AutoFieldMaintenanceUnitBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+180%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -52,7 +52,7 @@ public class AutoFieldMaintenanceUnitBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+240%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.FEDCORECOMPOSITES, 1,
                                     Manufactured.COMPOUNDSHIELDING, 1,

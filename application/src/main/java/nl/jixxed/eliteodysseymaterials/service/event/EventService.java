@@ -14,7 +14,7 @@ public class EventService {
     private static final Map<Class<? extends Event>, List<EventListener<? extends Event>>> LISTENERS_MAP = new HashMap<>();
 
     public static <T extends Event> void publish(final T event) {
-        LISTENERS_MAP.get(event.getClass()).stream()
+        LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()
                 .sorted(Comparator.comparingInt(EventListener::getPriority))
                 .forEach(eventListener -> ((EventListener<T>) eventListener).handleEvent(event));
     }
@@ -68,10 +68,10 @@ public class EventService {
     }
 
     private static <T extends Event> void logListener(final Object owner, final EventListener<T> listener, final String action) {
-        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode() + (owner != null ? ", " + owner.getClass().getName() : ""));
+//        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode() + (owner != null ? ", " + owner.getClass().getName() : ""));
     }
 
     private static void logListenerSize() {
-        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
+//        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
     }
 }

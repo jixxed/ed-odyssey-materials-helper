@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ShieldBoosterBlueprints {
-    public static final Map<HorizonsBlueprintModificationType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
-            HorizonsBlueprintModificationType.BLAST_RESISTANT,
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+            HorizonsBlueprintType.BLAST_RESISTANT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.IRON, 1
                             ),
@@ -21,7 +21,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("+8%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Raw.IRON, 1
@@ -32,7 +32,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("+12%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.FOCUSCRYSTALS, 1,
@@ -44,7 +44,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("+17%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.GERMANIUM, 1,
                                     Encoded.SHIELDDENSITYREPORTS, 1,
@@ -56,7 +56,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("+22%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.BLAST_RESISTANT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.NIOBIUM, 1,
                                     Encoded.SHIELDPATTERNANALYSIS, 1,
@@ -68,9 +68,9 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("+27%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN))),
-            HorizonsBlueprintModificationType.HEAVY_DUTY,
+            HorizonsBlueprintType.HEAVY_DUTY,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.GRIDRESISTORS, 1
                             ),
@@ -81,7 +81,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+100%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Encoded.SHIELDCYCLERECORDINGS, 1,
                                     Manufactured.HYBRIDCAPACITORS, 1
@@ -93,7 +93,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+150%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Encoded.SHIELDCYCLERECORDINGS, 1,
                                     Manufactured.HYBRIDCAPACITORS, 1,
@@ -106,7 +106,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+200%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.ELECTROCHEMICALARRAYS, 1,
                                     Encoded.SHIELDSOAKANALYSIS, 1,
@@ -119,7 +119,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+250%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.HEAVY_DUTY, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.ANTIMONY, 1,
                                     Manufactured.POLYMERCAPACITORS, 1,
@@ -132,9 +132,9 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+300%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN))),
-            HorizonsBlueprintModificationType.KINETIC_RESISTANT,
+            HorizonsBlueprintType.KINETIC_RESISTANT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.IRON, 1
                             ),
@@ -144,7 +144,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-1%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.GERMANIUM, 1,
                                     Manufactured.GRIDRESISTORS, 1
@@ -155,7 +155,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-1%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.FOCUSCRYSTALS, 1,
                                     Manufactured.HYBRIDCAPACITORS, 1,
@@ -167,7 +167,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-2%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.GALVANISINGALLOYS, 1,
                                     Encoded.SHIELDDENSITYREPORTS, 1,
@@ -179,7 +179,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-3%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.KINETIC_RESISTANT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.PHASEALLOYS, 1,
                                     Encoded.SHIELDPATTERNANALYSIS, 1,
@@ -191,9 +191,9 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-4%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN))),
-            HorizonsBlueprintModificationType.RESISTANCE_AUGMENTED,
+            HorizonsBlueprintType.RESISTANCE_AUGMENTED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -203,7 +203,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.ALL_RESISTANCES, new HorizonsModifierValue("+5%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Raw.PHOSPHORUS, 1
@@ -214,7 +214,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.ALL_RESISTANCES, new HorizonsModifierValue("+8%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.FOCUSCRYSTALS, 1,
@@ -226,7 +226,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.ALL_RESISTANCES, new HorizonsModifierValue("+11%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
@@ -238,7 +238,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.ALL_RESISTANCES, new HorizonsModifierValue("+15%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.RESISTANCE_AUGMENTED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.IMPERIALSHIELDING, 1,
@@ -250,9 +250,9 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.ALL_RESISTANCES, new HorizonsModifierValue("+17%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN))),
-            HorizonsBlueprintModificationType.THERMAL_RESISTANT,
+            HorizonsBlueprintType.THERMAL_RESISTANT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.IRON, 1
                             ),
@@ -262,7 +262,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-1%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.GERMANIUM, 1,
                                     Manufactured.HEATCONDUCTIONWIRING, 1
@@ -273,7 +273,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-1%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.FOCUSCRYSTALS, 1,
                                     Manufactured.HEATCONDUCTIONWIRING, 1,
@@ -285,7 +285,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-2%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LEI_CHEUNG, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.HEATDISPERSIONPLATE, 1,
                                     Encoded.SHIELDDENSITYREPORTS, 1,
@@ -297,7 +297,7 @@ public class ShieldBoosterBlueprints {
                                     HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsModifierValue("-3%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.DIDI_VATERMANN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SHIELD_BOOSTER, HorizonsBlueprintModificationType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_BOOSTER, HorizonsBlueprintType.THERMAL_RESISTANT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.HEATEXCHANGERS, 1,
                                     Encoded.SHIELDPATTERNANALYSIS, 1,

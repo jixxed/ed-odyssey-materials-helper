@@ -9,7 +9,7 @@ import javafx.scene.layout.Region;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
@@ -89,13 +89,13 @@ class MaterialCard extends HBox {
                 case CIRCUIT -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-circuit");
                 case CHEMICAL -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-chemical");
             }
-        } else if (BlueprintConstants.isEngineeringIngredientAndNotCompleted(this.odysseyMaterial)) {
+        } else if (OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(this.odysseyMaterial)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
-        } else if (APPLICATION_STATE.getSoloMode() && BlueprintConstants.isEngineeringOnlyIngredient(this.odysseyMaterial)) {
+        } else if (APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isEngineeringOnlyIngredient(this.odysseyMaterial)) {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-irrelevant");
-        } else if (BlueprintConstants.isEngineeringIngredient(this.odysseyMaterial)) {
+        } else if (OdysseyBlueprintConstants.isEngineeringIngredient(this.odysseyMaterial)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
-        } else if (BlueprintConstants.isBlueprintIngredientWithOverride(this.odysseyMaterial)) {
+        } else if (OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(this.odysseyMaterial)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-relevant");
         } else {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-irrelevant");
@@ -104,7 +104,7 @@ class MaterialCard extends HBox {
 
     private DestroyableResizableImageView createMaterialImage(final OdysseyMaterial odysseyMaterial) {
 
-        final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? BlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : BlueprintConstants.isEngineeringIngredient(odysseyMaterial);
+        final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : OdysseyBlueprintConstants.isEngineeringIngredient(odysseyMaterial);
         ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder().withStyleClass("materialcard-image");
         if (odysseyMaterial.isUnknown()) {
             imageViewBuilder.withImage("/images/material/unknown.png");

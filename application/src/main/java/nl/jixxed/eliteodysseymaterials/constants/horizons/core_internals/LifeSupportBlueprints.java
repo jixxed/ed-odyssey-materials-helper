@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 public class LifeSupportBlueprints {
-    public static final Map<HorizonsBlueprintModificationType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
 
-            HorizonsBlueprintModificationType.LIGHTWEIGHT,
+            HorizonsBlueprintType.LIGHTWEIGHT,
             Map.of(
 
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -22,7 +22,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
@@ -32,7 +32,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-56%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
@@ -43,7 +43,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-65%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.PHASEALLOYS, 1,
@@ -54,7 +54,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-75%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.PROTORADIOLICALLOYS, 1,
@@ -66,10 +66,10 @@ public class LifeSupportBlueprints {
                             ),
                             List.of(Engineer.ETIENNE_DORN))
             ),
-            HorizonsBlueprintModificationType.REINFORCED,
+            HorizonsBlueprintType.REINFORCED,
             Map.of(
 
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -78,7 +78,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+30%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -88,7 +88,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1,
@@ -99,7 +99,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+90%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
                                     Raw.TUNGSTEN, 1,
@@ -110,7 +110,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+120%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.REINFORCED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Raw.MOLYBDENUM, 1,
@@ -122,10 +122,10 @@ public class LifeSupportBlueprints {
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON)))
             ,
-            HorizonsBlueprintModificationType.SHIELDED,
+            HorizonsBlueprintType.SHIELDED,
             Map.of(
 
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.WORNSHIELDEMITTERS, 1
                             ),
@@ -134,7 +134,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+60%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -144,7 +144,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+120%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -155,7 +155,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+180%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -166,7 +166,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+240%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.LIFE_SUPPORT, HorizonsBlueprintModificationType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.FEDCORECOMPOSITES, 1,
                                     Manufactured.COMPOUNDSHIELDING, 1,

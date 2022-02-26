@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class HullReinforcementBlueprints {
-    public static final Map<HorizonsBlueprintModificationType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
-            HorizonsBlueprintModificationType.BLAST_RESISTANT_HULL_REINFORCEMENT,
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+            HorizonsBlueprintType.BLAST_RESISTANT_HULL_REINFORCEMENT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -22,7 +22,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+3%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Raw.ZINC, 1
@@ -34,7 +34,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+6%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.SALVAGEDALLOYS, 1,
                                     Raw.VANADIUM, 1,
@@ -47,7 +47,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+9%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.GALVANISINGALLOYS, 1,
                                     Raw.TUNGSTEN, 1,
@@ -60,7 +60,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+12%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.BLAST_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.PHASEALLOYS, 1,
                                     Raw.MOLYBDENUM, 1,
@@ -73,9 +73,9 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+15%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN))),
-            HorizonsBlueprintModificationType.HEAVY_DUTY_HULL_REINFORCEMENT,
+            HorizonsBlueprintType.HEAVY_DUTY_HULL_REINFORCEMENT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.CARBON, 1
                             ),
@@ -85,7 +85,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+8%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -96,7 +96,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+16%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -108,7 +108,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+24%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -120,7 +120,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+32%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.HEAVY_DUTY_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.COMPOUNDSHIELDING, 1,
                                     Manufactured.FEDCORECOMPOSITES, 1,
@@ -132,9 +132,9 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN))),
-            HorizonsBlueprintModificationType.KINETIC_RESISTANT_HULL_REINFORCEMENT,
+            HorizonsBlueprintType.KINETIC_RESISTANT_HULL_REINFORCEMENT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -145,7 +145,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+3%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Raw.VANADIUM, 1
@@ -157,7 +157,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+6%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Manufactured.SALVAGEDALLOYS, 1,
@@ -170,7 +170,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+9%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.GALVANISINGALLOYS, 1,
                                     Raw.TUNGSTEN, 1,
@@ -183,7 +183,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+12%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.KINETIC_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.PHASEALLOYS, 1,
                                     Raw.MOLYBDENUM, 1,
@@ -196,9 +196,9 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+15%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN))),
-            HorizonsBlueprintModificationType.LIGHTWEIGHT_HULL_REINFORCEMENT,
+            HorizonsBlueprintType.LIGHTWEIGHT_HULL_REINFORCEMENT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.IRON, 1
                             ),
@@ -208,7 +208,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-8%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Raw.IRON, 1
@@ -219,7 +219,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-12%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -231,7 +231,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-16%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.GERMANIUM, 1,
@@ -243,7 +243,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-20%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.LIGHTWEIGHT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.MILITARYGRADEALLOYS, 1,
@@ -255,9 +255,9 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-24%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN))),
-            HorizonsBlueprintModificationType.THERMAL_RESISTANT_HULL_REINFORCEMENT,
+            HorizonsBlueprintType.THERMAL_RESISTANT_HULL_REINFORCEMENT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.HEATCONDUCTIONWIRING, 1
                             ),
@@ -268,7 +268,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+3%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.HEATDISPERSIONPLATE, 1,
                                     Raw.NICKEL, 1
@@ -280,7 +280,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+6%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.HEATEXCHANGERS, 1,
                                     Manufactured.SALVAGEDALLOYS, 1,
@@ -293,7 +293,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+9%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.GALVANISINGALLOYS, 1,
                                     Raw.TUNGSTEN, 1,
@@ -306,7 +306,7 @@ public class HullReinforcementBlueprints {
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsModifierValue("+12%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintModificationType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.THERMAL_RESISTANT_HULL_REINFORCEMENT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.PHASEALLOYS, 1,
                                     Raw.MOLYBDENUM, 1,

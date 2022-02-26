@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ResizableImageViewBuilder {
     }
 
     public ResizableImageViewBuilder withImage(final String imageResource) {
-        this.image = new Image(getClass().getResourceAsStream(imageResource));
+        this.image = ImageService.getImage(imageResource);
         return this;
     }
 

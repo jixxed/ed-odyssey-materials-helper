@@ -31,6 +31,7 @@ public enum HorizonsMaterialType {
     THARGOID(false),
     THERMIC(true),
     WAKE_SCANS(true),
+    COMMODITY(true),
     UNKNOWN(false);
 
     private final boolean tradable;

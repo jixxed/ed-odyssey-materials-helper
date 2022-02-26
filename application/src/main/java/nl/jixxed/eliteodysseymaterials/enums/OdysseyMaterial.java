@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public interface OdysseyMaterial extends Material {
     static List<OdysseyMaterial> getAllRelevantMaterialsWithoutOverride() {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
                 .filter(material -> !material.isUnknown())
-                .filter(BlueprintConstants::isEngineeringOrBlueprintIngredient)
+                .filter(OdysseyBlueprintConstants::isEngineeringOrBlueprintIngredient)
                 .map(OdysseyMaterial.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -63,7 +63,7 @@ public interface OdysseyMaterial extends Material {
     static List<OdysseyMaterial> getAllIrrelevantMaterialsWithoutOverride() {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
                 .filter(material -> !material.isUnknown())
-                .filter(BlueprintConstants::isNotRelevantAndNotRequiredEngineeringIngredient)
+                .filter(OdysseyBlueprintConstants::isNotRelevantAndNotRequiredEngineeringIngredient)
                 .map(OdysseyMaterial.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
     }

@@ -1,19 +1,20 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TextBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import javafx.scene.text.TextFlow;
+import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,14 +25,11 @@ import java.util.stream.Collectors;
 class HorizonsBlueprintContent extends VBox {
     private static final String RECIPE_TITLE_LABEL_STYLE_CLASS = "recipe-title-label";
     private final List<Ingredient> ingredients = new ArrayList<>();
-    private final HorizonsBlueprint recipe;
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private Label countLabel;
+    private final HorizonsBlueprint blueprint;
     private HBox recipeHeader;
-    private MenuButton addToWishlist;
 
-    HorizonsBlueprintContent(final HorizonsBlueprint recipe) {
-        this.recipe = recipe;
+    HorizonsBlueprintContent(final HorizonsBlueprint blueprint) {
+        this.blueprint = blueprint;
         initComponents();
         initEventHandling();
     }
@@ -40,22 +38,65 @@ class HorizonsBlueprintContent extends VBox {
         this.getStyleClass().add("recipe-content");
         loadIngredients();
         initDescription();
-        initRecipe();
-        initIngredients();
-        initEngineers();
+        if (this.blueprint instanceof HorizonsEngineerBlueprint) {
+            initObjectivesLabel();
+            initObjectives();
+        }
+        if (!this.ingredients.isEmpty() && !this.ingredients.stream().allMatch(ingredient -> ingredient.getType().equals(HorizonsStorageType.OTHER))) {
+            initRecipe();
+            initIngredients();
+        }
 
+        if (!(this.blueprint instanceof HorizonsEngineerBlueprint) && !this.blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.SYNTHESIS) && !HorizonsBlueprintConstants.getTechbrokerUnlocks().containsKey(this.blueprint.getHorizonsBlueprintName())) {
+            initEngineers();
+        }
         initModifiers();
+
+        if (!HorizonsBlueprintGrade.NONE.equals(this.blueprint.getHorizonsBlueprintGrade()) && HorizonsBlueprintConstants.getExperimentalEffects().containsKey(this.blueprint.getHorizonsBlueprintName())) {
+            final Button experimentalEffects = ButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.category.name.experimental_effects")).withOnAction(event -> {
+                EventService.publish(new BlueprintClickEvent(this.blueprint.getHorizonsBlueprintName(), true));
+            }).build();
+            final HBox box = BoxBuilder.builder()
+                    .withStyleClass("recipe-wishlist-count-box")
+                    .withNodes(experimentalEffects)
+                    .buildHBox();
+            HBox.setHgrow(experimentalEffects, Priority.ALWAYS);
+            this.recipeHeader.getChildren().add(box);
+        }
+        if (HorizonsBlueprintGrade.NONE.equals(this.blueprint.getHorizonsBlueprintGrade()) && !(this.blueprint instanceof HorizonsEngineerBlueprint) && !HorizonsBlueprintConstants.getTechbrokerUnlocks().containsKey(this.blueprint.getHorizonsBlueprintName())) {
+            final Button blueprints = ButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.category.name.blueprints")).withOnAction(event -> {
+                EventService.publish(new BlueprintClickEvent(this.blueprint.getHorizonsBlueprintName()));
+            }).build();
+            final HBox box = BoxBuilder.builder()
+                    .withStyleClass("recipe-wishlist-count-box")
+                    .withNodes(blueprints)
+                    .buildHBox();
+            HBox.setHgrow(blueprints, Priority.ALWAYS);
+            this.recipeHeader.getChildren().add(box);
+        }
+
     }
 
 
     private void loadIngredients() {
-        this.ingredients.addAll(getRecipeIngredients(this.recipe, Raw.class, HorizonsStorageType.RAW, StorageService.getRaw()));
-        this.ingredients.addAll(getRecipeIngredients(this.recipe, Encoded.class, HorizonsStorageType.ENCODED, StorageService.getEncoded()));
-        this.ingredients.addAll(getRecipeIngredients(this.recipe, Manufactured.class, HorizonsStorageType.MANUFACTURED, StorageService.getManufactured()));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Raw.class, HorizonsStorageType.RAW, StorageService.getRaw()));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Encoded.class, HorizonsStorageType.ENCODED, StorageService.getEncoded()));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Manufactured.class, HorizonsStorageType.MANUFACTURED, StorageService.getManufactured()));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Commodity.class, HorizonsStorageType.COMMODITY, StorageService.getCommodities()));
+        if (this.blueprint instanceof HorizonsEngineerBlueprint horizonsEngineerBlueprint) {
+            this.ingredients.addAll(horizonsEngineerBlueprint.getOther().stream()
+                    .map(text -> new MissionIngredient(text, HorizonsStorageType.OTHER))
+                    .collect(Collectors.toCollection(ArrayList::new)));
+        }
     }
 
     private void initIngredients() {
-        final FlowPane ingredientFlow = FlowPaneBuilder.builder().withStyleClass("recipe-ingredient-flow").withNodes(this.ingredients).build();
+        final FlowPane ingredientFlow = FlowPaneBuilder.builder().withStyleClass("recipe-ingredient-flow").withNodes(this.ingredients.stream().filter(ingredient -> !ingredient.getType().equals(HorizonsStorageType.OTHER)).toList()).build();
+        this.getChildren().add(ingredientFlow);
+    }
+
+    private void initObjectives() {
+        final FlowPane ingredientFlow = FlowPaneBuilder.builder().withStyleClass("recipe-ingredient-flow").withNodes(this.ingredients.stream().filter(ingredient -> ingredient.getType().equals(HorizonsStorageType.OTHER)).toList()).build();
         this.getChildren().add(ingredientFlow);
     }
 
@@ -69,33 +110,19 @@ class HorizonsBlueprintContent extends VBox {
         HBox.setHgrow(descriptionRegion, Priority.ALWAYS);
 
         this.recipeHeader = BoxBuilder.builder().withNodes(descriptionTitle, descriptionRegion).buildHBox();
-        final Text description = TextBuilder.builder()
-                .withStyleClass("recipe-description")
-                .withWrappingWidth(465D)
-                .withText(LocaleService.getStringBinding(this.recipe.getHorizonsBlueprintObjectName().getDescriptionLocalizationKey()))
-                .build();
 
-        this.getChildren().addAll(this.recipeHeader, description);
+        final Text description = TextBuilder.builder()
+                .withStyleClass("blueprint-description-text")
+                .withWrappingWidth(465D)
+                .withText(LocaleService.getStringBinding(HorizonsBlueprintType.SYNTHESIS.equals(this.blueprint.getHorizonsBlueprintType()) || HorizonsBlueprintType.ENGINEER.equals(this.blueprint.getHorizonsBlueprintType()) ? this.blueprint.getHorizonsBlueprintName().getDescriptionLocalizationKey() : this.blueprint.getHorizonsBlueprintType().getDescriptionLocalizationKey()))
+                .build();
+        final TextFlow textFlow = new TextFlow(description);
+        textFlow.getStyleClass().add("blueprint-description");
+        this.getChildren().addAll(this.recipeHeader, textFlow);
     }
 
     @SuppressWarnings("java:S1192")
     private void initRecipe() {
-        this.addToWishlist = new MenuButton();
-        this.addToWishlist.getStyleClass().add("recipe-wishlist-button");
-        this.addToWishlist.textProperty().bind(LocaleService.getStringBinding("blueprint.add.to.wishlist"));
-        this.addToWishlist.getItems().addAll(new ArrayList<>());
-        this.countLabel = LabelBuilder.builder().withStyleClass("recipe-wishlist-count").build();
-        this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", 0));
-//        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-//            final Wishlists wishlists = loadCommanderWishlists(commander);
-//            loadInitialCount(wishlists);
-//        });
-        final HBox box = BoxBuilder.builder()
-                .withStyleClass("recipe-wishlist-count-box")
-                .withNodes(this.countLabel, this.addToWishlist)
-                .buildHBox();
-        HBox.setHgrow(this.addToWishlist, Priority.ALWAYS);
-//        this.recipeHeader.getChildren().add(box);
         final Label materialHeader = LabelBuilder.builder()
                 .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("blueprint.header.material"))
@@ -103,35 +130,14 @@ class HorizonsBlueprintContent extends VBox {
         this.getChildren().add(materialHeader);
     }
 
-//    private void loadInitialCount(final Wishlists wishlists) {
-//        final long count = wishlists.getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getHorizonsRecipeObjectName())).count();
-//        if (count > 0L) {
-//            this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", count));
-//        } else {
-//            this.countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
-//        }
-//    }
-//
-//    private Wishlists loadCommanderWishlists(final Commander commander) {
-//        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
-//        this.addToWishlist.getItems().clear();
-//        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
-//            final MenuItem menuItem = new MenuItem();
-//            menuItem.setOnAction(event -> EventService.publish(new WishlistRecipeEvent(commander.getFid(), wishlist.getUuid(), List.of(new WishlistRecipe(this.recipe.getHorizonsRecipeObjectName(), true)), Action.ADDED)));
-//            menuItem.setText(wishlist.getName());
-//            return menuItem;
-//        }).toList();
-//        this.addToWishlist.getItems().addAll(menuItems);
-//        return wishlists;
-//    }
 
-//    private void initAsEngineerMission() {
-//        final Label materialHeader = LabelBuilder.builder()
-//                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
-//                .withText(LocaleService.getStringBinding("blueprint.header.objective"))
-//                .build();
-//        this.getChildren().add(materialHeader);
-//    }
+    private void initObjectivesLabel() {
+        final Label materialHeader = LabelBuilder.builder()
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
+                .withText(LocaleService.getStringBinding("blueprint.header.objective"))
+                .build();
+        this.getChildren().add(materialHeader);
+    }
 
     private void initEngineers() {
         final Label engineerLabelHeader = LabelBuilder.builder()
@@ -139,17 +145,17 @@ class HorizonsBlueprintContent extends VBox {
                 .withText(LocaleService.getStringBinding("blueprint.label.engineers"))
                 .build();
         this.getChildren().add(engineerLabelHeader);
-        final Label[] engineerLabels = ((HorizonsBlueprint) this.recipe).getEngineers().stream()
-                .map(EngineerModuleLabel::new)
-                .sorted(Comparator.comparing(EngineerModuleLabel::getText))
-                .toArray(Label[]::new);
+        final HBox[] engineerLabels = this.blueprint.getEngineers().stream()
+                .map(engineer -> new EngineerBlueprintLabel(engineer, true, this.blueprint.getHorizonsBlueprintGrade().getGrade()))
+                .sorted(Comparator.comparing(engineerBlueprintLabel -> engineerBlueprintLabel.getLabel().getText()))
+                .toArray(HBox[]::new);
         final FlowPane flowPane = FlowPaneBuilder.builder().withStyleClass("recipe-engineer-flow").withNodes(engineerLabels).build();
         this.getChildren().add(flowPane);
 
     }
 
     private void initModifiers() {
-        final Map<HorizonsModifier, HorizonsModifierValue> modifierMap = this.recipe.getModifiers();
+        final Map<HorizonsModifier, HorizonsModifierValue> modifierMap = this.blueprint.getModifiers();
         if (!modifierMap.isEmpty()) {
             final Label modifierTitle = LabelBuilder.builder().withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("blueprint.label.modifiers")).build();
             this.getChildren().add(modifierTitle);
@@ -170,38 +176,7 @@ class HorizonsBlueprintContent extends VBox {
     }
 
     private void initEventHandling() {
-//        EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
-//            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-//                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-//                    final Wishlists wishlists = loadCommanderWishlists(commander);
-//                    loadInitialCount(wishlists);
-//                });
-//            }
-//        });
-//        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
-//            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-//                final Wishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
-//                loadInitialCount(wishlists);
-//            }
-//        });
-//        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
-//            if (!(this.recipe instanceof EngineerRecipe) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
-//                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-//                    final Wishlists wishlists = loadCommanderWishlists(commander);
-//                    loadInitialCount(wishlists);
-//                });
-//            }
-//        });
-//        EventService.addListener(this, WishlistChangedEvent.class, wishlistEvent -> {
-//            if (this.countLabel != null) {
-//                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.recipe.getRecipeName())).count()).orElse(0L);
-//                if (count > 0L) {
-//                    this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", count));
-//                } else {
-//                    this.countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
-//                }
-//            }
-//        });
+        //NOOP
     }
 
     private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint recipe, final Class<? extends HorizonsMaterial> materialClass, final HorizonsStorageType storageType, final Map<? extends HorizonsMaterial, Integer> materialMap) {

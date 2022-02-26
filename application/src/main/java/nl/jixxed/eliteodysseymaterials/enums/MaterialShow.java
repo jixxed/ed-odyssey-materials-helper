@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
@@ -38,19 +38,19 @@ public enum MaterialShow {
         return switch (search.getMaterialShow()) {
             case ALL -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> true;
             case ALL_WITH_STOCK -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> o.getValue().getTotalValue() > 0;
-            case BLUEPRINT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isBlueprintIngredientWithOverride(o.getKey());
+            case BLUEPRINT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(o.getKey());
             case IRRELEVANT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> getIrrelevantFilter(o.getKey());
             case IRRELEVANT_WITH_STOCK -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> getIrrelevantFilter(o.getKey()) && o.getValue().getTotalValue() > 0;
             case PROHIBITED -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> o.getKey().isIllegal();
-            case ALL_ENGINEER -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isEngineeringIngredient(o.getKey());
-            case REQUIRED_ENGINEER -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isEngineeringIngredientAndNotCompleted(o.getKey());
-            case ALL_ENGINEER_BLUEPRINT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isBlueprintIngredientWithOverride(o.getKey()) || BlueprintConstants.isEngineeringIngredient(o.getKey());
-            case REQUIRED_ENGINEER_BLUEPRINT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> BlueprintConstants.isEngineeringIngredientAndNotCompleted(o.getKey()) || BlueprintConstants.isBlueprintIngredientWithOverride(o.getKey());
+            case ALL_ENGINEER -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isEngineeringIngredient(o.getKey());
+            case REQUIRED_ENGINEER -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(o.getKey());
+            case ALL_ENGINEER_BLUEPRINT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(o.getKey()) || OdysseyBlueprintConstants.isEngineeringIngredient(o.getKey());
+            case REQUIRED_ENGINEER_BLUEPRINT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(o.getKey()) || OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(o.getKey());
             case FAVOURITES -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> APPLICATION_STATE.isFavourite(o.getKey());
         };
     }
 
     private static boolean getIrrelevantFilter(final OdysseyMaterial odysseyMaterial) {
-        return APPLICATION_STATE.getSoloMode() ? BlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(odysseyMaterial) : BlueprintConstants.isNotRelevantAndNotEngineeringIngredient(odysseyMaterial);
+        return APPLICATION_STATE.getSoloMode() ? OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(odysseyMaterial) : OdysseyBlueprintConstants.isNotRelevantAndNotEngineeringIngredient(odysseyMaterial);
     }
 }

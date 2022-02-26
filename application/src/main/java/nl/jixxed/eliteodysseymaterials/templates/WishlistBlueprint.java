@@ -4,21 +4,18 @@ import javafx.animation.FadeTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.Action;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.Craftability;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -38,7 +35,7 @@ public class WishlistBlueprint extends HBox {
     private final Integer sequenceID;
     private final nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint wishlistBlueprint;
     private final BlueprintCategory blueprintCategory;
-    private final Blueprint blueprint;
+    private final OdysseyBlueprint blueprint;
     private final String wishlistUUID;
 
     private Button visibilityButton;
@@ -54,8 +51,8 @@ public class WishlistBlueprint extends HBox {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = wishlistBlueprint;
         this.sequenceID = counter++;
-        this.blueprintCategory = BlueprintConstants.getRecipeCategory(wishlistBlueprint.getRecipeName());
-        this.blueprint = BlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName());
+        this.blueprintCategory = OdysseyBlueprintConstants.getRecipeCategory(wishlistBlueprint.getRecipeName());
+        this.blueprint = OdysseyBlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName());
         initComponents();
         initEventHandling();
     }
@@ -100,7 +97,7 @@ public class WishlistBlueprint extends HBox {
             Tooltip.install(this.wishlistRecipeName, this.tooltip);
         }
         initFadeTransition();
-        final Craftability craftability = APPLICATION_STATE.getCraftability(this.getRecipeName());
+        final Craftability craftability = APPLICATION_STATE.getCraftability((OdysseyBlueprintName) this.getRecipeName());
         this.canCraft(craftability);
     }
 
@@ -119,7 +116,7 @@ public class WishlistBlueprint extends HBox {
 
     private void initEventHandling() {
         this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
-            final Craftability craftability = APPLICATION_STATE.getCraftability(this.getRecipeName());
+            final Craftability craftability = APPLICATION_STATE.getCraftability((OdysseyBlueprintName) this.getRecipeName());
             this.canCraft(craftability);
         });
     }
@@ -157,7 +154,7 @@ public class WishlistBlueprint extends HBox {
     void setVisibility(final boolean visible) {
         this.visible = visible;
         this.wishlistBlueprint.setVisible(this.visible);
-        this.visibilityImage.setImage(new Image(getClass().getResourceAsStream(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png")));
+        this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
         if (this.visible) {
             this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
         } else {
@@ -166,7 +163,7 @@ public class WishlistBlueprint extends HBox {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }
 
-    public Blueprint getRecipe() {
+    public OdysseyBlueprint getRecipe() {
         return this.blueprint;
     }
 

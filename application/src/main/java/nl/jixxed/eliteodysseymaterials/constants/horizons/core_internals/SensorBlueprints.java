@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class SensorBlueprints {
-    public static final Map<HorizonsBlueprintModificationType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
-            HorizonsBlueprintModificationType.LONG_RANGE_SCANNER,
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+            HorizonsBlueprintType.LONG_RANGE_SCANNER,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.IRON, 1
                             ),
@@ -21,7 +21,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.IRON, 1, Manufactured.HYBRIDCAPACITORS, 1
                             ),
@@ -31,7 +31,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.IRON, 1, Manufactured.HYBRIDCAPACITORS, 1, Encoded.EMISSIONDATA, 1
                             ),
@@ -41,7 +41,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.LEI_CHEUNG, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.GERMANIUM, 1, Manufactured.ELECTROCHEMICALARRAYS, 1, Encoded.DECODEDEMISSIONDATA, 1
                             ),
@@ -51,7 +51,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+80%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.NIOBIUM, 1, Manufactured.POLYMERCAPACITORS, 1, Encoded.COMPACTEMISSIONSDATA, 1
                             ),
@@ -61,9 +61,9 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+100%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG))),
-            HorizonsBlueprintModificationType.WIDE_ANGLE_SCANNER,
+            HorizonsBlueprintType.WIDE_ANGLE_SCANNER,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
@@ -73,7 +73,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-4%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1, Raw.GERMANIUM, 1
                             ),
@@ -83,7 +83,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-8%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.GERMANIUM, 1, Manufactured.MECHANICALSCRAP, 1, Encoded.SCANDATABANKS, 1
                             ),
@@ -93,7 +93,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-12%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.LEI_CHEUNG, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.MECHANICALEQUIPMENT, 1, Raw.NIOBIUM, 1, Encoded.ENCODEDSCANDATA, 1
                             ),
@@ -103,7 +103,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-16%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.MECHANICALCOMPONENTS, 1, Raw.TIN, 1, Encoded.CLASSIFIEDSCANDATA, 1
                             ),
@@ -113,9 +113,9 @@ public class SensorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-20%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG))),
-            HorizonsBlueprintModificationType.LIGHT_WEIGHT_SCANNER,
+            HorizonsBlueprintType.LIGHT_WEIGHT_SCANNER,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -125,7 +125,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-20%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.SALVAGEDALLOYS, 1, Raw.MANGANESE, 1
                             ),
@@ -135,7 +135,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-35%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.SALVAGEDALLOYS, 1, Raw.MANGANESE, 1, Manufactured.CONDUCTIVECERAMICS, 1
                             ),
@@ -145,7 +145,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-50%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.LEI_CHEUNG, Engineer.FELICITY_FARSEER)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1, Manufactured.PHASEALLOYS, 1, Manufactured.PROTOLIGHTALLOYS, 1
                             ),
@@ -155,7 +155,7 @@ public class SensorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-65%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.SENSORS, HorizonsBlueprintModificationType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.LIGHT_WEIGHT_SCANNER, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1, Manufactured.PROTOLIGHTALLOYS, 1, Manufactured.PROTORADIOLICALLOYS, 1
                             ),

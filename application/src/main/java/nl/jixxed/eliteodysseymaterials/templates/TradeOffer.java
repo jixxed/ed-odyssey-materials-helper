@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.TradeSpec;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
@@ -97,10 +98,10 @@ class TradeOffer extends Trade {
         if (getTradeSpec().hasBid()) {
             this.statusLabel.textProperty().bind(LocaleService.getStringBinding("trade.status.received.a.bid"));
         }
-        this.setHgap(4);
-        this.setVgap(4);
+        this.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        this.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.buttonBox = BoxBuilder.builder().buildHBox();
-        this.buttonBox.setSpacing(4);
+        this.buttonBox.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         final VBox statusContactBox = BoxBuilder.builder().withStyleClass("trade-info-box").withNodes(this.statusLabel, this.otherLabel, this.buttonBox).buildVBox();
 
         this.getChildren().addAll(this.offerIngredient, this.receiveIngredient, statusContactBox);

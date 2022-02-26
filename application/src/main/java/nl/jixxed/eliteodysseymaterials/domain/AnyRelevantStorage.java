@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -38,7 +38,7 @@ public class AnyRelevantStorage extends Storage {
         data.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         assets.forEach((key, value) -> materials.merge(key, value, (v1, v2) -> value));
         return materials.entrySet().stream()
-                .filter(material -> BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()))
+                .filter(material -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()))
                 .map(entry -> entry.getValue().getTotalValue())
                 .reduce(0, Integer::sum);
     }

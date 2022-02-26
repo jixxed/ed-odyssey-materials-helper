@@ -17,11 +17,12 @@ public class HorizonsBlueprint {
     private final Map<HorizonsMaterial, Integer> raw;
     private final Map<HorizonsMaterial, Integer> encoded;
     private final Map<HorizonsMaterial, Integer> manufactured;
+    private final Map<HorizonsMaterial, Integer> commodities;
     @EqualsAndHashCode.Include
     @Getter
-    private final HorizonsBlueprintObjectName horizonsBlueprintObjectName;
+    private final HorizonsBlueprintName horizonsBlueprintName;
     @Getter
-    private final HorizonsBlueprintModificationType horizonsBlueprintModificationType;
+    private final HorizonsBlueprintType horizonsBlueprintType;
     @Getter
     private final HorizonsBlueprintGrade horizonsBlueprintGrade;
     @Getter
@@ -29,19 +30,28 @@ public class HorizonsBlueprint {
     @Getter
     private final List<Engineer> engineers;
 
-    public HorizonsBlueprint(final HorizonsBlueprintObjectName horizonsBlueprintObjectName, final HorizonsBlueprintModificationType horizonsBlueprintModificationType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final List<Engineer> engineers) {
-        this(horizonsBlueprintObjectName, horizonsBlueprintModificationType, horizonsBlueprintGrade, materials, Collections.emptyMap(), engineers);
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends HorizonsMaterial, Integer> materials) {
+        this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), null);
     }
 
-    public HorizonsBlueprint(final HorizonsBlueprintObjectName horizonsBlueprintObjectName, final HorizonsBlueprintModificationType horizonsBlueprintModificationType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
-        this.horizonsBlueprintObjectName = horizonsBlueprintObjectName;
-        this.horizonsBlueprintModificationType = horizonsBlueprintModificationType;
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final List<Engineer> engineers) {
+        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, Collections.emptyMap(), engineers);
+    }
+
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
+        this(horizonsBlueprintName, horizonsBlueprintType, HorizonsBlueprintGrade.NONE, materials, modifiers, engineers);
+    }
+
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
+        this.horizonsBlueprintName = horizonsBlueprintName;
+        this.horizonsBlueprintType = horizonsBlueprintType;
         this.horizonsBlueprintGrade = horizonsBlueprintGrade;
         this.modifiers = modifiers;
         this.engineers = engineers;
         this.raw = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Raw).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.encoded = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Encoded).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.manufactured = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Manufactured).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        this.commodities = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Commodity).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public <T extends HorizonsMaterial> Map<HorizonsMaterial, Integer> getMaterialCollection(final Class<T> clazz) {
@@ -51,6 +61,8 @@ public class HorizonsBlueprint {
             return this.encoded;
         } else if (clazz.equals(Manufactured.class)) {
             return this.manufactured;
+        } else if (clazz.equals(Commodity.class)) {
+            return this.commodities;
         } else if (clazz.equals(HorizonsMaterial.class)) {
             return Stream.concat(Stream.concat(this.raw.entrySet().stream(), this.encoded.entrySet().stream()), this.manufactured.entrySet().stream()).collect(
                     Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

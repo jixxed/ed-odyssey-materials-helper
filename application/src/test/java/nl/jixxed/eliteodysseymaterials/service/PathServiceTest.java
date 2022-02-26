@@ -2,14 +2,14 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import de.saxsys.mvvmfx.testingutils.JfxToolkitExtension;
 import de.saxsys.mvvmfx.testingutils.jfxrunner.TestInJfxThread;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Locale;
 
-import static nl.jixxed.eliteodysseymaterials.enums.BlueprintName.*;
+import static nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,10 +51,10 @@ class PathServiceTest {
     void calculateShortestPath() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         final List<nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint> wishlistBlueprints = List.of(
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(BlueprintName.GREATER_RANGE_PLASMA, true)),
+                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
                 new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(BlueprintName.SCOPE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(BlueprintName.STABILITY, true))
+                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
+                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
         );
         LocationService.getCurrentStarSystem();
 
@@ -65,11 +65,11 @@ class PathServiceTest {
         assertAll(() -> {
             assertEquals(3, pathItems.size());
             assertEquals(Engineer.ODEN_GEIGER, pathItems.get(0).getEngineer());
-            assertThat(pathItems.get(0).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) BlueprintConstants.getRecipe(SCOPE));
+            assertThat(pathItems.get(0).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(SCOPE));
             assertEquals(Engineer.KIT_FOWLER, pathItems.get(1).getEngineer());
-            assertThat(pathItems.get(1).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) BlueprintConstants.getRecipe(MAGAZINE_SIZE));
+            assertThat(pathItems.get(1).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(MAGAZINE_SIZE));
             assertEquals(Engineer.DOMINO_GREEN, pathItems.get(2).getEngineer());
-            assertThat(pathItems.get(2).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) BlueprintConstants.getRecipe(GREATER_RANGE_PLASMA), (ModuleBlueprint) BlueprintConstants.getRecipe(STABILITY));
+            assertThat(pathItems.get(2).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(GREATER_RANGE_PLASMA), (ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(STABILITY));
             assertEquals(203.7865988002623, pathItems.get(0).getDistance() + pathItems.get(1).getDistance() + pathItems.get(2).getDistance());
 //            System.out.println(pathItems.get(0).getDistance() + "/" + pathItems.get(1).getDistance() + "/" + pathItems.get(2).getDistance());
         });
@@ -80,10 +80,10 @@ class PathServiceTest {
     void calculateShortestPath2() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         final List<nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint> wishlistBlueprints = List.of(
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(BlueprintName.GREATER_RANGE_PLASMA, true)),
+                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
                 new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(BlueprintName.SCOPE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(BlueprintName.STABILITY, true))
+                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
+                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
         );
         LocationService.getCurrentStarSystem();
 
@@ -93,11 +93,11 @@ class PathServiceTest {
         assertAll(() -> {
             assertEquals(3, pathItems.size());
             assertEquals(Engineer.DOMINO_GREEN, pathItems.get(0).getEngineer());
-            assertThat(pathItems.get(0).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) BlueprintConstants.getRecipe(STABILITY), (ModuleBlueprint) BlueprintConstants.getRecipe(GREATER_RANGE_PLASMA));
+            assertThat(pathItems.get(0).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(STABILITY), (ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(GREATER_RANGE_PLASMA));
             assertEquals(Engineer.KIT_FOWLER, pathItems.get(1).getEngineer());
-            assertThat(pathItems.get(1).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) BlueprintConstants.getRecipe(MAGAZINE_SIZE));
+            assertThat(pathItems.get(1).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(MAGAZINE_SIZE));
             assertEquals(Engineer.ODEN_GEIGER, pathItems.get(2).getEngineer());
-            assertThat(pathItems.get(2).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) BlueprintConstants.getRecipe(SCOPE));
+            assertThat(pathItems.get(2).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(SCOPE));
             assertEquals(203.7865988002623, pathItems.get(0).getDistance() + pathItems.get(1).getDistance() + pathItems.get(2).getDistance());
 //            System.out.println(pathItems.get(0).getDistance() + "/" + pathItems.get(1).getDistance() + "/" + pathItems.get(2).getDistance());
         });

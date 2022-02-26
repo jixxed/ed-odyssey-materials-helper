@@ -11,7 +11,7 @@ import java.util.Map;
 @Getter
 public enum Suit implements Equipment {
     MAVERICK(
-            new LevelValue(BlueprintName.NONE, BlueprintName.MAVERICK_SUIT_GRADE_1_2, BlueprintName.MAVERICK_SUIT_GRADE_2_3, BlueprintName.MAVERICK_SUIT_GRADE_3_4, BlueprintName.MAVERICK_SUIT_GRADE_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_1_2, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_2_3, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_3_4, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.HEALTH, 30),
             Map.entry(StaticStat.MASS, 100),
@@ -33,7 +33,7 @@ public enum Suit implements Equipment {
             Map.entry(DynamicStat.DATA_CAPACITY, 10)
     ),
     DOMINATOR(
-            new LevelValue(BlueprintName.NONE, BlueprintName.DOMINATOR_SUIT_GRADE_1_2, BlueprintName.DOMINATOR_SUIT_GRADE_2_3, BlueprintName.DOMINATOR_SUIT_GRADE_3_4, BlueprintName.DOMINATOR_SUIT_GRADE_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_1_2, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_2_3, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_3_4, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.HEALTH, 30),
             Map.entry(StaticStat.MASS, 100),
@@ -54,7 +54,7 @@ public enum Suit implements Equipment {
             Map.entry(DynamicStat.DATA_CAPACITY, 10)
     ),
     ARTEMIS(
-            new LevelValue(BlueprintName.NONE, BlueprintName.ARTEMIS_SUIT_GRADE_1_2, BlueprintName.ARTEMIS_SUIT_GRADE_2_3, BlueprintName.ARTEMIS_SUIT_GRADE_3_4, BlueprintName.ARTEMIS_SUIT_GRADE_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_1_2, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_2_3, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_3_4, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.HEALTH, 30),
             Map.entry(StaticStat.MASS, 100),
@@ -75,7 +75,7 @@ public enum Suit implements Equipment {
             Map.entry(DynamicStat.DATA_CAPACITY, 10)
     ),
     FLIGHTSUIT(
-            new LevelValue(BlueprintName.NONE, BlueprintName.NONE, BlueprintName.NONE, BlueprintName.NONE, BlueprintName.NONE),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 0, 0, 0, 0)),
             Map.entry(StaticStat.HEALTH, 30),
             Map.entry(StaticStat.MASS, 100),

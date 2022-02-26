@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 
 import java.io.BufferedReader;
@@ -77,7 +78,7 @@ public class StartDialog extends VBox implements Template {
                 : BoxBuilder.builder().withNodes(region,
                 ButtonBuilder.builder().withNonLocalizedText("Continue").withOnAction(event -> this.stage.close()).build()
         ).buildHBox();
-        buttons.setSpacing(4);
+        buttons.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.getStyleClass().add("start-dialog");
         this.getChildren().addAll(whatsNewTitle, whatsNewContent, policyTitle, policyContent, buttons);
     }

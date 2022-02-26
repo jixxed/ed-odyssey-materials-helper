@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
@@ -69,14 +70,19 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
     public void initEventHandling() {
         if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
 
-            EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent ->
-                    APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists))
-            ;
+            EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+                if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
+                    APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
+                }
+            });
             EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
                     loadCommanderWishlists(commanderSelectedEvent.getCommander())
             );
-            EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent ->
-                    APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists)
+            EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+                        if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
+                            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
+                        }
+                    }
             );
             EventService.addListener(this, ModificationChangedEvent.class, modificationChangedEvent -> {
                 if (modificationChangedEvent.getLoadoutItem() == this) {
@@ -96,7 +102,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
     @SuppressWarnings("java:S3776")
     public void initComponents() {
         this.getStyleClass().add("loadout-item");
-        this.setSpacing(5);
+        this.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.stats = BoxBuilder.builder().withNodes().buildVBox();
         this.statsToggle = ToggleSwitchBuilder.builder()
                 .withSelected(this.loadout.isShowChanged())
@@ -302,8 +308,8 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         final List<WishlistBlueprint> wishlistBlueprints = new ArrayList<>();
         for (int level = this.loadout.getCurrentLevel() + 1; level <= this.loadout.getTargetLevel(); level++) {
             final Object recipe = recipes.getValueForLevel(level);
-            if (!BlueprintName.NONE.equals(recipe)) {
-                wishlistBlueprints.add(new WishlistBlueprint((BlueprintName) recipe, true));
+            if (!OdysseyBlueprintName.NONE.equals(recipe)) {
+                wishlistBlueprints.add(new WishlistBlueprint((OdysseyBlueprintName) recipe, true));
             }
         }
         wishlistBlueprints.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification != null && !WeaponModification.NONE.equals(modification)).map(modification -> new WishlistBlueprint(modification.getRecipe(), true)).toList());

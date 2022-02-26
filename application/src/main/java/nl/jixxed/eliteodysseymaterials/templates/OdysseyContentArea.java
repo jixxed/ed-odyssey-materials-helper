@@ -22,10 +22,10 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 class OdysseyContentArea extends AnchorPane {
 
     private SearchBar searchBar;
-    private BlueprintBar blueprintBar;
+    private OdysseyBlueprintBar odysseyBlueprintBar;
     private OverviewTab overview;
     private WishlistTab wishlistTab;
-    private EngineersTab engineersTab;
+    private OdysseyEngineersTab odysseyEngineersTab;
     private SettingsTab settingsTab;
     private LoadoutEditorTab loadoutEditorTab;
     private TradeTab tradeTab;
@@ -42,20 +42,20 @@ class OdysseyContentArea extends AnchorPane {
         this.overview = new OverviewTab();
         this.wishlistTab = new WishlistTab();
         this.loadoutEditorTab = new LoadoutEditorTab();
-        this.engineersTab = new EngineersTab();
+        this.odysseyEngineersTab = new OdysseyEngineersTab();
         this.tradeTab = new TradeTab();
         this.settingsTab = new SettingsTab(application);
         this.importTab = new ImportTab();
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.loadoutEditorTab.setClosable(false);
-        this.engineersTab.setClosable(false);
+        this.odysseyEngineersTab.setClosable(false);
         this.settingsTab.setClosable(false);
         this.importTab.setClosable(false);
         this.tradeTab.setClosable(false);
 
         this.searchBar = new SearchBar();
-        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.engineersTab, this.settingsTab, this.importTab);
+        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.odysseyEngineersTab, this.settingsTab, this.importTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -69,16 +69,16 @@ class OdysseyContentArea extends AnchorPane {
         this.body = new VBox(this.searchBar, this.tabs);
         HBox.setHgrow(this.body, Priority.ALWAYS);
 
-        this.blueprintBar = new BlueprintBar(application);
-        this.blueprintBar.visibleProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(newValue, this.blueprintBar.getWidth()));
-        this.blueprintBar.widthProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(isRecipeBarVisible(), newValue.doubleValue()));
-        this.blueprintBar.visibleProperty().set(isRecipeBarVisible());
+        this.odysseyBlueprintBar = new OdysseyBlueprintBar(application);
+        this.odysseyBlueprintBar.visibleProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(newValue, this.odysseyBlueprintBar.getWidth()));
+        this.odysseyBlueprintBar.widthProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(isRecipeBarVisible(), newValue.doubleValue()));
+        this.odysseyBlueprintBar.visibleProperty().set(isRecipeBarVisible());
 
-        AnchorPaneHelper.setAnchor(this.blueprintBar, 0.0, 0.0, 0.0, null);
-        setBodyAnchor(isRecipeBarVisible(), this.blueprintBar.getWidth());
+        AnchorPaneHelper.setAnchor(this.odysseyBlueprintBar, 0.0, 0.0, 0.0, null);
+        setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth());
         AnchorPaneHelper.setAnchor(this.tabs, 0.0, 0.0, 0.0, null);
 
-        this.getChildren().addAll(this.blueprintBar, this.body);
+        this.getChildren().addAll(this.odysseyBlueprintBar, this.body);
     }
 
     private void initEventHandling() {
@@ -88,15 +88,15 @@ class OdysseyContentArea extends AnchorPane {
             }
         });
         EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
-            this.blueprintBar.setVisible(true);
+            this.odysseyBlueprintBar.setVisible(true);
             PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, true);
         });
-        EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.blueprintBar.getWidth()));
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.blueprintBar.getWidth()));
+        EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth()));
+        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth()));
         EventService.addListener(this, MenuButtonClickedEvent.class, event -> {
             if (Expansion.ODYSSEY.equals(event.getExpansion())) {
-                final boolean visibility = !this.blueprintBar.isVisible();
-                this.blueprintBar.setVisible(visibility);
+                final boolean visibility = !this.odysseyBlueprintBar.isVisible();
+                this.odysseyBlueprintBar.setVisible(visibility);
                 PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, visibility);
             }
         });

@@ -1,10 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-import lombok.Getter;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -16,7 +18,12 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.segmentbar.SegmentType;
+import nl.jixxed.eliteodysseymaterials.templates.segmentbar.TypeSegment;
+import nl.jixxed.eliteodysseymaterials.templates.segmentbar.TypeSegmentView;
 import org.controlsfx.control.SegmentedBar;
+
+import java.util.Map;
 
 public class HorizonsMaterialCard extends VBox implements Template {
 
@@ -53,7 +60,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
         this.segmentedBar = new SegmentedBar<>();
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
-        this.segmentedBar.setSegmentViewFactory(TypeSegmentView::new);
+        this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true));
         this.present = new TypeSegment(materialCount, SegmentType.PRESENT);
         this.notPresent = new TypeSegment(maxAmount - materialCount, SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
@@ -80,32 +87,5 @@ public class HorizonsMaterialCard extends VBox implements Template {
         });
     }
 
-    class TypeSegmentView extends StackPane {
-        private final Label label;
 
-        TypeSegmentView(final TypeSegment segment) {
-            this.label = LabelBuilder.builder().build();
-            this.label.textProperty().bind(segment.textProperty());
-            this.label.getStyleClass().add("horizons-materialcard-amount");
-            this.setStyle(SegmentType.PRESENT.equals(segment.getSegmentType()) ? "-fx-background-color: #89d07f;" : "-fx-background-color:  #ff7c7c;");
-            this.setPadding(new Insets(5.0));
-            this.setPrefHeight(30.0);
-            this.getChildren().add(this.label);
-            this.label.visibleProperty().bind(segment.textProperty().isNotEqualTo("0"));
-        }
-    }
-
-    class TypeSegment extends SegmentedBar.Segment {
-        @Getter
-        final SegmentType segmentType;
-
-        TypeSegment(final Integer materialCount, final SegmentType segmentType) {
-            super(materialCount, materialCount.toString());
-            this.segmentType = segmentType;
-        }
-    }
-
-    private enum SegmentType {
-        PRESENT, NOT_PRESENT
-    }
 }

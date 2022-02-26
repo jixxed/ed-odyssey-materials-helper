@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
@@ -165,7 +165,7 @@ class TradeCreateBlock extends VBox {
         Integer total = 0;
         for (final OdysseyStorageType storageType : List.of(OdysseyStorageType.DATA, OdysseyStorageType.GOOD, OdysseyStorageType.ASSET)) {
             total += StorageService.getMaterials(storageType).entrySet().stream()
-                    .filter(material -> BlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()))
+                    .filter(material -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()))
                     .map(entry -> entry.getValue().getTotalValue())
                     .reduce(0, Integer::sum);
         }

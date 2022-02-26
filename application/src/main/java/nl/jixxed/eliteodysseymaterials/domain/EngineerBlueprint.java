@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class EngineerBlueprint extends Blueprint {
+public class EngineerBlueprint extends OdysseyBlueprint {
     private final List<String> other;
     private final Supplier<Boolean> isCompletedSupplier;
 

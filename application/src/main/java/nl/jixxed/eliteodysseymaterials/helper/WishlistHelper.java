@@ -3,7 +3,7 @@ package nl.jixxed.eliteodysseymaterials.helper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,13 +18,13 @@ public class WishlistHelper {
                 .filter(recipe -> !recipes.isBlank())
                 .map(recipe -> {
                     final String[] splittedRecipe = recipe.split(":");
-                    return new WishlistBlueprint(BlueprintName.forName(splittedRecipe[0]), Boolean.parseBoolean(splittedRecipe[1]));
+                    return new WishlistBlueprint(OdysseyBlueprintName.forName(splittedRecipe[0]), Boolean.parseBoolean(splittedRecipe[1]));
                 })
                 .forEach(wishlist::add);
         return wishlist;
     }
 
     public static String convertWishlist(final List<WishlistBlueprint> recipes) {
-        return recipes.stream().map(recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible()).collect(Collectors.joining(","));
+        return recipes.stream().map(recipe -> ((OdysseyBlueprintName) recipe.getRecipeName()).name() + ":" + recipe.isVisible()).collect(Collectors.joining(","));
     }
 }

@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Encoded;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
 import nl.jixxed.eliteodysseymaterials.enums.Manufactured;
 import nl.jixxed.eliteodysseymaterials.enums.Raw;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
@@ -41,18 +42,17 @@ public class HorizonsMaterialOverview extends VBox implements Template {
             final HorizonsMaterialCard[] array = Arrays.stream(Manufactured.materialsForTypeSorted(type)).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
             createMaterialCardRow(type, array);
         });
-        this.setSpacing(8);
+        this.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.5));
     }
-
 
     private void createMaterialCardRow(final HorizonsMaterialType type, final HorizonsMaterialCard[] array) {
         final DestroyableLabel category = LabelBuilder.builder().withStyleClass("horizons-material-overview-row-name").withText(LocaleService.getStringBinding(type.getLocalizationKey())).build();
         final FlowPane materials = FlowPaneBuilder.builder().withNodes(array).build();
-        materials.setVgap(4);
-        materials.setHgap(4);
+        materials.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        materials.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         HBox.setHgrow(materials, Priority.ALWAYS);
         final HBox row = BoxBuilder.builder().withNodes(category, materials).buildHBox();
-        row.setSpacing(4);
+        row.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.getChildren().add(row);
     }
 

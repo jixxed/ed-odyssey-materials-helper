@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.enums.Suit;
 import nl.jixxed.eliteodysseymaterials.enums.Weapon;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -94,10 +95,10 @@ public class LoadoutEditorTab extends EDOTab implements Template {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.loadout"));
         final Node menu = initMenu();
         this.loadoutItemsFlow = FlowPaneBuilder.builder().build();
-        this.loadoutItemsFlow.setHgap(5);
-        this.loadoutItemsFlow.setVgap(5);
+        this.loadoutItemsFlow.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        this.loadoutItemsFlow.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         final VBox vBox = BoxBuilder.builder().withStyleClass("loadout-box").withNodes(menu, this.loadoutItemsFlow).buildVBox();
-        vBox.setSpacing(5);
+        vBox.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(vBox)
                 .build();
@@ -199,12 +200,12 @@ public class LoadoutEditorTab extends EDOTab implements Template {
         region.setMinWidth(5);
 
         final FlowPane flowPane = FlowPaneBuilder.builder().withNodes(this.renameLoadoutSetButton, this.createLoadoutSetButton, this.removeLoadoutSetButton, this.clipboardButton).build();
-        flowPane.setHgap(4);
-        flowPane.setVgap(4);
+        flowPane.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        flowPane.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         flowPane.prefWrapLengthProperty().bind(this.renameLoadoutSetButton.widthProperty().add(this.createLoadoutSetButton.widthProperty()).add(this.removeLoadoutSetButton.widthProperty()).add(this.clipboardButton.widthProperty()).add(20));
         flowPane.setColumnHalignment(HPos.RIGHT);
         final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.loadoutSetSelect, addSuitButton, addWeaponButton, region, this.loadoutSetName, flowPane).buildHBox();
-        hBoxBlueprints.setSpacing(5);
+        hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         return hBoxBlueprints;
     }
 

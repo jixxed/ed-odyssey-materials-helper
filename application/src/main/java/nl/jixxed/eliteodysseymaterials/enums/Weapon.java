@@ -13,7 +13,7 @@ public enum Weapon implements Equipment {
 
 
     KINEMATIC_P15(
-            new LevelValue(BlueprintName.NONE, BlueprintName.KARMA_1_2, BlueprintName.KARMA_2_3, BlueprintName.KARMA_3_4, BlueprintName.KARMA_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.KARMA_1_2, OdysseyBlueprintName.KARMA_2_3, OdysseyBlueprintName.KARMA_3_4, OdysseyBlueprintName.KARMA_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.pistol"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.secondary"),
@@ -35,7 +35,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     KINEMATIC_AR50(
-            new LevelValue(BlueprintName.NONE, BlueprintName.KARMA_1_2, BlueprintName.KARMA_2_3, BlueprintName.KARMA_3_4, BlueprintName.KARMA_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.KARMA_1_2, OdysseyBlueprintName.KARMA_2_3, OdysseyBlueprintName.KARMA_3_4, OdysseyBlueprintName.KARMA_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.rifle"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),
@@ -57,7 +57,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     KINEMATIC_C44(
-            new LevelValue(BlueprintName.NONE, BlueprintName.KARMA_1_2, BlueprintName.KARMA_2_3, BlueprintName.KARMA_3_4, BlueprintName.KARMA_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.KARMA_1_2, OdysseyBlueprintName.KARMA_2_3, OdysseyBlueprintName.KARMA_3_4, OdysseyBlueprintName.KARMA_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.carbine"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),
@@ -79,7 +79,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     KINEMATIC_L6(
-            new LevelValue(BlueprintName.NONE, BlueprintName.KARMA_1_2, BlueprintName.KARMA_2_3, BlueprintName.KARMA_3_4, BlueprintName.KARMA_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.KARMA_1_2, OdysseyBlueprintName.KARMA_2_3, OdysseyBlueprintName.KARMA_3_4, OdysseyBlueprintName.KARMA_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.launcher"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),
@@ -101,7 +101,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     TAKADA_APHELION(
-            new LevelValue(BlueprintName.NONE, BlueprintName.TK_1_2, BlueprintName.TK_2_3, BlueprintName.TK_3_4, BlueprintName.TK_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.TK_1_2, OdysseyBlueprintName.TK_2_3, OdysseyBlueprintName.TK_3_4, OdysseyBlueprintName.TK_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.rifle"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),
@@ -123,7 +123,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     TAKADA_ECLIPSE(
-            new LevelValue(BlueprintName.NONE, BlueprintName.TK_1_2, BlueprintName.TK_2_3, BlueprintName.TK_3_4, BlueprintName.TK_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.TK_1_2, OdysseyBlueprintName.TK_2_3, OdysseyBlueprintName.TK_3_4, OdysseyBlueprintName.TK_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.carbine"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),
@@ -145,7 +145,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     TAKADA_ZENITH(
-            new LevelValue(BlueprintName.NONE, BlueprintName.TK_1_2, BlueprintName.TK_2_3, BlueprintName.TK_3_4, BlueprintName.TK_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.TK_1_2, OdysseyBlueprintName.TK_2_3, OdysseyBlueprintName.TK_3_4, OdysseyBlueprintName.TK_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.pistol"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.secondary"),
@@ -167,7 +167,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     MANTICORE_EXECUTIONER(
-            new LevelValue(BlueprintName.NONE, BlueprintName.MANTICORE_1_2, BlueprintName.MANTICORE_2_3, BlueprintName.MANTICORE_3_4, BlueprintName.MANTICORE_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.MANTICORE_1_2, OdysseyBlueprintName.MANTICORE_2_3, OdysseyBlueprintName.MANTICORE_3_4, OdysseyBlueprintName.MANTICORE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.sniper"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),
@@ -189,7 +189,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     MANTICORE_TORMENTOR(
-            new LevelValue(BlueprintName.NONE, BlueprintName.MANTICORE_1_2, BlueprintName.MANTICORE_2_3, BlueprintName.MANTICORE_3_4, BlueprintName.MANTICORE_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.MANTICORE_1_2, OdysseyBlueprintName.MANTICORE_2_3, OdysseyBlueprintName.MANTICORE_3_4, OdysseyBlueprintName.MANTICORE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.pistol"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.secondary"),
@@ -211,7 +211,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     MANTICORE_INTIMIDATOR(
-            new LevelValue(BlueprintName.NONE, BlueprintName.MANTICORE_1_2, BlueprintName.MANTICORE_2_3, BlueprintName.MANTICORE_3_4, BlueprintName.MANTICORE_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.MANTICORE_1_2, OdysseyBlueprintName.MANTICORE_2_3, OdysseyBlueprintName.MANTICORE_3_4, OdysseyBlueprintName.MANTICORE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.shotgun"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),
@@ -233,7 +233,7 @@ public enum Weapon implements Equipment {
             Map.entry(DynamicStat.STOWED_RELOADING, false)
     ),
     MANTICORE_OPPRESSOR(
-            new LevelValue(BlueprintName.NONE, BlueprintName.MANTICORE_1_2, BlueprintName.MANTICORE_2_3, BlueprintName.MANTICORE_3_4, BlueprintName.MANTICORE_4_5),
+            new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.MANTICORE_1_2, OdysseyBlueprintName.MANTICORE_2_3, OdysseyBlueprintName.MANTICORE_3_4, OdysseyBlueprintName.MANTICORE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.CLASS, "loadout.stat.value.class.rifle"),
             Map.entry(StaticStat.TYPE, "loadout.stat.value.type.primary"),

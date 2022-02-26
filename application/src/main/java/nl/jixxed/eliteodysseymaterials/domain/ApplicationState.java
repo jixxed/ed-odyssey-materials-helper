@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
@@ -22,23 +22,49 @@ import java.util.function.Function;
 public class ApplicationState {
 
     private static ApplicationState applicationState;
-    private final Function<WishlistBlueprint, String> wishlistRecipeMapper = recipe -> recipe.getRecipeName().name() + ":" + recipe.isVisible();
+    private final Function<WishlistBlueprint, String> wishlistRecipeMapper = recipe -> ((OdysseyBlueprintName) recipe.getRecipeName()).name() + ":" + recipe.isVisible();
     private final List<OdysseyMaterial> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
-    private final Map<Engineer, EngineerState> engineerStates = new EnumMap<>(Map.ofEntries(
-            Map.entry(Engineer.DOMINO_GREEN, EngineerState.UNKNOWN),
-            Map.entry(Engineer.HERO_FERRARI, EngineerState.UNKNOWN),
-            Map.entry(Engineer.JUDE_NAVARRO, EngineerState.UNKNOWN),
-            Map.entry(Engineer.KIT_FOWLER, EngineerState.UNKNOWN),
-            Map.entry(Engineer.ODEN_GEIGER, EngineerState.UNKNOWN),
-            Map.entry(Engineer.TERRA_VELASQUEZ, EngineerState.UNKNOWN),
-            Map.entry(Engineer.UMA_LASZLO, EngineerState.UNKNOWN),
-            Map.entry(Engineer.WELLINGTON_BECK, EngineerState.UNKNOWN),
-            Map.entry(Engineer.YARDEN_BOND, EngineerState.UNKNOWN),
-            Map.entry(Engineer.BALTANOS, EngineerState.UNKNOWN),
-            Map.entry(Engineer.ELEANOR_BRESA, EngineerState.UNKNOWN),
-            Map.entry(Engineer.ROSA_DAYETTE, EngineerState.UNKNOWN),
-            Map.entry(Engineer.YI_SHEN, EngineerState.UNKNOWN)
+    private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
+            Map.entry(Engineer.DOMINO_GREEN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.HERO_FERRARI, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.JUDE_NAVARRO, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.KIT_FOWLER, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.ODEN_GEIGER, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.TERRA_VELASQUEZ, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.UMA_LASZLO, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.WELLINGTON_BECK, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.YARDEN_BOND, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.BALTANOS, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.ELEANOR_BRESA, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.ROSA_DAYETTE, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.YI_SHEN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.COLONEL_BRIS_DEKKER, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.MARCO_QWENT, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.THE_DWELLER, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.LORI_JAMESON, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.THE_SARGE, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.SELENE_JEAN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.LIZ_RYDER, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.BILL_TURNER, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.TOD_THE_BLASTER_MCQUINN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.PROFESSOR_PALIN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.DIDI_VATERMANN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.JURI_ISHMAAK, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.LEI_CHEUNG, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.FELICITY_FARSEER, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.TIANA_FORTUNE, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.ZACARIAH_NEMO, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.RAM_TAH, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.BROO_TARQUIN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.ELVIRA_MARTUUK, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.HERA_TANI, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.CHLOE_SEDESI, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.MARSHA_HICKS, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.ETIENNE_DORN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.MEL_BRANDON, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.PETRA_OLMANOVA, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.UNKNOWN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0))
     ));
     private GameMode gameMode = GameMode.NONE;
 
@@ -79,28 +105,60 @@ public class ApplicationState {
     }
 
     public boolean isEngineerKnown(final Engineer engineer) {
-        final EngineerState engineerState = this.engineerStates.get(engineer);
+        final EngineerState engineerState = this.engineerStates.get(engineer).getEngineerState();
         return EngineerState.KNOWN.equals(engineerState) || isEngineerUnlocked(engineer);
 
     }
 
     public boolean isEngineerUnlocked(final Engineer engineer) {
-        final EngineerState engineerState = this.engineerStates.get(engineer);
+        final EngineerState engineerState = this.engineerStates.get(engineer).getEngineerState();
         return EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState);
     }
 
+    public boolean isEngineerInvited(final Engineer engineer) {
+        final EngineerState engineerState = this.engineerStates.get(engineer).getEngineerState();
+        return EngineerState.INVITED.equals(engineerState);
+    }
+
     public boolean isEngineerUnlockedExact(final Engineer engineer) {
-        final EngineerState engineerState = this.engineerStates.get(engineer);
+        final EngineerState engineerState = this.engineerStates.get(engineer).getEngineerState();
         return EngineerState.UNLOCKED.equals(engineerState);
     }
 
+    public void setEngineerStatus(final Engineer engineer, final EngineerState engineerState, final Integer rank, final Integer progress) {
+        final EngineerStatus engineerStatus = this.engineerStates.get(engineer);
+        engineerStatus.setEngineerState(engineerState);
+        engineerStatus.setRank(rank);
+        engineerStatus.setProgress(progress);
+    }
+
     public void setEngineerState(final Engineer engineer, final EngineerState engineerState) {
-        this.engineerStates.put(engineer, engineerState);
+        this.engineerStates.get(engineer).setEngineerState(engineerState);
+    }
+
+    public void setEngineerRank(final Engineer engineer, final Integer rank) {
+        this.engineerStates.get(engineer).setRank(rank);
+    }
+
+    public Integer getEngineerRank(final Engineer engineer) {
+        return this.engineerStates.get(engineer).getRank();
+    }
+
+    public void setEngineerProgress(final Engineer engineer, final Integer progress) {
+        this.engineerStates.get(engineer).setProgress(progress);
+    }
+
+    public Integer getEngineerProgress(final Engineer engineer) {
+        return this.engineerStates.get(engineer).getProgress();
     }
 
 
     public void resetEngineerStates() {
-        this.engineerStates.forEach((engineer, engineerState) -> this.engineerStates.put(engineer, EngineerState.UNKNOWN));
+        this.engineerStates.forEach((engineer, engineerState) -> {
+            this.engineerStates.get(engineer).setEngineerState(EngineerState.UNKNOWN);
+            this.engineerStates.get(engineer).setProgress(0);
+            this.engineerStates.get(engineer).setRank(0);
+        });
         EventService.publish(new EngineerEvent());
     }
 
@@ -124,7 +182,7 @@ public class ApplicationState {
     private void addToWishList(final String wishlistUUID, final String fid, final BlueprintName recipe) {
         final Wishlists wishlists = getWishlists(fid);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        wishlist.getItems().add(new WishlistBlueprint(recipe, true));
+        wishlist.getItems().add(new WishlistBlueprint((OdysseyBlueprintName) recipe, true));
         saveWishlists(fid, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
@@ -241,8 +299,8 @@ public class ApplicationState {
         this.commanders.clear();
     }
 
-    public int amountCraftable(final BlueprintName blueprintName) {
-        final Blueprint blueprint = BlueprintConstants.getRecipe(blueprintName);
+    public int amountCraftable(final OdysseyBlueprintName odysseyBlueprintName) {
+        final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
         final AtomicInteger lowestAmount = new AtomicInteger(9999);
         blueprint.getMaterialCollection(OdysseyMaterial.class).forEach((material, amountRequired) -> {
             final int amountCraftable = StorageService.getMaterialStorage(material).getTotalValue() / amountRequired;
@@ -251,8 +309,8 @@ public class ApplicationState {
         return lowestAmount.get();
     }
 
-    public Craftability getCraftability(final BlueprintName blueprintName) {
-        final Blueprint blueprint = BlueprintConstants.getRecipe(blueprintName);
+    public Craftability getCraftability(final OdysseyBlueprintName odysseyBlueprintName) {
+        final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
         final AtomicBoolean hasGoods = new AtomicBoolean(true);
         final AtomicBoolean hasData = new AtomicBoolean(true);
         final AtomicBoolean hasAssets = new AtomicBoolean(true);

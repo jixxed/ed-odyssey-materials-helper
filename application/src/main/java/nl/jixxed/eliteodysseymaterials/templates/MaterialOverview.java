@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 
 class MaterialOverview extends VBox {
 
-    private static final String FLOW_PANE_STYLE_CLASS = "flow-pane";
+    private static final String FLOW_PANE_STYLE_CLASS = "material-overview-flow-pane";
     private final ScrollPane scrollPane;
     private FlowPane totals;
     private FlowPane assetChemicalFlow;

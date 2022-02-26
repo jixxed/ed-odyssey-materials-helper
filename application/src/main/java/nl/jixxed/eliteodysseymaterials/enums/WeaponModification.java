@@ -6,26 +6,26 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum WeaponModification implements Modification {
-    AUDIO_MASKING(BlueprintName.AUDIO_MASKING),
-    FASTER_HANDLING(BlueprintName.FASTER_HANDLING),
-    GREATER_RANGE_KINETIC(BlueprintName.GREATER_RANGE_KINETIC),
-    GREATER_RANGE_LASER(BlueprintName.GREATER_RANGE_LASER),
-    GREATER_RANGE_PLASMA(BlueprintName.GREATER_RANGE_PLASMA),
-    HEADSHOT_DAMAGE_KINETIC(BlueprintName.HEADSHOT_DAMAGE_KINETIC),
-    HEADSHOT_DAMAGE_LASER(BlueprintName.HEADSHOT_DAMAGE_LASER),
-    HEADSHOT_DAMAGE_PLASMA(BlueprintName.HEADSHOT_DAMAGE_PLASMA),
-    HIGHER_ACCURACY_KINETIC(BlueprintName.HIGHER_ACCURACY_KINETIC),
-    HIGHER_ACCURACY_LASER(BlueprintName.HIGHER_ACCURACY_LASER),
-    HIGHER_ACCURACY_PLASMA(BlueprintName.HIGHER_ACCURACY_PLASMA),
-    MAGAZINE_SIZE(BlueprintName.MAGAZINE_SIZE),
-    NOISE_SUPPRESSOR(BlueprintName.NOISE_SUPPRESSOR),
-    RELOAD_SPEED(BlueprintName.RELOAD_SPEED),
-    SCOPE(BlueprintName.SCOPE),
-    STABILITY(BlueprintName.STABILITY),
-    STOWED_RELOADING(BlueprintName.STOWED_RELOADING),
-    NONE(BlueprintName.NONE);
+    AUDIO_MASKING(OdysseyBlueprintName.AUDIO_MASKING),
+    FASTER_HANDLING(OdysseyBlueprintName.FASTER_HANDLING),
+    GREATER_RANGE_KINETIC(OdysseyBlueprintName.GREATER_RANGE_KINETIC),
+    GREATER_RANGE_LASER(OdysseyBlueprintName.GREATER_RANGE_LASER),
+    GREATER_RANGE_PLASMA(OdysseyBlueprintName.GREATER_RANGE_PLASMA),
+    HEADSHOT_DAMAGE_KINETIC(OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC),
+    HEADSHOT_DAMAGE_LASER(OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER),
+    HEADSHOT_DAMAGE_PLASMA(OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA),
+    HIGHER_ACCURACY_KINETIC(OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC),
+    HIGHER_ACCURACY_LASER(OdysseyBlueprintName.HIGHER_ACCURACY_LASER),
+    HIGHER_ACCURACY_PLASMA(OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA),
+    MAGAZINE_SIZE(OdysseyBlueprintName.MAGAZINE_SIZE),
+    NOISE_SUPPRESSOR(OdysseyBlueprintName.NOISE_SUPPRESSOR),
+    RELOAD_SPEED(OdysseyBlueprintName.RELOAD_SPEED),
+    SCOPE(OdysseyBlueprintName.SCOPE),
+    STABILITY(OdysseyBlueprintName.STABILITY),
+    STOWED_RELOADING(OdysseyBlueprintName.STOWED_RELOADING),
+    NONE(OdysseyBlueprintName.NONE);
 
-    private final BlueprintName recipe;
+    private final OdysseyBlueprintName recipe;
 
     @Override
     public String getLocalizationKey() {

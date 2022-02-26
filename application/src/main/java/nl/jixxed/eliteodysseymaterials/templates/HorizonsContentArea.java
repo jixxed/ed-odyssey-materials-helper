@@ -24,6 +24,7 @@ class HorizonsContentArea extends AnchorPane {
     private HorizonsBlueprintBar recipeBar;
     private TabPane tabs;
     private VBox body;
+    private HorizonsEngineersTab horizonsEngineersTab;
 
     HorizonsContentArea(final Application application) {
         initComponents(application);
@@ -33,9 +34,11 @@ class HorizonsContentArea extends AnchorPane {
     private void initComponents(final Application application) {
         this.horizonsMaterialOverview = new HorizonsMaterialOverviewTab();
         this.horizonsMaterialOverview.setClosable(false);
+        this.horizonsEngineersTab = new HorizonsEngineersTab();
+        this.horizonsEngineersTab.setClosable(false);
 
         this.searchBar = new HorizonsSearchBar();
-        this.tabs = new TabPane(this.horizonsMaterialOverview);
+        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsEngineersTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

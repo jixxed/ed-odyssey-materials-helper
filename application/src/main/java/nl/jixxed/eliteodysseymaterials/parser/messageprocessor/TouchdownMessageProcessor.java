@@ -13,8 +13,8 @@ public class TouchdownMessageProcessor implements MessageProcessor {
         final String nearestDestination = asTextOrBlank(journalMessage, "NearestDestination");
         final Boolean playerControlled = journalMessage.get("PlayerControlled").asBoolean(false);
         final Boolean taxi = journalMessage.has("Taxi") && journalMessage.get("Taxi").asBoolean(false);
-        final Double latitude = journalMessage.get("Latitude").asDouble(999.9);
-        final Double longitude = journalMessage.get("Longitude").asDouble(999.9);
+        final Double latitude = journalMessage.has("Latitude") ? journalMessage.get("Latitude").asDouble(999.9) : 999.9;
+        final Double longitude = journalMessage.has("Longitude") ? journalMessage.get("Longitude").asDouble(999.9) : 999.9;
         EventService.publish(new TouchdownJournalEvent(timestamp, starSystem, body, nearestDestination, playerControlled, taxi, latitude, longitude));
 
     }

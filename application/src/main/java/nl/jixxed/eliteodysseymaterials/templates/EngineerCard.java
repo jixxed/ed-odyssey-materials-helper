@@ -3,7 +3,6 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
@@ -14,30 +13,29 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class EngineerCard extends VBox {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private static final Function<BlueprintName, HBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
+    protected static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    static final Function<BlueprintName, HBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
             .withNodes(LabelBuilder.builder()
                             .withStyleClass("engineer-bullet")
                             .withNonLocalizedText("\u2022")
@@ -48,28 +46,23 @@ class EngineerCard extends VBox {
                             .withText(LocaleService.getStringBinding(recipeName.getLocalizationKey()))
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
                             .build()).buildHBox();
-    private static final String ENGINEER_CATEGORY_STYLE_CLASS = "engineer-category";
+    static final String ENGINEER_CATEGORY_STYLE_CLASS = "engineer-category";
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    private final Engineer engineer;
+    protected final Engineer engineer;
 
-    private DestroyableResizableImageView image;
-    private Label name;
-    private HBox specialisation;
+    protected DestroyableResizableImageView image;
+    protected Label name;
     private Label engineerLocation;
     private Label engineerDistance;
     private DestroyableResizableImageView copyIcon;
-    private FlowPane location;
-    private Label suitModulesTitle;
-    private List<HBox> suitBlueprintLabels;
-    private Label weaponModulesTitle;
-    private List<HBox> weaponBlueprintLabels;
-    private Label unlockRequirementsTitle;
-    private List<HBox> unlockRequirementsLabels;
-    private Separator unlockSeparator;
+    protected FlowPane location;
+    Label unlockRequirementsTitle;
+    List<HBox> unlockRequirementsLabels;
+    Separator unlockSeparator;
 
     EngineerCard(final Engineer engineer) {
         this.engineer = engineer;
@@ -79,42 +72,19 @@ class EngineerCard extends VBox {
 
     private void initEventHandling(final Engineer engineer) {
         EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationChangedEvent.getCurrentStarSystem().getX(), locationChangedEvent.getCurrentStarSystem().getY(), locationChangedEvent.getCurrentStarSystem().getZ())) + "Ly)"));
-        EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
-            this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
-            this.getChildren().removeAll(this.unlockRequirementsLabels);
-            if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
-                this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/" + engineer.name().toLowerCase() + ".jpg")));
-            } else {
-                this.image.setImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")));
-                this.unlockRequirementsLabels = getUnlockRequirements();
-                this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
-                this.getChildren().addAll(this.unlockRequirementsLabels);
-            }
-        });
     }
 
     private void initComponents() {
         this.image = getEngineerImageView();
         this.name = getEngineerName();
-        this.specialisation = getEngineerSpecialisation();
         this.location = getEngineerLocation();
-        this.suitModulesTitle = getSuitModulesTitle();
-        this.suitBlueprintLabels = getSuitBlueprints();
-        this.weaponModulesTitle = getWeaponModulesTitle();
-        this.weaponBlueprintLabels = getWeaponBlueprints();
         this.unlockRequirementsTitle = getUnlockRequirementsTitle();
         this.unlockRequirementsLabels = getUnlockRequirements();
         this.unlockSeparator = new Separator(Orientation.HORIZONTAL);
-        this.getChildren().addAll(this.image, this.name, this.specialisation, this.location, new Separator(Orientation.HORIZONTAL), this.suitModulesTitle);
-        this.getChildren().addAll(this.suitBlueprintLabels);
-        this.getChildren().addAll(new Separator(Orientation.HORIZONTAL), this.weaponModulesTitle);
-        this.getChildren().addAll(this.weaponBlueprintLabels);
-        this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
-        this.getChildren().addAll(this.unlockRequirementsLabels);
         this.getStyleClass().add("engineer-card");
     }
 
-    private List<HBox> getUnlockRequirements() {
+    List<HBox> getUnlockRequirements() {
         return this.engineer.getPrerequisites().stream()
                 .map(prerequisite -> BoxBuilder.builder()
                         .withNodes(LabelBuilder.builder()
@@ -137,37 +107,6 @@ class EngineerCard extends VBox {
                 .build();
     }
 
-    private List<HBox> getWeaponBlueprints() {
-        return BlueprintConstants.getWeaponModuleBlueprints().entrySet().stream()
-                .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
-                .map(Map.Entry::getKey)
-                .sorted(Comparator.comparing(BlueprintName::name))
-                .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    private List<HBox> getSuitBlueprints() {
-        return BlueprintConstants.getSuitModuleBlueprints().entrySet().stream()
-                .filter(recipeNameModuleRecipeEntry -> recipeNameModuleRecipeEntry.getValue().getEngineers().contains(this.engineer))
-                .map(Map.Entry::getKey)
-                .sorted(Comparator.comparing(BlueprintName::name))
-                .map(RECIPE_TO_ENGINEER_BLUEPRINT_LABEL)
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    private Label getWeaponModulesTitle() {
-        return LabelBuilder.builder()
-                .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.engineer.weapon.modules"))
-                .build();
-    }
-
-    private Label getSuitModulesTitle() {
-        return LabelBuilder.builder()
-                .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.engineer.suit.modules"))
-                .build();
-    }
 
     private FlowPane getEngineerLocation() {
         this.engineerLocation = LabelBuilder.builder()
@@ -202,34 +141,12 @@ class EngineerCard extends VBox {
         clipboard.setContent(content);
     }
 
-    private HBox getEngineerSpecialisation() {
-        LabelBuilder engineerSpecialisationLabelBuilder = LabelBuilder.builder().withText(LocaleService.getStringBinding(this.engineer.getSpecialisation().getLocalizationKey()));
-
-        engineerSpecialisationLabelBuilder = switch (this.engineer.getSpecialisation()) {
-            case FORCE -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-force");
-            case DYNAMIC -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-dynamic");
-            case STRATEGIC -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-strategic");
-            case UNKNOWN -> engineerSpecialisationLabelBuilder.withStyleClass("specialisation-unknown");
-        };
-
-        final Label engineerSpecialisation = engineerSpecialisationLabelBuilder.build();
-
-        final DestroyableResizableImageView specialisationIcon = ResizableImageViewBuilder.builder()
-                .withStyleClass("specialisation-image")
-                .withImage("/images/engineer/specialisation/" + this.engineer.getSpecialisation().name().toLowerCase() + ".png")
-                .build();
-
-        return BoxBuilder.builder()
-                .withStyleClass("specialisation-line")
-                .withNodes(new StackPane(specialisationIcon), engineerSpecialisation)
-                .buildHBox();
-    }
 
     private Label getEngineerName() {
         return LabelBuilder.builder()
                 .withStyleClass("engineer-name")
                 .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
-                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(BlueprintName.forEngineer(this.engineer))))
+                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.engineer.isOdyssey() ? OdysseyBlueprintName.forEngineer(this.engineer) : HorizonsBlueprintName.forEngineer(this.engineer))))
                 .build();
     }
 
@@ -237,7 +154,7 @@ class EngineerCard extends VBox {
         return ResizableImageViewBuilder.builder()
                 .withStyleClass("engineer-image")
                 .withPreserveRatio(true)
-                .withImage(new Image(getClass().getResourceAsStream("/images/engineer/locked.png")))
+                .withImage(ImageService.getImage("/images/engineer/locked.png"))
                 .build();
 
     }

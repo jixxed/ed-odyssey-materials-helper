@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class PowerPlantBlueprints {
-    public static final Map<HorizonsBlueprintModificationType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
-            HorizonsBlueprintModificationType.ARMOURED,
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+            HorizonsBlueprintType.ARMOURED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.ARMOURED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.ARMOURED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.WORNSHIELDEMITTERS, 1
                             ),
@@ -22,7 +22,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+4%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.FELICITY_FARSEER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.ARMOURED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.ARMOURED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -34,7 +34,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+8%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.ARMOURED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.ARMOURED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -47,7 +47,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+12%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.ARMOURED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.ARMOURED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -60,7 +60,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+16%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.ARMOURED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.ARMOURED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.COMPOUNDSHIELDING, 1,
                                     Manufactured.FEDCORECOMPOSITES, 1,
@@ -73,9 +73,9 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.HERA_TANI))),
-            HorizonsBlueprintModificationType.LOW_EMISSIONS,
+            HorizonsBlueprintType.LOW_EMISSIONS,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.IRON, 1
                             ),
@@ -85,7 +85,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("-3%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.FELICITY_FARSEER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.IRON, 1,
                                     Encoded.ARCHIVEDEMISSIONDATA, 1
@@ -96,7 +96,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("-6%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.HEATEXCHANGERS, 1,
                                     Raw.IRON, 1,
@@ -108,7 +108,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("-9%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.GERMANIUM, 1,
                                     Encoded.EMISSIONDATA, 1,
@@ -120,7 +120,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("-12%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.LOW_EMISSIONS, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.NIOBIUM, 1,
                                     Encoded.DECODEDEMISSIONDATA, 1,
@@ -132,9 +132,9 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("-15%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.HERA_TANI))),
-            HorizonsBlueprintModificationType.OVERCHARGED,
+            HorizonsBlueprintType.OVERCHARGED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -144,7 +144,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("+12%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.FELICITY_FARSEER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.HEATCONDUCTIONWIRING, 1
@@ -155,7 +155,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("+19%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.HEATCONDUCTIONWIRING, 1,
@@ -167,7 +167,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("+26%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.CADMIUM, 1,
                                     Manufactured.CONDUCTIVECERAMICS, 1,
@@ -179,7 +179,7 @@ public class PowerPlantBlueprints {
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("+33%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintObjectName.POWER_PLANT, HorizonsBlueprintModificationType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.OVERCHARGED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CHEMICALMANIPULATORS, 1,
                                     Manufactured.CONDUCTIVECERAMICS, 1,

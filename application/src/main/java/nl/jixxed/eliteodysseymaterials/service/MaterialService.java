@@ -15,7 +15,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.EconomyStatistic;
 import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
 import nl.jixxed.eliteodysseymaterials.domain.SettlementStatistic;
@@ -61,7 +61,7 @@ public class MaterialService {
             if (odysseyMaterial instanceof Data data) {
                 addTransferTimeToTooltip(data, vBox);
             }
-            addRecipesToTooltip(BlueprintConstants.findRecipesContaining(odysseyMaterial), vBox);
+            addRecipesToTooltip(OdysseyBlueprintConstants.findRecipesContaining(odysseyMaterial), vBox);
             addStatisticsToTooltip(odysseyMaterial, vBox);
         }
         return vBox;
@@ -168,7 +168,7 @@ public class MaterialService {
         }
     }
 
-    private static void addRecipesToTooltip(final Map<BlueprintName, Integer> recipesContainingMaterial, final VBox vBox) {
+    private static void addRecipesToTooltip(final Map<OdysseyBlueprintName, Integer> recipesContainingMaterial, final VBox vBox) {
         if (!recipesContainingMaterial.isEmpty()) {
             vBox.getChildren().add(LabelBuilder.builder().build());
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes")).build());

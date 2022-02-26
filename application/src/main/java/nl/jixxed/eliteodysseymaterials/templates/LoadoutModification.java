@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -15,6 +14,8 @@ import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.Loadout;
 import nl.jixxed.eliteodysseymaterials.domain.ModificationChange;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModificationChangedEvent;
@@ -91,8 +92,8 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
         final GridPane gridPane = new GridPane();
         final Pane pane = new Pane(gridPane);
         gridPane.getStyleClass().add("loadout-modification-grid");
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
+        gridPane.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
 
         if (this.loadout.getEquipment() instanceof Weapon) {
             createGridPaneCell(getHeadshotDamageModification(), 0, 0, gridPane);
@@ -198,7 +199,7 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
     }
 
     private void clear() {
-        this.imageView.setImage(new Image(getClass().getResourceAsStream("/images/modification/empty.png")));
+        this.imageView.setImage(ImageService.getImage("/images/modification/empty.png"));
         this.label.textProperty().bind(LocaleService.getStringBinding("loadout.modification.name.none"));
         final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], null);
         this.loadout.getModifications()[this.position] = null;
@@ -207,7 +208,7 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
 
     private EventHandler<MouseEvent> getModificationSelectedEventHandler(final Modification modification) {
         return e -> {
-            this.imageView.setImage(new Image(getClass().getResourceAsStream(modification.getImage())));
+            this.imageView.setImage(ImageService.getImage(modification.getImage()));
             this.label.textProperty().bind(LocaleService.getStringBinding(modification.getLocalizationKey()));
             this.label.setWrapText(true);
             final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], modification);

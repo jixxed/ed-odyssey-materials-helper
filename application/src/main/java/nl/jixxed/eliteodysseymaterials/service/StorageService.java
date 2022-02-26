@@ -18,6 +18,8 @@ public class StorageService {
     @Getter
     private static final Map<Manufactured, Integer> manufactured = new EnumMap<>(Manufactured.class);
     @Getter
+    private static final Map<Commodity, Integer> commodities = new EnumMap<>(Commodity.class);
+    @Getter
     private static final Map<Good, Storage> goods = new EnumMap<>(Good.class);
     @Getter
     private static final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
@@ -63,6 +65,8 @@ public class StorageService {
             encoded.put(encodedMaterial, encoded.get(material) + amount);
         } else if (material instanceof Manufactured manufacturedMaterial) {
             manufactured.put(manufacturedMaterial, manufactured.get(material) + amount);
+        } else if (material instanceof Commodity commodity) {
+            commodities.put(commodity, commodities.get(material) + amount);
         }
     }
 
@@ -73,6 +77,8 @@ public class StorageService {
             return encoded.get(material);
         } else if (material instanceof Manufactured) {
             return manufactured.get(material);
+        } else if (material instanceof Commodity) {
+            return commodities.get(material);
         }
         throw new IllegalArgumentException("Unknown material type");
     }
@@ -103,6 +109,9 @@ public class StorageService {
         Arrays.stream(Manufactured.values()).forEach(material ->
                 getManufactured().put(material, 0)
         );
+        Arrays.stream(Commodity.values()).forEach(material ->
+                getCommodities().put(material, 0)
+        );
     }
 
     private static void initCounts() {
@@ -123,6 +132,9 @@ public class StorageService {
         );
         Arrays.stream(Manufactured.values()).forEach(material ->
                 getManufactured().put(material, 0)
+        );
+        Arrays.stream(Commodity.values()).forEach(material ->
+                getCommodities().put(material, 0)
         );
 
     }

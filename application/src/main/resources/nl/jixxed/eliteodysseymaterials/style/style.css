@@ -12,6 +12,7 @@
     -fx-fill: #89d07f;
 }
 
+
 .recipe-complete {
     -fx-text-fill: #89d07f;
 }
@@ -84,10 +85,6 @@
     -fx-max-width: 80px;
     -fx-pref-width: 80px;
 
-}
-
-.blueprint-title-pane > .title > .arrow-button .arrow, .blueprint-title-pane > .title > .text {
-    -fx-translate-x: 5;
 }
 
 .category-title-pane {
@@ -173,25 +170,25 @@
 }
 
 .wishlist-recipes {
-    -fx-hgap: 10;
-    -fx-vgap: 10;
+    -fx-hgap: 0.75em;
+    -fx-vgap: 0.75em;
 }
 
 .wishlist-ingredients {
-    -fx-hgap: 4;
-    -fx-vgap: 4;
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
 }
 
 .wishlist-blueprints {
-    -fx-spacing: 4;
+    -fx-spacing: 0.25em;
 }
 
 .ingredient {
     -fx-border-color: #0f0f0f;
     -fx-alignment: center-left;
     -fx-min-height: 2.5em;
-    -fx-max-width: 242px;
-    -fx-min-width: 242px;
+    -fx-max-width: 17.4em;
+    -fx-min-width: 17.4em;
     -fx-background-color: #0f0f0f;
 }
 
@@ -250,8 +247,8 @@
 
 .ingredient-without-amount {
     -fx-background-color: #0f0f0f;
-    -fx-max-width: 490px;
-    -fx-min-width: 490px;
+    -fx-max-width: 35.15em;
+    -fx-min-width: 35.15em;
 }
 
 .ingredient-name {
@@ -302,8 +299,8 @@
 }
 
 .engineer-grid {
-    -fx-hgap: 10;
-    -fx-vgap: 10;
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
     -fx-padding: 5;
 }
 
@@ -314,9 +311,9 @@
 
     -fx-border-width: 1;
     -fx-border-color: #2e2e2e;
-    -fx-max-height: 2em;
-    -fx-min-height: 2em;
-    -fx-pref-height: 2em;
+    -fx-max-height: 28px;
+    -fx-min-height: 28px;
+    -fx-pref-height: 28px;
 }
 
 .search:focused, .search:selected {
@@ -328,9 +325,9 @@
     -fx-spacing: 10;
 }
 
-.material-overview .flow-pane {
-    -fx-hgap: 4;
-    -fx-vgap: 4;
+.material-overview .material-overview-flow-pane {
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
 }
 
 .donate-label {
@@ -380,33 +377,47 @@
 }
 
 .engineer-label {
+    -fx-background-color: #0f0f0f;
     -fx-border-color: black;
     -fx-border-width: 1;
     -fx-padding: 5;
     -fx-text-fill: black;
+    -fx-spacing: 5;
 }
 
-.recipe-titled-pane-content {
+.engineer-label-big .label {
+    -fx-min-height: 2em;
+}
+
+.blueprint-titled-pane-content {
     -fx-fill-width: true;
     -fx-padding: 0;
 }
 
-.recipes-list {
-    -fx-min-width: 500;
-    -fx-pref-width: 500;
-    -fx-max-width: 500;
+.blueprint-list {
+    -fx-min-width: 36em;
+    -fx-pref-width: 36em;
+    -fx-max-width: 36em;
 }
 
 .recipe-engineer-flow {
-    -fx-hgap: 10;
-    -fx-vgap: 10;
-    -fx-max-width: 500;
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
+    -fx-min-width: 35.5em;
+    -fx-pref-width: 35.5em;
+    -fx-max-width: 35.5em;
 }
 
 .engineer-unlocked {
 
     -fx-background-color: #0f0f0f;
     -fx-text-fill: #89d07f;
+}
+
+.engineer-lowgrade {
+
+    -fx-background-color: #0f0f0f;
+    -fx-text-fill: #dcc030;
 }
 
 .engineer-locked {
@@ -863,29 +874,48 @@
     -fx-fit-to-width: true;
 }
 
+.grade-bar-image {
+    /*-fx-max-width: 2.2em;*/
+    -fx-min-height: 2.2em;
+    -fx-pref-height: 2.2em;
+    -fx-max-height: 2.2em;
+    -fx-fit-to-height: true;
+    /*-fx-fit-to-width: true;*/
+}
+
 .specialisation-line {
     -fx-padding: 0 0 0 5;
 }
 
 .recipe-content {
-    -fx-padding: 5px;
+    -fx-padding: 0.33em;
     -fx-max-height: 9999;
+    -fx-min-width: 35.8em;
+    -fx-pref-width: 35.8em;
+    -fx-max-width: 35.8em;
 }
 
 .recipe-ingredient-flow {
-    -fx-hgap: 4;
-    -fx-vgap: 4;
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
+    -fx-min-width: 35.8em;
+    -fx-pref-width: 35.8em;
+    -fx-max-width: 35.8em;
 }
 
 .recipe-modifier-flow {
-    -fx-hgap: 4;
-    -fx-vgap: 4;
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
 
 }
 
-.recipe-description {
-    -fx-translate-x: 15px;
+.blueprint-description-text {
     -fx-font-weight: normal;
+    -fx-max-width: 35.5em;
+}
+
+.blueprint-description {
+    -fx-padding: 0 0 0 10;
 }
 
 .recipe-modifier {
@@ -909,8 +939,43 @@
     -fx-max-width: 1000;
 }
 
+.recipe-synthesis-togglebutton {
+    -fx-min-width: 12em;
+    -fx-max-height: 2em;
+}
+
+.recipe-synthesis-togglebutton .blueprint-grade-image {
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    -fx-min-width: 2em;
+    -fx-pref-width: 2em;
+    -fx-max-width: 2em;
+    -fx-preserve-ratio: true;
+}
+
 .recipe-grade-togglebutton {
-    -fx-min-width: 7.1em;
+    -fx-min-width: 7.2em;
+    -fx-max-height: 2em;
+}
+
+.recipe-grade-togglebutton .blueprint-grade-image {
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    -fx-min-width: 2em;
+    -fx-pref-width: 2em;
+    -fx-max-width: 2em;
+    -fx-preserve-ratio: true;
+}
+
+.engineer-grade-image {
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    /*-fx-min-width: 2em;*/
+    /*-fx-pref-width: 2em;*/
+    /*-fx-max-width: 2em;*/
 }
 
 .recipe-modifier-positive {
@@ -924,14 +989,15 @@
 .recipe-title-label {
     -fx-font-size: 1.1em;
     -fx-min-height: 3em;
+    -fx-max-width: 35.5em;
     -fx-label-padding: 5px;
     -fx-font-weight: bold;
 }
 
-.recipe {
-    -fx-min-width: 500px;
-    -fx-pref-width: 500px;
-    -fx-max-width: 500px;
+.blueprint-bar {
+    -fx-min-width: 36em;
+    -fx-pref-width: 36em;
+    -fx-max-width: 36em;
 }
 
 .material-total {
@@ -1741,23 +1807,33 @@
 
 }
 
-.horizons-materialcard .segmented-bar:horizontal > .only-segment {
+.segmented-bar:horizontal > .only-segment {
     -fx-background-radius: 0;
     -fx-border-radius: 0;
 }
 
-.horizons-materialcard .segmented-bar:horizontal > .first-segment {
+.segmented-bar:horizontal > .first-segment {
     -fx-background-insets: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
 }
 
-.horizons-materialcard .segmented-bar:horizontal > .middle-segment {
+.segmented-bar:horizontal > .middle-segment {
     -fx-background-insets: 0 0 0 0;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
 }
 
-.horizons-materialcard .segmented-bar:horizontal > .last-segment {
+.segmented-bar:horizontal > .last-segment {
     -fx-background-radius: 0 0 0 0;
     -fx-border-radius: 0 0 0 0;
+}
+
+.engineer-card .segmented-bar {
+    -fx-pref-width: 17.5em;
+    -fx-min-width: 17.5em;
+    -fx-max-width: 17.5em;
+    -fx-pref-height: 1em;
+    -fx-min-height: 1em;
+    -fx-max-height: 1em;
+
 }

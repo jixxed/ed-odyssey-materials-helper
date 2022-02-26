@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import nl.jixxed.eliteodysseymaterials.constants.BlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
@@ -47,8 +47,8 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                     .map(jsonNode -> OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText()))
                     .filter(material -> !(material instanceof Consumable))
                     .forEach(material -> {
-                        if ((APPLICATION_STATE.getSoloMode() && BlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
-                                || (!APPLICATION_STATE.getSoloMode() && !BlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
+                        if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
+                                || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
                             NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
                         }
                     });

@@ -4,6 +4,7 @@ public enum HorizonsStorageType implements StorageType {
     RAW,
     ENCODED,
     MANUFACTURED,
+    COMMODITY,
     OTHER;
 
     public static HorizonsStorageType forMaterial(final HorizonsMaterial horizonsMaterial) {
