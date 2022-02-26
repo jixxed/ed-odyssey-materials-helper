@@ -12,15 +12,9 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.*;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -116,6 +110,16 @@ public abstract class HorizonsBlueprintConstants {
             return blueprintModificationTypes;
         }
         return Collections.emptyMap();
+    }
+
+    public static int getEngineerMaxGrade(final HorizonsBlueprint horizonsBlueprint1, final Engineer engineer) {
+        return RECIPES.values().stream()
+                .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
+                .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
+                .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
+                .filter(horizonsBlueprint -> horizonsBlueprint.getHorizonsBlueprintName().equals(horizonsBlueprint1.getHorizonsBlueprintName()) && horizonsBlueprint.getHorizonsBlueprintType().equals(horizonsBlueprint1.getHorizonsBlueprintType()) && horizonsBlueprint.getEngineers().contains(engineer))
+                .max(Comparator.comparing((HorizonsBlueprint horizonsBlueprint) -> horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()))
+                .map(horizonsBlueprint -> horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()).orElse(0);
     }
 
     public static Set<HorizonsBlueprintType> getBlueprintTypes(final HorizonsBlueprintName name) {

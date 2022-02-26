@@ -146,7 +146,7 @@ class HorizonsBlueprintContent extends VBox {
                 .build();
         this.getChildren().add(engineerLabelHeader);
         final HBox[] engineerLabels = this.blueprint.getEngineers().stream()
-                .map(engineer -> new EngineerBlueprintLabel(engineer, true, this.blueprint.getHorizonsBlueprintGrade().getGrade()))
+                .map(engineer -> new EngineerBlueprintLabel(engineer, this.blueprint, true, this.blueprint.getHorizonsBlueprintGrade().getGrade()))
                 .sorted(Comparator.comparing(engineerBlueprintLabel -> engineerBlueprintLabel.getLabel().getText()))
                 .toArray(HBox[]::new);
         final FlowPane flowPane = FlowPaneBuilder.builder().withStyleClass("recipe-engineer-flow").withNodes(engineerLabels).build();

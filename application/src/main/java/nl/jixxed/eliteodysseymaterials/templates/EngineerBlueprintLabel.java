@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -22,6 +24,7 @@ class EngineerBlueprintLabel extends HBox {
     private final Engineer engineer;
     private final int rank;
     private final boolean exact;
+    private final HorizonsBlueprint horizonsBlueprint;
     @Getter
     private Label label;
     private DestroyableResizableImageView image;
@@ -34,6 +37,11 @@ class EngineerBlueprintLabel extends HBox {
     }
 
     EngineerBlueprintLabel(final Engineer engineer, final boolean exact, final int rank) {
+        this(engineer, null, exact, rank);
+    }
+
+    EngineerBlueprintLabel(final Engineer engineer, final HorizonsBlueprint horizonsBlueprint, final boolean exact, final int rank) {
+        this.horizonsBlueprint = horizonsBlueprint;
         this.engineer = engineer;
         this.rank = rank;
         this.exact = exact;
@@ -47,7 +55,9 @@ class EngineerBlueprintLabel extends HBox {
         };
         initComponents();
         initEventHandling();
+
     }
+
 
     private void initEventHandling() {
         EventService.addListener(this, EngineerEvent.class, event -> {
@@ -90,6 +100,12 @@ class EngineerBlueprintLabel extends HBox {
             this.getStyleClass().add("engineer-label-big");
         }
         this.getChildren().add(this.label);
+        if (this.engineer.isHorizons() && this.horizonsBlueprint != null) {
+            final int engineerMaxGrade = HorizonsBlueprintConstants.getEngineerMaxGrade(this.horizonsBlueprint, this.engineer);
+            if (engineerMaxGrade > 0) {
+                this.getChildren().add(LabelBuilder.builder().withNonLocalizedText("\u2191" + engineerMaxGrade).build());
+            }
+        }
     }
 
     private void updateStyle(final boolean unlocked, final Integer currentEngineerRank) {
