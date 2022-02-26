@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.StringBinding;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
@@ -9,24 +10,23 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.EconomyStatistic;
-import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
-import nl.jixxed.eliteodysseymaterials.domain.SettlementStatistic;
-import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import org.controlsfx.control.PopOver;
 
 import java.text.NumberFormat;
-import java.util.Comparator;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -35,6 +35,7 @@ public class MaterialService {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final String STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE = "material-tooltip-subtitle";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
+    private static final String STYLECLASS_MATERIAL_TOOLTIP_TITLE = "material-tooltip-title";
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -43,6 +44,23 @@ public class MaterialService {
     private static VBox getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial) {
         final VBox vBox = BoxBuilder.builder().buildVBox();
         LabelBuilder.builder().withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey())).build();
+        if (horizonsMaterial.isUnknown()) {
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
+        } else {
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey())).build());
+            if (horizonsMaterial instanceof Commodity commodity) {
+                vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.type") + LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()))).build());
+                vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + LocaleService.getLocalizedStringForCurrentLocale(commodity.isRareCommodity() ? "material.tooltip.text.yes" : "material.tooltip.text.no"))).build());
+            } else if (horizonsMaterial instanceof Raw) {
+                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.type.raw")).build());
+            } else if (horizonsMaterial instanceof Encoded) {
+                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.type.encoded")).build());
+            } else if (horizonsMaterial instanceof Manufactured) {
+                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.type.manufactured")).build());
+            }
+
+            addHorizonsBlueprintsToTooltip(HorizonsBlueprintConstants.findRecipesContaining(horizonsMaterial), vBox);
+        }
         return vBox;
 
 
@@ -51,9 +69,9 @@ public class MaterialService {
     private static VBox getMaterialPopOverContent(final OdysseyMaterial odysseyMaterial) {
         final VBox vBox = BoxBuilder.builder().buildVBox();
         if (odysseyMaterial.isUnknown()) {
-            vBox.getChildren().add(LabelBuilder.builder().withStyleClass("material-tooltip-title").withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
         } else {
-            vBox.getChildren().add(LabelBuilder.builder().withStyleClass("material-tooltip-title").withText(LocaleService.getStringBinding(odysseyMaterial.getLocalizationKey())).build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding(odysseyMaterial.getLocalizationKey())).build());
             if (odysseyMaterial.isIllegal()) {
                 vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.illegal")).build());
             }
@@ -175,6 +193,43 @@ public class MaterialService {
             recipesContainingMaterial.entrySet().stream()
                     .sorted(Comparator.comparing(entry -> ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey())))
                     .forEach(entry -> vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()) + " (" + entry.getValue() + ")")).build()));
+        }
+    }
+
+    private static void addHorizonsBlueprintsToTooltip(final Map<HorizonsBlueprint, Integer> horizonsBlueprintMap, final VBox vBox) {
+        if (!horizonsBlueprintMap.isEmpty()) {
+            vBox.getChildren().add(LabelBuilder.builder().build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes")).build());
+            final Map<Pair<HorizonsBlueprintName, HorizonsBlueprintType>, List<Pair<HorizonsBlueprintGrade, Integer>>> groupedBlueprints = new HashMap<>();
+            horizonsBlueprintMap.forEach((key1, value) -> {
+                final Pair<HorizonsBlueprintName, HorizonsBlueprintType> keyPair = new Pair<>(key1.getHorizonsBlueprintName(), key1.getHorizonsBlueprintType());
+                final List<Pair<HorizonsBlueprintGrade, Integer>> gradeValues = groupedBlueprints.computeIfAbsent(keyPair, key -> new ArrayList<>());
+                gradeValues.add(new Pair<>(key1.getHorizonsBlueprintGrade(), value));
+            });
+
+
+            groupedBlueprints.entrySet().stream().
+                    mapMulti((Map.Entry<Pair<HorizonsBlueprintName, HorizonsBlueprintType>, List<Pair<HorizonsBlueprintGrade, Integer>>> entry, Consumer<StringBinding> consumer) -> {
+                        final Map<Integer, List<Pair<HorizonsBlueprintGrade, Integer>>> gradeGroups = entry.getValue().stream().collect(Collectors.groupingBy(Pair::getValue));
+                        gradeGroups.forEach((materialAmount, pairs) ->
+                                consumer.accept(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getKey().getBlueprintCategory().getLocalizationKey()) +
+                                                " - " +
+                                                LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getKey().getLocalizationKey()) +
+                                                " - " +
+                                                LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getValue().getLocalizationKey()) +
+                                                ((!pairs.get(0).getKey().equals(HorizonsBlueprintGrade.NONE)) ? " - " : "") +
+                                                (pairs.stream()
+                                                        .filter(pair -> pair.getKey().getGrade() > 0)
+                                                        .sorted(Comparator.comparingInt(value -> value.getKey().getGrade()))
+                                                        .map(pair -> String.valueOf(pair.getKey().getGrade()))
+                                                        .collect(Collectors.joining(", "))) +
+                                                " (" + materialAmount + ")"
+                                        )
+                                )
+                        );
+                    })
+                    .sorted(Comparator.comparing(StringBinding::get))
+                    .forEach(text -> vBox.getChildren().add(LabelBuilder.builder().withText(text).build()));
         }
     }
 

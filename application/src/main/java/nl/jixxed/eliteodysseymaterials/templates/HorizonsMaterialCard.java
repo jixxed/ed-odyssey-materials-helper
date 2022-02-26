@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
@@ -70,6 +71,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
         VBox.setVgrow(region, Priority.ALWAYS);
         this.getChildren().add(region);
         this.getChildren().add(this.segmentedBar);
+        MaterialService.addMaterialInfoPopOver(this, this.material);
     }
 
     @Override

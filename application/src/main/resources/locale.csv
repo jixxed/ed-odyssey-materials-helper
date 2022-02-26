@@ -1414,6 +1414,22 @@ material.commodity.landmines,Landmines,Landmines,Landminen,Mines terrestres,Mina
 material.commodity.nonlethalweapons,Non-Lethal Weapons,Non-Lethal Weapons,Nichttödliche Waffen,Armes incapacitantes,Armas no letales,Armas não letais,Нелетальное оружие
 material.commodity.personalweapons,Personal Weapons,Personal Weapons,Persönliche Waffen,Armes de poing,Armas personales,Armas pessoais,Личное оружие
 material.commodity.reactivearmour,Reactive Armour,Reactive Armour,Reaktivrüstung,Protection réactive,Blindaje reactivo,Blindagem reativa,Реактивная защита
+material.commoditytype.chemicals,Chemicals,Chemicals,,,,,
+material.commoditytype.consumer_items,Consumer Items,Consumer Items,,,,,
+material.commoditytype.foods,Foods,Foods,,,,,
+material.commoditytype.industrial_materials,Industrial Materials,Industrial Materials,,,,,
+material.commoditytype.legal_drugs,Legal Drugs,Legal Drugs,,,,,
+material.commoditytype.machinery,Machinery,Machinery,,,,,
+material.commoditytype.medicines,Medicines,Medicines,,,,,
+material.commoditytype.metals,Metals,Metals,,,,,
+material.commoditytype.minerals,Minerals,Minerals,,,,,
+material.commoditytype.nonmarketable,Nonmarketable,Nonmarketable,,,,,
+material.commoditytype.salvage,Salvage,Salvage,,,,,
+material.commoditytype.slavery,Slavery,Slavery,,,,,
+material.commoditytype.technology,Technology,Technology,,,,,
+material.commoditytype.textiles,Textiles,Textiles,,,,,
+material.commoditytype.waste,Waste,Waste,,,,,
+material.commoditytype.weapons,Weapons,Weapons,,,,,
 material.consumable.amm_grenade_emp,Shield Disruptor,Shield Disruptor,Schildunterbrecher,Supresor de escudo,Neutralisateur de bouclier,Disruptor de escudo,Разрушитель щитов
 material.consumable.amm_grenade_frag,Frag Grenade,Frag Grenade,Splittergranate,Granada de fragmentación,Grenade à fragmentation,Granada de fragmentação,Осколочная граната
 material.consumable.amm_grenade_shield,Shield Projector,Shield Projector,Schildgenerator,Proyector de escudo,Générateur de bouclier,Projetor de escudo,Проектор щита
@@ -1730,6 +1746,13 @@ material.tooltip.statistics.runs,Best runs:,Best runs:,Beste Läufe:,Mejores eje
 material.tooltip.statistics.settlements,Most collected in locations:,Most collected in locations:,Am meisten gesammelt an Orten:,Más recolectados en ubicaciones:,Les plus collectés dans les lieux:,Mais coletados nos locais:,Больше всего собирают в локациях:
 material.tooltip.unknown,"Unknown material, please report to the developer.","Unknown material, please report to the developer.","Unbekanntes Material, bitte dem Entwickler melden.","Material desconocido, informe al desarrollador.","Matériel inconnu, veuillez le signaler au développeur.","Material desconhecido, por favor informe ao desenvolvedor.","Неизвестный материал, сообщите разработчику."
 material.tooltip.used.in.recipes,Used in recipes:,Used in recipes:,In Rezepten verwendet:,Usado en recetas:,Utilisé dans les recettes:,Usado em receitas:,Используется в рецептах:
+material.tooltip.text.no,No,No,,,,,
+material.tooltip.text.yes,Yes,Yes,,,,,
+material.tooltip.is.rare,Rare:,Rare:,,,,,
+material.tooltip.type,Type:,Type:,,,,,
+material.tooltip.type.raw,Type: Raw,Type: Raw,,,,,
+material.tooltip.type.encoded,Type: Encoded,Type: Encoded,,,,,
+material.tooltip.type.manufactured,Type: Manufactured,Type: Manufactured,,,,,
 material.trade.any_relevant,Any blueprint material,Any blueprint material,Beliebiges Blaupausenmaterial,Cualquier material de plano,Tout matériel de plan,Qualquer material de projeto,Любой материал для чертежей
 material.trade.nothing,Nothing,Nothing,Nichts,Nada,Rien,Nada,Ничего
 material.trade.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестно

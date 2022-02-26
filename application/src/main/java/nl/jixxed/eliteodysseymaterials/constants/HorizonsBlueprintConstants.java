@@ -264,4 +264,34 @@ public abstract class HorizonsBlueprintConstants {
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_FIGHTERS, TechbrokerBlueprints.GUARDIAN_FIGHTERS);
     }
 
+    public static Map<HorizonsBlueprint, Integer> findRecipesContaining(final HorizonsMaterial horizonsMaterial) {
+        final Map<HorizonsBlueprint, Integer> newMap = new HashMap<>();
+        ENGINEER_UNLOCK_REQUIREMENTS.values()
+                .stream()
+                .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
+                .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
+        RECIPES.values()
+                .stream()
+                .flatMap(horizonsBlueprintNameMap -> horizonsBlueprintNameMap.values().stream())
+                .flatMap(horizonsBlueprintTypesMap -> horizonsBlueprintTypesMap.values().stream())
+                .flatMap(horizonsBlueprintGradesMap -> horizonsBlueprintGradesMap.values().stream())
+                .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
+                .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
+        EXPERIMENTAL_EFFECTS.values()
+                .stream()
+                .flatMap(horizonsBlueprintNameMap -> horizonsBlueprintNameMap.values().stream())
+                .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
+                .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
+        SYNTHESIS.values()
+                .stream()
+                .flatMap(horizonsBlueprintNameMap -> horizonsBlueprintNameMap.values().stream())
+                .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
+                .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
+        TECHBROKER_UNLOCKS.values()
+                .stream()
+                .flatMap(horizonsBlueprintNameMap -> horizonsBlueprintNameMap.values().stream())
+                .filter(horizonsBlueprint -> horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).containsKey(horizonsMaterial))
+                .forEach(horizonsBlueprint -> newMap.put(horizonsBlueprint, horizonsBlueprint.getMaterialCollection(horizonsMaterial.getClass()).get(horizonsMaterial)));
+        return newMap;
+    }
 }

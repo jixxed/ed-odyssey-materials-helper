@@ -21,8 +21,10 @@ public class HorizonsBlueprint {
     @EqualsAndHashCode.Include
     @Getter
     private final HorizonsBlueprintName horizonsBlueprintName;
+    @EqualsAndHashCode.Include
     @Getter
     private final HorizonsBlueprintType horizonsBlueprintType;
+    @EqualsAndHashCode.Include
     @Getter
     private final HorizonsBlueprintGrade horizonsBlueprintGrade;
     @Getter

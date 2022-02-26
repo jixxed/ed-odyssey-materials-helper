@@ -19,6 +19,6 @@ public enum CommodityType {
     WEAPONS;
 
     public String getLocalizationKey() {
-        return "material.commodity.type." + this.name().toLowerCase();
+        return "material.commoditytype." + this.name().toLowerCase();
     }
 }
