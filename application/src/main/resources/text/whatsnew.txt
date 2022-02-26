@@ -1,3 +1,7 @@
+Version 1.70
+-------------
+Added horizons engineers & blueprints
+
 Version 1.69
 -------------
 Fix exceptions caused by Horizons journals
