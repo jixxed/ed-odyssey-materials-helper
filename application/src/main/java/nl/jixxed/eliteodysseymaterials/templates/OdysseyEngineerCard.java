@@ -37,7 +37,7 @@ class OdysseyEngineerCard extends EngineerCard {
         initEventHandling(engineer);
     }
 
-
+    @SuppressWarnings("java:S2177")
     private void initComponents() {
 
         this.suitModulesTitle = getSuitModulesTitle();
@@ -54,6 +54,7 @@ class OdysseyEngineerCard extends EngineerCard {
         this.getStyleClass().add("engineer-card");
     }
 
+    @SuppressWarnings("java:S2177")
     private void initEventHandling(final Engineer engineer) {
         EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);

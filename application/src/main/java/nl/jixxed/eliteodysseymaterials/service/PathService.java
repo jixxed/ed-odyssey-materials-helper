@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
-import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint;
+import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprintTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,12 +20,12 @@ public class PathService {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    public static List<PathItem> calculateShortestPath(final List<WishlistBlueprint> wishlistBlueprints) {
+    public static List<PathItem> calculateShortestPath(final List<WishlistBlueprintTemplate> wishlistBlueprints) {
 
         final LinkedHashSet<ModuleBlueprint> distinctRecipes = wishlistBlueprints.stream()
                 .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe() instanceof ModuleBlueprint)
-                .filter(WishlistBlueprint::isVisibleBlueprint)
-                .map(WishlistBlueprint::getRecipe)
+                .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
+                .map(WishlistBlueprintTemplate::getRecipe)
                 .map(ModuleBlueprint.class::cast)
                 .sorted(Comparator.comparing(ModuleBlueprint::hasSingleEngineerPerRegion).thenComparing((ModuleBlueprint moduleBlueprint) -> (OdysseyBlueprintName) moduleBlueprint.getBlueprintName()))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
@@ -153,10 +153,10 @@ public class PathService {
         return paths;
     }
 
-    private static Map<ModuleBlueprint, Integer> getRecipesForEngineer(final List<WishlistBlueprint> wishlistBlueprints, final List<PathItem> pathItems, final Engineer engineer) {
+    private static Map<ModuleBlueprint, Integer> getRecipesForEngineer(final List<WishlistBlueprintTemplate> wishlistBlueprints, final List<PathItem> pathItems, final Engineer engineer) {
         final List<ModuleBlueprint> recipes = wishlistBlueprints.stream()
-                .filter(WishlistBlueprint::isVisibleBlueprint)
-                .map(WishlistBlueprint::getRecipe)
+                .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
+                .map(WishlistBlueprintTemplate::getRecipe)
                 .filter(ModuleBlueprint.class::isInstance)
                 .map(ModuleBlueprint.class::cast)
                 .toList();

@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.constants.horizons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -7,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EngineerBlueprints {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     public static final HorizonsEngineerBlueprint ENGINEER_A = new HorizonsEngineerBlueprint(

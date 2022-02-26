@@ -67,10 +67,12 @@ public class EventService {
         LISTENERS_MAP.values().forEach(eventListeners -> eventListeners.removeIf(listener -> listener instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.hasOwner(owner)));
     }
 
+    @SuppressWarnings({"java:S1172", "java:S125"})
     private static <T extends Event> void logListener(final Object owner, final EventListener<T> listener, final String action) {
 //        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode() + (owner != null ? ", " + owner.getClass().getName() : ""));
     }
 
+    @SuppressWarnings("java:S125")
     private static void logListenerSize() {
 //        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
     }

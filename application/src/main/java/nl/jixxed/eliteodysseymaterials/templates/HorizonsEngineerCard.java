@@ -32,6 +32,7 @@ import org.controlsfx.control.SegmentedBar;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("java:S2177")
 class HorizonsEngineerCard extends EngineerCard {
 
     private Label hardpointTitle;
@@ -81,7 +82,6 @@ class HorizonsEngineerCard extends EngineerCard {
         final StackPane stackPane = new StackPane(this.segmentedBar, this.grade);
         HBox.setHgrow(stackPane, Priority.ALWAYS);
         this.grade.translateXProperty().bind(this.segmentedBar.widthProperty().subtract(ScalingHelper.getPixelDoubleBindingFromEm(0.25)));
-//        this.segmentedBar.setLayoutX(0);
         this.segmentedBar.setTranslateY(stackPane.getHeight() / 2);
         StackPane.setAlignment(this.segmentedBar, Pos.CENTER_LEFT);
         this.getChildren().addAll(this.image, this.name, BoxBuilder.builder().withStyleClass("grade-box").withNodes(stackPane).buildHBox(), this.location);
@@ -111,10 +111,17 @@ class HorizonsEngineerCard extends EngineerCard {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
             final Integer rank = APPLICATION_STATE.getEngineerRank(this.engineer);
-            final String imageString = (rank > 0) ? "rank_" + rank.toString() : (APPLICATION_STATE.isEngineerInvited(this.engineer)) ? "invited" : "lock";
+            final String imageString;
+            if ((rank > 0)) {
+                imageString = "rank_" + rank;
+            } else if (APPLICATION_STATE.isEngineerInvited(this.engineer)) {
+                imageString = "invited";
+            } else {
+                imageString = "lock";
+            }
             final Integer engineerProgress = rank.equals(5) ? 100 : APPLICATION_STATE.getEngineerProgress(this.engineer);
             this.present.setValue(engineerProgress);
-            this.notPresent.setValue(100 - engineerProgress);
+            this.notPresent.setValue(100.0 - engineerProgress);
             this.gradeIcon.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
             if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
                 this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
@@ -130,19 +137,23 @@ class HorizonsEngineerCard extends EngineerCard {
     private DestroyableResizableImageView getEngineerGrade() {
 
         final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
-        final String imageString = (engineerRank > 0) ? "rank_" + engineerRank.toString() : (APPLICATION_STATE.isEngineerInvited(this.engineer)) ? "invited" : "lock";
+        final String imageString;
+        if ((engineerRank > 0)) {
+            imageString = "rank_" + engineerRank.toString();
+        } else if (APPLICATION_STATE.isEngineerInvited(this.engineer)) {
+            imageString = "invited";
+        } else {
+            imageString = "lock";
+        }
+
         this.gradeIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("grade-bar-image")
                 .withImage("/images/ships/engineers/ranks/" + imageString + ".png")
                 .build();
         return this.gradeIcon;
-//        return BoxBuilder.builder()
-//                .withStyleClass("specialisation-line")
-//                .withNodes(new StackPane(this.gradeIcon))
-//                .buildHBox();
     }
 
-
+    @SuppressWarnings("java:S1640")
     private List<HBox> getBlueprints(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> blueprints) {
         final Map<HorizonsBlueprintName, Integer> maxGrades = new HashMap<>();
         blueprints.values().stream()
@@ -157,7 +168,7 @@ class HorizonsEngineerCard extends EngineerCard {
 
     private ArrayList<HBox> getBlueprintLabels(final Map<HorizonsBlueprintName, Integer> maxGrades) {
         return maxGrades.entrySet().stream()
-                .sorted(((Comparator<Map.Entry<HorizonsBlueprintName, Integer>>) (Comparator<?>) Map.Entry.comparingByValue().reversed()).thenComparing((entry) -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
+                .sorted(((Comparator<Map.Entry<HorizonsBlueprintName, Integer>>) (Comparator<?>) Map.Entry.comparingByValue().reversed()).thenComparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
                 .map(entry -> BoxBuilder.builder()
                         .withNodes(LabelBuilder.builder()
                                         .withStyleClass("engineer-bullet")

@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.constants.horizons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
@@ -8,21 +10,9 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("java:S1192")
 public class ExperimentalEffectBlueprints {
-//    public static final Map<HorizonsBlueprintType, HorizonsBlueprint> BEAM_LASER = Map.of(
-//            HorizonsBlueprintType.CONCORDANT_SEQUENCE,
-//            new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.CONCORDANT_SEQUENCE,
-//                    Map.of(
-//                            Manufactured.FOCUSCRYSTALS, 5,
-
-//                            Encoded.EMBEDDEDFIRMWARE, 3,
-
-//                            Raw.ZIRCONIUM, 1
-//                    ),
-//                    Map.of(
-//                    ),
-//                    List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN))
-//    );
 
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> BEAM_LASER = Map.of(
             HorizonsBlueprintType.CONCORDANT_SEQUENCE, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.CONCORDANT_SEQUENCE,

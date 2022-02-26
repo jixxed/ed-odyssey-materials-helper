@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 @Slf4j
+@SuppressWarnings("java:S1479")
 public class EngineerProgressMessageProcessor implements MessageProcessor {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String ENGINEER = "Engineer";
@@ -31,7 +32,18 @@ public class EngineerProgressMessageProcessor implements MessageProcessor {
         if (item.get(ENGINEER) != null && item.get(PROGRESS) != null) {
             final String engineer = item.get(ENGINEER).asText();
             final EngineerState engineerState = EngineerState.forName(item.get(PROGRESS).asText());
-            final Integer rank = item.get(RANK) != null ? item.get(RANK).asInt() : EngineerState.INVITED.equals(engineerState) ? -1 : EngineerState.KNOWN.equals(engineerState) ? -2 : EngineerState.UNKNOWN.equals(engineerState) ? -3 : 0;
+            final Integer rank;
+            if (item.get(RANK) != null) {
+                rank = item.get(RANK).asInt();
+            } else if (EngineerState.INVITED.equals(engineerState)) {
+                rank = -1;
+            } else if (EngineerState.KNOWN.equals(engineerState)) {
+                rank = -2;
+            } else if (EngineerState.UNKNOWN.equals(engineerState)) {
+                rank = -3;
+            } else {
+                rank = 0;
+            }
             final Integer rankProgress = item.get(RANK_PROGRESS) != null ? item.get(RANK_PROGRESS).asInt() : 0;
             switch (engineer) {
                 case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, engineerState);

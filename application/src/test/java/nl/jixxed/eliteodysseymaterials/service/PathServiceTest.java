@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
+import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprintTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,11 +51,11 @@ class PathServiceTest {
     @TestInJfxThread
     void calculateShortestPath() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
-        final List<nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint> wishlistBlueprints = List.of(
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
+        final List<WishlistBlueprintTemplate> wishlistBlueprints = List.of(
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
         );
         LocationService.getCurrentStarSystem();
 
@@ -79,11 +80,11 @@ class PathServiceTest {
     @TestInJfxThread
     void calculateShortestPath2() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
-        final List<nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint> wishlistBlueprints = List.of(
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
-                new nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
+        final List<WishlistBlueprintTemplate> wishlistBlueprints = List.of(
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
+                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
         );
         LocationService.getCurrentStarSystem();
 

@@ -37,7 +37,7 @@ public class CSVResourceBundle extends ResourceBundle {
             });
 
         } catch (final IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -46,7 +46,7 @@ public class CSVResourceBundle extends ResourceBundle {
     }
 
     public static ResourceBundle getResourceBundle(final String resourceBundleName, final Locale locale) {
-        return BUNDLES.computeIfAbsent(resourceBundleName + locale, (key) -> new CSVResourceBundle(resourceBundleName, locale));
+        return BUNDLES.computeIfAbsent(resourceBundleName + locale, key -> new CSVResourceBundle(resourceBundleName, locale));
     }
 
     @Override

@@ -1,11 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.constants.horizons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TechbrokerBlueprints {
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> GUARDIAN_MODULES = Map.of(
             HorizonsBlueprintType.GUARDIAN_HYBRID_POWER_PLANT, new HorizonsBlueprint(HorizonsBlueprintName.GUARDIAN_MODULES, HorizonsBlueprintType.GUARDIAN_HYBRID_POWER_PLANT,

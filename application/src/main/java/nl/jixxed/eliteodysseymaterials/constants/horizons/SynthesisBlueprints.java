@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.constants.horizons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
@@ -8,6 +10,8 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@SuppressWarnings("java:S1192")
 public class SynthesisBlueprints {
     public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> GUARDIAN_PLASMA_CHARGER_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,

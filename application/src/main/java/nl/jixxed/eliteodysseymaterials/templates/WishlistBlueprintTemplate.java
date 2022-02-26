@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class WishlistBlueprint extends HBox {
+public class WishlistBlueprintTemplate extends HBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String VISIBLE_STYLE_CLASS = "visible";
     private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
@@ -33,7 +34,7 @@ public class WishlistBlueprint extends HBox {
 
     private boolean visible;
     private final Integer sequenceID;
-    private final nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint wishlistBlueprint;
+    private final WishlistBlueprint wishlistBlueprint;
     private final BlueprintCategory blueprintCategory;
     private final OdysseyBlueprint blueprint;
     private final String wishlistUUID;
@@ -47,7 +48,7 @@ public class WishlistBlueprint extends HBox {
     private EventListener<StorageEvent> storageEventEventListener;
     private Tooltip tooltip;
 
-    public WishlistBlueprint(final String wishlistUUID, final nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint wishlistBlueprint) {
+    public WishlistBlueprintTemplate(final String wishlistUUID, final WishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = wishlistBlueprint;
         this.sequenceID = counter++;
@@ -183,7 +184,7 @@ public class WishlistBlueprint extends HBox {
         return this.visible;
     }
 
-    nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint getWishlistRecipe() {
+    WishlistBlueprint getWishlistRecipe() {
         return this.wishlistBlueprint;
     }
 

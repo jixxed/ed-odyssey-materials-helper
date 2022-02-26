@@ -19,11 +19,11 @@ public abstract class OdysseyBlueprint {
     private final BlueprintName blueprintName;
     private final Map<OdysseyModifier, String> modifiers;
 
-    public OdysseyBlueprint(final BlueprintName blueprintName, final Map<? extends OdysseyMaterial, Integer> materials) {
+    protected OdysseyBlueprint(final BlueprintName blueprintName, final Map<? extends OdysseyMaterial, Integer> materials) {
         this(blueprintName, materials, Collections.emptyMap());
     }
 
-    public OdysseyBlueprint(final BlueprintName blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Map<OdysseyModifier, String> modifiers) {
+    protected OdysseyBlueprint(final BlueprintName blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Map<OdysseyModifier, String> modifiers) {
         this.blueprintName = blueprintName;
         this.modifiers = modifiers;
         this.assets = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Asset).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

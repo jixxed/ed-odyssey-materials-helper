@@ -50,7 +50,6 @@ class EngineerBlueprintLabel extends HBox {
     }
 
     private void initEventHandling() {
-//        EventService.addListener(this, JournalLineProcessedEvent.class, this.journalProcessedEventConsumer);
         EventService.addListener(this, EngineerEvent.class, event -> {
             if (this.exact) {
                 this.updateStyle(APPLICATION_STATE.isEngineerUnlockedExact(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
@@ -60,7 +59,7 @@ class EngineerBlueprintLabel extends HBox {
             if (this.engineer.isHorizons()) {
                 final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
                 if (!this.currentEngineerRank.equals(engineerRank)) {//only update if image has changed
-                    final String imageString = (engineerRank > 0) ? "rank_" + engineerRank.toString() : (APPLICATION_STATE.isEngineerInvited(this.engineer)) ? "invited" : "lock";
+                    final String imageString = getEngineerRankImage(engineerRank);
                     this.image.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
                     this.currentEngineerRank = engineerRank;
                 }
@@ -68,11 +67,24 @@ class EngineerBlueprintLabel extends HBox {
         });
     }
 
+    private String getEngineerRankImage(final Integer engineerRank) {
+        final String imageString;
+        if ((engineerRank > 0)) {
+            imageString = "rank_" + engineerRank;
+        } else {
+            if (APPLICATION_STATE.isEngineerInvited(this.engineer)) {
+                imageString = "invited";
+            } else {
+                imageString = "lock";
+            }
+        }
+        return imageString;
+    }
+
     private void initComponents() {
         this.label = LabelBuilder.builder().withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey())).build();
         this.getStyleClass().add("engineer-label");
         if (this.engineer.isHorizons()) {
-//            final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
             this.image = ResizableImageViewBuilder.builder().withStyleClasses("engineer-grade-image").build();
             this.getChildren().add(this.image);
             this.getStyleClass().add("engineer-label-big");

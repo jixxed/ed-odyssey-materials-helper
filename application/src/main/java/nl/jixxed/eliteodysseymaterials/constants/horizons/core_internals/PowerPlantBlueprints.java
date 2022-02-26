@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -7,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PowerPlantBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.ARMOURED,

@@ -25,6 +25,6 @@ public class WishlistHelper {
     }
 
     public static String convertWishlist(final List<WishlistBlueprint> recipes) {
-        return recipes.stream().map(recipe -> ((OdysseyBlueprintName) recipe.getRecipeName()).name() + ":" + recipe.isVisible()).collect(Collectors.joining(","));
+        return recipes.stream().map(recipe -> (recipe.getRecipeName()).name() + ":" + recipe.isVisible()).collect(Collectors.joining(","));
     }
 }

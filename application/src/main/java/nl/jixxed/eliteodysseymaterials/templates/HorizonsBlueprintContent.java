@@ -53,9 +53,9 @@ class HorizonsBlueprintContent extends VBox {
         initModifiers();
 
         if (!HorizonsBlueprintGrade.NONE.equals(this.blueprint.getHorizonsBlueprintGrade()) && HorizonsBlueprintConstants.getExperimentalEffects().containsKey(this.blueprint.getHorizonsBlueprintName())) {
-            final Button experimentalEffects = ButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.category.name.experimental_effects")).withOnAction(event -> {
-                EventService.publish(new BlueprintClickEvent(this.blueprint.getHorizonsBlueprintName(), true));
-            }).build();
+            final Button experimentalEffects = ButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.category.name.experimental_effects")).withOnAction(event ->
+                    EventService.publish(new BlueprintClickEvent(this.blueprint.getHorizonsBlueprintName(), true))
+            ).build();
             final HBox box = BoxBuilder.builder()
                     .withStyleClass("recipe-wishlist-count-box")
                     .withNodes(experimentalEffects)
@@ -64,9 +64,9 @@ class HorizonsBlueprintContent extends VBox {
             this.recipeHeader.getChildren().add(box);
         }
         if (HorizonsBlueprintGrade.NONE.equals(this.blueprint.getHorizonsBlueprintGrade()) && !(this.blueprint instanceof HorizonsEngineerBlueprint) && !HorizonsBlueprintConstants.getTechbrokerUnlocks().containsKey(this.blueprint.getHorizonsBlueprintName())) {
-            final Button blueprints = ButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.category.name.blueprints")).withOnAction(event -> {
-                EventService.publish(new BlueprintClickEvent(this.blueprint.getHorizonsBlueprintName()));
-            }).build();
+            final Button blueprints = ButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.category.name.blueprints")).withOnAction(event ->
+                    EventService.publish(new BlueprintClickEvent(this.blueprint.getHorizonsBlueprintName()))
+            ).build();
             final HBox box = BoxBuilder.builder()
                     .withStyleClass("recipe-wishlist-count-box")
                     .withNodes(blueprints)

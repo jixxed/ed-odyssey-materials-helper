@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -74,9 +73,9 @@ class OdysseyBlueprintContent extends VBox {
     }
 
     private void loadIngredients() {
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Good.class, OdysseyStorageType.GOOD, StorageService.getGoods()));
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Asset.class, OdysseyStorageType.ASSET, StorageService.getAssets()));
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Data.class, OdysseyStorageType.DATA, StorageService.getData()));
+        this.ingredients.addAll(getRecipeIngredients(Good.class, OdysseyStorageType.GOOD, StorageService.getGoods()));
+        this.ingredients.addAll(getRecipeIngredients(Asset.class, OdysseyStorageType.ASSET, StorageService.getAssets()));
+        this.ingredients.addAll(getRecipeIngredients(Data.class, OdysseyStorageType.DATA, StorageService.getData()));
         if (this.blueprint instanceof EngineerBlueprint engineerRecipe) {
             this.ingredients.addAll(engineerRecipe.getOther().stream()
                     .map(text -> new MissionIngredient(text, OdysseyStorageType.OTHER))
@@ -235,7 +234,7 @@ class OdysseyBlueprintContent extends VBox {
         });
     }
 
-    private List<MaterialIngredient> getRecipeIngredients(final OdysseyBlueprint odysseyBlueprint, final Class<? extends OdysseyMaterial> materialClass, final OdysseyStorageType storageType, final Map<? extends OdysseyMaterial, Storage> materialMap) {
+    private List<MaterialIngredient> getRecipeIngredients(final Class<? extends OdysseyMaterial> materialClass, final OdysseyStorageType storageType, final Map<? extends OdysseyMaterial, Storage> materialMap) {
         return this.blueprint.getMaterialCollection(materialClass).entrySet().stream()
                 .map(material -> new MaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue()))
                 .sorted(Comparator.comparing(MaterialIngredient::getName))

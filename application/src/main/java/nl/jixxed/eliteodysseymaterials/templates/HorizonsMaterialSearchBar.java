@@ -70,16 +70,12 @@ class HorizonsMaterialSearchBar extends HBox {
             this.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
         });
-        EventService.addListener(this, HorizonsTabSelectedEvent.class, event -> {
-            if (HorizonsTabs.MATERIALS.equals(event.getSelectedTab())) {
-                this.textField.setDisable(false);
-            } else {
-                this.textField.setDisable(true);
-            }
-        });
+        EventService.addListener(this, HorizonsTabSelectedEvent.class, event ->
+                this.textField.setDisable(!HorizonsTabs.MATERIALS.equals(event.getSelectedTab()))
+        );
     }
 
-
+    @SuppressWarnings("java:S1144")
     private String getQueryOrDefault(final TextField textField) {
         return (textField.getText() != null) ? textField.getText() : "";
     }

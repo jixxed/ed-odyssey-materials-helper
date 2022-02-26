@@ -48,7 +48,7 @@ public class WishlistTab extends EDOTab {
     private static final String WISHLIST_BUTTON_STYLE_CLASS = "wishlist-button";
     private static final String WISHLIST_CONTENT_STYLE_CLASS = "wishlist-content";
     private int wishlistSize;
-    private final List<WishlistBlueprint> wishlistBlueprints = new ArrayList<>();
+    private final List<WishlistBlueprintTemplate> wishlistBlueprints = new ArrayList<>();
     private final AtomicBoolean hideCompleted = new AtomicBoolean();
     private final Map<Data, Integer> wishlistNeededDatas = new EnumMap<>(Data.class);
     private final Map<Good, Integer> wishlistNeededGoods = new EnumMap<>(Good.class);
@@ -108,10 +108,10 @@ public class WishlistTab extends EDOTab {
     private void copyWishListToClipboard() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent clipboardContent = new ClipboardContent();
-        final List<nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint> wishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
+        final List<nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint> wishlistBlueprintsForClipboard = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems())
                 .orElse(new ArrayList<>());
-        clipboardContent.putString(Base64.getEncoder().encodeToString(WishlistHelper.convertWishlist(wishlistBlueprints).getBytes(StandardCharsets.UTF_8)));
+        clipboardContent.putString(Base64.getEncoder().encodeToString(WishlistHelper.convertWishlist(wishlistBlueprintsForClipboard).getBytes(StandardCharsets.UTF_8)));
         clipboard.setContent(clipboardContent);
     }
 
@@ -275,11 +275,11 @@ public class WishlistTab extends EDOTab {
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(this::refreshContent));
 
-        this.wishlistBlueprints.forEach(nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint::onDestroy);
+        this.wishlistBlueprints.forEach(WishlistBlueprintTemplate::onDestroy);
         this.wishlistBlueprints.clear();
         this.wishlistBlueprints.addAll(APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
-                        .map(wishlistRecipe -> new WishlistBlueprint(APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getUuid(), wishlistRecipe))
+                        .map(wishlistRecipe -> new WishlistBlueprintTemplate(APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getUuid(), wishlistRecipe))
                         .toList()
                 )
                 .orElse(new ArrayList<>()));
@@ -376,21 +376,21 @@ public class WishlistTab extends EDOTab {
 
             {
                 this.removeButton.setOnAction((ActionEvent event) -> {
-                    final List<WishlistBlueprint> pathBlueprints = getPathWishlistBlueprints();
-                    pathBlueprints.forEach(nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint::remove);
+                    final List<WishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints();
+                    pathBlueprints.forEach(WishlistBlueprintTemplate::remove);
                 });
                 this.hideButton.setOnAction((ActionEvent event) -> {
-                    final List<WishlistBlueprint> pathBlueprints = getPathWishlistBlueprints();
+                    final List<WishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints();
                     pathBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setVisibility(false));
                     refreshContent();
                 });
             }
 
-            private List<WishlistBlueprint> getPathWishlistBlueprints() {
+            private List<WishlistBlueprintTemplate> getPathWishlistBlueprints() {
                 final PathItem pathItem = getTableView().getItems().get(getIndex());
                 return pathItem.getRecipes().entrySet().stream()
                         .flatMap(recipeEntry -> WishlistTab.this.wishlistBlueprints.stream()
-                                .filter(nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint::isVisibleBlueprint)
+                                .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
                                 .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe().equals(recipeEntry.getKey()))
                                 .limit(recipeEntry.getValue())
                         ).toList();
@@ -451,7 +451,7 @@ public class WishlistTab extends EDOTab {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander ->
                         wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
-                            final WishlistBlueprint wishlistBlueprint = new WishlistBlueprint(wishlistEvent.getWishlistUUID(), wishlistRecipe);
+                            final WishlistBlueprintTemplate wishlistBlueprint = new WishlistBlueprintTemplate(wishlistEvent.getWishlistUUID(), wishlistRecipe);
                             if (!wishlistEvent.getWishlistUUID().equals(this.activeWishlistUUID)) {
                                 Platform.runLater(() -> this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null)));
                             } else {
@@ -468,10 +468,10 @@ public class WishlistTab extends EDOTab {
             final String fid = commanderSelectedEvent.getCommander().getFid();
             final Wishlist selectedWishlist = APPLICATION_STATE.getWishlists(fid).getSelectedWishlist();
             this.activeWishlistUUID = selectedWishlist.getUuid();
-            this.wishlistBlueprints.forEach(nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint::onDestroy);
+            this.wishlistBlueprints.forEach(WishlistBlueprintTemplate::onDestroy);
             this.wishlistBlueprints.clear();
             this.wishlistBlueprints.addAll(selectedWishlist.getItems().stream()
-                    .map(wishlistRecipe -> new WishlistBlueprint(this.activeWishlistUUID, wishlistRecipe))
+                    .map(wishlistRecipe -> new WishlistBlueprintTemplate(this.activeWishlistUUID, wishlistRecipe))
                     .toList());
             refreshWishlistSelect();
             refreshWishlistRecipes();
@@ -489,14 +489,14 @@ public class WishlistTab extends EDOTab {
     }
 
     private void refreshWishlistBlueprints() {
-        this.wishlistBlueprints.forEach(nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint::onDestroy);
+        this.wishlistBlueprints.forEach(WishlistBlueprintTemplate::onDestroy);
         this.wishlistBlueprints.clear();
-        final List<WishlistBlueprint> newWishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
+        final List<WishlistBlueprintTemplate> newWishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> {
                     final Wishlist selectedWishlist = APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist();
                     this.activeWishlistUUID = selectedWishlist.getUuid();
                     return selectedWishlist.getItems().stream()
-                            .map(wishlistRecipe -> new WishlistBlueprint(this.activeWishlistUUID, wishlistRecipe))
+                            .map(wishlistRecipe -> new WishlistBlueprintTemplate(this.activeWishlistUUID, wishlistRecipe))
                             .toList();
                 })
                 .orElse(Collections.emptyList());
@@ -532,24 +532,26 @@ public class WishlistTab extends EDOTab {
     }
 
 
-    private void addBluePrint(final WishlistBlueprint wishlistBlueprint) {
+    private void addBluePrint(final WishlistBlueprintTemplate wishlistBlueprint) {
         switch (wishlistBlueprint.getRecipeCategory()) {
             case ENGINEER_UNLOCKS -> this.engineerRecipes.getChildren().add(wishlistBlueprint);
             case SUIT_GRADES -> this.suitUpgradeRecipes.getChildren().add(wishlistBlueprint);
             case SUIT_MODULES -> this.suitModuleRecipes.getChildren().add(wishlistBlueprint);
             case WEAPON_GRADES -> this.weaponUpgradeRecipes.getChildren().add(wishlistBlueprint);
             case WEAPON_MODULES -> this.weaponModuleRecipes.getChildren().add(wishlistBlueprint);
+            default -> throw new IllegalArgumentException("Unsupported Category");
         }
         refreshBlueprintOverview();
     }
 
-    private void removeBluePrint(final WishlistBlueprint wishlistBlueprint) {
+    private void removeBluePrint(final WishlistBlueprintTemplate wishlistBlueprint) {
         switch (wishlistBlueprint.getRecipeCategory()) {
             case ENGINEER_UNLOCKS -> this.engineerRecipes.getChildren().remove(wishlistBlueprint);
             case SUIT_GRADES -> this.suitUpgradeRecipes.getChildren().remove(wishlistBlueprint);
             case SUIT_MODULES -> this.suitModuleRecipes.getChildren().remove(wishlistBlueprint);
             case WEAPON_GRADES -> this.weaponUpgradeRecipes.getChildren().remove(wishlistBlueprint);
             case WEAPON_MODULES -> this.weaponModuleRecipes.getChildren().remove(wishlistBlueprint);
+            default -> throw new IllegalArgumentException("Unsupported Category");
         }
         refreshBlueprintOverview();
     }
@@ -559,11 +561,11 @@ public class WishlistTab extends EDOTab {
         for (final HBox blueprintList : List.of(this.engineerBlueprintsLine, this.suitUpgradeBlueprintsLine, this.suitModuleBlueprintsLine, this.weaponUpgradeBlueprintsLine, this.weaponModuleBlueprintsLine)) {
             if (!((FlowPane) blueprintList.getChildren().get(1)).getChildren().isEmpty()) {
                 this.blueprints.getChildren().add(blueprintList);
-                final ArrayList<WishlistBlueprint> wishlistItems = (ArrayList<WishlistBlueprint>) (ArrayList<?>) new ArrayList<>(((FlowPane) blueprintList.getChildren().get(1)).getChildren());
+                final ArrayList<WishlistBlueprintTemplate> wishlistItems = (ArrayList<WishlistBlueprintTemplate>) (ArrayList<?>) new ArrayList<>(((FlowPane) blueprintList.getChildren().get(1)).getChildren());
                 wishlistItems
                         .sort(Comparator
-                                .comparing(node -> LocaleService.getLocalizedStringForCurrentLocale(((WishlistBlueprint) node).getRecipeName().getLocalizationKey()))
-                                .thenComparing(node -> ((WishlistBlueprint) node).getSequenceID()));
+                                .comparing(node -> LocaleService.getLocalizedStringForCurrentLocale(((WishlistBlueprintTemplate) node).getRecipeName().getLocalizationKey()))
+                                .thenComparing(node -> ((WishlistBlueprintTemplate) node).getSequenceID()));
                 ((FlowPane) blueprintList.getChildren().get(1)).getChildren().clear();
                 ((FlowPane) blueprintList.getChildren().get(1)).getChildren().addAll(wishlistItems);
             }
@@ -597,8 +599,8 @@ public class WishlistTab extends EDOTab {
         this.wishlistNeededDatas.clear();
         this.shortestRoute.getItems().clear();
         this.wishlistBlueprints.stream()
-                .filter(nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint::isVisibleBlueprint)
-                .map(nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprint::getRecipe)
+                .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
+                .map(WishlistBlueprintTemplate::getRecipe)
                 .forEach(recipe -> {
                             recipe.getMaterialCollection(Data.class).forEach((key, value1) -> this.wishlistNeededDatas.merge((Data) key, value1, Integer::sum));
                             recipe.getMaterialCollection(Good.class).forEach((key, value1) -> this.wishlistNeededGoods.merge((Good) key, value1, Integer::sum));

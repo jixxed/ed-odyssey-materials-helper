@@ -22,7 +22,7 @@ import java.util.function.Function;
 public class ApplicationState {
 
     private static ApplicationState applicationState;
-    private final Function<WishlistBlueprint, String> wishlistRecipeMapper = recipe -> ((OdysseyBlueprintName) recipe.getRecipeName()).name() + ":" + recipe.isVisible();
+    private final Function<WishlistBlueprint, String> wishlistRecipeMapper = recipe -> (recipe.getRecipeName()).name() + ":" + recipe.isVisible();
     private final List<OdysseyMaterial> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
     private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
