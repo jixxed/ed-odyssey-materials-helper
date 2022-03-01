@@ -14,7 +14,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.Main;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
@@ -74,6 +75,9 @@ public class SettingsTab extends EDOTab {
     private Label wipLabel;
     private Label wipExplainLabel;
     private CheckBox wipCheckBox;
+    private Label urlSchemeLinkingLabel;
+    private Button urlSchemeLinkingButton;
+    private Label urlSchemeLinkingActiveLabel;
 
 
     SettingsTab(final Application application) {
@@ -122,15 +126,39 @@ public class SettingsTab extends EDOTab {
         final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
         final HBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
         final HBox irrelevantOverrideList = createIrrelevantOverrideList();
+        final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
 
         final VBox settings = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList, trackingOptOutSetting, wipSetting)
+                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList, trackingOptOutSetting, wipSetting, urlSchemeLinkingSetting)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
                 .build();
         this.setContent(this.scrollPane);
+    }
+
+    private HBox createUrlSchemeLinkingSetting() {
+        this.urlSchemeLinkingLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.url.scheme")).build();
+        this.urlSchemeLinkingButton = ButtonBuilder.builder()
+                .withText(LocaleService.getStringBinding(RegistryService.isRegistered() ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"))
+                .withOnAction(event -> {
+                    boolean isRegistered = RegistryService.isRegistered();
+                    if (isRegistered) {
+                        RegistryService.unregisterApplication();
+                    } else {
+                        RegistryService.registerApplication();
+                    }
+                    isRegistered = !isRegistered;
+                    this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
+                    this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
+                })
+                .build();
+        this.urlSchemeLinkingActiveLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding(RegistryService.isRegistered() ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered")).build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.urlSchemeLinkingLabel, this.urlSchemeLinkingButton, this.urlSchemeLinkingActiveLabel)
+                .buildHBox();
     }
 
     private HBox createNotificationVolumeSetting() {
@@ -196,7 +224,7 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.notification.sound.select"))
                 .withOnAction(e -> {
-                    final File selectedFile = notificationSoundSelect.showOpenDialog(((Main) this.application).getPrimaryStage());
+                    final File selectedFile = notificationSoundSelect.showOpenDialog(((FXApplication) this.application).getPrimaryStage());
                     if (selectedFile != null) {
                         this.selectedNotificationSoundLabel.setText(selectedFile.getAbsolutePath());
                         PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, selectedFile.getAbsolutePath());
@@ -274,7 +302,7 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.journal.folder.select"))
                 .withOnAction(e -> {
-                    final File selectedDirectory = journalFolderSelect.showDialog(((Main) this.application).getPrimaryStage());
+                    final File selectedDirectory = journalFolderSelect.showDialog(((FXApplication) this.application).getPrimaryStage());
                     if (selectedDirectory != null) {
                         this.selectedFolderLabel.setText(selectedDirectory.getAbsolutePath());
                         PreferencesService.setPreference(PreferenceConstants.JOURNAL_FOLDER, selectedDirectory.getAbsolutePath());

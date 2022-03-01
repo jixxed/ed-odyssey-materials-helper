@@ -24,12 +24,11 @@ import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.domain.Wishlists;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
-import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
-import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -108,10 +107,8 @@ public class WishlistTab extends EDOTab {
     private void copyWishListToClipboard() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent clipboardContent = new ClipboardContent();
-        final List<nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint> wishlistBlueprintsForClipboard = APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems())
-                .orElse(new ArrayList<>());
-        clipboardContent.putString(Base64.getEncoder().encodeToString(WishlistHelper.convertWishlist(wishlistBlueprintsForClipboard).getBytes(StandardCharsets.UTF_8)));
+
+        clipboardContent.putString(ClipboardHelper.createClipboardWishlist());
         clipboard.setContent(clipboardContent);
     }
 

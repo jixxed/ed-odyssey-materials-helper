@@ -30,7 +30,13 @@ jar {
     manifest {
         attributes 'Name': 'nl/jixxed/eliteodysseymaterials',
                 'Implementation-Title': 'Elite Dangerous Odyssey Materials Helper',
-                'Implementation-Version': project.version
+                'Implementation-Version': project.version,
+                'Codebase': ' *',
+                'Permissions': ' all-permissions',
+                'Application-Library-Allowable-Codebase': ' *',
+                'Caller-Allowable-Codebase': ' *',
+                'Trusted-Only': ' false',
+                'Trusted-Library': ' false'
     }
 }
 repositories {
@@ -97,7 +103,6 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
-
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
@@ -127,6 +132,7 @@ jpackage {
     }
 }
 run {
+//    setArgs(['edomh://wishlist?eyJldmVudCI6Indpc2hsaXN0IiwidmVyc2lvbiI6IjEiLCJ3aXNobGlzdCI6eyJ1dWlkIjoiMGU4OGE4MzEtMGY1ZS00NjczLWEwODItMzk4YTRmMjA5NDU0IiwibmFtZSI6IkRlZmF1bHQgd2lzaGxpc3QiLCJpdGVtcyI6W3sicmVjaXBlTmFtZSI6IktBUk1BXzRfNSIsInZpc2libGUiOnRydWV9LHsicmVjaXBlTmFtZSI6Ik1BTlRJQ09SRV80XzUiLCJ2aXNpYmxlIjp0cnVlfSx7InJlY2lwZU5hbWUiOiJNQUdBWklORV9TSVpFIiwidmlzaWJsZSI6dHJ1ZX0seyJyZWNpcGVOYW1lIjoiS0FSTUFfMV8yIiwidmlzaWJsZSI6dHJ1ZX1dfX0='])
     jvmArgs = ['--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls', '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming']
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
 }

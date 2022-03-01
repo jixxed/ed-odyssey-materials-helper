@@ -81,7 +81,7 @@ class BottomBar extends HBox {
         EventService.addListener(this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel);
         EventService.addListener(this, EngineerEvent.class, event -> hideLoginRequest());
         EventService.addListener(this, CommanderAddedEvent.class, this::handleAddedCommander);
-        EventService.addListener(this, CommanderAllListedEvent.class, event -> afterAllCommandersListed());
+        EventService.addListener(this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed());
         EventService.addListener(this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear());
         EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px"));
         EventService.addListener(this, LoadGameEvent.class, this::handleLoadGame);

@@ -1433,6 +1433,16 @@
     -fx-padding: 4px;
 }
 
+.urlscheme-dialog {
+    -fx-background-color: #0f0f0f;
+}
+
+.urlscheme-dialog-text {
+    -fx-font-size: 1.2em;
+    -fx-padding: 4px;
+    -fx-wrap-text: true;
+}
+
 .loadout-box {
     -fx-padding: 5px;
 }

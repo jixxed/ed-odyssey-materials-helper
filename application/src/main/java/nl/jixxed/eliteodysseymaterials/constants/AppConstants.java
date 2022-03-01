@@ -11,5 +11,6 @@ public class AppConstants {
     public static final String APP_ICON_PATH = "/images/application/rocket.png";
     public static final String SHIPLOCKER_FILE = "ShipLocker.json";
     public static final String BACKPACK_FILE = "Backpack.json";
+    public static final String DEEPLINK_FILE = "deeplink";
     public static final String JOURNAL_FILE_PREFIX = "Journal.";
 }

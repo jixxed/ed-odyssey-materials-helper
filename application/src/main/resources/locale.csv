@@ -2037,6 +2037,11 @@ tab.settings.solo.mode,Solo Mode,Solo Mode,Solo-Modus,Modo Solo,Mode solo,Modo S
 tab.settings.textsize,Text size,Text size,Textgröße,Tamano del texto,Taille du texte,Tamanho do texto,Размер текста
 tab.settings.tracking.opt.out.explain,disables tracking of material pickup locations,disables tracking of material pickup locations,deaktiviert die Verfolgung von Materialabholorten,desactiva el seguimiento de las ubicaciones de recogida de material,désactive le suivi des lieux de ramassage des matériaux,desativa o rastreamento de locais de coleta de material,отключает отслеживание мест получения материалов
 tab.settings.tracking.opt.out,Tracking opt-out,Tracking opt-out,Tracking-Deaktivierung,Exclusión de seguimiento,Désactivation du suivi,Desativação de rastreamento,Отказ от отслеживания
+tab.settings.url.scheme,Handle edomh:// links,Handle edomh:// links,,,,,
+tab.settings.url.scheme.button.register,Register application,Register application,,,,,
+tab.settings.url.scheme.button.unregister,Unregister application,Unregister application,,,,,
+tab.settings.url.scheme.registered,Registered,Registered,,,,,
+tab.settings.url.scheme.unregistered,Unregistered,Unregistered,,,,,
 tab.settings.wip.explain,Show Work In Progress features,Show Work In Progress features,In Bearbeitung befindliche Funktionen anzeigen,Mostrar funciones de trabajo en curso,Afficher les fonctionnalités de travail en cours,Mostrar recursos de Trabalho em Andamento,Показать функции незавершенной работы
 tab.settings.wip,WIP visible,WIP visible,WIP sichtbar,WIP visible,WIP visible,WIP visível,WIP виден
 tab.trade.button.connect,connect,connect,connect,conectar,connect,conectar,подключиться
@@ -2124,3 +2129,5 @@ trade.search.text.placeholder,Search,Search,Suche,Buscar,Rechercher,Pesquisa,П�
 trade.status.bid.accepted,Status: Bid accepted,Status: Bid accepted,Status: Gebot angenommen,Estado: Oferta aceptada,Statut: offre acceptée,Status: Lance aceito,Статус: Ставка принята
 trade.status.received.a.bid,Status: Received a bid,Status: Received a bid,Status: Gebot erhalten,Estado: Recibió una oferta,Statut: a reçu une offre,Status: Recebeu um lance,Статус: Получено предложение
 trade.status.waiting.for.bids,Status: Waiting for bids...,Status: Waiting for bids...,Status: Warte auf Gebote...,Estado: Esperando ofertas...,Statut: En attente des offres...,Status: Aguardando lances...,Статус: Ожидание ставок...
+url.scheme.registration.text,This app can handle url's starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,This app can handle url's starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,,,,,
+url.scheme.registration.text2,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,,,,,

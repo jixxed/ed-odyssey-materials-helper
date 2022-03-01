@@ -13,7 +13,6 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class LoadoutSet {
-    private Integer version = 1;
     @EqualsAndHashCode.Include
     private String uuid = UUID.randomUUID().toString();
     private String name;

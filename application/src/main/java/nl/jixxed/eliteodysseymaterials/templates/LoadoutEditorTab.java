@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -21,19 +19,18 @@ import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.enums.Suit;
 import nl.jixxed.eliteodysseymaterials.enums.Weapon;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class LoadoutEditorTab extends EDOTab implements Template {
 
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String LOADOUT_BUTTON_STYLE_CLASS = "loadout-button";
     private ScrollPane scrollPane;
@@ -212,13 +209,8 @@ public class LoadoutEditorTab extends EDOTab implements Template {
     private void copyLoadoutSetToClipboard() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent clipboardContent = new ClipboardContent();
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            try {
-                clipboardContent.putString(Base64.getEncoder().encodeToString(OBJECT_MAPPER.writeValueAsString(APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getSelectedLoadoutSet()).getBytes(StandardCharsets.UTF_8)));
-            } catch (final JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        });
+
+        clipboardContent.putString(ClipboardHelper.createClipboardLoadout());
         clipboard.setContent(clipboardContent);
     }
 
