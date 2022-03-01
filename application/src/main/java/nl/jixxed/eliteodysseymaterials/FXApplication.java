@@ -191,7 +191,7 @@ public class FXApplication extends Application {
     }
 
     private void urlSchemePopup() {
-        final boolean urlSchemeAsked = OsCheck.isWindows() && PreferencesService.getPreference(PreferenceConstants.URL_SCHEME, false).equals(true);
+        final boolean urlSchemeAsked = PreferencesService.getPreference(PreferenceConstants.URL_SCHEME, false).equals(true);
         if (!urlSchemeAsked) {
             final Stage urlSchemeStage = new Stage();
 

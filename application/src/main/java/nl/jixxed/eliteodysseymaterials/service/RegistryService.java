@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 @Slf4j
 public class RegistryService {
     private static final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
-    private static final boolean isJava = ProcessHandle.current().info().command().map(s -> s.endsWith("java.exe")).orElse(false);
+    private static final boolean isJava = ProcessHandle.current().info().command().map(s -> s.endsWith("java.exe") || s.endsWith("java")).orElse(false);
     private static final String currentDirSingleSlashed = (binDir.trim().replace("\"", "") + (OsCheck.isWindows() ? "\\" : "/"));
     private static final String currentDirDoubleSlashed = currentDirSingleSlashed.replace("\\", "\\\\");
     private static final String regKey = """
@@ -29,7 +29,7 @@ public class RegistryService {
             @=\"\\\"""" + currentDirDoubleSlashed + "Elite Dangerous Odyssey Materials Helper.exe\\\" \\\"%1\\\"\"";
     private static final String desktopfile = """
             [Desktop Entry]
-            Name=edomh
+            Name=Elite Dangerous Odyssey Materials Helper
             Exec=""" + currentDirSingleSlashed + """
             Elite\\ Dangerous\\ Odyssey\\ Materials\\ Helper %u
             Type=Application
@@ -60,6 +60,7 @@ public class RegistryService {
                     output.write(desktopfile.getBytes(StandardCharsets.UTF_8));
                 }
                 Runtime.getRuntime().exec("xdg-mime default " + System.getProperty("user.home") + "/.local/share/applications/edomh.desktop x-scheme-handler/edomh").waitFor();//
+                Runtime.getRuntime().exec("update-desktop-database /.local/share/applications/").waitFor();//
 
             } catch (final IOException | InterruptedException e) {
                 log.error("Error creating desktop file", e);
@@ -68,17 +69,18 @@ public class RegistryService {
     }
 
     public static void unregisterApplication() {
-        if (!isJava && OsCheck.isWindows()) {
-            try {
-                Runtime.getRuntime().exec("powershell Start-Process \"reg\" -ArgumentList @('delete', 'HKEY_CLASSES_ROOT\\edomh', '/f') -Verb RunAs").waitFor();//
-            } catch (final IOException | InterruptedException e) {
-                log.error("Error deleting registry entry", e);
+        try {
+            if (!isJava && OsCheck.isWindows()) {
+                    Runtime.getRuntime().exec("powershell Start-Process \"reg\" -ArgumentList @('delete', 'HKEY_CLASSES_ROOT\\edomh', '/f') -Verb RunAs").waitFor();//
+            } else if (!isJava && OsCheck.isLinux()) {
+                final File file = new File(System.getProperty("user.home") + "/.local/share/applications/edomh.desktop");
+                if (file.exists() && file.isFile()) {
+                    file.delete();
+                }
+                Runtime.getRuntime().exec("update-desktop-database /.local/share/applications/").waitFor();//
             }
-        } else if (!isJava && OsCheck.isLinux()) {
-            final File file = new File(System.getProperty("user.home") + "/.local/share/applications/edomh.desktop");
-            if (file.exists() && file.isFile()) {
-                file.delete();
-            }
+        } catch (final IOException | InterruptedException e) {
+            log.error("Error deleting registry entry", e);
         }
     }
 
