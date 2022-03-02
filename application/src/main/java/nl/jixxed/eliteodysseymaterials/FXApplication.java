@@ -16,12 +16,14 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
-import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.exception.LoadoutDeeplinkException;
+import nl.jixxed.eliteodysseymaterials.service.exception.WishlistDeeplinkException;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.URLSchemeDialog;
@@ -45,8 +47,8 @@ public class FXApplication extends Application {
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
+    private final DeeplinkWatcher deeplinkWatcher = new DeeplinkWatcher();
     private Stage primaryStage;
-    private DeeplinkWatcher deeplinkWatcher;
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
@@ -104,14 +106,18 @@ public class FXApplication extends Application {
             EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
         });
         this.primaryStage.setOnCloseRequest(event -> {
-            if (MarketPlaceClient.getInstance() != null) {
-                MarketPlaceClient.getInstance().close();
+            try {
+                if (MarketPlaceClient.getInstance() != null) {
+                    MarketPlaceClient.getInstance().close();
+                }
+                MaterialTrackingService.close();
+                this.timeStampedShipLockerWatcher.stop();
+                this.timeStampedBackPackWatcher.stop();
+                this.journalWatcher.stop();
+                this.deeplinkWatcher.stop();
+            } catch (final Exception ex) {
+                //don't care
             }
-            MaterialTrackingService.close();
-            this.timeStampedShipLockerWatcher.stop();
-            this.timeStampedBackPackWatcher.stop();
-            this.journalWatcher.stop();
-            this.deeplinkWatcher.stop();
         });
         EventService.addListener(this, SaveWishlistEvent.class, event -> {
             final FileChooser fileChooser = new FileChooser();
@@ -138,10 +144,30 @@ public class FXApplication extends Application {
         reference.set(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
 
             final File deeplinkWatchedFolder = new File(OsConstants.DEEPLINK_FOLDER);
-            this.deeplinkWatcher = new DeeplinkWatcher();
             this.deeplinkWatcher.watch(deeplinkWatchedFolder, deeplink -> {
                 if (!deeplink.isEmpty()) {
-                    ImportService.importDeeplink(deeplink);
+                    try {
+                        final ImportResult importResult = ImportService.importDeeplink(deeplink);
+                        EventService.publish(new ImportResultEvent(importResult));
+                        if (ImportResult.ResultType.SUCCESS_LOADOUT.equals(importResult.getResultType())) {
+                            NotificationService.showInformation("Imported loadout", importResult.getMessage());
+                            this.primaryStage.toFront();
+                        } else if (ImportResult.ResultType.SUCCESS_WISHLIST.equals(importResult.getResultType())) {
+                            NotificationService.showInformation("Imported wishlist", importResult.getMessage());
+                            this.primaryStage.toFront();
+                        } else if (ImportResult.ResultType.UNKNOWN_TYPE.equals(importResult.getResultType())) {
+                            NotificationService.showError("Failed to import", "Unknown type");
+                        }
+                    } catch (final LoadoutDeeplinkException ex) {
+                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_LOADOUT)));
+                        NotificationService.showError("Failed to import loadout", ex.getMessage());
+                    } catch (final WishlistDeeplinkException ex) {
+                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_WISHLIST)));
+                        NotificationService.showError("Failed to import wishlist", ex.getMessage());
+                    } catch (final RuntimeException ex) {
+                        NotificationService.showError("Failed to import", ex.getMessage());
+                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.OTHER_ERROR)));
+                    }
                 }
             }, AppConstants.DEEPLINK_FILE);
             EventService.removeListener(reference.get());
@@ -244,9 +270,10 @@ public class FXApplication extends Application {
         this.timeStampedShipLockerWatcher.stop();
         this.timeStampedBackPackWatcher.stop();
         this.journalWatcher.stop();
+        this.deeplinkWatcher.stop();
+        setupDeeplinkWatcher();
         this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
         this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
-
         this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
     }
 

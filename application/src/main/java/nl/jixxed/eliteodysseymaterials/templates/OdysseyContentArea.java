@@ -102,9 +102,9 @@ class OdysseyContentArea extends AnchorPane {
         });
 
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().equals(ImportResult.SUCCESS_WISHLIST)) {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_WISHLIST)) {
                 this.tabs.getSelectionModel().select(this.wishlistTab);
-            } else if (importResultEvent.getResult().equals(ImportResult.SUCCESS_LOADOUT)) {
+            } else if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_LOADOUT)) {
                 this.tabs.getSelectionModel().select(this.loadoutEditorTab);
             }
         });

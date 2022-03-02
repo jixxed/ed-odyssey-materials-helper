@@ -72,7 +72,6 @@ public class MaterialTrackingService {
             final File statisticsFile = new File(OsConstants.STATISTICS);
             try {
                 if (!statisticsFile.exists() || ZonedDateTime.now().minus(1, ChronoUnit.DAYS).isAfter(ZonedDateTime.ofInstant(Instant.ofEpochMilli(statisticsFile.lastModified()), ZoneId.systemDefault()))) {
-
                     log.info("Start download of material statistics");
                     final URL url = new URL("https://material-tracking-report.s3.eu-west-1.amazonaws.com/material-report.json");
                     try (final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream()); final FileOutputStream fileOutputStream = new FileOutputStream(statisticsFile)) {

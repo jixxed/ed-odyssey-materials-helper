@@ -12,9 +12,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = WeaponModification.class, name = "WEAPONMOD"),
 })
 public interface Modification {
-    String getImage();
+    String getImage(boolean present);
 
     String getLocalizationKey();
 
     OdysseyBlueprintName getRecipe();
+
 }

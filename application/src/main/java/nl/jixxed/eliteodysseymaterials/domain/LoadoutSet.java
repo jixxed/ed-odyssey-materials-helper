@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIgnoreProperties("version")
 public class LoadoutSet {
     @EqualsAndHashCode.Include
     private String uuid = UUID.randomUUID().toString();

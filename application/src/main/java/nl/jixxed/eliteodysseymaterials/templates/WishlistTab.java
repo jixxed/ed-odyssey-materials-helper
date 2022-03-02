@@ -5,16 +5,15 @@ import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.*;
-import javafx.util.Callback;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -28,6 +27,7 @@ import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import org.controlsfx.control.PopOver;
 
 import java.text.NumberFormat;
 import java.util.*;
@@ -44,7 +44,6 @@ public class WishlistTab extends EDOTab {
     private static final String WISHLIST_CATEGORY_CLASS = "wishlist-category";
     private static final String WISHLIST_RECIPES_STYLE_CLASS = "wishlist-recipes";
     private static final String WISHLIST_INGREDIENTS_STYLE_CLASS = "wishlist-ingredients";
-    private static final String WISHLIST_BUTTON_STYLE_CLASS = "wishlist-button";
     private static final String WISHLIST_CONTENT_STYLE_CLASS = "wishlist-content";
     private int wishlistSize;
     private final List<WishlistBlueprintTemplate> wishlistBlueprints = new ArrayList<>();
@@ -70,7 +69,7 @@ public class WishlistTab extends EDOTab {
     private FlowPane dataFlow;
     private FlowPane assetCircuitFlow;
     private FlowPane assetTechFlow;
-    private TableView<PathItem> shortestRoute;
+    private ShortestPathFlow shortestPathFlow;
     private VBox blueprints;
     private ScrollPane scrollPane;
     private VBox content;
@@ -86,17 +85,13 @@ public class WishlistTab extends EDOTab {
     private Label weaponUpgradeRecipesLabel;
     private Label weaponModuleRecipesLabel;
     private String activeWishlistUUID;
-    private TextField wishlistName;
+    private OdysseyMaterialTotals totals;
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    private Button createWishlistButton;
-    private Button renameWishlistButton;
-    private Button removeWishlistButton;
-    private Button exportButton;
-    private Button clipboardButton;
+    private MenuButton menuButton;
 
     WishlistTab() {
         initComponents();
@@ -117,12 +112,6 @@ public class WishlistTab extends EDOTab {
     private void applyFontSizingHack(final Integer fontSize) {
         //hack for component resizing on other fontsizes
         final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSize);
-        this.wishlistName.styleProperty().set(fontStyle);
-        this.createWishlistButton.styleProperty().set(fontStyle);
-        this.renameWishlistButton.styleProperty().set(fontStyle);
-        this.removeWishlistButton.styleProperty().set(fontStyle);
-        this.exportButton.styleProperty().set(fontStyle);
-        this.clipboardButton.styleProperty().set(fontStyle);
         this.wishlistSelect.styleProperty().set(fontStyle);
     }
 
@@ -145,6 +134,7 @@ public class WishlistTab extends EDOTab {
                     }
                 })
                 .build();
+        this.totals = new OdysseyMaterialTotals();
         this.engineerRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.suitUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.suitModuleRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
@@ -158,62 +148,78 @@ public class WishlistTab extends EDOTab {
 
         this.hideCompleted.set(PreferencesService.getPreference("blueprint.hide.completed", Boolean.FALSE));
 
-        this.removeWishlistButton = ButtonBuilder.builder()
-                .withStyleClass(WISHLIST_BUTTON_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.wishlist.delete"))
-                .withOnAction(event -> {
-                    final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.title"));
-                    alert.setHeaderText(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.header"));
-                    alert.setContentText(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.content"));
+        this.menuButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.options")).withMenuItems(
+                Map.of("tab.wishlist.create", event -> {
+                            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "wishlist-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt")).build();
+                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.create")).build();
+                            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
+                            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
+                            popOver.setDetachable(false);
+                            popOver.setHeaderAlwaysVisible(false);
+                            popOver.getStyleClass().add("popover-menubutton-layout");
+                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                            popOver.show(this.menuButton);
+                            button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                                final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+                                wishlists.createWishlist(textField.getText());
+                                APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
+                                textField.clear();
+                                refreshWishlistSelect();
+                                popOver.hide();
+                            }));
+                            textField.setOnKeyPressed(ke -> {
+                                if (ke.getCode().equals(KeyCode.ENTER)) {
+                                    button.fire();
+                                }
+                            });
+                        },
+                        "tab.wishlist.rename", event -> {
+                            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "wishlist-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt")).build();
+                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.rename")).build();
+                            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
+                            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
+                            popOver.setDetachable(false);
+                            popOver.setHeaderAlwaysVisible(false);
+                            popOver.getStyleClass().add("popover-menubutton-layout");
+                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+                            popOver.show(this.menuButton);
+                            button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                                final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+                                wishlists.renameWishlist(this.activeWishlistUUID, textField.getText());
+                                APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
+                                textField.clear();
+                                refreshWishlistSelect();
+                                popOver.hide();
+                            }));
+                            textField.setOnKeyPressed(ke -> {
+                                if (ke.getCode().equals(KeyCode.ENTER)) {
+                                    button.fire();
+                                }
+                            });
+                        },
+                        "tab.wishlist.delete", event -> {
+                            final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.title"));
+                            alert.setHeaderText(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.header"));
+                            alert.setContentText(LocaleService.getLocalizedStringForCurrentLocale("tab.wishlist.delete.confirm.content"));
 
-                    final Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK) {
-                        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                            APPLICATION_STATE.deleteWishlist(this.activeWishlistUUID, commander.getFid());
-                            Platform.runLater(this::refreshWishlistSelect);
+                            final Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == ButtonType.OK) {
+                                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                                    APPLICATION_STATE.deleteWishlist(this.activeWishlistUUID, commander.getFid());
+                                    Platform.runLater(this::refreshWishlistSelect);
+                                });
+                            }
+                        },
+                        "tab.wishlist.copy", event -> {
+                            copyWishListToClipboard();
+                            NotificationService.showInformation("Wishlists", "The wishlist has been copied to your clipboard");
+                        },
+                        "tab.wishlist.export", event ->
+                                EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededDatas, this.wishlistNeededGoods, this.wishlistNeededAssets)))
+                )).build();
+        this.menuButton.setFocusTraversable(false);
 
-                        });
-                    }
-                })
-                .build();
-        this.renameWishlistButton = ButtonBuilder.builder()
-                .withStyleClass(WISHLIST_BUTTON_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.wishlist.rename"))
-                .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
-                    wishlists.renameWishlist(this.activeWishlistUUID, this.wishlistName.getText());
-                    APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
-                    this.wishlistName.clear();
-                    refreshWishlistSelect();
-                }))
-                .build();
-        this.createWishlistButton = ButtonBuilder.builder()
-                .withStyleClass(WISHLIST_BUTTON_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.wishlist.create"))
-                .withOnAction(event -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
-                    wishlists.createWishlist(this.wishlistName.getText());
-                    APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
-                    this.wishlistName.clear();
-                    refreshWishlistSelect();
-                }))
-                .build();
-        this.wishlistName = TextFieldBuilder.builder().withStyleClasses("root", "wishlist-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.wishlist.rename.prompt")).build();
-        this.exportButton = ButtonBuilder.builder().withStyleClass(WISHLIST_BUTTON_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.export"))
-                .withOnAction(event -> EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededDatas, this.wishlistNeededGoods, this.wishlistNeededAssets)))).build();
-        this.clipboardButton = ButtonBuilder.builder().withStyleClass(WISHLIST_BUTTON_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.copy"))
-                .withOnAction(event -> {
-                    copyWishListToClipboard();
-                    NotificationService.showInformation("Wishlists", "The wishlist has been copied to your clipboard");
-                }).build();
-
-        final double minButtonWidth = 110.0;
-        this.removeWishlistButton.setMinWidth(minButtonWidth);
-        this.renameWishlistButton.setMinWidth(minButtonWidth);
-        this.createWishlistButton.setMinWidth(minButtonWidth);
-        this.exportButton.setMinWidth(minButtonWidth);
-        this.clipboardButton.setMinWidth(minButtonWidth);
         this.hideCompletedCheckBox = new CheckBox();
         this.hideCompletedCheckBox.getStyleClass().add("wishlist-checkbox");
         this.hideCompletedCheckBox.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.hide.completed"));
@@ -239,29 +245,12 @@ public class WishlistTab extends EDOTab {
         HBox.setHgrow(this.weaponModuleRecipes, Priority.ALWAYS);
         this.blueprints = BoxBuilder.builder().withStyleClass("wishlist-blueprints").buildVBox();
 
-        final Region region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
-        region.setMinWidth(5);
-
-        final Region region4 = new Region();
-        region4.setMinWidth(5);
-        final Region region5 = new Region();
-        region5.setMinWidth(5);
-        final Region region6 = new Region();
-        region6.setMinWidth(5);
-        final Region region7 = new Region();
-        region7.setMinWidth(5);
-        final FlowPane flowPane = FlowPaneBuilder.builder().withNodes(this.renameWishlistButton, this.createWishlistButton, this.removeWishlistButton, this.clipboardButton, this.exportButton).build();
-        flowPane.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        flowPane.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        flowPane.prefWrapLengthProperty().bind(this.renameWishlistButton.widthProperty().add(this.createWishlistButton.widthProperty()).add(this.removeWishlistButton.widthProperty()).add(this.clipboardButton.widthProperty()).add(this.exportButton.widthProperty()).add(20));
-        flowPane.setColumnHalignment(HPos.RIGHT);
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, region, this.wishlistName, flowPane).buildHBox();
+        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton).buildHBox();
         final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.hideCompletedCheckBox).buildHBox();
         hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         hBoxMaterials.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
         this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
-        this.contentChild = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestRoute).buildVBox();
+        this.contentChild = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.totals, this.selectedBlueprintsLabel, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestPathFlow).buildVBox();
         this.content = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint).buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(this.content)
@@ -282,7 +271,7 @@ public class WishlistTab extends EDOTab {
                 .orElse(new ArrayList<>()));
         try {
             final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);
-            this.shortestRoute.getItems().addAll(pathItems);
+            this.shortestPathFlow.setItems(pathItems);
         } catch (final IllegalArgumentException ex) {
             log.error("Failed to generate path", ex);
         }
@@ -295,116 +284,10 @@ public class WishlistTab extends EDOTab {
     }
 
     private void initShortestPathTable() {
-        this.shortestRoute = new TableView<>();
-        final TableColumn<PathItem, String> columnIndex = new TableColumn<>("#");
-        columnIndex.setCellFactory(col -> {
-            final TableCell<PathItem, String> cell = new TableCell<>();
-            cell.textProperty().bind(Bindings.createStringBinding(() -> {
-                if (cell.isEmpty()) {
-                    return null;
-                } else {
-                    return Integer.toString(cell.getIndex() + 1);
-                }
-            }, cell.emptyProperty(), cell.indexProperty()));
-            return cell;
-        });
-        columnIndex.setSortable(false);
-        columnIndex.getStyleClass().add("wishlist-travel-path-index");
-        columnIndex.setMaxWidth(50);
-        columnIndex.setPrefWidth(50);
-        columnIndex.setMinWidth(50);
+        this.shortestPathFlow = new ShortestPathFlow();
 
-        final TableColumn<PathItem, String> columnEngineer = new TableColumn<>();
-        columnEngineer.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.travel.path.column.engineer"));
-        columnEngineer.setCellValueFactory(param -> LocaleService.getStringBinding(param.getValue().getEngineer().getLocalizationKey()));
-        columnEngineer.setMaxWidth(500);
-        columnEngineer.setPrefWidth(175);
-        columnEngineer.setMinWidth(175);
-        columnEngineer.setSortable(false);
-        columnEngineer.getStyleClass().add("wishlist-travel-path-engineer");
-
-        final TableColumn<PathItem, Void> columnButtons = createButtonsColumn();
-        columnButtons.setMaxWidth(300);
-        columnButtons.setPrefWidth(300);
-        columnButtons.setMinWidth(300);
-        columnButtons.setSortable(false);
-
-        final TableColumn<PathItem, String> columnDistance = new TableColumn<>();
-        columnDistance.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.travel.path.column.distance"));
-        columnDistance.setCellValueFactory(param -> {
-            final PathItem item = param.getValue();
-            final int index = param.getTableView().getItems().indexOf(item);
-            return new SimpleStringProperty(((index > 0) ? "+" : "") + NUMBER_FORMAT.format(item.getDistance()) + "Ly");
-        });
-        columnDistance.setSortable(false);
-        columnDistance.getStyleClass().add("wishlist-travel-path-distance");
-        columnDistance.setMaxWidth(120);
-        columnDistance.setPrefWidth(120);
-        columnDistance.setMinWidth(120);
-
-        final TableColumn<PathItem, String> columnBlueprint = new TableColumn<>();
-        columnBlueprint.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints"));
-        columnBlueprint.setCellValueFactory(param -> LocaleService.getStringBinding(() -> param.getValue().getRecipesString()));
-        columnBlueprint.setSortable(false);
-        final DoubleBinding usedWidth = columnEngineer.widthProperty().add(columnDistance.widthProperty()).add(columnIndex.widthProperty()).add(columnButtons.widthProperty()).add(10);
-        columnBlueprint.prefWidthProperty().bind(this.shortestRoute.widthProperty().subtract(usedWidth));
-        columnIndex.getStyleClass().add("wishlist-travel-path-blueprint");
-
-        this.shortestRoute.getStyleClass().add("wishlist-travel-path-table");
-        this.shortestRoute.prefHeightProperty().bind(this.shortestRoute.fixedCellSizeProperty().multiply(Bindings.size(this.shortestRoute.getItems()).add(1.05)));
-        this.shortestRoute.minHeightProperty().bind(this.shortestRoute.prefHeightProperty());
-        this.shortestRoute.maxHeightProperty().bind(this.shortestRoute.prefHeightProperty());
-        this.shortestRoute.getColumns().add(columnIndex);
-        this.shortestRoute.getColumns().add(columnEngineer);
-        this.shortestRoute.getColumns().add(columnBlueprint);
-        this.shortestRoute.getColumns().add(columnDistance);
-        this.shortestRoute.getColumns().add(columnButtons);
-        this.shortestRoute.visibleProperty().bind(Bindings.greaterThan(Bindings.size(this.shortestRoute.getItems()), 0));
-        this.travelPathLabel.visibleProperty().bind(Bindings.greaterThan(Bindings.size(this.shortestRoute.getItems()), 0));
-    }
-
-    private TableColumn<PathItem, Void> createButtonsColumn() {
-        final TableColumn<PathItem, Void> colBtn = new TableColumn<>();
-        colBtn.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions"));
-        @SuppressWarnings("java:S1171") final Callback<TableColumn<PathItem, Void>, TableCell<PathItem, Void>> cellFactory = param -> new TableCell<>() {
-
-            private final Button removeButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove")).build();
-            private final Button hideButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide")).build();
-
-            {
-                this.removeButton.setOnAction((ActionEvent event) -> {
-                    final List<WishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints();
-                    pathBlueprints.forEach(WishlistBlueprintTemplate::remove);
-                });
-                this.hideButton.setOnAction((ActionEvent event) -> {
-                    final List<WishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints();
-                    pathBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setVisibility(false));
-                    refreshContent();
-                });
-            }
-
-            private List<WishlistBlueprintTemplate> getPathWishlistBlueprints() {
-                final PathItem pathItem = getTableView().getItems().get(getIndex());
-                return pathItem.getRecipes().entrySet().stream()
-                        .flatMap(recipeEntry -> WishlistTab.this.wishlistBlueprints.stream()
-                                .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
-                                .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe().equals(recipeEntry.getKey()))
-                                .limit(recipeEntry.getValue())
-                        ).toList();
-            }
-
-            @Override
-            public void updateItem(final Void item, final boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(new HBox(this.removeButton, this.hideButton));
-                }
-            }
-        };
-        colBtn.setCellFactory(cellFactory);
-        return colBtn;
+        this.shortestPathFlow.visibleProperty().bind(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0));
+        this.travelPathLabel.visibleProperty().bind(Bindings.greaterThan(Bindings.size(this.shortestPathFlow.getItems()), 0));
     }
 
     private void initLabels() {
@@ -479,10 +362,28 @@ public class WishlistTab extends EDOTab {
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
         EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent());
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().equals(ImportResult.SUCCESS_WISHLIST)) {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_WISHLIST)) {
                 refreshWishlistBlueprints();
             }
         });
+        EventService.addListener(this, HideWishlistShortestPathItemEvent.class, event -> {
+            final List<WishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
+            pathBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setVisibility(false));
+            refreshContent();
+        });
+        EventService.addListener(this, RemoveWishlistShortestPathItemEvent.class, event -> {
+            final List<WishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
+            pathBlueprints.forEach(WishlistBlueprintTemplate::remove);
+        });
+    }
+
+    private List<WishlistBlueprintTemplate> getPathWishlistBlueprints(final PathItem pathItem) {
+        return pathItem.getRecipes().entrySet().stream()
+                .flatMap(recipeEntry -> WishlistTab.this.wishlistBlueprints.stream()
+                        .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
+                        .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe().equals(recipeEntry.getKey()))
+                        .limit(recipeEntry.getValue())
+                ).toList();
     }
 
     private void refreshWishlistBlueprints() {
@@ -594,7 +495,6 @@ public class WishlistTab extends EDOTab {
         this.wishlistNeededGoods.clear();
         this.wishlistNeededAssets.clear();
         this.wishlistNeededDatas.clear();
-        this.shortestRoute.getItems().clear();
         this.wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
                 .map(WishlistBlueprintTemplate::getRecipe)
@@ -632,7 +532,7 @@ public class WishlistTab extends EDOTab {
         removeAndAddFlows();
         try {
             final List<PathItem> pathItems = PathService.calculateShortestPath(this.wishlistBlueprints);
-            this.shortestRoute.getItems().addAll(pathItems);
+            this.shortestPathFlow.setItems(pathItems);
         } catch (final IllegalArgumentException ex) {
             log.error("Failed to generate path", ex);
         }

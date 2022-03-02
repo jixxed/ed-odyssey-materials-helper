@@ -33,11 +33,11 @@ public enum WeaponModification implements Modification {
     }
 
     @Override
-    public String getImage() {
+    public String getImage(final boolean present) {
         String name = name();
         name = name.endsWith("_KINETIC") ? name.substring(0, name.indexOf("_KINETIC")) : name;
         name = name.endsWith("_LASER") ? name.substring(0, name.indexOf("_LASER")) : name;
         name = name.endsWith("_PLASMA") ? name.substring(0, name.indexOf("_PLASMA")) : name;
-        return "/images/modification/" + name.toLowerCase() + ".png";
+        return "/images/modification/" + name.toLowerCase() + (present ? "_active" : "") + ".png";
     }
 }

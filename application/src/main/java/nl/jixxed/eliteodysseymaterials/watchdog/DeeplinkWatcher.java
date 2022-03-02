@@ -87,6 +87,8 @@ public class DeeplinkWatcher {
     }
 
     public void stop() {
-        this.fileWatcher.stop();
+        if (this.fileWatcher != null) {
+            this.fileWatcher.stop();
+        }
     }
 }

@@ -2,10 +2,13 @@ package nl.jixxed.eliteodysseymaterials.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ClipboardJsonIgnore;
 import nl.jixxed.eliteodysseymaterials.domain.ClipboardLoadout;
 import nl.jixxed.eliteodysseymaterials.domain.ClipboardWishlist;
 
@@ -20,6 +23,19 @@ public class ClipboardHelper {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+
+    static {
+        OBJECT_MAPPER.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
+            @Override
+            public boolean hasIgnoreMarker(final AnnotatedMember m) {
+                if (_findAnnotation(m, ClipboardJsonIgnore.class) != null) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    }
 
     public static String createClipboardWishlist() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
@@ -47,7 +63,8 @@ public class ClipboardHelper {
         }).orElse("");
     }
 
-    private static String convertJsonToBase64Compressed(final String wishlistJson) throws UnsupportedEncodingException {
+    private static String convertJsonToBase64Compressed(final String wishlistJson) throws
+            UnsupportedEncodingException {
         final Deflater def = new Deflater();
         def.setInput(wishlistJson.getBytes(StandardCharsets.UTF_8));
         def.finish();

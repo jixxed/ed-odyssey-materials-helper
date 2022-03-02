@@ -28,8 +28,8 @@ public enum SuitModification implements Modification {
     }
 
     @Override
-    public String getImage() {
+    public String getImage(final boolean present) {
 
-        return "/images/modification/" + name().toLowerCase() + ".png";
+        return "/images/modification/" + name().toLowerCase() + (present ? "_active" : "") + ".png";
     }
 }

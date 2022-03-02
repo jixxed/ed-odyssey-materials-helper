@@ -12,7 +12,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
@@ -22,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class LoadoutItem extends VBox implements DestroyableTemplate {
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_NAME = "loadout-item-stats-name";
@@ -312,7 +312,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
                 wishlistBlueprints.add(new WishlistBlueprint((OdysseyBlueprintName) recipe, true));
             }
         }
-        wishlistBlueprints.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification != null && !WeaponModification.NONE.equals(modification)).map(modification -> new WishlistBlueprint(modification.getRecipe(), true)).toList());
+        wishlistBlueprints.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification.getModification() != null && !WeaponModification.NONE.equals(modification.getModification())).filter(SelectedModification::isNotPresent).map(modification -> new WishlistBlueprint(modification.getModification().getRecipe(), true)).toList());
         return wishlistBlueprints;
     }
 
@@ -395,11 +395,13 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         final Object value = statObjectEntry.getValue();
         final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
         final String targetLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel());
-        final List<Modification> modifications = new ArrayList<>(Arrays.asList(this.loadout.getModifications()));
-        if (this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit).anyMatch(loadoutItem -> Arrays.asList(loadoutItem.getModifications()).contains(SuitModification.EXTRA_AMMO_CAPACITY))) {
-            modifications.add(SuitModification.EXTRA_AMMO_CAPACITY);
+        final List<SelectedModification> modifications = new ArrayList<>(Arrays.asList(this.loadout.getModifications()));
+        if (this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit).anyMatch(loadoutItem -> Arrays.stream(loadoutItem.getModifications()).map(SelectedModification::getModification).anyMatch(SuitModification.EXTRA_AMMO_CAPACITY::equals))) {
+            modifications.add(new SelectedModification(SuitModification.EXTRA_AMMO_CAPACITY, false));
         }
-        final String moddedLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel(), modifications);
+        final List<Modification> modifications1 = Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        final String moddedLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel(), modifications1);
         if (this.statsToggle.isSelected() && Objects.equals(currentLevelValue, targetLevelValue) && Objects.equals(targetLevelValue, moddedLevelValue)) {
             return;
         }

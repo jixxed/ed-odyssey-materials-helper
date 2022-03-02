@@ -2067,6 +2067,7 @@ tab.wishlist.delete,Delete wishlist,Delete wishlist,Wunschliste löschen,Elimina
 tab.wishlist.export,Export wishlist,Export wishlist,Wunschliste exportieren,Exportar lista de deseos,Exporter la liste de souhaits,Exportar lista de desejos,Экспорт списка желаний
 tab.wishlist.hide.completed,Hide completed,Hide completed,Ausblenden abgeschlossen,Ocultar completado,Masquer terminé,Ocultar concluído,Скрыть завершённые
 tab.wishlist.no.blueprint,No blueprints selected,No blueprints selected,Keine Blaupausen ausgewählt,No se seleccionaron planos,Aucun plan sélectionné,Nenhum projeto selecionado,Чертежи не выбраны
+tab.wishlist.options,Options,Options,,,,,
 tab.wishlist.rename.prompt,New name (max. 50 characters),New name (max. 50 characters),Neuer Name (max. 50 Zeichen),Nuevo nombre (máx.50 caracteres),Nouveau nom (max. 50 caractères),Novo nome (máx. 50 caracteres),Новое имя (макс.50 знаков)
 tab.wishlist.rename,Rename wishlist,Rename wishlist,Wunschliste umbenennen,Cambiar el nombre de la lista de deseos,Renommer la liste de souhaits,Renomear lista de desejos,Переименовать список желаний
 tab.wishlist.required.materials,Required materials,Required materials,Erforderliche Materialien,Materiales necesarios,Matériaux requis,Materiais necessários,Необходимые материалы
@@ -2074,9 +2075,9 @@ tab.wishlist.selected.blueprints,Selected blueprints,Selected blueprints,Ausgew�
 tab.wishlist.travel.path.column.actions.hide,Hide blueprints,Hide blueprints,Blaupausen ausblenden,Ocultar planos,Masquer les plans,Ocultar projetos,Скрыть чертежи
 tab.wishlist.travel.path.column.actions.remove,Remove blueprints,Remove blueprints,Blaupausen entfernen,Eliminar planos,Supprimer les plans,Remover projetos,Удалить чертежи
 tab.wishlist.travel.path.column.actions,Actions,Actions,Aktionen,Acciones,Actions,Ações,Действия
-tab.wishlist.travel.path.column.blueprints,Blueprints,Blueprints,Blaupausen,Planos,Plans,Blueprints,Чертежи
-tab.wishlist.travel.path.column.distance,Distance,Distance,Entfernung,Distancia,Distance,Distância,Расстояние
-tab.wishlist.travel.path.column.engineer,Engineer,Engineer,Ingenieur,Ingeniero,Ingénieur,Engenheiro,Инженер
+tab.wishlist.travel.path.column.blueprints,Blueprints:,Blueprints:,Blaupausen:,Planos:,Plans:,Blueprints:,Чертежи:
+tab.wishlist.travel.path.column.distance,Distance:,Distance:,Entfernung:,Distancia:,Distance:,Distância:,Расстояние:
+tab.wishlist.travel.path.column.engineer,Engineer:,Engineer:,Ingenieur:,Ingeniero:,Ingénieur:,Engenheiro:,Инженер:
 tab.wishlist.travel.path,Shortest travel path,Shortest travel path,Kürzester Fahrweg,Ruta de viaje más corta,Chemin de déplacement le plus court,Caminho de viagem mais curto,Кратчайший путь путешествия
 tabs.engineers,Engineers,Engineers,Ingenieure,Ingenieros,Ingénieurs,Engenheiros,Инженеры
 tabs.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.ImportResultEvent;
+import nl.jixxed.eliteodysseymaterials.service.exception.LoadoutDeeplinkException;
+import nl.jixxed.eliteodysseymaterials.service.exception.WishlistDeeplinkException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class ImportService {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String ERROR_IMPORT_STRING_NOT_DECODED = "String could not be decoded";
 
-    public static void importDeeplink(final String deeplink) {
+    public static ImportResult importDeeplink(final String deeplink) {
         // edomh://wishlist=
         final String content = deeplink.substring(8);
         final String[] split = content.split("\\?");
@@ -35,7 +35,7 @@ public class ImportService {
             final String decoded = convertBase64CompressedToJson(data);
 
             if (decoded.isEmpty()) {
-                throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
+                throw new WishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
             }
             try {
                 final ClipboardWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardWishlist.class);
@@ -51,15 +51,13 @@ public class ImportService {
                     wishlists.addWishlist(wishlist);
                     wishlists.setSelectedWishlistUUID(wishlist.getUuid());
                     APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
-                    EventService.publish(new ImportResultEvent(ImportResult.SUCCESS_WISHLIST));
-                    NotificationService.showInformation("Imported wishlist", name);
+                    return new ImportResult(ImportResult.ResultType.SUCCESS_WISHLIST, name);
                 } else {
-                    NotificationService.showError("Failed to import wishlist", "The wishlist could not be imported because the link was made with a newer version of the app.");
+                    throw new WishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
                 }
             } catch (final RuntimeException | JsonProcessingException ex) {
                 log.error("Failed to import wishlist", ex);
-                NotificationService.showError("Failed to import wishlist", ex.getMessage());
-                EventService.publish(new ImportResultEvent(ImportResult.ERROR_WISHLIST));
+                throw new LoadoutDeeplinkException("Failed to parse deeplink");
             }
         } else if ("loadout/".equals(type)) {
             final String decoded = convertBase64CompressedToJson(data);
@@ -78,19 +76,17 @@ public class ImportService {
                     loadoutSetList.addLoadoutSet(loadoutSet);
                     loadoutSetList.setSelectedLoadoutSetUUID(loadoutSet.getUuid());
                     APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
-                    EventService.publish(new ImportResultEvent(ImportResult.SUCCESS_LOADOUT));
-                    NotificationService.showInformation("Imported loadout", loadoutSetName);
+                    return new ImportResult(ImportResult.ResultType.SUCCESS_LOADOUT, loadoutSetName);
 
                 } else {
-                    NotificationService.showError("Failed to import loadout", "The loadout could not be imported because the link was made with a newer version of the app.");
+                    throw new LoadoutDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
                 }
             } catch (final RuntimeException | JsonProcessingException ex) {
                 log.error("Failed to import loadout", ex);
-                NotificationService.showError("Failed to import loadout", ex.getMessage());
-                EventService.publish(new ImportResultEvent(ImportResult.ERROR_LOADOUT));
+                throw new LoadoutDeeplinkException("Failed to parse deeplink");
             }
         }
-
+        return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
     }
 
     private static String convertBase64CompressedToJson(final String compressedBase64) {

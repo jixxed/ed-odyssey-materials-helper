@@ -28,15 +28,12 @@ class MaterialOverview extends VBox {
 
     private static final String FLOW_PANE_STYLE_CLASS = "material-overview-flow-pane";
     private final ScrollPane scrollPane;
-    private FlowPane totals;
+    private OdysseyMaterialTotals totals;
     private FlowPane assetChemicalFlow;
     private FlowPane assetCircuitFlow;
     private FlowPane assetTechFlow;
     private FlowPane goodFlow;
     private FlowPane dataFlow;
-    private MaterialTotal goodsTotal;
-    private MaterialTotal assetsTotal;
-    private MaterialTotal dataTotal;
     private Search currentSearch = new Search("", MaterialSort.ALPHABETICAL, MaterialShow.ALL);
     private ChangeListener<Number> resizeListener;
 
@@ -48,11 +45,8 @@ class MaterialOverview extends VBox {
 
     private void initComponents() {
         this.getStyleClass().add("material-overview");
-        this.goodsTotal = new MaterialTotal(OdysseyStorageType.GOOD, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
-        this.assetsTotal = new MaterialTotal(OdysseyStorageType.ASSET, MaterialTotalType.CHEMICAL, MaterialTotalType.CIRCUIT, MaterialTotalType.TECH);
-        this.dataTotal = new MaterialTotal(OdysseyStorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
         final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")).getOrientation();
-        this.totals = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(Orientation.HORIZONTAL).withNodes(this.goodsTotal, this.assetsTotal, this.dataTotal).build();
+        this.totals = new OdysseyMaterialTotals();
         this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
         this.assetCircuitFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
         this.assetTechFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
@@ -78,8 +72,6 @@ class MaterialOverview extends VBox {
         };
         this.scrollPane.widthProperty().addListener(this.resizeListener);
         this.getChildren().addAll(this.totals, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow);
-
-
     }
 
     private void initEventHandling() {

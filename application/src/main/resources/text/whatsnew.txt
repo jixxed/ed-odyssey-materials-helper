@@ -1,3 +1,11 @@
+Version 1.71
+-------------
+Import tab removed
+Import now available through edomh:// urls
+Updated menu for wishlist and loadout tabs
+Double-click on loadout modifications to mark them as present and prevent them being added to the wishlist
+Added material totals to the wishlist tab
+
 Version 1.70
 -------------
 Added horizons engineers & blueprints

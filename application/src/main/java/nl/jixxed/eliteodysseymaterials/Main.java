@@ -40,7 +40,7 @@ public class Main {
         try {
             Files.move(Path.of(OsConstants.DEEPLINK + ".tmp"), Path.of(OsConstants.DEEPLINK), StandardCopyOption.REPLACE_EXISTING);
         } catch (final IOException e) {
-            log.error("Error creating create deeplink tmp file", e);
+            log.error("Error moving deeplink tmp file", e);
         }
     }
 
@@ -52,7 +52,7 @@ public class Main {
             log.error("error acquiring lock", exception);
             return true;
         }
-        // "null if the lock could not be acquired because another program holds an overlapping lock"
+        // null if the lock could not be acquired because another program holds an overlapping lock
         return (fileLock == null);
     }
 }

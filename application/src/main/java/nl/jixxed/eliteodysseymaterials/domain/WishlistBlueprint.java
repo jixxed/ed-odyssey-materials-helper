@@ -10,5 +10,6 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 @Data
 public class WishlistBlueprint {
     private OdysseyBlueprintName recipeName;
-    private boolean visible;
+    @ClipboardJsonIgnore
+    private boolean visible = true;
 }
