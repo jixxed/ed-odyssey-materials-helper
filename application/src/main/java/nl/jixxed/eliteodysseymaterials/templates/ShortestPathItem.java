@@ -26,11 +26,11 @@ import java.util.List;
 
 class ShortestPathItem extends VBox implements Template {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
+    private static final String SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS = "shortest-path-item-label";
     private final PathItem pathItem;
     private final int index;
     private Button removeButton;
     private Button hideButton;
-    private Label engineerLabel;
     private Label engineer;
     private Label distanceLabel;
     private Label distance;
@@ -50,9 +50,8 @@ class ShortestPathItem extends VBox implements Template {
 
     @Override
     public void initComponents() {
-        this.engineerLabel = LabelBuilder.builder().withStyleClass("shortest-path-item-label").withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.engineer")).build();
-        this.distanceLabel = LabelBuilder.builder().withStyleClass("shortest-path-item-label").withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.distance")).build();
-        this.blueprintsLabel = LabelBuilder.builder().withStyleClass("shortest-path-item-label").withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints")).build();
+        this.distanceLabel = LabelBuilder.builder().withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.distance")).build();
+        this.blueprintsLabel = LabelBuilder.builder().withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints")).build();
         this.distance = LabelBuilder.builder().withNonLocalizedText(" " + ((this.index > 1) ? "+" : "") + NUMBER_FORMAT.format(this.pathItem.getDistance()) + "Ly").build();
         this.engineer = LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withText(LocaleService.getStringBinding(() -> " " + LocaleService.getLocalizedStringForCurrentLocale(this.pathItem.getEngineer().getLocalizationKey()))).build();
         this.blueprints.addAll(this.pathItem.getRecipes().entrySet().stream().map(entry ->
@@ -105,6 +104,6 @@ class ShortestPathItem extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-
+        //NOOP
     }
 }

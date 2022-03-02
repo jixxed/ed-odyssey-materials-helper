@@ -55,18 +55,18 @@ public class DeeplinkWatcher {
                     if (event.getFile().isFile() && event.getFile().getName().equals(filename) && event.getFile().exists() && !Files.readString(event.getFile().getAbsoluteFile().toPath()).isEmpty()) {
                         final File file = event.getFile();
                         DeeplinkWatcher.this.watchedFile = Optional.of(file);
-                        try {
-                            final File procFile = new File(OsConstants.DEEPLINK + ".proc");
-                            final Path procPath = procFile.toPath();
-                            Files.move(Path.of(OsConstants.DEEPLINK), procPath, StandardCopyOption.REPLACE_EXISTING);
-                            final String content = Files.readString(procFile.getAbsoluteFile().toPath());
-                            Platform.runLater(() -> {
-                                fileProcessor.accept(content);
-                                procFile.delete();
-                            });
-                        } catch (final IOException e) {
-                            e.printStackTrace();
-                        }
+                        final File procFile = new File(OsConstants.DEEPLINK + ".proc");
+                        final Path procPath = procFile.toPath();
+                        Files.move(Path.of(OsConstants.DEEPLINK), procPath, StandardCopyOption.REPLACE_EXISTING);
+                        final String content = Files.readString(procFile.getAbsoluteFile().toPath());
+                        Platform.runLater(() -> {
+                            fileProcessor.accept(content);
+                            try {
+                                Files.delete(procFile.getAbsoluteFile().toPath());
+                            } catch (final IOException e) {
+                                log.error(e.getMessage(), e);
+                            }
+                        });
                     }
                 } catch (final IOException e) {
                     log.error(e.getMessage(), e);

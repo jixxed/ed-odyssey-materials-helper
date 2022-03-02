@@ -44,7 +44,7 @@ public class Main {
         }
     }
 
-
+    @SuppressWarnings("java:S2095")
     private static boolean isLocked() {
         try {
             fileLock = new FileOutputStream(OsConstants.LOCK).getChannel().tryLock();

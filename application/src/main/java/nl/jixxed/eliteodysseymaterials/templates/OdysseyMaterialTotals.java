@@ -12,7 +12,7 @@ public class OdysseyMaterialTotals extends FlowPane implements Template {
     private MaterialTotal assetsTotal;
     private MaterialTotal dataTotal;
 
-    public OdysseyMaterialTotals() {
+    OdysseyMaterialTotals() {
         initComponents();
         initEventHandling();
     }
@@ -30,6 +30,6 @@ public class OdysseyMaterialTotals extends FlowPane implements Template {
 
     @Override
     public void initEventHandling() {
-
+        //NOOP
     }
 }

@@ -42,6 +42,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class FXApplication extends Application {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final String MAIN_STYLESHEET = "/nl/jixxed/eliteodysseymaterials/style/style.css";
 
     private ApplicationLayout applicationLayout;
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
@@ -54,7 +55,6 @@ public class FXApplication extends Application {
         return this.primaryStage;
     }
 
-    @SuppressWarnings("java:S899")
     @Override
     public void start(final Stage primaryStage) {
         try {
@@ -149,15 +149,7 @@ public class FXApplication extends Application {
                     try {
                         final ImportResult importResult = ImportService.importDeeplink(deeplink);
                         EventService.publish(new ImportResultEvent(importResult));
-                        if (ImportResult.ResultType.SUCCESS_LOADOUT.equals(importResult.getResultType())) {
-                            NotificationService.showInformation("Imported loadout", importResult.getMessage());
-                            this.primaryStage.toFront();
-                        } else if (ImportResult.ResultType.SUCCESS_WISHLIST.equals(importResult.getResultType())) {
-                            NotificationService.showInformation("Imported wishlist", importResult.getMessage());
-                            this.primaryStage.toFront();
-                        } else if (ImportResult.ResultType.UNKNOWN_TYPE.equals(importResult.getResultType())) {
-                            NotificationService.showError("Failed to import", "Unknown type");
-                        }
+                        handleImportResult(importResult);
                     } catch (final LoadoutDeeplinkException ex) {
                         EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_LOADOUT)));
                         NotificationService.showError("Failed to import loadout", ex.getMessage());
@@ -174,6 +166,18 @@ public class FXApplication extends Application {
 
         }));
 
+    }
+
+    private void handleImportResult(final ImportResult importResult) {
+        if (ImportResult.ResultType.SUCCESS_LOADOUT.equals(importResult.getResultType())) {
+            NotificationService.showInformation("Imported loadout", importResult.getMessage());
+            this.primaryStage.toFront();
+        } else if (ImportResult.ResultType.SUCCESS_WISHLIST.equals(importResult.getResultType())) {
+            NotificationService.showInformation("Imported wishlist", importResult.getMessage());
+            this.primaryStage.toFront();
+        } else if (ImportResult.ResultType.UNKNOWN_TYPE.equals(importResult.getResultType())) {
+            NotificationService.showError("Failed to import", "Unknown type");
+        }
     }
 
 
@@ -197,11 +201,12 @@ public class FXApplication extends Application {
         this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
-        scene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
         addCustomCss(scene);
     }
 
+    @SuppressWarnings("java:S899")
     private void addCustomCss(final Scene scene) throws IOException {
         final File customCss = new File(OsConstants.CUSTOM_CSS);
         if (OsConstants.OLD_CUSTOM_CSS != null) {
@@ -225,7 +230,7 @@ public class FXApplication extends Application {
             urlSchemeStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(urlSchemeScene);
-            urlSchemeScene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+            urlSchemeScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
             urlSchemeStage.setScene(urlSchemeScene);
             urlSchemeStage.titleProperty().set("Register url scheme");
             urlSchemeStage.showAndWait();
@@ -241,7 +246,7 @@ public class FXApplication extends Application {
             policyStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(policyScene);
-            policyScene.getStylesheets().add(getClass().getResource("/nl/jixxed/eliteodysseymaterials/style/style.css").toExternalForm());
+            policyScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
             policyStage.setScene(policyScene);
             policyStage.titleProperty().set("What's new & privacy policy");
             policyStage.showAndWait();

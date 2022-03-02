@@ -12,7 +12,6 @@ import nl.jixxed.eliteodysseymaterials.domain.ClipboardJsonIgnore;
 import nl.jixxed.eliteodysseymaterials.domain.ClipboardLoadout;
 import nl.jixxed.eliteodysseymaterials.domain.ClipboardWishlist;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.zip.Deflater;
@@ -28,11 +27,7 @@ public class ClipboardHelper {
         OBJECT_MAPPER.setAnnotationIntrospector(new JacksonAnnotationIntrospector() {
             @Override
             public boolean hasIgnoreMarker(final AnnotatedMember m) {
-                if (_findAnnotation(m, ClipboardJsonIgnore.class) != null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return _findAnnotation(m, ClipboardJsonIgnore.class) != null;
             }
         });
     }
@@ -43,7 +38,7 @@ public class ClipboardHelper {
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist()));
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
                 return "edomh://wishlist/?" + wishlist64;
-            } catch (final JsonProcessingException | UnsupportedEncodingException e) {
+            } catch (final JsonProcessingException e) {
                 log.error("failed to process wishlist", e);
             }
             return "";
@@ -56,15 +51,14 @@ public class ClipboardHelper {
                 final String loadoutJson = OBJECT_MAPPER.writeValueAsString(new ClipboardLoadout("loadout", 1, APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getSelectedLoadoutSet()));
                 final String loadout64 = convertJsonToBase64Compressed(loadoutJson);
                 return "edomh://loadout/?" + loadout64;
-            } catch (final JsonProcessingException | UnsupportedEncodingException e) {
+            } catch (final JsonProcessingException e) {
                 log.error("failed to process loadout", e);
             }
             return "";
         }).orElse("");
     }
 
-    private static String convertJsonToBase64Compressed(final String wishlistJson) throws
-            UnsupportedEncodingException {
+    private static String convertJsonToBase64Compressed(final String wishlistJson) {
         final Deflater def = new Deflater();
         def.setInput(wishlistJson.getBytes(StandardCharsets.UTF_8));
         def.finish();

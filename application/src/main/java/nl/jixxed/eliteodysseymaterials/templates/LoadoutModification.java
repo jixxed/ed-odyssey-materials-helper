@@ -89,7 +89,30 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
             }
             if (!this.dragFlag) {
                 if (event.getClickCount() == 1) {
-                    this.scheduledFuture = this.executor.schedule(() -> {
+                    processSingleClick(event);
+                } else if (event.getClickCount() > 1 && this.scheduledFuture != null && !this.scheduledFuture.isCancelled() && !this.scheduledFuture.isDone()) {
+                    processMultiClick();
+                }
+
+            }
+            this.dragFlag = false;
+
+        };
+
+        this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
+        this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
+        VBox.setVgrow(this.imageView, Priority.ALWAYS);
+        this.getChildren().addAll(this.imageView, this.label);
+
+    }
+
+    private void processMultiClick() {
+        this.scheduledFuture.cancel(false);
+        setPresent();
+    }
+
+    private void processSingleClick(final MouseEvent event) {
+        this.scheduledFuture = this.executor.schedule(() ->
                         Platform.runLater(() -> {
                             if (this.popOver != null && this.popOver.isShowing()) {
                                 this.popOver.hide(Duration.ZERO);
@@ -105,23 +128,8 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
                             this.popOver.setContentNode(createModificationOptionsGrid());
                             this.popOver.setDetachable(false);
                             this.popOver.show(this, event.getScreenX(), event.getScreenY());
-                        });
-                    }, 300, TimeUnit.MILLISECONDS);
-                } else if (event.getClickCount() > 1 && this.scheduledFuture != null && !this.scheduledFuture.isCancelled() && !this.scheduledFuture.isDone()) {
-                    this.scheduledFuture.cancel(false);
-                    setPresent();
-                }
-
-            }
-            this.dragFlag = false;
-
-        };
-
-        this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
-        this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
-        VBox.setVgrow(this.imageView, Priority.ALWAYS);
-        this.getChildren().addAll(this.imageView, this.label);
-
+                        })
+                , 300, TimeUnit.MILLISECONDS);
     }
 
     private void setPresent() {

@@ -29,7 +29,6 @@ class OdysseyContentArea extends AnchorPane {
     private SettingsTab settingsTab;
     private LoadoutEditorTab loadoutEditorTab;
     private TradeTab tradeTab;
-    //    private ImportTab importTab;
     private TabPane tabs;
     private VBox body;
 
@@ -45,13 +44,11 @@ class OdysseyContentArea extends AnchorPane {
         this.odysseyEngineersTab = new OdysseyEngineersTab();
         this.tradeTab = new TradeTab();
         this.settingsTab = new SettingsTab(application);
-//        this.importTab = new ImportTab();
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.loadoutEditorTab.setClosable(false);
         this.odysseyEngineersTab.setClosable(false);
         this.settingsTab.setClosable(false);
-//        this.importTab.setClosable(false);
         this.tradeTab.setClosable(false);
 
         this.searchBar = new SearchBar();

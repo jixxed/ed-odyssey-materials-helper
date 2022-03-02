@@ -21,7 +21,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 public class LoadoutItem extends VBox implements DestroyableTemplate {
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_NAME = "loadout-item-stats-name";
@@ -399,8 +398,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         if (this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit).anyMatch(loadoutItem -> Arrays.stream(loadoutItem.getModifications()).map(SelectedModification::getModification).anyMatch(SuitModification.EXTRA_AMMO_CAPACITY::equals))) {
             modifications.add(new SelectedModification(SuitModification.EXTRA_AMMO_CAPACITY, false));
         }
-        final List<Modification> modifications1 = Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        final List<Modification> modifications1 = Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).filter(Objects::nonNull).toList();
         final String moddedLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel(), modifications1);
         if (this.statsToggle.isSelected() && Objects.equals(currentLevelValue, targetLevelValue) && Objects.equals(targetLevelValue, moddedLevelValue)) {
             return;

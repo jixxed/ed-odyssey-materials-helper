@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 
@@ -9,13 +11,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@SuppressWarnings({"java:S1075", "java:S2142", "java:S5665"})
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RegistryService {
-    private static final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
-    private static final boolean isJava = ProcessHandle.current().info().command().map(s -> s.endsWith("java.exe") || s.endsWith("java")).orElse(false);
-    private static final String currentDirSingleSlashed = (binDir.trim().replace("\"", "") + (OsCheck.isWindows() ? "\\" : "/"));
-    private static final String currentDirDoubleSlashed = currentDirSingleSlashed.replace("\\", "\\\\");
-    private static final String regKey = """
+    private static final String BIN_DIR = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
+    private static final boolean IS_JAVA = ProcessHandle.current().info().command().map(s -> s.endsWith("java.exe") || s.endsWith("java")).orElse(false);
+    private static final String CURRENT_DIR_SINGLE_SLASHED = (BIN_DIR.trim().replace("\"", "") + (OsCheck.isWindows() ? "\\" : "/"));
+    private static final String CURRENT_DIR_DOUBLE_SLASHED = CURRENT_DIR_SINGLE_SLASHED.replace("\\", "\\\\");
+    private static final String REG_KEY = """
             Windows Registry Editor Version 5.00
                         
             [HKEY_CLASSES_ROOT\\edomh]
@@ -26,40 +30,36 @@ public class RegistryService {
             [HKEY_CLASSES_ROOT\\edomh\\shell\\open]
                         
             [HKEY_CLASSES_ROOT\\edomh\\shell\\open\\command]
-            @=\"\\\"""" + currentDirDoubleSlashed + "Elite Dangerous Odyssey Materials Helper.exe\\\" \\\"%1\\\"\"";
-    private static final String desktopfile = """
+            @=\"\\\"""" + CURRENT_DIR_DOUBLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\\\" \\\"%1\\\"\"";
+    private static final String DESKTOPFILE = """
             [Desktop Entry]
             Name=Elite Dangerous Odyssey Materials Helper
-            Exec=""" + currentDirSingleSlashed + """
+            Exec=""" + CURRENT_DIR_SINGLE_SLASHED + """
             Elite\\ Dangerous\\ Odyssey\\ Materials\\ Helper %u
             Type=Application
             NoDisplay=true
             Terminal=false
             MimeType=x-scheme-handler/edomh;
             """;
+    private static final String USER_HOME = "user.home";
+    private static final String DESKTOP_FILE_PATH = "/.local/share/applications/edomh.desktop";
 
     public static void registerApplication() {
-        if (!isJava && OsCheck.isWindows()) {
+        if (!IS_JAVA && OsCheck.isWindows()) {
             try {
                 final File file = Files.createTempFile("edomh", ".reg").toFile();
-                try (final OutputStream output = new FileOutputStream(file)) {
-                    output.write(regKey.getBytes(StandardCharsets.UTF_8));
-                } catch (final IOException e) {
-                    log.error("Error creating reg file", e);
-                }
+                writeRegFile(file);
 
                 Runtime.getRuntime().exec("powershell Start-Process \"reg\" -ArgumentList @('import', '" + file.getAbsolutePath() + "') -Verb RunAs").waitFor();//
 
             } catch (final IOException | InterruptedException e) {
                 log.error("Error creating registry entry", e);
             }
-        } else if (!isJava && OsCheck.isLinux()) {
+        } else if (!IS_JAVA && OsCheck.isLinux()) {
             try {
-                final File file = Files.createFile(Path.of(System.getProperty("user.home") + "/.local/share/applications/edomh.desktop")).toFile();
-                try (final OutputStream output = new FileOutputStream(file)) {
-                    output.write(desktopfile.getBytes(StandardCharsets.UTF_8));
-                }
-                Runtime.getRuntime().exec("xdg-mime default " + System.getProperty("user.home") + "/.local/share/applications/edomh.desktop x-scheme-handler/edomh").waitFor();//
+                final File file = Files.createFile(Path.of(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH)).toFile();
+                writeDesktopFile(file);
+                Runtime.getRuntime().exec("xdg-mime default " + System.getProperty(USER_HOME) + "/.local/share/applications/edomh.desktop x-scheme-handler/edomh").waitFor();//
                 Runtime.getRuntime().exec("update-desktop-database /.local/share/applications/").waitFor();//
 
             } catch (final IOException | InterruptedException e) {
@@ -68,14 +68,28 @@ public class RegistryService {
         }
     }
 
+    private static void writeDesktopFile(final File file) throws IOException {
+        try (final OutputStream output = new FileOutputStream(file)) {
+            output.write(DESKTOPFILE.getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
+    private static void writeRegFile(final File file) {
+        try (final OutputStream output = new FileOutputStream(file)) {
+            output.write(REG_KEY.getBytes(StandardCharsets.UTF_8));
+        } catch (final IOException e) {
+            log.error("Error creating reg file", e);
+        }
+    }
+
     public static void unregisterApplication() {
         try {
-            if (!isJava && OsCheck.isWindows()) {
-                    Runtime.getRuntime().exec("powershell Start-Process \"reg\" -ArgumentList @('delete', 'HKEY_CLASSES_ROOT\\edomh', '/f') -Verb RunAs").waitFor();//
-            } else if (!isJava && OsCheck.isLinux()) {
-                final File file = new File(System.getProperty("user.home") + "/.local/share/applications/edomh.desktop");
+            if (!IS_JAVA && OsCheck.isWindows()) {
+                Runtime.getRuntime().exec("powershell Start-Process \"reg\" -ArgumentList @('delete', 'HKEY_CLASSES_ROOT\\edomh', '/f') -Verb RunAs").waitFor();//
+            } else if (!IS_JAVA && OsCheck.isLinux()) {
+                final File file = new File(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH);
                 if (file.exists() && file.isFile()) {
-                    file.delete();
+                    Files.delete(file.getAbsoluteFile().toPath());
                 }
                 Runtime.getRuntime().exec("update-desktop-database /.local/share/applications/").waitFor();//
             }
@@ -85,10 +99,10 @@ public class RegistryService {
     }
 
     public static boolean isRegistered() {
-        if (!isJava && OsCheck.isWindows()) {
-            return getValue().equals("\"" + currentDirSingleSlashed + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"");
-        } else if (!isJava && OsCheck.isLinux()) {
-            final File file = new File(System.getProperty("user.home") + "/.local/share/applications/edomh.desktop");
+        if (!IS_JAVA && OsCheck.isWindows()) {
+            return getValue().equals("\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"");
+        } else if (!IS_JAVA && OsCheck.isLinux()) {
+            final File file = new File(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH);
             return file.exists() && file.isFile();
         }
         return false;
