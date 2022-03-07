@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
@@ -13,6 +14,9 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileLock;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,6 +25,8 @@ import java.util.function.Function;
 @Slf4j
 public class ApplicationState {
 
+    private static PreferencesService preferencesService;//defined so app folder gets created for lockfile
+    private static FileLock fileLock;
     private static ApplicationState applicationState;
     private final Function<WishlistBlueprint, String> wishlistRecipeMapper = recipe -> (recipe.getRecipeName()).name() + ":" + recipe.isVisible();
     private final List<OdysseyMaterial> favourites = new ArrayList<>();
@@ -380,4 +386,23 @@ public class ApplicationState {
         saveLoadoutSetList(fid, loadoutSetList);
     }
 
+    @SuppressWarnings("java:S2095")
+    public boolean isLocked() {
+        try {
+            fileLock = new FileOutputStream(OsConstants.LOCK).getChannel().tryLock();
+        } catch (final IOException exception) {
+            log.error("error acquiring lock", exception);
+            return true;
+        }
+        // null if the lock could not be acquired because another program holds an overlapping lock
+        return (fileLock == null);
+    }
+
+    public void releaseLock() {
+        try {
+            fileLock.release();
+        } catch (final IOException e) {
+            log.error("error releasing lock", e);
+        }
+    }
 }

@@ -6,13 +6,14 @@ import org.controlsfx.control.ToggleSwitch;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("java:S3740")
 public class DestroyableToggleSwitch extends ToggleSwitch implements DestroyableComponent {
     private final HashMap<ObservableValue, List<ChangeListener>> listenersMap = new HashMap<>();
 
     @Override
-    public HashMap<ObservableValue, List<ChangeListener>> getListenersMap() {
+    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
         return this.listenersMap;
     }
 

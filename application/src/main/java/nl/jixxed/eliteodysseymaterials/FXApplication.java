@@ -111,10 +111,12 @@ public class FXApplication extends Application {
                     MarketPlaceClient.getInstance().close();
                 }
                 MaterialTrackingService.close();
+                EventService.shutdown();
                 this.timeStampedShipLockerWatcher.stop();
                 this.timeStampedBackPackWatcher.stop();
                 this.journalWatcher.stop();
                 this.deeplinkWatcher.stop();
+                APPLICATION_STATE.releaseLock();
             } catch (final Exception ex) {
                 //don't care
             }

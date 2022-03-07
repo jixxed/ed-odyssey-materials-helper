@@ -15,6 +15,8 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-class HorizonsBlueprintContent extends VBox {
+class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
     private static final String RECIPE_TITLE_LABEL_STYLE_CLASS = "recipe-title-label";
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final HorizonsBlueprint blueprint;
@@ -34,7 +36,8 @@ class HorizonsBlueprintContent extends VBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    @Override
+    public void initComponents() {
         this.getStyleClass().add("recipe-content");
         loadIngredients();
         initDescription();
@@ -146,7 +149,11 @@ class HorizonsBlueprintContent extends VBox {
                 .build();
         this.getChildren().add(engineerLabelHeader);
         final HBox[] engineerLabels = this.blueprint.getEngineers().stream()
-                .map(engineer -> new EngineerBlueprintLabel(engineer, this.blueprint, true, this.blueprint.getHorizonsBlueprintGrade().getGrade()))
+                .map(engineer -> {
+                    final EngineerBlueprintLabel blueprintLabel = new EngineerBlueprintLabel(engineer, this.blueprint, true, this.blueprint.getHorizonsBlueprintGrade().getGrade());
+                    this.destroyables.add(blueprintLabel);
+                    return blueprintLabel;
+                })
                 .sorted(Comparator.comparing(engineerBlueprintLabel -> engineerBlueprintLabel.getLabel().getText()))
                 .toArray(HBox[]::new);
         final FlowPane flowPane = FlowPaneBuilder.builder().withStyleClass("recipe-engineer-flow").withNodes(engineerLabels).build();
@@ -175,16 +182,26 @@ class HorizonsBlueprintContent extends VBox {
         }
     }
 
-    private void initEventHandling() {
+    @Override
+    public void initEventHandling() {
         //NOOP
     }
 
     private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint recipe, final Class<? extends HorizonsMaterial> materialClass, final HorizonsStorageType storageType, final Map<? extends HorizonsMaterial, Integer> materialMap) {
         return recipe.getMaterialCollection(materialClass).entrySet().stream()
-                .map(material -> new HorizonsMaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey())))
+                .map(material -> {
+                    final HorizonsMaterialIngredient horizonsMaterialIngredient = new HorizonsMaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()));
+                    this.destroyables.add(horizonsMaterialIngredient);
+                    return horizonsMaterialIngredient;
+                })
                 .sorted(Comparator.comparing(HorizonsMaterialIngredient::getName))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    private final List<Destroyable> destroyables = new ArrayList<>();
 
+    @Override
+    public List<Destroyable> getDestroyablesList() {
+        return this.destroyables;
+    }
 }

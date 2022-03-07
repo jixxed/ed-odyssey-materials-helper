@@ -2,11 +2,11 @@ package nl.jixxed.eliteodysseymaterials;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.channels.FileLock;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,8 +14,8 @@ import java.nio.file.StandardCopyOption;
 
 @Slf4j
 public class Main {
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    private static FileLock fileLock;
 
     public static void main(final String[] args) {
         //handle deeplinks
@@ -24,7 +24,7 @@ public class Main {
         }
 
         //exit if app is already running
-        if (isLocked()) {
+        if (APPLICATION_STATE.isLocked()) {
             System.exit(0);
         }
 
@@ -42,17 +42,5 @@ public class Main {
         } catch (final IOException e) {
             log.error("Error moving deeplink tmp file", e);
         }
-    }
-
-    @SuppressWarnings("java:S2095")
-    private static boolean isLocked() {
-        try {
-            fileLock = new FileOutputStream(OsConstants.LOCK).getChannel().tryLock();
-        } catch (final IOException exception) {
-            log.error("error acquiring lock", exception);
-            return true;
-        }
-        // null if the lock could not be acquired because another program holds an overlapping lock
-        return (fileLock == null);
     }
 }

@@ -6,13 +6,14 @@ import javafx.scene.control.ComboBox;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("java:S3740")
 public class DestroyableComboBox<T> extends ComboBox<T> implements DestroyableComponent {
     private final HashMap<ObservableValue, List<ChangeListener>> listenersMap = new HashMap<>();
 
     @Override
-    public HashMap<ObservableValue, List<ChangeListener>> getListenersMap() {
+    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
         return this.listenersMap;
     }
 

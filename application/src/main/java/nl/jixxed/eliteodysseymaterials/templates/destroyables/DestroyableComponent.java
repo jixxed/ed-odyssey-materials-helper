@@ -4,13 +4,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("java:S3740")
 public interface DestroyableComponent extends Destroyable {
 
-    HashMap<ObservableValue, List<ChangeListener>> getListenersMap();
+    Map<ObservableValue, List<ChangeListener>> getListenersMap();
 
     @Override
     default void destroy() {
@@ -21,7 +21,7 @@ public interface DestroyableComponent extends Destroyable {
     }
 
     default void addChangeListener(final ObservableValue observableValue, final ChangeListener listener) {
-        final HashMap<ObservableValue, List<ChangeListener>> listenersMap = getListenersMap();
+        final Map<ObservableValue, List<ChangeListener>> listenersMap = getListenersMap();
         final List<ChangeListener> listeners = listenersMap.getOrDefault(observableValue, new ArrayList<>());
         listeners.add(listener);
         listenersMap.put(observableValue, listeners);

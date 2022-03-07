@@ -114,12 +114,12 @@ dependencies {
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }
-    implementation("org.openjfx:javafx-base:17.0.2:${platform}")
-    implementation("org.openjfx:javafx-controls:17.0.2:${platform}")
-    implementation("org.openjfx:javafx-fxml:17.0.2:${platform}")
-    implementation("org.openjfx:javafx-graphics:17.0.2:${platform}")
-    implementation("org.openjfx:javafx-media:17.0.2:${platform}")
-    implementation('org.controlsfx:controlsfx:11.1.1')
+    implementation("org.openjfx:javafx-base:17+:${platform}")
+    implementation("org.openjfx:javafx-controls:17+:${platform}")
+    implementation("org.openjfx:javafx-fxml:17+:${platform}")
+    implementation("org.openjfx:javafx-graphics:17+:${platform}")
+    implementation("org.openjfx:javafx-media:17+:${platform}")
+    implementation('org.controlsfx:controlsfx:11+')
 
 //    testImplementation 'de.saxsys:jfx-testrunner:1.2'
     testImplementation 'de.saxsys:mvvmfx-testing-utils:1.8.0'

@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.beans.binding.StringBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -16,16 +18,17 @@ import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class HorizonsMaterialIngredient extends Ingredient {
+public class HorizonsMaterialIngredient extends Ingredient implements DestroyableComponent {
     private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
@@ -48,7 +51,6 @@ public class HorizonsMaterialIngredient extends Ingredient {
     private Region region;
     private HBox secondLine;
     private Region region2;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
 
     HorizonsMaterialIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer leftAmount, final Integer rightAmount) {
@@ -64,7 +66,7 @@ public class HorizonsMaterialIngredient extends Ingredient {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
+        EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update());
     }
 
     private void initComponents() {
@@ -166,7 +168,13 @@ public class HorizonsMaterialIngredient extends Ingredient {
         return this.rightDescriptionLabel;
     }
 
-    void onDestroy() {
-        this.eventListeners.forEach(EventService::removeListener);
+    @Override
+    public void destroyInternal() {
+        EventService.removeListener(this);
+    }
+
+    @Override
+    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
+        return Collections.emptyMap();
     }
 }

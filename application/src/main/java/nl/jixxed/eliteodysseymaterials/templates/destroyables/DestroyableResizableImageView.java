@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("java:S3740")
 public class DestroyableResizableImageView extends Pane implements DestroyableComponent {
@@ -68,7 +69,7 @@ public class DestroyableResizableImageView extends Pane implements DestroyableCo
     }
 
     @Override
-    public HashMap<ObservableValue, List<ChangeListener>> getListenersMap() {
+    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
         return this.listenersMap;
     }
 }

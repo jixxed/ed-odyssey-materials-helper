@@ -3,16 +3,19 @@ package nl.jixxed.eliteodysseymaterials.service;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.StringBinding;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -29,6 +32,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MaterialService {
 
@@ -87,49 +91,49 @@ public class MaterialService {
 
     }
 
-    public static void addMaterialInfoPopOver(final Node hoverableNode, final OdysseyMaterial odysseyMaterial) {
+    public static void addMaterialInfoPopOver(final Node hoverableNode, final Material material) {
         hoverableNode.setOnMouseEntered(mouseEvent -> {
-            final Node contentNode = getMaterialPopOverContent(odysseyMaterial);
+            final Node contentNode = (material instanceof HorizonsMaterial) ? getMaterialPopOverContent((HorizonsMaterial) material) : getMaterialPopOverContent((OdysseyMaterial) material);
             contentNode.getStyleClass().add("material-popover");
             final PopOver popOver = new PopOver(contentNode);
             popOver.setDetachable(false);
             popOver.setHeaderAlwaysVisible(false);
-            popOver.show(hoverableNode);
-            final Timeline timeline = new Timeline();
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
-            timeline.setOnFinished(finishEvent -> {
-                if (hoverableNode.isHover() || contentNode.isHover()) {
-                    timeline.play();
-                } else {
-                    popOver.hide(Duration.ZERO);
-                    popOver.setContentNode(null);
-                    timeline.stop();
+            final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).get(0).getBounds();
+            final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
+            final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
+            if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+            } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
+            } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
+            } else {
+                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
+            }
+            final Timeline timelineShow = new Timeline();
+            timelineShow.getKeyFrames().add(new KeyFrame(Duration.millis(500)));
+            timelineShow.setOnFinished(finishEvent -> {
+                if (hoverableNode.isHover() || (contentNode.isHover())) {
+                    if (popOver.getContentNode() != null) {
+                        popOver.show(hoverableNode);
+                    }
                 }
             });
-            hoverableNode.setOnMouseExited(mouseEvent2 -> timeline.play());
-        });
-    }
-
-    public static void addMaterialInfoPopOver(final Node hoverableNode, final HorizonsMaterial horizonsMaterial) {
-        hoverableNode.setOnMouseEntered(mouseEvent -> {
-            final Node contentNode = getMaterialPopOverContent(horizonsMaterial);
-            contentNode.getStyleClass().add("material-popover");
-            final PopOver popOver = new PopOver(contentNode);
-            popOver.setDetachable(false);
-            popOver.setHeaderAlwaysVisible(false);
-            popOver.show(hoverableNode);
-            final Timeline timeline = new Timeline();
-            timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
-            timeline.setOnFinished(finishEvent -> {
+            timelineShow.play();
+            final Timeline timelineHide = new Timeline();
+            timelineHide.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
+            timelineHide.setOnFinished(finishEvent -> {
                 if (hoverableNode.isHover() || contentNode.isHover()) {
-                    timeline.play();
+                    timelineHide.play();
                 } else {
                     popOver.hide(Duration.ZERO);
-                    popOver.setContentNode(null);
-                    timeline.stop();
+                    if (popOver.getContentNode() != null) {
+                        popOver.setContentNode(null);
+                    }
+                    timelineHide.stop();
                 }
             });
-            hoverableNode.setOnMouseExited(mouseEvent2 -> timeline.play());
+            hoverableNode.setOnMouseExited(mouseEvent2 -> timelineHide.play());
         });
     }
 

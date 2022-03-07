@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
@@ -15,11 +17,15 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
-class EngineerBlueprintLabel extends HBox {
+class EngineerBlueprintLabel extends HBox implements DestroyableComponent {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private final Engineer engineer;
     private final int rank;
@@ -61,20 +67,24 @@ class EngineerBlueprintLabel extends HBox {
 
     private void initEventHandling() {
         EventService.addListener(this, EngineerEvent.class, event -> {
-            if (this.exact) {
-                this.updateStyle(APPLICATION_STATE.isEngineerUnlockedExact(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
-            } else {
-                this.updateStyle(APPLICATION_STATE.isEngineerUnlocked(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
-            }
-            if (this.engineer.isHorizons()) {
-                final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
-                if (!this.currentEngineerRank.equals(engineerRank)) {//only update if image has changed
-                    final String imageString = getEngineerRankImage(engineerRank);
-                    this.image.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
-                    this.currentEngineerRank = engineerRank;
-                }
-            }
+            update();
         });
+    }
+
+    private void update() {
+        if (this.exact) {
+            this.updateStyle(APPLICATION_STATE.isEngineerUnlockedExact(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
+        } else {
+            this.updateStyle(APPLICATION_STATE.isEngineerUnlocked(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
+        }
+        if (this.engineer.isHorizons()) {
+            final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
+            if (!this.currentEngineerRank.equals(engineerRank)) {//only update if image has changed
+                final String imageString = getEngineerRankImage(engineerRank);
+                this.image.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
+                this.currentEngineerRank = engineerRank;
+            }
+        }
     }
 
     private String getEngineerRankImage(final Integer engineerRank) {
@@ -106,6 +116,7 @@ class EngineerBlueprintLabel extends HBox {
                 this.getChildren().add(LabelBuilder.builder().withNonLocalizedText("\u2191" + engineerMaxGrade).build());
             }
         }
+        update();
     }
 
     private void updateStyle(final boolean unlocked, final Integer currentEngineerRank) {
@@ -119,5 +130,15 @@ class EngineerBlueprintLabel extends HBox {
             styleClass = "engineer-locked";
         }
         this.label.getStyleClass().add(styleClass);
+    }
+
+    @Override
+    public void destroyInternal() {
+        EventService.removeListener(this);
+    }
+
+    @Override
+    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
+        return Collections.emptyMap();
     }
 }

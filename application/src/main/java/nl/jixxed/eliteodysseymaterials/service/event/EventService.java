@@ -49,9 +49,16 @@ public class EventService {
 
     public static void removeListener(final Consumer<? extends Event> eventConsumer, final Class<? extends Event> eventClass) {
         LISTENERS_MAP.computeIfPresent(eventClass, (aClass, eventListeners) -> {
-            eventListeners.removeIf(listener -> listener.getConsumer().equals(eventConsumer));
+            eventListeners.removeIf(listener -> {
+                final boolean remove = listener.getConsumer().equals(eventConsumer);
+                if (remove) {
+                    logListener(null, listener, "deregister");
+                }
+                return remove;
+            });
             return eventListeners;
         });
+        logListenerSize();
     }
 
     public static void removeListener(final EventListener<? extends Event> eventListener) {
@@ -64,16 +71,27 @@ public class EventService {
     }
 
     public static void removeListener(final Object owner) {
-        LISTENERS_MAP.values().forEach(eventListeners -> eventListeners.removeIf(listener -> listener instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.hasOwner(owner)));
+        LISTENERS_MAP.values().forEach(eventListeners -> eventListeners.removeIf(listener -> {
+            final boolean remove = listener instanceof NonStaticEventListener nonStaticEventListener && nonStaticEventListener.hasOwner(owner);
+            if (remove) {
+                logListener(owner, listener, "deregister");
+            }
+            return remove;
+        }));
+        logListenerSize();
     }
 
     @SuppressWarnings({"java:S1172", "java:S125"})
     private static <T extends Event> void logListener(final Object owner, final EventListener<T> listener, final String action) {
-//        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode() + (owner != null ? ", " + owner.getClass().getName() : ""));
+        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode() + (owner != null ? ", " + owner.getClass().getName() : ""));
     }
 
     @SuppressWarnings("java:S125")
     private static void logListenerSize() {
-//        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
+        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
+    }
+
+    public static void shutdown() {
+        LISTENERS_MAP.clear();
     }
 }
