@@ -1,3 +1,9 @@
+Version 1.72
+-------------
+Improve memory footprint - dynamic loading of horizons blueprints
+Fix for new installs not having the appfolder yet when creating the lockfile
+Improve material popup: delay when showing, position based on screen quadrant
+
 Version 1.71
 -------------
 Import tab removed
