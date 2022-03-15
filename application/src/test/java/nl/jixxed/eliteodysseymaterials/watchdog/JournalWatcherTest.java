@@ -18,10 +18,10 @@ class JournalWatcherTest {
 
     private static Stream<Arguments> provideFilesForGetFileTimestamp() {
         return Stream.of(
-                Arguments.of(fileNewDate, 220315151250L),
-                Arguments.of(fileNewTimestamp, 220314230050L),
-                Arguments.of(fileOldDate, 190315151250L),
-                Arguments.of(fileOldTimestamp, 190314230050L)
+                Arguments.of(fileNewDate, 22031515125001L),
+                Arguments.of(fileNewTimestamp, 22031423005002L),
+                Arguments.of(fileOldDate, 19031515125003L),
+                Arguments.of(fileOldTimestamp, 19031423005004L)
         );
     }
 

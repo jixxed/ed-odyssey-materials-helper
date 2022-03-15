@@ -109,7 +109,7 @@ public class JournalWatcher {
                     .filter(this::isNewerThan2020)
                     .filter(this::hasFileHeader)
                     .filter(this::isSelectedCommander)
-                    .max(Comparator.comparingLong(file -> getFileTimestamp(file)));
+                    .max(Comparator.comparingLong(this::getFileTimestamp));
             log.info("Registered watched file: " + this.currentlyWatchedFile.map(File::getName).orElse("No file"));
         } catch (final NullPointerException ex) {
             log.error("Failed to Registered watched file at " + folder.getAbsolutePath());
