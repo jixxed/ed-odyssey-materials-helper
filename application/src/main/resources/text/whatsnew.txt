@@ -1,3 +1,7 @@
+Version 1.73
+-------------
+handle new journal filenaming scheme for Update 11
+
 Version 1.72
 -------------
 Improve memory footprint - dynamic loading of horizons blueprints

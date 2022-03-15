@@ -25,7 +25,8 @@ public class JournalWatcher {
     private File watchedFolder;
     private FileWatcher fileWatcher;
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final Pattern p = Pattern.compile("(Journal\\.)+(\\d{2})(.*)");
+    private final Pattern journalPatternTimestamp = Pattern.compile("Journal\\.(\\d+)\\.(\\d{2})\\.log");
+    private final Pattern journalPatternDate = Pattern.compile("Journal\\.(\\d{4})-(\\d{2})-(\\d{2})T(\\d{6})\\.(\\d{2})\\.log");
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
         Platform.runLater(() -> {
@@ -53,7 +54,7 @@ public class JournalWatcher {
                 }
 
                 private boolean isValidOdysseyJournal(final File file) {
-                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && isOlderThan2020(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && isNewerThan2020(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
                 }
             }).watch(folder);
         });
@@ -71,7 +72,7 @@ public class JournalWatcher {
         try {
             Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
-                    .filter(this::isOlderThan2020)
+                    .filter(this::isNewerThan2020)
                     .filter(this::hasFileHeader)
                     .filter(this::hasCommanderHeader)
                     .forEach(this::listCommander);
@@ -105,10 +106,10 @@ public class JournalWatcher {
         try {
             this.currentlyWatchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
-                    .filter(this::isOlderThan2020)
+                    .filter(this::isNewerThan2020)
                     .filter(this::hasFileHeader)
                     .filter(this::isSelectedCommander)
-                    .max(Comparator.comparingLong(file -> Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23))));
+                    .max(Comparator.comparingLong(file -> getFileTimestamp(file)));
             log.info("Registered watched file: " + this.currentlyWatchedFile.map(File::getName).orElse("No file"));
         } catch (final NullPointerException ex) {
             log.error("Failed to Registered watched file at " + folder.getAbsolutePath());
@@ -117,9 +118,22 @@ public class JournalWatcher {
 
 
     private synchronized boolean isNewerJournal(final File file) {
-        final long fileTimestamp = Long.parseLong(file.getName().substring(8, 20) + file.getName().substring(21, 23));
-        final long currentFileTimestamp = this.currentlyWatchedFile.map(currentFile -> Long.parseLong(currentFile.getName().substring(8, 20) + currentFile.getName().substring(21, 23))).orElse(0L);
+        final long fileTimestamp = getFileTimestamp(file);
+        final long currentFileTimestamp = this.currentlyWatchedFile.map(this::getFileTimestamp).orElse(0L);
         return fileTimestamp > currentFileTimestamp;
+    }
+
+
+    Long getFileTimestamp(final File file) {
+        final Matcher matcher = this.journalPatternTimestamp.matcher(file.getName());
+        if (matcher.matches()) {
+            return Long.parseLong(matcher.group(1) + matcher.group(2));
+        }
+        final Matcher matcher2 = this.journalPatternDate.matcher(file.getName());
+        if (matcher2.matches()) {
+            return Long.parseLong(matcher2.group(1).substring(2) + matcher2.group(2) + matcher2.group(3) + matcher2.group(4) + matcher2.group(5));//group 1 - year - only last 2 digits to match other pattern
+        }
+        return 0L;
     }
 
 
@@ -143,11 +157,16 @@ public class JournalWatcher {
         }).orElse(true);
     }
 
-    private synchronized boolean isOlderThan2020(final File file) {
-
-        final Matcher matcher = this.p.matcher(file.getName());
-        return matcher.matches()
-                && Integer.parseInt(matcher.group(2)) > 20;
+    synchronized boolean isNewerThan2020(final File file) {
+        final Matcher matcher = this.journalPatternTimestamp.matcher(file.getName());
+        if (matcher.matches()) {
+            return Integer.parseInt(matcher.group(1).substring(0, 2)) > 20;
+        }
+        final Matcher matcher2 = this.journalPatternDate.matcher(file.getName());
+        if (matcher2.matches()) {
+            return Integer.parseInt(matcher2.group(1).substring(2, 4)) > 20;
+        }
+        return true;
 
     }
 
