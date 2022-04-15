@@ -14,6 +14,7 @@ import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.TradeSpec;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
@@ -106,7 +107,7 @@ abstract class Trade extends FlowPane {
                     this.chatStage.toFront();
                 }
                 if (this.chatStage == null || !this.chatStage.isFocused()) {
-                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale("notification.trade.message.from", message.getInfo().getNickname()), message.getText());
+                    NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale("notification.trade.message.from", message.getInfo().getNickname()), message.getText());
                 }
             }
         });

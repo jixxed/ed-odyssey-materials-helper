@@ -24,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.io.File;
 import java.net.URI;
@@ -56,10 +57,6 @@ public class SettingsTab extends EDOTab {
     private Label soloModeExplainLabel;
     private CheckBox notificationSoundCheckBox;
     private Label notificationSoundLabel;
-    private Label customNotificationSoundLabel;
-    private Label selectedNotificationSoundLabel;
-    private Button customNotificationSoundSelectButton;
-    private Button customNotificationSoundClearButton;
     private Label notificationVolumeLabel;
     private Slider notificationVolumeSlider;
     private Button playNotificationButton;
@@ -109,11 +106,26 @@ public class SettingsTab extends EDOTab {
     private void initComponents() {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
 
+        final Label overviewLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.overview"))
+                .build();
+        final Label generalLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.general"))
+                .build();
+        final Label trackingLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.tracking"))
+                .build();
+        final Label notificationLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.notification"))
+                .build();
         final Label settingsLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tabs.settings"))
                 .build();
-
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
@@ -122,20 +134,31 @@ public class SettingsTab extends EDOTab {
         final HBox trackingOptOutSetting = createTrackingOptOutSetting();
         final HBox wipSetting = createWIPSetting();
         final HBox notificationSetting = createNotificationSetting();
-        final HBox customNotificationSoundSetting = createCustomNotificationSoundSetting();
         final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
+        final HBox notificationsListHeader = createNotificationListHeader();
         final HBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
         final HBox irrelevantOverrideList = createIrrelevantOverrideList();
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
 
+        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
+        final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
+        final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
+        final VBox notification = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader).buildVBox();
+        Arrays.stream(NotificationType.values()).forEach(notificationType -> notification.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
         final VBox settings = BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, langSetting, fontSetting, readingDirectionSetting, customJournalFolderSetting, soloModeSetting, notificationSetting, customNotificationSoundSetting, notificationSoundVolumeSetting, irrelevantOverrideSetting, irrelevantOverrideList, trackingOptOutSetting, wipSetting, urlSchemeLinkingSetting)
+                .withNodes(settingsLabel, general, overview, notification, tracking)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
                 .build();
         this.setContent(this.scrollPane);
+    }
+
+    private HBox createNotificationListHeader() {
+        final DestroyableLabel headerNotification = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.header.notification")).build();
+        final DestroyableLabel headerEnabled = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.notification.header.enabled")).build();
+        return BoxBuilder.builder().withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS).withNodes(headerNotification, headerEnabled).buildHBox();
     }
 
     private HBox createUrlSchemeLinkingSetting() {
@@ -211,38 +234,41 @@ public class SettingsTab extends EDOTab {
 
     }
 
-    private HBox createCustomNotificationSoundSetting() {
-        this.customNotificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.sound.custom")).build();
-        this.selectedNotificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, "")).build();
+    private HBox createCustomNotificationSoundSetting(final NotificationType notificationType) {
+        final Label customNotificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.sound.custom", LocaleService.LocalizationKey.of("notification.type." + notificationType.name().toLowerCase()))).build();
+        final Label selectedNotificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), "")).build();
 
         final FileChooser notificationSoundSelect = new FileChooser();
         //Set extension filter for mp3 files
         final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MP3 files (*.mp3)", "*.mp3");
         notificationSoundSelect.getExtensionFilters().add(extFilter);
-
-        this.customNotificationSoundSelectButton = ButtonBuilder.builder()
+        final CheckBox notificationEnabledCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled()))
+                .withChangeListener((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), newValue))
+                .build();
+        final Button customNotificationSoundSelectButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.notification.sound.select"))
                 .withOnAction(e -> {
                     final File selectedFile = notificationSoundSelect.showOpenDialog(((FXApplication) this.application).getPrimaryStage());
                     if (selectedFile != null) {
-                        this.selectedNotificationSoundLabel.setText(selectedFile.getAbsolutePath());
-                        PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, selectedFile.getAbsolutePath());
+                        selectedNotificationSoundLabel.setText(selectedFile.getAbsolutePath());
+                        PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), selectedFile.getAbsolutePath());
                     }
                 })
                 .build();
-        this.customNotificationSoundClearButton = ButtonBuilder.builder()
+        final Button customNotificationSoundClearButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.notification.sound.clear"))
                 .withOnAction(e -> {
-                    this.selectedNotificationSoundLabel.setText("");
-                    PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, "");
+                    selectedNotificationSoundLabel.setText("");
+                    PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), "");
                 })
                 .build();
 
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.customNotificationSoundLabel, this.customNotificationSoundSelectButton, this.customNotificationSoundClearButton, this.selectedNotificationSoundLabel)
+                .withNodes(customNotificationSoundLabel, notificationEnabledCheckBox, customNotificationSoundSelectButton, customNotificationSoundClearButton, selectedNotificationSoundLabel)
                 .buildHBox();
     }
 

@@ -1903,6 +1903,7 @@ modifier.name.tool_energy_drain_multiplier,Tool Energy Drain Multiplier,Tool Ene
 modifier.name.weapon_effective_range,Weapon Effective Range,Weapon Effective Range,Wirksame Reichweite der Waffe,Alcance efectivo del arma,Portée effective de l''arme,Alcance Efetivo da Arma,Эффективная дальность действия оружия
 modifier.name.weapon_melee_damage_multiplier,Weapon Melee Damage Multiplier,Weapon Melee Damage Multiplier,Waffen-Nahkampfschaden-Multiplikator,Multiplicador de daño cuerpo a cuerpo de armas,Multiplicateur de dégâts de mêlée d''arme,Multiplicador de dano corpo a corpo da arma,Множитель урона в ближнем бою
 notification.collected.irrelevant.material.title,Collected irrelevant material,Collected irrelevant material,Irrrelevantes Material gesammelt,Material irrelevante recopilado,Matériel non pertinent collecté,Recolheu material irrelevante,Собран нерелевантный материал
+notification.collected.wishlist.material.title,Collected wishlist material,Collected wishlist material,,,,,
 notification.trade.a.bid.was.pulled,A bid was pulled.,A bid was pulled.,Ein Gebot wurde gezogen.,Se retiró una oferta.,Une offre a été retirée.,Um lance foi retirado.,Ставка была снята.
 notification.trade.message.from,Message from {0},Message from {0},Nachricht von {0},Mensaje de {0},Message de {0},Mensagem de {0},Сообщение от {0}
 notification.trade.title,Trade,Trade,Handel,Comercio,Commerce,Comércio,Торговля
@@ -2027,7 +2028,9 @@ tab.settings.material.override.remove,Remove,Remove,Entfernen,Eliminar,Supprimer
 tab.settings.material.override,Override materials,Override materials,Materialien überschreiben,Anular materiales,Remplacer les matériaux,Substituir materiais,Переопределить материалы
 tab.settings.notification.play,Play,Play,Spielen,Reproducir,Jouer,Jogar,Играть
 tab.settings.notification.sound.clear,Clear,Clear,Löschen,Borrar,Effacer,Limpar,Очистить
-tab.settings.notification.sound.custom,Custom notification sound,Custom notification sound,Benutzerdefinierter Benachrichtigungston,Sonido de notificación personalizado,Son de notification personnalisé,Som de notificação personalizado,Пользовательский звук уведомления
+tab.settings.notification.sound.custom,{0},{0},{0},{0},{0},{0},{0}
+tab.settings.notification.header.enabled,Enabled,Enabled,,,,,
+tab.settings.notification.header.notification,Notification,Notification,,,,,
 tab.settings.notification.sound.select,Select File,Select File,Datei auswählen,Seleccionar archivo,Sélectionner un fichier,Selecionar Arquivo,Выбрать файл
 tab.settings.notification.volume,Notification volume,Notification volume,Benachrichtigungsvolumen,Volumen de notificación,Volume de notification,Volume de notificação,Объем уведомления
 tab.settings.notification,Enable notification sounds,Enable notification sounds,Benachrichtigungstöne aktivieren,Activar sonidos de notificación,Activer les sons de notification,Habilitar sons de notificação,Включить звуки уведомлений
@@ -2044,6 +2047,10 @@ tab.settings.url.scheme.registered,Registered,Registered,,,,,
 tab.settings.url.scheme.unregistered,Unregistered,Unregistered,,,,,
 tab.settings.wip.explain,Show Work In Progress features,Show Work In Progress features,In Bearbeitung befindliche Funktionen anzeigen,Mostrar funciones de trabajo en curso,Afficher les fonctionnalités de travail en cours,Mostrar recursos de Trabalho em Andamento,Показать функции незавершенной работы
 tab.settings.wip,WIP visible,WIP visible,WIP sichtbar,WIP visible,WIP visible,WIP visível,WIP виден
+tab.settings.title.overview,Overview,Overview,,,,,
+tab.settings.title.general,General,General,,,,,
+tab.settings.title.notification,Notification,Notification,,,,,
+tab.settings.title.tracking,Tracking,Tracking,,,,,
 tab.trade.button.connect,connect,connect,connect,conectar,connect,conectar,подключиться
 tab.trade.button.disconnect,disconnect,disconnect,trennen,desconectar,déconnecter,desconectar,отключить
 tab.trade.disclaimer,DISCLAIMER: Trading is still very much beta. Future releases may remove all your active trade offers. Please report any issues on the discord channel,DISCLAIMER: Trading is still very much beta. Future releases may remove all your active trade offers. Please report any issues on the discord channel,HAFTUNGSAUSSCHLUSS: Der Handel befindet sich noch in der Betaphase. Zukünftige Veröffentlichungen können alle Ihre aktiven Handelsangebote entfernen. Bitte melde alle Probleme auf dem Discord-Kanal,DESCARGO DE RESPONSABILIDAD: El comercio todavía es muy beta. Los lanzamientos futuros pueden eliminar todas sus ofertas comerciales activas. Informe cualquier problema en el canal de discordia,AVIS DE NON-RESPONSABILITÉ: Le trading est encore en grande partie bêta. Les versions futures peuvent supprimer toutes vos offres commerciales actives. Veuillez signaler tout problème sur le canal discord,"AVISO LEGAL: A negociação ainda é muito beta. Versões futuras podem remover todas as suas ofertas comerciais ativas. Por favor, relate quaisquer problemas no canal de discórdia","ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ: Торговля все еще находится в стадии бета-тестирования. В будущих выпусках могут быть удалены все ваши активные торговые предложения. Пожалуйста, сообщайте о любых проблемах на канале Discord"
@@ -2132,3 +2139,9 @@ trade.status.received.a.bid,Status: Received a bid,Status: Received a bid,Status
 trade.status.waiting.for.bids,Status: Waiting for bids...,Status: Waiting for bids...,Status: Warte auf Gebote...,Estado: Esperando ofertas...,Statut: En attente des offres...,Status: Aguardando lances...,Статус: Ожидание ставок...
 url.scheme.registration.text,This app can handle url's starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,This app can handle url's starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,,,,,
 url.scheme.registration.text2,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,,,,,
+notification.type.irrelevant_pickup,Irrelevant Pickup,Irrelevant Pickup,,,,,
+notification.type.wishlist_pickup,Wishlist Pickup,Wishlist Pickup,,,,,
+notification.type.trade,Trade,Trade,,,,,
+notification.type.import,Import,Import,,,,,
+notification.type.copy,Copy,Copy,,,,,
+notification.type.error,Error,Error,,,,,

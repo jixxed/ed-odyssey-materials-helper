@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import org.controlsfx.control.Notifications;
@@ -24,44 +25,47 @@ public class NotificationService {
         EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised());
     }
 
-    public static void showInformation(final String title, final String text) {
-        if (enabled) {
+    public static void showInformation(final NotificationType notificationType, final String title, final String text) {
+        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), Boolean.TRUE);
+        if (enabled && active) {
             Notifications.create()
                     .darkStyle()
                     .title(title)
                     .text(text)
                     .showInformation();
-            playSound();
+            playSound(notificationType);
         }
     }
 
-    public static void showWarning(final String title, final String text) {
-        if (enabled) {
+    public static void showWarning(final NotificationType notificationType, final String title, final String text) {
+        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), Boolean.TRUE);
+        if (enabled && active) {
             Notifications.create()
                     .darkStyle()
                     .title(title)
                     .text(text)
                     .showWarning();
-            playSound();
+            playSound(notificationType);
         }
     }
 
-    public static void showError(final String title, final String text) {
-        if (enabled) {
+    public static void showError(final NotificationType notificationType, final String title, final String text) {
+        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), Boolean.TRUE);
+        if (enabled && active) {
             Notifications.create()
                     .darkStyle()
                     .title(title)
                     .text(text)
                     .showError();
-            playSound();
+            playSound(notificationType);
         }
     }
 
-    private static void playSound() {
+    private static void playSound(final NotificationType notificationType) {
 
         final boolean playSounds = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND, Boolean.TRUE);
         final double volume = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_VOLUME, 50);
-        final String customSoundPath = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE, "");
+        final String customSoundPath = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), "");
         if (playSounds) {
             try {
                 final URI resource;

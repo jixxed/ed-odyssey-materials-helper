@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
@@ -36,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -154,12 +156,12 @@ public class FXApplication extends Application {
                         handleImportResult(importResult);
                     } catch (final LoadoutDeeplinkException ex) {
                         EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_LOADOUT)));
-                        NotificationService.showError("Failed to import loadout", ex.getMessage());
+                        NotificationService.showError(NotificationType.ERROR, "Failed to import loadout", ex.getMessage());
                     } catch (final WishlistDeeplinkException ex) {
                         EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_WISHLIST)));
-                        NotificationService.showError("Failed to import wishlist", ex.getMessage());
+                        NotificationService.showError(NotificationType.ERROR, "Failed to import wishlist", ex.getMessage());
                     } catch (final RuntimeException ex) {
-                        NotificationService.showError("Failed to import", ex.getMessage());
+                        NotificationService.showError(NotificationType.ERROR, "Failed to import", ex.getMessage());
                         EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.OTHER_ERROR)));
                     }
                 }
@@ -172,13 +174,13 @@ public class FXApplication extends Application {
 
     private void handleImportResult(final ImportResult importResult) {
         if (ImportResult.ResultType.SUCCESS_LOADOUT.equals(importResult.getResultType())) {
-            NotificationService.showInformation("Imported loadout", importResult.getMessage());
+            NotificationService.showInformation(NotificationType.IMPORT, "Imported loadout", importResult.getMessage());
             this.primaryStage.toFront();
         } else if (ImportResult.ResultType.SUCCESS_WISHLIST.equals(importResult.getResultType())) {
-            NotificationService.showInformation("Imported wishlist", importResult.getMessage());
+            NotificationService.showInformation(NotificationType.IMPORT, "Imported wishlist", importResult.getMessage());
             this.primaryStage.toFront();
         } else if (ImportResult.ResultType.UNKNOWN_TYPE.equals(importResult.getResultType())) {
-            NotificationService.showError("Failed to import", "Unknown type");
+            NotificationService.showError(NotificationType.ERROR, "Failed to import", "Unknown type");
         }
     }
 
@@ -303,6 +305,7 @@ public class FXApplication extends Application {
     }
 
     static void launchFx(final String[] args) {
+        Locale.setDefault(Locale.ENGLISH);
         LocaleService.setCurrentLocale(LocaleService.getCurrentLocale());
 
         launch(args);

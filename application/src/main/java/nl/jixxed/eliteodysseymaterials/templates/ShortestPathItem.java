@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
@@ -87,7 +88,7 @@ class ShortestPathItem extends VBox implements Template {
         this.getChildren().add(BoxBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
                 .withOnMouseClicked(event -> {
                     copyLocationToClipboard(engineer.getStarSystem().getName());
-                    NotificationService.showInformation("Clipboard", "System name copied.");
+                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
                 }).withNodes(label, new StackPane(ResizableImageViewBuilder.builder()
                         .withStyleClass("material-tooltip-copy-icon")
                         .withImage("/images/other/copy.png")

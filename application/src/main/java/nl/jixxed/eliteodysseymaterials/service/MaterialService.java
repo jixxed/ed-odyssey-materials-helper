@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MaterialService {
 
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final String STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE = "material-tooltip-subtitle";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
@@ -162,7 +163,7 @@ public class MaterialService {
         vBox.getChildren().add(BoxBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
                 .withOnMouseClicked(event -> {
                     copyLocationToClipboard(settlementStatistic.getSystem());
-                    NotificationService.showInformation("Clipboard", "System name copied.");
+                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
                 }).withNodes(label, new StackPane(ResizableImageViewBuilder.builder()
                         .withStyleClass("material-tooltip-copy-icon")
                         .withImage("/images/other/copy.png")
@@ -237,5 +238,12 @@ public class MaterialService {
         }
     }
 
+    public static boolean isMaterialOnWishlist(final OdysseyMaterial odysseyMaterial) {
+        return APPLICATION_STATE.getPreferredCommander()
+                .map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getWishlists().stream()
+                        .anyMatch(wishlist -> wishlist.getItems().stream()
+                                .anyMatch(wishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName()).hasIngredient(odysseyMaterial))))
+                .orElse(false);
 
+    }
 }

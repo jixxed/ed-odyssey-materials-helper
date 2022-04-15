@@ -14,10 +14,7 @@ import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
@@ -127,7 +124,7 @@ class EngineerCard extends VBox {
         return FlowPaneBuilder.builder().withStyleClass("engineer-location-line")
                 .withOnMouseClicked(event -> {
                     copyLocationToClipboard();
-                    NotificationService.showInformation("Clipboard", "System name copied.");
+                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
                 })
                 .withNodes(this.engineerLocation, new StackPane(this.copyIcon), this.engineerDistance)
                 .build();

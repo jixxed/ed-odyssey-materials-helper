@@ -27,10 +27,8 @@ import java.net.http.HttpResponse;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.*;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +69,7 @@ public class MaterialTrackingService {
             log.info("Start load material statistics");
             final File statisticsFile = new File(OsConstants.STATISTICS);
             try {
-                if (!statisticsFile.exists() || ZonedDateTime.now().minus(1, ChronoUnit.DAYS).isAfter(ZonedDateTime.ofInstant(Instant.ofEpochMilli(statisticsFile.lastModified()), ZoneId.systemDefault()))) {
+                if (!statisticsFile.exists() || modifiedBeforeMonday(statisticsFile)) {
                     log.info("Start download of material statistics");
                     final URL url = new URL("https://material-tracking-report.s3.eu-west-1.amazonaws.com/material-report.json");
                     try (final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream()); final FileOutputStream fileOutputStream = new FileOutputStream(statisticsFile)) {
@@ -89,10 +87,17 @@ public class MaterialTrackingService {
             } catch (final IOException ex) {
                 log.error("Load material statistics failed", ex);
                 Platform.runLater(() ->
-                        NotificationService.showError("Error", "Failed to download material statistics.")
+                        NotificationService.showError(NotificationType.ERROR, "Error", "Failed to download material statistics.")
                 );
             }
         }, "Material Statistics Loader Thread").start();
+    }
+
+    static boolean modifiedBeforeMonday(final File statisticsFile) {
+        final ZonedDateTime date = LocalDate.now().atStartOfDay(ZoneId.systemDefault());
+        final DayOfWeek todayAsDayOfWeek = date.getDayOfWeek();
+        final ZonedDateTime previousMonday = todayAsDayOfWeek == DayOfWeek.MONDAY ? date : date.with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+        return previousMonday.isAfter(ZonedDateTime.ofInstant(Instant.ofEpochMilli(statisticsFile.lastModified()), ZoneId.systemDefault()));
     }
 
     static MaterialStatistic getMaterialStatistic(final OdysseyMaterial odysseyMaterial) {

@@ -213,7 +213,7 @@ public class WishlistTab extends EDOTab {
                         },
                         "tab.wishlist.copy", event -> {
                             copyWishListToClipboard();
-                            NotificationService.showInformation("Wishlists", "The wishlist has been copied to your clipboard");
+                            NotificationService.showInformation(NotificationType.COPY, "Wishlists", "The wishlist has been copied to your clipboard");
                         },
                         "tab.wishlist.export", event ->
                                 EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededDatas, this.wishlistNeededGoods, this.wishlistNeededAssets)))

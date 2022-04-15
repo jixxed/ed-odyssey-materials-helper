@@ -1909,3 +1909,8 @@
 .shortest-path-item-spacer {
     -fx-min-height: 1em;
 }
+
+.settingsblock {
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 0 0 1em 0;
+}

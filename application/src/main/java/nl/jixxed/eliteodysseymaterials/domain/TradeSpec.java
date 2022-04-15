@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
@@ -91,7 +92,7 @@ public class TradeSpec {
             if (getOfferId().equals(bidOffer.getOfferId())) {
                 if (isBidFromMe()) {
                     this.tradeStatus = TradeStatus.PULLED;
-                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.was.pulled"));
+                    NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.was.pulled"));
                     final TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
@@ -108,7 +109,7 @@ public class TradeSpec {
                     timer.schedule(task, delay);
                 } else {
                     if (isOwnedByMe()) {
-                        NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.a.bid.was.pulled"));
+                        NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.a.bid.was.pulled"));
                     }
                     this.tradeStatus = TradeStatus.AVAILABLE;
                     this.bid = "";
@@ -123,9 +124,9 @@ public class TradeSpec {
                 this.bid = bidOffer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).map(XBid::getTokenhash).findFirst().orElse("");
                 this.tradeStatus = TradeStatus.PUSHED;
                 if (isBidFromMe()) {
-                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.is.placed"));
+                    NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.is.placed"));
                 } else if (isOwnedByMe()) {
-                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.you.received.a.bid.on.an.offer"));
+                    NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.you.received.a.bid.on.an.offer"));
                     final TimerTask task = new TimerTask() {
                         @Override
                         public void run() {
@@ -152,14 +153,14 @@ public class TradeSpec {
                     this.tradeStatus = TradeStatus.ACCEPTED;
                     this.acceptedTokenHash = acceptedBid.map(XBid::getTokenhash).orElse("");
                     if (isOwnedByMe()) {
-                        NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.you.accepted.a.bid"));
+                        NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.you.accepted.a.bid"));
                     } else if (isBidFromMe()) {
-                        NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.has.been.accepted"));
+                        NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.has.been.accepted"));
                     }
                 } else if (isBidFromMe()) {
                     this.tradeStatus = TradeStatus.REJECTED;
                     this.bid = "";
-                    NotificationService.showInformation(LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.has.been.rejected"));
+                    NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale(NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY), LocaleService.getLocalizedStringForCurrentLocale("notification.trade.your.bid.has.been.rejected"));
                     final TimerTask task = new TimerTask() {
                         @Override
                         public void run() {

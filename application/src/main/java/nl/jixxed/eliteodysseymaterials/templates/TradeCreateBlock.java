@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.TradeOdysseyMaterial;
@@ -177,11 +178,11 @@ class TradeCreateBlock extends VBox {
             final OdysseyMaterial offerItem = OdysseyMaterial.forLocalizedName(this.offerItems.getValue());
             final OdysseyMaterial receiveItem = OdysseyMaterial.forLocalizedName(this.receiveItems.getValue());
             if (Objects.equals(offerItem, receiveItem)) {
-                NotificationService.showError(LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.offer"), LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.duplicate"));
+                NotificationService.showError(NotificationType.ERROR, LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.offer"), LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.duplicate"));
                 return false;
             }
         } catch (final IllegalArgumentException ex) {
-            NotificationService.showError(LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.offer"), LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.materials"));
+            NotificationService.showError(NotificationType.ERROR, LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.offer"), LocaleService.getLocalizedStringForCurrentLocale("trade.create.invalid.materials"));
             return false;
         }
 

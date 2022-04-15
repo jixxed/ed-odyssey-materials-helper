@@ -17,10 +17,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Loadout;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSetList;
-import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
-import nl.jixxed.eliteodysseymaterials.enums.Suit;
-import nl.jixxed.eliteodysseymaterials.enums.Weapon;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -203,7 +200,7 @@ public class LoadoutEditorTab extends EDOTab implements Template {
                         },
                         "tab.loadout.copy", event -> {
                             copyLoadoutSetToClipboard();
-                            NotificationService.showInformation("Loadout Editor", "The loadout has been copied to your clipboard");
+                            NotificationService.showInformation(NotificationType.COPY, "Loadout Editor", "The loadout has been copied to your clipboard");
                         })).build();
         this.menuButton.setFocusTraversable(false);
 
