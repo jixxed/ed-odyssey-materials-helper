@@ -1,3 +1,12 @@
+Version 1.74
+-------------
+set material tracking report download to weekly
+fix for launching app in a non-english locale
+update settings layout
+add more notification sounds configuration to settings
+add notification when picking something up from the wishlist
+add option to disable specific notifications
+
 Version 1.73
 -------------
 handle new journal filenaming scheme for Update 11
