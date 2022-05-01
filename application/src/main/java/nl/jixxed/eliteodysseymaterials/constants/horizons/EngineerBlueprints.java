@@ -92,7 +92,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_B2A = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_B2A,
-            Map.of(Encoded.CLASSIFIEDSCANDATA, 50),
+            Map.of(Encoded.SCANDATABANKS, 50),
             List.of("blueprint.description.horizons.engineer_b2a_learn",
                     "blueprint.description.horizons.engineer_b2a_invite",
                     "blueprint.description.horizons.engineer_b2a_unlock"),
