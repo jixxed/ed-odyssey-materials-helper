@@ -19,7 +19,8 @@ apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(16)
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.ADOPTOPENJDK
     }
 }
 OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
@@ -92,38 +93,38 @@ if (os.isWindows()) {
     platform = 'win'
 }
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-    testImplementation "org.junit.platform:junit-platform-suite-api:1.7.2"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.junit.platform:junit-platform-suite-api:1.8.2'
     testImplementation group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.7.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
-    testImplementation "org.assertj:assertj-core:3.19.0"
+    testImplementation 'org.assertj:assertj-core:3.22.0'
 
-    compileOnly 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
-    implementation 'org.slf4j:slf4j-api:1.7.32'
-    implementation 'org.slf4j:slf4j-simple:1.7.32'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'org.slf4j:slf4j-simple:1.7.36'
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
     implementation 'io.github.pustike:commons-csv:1.7.0'
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }
-    implementation("org.openjfx:javafx-base:17+:${platform}")
-    implementation("org.openjfx:javafx-controls:17+:${platform}")
-    implementation("org.openjfx:javafx-fxml:17+:${platform}")
-    implementation("org.openjfx:javafx-graphics:17+:${platform}")
-    implementation("org.openjfx:javafx-media:17+:${platform}")
+    implementation("org.openjfx:javafx-base:18+:${platform}")
+    implementation("org.openjfx:javafx-controls:18+:${platform}")
+    implementation("org.openjfx:javafx-fxml:18+:${platform}")
+    implementation("org.openjfx:javafx-graphics:18+:${platform}")
+    implementation("org.openjfx:javafx-media:18+:${platform}")
     implementation('org.controlsfx:controlsfx:11+')
 
 //    testImplementation 'de.saxsys:jfx-testrunner:1.2'
     testImplementation 'de.saxsys:mvvmfx-testing-utils:1.8.0'
-    testImplementation("org.openjfx:javafx-swing:17.0.2:${platform}")
+    testImplementation("org.openjfx:javafx-swing:18+:${platform}")
 
 }
 jpackage {
