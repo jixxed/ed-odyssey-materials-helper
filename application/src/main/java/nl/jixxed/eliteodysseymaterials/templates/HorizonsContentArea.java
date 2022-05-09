@@ -9,6 +9,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
@@ -25,6 +26,7 @@ class HorizonsContentArea extends AnchorPane {
     private TabPane tabs;
     private VBox body;
     private HorizonsEngineersTab horizonsEngineersTab;
+    private HorizonsWishlistTab horizonsWishlistTab;
 
     HorizonsContentArea(final Application application) {
         initComponents(application);
@@ -36,9 +38,11 @@ class HorizonsContentArea extends AnchorPane {
         this.horizonsMaterialOverview.setClosable(false);
         this.horizonsEngineersTab = new HorizonsEngineersTab();
         this.horizonsEngineersTab.setClosable(false);
+        this.horizonsWishlistTab = new HorizonsWishlistTab();
+        this.horizonsWishlistTab.setClosable(false);
 
         this.searchBar = new HorizonsSearchBar();
-        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsEngineersTab);
+        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsWishlistTab, this.horizonsEngineersTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -70,6 +74,15 @@ class HorizonsContentArea extends AnchorPane {
     }
 
     private void initEventHandling() {
+        EventService.addListener(this, HorizonsWishlistBlueprintEvent.class, wishlistEvent -> {
+            if (Action.ADDED.equals(wishlistEvent.getAction())) {
+                this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
+            }
+        });
+        EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+            this.recipeBar.setVisible(true);
+            PreferencesService.setPreference(PreferenceConstants.HORIZONS_RECIPES_VISIBLE, true);
+        });
         EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth()));
         EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth()));
         EventService.addListener(this, MenuButtonClickedEvent.class, event -> {

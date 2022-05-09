@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class HorizonsBlueprint {
+public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
     private final Map<HorizonsMaterial, Integer> raw;
     private final Map<HorizonsMaterial, Integer> encoded;
     private final Map<HorizonsMaterial, Integer> manufactured;
@@ -66,7 +66,7 @@ public class HorizonsBlueprint {
         } else if (clazz.equals(Commodity.class)) {
             return this.commodities;
         } else if (clazz.equals(HorizonsMaterial.class)) {
-            return Stream.concat(Stream.concat(this.raw.entrySet().stream(), this.encoded.entrySet().stream()), this.manufactured.entrySet().stream()).collect(
+            return Stream.concat(Stream.concat(Stream.concat(this.raw.entrySet().stream(), this.encoded.entrySet().stream()), this.manufactured.entrySet().stream()), this.commodities.entrySet().stream()).collect(
                     Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
         throw new ClassCastException("Invalid Material Collection Type");
@@ -82,4 +82,13 @@ public class HorizonsBlueprint {
         return amount != null ? amount : 0;
     }
 
+    @Override
+    public HorizonsBlueprintName getBlueprintName() {
+        return this.getHorizonsBlueprintName();
+    }
+
+//    @Override
+//    public BlueprintName<E> getBlueprintName() {
+//        return (BlueprintName<E>) this.getHorizonsBlueprintName();
+//    }
 }

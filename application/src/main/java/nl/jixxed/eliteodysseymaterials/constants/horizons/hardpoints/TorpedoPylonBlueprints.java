@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class TorpedoPylonBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.LIGHTWEIGHT_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -23,7 +24,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-30%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
@@ -35,7 +36,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
@@ -48,7 +49,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-60%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.PHASEALLOYS, 1,
@@ -61,7 +62,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-75%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.LIZ_RYDER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.PROTOLIGHTALLOYS, 1,
@@ -76,7 +77,7 @@ public class TorpedoPylonBlueprints {
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.LIZ_RYDER))),
             HorizonsBlueprintType.STURDY_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -87,7 +88,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -99,7 +100,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1,
@@ -112,7 +113,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
                                     Raw.TUNGSTEN, 1,
@@ -125,7 +126,7 @@ public class TorpedoPylonBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+80%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.LIZ_RYDER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.TORPEDO_PYLON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Raw.MOLYBDENUM, 1,

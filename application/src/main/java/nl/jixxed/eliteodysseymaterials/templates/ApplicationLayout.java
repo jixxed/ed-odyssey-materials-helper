@@ -20,6 +20,7 @@ public class ApplicationLayout extends AnchorPane {
     private TabPane tabsMain;
     private Tab odyssey;
     private Tab horizons;
+    private SettingsTab settingsTab;
     private final IntegerProperty fontSize = new SimpleIntegerProperty(14);
 
     public ApplicationLayout(final Application application) {
@@ -36,6 +37,8 @@ public class ApplicationLayout extends AnchorPane {
     private void initComponents(final Application application) {
         this.getStyleClass().add("app");
         this.bottomBar = new BottomBar();
+        this.settingsTab = new SettingsTab(application);
+        this.settingsTab.setClosable(false);
         AnchorPaneHelper.setAnchor(this.bottomBar, null, 0.0, 0.0, 0.0);
         this.odysseyContentArea = new OdysseyContentArea(application);
         this.horizonsContentArea = new HorizonsContentArea(application);
@@ -45,11 +48,11 @@ public class ApplicationLayout extends AnchorPane {
         this.horizons = new Tab();
         this.horizons.setText("Horizons");
         this.horizons.setClosable(false);
-        this.tabsMain = new TabPane(this.odyssey, this.horizons);
+        this.tabsMain = new TabPane(this.odyssey, this.horizons, this.settingsTab);
         this.tabsMain.getStyleClass().add("tab-main");
         this.tabsMain.setSide(Side.LEFT);
-        this.tabsMain.tabMaxWidthProperty().bind(this.tabsMain.heightProperty().divide(2).subtract(this.fontSize.multiply(5.14)));
-        this.tabsMain.tabMinWidthProperty().bind(this.tabsMain.heightProperty().divide(2).subtract(this.fontSize.multiply(5.14)));
+        this.tabsMain.tabMaxWidthProperty().bind(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
+        this.tabsMain.tabMinWidthProperty().bind(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
         this.odyssey.setContent(this.odysseyContentArea);
         this.horizons.setContent(this.horizonsContentArea);
         this.getChildren().addAll(this.tabsMain, this.bottomBar);

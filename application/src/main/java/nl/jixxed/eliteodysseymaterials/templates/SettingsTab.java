@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -19,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -30,8 +32,10 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -75,6 +79,8 @@ public class SettingsTab extends EDOTab {
     private Label urlSchemeLinkingLabel;
     private Button urlSchemeLinkingButton;
     private Label urlSchemeLinkingActiveLabel;
+    private Label wishlistHorizonsGradeRollsLabel;
+    private HBox wishlistHorizonsGradeRolls;
 
 
     SettingsTab(final Application application) {
@@ -110,6 +116,10 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.settings.title.overview"))
                 .build();
+        final Label wishlistLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.wishlist"))
+                .build();
         final Label generalLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.settings.title.general"))
@@ -139,15 +149,17 @@ public class SettingsTab extends EDOTab {
         final HBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
         final HBox irrelevantOverrideList = createIrrelevantOverrideList();
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
+        final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
 
         final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
         final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
+        final VBox wishlist = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(wishlistLabel, wishlistHorizonsGradeRollsSetting).buildVBox();
         final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
         final VBox notification = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader).buildVBox();
         Arrays.stream(NotificationType.values()).forEach(notificationType -> notification.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
         final VBox settings = BoxBuilder.builder()
-                .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, general, overview, notification, tracking)
+                .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
+                .withNodes(settingsLabel, general, overview, wishlist, notification, tracking)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
@@ -181,6 +193,30 @@ public class SettingsTab extends EDOTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.urlSchemeLinkingLabel, this.urlSchemeLinkingButton, this.urlSchemeLinkingActiveLabel)
+                .buildHBox();
+    }
+
+    private HBox createWishlistHorizonsGradeRollsSetting() {
+        this.wishlistHorizonsGradeRollsLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wishlist.grade.rolls")).build();
+        final VBox[] gradeControls = Arrays.stream(HorizonsBlueprintGrade.values()).filter(Predicate.not(HorizonsBlueprintGrade.NONE::equals)).sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
+                {
+                    final ButtonIntField buttonIntField = new ButtonIntField(0, 15, PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + grade.name(), grade.getDefaultNumberOfRolls()));
+                    buttonIntField.addHandlerOnValidChange(rolls -> PreferencesService.setPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + grade.name(), rolls));
+                    buttonIntField.getStyleClass().add("wishlist-rolls-select");
+                    final DestroyableLabel label = LabelBuilder.builder().withStyleClass("wishlist-rolls-label").withNonLocalizedText(String.valueOf(grade.getGrade())).build();
+                    final AnchorPane anchorPane2 = new AnchorPane(label);
+                    AnchorPaneHelper.setAnchor(label, 0D, 0D, 0D, 0D);
+                    return BoxBuilder.builder().withNodes(
+                            anchorPane2,
+                            buttonIntField
+                    ).buildVBox();
+                })
+                .toArray(VBox[]::new);
+
+        this.wishlistHorizonsGradeRolls = BoxBuilder.builder().withStyleClasses("grade-selects").withNodes(gradeControls).buildHBox();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.wishlistHorizonsGradeRollsLabel, this.wishlistHorizonsGradeRolls)
                 .buildHBox();
     }
 

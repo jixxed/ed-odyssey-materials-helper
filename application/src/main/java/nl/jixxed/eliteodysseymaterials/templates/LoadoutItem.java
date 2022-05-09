@@ -292,7 +292,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
             final DestroyableMenuItem menuItem = new DestroyableMenuItem();
             menuItem.setOnAction(event -> {
-                final List<WishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
+                final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
                 EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
             });
             menuItem.setText(wishlist.getName());
@@ -302,16 +302,16 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         return wishlists;
     }
 
-    private List<WishlistBlueprint> getRequiredWishlistRecipes() {
+    private List<OdysseyWishlistBlueprint> getRequiredWishlistRecipes() {
         final LevelValue recipes = this.loadout.getEquipment().getRecipes();
-        final List<WishlistBlueprint> wishlistBlueprints = new ArrayList<>();
+        final List<OdysseyWishlistBlueprint> wishlistBlueprints = new ArrayList<>();
         for (int level = this.loadout.getCurrentLevel() + 1; level <= this.loadout.getTargetLevel(); level++) {
             final Object recipe = recipes.getValueForLevel(level);
             if (!OdysseyBlueprintName.NONE.equals(recipe)) {
-                wishlistBlueprints.add(new WishlistBlueprint((OdysseyBlueprintName) recipe, true));
+                wishlistBlueprints.add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe, true));
             }
         }
-        wishlistBlueprints.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification.getModification() != null && !WeaponModification.NONE.equals(modification.getModification())).filter(SelectedModification::isNotPresent).map(modification -> new WishlistBlueprint(modification.getModification().getRecipe(), true)).toList());
+        wishlistBlueprints.addAll(Arrays.stream(this.loadout.getModifications()).filter(modification -> modification.getModification() != null && !WeaponModification.NONE.equals(modification.getModification())).filter(SelectedModification::isNotPresent).map(modification -> new OdysseyWishlistBlueprint(modification.getModification().getRecipe(), true)).toList());
         return wishlistBlueprints;
     }
 

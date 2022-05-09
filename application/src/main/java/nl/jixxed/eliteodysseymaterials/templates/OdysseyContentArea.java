@@ -26,7 +26,6 @@ class OdysseyContentArea extends AnchorPane {
     private OverviewTab overview;
     private WishlistTab wishlistTab;
     private OdysseyEngineersTab odysseyEngineersTab;
-    private SettingsTab settingsTab;
     private LoadoutEditorTab loadoutEditorTab;
     private TradeTab tradeTab;
     private TabPane tabs;
@@ -43,16 +42,14 @@ class OdysseyContentArea extends AnchorPane {
         this.loadoutEditorTab = new LoadoutEditorTab();
         this.odysseyEngineersTab = new OdysseyEngineersTab();
         this.tradeTab = new TradeTab();
-        this.settingsTab = new SettingsTab(application);
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.loadoutEditorTab.setClosable(false);
         this.odysseyEngineersTab.setClosable(false);
-        this.settingsTab.setClosable(false);
         this.tradeTab.setClosable(false);
 
         this.searchBar = new SearchBar();
-        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.odysseyEngineersTab, this.settingsTab/*, this.importTab*/);
+        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.odysseyEngineersTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

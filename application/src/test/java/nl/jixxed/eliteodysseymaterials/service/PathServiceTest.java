@@ -5,14 +5,14 @@ import de.saxsys.mvvmfx.testingutils.jfxrunner.TestInJfxThread;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
-import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
-import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprintTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.OdysseyWishlistBlueprintTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,17 +51,17 @@ class PathServiceTest {
     @TestInJfxThread
     void calculateShortestPath() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
-        final List<WishlistBlueprintTemplate> wishlistBlueprints = List.of(
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
+        final List<OdysseyWishlistBlueprintTemplate> wishlistBlueprints = List.of(
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(MAGAZINE_SIZE, true)),
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
         );
         LocationService.getCurrentStarSystem();
 
         EventService.publish(new LocationJournalEvent("", Engineer.ODEN_GEIGER.getStarSystem(), "", "", true));
 
-        final List<PathItem> pathItems = PathService.calculateShortestPath(wishlistBlueprints);
+        final List<PathItem<OdysseyBlueprintName>> pathItems = PathService.calculateOdysseyShortestPath(wishlistBlueprints);
 
         assertAll(() -> {
             assertEquals(3, pathItems.size());
@@ -80,16 +80,16 @@ class PathServiceTest {
     @TestInJfxThread
     void calculateShortestPath2() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
-        final List<WishlistBlueprintTemplate> wishlistBlueprints = List.of(
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(MAGAZINE_SIZE, true)),
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
-                new WishlistBlueprintTemplate("TEST", new WishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
+        final List<OdysseyWishlistBlueprintTemplate> wishlistBlueprints = List.of(
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(OdysseyBlueprintName.GREATER_RANGE_PLASMA, true)),
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(MAGAZINE_SIZE, true)),
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(OdysseyBlueprintName.SCOPE, true)),
+                new OdysseyWishlistBlueprintTemplate("TEST", new OdysseyWishlistBlueprint(OdysseyBlueprintName.STABILITY, true))
         );
         LocationService.getCurrentStarSystem();
 
         EventService.publish(new LocationJournalEvent("", Engineer.DOMINO_GREEN.getStarSystem(), "", "", true));
-        final List<PathItem> pathItems = PathService.calculateShortestPath(wishlistBlueprints);
+        final List<PathItem<OdysseyBlueprintName>> pathItems = PathService.calculateOdysseyShortestPath(wishlistBlueprints);
 
         assertAll(() -> {
             assertEquals(3, pathItems.size());

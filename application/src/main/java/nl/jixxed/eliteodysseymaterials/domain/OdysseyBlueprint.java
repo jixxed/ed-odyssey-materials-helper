@@ -11,19 +11,19 @@ import java.util.stream.Stream;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class OdysseyBlueprint {
+public abstract class OdysseyBlueprint implements Blueprint<OdysseyBlueprintName> {
     private final Map<OdysseyMaterial, Integer> assets;
     private final Map<OdysseyMaterial, Integer> data;
     private final Map<OdysseyMaterial, Integer> goods;
     @EqualsAndHashCode.Include
-    private final BlueprintName blueprintName;
+    private final BlueprintName<OdysseyBlueprintName> blueprintName;
     private final Map<OdysseyModifier, String> modifiers;
 
-    protected OdysseyBlueprint(final BlueprintName blueprintName, final Map<? extends OdysseyMaterial, Integer> materials) {
+    protected OdysseyBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials) {
         this(blueprintName, materials, Collections.emptyMap());
     }
 
-    protected OdysseyBlueprint(final BlueprintName blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Map<OdysseyModifier, String> modifiers) {
+    protected OdysseyBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final Map<OdysseyModifier, String> modifiers) {
         this.blueprintName = blueprintName;
         this.modifiers = modifiers;
         this.assets = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Asset).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -58,7 +58,8 @@ public abstract class OdysseyBlueprint {
         return amount != null ? amount : 0;
     }
 
-    public BlueprintName getBlueprintName() {
+    @Override
+    public BlueprintName<OdysseyBlueprintName> getBlueprintName() {
         return this.blueprintName;
     }
 

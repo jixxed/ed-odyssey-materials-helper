@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class BeamLaserBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.LIGHTWEIGHT_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -24,7 +25,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-30%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
@@ -36,7 +37,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
@@ -49,7 +50,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-60%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.PHASEALLOYS, 1,
@@ -62,7 +63,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-75%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.PROTOLIGHTALLOYS, 1,
@@ -77,7 +78,7 @@ public class BeamLaserBlueprints {
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
             HorizonsBlueprintType.LONG_RANGE_WEAPON,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -88,7 +89,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+10%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Encoded.CONSUMERFIRMWARE, 1,
                                     Raw.SULPHUR, 1
@@ -100,7 +101,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+15%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.FOCUSCRYSTALS, 1,
                                     Encoded.CONSUMERFIRMWARE, 1,
@@ -113,7 +114,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVEPOLYMERS, 1,
                                     Manufactured.FOCUSCRYSTALS, 1,
@@ -126,7 +127,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+25%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.INDUSTRIALFIRMWARE, 1,
                                     Manufactured.THERMICALLOYS, 1,
@@ -141,7 +142,7 @@ public class BeamLaserBlueprints {
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
             HorizonsBlueprintType.SHORT_RANGE_BLASTER,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -150,7 +151,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-10%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Encoded.CONSUMERFIRMWARE, 1,
                                     Raw.NICKEL, 1
@@ -161,7 +162,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+10%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.ELECTROCHEMICALARRAYS, 1,
                                     Encoded.CONSUMERFIRMWARE, 1,
@@ -173,7 +174,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVEPOLYMERS, 1,
                                     Manufactured.ELECTROCHEMICALARRAYS, 1,
@@ -185,7 +186,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+30%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.BIOTECHCONDUCTORS, 1,
                                     Manufactured.CONFIGURABLECOMPONENTS, 1,
@@ -199,7 +200,7 @@ public class BeamLaserBlueprints {
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
             HorizonsBlueprintType.STURDY_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -210,7 +211,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -222,7 +223,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1,
@@ -235,7 +236,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
                                     Raw.TUNGSTEN, 1,
@@ -248,7 +249,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+80%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Raw.MOLYBDENUM, 1,
@@ -263,7 +264,7 @@ public class BeamLaserBlueprints {
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
             HorizonsBlueprintType.EFFICIENT_WEAPON,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -272,7 +273,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-38%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.HEATDISPERSIONPLATE, 1, Raw.SULPHUR, 1
                             ),
@@ -283,7 +284,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-43%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CHROMIUM, 1, Encoded.SCRAMBLEDEMISSIONDATA, 1, Manufactured.HEATEXCHANGERS, 1
                             ),
@@ -294,7 +295,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-48%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.HEATVANES, 1, Encoded.ARCHIVEDEMISSIONDATA, 1, Raw.SELENIUM, 1
                             ),
@@ -305,7 +306,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-53%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.CADMIUM, 1, Manufactured.PROTOHEATRADIATORS, 1, Encoded.EMISSIONDATA, 1
                             ),
@@ -318,7 +319,7 @@ public class BeamLaserBlueprints {
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
             HorizonsBlueprintType.OVERCHARGED_WEAPON,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -328,7 +329,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+3%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1, Raw.NICKEL, 1
                             ),
@@ -338,7 +339,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+6%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1, Manufactured.ELECTROCHEMICALARRAYS, 1, Raw.NICKEL, 1
                             ),
@@ -348,7 +349,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+9%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1, Manufactured.POLYMERCAPACITORS, 1, Raw.ZINC, 1
                             ),
@@ -358,7 +359,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+12%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.BEAM_LASER, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVEPOLYMERS, 1, Encoded.EMBEDDEDFIRMWARE, 1, Raw.ZIRCONIUM, 1
                             ),

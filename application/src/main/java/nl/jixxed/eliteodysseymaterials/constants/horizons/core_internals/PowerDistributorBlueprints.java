@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class PowerDistributorBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.CHARGE_ENHANCED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Encoded.LEGACYFIRMWARE, 1
                             ),
@@ -23,7 +24,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_RECHARGE, new HorizonsModifierValue("+9%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CHEMICALPROCESSORS, 1,
                                     Encoded.LEGACYFIRMWARE, 1
@@ -33,7 +34,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_RECHARGE, new HorizonsModifierValue("+18%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CHEMICALDISTILLERY, 1,
                                     Manufactured.GRIDRESISTORS, 1,
@@ -44,7 +45,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_RECHARGE, new HorizonsModifierValue("+27%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CHEMICALMANIPULATORS, 1,
                                     Encoded.INDUSTRIALFIRMWARE, 1,
@@ -55,7 +56,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_RECHARGE, new HorizonsModifierValue("+36%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.CHARGE_ENHANCED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CHEMICALMANIPULATORS, 1,
                                     Encoded.INDUSTRIALFIRMWARE, 1,
@@ -68,7 +69,7 @@ public class PowerDistributorBlueprints {
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER))),
             HorizonsBlueprintType.ENGINE_FOCUSED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -81,7 +82,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("+16%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Raw.SULPHUR, 1
@@ -95,7 +96,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("+23%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Encoded.BULKSCANDATA, 1,
                                     Raw.CHROMIUM, 1,
@@ -110,7 +111,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("+30%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Encoded.SCANARCHIVES, 1,
                                     Raw.SELENIUM, 1,
@@ -125,7 +126,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("+37%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ENGINE_FOCUSED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.SCANDATABANKS, 1,
                                     Raw.CADMIUM, 1,
@@ -142,7 +143,7 @@ public class PowerDistributorBlueprints {
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER))),
             HorizonsBlueprintType.HIGH_CHARGE_CAPACITY,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -152,7 +153,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_CAPACITY, new HorizonsModifierValue("+10%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CHROMIUM, 1,
                                     Encoded.LEGACYFIRMWARE, 1
@@ -163,7 +164,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_CAPACITY, new HorizonsModifierValue("+18%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CHROMIUM, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -175,7 +176,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_CAPACITY, new HorizonsModifierValue("+26%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Encoded.CONSUMERFIRMWARE, 1,
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
@@ -187,7 +188,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.POWER_CAPACITY, new HorizonsModifierValue("+34%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.HIGH_CHARGE_CAPACITY, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.INDUSTRIALFIRMWARE, 1,
                                     Manufactured.MILITARYSUPERCAPACITORS, 1,
@@ -201,7 +202,7 @@ public class PowerDistributorBlueprints {
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER))),
             HorizonsBlueprintType.SHIELDED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.WORNSHIELDEMITTERS, 1
                             ),
@@ -211,7 +212,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+3%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -222,7 +223,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+6%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -234,7 +235,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+9%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -246,7 +247,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+12%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.COMPOUNDSHIELDING, 1,
                                     Manufactured.FEDCORECOMPOSITES, 1,
@@ -260,7 +261,7 @@ public class PowerDistributorBlueprints {
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER))),
             HorizonsBlueprintType.SYSTEM_FOCUSED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -273,7 +274,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-1%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Raw.SULPHUR, 1
@@ -287,7 +288,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-2%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Encoded.BULKSCANDATA, 1,
                                     Raw.CHROMIUM, 1,
@@ -302,7 +303,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-3%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Encoded.SCANARCHIVES, 1,
                                     Raw.SELENIUM, 1,
@@ -317,7 +318,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-4%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.SYSTEM_FOCUSED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.SCANDATABANKS, 1,
                                     Raw.CADMIUM, 1,
@@ -334,7 +335,7 @@ public class PowerDistributorBlueprints {
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER))),
             HorizonsBlueprintType.WEAPON_FOCUSED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -347,7 +348,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-3%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Raw.SULPHUR, 1
@@ -361,7 +362,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-6%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Encoded.BULKSCANDATA, 1,
                                     Manufactured.HYBRIDCAPACITORS, 1,
@@ -376,7 +377,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-9%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Encoded.SCANARCHIVES, 1,
                                     Manufactured.ELECTROCHEMICALARRAYS, 1,
@@ -391,7 +392,7 @@ public class PowerDistributorBlueprints {
                                     HorizonsModifier.ENGINES_RECHARGE, new HorizonsModifierValue("-12%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.WEAPON_FOCUSED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.SCANDATABANKS, 1,
                                     Manufactured.POLYMERCAPACITORS, 1,

@@ -14,15 +14,19 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +56,11 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private HBox secondLine;
     private Region region2;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
+    public List<EventListener<?>> getEventListeners() {
+        return this.eventListeners;
+    }
 
     HorizonsMaterialIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer leftAmount, final Integer rightAmount) {
         if (storageType.equals(HorizonsStorageType.OTHER)) {
@@ -66,7 +75,12 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update());
+        this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
+        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, evt -> {
+            if (evt.getStoragePool().equals(StoragePool.SHIP)) {
+                this.update();
+            }
+        }));
     }
 
     private void initComponents() {
@@ -108,7 +122,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     }
 
 
-    private void update() {
+    protected void update() {
         setRightAmount(StorageService.getMaterialCount(this.horizonsMaterial));
         if (this.rightAmount >= this.leftAmount) {
             this.rightAmountLabel.setText(this.rightAmount.toString());
@@ -131,7 +145,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         return this.nameLabel.getText();
     }
 
-    public HorizonsMaterial getOdysseyMaterial() {
+    public HorizonsMaterial getHorizonsMaterial() {
         return this.horizonsMaterial;
     }
 
@@ -170,11 +184,13 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
 
     @Override
     public void destroyInternal() {
-        EventService.removeListener(this);
+        this.eventListeners.forEach(EventService::removeListener);
     }
 
     @Override
     public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
         return Collections.emptyMap();
     }
+
+
 }

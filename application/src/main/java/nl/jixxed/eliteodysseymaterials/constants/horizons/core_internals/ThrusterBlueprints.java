@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class ThrusterBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.CLEAN_DRIVE_TUNING,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -24,7 +25,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.OPTIMAL_MASS, new HorizonsModifierValue("-2%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Encoded.LEGACYFIRMWARE, 1
@@ -37,7 +38,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-30%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Encoded.LEGACYFIRMWARE, 1,
@@ -51,7 +52,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-40%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Encoded.DECODEDEMISSIONDATA, 1,
@@ -65,7 +66,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-50%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.CLEAN_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.COMPACTEMISSIONSDATA, 1,
                                     Manufactured.CONDUCTIVECERAMICS, 1,
@@ -81,7 +82,7 @@ public class ThrusterBlueprints {
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI))),
             HorizonsBlueprintType.DIRTY_DRIVE_TUNING,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Encoded.LEGACYFIRMWARE, 1
                             ),
@@ -93,7 +94,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.MECHANICALEQUIPMENT, 1,
                                     Encoded.LEGACYFIRMWARE, 1
@@ -106,7 +107,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+30%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CHROMIUM, 1,
                                     Manufactured.MECHANICALCOMPONENTS, 1,
@@ -120,7 +121,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+40%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONFIGURABLECOMPONENTS, 1,
                                     Encoded.CONSUMERFIRMWARE, 1,
@@ -134,7 +135,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+50%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DIRTY_DRIVE_TUNING, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.CADMIUM, 1,
                                     Encoded.INDUSTRIALFIRMWARE, 1,
@@ -150,7 +151,7 @@ public class ThrusterBlueprints {
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI))),
             HorizonsBlueprintType.DRIVE_STRENGTHENING,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.CARBON, 1
                             ),
@@ -160,7 +161,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+5%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.HEATCONDUCTIONWIRING, 1,
                                     Raw.VANADIUM, 1
@@ -171,7 +172,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+10%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.HEATCONDUCTIONWIRING, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -183,7 +184,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+15%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.COMPOUNDSHIELDING, 1,
                                     Manufactured.HEATDISPERSIONPLATE, 1,
@@ -195,7 +196,7 @@ public class ThrusterBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.THRUSTERS, HorizonsBlueprintType.DRIVE_STRENGTHENING, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.HEATEXCHANGERS, 1,
                                     Manufactured.IMPERIALSHIELDING, 1,

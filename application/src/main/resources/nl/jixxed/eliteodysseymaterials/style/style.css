@@ -584,13 +584,15 @@
     -fx-text-fill: white;
 }
 
-.wishlist-item > .label {
+.wishlist-item > .wishlist-label {
     -fx-label-padding: 5;
     -fx-text-fill: white;
     -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
 
-.wishlist-item-close {
+.wishlist-item-button {
     -fx-background-color: #4f4f4f;
     -fx-background-insets: 0 0 0 0;
     -fx-border-color: black;
@@ -601,19 +603,20 @@
     -fx-max-width: 2em;
     -fx-min-width: 2em;
     -fx-padding: 2;
+    -fx-focus-traversable: false;
 }
 
-.wishlist-item-close:hover {
+.wishlist-item-button:hover {
     -fx-background-color: #fff;
     -fx-text-fill: black;
 }
 
-.wishlist-item-close:armed,
-.wishlist-item-close:pressed,
-.wishlist-item-close:selected,
-.wishlist-item-close:visited,
-.wishlist-item-close:selected:focused,
-.wishlist-item-close:focused {
+.wishlist-item-button:armed,
+.wishlist-item-button:pressed,
+.wishlist-item-button:selected,
+.wishlist-item-button:visited,
+.wishlist-item-button:selected:focused,
+.wishlist-item-button:focused {
     -fx-background-color: black;
     -fx-background-insets: 0 0 0 0;
     -fx-border-color: black;
@@ -622,11 +625,11 @@
     -fx-cursor: hand;
 }
 
-.wishlist-item-close:focused {
+.wishlist-item-button:focused {
     -fx-background-color: #2e92df;
 }
 
-.wishlist-item-close:pressed {
+.wishlist-item-button:pressed {
     -fx-background-color: black;
 }
 
@@ -649,10 +652,15 @@
 }
 
 
-.wishlist-item.wishlist-highlight .label {
+.wishlist-item.wishlist-highlight .wishlist-label {
     -fx-background-color: #4f4f4f;
     -fx-text-fill: #2e92df;
 }
+
+/*.wishlist-item.wishlist-highlight {*/
+/*    -fx-background-color: #4f4f4f;*/
+/*    -fx-text-fill: #2e92df;*/
+/*}*/
 
 .recipe-wishlist-count {
     -fx-background-radius: 15;
@@ -704,7 +712,11 @@
 }
 
 .settings-spacing-10 {
-    -fx-spacing: 10;
+    -fx-spacing: 0.75em;
+}
+
+.settings-vbox {
+    -fx-padding: 0 0.75em 0.75em 0.75em;
 }
 
 .settings-dropdown {
@@ -1044,6 +1056,7 @@
 }
 
 .wishlist-label {
+    -fx-label-padding: 5;
     -fx-max-height: 2em;
     -fx-pref-height: 2em;
     -fx-min-height: 2em;
@@ -1131,19 +1144,19 @@
     -fx-padding: 5px;
 }
 
-.wishlist-item > .label.wishlist-craftable {
+.wishlist-item .label.wishlist-craftable {
     -fx-text-fill: #89d07f;
 }
 
-.wishlist-item > .label.wishlist-craftable:hover {
+.wishlist-item .label.wishlist-craftable:hover {
     -fx-text-fill: #2e92df;
 }
 
-.wishlist-item > .label.wishlist-craftable-with-trade {
+.wishlist-item .label.wishlist-craftable-with-trade {
     -fx-text-fill: #dcc030;
 }
 
-.wishlist-item > .label.wishlist-craftable-with-trade:hover {
+.wishlist-item .label.wishlist-craftable-with-trade:hover {
     -fx-text-fill: #2e92df;
 }
 
@@ -1900,7 +1913,6 @@
     -fx-underline: true;
 }
 
-
 .shortest-path-item-button {
     -fx-hgap: 0.25em;
     -fx-spacing: 0.25em;
@@ -1913,4 +1925,72 @@
 .settingsblock {
     -fx-background-color: #0f0f0f;
     -fx-padding: 0 0 1em 0;
+}
+
+.recipe-wishlist-quickswitch {
+    -fx-min-width: 35em;
+    -fx-pref-width: 35em;
+    -fx-max-width: 35em;
+}
+
+.recipe-wishlist-quickswitch-spacer {
+    -fx-min-height: 0.3em;
+    -fx-pref-height: 0.3em;
+    -fx-max-height: 0.3em;
+}
+
+.wishlist-rolls-select > .button {
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    -fx-padding: 0.1em;
+    -fx-min-width: 1.2em;
+    -fx-focus-traversable: false;
+}
+
+.wishlist-rolls-select > .text-field {
+    -fx-min-width: 2.5em;
+    -fx-pref-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    -fx-focus-traversable: false;
+}
+
+.wishlist-rolls-label {
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.grade-selects {
+    -fx-spacing: 0.2em;
+}
+
+.grade-selects-title {
+    -fx-font-size: 1.3em;
+}
+
+.wishlist-hint-box {
+    -fx-min-width: 3em;
+}
+
+
+.wishlist-hint-white {
+    -fx-text-fill: #fff;
+    -fx-font-style: italic;
+}
+
+.wishlist-hint-yellow {
+    -fx-text-fill: #dcc030;
+    -fx-font-style: italic;
+}
+
+.wishlist-hint-green {
+    -fx-text-fill: #89d07f;
+    -fx-font-style: italic;
+}
+
+.wishlist-tooltip {
+    -fx-wrap-text: true;
 }

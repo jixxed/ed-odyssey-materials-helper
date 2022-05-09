@@ -19,6 +19,7 @@ public class PreferenceConstants {
     public static final String ORIENTATION = "orientation";
     public static final String LOADOUTS_PREFIX = "loadouts.";
     public static final String WISHLISTS_PREFIX = "wishlists.";
+    public static final String HORIZONS_WISHLISTS_PREFIX = "wishlists.horizons.";
     public static final String WISHLIST_RECIPES_PREFIX = "wishlist.recipes.";
     public static final String WISHLIST_RECIPES = "wishlist.recipes";
     public static final String RECIPES_VISIBLE = "recipes.visible";
@@ -35,6 +36,7 @@ public class PreferenceConstants {
     public static final String WHATS_NEW_VERSION = "whats.new.version";
     public static final String URL_SCHEME = "url.scheme.asked";
     public static final String WIP = "wip.visible";
+    public static final String WISHLIST_GRADE_ROLLS_PREFIX = "wishlist.grade.rolls.";
 
 
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";

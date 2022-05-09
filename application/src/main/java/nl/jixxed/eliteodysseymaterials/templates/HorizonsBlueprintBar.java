@@ -11,8 +11,7 @@ import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -92,7 +91,13 @@ class HorizonsBlueprintBar extends Accordion {
         final HBox hBoxTypes = BoxBuilder.builder().withNode(types).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
-
+        EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.TECHBROKER.equals(blueprintName.getBlueprintCategory())) {
+                blueprints.getSelectionModel().select(blueprintName);
+                types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
+                this.setExpandedPane(categoryTitledPane);
+            }
+        });
 
         //auto select first option
         blueprints.getSelectionModel().select(0);
@@ -103,6 +108,20 @@ class HorizonsBlueprintBar extends Accordion {
         categoryTitledPane.setContent(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
+    }
+
+    private HorizonsBlueprintGrade getBlueprintGrade(final Blueprint blueprint) {
+        if (blueprint instanceof HorizonsBlueprint horizonsBlueprint) {
+            return horizonsBlueprint.getHorizonsBlueprintGrade();
+        }
+        return null;
+    }
+
+    private HorizonsBlueprintType getBlueprintType(final Blueprint blueprint) {
+        if (blueprint instanceof HorizonsBlueprint horizonsBlueprint) {
+            return horizonsBlueprint.getHorizonsBlueprintType();
+        }
+        return null;
     }
 
     private TitledPane createExperimentalEffectsCategoryTitledPane(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> recipesEntry) {
@@ -123,17 +142,19 @@ class HorizonsBlueprintBar extends Accordion {
             }
             types.setVisibleRowCount(types.getItems().size());
         });
-        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprintName() instanceof HorizonsBlueprintName horizonsBlueprintName && blueprintClickEvent.isExperimental() && blueprints.getItems().contains(horizonsBlueprintName)) {
-                blueprints.getSelectionModel().select(horizonsBlueprintName);
-                this.setExpandedPane(categoryTitledPane);
-            }
-        });
         final HBox hBoxBlueprints = BoxBuilder.builder().withNode(blueprints).buildHBox();
         final HBox hBoxTypes = BoxBuilder.builder().withNode(types).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
-
+        EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && blueprintClickEvent.isExperimental()) {
+                blueprints.getSelectionModel().select(blueprintName);
+                if (blueprintClickEvent.getBlueprint() instanceof HorizonsExperimentalEffectBlueprint) {
+                    types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
+                }
+                this.setExpandedPane(categoryTitledPane);
+            }
+        });
 
         //auto select first option
         blueprints.getSelectionModel().select(0);
@@ -159,7 +180,20 @@ class HorizonsBlueprintBar extends Accordion {
 
         final HBox hBoxBlueprints = BoxBuilder.builder().withNode(blueprints).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
+        EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.SYNTHESIS.equals(blueprintName.getBlueprintCategory())) {
+                blueprints.getSelectionModel().select(blueprintName);
+                final HorizonsBlueprintGrade horizonsBlueprintGrade = ((HorizonsBlueprint) blueprintClickEvent.getBlueprint()).getHorizonsBlueprintGrade();
+                switch (horizonsBlueprintGrade) {
+                    case GRADE_1 -> gradeButtons.getButtons().get(0).selectedProperty().set(true);
+                    case GRADE_2 -> gradeButtons.getButtons().get(1).selectedProperty().set(true);
+                    case GRADE_3 -> gradeButtons.getButtons().get(2).selectedProperty().set(true);
+                    default -> throw new UnsupportedOperationException();
+                }
 
+                this.setExpandedPane(categoryTitledPane);
+            }
+        });
 
         //auto select first option
         blueprints.getSelectionModel().select(0);
@@ -195,9 +229,21 @@ class HorizonsBlueprintBar extends Accordion {
                 }
             }
         });
-        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprintName() instanceof HorizonsBlueprintName horizonsBlueprintName && !blueprintClickEvent.isExperimental() && blueprints.getItems().contains(horizonsBlueprintName)) {
-                blueprints.getSelectionModel().select(horizonsBlueprintName);
+        EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && recipesEntry.getKey().equals(blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
+                blueprints.getSelectionModel().select(blueprintName);
+                if (blueprintClickEvent.getBlueprint() instanceof HorizonsModuleBlueprint) {
+                    types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
+                    final HorizonsBlueprintGrade horizonsBlueprintGrade = ((HorizonsBlueprint) blueprintClickEvent.getBlueprint()).getHorizonsBlueprintGrade();
+                    switch (horizonsBlueprintGrade) {
+                        case GRADE_1 -> gradeButtons.getButtons().get(0).selectedProperty().set(true);
+                        case GRADE_2 -> gradeButtons.getButtons().get(1).selectedProperty().set(true);
+                        case GRADE_3 -> gradeButtons.getButtons().get(2).selectedProperty().set(true);
+                        case GRADE_4 -> gradeButtons.getButtons().get(3).selectedProperty().set(true);
+                        case GRADE_5 -> gradeButtons.getButtons().get(4).selectedProperty().set(true);
+                        default -> throw new UnsupportedOperationException();
+                    }
+                }
                 this.setExpandedPane(categoryTitledPane);
             }
         });
@@ -312,16 +358,22 @@ class HorizonsBlueprintBar extends Accordion {
         final ToggleButton toggleButton = ToggleButtonBuilder.builder().withStyleClass("recipe-grade-togglebutton").build();
         toggleButton.setGraphic(ResizableImageViewBuilder.builder().withImage("/images/ships/engineers/ranks/" + grade.getGrade() + ".png").withStyleClasses("blueprint-grade-image").build());
         toggleButton.selectedProperty().addListener((observable, oldValue, newValue) ->
-                setContent(scroll, selectedBlueprint.get(), selectedType.get(), newValue, generateContent(recipeEntry.getOrDefault(selectedBlueprint.get(), Collections.emptyMap()).getOrDefault(selectedType.get(), Collections.emptyMap()).get(grade)))
-        );
+        {
+            if (Boolean.TRUE.equals(newValue)) {
+                setContent(scroll, selectedBlueprint.get(), selectedType.get(), newValue, generateContent(recipeEntry.getOrDefault(selectedBlueprint.get(), Collections.emptyMap()).getOrDefault(selectedType.get(), Collections.emptyMap()).get(grade)));
+            }
+        });
         return toggleButton;
     }
 
     private ToggleButton getSynthesisToggleButton(final ScrollPane scroll, final Supplier<HorizonsBlueprintType> selectedType, final Supplier<HorizonsBlueprintName> selectedBlueprint, final HorizonsBlueprintGrade grade, final Map<HorizonsBlueprintName, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> recipesEntry) {
         final ToggleButton toggleButton = ToggleButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.synthesis.grade" + grade.getGrade())).withStyleClass("recipe-synthesis-togglebutton").build();
         toggleButton.selectedProperty().addListener((observable, oldValue, newValue) ->
-                setContent(scroll, selectedBlueprint.get(), selectedType.get(), newValue, generateContent(recipesEntry.getOrDefault(selectedBlueprint.get(), Collections.emptyMap()).get(grade)))
-        );
+        {
+            if (Boolean.TRUE.equals(newValue)) {
+                setContent(scroll, selectedBlueprint.get(), selectedType.get(), newValue, generateContent(recipesEntry.getOrDefault(selectedBlueprint.get(), Collections.emptyMap()).get(grade)));
+            }
+        });
         return toggleButton;
     }
 
@@ -336,11 +388,18 @@ class HorizonsBlueprintBar extends Accordion {
         if (Objects.equals(true, isSelected) && type != null && name != null) {
             try {
                 if (scroll.getContent() instanceof Destroyable destroyableContent) {
+                    log.debug("destroy existing content" + destroyableContent);
                     destroyableContent.destroy();
                 }
+                log.debug("set content" + content);
                 scroll.setContent(content);
             } catch (final NullPointerException ex) {
                 log.error("NPE", ex);
+            }
+        } else {
+            if (content instanceof Destroyable destroyableContent) {
+                log.debug("set provided content" + destroyableContent);
+                destroyableContent.destroy();
             }
         }
     }
@@ -373,9 +432,9 @@ class HorizonsBlueprintBar extends Accordion {
         blueprints.valueProperty().addListener((obs, oldValue, newValue) -> {
             setContent(scroll, newValue, HorizonsBlueprintType.ENGINEER, true, generateContent(recipesEngineers.get(newValue)));
         });
-        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprintName() instanceof HorizonsBlueprintName horizonsBlueprintName && !blueprintClickEvent.isExperimental() && blueprints.getItems().contains(horizonsBlueprintName)) {
-                blueprints.getSelectionModel().select(horizonsBlueprintName);
+        EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.ENGINEER_UNLOCKS.equals(blueprintName.getBlueprintCategory())) {
+                blueprints.getSelectionModel().select(blueprintName);
                 this.setExpandedPane(categoryTitledPane);
             }
         });

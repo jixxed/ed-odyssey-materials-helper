@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.ClipboardJsonIgnore;
-import nl.jixxed.eliteodysseymaterials.domain.ClipboardLoadout;
-import nl.jixxed.eliteodysseymaterials.domain.ClipboardWishlist;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -30,6 +27,19 @@ public class ClipboardHelper {
                 return _findAnnotation(m, ClipboardJsonIgnore.class) != null;
             }
         });
+    }
+
+    public static String createClipboardHorizonsWishlist() {
+        return APPLICATION_STATE.getPreferredCommander().map(commander -> {
+            try {
+                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardHorizonsWishlist("wishlist", 1, APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist()));
+                final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
+                return "edomh://horizonswishlist/?" + wishlist64;
+            } catch (final JsonProcessingException e) {
+                log.error("failed to process wishlist", e);
+            }
+            return "";
+        }).orElse("");
     }
 
     public static String createClipboardWishlist() {

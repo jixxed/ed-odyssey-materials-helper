@@ -4,13 +4,16 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import lombok.Getter;
 import lombok.Setter;
 
 public class IntField extends TextField {
     private final IntegerProperty value;
     @Setter
+    @Getter
     private int minValue;
     @Setter
+    @Getter
     private int maxValue;
 
     // expose an integer value property for the text field.

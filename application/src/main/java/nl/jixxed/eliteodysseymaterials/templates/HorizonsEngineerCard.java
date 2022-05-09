@@ -20,9 +20,9 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.segmentbar.TypeSegment;
@@ -155,30 +155,36 @@ class HorizonsEngineerCard extends EngineerCard {
 
     @SuppressWarnings("java:S1640")
     private List<HBox> getBlueprints(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> blueprints) {
-        final Map<HorizonsBlueprintName, Integer> maxGrades = new HashMap<>();
+        final Map<HorizonsBlueprint, Integer> maxGrades = new HashMap<>();
         blueprints.values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
                 .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
                 .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(this.engineer))
+                .sorted((Comparator.comparing(HorizonsBlueprint::getHorizonsBlueprintType)))
                 .sorted((Comparator.comparing((HorizonsBlueprint horizonsBlueprint) -> horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()).reversed()))
-                .forEach(horizonsBlueprint -> maxGrades.computeIfAbsent(horizonsBlueprint.getHorizonsBlueprintName(), horizonsBlueprintName -> horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()));
+                .forEach(horizonsBlueprint -> {
+                    if (maxGrades.keySet().stream().noneMatch(horizonsBlueprintInMap -> horizonsBlueprintInMap.getHorizonsBlueprintName().equals(horizonsBlueprint.getBlueprintName()))) {
+                        maxGrades.put(horizonsBlueprint, horizonsBlueprint.getHorizonsBlueprintGrade().getGrade());
+                    }
+                });
+//                .forEach(horizonsBlueprint -> maxGrades.compute(horizonsBlueprint, (horizonsBlueprint, horizonsBlueprintName) -> horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()));
         return getBlueprintLabels(maxGrades);
     }
 
 
-    private ArrayList<HBox> getBlueprintLabels(final Map<HorizonsBlueprintName, Integer> maxGrades) {
+    private ArrayList<HBox> getBlueprintLabels(final Map<HorizonsBlueprint, Integer> maxGrades) {
         return maxGrades.entrySet().stream()
-                .sorted(((Comparator<Map.Entry<HorizonsBlueprintName, Integer>>) (Comparator<?>) Map.Entry.comparingByValue().reversed()).thenComparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey())))
+                .sorted(((Comparator<Map.Entry<HorizonsBlueprint, Integer>>) (Comparator<?>) Map.Entry.comparingByValue().reversed()).thenComparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintName().getLocalizationKey())))
                 .map(entry -> BoxBuilder.builder()
                         .withNodes(LabelBuilder.builder()
                                         .withStyleClass("engineer-bullet")
                                         .withNonLocalizedText(entry.getValue().toString())
-                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(entry.getKey())))
+                                        .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
                                         .build(),
                                 LabelBuilder.builder()
                                         .withStyleClass("engineer-blueprint")
-                                        .withText(LocaleService.getStringBinding(entry.getKey().getLocalizationKey()))
-                                        .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(entry.getKey())))
+                                        .withText(LocaleService.getStringBinding(entry.getKey().getHorizonsBlueprintName().getLocalizationKey()))
+                                        .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
                                         .build()).buildHBox())
                 .collect(Collectors.toCollection(ArrayList::new));
     }

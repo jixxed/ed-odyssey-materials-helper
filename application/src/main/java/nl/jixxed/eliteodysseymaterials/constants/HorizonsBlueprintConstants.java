@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.*;
+import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -70,21 +71,47 @@ public abstract class HorizonsBlueprintConstants {
                     BlueprintCategory.OPTIONAL_INTERNAL, OPTIONAL_INTERNAL_BLUEPRINTS
             );
 
-    public static HorizonsBlueprint getRecipe(final HorizonsBlueprintName name, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        HorizonsBlueprint recipe = HARDPOINT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
+    public static Blueprint<HorizonsBlueprintName> getRecipe(final HorizonsBlueprintName name, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+
+        HorizonsBlueprint recipe = ENGINEER_UNLOCK_REQUIREMENTS.get(name);
         if (recipe != null) {
             return recipe;
         }
-        recipe = UTILITY_MOUNT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
+        if (horizonsBlueprintType != null) {
+            recipe = EXPERIMENTAL_EFFECTS.getOrDefault(name, Collections.emptyMap()).get(horizonsBlueprintType);
+            if (recipe != null) {
+                return recipe;
+            }
+            recipe = TECHBROKER_UNLOCKS.getOrDefault(name, Collections.emptyMap()).get(horizonsBlueprintType);
+            if (recipe != null) {
+                return recipe;
+            }
+        }
+        if (horizonsBlueprintGrade != null) {
+            recipe = SYNTHESIS.getOrDefault(name, Collections.emptyMap()).get(horizonsBlueprintGrade);
+            if (recipe != null) {
+                return recipe;
+            }
+        }
+        if (horizonsBlueprintType != null && horizonsBlueprintGrade != null) {
+            recipe = HARDPOINT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
+            if (recipe != null) {
+                return recipe;
+            }
+            recipe = UTILITY_MOUNT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
+            if (recipe != null) {
+                return recipe;
+            }
+            recipe = CORE_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
+            if (recipe != null) {
+                return recipe;
+            }
+            recipe = OPTIONAL_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
+        }
         if (recipe != null) {
             return recipe;
         }
-        recipe = CORE_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
-        if (recipe != null) {
-            return recipe;
-        }
-        recipe = OPTIONAL_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
-        return recipe;
+        throw new IllegalArgumentException("could not find blueprint for name/type/grade: " + name + "/" + horizonsBlueprintType.name() + "/" + horizonsBlueprintGrade.name());
     }
 
     public static HorizonsEngineerBlueprint getEngineerRecipe(final HorizonsBlueprintName name) {
@@ -137,12 +164,24 @@ public abstract class HorizonsBlueprintConstants {
         return SYNTHESIS.get(name).keySet();
     }
 
-    public static BlueprintCategory getRecipeCategory(final HorizonsBlueprintName recipeName) {
-        return RECIPES.entrySet().stream()
-                .filter(recipeCategoryMapEntry -> recipeCategoryMapEntry.getValue().containsKey(recipeName))
-                .findFirst()
-                .map(Map.Entry::getKey)
-                .orElse(null);
+    public static BlueprintCategory getRecipeCategory(final BlueprintName<HorizonsBlueprintName> recipeName, final boolean isExperimental) {
+        BlueprintCategory blueprintCategory = null;
+        if (isExperimental) {
+            blueprintCategory = BlueprintCategory.EXPERIMENTAL_EFFECTS;
+        } else if (ENGINEER_UNLOCK_REQUIREMENTS.entrySet().stream().anyMatch(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().equals(recipeName))) {
+            blueprintCategory = BlueprintCategory.ENGINEER_UNLOCKS;
+        } else if (SYNTHESIS.entrySet().stream().anyMatch(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().equals(recipeName))) {
+            blueprintCategory = BlueprintCategory.SYNTHESIS;
+        } else if (TECHBROKER_UNLOCKS.entrySet().stream().anyMatch(recipeCategoryMapEntry -> recipeCategoryMapEntry.getKey().equals(recipeName))) {
+            blueprintCategory = BlueprintCategory.TECHBROKER;
+        } else {
+            blueprintCategory = RECIPES.entrySet().stream()
+                    .filter(recipeCategoryMapEntry -> recipeCategoryMapEntry.getValue().containsKey(recipeName))
+                    .findFirst()
+                    .map(Map.Entry::getKey)
+                    .orElse(null);
+        }
+        return blueprintCategory;
     }
 
     static {

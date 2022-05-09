@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class FSDBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.GRIDRESISTORS, 1
                             ),
@@ -25,7 +26,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+4%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CHROMIUM, 1,
                                     Manufactured.GRIDRESISTORS, 1
@@ -37,7 +38,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+8%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.GRIDRESISTORS, 1,
                                     Manufactured.HEATDISPERSIONPLATE, 1,
@@ -50,7 +51,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+12%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.CADMIUM, 1,
                                     Manufactured.HEATEXCHANGERS, 1,
@@ -63,7 +64,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+16%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.ELECTROCHEMICALARRAYS, 1,
                                     Manufactured.HEATVANES, 1,
@@ -80,7 +81,7 @@ public class FSDBlueprints {
             HorizonsBlueprintType.INCREASED_FSD_RANGE,
             Map.of(
 
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Encoded.DISRUPTEDWAKEECHOES, 1
                             ),
@@ -91,7 +92,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+10%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Encoded.DISRUPTEDWAKEECHOES, 1,
                                     Manufactured.CHEMICALPROCESSORS, 1
@@ -103,7 +104,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+15%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CHEMICALPROCESSORS, 1,
                                     Raw.PHOSPHORUS, 1,
@@ -116,7 +117,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CHEMICALDISTILLERY, 1,
                                     Encoded.HYPERSPACETRAJECTORIES, 1,
@@ -129,7 +130,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+25%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.INCREASED_FSD_RANGE, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Raw.ARSENIC, 1,
                                     Manufactured.CHEMICALMANIPULATORS, 1,
@@ -146,7 +147,7 @@ public class FSDBlueprints {
             HorizonsBlueprintType.SHIELDED_FSD,
             Map.of(
 
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -157,7 +158,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+4%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -169,7 +170,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+8%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
@@ -182,7 +183,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+12%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.COLONEL_BRIS_DEKKER, Engineer.CHLOE_SEDESI)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.COMPOUNDSHIELDING, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
@@ -195,7 +196,7 @@ public class FSDBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+16%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, HorizonsBlueprintType.SHIELDED_FSD, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.IMPERIALSHIELDING, 1,
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,

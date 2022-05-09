@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 @Getter
 @RequiredArgsConstructor
-public enum HorizonsBlueprintName implements BlueprintName {
+public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName> {
     ENGINEER_A(BlueprintCategory.ENGINEER_UNLOCKS),
     ENGINEER_A1(BlueprintCategory.ENGINEER_UNLOCKS),
     ENGINEER_A2(BlueprintCategory.ENGINEER_UNLOCKS),
@@ -103,6 +103,7 @@ public enum HorizonsBlueprintName implements BlueprintName {
     SRV_REFUEL(BlueprintCategory.SYNTHESIS),
     SRV_REPAIR(BlueprintCategory.SYNTHESIS),
     SUB_SURFACE_DISPLACEMENT_MUNITIONS(BlueprintCategory.SYNTHESIS),
+    //Techbroker
     GUARDIAN_MODULES(BlueprintCategory.TECHBROKER),
     GUARDIAN_WEAPONS(BlueprintCategory.TECHBROKER),
     GUARDIAN_FIGHTERS(BlueprintCategory.TECHBROKER),

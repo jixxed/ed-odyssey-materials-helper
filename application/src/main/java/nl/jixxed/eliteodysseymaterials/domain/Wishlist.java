@@ -15,7 +15,7 @@ public class Wishlist {
     @EqualsAndHashCode.Include
     private String uuid = UUID.randomUUID().toString();
     private String name;
-    private List<WishlistBlueprint> items = new ArrayList<>();
+    private List<OdysseyWishlistBlueprint> items = new ArrayList<>();
 
     @Override
     public String toString() {

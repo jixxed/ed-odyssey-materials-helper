@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-public enum OdysseyBlueprintName implements BlueprintName {
+public enum OdysseyBlueprintName implements BlueprintName<OdysseyBlueprintName> {
 
     ENGINEER_A1,
     ENGINEER_A2,
@@ -94,6 +94,7 @@ public enum OdysseyBlueprintName implements BlueprintName {
         return "blueprint.name." + this.name().toLowerCase();
     }
 
+    @Override
     public String getDescriptionLocalizationKey() {
         return "blueprint.description." + this.name().toLowerCase();
     }

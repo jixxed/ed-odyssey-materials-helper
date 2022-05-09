@@ -12,7 +12,7 @@ import java.util.Map;
 
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class ModuleBlueprint extends OdysseyBlueprint {
+public class ModuleBlueprint extends OdysseyBlueprint implements EngineeringBlueprint<OdysseyBlueprintName> {
     private final List<Engineer> engineers;
 
     public ModuleBlueprint(final OdysseyBlueprintName odysseyBlueprintName, final Map<? extends OdysseyMaterial, Integer> materials, final List<Engineer> engineers) {
@@ -25,6 +25,7 @@ public class ModuleBlueprint extends OdysseyBlueprint {
         this.engineers = engineers;
     }
 
+    @Override
     public List<Engineer> getEngineers() {
         return this.engineers;
     }

@@ -11,25 +11,24 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.PathItem;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HideWishlistShortestPathItemEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.RemoveWishlistShortestPathItemEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
-class ShortestPathItem extends VBox implements Template {
+class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Template {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final String SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS = "shortest-path-item-label";
-    private final PathItem pathItem;
+    private final PathItem<T> pathItem;
     private final int index;
+    private final Expansion expansion;
     private Button removeButton;
     private Button hideButton;
     private Label engineer;
@@ -42,9 +41,10 @@ class ShortestPathItem extends VBox implements Template {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    ShortestPathItem(final PathItem pathItem, final int index) {
+    ShortestPathItem(final PathItem<T> pathItem, final int index, final Expansion expansion) {
         this.pathItem = pathItem;
         this.index = index;
+        this.expansion = expansion;
         initComponents();
         initEventHandling();
     }
@@ -55,15 +55,25 @@ class ShortestPathItem extends VBox implements Template {
         this.blueprintsLabel = LabelBuilder.builder().withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints")).build();
         this.distance = LabelBuilder.builder().withNonLocalizedText(" " + ((this.index > 1) ? "+" : "") + NUMBER_FORMAT.format(this.pathItem.getDistance()) + "Ly").build();
         this.engineer = LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withText(LocaleService.getStringBinding(() -> " " + LocaleService.getLocalizedStringForCurrentLocale(this.pathItem.getEngineer().getLocalizationKey()))).build();
-        this.blueprints.addAll(this.pathItem.getRecipes().entrySet().stream().map(entry ->
-                LabelBuilder.builder().withStyleClasses("shortest-path-item-label-value", "shortest-path-item-label-blueprint").withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(entry.getKey().getBlueprintName()))).withText(LocaleService.getStringBinding(() -> "\u2022 " + LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getBlueprintName().getLocalizationKey()) + ((entry.getValue() > 1) ? " (" + entry.getValue() + ")" : ""))).build()
-        ).toList());
+        this.blueprints.addAll(this.pathItem.getRecipes().entrySet().stream()
+                .sorted(getGradeSorter())
+//                .filter(distinctByKey(getKey(this.pathItem.getRecipes().keySet().stream().findFirst().orElse(null))))
+                .map(entry ->
+                                LabelBuilder.builder()
+                                        .withStyleClasses("shortest-path-item-label-value", "shortest-path-item-label-blueprint")
+                                        .withOnMouseClicked(event -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
+                                        .withText((Expansion.HORIZONS.equals(this.expansion)) ?
+                                                LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.horizons", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) entry.getKey()).getLocalizationKey()), entry.getValue()) :
+                                                LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), entry.getValue()))
+//                        .withText(LocaleService.getStringBinding(() -> "\u2022 " + LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getBlueprintName().getLocalizationKey()) + ((entry.getValue() > 1) ? " (" + entry.getValue() + ")" : "")))
+                                        .build()
+                ).toList());
 
         this.removeButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove")).build();
         this.hideButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide")).build();
 
-        this.removeButton.setOnAction((ActionEvent event) -> EventService.publish(new RemoveWishlistShortestPathItemEvent(this.pathItem)));
-        this.hideButton.setOnAction((ActionEvent event) -> EventService.publish(new HideWishlistShortestPathItemEvent(this.pathItem)));
+        this.removeButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
+        this.hideButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
 
         this.getStyleClass().add("shortest-path-item");
         if (!Engineer.UNKNOWN.equals(this.pathItem.getEngineer())) {
@@ -79,6 +89,40 @@ class ShortestPathItem extends VBox implements Template {
         this.getChildren().addAll(new GrowingRegion("shortest-path-item-spacer"));
         this.getChildren().addAll(BoxBuilder.builder().withStyleClass("shortest-path-item-button").withNodes(new GrowingRegion(), this.hideButton, this.removeButton).buildHBox());
     }
+
+    private <T extends BlueprintName<T>> Comparator<? super Map.Entry<Blueprint<T>, Integer>> getGradeSorter() {
+
+        return Comparator.comparing((Map.Entry<Blueprint<T>, Integer> blueprintIntegerEntry) -> {
+            if (blueprintIntegerEntry.getKey() instanceof HorizonsModuleBlueprint moduleBlueprint) {
+                return moduleBlueprint.getHorizonsBlueprintGrade().getGrade();
+            }
+            return 0;
+        }).reversed();
+    }
+
+    private static <T extends BlueprintName<T>> Predicate<Map.Entry<Blueprint<T>, Integer>> distinctByKey(final Function<Map.Entry<Blueprint<T>, Integer>, Object> keyExtractor) {
+        final Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
+    }
+
+    private static <T extends BlueprintName<T>> Function<Map.Entry<Blueprint<T>, Integer>, Object> getKey(final Blueprint<T> blueprint) {
+        return (bp) -> {
+            if (bp.getKey() instanceof HorizonsExperimentalEffectBlueprint experimentalEffectBlueprint) {
+                return experimentalEffectBlueprint.getBlueprintName().name() + experimentalEffectBlueprint.getHorizonsBlueprintType().name();
+            } else if (bp.getKey() instanceof HorizonsModuleBlueprint moduleBlueprint) {
+                return moduleBlueprint.getBlueprintName().name() + moduleBlueprint.getHorizonsBlueprintType().name();
+            }
+            return bp.getKey().getBlueprintName();
+        };
+    }
+
+    private HorizonsBlueprintType getBlueprintType(final EngineeringBlueprint<T> blueprint) {
+        if (blueprint instanceof HorizonsEngineeringBlueprint horizonsModuleWishlistBlueprint) {
+            return horizonsModuleWishlistBlueprint.getHorizonsBlueprintType();
+        }
+        return null;
+    }
+
 
     private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
 

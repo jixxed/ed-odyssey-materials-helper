@@ -5,15 +5,19 @@ import javafx.collections.ObservableList;
 import javafx.scene.layout.FlowPane;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
+import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
+import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class ShortestPathFlow extends FlowPane implements Template {
+public class ShortestPathFlow<T extends BlueprintName<T>> extends FlowPane implements Template {
     @Getter
-    private final ObservableList<ShortestPathItem> items = FXCollections.observableArrayList();
+    private final ObservableList<ShortestPathItem<T>> items = FXCollections.observableArrayList();
+    private final Expansion expansion;
 
-    ShortestPathFlow() {
+    ShortestPathFlow(final Expansion expansion) {
+        this.expansion = expansion;
         initComponents();
         initEventHandling();
     }
@@ -28,10 +32,10 @@ public class ShortestPathFlow extends FlowPane implements Template {
         //NOOP
     }
 
-    public void setItems(final List<PathItem> pathItems) {
+    public void setItems(final List<PathItem<T>> pathItems) {
         this.getChildren().clear();
         this.items.clear();
-        this.items.addAll(IntStream.range(0, pathItems.size()).mapToObj(index -> new ShortestPathItem(pathItems.get(index), index + 1)).toList());
+        this.items.addAll(IntStream.range(0, pathItems.size()).mapToObj(index -> new ShortestPathItem<>(pathItems.get(index), index + 1, this.expansion)).toList());
         this.getChildren().addAll(this.items);
     }
 }

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class MineLauncherBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
@@ -27,7 +28,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1,
                                     Raw.VANADIUM, 1
@@ -40,7 +41,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+30%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1,
                                     Raw.NIOBIUM, 1,
@@ -54,7 +55,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Manufactured.MECHANICALEQUIPMENT, 1,
@@ -68,7 +69,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+50%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.MECHANICALCOMPONENTS, 1,
                                     Manufactured.MILITARYSUPERCAPACITORS, 1,
@@ -84,7 +85,7 @@ public class MineLauncherBlueprints {
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK))),
             HorizonsBlueprintType.LIGHTWEIGHT_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.PHOSPHORUS, 1
                             ),
@@ -93,7 +94,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-30%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
@@ -105,7 +106,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.LIZ_RYDER, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
@@ -118,7 +119,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-60%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.LIZ_RYDER, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.PHASEALLOYS, 1,
@@ -131,7 +132,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-75%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.PROTORADIOLICALLOYS, 1,
@@ -146,7 +147,7 @@ public class MineLauncherBlueprints {
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK))),
             HorizonsBlueprintType.RAPID_FIRE_MODIFICATION,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
@@ -157,7 +158,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+8%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.HEATDISPERSIONPLATE, 1,
                                     Manufactured.MECHANICALSCRAP, 1
@@ -170,7 +171,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+17%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.MECHANICALEQUIPMENT, 1,
                                     Manufactured.PRECIPITATEDALLOYS, 1,
@@ -184,7 +185,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+26%", true)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.MECHANICALCOMPONENTS, 1,
                                     Encoded.CONSUMERFIRMWARE, 1,
@@ -198,7 +199,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+35%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONFIGURABLECOMPONENTS, 1,
                                     Raw.TECHNETIUM, 1,
@@ -214,7 +215,7 @@ public class MineLauncherBlueprints {
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK))),
             HorizonsBlueprintType.STURDY_MOUNT,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.NICKEL, 1
                             ),
@@ -225,7 +226,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
@@ -237,7 +238,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1,
@@ -250,7 +251,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
                                     Raw.TUNGSTEN, 1,
@@ -263,7 +264,7 @@ public class MineLauncherBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+80%", false)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.JURI_ISHMAAK)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINE_LAUNCHER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
                                     Raw.MOLYBDENUM, 1,

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class FSDInterdictorBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
@@ -24,7 +25,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-10%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.COLONEL_BRIS_DEKKER, Engineer.TIANA_FORTUNE)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.MECHANICALEQUIPMENT, 1,
                                     Encoded.ENCRYPTEDFILES, 1
@@ -35,7 +36,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-15%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.COLONEL_BRIS_DEKKER, Engineer.TIANA_FORTUNE)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.GRIDRESISTORS, 1,
                                     Manufactured.MECHANICALCOMPONENTS, 1,
@@ -47,7 +48,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.COLONEL_BRIS_DEKKER, Engineer.TIANA_FORTUNE)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Encoded.ENCODEDSCANDATA, 1,
                                     Manufactured.MECHANICALEQUIPMENT, 1,
@@ -59,7 +60,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.RANGE, new HorizonsModifierValue("-25%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.COLONEL_BRIS_DEKKER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.CLASSIFIEDSCANDATA, 1,
                                     Encoded.HYPERSPACETRAJECTORIES, 1,
@@ -73,7 +74,7 @@ public class FSDInterdictorBlueprints {
                             List.of(Engineer.MEL_BRANDON))),
             HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Encoded.ENCRYPTEDFILES, 1
                             ),
@@ -84,7 +85,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+10%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.COLONEL_BRIS_DEKKER, Engineer.TIANA_FORTUNE)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Encoded.DISRUPTEDWAKEECHOES, 1,
                                     Encoded.ENCRYPTIONCODES, 1
@@ -96,7 +97,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+15%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.COLONEL_BRIS_DEKKER, Engineer.TIANA_FORTUNE)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Encoded.BULKSCANDATA, 1,
                                     Encoded.FSDTELEMETRY, 1,
@@ -109,7 +110,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.COLONEL_BRIS_DEKKER, Engineer.TIANA_FORTUNE)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Encoded.SCANARCHIVES, 1,
                                     Encoded.WAKESOLUTIONS, 1,
@@ -122,7 +123,7 @@ public class FSDInterdictorBlueprints {
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+25%", false)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.COLONEL_BRIS_DEKKER)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, HorizonsBlueprintType.LONG_RANGE_FSD_INTERDICTOR, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Encoded.SCANDATABANKS, 1,
                                     Encoded.HYPERSPACETRAJECTORIES, 1,

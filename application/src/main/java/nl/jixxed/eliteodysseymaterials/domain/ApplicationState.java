@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -28,7 +29,7 @@ public class ApplicationState {
     private static PreferencesService preferencesService;//defined so app folder gets created for lockfile
     private static FileLock fileLock;
     private static ApplicationState applicationState;
-    private final Function<WishlistBlueprint, String> wishlistRecipeMapper = recipe -> (recipe.getRecipeName()).name() + ":" + recipe.isVisible();
+    private final Function<OdysseyWishlistBlueprint, String> wishlistRecipeMapper = recipe -> (recipe.getRecipeName()).name() + ":" + recipe.isVisible();
     private final List<OdysseyMaterial> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
     private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
@@ -88,6 +89,17 @@ public class ApplicationState {
                                 case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
                                 case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
                                 case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                            }
+                        })));
+
+        EventService.addListener(this, 0, HorizonsWishlistBlueprintEvent.class,
+                wishlistEvent -> Platform.runLater(() ->
+                        wishlistEvent.getWishlistBlueprints().forEach(horizonsWishlistBlueprint -> {
+                            switch (wishlistEvent.getAction()) {
+                                case ADDED -> addToHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                case REMOVED -> removeFromHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                case VISIBILITY_CHANGED -> changeHorizonsVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                case MODIFY -> modifyHorizonsBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
                             }
                         })));
 
@@ -188,27 +200,76 @@ public class ApplicationState {
     private void addToWishList(final String wishlistUUID, final String fid, final BlueprintName recipe) {
         final Wishlists wishlists = getWishlists(fid);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        wishlist.getItems().add(new WishlistBlueprint((OdysseyBlueprintName) recipe, true));
+        wishlist.getItems().add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe, true));
         saveWishlists(fid, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
 
-    private void removeFromWishList(final String wishlistUUID, final String fid, final WishlistBlueprint recipe) {
+    private void addToHorizonsWishList(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint recipe) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+        final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
+        wishlist.getItems().add(recipe);
+        saveHorizonsWishlists(fid, wishlists);
+        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+    }
+
+    private void removeFromWishList(final String wishlistUUID, final String fid, final OdysseyWishlistBlueprint recipe) {
         final Wishlists wishlists = getWishlists(fid);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<WishlistBlueprint> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
+        final Optional<OdysseyWishlistBlueprint> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
         found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
         saveWishlists(fid, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
 
-    private void changeVisibility(final String wishlistUUID, final String fid, final WishlistBlueprint wishlistBlueprint) {
+    private void removeFromHorizonsWishList(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint recipe) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+        final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
+        final Optional<WishlistBlueprint<HorizonsBlueprintName>> found = wishlist.getItems().stream().filter(wishlistRecipe -> ((HorizonsWishlistBlueprint) wishlistRecipe).getUuid().equals(recipe.getUuid())).findFirst();
+        found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
+        saveHorizonsWishlists(fid, wishlists);
+        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+    }
+
+    private void changeVisibility(final String wishlistUUID, final String fid, final OdysseyWishlistBlueprint wishlistBlueprint) {
         final Wishlists wishlists = getWishlists(fid);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<WishlistBlueprint> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistBlueprint.getRecipeName()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).findFirst();
+        final Optional<OdysseyWishlistBlueprint> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistBlueprint.getRecipeName()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).findFirst();
         existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
         saveWishlists(fid, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
+    }
+
+    private void changeHorizonsVisibility(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint wishlistBlueprint) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+        final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
+        final Optional<WishlistBlueprint<HorizonsBlueprintName>> existingRecipe = wishlist.getItems().stream().filter(recipe -> wishlistBlueprint.getUuid().equals(((HorizonsWishlistBlueprint) recipe).getUuid()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).
+                findFirst();
+        existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
+        saveHorizonsWishlists(fid, wishlists);
+        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+    }
+
+    private void modifyHorizonsBlueprint(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint wishlistBlueprint) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+        final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
+        final Optional<HorizonsWishlistBlueprint> existingRecipe = wishlist.getItems().stream()
+                .map(HorizonsWishlistBlueprint.class::cast)
+                .filter(recipe -> recipe.getUuid().equals(wishlistBlueprint.getUuid()))
+                .findFirst();
+        existingRecipe.ifPresent(recipe -> {
+            if (recipe instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
+                moduleWishlistBlueprint.setBlueprintGradeRolls(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getBlueprintGradeRolls());
+            }
+        });
+        saveHorizonsWishlists(fid, wishlists);
+        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+    }
+
+    public void selectHorizonsWishlist(final String wishlistUUID, final String fid) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+        wishlists.setSelectedWishlistUUID(wishlistUUID);
+        saveHorizonsWishlists(fid, wishlists);
     }
 
     public void selectWishlist(final String wishlistUUID, final String fid) {
@@ -218,6 +279,20 @@ public class ApplicationState {
     }
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    public HorizonsWishlists getHorizonsWishlists(final String fid) {
+        final String wishlists = PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, "N/A");
+        try {
+            if (!wishlists.equals("N/A")) {
+                return OBJECT_MAPPER.readValue(wishlists, HorizonsWishlists.class);
+            } else {
+                return OBJECT_MAPPER.readValue(createHorizonsWishlist(fid), HorizonsWishlists.class);
+            }
+        } catch (final JsonProcessingException e) {
+            log.error("Failed to load wishlists", e);
+        }
+        throw new IllegalStateException("Unable to load horizons wishlists from configuration.");
+    }
 
     public Wishlists getWishlists(final String fid) {
         final String wishlists = PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
@@ -235,6 +310,14 @@ public class ApplicationState {
         throw new IllegalStateException("Unable to load wishlists from configuration.");
     }
 
+    public void saveHorizonsWishlists(final String fid, final HorizonsWishlists wishlists) {
+        try {
+            PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
+        } catch (final JsonProcessingException e) {
+            log.error("Failed to save wishlists", e);
+        }
+    }
+
     public void saveWishlists(final String fid, final Wishlists wishlists) {
         try {
             PreferencesService.setPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
@@ -247,6 +330,26 @@ public class ApplicationState {
         final Wishlists wishlists = getWishlists(fid);
         wishlists.delete(activeWishlistUUID);
         saveWishlists(fid, wishlists);
+    }
+
+    public void deleteHorizonsWishlist(final String activeWishlistUUID, final String fid) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+        wishlists.delete(activeWishlistUUID);
+        saveHorizonsWishlists(fid, wishlists);
+    }
+
+    private String createHorizonsWishlist(final String fid) {
+
+        final HorizonsWishlists wishlists = new HorizonsWishlists();
+        final HorizonsWishlist defaultWishlist = new HorizonsWishlist();
+        defaultWishlist.setName("Default wishlist");
+        wishlists.addWishlist(defaultWishlist);
+        try {
+            PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
+        } catch (final JsonProcessingException e) {
+            log.error("Failed to save wishlists", e);
+        }
+        return PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, "N/A");
     }
 
     private String getOldStyleWishList2(final String fid) {
@@ -267,7 +370,7 @@ public class ApplicationState {
         return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
     }
 
-    private List<WishlistBlueprint> parseFIDWishlist(final String recipes) {
+    private List<OdysseyWishlistBlueprint> parseFIDWishlist(final String recipes) {
         return WishlistHelper.convertWishlist(recipes);
     }
 
@@ -330,6 +433,38 @@ public class ApplicationState {
         } else {
             return Craftability.CRAFTABLE;
         }
+    }
+
+    public Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1));
+    }
+
+    public Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Integer> horizonsBlueprintGrades) {
+        final List<Craftability> craftabilities = horizonsBlueprintGrades.entrySet().stream().map(horizonsBlueprintGradeRolls -> {
+            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGradeRolls.getKey());
+            final AtomicBoolean hasRaw = new AtomicBoolean(true);
+            final AtomicBoolean hasEncoded = new AtomicBoolean(true);
+            final AtomicBoolean hasManufactured = new AtomicBoolean(true);
+            final AtomicBoolean hasCommodity = new AtomicBoolean(true);
+            final Integer numberOfRolls = horizonsBlueprintGradeRolls.getValue();
+            blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            blueprint.getMaterialCollection(Commodity.class).forEach((material, amountRequired) -> hasCommodity.set(hasCommodity.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            if (!hasRaw.get() || !hasEncoded.get() || !hasManufactured.get()) {
+                return Craftability.NOT_CRAFTABLE;
+            } else if (hasRaw.get() && hasEncoded.get() && hasManufactured.get() && !hasCommodity.get()) {
+                return Craftability.CRAFTABLE_WITH_TRADE;
+            } else {
+                return Craftability.CRAFTABLE;
+            }
+        }).toList();
+        if (craftabilities.stream().allMatch(Craftability.CRAFTABLE::equals)) {
+            return Craftability.CRAFTABLE;
+        } else if (craftabilities.stream().allMatch(craftability -> Craftability.CRAFTABLE.equals(craftability) || Craftability.CRAFTABLE_WITH_TRADE.equals(craftability))) {
+            return Craftability.CRAFTABLE_WITH_TRADE;
+        }
+        return Craftability.NOT_CRAFTABLE;
     }
 
     public String getMarketPlaceToken() {

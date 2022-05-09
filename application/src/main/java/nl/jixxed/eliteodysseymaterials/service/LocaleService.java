@@ -6,10 +6,7 @@ import javafx.beans.value.ObservableValue;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
-import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.helper.CSVResourceBundle;
 
@@ -48,8 +45,8 @@ public class LocaleService {
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {
         return ObservableResourceFactory.getStringBinding(() -> {
-            final String[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(String[]::new);
-            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), (Object[]) localizedParams);
+            final Object[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(Object[]::new);
+            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), localizedParams);
         });
     }
 
@@ -88,6 +85,12 @@ public class LocaleService {
         return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", "))));
     }
 
+    public static StringBinding getToolTipStringBinding(final HorizonsEngineeringBlueprint recipe, final String localizationKey) {
+        return ObservableResourceFactory.getStringBinding(
+                () -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey).translateEscapes(), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", ")))
+        );
+    }
+
     @SafeVarargs
     public static <T> ListBinding<T> getListBinding(final T... items) {
         return ObservableResourceFactory.getListBinding(items);
@@ -97,11 +100,13 @@ public class LocaleService {
         return ObservableResourceFactory.getListBinding(supplier);
     }
 
-    private static String localizeParameter(final Object parameter) {
+    private static Object localizeParameter(final Object parameter) {
         if (parameter instanceof LocalizationKey localizationKey) {
             return ObservableResourceFactory.getResources().getString(localizationKey.getKey());
         } else if (parameter instanceof OdysseyMaterial odysseyMaterial) {
             return ObservableResourceFactory.getResources().getString(odysseyMaterial.getLocalizationKey());
+        } else if (parameter instanceof Number) {
+            return parameter;
         }
         return parameter.toString();
     }

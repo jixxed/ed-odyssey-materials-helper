@@ -148,7 +148,7 @@ class OdysseyBlueprintContent extends VBox {
         this.addToWishlist.getItems().clear();
         final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
             final MenuItem menuItem = new MenuItem();
-            menuItem.setOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), List.of(new WishlistBlueprint((OdysseyBlueprintName) this.blueprint.getBlueprintName(), true)), Action.ADDED)));
+            menuItem.setOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint((OdysseyBlueprintName) this.blueprint.getBlueprintName(), true)), Action.ADDED)));
             menuItem.setText(wishlist.getName());
             return menuItem;
         }).toList();

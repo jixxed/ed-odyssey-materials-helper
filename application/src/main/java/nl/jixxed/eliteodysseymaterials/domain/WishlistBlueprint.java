@@ -1,15 +1,24 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-public class WishlistBlueprint {
-    private OdysseyBlueprintName recipeName;
-    @ClipboardJsonIgnore
-    private boolean visible = true;
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = HorizonsExperimentalWishlistBlueprint.class, name = "experimental"),
+        @JsonSubTypes.Type(value = HorizonsModuleWishlistBlueprint.class, name = "module"),
+        @JsonSubTypes.Type(value = HorizonsSynthesisWishlistBlueprint.class, name = "synthesis"),
+        @JsonSubTypes.Type(value = HorizonsTechBrokerWishlistBlueprint.class, name = "techbroker"),
+        @JsonSubTypes.Type(value = HorizonsEngineerWishlistBlueprint.class, name = "engineer"),
+        @JsonSubTypes.Type(value = OdysseyWishlistBlueprint.class, name = "odyssey")
+})
+public interface WishlistBlueprint<E extends BlueprintName<E>> {
+    BlueprintName<E> getRecipeName();
+
+    boolean isVisible();
+
+    void setVisible(boolean visible);
 }

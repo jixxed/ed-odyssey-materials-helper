@@ -25,7 +25,7 @@ public abstract class OdysseyBlueprintConstants {
             BlueprintCategory.ENGINEER_UNLOCKS, ENGINEER_UNLOCK_REQUIREMENTS
     );
 
-    public static OdysseyBlueprint getRecipe(final BlueprintName name) {
+    public static OdysseyBlueprint getRecipe(final BlueprintName<OdysseyBlueprintName> name) {
         OdysseyBlueprint blueprint = WEAPON_MODULE_BLUEPRINTS.get(name);
         if (blueprint != null) {
             return blueprint;
@@ -45,7 +45,7 @@ public abstract class OdysseyBlueprintConstants {
         return ENGINEER_UNLOCK_REQUIREMENTS.get(name);
     }
 
-    public static BlueprintCategory getRecipeCategory(final BlueprintName blueprintName) {
+    public static BlueprintCategory getRecipeCategory(final BlueprintName<OdysseyBlueprintName> blueprintName) {
         return RECIPES.entrySet().stream()
                 .filter(recipeCategoryMapEntry -> recipeCategoryMapEntry.getValue().containsKey(blueprintName))
                 .findFirst()

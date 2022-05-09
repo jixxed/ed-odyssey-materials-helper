@@ -30,6 +30,9 @@ public class ImportService {
         final String[] split = content.split("\\?");
         final String type = split[0];
         final String data = split[1];
+        if ("horizonswishlist/".equals(type)) {
+            return importHorizonsWishlist(data);
+        }
         if ("wishlist/".equals(type)) {
             return importWishlist(data);
         } else if ("loadout/".equals(type)) {
@@ -92,6 +95,36 @@ public class ImportService {
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import wishlist", ex);
+            throw new LoadoutDeeplinkException("Failed to parse deeplink");
+        }
+    }
+
+    private static ImportResult importHorizonsWishlist(final String data) {
+        final String decoded = convertBase64CompressedToJson(data);
+
+        if (decoded.isEmpty()) {
+            throw new WishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
+        }
+        try {
+            final ClipboardHorizonsWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardHorizonsWishlist.class);
+            if (Objects.equals(clipboardWishlist.getVersion(), 1)) {
+
+                final HorizonsWishlist wishlist = new HorizonsWishlist();
+                final String name = clipboardWishlist.getWishlist().getName() + " - Imported";
+                wishlist.setName(name);
+                wishlist.setItems(clipboardWishlist.getWishlist().getItems());
+
+                final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
+                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander.getFid());
+                wishlists.addWishlist(wishlist);
+                wishlists.setSelectedWishlistUUID(wishlist.getUuid());
+                APPLICATION_STATE.saveHorizonsWishlists(commander.getFid(), wishlists);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_WISHLIST, name);
+            } else {
+                throw new WishlistDeeplinkException("The horizons wishlist could not be imported because the link was made with a newer version of the app.");
+            }
+        } catch (final RuntimeException | JsonProcessingException ex) {
+            log.error("Failed to import horizons wishlist", ex);
             throw new LoadoutDeeplinkException("Failed to parse deeplink");
         }
     }

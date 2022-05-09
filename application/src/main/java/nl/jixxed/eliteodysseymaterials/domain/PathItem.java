@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
@@ -15,34 +16,52 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
+@Setter
 @ToString
-public class PathItem {
+public class PathItem<E extends BlueprintName<E>> {
     private final List<Engineer> engineers;
-    private final Map<ModuleBlueprint, Integer> recipes;
-    @Setter
+    private final Map<Blueprint<E>, Integer> recipes;
     private Engineer engineer;
     private List<Engineer> alternateEngineers = new ArrayList<>();
-    @Setter
     private double distance;
 
     public String getRecipesString() {
-        return this.recipes.entrySet().stream().map(recipe -> LocaleService.getLocalizedStringForCurrentLocale(recipe.getKey().getBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "")).collect(Collectors.joining(", "));
+        return this.recipes.entrySet().stream().map(recipe -> {
+            if (recipe.getKey() instanceof ModuleBlueprint moduleBlueprint) {
+                return LocaleService.getLocalizedStringForCurrentLocale(moduleBlueprint.getBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "");
+            }
+            if (recipe.getKey() instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
+                return LocaleService.getLocalizedStringForCurrentLocale(horizonsModuleBlueprint.getHorizonsBlueprintName().getLocalizationKey()) + ((recipe.getValue() > 1) ? "(" + recipe.getValue() + ")" : "");
+            }
+            return "";
+        }).collect(Collectors.joining(", "));
     }
 
     public Double getAndSetDistanceToClosestEngineer(final StarSystem starSystem) {
-        final List<Engineer> potentialEngineers = this.engineers.stream().filter(eng -> this.recipes.keySet().stream().allMatch(moduleRecipe -> moduleRecipe.getEngineers().contains(eng))).toList();
-        this.engineer = potentialEngineers.stream().min(Comparator.comparingDouble(value -> value.getDistance(starSystem))).orElseThrow(IllegalArgumentException::new);
-        this.alternateEngineers = potentialEngineers.stream().filter(eng -> eng != this.engineer).collect(Collectors.toList());
-        this.distance = this.engineer.getDistance(starSystem);
-        return this.distance;
+        final List<Engineer> potentialEngineers = this.getEngineers().stream().filter(eng -> this.recipes.keySet().stream().allMatch(moduleRecipe -> {
+            if (moduleRecipe instanceof ModuleBlueprint moduleBlueprint) {
+                return moduleBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
+                return horizonsModuleBlueprint.getEngineers().contains(eng);
+            }
+            if (moduleRecipe instanceof HorizonsExperimentalEffectBlueprint experimentalEffectBlueprint) {
+                return experimentalEffectBlueprint.getEngineers().contains(eng);
+            }
+            return false;
+        })).toList();
+        this.setEngineer(potentialEngineers.stream().min(Comparator.comparingDouble(value -> value.getDistance(starSystem))).orElseThrow(IllegalArgumentException::new));
+        this.setAlternateEngineers(potentialEngineers.stream().filter(eng -> eng != this.getEngineer()).collect(Collectors.toList()));
+        this.setDistance(this.getEngineer().getDistance(starSystem));
+        return this.getDistance();
     }
 
     public void setEngineerAndCalculateDistance(final Engineer engineer, final StarSystem starSystem) {
-        if (this.engineer != engineer) {
-            this.alternateEngineers.remove(engineer);
-            this.alternateEngineers.add(this.engineer);
+        if (this.getEngineer() != engineer) {
+            this.getAlternateEngineers().remove(engineer);
+            this.getAlternateEngineers().add(this.getEngineer());
         }
-        this.engineer = engineer;
-        this.distance = this.engineer.getDistance(starSystem);
+        this.setEngineer(engineer);
+        this.setDistance(this.getEngineer().getDistance(starSystem));
     }
 }

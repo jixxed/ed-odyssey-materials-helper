@@ -2064,7 +2064,7 @@ tab.trade.status.connected,Connected,Connected,Verbunden,Conectado,Connecté,Con
 tab.trade.status.connecting,Connecting...,Connecting...,Verbindung wird hergestellt...,Conectando...,Connexion...,Conectando...,Подключение...
 tab.trade.status.not.connected,not connected,not connected,nicht verbunden,no conectado,non connecté,não conectado,не подключен
 tab.wishlist.blueprint.tooltip.craftable,Engineers crafting this blueprint:\n{0} \n\nThis blueprint might be craftable after trading assets,Engineers crafting this blueprint:\n{0} \n\nThis blueprint might be craftable after trading assets,"Ingenieure, die diesen Bauplan herstellen:\n{0} \n\nDieser Bauplan kann möglicherweise nach dem Handel mit Vermögenswerten hergestellt werden",Ingenieros que elaboran este plano:\n{0} \n\nEste plano podría fabricarse después de intercambiar activos,Ingénieurs élaborant ce plan:\n{0} \n\nCe plan peut être fabriqué après avoir échangé des actifs,Engenheiros elaborando este projeto:\n{0} \n\nEste projeto pode ser criado após a negociação de ativos,"Инженеры, создающие этот чертеж:\n{0} \n\nЭтот чертеж можно создать после обмена активами"
-tab.wishlist.blueprint.tooltip,Engineers crafting this blueprint:\n {0},Engineers crafting this blueprint:\n {0},"Ingenieure, die diese Blaupause herstellen:\n {0}",Ingenieros que crean este plano:\n {0},Ingénieurs élaborant ce plan:\n {0},Engenheiros elaborando este projeto:\n {0},"Инженеры, создающие этот чертеж:\n {0}"
+tab.wishlist.blueprint.tooltip,Engineers crafting this blueprint:\n{0},Engineers crafting this blueprint:\n{0},"Ingenieure, die diese Blaupause herstellen:\n{0}",Ingenieros que crean este plano:\n{0},Ingénieurs élaborant ce plan:\n{0},Engenheiros elaborando este projeto:\n{0},"Инженеры, создающие этот чертеж:\n{0}"
 tab.wishlist.copy,Copy wishlist to clipboard,Copy wishlist to clipboard,Wunschliste in Zwischenablage kopieren,Copiar lista de deseos al portapapeles,Copier la liste de souhaits dans le presse-papiers,Copiar lista de desejos para a área de transferência,Скопировать список желаний в буфер обмена
 tab.wishlist.create,Create wishlist,Create wishlist,Wunschliste erstellen,Crear lista de deseos,Créer une liste de souhaits,Criar lista de desejos,Создать список желаний
 tab.wishlist.delete.confirm.content,Do you wish to continue?,Do you wish to continue?,Möchten Sie fortfahren?,¿Desea continuar?,Souhaitez-vous continuer?,Você deseja continuar?,Вы хотите продолжить?
@@ -2145,3 +2145,20 @@ notification.type.trade,Trade,Trade,,,,,
 notification.type.import,Import,Import,,,,,
 notification.type.copy,Copy,Copy,,,,,
 notification.type.error,Error,Error,,,,,
+wishlist.blueprint.horizons.title.synthesis,{0} - {1},,,,,,
+wishlist.blueprint.horizons.title.techbroker,{0} - {1},,,,,,
+wishlist.blueprint.horizons.title.experimental,{0} - {1},,,,,,
+wishlist.blueprint.horizons.title.module,{0} - {1} ({2}),,,,,,
+wishlist.blueprint.horizons.title.engineer,{0},,,,,,
+tab.wishlist.travel.path.column.blueprints.blueprint.odyssey,"• {0}{1,choice,1#|1< ({1})}",,,,,,
+tab.wishlist.travel.path.column.blueprints.blueprint.horizons,"• {0} - {1}{2,choice,1#|1< ({2})}",,,,,,
+tab.wishlist.selected.blueprints.hint.white,White,,,,,,
+tab.wishlist.selected.blueprints.hint.white.explain,- This blueprint can''t be crafted,,,,,,
+tab.wishlist.selected.blueprints.hint.yellow,Yellow,,,,,,
+tab.wishlist.selected.blueprints.hint.yellow.explain,- This individual blueprint can be crafted if you are able to trade for the remaining commodities,,,,,,
+tab.wishlist.selected.blueprints.hint.yellow.odyssey.explain,- This individual blueprint can be crafted if you are able to trade for the remaining assets,,,,,,
+tab.wishlist.selected.blueprints.hint.green,Green,,,,,,
+tab.wishlist.selected.blueprints.hint.green.explain,- This individual blueprint can be crafted,,,,,,
+tab.settings.wishlist.grade.rolls,# of rolls per grade,Number of rolls per grade,,,,,
+tab.settings.title.overview,Odyssey Overview,Odyssey Overview,,,,,
+tab.settings.title.wishlist,Horizons Wishlist,Horizons Wishlist,,,,,

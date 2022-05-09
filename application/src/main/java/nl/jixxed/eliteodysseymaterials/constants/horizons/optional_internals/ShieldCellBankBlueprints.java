@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class ShieldCellBankBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.RAPID_CHARGE,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
@@ -25,7 +26,7 @@ public class ShieldCellBankBlueprints {
                                     HorizonsModifier.SHIELD_REINFORCEMENT, new HorizonsModifierValue("+5%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.ELVIRA_MARTUUK, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CHROMIUM, 1,
                                     Manufactured.GRIDRESISTORS, 1
@@ -37,7 +38,7 @@ public class ShieldCellBankBlueprints {
                                     HorizonsModifier.SHIELD_REINFORCEMENT, new HorizonsModifierValue("+10%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.HYBRIDCAPACITORS, 1,
                                     Manufactured.PRECIPITATEDALLOYS, 1,
@@ -50,7 +51,7 @@ public class ShieldCellBankBlueprints {
                                     HorizonsModifier.SHIELD_REINFORCEMENT, new HorizonsModifierValue("+15%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.RAPID_CHARGE, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.CHROMIUM, 1,
                                     Manufactured.ELECTROCHEMICALARRAYS, 1,
@@ -65,7 +66,7 @@ public class ShieldCellBankBlueprints {
                             List.of(Engineer.MEL_BRANDON))),
             HorizonsBlueprintType.SPECIALISED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Encoded.LEGACYFIRMWARE, 1
                             ),
@@ -77,7 +78,7 @@ public class ShieldCellBankBlueprints {
                                     HorizonsModifier.SHIELD_REINFORCEMENT, new HorizonsModifierValue("+4%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.ELVIRA_MARTUUK, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Encoded.LEGACYFIRMWARE, 1
@@ -90,7 +91,7 @@ public class ShieldCellBankBlueprints {
                                     HorizonsModifier.SHIELD_REINFORCEMENT, new HorizonsModifierValue("+6%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Encoded.INDUSTRIALFIRMWARE, 1,
@@ -104,7 +105,7 @@ public class ShieldCellBankBlueprints {
                                     HorizonsModifier.SHIELD_REINFORCEMENT, new HorizonsModifierValue("+8%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.LORI_JAMESON)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.SHIELD_CELL_BANK, HorizonsBlueprintType.SPECIALISED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Encoded.INDUSTRIALFIRMWARE, 1,

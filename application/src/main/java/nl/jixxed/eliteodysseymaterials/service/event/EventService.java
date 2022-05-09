@@ -83,7 +83,7 @@ public class EventService {
 
     @SuppressWarnings({"java:S1172", "java:S125"})
     private static <T extends Event> void logListener(final Object owner, final EventListener<T> listener, final String action) {
-        log.debug(action + " listener: " + listener.getEventClass() + ", " + listener.hashCode() + (owner != null ? ", " + owner.getClass().getName() : ""));
+        log.debug(action + " listener: " + listener.getEventClass() + ", HASH:" + listener.hashCode() + (owner != null ? ", OWNER:" + owner.getClass().getName() + "(" + owner.hashCode() + ")" : ""));
     }
 
     @SuppressWarnings("java:S125")
