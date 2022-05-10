@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        property = "type")
+        property = "type",
+        defaultImpl = OdysseyBlueprintName.class
+)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = HorizonsBlueprintName.class, name = "horizons"),
         @JsonSubTypes.Type(value = OdysseyBlueprintName.class, name = "odyssey")

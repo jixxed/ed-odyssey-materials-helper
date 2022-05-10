@@ -6,7 +6,9 @@ import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        property = "type")
+        property = "type",
+        defaultImpl = OdysseyWishlistBlueprint.class
+)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = HorizonsExperimentalWishlistBlueprint.class, name = "experimental"),
         @JsonSubTypes.Type(value = HorizonsModuleWishlistBlueprint.class, name = "module"),
