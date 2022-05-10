@@ -167,7 +167,6 @@ class HorizonsEngineerCard extends EngineerCard {
                         maxGrades.put(horizonsBlueprint, horizonsBlueprint.getHorizonsBlueprintGrade().getGrade());
                     }
                 });
-//                .forEach(horizonsBlueprint -> maxGrades.compute(horizonsBlueprint, (horizonsBlueprint, horizonsBlueprintName) -> horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()));
         return getBlueprintLabels(maxGrades);
     }
 

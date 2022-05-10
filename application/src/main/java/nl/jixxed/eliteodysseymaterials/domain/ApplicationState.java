@@ -25,7 +25,7 @@ import java.util.function.Function;
 
 @Slf4j
 public class ApplicationState {
-
+    @SuppressWarnings("java:S1068")
     private static PreferencesService preferencesService;//defined so app folder gets created for lockfile
     private static FileLock fileLock;
     private static ApplicationState applicationState;
@@ -90,6 +90,8 @@ public class ApplicationState {
                                 case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
                                 case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
                                 case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                                case MODIFY -> {
+                                }
                             }
                         })));
 
@@ -319,7 +321,7 @@ public class ApplicationState {
         try {
             PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
         } catch (final JsonProcessingException e) {
-            log.error("Failed to save wishlists", e);
+            log.error("Failed to save horizons wishlists", e);
         }
     }
 
@@ -352,7 +354,7 @@ public class ApplicationState {
         try {
             PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
         } catch (final JsonProcessingException e) {
-            log.error("Failed to save wishlists", e);
+            log.error("Failed to save horizons wishlists", e);
         }
         return PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, "N/A");
     }
