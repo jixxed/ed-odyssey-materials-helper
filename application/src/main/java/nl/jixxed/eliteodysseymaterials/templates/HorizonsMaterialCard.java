@@ -7,6 +7,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -17,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.segmentbar.SegmentType;
@@ -31,6 +33,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
     private DestroyableResizableImageView gradeImage;
     private Label nameLabel;
     private SegmentedBar<TypeSegment> segmentedBar;
+    @Getter
     private final HorizonsMaterial material;
     private TypeSegment present;
     private TypeSegment notPresent;
@@ -54,8 +57,6 @@ public class HorizonsMaterialCard extends VBox implements Template {
                 .withStyleClass("horizons-materialcard-name")
                 .withText(LocaleService.getStringBinding(this.material.getLocalizationKey()))
                 .build();
-
-
         final Integer materialCount = StorageService.getMaterialCount(this.material);
         final Integer maxAmount = this.material.getMaxAmount();
         this.segmentedBar = new SegmentedBar<>();
@@ -87,6 +88,18 @@ public class HorizonsMaterialCard extends VBox implements Template {
                 this.notPresent.setText(String.valueOf(availableStorage));
             }
         });
+
+        EventService.addListener(this, HorizonsSearchEvent.class, horizonsSearchEvent -> {
+            update(horizonsSearchEvent.getSearch());
+        });
+    }
+
+    private void update(final String search) {
+        if (search.isBlank() || !LocaleService.getLocalizedStringForCurrentLocale(this.material.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale()))) {
+            this.nameLabel.getStyleClass().remove("horizons-materialcard-name-highlight");
+        } else if (!this.nameLabel.getStyleClass().contains("horizons-materialcard-name-highlight") && LocaleService.getLocalizedStringForCurrentLocale(this.material.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale()))) {
+            this.nameLabel.getStyleClass().add("horizons-materialcard-name-highlight");
+        }
     }
 
 

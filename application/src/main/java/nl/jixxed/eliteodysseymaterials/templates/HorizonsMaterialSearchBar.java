@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -59,7 +60,7 @@ class HorizonsMaterialSearchBar extends HBox {
         Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(newValue -> EventService.publish(new HorizonsSearchEvent(newValue)));
+                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsSearchEvent(newValue))));
     }
 
 

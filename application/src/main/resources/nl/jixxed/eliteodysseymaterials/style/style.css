@@ -1811,6 +1811,12 @@
     -fx-max-width: 14em;
 }
 
+.horizons-materialcard-name-highlight {
+    -fx-text-fill: #dcc030 !important;
+    -fx-font-weight: bold;
+
+}
+
 .horizons-materialcard-amount {
     -fx-font-weight: bold;
     -fx-text-fill: #0f0f0f;

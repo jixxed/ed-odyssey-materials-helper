@@ -15,11 +15,17 @@ import nl.jixxed.eliteodysseymaterials.enums.Manufactured;
 import nl.jixxed.eliteodysseymaterials.enums.Raw;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.Arrays;
 
 public class HorizonsMaterialOverview extends VBox implements Template {
+    private HorizonsMaterialCard[] rawCards;
+    private HorizonsMaterialCard[] encodedCards;
+    private HorizonsMaterialCard[] manufacturedCards;
+
     HorizonsMaterialOverview() {
         initComponents();
         initEventHandling();
@@ -29,20 +35,39 @@ public class HorizonsMaterialOverview extends VBox implements Template {
     public void initComponents() {
         this.getStyleClass().add("horizons-material-overview");
         Arrays.stream(HorizonsMaterialType.getRawTypes()).forEach(type -> {
-            final HorizonsMaterialCard[] array = Arrays.stream(Raw.materialsForTypeSorted(type)).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
-            createMaterialCardRow(type, array);
+
+        });
+        this.rawCards = Arrays.stream(Raw.values()).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
+        this.encodedCards = Arrays.stream(Encoded.values()).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
+        this.manufacturedCards = Arrays.stream(Manufactured.values()).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
+
+        update("");
+        this.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.5));
+    }
+
+    private void update(final String search) {
+        this.getChildren().clear();
+        Arrays.stream(HorizonsMaterialType.getRawTypes()).forEach(type -> {
+            if (Arrays.stream(Raw.materialsForTypeSorted(type)).anyMatch(raw -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(raw.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
+                final HorizonsMaterialCard[] array = Arrays.stream(this.rawCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).toList().toArray(HorizonsMaterialCard[]::new);
+                createMaterialCardRow(type, array);
+            }
         });
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         Arrays.stream(HorizonsMaterialType.getEncodedTypes()).forEach(type -> {
-            final HorizonsMaterialCard[] array = Arrays.stream(Encoded.materialsForTypeSorted(type)).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
-            createMaterialCardRow(type, array);
+            if (Arrays.stream(Encoded.materialsForTypeSorted(type)).anyMatch(encoded -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(encoded.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
+                final HorizonsMaterialCard[] array = Arrays.stream(this.encodedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).toList().toArray(HorizonsMaterialCard[]::new);
+                createMaterialCardRow(type, array);
+
+            }
         });
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         Arrays.stream(HorizonsMaterialType.getManufacturedTypes()).forEach(type -> {
-            final HorizonsMaterialCard[] array = Arrays.stream(Manufactured.materialsForTypeSorted(type)).map(HorizonsMaterialCard::new).toList().toArray(HorizonsMaterialCard[]::new);
-            createMaterialCardRow(type, array);
+            if (Arrays.stream(Manufactured.materialsForTypeSorted(type)).anyMatch(manufactured -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(manufactured.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
+                final HorizonsMaterialCard[] array = Arrays.stream(this.manufacturedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).toList().toArray(HorizonsMaterialCard[]::new);
+                createMaterialCardRow(type, array);
+            }
         });
-        this.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.5));
     }
 
     private void createMaterialCardRow(final HorizonsMaterialType type, final HorizonsMaterialCard[] array) {
@@ -59,5 +84,8 @@ public class HorizonsMaterialOverview extends VBox implements Template {
     @Override
     public void initEventHandling() {
         //NOOP
+        EventService.addListener(this, HorizonsSearchEvent.class, horizonsSearchEvent -> {
+            update(horizonsSearchEvent.getSearch());
+        });
     }
 }
