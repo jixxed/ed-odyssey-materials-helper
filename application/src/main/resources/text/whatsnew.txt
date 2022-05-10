@@ -1,3 +1,7 @@
+Version 1.76
+-------------
+fix odyssey wishlist bug, causing application journal read failure
+
 Version 1.75
 -------------
 Correct Ram Tah unlock material (Classified Scan Fragment -> Classified Scan Databanks)
