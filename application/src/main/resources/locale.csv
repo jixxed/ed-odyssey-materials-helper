@@ -806,6 +806,7 @@ engineer.name.oden_geiger,Oden Geiger,Oden Geiger,Oden Geiger,Oden Geiger,Oden G
 engineer.name.petra_olmanova,Petra Olmanova ©,Petra Olmanova ©,Petra Olmanova ©,Petra Olmanova ©,Petra Olmanova ©,Petra Olmanova ©,
 engineer.name.professor_palin,Professor Palin,Professor Palin,Professor Palin,Professor Palin,Professor Palin,Professor Palin,
 engineer.name.ram_tah,Ram Tah,Ram Tah,Ram Tah,Ram Tah,Ram Tah,Ram Tah,
+engineer.name.remote_workshop,Remote Workshop,Remote Workshop,,,,,
 engineer.name.rosa_dayette,Rosa Dayette ©,Rosa Dayette ©,Rosa Dayette ©,Rosa Dayette ©,Rosa Dayette ©,Rosa Dayette ©,Роза Дайетт ©
 engineer.name.selene_jean,Selene Jean,Selene Jean,Selene Jean,Selene Jean,Selene Jean,Selene Jean,
 engineer.name.terra_velasquez,Terra Velasquez,Terra Velasquez,Terra Velasquez,Terra Velasquez,Terra Velasquez,Terra Velasquez,Терра Веласкес
@@ -2159,6 +2160,9 @@ tab.wishlist.selected.blueprints.hint.yellow.explain,- This individual blueprint
 tab.wishlist.selected.blueprints.hint.yellow.odyssey.explain,- This individual blueprint can be crafted if you are able to trade for the remaining assets,,,,,,
 tab.wishlist.selected.blueprints.hint.green,Green,,,,,,
 tab.wishlist.selected.blueprints.hint.green.explain,- This individual blueprint can be crafted,,,,,,
-tab.settings.wishlist.grade.rolls,# of rolls per grade,Number of rolls per grade,,,,,
+tab.settings.wishlist.grade.rolls,Number of of rolls per grade,Number of rolls per grade,,,,,
 tab.settings.title.overview,Odyssey Overview,Odyssey Overview,,,,,
 tab.settings.title.wishlist,Horizons Wishlist,Horizons Wishlist,,,,,
+blueprint.engineer.pinnable.tooltip,Double-click to pin blueprint to this engineer,,,,,,
+blueprint.add.to.wishlist.all.grade,Add all grades to {0},Add all grades to {0},,,,,
+blueprint.add.to.wishlist.single.grade,Add this grade to {0},Add this grade to {0},,,,,

@@ -26,6 +26,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials;
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.domain;
+    exports nl.jixxed.eliteodysseymaterials.templates;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates.segmentbar to javafx.fxml, org.controlsfx.controls;

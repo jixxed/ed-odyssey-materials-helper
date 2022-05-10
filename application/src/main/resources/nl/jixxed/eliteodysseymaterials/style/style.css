@@ -385,6 +385,18 @@
     -fx-spacing: 5;
 }
 
+.engineer-label-pinnable {
+    -fx-cursor: hand;
+}
+
+.engineer-label-pinnable:hover {
+    -fx-background-color: #2e2e2e;
+}
+
+.engineer-label-pinnable:hover .label {
+    -fx-background-color: #2e2e2e;
+}
+
 .engineer-label-big .label {
     -fx-min-height: 2em;
 }

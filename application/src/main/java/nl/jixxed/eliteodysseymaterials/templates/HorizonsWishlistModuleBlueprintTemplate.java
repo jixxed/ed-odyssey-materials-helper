@@ -193,14 +193,11 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
         this.wishlistRecipeName.getStyleClass().removeAll("wishlist-craftable", "wishlist-craftable-with-trade");
         if (Craftability.CRAFTABLE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable");
-//            if (this.blueprint instanceof HorizonsModuleBlueprint moduleRecipe) {
             this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip"));
-//            }
+
         } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable-with-trade");
-//            if (this.blueprint instanceof HorizonsModuleBlueprint moduleRecipe) {
             this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip.craftable"));
-//            }
         }
     }
 

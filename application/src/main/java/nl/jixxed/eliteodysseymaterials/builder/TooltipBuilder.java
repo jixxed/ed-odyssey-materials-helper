@@ -1,7 +1,10 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.beans.binding.StringBinding;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Tooltip;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -58,6 +61,10 @@ public class TooltipBuilder {
         if (this.showDuration != null) {
             tooltip.setShowDuration(this.showDuration);
         }
+        tooltip.setWrapText(true);
+        tooltip.setTextAlignment(TextAlignment.LEFT);
+        tooltip.setContentDisplay(ContentDisplay.LEFT);
+        tooltip.setTextOverrun(OverrunStyle.CLIP);
         return tooltip;
     }
 

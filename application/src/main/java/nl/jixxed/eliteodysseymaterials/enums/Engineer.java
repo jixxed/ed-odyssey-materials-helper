@@ -48,6 +48,7 @@ public enum Engineer {
     HERA_TANI(Expansion.HORIZONS, Settlement.THE_JETS_HOLE, Specialisation.UNKNOWN, new StarSystem("Kuwemaki", 134.65625, -226.90625, -7.8125), List.of(EngineerPrerequisite.HORIZONS_E2_LEARN, EngineerPrerequisite.HORIZONS_E2_INVITE, EngineerPrerequisite.HORIZONS_E2_UNLOCK)),
     BROO_TARQUIN(Expansion.HORIZONS, Settlement.BROOS_LEGACY, Specialisation.UNKNOWN, new StarSystem("Muang", 17.03125, -172.78125, -3.46875), List.of(EngineerPrerequisite.HORIZONS_E2A_LEARN, EngineerPrerequisite.HORIZONS_E2A_INVITE, EngineerPrerequisite.HORIZONS_E2A_UNLOCK)),
     TIANA_FORTUNE(Expansion.HORIZONS, Settlement.FORTUNES_LOSS, Specialisation.UNKNOWN, new StarSystem("Achenar", 67.5, -119.46875, 24.84375), List.of(EngineerPrerequisite.HORIZONS_E2B_LEARN, EngineerPrerequisite.HORIZONS_E2B_INVITE, EngineerPrerequisite.HORIZONS_E2B_UNLOCK)),
+    REMOTE_WORKSHOP(Expansion.HORIZONS, Settlement.UNKNOWN, Specialisation.UNKNOWN, new StarSystem("UNKNOWN", 0, 0, 0), List.of()),
 
     UNKNOWN(Expansion.ODYSSEY, Settlement.UNKNOWN, Specialisation.UNKNOWN, new StarSystem("UNKNOWN", 0, 0, 0), List.of());
 
@@ -63,7 +64,11 @@ public enum Engineer {
 
 
     public Double getDistance(final double x, final double y, final double z) {
-        return Math.sqrt(Math.pow(this.getStarSystem().getX() - x, 2) + Math.pow(this.getStarSystem().getY() - y, 2) + Math.pow(this.getStarSystem().getZ() - z, 2));
+        if (this == REMOTE_WORKSHOP) {
+            return 0D;
+        } else {
+            return Math.sqrt(Math.pow(this.getStarSystem().getX() - x, 2) + Math.pow(this.getStarSystem().getY() - y, 2) + Math.pow(this.getStarSystem().getZ() - z, 2));
+        }
     }
 
     public Double getDistance(final StarSystem starSystem) {
@@ -79,7 +84,7 @@ public enum Engineer {
     }
 
     public boolean isHorizons() {
-        return Expansion.HORIZONS.equals(this.expansion);
+        return Expansion.HORIZONS.equals(this.expansion) && this != REMOTE_WORKSHOP;
     }
 }
 

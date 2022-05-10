@@ -1,12 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprintTemplate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,16 +14,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
 public class PathItem<E extends BlueprintName<E>> {
     private final List<Engineer> engineers;
-    private final Map<Blueprint<E>, Integer> recipes;
+    private final List<? extends WishlistBlueprintTemplate<E>> blueprints;
+    private Map<Blueprint<E>, Integer> recipes;
     private Engineer engineer;
     private List<Engineer> alternateEngineers = new ArrayList<>();
     private double distance;
+
+    public PathItem(final List<Engineer> engineers, final List<? extends WishlistBlueprintTemplate<E>> blueprints) {
+        this.engineers = engineers;
+        this.blueprints = blueprints;
+        this.recipes = blueprints.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).collect(Collectors.groupingBy(
+                recipe -> recipe,
+                Collectors.summingInt(value -> 1))
+        );
+    }
 
     public String getRecipesString() {
         return this.recipes.entrySet().stream().map(recipe -> {

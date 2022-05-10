@@ -403,14 +403,17 @@ public class HorizonsWishlistTab extends EDHTab {
             final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
             pathBlueprints.forEach(WishlistBlueprintTemplate::remove);
         });
+        EventService.addListener(this, EngineerPinEvent.class, event -> {
+
+            refreshContent();
+        });
+
     }
 
     private List<WishlistBlueprintTemplate<HorizonsBlueprintName>> getPathWishlistBlueprints(final PathItem<HorizonsBlueprintName> pathItem) {
         return pathItem.getRecipes().entrySet().stream()
                 .flatMap(recipeEntry -> HorizonsWishlistTab.this.wishlistBlueprints.stream()
-                        .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
-                        .filter(wishlistBlueprint -> wishlistBlueprint.getRecipe().stream().anyMatch(bp -> bp.equals(recipeEntry.getKey())))
-                        .limit(recipeEntry.getValue())
+                        .filter(w -> pathItem.getBlueprints().contains(w))
                 ).toList();
     }
 

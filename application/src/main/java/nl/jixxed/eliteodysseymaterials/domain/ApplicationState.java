@@ -71,6 +71,7 @@ public class ApplicationState {
             Map.entry(Engineer.ETIENNE_DORN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
             Map.entry(Engineer.MEL_BRANDON, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
             Map.entry(Engineer.PETRA_OLMANOVA, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
+            Map.entry(Engineer.REMOTE_WORKSHOP, new EngineerStatus(EngineerState.UNLOCKED, 5, 0)),
             Map.entry(Engineer.UNKNOWN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0))
     ));
     private GameMode gameMode = GameMode.NONE;
@@ -177,6 +178,10 @@ public class ApplicationState {
             this.engineerStates.get(engineer).setProgress(0);
             this.engineerStates.get(engineer).setRank(0);
         });
+
+        final EngineerStatus engineerStatus = this.engineerStates.get(Engineer.REMOTE_WORKSHOP);
+        engineerStatus.setEngineerState(EngineerState.UNLOCKED);
+        engineerStatus.setRank(5);
         EventService.publish(new EngineerEvent());
     }
 

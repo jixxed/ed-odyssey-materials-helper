@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
@@ -177,10 +178,10 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
             final List<MenuItem> items = new ArrayList<>();
             if (this.blueprint instanceof HorizonsModuleBlueprint) {
                 final MenuItem menuItemSingle = createMenuItem(commander, wishlist);
-                menuItemSingle.setText("Add this grade to " + wishlist.getName());
+                menuItemSingle.textProperty().bind(LocaleService.getStringBinding("blueprint.add.to.wishlist.single.grade", wishlist.getName()));
                 items.add(menuItemSingle);
                 final MenuItem menuItemAll = createAllGradeMenuItem(commander, wishlist);
-                menuItemAll.setText("Add all grades to " + wishlist.getName());
+                menuItemAll.textProperty().bind(LocaleService.getStringBinding("blueprint.add.to.wishlist.all.grade", wishlist.getName()));
                 items.add(menuItemAll);
             } else {
                 final MenuItem menuItemSingle = createMenuItem(commander, wishlist);
@@ -243,6 +244,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         this.getChildren().add(materialHeader);
     }
 
+
     private void initEngineers() {
         final Label engineerLabelHeader = LabelBuilder.builder()
                 .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
@@ -250,6 +252,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 .build();
         this.getChildren().add(engineerLabelHeader);
         final HBox[] engineerLabels = this.blueprint.getEngineers().stream()
+                .filter(Predicate.not(Engineer.REMOTE_WORKSHOP::equals))
                 .map(engineer -> {
                     final EngineerBlueprintLabel blueprintLabel = new EngineerBlueprintLabel(engineer, this.blueprint, true, this.blueprint.getHorizonsBlueprintGrade().getGrade());
                     this.destroyables.add(blueprintLabel);
@@ -309,7 +312,15 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         }));
         this.eventListeners.add(EventService.addListener(this, HorizonsWishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
-                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName())).count()).orElse(0L);
+                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> {
+                            if (wishlistRecipe instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {
+                                return horizonsModuleWishlistBlueprint.getRecipeName().equals(this.blueprint.getBlueprintName()) && horizonsModuleWishlistBlueprint.getBlueprintType().equals(this.blueprint.getHorizonsBlueprintType());
+                            } else if (wishlistRecipe instanceof HorizonsExperimentalWishlistBlueprint horizonsExperimentalWishlistBlueprint) {
+                                return horizonsExperimentalWishlistBlueprint.getRecipeName().equals(this.blueprint.getBlueprintName()) && horizonsExperimentalWishlistBlueprint.getBlueprintType().equals(this.blueprint.getHorizonsBlueprintType());
+                            }
+                            return wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName());
+                        }
+                ).count()).orElse(0L);
                 if (count > 0L) {
                     this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", count));
                 } else {

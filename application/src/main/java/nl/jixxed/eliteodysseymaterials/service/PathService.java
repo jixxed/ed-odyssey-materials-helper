@@ -32,8 +32,6 @@ public class PathService {
                 .filter(distinctByKey(PathService::getKey))
                 .map(WishlistBlueprintTemplate::getPrimaryRecipe)
                 .map(HorizonsEngineeringBlueprint.class::cast)
-//                .sorted(Comparator.comparing((HorizonsEngineeringBlueprint e) -> e.getHorizonsBlueprintGrade().getGrade()).reversed())
-//                .filter(distinctByKey(PathService::getKey))
                 .sorted(Comparator.comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion).thenComparing(horizonsEngineeringBlueprint -> (HorizonsBlueprintName) horizonsEngineeringBlueprint.getBlueprintName()))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
@@ -46,12 +44,8 @@ public class PathService {
     }
 
     private static Function<WishlistBlueprintTemplate<HorizonsBlueprintName>, Object> getKey(final WishlistBlueprintTemplate<HorizonsBlueprintName> blueprint) {
-        return (bp) -> {
-            if (blueprint.getPrimaryRecipe() instanceof HorizonsExperimentalEffectBlueprint experimentalEffectBlueprint) {
-                return ((HorizonsWishlistBlueprint) bp.getWishlistRecipe()).getUuid();
-//                return experimentalEffectBlueprint.getBlueprintName().name() + experimentalEffectBlueprint.getHorizonsBlueprintType().name();
-            } else if (blueprint.getPrimaryRecipe() instanceof HorizonsModuleBlueprint moduleBlueprint) {
-//                return moduleBlueprint.getBlueprintName().name() + moduleBlueprint.getHorizonsBlueprintType().name();
+        return bp -> {
+            if (blueprint.getPrimaryRecipe() instanceof HorizonsExperimentalEffectBlueprint || blueprint.getPrimaryRecipe() instanceof HorizonsModuleBlueprint) {
                 return ((HorizonsWishlistBlueprint) bp.getWishlistRecipe()).getUuid();
             }
             return blueprint.getPrimaryRecipe().getBlueprintName();
@@ -78,7 +72,7 @@ public class PathService {
         final StarSystem finalCurrentStarSystem1 = currentStarSystem;
         final List<Engineer> allowedEngineers = Arrays.stream(Engineer.values())
                 .filter(engineer -> engineer.getDistance(finalCurrentStarSystem1) < MAX_ENGINEER_DISTANCE)
-                .filter(APPLICATION_STATE::isEngineerUnlocked)
+                .filter(APPLICATION_STATE::isEngineerUnlockedExact)
                 .toList();
         distinctRecipes.forEach(recipe -> recipe.getEngineers().stream()
                 .filter(allowedEngineers::contains)
@@ -101,8 +95,8 @@ public class PathService {
                                         engineerPreference.put(engineer, engineerPreference.get(engineer) - 1);
                                     }
                                 });
-                        final Map<EngineeringBlueprint<T>, Integer> recipesForEngineer = getRecipesForEngineer(wishlistBlueprints, pathItems, selectedEngineer);
-                        final PathItem<T> e = new PathItem(engineers, recipesForEngineer);
+                        final List<? extends WishlistBlueprintTemplate<T>> blueprintsForEngineer = getBlueprintsForEngineer(wishlistBlueprints, pathItems, selectedEngineer);
+                        final PathItem<T> e = new PathItem<>(engineers, blueprintsForEngineer);
                         pathItems.add(e);
                     }
                 });
@@ -123,12 +117,13 @@ public class PathService {
             }
         }
         tryOptimizePath(sortedPathItems);
-        final Map<EngineeringBlueprint<T>, Integer> unCraftable = distinctRecipes.stream().filter(recipe -> recipe.getEngineers().stream().noneMatch(engineerPreference::containsKey)).collect(Collectors.groupingBy(
-                recipe -> recipe,
-                Collectors.summingInt(value -> 1))
-        );
-        if (unCraftable.size() > 0) {
-            final PathItem<T> pathItem = new PathItem(List.of(Engineer.UNKNOWN), unCraftable);
+        final List<? extends WishlistBlueprintTemplate<T>> unCraftable = wishlistBlueprints.stream()
+                .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
+                .filter(bp -> bp.getPrimaryRecipe() instanceof EngineeringBlueprint<T>)
+                .filter(bp -> ((EngineeringBlueprint<T>) bp.getPrimaryRecipe()).getEngineers().stream().noneMatch(engineerPreference::containsKey))
+                .toList();
+        if (!unCraftable.isEmpty()) {
+            final PathItem<T> pathItem = new PathItem<>(List.of(Engineer.UNKNOWN), unCraftable);
             pathItem.setEngineer(Engineer.UNKNOWN);
             pathItem.setDistance(0.0);
             sortedPathItems.add(pathItem);
@@ -196,20 +191,14 @@ public class PathService {
         return paths;
     }
 
-    private static <T extends BlueprintName<T>> Map<EngineeringBlueprint<T>, Integer> getRecipesForEngineer(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer) {
-        final List<EngineeringBlueprint<T>> recipes = wishlistBlueprints.stream()
+    private static <T extends BlueprintName<T>> List<? extends WishlistBlueprintTemplate<T>> getBlueprintsForEngineer(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer) {
+        return wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
-                .map(WishlistBlueprintTemplate::getPrimaryRecipe)
-                .filter(EngineeringBlueprint.class::isInstance)
-                .map(blueprint -> (EngineeringBlueprint<T>) blueprint)
+                .filter(bp -> bp.getPrimaryRecipe() instanceof EngineeringBlueprint<T>)
+                .filter(bp -> ((EngineeringBlueprint<T>) bp.getPrimaryRecipe()).getEngineers().contains(engineer))
+                .filter(bp -> pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(bp.getPrimaryRecipe())))
+
                 .toList();
-        return recipes.stream()
-                .filter(recipe -> recipe.getEngineers().contains(engineer))
-                .filter(recipe -> pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(recipe)))
-                .collect(Collectors.groupingBy(
-                        recipe -> recipe,
-                        Collectors.summingInt(value -> 1))
-                );
     }
 
     private static <T extends BlueprintName<T>> List<Engineer> mostPreferredEngineers(final Map<Engineer, Integer> engineerPreference, final EngineeringBlueprint<T> recipe, final List<Engineer> allowedEngineers) {
