@@ -45,7 +45,6 @@
     -fx-text-fill: white;
 }
 
-
 .auto-complete-popup > .list-view > .placeholder > .label {
     -fx-text-fill: #2b2b2b;
 }
@@ -2011,4 +2010,9 @@
 
 .wishlist-tooltip {
     -fx-wrap-text: true;
+}
+
+.hidden-menu-button > .arrow-button,
+.hidden-menu-button > .arrow-button > .arrow {
+    -fx-padding: 0;
 }

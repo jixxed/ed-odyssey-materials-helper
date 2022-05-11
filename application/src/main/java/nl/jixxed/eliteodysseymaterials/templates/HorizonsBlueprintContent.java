@@ -1,9 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -143,6 +145,31 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         this.addToWishlist.getStyleClass().add("recipe-wishlist-button");
         this.addToWishlist.textProperty().bind(LocaleService.getStringBinding("blueprint.add.to.wishlist"));
         this.addToWishlist.getItems().addAll(new ArrayList<>());
+        this.addToWishlist.getItems().addListener((ListChangeListener<MenuItem>) c -> {
+            if (c.getList().size() <= 1) {
+                if (!this.addToWishlist.getStyleClass().contains("hidden-menu-button")) {
+                    this.addToWishlist.getStyleClass().add("hidden-menu-button");
+                }
+            } else {
+                this.addToWishlist.getStyleClass().remove("hidden-menu-button");
+            }
+        });
+        this.addToWishlist.setOnMouseClicked(event -> {
+            if (this.addToWishlist.getItems().size() == 1) {
+                this.addToWishlist.getItems().get(0).fire();
+                event.consume();
+            }
+        });
+        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            if (this.addToWishlist.getItems().size() == 1) {
+                event.consume();
+            }
+        });
+        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
+            if (this.addToWishlist.getItems().size() == 1) {
+                event.consume();
+            }
+        });
         this.countLabel = LabelBuilder.builder().withStyleClass("recipe-wishlist-count").build();
         this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", 0));
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {

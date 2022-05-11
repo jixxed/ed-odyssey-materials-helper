@@ -12,7 +12,10 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.domain.EngineeringBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineeringBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
@@ -20,9 +23,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Template {
@@ -84,9 +85,12 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
         this.getStyleClass().add("shortest-path-item");
         if (!Engineer.UNKNOWN.equals(this.pathItem.getEngineer())) {
             this.getChildren().addAll(BoxBuilder.builder().withNodes(this.engineer, new GrowingRegion(), LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withNonLocalizedText(String.valueOf(this.index)).build()).buildHBox());
-            addLocation(this.pathItem.getEngineer());
-            this.getChildren().addAll(BoxBuilder.builder().withNodes(this.distanceLabel, this.distance).buildHBox());
-            this.getChildren().addAll(new Label());
+
+            if (!Engineer.REMOTE_WORKSHOP.equals(this.pathItem.getEngineer())) {
+                addLocation(this.pathItem.getEngineer());
+                this.getChildren().addAll(BoxBuilder.builder().withNodes(this.distanceLabel, this.distance).buildHBox());
+                this.getChildren().addAll(new Label());
+            }
         } else {
             this.getChildren().addAll(this.engineer);
         }
@@ -96,32 +100,6 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
         this.getChildren().addAll(BoxBuilder.builder().withStyleClass("shortest-path-item-button").withNodes(this.hideButton, new GrowingRegion(), this.removeButton).buildHBox());
     }
 
-    private <T extends BlueprintName<T>> Comparator<? super Map.Entry<Blueprint<T>, Integer>> getGradeSorter() {
-
-        return Comparator.comparing((Map.Entry<Blueprint<T>, Integer> blueprintIntegerEntry) -> {
-            if (blueprintIntegerEntry.getKey() instanceof HorizonsModuleBlueprint moduleBlueprint) {
-                return moduleBlueprint.getHorizonsBlueprintGrade().getGrade();
-            }
-            return 0;
-        }).reversed();
-    }
-
-//    private static <T extends BlueprintName<T>> Predicate<Map.Entry<Blueprint<T>, Integer>> distinctByKey(final Function<Map.Entry<Blueprint<T>, Integer>, Object> keyExtractor) {
-//        final Set<Object> seen = ConcurrentHashMap.newKeySet();
-//        return t -> seen.add(keyExtractor.apply(t));
-//    }
-//
-//    private static <T extends BlueprintName<T>> Function<Map.Entry<Blueprint<T>, Integer>, Object> getKey(final Blueprint<T> blueprint) {
-//        return (bp) -> {
-//            if (bp.getKey() instanceof HorizonsExperimentalEffectBlueprint experimentalEffectBlueprint) {
-//                return experimentalEffectBlueprint.getBlueprintName().name() + experimentalEffectBlueprint.getHorizonsBlueprintType().name();
-//            } else if (bp.getKey() instanceof HorizonsModuleBlueprint moduleBlueprint) {
-//                return moduleBlueprint.getBlueprintName().name() + moduleBlueprint.getHorizonsBlueprintType().name();
-//            }
-//            return bp.getKey().getBlueprintName();
-//        };
-//    }
-
     private HorizonsBlueprintType getBlueprintType(final EngineeringBlueprint<T> blueprint) {
         if (blueprint instanceof HorizonsEngineeringBlueprint horizonsModuleWishlistBlueprint) {
             return horizonsModuleWishlistBlueprint.getHorizonsBlueprintType();
@@ -129,21 +107,18 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
         return null;
     }
 
-
     private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
 
     private void addLocation(final Engineer engineer) {
-        if (!Engineer.REMOTE_WORKSHOP.equals(engineer)) {
-            final Label label = LabelBuilder.builder().withStyleClass("shortest-path-item-label-value").withNonLocalizedText(engineer.getSettlement().getSettlementName() + " | " + engineer.getStarSystem().getName() + " ").build();
-            this.getChildren().add(BoxBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
-                    .withOnMouseClicked(event -> {
-                        copyLocationToClipboard(engineer.getStarSystem().getName());
-                        NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
-                    }).withNodes(label, new StackPane(ResizableImageViewBuilder.builder()
-                            .withStyleClass("material-tooltip-copy-icon")
-                            .withImage("/images/other/copy.png")
-                            .build())).buildHBox());
-        }
+        final Label label = LabelBuilder.builder().withStyleClass("shortest-path-item-label-value").withNonLocalizedText(engineer.getSettlement().getSettlementName() + " | " + engineer.getStarSystem().getName() + " ").build();
+        this.getChildren().add(BoxBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE)
+                .withOnMouseClicked(event -> {
+                    copyLocationToClipboard(engineer.getStarSystem().getName());
+                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
+                }).withNodes(label, new StackPane(ResizableImageViewBuilder.builder()
+                        .withStyleClass("material-tooltip-copy-icon")
+                        .withImage("/images/other/copy.png")
+                        .build())).buildHBox());
     }
 
     private static void copyLocationToClipboard(final String text) {
@@ -152,7 +127,6 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
         content.putString(text);
         clipboard.setContent(content);
     }
-
 
     @Override
     public void initEventHandling() {

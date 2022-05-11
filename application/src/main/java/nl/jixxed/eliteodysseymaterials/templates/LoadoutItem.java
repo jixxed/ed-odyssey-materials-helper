@@ -200,7 +200,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
                     .withValueChangeListener((observable, oldValue, newValue) -> {
                         if (newValue != null) {
                             this.loadout.setTargetLevel(newValue);
-                            setValid(Arrays.stream(this.loadout.getModifications()).filter(Objects::nonNull).count() >= newValue);
+                            setValid(Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).filter(Objects::nonNull).count() >= newValue);
                             updateStatsList();
                             saveLoadoutSet();
                         }
@@ -271,10 +271,10 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
     }
 
     private void handleModificationChange(final ModificationChange modificationChange) {
-        setValid(Arrays.stream(this.loadout.getModifications()).filter(Objects::nonNull).count() >= this.loadout.getTargetLevel());
+        setValid(Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).filter(Objects::nonNull).count() >= this.loadout.getTargetLevel());
         saveLoadoutSet();
         updateStatsList();
-        if (Objects.equals(modificationChange.getNewModification(), SuitModification.EXTRA_AMMO_CAPACITY) || Objects.equals(modificationChange.getOldModification(), SuitModification.EXTRA_AMMO_CAPACITY)) {
+        if (Objects.equals(modificationChange.getNewModification().getModification(), SuitModification.EXTRA_AMMO_CAPACITY) || Objects.equals(modificationChange.getOldModification().getModification(), SuitModification.EXTRA_AMMO_CAPACITY)) {
             EventService.publish(new AmmoCapacityModEvent());
         }
     }
@@ -398,7 +398,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
         if (this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit).anyMatch(loadoutItem -> Arrays.stream(loadoutItem.getModifications()).map(SelectedModification::getModification).anyMatch(SuitModification.EXTRA_AMMO_CAPACITY::equals))) {
             modifications.add(new SelectedModification(SuitModification.EXTRA_AMMO_CAPACITY, false));
         }
-        final List<Modification> modifications1 = Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).filter(Objects::nonNull).toList();
+        final List<Modification> modifications1 = modifications.stream().map(SelectedModification::getModification).filter(Objects::nonNull).toList();
         final String moddedLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel(), modifications1);
         if (this.statsToggle.isSelected() && Objects.equals(currentLevelValue, targetLevelValue) && Objects.equals(targetLevelValue, moddedLevelValue)) {
             return;

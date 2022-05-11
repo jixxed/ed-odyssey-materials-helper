@@ -22,7 +22,6 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.ConnectionWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
-import org.controlsfx.control.textfield.TextFields;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +69,6 @@ class TradeCreateBlock extends VBox {
         this.offerItems = ComboBoxBuilder.builder(String.class)
                 .withItemsProperty(materialListBinding)
                 .build();
-        this.offerItems.setEditable(true);
-        TextFields.bindAutoCompletion(this.offerItems.getEditor(), this.offerItems.getItems());
         this.offerAmount = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-offer-amount")
                 .withText(LocaleService.getStringBinding("trade.create.amount"))
@@ -96,8 +93,6 @@ class TradeCreateBlock extends VBox {
         this.receiveItems = ComboBoxBuilder.builder(String.class)
                 .withItemsProperty(materialListBinding)
                 .build();
-        this.receiveItems.setEditable(true);
-        TextFields.bindAutoCompletion(this.receiveItems.getEditor(), this.receiveItems.getItems());
         this.receiveAmount = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-receive-amount")
                 .withText(LocaleService.getStringBinding("trade.create.amount"))

@@ -78,6 +78,9 @@ public class IntField extends TextField {
 
     private void addValueListener() {
         this.value.addListener((observableValue, oldValue, newValue) -> {
+            if (oldValue.equals(newValue)) {
+                return;
+            }
             if (newValue == null) {
                 this.setText("");
             } else {

@@ -82,7 +82,7 @@ public class LocaleService {
     }
 
     public static StringBinding getToolTipStringBinding(final ModuleBlueprint recipe, final String localizationKey) {
-        return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", "))));
+        return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey).translateEscapes(), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", "))));
     }
 
     public static StringBinding getToolTipStringBinding(final HorizonsEngineeringBlueprint recipe, final String localizationKey) {
