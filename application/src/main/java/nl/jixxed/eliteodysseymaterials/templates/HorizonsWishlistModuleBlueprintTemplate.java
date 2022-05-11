@@ -126,7 +126,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                                 .toArray(VBox[]::new);
 
                         final HBox grades = BoxBuilder.builder().withStyleClasses("grade-selects").withNodes(gradeControls).buildHBox();
-                        final VBox gradePopOverContent = BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(LabelBuilder.builder().withStyleClass("grade-selects-title").withNonLocalizedText("Number of rolls per grade:").build(), grades).buildVBox();
+                        final VBox gradePopOverContent = BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(LabelBuilder.builder().withStyleClass("grade-selects-title").withText(LocaleService.getStringBinding("wishlist.rolls.per.grade")).build(), grades).buildVBox();
                         final PopOver popOver = new PopOver(gradePopOverContent);
                         popOverRef.set(popOver);
                         popOver.setDetachable(false);
