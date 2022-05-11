@@ -19,14 +19,14 @@ import java.util.Objects;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NotificationService {
-    private static boolean enabled = true;
+    private static boolean enabled = false;
 
     static {
         EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised());
     }
 
     public static void showInformation(final NotificationType notificationType, final String title, final String text) {
-        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), Boolean.TRUE);
+        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             Notifications.create()
                     .darkStyle()
@@ -38,7 +38,7 @@ public class NotificationService {
     }
 
     public static void showWarning(final NotificationType notificationType, final String title, final String text) {
-        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), Boolean.TRUE);
+        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             Notifications.create()
                     .darkStyle()
@@ -50,7 +50,7 @@ public class NotificationService {
     }
 
     public static void showError(final NotificationType notificationType, final String title, final String text) {
-        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), Boolean.TRUE);
+        final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             Notifications.create()
                     .darkStyle()

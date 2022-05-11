@@ -226,7 +226,7 @@ public class HorizonsWishlistTab extends EDHTab {
                             NotificationService.showInformation(NotificationType.COPY, "Wishlists", "The wishlist has been copied to your clipboard");
                         },
                         "tab.wishlist.export", event ->
-                                EventService.publish(new HorizonsSaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededRaw, this.wishlistNeededEncoded, this.wishlistNeededManufactured, this.wishlistNeededCommmodity)))
+                                EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededRaw, this.wishlistNeededEncoded, this.wishlistNeededManufactured, this.wishlistNeededCommmodity)))
                 )).build();
         this.menuButton.setFocusTraversable(false);
 

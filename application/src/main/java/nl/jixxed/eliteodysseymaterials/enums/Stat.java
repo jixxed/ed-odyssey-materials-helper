@@ -7,6 +7,7 @@ import java.util.List;
 public interface Stat {
 
     NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
+    NumberFormat NUMBER_FORMAT_1 = NumberFormat.getNumberInstance();
     NumberFormat NUMBER_FORMAT_0 = NumberFormat.getNumberInstance();
 
     default String formatValue(final Object value, final Equipment equipment, final Integer level) {

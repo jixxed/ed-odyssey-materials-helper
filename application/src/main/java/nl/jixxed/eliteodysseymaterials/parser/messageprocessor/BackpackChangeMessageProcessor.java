@@ -36,6 +36,9 @@ import java.util.stream.StreamSupport;
 public class BackpackChangeMessageProcessor implements MessageProcessor {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
+    public BackpackChangeMessageProcessor() {
+    }
+
     @Override
     public void process(final JsonNode journalMessage) {
         EventService.publish(new BackpackEvent(journalMessage.get("timestamp").asText()));
@@ -44,7 +47,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
         final String timestamp = journalMessage.get("timestamp").asText();
         publishBackpackChangeEvents(added, Operation.ADDED, timestamp);
         publishBackpackChangeEvents(removed, Operation.REMOVED, timestamp);
-        if (added != null && !added.isEmpty()) {
+        if (added != null && !added.isEmpty()) { // TODO
             StreamSupport.stream(added.spliterator(), false)
                     .map(jsonNode -> OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText()))
                     .filter(material -> !(material instanceof Consumable))

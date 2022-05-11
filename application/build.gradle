@@ -134,12 +134,15 @@ jpackage {
 }
 run {
 //    setArgs(['edomh://wishlist?eyJldmVudCI6Indpc2hsaXN0IiwidmVyc2lvbiI6IjEiLCJ3aXNobGlzdCI6eyJ1dWlkIjoiMGU4OGE4MzEtMGY1ZS00NjczLWEwODItMzk4YTRmMjA5NDU0IiwibmFtZSI6IkRlZmF1bHQgd2lzaGxpc3QiLCJpdGVtcyI6W3sicmVjaXBlTmFtZSI6IktBUk1BXzRfNSIsInZpc2libGUiOnRydWV9LHsicmVjaXBlTmFtZSI6Ik1BTlRJQ09SRV80XzUiLCJ2aXNpYmxlIjp0cnVlfSx7InJlY2lwZU5hbWUiOiJNQUdBWklORV9TSVpFIiwidmlzaWJsZSI6dHJ1ZX0seyJyZWNpcGVOYW1lIjoiS0FSTUFfMV8yIiwidmlzaWJsZSI6dHJ1ZX1dfX0='])
-    jvmArgs = ['--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls', '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming']
+    jvmArgs = ['--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls', '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming', '--enable-preview']
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
 }
 test {
     useJUnitPlatform {
 
     }
+}
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
 }
 mainClassName = 'nl.jixxed.eliteodysseymaterials.Main'

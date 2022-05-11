@@ -2167,3 +2167,15 @@ blueprint.engineer.pinnable.tooltip,Double-click to pin blueprint to this engine
 blueprint.add.to.wishlist.all.grade,Add all grades to {0},Add all grades to {0},Fügen Sie alle Noten zu {0} hinzu,Agregue todos los grados a {0},Ajouter toutes les notes à {0},Adicione todas as notas a {0},Добавьте все оценки в {0}
 blueprint.add.to.wishlist.single.grade,Add this grade to {0},Add this grade to {0},Fügen Sie diese Note zu {0} hinzu,Agregue esta calificación a {0},Ajoutez cette note à {0},Adicione esta nota a {0},Добавьте эту оценку в {0}
 wishlist.rolls.per.grade,Number of rolls per grade:,Number of rolls per grade:,Anzahl der Brötchen pro Klasse:,Número de rollos por grado:,Nombre de rouleaux par grade:,Número de rolos por série:,Количество рулонов на класс:
+loadout.stat.name.geneticsampler_power_usage,Genetic sampler power usage,,,,,,
+loadout.stat.name.profilescanner_power_usage,Profile scanner power usage,,,,,,
+loadout.stat.name.energylink_recharge_rate,Energylink recharge rate,,,,,,
+loadout.stat.name.nightvision_power_usage,Nightvision power usage,,,,,,
+loadout.stat.name.energylink_discharge_duration,Energylink discharge duration,,,,,,
+loadout.stat.name.profilescanner_scan_duration,Profile scanner scan duration,,,,,,
+loadout.stat.name.profilescanner_clone_duration,Profile scanner clone duration,,,,,,
+loadout.stat.name.energylink_discharge_rate,Energylink discharge rate,,,,,,
+loadout.stat.name.battery_recharge_duration,Battery recharge duration,,,,,,
+loadout.stat.name.draw_speed,Draw speed,,,,,,
+loadout.stat.name.stow_speed,Stow speed,,,,,,
+loadout.stat.name.ads_speed,ADS Speed,,,,,,

@@ -17,9 +17,14 @@ public enum StaticStat implements Stat {
     TYPE(StatGroup.GENERAL),
     DAMAGE_TYPE(StatGroup.GENERAL),
     RATE_OF_FIRE(StatGroup.DAMAGE),
-    ENERGYLINK_RECHARGE_TIME(StatGroup.POWER),
+    ENERGYLINK_RECHARGE_RATE(StatGroup.POWER),
     SHIELD_POWER_USAGE(StatGroup.POWER),
+    NIGHTVISION_POWER_USAGE(StatGroup.POWER),
     LIGHTS_POWER_USAGE(StatGroup.POWER),
+    ENERGYLINK_DISCHARGE_DURATION(StatGroup.POWER),
+    PROFILESCANNER_SCAN_DURATION(StatGroup.POWER),
+    PROFILESCANNER_CLONE_DURATION(StatGroup.POWER),
+    ENERGYLINK_DISCHARGE_RATE(StatGroup.POWER),
     SPRINT_SPEED(StatGroup.MOVEMENT),
     SPRINT_SPEED_PISTOL(StatGroup.MOVEMENT),
     WALK_SPEED(StatGroup.MOVEMENT),
@@ -30,6 +35,7 @@ public enum StaticStat implements Stat {
 
     static {
         NUMBER_FORMAT_2.setMaximumFractionDigits(2);
+        NUMBER_FORMAT_1.setMaximumFractionDigits(1);
         NUMBER_FORMAT_0.setMaximumFractionDigits(0);
     }
 
@@ -40,8 +46,9 @@ public enum StaticStat implements Stat {
             case HEALTH, PRIMARY_SLOTS, SECONDARY_SLOTS -> value.toString();
             case CLASS, TYPE, DAMAGE_TYPE, FIRE_MODE -> LocaleService.getLocalizedStringForCurrentLocale(value.toString());
             case MASS -> value.toString() + UnitConstants.KILOGRAM;
-            case SHIELD_POWER_USAGE, LIGHTS_POWER_USAGE -> NUMBER_FORMAT_2.format(value) + UnitConstants.KILOWATT_PER_SECOND;
-            case ENERGYLINK_RECHARGE_TIME -> NUMBER_FORMAT_2.format(value) + UnitConstants.SECOND;
+            case ENERGYLINK_RECHARGE_RATE -> NUMBER_FORMAT_2.format(value) + UnitConstants.MEGAWATT_PER_SECOND;
+            case ENERGYLINK_DISCHARGE_RATE, SHIELD_POWER_USAGE, LIGHTS_POWER_USAGE, NIGHTVISION_POWER_USAGE -> NUMBER_FORMAT_2.format(value) + UnitConstants.KILOWATT_PER_SECOND;
+            case ENERGYLINK_DISCHARGE_DURATION, PROFILESCANNER_SCAN_DURATION, PROFILESCANNER_CLONE_DURATION -> NUMBER_FORMAT_2.format(value) + UnitConstants.SECOND;
             case SPRINT_SPEED, SPRINT_SPEED_PISTOL, WALK_SPEED, WALK_SPEED_PISTOL -> NUMBER_FORMAT_2.format(value) + UnitConstants.METER_PER_SECOND;
             case LATERAL_SPEED -> value + UnitConstants.PERCENT;
 

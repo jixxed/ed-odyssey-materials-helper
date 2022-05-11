@@ -19,13 +19,14 @@ public enum DynamicStat implements Stat {
     PLASMA_RESIST(StatGroup.RESISTANCE),
     EXPLOSIVE_RESIST(StatGroup.RESISTANCE),
     BATTERY(StatGroup.POWER),
+    BATTERY_RECHARGE_DURATION(StatGroup.POWER),
     EMERGENCY_AIR(StatGroup.CAPACITY),
     AMMO_CAPACITY(StatGroup.CAPACITY),
     GOODS_CAPACITY(StatGroup.CAPACITY),
     ASSETS_CAPACITY(StatGroup.CAPACITY),
     DATA_CAPACITY(StatGroup.CAPACITY),
     SPRINT_DURATION(StatGroup.MOVEMENT),
-    NIGHT_VISION(StatGroup.POWER),
+    NIGHT_VISION(StatGroup.OTHER),
     FOOTSTEPS_AUDIBLE_RANGE(StatGroup.OTHER),
     SPRINT_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT),
     SPRINT_SPEED_RIFLE(StatGroup.MOVEMENT),
@@ -40,6 +41,8 @@ public enum DynamicStat implements Stat {
     LOS_ANALYSIS_RANGE(StatGroup.OTHER),
     LOS_ANALYSIS_TIME(StatGroup.OTHER),
     ARCCUTTER_POWER_USAGE(StatGroup.POWER),
+    GENETICSAMPLER_POWER_USAGE(StatGroup.POWER),
+    PROFILESCANNER_POWER_USAGE(StatGroup.POWER),
     ENERGYLINK_OVERLOAD_POWER_USAGE(StatGroup.POWER),
     MELEE_DAMAGE(StatGroup.OTHER),
     JUMP_ASSIST_BATTERY_CONSUMPTION(StatGroup.POWER),
@@ -53,7 +56,9 @@ public enum DynamicStat implements Stat {
     EFFECTIVE_RANGE(StatGroup.OTHER),
     HIP_FIRE_ACCURACY(StatGroup.OTHER),
     STABILITY(StatGroup.OTHER),
-    HANDLING(StatGroup.OTHER),
+    DRAW_SPEED(StatGroup.MOVEMENT),
+    STOW_SPEED(StatGroup.MOVEMENT),
+    ADS_SPEED(StatGroup.MOVEMENT),
     SILENCED_INSIDE(StatGroup.NOISE),
     SILENCED_OUTSIDE(StatGroup.NOISE),
     RELOAD_SPEED(StatGroup.DAMAGE),
@@ -75,10 +80,10 @@ public enum DynamicStat implements Stat {
             case JUMP_ASSIST_RECHARGE -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.IMPROVED_JUMP_ASSIST)) ? (Integer) value * 1.25 : value) + UnitConstants.PERCENT;
             case HIP_FIRE_ACCURACY -> (modifications.contains(WeaponModification.HIGHER_ACCURACY_KINETIC) || modifications.contains(WeaponModification.HIGHER_ACCURACY_LASER) || modifications.contains(WeaponModification.HIGHER_ACCURACY_PLASMA) ? getHipFireAccuracy(equipment, (Double) value) : value.toString()) + UnitConstants.PERCENT;
             case STABILITY -> (modifications.contains(WeaponModification.STABILITY) ? getStability((Double) value) : value.toString()) + UnitConstants.PERCENT;
-            case HANDLING -> (modifications.contains(WeaponModification.FASTER_HANDLING) ? String.valueOf((Integer) value + 10) : String.valueOf(value)) + UnitConstants.PERCENT;
             case MAGAZINE_SIZE -> modifications.contains(WeaponModification.MAGAZINE_SIZE) ? String.valueOf(Math.round((Integer) value * 1.5)) : value.toString();
             case AMMO_CAPACITY -> NUMBER_FORMAT_0.format(modifications.contains(SuitModification.EXTRA_AMMO_CAPACITY) ? (Integer) value * 1.5 : value) + UnitConstants.PERCENT;
             case BATTERY -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.IMPROVED_BATTERY_CAPACITY) ? (Double) value * 1.5 : value) + UnitConstants.MEGAWATT;
+            case BATTERY_RECHARGE_DURATION -> NUMBER_FORMAT_1.format((Double) (modifications.contains(SuitModification.IMPROVED_BATTERY_CAPACITY) ? (Double) value * 1.5 : value) / 2.7) + UnitConstants.SECOND;
             case SHIELD_STRENGTH -> ((LevelValue) value).getValueForLevel(level).toString() + UnitConstants.MEGAWATT;
             case SHIELD_REGEN -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.FASTER_SHIELD_REGEN) ? (Double) ((LevelValue) value).getValueForLevel(level) * 1.25 : ((LevelValue) value).getValueForLevel(level)) + UnitConstants.MEGAWATT_PER_SECOND;
             case RESERVE_AMMO -> (modifications.contains(SuitModification.EXTRA_AMMO_CAPACITY)) ? String.valueOf(Math.round((Integer) value * 1.5)) : value.toString();
@@ -102,9 +107,11 @@ public enum DynamicStat implements Stat {
             case ADS_SPEED_PISTOL, ADS_SPEED_CARBINE_SHOTGUN, ADS_SPEED_RIFLE, ADS_SPEED_SNIPER_LAUNCHER -> NUMBER_FORMAT_2.format(modifications.contains(SuitModification.COMBAT_MOVEMENT_SPEED) ? 4.0 : value) + UnitConstants.METER_PER_SECOND;
             case LOS_ANALYSIS_RANGE -> (modifications.contains(SuitModification.ENHANCED_TRACKING) ? (Integer) value * 2 : value) + UnitConstants.METER;
             case LOS_ANALYSIS_TIME -> (modifications.contains(SuitModification.ENHANCED_TRACKING) ? 0 : value) + UnitConstants.SECOND;
-            case ARCCUTTER_POWER_USAGE -> NUMBER_FORMAT_2.format((modifications.contains(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION) ? (Double) value / 2 : value)) + UnitConstants.KILOWATT_PER_SECOND;
+            case ARCCUTTER_POWER_USAGE, GENETICSAMPLER_POWER_USAGE, PROFILESCANNER_POWER_USAGE -> NUMBER_FORMAT_2.format((modifications.contains(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION) ? (Double) value / 2 : value)) + UnitConstants.KILOWATT_PER_SECOND;
             case ENERGYLINK_OVERLOAD_POWER_USAGE -> NUMBER_FORMAT_2.format((modifications.contains(SuitModification.REDUCED_TOOL_BATTERY_CONSUMPTION) ? (Double) value / 2 : value)) + UnitConstants.MEGAWATT;
             case MELEE_DAMAGE -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.ADDED_MELEE_DAMAGE)) ? (Integer) value * 2.5 : value) + UnitConstants.PERCENT;
+            case DRAW_SPEED, STOW_SPEED -> NUMBER_FORMAT_2.format(modifications.contains(WeaponModification.FASTER_HANDLING) ? getDrawStowSpeed(equipment, (Double) value) : value) + UnitConstants.SECOND;
+            case ADS_SPEED -> NUMBER_FORMAT_2.format(modifications.contains(WeaponModification.FASTER_HANDLING) ? getADSSpeed(equipment, (Double) value) : value) + UnitConstants.SECOND;
             case SILENCED_INSIDE -> (modifications.contains(WeaponModification.NOISE_SUPPRESSOR) || (boolean) value) ? UTF8Constants.CHECK_TRUE : UTF8Constants.CHECK_FALSE;
             case SILENCED_OUTSIDE -> (modifications.contains(WeaponModification.AUDIO_MASKING) || (boolean) value) ? UTF8Constants.CHECK_TRUE : UTF8Constants.CHECK_FALSE;
             case RELOAD_SPEED -> ((modifications.contains(WeaponModification.RELOAD_SPEED)) ? NUMBER_FORMAT_2.format((Double) value / (equipment.equals(Weapon.TAKADA_APHELION) ? 1.20 : 1.25)) : value) + UnitConstants.SECOND;
@@ -117,6 +124,20 @@ public enum DynamicStat implements Stat {
     private String getHipFireAccuracy(final Equipment equipment, final Double value) {
         if (equipment instanceof Weapon) {
             return round((100.0 - value) * (Weapon.getHIP_FIRE_FACTORS().get(equipment) / 100) + value, 1).toString();
+        }
+        throw new IllegalArgumentException("Equipment not a weapon!");
+    }
+
+    private Double getADSSpeed(final Equipment equipment, final Double value) {
+        if (equipment instanceof Weapon) {
+            return round(value - value * Weapon.getADS_FACTORS().get(equipment) / 100, 2);
+        }
+        throw new IllegalArgumentException("Equipment not a weapon!");
+    }
+
+    private Double getDrawStowSpeed(final Equipment equipment, final Double value) {
+        if (equipment instanceof Weapon) {
+            return round(value - value * Weapon.getDRAW_STOW_FACTORS().get(equipment) / 100, 2);
         }
         throw new IllegalArgumentException("Equipment not a weapon!");
     }

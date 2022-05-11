@@ -77,12 +77,12 @@ public class TextExporter {
                         .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
                         .forEach(item -> {
                             textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
-                            final Integer total = switch (item.getKey().getStorageType()) {
-                                case RAW -> StorageService.getRaw().get(item.getKey());
-                                case ENCODED -> StorageService.getEncoded().get(item.getKey());
-                                case MANUFACTURED -> StorageService.getManufactured().get(item.getKey());
-                                case COMMODITY -> StorageService.getCommodities().get(item.getKey());
-                                case OTHER -> 0;
+                            final Integer total = switch (item.getKey()) {
+                                case Raw r -> StorageService.getRaw().get(r);
+                                case Encoded e -> StorageService.getEncoded().get(e);
+                                case Manufactured m -> StorageService.getManufactured().get(m);
+                                case Commodity c -> StorageService.getCommodities().get(c);
+                                default -> 0;
                             };
                             textBuilder.append(String.format("%12s", total));
                             textBuilder.append(String.format("%12s", item.getValue()));
