@@ -35,7 +35,7 @@ public class PathService {
                 .sorted(Comparator.comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion).thenComparing(horizonsEngineeringBlueprint -> (HorizonsBlueprintName) horizonsEngineeringBlueprint.getBlueprintName()))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        return calculateShortestPath(wishlistBlueprints, distinctRecipes);
+        return calculateShortestPath(wishlistBlueprints, distinctRecipes, false);
     }
 
     private static Predicate<WishlistBlueprintTemplate<HorizonsBlueprintName>> distinctByKey(final Function<WishlistBlueprintTemplate<HorizonsBlueprintName>, Object> keyExtractor) {
@@ -61,10 +61,10 @@ public class PathService {
                 .map(ModuleBlueprint.class::cast)
                 .sorted(Comparator.comparing(ModuleBlueprint::hasSingleEngineerPerRegion).thenComparing((ModuleBlueprint moduleBlueprint) -> (OdysseyBlueprintName) moduleBlueprint.getBlueprintName()))
                 .collect(Collectors.toCollection(LinkedHashSet::new));
-        return calculateShortestPath(wishlistBlueprints, distinctRecipes);
+        return calculateShortestPath(wishlistBlueprints, distinctRecipes, true);
     }
 
-    private static <T extends BlueprintName<T>> List<PathItem<T>> calculateShortestPath(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final LinkedHashSet<? extends EngineeringBlueprint<T>> distinctRecipes) {
+    private static <T extends BlueprintName<T>> List<PathItem<T>> calculateShortestPath(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final LinkedHashSet<? extends EngineeringBlueprint<T>> distinctRecipes, final boolean isOdyssey) {
         final List<PathItem<T>> sortedPathItems = new ArrayList<>();
         final List<PathItem<T>> pathItems = new ArrayList<>();
         final Map<Engineer, Integer> engineerPreference = new EnumMap<>(Engineer.class);
@@ -72,7 +72,7 @@ public class PathService {
         final StarSystem finalCurrentStarSystem1 = currentStarSystem;
         final List<Engineer> allowedEngineers = Arrays.stream(Engineer.values())
                 .filter(engineer -> engineer.getDistance(finalCurrentStarSystem1) < MAX_ENGINEER_DISTANCE)
-                .filter(APPLICATION_STATE::isEngineerUnlockedExact)
+                .filter(engineer -> (isOdyssey) ? APPLICATION_STATE.isEngineerUnlocked(engineer) : APPLICATION_STATE.isEngineerUnlockedExact(engineer))
                 .toList();
         distinctRecipes.forEach(recipe -> recipe.getEngineers().stream()
                 .filter(allowedEngineers::contains)

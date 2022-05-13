@@ -19,4 +19,6 @@ public interface Stat {
     String getLocalizationKey();
 
     StatGroup getStatGroup();
+
+    Integer getOrder();
 }

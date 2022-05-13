@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 @RequiredArgsConstructor
 @Getter
@@ -60,10 +59,14 @@ public enum Raw implements HorizonsMaterial {
         }
     }
 
-    public static Raw[] materialsForTypeSorted(final HorizonsMaterialType materialType) {
+    public static Raw[] materialsForType(final HorizonsMaterialType materialType) {
         return Arrays.stream(Raw.values())
                 .filter(raw -> raw.getMaterialType().equals(materialType))
-                .sorted(Comparator.comparing(Raw::getRarity))
                 .toList().toArray(Raw[]::new);
+    }
+
+    @Override
+    public HorizonsStorageType getStorageType() {
+        return HorizonsStorageType.RAW;
     }
 }

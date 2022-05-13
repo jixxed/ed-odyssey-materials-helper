@@ -26,7 +26,6 @@ public class TradeTab extends EDOTab {
     private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
     private ScrollPane scrollPane;
     private Label status;
-    private Label disclaimer;
     private Button connectButton;
     private Button disconnectButton;
     private HBox tradeStatusRow;
@@ -52,11 +51,6 @@ public class TradeTab extends EDOTab {
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tabs.trade"))
                 .build();
-        this.disclaimer = LabelBuilder.builder()
-                .withStyleClass("trade-disclaimer")
-                .withText(LocaleService.getStringBinding("tab.trade.disclaimer"))
-                .build();
-
         this.status = LabelBuilder.builder()
                 .withStyleClass("trade-status-label")
                 .withText(LocaleService.getStringBinding("tab.trade.status.not.connected"))
@@ -86,7 +80,7 @@ public class TradeTab extends EDOTab {
         this.tradeCreateBlock = new TradeCreateBlock();
         final VBox trade = BoxBuilder.builder()
                 .withStyleClass("trade")
-                .withNodes(titleRow, this.disclaimer, this.tradeCreateBlock)
+                .withNodes(titleRow, this.tradeCreateBlock)
                 .buildVBox();
         this.tradeOffersPagination.getTrades().sizeProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.intValue() > 0 && !trade.getChildren().contains(this.tradeOffersPagination)) {

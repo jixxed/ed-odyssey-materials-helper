@@ -20,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.HorizonsSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class HorizonsMaterialOverview extends VBox implements Template {
     private HorizonsMaterialCard[] rawCards;
@@ -48,23 +49,23 @@ public class HorizonsMaterialOverview extends VBox implements Template {
     private void update(final String search) {
         this.getChildren().clear();
         Arrays.stream(HorizonsMaterialType.getRawTypes()).forEach(type -> {
-            if (Arrays.stream(Raw.materialsForTypeSorted(type)).anyMatch(raw -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(raw.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
-                final HorizonsMaterialCard[] array = Arrays.stream(this.rawCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).toList().toArray(HorizonsMaterialCard[]::new);
+            if (Arrays.stream(Raw.materialsForType(type)).anyMatch(raw -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(raw.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
+                final HorizonsMaterialCard[] array = Arrays.stream(this.rawCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).sorted(Comparator.comparing(card -> card.getMaterial().getRarity())).toList().toArray(HorizonsMaterialCard[]::new);
                 createMaterialCardRow(type, array);
             }
         });
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         Arrays.stream(HorizonsMaterialType.getEncodedTypes()).forEach(type -> {
-            if (Arrays.stream(Encoded.materialsForTypeSorted(type)).anyMatch(encoded -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(encoded.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
-                final HorizonsMaterialCard[] array = Arrays.stream(this.encodedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).toList().toArray(HorizonsMaterialCard[]::new);
+            if (Arrays.stream(Encoded.materialsForType(type)).anyMatch(encoded -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(encoded.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
+                final HorizonsMaterialCard[] array = Arrays.stream(this.encodedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).sorted(Comparator.comparing(card -> card.getMaterial().getRarity())).toList().toArray(HorizonsMaterialCard[]::new);
                 createMaterialCardRow(type, array);
 
             }
         });
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         Arrays.stream(HorizonsMaterialType.getManufacturedTypes()).forEach(type -> {
-            if (Arrays.stream(Manufactured.materialsForTypeSorted(type)).anyMatch(manufactured -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(manufactured.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
-                final HorizonsMaterialCard[] array = Arrays.stream(this.manufacturedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).toList().toArray(HorizonsMaterialCard[]::new);
+            if (Arrays.stream(Manufactured.materialsForType(type)).anyMatch(manufactured -> search.isBlank() || LocaleService.getLocalizedStringForCurrentLocale(manufactured.getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(search.toLowerCase(LocaleService.getCurrentLocale())))) {
+                final HorizonsMaterialCard[] array = Arrays.stream(this.manufacturedCards).filter(horizonsMaterialCard -> horizonsMaterialCard.getMaterial().getMaterialType().equals(type)).sorted(Comparator.comparing(card -> card.getMaterial().getRarity())).toList().toArray(HorizonsMaterialCard[]::new);
                 createMaterialCardRow(type, array);
             }
         });

@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.UnitConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -7,31 +8,34 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Getter
 public enum StaticStat implements Stat {
-
-    HEALTH(StatGroup.GENERAL),
-    MASS(StatGroup.GENERAL),
-    PRIMARY_SLOTS(StatGroup.GENERAL),
-    SECONDARY_SLOTS(StatGroup.GENERAL),
-    CLASS(StatGroup.GENERAL),
-    TYPE(StatGroup.GENERAL),
-    DAMAGE_TYPE(StatGroup.GENERAL),
-    RATE_OF_FIRE(StatGroup.DAMAGE),
-    ENERGYLINK_RECHARGE_RATE(StatGroup.POWER),
-    SHIELD_POWER_USAGE(StatGroup.POWER),
-    NIGHTVISION_POWER_USAGE(StatGroup.POWER),
-    LIGHTS_POWER_USAGE(StatGroup.POWER),
-    ENERGYLINK_DISCHARGE_DURATION(StatGroup.POWER),
-    PROFILESCANNER_SCAN_DURATION(StatGroup.POWER),
-    PROFILESCANNER_CLONE_DURATION(StatGroup.POWER),
-    ENERGYLINK_DISCHARGE_RATE(StatGroup.POWER),
-    SPRINT_SPEED(StatGroup.MOVEMENT),
-    SPRINT_SPEED_PISTOL(StatGroup.MOVEMENT),
-    WALK_SPEED(StatGroup.MOVEMENT),
-    WALK_SPEED_PISTOL(StatGroup.MOVEMENT),
-    LATERAL_SPEED(StatGroup.MOVEMENT),
-    FIRE_MODE(StatGroup.GENERAL);
+    //suit
+    HEALTH(StatGroup.GENERAL, 2),
+    MASS(StatGroup.GENERAL, 3),
+    PRIMARY_SLOTS(StatGroup.GENERAL, 4),
+    SECONDARY_SLOTS(StatGroup.GENERAL, 5),
+    //weapon
+    CLASS(StatGroup.GENERAL, 2),
+    TYPE(StatGroup.GENERAL, 3),
+    DAMAGE_TYPE(StatGroup.GENERAL, 4),
+    FIRE_MODE(StatGroup.GENERAL, 5),
+    SPRINT_SPEED(StatGroup.MOVEMENT, 1),
+    SPRINT_SPEED_PISTOL(StatGroup.MOVEMENT, 2),
+    WALK_SPEED(StatGroup.MOVEMENT, 6),
+    WALK_SPEED_PISTOL(StatGroup.MOVEMENT, 7),
+    LATERAL_SPEED(StatGroup.MOVEMENT, 15),
+    RATE_OF_FIRE(StatGroup.DAMAGE, 2),
+    SHIELD_POWER_USAGE(StatGroup.POWER, 6),
+    LIGHTS_POWER_USAGE(StatGroup.POWER, 7),
+    NIGHTVISION_POWER_USAGE(StatGroup.POWER, 8),
+    PROFILESCANNER_SCAN_DURATION(StatGroup.POWER, 10),
+    PROFILESCANNER_CLONE_DURATION(StatGroup.POWER, 11),
+    ENERGYLINK_RECHARGE_RATE(StatGroup.POWER, 12),
+    ENERGYLINK_DISCHARGE_RATE(StatGroup.POWER, 13),
+    ENERGYLINK_DISCHARGE_DURATION(StatGroup.POWER, 14);
     private final StatGroup statGroup;
+    private final Integer order;
 
     static {
         NUMBER_FORMAT_2.setMaximumFractionDigits(2);
@@ -60,8 +64,4 @@ public enum StaticStat implements Stat {
         return "loadout.stat.name." + this.name().toLowerCase();
     }
 
-    @Override
-    public StatGroup getStatGroup() {
-        return this.statGroup;
-    }
 }

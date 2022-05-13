@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 @RequiredArgsConstructor
 @Getter
@@ -95,10 +94,9 @@ public enum Manufactured implements HorizonsMaterial {
         }
     }
 
-    public static Manufactured[] materialsForTypeSorted(final HorizonsMaterialType materialType) {
+    public static Manufactured[] materialsForType(final HorizonsMaterialType materialType) {
         return Arrays.stream(Manufactured.values())
                 .filter(manufactured -> manufactured.getMaterialType().equals(materialType))
-                .sorted(Comparator.comparing(Manufactured::getRarity))
                 .toList().toArray(Manufactured[]::new);
     }
 }

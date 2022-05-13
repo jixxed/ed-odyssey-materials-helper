@@ -320,7 +320,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
 
         final AtomicReference<StatGroup> currentGroup = new AtomicReference<>();
         this.loadout.getEquipment().getStats().entrySet().stream()
-                .sorted(Comparator.comparing(statObjectEntry -> statObjectEntry.getKey().getStatGroup()))
+                .sorted(Comparator.comparing((Map.Entry<Stat, Object> statObjectEntry) -> statObjectEntry.getKey().getStatGroup()).thenComparing(statObjectEntry -> statObjectEntry.getKey().getOrder()))
                 .forEach(statObjectEntry ->
                 {
                     if (!Objects.equals(currentGroup.get(), statObjectEntry.getKey().getStatGroup())) {

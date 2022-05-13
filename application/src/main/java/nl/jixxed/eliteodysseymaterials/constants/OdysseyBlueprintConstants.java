@@ -610,9 +610,9 @@ public abstract class OdysseyBlueprintConstants {
                         Asset.MOTOR, 10
                 ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
-                        OdysseyModifier.JUMP_ASSIST_BOOST_DRAIN, "-25%",
-                        OdysseyModifier.JUMP_ASSIST_BOOST_RECHARGE_RATE, "+25%",
-                        OdysseyModifier.BATTERY_CONSUMPTION, "-25%"
+                        OdysseyModifier.JUMP_ASSIST_BOOST_DURATION, "+33%",
+                        OdysseyModifier.JUMP_ASSIST_BOOST_RECHARGE_DURATION, "-33%",
+                        OdysseyModifier.JUMP_ASSIST_BATTERY_CONSUMPTION, "-50%"
                 )
         ));
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.INCREASED_AIR_RESERVES, new ModuleBlueprint(
@@ -858,7 +858,7 @@ public abstract class OdysseyBlueprintConstants {
                         Asset.VISCOELASTICPOLYMER, 5
                 ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
-                        OdysseyModifier.HANDLING_SPEED, "+10%"
+                        OdysseyModifier.HANDLING_SPEED, "+30-50%"
                 )
         ));
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_KINETIC, new ModuleBlueprint(

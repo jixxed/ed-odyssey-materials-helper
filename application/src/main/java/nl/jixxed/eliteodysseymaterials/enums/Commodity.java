@@ -412,4 +412,8 @@ public enum Commodity implements HorizonsMaterial {
         return 999;
     }
 
+    @Override
+    public HorizonsStorageType getStorageType() {
+        return HorizonsStorageType.COMMODITY;
+    }
 }

@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.constants.UnitConstants;
@@ -8,63 +9,71 @@ import nl.jixxed.eliteodysseymaterials.domain.LevelValue;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Getter
 public enum DynamicStat implements Stat {
     //both
-    MODIFICATION_SLOTS(StatGroup.GENERAL),
-    //suits
-    SHIELD_STRENGTH(StatGroup.SHIELD),
-    SHIELD_REGEN(StatGroup.SHIELD),
-    KINETIC_RESIST(StatGroup.RESISTANCE),
-    THERMAL_RESIST(StatGroup.RESISTANCE),
-    PLASMA_RESIST(StatGroup.RESISTANCE),
-    EXPLOSIVE_RESIST(StatGroup.RESISTANCE),
-    BATTERY(StatGroup.POWER),
-    BATTERY_RECHARGE_DURATION(StatGroup.POWER),
-    EMERGENCY_AIR(StatGroup.CAPACITY),
-    AMMO_CAPACITY(StatGroup.CAPACITY),
-    GOODS_CAPACITY(StatGroup.CAPACITY),
-    ASSETS_CAPACITY(StatGroup.CAPACITY),
-    DATA_CAPACITY(StatGroup.CAPACITY),
-    SPRINT_DURATION(StatGroup.MOVEMENT),
-    NIGHT_VISION(StatGroup.OTHER),
-    FOOTSTEPS_AUDIBLE_RANGE(StatGroup.OTHER),
-    SPRINT_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT),
-    SPRINT_SPEED_RIFLE(StatGroup.MOVEMENT),
-    SPRINT_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT),
-    WALK_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT),
-    WALK_SPEED_RIFLE(StatGroup.MOVEMENT),
-    WALK_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT),
-    ADS_SPEED_PISTOL(StatGroup.MOVEMENT),
-    ADS_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT),
-    ADS_SPEED_RIFLE(StatGroup.MOVEMENT),
-    ADS_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT),
-    LOS_ANALYSIS_RANGE(StatGroup.OTHER),
-    LOS_ANALYSIS_TIME(StatGroup.OTHER),
-    ARCCUTTER_POWER_USAGE(StatGroup.POWER),
-    GENETICSAMPLER_POWER_USAGE(StatGroup.POWER),
-    PROFILESCANNER_POWER_USAGE(StatGroup.POWER),
-    ENERGYLINK_OVERLOAD_POWER_USAGE(StatGroup.POWER),
-    MELEE_DAMAGE(StatGroup.OTHER),
-    JUMP_ASSIST_BATTERY_CONSUMPTION(StatGroup.POWER),
-    JUMP_ASSIST_DRAIN(StatGroup.POWER),
-    JUMP_ASSIST_RECHARGE(StatGroup.POWER),
-    //weapons
-    DAMAGE(StatGroup.DAMAGE),
-    MAGAZINE_SIZE(StatGroup.CAPACITY),
-    RESERVE_AMMO(StatGroup.CAPACITY),
-    HEADSHOT_DAMAGE(StatGroup.DAMAGE),
-    EFFECTIVE_RANGE(StatGroup.OTHER),
-    HIP_FIRE_ACCURACY(StatGroup.OTHER),
-    STABILITY(StatGroup.OTHER),
-    DRAW_SPEED(StatGroup.MOVEMENT),
-    STOW_SPEED(StatGroup.MOVEMENT),
-    ADS_SPEED(StatGroup.MOVEMENT),
-    SILENCED_INSIDE(StatGroup.NOISE),
-    SILENCED_OUTSIDE(StatGroup.NOISE),
-    RELOAD_SPEED(StatGroup.DAMAGE),
-    SCOPE(StatGroup.OTHER),
-    STOWED_RELOADING(StatGroup.OTHER);
+    MODIFICATION_SLOTS(StatGroup.GENERAL, 1),
+    //suit
+    SHIELD_STRENGTH(StatGroup.SHIELD, 1),
+    SHIELD_REGEN(StatGroup.SHIELD, 2),
+    KINETIC_RESIST(StatGroup.RESISTANCE, 1),
+    THERMAL_RESIST(StatGroup.RESISTANCE, 2),
+    PLASMA_RESIST(StatGroup.RESISTANCE, 3),
+    EXPLOSIVE_RESIST(StatGroup.RESISTANCE, 4),
+    EMERGENCY_AIR(StatGroup.CAPACITY, 1),
+    AMMO_CAPACITY(StatGroup.CAPACITY, 2),
+    GOODS_CAPACITY(StatGroup.CAPACITY, 3),
+    ASSETS_CAPACITY(StatGroup.CAPACITY, 4),
+    DATA_CAPACITY(StatGroup.CAPACITY, 5),
+    //weapon
+    MAGAZINE_SIZE(StatGroup.CAPACITY, 1),
+    RESERVE_AMMO(StatGroup.CAPACITY, 2),
+    //suit
+    SPRINT_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT, 3),
+    SPRINT_SPEED_RIFLE(StatGroup.MOVEMENT, 4),
+    SPRINT_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT, 5),
+    WALK_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT, 8),
+    WALK_SPEED_RIFLE(StatGroup.MOVEMENT, 9),
+    WALK_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT, 10),
+    ADS_SPEED_PISTOL(StatGroup.MOVEMENT, 11),
+    ADS_SPEED_CARBINE_SHOTGUN(StatGroup.MOVEMENT, 12),
+    ADS_SPEED_RIFLE(StatGroup.MOVEMENT, 13),
+    ADS_SPEED_SNIPER_LAUNCHER(StatGroup.MOVEMENT, 14),
+    SPRINT_DURATION(StatGroup.MOVEMENT, 16),
+    //weapon
+    DRAW_SPEED(StatGroup.MOVEMENT, 1),
+    STOW_SPEED(StatGroup.MOVEMENT, 2),
+    ADS_SPEED(StatGroup.MOVEMENT, 3),
+    //suit
+    BATTERY(StatGroup.POWER, 1),
+    BATTERY_RECHARGE_DURATION(StatGroup.POWER, 2),
+    JUMP_ASSIST_RECHARGE(StatGroup.POWER, 3),
+    JUMP_ASSIST_BATTERY_CONSUMPTION(StatGroup.POWER, 4),
+    JUMP_ASSIST_DURATION(StatGroup.POWER, 5),
+    PROFILESCANNER_POWER_USAGE(StatGroup.POWER, 9),
+    ENERGYLINK_OVERLOAD_POWER_USAGE(StatGroup.POWER, 15),
+    ARCCUTTER_POWER_USAGE(StatGroup.POWER, 16),
+    GENETICSAMPLER_POWER_USAGE(StatGroup.POWER, 16),
+    //weapon
+    DAMAGE(StatGroup.DAMAGE, 1),
+    HEADSHOT_DAMAGE(StatGroup.DAMAGE, 2),
+    RELOAD_SPEED(StatGroup.DAMAGE, 3),
+    SILENCED_INSIDE(StatGroup.NOISE, 1),
+    SILENCED_OUTSIDE(StatGroup.NOISE, 2),
+    //suit
+    NIGHT_VISION(StatGroup.OTHER, 1),
+    FOOTSTEPS_AUDIBLE_RANGE(StatGroup.OTHER, 2),
+    LOS_ANALYSIS_RANGE(StatGroup.OTHER, 3),
+    LOS_ANALYSIS_TIME(StatGroup.OTHER, 4),
+    MELEE_DAMAGE(StatGroup.OTHER, 5),
+    //weapon
+    EFFECTIVE_RANGE(StatGroup.OTHER, 1),
+    HIP_FIRE_ACCURACY(StatGroup.OTHER, 2),
+    STABILITY(StatGroup.OTHER, 3),
+    SCOPE(StatGroup.OTHER, 4),
+    STOWED_RELOADING(StatGroup.OTHER, 5);
     private final StatGroup statGroup;
+    private final Integer order;
 
 
     @Override
@@ -76,8 +85,9 @@ public enum DynamicStat implements Stat {
         return switch (this) {
             case DAMAGE, MODIFICATION_SLOTS -> ((LevelValue) value).getValueForLevel(level).toString();
             case GOODS_CAPACITY, ASSETS_CAPACITY, DATA_CAPACITY -> modifications.contains(SuitModification.EXTRA_BACKPACK_CAPACITY) ? String.valueOf((Integer) value * 2) : value.toString();
-            case JUMP_ASSIST_BATTERY_CONSUMPTION, JUMP_ASSIST_DRAIN -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.IMPROVED_JUMP_ASSIST)) ? (Integer) value * 0.75 : value) + UnitConstants.PERCENT;
-            case JUMP_ASSIST_RECHARGE -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.IMPROVED_JUMP_ASSIST)) ? (Integer) value * 1.25 : value) + UnitConstants.PERCENT;
+            case JUMP_ASSIST_DURATION -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.IMPROVED_JUMP_ASSIST)) ? (Integer) value * 1.33 : value) + UnitConstants.PERCENT;
+            case JUMP_ASSIST_BATTERY_CONSUMPTION -> NUMBER_FORMAT_0.format((modifications.contains(SuitModification.IMPROVED_JUMP_ASSIST)) ? (Integer) value * 0.5 : value) + UnitConstants.KILOWATT;
+            case JUMP_ASSIST_RECHARGE -> NUMBER_FORMAT_2.format((modifications.contains(SuitModification.IMPROVED_JUMP_ASSIST)) ? (Double) value * 2 / 3 : (Double) value) + UnitConstants.SECOND;
             case HIP_FIRE_ACCURACY -> (modifications.contains(WeaponModification.HIGHER_ACCURACY_KINETIC) || modifications.contains(WeaponModification.HIGHER_ACCURACY_LASER) || modifications.contains(WeaponModification.HIGHER_ACCURACY_PLASMA) ? getHipFireAccuracy(equipment, (Double) value) : value.toString()) + UnitConstants.PERCENT;
             case STABILITY -> (modifications.contains(WeaponModification.STABILITY) ? getStability((Double) value) : value.toString()) + UnitConstants.PERCENT;
             case MAGAZINE_SIZE -> modifications.contains(WeaponModification.MAGAZINE_SIZE) ? String.valueOf(Math.round((Integer) value * 1.5)) : value.toString();
@@ -154,11 +164,6 @@ public enum DynamicStat implements Stat {
     @Override
     public String getLocalizationKey() {
         return "loadout.stat.name." + this.name().toLowerCase();
-    }
-
-    @Override
-    public StatGroup getStatGroup() {
-        return this.statGroup;
     }
 
 

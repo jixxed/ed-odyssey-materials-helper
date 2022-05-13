@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 @RequiredArgsConstructor
 @Getter
@@ -77,10 +76,9 @@ public enum Encoded implements HorizonsMaterial {
         }
     }
 
-    public static Encoded[] materialsForTypeSorted(final HorizonsMaterialType materialType) {
+    public static Encoded[] materialsForType(final HorizonsMaterialType materialType) {
         return Arrays.stream(Encoded.values())
                 .filter(encoded -> encoded.getMaterialType().equals(materialType))
-                .sorted(Comparator.comparing(Encoded::getRarity))
                 .toList().toArray(Encoded[]::new);
     }
 
@@ -92,5 +90,10 @@ public enum Encoded implements HorizonsMaterial {
             return 150;
         }
         return this.getRarity().getMaxAmount();
+    }
+
+    @Override
+    public HorizonsStorageType getStorageType() {
+        return HorizonsStorageType.ENCODED;
     }
 }
