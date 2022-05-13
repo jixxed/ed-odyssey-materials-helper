@@ -164,14 +164,15 @@ public abstract class OdysseyBlueprintConstants {
                 ),
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.WELLINGTON_BECK)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B3, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B3, new TotalMaterialEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B3,
                 Map.of(
                         Data.CLASSICENTERTAINMENT, 25,
                         Data.MULTIMEDIAENTERTAINMENT, 25,
                         Data.CATMEDIA, 25
                 ),
-                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.WELLINGTON_BECK)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.WELLINGTON_BECK),
+                25
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B4, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B4,
@@ -209,34 +210,36 @@ public abstract class OdysseyBlueprintConstants {
                 ),
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.ODEN_GEIGER)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C5, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C5, new TotalMaterialEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_C5,
                 Map.of(
                         Good.GENETICSAMPLE, 20,
                         Data.EMPLOYEEGENETICDATA, 20,
                         Data.GENETICRESEARCH, 20
                 ),
-                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ODEN_GEIGER)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ODEN_GEIGER),
+                20
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_1, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D1_1,
                 List.of("ingredient.d1.1.colonia.rep"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.BALTANOS)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_2, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_2, new TotalMaterialEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D1_2,
                 Map.of(
                         Data.CULINARYRECIPES, 10,
                         Data.COCKTAILRECIPES, 10
                 ),
-                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ROSA_DAYETTE)
+                () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ROSA_DAYETTE),
+                10
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D1_3, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D1_3,
                 List.of("ingredient.d1.3.colonia.travel"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.ELEANOR_BRESA)
         ));
-        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D2, new EngineerBlueprint(
+        ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_D2, new OneOfMaterialEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_D2,
                 Map.of(
                         Data.FACTIONASSOCIATES, 10,

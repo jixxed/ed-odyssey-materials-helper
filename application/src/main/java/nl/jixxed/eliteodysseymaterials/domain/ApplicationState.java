@@ -87,9 +87,12 @@ public class ApplicationState {
                 wishlistEvent -> Platform.runLater(() ->
                         wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
                             switch (wishlistEvent.getAction()) {
-                                case ADDED -> addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
-                                case REMOVED -> removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
-                                case VISIBILITY_CHANGED -> changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                                case ADDED ->
+                                        addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
+                                case REMOVED ->
+                                        removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                                case VISIBILITY_CHANGED ->
+                                        changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
                                 case MODIFY -> {
                                 }
                             }
@@ -99,10 +102,14 @@ public class ApplicationState {
                 wishlistEvent -> Platform.runLater(() ->
                         wishlistEvent.getWishlistBlueprints().forEach(horizonsWishlistBlueprint -> {
                             switch (wishlistEvent.getAction()) {
-                                case ADDED -> addToHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
-                                case REMOVED -> removeFromHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
-                                case VISIBILITY_CHANGED -> changeHorizonsVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
-                                case MODIFY -> modifyHorizonsBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                case ADDED ->
+                                        addToHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                case REMOVED ->
+                                        removeFromHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                case VISIBILITY_CHANGED ->
+                                        changeHorizonsVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                case MODIFY ->
+                                        modifyHorizonsBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
                             }
                         })));
 
@@ -427,18 +434,22 @@ public class ApplicationState {
 
     public Craftability getCraftability(final OdysseyBlueprintName odysseyBlueprintName) {
         final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
-        final AtomicBoolean hasGoods = new AtomicBoolean(true);
-        final AtomicBoolean hasData = new AtomicBoolean(true);
-        final AtomicBoolean hasAssets = new AtomicBoolean(true);
-        blueprint.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-        blueprint.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-        blueprint.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-        if (!hasGoods.get() || !hasData.get()) {
-            return Craftability.NOT_CRAFTABLE;
-        } else if (hasGoods.get() && hasData.get() && !hasAssets.get()) {
-            return Craftability.CRAFTABLE_WITH_TRADE;
+        if (blueprint instanceof EngineerBlueprint engineerBlueprint) {
+            return engineerBlueprint.getCraftability();
         } else {
-            return Craftability.CRAFTABLE;
+            final AtomicBoolean hasGoods = new AtomicBoolean(true);
+            final AtomicBoolean hasData = new AtomicBoolean(true);
+            final AtomicBoolean hasAssets = new AtomicBoolean(true);
+            blueprint.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+            blueprint.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+            blueprint.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+            if (!hasGoods.get() || !hasData.get()) {
+                return Craftability.NOT_CRAFTABLE;
+            } else if (hasGoods.get() && hasData.get() && !hasAssets.get()) {
+                return Craftability.CRAFTABLE_WITH_TRADE;
+            } else {
+                return Craftability.CRAFTABLE;
+            }
         }
     }
 
