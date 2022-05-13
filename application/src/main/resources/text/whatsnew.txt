@@ -1,6 +1,21 @@
+Version 1.77
+-------------
+Add/replace stats for handling speed and jump assist in loadout editor - BIG CHANGES (thanks to toqueville)
+Correct modifiers for handling speed and jump assist
+Fix order of horizons materials
+Fix odyssey shortest path excluding T3 engineers
+Fix dropdowns in trade sometimes showing black text on a black background
+Remove beta tag from trade
+Fix notification playing before initialization finishes
+Fix loadout warning showing incorrectly
+Fix tooltips for odyssey blueprints in wishlist - actual newline instead of \n
+QOL: singleclick add to wishlist if only 1 option is present
+Hide distance for remote workshop in Horizons wishlist shortest path
+Fix localizations - add missing localizations, add missing single-quotes(')
+
 Version 1.76
 -------------
-fix odyssey wishlist bug, causing application journal read failure
+Fix odyssey wishlist bug, causing application journal read failure
 
 Version 1.75
 -------------
