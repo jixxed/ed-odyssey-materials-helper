@@ -16,7 +16,18 @@ public class EventService {
     public static <T extends Event> void publish(final T event) {
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()
                 .sorted(Comparator.comparingInt(EventListener::getPriority))
-                .forEach(eventListener -> ((EventListener<T>) eventListener).handleEvent(event));
+                .forEach(eventListener -> {
+                    if (event instanceof TerminateApplicationEvent) {
+                        //make sure we call each TerminateApplicationEvent listener and try to close all running threads
+                        try {
+                            ((EventListener<T>) eventListener).handleEvent(event);
+                        } catch (final Exception ex) {
+                            log.error(ex.getMessage(), ex);
+                        }
+                    } else {
+                        ((EventListener<T>) eventListener).handleEvent(event);
+                    }
+                });
     }
 
     public static <T extends Event> EventListener<T> addListener(final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {

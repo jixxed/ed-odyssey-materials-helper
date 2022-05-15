@@ -45,7 +45,7 @@ class MaterialOverview extends VBox {
 
     private void initComponents() {
         this.getStyleClass().add("material-overview");
-        final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")).getOrientation();
+        final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "VERTICAL")).getOrientation();
         this.totals = new OdysseyMaterialTotals();
         this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
         this.assetCircuitFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();

@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.watchdog;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +21,9 @@ public class FileWatcher implements Runnable {
         this.thread = new Thread(this);
         this.thread.setName(threadName);
         this.thread.setDaemon(true);
+        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            stop();
+        });
     }
 
     FileWatcher watch(final File folder) {

@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModificationChangedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -279,7 +280,12 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        //NOOP
+        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            if (this.scheduledFuture != null) {
+                this.scheduledFuture.cancel(true);
+            }
+            this.executor.shutdown();
+        });
     }
 
     @Override

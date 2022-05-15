@@ -46,6 +46,7 @@ public class MaterialTrackingService {
     private static boolean isEnabled = false;
     private static final List<EventListener<?>> eventListeners = new ArrayList<>();
     private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
+    private static Thread thread;
 
     static {
         OdysseyMaterial.getAllMaterials().forEach(material ->
@@ -63,9 +64,11 @@ public class MaterialTrackingService {
         eventListeners.add(EventService.addStaticListener(CommanderSelectedEvent.class, commanderSelectedEvent -> publish()));
         eventListeners.add(EventService.addStaticListener(ShipLockerEvent.class, shipLockerEvent -> clearChanges(shipLockerEvent.getTimestamp())));
         eventListeners.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> isEnabled = journalInitEvent.isInitialised()));
-
+        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            close();
+        });
         //check if statistics file exists
-        new Thread(() -> {
+        thread = new Thread(() -> {
             log.info("Start load material statistics");
             final File statisticsFile = new File(OsConstants.STATISTICS);
             try {
@@ -90,7 +93,8 @@ public class MaterialTrackingService {
                         NotificationService.showError(NotificationType.ERROR, "Error", "Failed to download material statistics.")
                 );
             }
-        }, "Material Statistics Loader Thread").start();
+        }, "Material Statistics Loader Thread");
+        thread.start();
     }
 
     static boolean modifiedBeforeMonday(final File statisticsFile) {
@@ -108,6 +112,9 @@ public class MaterialTrackingService {
         log.debug("Close MaterialTrackingService");
         eventListeners.forEach(EventService::removeListener);
         publish();
+        if (thread != null) {
+            thread.interrupt();
+        }
     }
 
     private static synchronized void clearChanges(final String timestamp) {

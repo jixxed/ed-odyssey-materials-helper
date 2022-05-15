@@ -364,6 +364,11 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.journal.folder.select"))
                 .withOnAction(e -> {
+                    File initialDirectory = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
+                    if (!initialDirectory.exists()) {
+                        initialDirectory = new File(OsConstants.DEFAULT_WATCHED_FOLDER);
+                    }
+                    journalFolderSelect.setInitialDirectory(initialDirectory);
                     final File selectedDirectory = journalFolderSelect.showDialog(((FXApplication) this.application).getPrimaryStage());
                     if (selectedDirectory != null) {
                         this.selectedFolderLabel.setText(selectedDirectory.getAbsolutePath());
@@ -550,7 +555,7 @@ public class SettingsTab extends EDOTab {
                 .asLocalized()
                 .build();
 
-        this.readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "HORIZONTAL")));
+        this.readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "VERTICAL")));
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)

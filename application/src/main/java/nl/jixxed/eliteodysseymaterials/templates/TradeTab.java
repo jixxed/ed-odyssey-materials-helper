@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.ConnectionWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
@@ -33,6 +34,7 @@ public class TradeTab extends EDOTab {
     private TradePagination tradeOffersPagination;
     private TradeCreateBlock tradeCreateBlock;
     private boolean reconnect = true;
+    private Thread thread;
 
     @Override
     public OdysseyTabs getTabType() {
@@ -124,6 +126,10 @@ public class TradeTab extends EDOTab {
             }
         });
         EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.close());
+
+        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            this.stop();
+        });
     }
 
     private void connect() {
@@ -135,8 +141,14 @@ public class TradeTab extends EDOTab {
             this.marketPlaceClient.getOffers();
             Platform.runLater(() -> this.connectButton.setDisable(false));
         };
-        new Thread(r).start();
+        this.thread = new Thread(r);
+        this.thread.start();
     }
 
+    private void stop() {
+        if (this.thread != null) {
+            this.thread.interrupt();
+        }
+    }
 
 }

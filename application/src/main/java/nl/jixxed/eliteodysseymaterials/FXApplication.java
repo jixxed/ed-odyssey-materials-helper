@@ -28,7 +28,6 @@ import nl.jixxed.eliteodysseymaterials.service.exception.WishlistDeeplinkExcepti
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.URLSchemeDialog;
-import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import nl.jixxed.eliteodysseymaterials.watchdog.DeeplinkWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
@@ -109,16 +108,10 @@ public class FXApplication extends Application {
         });
         this.primaryStage.setOnCloseRequest(event -> {
             try {
-                if (MarketPlaceClient.getInstance() != null) {
-                    MarketPlaceClient.getInstance().close();
-                }
-                MaterialTrackingService.close();
+                EventService.publish(new TerminateApplicationEvent());
                 EventService.shutdown();
-                this.timeStampedShipLockerWatcher.stop();
-                this.timeStampedBackPackWatcher.stop();
-                this.journalWatcher.stop();
-                this.deeplinkWatcher.stop();
                 APPLICATION_STATE.releaseLock();
+                Platform.exit();
             } catch (final Exception ex) {
                 //don't care
             }

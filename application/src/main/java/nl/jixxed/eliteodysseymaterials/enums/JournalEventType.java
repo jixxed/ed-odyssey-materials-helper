@@ -31,6 +31,8 @@ public enum JournalEventType {
     ENGINEERCRAFT("EngineerCraft"),
     MISSIONCOMPLETED("MissionCompleted"),
     SYNTHESIS("Synthesis"),
+    UPGRADESUIT("UpgradeSuit"),
+    UPGRADEWEAPON("UpgradeWeapon"),
     TECHNOLOGYBROKER("TechnologyBroker");
 
     private final String name;
