@@ -4,6 +4,7 @@ Show engineer unlock blueprints green when requirements are met. (B3, C5, D1.2, 
 Improve shutdown closing active threads before exit
 Add upgrade suit and upgrade weapon event handling
 Settings - Try to initialize journalfolder select to existing selection
+Add melee damage values to loadout
 
 Version 1.77
 -------------

@@ -14,7 +14,6 @@ public enum Suit implements Equipment {
             new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_1_2, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_2_3, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_3_4, OdysseyBlueprintName.MAVERICK_SUIT_GRADE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.HEALTH, 30),
-            Map.entry(StaticStat.MASS, 100),
             Map.entry(StaticStat.PRIMARY_SLOTS, 1),
             Map.entry(StaticStat.SECONDARY_SLOTS, 1),
             Map.entry(DynamicStat.EMERGENCY_AIR, 60),
@@ -37,7 +36,6 @@ public enum Suit implements Equipment {
             new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_1_2, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_2_3, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_3_4, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.HEALTH, 30),
-            Map.entry(StaticStat.MASS, 100),
             Map.entry(StaticStat.PRIMARY_SLOTS, 2),
             Map.entry(StaticStat.SECONDARY_SLOTS, 1),
             Map.entry(DynamicStat.EMERGENCY_AIR, 60),
@@ -59,7 +57,6 @@ public enum Suit implements Equipment {
             new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_1_2, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_2_3, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_3_4, OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_4_5),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 1, 2, 3, 4)),
             Map.entry(StaticStat.HEALTH, 30),
-            Map.entry(StaticStat.MASS, 100),
             Map.entry(StaticStat.PRIMARY_SLOTS, 1),
             Map.entry(StaticStat.SECONDARY_SLOTS, 1),
             Map.entry(DynamicStat.EMERGENCY_AIR, 60),
@@ -82,7 +79,6 @@ public enum Suit implements Equipment {
             new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE, OdysseyBlueprintName.NONE),
             Map.entry(DynamicStat.MODIFICATION_SLOTS, new LevelValue(0, 0, 0, 0, 0)),
             Map.entry(StaticStat.HEALTH, 30),
-            Map.entry(StaticStat.MASS, 100),
             Map.entry(StaticStat.PRIMARY_SLOTS, 0),
             Map.entry(StaticStat.SECONDARY_SLOTS, 1),
             Map.entry(DynamicStat.EMERGENCY_AIR, 60),
@@ -132,7 +128,9 @@ public enum Suit implements Equipment {
             Map.entry(DynamicStat.LOS_ANALYSIS_RANGE, 50),
             Map.entry(DynamicStat.LOS_ANALYSIS_TIME, 1),
             Map.entry(DynamicStat.FOOTSTEPS_AUDIBLE_RANGE, 8),
-            Map.entry(DynamicStat.MELEE_DAMAGE, 100)
+            Map.entry(DynamicStat.MELEE_SHIELD_DAMAGE, 2),
+            Map.entry(DynamicStat.MELEE_HEALTH_DAMAGE, 2)
+
     );
     private final Map<Stat, Object> stats;
 

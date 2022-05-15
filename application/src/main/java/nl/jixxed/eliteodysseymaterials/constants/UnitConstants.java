@@ -15,4 +15,5 @@ public class UnitConstants {
     public static final String KILOWATT = "kW";
     public static final String KILOGRAM = "kg";
     public static final String MEGAWATT_PER_SECOND = "MW/s";
+    public static final String HP = "HP";
 }

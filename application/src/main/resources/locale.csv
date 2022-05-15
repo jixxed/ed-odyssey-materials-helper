@@ -928,7 +928,6 @@ loadout.stat.name.los_analysis_range,Line of sight analysis range,Line of sight 
 loadout.stat.name.los_analysis_time,Line of sight analysis time,Line of sight analysis time,Sichtlinienanalysezeit,Tiempo de análisis de línea de visión,Temps d''analyse de la ligne de visée,Tempo de análise da linha de visão,Время анализа линии прямой видимости
 loadout.stat.name.magazine_size,Magazine size,Magazine size,Magazingröße,Tamaño de la revista,Taille du magazine,Tamanho da revista,Размер журнала
 loadout.stat.name.mass,Mass,Mass,Masse,Masa,Masse,Massa,Масса
-loadout.stat.name.melee_damage,Melee damage,Melee damage,Nahkampfschaden,Daño cuerpo a cuerpo,Dégâts de mêlée,dano corpo a corpo,Урон в ближнем бою
 loadout.stat.name.modification_slots,Modification slots,Modification slots,Modifikations-Slots,Ranuras de modificación,Emplacements de modification,Slots de modificação,Слоты модификации
 loadout.stat.name.night_vision,Night vision,Night vision,Nachtsicht,Visión nocturna,Vision nocturne,Visão noturna,Ночное видение
 loadout.stat.name.nightvision_power_usage,Nightvision Power Usage,Nightvision Power Usage,Nightvision-Stromverbrauch,Uso de energía de visión nocturna,Consommation d''énergie de la vision nocturne,Uso de energia do Nightvision,Использование энергии ночного видения
@@ -2178,3 +2177,5 @@ loadout.stat.name.jump_assist_recharge,Jump assist recharge duration,Jump assist
 modifier.name.jump_assist_battery_consumption,Battery Consumption,Battery Consumption,Batterieverbrauch,Consumo de batería,Consommation de la batterie,Consumo de bateria,Расход заряда батареи
 modifier.name.jump_assist_boost_duration,Jump Assist Boost Duration,Jump Assist Boost Duration,Sprungassistent -Boost -Dauer,Jump Assist Boost Duración,Sauter Assist Boost Durée,Duração de aumento de assistência ao salto,Продолжительность повышения помощи
 modifier.name.jump_assist_boost_recharge_duration,Jump Assist Boost Recharge Duration,Jump Assist Boost Recharge Duration,Jump Assist Boost -Aufladungsdauer,Jump Assist Boost Duración de recarga,Sauter Assist Boost Durée de recharge,Salto de assistência ao aumento da duração da recarga,Джамп -поддержка продолжительности перезарядки
+loadout.stat.name.melee_shield_damage,Melee shield damage,Melee shield damage,Nahkampfschildschaden,Daño del escudo cuerpo a cuerpo,Dégâts du bouclier de mêlée,Dano de escudo corpo a corpo,Повреждение воздействия ближнего боя
+loadout.stat.name.melee_health_damage,Melee health damage,Melee health damage,Nahkampfschaden,Daño a la salud del cuerpo a cuerpo,Dommages causés par la santé en mêlée,Dano de saúde corpo a corpo,Ущерб для здоровья в ближнем бою
