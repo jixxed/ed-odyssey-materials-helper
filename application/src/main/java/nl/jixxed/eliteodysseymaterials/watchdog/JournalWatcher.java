@@ -199,7 +199,9 @@ public class JournalWatcher {
     }
 
     public void stop() {
-        this.fileWatcher.stop();
+        if (this.fileWatcher != null) {
+            this.fileWatcher.stop();
+        }
     }
 
     public File getWatchedFolder() {

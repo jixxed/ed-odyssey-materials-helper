@@ -84,6 +84,7 @@ public class MaterialService {
             if (odysseyMaterial instanceof Data data) {
                 addTransferTimeToTooltip(data, vBox);
             }
+            addFleetCarrierOrdersToTooltip(odysseyMaterial, vBox);
             addRecipesToTooltip(OdysseyBlueprintConstants.findRecipesContaining(odysseyMaterial), vBox);
             addStatisticsToTooltip(odysseyMaterial, vBox);
         }
@@ -91,6 +92,7 @@ public class MaterialService {
 
 
     }
+
 
     public static void addMaterialInfoPopOver(final Node hoverableNode, final Material material) {
         hoverableNode.setOnMouseEntered(mouseEvent -> {
@@ -189,6 +191,26 @@ public class MaterialService {
         if (odysseyMaterial instanceof Asset) {
             vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.barter.trade", BarterConstants.getBarterValues(odysseyMaterial))).build());
         }
+    }
+
+    private static void addFleetCarrierOrdersToTooltip(final OdysseyMaterial odysseyMaterial, final VBox vBox) {
+        final BuyOrder buyOrder = OrderService.getBuyOrder(odysseyMaterial);
+        final SellOrder sellOrder = OrderService.getSellOrder(odysseyMaterial);
+
+        if (buyOrder != null || sellOrder != null || CAPIService.getInstance().getActive().not().get()) {
+            vBox.getChildren().add(LabelBuilder.builder().build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier")).build());
+        }
+        if (CAPIService.getInstance().getActive().not().get()) {
+            vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.not.linked")).build());
+        }
+        if (buyOrder != null) {
+            vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.buy", buyOrder.getTotal(), buyOrder.getOutstanding(), NUMBER_FORMAT.format(buyOrder.getPrice()))).build());
+        }
+        if (sellOrder != null) {
+            vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.fleetcarrier.sell", sellOrder.getStock(), NUMBER_FORMAT.format(sellOrder.getPrice()))).build());
+        }
+
     }
 
     private static void addRecipesToTooltip(final Map<OdysseyBlueprintName, Integer> recipesContainingMaterial, final VBox vBox) {

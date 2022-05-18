@@ -2,6 +2,8 @@ package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
 import javafx.beans.binding.ListBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,10 +23,7 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.RegistryService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
@@ -81,7 +80,12 @@ public class SettingsTab extends EDOTab {
     private Label urlSchemeLinkingActiveLabel;
     private Label wishlistHorizonsGradeRollsLabel;
     private HBox wishlistHorizonsGradeRolls;
+    private DestroyableLabel capiConnectLabel;
+    private DestroyableLabel capiStatusLabel;
+    private Button capiConnectButton;
 
+    private final BooleanProperty registered = new SimpleBooleanProperty(RegistryService.isRegistered());
+    private Button capiDisconnectButton;
 
     SettingsTab(final Application application) {
         this.application = application;
@@ -136,6 +140,10 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tabs.settings"))
                 .build();
+        final Label capiLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.capi"))
+                .build();
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
@@ -150,16 +158,18 @@ public class SettingsTab extends EDOTab {
         final HBox irrelevantOverrideList = createIrrelevantOverrideList();
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
+        final HBox capiConnectSetting = createCapiConnectSetting();
 
         final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
         final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
         final VBox wishlist = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(wishlistLabel, wishlistHorizonsGradeRollsSetting).buildVBox();
         final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
         final VBox notification = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader).buildVBox();
+        final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiConnectSetting).buildVBox();
         Arrays.stream(NotificationType.values()).forEach(notificationType -> notification.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
         final VBox settings = BoxBuilder.builder()
                 .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, general, overview, wishlist, notification, tracking)
+                .withNodes(settingsLabel, general, overview, wishlist, notification, capiIntegration, tracking)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
@@ -185,6 +195,7 @@ public class SettingsTab extends EDOTab {
                         RegistryService.registerApplication();
                     }
                     isRegistered = !isRegistered;
+                    this.registered.set(isRegistered);
                     this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
                     this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
                 })
@@ -217,6 +228,38 @@ public class SettingsTab extends EDOTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.wishlistHorizonsGradeRollsLabel, this.wishlistHorizonsGradeRolls)
+                .buildHBox();
+    }
+
+    private HBox createCapiConnectSetting() {
+        this.capiConnectLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.capi.link.account")).build();
+        this.capiConnectButton = ButtonBuilder.builder()
+                .withText(LocaleService.getStringBinding("tab.settings.capi.connect"))
+                .withOnAction(event -> CAPIService.getInstance().authenticate())
+                .build();
+        this.capiDisconnectButton = ButtonBuilder.builder()
+                .withText(LocaleService.getStringBinding("tab.settings.capi.disconnect"))
+                .withOnAction(event -> CAPIService.getInstance().deauthenticate())
+                .build();
+        this.capiConnectButton.disableProperty().bind(CAPIService.getInstance().getActive().or(this.registered.not()));
+        this.capiDisconnectButton.disableProperty().bind(CAPIService.getInstance().getActive().not());
+        if (this.registered.get()) {
+            this.capiStatusLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withVisibilityProperty(CAPIService.getInstance().getActive()).withText(LocaleService.getStringBinding("tab.settings.capi.connected")).build();
+        } else {
+            this.capiStatusLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withVisibilityProperty(this.registered.not().and(CAPIService.getInstance().getActive().not())).withText(LocaleService.getStringBinding("tab.settings.capi.needs.registration")).build();
+        }
+        this.registered.addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                this.capiStatusLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.capi.connected"));
+                this.capiStatusLabel.visibleProperty().bind(CAPIService.getInstance().getActive());
+            } else {
+                this.capiStatusLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.capi.needs.registration"));
+                this.capiStatusLabel.visibleProperty().bind(this.registered.not());
+            }
+        });
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.capiConnectLabel, this.capiConnectButton, this.capiDisconnectButton, this.capiStatusLabel)
                 .buildHBox();
     }
 

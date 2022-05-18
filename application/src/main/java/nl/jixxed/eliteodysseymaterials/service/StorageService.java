@@ -7,7 +7,10 @@ import nl.jixxed.eliteodysseymaterials.domain.AnyRelevantStorage;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StorageService {
@@ -27,10 +30,6 @@ public class StorageService {
     private static final Map<Data, Storage> data = new EnumMap<>(Data.class);
     @Getter
     private static final Map<Consumable, Storage> consumables = new EnumMap<>(Consumable.class);
-    @Getter
-    private static final Map<String, Storage> unknownData = new HashMap<>();
-    @Getter
-    private static final Map<String, Storage> unknownGoods = new HashMap<>();
 
     static {
         initCounts();
@@ -41,7 +40,8 @@ public class StorageService {
             case GOOD -> goods;
             case DATA -> data;
             case ASSET -> assets;
-            case TRADE -> Map.of(TradeOdysseyMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeOdysseyMaterial.NOTHING, new Storage(0, 0));
+            case TRADE ->
+                    Map.of(TradeOdysseyMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeOdysseyMaterial.NOTHING, new Storage(0, 0, 0));
             case CONSUMABLE -> Collections.emptyMap();
             case OTHER -> consumables;
         };
@@ -87,16 +87,18 @@ public class StorageService {
         getAssets().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
         getData().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
         getGoods().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-        getUnknownGoods().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-        getUnknownData().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+    }
+
+    public static void resetFleetCarrierCounts() {
+        getAssets().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+        getData().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+        getGoods().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
     }
 
     public static void resetBackPackCounts() {
         getAssets().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
         getData().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
         getGoods().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-        getUnknownGoods().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-        getUnknownData().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
     }
 
     public static void resetHorizonsMaterialCounts() {

@@ -11,7 +11,8 @@ public enum NotificationType {
     TRADE(true),
     IMPORT(true),
     COPY(true),
-    ERROR(true);
+    ERROR(true),
+    SUCCESS(true);
 
     private final boolean defaultEnabled;
 

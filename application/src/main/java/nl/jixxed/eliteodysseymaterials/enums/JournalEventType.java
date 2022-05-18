@@ -9,6 +9,7 @@ public enum JournalEventType {
     EMBARK("Embark"),
     SHIPLOCKER("ShipLocker"),
     BACKPACK("Backpack"),
+    FLEETCARRIER("FleetCarrier"),//CAPI Resource
     BACKPACKCHANGE("BackpackChange"),
     RESUPPLY("Resupply"),
     FSDJUMP("FSDJump"),

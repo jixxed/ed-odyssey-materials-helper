@@ -46,7 +46,7 @@ public class AnyRelevantStorage extends Storage {
     @Override
     public Integer getValue(final StoragePool target) {
         return switch (target) {
-            case BACKPACK, SHIPLOCKER, SHIP -> 0;
+            case BACKPACK, SHIPLOCKER, SHIP, FLEETCARRIER -> 0;
         };
     }
 }

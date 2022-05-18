@@ -10,11 +10,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Slf4j
-class GameStateWatcher {
+public class GameStateWatcher {
     private Optional<File> watchedFile = Optional.empty();
     private FileWatcher fileWatcher;
 
-    void watch(final File folder, final Consumer<File> fileProcessor, final String filename, final StoragePool storagePool) {
+    public void watch(final File folder, final Consumer<File> fileProcessor, final String filename, final StoragePool storagePool) {
         findLatestFile(folder, filename);
         this.watchedFile.ifPresent(fileProcessor);
         this.fileWatcher = new FileWatcher(storagePool.name() + " Watcher Thread").withListener(new FileAdapter() {
@@ -50,7 +50,9 @@ class GameStateWatcher {
         }
     }
 
-    void stop() {
-        this.fileWatcher.stop();
+    public void stop() {
+        if (this.fileWatcher != null) {
+            this.fileWatcher.stop();
+        }
     }
 }

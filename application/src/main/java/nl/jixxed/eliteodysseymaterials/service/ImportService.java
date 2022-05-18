@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.service.event.CapiOAuthCallbackEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.exception.LoadoutDeeplinkException;
 import nl.jixxed.eliteodysseymaterials.service.exception.WishlistDeeplinkException;
 
@@ -14,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
@@ -32,6 +35,12 @@ public class ImportService {
         final String data = split[1];
         if ("horizonswishlist/".equals(type)) {
             return importHorizonsWishlist(data);
+        }
+        if ("capi/".equals(type)) {
+            final HashMap<String, String> params = convertToQueryStringToHashMap(data);
+
+            EventService.publish(new CapiOAuthCallbackEvent(params.get("code"), params.get("state")));
+            return new ImportResult(ImportResult.ResultType.CAPI_OAUTH_TOKEN);
         }
         if ("wishlist/".equals(type)) {
             return importWishlist(data);
@@ -143,5 +152,28 @@ public class ImportService {
             log.error("Failed to decompress data", e);
         }
         return "";
+    }
+
+    private static HashMap<String, String> convertToQueryStringToHashMap(final String source) {
+
+        final HashMap<String, String> data = new HashMap<>();
+
+        final String[] arrParameters = source.split("&");
+        for (final String tempParameterString : arrParameters) {
+
+            final String[] arrTempParameter = tempParameterString
+                    .split("=");
+
+            if (arrTempParameter.length >= 2) {
+                final String parameterKey = arrTempParameter[0];
+                final String parameterValue = arrTempParameter[1];
+                data.put(parameterKey, parameterValue);
+            } else {
+                final String parameterKey = arrTempParameter[0];
+                data.put(parameterKey, "");
+            }
+        }
+
+        return data;
     }
 }

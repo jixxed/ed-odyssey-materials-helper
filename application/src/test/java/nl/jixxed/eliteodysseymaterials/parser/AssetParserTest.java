@@ -24,13 +24,12 @@ class AssetParserTest {
         assets.put(Asset.CARBONFIBREPLATING, new Storage());
         assets.put(Asset.CHEMICALCATALYST, new Storage());
         assets.put(Asset.CHEMICALSUPERBASE, new Storage());
-        final Map<String, Storage> unknownAssets = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_good.json"));
         final Iterator<JsonNode> items = jsonNode.get("Components").elements();
         final AssetParser goodParser = new AssetParser();
 
-        goodParser.parse(items, StoragePool.SHIPLOCKER, assets, unknownAssets);
+        goodParser.parse(items, StoragePool.SHIPLOCKER, assets);
 
         Assertions.assertThat(assets).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Asset.GRAPHENE, Storage.of(0, 45),
@@ -39,7 +38,6 @@ class AssetParserTest {
                 Asset.CHEMICALCATALYST, Storage.of(0, 47),
                 Asset.CHEMICALSUPERBASE, Storage.of(0, 50)
         ));
-        Assertions.assertThat(unknownAssets).isEmpty();
     }
 
     @Test
@@ -49,13 +47,12 @@ class AssetParserTest {
         assets.put(Asset.AEROGEL, new Storage());
         assets.put(Asset.CARBONFIBREPLATING, new Storage());
         assets.put(Asset.CHEMICALCATALYST, new Storage());
-        final Map<String, Storage> unknownAssets = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_unknown.json"));
         final Iterator<JsonNode> items = jsonNode.get("Components").elements();
         final AssetParser goodParser = new AssetParser();
 
-        goodParser.parse(items, StoragePool.SHIPLOCKER, assets, unknownAssets);
+        goodParser.parse(items, StoragePool.SHIPLOCKER, assets);
 
         Assertions.assertThat(assets).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Asset.GRAPHENE, Storage.of(0, 45),
@@ -63,7 +60,6 @@ class AssetParserTest {
                 Asset.CARBONFIBREPLATING, Storage.of(0, 15),
                 Asset.CHEMICALCATALYST, Storage.of(0, 47)
         ));
-        Assertions.assertThat(unknownAssets).isEmpty();
     }
 
     @Test
@@ -74,13 +70,12 @@ class AssetParserTest {
         assets.put(Asset.CARBONFIBREPLATING, new Storage());
         assets.put(Asset.CHEMICALCATALYST, new Storage());
         assets.put(Asset.CHEMICALSUPERBASE, new Storage());
-        final Map<String, Storage> unknownAssets = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_good.json"));
         final Iterator<JsonNode> items = jsonNode.get("Components").elements();
         final AssetParser goodParser = new AssetParser();
 
-        goodParser.parse(items, StoragePool.BACKPACK, assets, unknownAssets);
+        goodParser.parse(items, StoragePool.BACKPACK, assets);
 
         Assertions.assertThat(assets).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Asset.GRAPHENE, Storage.of(45, 0),
@@ -89,7 +84,6 @@ class AssetParserTest {
                 Asset.CHEMICALCATALYST, Storage.of(47, 0),
                 Asset.CHEMICALSUPERBASE, Storage.of(50, 0)
         ));
-        Assertions.assertThat(unknownAssets).isEmpty();
     }
 
     @Test
@@ -99,13 +93,12 @@ class AssetParserTest {
         assets.put(Asset.AEROGEL, new Storage());
         assets.put(Asset.CARBONFIBREPLATING, new Storage());
         assets.put(Asset.CHEMICALCATALYST, new Storage());
-        final Map<String, Storage> unknownAssets = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_unknown.json"));
         final Iterator<JsonNode> items = jsonNode.get("Components").elements();
         final AssetParser goodParser = new AssetParser();
 
-        goodParser.parse(items, StoragePool.BACKPACK, assets, unknownAssets);
+        goodParser.parse(items, StoragePool.BACKPACK, assets);
 
         Assertions.assertThat(assets).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Asset.GRAPHENE, Storage.of(45, 0),
@@ -113,6 +106,5 @@ class AssetParserTest {
                 Asset.CARBONFIBREPLATING, Storage.of(15, 0),
                 Asset.CHEMICALCATALYST, Storage.of(47, 0)
         ));
-        Assertions.assertThat(unknownAssets).isEmpty();
     }
 }

@@ -107,13 +107,8 @@ public class FileProcessor {
         }
     }
 
-    public static synchronized void processShipLockerBackpack(final File file) {
-        try {
-            final String message = Files.readString(file.toPath());
-            Platform.runLater(() -> MessageHandler.handleMessage(message, file));
-        } catch (final IOException e) {
-            log.error("Error processing ShipLocker or Backpack", e);
-        }
+    public static synchronized void processShipLockerBackpackFleetCarrier(final File file, final JournalEventType journalEventType) {
+        Platform.runLater(() -> MessageHandler.handleMessage(file, journalEventType));
     }
 }
 

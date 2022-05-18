@@ -19,7 +19,9 @@ import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -34,6 +36,7 @@ class MaterialOverview extends VBox {
     private FlowPane assetTechFlow;
     private FlowPane goodFlow;
     private FlowPane dataFlow;
+    private final Map<OdysseyMaterial, MaterialCard> materialCards = new HashMap<>();
     private Search currentSearch = new Search("", MaterialSort.ALPHABETICAL, MaterialShow.ALL);
     private ChangeListener<Number> resizeListener;
 
@@ -47,6 +50,11 @@ class MaterialOverview extends VBox {
         this.getStyleClass().add("material-overview");
         final Orientation flowPaneOrientation = MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "VERTICAL")).getOrientation();
         this.totals = new OdysseyMaterialTotals();
+
+        Arrays.stream(Good.values()).forEach(good -> this.materialCards.put(good, new MaterialCard((good))));
+        Arrays.stream(Asset.values()).forEach(asset -> this.materialCards.put(asset, new MaterialCard((asset))));
+        Arrays.stream(Data.values()).forEach(data -> this.materialCards.put(data, new MaterialCard((data))));
+
         this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
         this.assetCircuitFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
         this.assetTechFlow = FlowPaneBuilder.builder().withStyleClass(FLOW_PANE_STYLE_CLASS).withOrientation(flowPaneOrientation).build();
@@ -76,9 +84,12 @@ class MaterialOverview extends VBox {
 
     private void initEventHandling() {
 
-        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event ->
-                Platform.runLater(() -> this.updateContent(this.currentSearch))
-        );
+        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event -> {
+            Platform.runLater(() -> {
+                this.updateContent(this.currentSearch);
+                layoutChildren();
+            });
+        });
         EventService.addListener(this, OrientationChangeEvent.class, orientationChangeEvent -> {
             final Orientation orientation = orientationChangeEvent.getMaterialOrientation().getOrientation();
             this.assetChemicalFlow.setOrientation(orientation);
@@ -86,12 +97,15 @@ class MaterialOverview extends VBox {
             this.assetTechFlow.setOrientation(orientation);
             this.goodFlow.setOrientation(orientation);
             this.dataFlow.setOrientation(orientation);
-
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         });
-        EventService.addListener(this, SearchEvent.class, searchEvent -> {
+        EventService.addListener(this, 1, SearchEvent.class, searchEvent -> {
             this.currentSearch = searchEvent.getSearch();
-            Platform.runLater(() -> this.updateContent(this.currentSearch));
+            Platform.runLater(() -> {
+                this.updateContent(this.currentSearch);
+                layoutChildren();
+            });
+
         });
         EventService.addListener(this, CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
         Observable
@@ -118,7 +132,7 @@ class MaterialOverview extends VBox {
                 final double materialCardWidth = (card.getWidth() > 0 ? card.getWidth() : card.getPrefWidth()) + 4;
                 final double materialCardHeight = card.getHeight() > 0 ? card.getHeight() : card.getPrefHeight();
                 final int cardsPerRow = Math.max(1, (int) Math.floor((newValue.doubleValue() - 24) / materialCardWidth));
-                final double rows = cardsPerRow != 0 ? Math.ceil((double) size / cardsPerRow) : 0;
+                final double rows = Math.ceil((double) size / cardsPerRow);
                 flowPane.setMaxHeight(rows * (materialCardHeight + 4) - 4);
                 flowPane.setPrefHeight(rows * (materialCardHeight + 4) - 4);
                 flowPane.setMinHeight(rows * (materialCardHeight + 4) - 4);
@@ -174,14 +188,8 @@ class MaterialOverview extends VBox {
                 .filter(onKnownMaterial())
                 .sorted(MaterialSort.getSort(search))
                 .forEach(entry -> {
-                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
-                    this.goodFlow.getChildren().add(materialCard);
+                    this.goodFlow.getChildren().add(this.materialCards.get(entry.getKey()));
                 });
-        StorageService.getUnknownGoods().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
-            final String name = entry.getKey() + " (unknown)";
-            final MaterialCard materialCard = new MaterialCard(Good.UNKNOWN, name, entry.getValue());
-            this.goodFlow.getChildren().add(materialCard);
-        });
     }
 
     private void addAssets(final Search search) {
@@ -192,7 +200,7 @@ class MaterialOverview extends VBox {
                 .sorted(Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
                         .thenComparing(o -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey())))
                 .forEach(entry -> {
-                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
+                    final MaterialCard materialCard = this.materialCards.get(entry.getKey());
                     switch (entry.getKey().getType()) {
                         case TECH -> this.assetTechFlow.getChildren().add(materialCard);
                         case CHEMICAL -> this.assetChemicalFlow.getChildren().add(materialCard);
@@ -208,14 +216,8 @@ class MaterialOverview extends VBox {
                 .filter(onKnownMaterial())
                 .sorted(MaterialSort.getSort(search))
                 .forEach(entry -> {
-                    final MaterialCard materialCard = new MaterialCard(entry.getKey(), entry.getValue());
-                    this.dataFlow.getChildren().add(materialCard);
+                    this.dataFlow.getChildren().add(this.materialCards.get(entry.getKey()));
                 });
-        StorageService.getUnknownData().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
-            final String name = entry.getKey() + " (unknown)";
-            final MaterialCard materialCard = new MaterialCard(Data.UNKNOWN, name, entry.getValue());
-            this.dataFlow.getChildren().add(materialCard);
-        });
     }
 
     private Predicate<? super Map.Entry<? extends OdysseyMaterial, Storage>> onKnownMaterial() {

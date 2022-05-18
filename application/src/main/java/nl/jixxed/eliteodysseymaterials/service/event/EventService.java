@@ -94,12 +94,12 @@ public class EventService {
 
     @SuppressWarnings({"java:S1172", "java:S125"})
     private static <T extends Event> void logListener(final Object owner, final EventListener<T> listener, final String action) {
-        log.debug(action + " listener: " + listener.getEventClass() + ", HASH:" + listener.hashCode() + (owner != null ? ", OWNER:" + owner.getClass().getName() + "(" + owner.hashCode() + ")" : ""));
+//        log.debug(action + " listener: " + listener.getEventClass() + ", HASH:" + listener.hashCode() + (owner != null ? ", OWNER:" + owner.getClass().getName() + "(" + owner.hashCode() + ")" : ""));
     }
 
     @SuppressWarnings("java:S125")
     private static void logListenerSize() {
-        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
+//        log.debug("listener size: " + (Integer) LISTENERS_MAP.values().stream().mapToInt(List::size).sum());
     }
 
     public static void shutdown() {

@@ -59,6 +59,7 @@ public class DeeplinkWatcher {
                         final Path procPath = procFile.toPath();
                         Files.move(Path.of(OsConstants.DEEPLINK), procPath, StandardCopyOption.REPLACE_EXISTING);
                         final String content = Files.readString(procFile.getAbsoluteFile().toPath());
+                        log.debug(content);
                         Platform.runLater(() -> {
                             fileProcessor.accept(content);
                             try {

@@ -100,6 +100,9 @@
     -fx-pref-height: 2em;
     -fx-min-height: 2em;
     -fx-max-height: 2em;
+    /*-fx-pref-height: 4em;*/
+    /*-fx-min-height: 4em;*/
+    /*-fx-max-height: 4em;*/
     -fx-alignment: center-left;
     -fx-background-color: #0f0f0f;
     -fx-pref-width: 32em;
@@ -107,21 +110,43 @@
     -fx-max-width: 32em;
 }
 
+/*.material:hover {*/
+/*    -fx-pref-height: 4em;*/
+/*    -fx-min-height: 4em;*/
+/*    -fx-max-height: 4em;*/
+/*}*/
+
+/*.material:hover .material-quantity-line {*/
+/*    -fx-pref-height: 2em;*/
+/*    -fx-min-height: 2em;*/
+/*    -fx-max-height: 2em;*/
+/*}*/
+
+/*.material-quantity-line {*/
+/*    -fx-pref-height: 0em;*/
+/*    -fx-min-height: 0em;*/
+/*    -fx-max-height: 0em;*/
+/*}*/
+
+.material-name-line {
+    -fx-alignment: center-left;
+}
+
 .material:hover {
     -fx-cursor: hand;
     -fx-background-color: #4f4f4f;
 }
 
-.material > .label {
+.material .label {
     -fx-text-fill: #2e92df;
 }
 
-.material-relevant > .label {
+.material-relevant .label {
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
 
-.material-irrelevant > .label {
+.material-irrelevant .label {
     -fx-font-weight: normal;
     -fx-text-fill: #2e92df;
 }
@@ -130,8 +155,8 @@
     -fx-background-color: #ba5efa;
 }
 
-.material-favourite > .materialcard-name {
-    -fx-font-style: italic;
+.material-favourite .materialcard-name {
+    /*-fx-font-style: italic;*/
 }
 
 
@@ -147,9 +172,9 @@
 }
 
 
-.materialcard-amount {
-    -fx-padding: 5;
-    -fx-text-alignment: right;
+.material:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #1f1f1f;
 }
 
 .materialcard-image {
@@ -162,6 +187,57 @@
     -fx-fit-to-height: true;
     -fx-fit-to-width: true;
 }
+
+.materialcard-amount {
+    visibility: hidden;
+    -fx-padding: 0;
+    -fx-text-alignment: left;
+    /*-fx-min-width 3em;*/
+    -fx-min-width: 0em;
+    -fx-max-width: 0em;
+
+}
+
+.materialcard-amount-nonzero {
+    visibility: visible;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-padding: 5;
+}
+
+.materialcard-amount-image {
+    visibility: hidden;
+    -fx-min-width: 0em;
+    -fx-max-width: 0em;
+}
+
+.materialcard-amount-image-nonzero {
+    visibility: visible;
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+}
+
+.material:hover .materialcard-amount-image {
+    visibility: visible;
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+}
+
+.material:hover .materialcard-amount {
+    visibility: visible;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-padding: 5;
+}
+
+.materialcard-total {
+    -fx-padding: 5;
+    -fx-text-alignment: right;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+
+}
+
 
 .wishlist-content {
     -fx-spacing: 10;
@@ -242,6 +318,10 @@
 
 .ingredient-unfilled .label {
     -fx-text-fill: #ff7c7c;
+}
+
+.ingredient-filled-partial .label {
+    -fx-text-fill: #dcc030;
 }
 
 .ingredient-without-amount {

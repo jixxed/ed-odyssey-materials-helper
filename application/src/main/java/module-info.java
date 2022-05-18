@@ -15,6 +15,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires jdk.naming.dns;
     requires static lombok;
     requires org.apache.commons.csv;
+    requires scribejava.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
@@ -27,6 +28,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.domain;
     exports nl.jixxed.eliteodysseymaterials.templates;
+    exports nl.jixxed.eliteodysseymaterials.service;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates.segmentbar to javafx.fxml, org.controlsfx.controls;

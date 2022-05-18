@@ -12,6 +12,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Map;
 
 @Slf4j
@@ -24,6 +26,7 @@ class MessageHandler {
             Map.entry(JournalEventType.EMBARK, new EmbarkMessageProcessor()),
             Map.entry(JournalEventType.SHIPLOCKER, new ShipLockerMessageProcessor()),
             Map.entry(JournalEventType.BACKPACK, new BackpackMessageProcessor()),
+            Map.entry(JournalEventType.FLEETCARRIER, new FleetCarrierMessageProcessor()),
             Map.entry(JournalEventType.BACKPACKCHANGE, new BackpackChangeMessageProcessor()),
             Map.entry(JournalEventType.RESUPPLY, new ResupplyMessageProcessor()),
             Map.entry(JournalEventType.FSDJUMP, new FSDJumpMessageProcessor()),
@@ -68,6 +71,23 @@ class MessageHandler {
             }
         } catch (final JsonProcessingException e) {
             log.error("Error processing json message", e);
+        }
+    }
+
+    static void handleMessage(final File file, final JournalEventType journalEventType) {
+        try {
+            final String message = Files.readString(file.toPath());
+            final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
+            log.info("event: " + journalEventType);
+            final MessageProcessor messageProcessor = messageProcessors.get(journalEventType);
+            if (messageProcessor != null) {
+                messageProcessor.process(jsonNode);
+                EventService.publish(new JournalLineProcessedEvent("now", journalEventType, file));
+            }
+        } catch (final JsonProcessingException e) {
+            log.error("Error processing json message", e);
+        } catch (final IOException e) {
+            log.error("Error processing ShipLocker or Backpack", e);
         }
     }
 }

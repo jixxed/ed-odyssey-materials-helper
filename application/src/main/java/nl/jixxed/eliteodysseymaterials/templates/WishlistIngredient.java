@@ -1,14 +1,17 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import lombok.EqualsAndHashCode;
+import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 class WishlistIngredient extends MaterialIngredient {
 
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
+    private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
 
     WishlistIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, odysseyMaterial, amountRequired, amountAvailable);
@@ -22,9 +25,16 @@ class WishlistIngredient extends MaterialIngredient {
 
     @Override
     protected void update() {
-        if (this.getRightAmount() >= Integer.parseInt(this.getLeftAmountLabel().getText())) {
+
+        final Storage storage = StorageService.getMaterials(this.getOdysseyMaterial().getStorageType()).get(this.getOdysseyMaterial());
+        final int leftAmount = Integer.parseInt(this.getLeftAmountLabel().getText());
+        if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() < leftAmount) {
             this.getRightAmountLabel().setText(this.getRightAmount().toString());
-            this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
+            this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
+            this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
+        } else if (storage.getTotalValue() >= leftAmount) {
+            this.getRightAmountLabel().setText(this.getRightAmount().toString());
+            this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
         } else {
             this.getRightAmountLabel().setText(this.getRightAmount().toString());

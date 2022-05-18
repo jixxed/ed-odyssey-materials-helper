@@ -23,13 +23,12 @@ class DataParserTest {
         data.put(Data.SLUSHFUNDLOGS, new Storage());
         data.put(Data.BIOMETRICDATA, new Storage());
         data.put(Data.NOCDATA, new Storage());
-        final Map<String, Storage> unknownDatas = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_good.json"));
         final Iterator<JsonNode> items = jsonNode.get("Data").elements();
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.SHIPLOCKER, data, unknownDatas);
+        dataParser.parse(items, StoragePool.SHIPLOCKER, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.VIRUS, Storage.of(0, 1),
@@ -37,7 +36,6 @@ class DataParserTest {
                 Data.BIOMETRICDATA, Storage.of(0, 6),
                 Data.NOCDATA, Storage.of(0, 3)
         ));
-        Assertions.assertThat(unknownDatas).isEmpty();
     }
 
     @Test
@@ -45,22 +43,21 @@ class DataParserTest {
         final Map<Data, Storage> data = new HashMap<>();
         data.put(Data.SLUSHFUNDLOGS, new Storage());
         data.put(Data.NOCDATA, new Storage());
-        final Map<String, Storage> unknownData = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_unknown.json"));
         final Iterator<JsonNode> items = jsonNode.get("Data").elements();
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.SHIPLOCKER, data, unknownData);
+        dataParser.parse(items, StoragePool.SHIPLOCKER, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.SLUSHFUNDLOGS, Storage.of(0, 1),
                 Data.NOCDATA, Storage.of(0, 3)
         ));
-        Assertions.assertThat(unknownData).containsExactlyInAnyOrderEntriesOf(Map.of(
-                "banana:Banana", Storage.of(0, 6),
-                "apple:apple", Storage.of(0, 1)
-        ));
+//        Assertions.assertThat(unknownData).containsExactlyInAnyOrderEntriesOf(Map.of(
+//                "banana:Banana", Storage.of(0, 6),
+//                "apple:apple", Storage.of(0, 1)
+//        ));
     }
 
     @Test
@@ -70,13 +67,12 @@ class DataParserTest {
         data.put(Data.SLUSHFUNDLOGS, new Storage());
         data.put(Data.BIOMETRICDATA, new Storage());
         data.put(Data.NOCDATA, new Storage());
-        final Map<String, Storage> unknownDatas = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_good.json"));
         final Iterator<JsonNode> items = jsonNode.get("Data").elements();
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.BACKPACK, data, unknownDatas);
+        dataParser.parse(items, StoragePool.BACKPACK, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.VIRUS, Storage.of(1, 0),
@@ -84,7 +80,6 @@ class DataParserTest {
                 Data.BIOMETRICDATA, Storage.of(6, 0),
                 Data.NOCDATA, Storage.of(3, 0)
         ));
-        Assertions.assertThat(unknownDatas).isEmpty();
     }
 
     @Test
@@ -92,21 +87,20 @@ class DataParserTest {
         final Map<Data, Storage> data = new HashMap<>();
         data.put(Data.SLUSHFUNDLOGS, new Storage());
         data.put(Data.NOCDATA, new Storage());
-        final Map<String, Storage> unknownData = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_unknown.json"));
         final Iterator<JsonNode> items = jsonNode.get("Data").elements();
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.BACKPACK, data, unknownData);
+        dataParser.parse(items, StoragePool.BACKPACK, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.SLUSHFUNDLOGS, Storage.of(1, 0),
                 Data.NOCDATA, Storage.of(3, 0)
         ));
-        Assertions.assertThat(unknownData).containsExactlyInAnyOrderEntriesOf(Map.of(
-                "banana:Banana", Storage.of(6, 0),
-                "apple:apple", Storage.of(1, 0)
-        ));
+//        Assertions.assertThat(unknownData).containsExactlyInAnyOrderEntriesOf(Map.of(
+//                "banana:Banana", Storage.of(6, 0),
+//                "apple:apple", Storage.of(1, 0)
+//        ));
     }
 }

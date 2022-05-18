@@ -1,27 +1,28 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
-import javafx.beans.binding.StringBinding;
+import javafx.application.Platform;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
-import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.Good;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 @Slf4j
-class MaterialCard extends HBox {
+class MaterialCard extends VBox implements Template {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String MATERIAL_IRRELEVANT_CLASS = "material-irrelevant";
     private static final String MATERIAL_RELEVANT_CLASS = "material-relevant";
@@ -32,73 +33,133 @@ class MaterialCard extends HBox {
     private final Storage amounts;
     private DestroyableResizableImageView image;
     private Label name;
-    private Label amount;
+    private Label fleetCarrierAmount;
+    private Label backpackAmount;
+    private Label shiplockerAmount;
+    private Label totalAmount;
+    private MaterialShow materialShow;
+    private DestroyableResizableImageView fleetCarrierImage;
+    private DestroyableResizableImageView backpackImage;
+    private DestroyableResizableImageView shipImage;
+//    private DestroyableResizableImageView totalImage;
 
-
-    private MaterialCard(final OdysseyMaterial odysseyMaterial, final StringBinding nameBinding, final Storage amounts) {
-        this.amounts = amounts;
+    MaterialCard(final OdysseyMaterial odysseyMaterial) {
         this.odysseyMaterial = odysseyMaterial;
-        initComponents(odysseyMaterial, nameBinding);
+        this.amounts = StorageService.getMaterialStorage(odysseyMaterial);
+        initComponents();
+        initEventHandling();
     }
 
-    MaterialCard(final OdysseyMaterial odysseyMaterial, final String name, final Storage amounts) {
-        this(odysseyMaterial, LocaleService.getStringBinding(() -> name), amounts);
-    }
-
-    MaterialCard(final OdysseyMaterial odysseyMaterial, final Storage amounts) {
-        this(odysseyMaterial, LocaleService.getStringBinding(odysseyMaterial), amounts);
-    }
-
-    private void initComponents(final OdysseyMaterial odysseyMaterial, final StringBinding nameBinding) {
+    @Override
+    public void initComponents() {
         this.getStyleClass().add("material");
         this.name = LabelBuilder.builder()
                 .withStyleClass("materialcard-name")
-                .withText(nameBinding)
+                .withText(LocaleService.getStringBinding(this.odysseyMaterial))
                 .build();
-        final String amountText;
-        if (this.amounts != null) {
-            amountText = (!this.amounts.getBackPackValue().equals(0)) ? "(" + this.amounts.getBackPackValue() + ") " + this.amounts.getShipLockerValue().toString() : this.amounts.getShipLockerValue().toString();
-        } else {
-            amountText = "";
-        }
-        this.amount = LabelBuilder.builder()
+        this.fleetCarrierAmount = LabelBuilder.builder()
                 .withStyleClass("materialcard-amount")
+                .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
+                .withNonLocalizedText(String.valueOf(this.amounts.getFleetCarrierValue()))
+                .build();
+        this.backpackAmount = LabelBuilder.builder()
+                .withStyleClass("materialcard-amount")
+                .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
+                .withNonLocalizedText(String.valueOf(this.amounts.getBackPackValue()))
+                .build();
+        this.shiplockerAmount = LabelBuilder.builder()
+                .withStyleClass("materialcard-amount")
+                .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
+                .withNonLocalizedText(String.valueOf(this.amounts.getShipLockerValue()))
+                .build();
+        this.totalAmount = LabelBuilder.builder()
+                .withStyleClass("materialcard-total")
                 .withNodeOrientation(NodeOrientation.RIGHT_TO_LEFT)
-                .withNonLocalizedText(amountText)
+                .withNonLocalizedText(String.valueOf(this.amounts.getTotalValue()))
                 .build();
 
-        this.image = createMaterialImage(odysseyMaterial);
+        this.image = createMaterialImage(this.odysseyMaterial);
 
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
-        MaterialService.addMaterialInfoPopOver(this, odysseyMaterial);
-        initMaterialCardStyle();
+        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial);
 
-        this.setFavourite(odysseyMaterial, APPLICATION_STATE.isFavourite(odysseyMaterial));
-        this.setOnMouseClicked(event -> setFavourite(odysseyMaterial, APPLICATION_STATE.toggleFavourite(odysseyMaterial)));
-        this.getChildren().addAll(this.image, this.name, region, this.amount);
+        this.setFavourite(this.odysseyMaterial, APPLICATION_STATE.isFavourite(this.odysseyMaterial));
+        this.setOnMouseClicked(event -> setFavourite(this.odysseyMaterial, APPLICATION_STATE.toggleFavourite(this.odysseyMaterial)));
+
+        this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/fleetcarrier.png").build();
+        this.backpackImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/backpack.png").build();
+        this.shipImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/ship.png").build();
+
+        final HBox nameLine = BoxBuilder.builder().withStyleClass("material-name-line").withNodes(this.image, this.name, region, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.totalAmount).buildHBox();
+        this.getChildren().addAll(nameLine);
+        updateStyle();
     }
 
-    private void initMaterialCardStyle() {
-        final String materialType = this.odysseyMaterial.getClass().getSimpleName().toLowerCase();
-        if (this.odysseyMaterial.isUnknown()) {
-            this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-unknown");
-        } else if (this.odysseyMaterial instanceof Asset asset) {
-            switch (asset.getType()) {
-                case TECH -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-tech");
-                case CIRCUIT -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-circuit");
-                case CHEMICAL -> this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-chemical");
+    @Override
+    public void initEventHandling() {
+        EventService.addListener(this, CommanderSelectedEvent.class, event -> {
+            this.fleetCarrierAmount.setText(String.valueOf(0));
+            this.backpackAmount.setText(String.valueOf(0));
+            this.shiplockerAmount.setText(String.valueOf(0));
+            this.totalAmount.setText(String.valueOf(0));
+        });
+        EventService.addListener(this, StorageEvent.class, storageEvent -> {
+            if (StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
+                this.fleetCarrierAmount.setText(String.valueOf(this.amounts.getFleetCarrierValue()));
+            } else if (StoragePool.BACKPACK.equals(storageEvent.getStoragePool())) {
+                this.backpackAmount.setText(String.valueOf(this.amounts.getBackPackValue()));
+            } else if (StoragePool.SHIPLOCKER.equals(storageEvent.getStoragePool())) {
+                this.shiplockerAmount.setText(String.valueOf(this.amounts.getShipLockerValue()));
             }
+            this.totalAmount.setText(String.valueOf(this.amounts.getTotalValue()));
+            Platform.runLater(this::updateStyle);
+        });
+
+        EventService.addListener(this, SearchEvent.class, searchEvent -> {
+            this.materialShow = searchEvent.getSearch().getMaterialShow();
+            Platform.runLater(this::updateStyle);
+        });
+
+        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event ->
+                Platform.runLater(this::updateMaterialCardStyle)
+        );
+    }
+
+    private void updateStyle() {
+        updateMaterialCardStyle();
+        this.backpackImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
+        this.backpackAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
+        this.fleetCarrierImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
+        this.fleetCarrierAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
+        if (MaterialShow.FLEETCARRIER.equals(this.materialShow)) {
+            this.fleetCarrierImage.getStyleClass().add("materialcard-amount-image-nonzero");
+            this.fleetCarrierAmount.getStyleClass().add("materialcard-amount-nonzero");
+        }
+        if (this.amounts.getBackPackValue() > 0 || MaterialShow.BACKPACK.equals(this.materialShow)) {
+            this.backpackImage.getStyleClass().add("materialcard-amount-image-nonzero");
+            this.backpackAmount.getStyleClass().add("materialcard-amount-nonzero");
+        }
+    }
+
+    private void updateMaterialCardStyle() {
+        this.image = createMaterialImage(this.odysseyMaterial);
+        this.getStyleClass().removeAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_RELEVANT_CLASS);
+        this.setFavourite(this.odysseyMaterial, APPLICATION_STATE.isFavourite(this.odysseyMaterial));
+        if (this.odysseyMaterial.isUnknown()) {
+            this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS);
+        } else if (this.odysseyMaterial instanceof Asset) {
+            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS);
         } else if (OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(this.odysseyMaterial)) {
-            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
+            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS);
         } else if (APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isEngineeringOnlyIngredient(this.odysseyMaterial)) {
-            this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-irrelevant");
+            this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS);
         } else if (OdysseyBlueprintConstants.isEngineeringIngredient(this.odysseyMaterial)) {
-            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-engineer-relevant");
+            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS);
         } else if (OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(this.odysseyMaterial)) {
-            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-relevant");
+            this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS);
         } else {
-            this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_SPECIFIC_CLASS_PREFIX + materialType + "-irrelevant");
+            this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS);
         }
     }
 

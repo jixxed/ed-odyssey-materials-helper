@@ -23,9 +23,9 @@ public class BackpackMessageProcessor implements MessageProcessor {
         }
         StorageService.resetBackPackCounts();
 
-        ASSET_PARSER.parse(journalMessage.get("Components").elements(), StoragePool.BACKPACK, StorageService.getAssets(), null);
-        GOOD_PARSER.parse(journalMessage.get("Items").elements(), StoragePool.BACKPACK, StorageService.getGoods(), StorageService.getUnknownGoods());
-        DATA_PARSER.parse(journalMessage.get("Data").elements(), StoragePool.BACKPACK, StorageService.getData(), StorageService.getUnknownData());
+        ASSET_PARSER.parse(journalMessage.get("Components").elements(), StoragePool.BACKPACK, StorageService.getAssets());
+        GOOD_PARSER.parse(journalMessage.get("Items").elements(), StoragePool.BACKPACK, StorageService.getGoods());
+        DATA_PARSER.parse(journalMessage.get("Data").elements(), StoragePool.BACKPACK, StorageService.getData());
         EventService.publish(new StorageEvent(StoragePool.BACKPACK));
 
     }

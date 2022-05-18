@@ -9,24 +9,29 @@ buildscript {
     dependencies {
         classpath "org.beryx:badass-jlink-plugin:2.24.1"
         classpath "io.freefair.gradle:lombok-plugin:5.3.3.3"
+        classpath "de.jjohannes.gradle:extra-java-module-info:0.12"
     }
 }
+//plugins {
+//    id "io.freefair.lombok" version "6.4.3"
+//    id "de.jjohannes.extra-java-module-info" version "0.12"
+//    id "org.beryx.jlink" version "2.25.0"
+//}
 apply plugin: "io.freefair.lombok"
 apply plugin: 'idea' // optional (to generate IntelliJ IDEA project files)
 apply plugin: "java"
 apply plugin: "application"
 apply plugin: "org.beryx.jlink"
+apply plugin: "de.jjohannes.extra-java-module-info"
 group 'nl.jixxed'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
         vendor = JvmVendorSpec.ADOPTOPENJDK
     }
+    modularity.inferModulePath = true
 }
 OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
-java {
-    modularity.inferModulePath.set(true)
-}
 jar {
     manifest {
         attributes 'Name': 'nl/jixxed/eliteodysseymaterials',
@@ -125,12 +130,48 @@ dependencies {
 //    testImplementation 'de.saxsys:jfx-testrunner:1.2'
     testImplementation 'de.saxsys:mvvmfx-testing-utils:1.8.0'
     testImplementation("org.openjfx:javafx-swing:18+:${platform}")
+    implementation 'com.github.scribejava:scribejava-core:8.3.1'
 
 }
 jpackage {
     if (os.isWindows()) {
         dependsOn test
     }
+}
+extraJavaModuleInfo {
+    // This does not have to be a complete description (e.g. here 'org.apache.commons.collections' does not export anything here).
+    // It only needs to be good enough to work in the context of this application we are building.
+//    module('commons-beanutils-1.9.4.jar', 'org.apache.commons.beanutils', '1.9.4') {
+//        exports('org.apache.commons.beanutils')
+//
+//        requires('org.apache.commons.logging')
+//        requires('java.sql')
+//        requires('java.desktop')
+//    }
+//    module('commons-cli-1.4.jar', 'org.apache.commons.cli', '3.2.2') {
+//        exports('org.apache.commons.cli')
+//    }
+    module('scribejava-java8-8.3.1.jar', 'scribejava.java8', '8.3.1') {
+        exports("com.github.scribejava.java8.base64")
+    }
+    module('scribejava-core-8.3.1.jar', 'scribejava.core', '8.3.1') {
+//        exports("com.github.scribejava.core")
+        exports("com.github.scribejava.core.builder")
+        exports("com.github.scribejava.core.builder.api")
+        exports("com.github.scribejava.core.oauth")
+        exports("com.github.scribejava.core.model")
+        exports("com.github.scribejava.core.pkce")
+        requires("scribejava.java8")
+        requires("com.fasterxml.jackson.core")
+        requires("com.fasterxml.jackson.databind")
+    }
+    module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
+    module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
+    module('j2objc-annotations-1.3.jar', 'com.google.j2objc.j2objc-annotations', '1.3')
+    module('listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar', 'com.google.guava.listenablefuture', '9999.0-empty-to-avoid-conflict-with-guava')
+
+    module('doc-annotations-0.2.jar', 'eu.lestard', '0.2')
+    module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
 }
 run {
 //    setArgs(['edomh://wishlist?eyJldmVudCI6Indpc2hsaXN0IiwidmVyc2lvbiI6IjEiLCJ3aXNobGlzdCI6eyJ1dWlkIjoiMGU4OGE4MzEtMGY1ZS00NjczLWEwODItMzk4YTRmMjA5NDU0IiwibmFtZSI6IkRlZmF1bHQgd2lzaGxpc3QiLCJpdGVtcyI6W3sicmVjaXBlTmFtZSI6IktBUk1BXzRfNSIsInZpc2libGUiOnRydWV9LHsicmVjaXBlTmFtZSI6Ik1BTlRJQ09SRV80XzUiLCJ2aXNpYmxlIjp0cnVlfSx7InJlY2lwZU5hbWUiOiJNQUdBWklORV9TSVpFIiwidmlzaWJsZSI6dHJ1ZX0seyJyZWNpcGVOYW1lIjoiS0FSTUFfMV8yIiwidmlzaWJsZSI6dHJ1ZX1dfX0='])

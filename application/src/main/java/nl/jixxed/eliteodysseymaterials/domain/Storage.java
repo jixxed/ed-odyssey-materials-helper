@@ -11,18 +11,28 @@ import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 public class Storage {
     private Integer backPack;
     private Integer shipLocker;
+    private Integer fleetCarrier;
 
     public Storage() {
         this.backPack = 0;
         this.shipLocker = 0;
+        this.fleetCarrier = 0;
     }
 
     public static Storage of(final Integer backPack, final Integer shipLocker) {
-        return new Storage(backPack, shipLocker);
+        return new Storage(backPack, shipLocker, 0);
+    }
+
+    public static Storage of(final Integer backPack, final Integer shipLocker, final Integer fleetCarrier) {
+        return new Storage(backPack, shipLocker, fleetCarrier);
     }
 
     public Integer getBackPackValue() {
         return this.backPack;
+    }
+
+    public Integer getFleetCarrierValue() {
+        return this.fleetCarrier;
     }
 
     public Integer getShipLockerValue() {
@@ -34,17 +44,21 @@ public class Storage {
             this.backPack = value;
         } else if (pool == StoragePool.SHIPLOCKER) {
             this.shipLocker = value;
+        } else if (pool == StoragePool.FLEETCARRIER) {
+            this.fleetCarrier = value;
         }
+
     }
 
     public Integer getTotalValue() {
-        return this.backPack + this.shipLocker;
+        return this.backPack + this.shipLocker + this.fleetCarrier;
     }
 
     public Integer getValue(final StoragePool target) {
         return switch (target) {
             case BACKPACK -> this.backPack;
             case SHIPLOCKER -> this.shipLocker;
+            case FLEETCARRIER -> this.fleetCarrier;
             case SHIP -> null;
         };
     }

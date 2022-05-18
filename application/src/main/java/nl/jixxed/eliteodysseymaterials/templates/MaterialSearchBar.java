@@ -96,6 +96,8 @@ class MaterialSearchBar extends HBox {
                         MaterialShow.BLUEPRINT,
                         MaterialShow.IRRELEVANT,
                         MaterialShow.IRRELEVANT_WITH_STOCK,
+                        MaterialShow.BACKPACK,
+                        MaterialShow.FLEETCARRIER,
                         MaterialShow.PROHIBITED,
                         MaterialShow.FAVOURITES))
                 .withValueChangeListener((options, oldValue, newValue) -> {

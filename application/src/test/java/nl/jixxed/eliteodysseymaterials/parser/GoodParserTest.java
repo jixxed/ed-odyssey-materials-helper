@@ -24,20 +24,18 @@ class GoodParserTest {
         goods.put(Good.LARGECAPACITYPOWERREGULATOR, new Storage());
         goods.put(Good.GMEDS, new Storage());
         goods.put(Good.HEALTHMONITOR, new Storage());
-        final Map<String, Storage> unknownGoods = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_good.json"));
         final Iterator<JsonNode> items = jsonNode.get("Items").elements();
         final GoodParser goodParser = new GoodParser();
 
-        goodParser.parse(items, StoragePool.SHIPLOCKER, goods, unknownGoods);
+        goodParser.parse(items, StoragePool.SHIPLOCKER, goods);
 
         assertAll(
                 () -> Assertions.assertThat(goods).containsExactlyInAnyOrderEntriesOf(Map.of(
                         Good.LARGECAPACITYPOWERREGULATOR, Storage.of(0, 4),
                         Good.GMEDS, Storage.of(0, 30),
-                        Good.HEALTHMONITOR, Storage.of(0, 2))),
-                () -> Assertions.assertThat(unknownGoods).isEmpty()
+                        Good.HEALTHMONITOR, Storage.of(0, 2)))
         );
     }
 
@@ -46,21 +44,16 @@ class GoodParserTest {
         final Map<Good, Storage> goods = new HashMap<>();
         goods.put(Good.LARGECAPACITYPOWERREGULATOR, new Storage());
         goods.put(Good.HEALTHMONITOR, new Storage());
-        final Map<String, Storage> unknownGoods = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_unknown.json"));
         final Iterator<JsonNode> items = jsonNode.get("Items").elements();
         final GoodParser goodParser = new GoodParser();
 
-        goodParser.parse(items, StoragePool.SHIPLOCKER, goods, unknownGoods);
+        goodParser.parse(items, StoragePool.SHIPLOCKER, goods);
 
         Assertions.assertThat(goods).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Good.LARGECAPACITYPOWERREGULATOR, Storage.of(0, 1),
                 Good.HEALTHMONITOR, Storage.of(0, 2)
-        ));
-        Assertions.assertThat(unknownGoods).containsExactlyInAnyOrderEntriesOf(Map.of(
-                "banana:Banana", Storage.of(0, 3),
-                "apple:apple", Storage.of(0, 30)
         ));
     }
 
@@ -70,20 +63,18 @@ class GoodParserTest {
         goods.put(Good.LARGECAPACITYPOWERREGULATOR, new Storage());
         goods.put(Good.GMEDS, new Storage());
         goods.put(Good.HEALTHMONITOR, new Storage());
-        final Map<String, Storage> unknownGoods = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_good.json"));
         final Iterator<JsonNode> items = jsonNode.get("Items").elements();
         final GoodParser goodParser = new GoodParser();
 
-        goodParser.parse(items, StoragePool.BACKPACK, goods, unknownGoods);
+        goodParser.parse(items, StoragePool.BACKPACK, goods);
 
         Assertions.assertThat(goods).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Good.LARGECAPACITYPOWERREGULATOR, Storage.of(4, 0),
                 Good.GMEDS, Storage.of(30, 0),
                 Good.HEALTHMONITOR, Storage.of(2, 0)
         ));
-        Assertions.assertThat(unknownGoods).isEmpty();
     }
 
     @Test
@@ -91,21 +82,16 @@ class GoodParserTest {
         final Map<Good, Storage> goods = new HashMap<>();
         goods.put(Good.LARGECAPACITYPOWERREGULATOR, new Storage());
         goods.put(Good.HEALTHMONITOR, new Storage());
-        final Map<String, Storage> unknownGoods = new HashMap<>();
 
         final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_unknown.json"));
         final Iterator<JsonNode> items = jsonNode.get("Items").elements();
         final GoodParser goodParser = new GoodParser();
 
-        goodParser.parse(items, StoragePool.BACKPACK, goods, unknownGoods);
+        goodParser.parse(items, StoragePool.BACKPACK, goods);
 
         Assertions.assertThat(goods).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Good.LARGECAPACITYPOWERREGULATOR, Storage.of(1, 0),
                 Good.HEALTHMONITOR, Storage.of(2, 0)
-        ));
-        Assertions.assertThat(unknownGoods).containsExactlyInAnyOrderEntriesOf(Map.of(
-                "banana:Banana", Storage.of(3, 0),
-                "apple:apple", Storage.of(30, 0)
         ));
     }
 }

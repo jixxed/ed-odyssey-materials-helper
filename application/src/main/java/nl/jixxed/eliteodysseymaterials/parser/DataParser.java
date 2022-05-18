@@ -13,7 +13,7 @@ import java.util.Map;
 @Slf4j
 public class DataParser implements Parser {
     @Override
-    public void parse(final Iterator<JsonNode> datas, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap, final Map<String, Storage> unknownMap) {
+    public void parse(final Iterator<JsonNode> datas, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap) {
         datas.forEachRemaining(dataNode ->
         {
             final String name = dataNode.get("Name").asText();
@@ -21,10 +21,6 @@ public class DataParser implements Parser {
             final int amount = dataNode.get("Count").asInt();
             if (data.isUnknown()) {
                 log.warn("Unknown Data detected: " + dataNode.toPrettyString());
-                final String nameLocalised = dataNode.get("Name_Localised") != null ? dataNode.get("Name_Localised").asText() : name;
-                final Storage storage = getOrCreateContainer(unknownMap, name + ":" + nameLocalised);
-                //stack values as items occur multiple times in the json
-                storage.setValue(storage.getValue(storagePool) + amount, storagePool);
             } else {
                 final Storage storage = knownMap.get(data);
                 //stack values as items occur multiple times in the json

@@ -15,10 +15,8 @@ import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
@@ -29,6 +27,7 @@ import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.URLSchemeDialog;
 import nl.jixxed.eliteodysseymaterials.watchdog.DeeplinkWatcher;
+import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
 
@@ -48,6 +47,7 @@ public class FXApplication extends Application {
     private ApplicationLayout applicationLayout;
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
+    private GameStateWatcher fleetCarrierWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final DeeplinkWatcher deeplinkWatcher = new DeeplinkWatcher();
     private Stage primaryStage;
@@ -63,6 +63,7 @@ public class FXApplication extends Application {
             whatsnewPopup();
             urlSchemePopup();
             MaterialTrackingService.initialize();
+            CAPIService.getInstance(this);
             this.applicationLayout = new ApplicationLayout(this);
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
@@ -100,8 +101,13 @@ public class FXApplication extends Application {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, WatchedFolderChangedEvent.class, event -> reset(new File(event.getPath())));
+        EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder(new File(event.getPath())));
         EventService.addListener(this, CommanderSelectedEvent.class, event -> reset(this.journalWatcher.getWatchedFolder()));
+        EventService.addListener(this, JournalInitEvent.class, event -> {
+            if (event.isInitialised()) {
+                Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
+            }
+        });
         EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
             this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
             EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
@@ -131,9 +137,28 @@ public class FXApplication extends Application {
 
     private void setupWatchers() {
         final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
-        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
-        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
+        setupStorageWatchers(watchedFolder);
+    }
+
+    private void setupStorageWatchers(final File watchedFolder) {
+        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processShipLockerBackpackFleetCarrier(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
+        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processShipLockerBackpackFleetCarrier(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
         this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
+
+
+    }
+
+    private void setupFleetCarrierWatcher(final File watchedFolder, final Commander commander) {
+
+        if (commander != null) {
+            final File watchedFolderFleetCarrier = new File(OsConstants.CONFIG_DIRECTORY + "\\" + commander.getFid().toLowerCase(Locale.ENGLISH));
+            if (!watchedFolderFleetCarrier.exists()) {
+                watchedFolderFleetCarrier.mkdirs();
+            }
+            this.fleetCarrierWatcher = new GameStateWatcher();
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processShipLockerBackpackFleetCarrier(file, JournalEventType.FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, StoragePool.FLEETCARRIER);
+        }
+
     }
 
     private void setupDeeplinkWatcher() {
@@ -174,6 +199,8 @@ public class FXApplication extends Application {
             this.primaryStage.toFront();
         } else if (ImportResult.ResultType.UNKNOWN_TYPE.equals(importResult.getResultType())) {
             NotificationService.showError(NotificationType.ERROR, "Failed to import", "Unknown type");
+        } else if (ImportResult.ResultType.CAPI_OAUTH_TOKEN.equals(importResult.getResultType())) {
+            this.primaryStage.toFront();
         }
     }
 
@@ -263,20 +290,26 @@ public class FXApplication extends Application {
         }
     }
 
+    private void resetWatchedFolder(final File watchedFolder) {
+        APPLICATION_STATE.resetCommanders();
+        EventService.publish(new CommanderResetEvent());
+        reset(watchedFolder);
+    }
+
     private void reset(final File watchedFolder) {
         APPLICATION_STATE.resetEngineerStates();
         StorageService.resetShipLockerCounts();
         StorageService.resetBackPackCounts();
-        APPLICATION_STATE.resetCommanders();
-        EventService.publish(new CommanderResetEvent());
+        StorageService.resetFleetCarrierCounts();
+        if (this.fleetCarrierWatcher != null) {
+            this.fleetCarrierWatcher.stop();
+        }
         this.timeStampedShipLockerWatcher.stop();
         this.timeStampedBackPackWatcher.stop();
         this.journalWatcher.stop();
         this.deeplinkWatcher.stop();
         setupDeeplinkWatcher();
-        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
-        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processShipLockerBackpack, AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
-        this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
+        setupStorageWatchers(watchedFolder);
     }
 
     private void setPreferenceIfNotMaximized(final Stage primaryStage, final String setting, final Double value) {

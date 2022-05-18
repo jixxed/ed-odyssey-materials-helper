@@ -13,23 +13,27 @@ import java.util.Map;
 @Slf4j
 public class GoodParser implements Parser {
     @Override
-    public void parse(final Iterator<JsonNode> items, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap, final Map<String, Storage> unknownMap) {
+    public void parse(final Iterator<JsonNode> items, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap) {
         items.forEachRemaining(itemNode ->
         {
-            final String name = itemNode.get("Name").asText();
+            final String name = itemNode.get(getNameField()).asText();
             final Good good = Good.forName(name);
-            final int amount = itemNode.get("Count").asInt();
-            if (Good.UNKNOWN.equals(good)) {
+            final int amount = itemNode.get(getAmountField()).asInt();
+            if (good.isUnknown()) {
                 log.warn("Unknown Good detected: " + itemNode.toPrettyString());
-                final String nameLocalised = itemNode.get("Name_Localised") != null ? itemNode.get("Name_Localised").asText() : name;
-                final Storage storage = getOrCreateContainer(unknownMap, name + ":" + nameLocalised);
-                //stack values as items occur multiple times in the json
-                storage.setValue(storage.getValue(storagePool) + amount, storagePool);
             } else {
                 final Storage storage = knownMap.get(good);
                 //stack values as items occur multiple times in the json
                 storage.setValue(storage.getValue(storagePool) + amount, storagePool);
             }
         });
+    }
+
+    protected String getAmountField() {
+        return "Count";
+    }
+
+    protected String getNameField() {
+        return "Name";
     }
 }

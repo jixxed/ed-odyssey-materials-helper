@@ -4,7 +4,15 @@ Show engineer unlock blueprints green when requirements are met. (B3, C5, D1.2, 
 Improve shutdown closing active threads before exit
 Add upgrade suit and upgrade weapon event handling
 Settings - Try to initialize journalfolder select to existing selection
-Add melee damage values to loadout
+Added melee damage values to loadout
+Added filters for fleetcarrier and backpack to material overview
+Added yellow highlight for wishlistmaterials that have the required amount in total, but not in the shiplocker
+Added setting to connect the app with Frontier API
+Addde logic to get fleetcarrier information from API to show storage values
+Show individual storage quantities on hover in material overview
+Added fleetcarrier buy/sell orders to tooltip
+Retrieve fleetcarrier data every 5 minutes
+Added statusbar indicator for last api update
 
 Version 1.77
 -------------

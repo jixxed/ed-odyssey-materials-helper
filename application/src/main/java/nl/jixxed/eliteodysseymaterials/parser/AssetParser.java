@@ -13,14 +13,14 @@ import java.util.Map;
 @Slf4j
 public class AssetParser implements Parser {
     @Override
-    public void parse(final Iterator<JsonNode> components, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap, final Map<String, Storage> unknownMap) {
+    public void parse(final Iterator<JsonNode> components, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap) {
         components.forEachRemaining(componentNode ->
         {
             final String name = componentNode.get("Name").asText();
             final Asset asset = Asset.forName(name);
             final int amount = componentNode.get("Count").asInt();
-            if (Asset.UNKNOWN.equals(asset)) {
-                log.warn("Unknown Component detected: " + componentNode.toPrettyString());
+            if (asset.isUnknown()) {
+                log.warn("Unknown Asset detected: " + componentNode.toPrettyString());
             } else {
                 final Storage storage = knownMap.get(asset);
                 //stack values as items occur multiple times in the json

@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
@@ -41,6 +42,8 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
     private DestroyableToggleSwitch statsToggle;
     private BooleanProperty isValid;
     private final List<Destroyable> destroyables = new ArrayList<>();
+
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private final void setValid(final boolean value) {
         isValidProperty().set(value);
@@ -69,31 +72,31 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
     public void initEventHandling() {
         if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
 
-            EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+            this.eventListeners.add(EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
                 if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
                     APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
                 }
-            });
-            EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+            }));
+            this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
                     loadCommanderWishlists(commanderSelectedEvent.getCommander())
-            );
-            EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
-                        if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
+            ));
+            this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+                        if (this.loadout != null && Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
                             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
                         }
                     }
-            );
-            EventService.addListener(this, ModificationChangedEvent.class, modificationChangedEvent -> {
+            ));
+            this.eventListeners.add(EventService.addListener(this, ModificationChangedEvent.class, modificationChangedEvent -> {
                 if (modificationChangedEvent.getLoadoutItem() == this) {
                     handleModificationChange(modificationChangedEvent.getModificationChange());
                 }
-            });
+            }));
 
         }
         if (this.loadout.getEquipment() instanceof Weapon) {
-            EventService.addListener(this, AmmoCapacityModEvent.class, ammoCapacityModEvent ->
+            this.eventListeners.add(EventService.addListener(this, AmmoCapacityModEvent.class, ammoCapacityModEvent ->
                     updateStatsList()
-            );
+            ));
         }
     }
 
@@ -287,18 +290,20 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
 
     private Wishlists loadCommanderWishlists(final Commander commander) {
         final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
-        this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
-        this.addToWishlist.getItems().clear();
-        final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
-            final DestroyableMenuItem menuItem = new DestroyableMenuItem();
-            menuItem.setOnAction(event -> {
-                final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
-                EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
-            });
-            menuItem.setText(wishlist.getName());
-            return menuItem;
-        }).toList();
-        this.addToWishlist.getItems().addAll(menuItems);
+        if (this.addToWishlist != null) {
+            this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
+            this.addToWishlist.getItems().clear();
+            final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
+                final DestroyableMenuItem menuItem = new DestroyableMenuItem();
+                menuItem.setOnAction(event -> {
+                    final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
+                    EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                });
+                menuItem.setText(wishlist.getName());
+                return menuItem;
+            }).toList();
+            this.addToWishlist.getItems().addAll(menuItems);
+        }
         return wishlists;
     }
 
@@ -452,7 +457,7 @@ public class LoadoutItem extends VBox implements DestroyableTemplate {
 
     @Override
     public void destroyInternal() {
-        EventService.removeListener(this);
+        this.eventListeners.forEach(EventService::removeListener);
         this.statsList.clear();
         this.loadoutSet = null;
         this.loadout = null;
