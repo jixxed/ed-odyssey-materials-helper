@@ -112,6 +112,7 @@ class BottomBar extends HBox {
 
     private void handleAddedCommander(final CommanderAddedEvent commanderAddedEvent) {
         this.login.setVisible(true);
+        this.login.getStyleClass().remove("statusbar-login-hidden");
         this.commanderSelect.getItems().add(commanderAddedEvent.getCommander());
         final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
         if (preferredName.isBlank() || commanderAddedEvent.getCommander().getName().equals(preferredName)) {
@@ -125,6 +126,9 @@ class BottomBar extends HBox {
 
     private void hideLoginRequest() {
         this.login.setVisible(false);
+        if (!this.login.getStyleClass().contains("statusbar-login-hidden")) {
+            this.login.getStyleClass().add("statusbar-login-hidden");
+        }
     }
 
     private void resetAfterWatchedFolderChanged(final WatchedFolderChangedEvent watchedFolderChangedEvent) {

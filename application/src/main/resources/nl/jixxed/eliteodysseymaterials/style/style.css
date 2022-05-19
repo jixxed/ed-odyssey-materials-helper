@@ -2096,3 +2096,7 @@
 .hidden-menu-button > .arrow-button > .arrow {
     -fx-padding: 0;
 }
+
+.statusbar-login-hidden {
+    -fx-max-width: 0;
+}

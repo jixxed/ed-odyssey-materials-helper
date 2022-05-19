@@ -16,9 +16,9 @@ public class AssetParser implements Parser {
     public void parse(final Iterator<JsonNode> components, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap) {
         components.forEachRemaining(componentNode ->
         {
-            final String name = componentNode.get("Name").asText();
+            final String name = componentNode.get(getNameField()).asText();
             final Asset asset = Asset.forName(name);
-            final int amount = componentNode.get("Count").asInt();
+            final int amount = componentNode.get(getAmountField()).asInt();
             if (asset.isUnknown()) {
                 log.warn("Unknown Asset detected: " + componentNode.toPrettyString());
             } else {
@@ -27,5 +27,13 @@ public class AssetParser implements Parser {
                 storage.setValue(storage.getValue(storagePool) + amount, storagePool);
             }
         });
+    }
+
+    protected String getAmountField() {
+        return "Count";
+    }
+
+    protected String getNameField() {
+        return "Name";
     }
 }

@@ -16,9 +16,9 @@ public class DataParser implements Parser {
     public void parse(final Iterator<JsonNode> datas, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap) {
         datas.forEachRemaining(dataNode ->
         {
-            final String name = dataNode.get("Name").asText();
+            final String name = dataNode.get(getNameField()).asText();
             final Data data = Data.forName(name);
-            final int amount = dataNode.get("Count").asInt();
+            final int amount = dataNode.get(getAmountField()).asInt();
             if (data.isUnknown()) {
                 log.warn("Unknown Data detected: " + dataNode.toPrettyString());
             } else {
@@ -27,5 +27,13 @@ public class DataParser implements Parser {
                 storage.setValue(storage.getValue(storagePool) + amount, storagePool);
             }
         });
+    }
+
+    protected String getAmountField() {
+        return "Count";
+    }
+
+    protected String getNameField() {
+        return "Name";
     }
 }
