@@ -1,3 +1,8 @@
+Version 1.79
+-------------
+Fix statusbar hidden label taking up space
+Fix fleetcarrier amounts remaining 0
+
 Version 1.78
 -------------
 Show engineer unlock blueprints green when requirements are met. (B3, C5, D1.2, D2)
