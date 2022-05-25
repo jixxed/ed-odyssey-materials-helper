@@ -126,7 +126,7 @@ public class SynthesisBlueprints {
                             Raw.ARSENIC, 1,
                             Manufactured.UNKNOWNENERGYSOURCE, 3,
                             Manufactured.UNKNOWNTECHNOLOGYCOMPONENTS, 4,
-                            Manufactured.TG_WRECKAGECOMPONENTS, 1),
+                            Manufactured.TG_WEAPONPARTS, 1),
                     Map.of(
                             HorizonsModifier.DAMAGE_BOOST, new HorizonsModifierValue("+10%", true)),
                     List.of()));
