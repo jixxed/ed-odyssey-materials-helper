@@ -2,11 +2,15 @@ package nl.jixxed.eliteodysseymaterials;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -226,15 +230,52 @@ public class FXApplication extends Application {
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));
         scene.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_HEIGHT, Math.max((Double) newValue, 175.0D)));
+        final Bounds allScreenBounds = computeAllScreenBounds();
+        final double minX = allScreenBounds.getMinX() - 8.0D;
+        final double minY = allScreenBounds.getMinY() - 8.0D;
+        final double maxX = allScreenBounds.getMaxX();
+        final double maxY = allScreenBounds.getMaxY();
 
-        this.primaryStage.xProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_X, Math.max((Double) newValue, -8.0D)));
-        this.primaryStage.yProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_Y, Math.max((Double) newValue, -8.0D)));
+        this.primaryStage.xProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_X, Math.max((Double) newValue, minX)));
+        this.primaryStage.yProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_Y, Math.max((Double) newValue, minY)));
         this.primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.APP_MAXIMIZED, newValue));
-
-        this.primaryStage.setX(PreferencesService.getPreference(PreferenceConstants.APP_X, 0D));
-        this.primaryStage.setY(PreferencesService.getPreference(PreferenceConstants.APP_Y, 0D));
+        final Double savedX = PreferencesService.getPreference(PreferenceConstants.APP_X, 0D);
+        final Double savedY = PreferencesService.getPreference(PreferenceConstants.APP_Y, 0D);
+        double x = savedX;
+        double y = savedY;
+        if (savedX < minX || savedX > maxX) {
+            x = 0D;
+        }
+        if (savedY < minY || savedY > maxY) {
+            y = 0D;
+        }
+        this.primaryStage.setX(x);
+        this.primaryStage.setY(y);
         this.primaryStage.setMaximized(PreferencesService.getPreference(PreferenceConstants.APP_MAXIMIZED, Boolean.FALSE));
         return scene;
+    }
+
+    private Bounds computeAllScreenBounds() {
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        for (final Screen screen : Screen.getScreens()) {
+            final Rectangle2D screenBounds = screen.getBounds();
+            if (screenBounds.getMinX() < minX) {
+                minX = screenBounds.getMinX();
+            }
+            if (screenBounds.getMinY() < minY) {
+                minY = screenBounds.getMinY();
+            }
+            if (screenBounds.getMaxX() > maxX) {
+                maxX = screenBounds.getMaxX();
+            }
+            if (screenBounds.getMaxY() > maxY) {
+                maxY = screenBounds.getMaxY();
+            }
+        }
+        return new BoundingBox(minX, minY, maxX - minX, maxY - minY);
     }
 
     private void setupStyling(final Scene scene) throws IOException {
