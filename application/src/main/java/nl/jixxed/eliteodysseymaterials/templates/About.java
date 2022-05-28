@@ -21,7 +21,8 @@ import java.net.URL;
 
 @Slf4j
 class About extends VBox {
-
+    private final boolean isBeta = true;
+    private final String betaVersion = "1.80-beta5";
     private Label versionLabel;
     private Hyperlink link;
     private Label disclaimer1;
@@ -63,21 +64,26 @@ class About extends VBox {
     }
 
     private void versionCheck() {
-        final String buildVersion = getBuildVersion();
-        String latestVersion = "";
-        try {
-            latestVersion = getLatestVersion();
-        } catch (final IOException e) {
-            log.error("Error retrieving latest version", e);
-        }
+        if (!this.isBeta) {
+            final String buildVersion = getBuildVersion();
+            String latestVersion = "";
+            try {
+                latestVersion = getLatestVersion();
+            } catch (final IOException e) {
+                log.error("Error retrieving latest version", e);
+            }
 
-        if (getBuildVersion() == null) {
-            this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", "dev"));
-        } else if (buildVersion.equals(latestVersion)) {
-            this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", buildVersion));
-            this.link.setVisible(false);
+            if (getBuildVersion() == null) {
+                this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", "dev"));
+            } else if (buildVersion.equals(latestVersion)) {
+                this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", buildVersion));
+                this.link.setVisible(false);
+            } else {
+                this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version.new", buildVersion, latestVersion));
+            }
         } else {
-            this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version.new", buildVersion, latestVersion));
+            this.versionLabel.setText(this.betaVersion);
+            this.link.setVisible(false);
         }
     }
 

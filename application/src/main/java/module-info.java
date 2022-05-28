@@ -3,6 +3,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires javafx.fxml;
     requires transitive javafx.controls;
     requires transitive javafx.media;
+    requires javafx.swing;
     requires org.controlsfx.controls;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
@@ -16,6 +17,15 @@ module nl.jixxed.eliteodysseymaterials {
     requires static lombok;
     requires org.apache.commons.csv;
     requires scribejava.core;
+    requires org.openpnp;
+    requires net.java.dev.jna;
+    requires com.sun.jna.platform;
+
+//    requires com.asprise;
+    requires net.sourceforge.tess4j;
+    requires net.sourceforge.lept4j;
+
+    requires java.desktop;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
@@ -32,4 +42,5 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates.segmentbar to javafx.fxml, org.controlsfx.controls;
+    exports nl.jixxed.eliteodysseymaterials.service.ar;
 }

@@ -37,6 +37,7 @@ public class PreferenceConstants {
     public static final String URL_SCHEME = "url.scheme.asked";
     public static final String WIP = "wip.visible";
     public static final String WISHLIST_GRADE_ROLLS_PREFIX = "wishlist.grade.rolls.";
+    public static final String ENABLE_AR = "ar.enabled";
 
 
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";

@@ -2193,3 +2193,7 @@ material.tooltip.fleetcarrier.not.linked,Frontier account link not available,Fro
 material.tooltip.fleetcarrier.buy,Buy {0}({1} remaining) @ ${2},Buy {0}({1} remaining) @ ${2},Kaufen {0} ({1} verbleibend) @ $ {2},Comprar {0} ({1} restante) @ $ {2},Acheter {0} ({1} restant) @ $ {2},Compre {0} ({1} restante) @ $ {2},Купить {0} ({1} оставшееся) @ $ {2}
 material.tooltip.fleetcarrier.sell,Sell {0} @ ${1},Sell {0} @ ${1},Verkaufen {0} @ $ {1},Vender {0} @ $ {1},Vendre {0} @ $ {1},Vender {0} @ $ {1},Продать {0} @ $ {1}
 statusbar.api.last.update,Last API Update: {0},Last API Update: {0},Letzte API Aktualisierung: {0},Última actualización de API: {0},Dernière mise à jour de l'API: {0},Última atualização da API: {0},Последнее обновление API: {0}
+tab.settings.title.ar,Augmented Reality,,,,,,
+tab.settings.ar.toggle,Toggle Augmented Reality Overlay,,,,,,
+tab.settings.tesseract.folder.select,Select installation folder,,,,,,
+tab.settings.tesseract.data.folder,Tesseract installation location,,,,,,

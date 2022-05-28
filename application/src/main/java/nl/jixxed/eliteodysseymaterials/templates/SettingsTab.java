@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -23,9 +24,11 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
+import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableToggleSwitch;
 
 import java.io.File;
 import java.net.URI;
@@ -86,6 +89,11 @@ public class SettingsTab extends EDOTab {
 
     private final BooleanProperty registered = new SimpleBooleanProperty(RegistryService.isRegistered());
     private Button capiDisconnectButton;
+    private DestroyableLabel arOverlayLabel;
+    private DestroyableToggleSwitch arOverlayButton;
+    private DestroyableLabel tesseractDataPathFolderLabel;
+    private DestroyableLabel selectedTesseractDataPathFolderLabel;
+    private Button tesseractDataPathSelectButton;
 
     SettingsTab(final Application application) {
         this.application = application;
@@ -144,6 +152,10 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.settings.title.capi"))
                 .build();
+        final Label arLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.ar"))
+                .build();
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
@@ -159,6 +171,7 @@ public class SettingsTab extends EDOTab {
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
         final HBox capiConnectSetting = createCapiConnectSetting();
+        final HBox arSetting = createARSetting();
 
         final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
         final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
@@ -166,16 +179,18 @@ public class SettingsTab extends EDOTab {
         final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
         final VBox notification = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader).buildVBox();
         final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiConnectSetting).buildVBox();
+        final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, arSetting).buildVBox();
         Arrays.stream(NotificationType.values()).forEach(notificationType -> notification.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
         final VBox settings = BoxBuilder.builder()
                 .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, general, overview, wishlist, notification, capiIntegration, tracking)
+                .withNodes(settingsLabel, general, overview, wishlist, notification, capiIntegration, ar, tracking)
                 .buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
                 .build();
         this.setContent(this.scrollPane);
     }
+
 
     private HBox createNotificationListHeader() {
         final DestroyableLabel headerNotification = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.header.notification")).build();
@@ -228,6 +243,25 @@ public class SettingsTab extends EDOTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.wishlistHorizonsGradeRollsLabel, this.wishlistHorizonsGradeRolls)
+                .buildHBox();
+    }
+
+    private HBox createARSetting() {
+        this.arOverlayLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.toggle")).build();
+        this.arOverlayButton = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+                    if (OsCheck.isWindows()) {
+                        PreferencesService.setPreference(PreferenceConstants.ENABLE_AR, Boolean.TRUE.equals(newValue));
+                        Platform.runLater(ARService::toggle);
+                    }
+                })
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_AR, false))
+                .build();
+        EventService.addListener(this, ARDisableEvent.class, event -> this.arOverlayButton.setSelected(false));
+        this.arOverlayButton.setDisable(!OsCheck.isWindows());
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.arOverlayLabel, this.arOverlayButton)
                 .buildHBox();
     }
 

@@ -32,6 +32,10 @@ tasks.register("createRelease") {
     dependsOn subprojects.jpackage
     finalizedBy makePortable, copyInstaller
 }
+tasks.register("createPortableRelease") {
+    dependsOn(":application:jpackage")
+    finalizedBy makePortable
+}
 
 //run from WSL/Linux with clean command
 tasks.register("createReleaseLinux") {

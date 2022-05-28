@@ -70,7 +70,7 @@ public interface OdysseyMaterial extends Material {
 
     static OdysseyMaterial forLocalizedName(final String name) {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Stream.concat(Arrays.stream(Good.values()), Arrays.stream(TradeOdysseyMaterial.values()))))
-                .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()).equals(name))
+                .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()).equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

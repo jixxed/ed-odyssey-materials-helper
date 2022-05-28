@@ -558,4 +558,5 @@ public class ApplicationState {
             log.error("error releasing lock", e);
         }
     }
+
 }

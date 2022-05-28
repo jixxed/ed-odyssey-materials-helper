@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
+import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -31,12 +32,14 @@ import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class FXApplication extends Application {
@@ -59,6 +62,13 @@ public class FXApplication extends Application {
     @Override
     public void start(final Stage primaryStage) {
         try {
+            try {
+                final GraphicsEnvironment ge =
+                        GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/fonts/eurocaps.ttf")));
+            } catch (final IOException | FontFormatException e) {
+                //Handle exception
+            }
             PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
             whatsnewPopup();
             urlSchemePopup();
@@ -72,19 +82,25 @@ public class FXApplication extends Application {
 
             initEventHandling();
             setupDeeplinkWatcher();
-
             final Scene scene = createApplicationScene();
             setupStyling(scene);
             primaryStage.setScene(scene);
             primaryStage.show();
 
             EventService.publish(new ApplicationLifeCycleEvent());
-
+            if (PreferencesService.getPreference(PreferenceConstants.ENABLE_AR, false)) {
+                if (OsCheck.isWindows()) {
+                    ARService.toggle();
+                }
+            }
 
         } catch (final Exception ex) {
             showAlert(ex);
         }
     }
+
+    private final Pattern p = Pattern.compile(".*<ScreenHeight>(.*?)<\\/ScreenHeight>.*");
+
 
     private void showAlert(final Exception ex) {
         final Alert alert = new Alert(Alert.AlertType.ERROR);

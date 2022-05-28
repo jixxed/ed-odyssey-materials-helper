@@ -1,3 +1,28 @@
+Version 1.80 beta 5
+-------------
+extract required libraries to temp folder to do OCR
+update style with perspective transform
+speed optimizations to menu responsiveness, text extraction and time to render.
+reduced CPU load and memory consumption
+
+Version 1.80 beta 4
+-------------
+additional logging
+faster image capturing method
+
+Version 1.80 beta 3
+-------------
+Auto disable AR on fullscreen mode
+Remove dependency on Tesseract installation
+
+Version 1.80 beta 2
+-------------
+Improved detection for download panel
+
+Version 1.80 beta 1
+-------------
+AR Overlay
+
 Version 1.79
 -------------
 Fix statusbar hidden label taking up space
