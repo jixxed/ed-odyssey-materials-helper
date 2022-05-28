@@ -33,7 +33,7 @@ public class DownloadMenu {
         this.scrollBar = scrollBar;
         this.hasWarning = hasWarning;
         this.menuItemHeight = 100 * scale;
-        this.menuItemWidth = 1572 * scale;
+        this.menuItemWidth = 1574 * scale;
         this.menuItemSeperation = 4 * scale;
         this.contentHeight = contentHeight;
         this.contentWidth = contentWidth;
@@ -48,11 +48,11 @@ public class DownloadMenu {
 //        this.menu = new Rectangle(this.arrow.getX() - (35 * scale), this.arrow.getY() - (29 * scale), this.arrow.getX() - (32 * scale) + (1615 * scale), this.arrow.getY() - (25 * scale) + (951 * scale));
         final double menuWidth = 1625 * scale;
         final double menuHeight = 951 * scale;
-        this.menu = new Rectangle(contentX + (double) contentWidth / 2 - menuWidth / 2,
-                contentY + (double) contentHeight / 2 - menuHeight / 2,
-                contentX + (double) contentWidth / 2 + menuWidth / 2,
-                contentY + (double) contentHeight / 2 + menuHeight / 2);
-        final double menuItemOffsetX = 26 * scale;
+        this.menu = new Rectangle((double) contentWidth / 2 - menuWidth / 2,
+                (double) contentHeight / 2 - menuHeight / 2,
+                (double) contentWidth / 2 + menuWidth / 2,
+                (double) contentHeight / 2 + menuHeight / 2);
+        final double menuItemOffsetX = 25 * scale;
         final double menuItemOffsetY = 275 * scale;
         final double menuItemSpacing = this.menuItemHeight + this.menuItemSeperation;
         this.menuItems.put(1, new Rectangle(
@@ -107,7 +107,7 @@ public class DownloadMenu {
                 }
             }
             case DOWN_MIDDLE -> 104;//only with 6 and warning
-            case MIDDLE -> 69;//only with 6 and warning
+            case MIDDLE -> 70;//only with 6 and warning
             case UP_MIDDLE -> 40;//only with 6 and warning
             case UP -> 0;
             case NONE -> 0;
@@ -125,32 +125,32 @@ public class DownloadMenu {
 
     public double getMenuItemY(final int index) {
         if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
-            return this.menuItems.get(index).getY() + 38 * this.scale;
+            return this.menuItems.get(index).getY() + (36 * this.scale);
         }
         if (!this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 6 && index == 1) {
-            return this.menuItems.get(index).getY() + 67 * this.scale;
+            return this.menuItems.get(index).getY() + (67 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.DOWN == this.scrollBar.getPosition() && (index == 2)) {
-            return this.menuItems.get(index).getY() + 38 * this.scale;
+            return this.menuItems.get(index).getY() + (35 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.UP_MIDDLE == this.scrollBar.getPosition() && (index == 1)) {
-            return this.menuItems.get(index).getY() + 41 * this.scale;
+            return this.menuItems.get(index).getY() + (41 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 1)) {
-            return this.menuItems.get(index).getY() + 67 * this.scale;
+            return this.menuItems.get(index).getY() + (70 * this.scale);
         }
-        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.DOWN_MIDDLE == this.scrollBar.getPosition() && (index == 5)) {
-            return this.menuItems.get(index).getY() + 38 * this.scale;
-        }
-        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.UP == this.scrollBar.getPosition() && (index == 5)) {
-            return this.menuItems.get(index).getY() + 38 * this.scale;
-        }
-        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 1)) {
-            return this.menuItems.get(index).getY() + 67 * this.scale;
-        }
-        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 6)) {
-            return this.menuItems.get(index).getY() + 67 * this.scale;
-        }
+//        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.DOWN_MIDDLE == this.scrollBar.getPosition() && (index == 5)) {
+//            return this.menuItems.get(index).getY() + (38 * this.scale);
+//        }
+//        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.UP == this.scrollBar.getPosition() && (index == 5)) {
+//            return this.menuItems.get(index).getY() - (38 * this.scale);
+//        }
+//        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 1)) {
+//            return this.menuItems.get(index).getY() + (67 * this.scale);
+//        }
+//        if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 6)) {
+//            return this.menuItems.get(index).getY() + (67 * this.scale);
+//        }
 
         return this.menuItems.get(index).getY();
     }
@@ -161,37 +161,37 @@ public class DownloadMenu {
 
     public double getMenuItemHeight(final int index) {
         if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
-            return this.menuItems.get(index).getHeight() - 38 * this.scale;
+            return this.menuItems.get(index).getHeight() - (36 * this.scale);
         }
         if (this.hasWarning && ScrollPosition.UP == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 5) {
-            return this.menuItems.get(index).getHeight() - 33 * this.scale;
+            return this.menuItems.get(index).getHeight() - (34 * this.scale);
         }
         if (!this.hasWarning && ScrollPosition.UP == this.scrollBar.getPosition() && this.scrollBar.getSize() == 6 && index == 6) {
-            return this.menuItems.get(index).getHeight() - 67 * this.scale;
+            return this.menuItems.get(index).getHeight() - (67 * this.scale);
         }
         if (!this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 6 && index == 1) {
-            return this.menuItems.get(index).getHeight() - 67 * this.scale;
+            return this.menuItems.get(index).getHeight() - (67 * this.scale);
         }
         if (this.hasWarning && ScrollPosition.UP == this.scrollBar.getPosition() && this.scrollBar.getSize() == 6 && index == 6) {
-            return this.menuItems.get(index).getHeight() - 67 * this.scale;
+            return this.menuItems.get(index).getHeight() - (67 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.DOWN == this.scrollBar.getPosition() && (index == 2)) {
-            return this.menuItems.get(index).getHeight() - 38 * this.scale;
+            return this.menuItems.get(index).getHeight() - (35 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.DOWN_MIDDLE == this.scrollBar.getPosition() && (index == 6)) {
-            return this.menuItems.get(index).getHeight() - 36 * this.scale;
+            return this.menuItems.get(index).getHeight() - (35 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.UP_MIDDLE == this.scrollBar.getPosition() && (index == 1)) {
-            return this.menuItems.get(index).getHeight() - 41 * this.scale;
+            return this.menuItems.get(index).getHeight() - (41 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.UP == this.scrollBar.getPosition() && (index == 5)) {
-            return this.menuItems.get(index).getHeight() - 36 * this.scale;
+            return this.menuItems.get(index).getHeight() - (35 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 1)) {
-            return this.menuItems.get(index).getHeight() - 67 * this.scale;
+            return this.menuItems.get(index).getHeight() - (70 * this.scale);
         }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 6)) {
-            return this.menuItems.get(index).getHeight() - 67 * this.scale;
+            return this.menuItems.get(index).getHeight() - (70 * this.scale);
         }
         return this.menuItems.get(index).getHeight();
     }
@@ -231,8 +231,33 @@ public class DownloadMenu {
         return true;
     }
 
+    public boolean isMenuItemVisibleForOCR(final int index) {
+        if (ScrollPosition.MIDDLE == this.scrollBar.getPosition() && (index == 1 || index == 6)) {
+            return false;
+        }
+        if (ScrollPosition.DOWN_MIDDLE == this.scrollBar.getPosition() && (index == 1)) {
+            return false;
+        }
+        if (ScrollPosition.UP_MIDDLE == this.scrollBar.getPosition() && (index == 1 || index == 6)) {
+            return false;
+        }
+        if (ScrollPosition.UP == this.scrollBar.getPosition() && this.scrollBar.getSize() == 6 && (index == 6)) {
+            return false;
+        }
+        if (ScrollPosition.DOWN == this.scrollBar.getPosition() && this.hasWarning && (index <= this.scrollBar.getSize() - 4)) {
+            return false;
+        }
+        if (ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 6 && (index == 1)) {
+            return false;
+        }
+        return true;
+    }
+
     public int menuSize() {
         return this.scrollBar.getSize();
     }
 
+    public boolean isScanned(final Integer index) {
+        return this.scanned.get(index) != null;
+    }
 }

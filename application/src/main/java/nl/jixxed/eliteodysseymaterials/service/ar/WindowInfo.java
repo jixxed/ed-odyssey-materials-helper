@@ -4,6 +4,8 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 public class WindowInfo {
     public int hwnd;
     public RECT rect;
+    public int contentX;
+    public int contentY;
     public String title;
     long styles;
 

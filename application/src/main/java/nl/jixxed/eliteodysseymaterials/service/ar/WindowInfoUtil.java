@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import com.sun.jna.Native;
+import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,10 @@ public class WindowInfoUtil {
 
         User32.INSTANCE.GetWindowRect(windowInfo.hwnd, windowInfo.rect);
         final byte[] buffer = new byte[1024];
+        final WinDef.POINT getPos = new WinDef.POINT();
+        User32.INSTANCE.ClientToScreen(windowInfo.hwnd, getPos);
+        windowInfo.contentX = getPos.x;
+        windowInfo.contentY = getPos.y;
         User32.INSTANCE.GetWindowTextA(windowInfo.hwnd, buffer, buffer.length);
         windowInfo.title = Native.toString(buffer);
         windowInfo.styles = User32.INSTANCE.GetWindowLongA(windowInfo.hwnd, WinUser.GWL_STYLE);

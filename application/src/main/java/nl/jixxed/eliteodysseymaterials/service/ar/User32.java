@@ -44,4 +44,6 @@ public interface User32 extends StdCallLibrary {
     int GetSystemMetrics(int metric);
 
     long GetWindowLongA(int hWnd, int index);
+
+    void ClientToScreen(int hwnd, WinDef.POINT getPos);
 }
