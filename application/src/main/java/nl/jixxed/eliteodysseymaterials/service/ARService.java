@@ -248,10 +248,12 @@ public class ARService {
                     //test if download image is present
                     final BufferedImage arrowCapture = getArrowCapture();
                     final boolean menuPresent = isDownloadMenu(arrowCapture);
+                    boolean pauseThread = false;
                     if (menuPresent) {
                         //show
                         if (!menuVisible.get()) {
                             requestShow.set(true);
+                            pauseThread = true;
                         }
                         menuVisible.set(true);
                     } else {
@@ -260,6 +262,9 @@ public class ARService {
                             requestHide.set(true);
                         }
                         menuVisible.set(false);
+                    }
+                    if (pauseThread) {
+                        Thread.sleep(1000);
                     }
 //                        }
                 } catch (final Exception e) {
@@ -362,6 +367,7 @@ public class ARService {
                     arStage.setWidth(contentWidth);
                     arStage.setAlwaysOnTop(true);
                     arStage.show();
+                    log.debug("stage x/y: " + arStage.getX() + "/" + arStage.getY());
                     if (arDebugEnabled) {
                         arDebugStage.setAlwaysOnTop(true);
                         arDebugStage.show();
