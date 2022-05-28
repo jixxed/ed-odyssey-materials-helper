@@ -126,7 +126,7 @@ public class SynthesisBlueprints {
                             Raw.ARSENIC, 1,
                             Manufactured.UNKNOWNENERGYSOURCE, 3,
                             Manufactured.UNKNOWNTECHNOLOGYCOMPONENTS, 4,
-                            Manufactured.TG_WRECKAGECOMPONENTS, 1),
+                            Manufactured.TG_WEAPONPARTS, 1),
                     Map.of(
                             HorizonsModifier.DAMAGE_BOOST, new HorizonsModifierValue("+10%", true)),
                     List.of()));
@@ -234,7 +234,7 @@ public class SynthesisBlueprints {
                             Manufactured.TG_PROPULSIONELEMENT, 4,
                             Manufactured.UNKNOWNORGANICCIRCUITRY, 4),
                     Map.of(
-                            HorizonsModifier.DAMAGE, new HorizonsModifierValue("+5%", true)),
+                            HorizonsModifier.DAMAGE_BOOST, new HorizonsModifierValue("+5%", true)),
                     List.of()),
             HorizonsBlueprintGrade.GRADE_3, new HorizonsBlueprint(HorizonsBlueprintName.AX_EXPLOSIVE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_3,
                     Map.of(
