@@ -20,13 +20,13 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.openpnp;
     requires net.java.dev.jna;
     requires com.sun.jna.platform;
-
 //    requires com.asprise;
     requires net.sourceforge.tess4j;
     requires net.sourceforge.lept4j;
 
     requires java.desktop;
-    opens nl.jixxed.eliteodysseymaterials to javafx.graphics;
+//    opens nl.jixxed.eliteodysseymaterials to sun.java2d;
+    opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload to com.fasterxml.jackson.databind;

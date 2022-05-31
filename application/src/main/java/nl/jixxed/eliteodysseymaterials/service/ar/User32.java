@@ -17,6 +17,8 @@ public interface User32 extends StdCallLibrary {
 
     int GetWindowRect(int hWnd, RECT r);
 
+    int GetClientRect(int hWnd, RECT r);
+
     boolean AdjustWindowRect(RECT r, int dwStyle, boolean menu);
 
     void GetWindowTextA(int hWnd, byte[] buffer, int buflen);
@@ -46,4 +48,10 @@ public interface User32 extends StdCallLibrary {
     long GetWindowLongA(int hWnd, int index);
 
     void ClientToScreen(int hwnd, WinDef.POINT getPos);
+
+    void ScreenToClient(int hwnd, WinDef.POINT getPos);
+
+    void PhysicalToLogicalPointForPerMonitorDPI(int hwnd, WinDef.POINT getPos);
+
+    void LogicalToPhysicalPointForPerMonitorDPI(int hwnd, WinDef.POINT getPos);
 }

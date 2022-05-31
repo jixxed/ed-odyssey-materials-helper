@@ -18,4 +18,8 @@ public class Rectangle {
     public double getHeight() {
         return this.maxY - this.y;
     }
+
+    public java.awt.Rectangle getAwtRectangle() {
+        return new java.awt.Rectangle((int) this.x, (int) this.y, (int) getWidth(), (int) getHeight());
+    }
 }

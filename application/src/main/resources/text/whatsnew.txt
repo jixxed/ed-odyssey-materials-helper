@@ -1,3 +1,17 @@
+Version 1.80 beta 7
+-------------
+Handle Windows global/per device scaling
+Removed initial search for download panel arrow, we know where it is
+
+Version 1.80 beta 6
+-------------
+AR colorpicker
+render caching
+- it takes up to a second to render the overlay, so if you have a scrollbar in the menu(5/6 items) you will get multiple renders
+- when image is used from cache it is almost showing at native game speed.
+- OCR operations are done once per item and remembered
+improved positioning of overlay
+
 Version 1.80 beta 5
 -------------
 extract required libraries to temp folder to do OCR

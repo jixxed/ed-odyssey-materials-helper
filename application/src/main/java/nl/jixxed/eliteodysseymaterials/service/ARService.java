@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.AccessLevel;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.TesseractException;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
@@ -43,6 +45,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ARService {
+
+    private static Scaling windowsScaling;
+
     static {
         OpenCV.loadLocally();
     }
@@ -71,14 +76,14 @@ public class ARService {
     private static final boolean arDebugEnabled = false;
     private static int frameCounter = 0;
     private static double scaling = 0;
-    private static Point lastDetectedArrowPosition;
+    //    private static Point lastDetectedArrowPosition;
     private static final AtomicBoolean menuVisible = new AtomicBoolean(false);
     private static final AtomicBoolean requestShow = new AtomicBoolean(false);
 
     private static final AtomicBoolean requestHide = new AtomicBoolean(false);
     private static DownloadMenu downloadMenu;
     private static ScrollBar scrollBar;
-    private static boolean hasWarning;
+    private static Boolean hasWarning;
     private static boolean enabled = false;
     private static AnimationTimer animationTimer;
     private static Timer timer;
@@ -95,8 +100,6 @@ public class ARService {
     private static Point[][] sourceRows;
     private static Point[][] reverseSourceRows;
     private static Point[][] destinationRows;
-    private static int width;
-    private static int height;
     private static WindowInfo targetWindowInfo = new WindowInfo(0, new RECT(), "", 0);
     private static Borders windowBorders;
     private static int foregroundHwnd;
@@ -110,7 +113,7 @@ public class ARService {
     private static Mat menuWarningResult;
     private static Mat alertCaptureMatGray;
     private static final Map<String, Render> renderCache = new HashMap<>();
-    private static final ScreenshotService screenshotService = RobotScreenshotService.getInstance();
+    private static final ScreenshotService screenshotService = NewJNAScreenshotService.getInstance();
     private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
 
     static {
@@ -148,7 +151,6 @@ public class ARService {
             arScene.getStylesheets().add(ARService.class.getResource(STYLESHEET).toExternalForm());
             arStage.setScene(arScene);
             arStage.titleProperty().set("AR Overlay");
-
             setupTimerDisplay();
             setupTimerAnalyzeAndRender();
 
@@ -225,25 +227,28 @@ public class ARService {
                     }
                     //determine scaling used for further processing
                     final RECT rect = targetWindowInfo.rect;
-                    width = rect.right - rect.left;
-                    height = rect.bottom - rect.top;
+                    contentWidth = rect.right - rect.left;
+                    contentHeight = rect.bottom - rect.top;
                     if (windowBorders == null) {
                         windowBorders = WindowInfoUtil.getWindowBorders(targetWindowInfo.hwnd);
                     }
-                    contentHeight = (rect.bottom - rect.top) - windowBorders.getHeight();
-                    contentX = targetWindowInfo.contentX;
-                    contentY = targetWindowInfo.contentY;
+                    contentX = targetWindowInfo.rect.left;
+                    contentY = targetWindowInfo.rect.top;
+                    windowsScaling = Screen.getScreensForRectangle(new javafx.geometry.Rectangle2D(contentX, contentY, 1, 1)).stream().findFirst().map(screen -> new Scaling(screen.getOutputScaleX(), screen.getOutputScaleY())).orElse(new Scaling(1, 1));
+
                     newScaling = contentHeight / 1600D;
+                    getDownloadMenu().setContentWidth(contentWidth);
+                    getDownloadMenu().setContentHeight(contentHeight);
+                    getDownloadMenu().setScale(newScaling);
 //                                final double newScaling = 1600 / 1600D;
                     if (newScaling != scaling) {
-                        contentWidth = (rect.right - rect.left) - windowBorders.getWidth();
                         log.debug("application scaling changed");
                         log.debug("detected resolution: " + contentWidth + "x" + contentHeight);
                         //scaling
                         scaling = newScaling;
                         Imgproc.resize(arrowTemplate, arrowTemplateScaled, new Size(), scaling, scaling, Imgproc.INTER_AREA);
                         Imgproc.resize(alertTemplate, alertTemplateScaled, new Size(), scaling, scaling, Imgproc.INTER_AREA);
-                        lastDetectedArrowPosition = null;
+//                        lastDetectedArrowPosition = null;
                     }
                     //test if download image is present
                     final BufferedImage arrowCapture = getArrowCapture();
@@ -264,7 +269,7 @@ public class ARService {
                         menuVisible.set(false);
                     }
                     if (pauseThread) {
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     }
 //                        }
                 } catch (final Exception e) {
@@ -284,9 +289,9 @@ public class ARService {
                 try {
                     if (menuVisible.get()) {
                         final BufferedImage downloadMenuCapture = getDownloadMenuCapture();
-                        final boolean newHasWarning = menuHasWarning(downloadMenuCapture);
+                        final Boolean newHasWarning = menuHasWarning(downloadMenuCapture);
                         final ScrollBar newScrollBar = getScrollBar(downloadMenuCapture, newHasWarning);
-                        final boolean render = !Objects.equals(newScrollBar, scrollBar) || newHasWarning != hasWarning || downloadMenu == null;//initialRender.get();//only render on change
+                        final boolean render = !Objects.equals(newScrollBar, scrollBar) || newHasWarning.equals(hasWarning);//initialRender.get();//only render on change
                         scrollBar = newScrollBar;
                         hasWarning = newHasWarning;
                         if (downloadMenuCapture != null) {
@@ -295,30 +300,31 @@ public class ARService {
                                 if (cachedImage != null && cachedImage.fullyRendered()) {
                                     overlayImage = cachedImage.render();
                                     arOverlay.getResizableImageView().setImage(overlayImage);
-                                    log.debug("render from cache" + downloadMenu.isHasWarning() + downloadMenu.getScrollBar().getPosition());
+                                    log.debug("render from cache. Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + getDownloadMenu().getScrollBar().getPosition());
                                 } else {
                                     arOverlay.getResizableImageView().setImage(null);
                                     log.debug("render required for " + ((hasWarning) ? "warning + " : "no warning + ") + scrollBar.getPosition() + " size:" + scrollBar.getSize());
                                     downloadMenu = getDownloadMenu(hasWarning, scrollBar);
-                                    init(downloadMenu);
-                                    long timeRenderBefore = System.currentTimeMillis();
-                                    processMenu(downloadMenuCapture, downloadMenu);
-                                    long timeRenderAfter = System.currentTimeMillis();
-                                    log.debug("Menu processing time: " + (timeRenderAfter - timeRenderBefore));
-                                    timeRenderBefore = System.currentTimeMillis();
-                                    renderMenu(downloadMenu);
+                                    init(getDownloadMenu());
+                                    final long timeProcessBefore = System.currentTimeMillis();
+                                    processMenu(downloadMenuCapture, getDownloadMenu());
+                                    final long timeProcessAfter = System.currentTimeMillis();
+                                    log.debug("Menu processing time: " + (timeProcessAfter - timeProcessBefore));
+                                    final long timeRenderBefore = System.currentTimeMillis();
+                                    renderMenu(getDownloadMenu());
                                     arOverlay.getResizableImageView().setImage(overlayImage);
-                                    timeRenderAfter = System.currentTimeMillis();
-                                    log.debug("Render time: " + (timeRenderAfter - timeRenderBefore));
+                                    final long timeRenderAfter = System.currentTimeMillis();
+                                    log.debug("Total render time: " + (timeRenderAfter - timeRenderBefore));
+                                    log.debug("Total time to screen: " + ((timeProcessAfter - timeProcessBefore) + (timeRenderAfter - timeRenderBefore)));
                                 }
-
                             }
-
-
                         }
                     } else {
-                        downloadMenu = null;
+                        getDownloadMenu().getScanned().clear();
+                        getDownloadMenu().getDownloadData().clear();
                         renderCache.clear();
+                        scrollBar = null;
+                        hasWarning = null;
                         arOverlay.getResizableImageView().setImage(null);
                     }
                 } catch (final Exception e) {
@@ -340,10 +346,7 @@ public class ARService {
             @Override
             public void handle(final long now) {
                 if (arStage.isShowing()) {
-                    arStage.setX(contentX);
-                    arStage.setY(contentY);
-                    arStage.setHeight(contentHeight);
-                    arStage.setWidth(contentWidth);
+                    positionWindow();
                 }
                 if (menuVisible.get() && requestShow.get()) {
                     requestShow.set(false);
@@ -360,14 +363,11 @@ public class ARService {
                 //84020000 BORDERLESS
                 //B4020000 FULLSCREEN
                 if (!arStage.isShowing()) {
-                    log.debug("targetWindowInfo.rect x/y: " + targetWindowInfo.rect.left + "/" + targetWindowInfo.rect.top);
-                    arStage.setX(contentX);
-                    arStage.setY(contentY);
-                    arStage.setHeight(contentHeight);
-                    arStage.setWidth(contentWidth);
+//                    log.debug("targetWindowInfo.rect x/y: " + targetWindowInfo.rect.left + "/" + targetWindowInfo.rect.top);
+                    positionWindow();
                     arStage.setAlwaysOnTop(true);
                     arStage.show();
-                    log.debug("stage x/y: " + arStage.getX() + "/" + arStage.getY());
+//                    log.debug("stage x/y: " + arStage.getX() + "/" + arStage.getY());
                     if (arDebugEnabled) {
                         arDebugStage.setAlwaysOnTop(true);
                         arDebugStage.show();
@@ -379,7 +379,6 @@ public class ARService {
                 }
 
             }
-
 
             private static void hideOverlay() {
                 if (arStage.isShowing()) {
@@ -394,9 +393,20 @@ public class ARService {
                     System.gc();
                 }
             }
+
+            private static void positionWindow() {
+                final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle scaledRectForRealRect = ScreenHelper.getScaledRectForRealRect(contentX, contentY, contentX + contentWidth, contentY + contentHeight);
+                if (scaledRectForRealRect != null) {
+                    arStage.setX(scaledRectForRealRect.getX());
+                    arStage.setY(scaledRectForRealRect.getY());
+                    arStage.setHeight(scaledRectForRealRect.getHeight());
+                    arStage.setWidth(scaledRectForRealRect.getWidth());
+                }
+            }
         };
         animationTimer.start();
     }
+
 
     private static ScrollBar getScrollBar(final BufferedImage downloadMenuCapture, final boolean hasWarning) {
         if (downloadMenuCapture == null) {
@@ -407,7 +417,7 @@ public class ARService {
                 (int) (215 * scaling), 1, 1))).createWritableTranslatedChild(0, 0);
         final int colorPixel = ((DataBufferInt) dataColorPixel.getDataBuffer()).getData()[0];
 
-        final int scrollbarX = 1608;
+        final int scrollbarX = 1613;
         if (!hasWarning) {//no warning
             //test for scrollbar
             final WritableRaster dataTop = ((WritableRaster) downloadMenuCapture.getData(new Rectangle((int) (scrollbarX * scaling),
@@ -470,10 +480,9 @@ public class ARService {
 
 
     private static void renderMenu(final DownloadMenu downloadMenu) {
+
         final BufferedImage bufferedImage = new BufferedImage((int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics = bufferedImage.createGraphics();
-        graphics.setColor(Color.YELLOW);
-        graphics.drawRect((int) 0, (int) 0, (int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight());
         final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
         for (int index = 1; index <= downloadMenu.menuSize(); index++) {
             final OdysseyMaterial odysseyMaterial = downloadMenu.getDownloadData().get(index);
@@ -482,11 +491,8 @@ public class ARService {
                 isFullyRendered.set(false);
             }
             if (downloadMenu.isMenuItemVisible(index) && Data.UNKNOWN != odysseyMaterial && odysseyMaterial != null) {
-
-
-                final nl.jixxed.eliteodysseymaterials.service.ar.Rectangle menuItem = downloadMenu.getMenuItem(index);
                 graphics.setColor(Color.WHITE);
-                graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (24 * scaling)));
+                graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (downloadMenu.getFontSize())));
                 graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -496,11 +502,23 @@ public class ARService {
                 final int y = (int) (menuItemY + downloadMenu.getMenuTextWriteOffsetY());
                 final Color color;
                 if (MaterialService.isMaterialOnWishlist(odysseyMaterial)) {
-                    color = (Color.GREEN);
+                    final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_WISHLIST_COLOR, javafx.scene.paint.Color.LIME.toString()));
+                    color = new Color((float) preference.getRed(),
+                            (float) preference.getGreen(),
+                            (float) preference.getBlue(),
+                            (float) preference.getOpacity());
                 } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
-                    color = (Color.BLUE);
+                    final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_BLUEPRINT_COLOR, javafx.scene.paint.Color.BLUE.toString()));
+                    color = new Color((float) preference.getRed(),
+                            (float) preference.getGreen(),
+                            (float) preference.getBlue(),
+                            (float) preference.getOpacity());
                 } else {
-                    color = (Color.RED);
+                    final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_IRRELEVANT_COLOR, javafx.scene.paint.Color.RED.toString()));
+                    color = new Color((float) preference.getRed(),
+                            (float) preference.getGreen(),
+                            (float) preference.getBlue(),
+                            (float) preference.getOpacity());
                 }
                 if (downloadMenu.isMenuItemLabelVisible(index)) {
                     final String text;
@@ -538,9 +556,9 @@ public class ARService {
             for (int col = 0; col < col_count - 1; col++) {
                 final Mat submat = mat.submat(
                         (int) Math.max(0, Math.min(reverseSourceRows[row][col].y - extraPixels, reverseSourceRows[row + 1][col].y + extraPixels)),
-                        (int) Math.min(height, Math.max(reverseSourceRows[row][col + 1].y - extraPixels, reverseSourceRows[row + 1][col + 1].y + extraPixels)),
+                        (int) Math.min(contentHeight, Math.max(reverseSourceRows[row][col + 1].y - extraPixels, reverseSourceRows[row + 1][col + 1].y + extraPixels)),
                         (int) Math.max(0, reverseSourceRows[row][col].x - extraPixels),
-                        (int) Math.min(width, reverseSourceRows[row + 1][col + 1].x + extraPixels));
+                        (int) Math.min(contentWidth, reverseSourceRows[row + 1][col + 1].x + extraPixels));
                 Imgproc.cvtColor(submat, submat, Imgproc.COLOR_BGRA2GRAY);
                 if (Core.countNonZero(submat) == 0) {
                     continue;
@@ -585,7 +603,7 @@ public class ARService {
 
     private static boolean menuHasWarning(final BufferedImage downloadMenuCapture) {
         if (downloadMenuCapture == null) {
-            return hasWarning;
+            return false;
         }
         final BufferedImage alertCapture = downloadMenuCapture.getSubimage(
                 (int) (48 * scaling),
@@ -751,12 +769,7 @@ public class ARService {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                final int x = targetWindowInfo.rect.left + (int) (lastDetectedArrowPosition.x - (32 * scaling));
-                final int y = targetWindowInfo.rect.top + (int) (lastDetectedArrowPosition.y - (25 * scaling));
-                final int w = (int) (1615 * scaling);
-                final int h = (int) (951 * scaling);
-
-                return screenshotService.getScreenshot(new Rectangle(x, y, w, h), downloadMenuCapture);
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getMenu().getAwtRectangle(), downloadMenuCapture);
             }
         }
         return null;
@@ -764,10 +777,20 @@ public class ARService {
 
     private static DownloadMenu getDownloadMenu(final boolean hasWarning, final ScrollBar scrollBar) {
         if (downloadMenu == null) {
-            downloadMenu = new DownloadMenu(scaling, lastDetectedArrowPosition.x, lastDetectedArrowPosition.y, arrowTemplateScaled.cols(), arrowTemplateScaled.rows(), hasWarning, scrollBar, contentHeight, contentWidth, contentX, contentY);
+            downloadMenu = new DownloadMenu(scaling, hasWarning, scrollBar, contentWidth, contentHeight);
         } else {
+            downloadMenu.setScale(scaling);
+            downloadMenu.setContentHeight(contentHeight);
+            downloadMenu.setContentWidth(contentWidth);
             downloadMenu.setHasWarning(hasWarning);
             downloadMenu.setScrollBar(scrollBar);
+        }
+        return downloadMenu;
+    }
+
+    private static DownloadMenu getDownloadMenu() {
+        if (downloadMenu == null) {
+            downloadMenu = new DownloadMenu(scaling, Boolean.TRUE.equals(hasWarning), scrollBar, contentWidth, contentHeight);
         }
         return downloadMenu;
     }
@@ -777,22 +800,9 @@ public class ARService {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
-                final int x;
-                final int y;
-                final int w;
-                final int h;
-                if (lastDetectedArrowPosition != null) {
-                    x = targetWindowInfo.rect.left + (int) lastDetectedArrowPosition.x - 1;
-                    y = targetWindowInfo.rect.top + (int) lastDetectedArrowPosition.y - 1;
-                    w = (int) (arrowTemplate.cols() * scaling) + 1;
-                    h = (int) (arrowTemplate.rows() * scaling) + 1;
-                } else {
-                    x = targetWindowInfo.rect.left;
-                    y = targetWindowInfo.rect.top;
-                    w = (targetWindowInfo.rect.right - x) / 2;
-                    h = (targetWindowInfo.rect.bottom - y) / 2;
-                }
-                return screenshotService.getScreenshot(new Rectangle(x, y, w, h), arrowCapture);
+                //scale
+                return screenshotService.getScreenshot(new java.awt.Point(contentX, contentY), getDownloadMenu().getArrow().getAwtRectangle(), arrowCapture);
+
             }
         }
         return null;
@@ -826,13 +836,6 @@ public class ARService {
 
 
         if (mmr.maxVal > getMatchingThreshold()) {
-            //big quadrant view x value will be > 10
-            //arrow only screenshot will be < 2
-            if (mmr.maxLoc.x > 10) {
-                lastDetectedArrowPosition = mmr.maxLoc;
-                log.debug("last detected arrow at " + lastDetectedArrowPosition.x + "/" + lastDetectedArrowPosition.y);
-                log.debug("dataport downloadmenu detected. Confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
-            }
             if (frameCounter % 99 == 1) {
                 log.debug("dataport downloadmenu detected. Confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
             }

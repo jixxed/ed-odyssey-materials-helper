@@ -11,85 +11,102 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DownloadMenu {
     private boolean hasWarning;
     Map<Integer, Rectangle> menuItems = new HashMap<>();
-    private double menuItemHeight;
-    private double menuItemWidth;
-    private double menuItemSeperation;
-    private double menuTextWriteOffsetX;
-    private double menuTextWriteOffsetY;
-    private Rectangle menuTextReadOffset;
-    private Rectangle arrow;
+    //    private double menuItemHeight;
+//    private double menuItemWidth;
+//    private double menuItemSeperation;
+//    private double menuTextWriteOffsetX;
+//    private double menuTextWriteOffsetY;
+//    private Rectangle menuTextReadOffset;
+//    private Rectangle arrow;
     private Rectangle menu;
     private double scale;
     private int contentHeight;
-    private int appHeight;
+    //    private double fontSize;
+//    private int appHeight;
     private int contentWidth;
-    private int appWidth;
+    //    private int contentX;
+//    private int contentY;
+    //    private int appWidth;
     private ScrollBar scrollBar;
     private final Map<Integer, OdysseyMaterial> downloadData = new ConcurrentHashMap<>();
     private final Map<Integer, Boolean> scanned = new ConcurrentHashMap<>();
 
-    public DownloadMenu(final double scale, final double identifierX, final double identifierY, final double identifierW, final double identifierH, final boolean hasWarning, final ScrollBar scrollBar, final int contentHeight, final int contentWidth, final int contentX, final int contentY) {
+    public DownloadMenu(final double scale, final boolean hasWarning, final ScrollBar scrollBar, final int contentWidth, final int contentHeight) {
         this.scale = scale;
         this.scrollBar = scrollBar;
         this.hasWarning = hasWarning;
-        this.menuItemHeight = 100 * scale;
-        this.menuItemWidth = 1574 * scale;
-        this.menuItemSeperation = 4 * scale;
+//        this.contentX = contentX;
+//        this.contentY = contentY;
         this.contentHeight = contentHeight;
         this.contentWidth = contentWidth;
+//        this.fontSize = 24 * scale;
 //        this.appHeight = appHeight;
 //        this.appWidth = appWidth;
-        this.menuTextWriteOffsetX = 1220 * scale;
-        this.menuTextWriteOffsetY = 25 * scale;
-        final double menuItemWidth = 20 * scale;
+//        this.menuTextWriteOffsetX = 1220 * scale;
+//        this.menuTextWriteOffsetY = 25 * scale;
+//        final double menuItemWidth = 20 * scale;
 
-        this.menuTextReadOffset = new Rectangle(105 * scale, 18 * scale, 600 * scale, 50 * scale);
-        this.arrow = new Rectangle(identifierX - 2, identifierY - 2, identifierX + identifierW + 2, identifierY + identifierH + 2);
+//        this.menuTextReadOffset = new Rectangle(105 * scale, 18 * scale, 600 * scale, 50 * scale);
+//        this.arrow = new Rectangle(identifierX - 2, identifierY - 2, identifierX + identifierW + 2, identifierY + identifierH + 2);
 //        this.menu = new Rectangle(this.arrow.getX() - (35 * scale), this.arrow.getY() - (29 * scale), this.arrow.getX() - (32 * scale) + (1615 * scale), this.arrow.getY() - (25 * scale) + (951 * scale));
-        final double menuWidth = 1625 * scale;
-        final double menuHeight = 951 * scale;
-        this.menu = new Rectangle((double) contentWidth / 2 - menuWidth / 2,
-                (double) contentHeight / 2 - menuHeight / 2,
-                (double) contentWidth / 2 + menuWidth / 2,
-                (double) contentHeight / 2 + menuHeight / 2);
-        final double menuItemOffsetX = 25 * scale;
-        final double menuItemOffsetY = 275 * scale;
-        final double menuItemSpacing = this.menuItemHeight + this.menuItemSeperation;
+        setupMenu();
+//        final double menuItemOffsetX = 25 * scale;
+//        final double menuItemOffsetY = 275 * scale;
+//        final double menuItemSpacing = this.menuItemHeight + this.menuItemSeperation;
+        setupMenuItems();
+    }
+
+    private void setupMenu() {
+        final double menuWidth = 1625 * this.scale;
+        final double menuHeight = 951 * this.scale;
+        this.menu = new Rectangle(this.contentWidth / 2.0 - menuWidth / 2,
+                this.contentHeight / 2.0 - menuHeight / 2,
+                this.contentWidth / 2.0 + menuWidth / 2,
+                this.contentHeight / 2.0 + menuHeight / 2);
+    }
+
+    private void setupMenuItems() {
+        final double menuItemOffsetX = 25 * this.scale;
+        final double menuItemOffsetY = 275 * this.scale;
+        final double menuItemHeight = 100 * this.scale;
+        final double menuItemWidth = 20 * this.scale;
+        final double menuItemSeperation = 4 * this.scale;
+        final double menuItemSpacing = menuItemHeight + menuItemSeperation;
         this.menuItems.put(1, new Rectangle(
                 menuItemOffsetX,
                 menuItemOffsetY,
                 menuItemOffsetX + menuItemWidth,
-                menuItemOffsetY + this.menuItemHeight)
+                menuItemOffsetY + menuItemHeight)
         );
         this.menuItems.put(2, new Rectangle(
                 menuItemOffsetX,
                 menuItemOffsetY + (menuItemSpacing * 1),
                 menuItemOffsetX + menuItemWidth,
-                menuItemOffsetY + this.menuItemHeight + (menuItemSpacing * 1))
+                menuItemOffsetY + menuItemHeight + (menuItemSpacing * 1))
         );
         this.menuItems.put(3, new Rectangle(
                 menuItemOffsetX,
                 menuItemOffsetY + (menuItemSpacing * 2),
                 menuItemOffsetX + menuItemWidth,
-                menuItemOffsetY + this.menuItemHeight + (menuItemSpacing * 2))
+                menuItemOffsetY + menuItemHeight + (menuItemSpacing * 2))
         );
         this.menuItems.put(4, new Rectangle(
                 menuItemOffsetX,
                 menuItemOffsetY + (menuItemSpacing * 3),
                 menuItemOffsetX + menuItemWidth,
-                menuItemOffsetY + this.menuItemHeight + (menuItemSpacing * 3))
+                menuItemOffsetY + menuItemHeight + (menuItemSpacing * 3))
         );
         this.menuItems.put(5, new Rectangle(
                 menuItemOffsetX,
                 menuItemOffsetY + (menuItemSpacing * 4),
                 menuItemOffsetX + menuItemWidth,
-                menuItemOffsetY + this.menuItemHeight + (menuItemSpacing * 4))
+                menuItemOffsetY + menuItemHeight + (menuItemSpacing * 4))
         );
         this.menuItems.put(6, new Rectangle(
                 menuItemOffsetX,
                 menuItemOffsetY + (menuItemSpacing * 5),
                 menuItemOffsetX + menuItemWidth,
-                menuItemOffsetY + this.menuItemHeight + (menuItemSpacing * 5))
+                menuItemOffsetY + menuItemHeight + (menuItemSpacing * 5))
         );
     }
 
@@ -159,6 +176,10 @@ public class DownloadMenu {
         return this.menuItems.get(index).getWidth();
     }
 
+    public double getMenuItemWidth() {
+        return 1574 * this.scale;
+    }
+
     public double getMenuItemHeight(final int index) {
         if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
             return this.menuItems.get(index).getHeight() - (36 * this.scale);
@@ -197,9 +218,10 @@ public class DownloadMenu {
     }
 
     public boolean isMenuItemLabelVisible(final int index) {
-        if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
-            return false;
-        }
+        //only case for 5
+//        if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
+//            return false;
+//        }
         if (this.hasWarning && this.scrollBar.getSize() == 6 && ScrollPosition.DOWN == this.scrollBar.getPosition() && (index == 2)) {
             return false;
         }
@@ -260,4 +282,63 @@ public class DownloadMenu {
     public boolean isScanned(final Integer index) {
         return this.scanned.get(index) != null;
     }
+
+
+    public double getFontSize() {
+        return 24 * this.scale;
+    }
+
+    public Rectangle getMenuTextReadOffset() {
+        return new Rectangle(105 * this.scale, 18 * this.scale, 600 * this.scale, 50 * this.scale);
+    }
+
+    public double getMenuTextWriteOffsetX() {
+        return 1220 * this.scale;
+    }
+
+    public double getMenuTextWriteOffsetY() {
+        return 25 * this.scale;
+    }
+
+    public void setScale(final double scale) {
+        if (this.scale != scale) {
+            this.scale = scale;
+            setupMenu();
+            setupMenuItems();
+        } else {
+            this.scale = scale;
+        }
+    }
+
+    public void setContentHeight(final int contentHeight) {
+        if (this.contentHeight != contentHeight) {
+            this.contentHeight = contentHeight;
+            setupMenu();
+            setupMenuItems();
+        } else {
+            this.contentHeight = contentHeight;
+        }
+    }
+
+    public void setContentWidth(final int contentWidth) {
+        if (this.contentWidth != contentWidth) {
+            this.contentWidth = contentWidth;
+            setupMenu();
+            setupMenuItems();
+        } else {
+            this.contentWidth = contentWidth;
+        }
+
+    }
+
+    public Rectangle getArrow() {
+        return new Rectangle(
+                this.menu.getX() + 37 * this.scale,
+                this.menu.getY() + 28 * this.scale,
+                this.menu.getX() + (37 + 60) * this.scale + 3,
+                this.menu.getY() + (28 + 65) * this.scale + 3
+        );
+    }
+
+
 }

@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
@@ -172,6 +173,9 @@ public class SettingsTab extends EDOTab {
         final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
         final HBox capiConnectSetting = createCapiConnectSetting();
         final HBox arSetting = createARSetting();
+        final HBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
+        final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
+        final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
 
         final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
         final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
@@ -179,7 +183,7 @@ public class SettingsTab extends EDOTab {
         final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
         final VBox notification = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader).buildVBox();
         final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiConnectSetting).buildVBox();
-        final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, arSetting).buildVBox();
+        final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, arSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting).buildVBox();
         Arrays.stream(NotificationType.values()).forEach(notificationType -> notification.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
         final VBox settings = BoxBuilder.builder()
                 .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
@@ -262,6 +266,19 @@ public class SettingsTab extends EDOTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.arOverlayLabel, this.arOverlayButton)
+                .buildHBox();
+    }
+
+    private HBox createARColorSetting(final String preferenceName, final String localizationKey, final Color defaultColor) {
+        this.arOverlayLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding(localizationKey)).build();
+        final ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setValue(Color.valueOf(PreferencesService.getPreference(preferenceName, defaultColor.toString())));
+        colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            PreferencesService.setPreference(preferenceName, newValue.toString());
+        });
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.arOverlayLabel, colorPicker)
                 .buildHBox();
     }
 

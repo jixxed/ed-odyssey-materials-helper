@@ -124,7 +124,9 @@ public class CAPIService {
             }
         });
         EventService.addListener(this, TerminateApplicationEvent.class, event -> {
-            this.timer.cancel();
+            if (this.timer != null) {
+                this.timer.cancel();
+            }
         });
     }
 

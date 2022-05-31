@@ -37,12 +37,14 @@ public class WindowInfoUtil {
 
     public static WindowInfo getWindowInfo(final WindowInfo windowInfo) {
 
-        User32.INSTANCE.GetWindowRect(windowInfo.hwnd, windowInfo.rect);
+        User32.INSTANCE.GetClientRect(windowInfo.hwnd, windowInfo.rect);
         final byte[] buffer = new byte[1024];
         final WinDef.POINT getPos = new WinDef.POINT();
         User32.INSTANCE.ClientToScreen(windowInfo.hwnd, getPos);
-        windowInfo.contentX = getPos.x;
-        windowInfo.contentY = getPos.y;
+        windowInfo.rect.left += getPos.x;
+        windowInfo.rect.top += getPos.y;
+        windowInfo.rect.right += getPos.x;
+        windowInfo.rect.bottom += getPos.y;
         User32.INSTANCE.GetWindowTextA(windowInfo.hwnd, buffer, buffer.length);
         windowInfo.title = Native.toString(buffer);
         windowInfo.styles = User32.INSTANCE.GetWindowLongA(windowInfo.hwnd, WinUser.GWL_STYLE);
