@@ -11,8 +11,8 @@ import java.awt.*;
 import java.awt.image.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class NewJNAScreenshotService implements ScreenshotService {
-    private final static NewJNAScreenshotService INSTANCE = new NewJNAScreenshotService();
+public class GDIScreenshotService implements ScreenshotService {
+    private final static GDIScreenshotService INSTANCE = new GDIScreenshotService();
 
 
     private static final DirectColorModel SCREENSHOT_COLOR_MODEL = new DirectColorModel(24, 0x00FF0000, 0xFF00, 0xFF);

@@ -68,7 +68,9 @@ jlink {
                 '-Dapp.version=' + project.version,
                 '-Xmx1024M',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
-                '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming'
+                '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
+                '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
+                '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials'
         ]
         if (os.isWindows()) {
             jvmArgs += [

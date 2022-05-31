@@ -113,7 +113,7 @@ public class ARService {
     private static Mat menuWarningResult;
     private static Mat alertCaptureMatGray;
     private static final Map<String, Render> renderCache = new HashMap<>();
-    private static final ScreenshotService screenshotService = NewJNAScreenshotService.getInstance();
+    private static final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
     private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
 
     static {
@@ -288,7 +288,7 @@ public class ARService {
             public void run() {
                 try {
                     if (menuVisible.get()) {
-                        final BufferedImage downloadMenuCapture = getDownloadMenuCapture();
+                        downloadMenuCapture = getDownloadMenuCapture();
                         final Boolean newHasWarning = menuHasWarning(downloadMenuCapture);
                         final ScrollBar newScrollBar = getScrollBar(downloadMenuCapture, newHasWarning);
                         final boolean render = !Objects.equals(newScrollBar, scrollBar) || newHasWarning.equals(hasWarning);//initialRender.get();//only render on change
@@ -303,7 +303,7 @@ public class ARService {
                                     log.debug("render from cache. Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + getDownloadMenu().getScrollBar().getPosition());
                                 } else {
                                     arOverlay.getResizableImageView().setImage(null);
-                                    log.debug("render required for " + ((hasWarning) ? "warning + " : "no warning + ") + scrollBar.getPosition() + " size:" + scrollBar.getSize());
+                                    log.debug("render required for " + (Boolean.TRUE.equals((hasWarning)) ? "warning + " : "no warning + ") + scrollBar.getPosition() + " size:" + scrollBar.getSize());
                                     downloadMenu = getDownloadMenu(hasWarning, scrollBar);
                                     init(getDownloadMenu());
                                     final long timeProcessBefore = System.currentTimeMillis();
@@ -765,7 +765,7 @@ public class ARService {
     }
 
 
-    private static BufferedImage getDownloadMenuCapture() throws AWTException {
+    private static BufferedImage getDownloadMenuCapture() {
         if (targetWindowInfo.hwnd != 0) {
             final int i = User32.INSTANCE.GetForegroundWindow();
             if (i == targetWindowInfo.hwnd) {
