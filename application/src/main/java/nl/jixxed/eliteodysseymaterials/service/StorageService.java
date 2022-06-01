@@ -140,4 +140,14 @@ public class StorageService {
         );
 
     }
+
+    public static Integer getStorageTotal(final OdysseyStorageType storageType, final StoragePool... storagePools) {
+        return Arrays.stream(storagePools)
+                .map(storagePool -> getMaterials(storageType).values().stream()
+                        .map(storage -> storage.getValue(storagePool))
+                        .mapToInt(Integer::intValue)
+                        .sum())
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
 }

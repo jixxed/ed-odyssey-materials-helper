@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.AssetType;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -28,13 +29,13 @@ class MaterialTotal extends VBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String MATERIAL_TOTAL_VALUE_ROW_STYLE_CLASS = "material-total-value-row";
     private static final String MATERIAL_TOTAL_VALUE_IRRELEVANT_ROW_STYLE_CLASS = "material-total-value-irrelevant-row";
-    private Integer subtotalValue = 0;
-
     private final Map<MaterialTotalType, Label> totals = new EnumMap<>(MaterialTotalType.class);
     private final Map<MaterialTotalType, Label> totalValues = new EnumMap<>(MaterialTotalType.class);
     private Label name;
     private final OdysseyStorageType storageType;
     private final MaterialTotalType[] totalTypes;
+    private Label totalValueLabel;
+    private Label subTotalValueLabel;
 
     MaterialTotal(final OdysseyStorageType storageType, final MaterialTotalType... totalTypes) {
         this.storageType = storageType;
@@ -53,17 +54,18 @@ class MaterialTotal extends VBox {
     }
 
     private void initSubTotal() {
+        final Label subTotal = LabelBuilder.builder().withStyleClass("material-total-total-row").withText(LocaleService.getStringBinding(MaterialTotalType.SUB_TOTAL.getLocalizationKey())).build();
         final Label total = LabelBuilder.builder().withStyleClass("material-total-total-row").withText(LocaleService.getStringBinding(MaterialTotalType.TOTAL.getLocalizationKey())).build();
+        this.totals.put(MaterialTotalType.SUB_TOTAL, subTotal);
         this.totals.put(MaterialTotalType.TOTAL, total);
 
-        final Label totalValueLabel = LabelBuilder.builder().withStyleClass("material-total-total-row").withNonLocalizedText("0").build();
-        final Region region = new Region();
-        HBox.setHgrow(region, Priority.ALWAYS);
-        this.totalValues.put(MaterialTotalType.TOTAL, totalValueLabel);
+        this.subTotalValueLabel = LabelBuilder.builder().withStyleClass("material-total-total-row").withNonLocalizedText("0").build();
+        this.totalValueLabel = LabelBuilder.builder().withStyleClass("material-total-total-row").withNonLocalizedText("0").build();
 
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        final HBox totalBox = BoxBuilder.builder().withNodes(total, region, totalValueLabel).buildHBox();
-        this.getChildren().add(totalBox);
+        final HBox subTotalBox = BoxBuilder.builder().withNodes(subTotal, new GrowingRegion(), this.subTotalValueLabel).buildHBox();
+        final HBox totalBox = BoxBuilder.builder().withNodes(total, new GrowingRegion(), this.totalValueLabel).buildHBox();
+        this.getChildren().addAll(totalBox, subTotalBox);
     }
 
     private void initTotals() {
@@ -142,17 +144,21 @@ class MaterialTotal extends VBox {
             update(MaterialTotalType.CIRCUIT, circuitAssets);
             update(MaterialTotalType.TECH, techAssets);
         }
+        updateTotalsLabels();
     }
 
     private void update(final MaterialTotalType type, final Integer amount) {
+
         if (this.totalValues.containsKey(type)) {
             final Label label = this.totalValues.get(type);
-            final Integer currentAmount = Integer.parseInt(label.getText());
             label.setText(amount.toString());
-            final Label totalLabel = this.totalValues.get(MaterialTotalType.TOTAL);
-            this.subtotalValue += (amount - currentAmount);
-            totalLabel.setText(this.subtotalValue + "/1000");
         }
     }
 
+    private void updateTotalsLabels() {
+        final Integer subTotal = StorageService.getStorageTotal(this.storageType, StoragePool.BACKPACK, StoragePool.SHIPLOCKER);
+        this.subTotalValueLabel.setText(subTotal + "/1000");
+        final Integer total = StorageService.getStorageTotal(this.storageType, StoragePool.BACKPACK, StoragePool.SHIPLOCKER, StoragePool.FLEETCARRIER);
+        this.totalValueLabel.setText(total.toString());
+    }
 }

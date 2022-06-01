@@ -6,7 +6,8 @@ public enum MaterialTotalType {
     CHEMICAL,
     CIRCUIT,
     TECH,
-    TOTAL;
+    TOTAL,
+    SUB_TOTAL;
 
     public String getLocalizationKey() {
         return "total.type.name." + this.name().toLowerCase();
