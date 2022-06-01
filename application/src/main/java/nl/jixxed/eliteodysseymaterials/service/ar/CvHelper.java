@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
+import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -118,5 +119,26 @@ public class CvHelper {
 
         out.getRaster().setDataElements(0, 0, in.cols(), in.rows(), data);
         return out;
+    }
+
+    public static void overlayImage(final Mat overlay, final Mat output, final Point location, final double extraPixels) {
+        for (int y = (int) Math.max(location.y, 0); y < output.rows(); ++y) {
+            final int overlayY = (int) (y - location.y + extraPixels);
+            if (overlayY >= overlay.rows() - extraPixels) {
+                break;
+            }
+            for (int x = (int) Math.max(location.x, 0); x < output.cols(); ++x) {
+                final int overlayX = (int) (x - location.x + extraPixels);
+                if (overlayX >= overlay.cols() - extraPixels) {
+                    break;
+                }
+                final double[] finalPixelValue = new double[4];
+                finalPixelValue[0] = overlay.get(overlayY, overlayX)[0];
+                finalPixelValue[1] = overlay.get(overlayY, overlayX)[1];
+                finalPixelValue[2] = overlay.get(overlayY, overlayX)[2];
+                finalPixelValue[3] = overlay.get(overlayY, overlayX)[3];
+                output.put(y, x, finalPixelValue);
+            }
+        }
     }
 }
