@@ -50,6 +50,7 @@ class MessageHandler {
             Map.entry(JournalEventType.TECHNOLOGYBROKER, new TechnologyBrokerMessageProcessor()),
             Map.entry(JournalEventType.UPGRADESUIT, new UpgradeSuitMessageProcessor()),
             Map.entry(JournalEventType.UPGRADEWEAPON, new UpgradeWeaponMessageProcessor()),
+            Map.entry(JournalEventType.RECEIVETEXT, new ReceiveTextMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

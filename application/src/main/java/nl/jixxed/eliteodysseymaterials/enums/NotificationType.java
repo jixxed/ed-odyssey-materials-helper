@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 public enum NotificationType {
     IRRELEVANT_PICKUP(true),
     WISHLIST_PICKUP(false),
+    RELEVANT_POINT(true),
+    WISHLIST_POINT(true),
+    IRRELEVANT_POINT(true),
     TRADE(true),
     IMPORT(true),
     COPY(true),

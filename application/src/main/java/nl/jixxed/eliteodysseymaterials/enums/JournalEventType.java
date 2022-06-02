@@ -34,8 +34,8 @@ public enum JournalEventType {
     SYNTHESIS("Synthesis"),
     UPGRADESUIT("UpgradeSuit"),
     UPGRADEWEAPON("UpgradeWeapon"),
+    RECEIVETEXT("ReceiveText"),
     TECHNOLOGYBROKER("TechnologyBroker");
-
     private final String name;
 
     public static JournalEventType forName(final String name) {
