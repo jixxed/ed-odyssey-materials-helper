@@ -28,17 +28,15 @@ class WishlistIngredient extends MaterialIngredient {
 
         final Storage storage = StorageService.getMaterials(this.getOdysseyMaterial().getStorageType()).get(this.getOdysseyMaterial());
         final int leftAmount = Integer.parseInt(this.getLeftAmountLabel().getText());
-        if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() < leftAmount) {
+        this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
+        if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() + storage.getBackPackValue() < leftAmount) {
             this.getRightAmountLabel().setText(this.getRightAmount().toString());
-            this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
         } else if (storage.getTotalValue() >= leftAmount) {
             this.getRightAmountLabel().setText(this.getRightAmount().toString());
-            this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
         } else {
             this.getRightAmountLabel().setText(this.getRightAmount().toString());
-            this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
         }
     }

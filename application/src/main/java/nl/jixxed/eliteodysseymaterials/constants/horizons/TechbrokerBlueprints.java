@@ -245,6 +245,26 @@ public class TechbrokerBlueprints {
                             Raw.GERMANIUM, 2),
                     Map.of(),
                     List.of()
+            )),
+            Map.entry(HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_MEDIUM, new HorizonsBlueprint(HorizonsBlueprintName.GUARDIAN_WEAPONS, HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_MEDIUM,
+                    Map.of(
+                            Encoded.GUARDIAN_WEAPONBLUEPRINT, 1,
+                            Manufactured.GUARDIAN_POWERCELL, 5,
+                            Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 5,
+                            Raw.ARSENIC, 4,
+                            Commodity.POWERTRANSFERCONDUITS, 2),
+                    Map.of(),
+                    List.of()
+            )),
+            Map.entry(HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_SMALL, new HorizonsBlueprint(HorizonsBlueprintName.GUARDIAN_WEAPONS, HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_SMALL,
+                    Map.of(
+                            Encoded.GUARDIAN_WEAPONBLUEPRINT, 1,
+                            Manufactured.GUARDIAN_POWERCELL, 3,
+                            Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 3,
+                            Manufactured.GUARDIAN_TECHCOMPONENT, 4,
+                            Raw.ARSENIC, 2),
+                    Map.of(),
+                    List.of()
             )));
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> GUARDIAN_FIGHTERS = Map.of(
             HorizonsBlueprintType.JAVELIN_FIGHTER, new HorizonsBlueprint(HorizonsBlueprintName.GUARDIAN_FIGHTERS, HorizonsBlueprintType.JAVELIN_FIGHTER,
