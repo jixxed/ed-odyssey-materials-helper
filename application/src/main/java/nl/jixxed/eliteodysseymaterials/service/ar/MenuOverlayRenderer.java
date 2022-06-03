@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -64,11 +65,11 @@ public class MenuOverlayRenderer {
                     final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                     final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
                     if (MaterialService.isMaterialOnWishlist(odysseyMaterial)) {
-                        text = "Wishlist - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + getWishlistCount(odysseyMaterial);
+                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.wishlist") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + getWishlistCount(odysseyMaterial);
                     } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
-                        text = "Engineer/Blueprint - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
+                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.blueprint") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
                     } else {
-                        text = "Irrelevant";
+                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.irrelevant");
                     }
                     final FontMetrics fm = graphics.getFontMetrics();
                     final Rectangle2D rect = fm.getStringBounds(text, graphics);

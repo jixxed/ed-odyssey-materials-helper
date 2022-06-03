@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -71,6 +72,13 @@ public interface OdysseyMaterial extends Material {
     static OdysseyMaterial forLocalizedName(final String name) {
         return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Stream.concat(Arrays.stream(Good.values()), Arrays.stream(TradeOdysseyMaterial.values()))))
                 .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()).equalsIgnoreCase(name))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    static OdysseyMaterial forLocalizedName(final String name, final Locale locale) {
+        return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Stream.concat(Arrays.stream(Good.values()), Arrays.stream(TradeOdysseyMaterial.values()))))
+                .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForLocale(locale, odysseyMaterial.getLocalizationKey()).equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

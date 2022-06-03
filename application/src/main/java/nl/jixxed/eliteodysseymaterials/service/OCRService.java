@@ -7,6 +7,10 @@ import net.sourceforge.lept4j.util.LeptUtils;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract1;
 import net.sourceforge.tess4j.TesseractException;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,7 +24,7 @@ import java.nio.file.Path;
 @Slf4j
 public class OCRService {
     private static final ITesseract instance;  // JNA Interface Mapping
-    private static final String TESS4J_TEMP_DIR = new File(System.getProperty("java.io.tmpdir"), "tess4j").getPath();
+    public static final String TESS4J_DIR = new File(OsConstants.TESS4J).getPath();
 
     static {
 
@@ -31,6 +35,12 @@ public class OCRService {
         instance.setDatapath(tessData.getPath());
         instance.setLanguage("eng");
         instance.setVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ- ");
+        EventService.addStaticListener(ARWhitelistChangeEvent.class, arWhitelistChangeEvent ->
+                instance.setVariable("tessedit_char_whitelist", arWhitelistChangeEvent.getWhitelist())
+        );
+        EventService.addStaticListener(ARLocaleChangeEvent.class, arLocaleChangeEvent ->
+                instance.setLanguage(arLocaleChangeEvent.getLocale().getIso6392B())
+        );
     }
 
     static synchronized String imageToString(final BufferedImage image) throws TesseractException {
@@ -38,8 +48,8 @@ public class OCRService {
     }
 
     private static File extractTessDataResources() {
-        final File targetPath = new File(TESS4J_TEMP_DIR, "tessdata");
-        final File configsPath = new File(TESS4J_TEMP_DIR, "tessdata/configs");
+        final File targetPath = new File(TESS4J_DIR, "tessdata");
+        final File configsPath = new File(TESS4J_DIR, "tessdata/configs");
         targetPath.mkdirs();
         configsPath.mkdirs();
         extractResource(Path.of(targetPath.getPath(), "eng.traineddata"), "/tessdata/eng.traineddata");
@@ -63,7 +73,7 @@ public class OCRService {
 
     private static File extractLibResources() {
 //        ,"win32-x86-64"
-        final File targetPath = new File(TESS4J_TEMP_DIR, "win32-x86-64");
+        final File targetPath = new File(TESS4J_DIR, "win32-x86-64");
         targetPath.mkdirs();
         extractResource(Path.of(targetPath.getPath(), "libtesseract510.dll"), "/win32-x86-64/libtesseract510.dll");
         extractLeptResource(Path.of(targetPath.getPath(), "liblept1820.dll"), "/win32-x86-64/liblept1820.dll");

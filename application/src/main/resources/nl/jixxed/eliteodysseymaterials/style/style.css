@@ -2100,3 +2100,7 @@
 .statusbar-login-hidden {
     -fx-max-width: 0;
 }
+
+.setting-textfield-wide {
+    -fx-min-width: 50em;
+}

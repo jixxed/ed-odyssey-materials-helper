@@ -36,8 +36,13 @@ public class LocaleService {
     }
 
     public static String getLocalizedStringForCurrentLocale(final String key, final Object... parameters) {
-        return getLocalizedString(getCurrentLocale(), key, parameters);
+        return getLocalizedStringForLocale(getCurrentLocale(), key, parameters);
     }
+
+    public static String getLocalizedStringForLocale(final Locale locale, final String key, final Object... parameters) {
+        return getLocalizedString(locale, key, parameters);
+    }
+
 
     private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
         return MessageFormat.format(CSVResourceBundle.getResourceBundle(RESOURCE_BUNDLE_NAME, locale).getString(key), parameters);

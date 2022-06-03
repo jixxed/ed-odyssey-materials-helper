@@ -28,12 +28,15 @@ import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableToggleSwitch;
 
-import java.io.File;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -43,6 +46,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class SettingsTab extends EDOTab {
+    private static final String TESS4J_DIR = new File(OsConstants.TESS4J).getPath();
+
     private static final String SETTINGS_LABEL_CLASS = "settings-label";
     private static final String SETTINGS_DROPDOWN_CLASS = "settings-dropdown";
     private static final String SETTINGS_SPACING_10_CLASS = "settings-spacing-10";
@@ -95,6 +100,11 @@ public class SettingsTab extends EDOTab {
     private DestroyableLabel tesseractDataPathFolderLabel;
     private DestroyableLabel selectedTesseractDataPathFolderLabel;
     private Button tesseractDataPathSelectButton;
+    private DestroyableLabel arLocaleLabel;
+    private DestroyableComboBox<ApplicationLocale> arLocaleSelect;
+    private DestroyableLabel arCharacterWhitelistLabel;
+    private TextField arCharacterWhitelistTextField;
+    private Button arCharacterWhitelistSaveButton;
 
     SettingsTab(final Application application) {
         this.application = application;
@@ -173,6 +183,8 @@ public class SettingsTab extends EDOTab {
         final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
         final HBox capiConnectSetting = createCapiConnectSetting();
         final HBox arSetting = createARSetting();
+        final HBox arLocaleSetting = createARLocaleSetting();
+        final HBox arCharacterWhitelistSetting = createARCharacterWhitelistSetting();
         final HBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
         final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
         final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
@@ -183,7 +195,7 @@ public class SettingsTab extends EDOTab {
         final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
         final VBox notification = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader).buildVBox();
         final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiConnectSetting).buildVBox();
-        final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, arSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting).buildVBox();
+        final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, arSetting, arLocaleSetting, arCharacterWhitelistSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting).buildVBox();
         Arrays.stream(NotificationType.values()).forEach(notificationType -> notification.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
         final VBox settings = BoxBuilder.builder()
                 .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
@@ -267,6 +279,63 @@ public class SettingsTab extends EDOTab {
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.arOverlayLabel, this.arOverlayButton)
                 .buildHBox();
+    }
+
+    private HBox createARCharacterWhitelistSetting() {
+        this.arCharacterWhitelistLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.character.whitelist")).build();
+        this.arCharacterWhitelistTextField = TextFieldBuilder.builder().withStyleClass("setting-textfield-wide").build();
+        this.arCharacterWhitelistTextField.setText(PreferencesService.getPreference(PreferenceConstants.AR_CHAR_WHITELIST, "ABCDEFGHIJKLMNOPQRSTUVWXYZ- "));
+        this.arCharacterWhitelistSaveButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.ar.character.whitelist.save")).withOnAction(event -> {
+            PreferencesService.setPreference(PreferenceConstants.AR_CHAR_WHITELIST, this.arCharacterWhitelistTextField.getText());
+            EventService.publish(new ARWhitelistChangeEvent(this.arCharacterWhitelistTextField.getText()));
+        }).build();
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.arCharacterWhitelistLabel, this.arCharacterWhitelistTextField, this.arCharacterWhitelistSaveButton)
+                .buildHBox();
+    }
+
+    private HBox createARLocaleSetting() {
+        this.arLocaleLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.locale")).build();
+        this.arLocaleSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(LocaleService.getListBinding(ApplicationLocale.values()))
+                .withValueChangeListener((obs, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        final File tessdataPath = new File(OCRService.TESS4J_DIR, "tessdata");
+                        final File targetFile = new File(tessdataPath.getPath(), newValue.getIso6392B() + ".traineddata");
+                        if (targetFile.exists() || newValue == ApplicationLocale.ENGLISH) {
+                            PreferencesService.setPreference(PreferenceConstants.AR_LOCALE, newValue.name());
+                            EventService.publish(new ARLocaleChangeEvent(newValue));
+                        } else {//download
+                            tessdataPath.mkdirs();
+                            try (final OutputStream output = new FileOutputStream(targetFile)) {
+                                final String downloadUrl = "https://github.com/tesseract-ocr/tessdata/raw/main/" + newValue.getIso6392B() + ".traineddata";
+                                final URL url = new URL(downloadUrl);
+                                final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                                connection.setRequestProperty("accept", "application/json");
+                                final InputStream responseStream = connection.getInputStream();
+                                output.write(responseStream.readAllBytes());
+                                NotificationService.showInformation(NotificationType.SUCCESS, "Download complete", "Download of OCR languagedata complete");
+                            } catch (final IOException e) {
+                                log.error("error downloading OCR languagedata", e);
+                                NotificationService.showError(NotificationType.ERROR, "Download failed", "Failed downloading OCR languagedata");
+                            }
+                        }
+
+//
+                    }
+                })
+                .asLocalized()
+                .build();
+        this.arLocaleSelect.getSelectionModel().select(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")));
+
+
+        return BoxBuilder.builder()
+                .withStyleClass(SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.arLocaleLabel, this.arLocaleSelect)
+                .buildHBox();
+
     }
 
     private HBox createARColorSetting(final String preferenceName, final String localizationKey, final Color defaultColor) {

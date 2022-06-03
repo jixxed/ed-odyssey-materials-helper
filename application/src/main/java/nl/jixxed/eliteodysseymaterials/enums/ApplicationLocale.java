@@ -9,14 +9,15 @@ import java.util.Locale;
 @AllArgsConstructor
 @Getter
 public enum ApplicationLocale {
-    ENGLISH(Locale.ENGLISH),
-    GERMAN(Locale.GERMAN),
-    FRENCH(Locale.FRENCH),
-    PORTUGUESE(Locale.forLanguageTag("pt")),
-    SPANISH(Locale.forLanguageTag("es")),
-    RUSSIAN(Locale.forLanguageTag("ru"));
+    ENGLISH(Locale.ENGLISH, "eng"),
+    GERMAN(Locale.GERMAN, "deu"),
+    FRENCH(Locale.FRENCH, "fra"),
+    PORTUGUESE(Locale.forLanguageTag("pt"), "por"),
+    SPANISH(Locale.forLanguageTag("es"), "spa"),
+    RUSSIAN(Locale.forLanguageTag("ru"), "rus");
 
     private final Locale locale;
+    private final String iso6392B;
 
     public String getLocalizationKey() {
         return "application.language." + this.name().toLowerCase();

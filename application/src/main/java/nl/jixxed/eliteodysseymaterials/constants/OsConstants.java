@@ -18,6 +18,7 @@ public class OsConstants {
     public static String DEEPLINK_FOLDER;
     public static String STATISTICS;
     public static String CUSTOM_CSS;
+    public static String TESS4J;
     public static String OLD_PREFERENCES;
     public static String OLD_CUSTOM_CSS;
     public static String OS_SLASH;
@@ -35,6 +36,7 @@ public class OsConstants {
         DEFAULT_WATCHED_FOLDER = USER_HOME + "\\Saved Games\\Frontier Developments\\Elite Dangerous";
         CONFIG_DIRECTORY = System.getenv(LOCALAPPDATA) + "\\odyssey-materials-helper";
         PREFERENCES = CONFIG_DIRECTORY + "\\pref.properties";
+        TESS4J = CONFIG_DIRECTORY + "\\tesseract";
         DEEPLINK_FOLDER = CONFIG_DIRECTORY;
         DEEPLINK = CONFIG_DIRECTORY + "\\deeplink";
         LOCK = CONFIG_DIRECTORY + "\\lock";
@@ -50,6 +52,7 @@ public class OsConstants {
         CONFIG_DIRECTORY = USER_HOME + "/.config/odyssey-materials-helper";
         DEFAULT_WATCHED_FOLDER = USER_HOME + "/.steam/steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous";
         PREFERENCES = CONFIG_DIRECTORY + "/pref.properties";
+        TESS4J = CONFIG_DIRECTORY + "/tesseract";
         DEEPLINK_FOLDER = CONFIG_DIRECTORY;
         DEEPLINK = CONFIG_DIRECTORY + "/deeplink";
         LOCK = CONFIG_DIRECTORY + "/lock";

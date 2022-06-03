@@ -11,6 +11,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.TesseractException;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
@@ -395,8 +397,9 @@ public class ARService {
 
                         timeRenderBefore = System.currentTimeMillis();
                         String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginal);
+                        final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
                         try {
-                            OdysseyMaterial.forLocalizedName(cleaned);
+                            OdysseyMaterial.forLocalizedName(cleaned, locale);
                         } catch (final Exception e) {
                             final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginal, null);
                             final Mat inverted = new Mat();
@@ -412,7 +415,7 @@ public class ARService {
                                 downloadMenu.getDownloadData().put(finalIndex, Data.UNKNOWN);
                                 downloadMenu.getScanned().put(finalIndex, true);
                             } else {
-                                final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedName(cleaned);
+                                final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedName(cleaned, locale);
                                 downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
                                 downloadMenu.getScanned().put(finalIndex, true);
                             }
@@ -467,7 +470,6 @@ public class ARService {
         }
         return downloadMenu;
     }
-
 
     private static DownloadMenu getDownloadMenu(final boolean hasWarning, final ScrollBar scrollBar) {
         if (downloadMenu == null) {
