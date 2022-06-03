@@ -2,6 +2,8 @@ Version 1.80 beta 9
 -------------
 Added configuration options for different game languages
 Automatically download ocr data on switching language
+Add pointing(emote) to materials support
+handle blank screen detection for downloadmenu state
 
 Version 1.80 beta 8
 -------------

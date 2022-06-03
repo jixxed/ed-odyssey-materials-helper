@@ -127,6 +127,7 @@ public class CAPIService {
             if (this.timer != null) {
                 this.timer.cancel();
             }
+            this.executor.shutdown();
         });
     }
 

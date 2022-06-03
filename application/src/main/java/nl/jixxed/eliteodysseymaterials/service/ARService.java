@@ -89,6 +89,7 @@ public class ARService {
                 timer.cancel();
                 timerDisplay.cancel();
                 executorService.shutdown();
+                animationTimer.stop();
                 log.info("AR Service shutdown finished.");
             }
         });
@@ -484,11 +485,11 @@ public class ARService {
         return downloadMenu;
     }
 
-    private static boolean isDownloadMenu(final BufferedImage arrowCapture) {
-        if (arrowCapture == null) {
+    private static boolean isDownloadMenu(final BufferedImage capture) {
+        if (capture == null) {
             return false;
         }
-        arrowCaptureMat = CvHelper.convertToMat(arrowCapture, arrowCaptureMat);
+        arrowCaptureMat = CvHelper.convertToMat(capture, arrowCaptureMat);
         final int result_cols = arrowCaptureMat.cols() - arrowTemplateScaled.cols() + 1;
         final int result_rows = arrowCaptureMat.rows() - arrowTemplateScaled.rows() + 1;
         if (downloadMenuResult == null || downloadMenuResult.cols() != result_cols || downloadMenuResult.rows() != result_rows) {
@@ -511,16 +512,23 @@ public class ARService {
 
 
         if (mmr.maxVal > getMatchingThreshold()) {
-            if (frameCounter % 99 == 1) {
+            if (!previousMatch) {
+                previousMatch = true;
                 log.debug("dataport downloadmenu detected. Confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
             }
             return true;
         }
-        if (frameCounter % 99 == 1) {
-            log.debug("dataport downloadmenu test confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+        if (previousMatch) {
+
+            previousMatch = false;
+            log.debug("dataport downloadmenu detected. Confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+            arrowCapture = getArrowCapture();
+            return isDownloadMenu(arrowCapture);
         }
         return false;
     }
+
+    private static boolean previousMatch = false;
 
     private static double getMatchingThreshold() {
         return MATCHING_THRESHOLD;

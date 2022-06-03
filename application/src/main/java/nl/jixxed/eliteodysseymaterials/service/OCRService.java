@@ -8,6 +8,8 @@ import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract1;
 import net.sourceforge.tess4j.TesseractException;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -33,8 +35,8 @@ public class OCRService {
         final File tessData = extractTessDataResources();
         instance = new Tesseract1();
         instance.setDatapath(tessData.getPath());
-        instance.setLanguage("eng");
-        instance.setVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNOPQRSTUVWXYZ- ");
+        instance.setLanguage(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getIso6392B());
+        instance.setVariable("tessedit_char_whitelist", PreferencesService.getPreference(PreferenceConstants.AR_CHAR_WHITELIST, "ABCDEFGHIJKLMNOPQRSTUVWXYZ- "));
         EventService.addStaticListener(ARWhitelistChangeEvent.class, arWhitelistChangeEvent ->
                 instance.setVariable("tessedit_char_whitelist", arWhitelistChangeEvent.getWhitelist())
         );
