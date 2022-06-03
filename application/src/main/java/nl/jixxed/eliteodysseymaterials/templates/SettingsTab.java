@@ -531,7 +531,9 @@ public class SettingsTab extends EDOTab {
                     if (!initialDirectory.exists()) {
                         initialDirectory = new File(OsConstants.DEFAULT_WATCHED_FOLDER);
                     }
-                    journalFolderSelect.setInitialDirectory(initialDirectory);
+                    if (initialDirectory.exists()) {
+                        journalFolderSelect.setInitialDirectory(initialDirectory);
+                    }
                     final File selectedDirectory = journalFolderSelect.showDialog(((FXApplication) this.application).getPrimaryStage());
                     if (selectedDirectory != null) {
                         this.selectedFolderLabel.setText(selectedDirectory.getAbsolutePath());
