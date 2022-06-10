@@ -21,8 +21,8 @@ import java.net.URL;
 
 @Slf4j
 class About extends VBox {
-    private final boolean isBeta = true;
-    private final String betaVersion = "1.80-beta9";
+    private final boolean isBeta = false;
+    private final String betaVersion = "1.80-beta13";
     private Label versionLabel;
     private Hyperlink link;
     private Label disclaimer1;

@@ -734,11 +734,20 @@
     -fx-text-fill: rgba(0, 0, 0, .05) !important;
 }
 
+.wishlist-lowlight.ingredient-filled-partial {
+    -fx-background-color: rgba(15, 15, 15, .05);
+    -fx-text-fill: rgba(0, 0, 0, .05) !important;
+}
+
 .wishlist-lowlight.ingredient-filled .label {
     -fx-text-fill: rgba(0, 0, 0, .5) !important;
 }
 
 .wishlist-lowlight.ingredient-unfilled .label {
+    -fx-text-fill: rgba(0, 0, 0, .5) !important;
+}
+
+.wishlist-lowlight.ingredient-filled-partial .label {
     -fx-text-fill: rgba(0, 0, 0, .5) !important;
 }
 
@@ -793,6 +802,13 @@
 
 .settings-label {
     -fx-label-padding: 5;
+    -fx-min-height: 20;
+    -fx-min-width: 300px;
+    -fx-text-alignment: center;
+}
+
+.settings-link {
+    -fx-label-padding: 2.5;
     -fx-min-height: 20;
     -fx-min-width: 300px;
     -fx-text-alignment: center;

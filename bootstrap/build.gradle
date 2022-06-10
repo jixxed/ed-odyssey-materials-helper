@@ -5,14 +5,12 @@ buildscript {
         }
     }
     dependencies {
-//        classpath "org.openjfx:javafx-plugin:0.0.10"
         classpath "org.beryx:badass-jlink-plugin:2.24.0"
     }
 }
 
 apply plugin: "java"
 apply plugin: "application"
-//apply plugin: "org.openjfx.javafxplugin"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
@@ -34,9 +32,6 @@ jar {
 
 repositories {
     mavenCentral()
-    maven {
-        url "https://dl.bintray.com/jetbrains/intellij-third-party-dependencies/"
-    }
 }
 
 application {

@@ -14,13 +14,14 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Locale;
 
 @Slf4j
 public class MenuOverlayRenderer {
 
     public static BufferedImage renderMenu(final DownloadMenu downloadMenu) {
-        final int contentWidth = downloadMenu.getContentWidth();
-        final int contentHeight = downloadMenu.getContentHeight();
+//        final int contentWidth = downloadMenu.getContentWidth();
+//        final int contentHeight = downloadMenu.getContentHeight();
         final BufferedImage bufferedImage = new BufferedImage((int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics = bufferedImage.createGraphics();
 //        final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
@@ -30,9 +31,16 @@ public class MenuOverlayRenderer {
 //                log.debug("not scanned index:" + index);
 //                isFullyRendered.set(false);
 //            }
+//            graphics.setColor(Color.YELLOW);
+//            graphics.drawRect((int) (downloadMenu.getMenuItemX(index) + downloadMenu.getMenuTextReadOffset().getX()), (int) (downloadMenu.getMenuItemY(index) + downloadMenu.getMenuTextReadOffset().getY()), (int) downloadMenu.getMenuTextReadOffset().getWidth(), (int) downloadMenu.getMenuTextReadOffset().getHeight());
             if (downloadMenu.isMenuItemVisible(index) && Data.UNKNOWN != odysseyMaterial && odysseyMaterial != null) {
                 graphics.setColor(Color.WHITE);
-                graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (downloadMenu.getFontSize())));
+                if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
+                    graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (downloadMenu.getFontSize())));
+                } else {
+//                    graphics.setFont(new Font("Eurostile-Roman", Font.BOLD, (int) (downloadMenu.getFontSize())));
+                    graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (downloadMenu.getFontSize())));
+                }
                 graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -75,11 +83,11 @@ public class MenuOverlayRenderer {
                     final Rectangle2D rect = fm.getStringBounds(text, graphics);
                     graphics.setColor(Color.BLACK);
                     graphics.fillRect(x - fm.getAscent(),
-                            y - fm.getAscent(),
+                            y,
                             (int) rect.getWidth() + fm.getAscent() * 2,
-                            (int) rect.getHeight());
+                            (int) fm.getHeight() + (int) (0.1 * fm.getHeight()));
                     graphics.setColor(color);
-                    graphics.drawString(text, x, y);
+                    graphics.drawString(text, x, y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
                 }
                 graphics.setColor(color);
                 graphics.fillRect((int) downloadMenu.getMenuItemX(index), (int) menuItemY, (int) downloadMenu.getMenuItemWidth(index), (int) downloadMenu.getMenuItemHeight(index));

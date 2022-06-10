@@ -47,6 +47,10 @@ jar {
 }
 repositories {
     mavenCentral()
+    maven {
+        name 'nexus'
+        url "https://nexus.jixxed.nl/nexus/content/repositories/releases"
+    }
 }
 application {
     mainModule = "nl.jixxed.eliteodysseymaterials"
@@ -109,17 +113,21 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
     testImplementation 'org.assertj:assertj-core:3.22.0'
 
+
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
-    implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.13'
+    implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.5'
     implementation 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'org.slf4j:slf4j-simple:1.7.36'
+//    implementation 'org.slf4j:slf4j-simple:1.7.36'
+    implementation 'ch.qos.logback:logback-core:1.2.11'
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation('javax.servlet:javax.servlet-api:4.0.1')
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
     implementation 'io.github.pustike:commons-csv:1.7.0'
-    implementation 'org.openpnp:opencv:4.5.1-2'
+    implementation 'nl.jixxed:opencv:4.5.3-0'
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }
@@ -130,14 +138,17 @@ dependencies {
     implementation("org.openjfx:javafx-media:18+:${platform}")
     implementation("org.openjfx:javafx-swing:18+:${platform}")
     implementation('org.controlsfx:controlsfx:11+')
-
     testImplementation 'de.saxsys:mvvmfx-testing-utils:1.8.0'
     testImplementation("org.openjfx:javafx-swing:18+:${platform}")
     implementation 'com.github.scribejava:scribejava-core:8.3.1'
     implementation 'net.java.dev.jna:jna:5.11.0'
     implementation 'net.java.dev.jna:jna-platform:5.11.0'
-    implementation('net.sourceforge.tess4j:tess4j:5.2.1')
-//    implementation('net.sourceforge.lept4j:lept4j:1.16.1') {
+    implementation group: 'nl.jixxed.tess4j', name: 'tess4j', version: '5.2.8'
+    implementation group: 'nl.jixxed.lept4j', name: 'lept4j', version: '1.16.6'
+//    implementation group: 'net.sourceforge.tess4j', name: 'tess4j', version: '5.2.1'
+//    implementation group: 'net.sourceforge.lept4j', name: 'lept4j', version: '1.16.1'
+    implementation 'com.github.jai-imageio:jai-imageio-core:1.4.0'
+
 //        exclude group: 'org.jboss'
 //    exclude group: 'com.github.jaiimageio'
 //    exclude group: 'org.apache.pdfbox'
@@ -189,15 +200,17 @@ extraJavaModuleInfo {
 
     module('doc-annotations-0.2.jar', 'eu.lestard', '0.2')
     module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
-    automaticModule('opencv-4.5.1-2.jar', 'org.openpnp')
+    automaticModule('opencv-4.5.3-0.jar', 'org.openpnp')
     automaticModule('jna-5.11.0.jar', 'net.java.dev.jna')
-    automaticModule('tess4j-5.2.1.jar', 'net.sourceforge.tess4j')
-    automaticModule('lept4j-1.16.1.jar', 'net.sourceforge.lept4j')
+    automaticModule('tess4j-5.2.8.jar', 'nl.jixxed.tess4j')
+    automaticModule('lept4j-1.16.6.jar', 'nl.jixxed.lept4j')
     automaticModule('jai-imageio-core-1.4.0.jar', 'com.github.jaiimageio')
     automaticModule('jboss-vfs-3.2.16.Final.jar', 'org.jboss')
     automaticModule('commons-logging-1.2.jar', 'org.apache.commons.logging')
     automaticModule('jboss-logging-3.1.4.GA.jar', 'org.jboss.logging')
-
+    automaticModule('logback-classic-1.2.11.jar', 'ch.qos.logback.classic')
+    automaticModule('logback-core-1.2.11.jar', 'ch.qos.logback.core')
+    automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
 
 //    automaticModule('java-ocr-api-15.3.0.3.jar', 'com.asprise')
 

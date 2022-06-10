@@ -136,11 +136,11 @@ public class DownloadMenu {
         return this.menuItems.get(index);
     }
 
-    public double getMenuItemX(final int index) {
+    double getMenuItemX(final int index) {
         return this.menuItems.get(index).getX();
     }
 
-    public double getMenuItemY(final int index) {
+    double getMenuItemY(final int index) {
         if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
             return this.menuItems.get(index).getY() + (36 * this.scale);
         }
@@ -172,15 +172,15 @@ public class DownloadMenu {
         return this.menuItems.get(index).getY();
     }
 
-    public double getMenuItemWidth(final int index) {
+    double getMenuItemWidth(final int index) {
         return this.menuItems.get(index).getWidth();
     }
 
-    public double getMenuItemWidth() {
+    double getMenuItemWidth() {
         return 1574 * this.scale;
     }
 
-    public double getMenuItemHeight(final int index) {
+    double getMenuItemHeight(final int index) {
         if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
             return this.menuItems.get(index).getHeight() - (36 * this.scale);
         }
@@ -217,7 +217,7 @@ public class DownloadMenu {
         return this.menuItems.get(index).getHeight();
     }
 
-    public boolean isMenuItemLabelVisible(final int index) {
+    boolean isMenuItemLabelVisible(final int index) {
         //only case for 5
 //        if (this.hasWarning && ScrollPosition.DOWN == this.scrollBar.getPosition() && this.scrollBar.getSize() == 5 && index == 1) {
 //            return false;
@@ -289,15 +289,15 @@ public class DownloadMenu {
     }
 
     public Rectangle getMenuTextReadOffset() {
-        return new Rectangle(105 * this.scale, 18 * this.scale, 600 * this.scale, 50 * this.scale);
+        return new Rectangle(105 * this.scale, 18 * this.scale, 700 * this.scale, 55 * this.scale);
     }
 
-    public double getMenuTextWriteOffsetX() {
-        return 1220 * this.scale;
+    double getMenuTextWriteOffsetX() {
+        return 1170 * this.scale;
     }
 
-    public double getMenuTextWriteOffsetY() {
-        return 25 * this.scale;
+    double getMenuTextWriteOffsetY() {
+        return 1;
     }
 
     public void setScale(final double scale) {

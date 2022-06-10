@@ -6,7 +6,10 @@ import javafx.beans.value.ObservableValue;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
+import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.helper.CSVResourceBundle;
 
@@ -14,6 +17,7 @@ import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -116,6 +120,18 @@ public class LocaleService {
         return parameter.toString();
     }
 
+    static String getDataCharacterForCurrentARLocale() {
+        final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
+        return Arrays.stream(Data.values())
+                .filter(Predicate.not(Data::isUnknown))
+                .map(data -> LocaleService.getLocalizedStringForLocale(locale, data.getLocalizationKey()))
+                .flatMap(dataLocName -> Arrays.stream(dataLocName.split("")))
+                .map(string -> (Locale.forLanguageTag("ru").equals(locale)) ? string : string.toUpperCase())
+                .distinct()
+                .sorted()
+                .collect(Collectors.joining());
+    }
+
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
     public static class LocalizationKey {
@@ -125,4 +141,5 @@ public class LocaleService {
             return new LocalizationKey(key);
         }
     }
+
 }

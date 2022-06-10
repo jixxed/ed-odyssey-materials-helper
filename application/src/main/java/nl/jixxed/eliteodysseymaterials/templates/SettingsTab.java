@@ -49,6 +49,7 @@ public class SettingsTab extends EDOTab {
     private static final String TESS4J_DIR = new File(OsConstants.TESS4J).getPath();
 
     private static final String SETTINGS_LABEL_CLASS = "settings-label";
+    private static final String SETTINGS_LINK_CLASS = "settings-link";
     private static final String SETTINGS_DROPDOWN_CLASS = "settings-dropdown";
     private static final String SETTINGS_SPACING_10_CLASS = "settings-spacing-10";
     private static final String SETTINGS_JOURNAL_LINE_STYLE_CLASS = "settings-journal-line";
@@ -134,73 +135,93 @@ public class SettingsTab extends EDOTab {
 
     private void initComponents() {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
-
-        final Label overviewLabel = LabelBuilder.builder()
-                .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.overview"))
-                .build();
-        final Label wishlistLabel = LabelBuilder.builder()
-                .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.wishlist"))
-                .build();
-        final Label generalLabel = LabelBuilder.builder()
-                .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.general"))
-                .build();
-        final Label trackingLabel = LabelBuilder.builder()
-                .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.tracking"))
-                .build();
-        final Label notificationLabel = LabelBuilder.builder()
-                .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.notification"))
-                .build();
         final Label settingsLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tabs.settings"))
                 .build();
-        final Label capiLabel = LabelBuilder.builder()
+        final VBox settings = BoxBuilder.builder()
+                .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
+                .withNodes(settingsLabel)
+                .buildVBox();
+        //general
+        final Label generalLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.capi"))
-                .build();
-        final Label arLabel = LabelBuilder.builder()
-                .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.ar"))
+                .withText(LocaleService.getStringBinding("tab.settings.title.general"))
                 .build();
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
+        final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
+        final HBox wipSetting = createWIPSetting();
+        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
+        settings.getChildren().add(general);
+        //overview
+        final Label overviewLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.overview"))
+                .build();
         final HBox readingDirectionSetting = createReadingDirectionSetting();
         final HBox soloModeSetting = createSoloModeSetting();
-        final HBox trackingOptOutSetting = createTrackingOptOutSetting();
-        final HBox wipSetting = createWIPSetting();
+        final HBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
+        final HBox irrelevantOverrideList = createIrrelevantOverrideList();
+        final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
+        settings.getChildren().add(overview);
+        //horizons wishlist
+        final Label wishlistLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.wishlist"))
+                .build();
+        final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
+        final VBox wishlist = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(wishlistLabel, wishlistHorizonsGradeRollsSetting).buildVBox();
+        settings.getChildren().add(wishlist);
+        //notification
+        final Label notificationLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.notification"))
+                .build();
         final HBox notificationSetting = createNotificationSetting();
         final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
         final HBox notificationsListHeader = createNotificationListHeader();
-        final HBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
-        final HBox irrelevantOverrideList = createIrrelevantOverrideList();
-        final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
-        final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
-        final HBox capiConnectSetting = createCapiConnectSetting();
-        final HBox arSetting = createARSetting();
-        final HBox arLocaleSetting = createARLocaleSetting();
-        final HBox arCharacterWhitelistSetting = createARCharacterWhitelistSetting();
-        final HBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
-        final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
-        final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
-
-        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
-        final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
-        final VBox wishlist = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(wishlistLabel, wishlistHorizonsGradeRollsSetting).buildVBox();
-        final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
         final VBox notification = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader).buildVBox();
-        final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiConnectSetting).buildVBox();
-        final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, arSetting, arLocaleSetting, arCharacterWhitelistSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting).buildVBox();
         Arrays.stream(NotificationType.values()).forEach(notificationType -> notification.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
-        final VBox settings = BoxBuilder.builder()
-                .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
-                .withNodes(settingsLabel, general, overview, wishlist, notification, capiIntegration, ar, tracking)
-                .buildVBox();
+        settings.getChildren().add(notification);
+        //frontier API
+        final Label capiLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.capi"))
+                .build();
+        final HBox capiConnectSetting = createCapiConnectSetting();
+        final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiConnectSetting).buildVBox();
+        settings.getChildren().add(capiIntegration);
+        //AR
+        if (OsCheck.isWindows()) {
+            final Label arLabel = LabelBuilder.builder()
+                    .withStyleClass("settings-header")
+                    .withText(LocaleService.getStringBinding("tab.settings.title.ar"))
+                    .build();
+            final Label arExplainLabel = LabelBuilder.builder()
+                    .withStyleClass(SETTINGS_LABEL_CLASS)
+                    .withText(LocaleService.getStringBinding("tab.settings.ar.explain"))
+                    .build();
+            final Hyperlink vccLink = HyperlinkBuilder.builder().withStyleClass(SETTINGS_LINK_CLASS).withAction(actionEvent ->
+                    this.application.getHostServices().showDocument("https://aka.ms/vs/17/release/vc_redist.x64.exe")).withText(LocaleService.getStringBinding("tab.settings.ar.link")).build();
+            final HBox arSetting = createARSetting();
+            final HBox arLocaleSetting = createARLocaleSetting();
+            final HBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
+            final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
+            final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
+            final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting).buildVBox();
+            settings.getChildren().add(ar);
+        }
+        //Tracking
+        final Label trackingLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.tracking"))
+                .build();
+        final HBox trackingOptOutSetting = createTrackingOptOutSetting();
+        final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
+        settings.getChildren().add(tracking);
+
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)
                 .build();
@@ -302,7 +323,7 @@ public class SettingsTab extends EDOTab {
                 .withItemsProperty(LocaleService.getListBinding(ApplicationLocale.values()))
                 .withValueChangeListener((obs, oldValue, newValue) -> {
                     if (newValue != null) {
-                        final File tessdataPath = new File(OCRService.TESS4J_DIR, "tessdata");
+                        final File tessdataPath = new File(TESS4J_DIR, "tessdata");
                         final File targetFile = new File(tessdataPath.getPath(), newValue.getIso6392B() + ".traineddata");
                         if (targetFile.exists() || newValue == ApplicationLocale.ENGLISH) {
                             PreferencesService.setPreference(PreferenceConstants.AR_LOCALE, newValue.name());

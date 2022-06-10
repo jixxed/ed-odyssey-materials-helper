@@ -70,6 +70,7 @@ public class FXApplication extends Application {
                 final GraphicsEnvironment ge =
                         GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/fonts/eurocaps.ttf")));
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/fonts/832-font.ttf")));
             } catch (final IOException | FontFormatException e) {
                 //Handle exception
             }
@@ -136,6 +137,7 @@ public class FXApplication extends Application {
             try {
                 EventService.publish(new TerminateApplicationEvent());
                 EventService.shutdown();
+//                NativeLibrary.disposeAll();
                 APPLICATION_STATE.releaseLock();
                 Platform.exit();
             } catch (final Exception ex) {

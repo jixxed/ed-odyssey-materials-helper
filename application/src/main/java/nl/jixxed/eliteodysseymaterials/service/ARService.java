@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import com.sun.jna.NativeLibrary;
 import javafx.animation.AnimationTimer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -10,7 +11,6 @@ import javafx.stage.StageStyle;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.sourceforge.tess4j.TesseractException;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
@@ -19,6 +19,7 @@ import nl.jixxed.eliteodysseymaterials.service.ar.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.AROverlay;
+import nl.jixxed.tess4j.TesseractException;
 import nu.pattern.OpenCV;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -93,6 +94,13 @@ public class ARService {
                 log.info("AR Service shutdown finished.");
             }
         });
+
+        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+                    NativeLibrary.getInstance("user32").dispose();
+                    NativeLibrary.getInstance("gdi32").dispose();
+
+                }
+        );
     }
 
     public static void toggle() {
@@ -162,7 +170,7 @@ public class ARService {
                     }
                     if (targetWindowInfo.hwnd == 0) {
                         //application not running
-                        log.debug("application not running");
+//                        log.debug("application not running");
                         Thread.sleep(1000);
                         MENU_VISIBLE.set(false);
                         REQUEST_HIDE.set(true);
@@ -173,7 +181,7 @@ public class ARService {
                     foregroundHwnd = User32.INSTANCE.GetForegroundWindow();
                     if (foregroundHwnd != targetWindowInfo.hwnd) {
 
-                        log.debug("application not in foreground");
+//                        log.debug("application not in foreground");
                         MENU_VISIBLE.set(false);
                         REQUEST_HIDE.set(true);
                         Thread.sleep(1000);
@@ -253,10 +261,10 @@ public class ARService {
                                 if (cachedImage != null && cachedImage.fullyRendered()) {
                                     overlayImage = cachedImage.render();
                                     arOverlay.getResizableImageView().setImage(overlayImage);
-                                    log.debug("render from cache. Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + getDownloadMenu().getScrollBar().getPosition());
+//                                    log.debug("render from cache. Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + getDownloadMenu().getScrollBar().getPosition());
                                 } else {
                                     arOverlay.getResizableImageView().setImage(null);
-                                    log.debug("render required for " + (Boolean.TRUE.equals((hasWarning)) ? "warning + " : "no warning + ") + scrollBar.getPosition() + " size:" + scrollBar.getSize());
+                                    log.debug("render required for Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + scrollBar.getPosition() + " size:" + scrollBar.getSize());
                                     downloadMenu = getDownloadMenu(hasWarning, scrollBar);
                                     ImageTransformHelper.init(getDownloadMenu(), scaling);
                                     final long timeProcessBefore = System.currentTimeMillis();
@@ -408,6 +416,7 @@ public class ARService {
                             final BufferedImage menuItemLabelCaptureInverted = CvHelper.mat2Img(inverted);
                             normal.release();
                             inverted.release();
+                            log.debug("Attempt OCR inverted");
                             cleaned = imageToString(finalIndex, menuItemLabelCaptureInverted);
 
                         }
@@ -535,10 +544,12 @@ public class ARService {
     }
 
     private static String imageToString(final int index, final BufferedImage menuItemLabelCapture) throws TesseractException {
-
+        final String dataCharacterForCurrentLocale = LocaleService.getDataCharacterForCurrentARLocale();
+        final String dataCharacterForCurrentLocaleWithoutSpace = dataCharacterForCurrentLocale.replace("\s", "");
         final String ocr = OCRService.imageToString(menuItemLabelCapture);
-        String cleaned = ocr.replaceAll("[^a-zA-Z-\s]", "").replaceAll("\s\s", "\s").trim();
-        if (cleaned.matches("^.*\s[a-zA-Z]$")) {
+        log.debug("ocr detected " + index + ": " + ocr);
+        String cleaned = ocr.replaceAll("[^" + dataCharacterForCurrentLocale + "]", "").replace("\s\s", "\s").trim();
+        if (cleaned.matches("^[" + dataCharacterForCurrentLocale + "]*\s[" + dataCharacterForCurrentLocaleWithoutSpace + "]$")) {
             cleaned = cleaned.substring(0, cleaned.length() - 2);
         }
         log.debug("ocr cleaned " + index + ": " + cleaned);
