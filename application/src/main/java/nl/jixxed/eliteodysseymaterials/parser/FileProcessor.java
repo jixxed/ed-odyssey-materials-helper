@@ -20,10 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -70,7 +68,20 @@ public class FileProcessor {
                 }
                 position = is.getCount();
             }
-            messages.values().stream().sorted().forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
+
+            messages.entrySet().stream()
+                    .sorted(Comparator.comparing(entry -> {
+                        try {
+                            return OBJECT_MAPPER.readTree(entry.getValue()).get("timestamp").asText();
+                        } catch (final JsonProcessingException e) {
+                            log.error("Failed to read timestamp for event", e);
+                        }
+                        return "";
+                    }))
+                    .filter(entry -> (!entry.getKey().equals(JournalEventType.BACKPACKCHANGE) && !entry.getKey().equals(JournalEventType.BACKPACK)) || backpackAfterShiplocker(messages, entry))
+                    .map(Map.Entry::getValue)
+                    .forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
+
             horizonsMaterialMessages.forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
 
         } catch (final JsonProcessingException e) {
@@ -79,6 +90,14 @@ public class FileProcessor {
             log.error("Error processing journal", e);
         }
         Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
+    }
+
+    private static boolean backpackAfterShiplocker(final Map<JournalEventType, String> messages, final Map.Entry<JournalEventType, String> entry) {
+        try {
+            return ZonedDateTime.parse(OBJECT_MAPPER.readTree(entry.getValue()).get("timestamp").asText()).isAfter(ZonedDateTime.parse(OBJECT_MAPPER.readTree(messages.get(JournalEventType.SHIPLOCKER)).get("timestamp").asText()));
+        } catch (final JsonProcessingException e) {
+            return false;
+        }
     }
 
     @SuppressWarnings("java:S2674")

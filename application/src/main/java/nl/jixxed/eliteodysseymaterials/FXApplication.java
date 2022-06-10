@@ -65,6 +65,7 @@ public class FXApplication extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
+        NotificationService.init();
         try {
             try {
                 final GraphicsEnvironment ge =

@@ -21,7 +21,7 @@ import java.util.Objects;
 public class NotificationService {
     private static boolean enabled = false;
 
-    static {
+    public static void init() {
         EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised());
     }
 
