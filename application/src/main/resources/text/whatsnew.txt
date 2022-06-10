@@ -11,6 +11,8 @@ Add blueprints for Pre-Engineered Guardian Plasma Chargers
 Fix for wishlist material highlighting
 Fix for non-existent journal folder breaking journal folder select
 Added application log file. Cleared on each launch.
+Fix for notifications not playing
+Fix showing backpack content on application load, while backpack is actually empty(because you are sitting in your ship)
 
 Version 1.79
 -------------
