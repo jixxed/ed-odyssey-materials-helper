@@ -1,3 +1,7 @@
+Version 1.81
+-------------
+Add grayscale conversion for AR Overlay material OCR, to improve detection on default game HUD colors
+
 Version 1.80
 -------------
 AR Overlay for data download terminals. Windows 64-bit only feature.

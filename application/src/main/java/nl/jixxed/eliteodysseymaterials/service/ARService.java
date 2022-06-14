@@ -89,7 +89,7 @@ public class ARService {
             if (timer != null) {
                 timer.cancel();
                 timerDisplay.cancel();
-                executorService.shutdown();
+                executorService.shutdownNow();
                 animationTimer.stop();
                 log.info("AR Service shutdown finished.");
             }
@@ -397,20 +397,25 @@ public class ARService {
                         long timeRenderAfter = System.currentTimeMillis();
                         log.debug("Transform menu item time: " + (timeRenderAfter - timeRenderBefore));
                         final int y = (int) (menuItemY + downloadMenu.getMenuTextReadOffset().getY() - downloadMenu.getMenu().getY());
-                        final BufferedImage menuItemLabelCaptureOriginal = warped.getSubimage(
+                        final BufferedImage menuItemLabelCaptureOriginalColor = warped.getSubimage(
                                 (int) (downloadMenu.getMenuItem(finalIndex).getX() + downloadMenu.getMenuTextReadOffset().getX()),
                                 (int) (downloadMenu.getMenuItem(finalIndex).getY() + downloadMenu.getMenuTextReadOffset().getY() + downloadMenu.getMenuItemPositionYOffset()),
                                 (int) downloadMenu.getMenuTextReadOffset().getWidth(),
                                 (int) downloadMenu.getMenuTextReadOffset().getHeight()
                         );
 
+                        final Mat matColor = CvHelper.convertToMat(menuItemLabelCaptureOriginalColor, null);
+                        final Mat matGray = new Mat(matColor.size(), CvType.CV_8UC1);
+                        Imgproc.cvtColor(matColor, matGray, Imgproc.COLOR_RGB2GRAY);
+                        final BufferedImage menuItemLabelCaptureOriginalGray = CvHelper.mat2Img(matGray);
+
                         timeRenderBefore = System.currentTimeMillis();
-                        String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginal);
+                        String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginalGray);
                         final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
                         try {
                             OdysseyMaterial.forLocalizedName(cleaned, locale);
                         } catch (final Exception e) {
-                            final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginal, null);
+                            final Mat normal = CvHelper.convertToMat(menuItemLabelCaptureOriginalGray, null);
                             final Mat inverted = new Mat();
                             Core.bitwise_not(normal, inverted);
                             final BufferedImage menuItemLabelCaptureInverted = CvHelper.mat2Img(inverted);
@@ -456,6 +461,29 @@ public class ARService {
         log.debug("OCR menu full time: " + (timeRenderAfterMenu - timeRenderBeforeMenu));
     }
 
+    private static void makeGray(final BufferedImage img) {
+        for (int x = 0; x < img.getWidth(); ++x) {
+            for (int y = 0; y < img.getHeight(); ++y) {
+                final int rgb = img.getRGB(x, y);
+                final int r = (rgb >> 16) & 0xFF;
+                final int g = (rgb >> 8) & 0xFF;
+                final int b = (rgb & 0xFF);
+
+                // Normalize and gamma correct:
+                final double rr = Math.pow(r / 255.0, 2.2);
+                final double gg = Math.pow(g / 255.0, 2.2);
+                final double bb = Math.pow(b / 255.0, 2.2);
+
+                // Calculate luminance:
+                final double lum = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;
+
+                // Gamma compand and rescale to byte range:
+                final int grayLevel = (int) (255.0 * Math.pow(lum, 1.0 / 2.2));
+                final int gray = (grayLevel << 16) + (grayLevel << 8) + grayLevel;
+                img.setRGB(x, y, gray);
+            }
+        }
+    }
 
     private static BufferedImage getDownloadMenuCapture() {
         if (targetWindowInfo.hwnd != 0) {

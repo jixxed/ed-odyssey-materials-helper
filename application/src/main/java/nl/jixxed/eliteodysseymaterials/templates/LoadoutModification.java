@@ -284,7 +284,7 @@ class LoadoutModification extends VBox implements DestroyableTemplate {
             if (this.scheduledFuture != null) {
                 this.scheduledFuture.cancel(true);
             }
-            this.executor.shutdown();
+            this.executor.shutdownNow();
         });
     }
 
