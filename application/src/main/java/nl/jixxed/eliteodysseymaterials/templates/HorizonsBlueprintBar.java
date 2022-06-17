@@ -438,6 +438,12 @@ class HorizonsBlueprintBar extends Accordion {
                 this.setExpandedPane(categoryTitledPane);
             }
         });
+        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
+            if (blueprintClickEvent.getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.ENGINEER_UNLOCKS.equals(blueprintName.getBlueprintCategory())) {
+                blueprints.getSelectionModel().select(blueprintName);
+                this.setExpandedPane(categoryTitledPane);
+            }
+        });
         blueprints.setCellFactory(getCellFactory());
         blueprints.getSelectionModel().select(blueprints.getItems().get(0));
         blueprints.setButtonCell(new ListCell<>() {
