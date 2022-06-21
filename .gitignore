@@ -13,3 +13,5 @@ application/build
 application/out
 /output/
 /application/lombok.config
+/application/log/
+/application/log/edomh.log
