@@ -16,9 +16,19 @@ public enum CommodityType {
     TECHNOLOGY,
     TEXTILES,
     WASTE,
-    WEAPONS;
+    WEAPONS,
+    UNKNOWN;
 
     public String getLocalizationKey() {
         return "material.commoditytype." + this.name().toLowerCase();
+    }
+
+    public boolean isUnknown() {
+        return this == CommodityType.UNKNOWN;
+    }
+
+
+    public String getImagePath() {
+        return "/images/ships/materials/commodities/" + name().toLowerCase() + ".png";
     }
 }

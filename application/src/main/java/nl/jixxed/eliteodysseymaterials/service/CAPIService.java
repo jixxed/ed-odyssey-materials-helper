@@ -33,7 +33,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Locale;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
@@ -45,12 +44,10 @@ public class CAPIService {
     private static CAPIService capiService;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String CLIENT_ID = "c1fbc317-e74d-4118-bd86-6dbcca08f4e8";
     private final Application application;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final OAuth20Service service;
     private OAuth2AccessToken oAuth2AccessToken;
-    private final Random random;
     @Getter
     private final BooleanProperty active = new SimpleBooleanProperty(false);
     @Getter
@@ -61,8 +58,7 @@ public class CAPIService {
 
     private CAPIService(final Application application) {
         this.application = application;
-        this.random = new Random();
-        this.service = new ServiceBuilder(CLIENT_ID)
+        this.service = new ServiceBuilder(CapiOAuth20Service.CLIENT_ID)
                 .defaultScope("capi")
                 .callback("edomh://capi/")
 //                .debug()
@@ -78,7 +74,7 @@ public class CAPIService {
                     final AccessTokenRequestParams accessTokenRequestParams = AccessTokenRequestParams.create(event.getCode())
                             .pkceCodeVerifier(this.authorizationUrlBuilder.getPkce().getCodeVerifier())
                             .scope("capi")
-                            .addExtraParameter("client_id", CLIENT_ID);
+                            .addExtraParameter("client_id", CapiOAuth20Service.CLIENT_ID);
                     this.oAuth2AccessToken = this.service.getAccessToken(accessTokenRequestParams);
                     log.info("save access token");
                     saveToken(this.oAuth2AccessToken);
@@ -161,10 +157,7 @@ public class CAPIService {
     }
 
     public void authenticate() {
-        final String secretState = "secret" + this.random.nextInt(999_999);
-        this.authorizationUrlBuilder = this.service.createAuthorizationUrlBuilder()
-                .state(secretState)
-                .initPKCE();
+        this.authorizationUrlBuilder = ((CapiOAuth20Service) this.service).getAuthorizationUrlBuilder();
         final String build = this.authorizationUrlBuilder.build();
         log.debug(build);
         Platform.runLater(() -> this.application.getHostServices().showDocument(build));
@@ -181,6 +174,7 @@ public class CAPIService {
                         Response response = this.service.execute(oAuthRequest);
                         // retry if token expired
                         if (response.getCode() == 401) {
+                            log.warn("Frontier API returned unauthorized. Attempting to refresh token.");
                             refreshToken();
                             final OAuthRequest oAuthRequest2 = new OAuthRequest(Verb.GET, "https://companion.orerve.net/fleetcarrier");
                             this.service.signRequest(this.oAuth2AccessToken, oAuthRequest2);
@@ -188,12 +182,14 @@ public class CAPIService {
                         }
                         // handle response
                         if (response.getCode() == 204) {
+                            log.warn("Frontier API returned a " + response.getCode() + ". Disabling FC endpoint.");
                             // no FC -> disable endpoint
                             Platform.runLater(() -> {
                                 this.fcEnabled.set(false);
                                 NotificationService.showError(NotificationType.ERROR, "Frontier API", "Empty response from FC endpoint. Endpoint disabled. Do you own a FC?");
                             });
                         } else if (response.getCode() == 200) {
+                            log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
                             // write response to file
                             final String pathname = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH);
                             final File fleetCarrierFileDir = new File(pathname);
@@ -203,6 +199,7 @@ public class CAPIService {
                                 fileOutputStream.write(response.getBody().getBytes(StandardCharsets.UTF_8));
                             }
                         } else {
+                            log.warn("Frontier API returned a " + response.getCode() + ". Disabling service.");
                             Platform.runLater(() -> this.active.set(false));
                         }
                         Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
@@ -212,6 +209,13 @@ public class CAPIService {
                         log.error("ExecutionException", e);
                     } catch (final IOException e) {
                         log.error("IOException", e);
+                    } catch (final Exception e) {
+                        log.error("Exception", e);
+                        log.warn("Frontier API returned an error. Disabling service.");
+                        Platform.runLater(() -> {
+                            this.active.set(false);
+                            NotificationService.showError(NotificationType.ERROR, "Frontier API", "Failed to authenticate. Try to re-authenticate to the API.");
+                        });
                     }
                 });
             });

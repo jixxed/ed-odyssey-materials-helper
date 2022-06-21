@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class HorizonsSearchEvent implements Event {
+public class HorizonsMaterialSearchEvent implements Event {
     private final String search;
 }

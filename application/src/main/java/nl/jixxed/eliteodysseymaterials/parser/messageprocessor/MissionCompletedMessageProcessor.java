@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -20,6 +21,9 @@ public class MissionCompletedMessageProcessor implements MessageProcessor {
             final String name = jsonNode.get("Name").asText();
             try {
                 final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(name);
+                if (horizonsMaterial instanceof Commodity commodity && !horizonsMaterial.isUnknown()) {
+                    StorageService.addCommodity(commodity, StoragePool.SHIP, jsonNode.get("Count").asInt());
+                }
                 if (!horizonsMaterial.isUnknown()) {
                     StorageService.addMaterial(horizonsMaterial, jsonNode.get("Count").asInt());
                 }

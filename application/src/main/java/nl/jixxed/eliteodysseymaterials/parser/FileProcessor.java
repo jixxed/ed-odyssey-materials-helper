@@ -126,7 +126,7 @@ public class FileProcessor {
         }
     }
 
-    public static synchronized void processShipLockerBackpackFleetCarrier(final File file, final JournalEventType journalEventType) {
+    public static synchronized void processStateFile(final File file, final JournalEventType journalEventType) {
         Platform.runLater(() -> MessageHandler.handleMessage(file, journalEventType));
     }
 }

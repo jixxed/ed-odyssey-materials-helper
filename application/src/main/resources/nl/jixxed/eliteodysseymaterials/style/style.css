@@ -2122,3 +2122,71 @@
 .setting-textfield-wide {
     -fx-min-width: 50em;
 }
+
+.horizons-commoditycard {
+    -fx-padding: 0.2em, 0.2em, 0.2em, 0.2em;
+    -fx-background-color: #0f0f0f;
+    /*-fx-pref-height: 5.4em;*/
+    /*-fx-min-height: 5.4em;*/
+    /*-fx-max-height: 5em;*/
+    -fx-alignment: center-left;
+    -fx-background-color: #0f0f0f;
+    -fx-pref-width: 17.9em;
+    -fx-min-width: 17.9em;
+    -fx-max-width: 17.9em;
+}
+
+.horizons-commoditycard-firstline {
+    /*-fx-pref-height: 4em;*/
+}
+
+.horizons-commoditycard-image {
+    -fx-pref-height: 2.5em;
+    -fx-min-height: 2.5em;
+    -fx-max-height: 2.5em;
+    -fx-pref-width: 2.5em;
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-alignment: center-left;
+
+}
+
+.fleetcarrier-amount {
+    -fx-pref-width: 6.5em;
+    -fx-padding: 0, 0, 0, 1em;
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
+    -fx-text-alignment: left;
+}
+
+.ship-amount {
+    -fx-pref-width: 6.5em;
+    -fx-padding: 0, 1em, 0, 0;
+    -fx-min-height: 2em;
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+}
+
+.horizons-commoditycard-name {
+    /*-fx-spacing: 0, 0, 0, 1em;*/
+    -fx-min-width: 1em;
+    -fx-pref-width: 14em;
+    -fx-max-width: 14em;
+    -fx-padding: 0.5em, 0, 0, 0;
+    /*-fx-pref-height: 2.5em;*/
+    -fx-alignment: center-left;
+    /*-fx-text-alignment: left;*/
+    -fx-wrap-text: true;
+}
+
+.blueprint-listing-flowpane {
+    -fx-spacing: 0.5em;
+}
+
+.blueprint-listing-label {
+    -fx-background-color: #4f4f4f;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-label-padding: 0.2em;
+
+}

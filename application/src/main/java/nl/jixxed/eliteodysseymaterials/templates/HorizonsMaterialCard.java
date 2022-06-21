@@ -18,7 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.segmentbar.SegmentType;
@@ -89,8 +89,8 @@ public class HorizonsMaterialCard extends VBox implements Template {
             }
         });
 
-        EventService.addListener(this, HorizonsSearchEvent.class, horizonsSearchEvent -> {
-            update(horizonsSearchEvent.getSearch());
+        EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
+            update(horizonsMaterialSearchEvent.getSearch());
         });
     }
 

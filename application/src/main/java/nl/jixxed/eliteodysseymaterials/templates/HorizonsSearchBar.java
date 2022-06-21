@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
@@ -16,6 +17,7 @@ class HorizonsSearchBar extends HBox {
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private Button button;
     private HorizonsMaterialSearchBar materialSearchBar;
+    private HorizonsCommoditiesSearchBar commoditiesSearchBar;
 
     HorizonsSearchBar() {
         initComponents();
@@ -26,10 +28,12 @@ class HorizonsSearchBar extends HBox {
         this.getStyleClass().add("root");
         initMenuButton();
         this.materialSearchBar = new HorizonsMaterialSearchBar();
+        this.commoditiesSearchBar = new HorizonsCommoditiesSearchBar();
 
         applyFontSizingHack();
 
         HBox.setHgrow(this.materialSearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.commoditiesSearchBar, Priority.ALWAYS);
         this.getChildren().addAll(this.button, this.materialSearchBar);
     }
 
@@ -61,6 +65,17 @@ class HorizonsSearchBar extends HBox {
             this.button.styleProperty().set(fontStyle);
         });
         EventService.addListener(this, HorizonsTabSelectedEvent.class, event -> {
+            if (HorizonsTabs.COMMODITIES.equals(event.getSelectedTab())) {
+                if (this.getChildren().contains(this.materialSearchBar)) {
+                    this.getChildren().remove(this.materialSearchBar);
+                    this.getChildren().add(this.commoditiesSearchBar);
+                }
+            } else {
+                if (this.getChildren().contains(this.commoditiesSearchBar)) {
+                    this.getChildren().remove(this.commoditiesSearchBar);
+                    this.getChildren().add(this.materialSearchBar);
+                }
+            }
         });
     }
 

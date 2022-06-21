@@ -185,6 +185,7 @@ extraJavaModuleInfo {
         exports("com.github.scribejava.core.oauth")
         exports("com.github.scribejava.core.model")
         exports("com.github.scribejava.core.pkce")
+        exports("com.github.scribejava.core.httpclient")
         requires("scribejava.java8")
         requires("com.fasterxml.jackson.core")
         requires("com.fasterxml.jackson.databind")

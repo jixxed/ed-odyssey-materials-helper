@@ -16,7 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Raw;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.Arrays;
@@ -85,8 +85,8 @@ public class HorizonsMaterialOverview extends VBox implements Template {
     @Override
     public void initEventHandling() {
         //NOOP
-        EventService.addListener(this, HorizonsSearchEvent.class, horizonsSearchEvent -> {
-            update(horizonsSearchEvent.getSearch());
+        EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
+            update(horizonsMaterialSearchEvent.getSearch());
         });
     }
 }

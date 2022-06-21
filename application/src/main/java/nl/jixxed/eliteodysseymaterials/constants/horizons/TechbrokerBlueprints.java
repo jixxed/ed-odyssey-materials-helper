@@ -417,7 +417,7 @@ public class TechbrokerBlueprints {
                     Map.of(),
                     List.of()
             )),
-            Map.entry(HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
+            Map.entry(HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
                     Map.of(
                             Commodity.METAALLOYS, 16,
                             Manufactured.FOCUSCRYSTALS, 25,

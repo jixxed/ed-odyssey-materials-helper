@@ -6,6 +6,6 @@ This application reads the journal files to track which materials you have and m
 materials are relevant to collect, how much you need to collect to upgrade a weapon or suit, unlock an engineer or craft
 a blueprint.
 
-Down To Earth Astronomy made a video on it:
+The Buur Pit made a video on it:
 
-[![Video](https://img.youtube.com/vi/_vVbxeI1n6g/maxresdefault.jpg)](https://youtu.be/_vVbxeI1n6g)
+[![Video](https://img.youtube.com/vi/Dwk-5SLbZ3U/maxresdefault.jpg)](https://youtu.be/Dwk-5SLbZ3U)

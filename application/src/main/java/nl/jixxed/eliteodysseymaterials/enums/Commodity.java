@@ -3,6 +3,8 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -383,7 +385,8 @@ public enum Commodity implements HorizonsMaterial {
     WUTHIELOKUFROTH(CommodityType.LEGAL_DRUGS, TRUE),
     XIHECOMPANIONS(CommodityType.TECHNOLOGY, TRUE),
     YASOKONDILEAF(CommodityType.LEGAL_DRUGS, TRUE),
-    ZEESSZEANTGLUE(CommodityType.CONSUMER_ITEMS, TRUE);
+    ZEESSZEANTGLUE(CommodityType.CONSUMER_ITEMS, TRUE),
+    UNKNOWN(CommodityType.UNKNOWN, FALSE);
     private final CommodityType commodityType;
     private final boolean rareCommodity;
 
@@ -397,9 +400,17 @@ public enum Commodity implements HorizonsMaterial {
         return HorizonsMaterialType.COMMODITY;
     }
 
+    public static Commodity forName(final String name) {
+        try {
+            return Commodity.valueOf(name.toUpperCase());
+        } catch (final IllegalArgumentException ex) {
+            return Commodity.UNKNOWN;
+        }
+    }
+
     @Override
     public boolean isUnknown() {
-        return false;
+        return this == Commodity.UNKNOWN;
     }
 
     @Override
@@ -415,5 +426,11 @@ public enum Commodity implements HorizonsMaterial {
     @Override
     public HorizonsStorageType getStorageType() {
         return HorizonsStorageType.COMMODITY;
+    }
+
+    public static Commodity[] materialsForType(final CommodityType commodityType) {
+        return Arrays.stream(Commodity.values())
+                .filter(commodity -> commodity.getCommodityType().equals(commodityType))
+                .toList().toArray(Commodity[]::new);
     }
 }

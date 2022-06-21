@@ -52,6 +52,7 @@ public class FXApplication extends Application {
     private static final String MAIN_STYLESHEET = "/nl/jixxed/eliteodysseymaterials/style/style.css";
 
     private ApplicationLayout applicationLayout;
+    private TimeStampedGameStateWatcher timeStampedCargoWatcher;
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private GameStateWatcher fleetCarrierWatcher;
@@ -164,8 +165,10 @@ public class FXApplication extends Application {
     }
 
     private void setupStorageWatchers(final File watchedFolder) {
-        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processShipLockerBackpackFleetCarrier(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
-        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processShipLockerBackpackFleetCarrier(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
+
+        this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, StoragePool.SHIP);
+        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
+        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
         this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
 
 
@@ -179,7 +182,7 @@ public class FXApplication extends Application {
                 watchedFolderFleetCarrier.mkdirs();
             }
             this.fleetCarrierWatcher = new GameStateWatcher();
-            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processShipLockerBackpackFleetCarrier(file, JournalEventType.FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, StoragePool.FLEETCARRIER);
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processStateFile(file, JournalEventType.FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, StoragePool.FLEETCARRIER);
         }
 
     }
@@ -361,9 +364,12 @@ public class FXApplication extends Application {
         StorageService.resetShipLockerCounts();
         StorageService.resetBackPackCounts();
         StorageService.resetFleetCarrierCounts();
+        StorageService.resetHorizonsMaterialCounts();
+        StorageService.resetHorizonsCommodityCounts();
         if (this.fleetCarrierWatcher != null) {
             this.fleetCarrierWatcher.stop();
         }
+        this.timeStampedCargoWatcher.stop();
         this.timeStampedShipLockerWatcher.stop();
         this.timeStampedBackPackWatcher.stop();
         this.journalWatcher.stop();

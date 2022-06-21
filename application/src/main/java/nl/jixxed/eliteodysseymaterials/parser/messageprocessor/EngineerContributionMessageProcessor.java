@@ -14,7 +14,7 @@ public class EngineerContributionMessageProcessor implements MessageProcessor {
         if (journalMessage.has("Material")) {
             final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(journalMessage.get("Material").asText());
             if (!horizonsMaterial.isUnknown()) {
-                StorageService.addMaterial(horizonsMaterial, -journalMessage.get("Quantity").asInt());
+                StorageService.removeMaterial(horizonsMaterial, journalMessage.get("Quantity").asInt());
             }
             EventService.publish(new StorageEvent(StoragePool.SHIP));
         }

@@ -49,6 +49,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
         publishBackpackChangeEvents(removed, Operation.REMOVED, timestamp);
         if (added != null && !added.isEmpty()) {
             StreamSupport.stream(added.spliterator(), false)
+                    .filter(jsonNode -> jsonNode.get("MissionID") == null)
                     .map(jsonNode -> OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText()))
                     .filter(material -> !(material instanceof Consumable))
                     .forEach(material -> {

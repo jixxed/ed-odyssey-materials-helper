@@ -468,7 +468,7 @@ public class ApplicationState {
             blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
             blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
             blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
-            blueprint.getMaterialCollection(Commodity.class).forEach((material, amountRequired) -> hasCommodity.set(hasCommodity.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            blueprint.getMaterialCollection(Commodity.class).forEach((material, amountRequired) -> hasCommodity.set(hasCommodity.get() && (StorageService.getCommodityCount((Commodity) material, StoragePool.SHIP) - (amountRequired * numberOfRolls)) >= 0));
             if (!hasRaw.get() || !hasEncoded.get() || !hasManufactured.get()) {
                 return Craftability.NOT_CRAFTABLE;
             } else if (hasRaw.get() && hasEncoded.get() && hasManufactured.get() && !hasCommodity.get()) {

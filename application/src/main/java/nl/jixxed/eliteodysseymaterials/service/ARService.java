@@ -408,7 +408,8 @@ public class ARService {
                         final Mat matGray = new Mat(matColor.size(), CvType.CV_8UC1);
                         Imgproc.cvtColor(matColor, matGray, Imgproc.COLOR_RGB2GRAY);
                         final BufferedImage menuItemLabelCaptureOriginalGray = CvHelper.mat2Img(matGray);
-
+                        matColor.release();
+                        matGray.release();
                         timeRenderBefore = System.currentTimeMillis();
                         String cleaned = imageToString(finalIndex, menuItemLabelCaptureOriginalGray);
                         final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();

@@ -48,8 +48,8 @@ class MaterialSearchBar extends HBox {
         applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
-        HBox.setHgrow(this.showMaterialsComboBox, Priority.ALWAYS);
-        HBox.setHgrow(this.sortMaterialsComboBox, Priority.ALWAYS);
+//        HBox.setHgrow(this.showMaterialsComboBox, Priority.ALWAYS);
+//        HBox.setHgrow(this.sortMaterialsComboBox, Priority.ALWAYS);
 
         this.getChildren().addAll(this.textField, this.showMaterialsComboBox, this.sortMaterialsComboBox);
     }

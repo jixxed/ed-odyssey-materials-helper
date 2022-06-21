@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum HorizonsTabs {
-    MATERIALS, BLUEPRINTS, ENGINEERS, WISHLIST
+    MATERIALS, COMMODITIES, BLUEPRINTS, ENGINEERS, WISHLIST
 
 }

@@ -328,7 +328,6 @@ blueprint.horizons.name.fragment_cannon,Fragment Cannon,Fragment Cannon,Fragment
 blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Rahmenverschiebungsantrieb,Unidad de cambio de marco,Lecteur de décalage du cadre,Unidade de mudança de quadro,Рамочно-сместительный двигатель
 blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Rahmenverschiebungsantriebsbetrieb,Interdictor de unidad de cambio de cuadro,Interdictor de lecteur de décalage de cadre,Interditor de transmissão de mudança de quadro,Перехватчик FSD
 blueprint.horizons.name.frame_shift_wake_scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Escáner de estela de cambio de cuadro,Scanner de shift de cadre,Scanner de despertar em mudança de quadro,Сканер следа FSD
-blueprint.horizons.name.fsd_injection,Boosts FSD Hyperspace jump range,Boosts FSD Hyperspace jump range,Steigert den FSD -Hyperraum -Sprungbereich,Aumenta el rango de salto de hiperespacio FSD,Booste la plage de saut hyperspace FSD,Aumenta a faixa de salto do hiperespaço FSD,Вброс в FSD
 blueprint.horizons.name.fuel_scoop,Fuel Scoop,Fuel Scoop,Kraftstoffschaufel,Cucharada de combustible,Scoop de carburant,Colher de combustível,Топливозаборник
 blueprint.horizons.name.fuel_transfer_limpet_controller,Fuel Transfer Limpet Controller,Fuel Transfer Limpet Controller,Kraftstoffübertragungs -Limpet -Controller,Controlador de lapa de transferencia de combustible,Contrôleur de paquet de transfert de carburant,Controlador de transferência de combustível,Контроллер дрона-заправщика
 blueprint.horizons.name.guardian_fighters,Guardian Fighters,Guardian Fighters,Wächterkämpfer,Combatientes guardianes,Fighters gardiens,Fighters Guardian,Истребители Стражей
@@ -2081,7 +2080,6 @@ tabs.engineers,Engineers,Engineers,Ingenieure,Ingenieros,Ingénieurs,Engenheiros
 tabs.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать
 tabs.imported.wishlist,Imported wishlist,Imported wishlist,Importierte Wunschliste,Lista de deseos importada,Liste de souhaits importée,Lista de desejos importada,Импортированный список желаемого
 tabs.loadout,Loadout Editor,Loadout Editor,Loadout-Editor,Editor de equipamiento,Éditeur de chargement,Editor de Carregamento,Редактор экипировки
-tabs.overview,Overview,Overview,Übersicht,Resumen,Aperçu,Visão geral,Обзор
 tabs.settings,Settings,Settings,Einstellungen,Configuración,Paramètres,Configurações,Настройки
 tabs.trade,Trade,Trade,Handel,Comercio,Commerce,Negociação,Торговля
 tabs.wishlist,Wishlist{0},Wishlist{0},Wunschliste{0},Lista de deseos{0},Liste de souhaits{0},Lista de desejos{0},Список желаемого{0}
@@ -2151,7 +2149,6 @@ tab.wishlist.selected.blueprints.hint.yellow.odyssey.explain,- This individual b
 tab.wishlist.selected.blueprints.hint.green,Green,Green,Grün,Verde,Vert,Verde,Зеленый
 tab.wishlist.selected.blueprints.hint.green.explain,- This individual blueprint can be crafted,- This individual blueprint can be crafted,- Dieser individuelle Blaupause kann gestaltet werden,- Este plan individual se puede elaborar,- Ce plan individuel peut être conçu,- Este plano individual pode ser criado,- Можно изготовить
 tab.settings.wishlist.grade.rolls,Number of of rolls per grade,Number of of rolls per grade,Anzahl der Brötchen pro Klasse,Número de rollos por grado,Nombre de rouleaux par grade,Número de rolos por série,Количество попыток на одну гайку
-tab.settings.title.overview,Odyssey Overview,Odyssey Overview,Odyssey -Übersicht,Descripción general de Odyssey,Présentation de l''Odyssée,Visão geral da Odyssey,Odyssey обзор
 tab.settings.title.wishlist,Horizons Wishlist,Horizons Wishlist,Horizons Wunschliste,Lista de deseos de horizontes,Liste de souhaits Horizons,Lista de desejos Horizons,Horizons список желаемого
 blueprint.engineer.pinnable.tooltip,Double-click to pin blueprint to this engineer,Double-click to pin blueprint to this engineer,"Doppelklicken Sie auf diesen Ingenieur, um Blaupause zu erhalten",Haga doble clic para pintar un plan a este ingeniero,Double-cliquez pour épingler Blueprint à cet ingénieur,Clique duas vezes para prender o plano para este engenheiro,"Дважды щелкните, чтобы прикрепить чертеж к этому инженеру"
 blueprint.add.to.wishlist.all.grade,Add all grades to {0},Add all grades to {0},Fügen Sie alle Noten zu {0} hinzu,Agregue todos los grados a {0},Ajouter toutes les notes à {0},Adicione todas as notas a {0},Добавьте все апгрейды в {0}
@@ -2215,3 +2212,16 @@ tab.settings.ar.color.blueprint,Blueprint color,Blueprint color,Blaupause Farbe,
 notification.type.irrelevant_point,Point to irrelevant material,Point to irrelevant material,Auf irrelevantes Material hinweisen,Señalar material irrelevante,Pointer du matériau non pertinent,Apontar para material irrelevante,При указывании на ненужные материалы
 notification.type.wishlist_point,Point to wishlist material,Point to wishlist material,Zeigen Sie auf Wunschlistematerial,Señalar material de lista de deseos,Pointer à WishList Material,Apontar para o material da lista de desejos,При указывании на материалы из вишлиста
 notification.type.relevant_point,Point to relevant material,Point to relevant material,Auf relevantes Material hinweisen,Señalar material relevante,Pointer du matériel pertinent,Apontar para o material relevante,При указывании на используемые (полезные) материалы
+tabs.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey
+tabs.horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons
+tabs.odyssey.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
+tabs.horizons.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
+tabs.horizons.commodities,Commodities,Commodities,Waren,Productos básicos,Marchandises,Mercadorias,Товары
+material.tooltip.fleetcarrier.storage,Stored amount: {0},Stored amount: {0},Gespeicherte Menge: {0},Cantidad almacenada: {0},Montant stocké: {0},Quantidade armazenada: {0},Хранящаяся сумма: {0}
+search.sort.quantity_ship,Ship quantity,Ship quantity,Schiffsmenge,Cantidad de barcos,Quantité de navire,Quantidade de navio,Количество корабля
+search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,FleetCarrier Menge,Cantidad de flotador,Quantité Fleetcarrier,Quantidade FleetCarrier,Количество FleetCarrier
+search.sort.quantity_total,Total quantity,Total quantity,Gesamtmenge,Cantidad total,Quantité totale,Quantidade total,Общая численность
+search.filter.ship,Ship,Ship,Schiff,Barco,Bateau,Navio,Судно
+blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSD Injektion,Inyección de FSD,Injection de FSD,Injeção de FSD,FSD инъекция
+tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Ruft API Daten wie FleetCarrier Aktien und Bestellungen in einem Intervall von 5 Minuten ab,Recupera datos de API como stock de flotante y pedidos en un intervalo de 5 minutos,Récupère les données de l'API comme le stock et les commandes de FleetCarrier sur un intervalle de 5 minutes,Recupera dados da API como estoque de FleetCarrier e pedidos em um intervalo de 5 minutos,Получает данные API, такие как запасы FleetCarrier и заказы в 5 -минутном интервале
+tab.settings.title.odyssey.materials,Odyssey Materials,Odyssey Materials,Odyssey Materialien,Materiales de Odyssey,Matériaux Odyssey,Materiais Odyssey,Odyssey материалы

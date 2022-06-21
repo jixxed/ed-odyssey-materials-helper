@@ -1,3 +1,15 @@
+Version 1.82
+-------------
+Added overview for Horizons Commodities with search abilities
+Integrated with fleetcarrier stock and orders
+Compacted recipes for Horizons materials in the tooltip
+Added yellow highlight to Horizons wishlist materials to indicate remaining required materials are available on fleetcarrier
+Added a warning for when the API authentication fails and requires a relogin
+Muted Warning if irrelevant or wishlist material is mission related
+Fix horizons engineer links to blueprints
+Fix flickering material images for certain languages
+Renamed Odyssey Overview to Materials
+
 Version 1.81
 -------------
 Add grayscale conversion for AR Overlay material OCR, to improve detection on default game HUD colors

@@ -40,6 +40,8 @@ class MessageHandler {
             Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor()),
             Map.entry(JournalEventType.DOCKED, new DockedMessageProcessor()),
             Map.entry(JournalEventType.MATERIALS, new MaterialsMessageProcessor()),
+            Map.entry(JournalEventType.CARGO, new CargoMessageProcessor()),
+
             Map.entry(JournalEventType.MATERIALCOLLECTED, new MaterialCollectedMessageProcessor()),
             Map.entry(JournalEventType.MATERIALTRADE, new MaterialTradeMessageProcessor()),
             Map.entry(JournalEventType.MATERIALDISCARDED, new MaterialDiscardedMessageProcessor()),
@@ -51,6 +53,9 @@ class MessageHandler {
             Map.entry(JournalEventType.UPGRADESUIT, new UpgradeSuitMessageProcessor()),
             Map.entry(JournalEventType.UPGRADEWEAPON, new UpgradeWeaponMessageProcessor()),
             Map.entry(JournalEventType.RECEIVETEXT, new ReceiveTextMessageProcessor()),
+            Map.entry(JournalEventType.BUYMICRORESOURCES, new BuyMicroResourcesMessageProcessor()),
+            Map.entry(JournalEventType.MARKETBUY, new MarketBuyMessageProcessor()),
+            Map.entry(JournalEventType.MARKETSELL, new MarketSellMessageProcessor()),
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

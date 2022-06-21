@@ -30,7 +30,7 @@ public class ObservableResourceFactory {
     }
 
     @SuppressWarnings("java:S1171")
-    protected static StringBinding getStringBinding(final Supplier<String> stringSupplier) {
+    public static StringBinding getStringBinding(final Supplier<String> stringSupplier) {
         return new StringBinding() {
             {
                 bind(resourcesProperty());

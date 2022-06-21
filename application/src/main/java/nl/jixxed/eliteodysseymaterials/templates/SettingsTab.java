@@ -152,13 +152,13 @@ public class SettingsTab extends EDOTab {
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
-        final HBox wipSetting = createWIPSetting();
-        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting, wipSetting).buildVBox();
+//        final HBox wipSetting = createWIPSetting();
+        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting/*, wipSetting*/).buildVBox();
         settings.getChildren().add(general);
         //overview
         final Label overviewLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.overview"))
+                .withText(LocaleService.getStringBinding("tab.settings.title.odyssey.materials"))
                 .build();
         final HBox readingDirectionSetting = createReadingDirectionSetting();
         final HBox soloModeSetting = createSoloModeSetting();
@@ -190,8 +190,12 @@ public class SettingsTab extends EDOTab {
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.settings.title.capi"))
                 .build();
+        final Label capiExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.capi.explain"))
+                .build();
         final HBox capiConnectSetting = createCapiConnectSetting();
-        final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiConnectSetting).buildVBox();
+        final VBox capiIntegration = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(capiLabel, capiExplainLabel, capiConnectSetting).buildVBox();
         settings.getChildren().add(capiIntegration);
         //AR
         if (OsCheck.isWindows()) {

@@ -12,10 +12,7 @@ import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
-import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -36,6 +33,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
+    private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
     @EqualsAndHashCode.Include
     private final HorizonsStorageType storageType;
     @EqualsAndHashCode.Include
@@ -103,6 +101,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         VBox.setVgrow(this.region2, Priority.ALWAYS);
 
         this.firstLine = BoxBuilder.builder().withNodes(this.image, this.nameLabel).buildHBox();
+        this.firstLine.prefHeightProperty().bind(this.nameLabel.heightProperty());
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
@@ -114,7 +113,11 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
 
     @SuppressWarnings("java:S6205")
     private void initImage() {
-        this.image = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(this.horizonsMaterial.getRarity().getImagePath()).build();
+        if (this.horizonsMaterial instanceof Commodity commodity) {
+            this.image = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(commodity.getCommodityType().getImagePath()).build();
+        } else {
+            this.image = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(this.horizonsMaterial.getRarity().getImagePath()).build();
+        }
     }
 
     private void setRightAmount(final Integer rightAmount) {
@@ -123,14 +126,23 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
 
 
     protected void update() {
-        setRightAmount(StorageService.getMaterialCount(this.horizonsMaterial));
-        if (this.rightAmount >= this.leftAmount) {
-            this.rightAmountLabel.setText(this.rightAmount.toString());
-            this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
+        final Integer materialCountShip;
+        final Integer materialCountBoth;
+        if (this.horizonsMaterial instanceof Commodity commodity) {
+            materialCountShip = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
+            materialCountBoth = materialCountShip + StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+        } else {
+            materialCountBoth = StorageService.getMaterialCount(this.horizonsMaterial);
+            materialCountShip = materialCountBoth;
+        }
+        setRightAmount(materialCountBoth);
+        this.rightAmountLabel.setText(this.rightAmount.toString());
+        this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
+        if (materialCountBoth >= this.leftAmount && materialCountShip < this.leftAmount) {
+            this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
+        } else if (materialCountBoth >= this.leftAmount) {
             this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS);
         } else {
-            this.rightAmountLabel.setText(this.rightAmount.toString());
-            this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
             this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_UNFILLED_CLASS);
         }
     }

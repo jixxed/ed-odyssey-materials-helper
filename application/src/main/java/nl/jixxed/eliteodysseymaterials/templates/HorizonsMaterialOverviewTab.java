@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.scene.control.ScrollPane;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 public class HorizonsMaterialOverviewTab extends EDHTab implements Template {
     private ScrollPane scrollPane;
@@ -16,7 +17,7 @@ public class HorizonsMaterialOverviewTab extends EDHTab implements Template {
     @Override
     public void initComponents() {
         this.materialOverview = new HorizonsMaterialOverview();
-        this.setText("Materials");
+        this.textProperty().bind(LocaleService.getStringBinding("tabs.horizons.materials"));
         this.setClosable(false);
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(this.materialOverview)

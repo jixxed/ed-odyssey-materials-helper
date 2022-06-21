@@ -17,4 +17,5 @@ public class AppConstants {
     public static final String JOURNAL_FILE_PREFIX = "Journal.";
 
     public static final String CAPI_FILE = "capi.json";
+    public static final String CARGO_FILE = "Cargo.json";
 }

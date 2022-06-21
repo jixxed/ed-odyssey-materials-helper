@@ -22,7 +22,10 @@ public interface HorizonsMaterial extends Material {
             if (material.isUnknown()) {
                 material = Manufactured.forName(name);
                 if (material.isUnknown()) {
-                    throw new IllegalArgumentException("Unknown material type for name: " + name);
+                    material = Commodity.forName(name);
+                    if (material.isUnknown()) {
+                        throw new IllegalArgumentException("Unknown material type for name: " + name);
+                    }
                 }
             }
         }

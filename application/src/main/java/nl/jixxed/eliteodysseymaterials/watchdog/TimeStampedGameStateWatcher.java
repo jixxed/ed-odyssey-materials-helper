@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.Event;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.ShipLockerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,12 +40,27 @@ public class TimeStampedGameStateWatcher {
             };
             this.eventConsumer = consumer;
             EventService.addListener(this, BackpackEvent.class, consumer);
+        } else if (storagePool == StoragePool.SHIP) {
+            final Consumer<CargoEvent> consumer = (CargoEvent cargoEvent) -> {
+                this.timeStamp.set(cargoEvent.getTimestamp());
+                this.process(this.file);
+            };
+            this.eventConsumer = consumer;
+            EventService.addListener(this, CargoEvent.class, consumer);
         }
     }
 
     public void stop() {
         this.gameStateWatcher.stop();
-        EventService.removeListener(this.eventConsumer, this.storagePool == StoragePool.SHIPLOCKER ? ShipLockerEvent.class : BackpackEvent.class);
+        final Class<? extends Event> eventClass;
+        if (this.storagePool == StoragePool.SHIPLOCKER) {
+            eventClass = ShipLockerEvent.class;
+        } else if (this.storagePool == StoragePool.BACKPACK) {
+            eventClass = BackpackEvent.class;
+        } else {
+            eventClass = CargoEvent.class;
+        }
+        EventService.removeListener(this.eventConsumer, eventClass);
     }
 
     @SuppressWarnings("java:S1192")
@@ -60,7 +72,7 @@ public class TimeStampedGameStateWatcher {
 
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
                 if (jsonNode.get("event") != null
-                        && jsonNode.get("event").asText().equalsIgnoreCase(this.storagePool.name())
+                        && jsonNode.get("event").asText().equalsIgnoreCase(getEventName())
                         && jsonNode.get("timestamp") != null
                         && jsonNode.get("timestamp").asText().equals(this.timeStamp.get())) {
                     this.fileProcessor.accept(file);
@@ -71,5 +83,12 @@ public class TimeStampedGameStateWatcher {
                 log.error("Error processing journal message", e);
             }
         }
+    }
+
+    private String getEventName() {
+        if (this.storagePool.equals(StoragePool.SHIP)) {
+            return "Cargo";
+        }
+        return this.storagePool.name();
     }
 }

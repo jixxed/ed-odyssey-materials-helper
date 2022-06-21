@@ -16,7 +16,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsTabSelectedEvent;
 
 import java.util.concurrent.TimeUnit;
@@ -60,7 +60,7 @@ class HorizonsMaterialSearchBar extends HBox {
         Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsSearchEvent(newValue))));
+                .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsMaterialSearchEvent(newValue))));
     }
 
 

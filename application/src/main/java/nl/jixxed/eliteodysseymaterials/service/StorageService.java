@@ -23,6 +23,8 @@ public class StorageService {
     @Getter
     private static final Map<Commodity, Integer> commodities = new EnumMap<>(Commodity.class);
     @Getter
+    private static final Map<Commodity, Integer> commoditiesFleetcarrier = new EnumMap<>(Commodity.class);
+    @Getter
     private static final Map<Good, Storage> goods = new EnumMap<>(Good.class);
     @Getter
     private static final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
@@ -58,6 +60,14 @@ public class StorageService {
         throw new IllegalArgumentException("Unknown material type");
     }
 
+    public static void removeMaterial(final HorizonsMaterial material, final Integer amount) {
+        addMaterial(material, -amount);
+    }
+
+    public static void removeCommodity(final Commodity commodity, final StoragePool storagePool, final int amount) {
+        addCommodity(commodity, storagePool, -amount);
+    }
+
     public static void addMaterial(final HorizonsMaterial material, final Integer amount) {
         if (material instanceof Raw rawMaterial) {
             raw.put(rawMaterial, raw.get(material) + amount);
@@ -66,7 +76,17 @@ public class StorageService {
         } else if (material instanceof Manufactured manufacturedMaterial) {
             manufactured.put(manufacturedMaterial, manufactured.get(material) + amount);
         } else if (material instanceof Commodity commodity) {
-            commodities.put(commodity, commodities.get(material) + amount);
+            throw new UnsupportedOperationException("use addCommodity instead");
+        }
+    }
+
+    public static void addCommodity(final Commodity commodity, final StoragePool storagePool, final Integer amount) {
+        if (StoragePool.FLEETCARRIER.equals(storagePool)) {
+            commoditiesFleetcarrier.put(commodity, commoditiesFleetcarrier.get(commodity) + amount);
+        } else if (StoragePool.SHIP.equals(storagePool)) {
+            commodities.put(commodity, commodities.get(commodity) + amount);
+        } else {
+            throw new IllegalArgumentException("storagePool not supported");
         }
     }
 
@@ -78,9 +98,18 @@ public class StorageService {
         } else if (material instanceof Manufactured) {
             return manufactured.get(material);
         } else if (material instanceof Commodity) {
-            return commodities.get(material);
+            throw new UnsupportedOperationException("Use getCommodityCount instead");
         }
         throw new IllegalArgumentException("Unknown material type");
+    }
+
+    public static Integer getCommodityCount(final Commodity commodity, final StoragePool storagePool) {
+        if (StoragePool.FLEETCARRIER.equals(storagePool)) {
+            return commoditiesFleetcarrier.getOrDefault(commodity, 0);
+        } else if (StoragePool.SHIP.equals(storagePool)) {
+            return commodities.getOrDefault(commodity, 0);
+        }
+        throw new IllegalArgumentException("Unknown storagePool for commodity");
     }
 
     public static void resetShipLockerCounts() {
@@ -93,6 +122,9 @@ public class StorageService {
         getAssets().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
         getData().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
         getGoods().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+        Arrays.stream(Commodity.values()).forEach(material ->
+                getCommoditiesFleetcarrier().put(material, 0)
+        );
     }
 
     public static void resetBackPackCounts() {
@@ -111,6 +143,9 @@ public class StorageService {
         Arrays.stream(Manufactured.values()).forEach(material ->
                 getManufactured().put(material, 0)
         );
+    }
+
+    public static void resetHorizonsCommodityCounts() {
         Arrays.stream(Commodity.values()).forEach(material ->
                 getCommodities().put(material, 0)
         );

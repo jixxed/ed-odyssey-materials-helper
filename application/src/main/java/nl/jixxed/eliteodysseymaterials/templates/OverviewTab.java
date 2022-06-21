@@ -16,7 +16,7 @@ public class OverviewTab extends EDOTab {
     }
 
     private void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.overview"));
+        this.textProperty().bind(LocaleService.getStringBinding("tabs.odyssey.materials"));
         this.scrollPane = ScrollPaneBuilder.builder().build();
         this.materialOverview = new MaterialOverview(this.scrollPane);
         this.scrollPane.setContent(this.materialOverview);
