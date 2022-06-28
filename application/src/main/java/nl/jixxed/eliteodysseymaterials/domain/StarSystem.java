@@ -11,6 +11,8 @@ import nl.jixxed.eliteodysseymaterials.enums.SystemSecurity;
 @AllArgsConstructor
 @Getter
 public class StarSystem {
+    public static final StarSystem SOL = new StarSystem("Sol", 0, 0, 0);
+    public static final StarSystem COLONIA = new StarSystem("Colonia", -9530.5, -910.28125, 19808.125);
     private final String name;
     private SystemEconomy primaryEconomy = SystemEconomy.UNKNOWN;
     private SystemEconomy secondaryEconomy = SystemEconomy.UNKNOWN;
