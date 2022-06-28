@@ -4,7 +4,7 @@ import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ObservableValue;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.templates.IntField;
+import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
 
 import java.util.ArrayList;
 import java.util.Arrays;

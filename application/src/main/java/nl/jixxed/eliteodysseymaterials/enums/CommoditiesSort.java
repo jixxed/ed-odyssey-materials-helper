@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.HorizonsCommodityCard;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommodityCard;
 
 import java.util.Comparator;
 

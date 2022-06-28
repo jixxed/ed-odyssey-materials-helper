@@ -12,6 +12,9 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ApplicationLifeCycleEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsContentArea;
+import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyContentArea;
+import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
 public class ApplicationLayout extends AnchorPane {
     private BottomBar bottomBar;

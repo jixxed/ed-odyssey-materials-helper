@@ -7,8 +7,8 @@ import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
-import nl.jixxed.eliteodysseymaterials.templates.OdysseyWishlistBlueprintTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprintTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistBlueprintTemplate;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

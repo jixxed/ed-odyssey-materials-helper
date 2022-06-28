@@ -18,7 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
-import nl.jixxed.eliteodysseymaterials.templates.AROverlay;
+import nl.jixxed.eliteodysseymaterials.templates.overlay.ar.AROverlay;
 import nl.jixxed.tess4j.TesseractException;
 import nu.pattern.OpenCV;
 import org.opencv.core.Core;

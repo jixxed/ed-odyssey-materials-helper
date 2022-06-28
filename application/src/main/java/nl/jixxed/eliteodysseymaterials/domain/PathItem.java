@@ -6,7 +6,7 @@ import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.WishlistBlueprintTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
