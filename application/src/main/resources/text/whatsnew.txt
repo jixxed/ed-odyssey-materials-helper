@@ -1,3 +1,11 @@
+Version 1.83
+-------------
+Split material tracking for Bubble/Colonia. Show material statistics for whichever is closest.
+The update schedule for this is weekly, so if you are in Colonia and want the latest report with Colonia statistics:
+- remove material-report.json from %localappdata%\odyssey-materials-helper
+- restart the application
+Or wait a week for the next refresh.
+
 Version 1.82
 -------------
 Added overview for Horizons Commodities with search abilities
