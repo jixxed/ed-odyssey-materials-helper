@@ -51,7 +51,11 @@ public class Storage {
     }
 
     public Integer getTotalValue() {
-        return this.backPack + this.shipLocker + this.fleetCarrier;
+        return getAvailableValue() + this.fleetCarrier;
+    }
+
+    public Integer getAvailableValue() {
+        return this.backPack + this.shipLocker;
     }
 
     public Integer getValue(final StoragePool target) {

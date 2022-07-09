@@ -81,7 +81,7 @@ public class TextExporter {
                                 case RAW -> StorageService.getRaw().get(item.getKey());
                                 case ENCODED -> StorageService.getEncoded().get(item.getKey());
                                 case MANUFACTURED -> StorageService.getManufactured().get(item.getKey());
-                                case COMMODITY -> StorageService.getCommodities().get(item.getKey());
+                                case COMMODITY -> StorageService.getCommoditiesShip().get(item.getKey());
                                 default -> 0;
                             };
                             textBuilder.append(String.format("%12s", total));

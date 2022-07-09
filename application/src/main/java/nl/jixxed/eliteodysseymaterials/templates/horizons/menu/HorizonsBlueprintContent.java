@@ -104,7 +104,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         this.ingredients.addAll(getRecipeIngredients(this.blueprint, Raw.class, HorizonsStorageType.RAW, StorageService.getRaw()));
         this.ingredients.addAll(getRecipeIngredients(this.blueprint, Encoded.class, HorizonsStorageType.ENCODED, StorageService.getEncoded()));
         this.ingredients.addAll(getRecipeIngredients(this.blueprint, Manufactured.class, HorizonsStorageType.MANUFACTURED, StorageService.getManufactured()));
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Commodity.class, HorizonsStorageType.COMMODITY, StorageService.getCommodities()));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Commodity.class, HorizonsStorageType.COMMODITY, StorageService.getCommoditiesShip()));
         if (this.blueprint instanceof HorizonsEngineerBlueprint horizonsEngineerBlueprint) {
             this.ingredients.addAll(horizonsEngineerBlueprint.getOther().stream()
                     .map(text -> new MissionIngredient(text, HorizonsStorageType.OTHER))

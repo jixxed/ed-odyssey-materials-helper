@@ -21,7 +21,7 @@ public class StorageService {
     @Getter
     private static final Map<Manufactured, Integer> manufactured = new EnumMap<>(Manufactured.class);
     @Getter
-    private static final Map<Commodity, Integer> commodities = new EnumMap<>(Commodity.class);
+    private static final Map<Commodity, Integer> commoditiesShip = new EnumMap<>(Commodity.class);
     @Getter
     private static final Map<Commodity, Integer> commoditiesFleetcarrier = new EnumMap<>(Commodity.class);
     @Getter
@@ -84,7 +84,7 @@ public class StorageService {
         if (StoragePool.FLEETCARRIER.equals(storagePool)) {
             commoditiesFleetcarrier.put(commodity, commoditiesFleetcarrier.get(commodity) + amount);
         } else if (StoragePool.SHIP.equals(storagePool)) {
-            commodities.put(commodity, commodities.get(commodity) + amount);
+            commoditiesShip.put(commodity, commoditiesShip.get(commodity) + amount);
         } else {
             throw new IllegalArgumentException("storagePool not supported");
         }
@@ -107,7 +107,7 @@ public class StorageService {
         if (StoragePool.FLEETCARRIER.equals(storagePool)) {
             return commoditiesFleetcarrier.getOrDefault(commodity, 0);
         } else if (StoragePool.SHIP.equals(storagePool)) {
-            return commodities.getOrDefault(commodity, 0);
+            return commoditiesShip.getOrDefault(commodity, 0);
         }
         throw new IllegalArgumentException("Unknown storagePool for commodity");
     }
@@ -147,7 +147,7 @@ public class StorageService {
 
     public static void resetHorizonsCommodityCounts() {
         Arrays.stream(Commodity.values()).forEach(material ->
-                getCommodities().put(material, 0)
+                getCommoditiesShip().put(material, 0)
         );
     }
 
@@ -171,7 +171,7 @@ public class StorageService {
                 getManufactured().put(material, 0)
         );
         Arrays.stream(Commodity.values()).forEach(material ->
-                getCommodities().put(material, 0)
+                getCommoditiesShip().put(material, 0)
         );
 
     }

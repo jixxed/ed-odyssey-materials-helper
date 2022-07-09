@@ -518,15 +518,15 @@ public class OdysseyWishlistTab extends OdysseyTab {
                         }
                 );
         final List<OdysseyWishlistIngredient> ingredientsData = this.wishlistNeededDatas.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getData().get(entry.getKey()).getTotalValue() < entry.getValue())
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getData().get(entry.getKey()).getAvailableValue() < entry.getValue())
                 .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getData().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<OdysseyWishlistIngredient> ingredientsGood = this.wishlistNeededGoods.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getGoods().get(entry.getKey()).getTotalValue() < entry.getValue())
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getGoods().get(entry.getKey()).getAvailableValue() < entry.getValue())
                 .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getGoods().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<OdysseyWishlistIngredient> ingredientsAsset = this.wishlistNeededAssets.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getAssets().get(entry.getKey()).getTotalValue() < entry.getValue())
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getAssets().get(entry.getKey()).getAvailableValue() < entry.getValue())
                 .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getAssets().get(wishlistItem.getKey()).getTotalValue()))
                 .toList();
         final List<Ingredient> allIngredients = new ArrayList<>();

@@ -560,20 +560,20 @@ public class HorizonsWishlistTab extends HorizonsTab {
                         }
                 );
         final List<HorizonsWishlistIngredient> ingredientsRaw = this.wishlistNeededRaw.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getRaw().get(entry.getKey()) < entry.getValue())
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
                 .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getRaw().get(wishlistItem.getKey())))
                 .toList();
         final List<HorizonsWishlistIngredient> ingredientsEncoded = this.wishlistNeededEncoded.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getEncoded().get(entry.getKey()) < entry.getValue())
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
                 .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getEncoded().get(wishlistItem.getKey())))
                 .toList();
         final List<HorizonsWishlistIngredient> ingredientsManufactured = this.wishlistNeededManufactured.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getManufactured().get(entry.getKey()) < entry.getValue())
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
                 .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getManufactured().get(wishlistItem.getKey())))
                 .toList();
         final List<HorizonsWishlistIngredient> ingredientsCommodities = this.wishlistNeededCommmodity.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getCommodities().get(entry.getKey()) < entry.getValue())
-                .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getCommodities().get(wishlistItem.getKey())))
+                .filter(entry -> !this.hideCompleted.get() || StorageService.getCommodityCount(entry.getKey(), StoragePool.SHIP) < entry.getValue())
+                .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getCommoditiesShip().get(wishlistItem.getKey())))
                 .toList();
         final List<Ingredient> allIngredients = new ArrayList<>();
         allIngredients.addAll(ingredientsRaw);
