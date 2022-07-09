@@ -1,3 +1,8 @@
+Version 1.84
+-------------
+Leave yellow wishlist materials on uncompleted list (because you need to collect them from the fleetcarrier)
+bugfix for Meta Hull Reinforcement blueprint on wishlist causing application error
+
 Version 1.83
 -------------
 Split material tracking for Bubble/Colonia. Show material statistics for whichever is closest.
