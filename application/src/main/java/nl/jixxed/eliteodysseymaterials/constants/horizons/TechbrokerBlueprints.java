@@ -417,16 +417,6 @@ public class TechbrokerBlueprints {
                     Map.of(),
                     List.of()
             )),
-            Map.entry(HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
-                    Map.of(
-                            Commodity.METAALLOYS, 16,
-                            Manufactured.FOCUSCRYSTALS, 25,
-                            Encoded.SHIELDPATTERNANALYSIS, 22,
-                            Manufactured.CONFIGURABLECOMPONENTS, 20,
-                            Commodity.REINFORCEDMOUNTINGPLATE, 12),
-                    Map.of(),
-                    List.of()
-            )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_MISSILE_RACK_V1,
                     new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.ENGINEERED_MISSILE_RACK_V1,
                             Map.of(
@@ -466,6 +456,16 @@ public class TechbrokerBlueprints {
                             Manufactured.ELECTROCHEMICALARRAYS, 26,
                             Manufactured.CHEMICALPROCESSORS, 28,
                             Encoded.DATAMINEDWAKE, 18),
+                    Map.of(),
+                    List.of()
+            ),
+            HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
+                    Map.of(
+                            Commodity.METAALLOYS, 16,
+                            Manufactured.FOCUSCRYSTALS, 25,
+                            Encoded.SHIELDPATTERNANALYSIS, 22,
+                            Manufactured.CONFIGURABLECOMPONENTS, 20,
+                            Commodity.REINFORCEDMOUNTINGPLATE, 12),
                     Map.of(),
                     List.of()
             ),
