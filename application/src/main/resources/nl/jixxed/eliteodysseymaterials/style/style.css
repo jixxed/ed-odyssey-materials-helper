@@ -2013,13 +2013,14 @@
 }
 
 .shortest-path-item-label-value {
-    -fx-padding: 0em 0em 0em 0.5em;
+    -fx-padding: 0em 0.5em 0em 0.5em;
     -fx-text-fill: #2e92df;
 
 }
 
 .shortest-path-item-label-big {
     -fx-font-size: 2em;
+    -fx-padding: 0em 0.1em 0em 0em;
 }
 
 .shortest-path-item-label-blueprint:hover {

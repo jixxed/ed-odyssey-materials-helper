@@ -293,7 +293,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
         if (this.addToWishlist != null) {
             this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
             this.addToWishlist.getItems().clear();
-            final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
+            final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().filter(wishlist -> wishlist != Wishlist.ALL).sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
                 final DestroyableMenuItem menuItem = new DestroyableMenuItem();
                 menuItem.setOnAction(event -> {
                     final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();

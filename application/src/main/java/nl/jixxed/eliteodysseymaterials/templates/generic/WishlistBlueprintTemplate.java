@@ -31,4 +31,6 @@ public interface WishlistBlueprintTemplate<E extends BlueprintName<E>> {
 
 
     void addWishlistIngredients(final List<Ingredient> wishlistIngredients);
+
+    String getWishlistUUID();
 }

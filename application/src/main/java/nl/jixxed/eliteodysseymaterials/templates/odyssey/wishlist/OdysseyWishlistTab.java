@@ -226,7 +226,13 @@ public class OdysseyWishlistTab extends OdysseyTab {
                         },
                         "tab.wishlist.export", event ->
                                 EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededDatas, this.wishlistNeededGoods, this.wishlistNeededAssets)))
-                )).build();
+                ),
+                Map.of(
+                        "tab.wishlist.rename", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL),
+                        "tab.wishlist.copy", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL),
+                        "tab.wishlist.delete", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(Wishlist.ALL)
+                )
+        ).build();
         this.menuButton.setFocusTraversable(false);
 
         this.hideCompletedCheckBox = new CheckBox();
@@ -371,6 +377,10 @@ public class OdysseyWishlistTab extends OdysseyTab {
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.activeWishlistUUID));
+        });
+        EventService.addListener(this, LanguageChangedEvent.class, languageChangedEvent ->
+        {
+            refreshWishlistSelect();
         });
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
         EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent());

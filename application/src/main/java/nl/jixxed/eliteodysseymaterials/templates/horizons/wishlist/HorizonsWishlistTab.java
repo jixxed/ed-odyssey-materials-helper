@@ -232,6 +232,11 @@ public class HorizonsWishlistTab extends HorizonsTab {
                         },
                         "tab.wishlist.export", event ->
                                 EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededRaw, this.wishlistNeededEncoded, this.wishlistNeededManufactured, this.wishlistNeededCommmodity)))
+                ),
+                Map.of(
+                        "tab.wishlist.rename", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(HorizonsWishlist.ALL),
+                        "tab.wishlist.copy", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(HorizonsWishlist.ALL),
+                        "tab.wishlist.delete", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(HorizonsWishlist.ALL)
                 )).build();
         this.menuButton.setFocusTraversable(false);
 
@@ -391,6 +396,10 @@ public class HorizonsWishlistTab extends HorizonsTab {
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new HorizonsWishlistChangedEvent(this.activeWishlistUUID));
+        });
+        EventService.addListener(this, LanguageChangedEvent.class, languageChangedEvent ->
+        {
+            refreshWishlistSelect();
         });
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
         EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent());

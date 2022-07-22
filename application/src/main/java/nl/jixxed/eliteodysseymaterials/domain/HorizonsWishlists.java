@@ -18,7 +18,9 @@ public class HorizonsWishlists {
 
     @JsonIgnore
     public Set<HorizonsWishlist> getAllWishlists() {
-        return Collections.unmodifiableSet(this.wishlists);
+        final Set<HorizonsWishlist> wishlists1 = new HashSet<>(this.wishlists);
+        wishlists1.add(HorizonsWishlist.ALL);
+        return Collections.unmodifiableSet(wishlists1);
     }
 
     @JsonIgnore
@@ -26,13 +28,13 @@ public class HorizonsWishlists {
         if (this.selectedWishlistUUID == null || this.selectedWishlistUUID.isEmpty()) {
             return selectFirstWishlist();
         } else {
-            return this.wishlists.stream().filter(wishlist -> wishlist.getUuid().equals(this.selectedWishlistUUID)).findFirst().orElseGet(this::selectFirstWishlist);
+            return this.getAllWishlists().stream().filter(wishlist -> wishlist.getUuid().equals(this.selectedWishlistUUID)).findFirst().orElseGet(this::selectFirstWishlist);
         }
     }
 
     @JsonIgnore
     private HorizonsWishlist selectFirstWishlist() {
-        final HorizonsWishlist wishlist = this.wishlists.stream().findFirst().orElse(createInitialWishlist());
+        final HorizonsWishlist wishlist = this.getAllWishlists().stream().filter(wl -> wl != HorizonsWishlist.ALL).findFirst().orElse(createInitialWishlist());
         this.selectedWishlistUUID = wishlist.getUuid();
         return wishlist;
     }

@@ -205,7 +205,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
     private HorizonsWishlists loadCommanderWishlists(final Commander commander) {
         final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander.getFid());
         this.addToWishlist.getItems().clear();
-        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().sorted(Comparator.comparing(HorizonsWishlist::getName)).flatMap(wishlist -> {
+        final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().filter(horizonsWishlist -> !horizonsWishlist.equals(HorizonsWishlist.ALL)).sorted(Comparator.comparing(HorizonsWishlist::getName)).flatMap(wishlist -> {
             final List<MenuItem> items = new ArrayList<>();
             if (this.blueprint instanceof HorizonsModuleBlueprint) {
                 final MenuItem menuItemSingle = createMenuItem(commander, wishlist);

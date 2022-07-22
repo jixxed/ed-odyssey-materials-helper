@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -38,6 +39,7 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
     private final HorizonsWishlistBlueprint wishlistBlueprint;
     private final BlueprintCategory blueprintCategory;
     private final HorizonsBlueprint blueprint;
+    @Getter
     private final String wishlistUUID;
 
     private Button visibilityButton;
@@ -60,17 +62,21 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
     }
 
     private void initComponents() {
-        this.visibilityImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("wishlist-visible-image")
-                .withImage("/images/other/visible_blue.png")
-                .build();
-        this.visibilityButton = ButtonBuilder.builder()
-                .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
-                .withOnAction(event -> setVisibility(!this.visible))
-                .withGraphic(this.visibilityImage)
-                .build();
-        setVisibility(this.wishlistBlueprint.isVisible());
-
+        if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
+            this.visibilityImage = ResizableImageViewBuilder.builder()
+                    .withStyleClass("wishlist-visible-image")
+                    .withImage("/images/other/visible_blue.png")
+                    .build();
+            this.visibilityButton = ButtonBuilder.builder()
+                    .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
+                    .withOnAction(event -> setVisibility(!this.visible))
+                    .withGraphic(this.visibilityImage)
+                    .build();
+            setVisibility(this.wishlistBlueprint.isVisible());
+            this.getChildren().addAll(this.visibilityButton);
+        } else {
+            setVisibility(true);
+        }
         final StringBinding titleStringBinding;
         if (this.wishlistBlueprint instanceof HorizonsSynthesisWishlistBlueprint wbp) {
             titleStringBinding = LocaleService.getStringBinding("wishlist.blueprint.horizons.title.synthesis", LocaleService.LocalizationKey.of(wbp.getRecipeName().getLocalizationKey()), LocaleService.LocalizationKey.of("blueprint.synthesis.grade" + wbp.getBlueprintGrade().getGrade()));
@@ -94,13 +100,14 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
                     this.highlight(newValue);
                 })
                 .build();
-        this.getChildren().addAll(this.visibilityButton, this.wishlistRecipeName);
-
-        this.removeBlueprint = ButtonBuilder.builder()
-                .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
-                .withOnAction(event -> remove())
-                .build();
-        this.getChildren().add(this.removeBlueprint);
+        this.getChildren().addAll(this.wishlistRecipeName);
+        if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
+            this.removeBlueprint = ButtonBuilder.builder()
+                    .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
+                    .withOnAction(event -> remove())
+                    .build();
+            this.getChildren().add(this.removeBlueprint);
+        }
         this.getStyleClass().add("wishlist-item");
 
 
@@ -172,11 +179,13 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
     public void setVisibility(final boolean visible) {
         this.visible = visible;
         this.wishlistBlueprint.setVisible(this.visible);
-        this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
-        if (this.visible) {
-            this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
-        } else {
-            this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
+        if (this.visibilityButton != null) {
+            this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
+            if (this.visible) {
+                this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
+            } else {
+                this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
+            }
         }
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }

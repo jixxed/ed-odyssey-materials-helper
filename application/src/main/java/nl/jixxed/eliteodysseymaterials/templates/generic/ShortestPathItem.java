@@ -12,10 +12,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.EngineeringBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineeringBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.PathItem;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
@@ -78,15 +75,9 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
                 ).toList()
         );
 
-        this.removeButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove")).build();
-        this.hideButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide")).build();
-
-        this.removeButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
-        this.hideButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
-
         this.getStyleClass().add("shortest-path-item");
         if (!Engineer.UNKNOWN.equals(this.pathItem.getEngineer())) {
-            this.getChildren().addAll(BoxBuilder.builder().withNodes(this.engineer, new GrowingRegion(), LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withNonLocalizedText(String.valueOf(this.index)).build()).buildHBox());
+            this.getChildren().addAll(BoxBuilder.builder().withNodes(this.engineer, new GrowingRegion(), LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withNonLocalizedText("  " + this.index).build()).buildHBox());
 
             if (!Engineer.REMOTE_WORKSHOP.equals(this.pathItem.getEngineer())) {
                 addLocation(this.pathItem.getEngineer());
@@ -99,7 +90,15 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
         this.getChildren().addAll(this.blueprintsLabel);
         this.getChildren().addAll(this.blueprints);
         this.getChildren().addAll(new GrowingRegion("shortest-path-item-spacer"));
-        this.getChildren().addAll(BoxBuilder.builder().withStyleClass("shortest-path-item-button").withNodes(this.hideButton, new GrowingRegion(), this.removeButton).buildHBox());
+        final String wishlistUUID = this.pathItem.getBlueprints().stream().findFirst().map(WishlistBlueprintTemplate::getWishlistUUID).orElse("");
+        if (!wishlistUUID.equals(Wishlist.ALL.getUuid())) {
+            this.removeButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.remove")).build();
+            this.hideButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.actions.hide")).build();
+
+            this.removeButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsRemoveWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new RemoveWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
+            this.hideButton.setOnAction((ActionEvent event) -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsHideWishlistShortestPathItemEvent((PathItem<HorizonsBlueprintName>) this.pathItem) : new HideWishlistShortestPathItemEvent((PathItem<OdysseyBlueprintName>) this.pathItem)));
+            this.getChildren().addAll(BoxBuilder.builder().withStyleClass("shortest-path-item-button").withNodes(this.hideButton, new GrowingRegion(), this.removeButton).buildHBox());
+        }
     }
 
     private HorizonsBlueprintType getBlueprintType(final EngineeringBlueprint<T> blueprint) {

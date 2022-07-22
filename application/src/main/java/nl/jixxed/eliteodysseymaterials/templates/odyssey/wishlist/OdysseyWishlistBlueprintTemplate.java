@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -36,6 +37,7 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     private final OdysseyWishlistBlueprint odysseyWishlistBlueprint;
     private final BlueprintCategory blueprintCategory;
     private final OdysseyBlueprint blueprint;
+    @Getter
     private final String wishlistUUID;
 
     private Button visibilityButton;
@@ -58,17 +60,21 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     }
 
     private void initComponents() {
-        this.visibilityImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("wishlist-visible-image")
-                .withImage("/images/other/visible_blue.png")
-                .build();
-        this.visibilityButton = ButtonBuilder.builder()
-                .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
-                .withOnAction(event -> setVisibility(!this.visible))
-                .withGraphic(this.visibilityImage)
-                .build();
-        setVisibility(this.odysseyWishlistBlueprint.isVisible());
-
+        if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
+            this.visibilityImage = ResizableImageViewBuilder.builder()
+                    .withStyleClass("wishlist-visible-image")
+                    .withImage("/images/other/visible_blue.png")
+                    .build();
+            this.visibilityButton = ButtonBuilder.builder()
+                    .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
+                    .withOnAction(event -> setVisibility(!this.visible))
+                    .withGraphic(this.visibilityImage)
+                    .build();
+            this.getChildren().addAll(this.visibilityButton);
+            setVisibility(this.odysseyWishlistBlueprint.isVisible());
+        } else {
+            setVisibility(true);
+        }
         this.wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("wishlist-label")
                 .withText(LocaleService.getStringBinding(this.odysseyWishlistBlueprint.getRecipeName().getLocalizationKey()))
@@ -79,13 +85,14 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
                     this.highlight(newValue);
                 })
                 .build();
-        this.getChildren().addAll(this.visibilityButton, this.wishlistRecipeName);
-
-        this.removeBlueprint = ButtonBuilder.builder()
-                .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
-                .withOnAction(event -> remove())
-                .build();
-        this.getChildren().add(this.removeBlueprint);
+        this.getChildren().addAll(this.wishlistRecipeName);
+        if (!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid())) {
+            this.removeBlueprint = ButtonBuilder.builder()
+                    .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
+                    .withOnAction(event -> remove())
+                    .build();
+            this.getChildren().add(this.removeBlueprint);
+        }
         this.getStyleClass().add("wishlist-item");
 
 
@@ -159,11 +166,13 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     public void setVisibility(final boolean visible) {
         this.visible = visible;
         this.odysseyWishlistBlueprint.setVisible(this.visible);
-        this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
-        if (this.visible) {
-            this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
-        } else {
-            this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
+        if (this.visibilityButton != null) {
+            this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
+            if (this.visible) {
+                this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
+            } else {
+                this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
+            }
         }
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }

@@ -1,3 +1,7 @@
+Version 1.85
+-------------
+New read-only aggregated wishlists for Horizons and Odyssey
+
 Version 1.84
 -------------
 Leave yellow wishlist materials on uncompleted list (because you need to collect them from the fleetcarrier)

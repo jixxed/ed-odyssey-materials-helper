@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
@@ -43,6 +44,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     private final HorizonsModuleWishlistBlueprint wishlistBlueprint;
     private final BlueprintCategory blueprintCategory;
     private List<Blueprint<HorizonsBlueprintName>> blueprints;
+    @Getter
     private final String wishlistUUID;
 
     private Button visibilityButton;
@@ -66,17 +68,22 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     }
 
     private void initComponents() {
-        this.visibilityImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("wishlist-visible-image")
-                .withImage("/images/other/visible_blue.png")
-                .build();
-        this.visibilityButton = ButtonBuilder.builder()
-                .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
-                .withOnAction(event -> setVisibility(!this.visible))
-                .withGraphic(this.visibilityImage)
-                .build();
-        setVisibility(this.wishlistBlueprint.isVisible());
-
+        final HBox header = BoxBuilder.builder().buildHBox();
+        if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
+            this.visibilityImage = ResizableImageViewBuilder.builder()
+                    .withStyleClass("wishlist-visible-image")
+                    .withImage("/images/other/visible_blue.png")
+                    .build();
+            this.visibilityButton = ButtonBuilder.builder()
+                    .withStyleClasses(WISHLIST_VISIBLE_ICON_STYLE_CLASS, VISIBLE_STYLE_CLASS)
+                    .withOnAction(event -> setVisibility(!this.visible))
+                    .withGraphic(this.visibilityImage)
+                    .build();
+            setVisibility(this.wishlistBlueprint.isVisible());
+            header.getChildren().addAll(this.visibilityButton);
+        } else {
+            setVisibility(true);
+        }
         this.wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("wishlist-label")
                 .withText(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
@@ -90,60 +97,65 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                     this.highlight(newValue);
                 })
                 .build();
-        this.removeBlueprint = ButtonBuilder.builder()
-                .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
-                .withOnAction(event -> remove())
-                .build();
         final AnchorPane anchorPane = new AnchorPane(this.wishlistRecipeName);
         AnchorPaneHelper.setAnchor(this.wishlistRecipeName, 0D, 0D, 0D, 0D);
         HBox.setHgrow(anchorPane, Priority.ALWAYS);
-        final AtomicReference<PopOver> popOverRef = new AtomicReference<>();
-        this.toggleControls = ButtonBuilder.builder()
-                .withStyleClass("wishlist-item-button").withNonLocalizedText("\u25BC")
-                .withOnAction(event -> {
-                    if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
-                        final VBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
-                                {
-                                    final ButtonIntField buttonIntField = new ButtonIntField(0, 15, this.wishlistBlueprint.getBlueprintGradeRolls().getOrDefault(grade, 0));
-                                    buttonIntField.addHandlerOnValidChange(rolls -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                        this.wishlistBlueprint.setBlueprintGradeRollsFor(grade, rolls);
-                                        this.blueprints = this.wishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().flatMap(gradeRolls -> IntStream.range(0, gradeRolls.getValue()).mapToObj(value -> HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradeRolls.getKey()))).toList();
-                                        modify();
-                                        EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
-                                        this.wishlistRecipeName.textProperty().bind(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
-                                                LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
-                                                LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
-                                                this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))));
-                                        final Craftability craftability = APPLICATION_STATE.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
-                                        this.canCraft(craftability);
-                                    }));
-                                    buttonIntField.getStyleClass().add("wishlist-rolls-select");
-                                    final DestroyableLabel label = LabelBuilder.builder().withStyleClass("wishlist-rolls-label").withNonLocalizedText(String.valueOf(grade.getGrade())).build();
-                                    final AnchorPane anchorPane2 = new AnchorPane(label);
-                                    AnchorPaneHelper.setAnchor(label, 0D, 0D, 0D, 0D);
-                                    return BoxBuilder.builder().withNodes(
-                                            anchorPane2,
-                                            buttonIntField
-                                    ).buildVBox();
-                                })
-                                .toArray(VBox[]::new);
+        header.getChildren().addAll(anchorPane);
 
-                        final HBox grades = BoxBuilder.builder().withStyleClasses("grade-selects").withNodes(gradeControls).buildHBox();
-                        final VBox gradePopOverContent = BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(LabelBuilder.builder().withStyleClass("grade-selects-title").withText(LocaleService.getStringBinding("wishlist.rolls.per.grade")).build(), grades).buildVBox();
-                        final PopOver popOver = new PopOver(gradePopOverContent);
-                        popOverRef.set(popOver);
-                        popOver.setDetachable(false);
-                        popOver.setHeaderAlwaysVisible(false);
-                        popOver.getStyleClass().add("popover-menubutton-layout");
-                        popOver.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
-                        popOver.show(this.toggleControls);
-                    } else {
-                        popOverRef.get().hide();
-                        popOverRef.set(null);
-                    }
-                })
-                .build();
-        final HBox header = BoxBuilder.builder().withNodes(this.visibilityButton, anchorPane, this.toggleControls, this.removeBlueprint).buildHBox();
+        if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
+            this.removeBlueprint = ButtonBuilder.builder()
+                    .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
+                    .withOnAction(event -> remove())
+                    .build();
+            final AtomicReference<PopOver> popOverRef = new AtomicReference<>();
+            this.toggleControls = ButtonBuilder.builder()
+                    .withStyleClass("wishlist-item-button").withNonLocalizedText("\u25BC")
+                    .withOnAction(event -> {
+                        if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
+                            final VBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
+                                    {
+                                        final ButtonIntField buttonIntField = new ButtonIntField(0, 15, this.wishlistBlueprint.getBlueprintGradeRolls().getOrDefault(grade, 0));
+                                        buttonIntField.addHandlerOnValidChange(rolls -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                                            this.wishlistBlueprint.setBlueprintGradeRollsFor(grade, rolls);
+                                            this.blueprints = this.wishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().flatMap(gradeRolls -> IntStream.range(0, gradeRolls.getValue()).mapToObj(value -> HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradeRolls.getKey()))).toList();
+                                            modify();
+                                            EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
+                                            this.wishlistRecipeName.textProperty().bind(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
+                                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
+                                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
+                                                    this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))));
+                                            final Craftability craftability = APPLICATION_STATE.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+                                            this.canCraft(craftability);
+                                        }));
+                                        buttonIntField.getStyleClass().add("wishlist-rolls-select");
+                                        final DestroyableLabel label = LabelBuilder.builder().withStyleClass("wishlist-rolls-label").withNonLocalizedText(String.valueOf(grade.getGrade())).build();
+                                        final AnchorPane anchorPane2 = new AnchorPane(label);
+                                        AnchorPaneHelper.setAnchor(label, 0D, 0D, 0D, 0D);
+                                        return BoxBuilder.builder().withNodes(
+                                                anchorPane2,
+                                                buttonIntField
+                                        ).buildVBox();
+                                    })
+                                    .toArray(VBox[]::new);
+
+                            final HBox grades = BoxBuilder.builder().withStyleClasses("grade-selects").withNodes(gradeControls).buildHBox();
+                            final VBox gradePopOverContent = BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(LabelBuilder.builder().withStyleClass("grade-selects-title").withText(LocaleService.getStringBinding("wishlist.rolls.per.grade")).build(), grades).buildVBox();
+                            final PopOver popOver = new PopOver(gradePopOverContent);
+                            popOverRef.set(popOver);
+                            popOver.setDetachable(false);
+                            popOver.setHeaderAlwaysVisible(false);
+                            popOver.getStyleClass().add("popover-menubutton-layout");
+                            popOver.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+                            popOver.show(this.toggleControls);
+                        } else {
+                            popOverRef.get().hide();
+                            popOverRef.set(null);
+                        }
+                    })
+                    .build();
+
+            header.getChildren().addAll(this.toggleControls, this.removeBlueprint);
+        }
         this.getChildren().addAll(header);
         this.getStyleClass().add("wishlist-item");
 
@@ -216,11 +228,13 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     public void setVisibility(final boolean visible) {
         this.visible = visible;
         this.wishlistBlueprint.setVisible(this.visible);
-        this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
-        if (this.visible) {
-            this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
-        } else {
-            this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
+        if (this.visibilityButton != null) {
+            this.visibilityImage.setImage(ImageService.getImage(this.visible ? "/images/other/visible_blue.png" : "/images/other/invisible_gray.png"));
+            if (this.visible) {
+                this.visibilityButton.getStyleClass().add(VISIBLE_STYLE_CLASS);
+            } else {
+                this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
+            }
         }
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.wishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }

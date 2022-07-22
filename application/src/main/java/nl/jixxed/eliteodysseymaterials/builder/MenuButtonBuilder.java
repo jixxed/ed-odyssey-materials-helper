@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,6 +45,21 @@ public class MenuButtonBuilder {
             final MenuItem menuItem = new MenuItem();
             menuItem.setOnAction(eventHandler);
             menuItem.textProperty().bind(LocaleService.getStringBinding(textLocaleKey));
+            return menuItem;
+        }).toList();
+        return this;
+    }
+
+    public MenuButtonBuilder withMenuItems(final Map<String, EventHandler<ActionEvent>> menuItems, final Map<String, BooleanBinding> disableBindings) {
+        this.items = menuItems.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(stringEventHandlerEntry -> {
+            final EventHandler<ActionEvent> eventHandler = stringEventHandlerEntry.getValue();
+            final String textLocaleKey = stringEventHandlerEntry.getKey();
+            final MenuItem menuItem = new MenuItem();
+            menuItem.setOnAction(eventHandler);
+            menuItem.textProperty().bind(LocaleService.getStringBinding(textLocaleKey));
+            if (disableBindings.containsKey(textLocaleKey)) {
+                menuItem.disableProperty().bind(disableBindings.get(textLocaleKey));
+            }
             return menuItem;
         }).toList();
         return this;
