@@ -78,7 +78,9 @@ public class CAPIService {
                     this.oAuth2AccessToken = this.service.getAccessToken(accessTokenRequestParams);
                     log.info("save access token");
                     saveToken(this.oAuth2AccessToken);
-                    NotificationService.showInformation(NotificationType.SUCCESS, "Frontier API", "Account linked! You may close the browser window.");
+                    Platform.runLater(() -> {
+                        NotificationService.showInformation(NotificationType.SUCCESS, "Frontier API", "Account linked! You may close the browser window.");
+                    });
                     this.active.set(true);
                 } catch (final InterruptedException e) {
                     log.error("InterruptedException", e);
