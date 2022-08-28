@@ -34,7 +34,7 @@ public class JournalWatcher {
             listCommanders(folder);
             findLatestFile(folder);
             this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
-            this.fileWatcher = new FileWatcher("Journal Watcher Thread").withListener(new FileAdapter() {
+            this.fileWatcher = new FileWatcher("Journal Watcher Thread", true).withListener(new FileAdapter() {
                 @Override
                 public void onModified(final FileEvent event) {
                     final File file = event.getFile();

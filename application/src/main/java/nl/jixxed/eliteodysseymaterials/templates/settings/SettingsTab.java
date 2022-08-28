@@ -108,6 +108,9 @@ public class SettingsTab extends OdysseyTab {
     private DestroyableLabel arCharacterWhitelistLabel;
     private TextField arCharacterWhitelistTextField;
     private Button arCharacterWhitelistSaveButton;
+    private Label pollLabel;
+    private Label pollExplainLabel;
+    private CheckBox pollCheckBox;
 
     public SettingsTab(final Application application) {
         this.application = application;
@@ -153,9 +156,10 @@ public class SettingsTab extends OdysseyTab {
         final HBox langSetting = createLangSetting();
         final HBox fontSetting = creatFontSetting();
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
+        final HBox pollSetting = createPollSetting();
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
 //        final HBox wipSetting = createWIPSetting();
-        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, urlSchemeLinkingSetting/*, wipSetting*/).buildVBox();
+        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting/*, wipSetting*/).buildVBox();
         settings.getChildren().add(general);
         //overview
         final Label overviewLabel = LabelBuilder.builder()
@@ -526,6 +530,22 @@ public class SettingsTab extends OdysseyTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.trackingOptOutLabel, this.trackingOptOutCheckBox, this.trackingOptOutExplainLabel)
+                .buildHBox();
+    }
+
+    private HBox createPollSetting() {
+        this.pollLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.poll")).build();
+        this.pollExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.poll.explain")).build();
+        this.pollCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, Boolean.FALSE))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.POLLING_FILE_MODE, newValue);
+                    EventService.publish(new PollingFileModeEvent(newValue));
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.pollLabel, this.pollCheckBox, this.pollExplainLabel)
                 .buildHBox();
     }
 

@@ -22,7 +22,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires com.sun.jna.platform;
     requires nl.jixxed.tess4j;
     requires nl.jixxed.lept4j;
-
+    requires org.apache.commons.io;
     requires java.desktop;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;

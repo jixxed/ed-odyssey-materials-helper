@@ -43,6 +43,7 @@ public class PreferenceConstants {
     public static final String AR_WISHLIST_COLOR = "ar.wishlist.color";
     public static final String AR_LOCALE = "ar.locale";
     public static final String AR_CHAR_WHITELIST = "ar.character.whitelist";
+    public static final String POLLING_FILE_MODE = "polling.file.mode";
 
 
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";

@@ -17,7 +17,7 @@ public class GameStateWatcher {
     public void watch(final File folder, final Consumer<File> fileProcessor, final String filename, final StoragePool storagePool) {
         findLatestFile(folder, filename);
         this.watchedFile.ifPresent(fileProcessor);
-        this.fileWatcher = new FileWatcher(storagePool.name() + " Watcher Thread").withListener(new FileAdapter() {
+        this.fileWatcher = new FileWatcher(storagePool.name() + " Watcher Thread", true).withListener(new FileAdapter() {
             @Override
             public void onCreated(final FileEvent event) {
                 handleFile(event, fileProcessor);

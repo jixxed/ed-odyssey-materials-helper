@@ -31,6 +31,7 @@ public enum Commodity implements HorizonsMaterial {
     ANCIENTKEY(CommodityType.SALVAGE, FALSE),
     ANCIENTORB(CommodityType.SALVAGE, FALSE),
     ANCIENTRELIC(CommodityType.SALVAGE, FALSE),
+    ANCIENTRELICTG(CommodityType.SALVAGE, FALSE),
     ANCIENTTABLET(CommodityType.SALVAGE, FALSE),
     ANCIENTTOTEM(CommodityType.SALVAGE, FALSE),
     ANCIENTURN(CommodityType.SALVAGE, FALSE),

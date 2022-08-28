@@ -127,6 +127,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.5'
     implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'commons-io:commons-io:2.11.0'
 //    implementation 'org.slf4j:slf4j-simple:1.7.36'
     implementation 'ch.qos.logback:logback-core:1.2.11'
     implementation 'ch.qos.logback:logback-classic:1.2.11'
@@ -218,6 +219,8 @@ extraJavaModuleInfo {
     automaticModule('logback-classic-1.2.11.jar', 'ch.qos.logback.classic')
     automaticModule('logback-core-1.2.11.jar', 'ch.qos.logback.core')
     automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
+//    automaticModule('commons-io-2.11.0.jar', 'org.apache.commons.io')
+
 
 //    automaticModule('java-ocr-api-15.3.0.3.jar', 'com.asprise')
 
