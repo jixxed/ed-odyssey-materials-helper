@@ -1,3 +1,9 @@
+Version 1.86
+-------------
+Alternate journal monitoring method for network shares(Optional Setting)
+Added Unclassified Relic Commodity
+Fix notification on CAPI connect
+
 Version 1.85
 -------------
 New read-only aggregated wishlists for Horizons and Odyssey
