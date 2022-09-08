@@ -139,7 +139,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
         this.menuButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.options")).withMenuItems(
                 Map.of("tab.loadout.create", event -> {
                             final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
-                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.create")).build();
+                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.create")).build();
                             final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
                             final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
                             popOver.setDetachable(false);
@@ -164,7 +164,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                         "tab.loadout.rename", event -> {
                             final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
 
-                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.rename")).build();
+                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.rename")).build();
                             final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
                             final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
                             popOver.setDetachable(false);
