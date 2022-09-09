@@ -2191,3 +2191,7 @@
     -fx-label-padding: 0.2em;
 
 }
+
+.loadout-wishlist-create-new {
+    -fx-font-style: italic;
+}

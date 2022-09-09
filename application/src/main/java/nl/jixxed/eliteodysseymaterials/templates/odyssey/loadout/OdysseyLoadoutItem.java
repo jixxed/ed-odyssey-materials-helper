@@ -303,6 +303,18 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
                 return menuItem;
             }).toList();
             this.addToWishlist.getItems().addAll(menuItems);
+            final DestroyableMenuItem createNew = new DestroyableMenuItem();
+            createNew.setOnAction(event -> {
+                final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
+                final Wishlists odysseyWishlists = ApplicationState.getInstance().getWishlists(commander.getFid());
+                final Wishlist newWishlist = odysseyWishlists.createWishlist("New Wishlist");
+                ApplicationState.getInstance().saveWishlists(commander.getFid(), odysseyWishlists);
+                EventService.publish(new WishlistCreatedEvent());//refreshes wishlist dropdown
+                EventService.publish(new WishlistBlueprintEvent(commander.getFid(), newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+            });
+            createNew.textProperty().bind(LocaleService.getStringBinding("loadout.create.new.wishlist"));
+            createNew.getStyleClass().add("loadout-wishlist-create-new");
+            this.addToWishlist.getItems().add(createNew);
         }
         return wishlists;
     }

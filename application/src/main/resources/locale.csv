@@ -2229,3 +2229,4 @@ tab.wishlist.option.all,All wishlists (read only),All wishlists (read only),Alle
 tab.settings.poll,Polling Mode,Polling Mode,,,,,
 tab.settings.poll.explain,Enables periodic file polling. Enable this if the app does not automatically update. (fe. when reading journals over a network share),Enables periodic file polling. Enable this if the app does not automatically update. (fe. when reading journals over a network share),,,,,
 material.commodity.ancientrelictg,Unclassified Relic,Unclassified Relic,Nicht klassifiziertes Relikt,Reliquia no clasificada,Relique non classée,Relíquia não classificada,Несекретная реликвия
+loadout.create.new.wishlist,Create new,Create new,,,,,
