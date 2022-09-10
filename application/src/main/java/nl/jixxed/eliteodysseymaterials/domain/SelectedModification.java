@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ public class SelectedModification {
     private Modification modification;
     private boolean present;
 
+    @JsonIgnore
     public String getImage() {
         if (this.modification == null) {
             return "/images/modification/empty.png";
@@ -19,6 +21,7 @@ public class SelectedModification {
         return this.modification.getImage(isPresent());
     }
 
+    @JsonIgnore
     public boolean isNotPresent() {
         return !this.present;
     }

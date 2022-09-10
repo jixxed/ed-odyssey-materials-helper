@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -34,6 +35,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE_BOX = "loadout-item-stats-value-wide-box";
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_HEADER = "loadout-item-stats-header";
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    @Getter
     private LoadoutSet loadoutSet;
     private Loadout loadout;
     private final List<HBox> statsList;
@@ -153,6 +155,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
             right.setVisible(false);
         }
         final HBox navBar = BoxBuilder.builder().withStyleClass("loadout-navbar").withNodes(left, regionL, delete, regionR, right).buildHBox();
+        navBar.setVisible(!this.loadoutSet.equals(LoadoutSet.CURRENT));
         //image
         final DestroyableResizableImageView image = ResizableImageViewBuilder.builder()
                 .withStyleClass("loadout-item-image")
@@ -229,6 +232,8 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
                 }
             });
 
+            currentLevel.setDisable(this.loadoutSet.equals(LoadoutSet.CURRENT));
+            targetLevel.setDisable(this.loadoutSet.equals(LoadoutSet.CURRENT));
             //modifications
             final DestroyableLabel modificationsLabel = LabelBuilder
                     .builder().withStyleClass("loadout-item-subtitle")
@@ -263,7 +268,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
         updateStatsList();
 
         this.getChildren().addAll(statsLine, this.stats);
-        if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
+        if (Suit.FLIGHTSUIT != this.loadout.getEquipment() && !this.loadoutSet.equals(LoadoutSet.CURRENT)) {
             this.addToWishlist = MenuButtonBuilder.builder().withStyleClass("loadout-wishlist-button").withText(LocaleService.getStringBinding("blueprint.add.to.wishlist")).build();
             final Label warning = LabelBuilder.builder().withStyleClass("loadout-warning").withText(LocaleService.getStringBinding("loadout.equipment.warning")).withVisibilityProperty(isValidProperty()).build();
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);

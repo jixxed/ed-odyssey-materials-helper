@@ -1598,11 +1598,11 @@
 .loadout-modification-image {
     -fx-max-width: 6.66em;
     -fx-max-height: 5.583em;
-    -fx-cursor: hand;
     -fx-opacity: 0.8;
 }
 
-.loadout-modification-image:hover {
+.loadout-modification-image-hover:hover {
+    -fx-cursor: hand;
     -fx-opacity: 1;
 }
 

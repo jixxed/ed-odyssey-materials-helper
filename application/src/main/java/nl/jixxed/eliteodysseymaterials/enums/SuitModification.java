@@ -32,4 +32,24 @@ public enum SuitModification implements Modification {
 
         return "/images/modification/" + name().toLowerCase() + (present ? "_active" : "") + ".png";
     }
+
+    public static SuitModification forFdevName(final String name) {
+        return switch (name) {
+            case "suit_increasedmeleedamage" -> ADDED_MELEE_DAMAGE;
+            case "suit_adsmovementspeed" -> COMBAT_MOVEMENT_SPEED;
+            case "suit_improvedarmourrating" -> DAMAGE_RESISTANCE;
+            case "suit_improvedradar" -> ENHANCED_TRACKING;
+            case "suit_increasedammoreserves" -> EXTRA_AMMO_CAPACITY;
+            case "suit_backpackcapacity" -> EXTRA_BACKPACK_CAPACITY;
+            case "suit_increasedshieldregen" -> FASTER_SHIELD_REGEN;
+            case "suit_increasedbatterycapacity" -> IMPROVED_BATTERY_CAPACITY;
+            case "suit_improvedjumpassist" -> IMPROVED_JUMP_ASSIST;
+            case "suit_increasedo2capacity" -> INCREASED_AIR_RESERVES;
+            case "suit_increasedsprintduration" -> INCREASED_SPRINT_DURATION;
+            case "suit_nightvision" -> NIGHT_VISION;
+            case "suit_quieterfootsteps" -> QUIETER_FOOTSTEPS;
+            case "suit_reducedtoolbatteryconsumption" -> REDUCED_TOOL_BATTERY_CONSUMPTION;
+            default -> throw new IllegalArgumentException("Unknown SuitModification: " + name);
+        };
+    }
 }

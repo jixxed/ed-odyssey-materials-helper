@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.Equipment;
 
+import java.util.Arrays;
 import java.util.function.BooleanSupplier;
 
 @Data
@@ -55,4 +56,13 @@ public class Loadout {
         }
     }
 
+    Loadout cloneLoadout() {
+        final Loadout newLoadout = new Loadout();
+        newLoadout.currentLevel = this.currentLevel;
+        newLoadout.targetLevel = this.targetLevel;
+        newLoadout.equipment = this.equipment;
+        newLoadout.showChanged = this.showChanged;
+        newLoadout.modifications = Arrays.copyOf(this.modifications, 4);
+        return newLoadout;
+    }
 }

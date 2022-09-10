@@ -70,6 +70,10 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                 refreshLoadoutSetSelect();
             }
         });
+        EventService.addListener(this, 9, LoadoutEvent.class, event -> {
+            refreshCurrentLoadout();
+        });
+
     }
 
     private void refreshContent() {
@@ -135,78 +139,98 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                     refreshContent();
                 })));
         final MenuButton addWeaponButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.add.weapon")).withMenuItems(weaponMenuItems).build();
+        addSuitButton.disableProperty().bind(this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
+        addWeaponButton.disableProperty().bind(this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
+        final EventHandler<ActionEvent> createHandler = event -> {
+            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
+            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.create")).build();
+            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
+            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
+            popOver.setDetachable(false);
+            popOver.setHeaderAlwaysVisible(false);
+            popOver.getStyleClass().add("popover-menubutton-layout");
+            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+            popOver.show(this.menuButton);
+            button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                loadoutSetList.createLoadoutSet(textField.getText());
+                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                textField.clear();
+                refreshLoadoutSetSelect();
+                popOver.hide();
+            }));
+            textField.setOnKeyPressed(ke -> {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
+                    button.fire();
+                }
+            });
+        };
+        final EventHandler<ActionEvent> renameHandler = event -> {
+            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
 
+            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.rename")).build();
+            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
+            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
+            popOver.setDetachable(false);
+            popOver.setHeaderAlwaysVisible(false);
+            popOver.getStyleClass().add("popover-menubutton-layout");
+            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
+            popOver.show(this.menuButton);
+            button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                loadoutSetList.renameLoadoutSet(this.activeLoadoutSetUUID, textField.getText());
+                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                textField.clear();
+                refreshLoadoutSetSelect();
+                popOver.hide();
+            }));
+            textField.setOnKeyPressed(ke -> {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
+                    button.fire();
+                }
+            });
+        };
+        final EventHandler<ActionEvent> deleteHandler = event -> {
+            final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(LocaleService.getLocalizedStringForCurrentLocale("tab.loadout.delete.confirm.title"));
+            alert.setHeaderText(LocaleService.getLocalizedStringForCurrentLocale("tab.loadout.delete.confirm.header"));
+            alert.setContentText(LocaleService.getLocalizedStringForCurrentLocale("tab.loadout.delete.confirm.content"));
+
+            final Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    APPLICATION_STATE.deleteLoadoutSet(this.activeLoadoutSetUUID, commander.getFid());
+                    Platform.runLater(this::refreshLoadoutSetSelect);
+
+                });
+            }
+        };
+        final EventHandler<ActionEvent> copyHandler = event -> {
+            copyLoadoutSetToClipboard();
+            NotificationService.showInformation(NotificationType.COPY, "Loadout Editor", "The loadout has been copied to your clipboard");
+        };
+        final EventHandler<ActionEvent> cloneHandler = event -> {
+            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                final LoadoutSet loadoutSet = this.loadoutSetSelect.getSelectionModel().getSelectedItem().cloneLoadoutSet();
+                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                loadoutSetList.addLoadoutSet(loadoutSet);
+                loadoutSetList.setSelectedLoadoutSetUUID(loadoutSet.getUuid());
+                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                refreshLoadoutSetSelect();
+            });
+        };
         this.menuButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.options")).withMenuItems(
-                Map.of("tab.loadout.create", event -> {
-                            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
-                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.create")).build();
-                            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
-                            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
-                            popOver.setDetachable(false);
-                            popOver.setHeaderAlwaysVisible(false);
-                            popOver.getStyleClass().add("popover-menubutton-layout");
-                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
-                            popOver.show(this.menuButton);
-                            button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
-                                loadoutSetList.createLoadoutSet(textField.getText());
-                                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
-                                textField.clear();
-                                refreshLoadoutSetSelect();
-                                popOver.hide();
-                            }));
-                            textField.setOnKeyPressed(ke -> {
-                                if (ke.getCode().equals(KeyCode.ENTER)) {
-                                    button.fire();
-                                }
-                            });
-                        },
-                        "tab.loadout.rename", event -> {
-                            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
-
-                            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.rename")).build();
-                            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
-                            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
-                            popOver.setDetachable(false);
-                            popOver.setHeaderAlwaysVisible(false);
-                            popOver.getStyleClass().add("popover-menubutton-layout");
-                            popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
-                            popOver.show(this.menuButton);
-                            button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
-                                loadoutSetList.renameLoadoutSet(this.activeLoadoutSetUUID, textField.getText());
-                                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
-                                textField.clear();
-                                refreshLoadoutSetSelect();
-                                popOver.hide();
-                            }));
-                            textField.setOnKeyPressed(ke -> {
-                                if (ke.getCode().equals(KeyCode.ENTER)) {
-                                    button.fire();
-                                }
-                            });
-                        },
-                        "tab.loadout.delete", event -> {
-                            final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setTitle(LocaleService.getLocalizedStringForCurrentLocale("tab.loadout.delete.confirm.title"));
-                            alert.setHeaderText(LocaleService.getLocalizedStringForCurrentLocale("tab.loadout.delete.confirm.header"));
-                            alert.setContentText(LocaleService.getLocalizedStringForCurrentLocale("tab.loadout.delete.confirm.content"));
-
-                            final Optional<ButtonType> result = alert.showAndWait();
-                            if (result.get() == ButtonType.OK) {
-                                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                    APPLICATION_STATE.deleteLoadoutSet(this.activeLoadoutSetUUID, commander.getFid());
-                                    Platform.runLater(this::refreshLoadoutSetSelect);
-
-                                });
-                            }
-                        },
-                        "tab.loadout.copy", event -> {
-                            copyLoadoutSetToClipboard();
-                            NotificationService.showInformation(NotificationType.COPY, "Loadout Editor", "The loadout has been copied to your clipboard");
-                        })).build();
+                Map.of("tab.loadout.create", createHandler,
+                        "tab.loadout.rename", renameHandler,
+                        "tab.loadout.delete", deleteHandler,
+                        "tab.loadout.clone", cloneHandler,
+                        "tab.loadout.copy", copyHandler)).build();
         this.menuButton.setFocusTraversable(false);
-
+        this.menuButton.getItems().forEach(menuItem -> {
+            if (!menuItem.getOnAction().equals(createHandler) && !menuItem.getOnAction().equals(cloneHandler)) {
+                menuItem.disableProperty().bind(this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
+            }
+        });
         final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.loadoutSetSelect, this.menuButton, addSuitButton, addWeaponButton).buildHBox();
         hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         return hBoxBlueprints;
@@ -228,6 +252,12 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
             this.loadoutSetSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(LoadoutSet::getName)).toList());
             this.loadoutSetSelect.getSelectionModel().select(loadoutSetList.getSelectedLoadoutSet());
         });
+    }
+
+    private void refreshCurrentLoadout() {
+        if (this.loadoutSetSelect.getSelectionModel().getSelectedItem().equals(LoadoutSet.CURRENT)) {
+            refreshContent();
+        }
     }
 
 }

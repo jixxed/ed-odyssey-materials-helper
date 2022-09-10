@@ -18,7 +18,10 @@ public class LoadoutSetList {
 
     @JsonIgnore
     public Set<LoadoutSet> getAllLoadoutSets() {
-        return Collections.unmodifiableSet(this.loadoutSets);
+
+        final Set<LoadoutSet> loadoutSets1 = new HashSet<>(this.loadoutSets);
+        loadoutSets1.add(LoadoutSet.CURRENT);
+        return Collections.unmodifiableSet(loadoutSets1);
     }
 
     @JsonIgnore
@@ -26,7 +29,7 @@ public class LoadoutSetList {
         if (this.selectedLoadoutSetUUID == null || this.selectedLoadoutSetUUID.isEmpty()) {
             return selectFirstloadoutSet();
         } else {
-            return this.loadoutSets.stream()
+            return this.getAllLoadoutSets().stream()
                     .filter(loadoutSet -> loadoutSet.getUuid().equals(this.selectedLoadoutSetUUID))
                     .findFirst()
                     .orElseGet(this::selectFirstloadoutSet);
@@ -64,8 +67,10 @@ public class LoadoutSetList {
 
     @JsonIgnore
     void updateLoadoutSet(final LoadoutSet loadoutSetToAdd) {
-        this.loadoutSets.removeIf(loadoutSet -> loadoutSet.getUuid().equals(loadoutSetToAdd.getUuid()));
-        this.loadoutSets.add(loadoutSetToAdd);
+        if (!loadoutSetToAdd.equals(LoadoutSet.CURRENT)) {
+            this.loadoutSets.removeIf(loadoutSet -> loadoutSet.getUuid().equals(loadoutSetToAdd.getUuid()));
+            this.loadoutSets.add(loadoutSetToAdd);
+        }
     }
 
     @JsonIgnore

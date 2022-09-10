@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.Loadout;
+import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
 import nl.jixxed.eliteodysseymaterials.domain.ModificationChange;
 import nl.jixxed.eliteodysseymaterials.domain.SelectedModification;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -39,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
     private static final String LOADOUT_MODIFICATION_STYLE_CLASS = "loadout-modification";
     private static final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "loadout-modification-image";
+    private static final String LOADOUT_MODIFICATION_IMAGE_HOVER_STYLE_CLASS = "loadout-modification-image-hover";
     private static final String LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS = "loadout-modification-image-consumed";
     private static final String LOADOUT_MODIFICATION_LABEL_STYLE_CLASS = "loadout-modification-label";
     private DestroyableResizableImageView imageView;
@@ -69,39 +71,41 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
         this.executor.setRemoveOnCancelPolicy(true);
         this.getStyleClass().add(LOADOUT_MODIFICATION_STYLE_CLASS);
         this.imageView = ResizableImageViewBuilder.builder()
-                .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
+                .withStyleClasses(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
                 .withImage((this.loadout.getModifications()[this.position] != null) ? this.loadout.getModifications()[this.position].getImage() : "/images/modification/empty.png")
                 .build();
         this.label = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding((this.loadout.getModifications()[this.position] != null && this.loadout.getModifications()[this.position].getModification() != null) ? this.loadout.getModifications()[this.position].getModification().getLocalizationKey() : "loadout.modification.name.none")).build();
         this.destroyables.add(this.label);
         this.destroyables.add(this.imageView);
-
-        final EventHandler<MouseEvent> imageDragMouseEventHandler = event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                this.dragFlag = true;
-            }
-        };
-
-        final EventHandler<MouseEvent> imageClickMouseEventHandler = event -> {
-
-            if (event.getButton().equals(MouseButton.SECONDARY)) {
-                clear();
-                return;
-            }
-            if (!this.dragFlag) {
-                if (event.getClickCount() == 1) {
-                    processSingleClick(event);
-                } else if (event.getClickCount() > 1 && this.scheduledFuture != null && !this.scheduledFuture.isCancelled() && !this.scheduledFuture.isDone()) {
-                    processMultiClick();
+        if (!this.loadoutItem.getLoadoutSet().equals(LoadoutSet.CURRENT)) {
+            this.imageView.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_HOVER_STYLE_CLASS);
+            final EventHandler<MouseEvent> imageDragMouseEventHandler = event -> {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    this.dragFlag = true;
                 }
+            };
 
-            }
-            this.dragFlag = false;
+            final EventHandler<MouseEvent> imageClickMouseEventHandler = event -> {
 
-        };
+                if (event.getButton().equals(MouseButton.SECONDARY)) {
+                    clear();
+                    return;
+                }
+                if (!this.dragFlag) {
+                    if (event.getClickCount() == 1) {
+                        processSingleClick(event);
+                    } else if (event.getClickCount() > 1 && this.scheduledFuture != null && !this.scheduledFuture.isCancelled() && !this.scheduledFuture.isDone()) {
+                        processMultiClick();
+                    }
 
-        this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
-        this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
+                }
+                this.dragFlag = false;
+
+            };
+
+            this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
+            this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
+        }
         VBox.setVgrow(this.imageView, Priority.ALWAYS);
         this.getChildren().addAll(this.imageView, this.label);
 

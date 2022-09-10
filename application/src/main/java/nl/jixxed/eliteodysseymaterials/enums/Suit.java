@@ -154,4 +154,25 @@ public enum Suit implements Equipment {
         return "loadout.equipment.name." + this.name().toLowerCase();
     }
 
+    public static Suit forFdevName(final String name) {
+        return switch (name) {
+            case "utilitysuit_class1" -> MAVERICK;
+            case "utilitysuit_class2" -> MAVERICK;
+            case "utilitysuit_class3" -> MAVERICK;
+            case "utilitysuit_class4" -> MAVERICK;
+            case "utilitysuit_class5" -> MAVERICK;
+            case "explorationsuit_class1" -> ARTEMIS;
+            case "explorationsuit_class2" -> ARTEMIS;
+            case "explorationsuit_class3" -> ARTEMIS;
+            case "explorationsuit_class4" -> ARTEMIS;
+            case "explorationsuit_class5" -> ARTEMIS;
+            case "tacticalsuit_class1" -> DOMINATOR;
+            case "tacticalsuit_class2" -> DOMINATOR;
+            case "tacticalsuit_class3" -> DOMINATOR;
+            case "tacticalsuit_class4" -> DOMINATOR;
+            case "tacticalsuit_class5" -> DOMINATOR;
+            case "flightsuit" -> FLIGHTSUIT;
+            default -> throw new IllegalArgumentException("Unknown Suit: " + name);
+        };
+    }
 }

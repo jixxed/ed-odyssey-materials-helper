@@ -39,7 +39,9 @@ public enum JournalEventType {
     MARKETBUY("MarketBuy"),
     MARKETSELL("MarketSell"),
     CARGO("Cargo"),
-    TECHNOLOGYBROKER("TechnologyBroker");
+    TECHNOLOGYBROKER("TechnologyBroker"),
+    SUITLOADOUT("SuitLoadout"),
+    SWITCHSUITLOADOUT("SuitLoadout");
     private final String name;
 
     public static JournalEventType forName(final String name) {

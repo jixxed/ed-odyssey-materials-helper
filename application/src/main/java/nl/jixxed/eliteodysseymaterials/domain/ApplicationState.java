@@ -534,9 +534,11 @@ public class ApplicationState {
     }
 
     public void saveLoadoutSet(final String fid, final LoadoutSet loadoutSet) {
-        final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
-        loadoutSetList.updateLoadoutSet(loadoutSet);
-        saveLoadoutSetList(fid, loadoutSetList);
+        if (!loadoutSet.equals(LoadoutSet.CURRENT)) {
+            final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
+            loadoutSetList.updateLoadoutSet(loadoutSet);
+            saveLoadoutSetList(fid, loadoutSetList);
+        }
     }
 
     @SuppressWarnings("java:S2095")

@@ -1,3 +1,10 @@
+Version 1.87
+-------------
+Loadout cloning - Clones an entire loadout you defined
+Current loadout - Show a read-only version of your current loadout selected in-game, which can be cloned
+Loadout add to wishlist - Option to add a loadout item to a new wishlist
+Fix loadout create/rename button texts
+
 Version 1.86
 -------------
 Alternate journal monitoring method for network shares(Optional Setting)

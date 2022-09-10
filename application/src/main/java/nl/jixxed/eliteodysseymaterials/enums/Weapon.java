@@ -352,4 +352,22 @@ public enum Weapon implements Equipment {
         return "loadout.equipment.name." + this.name().toLowerCase();
     }
 
+    public static Weapon forFdevName(final String name) {
+        return switch (name) {
+            case "wpn_m_sniper_plasma_charged" -> MANTICORE_EXECUTIONER;
+            case "wpn_s_pistol_plasma_charged" -> MANTICORE_TORMENTOR;
+            case "wpn_m_shotgun_plasma_doublebarrel" -> MANTICORE_INTIMIDATOR;
+            case "wpn_m_assaultrifle_plasma_fauto" -> MANTICORE_OPPRESSOR;
+            case "wpn_m_assaultrifle_kinetic_fauto" -> KINEMATIC_AR50;
+            case "wpn_m_submachinegun_kinetic_fauto" -> KINEMATIC_C44;
+            case "wpn_m_launcher_rocket_sauto" -> KINEMATIC_L6;
+            case "wpn_s_pistol_kinetic_sauto" -> KINEMATIC_P15;
+            case "wpn_m_assaultrifle_laser_fauto" -> TAKADA_APHELION;
+            case "wpn_m_submachinegun_laser_fauto" -> TAKADA_ECLIPSE;
+            case "wpn_s_pistol_laser_sauto" -> TAKADA_ZENITH;
+
+            default -> throw new IllegalArgumentException("Unknown Weapon: " + name);
+        };
+    }
 }
+
