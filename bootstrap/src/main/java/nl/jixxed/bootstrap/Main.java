@@ -92,12 +92,17 @@ public class Main extends Application {
                             final FileChannel fileChannel = fileOutputStream.getChannel();
                             fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                         }
+                        final long expectedSize = getLatestUpdateSize();
+                        final long actualSize = updateFile.length();
+                        if (actualSize != expectedSize) {
+                            error(label, animation, "Downloaded update integrity check failed. Please try again.(" + actualSize + ")", false);
+                        }
                         //remove old
                         Platform.runLater(() -> label.setText("Cleaning old files..."));
                         try {
                             //linux does not put files in use so always kill existing instances
                             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
-  
+
                                 try {
                                     runCommand(OsConstants.KILL_COMMAND);
                                     Thread.sleep(3000);
@@ -270,6 +275,21 @@ public class Main extends Application {
                     .orElse("ERROR");
         } catch (final NullPointerException ex) {
             return "ERROR";
+        }
+    }
+
+    private long getLatestUpdateSize() throws IOException {
+        final JsonNode response = getLatest();
+        try {
+            final Iterator<JsonNode> assets = response.get("assets").elements();
+            final Iterable<JsonNode> iterable = () -> assets;
+            return StreamSupport.stream(iterable.spliterator(), false)
+                    .filter(node -> node.get("browser_download_url").asText().endsWith(OsConstants.UPDATE_FILE_SUFFIX))
+                    .map(node -> node.get("size").asLong())
+                    .findFirst()
+                    .orElse(-1L);
+        } catch (final NullPointerException ex) {
+            return -1L;
         }
     }
 
