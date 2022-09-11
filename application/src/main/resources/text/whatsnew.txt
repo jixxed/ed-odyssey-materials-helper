@@ -1,3 +1,9 @@
+Version 1.88
+-------------
+ED Shipyard integration - import wishlist in the app through the click of a button on edsy.org (pending implementation)
+Added material statistics best average collected per visit
+- requires minimum of 10 visits for settlements to be considered. (5 for Colonia)
+
 Version 1.87
 -------------
 Loadout cloning - Clones an entire loadout you defined

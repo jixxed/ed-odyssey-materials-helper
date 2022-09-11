@@ -389,7 +389,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
         EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent());
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_WISHLIST)) {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST)) {
                 refreshWishlistBlueprints();
             }
         });

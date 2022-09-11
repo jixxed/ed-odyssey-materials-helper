@@ -175,6 +175,176 @@ public enum HorizonsBlueprintType {
         }
     }
 
+
+    public static HorizonsBlueprintType forInternalName(final String internalName) {
+        return switch (internalName.toLowerCase()) {
+            //modules
+            case "misc_lightweight" -> LIGHTWEIGHT;
+            case "misc_reinforced" -> REINFORCED;
+            case "misc_shielded" -> SHIELDED;
+
+            case "weapon_doubleshot" -> DOUBLE_SHOT;
+            case "weapon_efficient" -> EFFICIENT_WEAPON;
+            case "weapon_focused" -> FOCUSED_WEAPON;
+            case "weapon_highcapacity" -> HIGH_CAPACITY_MAGAZINE;
+            case "weapon_lightweight" -> LIGHTWEIGHT_MOUNT;
+            case "weapon_longrange" -> LONG_RANGE_WEAPON;
+            case "weapon_overcharged" -> OVERCHARGED_WEAPON;
+            case "weapon_rapidfire" -> RAPID_FIRE_MODIFICATION;
+            case "weapon_shortrange" -> SHORT_RANGE_BLASTER;
+            case "weapon_sturdy" -> STURDY_MOUNT;
+
+            case "sensor_fastscan" -> FAST_SCANNER;
+            case "sensor_longrange" -> LONG_RANGE_SCANNER;
+            case "sensor_wideangle" -> WIDE_ANGLE_SCANNER;
+
+            case "sensor_lightweight" -> LIGHT_WEIGHT_SCANNER;
+            case "sensor_expanded" -> WIDE_ANGLE_SCANNER;
+
+            case "misc_chaffcapacity" -> AMMO_CAPACITY;
+            case "misc_heatsinkcapacity" -> AMMO_CAPACITY;
+            case "misc_pointdefensecapacity" -> AMMO_CAPACITY;
+
+            case "shieldbooster_explosive" -> BLAST_RESISTANT;
+            case "shieldbooster_heavyduty" -> HEAVY_DUTY;
+            case "shieldbooster_kinetic" -> KINETIC_RESISTANT;
+            case "shieldbooster_resistive" -> RESISTANCE_AUGMENTED;
+            case "shieldbooster_thermic" -> THERMAL_RESISTANT;
+
+            case "armour_explosive" -> BLAST_RESISTANT;
+            case "armour_heavyduty" -> HEAVY_DUTY;
+            case "armour_kinetic" -> KINETIC_RESISTANT;
+            case "armour_advanced" -> LIGHTWEIGHT;
+            case "armour_thermic" -> THERMAL_RESISTANT;
+
+            case "powerplant_armoured" -> ARMOURED;
+            case "powerplant_stealth" -> LOW_EMISSIONS;
+            case "powerplant_boosted" -> OVERCHARGED;
+
+            case "engine_tuned" -> CLEAN_DRIVE_TUNING;
+            case "engine_dirty" -> DIRTY_DRIVE_TUNING;
+            case "engine_reinforced" -> DRIVE_STRENGTHENING;
+
+            case "fsd_fastboot" -> FASTER_FSD_BOOT_SEQUENCE;
+            case "fsd_longrange" -> INCREASED_FSD_RANGE;
+            case "fsd_shielded" -> SHIELDED_FSD;
+
+            case "powerdistributor_highfrequency" -> CHARGE_ENHANCED;
+            case "powerdistributor_priorityengines" -> ENGINE_FOCUSED;
+            case "powerdistributor_highcapacity" -> HIGH_CHARGE_CAPACITY;
+            case "powerdistributor_shielded" -> SHIELDED;
+            case "powerdistributor_prioritysystems" -> SYSTEM_FOCUSED;
+            case "powerdistributor_priorityweapons" -> WEAPON_FOCUSED;
+
+            case "fsdinterdictor_expanded" -> EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC;
+            case "fsdinterdictor_longrange" -> LONG_RANGE_FSD_INTERDICTOR;
+
+            case "hullreinforcement_explosive" -> BLAST_RESISTANT_HULL_REINFORCEMENT;
+            case "hullreinforcement_heavyduty" -> HEAVY_DUTY_HULL_REINFORCEMENT;
+            case "hullreinforcement_kinetic" -> KINETIC_RESISTANT_HULL_REINFORCEMENT;
+            case "hullreinforcement_advanced" -> LIGHTWEIGHT_HULL_REINFORCEMENT;
+            case "hullreinforcement_thermic" -> THERMAL_RESISTANT_HULL_REINFORCEMENT;
+
+            case "shieldcellbank_rapid" -> RAPID_CHARGE;
+            case "shieldcellbank_specialised" -> SPECIALISED;
+
+            case "shieldgenerator_optimised" -> ENHANCED_LOW_POWER_SHIELDS;
+            case "shieldgenerator_kinetic" -> KINETIC_RESISTANT_SHIELDS;
+            case "shieldgenerator_reinforced" -> REINFORCED_SHIELDS;
+            case "shieldgenerator_thermic" -> THERMAL_RESISTANT_SHIELDS;
+            //experimental effects
+            case "special_auto_loader" -> AUTO_LOADER;
+            case "special_concordant_sequence" -> CONCORDANT_SEQUENCE;
+            case "special_corrosive_shell" -> CORROSIVE_SHELL;
+            case "special_blinding_shell" -> DAZZLE_SHELL;
+            case "special_dispersal_field" -> DISPERSAL_FIELD;
+            case "special_weapon_toughened" -> DOUBLE_BRACED;
+            case "special_drag_munitions" -> DRAG_MUNITION;
+            case "special_emissive_munitions" -> EMISSIVE_MUNITIONS;
+            case "special_feedback_cascade" -> FEEDBACK_CASCADE;
+            case "special_feedback_cascade_cooled" -> FEEDBACK_CASCADE;
+            case "special_weapon_efficient" -> FLOW_CONTROL;
+            case "special_force_shell" -> FORCE_SHELL;
+            case "special_fsd_interrupt" -> FSD_INTERRUPT;
+            case "special_high_yield_shell" -> HIGH_YIELD_SHELL;
+            case "special_incendiary_rounds" -> INCENDIARY_ROUNDS;
+            case "special_distortion_field" -> INERTIAL_IMPACT;
+            case "special_choke_canister" -> ION_DISRUPTOR;
+            case "special_mass_lock" -> MASS_LOCK_MUNITION;
+            case "special_weapon_rateoffire" -> MULTI_SERVOS;
+            case "special_overload_munitions" -> OVERLOAD_MUNITIONS;
+            case "special_weapon_damage" -> OVERSIZED;
+            case "special_penetrator_munitions" -> PENETRATOR_MUNITIONS;
+            case "special_deep_cut_payload" -> PENETRATOR_PAYLOAD;
+            case "special_phasing_sequence" -> PHASING_SEQUENCE;
+            case "special_plasma_slug" -> PLASMA_SLUG;
+            case "special_plasma_slug_cooled" -> PLASMA_SLUG;
+            case "special_radiant_canister" -> RADIANT_CANISTER;
+            case "special_regeneration_sequence" -> REGENERATION_SEQUENCE;
+            case "special_reverberating_cascade" -> REVERBERATING_CASCADE;
+            case "special_scramble_spectrum" -> SCRAMBLE_SPECTRUM;
+            case "special_screening_shell" -> SCREENING_SHELL;
+            case "special_shiftlock_canister" -> SHIFT_LOCK_CANISTER;
+            case "special_smart_rounds" -> SMART_ROUNDS;
+            case "special_weapon_lightweight" -> STRIPPED_DOWN;
+            case "special_super_penetrator" -> SUPER_PENETRATOR;
+            case "special_super_penetrator_cooled" -> SUPER_PENETRATOR;
+            case "special_lock_breaker" -> TARGET_LOCK_BREAKER;
+            case "special_thermal_cascade" -> THERMAL_CASCADE;
+            case "special_thermal_conduit" -> THERMAL_CONDUIT;
+            case "special_thermalshock" -> THERMAL_SHOCK;
+            case "special_thermal_vent" -> THERMAL_VENT;
+            case "special_shieldbooster_explosive" -> BLAST_BLOCK;
+            case "special_shieldbooster_toughened" -> DOUBLE_BRACED;
+            case "special_shieldbooster_efficient" -> FLOW_CONTROL;
+            case "special_shieldbooster_kinetic" -> FORCE_BLOCK;
+            case "special_shieldbooster_chunky" -> SUPER_CAPACITOR;
+            case "special_shieldbooster_thermic" -> THERMO_BLOCK;
+            case "special_armour_kinetic" -> ANGLED_PLATING;
+            case "special_armour_chunky" -> DEEP_PLATING;
+            case "special_armour_explosive" -> LAYERED_PLATING;
+            case "special_armour_thermic" -> REFLECTIVE_PLATING;
+            case "special_powerplant_toughened" -> DOUBLE_BRACED;
+            case "special_powerplant_highcharge" -> MONSTERED;
+            case "special_powerplant_lightweight" -> STRIPPED_DOWN;
+            case "special_powerplant_cooled" -> THERMAL_SPREAD;
+            case "special_engine_toughened" -> DOUBLE_BRACED;
+            case "special_engine_overloaded" -> DRAG_DRIVES;
+            case "special_engine_haulage" -> DRIVE_DISTRIBUTORS;
+            case "special_engine_lightweight" -> STRIPPED_DOWN;
+            case "special_engine_cooled" -> THERMAL_SPREAD;
+            case "special_fsd_fuelcapacity" -> DEEP_CHARGE;
+            case "special_fsd_toughened" -> DOUBLE_BRACED;
+            case "special_fsd_heavy" -> MASS_MANAGER;
+            case "special_fsd_lightweight" -> STRIPPED_DOWN;
+            case "special_fsd_cooled" -> THERMAL_SPREAD;
+            case "special_powerdistributor_capacity" -> CLUSTER_CAPACITOR;
+            case "special_powerdistributor_toughened" -> DOUBLE_BRACED;
+            case "special_powerdistributor_efficient" -> FLOW_CONTROL;
+            case "special_powerdistributor_lightweight" -> STRIPPED_DOWN;
+            case "special_powerdistributor_fast" -> SUPER_CONDUITS;
+            case "special_hullreinforcement_kinetic" -> ANGLED_PLATING;
+            case "special_hullreinforcement_chunky" -> DEEP_PLATING;
+            case "special_hullreinforcement_explosive" -> LAYERED_PLATING;
+            case "special_hullreinforcement_thermic" -> REFLECTIVE_PLATING;
+            case "special_shieldcell_oversized" -> BOSS_CELLS;
+            case "special_shieldcell_toughened" -> DOUBLE_BRACED;
+            case "special_shieldcell_efficient" -> FLOW_CONTROL;
+            case "special_shieldcell_gradual" -> RECYCLING_CELLS;
+            case "special_shieldcell_lightweight" -> STRIPPED_DOWN;
+            case "special_shield_toughened" -> DOUBLE_BRACED;
+            case "special_shield_regenerative" -> FAST_CHARGE;
+            case "special_shield_kinetic" -> FORCE_BLOCK;
+            case "special_shield_health" -> HI_CAP;
+            case "special_shield_efficient" -> LO_DRAW;
+            case "special_shield_resistive" -> MULTI_WEAVE;
+            case "special_shield_lightweight" -> STRIPPED_DOWN;
+            case "special_shield_thermic" -> THERMO_BLOCK;
+            default -> throw new IllegalArgumentException("Unknown blueprint type: " + internalName);
+        };
+
+    }
+
     public String getLocalizationKey() {
         return "blueprint.horizons.type." + this.name().toLowerCase();
     }

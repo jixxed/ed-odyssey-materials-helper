@@ -153,6 +153,92 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
         };
     }
 
+    public static HorizonsBlueprintName forInternalName(final String internalModuleName) {
+        final String nameLowerCase = internalModuleName.toLowerCase();
+        if (nameLowerCase.startsWith("hpt_beamlaser")) {
+            return BEAM_LASER;
+        } else if (nameLowerCase.startsWith("hpt_pulselaserburst")) {
+            return BURST_LASER;
+        } else if (nameLowerCase.startsWith("hpt_cannon")) {
+            return CANNON;
+        } else if (nameLowerCase.startsWith("hpt_slugshot")) {
+            return FRAGMENT_CANNON;
+        } else if (nameLowerCase.startsWith("hpt_minelauncher")) {
+            return MINE_LAUNCHER;
+        } else if (nameLowerCase.startsWith("hpt_dumbfiremissilerack")
+                || nameLowerCase.startsWith("hpt_drunkmissilerack")) {
+            return MISSILE_RACK;
+        } else if (nameLowerCase.startsWith("hpt_multicannon")) {
+            return MULTI_CANNON;
+        } else if (nameLowerCase.startsWith("hpt_plasmaaccelerator")) {
+            return PLASMA_ACCELERATOR;
+        } else if (nameLowerCase.startsWith("hpt_pulselaser")) {
+            return PULSE_LASER;
+        } else if (nameLowerCase.startsWith("hpt_railgun")) {
+            return RAIL_GUN;
+        } else if (nameLowerCase.startsWith("hpt_basicmissilerack")) {
+            return SEEKER_MISSILE_RACK;
+        } else if (nameLowerCase.startsWith("hpt_advancedtorppylon")) {
+            return TORPEDO_PYLON;
+        } else if (nameLowerCase.startsWith("hpt_chafflauncher")) {
+            return CHAFF_LAUNCHER;
+        } else if (nameLowerCase.startsWith("hpt_electroniccountermeasure")) {
+            return ELECTRONIC_COUNTERMEASURE;
+        } else if (nameLowerCase.startsWith("hpt_cloudscanner")) {
+            return FRAME_SHIFT_WAKE_SCANNER;
+        } else if (nameLowerCase.startsWith("hpt_heatsinklauncher")) {
+            return HEAT_SINK_LAUNCHER;
+        } else if (nameLowerCase.startsWith("hpt_crimescanner")) {
+            return KILL_WARRANT_SCANNER;
+        } else if (nameLowerCase.startsWith("hpt_cargoscanner")) {
+            return MANIFEST_SCANNER;
+        } else if (nameLowerCase.startsWith("hpt_plasmapointdefence")) {
+            return POINT_DEFENCE;
+        } else if (nameLowerCase.startsWith("hpt_shieldbooster")) {
+            return SHIELD_BOOSTER;
+        } else if (nameLowerCase.contains("armour")) {
+            return ARMOUR;
+        } else if (nameLowerCase.startsWith("int_hyperdrive")) {
+            return FRAME_SHIFT_DRIVE;
+        } else if (nameLowerCase.startsWith("int_lifesupport")) {
+            return LIFE_SUPPORT;
+        } else if (nameLowerCase.startsWith("int_powerdistributor")) {
+            return POWER_DISTRIBUTOR;
+        } else if (nameLowerCase.startsWith("int_powerplant")) {
+            return POWER_PLANT;
+        } else if (nameLowerCase.startsWith("int_sensors")) {
+            return SENSORS;
+        } else if (nameLowerCase.startsWith("int_engine_size2_class2")) {
+            return THRUSTERS;
+        } else if (nameLowerCase.startsWith("int_repairer")) {
+            return AUTO_FIELD_MAINTENANCE_UNIT;
+        } else if (nameLowerCase.startsWith("int_dronecontrol_collection")) {
+            return COLLECTOR_LIMPET_CONTROLLER;
+        } else if (nameLowerCase.startsWith("int_detailedsurfacescanner")) {
+            return DETAILED_SURFACE_SCANNER;
+        } else if (nameLowerCase.startsWith("int_fsdinterdictor")) {
+            return FRAME_SHIFT_DRIVE_INTERDICTOR;
+        } else if (nameLowerCase.startsWith("int_fuelscoop")) {
+            return FUEL_SCOOP;
+        } else if (nameLowerCase.startsWith("int_dronecontrol_fueltransfer")) {
+            return FUEL_TRANSFER_LIMPET_CONTROLLER;
+        } else if (nameLowerCase.startsWith("int_dronecontrol_resourcesiphon")) {
+            return HATCH_BREAKER_LIMPET_CONTROLLER;
+        } else if (nameLowerCase.startsWith("int_hullreinforcement")) {
+            return HULL_REINFORCEMENT_PACKAGE;
+        } else if (nameLowerCase.startsWith("int_dronecontrol_prospector")) {
+            return PROSPECTOR_LIMPET_CONTROLLER;
+        } else if (nameLowerCase.startsWith("int_refinery")) {
+            return REFINERY;
+        } else if (nameLowerCase.startsWith("int_shieldcellbank")) {
+            return SHIELD_CELL_BANK;
+        } else if (nameLowerCase.startsWith("int_shieldgenerator")) {
+            return SHIELD_GENERATOR;
+        }
+        throw new IllegalArgumentException("Unknown module name: " + internalModuleName);
+    }
+
+
     @Override
     public String getLocalizationKey() {
         return "blueprint.horizons.name." + this.name().toLowerCase();

@@ -71,6 +71,14 @@ public abstract class HorizonsBlueprintConstants {
                     BlueprintCategory.OPTIONAL_INTERNAL, OPTIONAL_INTERNAL_BLUEPRINTS
             );
 
+    public static Blueprint<HorizonsBlueprintName> getRecipeByInternalName(final String internalModuleName, final String internalBlueprintName, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+
+        final HorizonsBlueprintName horizonsBlueprintName = HorizonsBlueprintName.forInternalName(internalModuleName);
+        final HorizonsBlueprintType horizonsBlueprintType = HorizonsBlueprintType.forInternalName(internalBlueprintName);
+        return getRecipe(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade);
+
+    }
+
     public static Blueprint<HorizonsBlueprintName> getRecipe(final HorizonsBlueprintName name, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
 
         HorizonsBlueprint recipe = ENGINEER_UNLOCK_REQUIREMENTS.get(name);

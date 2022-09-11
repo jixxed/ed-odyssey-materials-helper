@@ -26,6 +26,10 @@ public class NotificationService {
     }
 
     public static void showInformation(final NotificationType notificationType, final String title, final String text) {
+        showInformation(notificationType, title, text, false);
+    }
+
+    public static void showInformation(final NotificationType notificationType, final String title, final String text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             Notifications.create()
@@ -33,11 +37,17 @@ public class NotificationService {
                     .title(title)
                     .text(text)
                     .showInformation();
-            playSound(notificationType);
+            if (!silent) {
+                playSound(notificationType);
+            }
         }
     }
 
     public static void showWarning(final NotificationType notificationType, final String title, final String text) {
+        showWarning(notificationType, title, text, false);
+    }
+
+    static void showWarning(final NotificationType notificationType, final String title, final String text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             Notifications.create()
@@ -45,11 +55,17 @@ public class NotificationService {
                     .title(title)
                     .text(text)
                     .showWarning();
-            playSound(notificationType);
+            if (!silent) {
+                playSound(notificationType);
+            }
         }
     }
 
     public static void showError(final NotificationType notificationType, final String title, final String text) {
+        showError(notificationType, title, text, false);
+    }
+
+    private static void showError(final NotificationType notificationType, final String title, final String text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             Notifications.create()
@@ -57,7 +73,9 @@ public class NotificationService {
                     .title(title)
                     .text(text)
                     .showError();
-            playSound(notificationType);
+            if (!silent) {
+                playSound(notificationType);
+            }
         }
     }
 

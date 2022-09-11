@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Action;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
+import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -100,6 +101,11 @@ class HorizonsContentArea extends AnchorPane {
                 final boolean visibility = !this.recipeBar.isVisible();
                 this.recipeBar.setVisible(visibility);
                 PreferencesService.setPreference(PreferenceConstants.HORIZONS_RECIPES_VISIBLE, visibility);
+            }
+        });
+        EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST)) {
+                this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
             }
         });
     }

@@ -5,19 +5,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.event.CapiOAuthCallbackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.exception.EdsyDeeplinkException;
+import nl.jixxed.eliteodysseymaterials.service.exception.HorizonsWishlistDeeplinkException;
 import nl.jixxed.eliteodysseymaterials.service.exception.LoadoutDeeplinkException;
-import nl.jixxed.eliteodysseymaterials.service.exception.WishlistDeeplinkException;
+import nl.jixxed.eliteodysseymaterials.service.exception.OdysseyWishlistDeeplinkException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
@@ -35,19 +40,86 @@ public class ImportService {
         final String data = split[1];
         if ("horizonswishlist/".equals(type)) {
             return importHorizonsWishlist(data);
-        }
-        if ("capi/".equals(type)) {
+        } else if ("capi/".equals(type)) {
             final HashMap<String, String> params = convertToQueryStringToHashMap(data);
 
             EventService.publish(new CapiOAuthCallbackEvent(params.get("code"), params.get("state")));
             return new ImportResult(ImportResult.ResultType.CAPI_OAUTH_TOKEN);
-        }
-        if ("wishlist/".equals(type)) {
-            return importWishlist(data);
+        } else if ("wishlist/".equals(type)) {
+            return importOdysseyWishlist(data);
         } else if ("loadout/".equals(type)) {
             return importLoadout(data);
+        } else if ("edsy/".equals(type)) {
+            return importEdsy(data);
         }
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
+    }
+
+    private static ImportResult importEdsy(final String data) {
+        final String decoded = convertBase64CompressedToJson(data);
+        if (decoded.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
+        }
+        try {
+            final EdsyWishlist edsyWishlist = OBJECT_MAPPER.readValue(decoded, EdsyWishlist.class);
+
+            if (Objects.equals(edsyWishlist.getVersion(), 1)) {
+
+                final HorizonsWishlist wishlist = new HorizonsWishlist();
+                final String name = "ED Shipyard - Imported";
+                wishlist.setName(name);
+                final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = edsyWishlist.getItems().stream().map(edsyWishlistItem -> {
+                    try {
+                        final HorizonsBlueprintGrade horizonsBlueprintGrade = edsyWishlistItem.getGrade() != null ? HorizonsBlueprintGrade.valueOf("GRADE_" + edsyWishlistItem.getGrade().toString()) : null;
+                        final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipeByInternalName(edsyWishlistItem.getItem(), edsyWishlistItem.getBlueprint(), horizonsBlueprintGrade);
+                        final HorizonsWishlistBlueprint bp;
+                        if (blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
+                            bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(edsyWishlistItem.getGrade(), edsyWishlistItem.getHighestGradePercentage()));
+                        } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
+                            bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
+                        } else {
+                            throw new EdsyDeeplinkException("Failed to parse deeplink");
+                        }
+                        bp.setRecipeName((blueprint.getBlueprintName()));
+                        bp.setVisible(true);
+                        return (WishlistBlueprint<HorizonsBlueprintName>) bp;
+                    } catch (final IllegalArgumentException ex) {
+                        NotificationService.showWarning(NotificationType.IMPORT, "Unknown item", ex.getMessage(), true);
+                        return null;
+                    }
+                }).filter(Objects::nonNull).toList();
+                wishlist.setItems(wishlistBlueprintList);
+
+                final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
+                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander.getFid());
+                wishlists.addWishlist(wishlist);
+                wishlists.setSelectedWishlistUUID(wishlist.getUuid());
+                APPLICATION_STATE.saveHorizonsWishlists(commander.getFid(), wishlists);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST, name);
+            } else {
+                throw new EdsyDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
+            }
+
+        } catch (final RuntimeException | JsonProcessingException ex) {
+            log.error("Failed to import ED shipyard wishlist", ex);
+            throw new EdsyDeeplinkException("Failed to parse deeplink");
+        }
+
+    }
+
+    private static EnumMap<HorizonsBlueprintGrade, Integer> createGradeMap(Integer grade, final Double fraction) {
+        final HorizonsBlueprintGrade topGrade = HorizonsBlueprintGrade.valueOf("GRADE_" + grade--);
+        final EnumMap<HorizonsBlueprintGrade, Integer> gradeRolls = new EnumMap<>(HorizonsBlueprintGrade.class);
+        gradeRolls.put(topGrade, (int) Math.ceil(getGradeRolls(topGrade) * fraction));
+        for (int i = grade; i > 0; i--) {
+            final HorizonsBlueprintGrade horizonsBlueprintGrade = HorizonsBlueprintGrade.valueOf("GRADE_" + i);
+            gradeRolls.put(horizonsBlueprintGrade, getGradeRolls(horizonsBlueprintGrade));
+        }
+        return gradeRolls;
+    }
+
+    private static int getGradeRolls(final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        return PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + horizonsBlueprintGrade.name(), horizonsBlueprintGrade.getDefaultNumberOfRolls());
     }
 
     private static ImportResult importLoadout(final String data) {
@@ -78,11 +150,11 @@ public class ImportService {
         }
     }
 
-    private static ImportResult importWishlist(final String data) {
+    private static ImportResult importOdysseyWishlist(final String data) {
         final String decoded = convertBase64CompressedToJson(data);
 
         if (decoded.isEmpty()) {
-            throw new WishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
+            throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
         }
         try {
             final ClipboardWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardWishlist.class);
@@ -98,13 +170,13 @@ public class ImportService {
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
                 APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_WISHLIST, name);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST, name);
             } else {
-                throw new WishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
+                throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import wishlist", ex);
-            throw new LoadoutDeeplinkException("Failed to parse deeplink");
+            throw new OdysseyWishlistDeeplinkException("Failed to parse deeplink");
         }
     }
 
@@ -112,7 +184,7 @@ public class ImportService {
         final String decoded = convertBase64CompressedToJson(data);
 
         if (decoded.isEmpty()) {
-            throw new WishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
+            throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
         }
         try {
             final ClipboardHorizonsWishlist clipboardWishlist = OBJECT_MAPPER.readValue(decoded, ClipboardHorizonsWishlist.class);
@@ -128,13 +200,13 @@ public class ImportService {
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
                 APPLICATION_STATE.saveHorizonsWishlists(commander.getFid(), wishlists);
-                return new ImportResult(ImportResult.ResultType.SUCCESS_WISHLIST, name);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST, name);
             } else {
-                throw new WishlistDeeplinkException("The horizons wishlist could not be imported because the link was made with a newer version of the app.");
+                throw new OdysseyWishlistDeeplinkException("The horizons wishlist could not be imported because the link was made with a newer version of the app.");
             }
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import horizons wishlist", ex);
-            throw new LoadoutDeeplinkException("Failed to parse deeplink");
+            throw new HorizonsWishlistDeeplinkException("Failed to parse deeplink");
         }
     }
 

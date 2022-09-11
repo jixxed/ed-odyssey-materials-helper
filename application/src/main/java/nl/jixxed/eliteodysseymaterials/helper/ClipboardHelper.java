@@ -68,7 +68,7 @@ public class ClipboardHelper {
         }).orElse("");
     }
 
-    private static String convertJsonToBase64Compressed(final String wishlistJson) {
+    static String convertJsonToBase64Compressed(final String wishlistJson) {
         final Deflater def = new Deflater();
         def.setInput(wishlistJson.getBytes(StandardCharsets.UTF_8));
         def.finish();
