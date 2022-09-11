@@ -14,8 +14,10 @@ public class MaterialStatistic {
     @Getter
     private List<EconomyStatistic> economies = new ArrayList<>();
     private List<SettlementStatistic> bestrun = new ArrayList<>();
+    private List<SettlementStatistic> bestavg = new ArrayList<>();
     private List<SettlementStatistic> mostcollected = new ArrayList<>();
     private List<SettlementStatistic> coloniabestrun = new ArrayList<>();
+    private List<SettlementStatistic> coloniabestavg = new ArrayList<>();
     private List<SettlementStatistic> coloniamostcollected = new ArrayList<>();
 
     public List<SettlementStatistic> getBestrun() {
@@ -25,6 +27,16 @@ public class MaterialStatistic {
             return this.bestrun;
         } else {
             return this.coloniabestrun;
+        }
+    }
+
+    public List<SettlementStatistic> getBestavg() {
+        final Double distanceToSol = LocationService.calculateDistance(LocationService.getCurrentStarSystem(), StarSystem.SOL);
+        final Double distanceToColonia = LocationService.calculateDistance(LocationService.getCurrentStarSystem(), StarSystem.COLONIA);
+        if (distanceToSol < distanceToColonia) {
+            return this.bestavg;
+        } else {
+            return this.coloniabestavg;
         }
     }
 
