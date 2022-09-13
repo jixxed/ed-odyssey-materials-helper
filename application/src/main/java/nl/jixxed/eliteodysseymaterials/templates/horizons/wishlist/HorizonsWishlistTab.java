@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -106,9 +108,10 @@ public class HorizonsWishlistTab extends HorizonsTab {
     }
 
     private MenuButton menuButton;
+    private Button edsyButton;
 
-    public HorizonsWishlistTab() {
-        initComponents();
+    public HorizonsWishlistTab(final Application application) {
+        initComponents(application);
         initEventHandling();
 
     }
@@ -129,7 +132,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.wishlistSelect.styleProperty().set(fontStyle);
     }
 
-    private void initComponents() {
+    private void initComponents(final Application application) {
         initLabels();
         initShortestPathTable();
         final Set<HorizonsWishlist> items = APPLICATION_STATE.getPreferredCommander()
@@ -240,6 +243,10 @@ public class HorizonsWishlistTab extends HorizonsTab {
                 )).build();
         this.menuButton.setFocusTraversable(false);
 
+        this.edsyButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("horizons.wishlist.edsy")).withOnAction(event -> {
+            application.getHostServices().showDocument("https://edsy.org");
+        }).build();
+        Tooltip.install(this.edsyButton, TooltipBuilder.builder().withShowDelay(Duration.millis(100D)).withText(LocaleService.getStringBinding("horizons.wishlist.edsy.tooltip")).build());
         this.hideCompletedCheckBox = new CheckBox();
         this.hideCompletedCheckBox.getStyleClass().add("wishlist-checkbox");
         this.hideCompletedCheckBox.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.hide.completed"));
@@ -271,7 +278,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         HBox.setHgrow(this.techbrokerRecipes, Priority.ALWAYS);
         this.blueprints = BoxBuilder.builder().withStyleClass("wishlist-blueprints").buildVBox();
 
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton).buildHBox();
+        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton, this.edsyButton).buildHBox();
         final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.hideCompletedCheckBox).buildHBox();
         hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         hBoxMaterials.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));

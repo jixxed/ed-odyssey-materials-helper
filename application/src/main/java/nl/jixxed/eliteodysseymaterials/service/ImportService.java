@@ -57,6 +57,7 @@ public class ImportService {
 
     private static ImportResult importEdsy(final String data) {
         final String decoded = convertBase64CompressedToJson(data);
+        log.info("Importing edsy data: " + decoded);
         if (decoded.isEmpty()) {
             throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
         }
@@ -66,7 +67,7 @@ public class ImportService {
             if (Objects.equals(edsyWishlist.getVersion(), 1)) {
 
                 final HorizonsWishlist wishlist = new HorizonsWishlist();
-                final String name = "ED Shipyard - Imported";
+                final String name = (edsyWishlist.getName() != null && edsyWishlist.getName().isBlank()) ? edsyWishlist.getName() : "ED Shipyard - Imported";
                 wishlist.setName(name);
                 final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = edsyWishlist.getItems().stream().map(edsyWishlistItem -> {
                     try {
@@ -84,6 +85,7 @@ public class ImportService {
                         bp.setVisible(true);
                         return (WishlistBlueprint<HorizonsBlueprintName>) bp;
                     } catch (final IllegalArgumentException ex) {
+                        log.error(ex.getMessage());
                         NotificationService.showWarning(NotificationType.IMPORT, "Unknown item", ex.getMessage(), true);
                         return null;
                     }

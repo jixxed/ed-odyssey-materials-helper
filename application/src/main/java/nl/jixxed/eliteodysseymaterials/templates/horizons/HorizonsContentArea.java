@@ -49,7 +49,7 @@ class HorizonsContentArea extends AnchorPane {
 
         this.horizonsEngineersTab = new HorizonsEngineersTab();
         this.horizonsEngineersTab.setClosable(false);
-        this.horizonsWishlistTab = new HorizonsWishlistTab();
+        this.horizonsWishlistTab = new HorizonsWishlistTab(application);
         this.horizonsWishlistTab.setClosable(false);
 
         this.searchBar = new HorizonsSearchBar();

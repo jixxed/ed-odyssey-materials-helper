@@ -199,7 +199,7 @@ public enum HorizonsBlueprintType {
             case "sensor_wideangle" -> WIDE_ANGLE_SCANNER;
 
             case "sensor_lightweight" -> LIGHT_WEIGHT_SCANNER;
-            case "sensor_expanded" -> WIDE_ANGLE_SCANNER;
+            case "sensor_expanded" -> EXPANDED_PROBE_SCANNING_RADIUS;
 
             case "misc_chaffcapacity" -> AMMO_CAPACITY;
             case "misc_heatsinkcapacity" -> AMMO_CAPACITY;

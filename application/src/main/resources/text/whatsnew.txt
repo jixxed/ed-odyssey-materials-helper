@@ -1,3 +1,10 @@
+Version 1.89
+-------------
+Add EDSY Button to Horizons Wishlist to open EDSY website
+- To import a wishlist from EDSY go to: OPS > EXPORT > EDOMH on the outfitting screen
+Use name from EDSY as wishlist name
+Fix engineer unlock requirements for Nemo and Dekker
+
 Version 1.88
 -------------
 ED Shipyard integration - import wishlist in the app through the click of a button on edsy.org (pending implementation)

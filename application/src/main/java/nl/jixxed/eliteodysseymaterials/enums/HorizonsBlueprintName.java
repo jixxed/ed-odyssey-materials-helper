@@ -166,7 +166,8 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
         } else if (nameLowerCase.startsWith("hpt_minelauncher")) {
             return MINE_LAUNCHER;
         } else if (nameLowerCase.startsWith("hpt_dumbfiremissilerack")
-                || nameLowerCase.startsWith("hpt_drunkmissilerack")) {
+                || nameLowerCase.startsWith("hpt_drunkmissilerack")
+                || nameLowerCase.startsWith("hpt_basicmissilerack")) {
             return MISSILE_RACK;
         } else if (nameLowerCase.startsWith("hpt_multicannon")) {
             return MULTI_CANNON;
@@ -176,8 +177,6 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return PULSE_LASER;
         } else if (nameLowerCase.startsWith("hpt_railgun")) {
             return RAIL_GUN;
-        } else if (nameLowerCase.startsWith("hpt_basicmissilerack")) {
-            return SEEKER_MISSILE_RACK;
         } else if (nameLowerCase.startsWith("hpt_advancedtorppylon")) {
             return TORPEDO_PYLON;
         } else if (nameLowerCase.startsWith("hpt_chafflauncher")) {
@@ -208,7 +207,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return POWER_PLANT;
         } else if (nameLowerCase.startsWith("int_sensors")) {
             return SENSORS;
-        } else if (nameLowerCase.startsWith("int_engine_size2_class2")) {
+        } else if (nameLowerCase.startsWith("int_engine")) {
             return THRUSTERS;
         } else if (nameLowerCase.startsWith("int_repairer")) {
             return AUTO_FIELD_MAINTENANCE_UNIT;

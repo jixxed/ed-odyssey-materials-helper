@@ -119,7 +119,8 @@ public abstract class HorizonsBlueprintConstants {
         if (recipe != null) {
             return recipe;
         }
-        throw new IllegalArgumentException("could not find blueprint for name/type/grade: " + name + "/" + horizonsBlueprintType.name() + "/" + horizonsBlueprintGrade.name());
+        final String error = "could not find blueprint for name/type/grade: " + name + "/" + (horizonsBlueprintType != null ? horizonsBlueprintType.name() : "NULL") + "/" + (horizonsBlueprintGrade != null ? horizonsBlueprintGrade.name() : "NULL");
+        throw new IllegalArgumentException(error);
     }
 
     public static HorizonsEngineerBlueprint getEngineerRecipe(final HorizonsBlueprintName name) {
