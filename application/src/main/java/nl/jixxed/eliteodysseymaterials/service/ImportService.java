@@ -67,7 +67,7 @@ public class ImportService {
             if (Objects.equals(edsyWishlist.getVersion(), 1)) {
 
                 final HorizonsWishlist wishlist = new HorizonsWishlist();
-                final String name = (edsyWishlist.getName() != null && edsyWishlist.getName().isBlank()) ? edsyWishlist.getName() : "ED Shipyard - Imported";
+                final String name = (edsyWishlist.getName() != null && !edsyWishlist.getName().isBlank()) ? edsyWishlist.getName() : "ED Shipyard - Imported";
                 wishlist.setName(name);
                 final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = edsyWishlist.getItems().stream().map(edsyWishlistItem -> {
                     try {
