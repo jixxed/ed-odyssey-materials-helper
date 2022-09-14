@@ -312,7 +312,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
             createNew.setOnAction(event -> {
                 final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
                 final Wishlists odysseyWishlists = ApplicationState.getInstance().getWishlists(commander.getFid());
-                final Wishlist newWishlist = odysseyWishlists.createWishlist("New Wishlist");
+                final Wishlist newWishlist = odysseyWishlists.createWishlist(this.loadoutSet.getName());
                 ApplicationState.getInstance().saveWishlists(commander.getFid(), odysseyWishlists);
                 EventService.publish(new WishlistCreatedEvent());//refreshes wishlist dropdown
                 EventService.publish(new WishlistBlueprintEvent(commander.getFid(), newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));

@@ -2195,3 +2195,133 @@
 .loadout-wishlist-create-new {
     -fx-font-style: italic;
 }
+
+.bartender-material {
+    -fx-border-color: black;
+    -fx-pref-height: 2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-alignment: center-left;
+    -fx-background-color: #0f0f0f;
+    -fx-pref-width: 45em;
+    -fx-min-width: 45em;
+    -fx-max-width: 45em;
+}
+
+.bartender-material-hover:hover {
+
+    -fx-background-color: #252525;
+    -fx-cursor: hand;
+}
+
+
+.bartender-material-amount-selected {
+
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-pref-width: 3em;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+}
+
+.bartender-material-value {
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+    -fx-label-padding: 0 1em 0 0;
+    -fx-pref-width: 3em;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+}
+
+.bartender-material-name {
+    -fx-pref-width: 30em;
+    -fx-min-width: 30em;
+    -fx-max-width: 30em;
+}
+
+.bartender-material-button {
+
+    -fx-background-color: #252525;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-pref-width: 2em;
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+}
+
+.bartender-material-button:hover {
+
+    -fx-background-color: #252525;
+    -fx-cursor: hand;
+}
+
+.bartender-material-amount {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-pref-width: 3em;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+}
+
+.bartender-flow {
+    /*-fx-spacing: 0.1em;*/
+    /*-fx-padding: 0, 0, 0.2em, 0;*/
+    -fx-vgap: 0.2em;
+    -fx-pref-width: 45em;
+    -fx-min-width: 45em;
+    -fx-max-width: 45em;
+}
+
+.bartender-top {
+    -fx-padding: 0, 0, 2em, 0;
+}
+
+.bartender-bottom {
+    -fx-spacing: 0.2em;
+    -fx-vgap: 0.2em;
+}
+
+.bartender-left {
+    -fx-padding: 0, 0, 0.2em, 0;
+    /*-fx-vgap: 0.2em;*/
+    -fx-vgap: 0.5em;
+    -fx-spacing: 1em;
+}
+
+.bartender-layout {
+    -fx-padding: 0.4em;
+    -fx-spacing: 0.2em;
+    -fx-hgap: 0.2em;
+}
+
+.bartender-header {
+    -fx-font-size: 1.35em;
+    -fx-min-height: 2em;
+    -fx-font-weight: bold;
+}
+
+.bartender-total {
+    /*-fx-border-color: black;*/
+    /*-fx-background-color: #0f0f0f;*/
+}
+
+.bartender-total-line {
+    -fx-background-color: #0f0f0f;
+    -fx-font-size: 1.3em;
+}
+
+.bartender-total-header {
+    -fx-pref-width: 15em;
+    -fx-min-width: 15em;
+    -fx-max-width: 15em;
+    -fx-label-padding: 0.5em;
+}
+
+.bartender-total-value {
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+    -fx-pref-width: 3em;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-label-padding: 0.5em;
+}

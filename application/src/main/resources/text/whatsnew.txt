@@ -1,3 +1,11 @@
+Version 1.90
+-------------
+Added new Bartender tab to simulate trading (Work in progress, suggestions appreciated)
+Use name of loadout when selecting "Create new" add to wishlist option
+Removed some text from the about section
+Really fix engineer unlock requirements for Nemo this time
+Handle blank name from EDSY
+
 Version 1.89
 -------------
 Add EDSY Button to Horizons Wishlist to open EDSY website

@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.odyssey.bartender.OdysseyBartenderTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers.OdysseyEngineersTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout.OdysseyLoadoutEditorTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMaterialTab;
@@ -37,6 +38,7 @@ class OdysseyContentArea extends AnchorPane {
     private OdysseyTradeTab tradeTab;
     private TabPane tabs;
     private VBox body;
+    private OdysseyBartenderTab odysseyBartenderTab;
 
     public OdysseyContentArea(final Application application) {
         initComponents(application);
@@ -48,15 +50,17 @@ class OdysseyContentArea extends AnchorPane {
         this.wishlistTab = new OdysseyWishlistTab();
         this.loadoutEditorTab = new OdysseyLoadoutEditorTab();
         this.odysseyEngineersTab = new OdysseyEngineersTab();
+        this.odysseyBartenderTab = new OdysseyBartenderTab();
         this.tradeTab = new OdysseyTradeTab();
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.loadoutEditorTab.setClosable(false);
         this.odysseyEngineersTab.setClosable(false);
+        this.odysseyBartenderTab.setClosable(false);
         this.tradeTab.setClosable(false);
 
         this.odysseySearchBar = new OdysseySearchBar();
-        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.tradeTab, this.odysseyEngineersTab);
+        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.odysseyBartenderTab, this.tradeTab, this.odysseyEngineersTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

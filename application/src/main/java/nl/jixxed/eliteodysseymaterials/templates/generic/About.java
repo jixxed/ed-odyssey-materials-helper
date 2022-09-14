@@ -26,10 +26,6 @@ class About extends VBox {
     private final String betaVersion = "1.80-beta13";
     private Label versionLabel;
     private Hyperlink link;
-    private Label disclaimer1;
-    private Label disclaimer2;
-    private Label beer;
-    private Hyperlink bugs;
     private Hyperlink donate;
     private Hyperlink donate2;
     private Hyperlink discord;
@@ -45,13 +41,8 @@ class About extends VBox {
     private void initComponents(final Application application) {
         this.getStyleClass().add("about");
         this.versionLabel = LabelBuilder.builder().withStyleClass("about-version").build();
-        this.disclaimer1 = LabelBuilder.builder().withStyleClass("about-disclaimer1").withText(LocaleService.getStringBinding("menu.about.disclaimer.1")).build();
-        this.disclaimer2 = LabelBuilder.builder().withStyleClass("about-disclaimer2").withText(LocaleService.getStringBinding("menu.about.disclaimer.2")).build();
-        this.beer = LabelBuilder.builder().withStyleClass("about-beer").withText(LocaleService.getStringBinding("menu.about.beer")).build();
         this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withAction(actionEvent ->
                 application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases")).build();
-        this.bugs = HyperlinkBuilder.builder().withStyleClass("about-bugs").withText(LocaleService.getStringBinding("menu.about.report")).withAction(actionEvent ->
-                application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/issues")).build();
         this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/donate.png").build();
         this.donate2Image = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/github_sponsors.png").build();
         this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
@@ -61,7 +52,7 @@ class About extends VBox {
                 application.getHostServices().showDocument("https://github.com/sponsors/jixxed")).withGraphic(this.donate2Image).build();
         this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withAction(actionEvent ->
                 application.getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA")).withGraphic(this.discordImage).build();
-        this.getChildren().addAll(this.versionLabel, this.link, this.disclaimer1, this.disclaimer2, this.beer, BoxBuilder.builder().withStyleClass("about-donate").withNodes(this.donate, this.donate2).buildHBox(), this.bugs, this.discord);
+        this.getChildren().addAll(this.versionLabel, this.link, BoxBuilder.builder().withStyleClass("about-donate").withNodes(this.donate, this.donate2).buildHBox(), this.discord);
     }
 
     private void versionCheck() {
