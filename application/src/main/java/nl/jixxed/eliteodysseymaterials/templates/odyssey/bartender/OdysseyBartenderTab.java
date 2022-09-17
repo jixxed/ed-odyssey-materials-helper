@@ -51,7 +51,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
         this.top = BoxBuilder.builder().withStyleClass("bartender-top").withNodes(title).buildVBox();
         //materials
         this.bottom = BoxBuilder.builder().withStyleClass("bartender-bottom").buildVBox();
-        for (final AssetType assetType : Arrays.stream(AssetType.values()).sorted(Comparator.comparing(Enum::name)).toArray(AssetType[]::new)) {
+        for (final AssetType assetType : Arrays.stream(AssetType.values()).sorted().toArray(AssetType[]::new)) {
             for (final Asset asset : Asset.values()) {
                 if (assetType.equals(asset.getType()) && !asset.isUnknown()) {
                     this.bartenderMaterials.get(assetType).add(new OdysseyBartenderMaterial(asset));
@@ -80,7 +80,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
         this.categories.values().forEach(flowPane -> {
             flowPane.getChildren().clear();
         });
-        for (final AssetType assetType : AssetType.values()) {
+        for (final AssetType assetType : Arrays.stream(AssetType.values()).sorted().toArray(AssetType[]::new)) {
             final FlowPane flowPane = this.categories.get(assetType);
             flowPane.getChildren().addAll(this.bartenderMaterials.get(assetType));
             this.bartenderMaterials.get(assetType).forEach(odysseyBartenderMaterial -> odysseyBartenderMaterial.setLayoutMode(LayoutMode.DEFAULT));
