@@ -388,6 +388,64 @@ public class PulseLaserBlueprints {
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+44%", true)
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
+            HorizonsBlueprintType.SHORT_RANGE_BLASTER,
+            Map.of(
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_1,
+                            Map.of(
+                                    Raw.NICKEL, 1
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+27%", true),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-10%", false)
+                            ),
+                            List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_2,
+                            Map.of(
+                                    Encoded.CONSUMERFIRMWARE, 1,
+                                    Raw.NICKEL, 1
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+39%", true),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-20%", false),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+10%", false)
+                            ),
+                            List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_3,
+                            Map.of(
+                                    Manufactured.ELECTROCHEMICALARRAYS, 1,
+                                    Encoded.CONSUMERFIRMWARE, 1,
+                                    Raw.NICKEL, 1
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+51%", true),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-30%", false),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+20%", false)
+                            ),
+                            List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)),
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_4,
+                            Map.of(
+                                    Manufactured.CONDUCTIVEPOLYMERS, 1,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 1,
+                                    Encoded.CONSUMERFIRMWARE, 1
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+63%", true),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-40%", false),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+30%", false)
+                            ),
+                            List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)),
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.SHORT_RANGE_BLASTER, HorizonsBlueprintGrade.GRADE_5,
+                            Map.of(
+                                    Manufactured.BIOTECHCONDUCTORS, 1,
+                                    Manufactured.CONFIGURABLECOMPONENTS, 1,
+                                    Encoded.INDUSTRIALFIRMWARE, 1
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+75%", true),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-50%", false),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+40%", false)
+                            ),
+                            List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN))),
             HorizonsBlueprintType.STURDY_MOUNT,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
