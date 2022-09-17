@@ -51,7 +51,8 @@ public class POIHelper {
             Map.entry("SAA_SignalType_Geological", "Geological Signal"),
             Map.entry("SAA_SignalType_Biological", "Biological Signal"),
             Map.entry("SAA_SignalType_Other", "Signal (Other)"),
-            Map.entry("CrashedShip", "Crashed Ship")
+            Map.entry("CrashedShip", "Crashed Ship"),
+            Map.entry("Unflattened_WreckedUnknown", "Crashed Thargoid Ship")
     );
     private static final String INDEX = ":#index=";
 
@@ -59,6 +60,7 @@ public class POIHelper {
         if (poi.startsWith("$")) {
             String tidiedPoi = poi.replace("$POIScene_", "")
                     .replace("$POIScenario_", "")
+                    .replace("$Settlement_", "")
                     .replace("$SAA_Unknown_Signal:#type=$", "")
                     .replace("$POI_", "")
                     .replace("Watson_", "")
