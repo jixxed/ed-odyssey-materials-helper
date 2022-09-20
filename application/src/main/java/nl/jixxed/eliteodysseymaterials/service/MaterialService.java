@@ -196,8 +196,8 @@ public class MaterialService {
         final Integer barterSellPrice = BarterConstants.getBarterSellPrice(odysseyMaterial);
         vBox.getChildren().add(LabelBuilder.builder().build());
         vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.barter.sell.price", barterSellPrice == -1 ? "?" : NUMBER_FORMAT.format(barterSellPrice))).build());
-        if (odysseyMaterial instanceof Asset) {
-            vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.barter.trade", BarterConstants.getBarterValues(odysseyMaterial))).build());
+        if (odysseyMaterial instanceof Asset asset) {
+            vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.barter.trade", asset.getBuyValue() + "/" + asset.getSellValue())).build());
         }
     }
 
