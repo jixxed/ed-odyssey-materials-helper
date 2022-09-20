@@ -13,10 +13,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.Loadout;
-import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
-import nl.jixxed.eliteodysseymaterials.domain.LoadoutSetList;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
@@ -25,6 +22,8 @@ import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 import org.controlsfx.control.PopOver;
 
@@ -41,6 +40,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     private ComboBox<LoadoutSet> loadoutSetSelect;
     private FlowPane loadoutItemsFlow;
     private MenuButton menuButton;
+    private DestroyableMenuButton addToWishlist;
 
     public OdysseyLoadoutEditorTab() {
         initComponents();
@@ -54,6 +54,10 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
 
     @Override
     public void initEventHandling() {
+
+        EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
+        });
         EventService.addListener(this, AfterFontSizeSetEvent.class, event -> refreshContent());
         EventService.addListener(this, LanguageChangedEvent.class, event -> refreshContent());
         EventService.addListener(this, LoadoutSetSelectedEvent.class, loadoutSetSelectedEvent -> refreshContent());
@@ -63,8 +67,12 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
         {
             refreshLoadoutSetSelect();
             refreshContent();
+            loadCommanderWishlists(commanderSelectedEvent.getCommander());
         });
-        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshLoadoutSetSelect());
+        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+            refreshLoadoutSetSelect();
+            APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
+        });
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_LOADOUT)) {
                 refreshLoadoutSetSelect();
@@ -105,6 +113,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     }
 
     private Node initMenu() {
+        this.addToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.add.all.to.wishlist")).build();
         final Set<LoadoutSet> items = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getAllLoadoutSets())
                 .orElse(Collections.emptySet());
@@ -231,7 +240,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                 menuItem.disableProperty().bind(this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
             }
         });
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.loadoutSetSelect, this.menuButton, addSuitButton, addWeaponButton).buildHBox();
+        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.loadoutSetSelect, this.menuButton, addSuitButton, addWeaponButton, this.addToWishlist).buildHBox();
         hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         return hBoxBlueprints;
     }
@@ -260,4 +269,60 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
         }
     }
 
+    private Wishlists loadCommanderWishlists(final Commander commander) {
+        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+        if (this.addToWishlist != null) {
+            this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
+            this.addToWishlist.getItems().clear();
+            final List<DestroyableMenuItem> menuItems = wishlists.getAllWishlists().stream().filter(wishlist -> wishlist != Wishlist.ALL).sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
+                final DestroyableMenuItem menuItem = new DestroyableMenuItem();
+                menuItem.setOnAction(event -> {
+                    final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
+                    if (wishlistBlueprints.isEmpty()) {
+                        NotificationService.showWarning(NotificationType.ERROR, "Can't add to wishlist", "No items to add");
+                    } else {
+                        EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                    }
+                });
+                menuItem.setText(wishlist.getName());
+                return menuItem;
+            }).toList();
+            this.addToWishlist.getItems().addAll(menuItems);
+            final DestroyableMenuItem createNew = new DestroyableMenuItem();
+            createNew.setOnAction(event -> {
+                final List<OdysseyWishlistBlueprint> wishlistBlueprints = getRequiredWishlistRecipes();
+                if (wishlistBlueprints.isEmpty()) {
+                    NotificationService.showWarning(NotificationType.ERROR, "Can't create wishlist", "No items to add");
+                } else {
+                    final Wishlists odysseyWishlists = ApplicationState.getInstance().getWishlists(commander.getFid());
+                    final Wishlist newWishlist = odysseyWishlists.createWishlist(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getName());
+                    ApplicationState.getInstance().saveWishlists(commander.getFid(), odysseyWishlists);
+                    EventService.publish(new WishlistCreatedEvent());//refreshes wishlist dropdown
+                    EventService.publish(new WishlistBlueprintEvent(commander.getFid(), newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                }
+            });
+            createNew.textProperty().bind(LocaleService.getStringBinding("loadout.create.new.wishlist"));
+            createNew.getStyleClass().add("loadout-wishlist-create-new");
+            this.addToWishlist.getItems().add(createNew);
+        }
+        return wishlists;
+    }
+
+    private List<OdysseyWishlistBlueprint> getRequiredWishlistRecipes() {
+        final List<OdysseyWishlistBlueprint> wishlistBlueprints = new ArrayList<>();
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+            APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getSelectedLoadoutSet().getLoadouts().forEach(loadout -> {
+                final LevelValue recipes = loadout.getEquipment().getRecipes();
+                for (int level = loadout.getCurrentLevel() + 1; level <= loadout.getTargetLevel(); level++) {
+                    final Object recipe = recipes.getValueForLevel(level);
+                    if (!OdysseyBlueprintName.NONE.equals(recipe)) {
+                        wishlistBlueprints.add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe, true));
+                    }
+                }
+                wishlistBlueprints.addAll(Arrays.stream(loadout.getModifications()).filter(modification -> modification.getModification() != null && !WeaponModification.NONE.equals(modification.getModification())).filter(SelectedModification::isNotPresent).map(modification -> new OdysseyWishlistBlueprint(modification.getModification().getRecipe(), true)).toList());
+
+            });
+        });
+        return wishlistBlueprints;
+    }
 }
