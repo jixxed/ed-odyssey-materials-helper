@@ -199,7 +199,7 @@ public class OdysseyMaterialOverview extends VBox {
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
                 .sorted(Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
-                        .thenComparing(o -> LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey())))
+                        .thenComparing(MaterialSort.getSort(search)))
                 .forEach(entry -> {
                     final OdysseyMaterialCard materialCard = this.materialCards.get(entry.getKey());
                     switch (entry.getKey().getType()) {
