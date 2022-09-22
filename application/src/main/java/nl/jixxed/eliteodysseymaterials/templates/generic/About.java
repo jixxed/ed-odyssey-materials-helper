@@ -26,6 +26,7 @@ class About extends VBox {
     private final String betaVersion = "1.80-beta13";
     private Label versionLabel;
     private Hyperlink link;
+    private Hyperlink linkTutorial;
     private Hyperlink donate;
     private Hyperlink donate2;
     private Hyperlink discord;
@@ -43,6 +44,8 @@ class About extends VBox {
         this.versionLabel = LabelBuilder.builder().withStyleClass("about-version").build();
         this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withAction(actionEvent ->
                 application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases")).build();
+        this.linkTutorial = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.tutorial")).withAction(actionEvent ->
+                application.getHostServices().showDocument("https://youtu.be/8EXOeB074Zw")).build();
         this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/donate.png").build();
         this.donate2Image = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/github_sponsors.png").build();
         this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
@@ -52,7 +55,9 @@ class About extends VBox {
                 application.getHostServices().showDocument("https://github.com/sponsors/jixxed")).withGraphic(this.donate2Image).build();
         this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withAction(actionEvent ->
                 application.getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA")).withGraphic(this.discordImage).build();
-        this.getChildren().addAll(this.versionLabel, this.link, BoxBuilder.builder().withStyleClass("about-donate").withNodes(this.donate, this.donate2).buildHBox(), this.discord);
+        this.getChildren().addAll(this.versionLabel, this.link, BoxBuilder.builder().withStyleClass("about-donate").withNodes(this.donate, this.donate2).buildHBox(), this.discord, this.linkTutorial);
+
+        this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
     }
 
     private void versionCheck() {

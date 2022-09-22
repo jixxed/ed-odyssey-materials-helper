@@ -1,3 +1,7 @@
+Version 1.92
+-------------
+Added link to about section to the official guide: https://youtu.be/8EXOeB074Zw
+
 Version 1.91
 -------------
 Added Thargoid shipwreck POI
