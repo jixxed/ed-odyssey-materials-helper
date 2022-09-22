@@ -220,6 +220,9 @@ public class ImportService {
             while (!inflater.finished()) {
                 final int count = inflater.inflate(uncompressedBuffer);
                 bos.write(uncompressedBuffer, 0, count);
+                if (count == 0 && inflater.needsInput()) {
+                    break;
+                }
             }
             return bos.toString();
         } catch (final IOException | DataFormatException e) {
