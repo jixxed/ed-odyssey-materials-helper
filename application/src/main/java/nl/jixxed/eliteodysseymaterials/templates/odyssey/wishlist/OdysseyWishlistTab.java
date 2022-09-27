@@ -28,6 +28,7 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.ShortestPathFlow;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
@@ -101,6 +102,11 @@ public class OdysseyWishlistTab extends OdysseyTab {
     private HBox selectedBlueprintsHintWhite;
     private HBox selectedBlueprintsHintYellow;
     private HBox selectedBlueprintsHintGreen;
+    private DestroyableResizableImageView blueprintsHelp;
+    private DestroyableResizableImageView materialsHelp;
+    private HBox materialHintRed;
+    private HBox materialHintYellow;
+    private HBox materialHintGreen;
 
     public OdysseyWishlistTab() {
         initComponents();
@@ -261,15 +267,35 @@ public class OdysseyWishlistTab extends OdysseyTab {
         this.blueprints = BoxBuilder.builder().withStyleClass("wishlist-blueprints").buildVBox();
 
         final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton).buildHBox();
-        final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.hideCompletedCheckBox).buildHBox();
+        this.materialHintRed = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-red", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.red")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.red.explain")).build()).buildHBox();
+        this.materialHintYellow = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-yellow", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.yellow")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.yellow.explain")).build()).buildHBox();
+        this.materialHintGreen = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-green", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.green")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.green.explain")).build()).buildHBox();
+
+        final PopOver popOverMaterials = new PopOver();
+        final VBox contentNodeMaterials = BoxBuilder.builder().withNodes(this.materialHintRed, this.materialHintYellow, this.materialHintGreen).buildVBox();
+        contentNodeMaterials.getStyleClass().add("help-popover");
+        popOverMaterials.setContentNode(contentNodeMaterials);
+        popOverMaterials.setDetachable(false);
+        this.materialsHelp = ResizableImageViewBuilder.builder().withOnMouseClicked(event -> {
+            popOverMaterials.show(this.materialsHelp, event.getScreenX(), event.getScreenY());
+        }).withStyleClass("help-image").withImage("/images/other/help.png").build();
+        final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.materialsHelp, this.hideCompletedCheckBox).buildHBox();
         hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         hBoxMaterials.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
         this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
         this.selectedBlueprintsHintWhite = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-white", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.white")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.white.explain")).build()).buildHBox();
         this.selectedBlueprintsHintYellow = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-yellow", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.yellow")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.yellow.odyssey.explain")).build()).buildHBox();
         this.selectedBlueprintsHintGreen = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-green", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.green")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.green.explain")).build()).buildHBox();
-
-        this.contentChild = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.totals, this.selectedBlueprintsLabel, this.selectedBlueprintsHintWhite, this.selectedBlueprintsHintYellow, this.selectedBlueprintsHintGreen, this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestPathFlow).buildVBox();
+        final PopOver popOver = new PopOver();
+        final VBox contentNode = BoxBuilder.builder().withNodes(this.selectedBlueprintsHintWhite, this.selectedBlueprintsHintYellow, this.selectedBlueprintsHintGreen).buildVBox();
+        contentNode.getStyleClass().add("help-popover");
+        popOver.setContentNode(contentNode);
+        popOver.setDetachable(false);
+        this.blueprintsHelp = ResizableImageViewBuilder.builder().withOnMouseClicked(event -> {
+            popOver.show(this.blueprintsHelp, event.getScreenX(), event.getScreenY());
+        }).withStyleClass("help-image").withImage("/images/other/help.png").build();
+        final HBox titleBar = BoxBuilder.builder().withStyleClass("help-image-bar").withNodes(this.selectedBlueprintsLabel, this.blueprintsHelp).buildHBox();
+        this.contentChild = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.totals, titleBar, /*this.selectedBlueprintsHintWhite, this.selectedBlueprintsHintYellow, this.selectedBlueprintsHintGreen, */this.blueprints, hBoxMaterials, this.flows, this.travelPathLabel, this.shortestPathFlow).buildVBox();
         this.content = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(hBoxBlueprints, this.wishlistSize > 0 ? this.contentChild : this.noBlueprint).buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(this.content)

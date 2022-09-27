@@ -1,6 +1,12 @@
 Version 1.92
 -------------
 Added link to about section to the official guide: https://youtu.be/8EXOeB074Zw
+Added new filter: Not or more than on wishlist
+- shows all the materials you have that are not on a wishlist or exceeding the total required amount of all wishlists
+Added wishlist amount on hover
+swap ES/FR locales for horizons commodities
+Sorted list of trading materials (only sorted on application launch)
+Added help tooltips to wislist tabs
 
 Version 1.91
 -------------

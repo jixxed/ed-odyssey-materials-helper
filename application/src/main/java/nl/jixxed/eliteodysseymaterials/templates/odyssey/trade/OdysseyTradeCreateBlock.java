@@ -25,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,7 +62,7 @@ class OdysseyTradeCreateBlock extends VBox {
         final List<OdysseyMaterial> tradeOdysseyMaterials = new ArrayList<>();
         tradeOdysseyMaterials.add(TradeOdysseyMaterial.NOTHING);
         tradeOdysseyMaterials.add(TradeOdysseyMaterial.ANY_RELEVANT);
-        tradeOdysseyMaterials.addAll(OdysseyMaterial.getAllRelevantMaterialsWithoutOverride());
+        tradeOdysseyMaterials.addAll(OdysseyMaterial.getAllRelevantMaterialsWithoutOverride().stream().sorted(Comparator.comparing(material -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), String.CASE_INSENSITIVE_ORDER)).toList());
         final ListBinding<String> materialListBinding = LocaleService.getListBinding(() -> tradeOdysseyMaterials.stream().map(material -> LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey())).toArray(String[]::new));
         this.offer = LabelBuilder.builder()
                 .withStyleClass("trade-new-offer-offer")

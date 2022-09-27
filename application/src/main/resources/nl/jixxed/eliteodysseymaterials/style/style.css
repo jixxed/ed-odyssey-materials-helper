@@ -2102,6 +2102,11 @@
     -fx-font-style: italic;
 }
 
+.wishlist-hint-red {
+    -fx-text-fill: #ff7c7c;
+    -fx-font-style: italic;
+}
+
 .wishlist-hint-green {
     -fx-text-fill: #89d07f;
     -fx-font-style: italic;
@@ -2325,3 +2330,23 @@
     -fx-max-width: 3em;
     -fx-label-padding: 0.5em;
 }
+
+.help-image {
+    -fx-pref-width: 2em;
+    -fx-cursor: hand;
+}
+
+.help-image-bar {
+    -fx-spacing: 1em;
+}
+
+.help-popover {
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 5px;
+}
+
+/*.help-popover > .border {*/
+/*    -fx-stroke: #000000 !important;*/
+/*    -fx-stroke-width: 0.5 !important;*/
+/*    -fx-fill: #000000 !important;*/
+/*}*/
