@@ -59,7 +59,6 @@ public class ARService {
     private static BufferedImage arrowCapture;
     private static Image overlayImage;
     private static final int MATCH_METHOD = Imgproc.TM_CCOEFF_NORMED;
-    private static int frameCounter = 0;
     private static double scaling = 0;
     private static final AtomicBoolean MENU_VISIBLE = new AtomicBoolean(false);
     private static final AtomicBoolean REQUEST_SHOW = new AtomicBoolean(false);
@@ -290,11 +289,6 @@ public class ARService {
                     }
                 } catch (final Exception e) {
                     log.error("error", e);
-                }
-                if (frameCounter == 99) {
-                    frameCounter = 0;
-                } else {
-                    frameCounter++;
                 }
             }
         };

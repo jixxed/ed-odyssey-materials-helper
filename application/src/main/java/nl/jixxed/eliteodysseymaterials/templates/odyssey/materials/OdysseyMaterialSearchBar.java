@@ -97,6 +97,7 @@ class OdysseyMaterialSearchBar extends HBox {
                         MaterialShow.BLUEPRINT,
                         MaterialShow.IRRELEVANT,
                         MaterialShow.IRRELEVANT_WITH_STOCK,
+                        MaterialShow.NOT_ON_WISHLIST,
                         MaterialShow.BACKPACK,
                         MaterialShow.FLEETCARRIER,
                         MaterialShow.PROHIBITED,

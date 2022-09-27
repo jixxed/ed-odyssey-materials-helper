@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
+import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
@@ -35,11 +36,13 @@ class OdysseyMaterialCard extends VBox implements Template {
     private DestroyableResizableImageView image;
     private Label name;
     private Label fleetCarrierAmount;
+    private Label wishlistAmount;
     private Label backpackAmount;
     private Label shiplockerAmount;
     private Label totalAmount;
     private MaterialShow materialShow;
     private DestroyableResizableImageView fleetCarrierImage;
+    private DestroyableResizableImageView wishlistImage;
     private DestroyableResizableImageView backpackImage;
     private DestroyableResizableImageView shipImage;
 //    private DestroyableResizableImageView totalImage;
@@ -62,6 +65,11 @@ class OdysseyMaterialCard extends VBox implements Template {
                 .withStyleClass("materialcard-amount")
                 .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
                 .withNonLocalizedText(String.valueOf(this.amounts.getFleetCarrierValue()))
+                .build();
+        this.wishlistAmount = LabelBuilder.builder()
+                .withStyleClass("materialcard-amount")
+                .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
+                .withNonLocalizedText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum()))
                 .build();
         this.backpackAmount = LabelBuilder.builder()
                 .withStyleClass("materialcard-amount")
@@ -89,10 +97,11 @@ class OdysseyMaterialCard extends VBox implements Template {
         this.setOnMouseClicked(event -> setFavourite(this.odysseyMaterial, APPLICATION_STATE.toggleFavourite(this.odysseyMaterial)));
 
         this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/fleetcarrier.png").build();
+        this.wishlistImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/wishlist.png").build();
         this.backpackImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/backpack.png").build();
         this.shipImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/ship.png").build();
 
-        final HBox nameLine = BoxBuilder.builder().withStyleClass("material-name-line").withNodes(this.image, this.name, region, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.totalAmount).buildHBox();
+        final HBox nameLine = BoxBuilder.builder().withStyleClass("material-name-line").withNodes(this.image, this.name, region, this.wishlistImage, this.wishlistAmount, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.totalAmount).buildHBox();
         this.getChildren().addAll(nameLine);
         updateStyle();
     }
@@ -103,6 +112,7 @@ class OdysseyMaterialCard extends VBox implements Template {
             this.fleetCarrierAmount.setText(String.valueOf(0));
             this.backpackAmount.setText(String.valueOf(0));
             this.shiplockerAmount.setText(String.valueOf(0));
+            this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum()));
             this.totalAmount.setText(String.valueOf(0));
         });
         EventService.addListener(this, StorageEvent.class, storageEvent -> {
@@ -125,6 +135,10 @@ class OdysseyMaterialCard extends VBox implements Template {
         EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event ->
                 Platform.runLater(this::updateMaterialCardStyle)
         );
+        EventService.addListener(this, 9, WishlistBlueprintEvent.class, event -> {
+            Platform.runLater(() -> this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum())));
+            Platform.runLater(this::updateStyle);
+        });
     }
 
     private void updateStyle() {
@@ -133,9 +147,15 @@ class OdysseyMaterialCard extends VBox implements Template {
         this.backpackAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
         this.fleetCarrierImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
         this.fleetCarrierAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
+        this.wishlistImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
+        this.wishlistAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
         if (MaterialShow.FLEETCARRIER.equals(this.materialShow)) {
             this.fleetCarrierImage.getStyleClass().add("materialcard-amount-image-nonzero");
             this.fleetCarrierAmount.getStyleClass().add("materialcard-amount-nonzero");
+        }
+        if (MaterialShow.NOT_ON_WISHLIST.equals(this.materialShow)) {
+            this.wishlistImage.getStyleClass().add("materialcard-amount-image-nonzero");
+            this.wishlistAmount.getStyleClass().add("materialcard-amount-nonzero");
         }
         if (this.amounts.getBackPackValue() > 0 || MaterialShow.BACKPACK.equals(this.materialShow)) {
             this.backpackImage.getStyleClass().add("materialcard-amount-image-nonzero");

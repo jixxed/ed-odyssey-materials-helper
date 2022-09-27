@@ -4,6 +4,7 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
+import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Map;
@@ -19,6 +20,7 @@ public enum MaterialShow {
     BLUEPRINT,
     IRRELEVANT,
     IRRELEVANT_WITH_STOCK,
+    NOT_ON_WISHLIST,
     PROHIBITED,
     BACKPACK,
     FLEETCARRIER,
@@ -61,6 +63,10 @@ public enum MaterialShow {
                     (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(o.getKey()) || OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(o.getKey());
             case FAVOURITES ->
                     (Map.Entry<? extends OdysseyMaterial, Storage> o) -> APPLICATION_STATE.isFavourite(o.getKey());
+            case NOT_ON_WISHLIST -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> {
+                final int amountOnAllWishlists = Wishlist.ALL.getItems().stream().map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(o.getKey())).mapToInt(Integer::intValue).sum();
+                return o.getValue().getTotalValue() > 0 && (amountOnAllWishlists == 0 || amountOnAllWishlists < o.getValue().getTotalValue());
+            };
         };
     }
 

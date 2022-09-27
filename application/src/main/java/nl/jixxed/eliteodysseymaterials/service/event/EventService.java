@@ -16,7 +16,7 @@ public class EventService {
     public static <T extends Event> void publish(final T event) {
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()
                 .sorted(Comparator.comparingInt(EventListener::getPriority))
-                .forEach(eventListener -> {
+                .forEachOrdered(eventListener -> {
                     if (event instanceof TerminateApplicationEvent) {
                         //make sure we call each TerminateApplicationEvent listener and try to close all running threads
                         try {
