@@ -32,7 +32,8 @@ public class PathService {
                 .filter(distinctByKey(PathService::getKey))
                 .map(WishlistBlueprintTemplate::getPrimaryRecipe)
                 .map(HorizonsEngineeringBlueprint.class::cast)
-                .sorted(Comparator.comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion).thenComparing(horizonsEngineeringBlueprint -> (HorizonsBlueprintName) horizonsEngineeringBlueprint.getBlueprintName()))
+                .sorted(Comparator.comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion).thenComparing(horizonsEngineeringBlueprint -> (HorizonsBlueprintName) horizonsEngineeringBlueprint.getBlueprintName())
+                        .thenComparing(horizonsEngineeringBlueprint -> horizonsEngineeringBlueprint.getHorizonsBlueprintGrade().getGrade()).reversed())
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
         return calculateShortestPath(wishlistBlueprints, distinctRecipes, false);

@@ -7,6 +7,8 @@ Added wishlist amount on hover
 swap ES/FR locales for horizons commodities
 Sorted list of trading materials (only sorted on application launch)
 Added help tooltips to wislist tabs
+Process modules before experimental effects in shortest path calculation(could reduce number of destinations)
+Added different list bullet for experimental effects in shortest path
 
 Version 1.91
 -------------

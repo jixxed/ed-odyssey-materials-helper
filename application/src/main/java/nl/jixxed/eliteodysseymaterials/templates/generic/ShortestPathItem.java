@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
+import javafx.beans.binding.StringBinding;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,13 +66,26 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
                         Collectors.summingInt(value -> 1))
                 ).entrySet().stream()
                 .map(entry ->
-                        LabelBuilder.builder()
-                                .withStyleClasses("shortest-path-item-label-value", "shortest-path-item-label-blueprint")
-                                .withOnMouseClicked(event -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
-                                .withText((Expansion.HORIZONS.equals(this.expansion)) ?
-                                        LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.horizons", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) entry.getKey()).getLocalizationKey()), entry.getValue()) :
-                                        LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), entry.getValue()))
-                                .build()
+                        {
+                            final StringBinding stringBinding;
+                            if (Expansion.HORIZONS.equals(this.expansion)) {
+                                final String localeKey = ((HorizonsBlueprintConstants.getRecipe(((HorizonsBlueprint) entry.getKey()).getBlueprintName(), ((HorizonsBlueprint) entry.getKey()).getHorizonsBlueprintType(), ((HorizonsBlueprint) entry.getKey()).getHorizonsBlueprintGrade())) instanceof HorizonsExperimentalEffectBlueprint)
+                                        ? "tab.wishlist.travel.path.column.blueprints.blueprint.horizons.experimental"
+                                        : "tab.wishlist.travel.path.column.blueprints.blueprint.horizons";
+                                stringBinding = LocaleService.getStringBinding(localeKey,
+                                        LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()),
+                                        LocaleService.LocalizationKey.of(getBlueprintType((EngineeringBlueprint<T>) entry.getKey()).getLocalizationKey()),
+                                        entry.getValue());
+                            } else {
+                                stringBinding = LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints.blueprint.odyssey", LocaleService.LocalizationKey.of(entry.getKey().getBlueprintName().getLocalizationKey()), entry.getValue());
+                            }
+                            return LabelBuilder.builder()
+                                    .withStyleClasses("shortest-path-item-label-value", "shortest-path-item-label-blueprint")
+                                    .withOnMouseClicked(event -> EventService.publish((Expansion.HORIZONS.equals(this.expansion)) ? new HorizonsBlueprintClickEvent(entry.getKey()) : new BlueprintClickEvent(entry.getKey().getBlueprintName())))
+                                    .withText(stringBinding
+                                    )
+                                    .build();
+                        }
                 ).toList()
         );
 
