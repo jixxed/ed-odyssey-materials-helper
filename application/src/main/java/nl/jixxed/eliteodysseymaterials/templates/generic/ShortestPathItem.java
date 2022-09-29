@@ -8,6 +8,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -23,9 +24,12 @@ import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Template {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final String SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS = "shortest-path-item-label";
@@ -65,6 +69,8 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
                         recipe -> recipe,
                         Collectors.summingInt(value -> 1))
                 ).entrySet().stream()
+                .sorted(Comparator.comparing((Map.Entry o) -> o.getKey() instanceof HorizonsExperimentalEffectBlueprint)
+                        .thenComparing((Map.Entry o) -> LocaleService.getLocalizedStringForCurrentLocale(((Blueprint) o.getKey()).getBlueprintName().getLocalizationKey())))
                 .map(entry ->
                         {
                             final StringBinding stringBinding;
