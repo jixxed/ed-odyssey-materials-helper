@@ -35,6 +35,7 @@ public enum JournalEventType {
     UPGRADESUIT("UpgradeSuit"),
     UPGRADEWEAPON("UpgradeWeapon"),
     RECEIVETEXT("ReceiveText"),
+    SENDTEXT("SendText"),
     BUYMICRORESOURCES("BuyMicroResources"),
     MARKETBUY("MarketBuy"),
     MARKETSELL("MarketSell"),

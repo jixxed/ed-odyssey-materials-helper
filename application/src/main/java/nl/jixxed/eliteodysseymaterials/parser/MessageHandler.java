@@ -55,6 +55,7 @@ class MessageHandler {
             Map.entry(JournalEventType.UPGRADESUIT, new UpgradeSuitMessageProcessor()),
             Map.entry(JournalEventType.UPGRADEWEAPON, new UpgradeWeaponMessageProcessor()),
             Map.entry(JournalEventType.RECEIVETEXT, new ReceiveTextMessageProcessor()),
+            Map.entry(JournalEventType.SENDTEXT, new SendTextMessageProcessor()),
             Map.entry(JournalEventType.BUYMICRORESOURCES, new BuyMicroResourcesMessageProcessor()),
             Map.entry(JournalEventType.MARKETBUY, new MarketBuyMessageProcessor()),
             Map.entry(JournalEventType.MARKETSELL, new MarketSellMessageProcessor()),
