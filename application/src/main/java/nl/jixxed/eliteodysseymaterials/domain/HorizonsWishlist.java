@@ -52,4 +52,14 @@ public class HorizonsWishlist {
         }
         return this.items;
     }
+
+    @JsonIgnore
+    public void optimizeUUIDs() {
+        for (int i = 0; i < this.items.size(); i++) {
+            final WishlistBlueprint<HorizonsBlueprintName> item = this.items.get(i);
+            if (item instanceof HorizonsWishlistBlueprint horizonsWishlistBlueprint) {
+                horizonsWishlistBlueprint.setUuid(String.valueOf(i));
+            }
+        }
+    }
 }

@@ -32,7 +32,9 @@ public class ClipboardHelper {
     public static String createClipboardHorizonsWishlist() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
-                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardHorizonsWishlist("wishlist", 1, APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist()));
+                final ClipboardHorizonsWishlist wishlist = new ClipboardHorizonsWishlist("wishlist", 1, APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist());
+                wishlist.getWishlist().optimizeUUIDs();
+                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(wishlist);
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
                 return "edomh://horizonswishlist/?" + wishlist64;
             } catch (final JsonProcessingException e) {
@@ -69,11 +71,12 @@ public class ClipboardHelper {
     }
 
     static String convertJsonToBase64Compressed(final String wishlistJson) {
-        final Deflater def = new Deflater();
+        final Deflater def = new Deflater(9);
+//        def.setStrategy(Deflater.FILTERED);
         def.setInput(wishlistJson.getBytes(StandardCharsets.UTF_8));
         def.finish();
-        final byte[] compressedBuffer = new byte[2048];
-        final int numberOfBytesAfterCompression = def.deflate(compressedBuffer);
+        final byte[] compressedBuffer = new byte[wishlistJson.length() * 2];
+        final int numberOfBytesAfterCompression = def.deflate(compressedBuffer, 0, compressedBuffer.length, Deflater.FULL_FLUSH);
         final byte[] wishListBytes = new byte[numberOfBytesAfterCompression];
         System.arraycopy(compressedBuffer, 0, wishListBytes, 0, numberOfBytesAfterCompression);
         return Base64.getUrlEncoder().encodeToString(wishListBytes);
