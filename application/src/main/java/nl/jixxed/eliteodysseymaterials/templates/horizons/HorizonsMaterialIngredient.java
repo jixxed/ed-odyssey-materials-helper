@@ -183,7 +183,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.leftDescriptionLabel.textProperty().bind(leftDescriptionLabel);
     }
 
-    void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
+    protected void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
         this.rightDescriptionLabel.textProperty().bind(rightDescriptionLabel);
     }
 

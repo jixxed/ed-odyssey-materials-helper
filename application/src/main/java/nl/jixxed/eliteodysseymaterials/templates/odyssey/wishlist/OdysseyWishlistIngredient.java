@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialIngredient;
 
@@ -22,6 +23,15 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
+        this.hoverProperty().addListener((observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue) && (this.getLeftAmount() - this.getRightAmount()) > 0) {
+                this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - this.getRightAmount()));
+                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
+            } else {
+                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
+                this.getRightAmountLabel().setText(this.getRightAmount().toString());
+            }
+        });
     }
 
     @Override

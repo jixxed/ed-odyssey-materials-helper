@@ -2253,3 +2253,4 @@ tab.wishlist.material.hint.yellow.explain,"You own enough of this material, but 
 tab.wishlist.material.hint.green,Green,Green,Grün,Verde,Vert,Verde,Зеленый
 tab.wishlist.material.hint.green.explain,You have the required amount of this material,You have the required amount of this material,Sie haben die erforderliche Menge dieses Materials,Tiene la cantidad requerida de este material,Vous avez le montant requis de ce matériel,Você tem a quantidade necessária deste material,У вас есть необходимое количество этого материала
 tab.wishlist.travel.path.column.blueprints.blueprint.horizons.experimental,"⁃ {0} - {1}{2,choice,1#|1< ({2})}","⁃ {0} - {1}{2,choice,1#|1< ({2})}","⁃ {0} - {1}{2,choice,1#|1< ({2})}","⁃ {0} - {1}{2,choice,1#|1< ({2})}","⁃ {0} - {1}{2,choice,1#|1< ({2})}","⁃ {0} - {1}{2,choice,1#|1< ({2})}","⁃ {0} - {1}{2,choice,1#|1< ({2})}"
+blueprint.header.remaining,Remaining,Remaining,Verblieben,Restante,Restant,Remanescente,Оставшийся

@@ -5,6 +5,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsMaterialIngredient;
 
@@ -23,6 +24,15 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
     @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
+        this.hoverProperty().addListener((observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue) && (this.getLeftAmount() - this.getRightAmount()) > 0) {
+                this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - this.getRightAmount()));
+                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
+            } else {
+                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
+                this.getRightAmountLabel().setText(this.getRightAmount().toString());
+            }
+        });
     }
 
     @Override
