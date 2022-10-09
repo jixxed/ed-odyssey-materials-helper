@@ -2,6 +2,7 @@ Version 1.94
 -------------
 optimization to copy to clipboard functionality for horizons wishlist to reduce url size
 show remaining indicator to red wishlist ingredients on mouse hover
+Added tips to unlocking Odyssey Engineers
 
 Version 1.93
 -------------
