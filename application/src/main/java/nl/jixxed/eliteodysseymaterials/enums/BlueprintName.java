@@ -16,4 +16,6 @@ public interface BlueprintName<E extends BlueprintName> extends Comparable<E> {
     String getLocalizationKey();
 
     String getDescriptionLocalizationKey();
+
+    String lcName();
 }

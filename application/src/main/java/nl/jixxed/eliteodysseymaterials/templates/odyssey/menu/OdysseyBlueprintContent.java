@@ -55,8 +55,12 @@ class OdysseyBlueprintContent extends VBox {
             initAsEngineerMission();
         }
         initIngredients();
-        if (this.blueprint instanceof EngineerBlueprint engineerRecipe && engineerRecipe.getBlueprintName().equals(OdysseyBlueprintName.ENGINEER_D3)) {
-            initSteps();
+        if (this.blueprint instanceof EngineerBlueprint engineerBlueprint) {
+
+            initTips(engineerBlueprint);
+            if (engineerBlueprint.getBlueprintName().equals(OdysseyBlueprintName.ENGINEER_D3)) {
+                initSteps();
+            }
         }
         if (this.blueprint instanceof ModuleBlueprint) {
             initEngineers();
@@ -113,6 +117,22 @@ class OdysseyBlueprintContent extends VBox {
         final TextFlow textFlow = new TextFlow(description);
         textFlow.getStyleClass().add("blueprint-description");
         this.getChildren().addAll(this.recipeHeader, textFlow);
+    }
+
+    private void initTips(final EngineerBlueprint engineerBlueprint) {
+        final Label tipsTitle = LabelBuilder.builder()
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
+                .withText(LocaleService.getStringBinding("blueprint.label.tips"))
+                .build();
+
+        final Text tips = TextBuilder.builder()
+                .withStyleClass("blueprint-description-text")
+                .withText(LocaleService.getStringBinding(engineerBlueprint.getTipsLocalizationKey()))
+                .build();
+        tips.wrappingWidthProperty().bind(this.widthProperty().subtract(35));
+        final TextFlow textFlow = new TextFlow(tips);
+        textFlow.getStyleClass().add("blueprint-description");
+        this.getChildren().addAll(tipsTitle, textFlow);
     }
 
     @SuppressWarnings("java:S1192")

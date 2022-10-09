@@ -91,7 +91,12 @@ public enum OdysseyBlueprintName implements BlueprintName<OdysseyBlueprintName> 
 
     @Override
     public String getLocalizationKey() {
-        return "blueprint.name." + this.name().toLowerCase();
+        return "blueprint.name." + lcName();
+    }
+
+    @Override
+    public String lcName() {
+        return this.name().toLowerCase();
     }
 
     @Override

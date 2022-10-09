@@ -240,12 +240,17 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
 
     @Override
     public String getLocalizationKey() {
-        return "blueprint.horizons.name." + this.name().toLowerCase();
+        return "blueprint.horizons.name." + lcName();
     }
 
     @Override
     public String getDescriptionLocalizationKey() {
-        return "blueprint.horizons.description." + this.name().toLowerCase();
+        return "blueprint.horizons.description." + lcName();
+    }
+
+    @Override
+    public String lcName() {
+        return this.name().toLowerCase();
     }
 
     @Override

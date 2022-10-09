@@ -52,4 +52,8 @@ public class EngineerBlueprint extends OdysseyBlueprint {
             return Craftability.CRAFTABLE;
         }
     }
+
+    public String getTipsLocalizationKey() {
+        return "blueprint.tips." + this.getBlueprintName().lcName();
+    }
 }

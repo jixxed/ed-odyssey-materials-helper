@@ -200,7 +200,7 @@ public abstract class OdysseyBlueprintConstants {
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C3, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_C3,
-                List.of("ingredient.c3.theft", "ingredient.c3.heist"),
+                List.of("ingredient.c3.covert"),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.TERRA_VELASQUEZ)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_C4, new EngineerBlueprint(
