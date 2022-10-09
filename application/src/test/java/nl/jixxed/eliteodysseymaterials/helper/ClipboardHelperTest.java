@@ -25,7 +25,7 @@ class ClipboardHelperTest {
     @Test
     public void testCompress() {
         final String s = ClipboardHelper.convertJsonToBase64Compressed(this.testmessage);
-        Assertions.assertThat(s).isEqualTo("eJyljssKwjAQRdftV5Ssi-hCkC4FHwsXggsXImFMp-lA0oYkPqD0353Y_oGbC_dwmLlDXmTihT5Q34lqVaZKEW0QVXHjkg0pJsZIHF2UWwR7goBe7umDtbxYMEaUk_gwT3SeupjsK4LrO7lrGlKEzGZJe6iRhfXcW9IthnhI-IxesQqaheVik4Sx_HtJcKgIjHxPi2qw6cHvOMc9H7-R-kuw");
+        Assertions.assertThat(s).isEqualTo("eNqljssKwjAQRdftV5Ssi-hCkC4FHwsXggsXImFMp-lA0oYkPqD0353Y_oGbC_dwmLlDXmTihT5Q34lqVaZKEW0QVXHjkg0pJsZIHF2UWwR7goBe7umDtbxYMEaUk_gwT3SeupjsK4LrO7lrGlKEzGZJe6iRhfXcW9IthnhI-IxesQqaheVik4Sx_HtJcKgIjHxPi2qw6cHvOMc9H7-R-kuw");
 
     }
 
