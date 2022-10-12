@@ -38,7 +38,7 @@ public class OdysseyMaterialOverview extends VBox {
     private FlowPane goodFlow;
     private FlowPane dataFlow;
     private final Map<OdysseyMaterial, OdysseyMaterialCard> materialCards = new HashMap<>();
-    private Search currentSearch = new Search("", MaterialSort.ALPHABETICAL, MaterialShow.ALL);
+    private Search currentSearch = new Search("", OdysseyMaterialSort.ALPHABETICAL, OdysseyMaterialShow.ALL);
     private ChangeListener<Number> resizeListener;
 
     OdysseyMaterialOverview(final ScrollPane scrollPane) {
@@ -184,10 +184,10 @@ public class OdysseyMaterialOverview extends VBox {
 
     private void addGoods(final Search search) {
         StorageService.getGoods().entrySet().stream()
-                .filter(MaterialShow.getFilter(search))
+                .filter(OdysseyMaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
-                .sorted(MaterialSort.getSort(search))
+                .sorted(OdysseyMaterialSort.getSort(search))
                 .forEach(entry -> {
                     this.goodFlow.getChildren().add(this.materialCards.get(entry.getKey()));
                 });
@@ -195,11 +195,11 @@ public class OdysseyMaterialOverview extends VBox {
 
     private void addAssets(final Search search) {
         StorageService.getAssets().entrySet().stream()
-                .filter(MaterialShow.getFilter(search))
+                .filter(OdysseyMaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
                 .sorted(Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
-                        .thenComparing(MaterialSort.getSort(search)))
+                        .thenComparing(OdysseyMaterialSort.getSort(search)))
                 .forEach(entry -> {
                     final OdysseyMaterialCard materialCard = this.materialCards.get(entry.getKey());
                     switch (entry.getKey().getType()) {
@@ -212,10 +212,10 @@ public class OdysseyMaterialOverview extends VBox {
 
     private void addDatas(final Search search) {
         StorageService.getData().entrySet().stream()
-                .filter(MaterialShow.getFilter(search))
+                .filter(OdysseyMaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
-                .sorted(MaterialSort.getSort(search))
+                .sorted(OdysseyMaterialSort.getSort(search))
                 .forEach(entry -> {
                     this.dataFlow.getChildren().add(this.materialCards.get(entry.getKey()));
                 });

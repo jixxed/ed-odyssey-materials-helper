@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCo
 
 import java.util.Comparator;
 
-public enum CommoditiesSort {
+public enum HorizonsCommoditiesSort {
 
     ALPHABETICAL,
     QUANTITY_SHIP,

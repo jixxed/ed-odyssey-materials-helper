@@ -3,15 +3,15 @@ package nl.jixxed.eliteodysseymaterials.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialShow;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialSort;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialShow;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialSort;
 
 @AllArgsConstructor
 @Getter
 @Setter
 public class Search {
     private String query;
-    private MaterialSort materialSort;
-    private MaterialShow materialShow;
+    private OdysseyMaterialSort materialSort;
+    private OdysseyMaterialShow materialShow;
 
 }

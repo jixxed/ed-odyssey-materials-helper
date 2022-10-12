@@ -7,7 +7,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCo
 
 import java.util.function.Predicate;
 
-public enum CommoditiesShow {
+public enum HorizonsCommoditiesShow {
     ALL,
     ALL_WITH_STOCK,
     SHIP,

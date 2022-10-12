@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
+package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
@@ -13,28 +13,28 @@ import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
+import nl.jixxed.eliteodysseymaterials.domain.OdysseyWishlistMaterialSearch;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsCommoditiesShow;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsCommoditiesSort;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyWishlistMaterialSort;
+import nl.jixxed.eliteodysseymaterials.enums.WishlistMaterialGrouping;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSearchEvent;
 
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public
-class HorizonsCommoditiesSearchBar extends HBox {
+class OdysseyWishlistSearchBar extends HBox {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private TextField textField;
-    private ComboBox<HorizonsCommoditiesShow> showMaterialsComboBox;
-    private ComboBox<HorizonsCommoditiesSort> sortMaterialsComboBox;
+    private ComboBox<WishlistMaterialGrouping> groupMaterialsComboBox;
+    private ComboBox<OdysseyWishlistMaterialSort> sortMaterialsComboBox;
 
-    public HorizonsCommoditiesSearchBar() {
+    public OdysseyWishlistSearchBar() {
         initComponents();
         initEventHandling();
     }
@@ -50,10 +50,8 @@ class HorizonsCommoditiesSearchBar extends HBox {
         applyFontSizingHack();
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
-//        HBox.setHgrow(this.showMaterialsComboBox, Priority.ALWAYS);
-//        HBox.setHgrow(this.sortMaterialsComboBox, Priority.ALWAYS);
 
-        this.getChildren().addAll(this.textField, this.showMaterialsComboBox, this.sortMaterialsComboBox);
+        this.getChildren().addAll(this.textField, this.groupMaterialsComboBox, this.sortMaterialsComboBox);
     }
 
     private void applyFontSizingHack() {
@@ -61,7 +59,7 @@ class HorizonsCommoditiesSearchBar extends HBox {
         final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
         final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSize);
         this.styleProperty().set(fontStyle);
-        this.showMaterialsComboBox.styleProperty().set(fontStyle);
+        this.groupMaterialsComboBox.styleProperty().set(fontStyle);
         this.textField.styleProperty().set(fontStyle);
         this.sortMaterialsComboBox.styleProperty().set(fontStyle);
     }
@@ -70,14 +68,14 @@ class HorizonsCommoditiesSearchBar extends HBox {
         final Tooltip sortMaterialsTooltip = TooltipBuilder.builder()
                 .withText(LocaleService.getStringBinding("search.sort.placeholder"))
                 .build();
-        this.sortMaterialsComboBox = ComboBoxBuilder.builder(HorizonsCommoditiesSort.class)
+        this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyWishlistMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
-                .withItemsProperty(LocaleService.getListBinding(HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesSort.QUANTITY_SHIP, HorizonsCommoditiesSort.QUANTITY_FLEETCARRIER, HorizonsCommoditiesSort.QUANTITY_TOTAL))
+                .withItemsProperty(LocaleService.getListBinding(OdysseyWishlistMaterialSort.ALPHABETICAL, OdysseyWishlistMaterialSort.QUANTITY_REQUIRED))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
-                        EventService.publish(new HorizonsCommoditiesSearchEvent(new CommoditiesSearch(getQueryOrDefault(this.textField), newValue, getShowOrDefault(this.showMaterialsComboBox))));
-                        PreferencesService.setPreference("search.commodities.sort", newValue.name());
+                        EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), newValue, getShowOrDefault(this.groupMaterialsComboBox))));
+                        PreferencesService.setPreference("search.odyssey.wishlist.sort", newValue.name());
                     }
                 })
                 .asLocalized()
@@ -86,22 +84,20 @@ class HorizonsCommoditiesSearchBar extends HBox {
     }
 
     private void initSearchTextFilter() {
-        final Tooltip showMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("search.filter.placeholder")).build();
-        this.showMaterialsComboBox = ComboBoxBuilder.builder(HorizonsCommoditiesShow.class)
+        final Tooltip groupMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("search.grouping.placeholder")).build();
+        this.groupMaterialsComboBox = ComboBoxBuilder.builder(WishlistMaterialGrouping.class)
                 .withStyleClasses("root", "filter-and-sort")
-                .withItemsProperty(LocaleService.getListBinding(HorizonsCommoditiesShow.ALL,
-                        HorizonsCommoditiesShow.ALL_WITH_STOCK,
-                        HorizonsCommoditiesShow.SHIP,
-                        HorizonsCommoditiesShow.FLEETCARRIER))
+                .withItemsProperty(LocaleService.getListBinding(WishlistMaterialGrouping.CATEGORY,
+                        WishlistMaterialGrouping.NONE))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
-                        EventService.publish(new HorizonsCommoditiesSearchEvent(new CommoditiesSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox))));
-                        PreferencesService.setPreference("search.commodities.filter", newValue.name());
+                        EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox))));
+                        PreferencesService.setPreference("search.odyssey.wishlist.grouping", newValue.name());
                     }
                 })
                 .asLocalized()
-                .withPromptTextProperty(LocaleService.getStringBinding("search.filter.placeholder"))
-                .withToolTip(showMaterialsTooltip)
+                .withPromptTextProperty(LocaleService.getStringBinding("search.grouping.placeholder"))
+                .withToolTip(groupMaterialsTooltip)
                 .build();
     }
 
@@ -114,7 +110,7 @@ class HorizonsCommoditiesSearchBar extends HBox {
         Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(newValue -> EventService.publish(new HorizonsCommoditiesSearchEvent(new CommoditiesSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox)))));
+                .subscribe(newValue -> EventService.publish(new OdysseyWishlistSearchEvent(new OdysseyWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
     }
 
 
@@ -123,36 +119,25 @@ class HorizonsCommoditiesSearchBar extends HBox {
         EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
-            this.showMaterialsComboBox.styleProperty().set(fontStyle);
+            this.groupMaterialsComboBox.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
             this.sortMaterialsComboBox.styleProperty().set(fontStyle);
         });
-//        EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
-//            if (OdysseyTabs.OVERVIEW.equals(event.getSelectedTab())) {
-//                this.textField.setDisable(false);
-//                this.showMaterialsComboBox.setDisable(false);
-//                this.sortMaterialsComboBox.setDisable(false);
-//            } else {
-//                this.textField.setDisable(true);
-//                this.showMaterialsComboBox.setDisable(true);
-//                this.sortMaterialsComboBox.setDisable(true);
-//            }
-//        });
     }
 
     private void setDefaultOptions() {
         try {
-            final HorizonsCommoditiesSort materialSort = HorizonsCommoditiesSort.valueOf(PreferencesService.getPreference("search.commodities.sort", "ALPHABETICAL"));
+            final OdysseyWishlistMaterialSort materialSort = OdysseyWishlistMaterialSort.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.sort", "ALPHABETICAL"));
             this.sortMaterialsComboBox.getSelectionModel().select(materialSort);
         } catch (final IllegalArgumentException ex) {
             log.error("sort error", ex);
         }
 
         try {
-            final HorizonsCommoditiesShow filter = HorizonsCommoditiesShow.valueOf(PreferencesService.getPreference("search.commodities.filter", "ALL"));
-            this.showMaterialsComboBox.getSelectionModel().select(filter);
+            final WishlistMaterialGrouping filter = WishlistMaterialGrouping.valueOf(PreferencesService.getPreference("search.odyssey.wishlist.grouping", "CATEGORY"));
+            this.groupMaterialsComboBox.getSelectionModel().select(filter);
         } catch (final IllegalArgumentException ex) {
-            log.error("filter error", ex);
+            log.error("grouping error", ex);
         }
     }
 
@@ -161,12 +146,12 @@ class HorizonsCommoditiesSearchBar extends HBox {
         return (textField.getText() != null) ? textField.getText() : "";
     }
 
-    private HorizonsCommoditiesShow getShowOrDefault(final ComboBox<HorizonsCommoditiesShow> showMaterialsComboBox) {
-        return (showMaterialsComboBox.getValue() != null) ? showMaterialsComboBox.getValue() : HorizonsCommoditiesShow.ALL;
+    private WishlistMaterialGrouping getShowOrDefault(final ComboBox<WishlistMaterialGrouping> groupMaterialsComboBox) {
+        return (groupMaterialsComboBox.getValue() != null) ? groupMaterialsComboBox.getValue() : WishlistMaterialGrouping.CATEGORY;
     }
 
-    private HorizonsCommoditiesSort getSortOrDefault(final ComboBox<HorizonsCommoditiesSort> sortMaterialsComboBox) {
-        return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : HorizonsCommoditiesSort.ALPHABETICAL;
+    private OdysseyWishlistMaterialSort getSortOrDefault(final ComboBox<OdysseyWishlistMaterialSort> sortMaterialsComboBox) {
+        return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : OdysseyWishlistMaterialSort.ALPHABETICAL;
     }
 
 }

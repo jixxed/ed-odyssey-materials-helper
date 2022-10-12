@@ -11,7 +11,9 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommoditiesSearchBar;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineerSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialSearchBar;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistSearchBar;
 
 @Slf4j
 class HorizonsSearchBar extends HBox {
@@ -20,6 +22,8 @@ class HorizonsSearchBar extends HBox {
     private Button button;
     private HorizonsMaterialSearchBar materialSearchBar;
     private HorizonsCommoditiesSearchBar commoditiesSearchBar;
+    private HorizonsWishlistSearchBar horizonsWishlistSearchBar;
+    private HorizonsEngineerSearchBar horizonsEngineerSearchBar;
 
     HorizonsSearchBar() {
         initComponents();
@@ -31,11 +35,15 @@ class HorizonsSearchBar extends HBox {
         initMenuButton();
         this.materialSearchBar = new HorizonsMaterialSearchBar();
         this.commoditiesSearchBar = new HorizonsCommoditiesSearchBar();
+        this.horizonsWishlistSearchBar = new HorizonsWishlistSearchBar();
+        this.horizonsEngineerSearchBar = new HorizonsEngineerSearchBar();
 
         applyFontSizingHack();
 
         HBox.setHgrow(this.materialSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.commoditiesSearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.horizonsWishlistSearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.horizonsEngineerSearchBar, Priority.ALWAYS);
         this.getChildren().addAll(this.button, this.materialSearchBar);
     }
 
@@ -68,13 +76,31 @@ class HorizonsSearchBar extends HBox {
         });
         EventService.addListener(this, HorizonsTabSelectedEvent.class, event -> {
             if (HorizonsTabs.COMMODITIES.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar)) {
+                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.horizonsWishlistSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
                     this.getChildren().remove(this.materialSearchBar);
+                    this.getChildren().remove(this.horizonsWishlistSearchBar);
+                    this.getChildren().remove(this.horizonsEngineerSearchBar);
                     this.getChildren().add(this.commoditiesSearchBar);
                 }
-            } else {
-                if (this.getChildren().contains(this.commoditiesSearchBar)) {
+            } else if (HorizonsTabs.WISHLIST.equals(event.getSelectedTab())) {
+                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.commoditiesSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
+                    this.getChildren().remove(this.materialSearchBar);
                     this.getChildren().remove(this.commoditiesSearchBar);
+                    this.getChildren().remove(this.horizonsEngineerSearchBar);
+                    this.getChildren().add(this.horizonsWishlistSearchBar);
+                }
+            } else if (HorizonsTabs.ENGINEERS.equals(event.getSelectedTab())) {
+                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.commoditiesSearchBar) || this.getChildren().contains(this.horizonsWishlistSearchBar)) {
+                    this.getChildren().remove(this.materialSearchBar);
+                    this.getChildren().remove(this.commoditiesSearchBar);
+                    this.getChildren().remove(this.horizonsWishlistSearchBar);
+                    this.getChildren().add(this.horizonsEngineerSearchBar);
+                }
+            } else {
+                if (this.getChildren().contains(this.horizonsWishlistSearchBar) || this.getChildren().contains(this.commoditiesSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
+                    this.getChildren().remove(this.horizonsWishlistSearchBar);
+                    this.getChildren().remove(this.commoditiesSearchBar);
+                    this.getChildren().remove(this.horizonsEngineerSearchBar);
                     this.getChildren().add(this.materialSearchBar);
                 }
             }

@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialIngredient;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+public
 class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
 
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
@@ -71,4 +72,12 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
         }
     }
 
+    void searchHighlight(final boolean enable) {
+        if (enable) {
+            this.getStyleClass().add("wishlist-search-highlight");
+        } else {
+            this.getStyleClass().removeAll("wishlist-search-highlight");
+        }
+        update();
+    }
 }

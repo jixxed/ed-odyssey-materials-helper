@@ -58,6 +58,15 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
         }
     }
 
+    void searchHighlight(final boolean enable) {
+        if (enable) {
+            this.getStyleClass().add("wishlist-search-highlight");
+        } else {
+            this.getStyleClass().removeAll("wishlist-search-highlight");
+        }
+        update();
+    }
+
     void highlight(final boolean enable, final Integer amountRequiredForRecipe) {
         if (enable) {
             this.getStyleClass().add("wishlist-highlight");

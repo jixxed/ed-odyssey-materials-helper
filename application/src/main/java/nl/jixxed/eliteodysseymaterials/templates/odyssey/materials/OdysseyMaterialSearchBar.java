@@ -15,8 +15,8 @@ import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialShow;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialSort;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialShow;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterialSort;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -30,8 +30,8 @@ class OdysseyMaterialSearchBar extends HBox {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private TextField textField;
-    private ComboBox<MaterialShow> showMaterialsComboBox;
-    private ComboBox<MaterialSort> sortMaterialsComboBox;
+    private ComboBox<OdysseyMaterialShow> showMaterialsComboBox;
+    private ComboBox<OdysseyMaterialSort> sortMaterialsComboBox;
 
     public OdysseyMaterialSearchBar() {
         initComponents();
@@ -69,9 +69,9 @@ class OdysseyMaterialSearchBar extends HBox {
         final Tooltip sortMaterialsTooltip = TooltipBuilder.builder()
                 .withText(LocaleService.getStringBinding("search.sort.placeholder"))
                 .build();
-        this.sortMaterialsComboBox = ComboBoxBuilder.builder(MaterialSort.class)
+        this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
-                .withItemsProperty(LocaleService.getListBinding(MaterialSort.ENGINEER_BLUEPRINT_IRRELEVANT, MaterialSort.RELEVANT_IRRELEVANT, MaterialSort.ALPHABETICAL, MaterialSort.QUANTITY))
+                .withItemsProperty(LocaleService.getListBinding(OdysseyMaterialSort.ENGINEER_BLUEPRINT_IRRELEVANT, OdysseyMaterialSort.RELEVANT_IRRELEVANT, OdysseyMaterialSort.ALPHABETICAL, OdysseyMaterialSort.QUANTITY))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
@@ -86,22 +86,22 @@ class OdysseyMaterialSearchBar extends HBox {
 
     private void initSearchTextFilter() {
         final Tooltip showMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("search.filter.placeholder")).build();
-        this.showMaterialsComboBox = ComboBoxBuilder.builder(MaterialShow.class)
+        this.showMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialShow.class)
                 .withStyleClasses("root", "filter-and-sort")
-                .withItemsProperty(LocaleService.getListBinding(MaterialShow.ALL,
-                        MaterialShow.ALL_WITH_STOCK,
-                        MaterialShow.ALL_ENGINEER_BLUEPRINT,
-                        MaterialShow.REQUIRED_ENGINEER_BLUEPRINT,
-                        MaterialShow.ALL_ENGINEER,
-                        MaterialShow.REQUIRED_ENGINEER,
-                        MaterialShow.BLUEPRINT,
-                        MaterialShow.IRRELEVANT,
-                        MaterialShow.IRRELEVANT_WITH_STOCK,
-                        MaterialShow.NOT_ON_WISHLIST,
-                        MaterialShow.BACKPACK,
-                        MaterialShow.FLEETCARRIER,
-                        MaterialShow.PROHIBITED,
-                        MaterialShow.FAVOURITES))
+                .withItemsProperty(LocaleService.getListBinding(OdysseyMaterialShow.ALL,
+                        OdysseyMaterialShow.ALL_WITH_STOCK,
+                        OdysseyMaterialShow.ALL_ENGINEER_BLUEPRINT,
+                        OdysseyMaterialShow.REQUIRED_ENGINEER_BLUEPRINT,
+                        OdysseyMaterialShow.ALL_ENGINEER,
+                        OdysseyMaterialShow.REQUIRED_ENGINEER,
+                        OdysseyMaterialShow.BLUEPRINT,
+                        OdysseyMaterialShow.IRRELEVANT,
+                        OdysseyMaterialShow.IRRELEVANT_WITH_STOCK,
+                        OdysseyMaterialShow.NOT_ON_WISHLIST,
+                        OdysseyMaterialShow.BACKPACK,
+                        OdysseyMaterialShow.FLEETCARRIER,
+                        OdysseyMaterialShow.PROHIBITED,
+                        OdysseyMaterialShow.FAVOURITES))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new SearchEvent(new Search(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), newValue)));
@@ -154,14 +154,14 @@ class OdysseyMaterialSearchBar extends HBox {
 
     private void setDefaultOptions() {
         try {
-            final MaterialSort materialSort = MaterialSort.valueOf(PreferencesService.getPreference("search.sort", "ALPHABETICAL"));
+            final OdysseyMaterialSort materialSort = OdysseyMaterialSort.valueOf(PreferencesService.getPreference("search.sort", "ALPHABETICAL"));
             this.sortMaterialsComboBox.getSelectionModel().select(materialSort);
         } catch (final IllegalArgumentException ex) {
             log.error("sort error", ex);
         }
 
         try {
-            final MaterialShow filter = MaterialShow.valueOf(PreferencesService.getPreference("search.filter", "ALL"));
+            final OdysseyMaterialShow filter = OdysseyMaterialShow.valueOf(PreferencesService.getPreference("search.filter", "ALL"));
             this.showMaterialsComboBox.getSelectionModel().select(filter);
         } catch (final IllegalArgumentException ex) {
             log.error("filter error", ex);
@@ -173,12 +173,12 @@ class OdysseyMaterialSearchBar extends HBox {
         return (textField.getText() != null) ? textField.getText() : "";
     }
 
-    private MaterialShow getShowOrDefault(final ComboBox<MaterialShow> showMaterialsComboBox) {
-        return (showMaterialsComboBox.getValue() != null) ? showMaterialsComboBox.getValue() : MaterialShow.ALL;
+    private OdysseyMaterialShow getShowOrDefault(final ComboBox<OdysseyMaterialShow> showMaterialsComboBox) {
+        return (showMaterialsComboBox.getValue() != null) ? showMaterialsComboBox.getValue() : OdysseyMaterialShow.ALL;
     }
 
-    private MaterialSort getSortOrDefault(final ComboBox<MaterialSort> sortMaterialsComboBox) {
-        return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : MaterialSort.ALPHABETICAL;
+    private OdysseyMaterialSort getSortOrDefault(final ComboBox<OdysseyMaterialSort> sortMaterialsComboBox) {
+        return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : OdysseyMaterialSort.ALPHABETICAL;
     }
 
 }

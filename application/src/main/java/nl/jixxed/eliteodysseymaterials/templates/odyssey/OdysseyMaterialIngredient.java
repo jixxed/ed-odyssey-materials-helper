@@ -154,7 +154,7 @@ public class OdysseyMaterialIngredient extends Ingredient {
         return this.leftAmountLabel;
     }
 
-    protected Integer getLeftAmount() {
+    public Integer getLeftAmount() {
         return this.leftAmount;
     }
 

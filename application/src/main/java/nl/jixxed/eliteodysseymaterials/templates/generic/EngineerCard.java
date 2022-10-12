@@ -9,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -49,9 +50,11 @@ public class EngineerCard extends VBox {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
+    @Getter
     protected final Engineer engineer;
 
     protected DestroyableResizableImageView image;
+
     protected Label name;
     private Label engineerLocation;
     private Label engineerDistance;

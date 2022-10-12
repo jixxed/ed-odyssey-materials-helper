@@ -40,7 +40,7 @@ class OdysseyMaterialCard extends VBox implements Template {
     private Label backpackAmount;
     private Label shiplockerAmount;
     private Label totalAmount;
-    private MaterialShow materialShow;
+    private OdysseyMaterialShow materialShow;
     private DestroyableResizableImageView fleetCarrierImage;
     private DestroyableResizableImageView wishlistImage;
     private DestroyableResizableImageView backpackImage;
@@ -149,15 +149,15 @@ class OdysseyMaterialCard extends VBox implements Template {
         this.fleetCarrierAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
         this.wishlistImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
         this.wishlistAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
-        if (MaterialShow.FLEETCARRIER.equals(this.materialShow)) {
+        if (OdysseyMaterialShow.FLEETCARRIER.equals(this.materialShow)) {
             this.fleetCarrierImage.getStyleClass().add("materialcard-amount-image-nonzero");
             this.fleetCarrierAmount.getStyleClass().add("materialcard-amount-nonzero");
         }
-        if (MaterialShow.NOT_ON_WISHLIST.equals(this.materialShow)) {
+        if (OdysseyMaterialShow.NOT_ON_WISHLIST.equals(this.materialShow)) {
             this.wishlistImage.getStyleClass().add("materialcard-amount-image-nonzero");
             this.wishlistAmount.getStyleClass().add("materialcard-amount-nonzero");
         }
-        if (this.amounts.getBackPackValue() > 0 || MaterialShow.BACKPACK.equals(this.materialShow)) {
+        if (this.amounts.getBackPackValue() > 0 || OdysseyMaterialShow.BACKPACK.equals(this.materialShow)) {
             this.backpackImage.getStyleClass().add("materialcard-amount-image-nonzero");
             this.backpackAmount.getStyleClass().add("materialcard-amount-nonzero");
         }

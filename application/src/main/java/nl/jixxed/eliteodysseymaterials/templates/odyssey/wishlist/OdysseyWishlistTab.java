@@ -17,10 +17,7 @@ import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.PathItem;
-import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
-import nl.jixxed.eliteodysseymaterials.domain.Wishlists;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
@@ -47,6 +44,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private OdysseyWishlistMaterialSearch currentSearch = new OdysseyWishlistMaterialSearch("", OdysseyWishlistMaterialSort.ALPHABETICAL, WishlistMaterialGrouping.CATEGORY);
     private static final String WISHLIST_HEADER_CLASS = "wishlist-header";
     private static final String WISHLIST_CATEGORY_CLASS = "wishlist-category";
     private static final String WISHLIST_RECIPES_STYLE_CLASS = "wishlist-recipes";
@@ -58,6 +56,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
     private final Map<Data, Integer> wishlistNeededDatas = new EnumMap<>(Data.class);
     private final Map<Good, Integer> wishlistNeededGoods = new EnumMap<>(Good.class);
     private final Map<Asset, Integer> wishlistNeededAssets = new EnumMap<>(Asset.class);
+    private final Map<OdysseyMaterial, Integer> wishlistNeededAll = new HashMap<>();
 
     private ComboBox<Wishlist> wishlistSelect;
     private Label noBlueprint;
@@ -71,6 +70,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
     private FlowPane suitModuleRecipes;
     private FlowPane weaponUpgradeRecipes;
     private FlowPane weaponModuleRecipes;
+    private FlowPane allFlow;
     private FlowPane goodFlow;
     private FlowPane assetChemicalFlow;
     private FlowPane dataFlow;
@@ -155,6 +155,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
         this.suitModuleRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.weaponUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.weaponModuleRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
+        this.allFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
         this.goodFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
         this.assetChemicalFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
         this.dataFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
@@ -282,7 +283,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
         final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.materialsHelp, this.hideCompletedCheckBox).buildHBox();
         hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         hBoxMaterials.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
-        this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
+        this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.allFlow, this.goodFlow, this.assetChemicalFlow, this.assetCircuitFlow, this.assetTechFlow, this.dataFlow).buildVBox();
         this.selectedBlueprintsHintWhite = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-white", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.white")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.white.explain")).build()).buildHBox();
         this.selectedBlueprintsHintYellow = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-yellow", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.yellow")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.yellow.odyssey.explain")).build()).buildHBox();
         this.selectedBlueprintsHintGreen = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-green", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.green")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.green.explain")).build()).buildHBox();
@@ -428,6 +429,10 @@ public class OdysseyWishlistTab extends OdysseyTab {
             final List<OdysseyWishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
             pathBlueprints.forEach(OdysseyWishlistBlueprintTemplate::remove);
         });
+        EventService.addListener(this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent -> {
+            this.currentSearch = odysseyWishlistSearchEvent.getSearch();
+            Platform.runLater(this::refreshContent);
+        });
     }
 
     private List<OdysseyWishlistBlueprintTemplate> getPathWishlistBlueprints(final PathItem<OdysseyBlueprintName> pathItem) {
@@ -535,16 +540,19 @@ public class OdysseyWishlistTab extends OdysseyTab {
                 this.content.getChildren().add(this.contentChild);
             }
         }
+        this.allFlow.getChildren().forEach(node -> ((OdysseyWishlistIngredient) node).onDestroy());
         this.goodFlow.getChildren().forEach(node -> ((OdysseyWishlistIngredient) node).onDestroy());
         this.assetChemicalFlow.getChildren().forEach(node -> ((OdysseyWishlistIngredient) node).onDestroy());
         this.dataFlow.getChildren().forEach(node -> ((OdysseyWishlistIngredient) node).onDestroy());
         this.assetCircuitFlow.getChildren().forEach(node -> ((OdysseyWishlistIngredient) node).onDestroy());
         this.assetTechFlow.getChildren().forEach(node -> ((OdysseyWishlistIngredient) node).onDestroy());
+        this.allFlow.getChildren().clear();
         this.goodFlow.getChildren().clear();
         this.assetChemicalFlow.getChildren().clear();
         this.dataFlow.getChildren().clear();
         this.assetCircuitFlow.getChildren().clear();
         this.assetTechFlow.getChildren().clear();
+        this.wishlistNeededAll.clear();
         this.wishlistNeededGoods.clear();
         this.wishlistNeededAssets.clear();
         this.wishlistNeededDatas.clear();
@@ -552,35 +560,52 @@ public class OdysseyWishlistTab extends OdysseyTab {
                 .filter(OdysseyWishlistBlueprintTemplate::isVisibleBlueprint)
                 .map(OdysseyWishlistBlueprintTemplate::getPrimaryRecipe)
                 .forEach(recipe -> {
-                            recipe.getMaterialCollection(Data.class).forEach((key, value1) -> this.wishlistNeededDatas.merge((Data) key, value1, Integer::sum));
-                            recipe.getMaterialCollection(Good.class).forEach((key, value1) -> this.wishlistNeededGoods.merge((Good) key, value1, Integer::sum));
-                            recipe.getMaterialCollection(Asset.class).forEach((key, value1) -> this.wishlistNeededAssets.merge((Asset) key, value1, Integer::sum));
+
+                            if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
+                                recipe.getMaterialCollection(Data.class).forEach((key, value1) -> this.wishlistNeededDatas.merge((Data) key, value1, Integer::sum));
+                                recipe.getMaterialCollection(Good.class).forEach((key, value1) -> this.wishlistNeededGoods.merge((Good) key, value1, Integer::sum));
+                                recipe.getMaterialCollection(Asset.class).forEach((key, value1) -> this.wishlistNeededAssets.merge((Asset) key, value1, Integer::sum));
+                            } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
+                                recipe.getMaterialCollection(OdysseyMaterial.class).forEach((key, value1) -> this.wishlistNeededAll.merge(key, value1, Integer::sum));
+                            }
                         }
                 );
-        final List<OdysseyWishlistIngredient> ingredientsData = this.wishlistNeededDatas.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getData().get(entry.getKey()).getAvailableValue() < entry.getValue())
-                .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getData().get(wishlistItem.getKey()).getTotalValue()))
-                .toList();
-        final List<OdysseyWishlistIngredient> ingredientsGood = this.wishlistNeededGoods.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getGoods().get(entry.getKey()).getAvailableValue() < entry.getValue())
-                .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getGoods().get(wishlistItem.getKey()).getTotalValue()))
-                .toList();
-        final List<OdysseyWishlistIngredient> ingredientsAsset = this.wishlistNeededAssets.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getAssets().get(entry.getKey()).getAvailableValue() < entry.getValue())
-                .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getAssets().get(wishlistItem.getKey()).getTotalValue()))
-                .toList();
+
         final List<Ingredient> allIngredients = new ArrayList<>();
-        allIngredients.addAll(ingredientsData);
-        allIngredients.addAll(ingredientsGood);
-        allIngredients.addAll(ingredientsAsset);
+        if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
+            final List<OdysseyWishlistIngredient> ingredientsData = this.wishlistNeededDatas.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getData().get(entry.getKey()).getAvailableValue() < entry.getValue())
+                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getData().get(wishlistItem.getKey()).getTotalValue()))
+                    .toList();
+            final List<OdysseyWishlistIngredient> ingredientsGood = this.wishlistNeededGoods.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getGoods().get(entry.getKey()).getAvailableValue() < entry.getValue())
+                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getGoods().get(wishlistItem.getKey()).getTotalValue()))
+                    .toList();
+            final List<OdysseyWishlistIngredient> ingredientsAsset = this.wishlistNeededAssets.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getAssets().get(entry.getKey()).getAvailableValue() < entry.getValue())
+                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getAssets().get(wishlistItem.getKey()).getTotalValue()))
+                    .toList();
+            allIngredients.addAll(ingredientsData);
+            allIngredients.addAll(ingredientsGood);
+            allIngredients.addAll(ingredientsAsset);
+
+            this.goodFlow.getChildren().addAll(ingredientsGood.stream().sorted(OdysseyWishlistMaterialSort.getSort(this.currentSearch)).toList());
+            this.dataFlow.getChildren().addAll(ingredientsData.stream().sorted(OdysseyWishlistMaterialSort.getSort(this.currentSearch)).toList());
+            this.assetCircuitFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getOdysseyMaterial()).getType().equals(AssetType.CIRCUIT)).sorted(OdysseyWishlistMaterialSort.getSort(this.currentSearch)).toList());
+            this.assetChemicalFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getOdysseyMaterial()).getType().equals(AssetType.CHEMICAL)).sorted(OdysseyWishlistMaterialSort.getSort(this.currentSearch)).toList());
+            this.assetTechFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getOdysseyMaterial()).getType().equals(AssetType.TECH)).sorted(OdysseyWishlistMaterialSort.getSort(this.currentSearch)).toList());
+        } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
+            final List<OdysseyWishlistIngredient> ingredientsAll = this.wishlistNeededAll.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialStorage(entry.getKey()).getAvailableValue() < entry.getValue())
+                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getMaterialStorage(wishlistItem.getKey()).getTotalValue()))
+                    .toList();
+            allIngredients.addAll(ingredientsAll);
+            this.allFlow.getChildren().addAll(ingredientsAll.stream().sorted(OdysseyWishlistMaterialSort.getSort(this.currentSearch)).toList());
+
+        }
 
         this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.addWishlistIngredients(allIngredients));
-        this.goodFlow.getChildren().addAll(ingredientsGood.stream().sorted(Comparator.comparing(OdysseyWishlistIngredient::getName)).toList());
-        this.dataFlow.getChildren().addAll(ingredientsData.stream().sorted(Comparator.comparing(OdysseyWishlistIngredient::getName)).toList());
-        this.assetCircuitFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getOdysseyMaterial()).getType().equals(AssetType.CIRCUIT)).sorted(Comparator.comparing(OdysseyWishlistIngredient::getName)).toList());
-        this.assetChemicalFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getOdysseyMaterial()).getType().equals(AssetType.CHEMICAL)).sorted(Comparator.comparing(OdysseyWishlistIngredient::getName)).toList());
-        this.assetTechFlow.getChildren().addAll(ingredientsAsset.stream().filter(ingredient -> ((Asset) ingredient.getOdysseyMaterial()).getType().equals(AssetType.TECH)).sorted(Comparator.comparing(OdysseyWishlistIngredient::getName)).toList());
-
+        allIngredients.forEach(odysseyWishlistIngredient -> ((OdysseyWishlistIngredient) odysseyWishlistIngredient).searchHighlight(!this.currentSearch.getQuery().isBlank() && LocaleService.getLocalizedStringForCurrentLocale(((OdysseyWishlistIngredient) odysseyWishlistIngredient).getOdysseyMaterial().getLocalizationKey()).toLowerCase().contains(this.currentSearch.getQuery().toLowerCase())));
 
         removeAndAddFlows();
         try {

@@ -23,7 +23,7 @@ import java.util.function.Predicate;
 
 public class HorizonsCommoditiesOverview extends VBox implements Template {
     private HorizonsCommodityCard[] commodityCards;
-    private CommoditiesSearch currentSearch = new CommoditiesSearch("", CommoditiesSort.ALPHABETICAL, CommoditiesShow.ALL);
+    private CommoditiesSearch currentSearch = new CommoditiesSearch("", HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesShow.ALL);
 
     HorizonsCommoditiesOverview() {
         initComponents();
@@ -46,9 +46,9 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
                     .toArray(HorizonsCommodityCard[]::new);
             if (hasCardsVisibleInGroup(horizonsCommodityCardsForType)) {
                 final HorizonsCommodityCard[] array = Arrays.stream(horizonsCommodityCardsForType)
-                        .filter(CommoditiesShow.getFilter(this.currentSearch))
+                        .filter(HorizonsCommoditiesShow.getFilter(this.currentSearch))
                         .filter(card -> this.currentSearch.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())) || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())))
-                        .sorted(CommoditiesSort.getSort(this.currentSearch))
+                        .sorted(HorizonsCommoditiesSort.getSort(this.currentSearch))
                         .toList()
                         .toArray(HorizonsCommodityCard[]::new);
                 createCommodityCardRow(commodityType, array);
@@ -57,7 +57,7 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
     }
 
     private boolean hasCardsVisibleInGroup(final HorizonsCommodityCard[] horizonsCommodityCardsForType) {
-        return Arrays.stream(horizonsCommodityCardsForType).anyMatch(card -> (this.currentSearch.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())) || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale()))) && CommoditiesShow.getFilter(this.currentSearch).test(card));
+        return Arrays.stream(horizonsCommodityCardsForType).anyMatch(card -> (this.currentSearch.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())) || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale()))) && HorizonsCommoditiesShow.getFilter(this.currentSearch).test(card));
     }
 
     private void createCommodityCardRow(final CommodityType type, final HorizonsCommodityCard[] array) {

@@ -2345,8 +2345,6 @@
     -fx-padding: 5px;
 }
 
-/*.help-popover > .border {*/
-/*    -fx-stroke: #000000 !important;*/
-/*    -fx-stroke-width: 0.5 !important;*/
-/*    -fx-fill: #000000 !important;*/
-/*}*/
+.wishlist-search-highlight {
+    -fx-border-color: yellow !important;
+}

@@ -166,7 +166,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         return this.leftAmountLabel;
     }
 
-    protected Integer getLeftAmount() {
+    public Integer getLeftAmount() {
         return this.leftAmount;
     }
 

@@ -10,7 +10,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public enum MaterialShow {
+public enum OdysseyMaterialShow {
     ALL,
     ALL_WITH_STOCK,
     ALL_ENGINEER_BLUEPRINT,

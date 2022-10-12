@@ -51,13 +51,15 @@ public class HorizonsWishlistTab extends HorizonsTab {
     private static final String WISHLIST_RECIPES_STYLE_CLASS = "wishlist-recipes";
     private static final String WISHLIST_INGREDIENTS_STYLE_CLASS = "wishlist-ingredients";
     private static final String WISHLIST_CONTENT_STYLE_CLASS = "wishlist-content";
+    private HorizonsWishlistMaterialSearch currentSearch = new HorizonsWishlistMaterialSearch("", HorizonsWishlistMaterialSort.ALPHABETICAL, WishlistMaterialGrouping.CATEGORY);
     private int wishlistSize;
     private final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> wishlistBlueprints = new ArrayList<>();
     private final AtomicBoolean hideCompleted = new AtomicBoolean();
+    private final Map<HorizonsMaterial, Integer> wishlistNeededAll = new HashMap<>();
     private final Map<Raw, Integer> wishlistNeededRaw = new EnumMap<>(Raw.class);
     private final Map<Encoded, Integer> wishlistNeededEncoded = new EnumMap<>(Encoded.class);
     private final Map<Manufactured, Integer> wishlistNeededManufactured = new EnumMap<>(Manufactured.class);
-    private final Map<Commodity, Integer> wishlistNeededCommmodity = new EnumMap<>(Commodity.class);
+    private final Map<Commodity, Integer> wishlistNeededCommodity = new EnumMap<>(Commodity.class);
 
     private ComboBox<HorizonsWishlist> wishlistSelect;
     private Label noBlueprint;
@@ -77,6 +79,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
     private FlowPane experimentalEffectRecipes;
     private FlowPane synthesisRecipes;
     private FlowPane techbrokerRecipes;
+    private FlowPane allFlow;
     private FlowPane rawFlow;
     private FlowPane encodedFlow;
     private FlowPane manufacturedFlow;
@@ -165,6 +168,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.experimentalEffectRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.synthesisRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.techbrokerRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
+        this.allFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
         this.rawFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
         this.encodedFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
         this.manufacturedFlow = FlowPaneBuilder.builder().withStyleClass(WISHLIST_INGREDIENTS_STYLE_CLASS).build();
@@ -240,7 +244,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                             NotificationService.showInformation(NotificationType.COPY, "Wishlists", "The wishlist has been copied to your clipboard");
                         },
                         "tab.wishlist.export", event ->
-                                EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededRaw, this.wishlistNeededEncoded, this.wishlistNeededManufactured, this.wishlistNeededCommmodity)))
+                                EventService.publish(new SaveWishlistEvent(TextExporter.createTextWishlist(this.wishlistNeededRaw, this.wishlistNeededEncoded, this.wishlistNeededManufactured, this.wishlistNeededCommodity)))
                 ),
                 Map.of(
                         "tab.wishlist.rename", this.wishlistSelect.getSelectionModel().selectedItemProperty().isEqualTo(HorizonsWishlist.ALL),
@@ -300,7 +304,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         final HBox hBoxMaterials = BoxBuilder.builder().withNodes(this.requiredMaterialsLabel, this.materialsHelp, this.hideCompletedCheckBox).buildHBox();
         hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         hBoxMaterials.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
-        this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.rawFlow, this.encodedFlow, this.manufacturedFlow, this.commodityFlow).buildVBox();
+        this.flows = BoxBuilder.builder().withStyleClass(WISHLIST_CONTENT_STYLE_CLASS).withNodes(this.allFlow, this.rawFlow, this.encodedFlow, this.manufacturedFlow, this.commodityFlow).buildVBox();
         this.selectedBlueprintsHintWhite = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-white", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.white")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.white.horizons.explain")).build()).buildHBox();
         this.selectedBlueprintsHintYellow = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-yellow", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.yellow")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.yellow.explain")).build()).buildHBox();
         this.selectedBlueprintsHintGreen = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-green", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.green")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.selected.blueprints.hint.green.explain")).build()).buildHBox();
@@ -456,6 +460,10 @@ public class HorizonsWishlistTab extends HorizonsTab {
             refreshContent();
         });
 
+        EventService.addListener(this, HorizonsWishlistSearchEvent.class, horizonsWishlistSearchEvent -> {
+            this.currentSearch = horizonsWishlistSearchEvent.getSearch();
+            Platform.runLater(this::refreshContent);
+        });
     }
 
     private List<WishlistBlueprintTemplate<HorizonsBlueprintName>> getPathWishlistBlueprints(final PathItem<HorizonsBlueprintName> pathItem) {
@@ -580,55 +588,75 @@ public class HorizonsWishlistTab extends HorizonsTab {
                 this.content.getChildren().add(this.contentChild);
             }
         }
+        this.allFlow.getChildren().forEach(node -> ((HorizonsWishlistIngredient) node).destroy());
         this.rawFlow.getChildren().forEach(node -> ((HorizonsWishlistIngredient) node).destroy());
         this.encodedFlow.getChildren().forEach(node -> ((HorizonsWishlistIngredient) node).destroy());
         this.manufacturedFlow.getChildren().forEach(node -> ((HorizonsWishlistIngredient) node).destroy());
         this.commodityFlow.getChildren().forEach(node -> ((HorizonsWishlistIngredient) node).destroy());
+        this.allFlow.getChildren().clear();
         this.rawFlow.getChildren().clear();
         this.encodedFlow.getChildren().clear();
         this.manufacturedFlow.getChildren().clear();
         this.commodityFlow.getChildren().clear();
+        this.wishlistNeededAll.clear();
         this.wishlistNeededRaw.clear();
         this.wishlistNeededEncoded.clear();
         this.wishlistNeededManufactured.clear();
-        this.wishlistNeededCommmodity.clear();
+        this.wishlistNeededCommodity.clear();
         this.wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
                 .flatMap(template -> template.getRecipe().stream())
                 .forEach(recipe -> {
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Raw.class).forEach((key, value1) -> this.wishlistNeededRaw.merge((Raw) key, value1, Integer::sum));
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Encoded.class).forEach((key, value1) -> this.wishlistNeededEncoded.merge((Encoded) key, value1, Integer::sum));
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Manufactured.class).forEach((key, value1) -> this.wishlistNeededManufactured.merge((Manufactured) key, value1, Integer::sum));
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Commodity.class).forEach((key, value1) -> this.wishlistNeededCommmodity.merge((Commodity) key, value1, Integer::sum));
+                            if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Raw.class).forEach((key, value1) -> this.wishlistNeededRaw.merge((Raw) key, value1, Integer::sum));
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Encoded.class).forEach((key, value1) -> this.wishlistNeededEncoded.merge((Encoded) key, value1, Integer::sum));
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Manufactured.class).forEach((key, value1) -> this.wishlistNeededManufactured.merge((Manufactured) key, value1, Integer::sum));
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Commodity.class).forEach((key, value1) -> this.wishlistNeededCommodity.merge((Commodity) key, value1, Integer::sum));
+                            } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(HorizonsMaterial.class).forEach((key, value1) -> this.wishlistNeededAll.merge(key, value1, Integer::sum));
+                            }
                         }
                 );
-        final List<HorizonsWishlistIngredient> ingredientsRaw = this.wishlistNeededRaw.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
-                .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getRaw().get(wishlistItem.getKey())))
-                .toList();
-        final List<HorizonsWishlistIngredient> ingredientsEncoded = this.wishlistNeededEncoded.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
-                .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getEncoded().get(wishlistItem.getKey())))
-                .toList();
-        final List<HorizonsWishlistIngredient> ingredientsManufactured = this.wishlistNeededManufactured.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
-                .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getManufactured().get(wishlistItem.getKey())))
-                .toList();
-        final List<HorizonsWishlistIngredient> ingredientsCommodities = this.wishlistNeededCommmodity.entrySet().stream()
-                .filter(entry -> !this.hideCompleted.get() || StorageService.getCommodityCount(entry.getKey(), StoragePool.SHIP) < entry.getValue())
-                .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getCommoditiesShip().get(wishlistItem.getKey())))
-                .toList();
         final List<Ingredient> allIngredients = new ArrayList<>();
-        allIngredients.addAll(ingredientsRaw);
-        allIngredients.addAll(ingredientsEncoded);
-        allIngredients.addAll(ingredientsManufactured);
-        allIngredients.addAll(ingredientsCommodities);
+        if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
+            final List<HorizonsWishlistIngredient> ingredientsRaw = this.wishlistNeededRaw.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getRaw().get(wishlistItem.getKey())))
+                    .toList();
+            final List<HorizonsWishlistIngredient> ingredientsEncoded = this.wishlistNeededEncoded.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getEncoded().get(wishlistItem.getKey())))
+                    .toList();
+            final List<HorizonsWishlistIngredient> ingredientsManufactured = this.wishlistNeededManufactured.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getManufactured().get(wishlistItem.getKey())))
+                    .toList();
+            final List<HorizonsWishlistIngredient> ingredientsCommodities = this.wishlistNeededCommodity.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getCommodityCount(entry.getKey(), StoragePool.SHIP) < entry.getValue())
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getCommoditiesShip().get(wishlistItem.getKey())))
+                    .toList();
+            allIngredients.addAll(ingredientsRaw);
+            allIngredients.addAll(ingredientsEncoded);
+            allIngredients.addAll(ingredientsManufactured);
+            allIngredients.addAll(ingredientsCommodities);
+            this.rawFlow.getChildren().addAll(ingredientsRaw.stream().sorted(HorizonsWishlistMaterialSort.getSort(this.currentSearch)).toList());
+            this.encodedFlow.getChildren().addAll(ingredientsEncoded.stream().sorted(HorizonsWishlistMaterialSort.getSort(this.currentSearch)).toList());
+            this.manufacturedFlow.getChildren().addAll(ingredientsManufactured.stream().sorted(HorizonsWishlistMaterialSort.getSort(this.currentSearch)).toList());
+            this.commodityFlow.getChildren().addAll(ingredientsCommodities.stream().sorted(HorizonsWishlistMaterialSort.getSort(this.currentSearch)).toList());
+        } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
+            final List<HorizonsWishlistIngredient> ingredientsAll = this.wishlistNeededAll.entrySet().stream()
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue())
+                    .map(wishlistItem -> {
+                        final Integer materialCount = (wishlistItem.getKey() instanceof Commodity commodity) ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) + StorageService.getCommodityCount(commodity, StoragePool.SHIP) : StorageService.getMaterialCount(wishlistItem.getKey());
+                        return new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), materialCount);
+                    })
+                    .toList();
+            allIngredients.addAll(ingredientsAll);
+            this.allFlow.getChildren().addAll(ingredientsAll.stream().sorted(HorizonsWishlistMaterialSort.getSort(this.currentSearch)).toList());
+        }
 
         this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.addWishlistIngredients(allIngredients));
-        this.rawFlow.getChildren().addAll(ingredientsRaw.stream().sorted(Comparator.comparing(HorizonsWishlistIngredient::getName)).toList());
-        this.encodedFlow.getChildren().addAll(ingredientsEncoded.stream().sorted(Comparator.comparing(HorizonsWishlistIngredient::getName)).toList());
-        this.manufacturedFlow.getChildren().addAll(ingredientsManufactured.stream().sorted(Comparator.comparing(HorizonsWishlistIngredient::getName)).toList());
-        this.commodityFlow.getChildren().addAll(ingredientsCommodities.stream().sorted(Comparator.comparing(HorizonsWishlistIngredient::getName)).toList());
+        allIngredients.forEach(horizonsWishlistIngredient -> ((HorizonsWishlistIngredient) horizonsWishlistIngredient).searchHighlight(!this.currentSearch.getQuery().isBlank() && LocaleService.getLocalizedStringForCurrentLocale(((HorizonsWishlistIngredient) horizonsWishlistIngredient).getHorizonsMaterial().getLocalizationKey()).toLowerCase().contains(this.currentSearch.getQuery().toLowerCase())));
 
 
         removeAndAddFlows();
@@ -642,8 +670,8 @@ public class HorizonsWishlistTab extends HorizonsTab {
     }
 
     private void removeAndAddFlows() {
-        this.flows.getChildren().removeAll(this.rawFlow, this.encodedFlow, this.manufacturedFlow, this.commodityFlow);
-        for (final FlowPane flowPane : new FlowPane[]{this.rawFlow, this.encodedFlow, this.manufacturedFlow, this.commodityFlow}) {
+        this.flows.getChildren().removeAll(this.allFlow, this.rawFlow, this.encodedFlow, this.manufacturedFlow, this.commodityFlow);
+        for (final FlowPane flowPane : new FlowPane[]{this.allFlow, this.rawFlow, this.encodedFlow, this.manufacturedFlow, this.commodityFlow}) {
             if (!flowPane.getChildren().isEmpty()) {
                 this.flows.getChildren().add(flowPane);
             }

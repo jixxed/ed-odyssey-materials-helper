@@ -10,8 +10,10 @@ import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers.OdysseyEngineerSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMaterialSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.trade.OdysseyTradeSearchBar;
+import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistSearchBar;
 
 @Slf4j
 class OdysseySearchBar extends HBox {
@@ -20,6 +22,8 @@ class OdysseySearchBar extends HBox {
     private Button button;
     private OdysseyMaterialSearchBar materialSearchBar;
     private OdysseyTradeSearchBar tradeSearchBar;
+    private OdysseyWishlistSearchBar wishlistSearchBar;
+    private OdysseyEngineerSearchBar engineerSearchBar;
 
     OdysseySearchBar() {
         initComponents();
@@ -31,11 +35,15 @@ class OdysseySearchBar extends HBox {
         initMenuButton();
         this.materialSearchBar = new OdysseyMaterialSearchBar();
         this.tradeSearchBar = new OdysseyTradeSearchBar();
+        this.wishlistSearchBar = new OdysseyWishlistSearchBar();
+        this.engineerSearchBar = new OdysseyEngineerSearchBar();
 
         applyFontSizingHack();
 
         HBox.setHgrow(this.materialSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.tradeSearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.wishlistSearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.engineerSearchBar, Priority.ALWAYS);
         this.getChildren().addAll(this.button, this.materialSearchBar);
     }
 
@@ -68,13 +76,31 @@ class OdysseySearchBar extends HBox {
         });
         EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
             if (OdysseyTabs.TRADE.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar)) {
+                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.wishlistSearchBar) || this.getChildren().contains(this.engineerSearchBar)) {
                     this.getChildren().remove(this.materialSearchBar);
+                    this.getChildren().remove(this.wishlistSearchBar);
+                    this.getChildren().remove(this.engineerSearchBar);
                     this.getChildren().add(this.tradeSearchBar);
                 }
-            } else {
-                if (this.getChildren().contains(this.tradeSearchBar)) {
+            } else if (OdysseyTabs.WISHLIST.equals(event.getSelectedTab())) {
+                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.tradeSearchBar) || this.getChildren().contains(this.engineerSearchBar)) {
+                    this.getChildren().remove(this.materialSearchBar);
                     this.getChildren().remove(this.tradeSearchBar);
+                    this.getChildren().remove(this.engineerSearchBar);
+                    this.getChildren().add(this.wishlistSearchBar);
+                }
+            } else if (OdysseyTabs.ENGINEERS.equals(event.getSelectedTab())) {
+                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.tradeSearchBar) || this.getChildren().contains(this.wishlistSearchBar)) {
+                    this.getChildren().remove(this.materialSearchBar);
+                    this.getChildren().remove(this.tradeSearchBar);
+                    this.getChildren().remove(this.wishlistSearchBar);
+                    this.getChildren().add(this.engineerSearchBar);
+                }
+            } else {
+                if (this.getChildren().contains(this.tradeSearchBar) || this.getChildren().contains(this.wishlistSearchBar) || this.getChildren().contains(this.engineerSearchBar)) {
+                    this.getChildren().remove(this.tradeSearchBar);
+                    this.getChildren().remove(this.wishlistSearchBar);
+                    this.getChildren().remove(this.engineerSearchBar);
                     this.getChildren().add(this.materialSearchBar);
                 }
             }
