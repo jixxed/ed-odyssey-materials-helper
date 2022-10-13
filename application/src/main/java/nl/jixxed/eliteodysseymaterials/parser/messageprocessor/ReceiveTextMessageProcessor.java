@@ -23,9 +23,9 @@ public class ReceiveTextMessageProcessor implements MessageProcessor {
 
     @Override
     public void process(final JsonNode journalMessage) {
-        final String from = journalMessage.get("From").asText();
-        final String message = journalMessage.get("Message").asText();
-        final String message_localised = journalMessage.get("Message_Localised").asText();
+        final String from = asTextOrBlank(journalMessage, "From");
+        final String message = asTextOrBlank(journalMessage, "Message");
+        final String message_localised = asTextOrBlank(journalMessage, "Message_Localised");
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             if (FROM.equals(from)
                     && message.contains("name=" + commander.getName())
