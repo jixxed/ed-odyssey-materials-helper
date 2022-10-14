@@ -121,7 +121,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         }
     }
 
-    private void setRightAmount(final Integer rightAmount) {
+    protected void setRightAmount(final Integer rightAmount) {
         this.rightAmount = rightAmount;
     }
 

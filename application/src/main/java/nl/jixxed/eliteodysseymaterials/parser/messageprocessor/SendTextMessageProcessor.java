@@ -21,7 +21,7 @@ public class SendTextMessageProcessor implements MessageProcessor {
 
     @Override
     public void process(final JsonNode journalMessage) {
-        final String message = journalMessage.get("Message").asText();
+        final String message = asTextOrBlank(journalMessage, "Message");
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             if (message.startsWith("CMDR " + commander.getName())) {
                 final Pattern pattern = Pattern.compile("^.*\\((.*)\\)$");

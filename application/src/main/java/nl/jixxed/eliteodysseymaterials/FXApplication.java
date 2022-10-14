@@ -37,12 +37,10 @@ import nl.jixxed.eliteodysseymaterials.watchdog.DeeplinkWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
 import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
@@ -151,12 +149,19 @@ public class FXApplication extends Application {
         EventService.addListener(this, SaveWishlistEvent.class, event -> {
             final FileChooser fileChooser = new FileChooser();
             //Set extension filter for text files
-            final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls"));
             //Show save file dialog
             final File file = fileChooser.showSaveDialog(this.primaryStage);
             if (file != null) {
-                saveTextToFile(event.getText(), file);
+                if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.txt")) {
+                    saveTextToFile(event.getTextSupplier().get(), file);
+                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.csv")) {
+                    saveTextToFile(event.getCsvSupplier().get(), file);
+                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.xls")) {
+                    saveXlsToFile(event.getXlsSupplier().get(), file);
+                }
             }
         });
     }
@@ -402,6 +407,14 @@ public class FXApplication extends Application {
             writer = new PrintWriter(file);
             writer.println(content);
             writer.close();
+        } catch (final IOException ex) {
+            log.error("Failed to write to file");
+        }
+    }
+
+    private void saveXlsToFile(final XSSFWorkbook workbook, final File file) {
+        try (final FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+            workbook.write(fileOutputStream);
         } catch (final IOException ex) {
             log.error("Failed to write to file");
         }

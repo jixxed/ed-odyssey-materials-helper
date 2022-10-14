@@ -99,4 +99,9 @@ public enum Manufactured implements HorizonsMaterial {
                 .filter(manufactured -> manufactured.getMaterialType().equals(materialType))
                 .toList().toArray(Manufactured[]::new);
     }
+
+    @Override
+    public HorizonsStorageType getStorageType() {
+        return HorizonsStorageType.MANUFACTURED;
+    }
 }

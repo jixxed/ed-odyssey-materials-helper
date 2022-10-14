@@ -25,8 +25,8 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
     private void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            if (Boolean.TRUE.equals(newValue) && (this.getLeftAmount() - this.getRightAmount()) > 0) {
-                this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - this.getRightAmount()));
+            if (Boolean.TRUE.equals(newValue) && getHorizonsMaterial() instanceof Commodity commodity && (this.getLeftAmount() - (StorageService.getCommodityCount(commodity, StoragePool.SHIP))) > 0) {
+                this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - (StorageService.getCommodityCount(commodity, StoragePool.SHIP)))));
                 setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
             } else {
                 setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
@@ -47,6 +47,7 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
             materialCountBoth = StorageService.getMaterialCount(getHorizonsMaterial());
             materialCountShip = materialCountBoth;
         }
+        this.setRightAmount(materialCountBoth);
         this.getRightAmountLabel().setText(materialCountBoth.toString());
         this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
         if (materialCountBoth >= Integer.parseInt(this.getLeftAmountLabel().getText()) && materialCountShip < Integer.parseInt(this.getLeftAmountLabel().getText())) {

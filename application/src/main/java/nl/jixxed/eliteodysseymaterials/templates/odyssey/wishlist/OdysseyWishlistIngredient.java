@@ -25,8 +25,8 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     private void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            if (Boolean.TRUE.equals(newValue) && (this.getLeftAmount() - this.getRightAmount()) > 0) {
-                this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - this.getRightAmount()));
+            if (Boolean.TRUE.equals(newValue) && (this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()) > 0) {
+                this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()));
                 setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
             } else {
                 setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));

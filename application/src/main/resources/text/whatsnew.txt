@@ -1,7 +1,13 @@
+Version 1.95
+-------------
+Added searchbars to wishlists with options for grouping and sorting
+Added searchbars to engineers for searching on name, location, specialization or blueprints
+Added pre-engineered Heatsink Launcher V1 blueprint
+
 Version 1.94
 -------------
-optimization to copy to clipboard functionality for horizons wishlist to reduce url size
-show remaining indicator to red wishlist ingredients on mouse hover
+Optimization to copy to clipboard functionality for horizons wishlist to reduce url size
+Show remaining indicator to red wishlist ingredients on mouse hover
 Added tips to unlocking Odyssey Engineers
 
 Version 1.93
@@ -16,7 +22,7 @@ Version 1.92
 -------------
 Added link to about section to the official guide: https://youtu.be/8EXOeB074Zw
 Added new filter: Not or more than on wishlist
-- shows all the materials you have that are not on a wishlist or exceeding the total required amount of all wishlists
+- Shows all the materials you have that are not on a wishlist or exceeding the total required amount of all wishlists
 Added wishlist amount on hover
 swap ES/FR locales for horizons commodities
 Sorted list of trading materials (only sorted on application launch)
@@ -54,7 +60,7 @@ Version 1.88
 -------------
 ED Shipyard integration - import wishlist in the app through the click of a button on edsy.org (pending implementation)
 Added material statistics best average collected per visit
-- requires minimum of 10 visits for settlements to be considered. (5 for Colonia)
+- Requires minimum of 10 visits for settlements to be considered. (5 for Colonia)
 
 Version 1.87
 -------------
@@ -76,14 +82,14 @@ New read-only aggregated wishlists for Horizons and Odyssey
 Version 1.84
 -------------
 Leave yellow wishlist materials on uncompleted list (because you need to collect them from the fleetcarrier)
-bugfix for Meta Hull Reinforcement blueprint on wishlist causing application error
+Bugfix for Meta Hull Reinforcement blueprint on wishlist causing application error
 
 Version 1.83
 -------------
 Split material tracking for Bubble/Colonia. Show material statistics for whichever is closest.
 The update schedule for this is weekly, so if you are in Colonia and want the latest report with Colonia statistics:
-- remove material-report.json from %localappdata%\odyssey-materials-helper
-- restart the application
+- Remove material-report.json from %localappdata%\odyssey-materials-helper
+- Restart the application
 Or wait a week for the next refresh.
 
 Version 1.82

@@ -135,6 +135,11 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
     implementation 'io.github.pustike:commons-csv:1.7.0'
     implementation 'nl.jixxed:opencv:4.5.3-0'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.3'
+    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+    implementation group: 'com.zaxxer', name: 'SparseBitSet', version: '1.2'
+
+
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }
@@ -219,10 +224,16 @@ extraJavaModuleInfo {
     automaticModule('logback-classic-1.2.11.jar', 'ch.qos.logback.classic')
     automaticModule('logback-core-1.2.11.jar', 'ch.qos.logback.core')
     automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
-//    automaticModule('commons-io-2.11.0.jar', 'org.apache.commons.io')
-
-
-//    automaticModule('java-ocr-api-15.3.0.3.jar', 'com.asprise')
+    automaticModule('poi-5.2.3.jar', 'org.apache.poi.poi')
+//    automaticModule('poi-ooxml-5.2.3.jar', 'org.apache.poi.poi-ooxml')
+//    automaticModule('poi-ooxml-lite-5.2.3.jar', 'org.apache.poi.poi-ooxml-lite')
+    module('poi-ooxml-5.2.3.jar', 'org.apache.poi.ooxml', '5.2.3') {
+        exports("org.apache.poi.xssf.usermodel")
+        requires("commons.math3")
+        requires("SparseBitSet")
+    }
+    automaticModule('commons-math3-3.6.1.jar', 'commons.math3')
+    automaticModule('SparseBitSet-1.2.jar', 'SparseBitSet')
 
 }
 compileJava {

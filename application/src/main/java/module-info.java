@@ -15,6 +15,9 @@ module nl.jixxed.eliteodysseymaterials {
     requires java.naming;
     requires jdk.naming.dns;
     requires static lombok;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+    requires org.apache.poi.ooxml.schemas;
     requires org.apache.commons.csv;
     requires scribejava.core;
     requires org.openpnp;
