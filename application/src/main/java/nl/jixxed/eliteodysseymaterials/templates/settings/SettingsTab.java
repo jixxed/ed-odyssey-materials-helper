@@ -24,6 +24,9 @@ import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
+import nl.jixxed.eliteodysseymaterials.export.TextExporter;
+import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.*;
@@ -158,8 +161,9 @@ public class SettingsTab extends OdysseyTab {
         final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
         final HBox pollSetting = createPollSetting();
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
+        final HBox exportInventory = createExportInventorySetting();
 //        final HBox wipSetting = createWIPSetting();
-        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting/*, wipSetting*/).buildVBox();
+        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory).buildVBox();
         settings.getChildren().add(general);
         //overview
         final Label overviewLabel = LabelBuilder.builder()
@@ -236,6 +240,22 @@ public class SettingsTab extends OdysseyTab {
                 .withContent(settings)
                 .build();
         this.setContent(this.scrollPane);
+    }
+
+    private HBox createExportInventorySetting() {
+        final DestroyableLabel saveInventoryLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.export.inventory")).build();
+        final Button saveInventory = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.export.inventory.save")).withOnAction(event -> {
+            EventService.publish(new SaveInventoryEvent(
+                    () -> TextExporter.createTextInventory(),
+                    () -> CsvExporter.createCsvInventory(),
+                    () -> XlsExporter.createXlsInventory()
+            ));
+        }).build();
+
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(saveInventoryLabel, saveInventory)
+                .buildHBox();
     }
 
 

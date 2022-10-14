@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import org.apache.poi.ss.formula.eval.NotImplementedException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -117,5 +118,9 @@ public class TextExporter {
                         })
         );
         return textBuilder.toString();
+    }
+
+    public static String createTextInventory() {
+        throw new NotImplementedException("createTextInventory not implemented");
     }
 }

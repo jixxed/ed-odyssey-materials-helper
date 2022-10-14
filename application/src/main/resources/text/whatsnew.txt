@@ -3,6 +3,10 @@ Version 1.95
 Added searchbars to wishlists with options for grouping and sorting
 Added searchbars to engineers for searching on name, location, specialization or blueprints
 Added pre-engineered Heatsink Launcher V1 blueprint
+Added wishlist export formats CSV and XLS
+Consider fleetcarrier materials as needed in export
+Added full inventory export to Settings (CSV and XLS)
+Show remaining indicator also to yellow wishlist ingredients on mouse hover
 
 Version 1.94
 -------------

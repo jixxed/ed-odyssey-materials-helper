@@ -164,6 +164,24 @@ public class FXApplication extends Application {
                 }
             }
         });
+        EventService.addListener(this, SaveInventoryEvent.class, event -> {
+            final FileChooser fileChooser = new FileChooser();
+            //Set extension filter for text files
+//            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls"));
+            //Show save file dialog
+            final File file = fileChooser.showSaveDialog(this.primaryStage);
+            if (file != null) {
+                if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.txt")) {
+                    saveTextToFile(event.getTextSupplier().get(), file);
+                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.csv")) {
+                    saveTextToFile(event.getCsvSupplier().get(), file);
+                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.xls")) {
+                    saveXlsToFile(event.getXlsSupplier().get(), file);
+                }
+            }
+        });
     }
 
     private void setupWatchers() {

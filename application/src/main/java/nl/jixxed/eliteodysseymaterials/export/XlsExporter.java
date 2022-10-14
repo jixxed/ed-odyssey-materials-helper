@@ -13,9 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -139,5 +137,145 @@ public class XlsExporter {
             cell.setCellValue((String) value);
         }
         cell.setCellStyle(style);
+    }
+
+    public static XSSFWorkbook createXlsInventory() {
+        final XSSFWorkbook workbook = new XSSFWorkbook();
+        final XSSFSheet sheetGoods = workbook.createSheet("Goods");
+        final XSSFSheet sheetAssets = workbook.createSheet("Assets");
+        final XSSFSheet sheetData = workbook.createSheet("Data");
+        final XSSFSheet sheetRaw = workbook.createSheet("Raw");
+        final XSSFSheet sheetEncoded = workbook.createSheet("Encoded");
+        final XSSFSheet sheetManufactured = workbook.createSheet("Manufactured");
+        final XSSFSheet sheetCommodity = workbook.createSheet("Commodities");
+        createHeaderOdyssey(workbook, sheetGoods);
+        createHeaderOdyssey(workbook, sheetAssets);
+        createHeaderOdyssey(workbook, sheetData);
+        createHeaderHorizons(workbook, sheetRaw);
+        createHeaderHorizons(workbook, sheetEncoded);
+        createHeaderHorizons(workbook, sheetManufactured);
+        createHeaderHorizonsCommodity(workbook, sheetCommodity);
+        final AtomicInteger rowNumber = new AtomicInteger(1);
+        final CellStyle dataStyle = workbook.createCellStyle();
+        final XSSFFont dataFont = workbook.createFont();
+        dataFont.setFontHeight(14);
+        dataStyle.setFont(dataFont);
+        StorageService.getGoods().forEach((material, storage) -> {
+            if (storage.getTotalValue() > 0) {
+                final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
+                final Row dataRow = sheetGoods.createRow(rowNumber.getAndIncrement());
+                createCell(sheetGoods, dataRow, 0, materialName, dataStyle);
+                createCell(sheetGoods, dataRow, 1, storage.getBackPackValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 2, storage.getShipLockerValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 3, storage.getFleetCarrierValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 4, storage.getTotalValue(), dataStyle);
+            }
+        });
+        rowNumber.set(1);
+        StorageService.getAssets().forEach((material, storage) -> {
+            if (storage.getTotalValue() > 0) {
+                final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
+                final Row dataRow = sheetAssets.createRow(rowNumber.getAndIncrement());
+                createCell(sheetAssets, dataRow, 0, materialName, dataStyle);
+                createCell(sheetAssets, dataRow, 1, storage.getBackPackValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 2, storage.getShipLockerValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 3, storage.getFleetCarrierValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 4, storage.getTotalValue(), dataStyle);
+            }
+        });
+        rowNumber.set(1);
+        StorageService.getData().forEach((material, storage) -> {
+            if (storage.getTotalValue() > 0) {
+                final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
+                final Row dataRow = sheetData.createRow(rowNumber.getAndIncrement());
+                createCell(sheetData, dataRow, 0, materialName, dataStyle);
+                createCell(sheetData, dataRow, 1, storage.getBackPackValue(), dataStyle);
+                createCell(sheetData, dataRow, 2, storage.getShipLockerValue(), dataStyle);
+                createCell(sheetData, dataRow, 3, storage.getFleetCarrierValue(), dataStyle);
+                createCell(sheetData, dataRow, 4, storage.getTotalValue(), dataStyle);
+            }
+        });
+        rowNumber.set(1);
+        StorageService.getRaw().forEach((material, amount) -> {
+            if (amount > 0) {
+                final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
+                final Row dataRow = sheetRaw.createRow(rowNumber.getAndIncrement());
+                createCell(sheetRaw, dataRow, 0, materialName, dataStyle);
+                createCell(sheetRaw, dataRow, 1, amount, dataStyle);
+            }
+        });
+        rowNumber.set(1);
+        StorageService.getEncoded().forEach((material, amount) -> {
+            if (amount > 0) {
+                final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
+                final Row dataRow = sheetEncoded.createRow(rowNumber.getAndIncrement());
+                createCell(sheetEncoded, dataRow, 0, materialName, dataStyle);
+                createCell(sheetEncoded, dataRow, 1, amount, dataStyle);
+            }
+        });
+        rowNumber.set(1);
+        StorageService.getManufactured().forEach((material, amount) -> {
+            if (amount > 0) {
+                final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
+                final Row dataRow = sheetManufactured.createRow(rowNumber.getAndIncrement());
+                createCell(sheetManufactured, dataRow, 0, materialName, dataStyle);
+                createCell(sheetManufactured, dataRow, 1, amount, dataStyle);
+            }
+        });
+        rowNumber.set(1);
+        final Set<Commodity> commodities = new HashSet<>();
+        commodities.addAll(StorageService.getCommoditiesShip().keySet());
+        commodities.addAll(StorageService.getCommoditiesFleetcarrier().keySet());
+        commodities.forEach(commodity -> {
+            final Integer shipAmount = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
+            final Integer fcAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
+            if (shipAmount + fcAmount > 0) {
+                final String materialName = LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey());
+                final Row dataRow = sheetCommodity.createRow(rowNumber.getAndIncrement());
+                createCell(sheetCommodity, dataRow, 0, materialName, dataStyle);
+                createCell(sheetCommodity, dataRow, 1, shipAmount, dataStyle);
+                createCell(sheetCommodity, dataRow, 2, fcAmount, dataStyle);
+                createCell(sheetCommodity, dataRow, 3, shipAmount + fcAmount, dataStyle);
+            }
+        });
+        return workbook;
+    }
+
+    private static void createHeaderOdyssey(final XSSFWorkbook workbook, final XSSFSheet sheet) {
+        final Row row = sheet.createRow(0);
+        final CellStyle style = workbook.createCellStyle();
+        final XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+        createCell(sheet, row, 0, "Material", style);
+        createCell(sheet, row, 1, "Amount Backpack", style);
+        createCell(sheet, row, 2, "Amount Ship", style);
+        createCell(sheet, row, 3, "Amount Fleetcarrier", style);
+        createCell(sheet, row, 4, "Amount Total", style);
+    }
+
+    private static void createHeaderHorizons(final XSSFWorkbook workbook, final XSSFSheet sheet) {
+        final Row row = sheet.createRow(0);
+        final CellStyle style = workbook.createCellStyle();
+        final XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+        createCell(sheet, row, 0, "Material", style);
+        createCell(sheet, row, 1, "Amount Ship", style);
+    }
+
+    private static void createHeaderHorizonsCommodity(final XSSFWorkbook workbook, final XSSFSheet sheet) {
+        final Row row = sheet.createRow(0);
+        final CellStyle style = workbook.createCellStyle();
+        final XSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeight(16);
+        style.setFont(font);
+        createCell(sheet, row, 0, "Material", style);
+        createCell(sheet, row, 1, "Amount Ship", style);
+        createCell(sheet, row, 2, "Amount Fleetcarrier", style);
+        createCell(sheet, row, 3, "Amount Total", style);
     }
 }

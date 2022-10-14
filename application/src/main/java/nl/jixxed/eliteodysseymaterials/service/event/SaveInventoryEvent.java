@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 @AllArgsConstructor
 @Getter
-public class SaveWishlistEvent implements Event {
+public class SaveInventoryEvent implements Event {
     private final Supplier<String> textSupplier;
     private final Supplier<String> csvSupplier;
     private final Supplier<XSSFWorkbook> xlsSupplier;

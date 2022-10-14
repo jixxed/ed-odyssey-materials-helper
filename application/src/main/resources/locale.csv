@@ -2281,3 +2281,6 @@ search.sort.grade,Grade,Grade,Klasse,Calificación,Noter,Avaliar,Оценка
 search.sort.quantity_required,Quantity required,Quantity required,Erforderliche Menge,Cantidad requerida,Quantité Nécessaire,Quantidade Requerida,Требуемое Количество
 blueprint.horizons.type.engineered_heat_sink_launcher_v1,Engineered Heat Sink Launcher V1,Engineered Heat Sink Launcher V1,,,,,
 blueprint.horizons.type.description.engineered_heat_sink_launcher_v1,"A pre-engineered Heat Sink Launcher with 5 heat sinks and 75% longer recharge time. Compared to the player-engineered version, the pre-engineered version adds 1 additional heat sink for 2.5s longer recharge, but does not carry the increased mass penalty. The modules are available through Sirius Corporation technology brokers.",,,,,,
+settings.button.export.inventory,Export Inventory,Export Inventory,Inventar exportieren,Inventario de exportación,Inventaire d''exportation,Inventário de exportação,Экспортный инвентарь
+settings.button.export.inventory.save,Save,Save,Speichern,Ahorrar,sauvegarder,Salvar,Сохранять
+material.commodity.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnue,Desconhecido,Неизвестный
