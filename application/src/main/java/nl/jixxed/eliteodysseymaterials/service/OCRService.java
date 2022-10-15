@@ -33,10 +33,10 @@ public class OCRService {
         instance.setDatapath(Path.of(OcrConstants.TESS4J_DIR, "tessdata").toString());
         instance.setLanguage(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getIso6392B());
 
-        instance.setVariable("tessedit_char_whitelist", LocaleService.getDataCharacterForCurrentARLocale());
+        setCharWhitelist(LocaleService.getDataCharacterForCurrentARLocale());
         EventService.addStaticListener(ARLocaleChangeEvent.class, arLocaleChangeEvent -> {
                     instance.setLanguage(arLocaleChangeEvent.getLocale().getIso6392B());
-                    instance.setVariable("tessedit_char_whitelist", LocaleService.getDataCharacterForCurrentARLocale());
+                    setCharWhitelist(LocaleService.getDataCharacterForCurrentARLocale());
                 }
         );
         EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
@@ -48,6 +48,10 @@ public class OCRService {
                     }
                 }
         );
+    }
+
+    static void setCharWhitelist(final String characters) {
+        instance.setVariable("tessedit_char_whitelist", characters);
     }
 
     static synchronized String imageToString(final BufferedImage image) throws TesseractException {

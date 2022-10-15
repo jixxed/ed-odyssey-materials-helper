@@ -25,6 +25,10 @@ public class MenuOverlayRenderer {
         final BufferedImage bufferedImage = new BufferedImage((int) downloadMenu.getMenu().getWidth(), (int) downloadMenu.getMenu().getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics = bufferedImage.createGraphics();
 //        final AtomicBoolean isFullyRendered = new AtomicBoolean(true);
+
+//        graphics.setColor(Color.WHITE);
+//        graphics.drawRect((int) downloadMenu.getTerminalType().getX(), (int) downloadMenu.getTerminalType().getY(), (int) downloadMenu.getTerminalType().getWidth(), (int) downloadMenu.getTerminalType().getHeight());
+
         for (int index = 1; index <= downloadMenu.menuSize(); index++) {
             final OdysseyMaterial odysseyMaterial = downloadMenu.getDownloadData().get(index);
 //            if (downloadMenu.isMenuItemVisible(index) && !downloadMenu.isScanned(index)) {

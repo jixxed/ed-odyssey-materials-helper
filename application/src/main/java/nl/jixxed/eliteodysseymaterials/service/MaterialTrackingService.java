@@ -9,10 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.domain.DataInTerminal;
 import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.message.DataTrackingItem;
+import nl.jixxed.eliteodysseymaterials.service.message.DataTrackingMessage;
 import nl.jixxed.eliteodysseymaterials.service.message.MaterialTrackingItem;
 import nl.jixxed.eliteodysseymaterials.service.message.MaterialTrackingMessage;
 
@@ -28,11 +33,9 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -46,6 +49,7 @@ public class MaterialTrackingService {
     private static boolean isEnabled = false;
     private static final List<EventListener<?>> eventListeners = new ArrayList<>();
     private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
+    private static final Map<String, Set<DataInTerminal>> DATA_TO_TERMINAL = new ConcurrentHashMap<>();
     private static Thread thread;
 
     static {
@@ -97,6 +101,16 @@ public class MaterialTrackingService {
         thread.start();
     }
 
+    static void registerData(final String dataPortName, final DataPortType dataPortType, final Data data, final Integer id) {
+        final Set<DataInTerminal> datas = DATA_TO_TERMINAL.getOrDefault(dataPortName, new HashSet<>());
+        final DataInTerminal inTerminal = datas.stream().filter(dataInTerminal -> dataInTerminal.getData().equals(data)).findFirst().orElse(new DataInTerminal());
+        inTerminal.setData(data);
+        inTerminal.setType(dataPortType);
+        inTerminal.getIds().add(id);
+        datas.add(inTerminal);
+        DATA_TO_TERMINAL.put(dataPortName, datas);
+    }
+
     static boolean modifiedBeforeMonday(final File statisticsFile) {
         final ZonedDateTime date = LocalDate.now().atStartOfDay(ZoneId.systemDefault());
         final DayOfWeek todayAsDayOfWeek = date.getDayOfWeek();
@@ -142,7 +156,9 @@ public class MaterialTrackingService {
         if (!BACKPACK_CHANGE_EVENTS.isEmpty()) {
             log.debug("Publish to material tracking server");
             publishMaterialTracking(new ArrayList<>(BACKPACK_CHANGE_EVENTS));
+            publishDataTracking(new HashMap<>(DATA_TO_TERMINAL));
             BACKPACK_CHANGE_EVENTS.clear();
+            DATA_TO_TERMINAL.clear();
         }
         resetSession();
     }
@@ -191,6 +207,44 @@ public class MaterialTrackingService {
                     Thread.currentThread().interrupt();
                 } catch (final Exception e) {
                     log.error("publish material tracking error", e);
+                }
+            };
+            new Thread(run).start();
+        }
+    }
+
+    private static synchronized void publishDataTracking(final Map<String, Set<DataInTerminal>> data) {
+        if (isEnabled && !PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, Boolean.FALSE)) {
+            final String appVersion = PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "");
+            final String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(ZonedDateTime.now().toLocalDateTime().atOffset(ZoneOffset.UTC));
+            final ArrayList<DataTrackingItem> items = data.entrySet().stream()
+                    .flatMap(dataInTerminalEntry -> dataInTerminalEntry.getValue().stream().map(dataInTerminal -> DataTrackingItem.builder()
+                            .data(dataInTerminal.getData())
+                            .dataPortName(dataInTerminalEntry.getKey())
+                            .type(dataInTerminal.getType())
+                            .amount(dataInTerminal.getIds().size())
+                            .timestamp(timestamp)//2022-10-02T08:50:16Z
+                            .commander(APPLICATION_STATE.getPreferredCommander().map(Commander::getName).orElse("UNKNOWN"))
+                            .session(session.toString())
+                            .version(appVersion)
+                            .build()))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            final Runnable run = () -> {
+                try {
+                    final String datax = OBJECT_MAPPER.writeValueAsString(new DataTrackingMessage(items));
+                    log.info(datax);
+                    final HttpClient httpClient = HttpClient.newHttpClient();
+                    final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/Prod/submit-data"))
+                            .POST(HttpRequest.BodyPublishers.ofString(datax))
+                            .build();
+                    final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    log.info(send.body());
+                } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (final Exception e) {
+                    log.error("publish data tracking error", e);
                 }
             };
             new Thread(run).start();

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
+import nl.jixxed.eliteodysseymaterials.enums.DataPortType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -265,6 +266,9 @@ public class ARService {
                                     arOverlay.getResizableImageView().setImage(null);
                                     log.debug("render required for Warning: " + getDownloadMenu().isHasWarning() + ". Scrollbar: " + scrollBar.getPosition() + " size:" + scrollBar.getSize());
                                     downloadMenu = getDownloadMenu(hasWarning, scrollBar);
+                                    if (PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH")) {
+                                        processMenuType(downloadMenuCapture, getDownloadMenu());
+                                    }
                                     ImageTransformHelper.init(getDownloadMenu(), scaling);
                                     final long timeProcessBefore = System.currentTimeMillis();
                                     processMenu(downloadMenuCapture, getDownloadMenu());
@@ -281,6 +285,8 @@ public class ARService {
                         }
                     } else {
                         getDownloadMenu().getScanned().clear();
+                        getDownloadMenu().setType(null);
+                        getDownloadMenu().setDataPortName(null);
                         getDownloadMenu().getDownloadData().clear();
                         renderCache.clear();
                         scrollBar = null;
@@ -370,6 +376,68 @@ public class ARService {
         renderCache.put(String.valueOf(downloadMenu.isHasWarning()) + downloadMenu.getScrollBar().getPosition(), new Render(isFullyRendered.get(), overlayImage));
     }
 
+    private static void processMenuType(final BufferedImage downloadMenuCapture, final DownloadMenu downloadMenu) {
+        if (downloadMenu.getType() == null) {
+            try {
+
+                long timeRenderBefore = System.currentTimeMillis();
+                final BufferedImage warped = ImageTransformHelper.transformForSelection(downloadMenuCapture, new Rectangle(
+                        (int) (downloadMenu.getTerminalType().getX() - 10),
+                        (int) (downloadMenu.getTerminalType().getY() - 10),
+                        (int) (downloadMenu.getTerminalType().getWidth() + 10),
+                        (int) (downloadMenu.getTerminalType().getHeight() + 10))
+
+                );
+                long timeRenderAfter = System.currentTimeMillis();
+                log.debug("Transform terminal time: " + (timeRenderAfter - timeRenderBefore));
+                final BufferedImage typeLabelCaptureOriginalColor = warped.getSubimage(
+                        (int) (downloadMenu.getTerminalType().getX()),
+                        (int) (downloadMenu.getTerminalType().getY()),
+                        (int) downloadMenu.getTerminalType().getWidth(),
+                        (int) downloadMenu.getTerminalType().getHeight()
+                );
+
+                final Mat matColor = CvHelper.convertToMat(typeLabelCaptureOriginalColor, null);
+                final Mat matGray = new Mat(matColor.size(), CvType.CV_8UC1);
+                Imgproc.cvtColor(matColor, matGray, Imgproc.COLOR_RGB2GRAY);
+                final BufferedImage typeLabelCaptureOriginalGray = CvHelper.mat2Img(matGray);
+                matColor.release();
+                matGray.release();
+                timeRenderBefore = System.currentTimeMillis();
+                String cleaned = imageToTerminalType(typeLabelCaptureOriginalGray);
+                final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
+                try {
+                    DataPortType.forLocalizedName(cleaned.split(" ")[0], locale);
+                } catch (final Exception e) {
+                    final Mat normal = CvHelper.convertToMat(typeLabelCaptureOriginalGray, null);
+                    final Mat inverted = new Mat();
+                    Core.bitwise_not(normal, inverted);
+                    final BufferedImage typeLabelCaptureInverted = CvHelper.mat2Img(inverted);
+                    normal.release();
+                    inverted.release();
+                    log.debug("Attempt OCR inverted");
+                    cleaned = imageToTerminalType(typeLabelCaptureInverted);
+                }
+                try {
+                    if (!cleaned.isBlank()) {
+                        final DataPortType dataPortType = DataPortType.forLocalizedName(cleaned.split(" ")[0], locale);
+                        log.debug("detected terminal: " + cleaned);
+                        downloadMenu.setType(dataPortType);
+                        downloadMenu.setDataPortName(cleaned);
+                    }
+
+                } catch (final IllegalArgumentException ex) {
+                    log.debug("detected terminal: UNKNOWN");
+                }
+
+                timeRenderAfter = System.currentTimeMillis();
+                log.debug("OCR terminal time: " + (timeRenderAfter - timeRenderBefore));
+            } catch (final TesseractException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     private static void processMenu(final BufferedImage downloadMenuCapture, final DownloadMenu downloadMenu) {
 
         final long timeRenderBeforeMenu = System.currentTimeMillis();
@@ -426,6 +494,9 @@ public class ARService {
                                 downloadMenu.getScanned().put(finalIndex, true);
                             } else {
                                 final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedName(cleaned, locale);
+                                if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH")) {
+                                    MaterialTrackingService.registerData(downloadMenu.getDataPortName(), downloadMenu.getType(), data, finalIndex);
+                                }
                                 downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
                                 downloadMenu.getScanned().put(finalIndex, true);
                             }
@@ -567,7 +638,9 @@ public class ARService {
     }
 
     private static String imageToString(final int index, final BufferedImage menuItemLabelCapture) throws TesseractException {
-        final String dataCharacterForCurrentLocale = LocaleService.getDataCharacterForCurrentARLocale();
+        final String dataCharacterForCurrentARLocale = LocaleService.getDataCharacterForCurrentARLocale();
+        OCRService.setCharWhitelist(dataCharacterForCurrentARLocale);
+        final String dataCharacterForCurrentLocale = dataCharacterForCurrentARLocale;
         final String dataCharacterForCurrentLocaleWithoutSpace = dataCharacterForCurrentLocale.replace("\s", "");
         final String ocr = OCRService.imageToString(menuItemLabelCapture);
         log.debug("ocr detected " + index + ": " + ocr);
@@ -576,6 +649,20 @@ public class ARService {
             cleaned = cleaned.substring(0, cleaned.length() - 2);
         }
         log.debug("ocr cleaned " + index + ": " + cleaned);
+        return cleaned;
+    }
+
+    private static String imageToTerminalType(final BufferedImage terminalLabelCapture) throws TesseractException {
+        final String dataCharacterForCurrentLocale = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+        OCRService.setCharWhitelist(dataCharacterForCurrentLocale);
+        final String dataCharacterForCurrentLocaleWithoutSpace = dataCharacterForCurrentLocale.replace("\s", "");
+        final String ocr = OCRService.imageToString(terminalLabelCapture);
+        log.debug("ocr detected terminal: " + ocr);
+        final String cleaned = ocr.replaceAll("[^" + dataCharacterForCurrentLocale + "]", "").replace("\s\s", "\s").trim();
+//        if (cleaned.matches("^[" + dataCharacterForCurrentLocale + "]*\s[" + dataCharacterForCurrentLocaleWithoutSpace + "]$")) {
+//            cleaned = cleaned.substring(0, cleaned.length() - 2);
+//        }
+        log.debug("ocr cleaned terminal: " + cleaned);
         return cleaned;
     }
 

@@ -132,6 +132,18 @@ public class LocaleService {
                 .collect(Collectors.joining());
     }
 
+    static String getTerminalCharacterForCurrentARLocale() {
+        final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
+        return Arrays.stream(Data.values())
+                .filter(Predicate.not(Data::isUnknown))
+                .map(data -> LocaleService.getLocalizedStringForLocale(locale, data.getLocalizationKey()))
+                .flatMap(dataLocName -> Arrays.stream(dataLocName.split("")))
+                .map(string -> (Locale.forLanguageTag("ru").equals(locale)) ? string : string.toUpperCase())
+                .distinct()
+                .sorted()
+                .collect(Collectors.joining());
+    }
+
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @Getter
     public static class LocalizationKey {

@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service.ar;
 
 import lombok.Data;
+import nl.jixxed.eliteodysseymaterials.enums.DataPortType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 
 import java.util.HashMap;
@@ -15,6 +16,8 @@ public class DownloadMenu {
     private double scale;
     private int contentHeight;
     private int contentWidth;
+    private DataPortType type;
+    private String dataPortName;
     private ScrollBar scrollBar;
     private final Map<Integer, OdysseyMaterial> downloadData = new ConcurrentHashMap<>();
     private final Map<Integer, Boolean> scanned = new ConcurrentHashMap<>();
@@ -302,4 +305,11 @@ public class DownloadMenu {
     }
 
 
+    public Rectangle getTerminalType() {
+        return new Rectangle(1125 * this.scale,
+                75 * this.scale,
+                1600 * this.scale,
+                105 * this.scale
+        );
+    }
 }
