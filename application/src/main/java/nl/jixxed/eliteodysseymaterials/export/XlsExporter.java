@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.export;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -165,10 +166,11 @@ public class XlsExporter {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetGoods.createRow(rowNumber.getAndIncrement());
                 createCell(sheetGoods, dataRow, 0, materialName, dataStyle);
-                createCell(sheetGoods, dataRow, 1, storage.getBackPackValue(), dataStyle);
-                createCell(sheetGoods, dataRow, 2, storage.getShipLockerValue(), dataStyle);
-                createCell(sheetGoods, dataRow, 3, storage.getFleetCarrierValue(), dataStyle);
-                createCell(sheetGoods, dataRow, 4, storage.getTotalValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 1, OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", dataStyle);
+                createCell(sheetGoods, dataRow, 2, storage.getBackPackValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 3, storage.getShipLockerValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 4, storage.getFleetCarrierValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 5, storage.getTotalValue(), dataStyle);
             }
         });
         rowNumber.set(1);
@@ -177,10 +179,11 @@ public class XlsExporter {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetAssets.createRow(rowNumber.getAndIncrement());
                 createCell(sheetAssets, dataRow, 0, materialName, dataStyle);
-                createCell(sheetAssets, dataRow, 1, storage.getBackPackValue(), dataStyle);
-                createCell(sheetAssets, dataRow, 2, storage.getShipLockerValue(), dataStyle);
-                createCell(sheetAssets, dataRow, 3, storage.getFleetCarrierValue(), dataStyle);
-                createCell(sheetAssets, dataRow, 4, storage.getTotalValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 1, OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", dataStyle);
+                createCell(sheetAssets, dataRow, 2, storage.getBackPackValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 3, storage.getShipLockerValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 4, storage.getFleetCarrierValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 5, storage.getTotalValue(), dataStyle);
             }
         });
         rowNumber.set(1);
@@ -189,10 +192,11 @@ public class XlsExporter {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetData.createRow(rowNumber.getAndIncrement());
                 createCell(sheetData, dataRow, 0, materialName, dataStyle);
-                createCell(sheetData, dataRow, 1, storage.getBackPackValue(), dataStyle);
-                createCell(sheetData, dataRow, 2, storage.getShipLockerValue(), dataStyle);
-                createCell(sheetData, dataRow, 3, storage.getFleetCarrierValue(), dataStyle);
-                createCell(sheetData, dataRow, 4, storage.getTotalValue(), dataStyle);
+                createCell(sheetData, dataRow, 1, OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", dataStyle);
+                createCell(sheetData, dataRow, 2, storage.getBackPackValue(), dataStyle);
+                createCell(sheetData, dataRow, 3, storage.getShipLockerValue(), dataStyle);
+                createCell(sheetData, dataRow, 4, storage.getFleetCarrierValue(), dataStyle);
+                createCell(sheetData, dataRow, 5, storage.getTotalValue(), dataStyle);
             }
         });
         rowNumber.set(1);
@@ -249,10 +253,11 @@ public class XlsExporter {
         font.setFontHeight(16);
         style.setFont(font);
         createCell(sheet, row, 0, "Material", style);
-        createCell(sheet, row, 1, "Amount Backpack", style);
-        createCell(sheet, row, 2, "Amount Ship", style);
-        createCell(sheet, row, 3, "Amount Fleetcarrier", style);
-        createCell(sheet, row, 4, "Amount Total", style);
+        createCell(sheet, row, 1, "Relevant", style);
+        createCell(sheet, row, 2, "Amount Backpack", style);
+        createCell(sheet, row, 3, "Amount Ship", style);
+        createCell(sheet, row, 4, "Amount Fleetcarrier", style);
+        createCell(sheet, row, 5, "Amount Total", style);
     }
 
     private static void createHeaderHorizons(final XSSFWorkbook workbook, final XSSFSheet sheet) {

@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.export;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -76,41 +77,41 @@ public class CsvExporter {
 
     public static String createCsvInventory() {
         final StringBuilder textBuilder = new StringBuilder();
-        textBuilder.append(String.join(",", "Material", "Amount Backpack", "Amount Ship", "Amount Fleetcarrier", "Amount Total"));
+        textBuilder.append(String.join(",", "Material", "Relevant", "Amount Backpack", "Amount Ship", "Amount Fleetcarrier", "Amount Total"));
         textBuilder.append("\n");
         StorageService.getGoods().forEach((material, storage) -> {
             if (storage.getTotalValue() > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), String.valueOf(storage.getBackPackValue()), String.valueOf(storage.getShipLockerValue()), String.valueOf(storage.getFleetCarrierValue()), String.valueOf(storage.getTotalValue())));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", String.valueOf(storage.getBackPackValue()), String.valueOf(storage.getShipLockerValue()), String.valueOf(storage.getFleetCarrierValue()), String.valueOf(storage.getTotalValue())));
                 textBuilder.append("\n");
             }
         });
         StorageService.getAssets().forEach((material, storage) -> {
             if (storage.getTotalValue() > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), String.valueOf(storage.getBackPackValue()), String.valueOf(storage.getShipLockerValue()), String.valueOf(storage.getFleetCarrierValue()), String.valueOf(storage.getTotalValue())));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", String.valueOf(storage.getBackPackValue()), String.valueOf(storage.getShipLockerValue()), String.valueOf(storage.getFleetCarrierValue()), String.valueOf(storage.getTotalValue())));
                 textBuilder.append("\n");
             }
         });
         StorageService.getData().forEach((material, storage) -> {
             if (storage.getTotalValue() > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), String.valueOf(storage.getBackPackValue()), String.valueOf(storage.getShipLockerValue()), String.valueOf(storage.getFleetCarrierValue()), String.valueOf(storage.getTotalValue())));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", String.valueOf(storage.getBackPackValue()), String.valueOf(storage.getShipLockerValue()), String.valueOf(storage.getFleetCarrierValue()), String.valueOf(storage.getTotalValue())));
                 textBuilder.append("\n");
             }
         });
         StorageService.getRaw().forEach((material, amount) -> {
             if (amount > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), "", String.valueOf(amount), "", String.valueOf(amount)));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), "", "", String.valueOf(amount), "", String.valueOf(amount)));
                 textBuilder.append("\n");
             }
         });
         StorageService.getEncoded().forEach((material, amount) -> {
             if (amount > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), "", String.valueOf(amount), "", String.valueOf(amount)));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), "", "", String.valueOf(amount), "", String.valueOf(amount)));
                 textBuilder.append("\n");
             }
         });
         StorageService.getManufactured().forEach((material, amount) -> {
             if (amount > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), "", String.valueOf(amount), "", String.valueOf(amount)));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()), "", "", String.valueOf(amount), "", String.valueOf(amount)));
                 textBuilder.append("\n");
             }
         });
@@ -121,7 +122,7 @@ public class CsvExporter {
             final Integer shipAmount = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
             final Integer fcAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
             if (shipAmount + fcAmount > 0) {
-                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()), "", String.valueOf(shipAmount), String.valueOf(fcAmount), String.valueOf(shipAmount + fcAmount)));
+                textBuilder.append(String.join(",", LocaleService.getLocalizedStringForCurrentLocale(commodity.getLocalizationKey()), "", "", String.valueOf(shipAmount), String.valueOf(fcAmount), String.valueOf(shipAmount + fcAmount)));
                 textBuilder.append("\n");
             }
         });
