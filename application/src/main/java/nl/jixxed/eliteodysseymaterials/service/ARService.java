@@ -82,7 +82,7 @@ public class ARService {
     private static final Map<String, Render> renderCache = new HashMap<>();
     private static final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
     private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
-    private static final Pattern DATA_PORT_NAME_PATTERN = Pattern.compile("^([A-Z]*)( DATA PORT )([\\d]{1,2})$");
+    private static final Pattern DATA_PORT_NAME_PATTERN = Pattern.compile("^([A-Z]*[\s]?DATA PORT)[\s]?([\\d]{0,2})$");
 
     static {
         EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
@@ -376,6 +376,12 @@ public class ARService {
         renderCache.put(String.valueOf(downloadMenu.isHasWarning()) + downloadMenu.getScrollBar().getPosition(), new Render(isFullyRendered.get(), overlayImage));
     }
 
+    private static byte saturate(final double val) {
+        int iVal = (int) Math.round(val);
+        iVal = iVal > 255 ? 255 : (iVal < 0 ? 0 : iVal);
+        return (byte) iVal;
+    }
+
     private static void processMenuType(final BufferedImage downloadMenuCapture, final DownloadMenu downloadMenu) {
         if (downloadMenu.getType() == null) {
             try {
@@ -399,14 +405,24 @@ public class ARService {
 
                 final Mat matColor = CvHelper.convertToMat(typeLabelCaptureOriginalColor, null);
                 final Mat matGray = new Mat(matColor.size(), CvType.CV_8UC1);
-                final Mat m = new Mat(matColor.size(), matColor.type(), new Scalar(255, 0, 255, 255));
-                final Mat mMul = matColor.mul(m, 0.005);
+                final Mat lookUpTable = new Mat(1, 256, CvType.CV_8U);
+                final double gammaValue = 1.5;
+                final byte[] lookUpTableData = new byte[(int) (lookUpTable.total() * lookUpTable.channels())];
+                for (int i = 0; i < lookUpTable.cols(); i++) {
+                    lookUpTableData[i] = saturate(Math.pow(i / 255.0, gammaValue) * 255.0);
+                }
+                lookUpTable.put(0, 0, lookUpTableData);
+                final Mat img = new Mat();
+                Core.LUT(matColor, lookUpTable, img);
+                final Mat m = new Mat(matColor.size(), matColor.type(), new Scalar(255, 255, 255, 255));
+                final Mat mMul = img.mul(m, 0.05);
                 Imgproc.cvtColor(mMul, matGray, Imgproc.COLOR_RGB2GRAY);
 
                 Imgproc.threshold(matGray, matGray, 0, 255, Imgproc.THRESH_BINARY_INV + Imgproc.THRESH_OTSU);
 
                 final BufferedImage typeLabelCaptureOriginalGray = CvHelper.mat2Img(matGray);
                 matColor.release();
+                lookUpTable.release();
                 matGray.release();
                 m.release();
                 mMul.release();
@@ -418,7 +434,7 @@ public class ARService {
                     if (matcher.matches()) {
                         DataPortType.forLocalizedName(matcher.group(1), locale);
                     } else {
-                        throw new RuntimeException("no match");
+                        throw new IllegalArgumentException("no match");
                     }
                 } catch (final Exception e) {
                     final Mat normal = CvHelper.convertToMat(typeLabelCaptureOriginalGray, null);
@@ -439,7 +455,7 @@ public class ARService {
                             downloadMenu.setType(dataPortType);
                             downloadMenu.setDataPortName(cleaned);
                         } else {
-                            throw new RuntimeException("no match");
+                            throw new IllegalArgumentException("no match");
                         }
                     }
 

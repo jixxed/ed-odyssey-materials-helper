@@ -1,3 +1,8 @@
+Version 1.97
+-------------
+Add detection of POI dataports
+Properly handle bad detections
+
 Version 1.96
 -------------
 Improved data port name detection

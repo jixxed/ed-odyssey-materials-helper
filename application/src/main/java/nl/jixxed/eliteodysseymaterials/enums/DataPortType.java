@@ -14,6 +14,7 @@ public enum DataPortType implements SpawnLocation {
     LAB,
     MED,
     PWR,
+    POI,
     SEC;
 
 

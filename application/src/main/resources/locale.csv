@@ -1915,15 +1915,6 @@ search.sort.quantity,Quantity,Quantity,Menge,Cantidad,Quantité,Quantidade,Ко�
 search.sort.relevant_irrelevant,"Relevant, irrelevant","Relevant, irrelevant","Relevant, irrelevant","Relevante, irrelevante","Pertinent, non pertinent","Relevante, irrelevante","Релевантные, нерелевантные"
 search.text.placeholder,Search,Search,Suchen,Buscar,Rechercher,Pesquisa,Поиск
 spawn.location.type.closedlocker,Sealed lockers,Sealed lockers,Versiegelte Schließfächer,Casilleros sellados,Casiers verrouillés,Armários lacrados,Запечатанные шкафчики
-spawn.location.type.dataport.agr,Agricultural,Agricultural,Landwirtschaftlich,Agrícola,Agriculture,Agrícola,Сельское хозяйство
-spawn.location.type.dataport.cmd,Command,Command,Befehl,Comando,Commande,Comando,Команда
-spawn.location.type.dataport.ext,Extraction,Extraction,Extraktion,Extracción,Extraction,Extração,Извлечение
-spawn.location.type.dataport.hab,Habitat,Habitat,Lebensraum,Hábitat,Habitat,Habitat,Среда обитания
-spawn.location.type.dataport.ind,Industrial,Industrial,Industriell,Industrial,Industriel,Industrial,Промышленное
-spawn.location.type.dataport.lab,Laboratory,Laboratory,Labor,Laboratorio,Laboratoire,Laboratório,Лаборатория
-spawn.location.type.dataport.med,Medical,Medical,Medizinisch,Médico,Médical,Médico,Медицинский
-spawn.location.type.dataport.pwr,Power,Power,Energie,Poder,Alimentation,Power,Мощность
-spawn.location.type.dataport.sec,Security,Security,Sicherheit,Seguridad,Sécurité,Segurança,Безопасность
 spawn.location.type.dataport,Settlement data ports,Settlement data ports,Ansiedlungsdatenports,Puertos de datos del asentamiento,Ports de données de l''installation,Portas de dados de liquidação,Порты данных поселения
 spawn.location.type.device.bio,Bio containment unit,Bio containment unit,Bio-Containment-Einheit,Unidad de biocontención,Unité de confinement bio,Unidade de bio contenção,Блок биологического содержания
 spawn.location.type.device.env,Environmental regulation unit,Environmental regulation unit,Umweltregulierungseinheit,Unidad de regulación medioambiental,Unité de régulation environnementale,Unidade de regulação ambiental,Блок регулирования окружающей среды
@@ -2284,3 +2275,13 @@ blueprint.horizons.type.description.engineered_heat_sink_launcher_v1,"A pre-engi
 settings.button.export.inventory,Export Inventory,Export Inventory,Inventar exportieren,Inventario de exportación,Inventaire d''exportation,Inventário de exportação,Экспортный инвентарь
 settings.button.export.inventory.save,Save,Save,Speichern,Ahorrar,sauvegarder,Salvar,Сохранять
 material.commodity.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnue,Desconhecido,Неизвестный
+spawn.location.type.dataport.agr,Agricultural Data Port,Agricultural Data Port,Landwirtschaftlich,Agrícola,Agriculture,Agrícola,Сельское хозяйство
+spawn.location.type.dataport.cmd,Command Data Port,Command Data Port,Befehl,Comando,Commande,Comando,Команда
+spawn.location.type.dataport.ext,Extraction Data Port,Extraction Data Port,Extraktion,Extracción,Extraction,Extração,Извлечение
+spawn.location.type.dataport.hab,Habitat Data Port,Habitat Data Port,Lebensraum,Hábitat,Habitat,Habitat,Среда обитания
+spawn.location.type.dataport.ind,Industrial Data Port,Industrial Data Port,Industriell,Industrial,Industriel,Industrial,Промышленное
+spawn.location.type.dataport.lab,Laboratory Data Port,Laboratory Data Port,Labor,Laboratorio,Laboratoire,Laboratório,Лаборатория
+spawn.location.type.dataport.med,Medical Data Port,Medical Data Port,Medizinisch,Médico,Médical,Médico,Медицинский
+spawn.location.type.dataport.pwr,Power Data Port,Power Data Port,Energie,Poder,Alimentation,Power,Мощность
+spawn.location.type.dataport.sec,Security Data Port,Security Data Port,Sicherheit,Seguridad,Sécurité,Segurança,Безопасность
+spawn.location.type.dataport.poi,Data Port,Data Port,,,,,
