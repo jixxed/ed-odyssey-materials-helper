@@ -22,10 +22,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.overlay.ar.AROverlay;
 import nl.jixxed.tess4j.TesseractException;
 import nu.pattern.OpenCV;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 
 import java.awt.Rectangle;
@@ -37,6 +34,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -83,6 +82,7 @@ public class ARService {
     private static final Map<String, Render> renderCache = new HashMap<>();
     private static final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
     private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
+    private static final Pattern DATA_PORT_NAME_PATTERN = Pattern.compile("^([A-Z]*)( DATA PORT )([\\d]{1,2})$");
 
     static {
         EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
@@ -399,15 +399,27 @@ public class ARService {
 
                 final Mat matColor = CvHelper.convertToMat(typeLabelCaptureOriginalColor, null);
                 final Mat matGray = new Mat(matColor.size(), CvType.CV_8UC1);
-                Imgproc.cvtColor(matColor, matGray, Imgproc.COLOR_RGB2GRAY);
+                final Mat m = new Mat(matColor.size(), matColor.type(), new Scalar(255, 0, 255, 255));
+                final Mat mMul = matColor.mul(m, 0.005);
+                Imgproc.cvtColor(mMul, matGray, Imgproc.COLOR_RGB2GRAY);
+
+                Imgproc.threshold(matGray, matGray, 0, 255, Imgproc.THRESH_BINARY_INV + Imgproc.THRESH_OTSU);
+
                 final BufferedImage typeLabelCaptureOriginalGray = CvHelper.mat2Img(matGray);
                 matColor.release();
                 matGray.release();
+                m.release();
+                mMul.release();
                 timeRenderBefore = System.currentTimeMillis();
                 String cleaned = imageToTerminalType(typeLabelCaptureOriginalGray);
                 final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
                 try {
-                    DataPortType.forLocalizedName(cleaned.split(" ")[0], locale);
+                    final Matcher matcher = DATA_PORT_NAME_PATTERN.matcher(cleaned);
+                    if (matcher.matches()) {
+                        DataPortType.forLocalizedName(matcher.group(1), locale);
+                    } else {
+                        throw new RuntimeException("no match");
+                    }
                 } catch (final Exception e) {
                     final Mat normal = CvHelper.convertToMat(typeLabelCaptureOriginalGray, null);
                     final Mat inverted = new Mat();
@@ -420,14 +432,20 @@ public class ARService {
                 }
                 try {
                     if (!cleaned.isBlank()) {
-                        final DataPortType dataPortType = DataPortType.forLocalizedName(cleaned.split(" ")[0], locale);
-                        log.debug("detected terminal: " + cleaned);
-                        downloadMenu.setType(dataPortType);
-                        downloadMenu.setDataPortName(cleaned);
+                        final Matcher matcher = DATA_PORT_NAME_PATTERN.matcher(cleaned);
+                        if (matcher.matches()) {
+                            final DataPortType dataPortType = DataPortType.forLocalizedName(matcher.group(1), locale);
+                            log.debug("detected terminal: " + cleaned);
+                            downloadMenu.setType(dataPortType);
+                            downloadMenu.setDataPortName(cleaned);
+                        } else {
+                            throw new RuntimeException("no match");
+                        }
                     }
 
                 } catch (final IllegalArgumentException ex) {
                     log.debug("detected terminal: UNKNOWN");
+                    downloadMenu.setDataPortName("UNKNOWN");
                 }
 
                 timeRenderAfter = System.currentTimeMillis();
@@ -494,7 +512,7 @@ public class ARService {
                                 downloadMenu.getScanned().put(finalIndex, true);
                             } else {
                                 final OdysseyMaterial odysseyMaterial = OdysseyMaterial.forLocalizedName(cleaned, locale);
-                                if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH")) {
+                                if (odysseyMaterial instanceof Data data && PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "").equals("ENGLISH") && downloadMenu.getDataPortName() != null && !downloadMenu.getDataPortName().equals("UNKNOWN")) {
                                     MaterialTrackingService.registerData(downloadMenu.getDataPortName(), downloadMenu.getType(), data, finalIndex);
                                 }
                                 downloadMenu.getDownloadData().put(finalIndex, odysseyMaterial);
@@ -510,6 +528,7 @@ public class ARService {
                         timeRenderAfter = System.currentTimeMillis();
                         log.debug("OCR menu item time: " + (timeRenderAfter - timeRenderBefore));
                     } catch (final TesseractException e) {
+                        log.error("", e);
                         throw new RuntimeException(e);
                     }
                 }
@@ -520,6 +539,7 @@ public class ARService {
             try {
                 future.get();
             } catch (final InterruptedException | ExecutionException e) {
+                log.error("", e);
                 throw new RuntimeException(e);
             }
         });

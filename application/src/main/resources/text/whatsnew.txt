@@ -1,3 +1,7 @@
+Version 1.96
+-------------
+Improved data port name detection
+
 Version 1.95
 -------------
 Added searchbars to wishlists with options for grouping and sorting
@@ -31,7 +35,7 @@ Added new filter: Not or more than on wishlist
 Added wishlist amount on hover
 swap ES/FR locales for horizons commodities
 Sorted list of trading materials (only sorted on application launch)
-Added help tooltips to wislist tabs
+Added help tooltips to wishlist tabs
 Process modules before experimental effects in shortest path calculation(could reduce number of destinations)
 Added different list bullet for experimental effects in shortest path
 
@@ -40,7 +44,7 @@ Version 1.91
 Added Thargoid shipwreck POI
 Added short range blaster to pulse laser
 Added button to add entire loadout to wishlist at once
-Added notification on adding loadout to wishist, while there is nothing to add.
+Added notification on adding loadout to wishlist, while there is nothing to add.
 - Also prevent creating empty wishlists
 Fix sorting of assets on material overview
 Correct erroneous barter buy/sell values
