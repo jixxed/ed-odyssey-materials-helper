@@ -2284,4 +2284,8 @@ spawn.location.type.dataport.lab,Laboratory Data Port,Laboratory Data Port,Labor
 spawn.location.type.dataport.med,Medical Data Port,Medical Data Port,Medizinisch,Médico,Médical,Médico,Медицинский
 spawn.location.type.dataport.pwr,Power Data Port,Power Data Port,Energie,Poder,Alimentation,Power,Мощность
 spawn.location.type.dataport.sec,Security Data Port,Security Data Port,Sicherheit,Seguridad,Sécurité,Segurança,Безопасность
-spawn.location.type.dataport.poi,Data Port,Data Port,,,,,
+spawn.location.type.dataport.poi,Data Port,Data Port,Datenschnittstelle,Puerto de datos,Port de données,Porta de dados,Порт данных
+tab.bartender.used.in,Used in recipes:,Used in recipes:,In Rezepten verwendet:,Usado en recetas:,Utilisé dans les recettes:,Usado em receitas:,Используется в рецептах:
+tab.bartender.total.add.all,Add all,Add all,Füge alle Hinzu,Añadir todo,Tout ajouter,Adicione tudo,Добавить все
+bartender.buy.value,Buy value: {0},Buy value: {0},Wert kaufen: {0},Valor de compra: {0},Valeur d''achat: {0},Valor de compra: {0},Значение покупки: {0}
+bartender.sell.value,Sell value: {0},Sell value: {0},Wert verkaufen: {0},Valor de venta: {0},Valeur de vente: {0},Valor de venda: {0},Продавать значение: {0}

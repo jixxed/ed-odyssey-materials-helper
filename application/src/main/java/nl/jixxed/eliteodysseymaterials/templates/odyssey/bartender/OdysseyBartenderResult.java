@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderAmountSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.HashMap;
@@ -43,10 +44,10 @@ public class OdysseyBartenderResult extends VBox implements Template {
         final DestroyableLabel toReceiveLabel = LabelBuilder.builder().withStyleClass("bartender-total-header").withText(LocaleService.getStringBinding("tab.bartender.total.receive")).build();
         this.toReceive = LabelBuilder.builder().withStyleClass("bartender-total-value").withNonLocalizedText("").build();
         this.getChildren().addAll(
-                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(costPerItemLabel, this.costPerItem).buildHBox(),
-                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(totalOfferedLabel, this.totalOffered).buildHBox(),
-                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(wastedLabel, this.wasted).buildHBox(),
-                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(toReceiveLabel, this.toReceive).buildHBox()
+                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(costPerItemLabel, new GrowingRegion(), this.costPerItem).buildHBox(),
+                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(totalOfferedLabel, new GrowingRegion(), this.totalOffered).buildHBox(),
+                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(wastedLabel, new GrowingRegion(), this.wasted).buildHBox(),
+                BoxBuilder.builder().withStyleClass("bartender-total-line").withNodes(toReceiveLabel, new GrowingRegion(), this.toReceive).buildHBox()
         );
         recalculate();
     }
