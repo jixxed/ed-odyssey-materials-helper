@@ -1,3 +1,10 @@
+Version 1.98
+-------------
+Bartender improvements
+- More information (storage/wishlist)
+- Show used in recipes
+- Redesigned component
+
 Version 1.97
 -------------
 Add detection of POI dataports
