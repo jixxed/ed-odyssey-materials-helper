@@ -276,7 +276,7 @@ public class SettingsTab extends OdysseyTab {
                     } else {
                         RegistryService.registerApplication();
                     }
-                    isRegistered = !isRegistered;
+                    isRegistered = RegistryService.isRegistered();
                     this.registered.set(isRegistered);
                     this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
                     this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));

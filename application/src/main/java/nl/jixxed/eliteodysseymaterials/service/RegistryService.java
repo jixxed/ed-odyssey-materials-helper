@@ -100,7 +100,7 @@ public class RegistryService {
 
     public static boolean isRegistered() {
         if (!IS_JAVA && OsCheck.isWindows()) {
-            return getValue().equals("\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"");
+            return getRegistryValue().equals("\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"");
         } else if (!IS_JAVA && OsCheck.isLinux()) {
             final File file = new File(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH);
             return file.exists() && file.isFile();
@@ -108,11 +108,11 @@ public class RegistryService {
         return false;
     }
 
-    private static String getValue() {
-        return getValue("HKEY_CLASSES_ROOT\\edomh\\shell\\open\\command", "");
+    private static String getRegistryValue() {
+        return getRegistryValue("HKEY_CLASSES_ROOT\\edomh\\shell\\open\\command", "");
     }
 
-    private static String getValue(final String keyPath, final String keyName) {
+    private static String getRegistryValue(final String keyPath, final String keyName) {
 
         final Process keyReader;
         try {
