@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
@@ -273,22 +274,9 @@ public class MaterialService {
                     mapMulti((Map.Entry<Pair<HorizonsBlueprintName, HorizonsBlueprintType>, List<Pair<HorizonsBlueprintGrade, Integer>>> entry, Consumer<BlueprintListing> consumer) -> {
                         final Map<Integer, List<Pair<HorizonsBlueprintGrade, Integer>>> gradeGroups = entry.getValue().stream().collect(Collectors.groupingBy(Pair::getValue));
                         gradeGroups.forEach((materialAmount, pairs) ->
-                                        consumer.accept(
-                                                new BlueprintListing(entry.getKey().getKey().getBlueprintCategory(), entry.getKey().getKey(), entry.getKey().getValue(), pairs, materialAmount)
-//                                        ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getKey().getBlueprintCategory().getLocalizationKey()) +
-//                                                " - " +
-//                                                LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getKey().getLocalizationKey()) +
-//                                                " - " +
-//                                                LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getValue().getLocalizationKey()) +
-//                                                ((!pairs.get(0).getKey().equals(HorizonsBlueprintGrade.NONE)) ? " - " : "") +
-//                                                (pairs.stream()
-//                                                        .filter(pair -> pair.getKey().getGrade() > 0)
-//                                                        .sorted(Comparator.comparingInt(value -> value.getKey().getGrade()))
-//                                                        .map(pair -> String.valueOf(pair.getKey().getGrade()))
-//                                                        .collect(Collectors.joining(", "))) +
-//                                                " (" + materialAmount + ")"
-//                                        )
-                                        )
+                                consumer.accept(
+                                        new BlueprintListing(entry.getKey().getKey().getBlueprintCategory(), entry.getKey().getKey(), entry.getKey().getValue(), pairs, materialAmount)
+                                )
                         );
                     })
                     .sorted()
@@ -299,7 +287,11 @@ public class MaterialService {
                 if (!blueprintListing.category().equals(prevCat)) {
                     prevCat = blueprintListing.category();
                     catBox = FlowPaneBuilder.builder().withStyleClass("blueprint-listing-flowpane").build();
-                    vBox.getChildren().addAll(LabelBuilder.builder().withText(LocaleService.getStringBinding(blueprintListing.category().getLocalizationKey())).build(), catBox);
+                    final TitledPane titledPane = new TitledPane();
+                    titledPane.textProperty().bind(LocaleService.getStringBinding(blueprintListing.category().getLocalizationKey()));
+                    titledPane.setContent(catBox);
+                    titledPane.setExpanded(false);
+                    vBox.getChildren().add(titledPane);
                     final DestroyableLabel build = LabelBuilder.builder().withStyleClass("blueprint-listing-label").withText(blueprintListing.toStringBinding()).build();
                     catBox.getChildren().add(build);
                 } else {
@@ -309,8 +301,6 @@ public class MaterialService {
                     catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(70.0 / 3).multiply(Math.min(catBox.getChildren().size(), 3)));
                 }
             }
-//                    .
-//            forEach(text -> vBox.getChildren().add(LabelBuilder.builder().withText(text.toStringBinding()).build()));
         }
     }
 
