@@ -41,7 +41,7 @@ public class FileProcessor {
         EventService.publish(new JournalInitEvent(false));
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
             final Map<JournalEventType, String> messages = new EnumMap<>(JournalEventType.class);
-            final List<String> horizonsMaterialMessages = new ArrayList<>();
+            final List<String> alwaysProcessMessages = new ArrayList<>();
             if (file.length() >= position) {
                 // Skip over already processed bytes.
                 is.skip(position);
@@ -58,12 +58,16 @@ public class FileProcessor {
                 if (jsonNode.get(EVENT) != null) {
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                     if (JournalEventType.MATERIALCOLLECTED.equals(journalEventType) || JournalEventType.MATERIALTRADE.equals(journalEventType)) {
-                        horizonsMaterialMessages.add(line);
+                        alwaysProcessMessages.add(line);
                     } else if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
                         if (JournalEventType.MATERIALS.equals(journalEventType)) {
-                            horizonsMaterialMessages.clear();
+                            alwaysProcessMessages.clear();
+                        } else if (JournalEventType.ENGINEERPROGRESS.equals(journalEventType) && messages.containsKey(JournalEventType.ENGINEERPROGRESS)) {
+                            alwaysProcessMessages.add(line);//add additional engineerprogress messages to alwaysProcessMessages instead
+                        } else {
+                            messages.put(journalEventType, line);
                         }
-                        messages.put(journalEventType, line);
+
                     }
                 }
                 position = is.getCount();
@@ -82,7 +86,7 @@ public class FileProcessor {
                     .map(Map.Entry::getValue)
                     .forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
 
-            horizonsMaterialMessages.forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
+            alwaysProcessMessages.forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
 
         } catch (final JsonProcessingException e) {
             log.error("Read error", e);
