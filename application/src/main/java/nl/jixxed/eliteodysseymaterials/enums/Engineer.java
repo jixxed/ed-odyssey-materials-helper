@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public enum Engineer {
     private final Settlement settlement;
     @Getter
     private final Specialisation specialisation;
-    @Getter
+
     private final StarSystem starSystem;
     @Getter
     private final List<EngineerPrerequisite> prerequisites;
@@ -73,6 +74,14 @@ public enum Engineer {
 
     public Double getDistance(final StarSystem starSystem) {
         return getDistance(starSystem.getX(), starSystem.getY(), starSystem.getZ());
+    }
+
+    public StarSystem getStarSystem() {
+        if (this == REMOTE_WORKSHOP) {
+            return LocationService.getCurrentStarSystem();
+        } else {
+            return this.starSystem;
+        }
     }
 
     public String getLocalizationKey() {
