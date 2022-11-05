@@ -54,14 +54,22 @@ public class FileProcessor {
             while ((line = lineReader.readLine()) != null) {
                 //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
-
+                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(JournalEventType.MATERIALCOLLECTED, JournalEventType.MATERIALTRADE, JournalEventType.ENGINEERCRAFT);
                 if (jsonNode.get(EVENT) != null) {
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
-                    if (JournalEventType.MATERIALCOLLECTED.equals(journalEventType) || JournalEventType.MATERIALTRADE.equals(journalEventType)) {
+                    if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {
                         alwaysProcessMessages.add(line);
                     } else if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
                         if (JournalEventType.MATERIALS.equals(journalEventType)) {
-                            alwaysProcessMessages.clear();
+                            alwaysProcessMessages.removeIf(lineA -> {
+                                try {
+                                    return alwaysTrackMaterialEventTypes.contains(JournalEventType.forName(OBJECT_MAPPER.readTree(lineA).get(EVENT).asText()));
+                                } catch (final JsonProcessingException e) {
+                                    e.printStackTrace();
+                                }
+                                return false;
+                            });
+                            messages.put(journalEventType, line);
                         } else if (JournalEventType.ENGINEERPROGRESS.equals(journalEventType) && messages.containsKey(JournalEventType.ENGINEERPROGRESS)) {
                             alwaysProcessMessages.add(line);//add additional engineerprogress messages to alwaysProcessMessages instead
                         } else {
