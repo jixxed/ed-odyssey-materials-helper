@@ -14,10 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.event.CapiOAuthCallbackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.exception.EdsyDeeplinkException;
-import nl.jixxed.eliteodysseymaterials.service.exception.HorizonsWishlistDeeplinkException;
-import nl.jixxed.eliteodysseymaterials.service.exception.LoadoutDeeplinkException;
-import nl.jixxed.eliteodysseymaterials.service.exception.OdysseyWishlistDeeplinkException;
+import nl.jixxed.eliteodysseymaterials.service.exception.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,6 +48,8 @@ public class ImportService {
             return importLoadout(data);
         } else if ("edsy/".equals(type)) {
             return importEdsy(data);
+        } else if ("coriolis/".equals(type)) {
+            return importCoriolis(data);
         }
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
     }
@@ -104,6 +103,60 @@ public class ImportService {
 
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import ED shipyard wishlist", ex);
+            throw new EdsyDeeplinkException("Failed to parse deeplink");
+        }
+
+    }
+
+    private static ImportResult importCoriolis(final String data) {
+        final String decoded = convertBase64CompressedToJson(data);
+        log.info("Importing edsy data: " + decoded);
+        if (decoded.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
+        }
+        try {
+            final CoriolisWishlist coriolisWishlist = OBJECT_MAPPER.readValue(decoded, CoriolisWishlist.class);
+
+            if (Objects.equals(coriolisWishlist.getVersion(), 1)) {
+
+                final HorizonsWishlist wishlist = new HorizonsWishlist();
+                final String name = (coriolisWishlist.getName() != null && !coriolisWishlist.getName().isBlank()) ? coriolisWishlist.getName() : "Coriolis - Imported";
+                wishlist.setName(name);
+                final List<WishlistBlueprint<HorizonsBlueprintName>> wishlistBlueprintList = coriolisWishlist.getItems().stream().map(coriolisWishlistItem -> {
+                    try {
+                        final HorizonsBlueprintGrade horizonsBlueprintGrade = coriolisWishlistItem.getGrade() != null ? HorizonsBlueprintGrade.valueOf("GRADE_" + coriolisWishlistItem.getGrade().toString()) : null;
+                        final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipeByInternalName(coriolisWishlistItem.getItem(), coriolisWishlistItem.getBlueprint(), horizonsBlueprintGrade);
+                        final HorizonsWishlistBlueprint bp;
+                        if (blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
+                            bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(coriolisWishlistItem.getGrade(), coriolisWishlistItem.getHighestGradePercentage()));
+                        } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
+                            bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
+                        } else {
+                            throw new CoriolisDeeplinkException("Failed to parse deeplink");
+                        }
+                        bp.setRecipeName((blueprint.getBlueprintName()));
+                        bp.setVisible(true);
+                        return (WishlistBlueprint<HorizonsBlueprintName>) bp;
+                    } catch (final IllegalArgumentException ex) {
+                        log.error(ex.getMessage());
+                        NotificationService.showWarning(NotificationType.IMPORT, "Unknown item", ex.getMessage(), true);
+                        return null;
+                    }
+                }).filter(Objects::nonNull).toList();
+                wishlist.setItems(wishlistBlueprintList);
+
+                final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
+                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander.getFid());
+                wishlists.addWishlist(wishlist);
+                wishlists.setSelectedWishlistUUID(wishlist.getUuid());
+                APPLICATION_STATE.saveHorizonsWishlists(commander.getFid(), wishlists);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST, name);
+            } else {
+                throw new CoriolisDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
+            }
+
+        } catch (final RuntimeException | JsonProcessingException ex) {
+            log.error("Failed to import Coriolis wishlist", ex);
             throw new EdsyDeeplinkException("Failed to parse deeplink");
         }
 

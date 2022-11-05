@@ -1,6 +1,9 @@
 Version 1.99
 -------------
 Data tracking improvements
+Check changes made to url handling registration
+Reduce size of horizons materials tooltips by placing blueprints inside collapsible panels
+Add Coriolis support
 
 Version 1.98
 -------------

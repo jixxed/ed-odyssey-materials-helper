@@ -120,6 +120,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
 
     private MenuButton menuButton;
     private Button edsyButton;
+    private Button coriolisButton;
 
     public HorizonsWishlistTab(final Application application) {
         initComponents(application);
@@ -263,7 +264,11 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.edsyButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("horizons.wishlist.edsy")).withOnAction(event -> {
             application.getHostServices().showDocument("https://edsy.org");
         }).build();
+        this.coriolisButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("horizons.wishlist.coriolis")).withOnAction(event -> {
+            application.getHostServices().showDocument("https://coriolis.io");
+        }).build();
         Tooltip.install(this.edsyButton, TooltipBuilder.builder().withShowDelay(Duration.millis(100D)).withText(LocaleService.getStringBinding("horizons.wishlist.edsy.tooltip")).build());
+        Tooltip.install(this.coriolisButton, TooltipBuilder.builder().withShowDelay(Duration.millis(100D)).withText(LocaleService.getStringBinding("horizons.wishlist.coriolis.tooltip")).build());
         this.hideCompletedCheckBox = new CheckBox();
         this.hideCompletedCheckBox.getStyleClass().add("wishlist-checkbox");
         this.hideCompletedCheckBox.textProperty().bind(LocaleService.getStringBinding("tab.wishlist.hide.completed"));
@@ -295,7 +300,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         HBox.setHgrow(this.techbrokerRecipes, Priority.ALWAYS);
         this.blueprints = BoxBuilder.builder().withStyleClass("wishlist-blueprints").buildVBox();
 
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton, this.edsyButton).buildHBox();
+        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton, this.edsyButton/*, this.coriolisButton*/).buildHBox();
         this.materialHintRed = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-red", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.red")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.red.explain")).build()).buildHBox();
         this.materialHintYellow = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-yellow", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.yellow")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.yellow.explain")).build()).buildHBox();
         this.materialHintGreen = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-green", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.green")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.green.explain")).build()).buildHBox();
@@ -449,7 +454,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints());
         EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent());
         EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST)) {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST)) {
                 refreshWishlistBlueprints();
             }
         });

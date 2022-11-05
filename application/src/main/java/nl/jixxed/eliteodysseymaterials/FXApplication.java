@@ -26,10 +26,7 @@ import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.exception.EdsyDeeplinkException;
-import nl.jixxed.eliteodysseymaterials.service.exception.HorizonsWishlistDeeplinkException;
-import nl.jixxed.eliteodysseymaterials.service.exception.LoadoutDeeplinkException;
-import nl.jixxed.eliteodysseymaterials.service.exception.OdysseyWishlistDeeplinkException;
+import nl.jixxed.eliteodysseymaterials.service.exception.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.URLSchemeDialog;
@@ -235,6 +232,9 @@ public class FXApplication extends Application {
                     } catch (final EdsyDeeplinkException ex) {
                         EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_EDSY_WISHLIST)));
                         NotificationService.showError(NotificationType.ERROR, "Failed to import EDSY wishlist", ex.getMessage());
+                    } catch (final CoriolisDeeplinkException ex) {
+                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_CORIOLIS_WISHLIST)));
+                        NotificationService.showError(NotificationType.ERROR, "Failed to import Coriolis wishlist", ex.getMessage());
                     } catch (final RuntimeException ex) {
                         NotificationService.showError(NotificationType.ERROR, "Failed to import", ex.getMessage());
                         EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.OTHER_ERROR)));
