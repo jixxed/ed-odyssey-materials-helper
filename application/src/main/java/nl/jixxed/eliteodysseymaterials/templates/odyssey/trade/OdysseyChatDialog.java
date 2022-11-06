@@ -60,6 +60,7 @@ class OdysseyChatDialog extends VBox {
         this.input = TextAreaBuilder.builder()
                 .withStyleClass("trade-chat-input")
                 .build();
+        this.chat.setWrapText(true);
         this.input.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER && !event.isShiftDown()) {
                 sendMessage(tokenHash);

@@ -24,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
@@ -68,12 +69,22 @@ public class MaterialService {
             } else if (horizonsMaterial instanceof Manufactured) {
                 vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.type.manufactured")).build());
             }
-
+            addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);
             addHorizonsBlueprintsToTooltip(HorizonsBlueprintConstants.findRecipesContaining(horizonsMaterial), vBox);
         }
         return vBox;
 
 
+    }
+
+    private static void addHorizonsSpawnLocationsToTooltip(final List<HorizonsMaterialSpawnLocation> horizonsMaterialSpawnLocations, final VBox vBox) {
+        if (horizonsMaterialSpawnLocations != null && !horizonsMaterialSpawnLocations.isEmpty()) {
+            vBox.getChildren().add(LabelBuilder.builder().build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.spawnlocations")).build());
+            final DestroyableLabel locations = LabelBuilder.builder().withText(LocaleService.getStringBinding(() -> horizonsMaterialSpawnLocations.stream().map(horizonsMaterialSpawnLocation -> LocaleService.getLocalizedStringForCurrentLocale(horizonsMaterialSpawnLocation.getLocalizationKey())).collect(Collectors.joining("\n")))).build();
+            locations.setWrapText(true);
+            vBox.getChildren().add(locations);
+        }
     }
 
     private static VBox getMaterialPopOverContent(final OdysseyMaterial odysseyMaterial) {
@@ -298,7 +309,7 @@ public class MaterialService {
                     //append
                     final DestroyableLabel build = LabelBuilder.builder().withStyleClass("blueprint-listing-label").withText(blueprintListing.toStringBinding()).build();
                     catBox.getChildren().add(build);
-                    catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(70.0 / 3).multiply(Math.min(catBox.getChildren().size(), 3)));
+                    catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 }
             }
         }
