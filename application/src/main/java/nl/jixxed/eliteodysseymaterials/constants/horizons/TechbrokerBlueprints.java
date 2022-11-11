@@ -459,13 +459,13 @@ public class TechbrokerBlueprints {
                     Map.of(),
                     List.of()
             ),
-            HorizonsBlueprintType.ENGINEERED_HEAT_SINK_LAUNCHER_V1,
-            new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_HEAT_SINK_LAUNCHER_V1,
-                    Map.of(
-                    ),
-                    Map.of(),
-                    List.of()
-            ),
+//            HorizonsBlueprintType.ENGINEERED_HEAT_SINK_LAUNCHER_V1,
+//            new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_HEAT_SINK_LAUNCHER_V1,
+//                    Map.of(
+//                    ),
+//                    Map.of(),
+//                    List.of()
+//            ),
             HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
                     Map.of(
                             Commodity.METAALLOYS, 16,
