@@ -14,10 +14,9 @@ public class MaterialCollectedMessageProcessor implements MessageProcessor {
     public void process(final JsonNode journalMessage) {
         final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(journalMessage.get("Name").asText());
         if (!horizonsMaterial.isUnknown()) {
-            if (horizonsMaterial instanceof Commodity commodity && !horizonsMaterial.isUnknown()) {
+            if (horizonsMaterial instanceof Commodity commodity) {
                 StorageService.addCommodity(commodity, StoragePool.SHIP, journalMessage.get("Count").asInt());
-            }
-            if (!horizonsMaterial.isUnknown()) {
+            } else {
                 StorageService.addMaterial(horizonsMaterial, journalMessage.get("Count").asInt());
             }
             EventService.publish(new StorageEvent(StoragePool.SHIP));
