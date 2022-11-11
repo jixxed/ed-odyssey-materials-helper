@@ -21,9 +21,9 @@ public class MaterialTraderService {
     private static final List<MaterialTrader> MATERIAL_TRADERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public MaterialTraderService() {
+    static {
 
-        final InputStream inputStream = this.getClass().getResourceAsStream("/materialtrader/traders.json");
+        final InputStream inputStream = MaterialTraderService.class.getResourceAsStream("/materialtrader/traders.json");
 
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             while (reader.ready()) {
