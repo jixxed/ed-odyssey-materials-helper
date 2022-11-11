@@ -176,6 +176,15 @@ public class SettingsTab extends OdysseyTab {
         final HBox irrelevantOverrideList = createIrrelevantOverrideList();
         final VBox overview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList).buildVBox();
         settings.getChildren().add(overview);
+        //horizons materials
+        final Label overviewHorizonsLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.horizons.materials"))
+                .build();
+
+        final HBox maxRange = createMaterialTraderMaxRangeSetting();
+        final VBox horizonsOverview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewHorizonsLabel, maxRange).buildVBox();
+        settings.getChildren().add(horizonsOverview);
         //horizons wishlist
         final Label wishlistLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
@@ -240,6 +249,18 @@ public class SettingsTab extends OdysseyTab {
                 .withContent(settings)
                 .build();
         this.setContent(this.scrollPane);
+    }
+
+    private HBox createMaterialTraderMaxRangeSetting() {
+        final Label maxRangeLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.materials.max.range")).build();
+        final ButtonIntField rangeField = new ButtonIntField(0, 9999999, PreferencesService.getPreference(PreferenceConstants.HORIZONS_MATERIAL_TRADER_MAX_RANGE, 5000));
+        rangeField.addHandlerOnValidChange(range -> PreferencesService.setPreference(PreferenceConstants.HORIZONS_MATERIAL_TRADER_MAX_RANGE, range));
+
+        rangeField.getStyleClass().add("material-trader-range-setting");
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(maxRangeLabel, rangeField)
+                .buildHBox();
     }
 
     private HBox createExportInventorySetting() {

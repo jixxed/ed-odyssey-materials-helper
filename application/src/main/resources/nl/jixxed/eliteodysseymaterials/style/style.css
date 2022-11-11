@@ -2423,3 +2423,62 @@
 .bartender-header-title-box {
     -fx-spacing: 1em;
 }
+
+.nearest-trader-flow {
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
+}
+
+.nearest-trader {
+    -fx-background-color: #0f0f0f;
+}
+
+.nearest-trader-title {
+    -fx-text-fill: white;
+    -fx-label-padding: 5px;
+    -fx-font-size: 1.2em;
+}
+
+.nearest-trader-location {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 5px;
+}
+
+.nearest-trader-location-line {
+    -fx-max-width: 21em;
+}
+
+.nearest-trader-location-line:hover {
+    -fx-cursor: hand;
+}
+
+.nearest-trader-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.nearest-trader-distance {
+    -fx-text-fill: #777;
+    -fx-label-padding: 5px;
+}
+
+.material-trader-range-setting > .button {
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    -fx-padding: 0.1em;
+    -fx-min-width: 1.2em;
+    -fx-focus-traversable: false;
+}
+
+.material-trader-range-setting > .text-field {
+    -fx-min-width: 8em;
+    -fx-pref-width: 8em;
+    -fx-max-width: 8em;
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    -fx-focus-traversable: false;
+}
