@@ -924,7 +924,7 @@
 .engineer-prerequisite {
     -fx-text-fill: #0078d6;
     -fx-label-padding: 0 5px 0 2px;
-    -fx-max-width: 19.7em;
+    -fx-max-width: 19.6em;
     -fx-wrap-text: true;
 }
 
@@ -936,7 +936,7 @@
 .engineer-blueprint {
     -fx-text-fill: #0078d6;
     -fx-label-padding: 0 5px 0 2px;
-    -fx-max-width: 19.7em;
+    -fx-max-width: 19.6em;
     -fx-wrap-text: true;
 }
 

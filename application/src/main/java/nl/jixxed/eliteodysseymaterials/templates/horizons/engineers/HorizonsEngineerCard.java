@@ -20,12 +20,12 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerCard;
 import org.controlsfx.control.SegmentedBar;
@@ -40,10 +40,13 @@ class HorizonsEngineerCard extends EngineerCard {
     private Label utilityMountTitle;
     private Label coreInternalTitle;
     private Label optionalInternalTitle;
+    private Label pinnedBlueprintTitle;
+    private final Separator pinnedBlueprintSeparator = new Separator(Orientation.HORIZONTAL);
     private List<HBox> hardpointBlueprintLabels;
     private List<HBox> utilityMountBlueprintLabels;
     private List<HBox> coreInternalBlueprintLabels;
     private List<HBox> optionalInternalBlueprintLabels;
+
     protected DestroyableResizableImageView grade;
     private DestroyableResizableImageView gradeIcon;
 
@@ -59,15 +62,16 @@ class HorizonsEngineerCard extends EngineerCard {
 
 
     private void initComponents() {
+        this.pinnedBlueprintTitle = getPinnedBlueprintTitle();
         this.hardpointTitle = getHardpointTitle();
         this.utilityMountTitle = getUtilityMountTitle();
         this.coreInternalTitle = getCoreInternalTitle();
         this.optionalInternalTitle = getOptionalInternalTitle();
         this.grade = getEngineerGrade();
-        this.hardpointBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getHardpointBlueprints());
-        this.utilityMountBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getUtilityMountBlueprints());
-        this.coreInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getCoreInternalBlueprints());
-        this.optionalInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getOptionalInternalBlueprints());
+        this.hardpointBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getHardpointBlueprints(),false);
+        this.utilityMountBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getUtilityMountBlueprints(),false);
+        this.coreInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getCoreInternalBlueprints(),false);
+        this.optionalInternalBlueprintLabels = getBlueprints(HorizonsBlueprintConstants.getOptionalInternalBlueprints(),false);
 
         this.segmentedBar = new SegmentedBar<>();
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
@@ -86,6 +90,10 @@ class HorizonsEngineerCard extends EngineerCard {
         this.segmentedBar.setTranslateY(stackPane.getHeight() / 2);
         StackPane.setAlignment(this.segmentedBar, Pos.CENTER_LEFT);
         this.getChildren().addAll(this.image, this.name, BoxBuilder.builder().withStyleClass("grade-box").withNodes(stackPane).buildHBox(), this.location);
+        if (hasPinnedBlueprint()) {
+            this.getChildren().addAll(this.pinnedBlueprintSeparator, this.pinnedBlueprintTitle);
+            this.getChildren().addAll(getPinnedBlueprintLabels());
+        }
         if (!this.hardpointBlueprintLabels.isEmpty()) {
             this.getChildren().addAll(new Separator(Orientation.HORIZONTAL), this.hardpointTitle);
             this.getChildren().addAll(this.hardpointBlueprintLabels);
@@ -107,7 +115,37 @@ class HorizonsEngineerCard extends EngineerCard {
         this.getStyleClass().add("engineer-card");
     }
 
+    private boolean hasPinnedBlueprint() {
+        final String preference = PreferencesService.getPreference("blueprint.pinned." + this.engineer.name(), "");
+        return !preference.isEmpty();
+    }
+
+    private List<HBox> getPinnedBlueprintLabels() {
+        final String preference = PreferencesService.getPreference("blueprint.pinned." + this.engineer.name(), "");
+        final String[] split = preference.split(":");
+        HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.forName(split[0]), HorizonsBlueprintType.forName(split[1]), HorizonsBlueprintGrade.forDigit(split[2]));
+        blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.forName(split[0]), HorizonsBlueprintType.forName(split[1]), HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)));
+        return getBlueprints(Map.of(blueprint.getHorizonsBlueprintName(), Map.of(blueprint.getHorizonsBlueprintType(), Map.of(HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)), blueprint))),true);
+    }
+
+    private Label getPinnedBlueprintTitle() {
+        return LabelBuilder.builder()
+                .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
+                .withText(LocaleService.getStringBinding("tab.engineer.pinned.blueprint"))
+                .build();
+    }
+
     private void initEventHandling(final Engineer engineer) {
+        EventService.addListener(this, JournalInitEvent.class, event -> {
+            if (event.isInitialised()) {
+                updatePinnedBlueprint();
+            }
+        });
+        EventService.addListener(this, 9, EngineerPinEvent.class, engineerPinEvent -> {
+            if (this.engineer.equals(engineerPinEvent.getEngineer())) {
+                updatePinnedBlueprint();
+            }
+        });
         EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
@@ -135,6 +173,17 @@ class HorizonsEngineerCard extends EngineerCard {
         });
     }
 
+    private void updatePinnedBlueprint() {
+        if (this.getChildren().contains(this.pinnedBlueprintSeparator)) {
+            this.getChildren().remove(4, 7);
+        }
+        if (hasPinnedBlueprint()) {
+            this.getChildren().add(4, this.pinnedBlueprintSeparator);
+            this.getChildren().add(5, this.pinnedBlueprintTitle);
+            this.getChildren().addAll(6, getPinnedBlueprintLabels());
+        }
+    }
+
     private DestroyableResizableImageView getEngineerGrade() {
 
         final Integer engineerRank = APPLICATION_STATE.getEngineerRank(this.engineer);
@@ -155,7 +204,7 @@ class HorizonsEngineerCard extends EngineerCard {
     }
 
     @SuppressWarnings("java:S1640")
-    private List<HBox> getBlueprints(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> blueprints) {
+    private List<HBox> getBlueprints(final Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>> blueprints, final boolean withType) {
         final Map<HorizonsBlueprint, Integer> maxGrades = new HashMap<>();
         blueprints.values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
@@ -168,24 +217,28 @@ class HorizonsEngineerCard extends EngineerCard {
                         maxGrades.put(horizonsBlueprint, horizonsBlueprint.getHorizonsBlueprintGrade().getGrade());
                     }
                 });
-        return getBlueprintLabels(maxGrades);
+        return getBlueprintLabels(maxGrades,withType);
     }
 
 
-    private ArrayList<HBox> getBlueprintLabels(final Map<HorizonsBlueprint, Integer> maxGrades) {
+    private ArrayList<HBox> getBlueprintLabels(final Map<HorizonsBlueprint, Integer> maxGrades, final boolean withType) {
         return maxGrades.entrySet().stream()
                 .sorted(((Comparator<Map.Entry<HorizonsBlueprint, Integer>>) (Comparator<?>) Map.Entry.comparingByValue().reversed()).thenComparing(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintName().getLocalizationKey())))
-                .map(entry -> BoxBuilder.builder()
-                        .withNodes(LabelBuilder.builder()
-                                        .withStyleClass("engineer-bullet")
-                                        .withNonLocalizedText(entry.getValue().toString())
-                                        .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
-                                        .build(),
-                                LabelBuilder.builder()
-                                        .withStyleClass("engineer-blueprint")
-                                        .withText(LocaleService.getStringBinding(entry.getKey().getHorizonsBlueprintName().getLocalizationKey()))
-                                        .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
-                                        .build()).buildHBox())
+                .map(entry -> {
+                    final DestroyableLabel name =
+                            LabelBuilder.builder()
+                                    .withStyleClass("engineer-blueprint")
+                                    .withText((!withType) ? LocaleService.getStringBinding(entry.getKey().getHorizonsBlueprintName().getLocalizationKey()) : LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintName().getLocalizationKey()) + " - " + LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getHorizonsBlueprintType().getLocalizationKey())))
+                                    .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
+                                    .build();
+                    return BoxBuilder.builder()
+                            .withNodes(LabelBuilder.builder()
+                                            .withStyleClass("engineer-bullet")
+                                            .withNonLocalizedText(entry.getValue().toString())
+                                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(entry.getKey())))
+                                            .build(),
+                                    name).buildHBox();
+                })
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

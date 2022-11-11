@@ -3,6 +3,8 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @RequiredArgsConstructor
 @Getter
 public enum HorizonsBlueprintGrade {
@@ -15,4 +17,9 @@ public enum HorizonsBlueprintGrade {
     private final int grade;
     private final int defaultNumberOfRolls;
 
+    public static HorizonsBlueprintGrade forDigit(final String digit) {
+        return forDigit(Integer.parseInt(digit));
+    } public static HorizonsBlueprintGrade forDigit(final int digit) {
+        return Arrays.stream(HorizonsBlueprintGrade.values()).filter(grade -> grade.grade == digit).findFirst().orElse(null);
+    }
 }

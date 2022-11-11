@@ -2350,3 +2350,4 @@ spawn.location.horizons.cz_authority,Destroyed authority or military ships in co
 horizons.materials.nearest.trader,Nearest trader,,,,,,
 tab.settings.materials.max.range,Material trader max. distance(Ls) from star,,,,,,
 tab.settings.title.horizons.materials,Horizons Materials,,,,,,
+tab.engineer.pinned.blueprint,Pinned Blueprint,,,,,,
