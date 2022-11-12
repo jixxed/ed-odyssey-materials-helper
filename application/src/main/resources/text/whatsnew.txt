@@ -1,3 +1,10 @@
+Version 1.100
+-------------
+Add data spawnrates to tooltips
+Add pinned blueprints in horizons engineers overview
+Add nearest traders to Horizons materials overview
+Remove the cancelled pre-engineered heatsink launcher
+
 Version 1.99
 -------------
 Data tracking improvements
