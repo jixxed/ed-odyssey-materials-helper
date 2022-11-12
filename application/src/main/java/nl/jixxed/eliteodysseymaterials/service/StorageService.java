@@ -70,11 +70,11 @@ public class StorageService {
 
     public static void addMaterial(final HorizonsMaterial material, final Integer amount) {
         if (material instanceof Raw rawMaterial) {
-            raw.put(rawMaterial, raw.get(material) + amount);
+            raw.put(rawMaterial, Math.min(raw.get(material) + amount, material.getMaxAmount()));
         } else if (material instanceof Encoded encodedMaterial) {
-            encoded.put(encodedMaterial, encoded.get(material) + amount);
+            encoded.put(encodedMaterial, Math.min(encoded.get(material) + amount, material.getMaxAmount()));
         } else if (material instanceof Manufactured manufacturedMaterial) {
-            manufactured.put(manufacturedMaterial, manufactured.get(material) + amount);
+            manufactured.put(manufacturedMaterial, Math.min(manufactured.get(material) + amount, material.getMaxAmount()));
         } else if (material instanceof Commodity commodity) {
             throw new UnsupportedOperationException("use addCommodity instead");
         }
