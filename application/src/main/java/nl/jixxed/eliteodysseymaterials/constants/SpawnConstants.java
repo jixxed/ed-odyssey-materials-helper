@@ -3,7 +3,12 @@ package nl.jixxed.eliteodysseymaterials.constants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -317,6 +322,45 @@ public class SpawnConstants {
             Map.entry(Good.PUSH, List.of(SKIMMER, SRV)),
             Map.entry(Good.HUSH, List.of(SKIMMER, SRV))
     );
+    public static final Map<Data, Map<DataPortType, Double>> DATA_SPAWN_CHANCE = new HashMap<>();
+
+    static {
+        final String[] headers = {"Data", "AGR", "CMD", "EXT", "HAB", "IND", "LAB", "MED", "POI", "PWR", "SEC"};
+        try (final InputStream is = SpawnConstants.class.getResourceAsStream("/dataspawn/data.spawnchance.csv")){
+            final Iterable<CSVRecord> records = CSVFormat.DEFAULT
+                    .withHeader(headers)
+                    .withFirstRecordAsHeader()
+                    .parse(new InputStreamReader(is));
+            for (final CSVRecord csvRecord : records) {
+                final String dataName = csvRecord.get("Data");
+                final String agr = csvRecord.get("AGR");
+                final String cmd = csvRecord.get("CMD");
+                final String ext = csvRecord.get("EXT");
+                final String hab = csvRecord.get("HAB");
+                final String ind = csvRecord.get("IND");
+                final String lab = csvRecord.get("LAB");
+                final String med = csvRecord.get("MED");
+                final String poi = csvRecord.get("POI");
+                final String pwr = csvRecord.get("PWR");
+                final String sec = csvRecord.get("SEC");
+                DATA_SPAWN_CHANCE.put(Data.forName(dataName), Map.of(
+                        AGR,Double.valueOf(agr),
+                        CMD,Double.valueOf(cmd),
+                        EXT,Double.valueOf(ext),
+                        HAB,Double.valueOf(hab),
+                        IND,Double.valueOf(ind),
+                        LAB,Double.valueOf(lab),
+                        MED,Double.valueOf(med),
+                        POI,Double.valueOf(poi),
+                        PWR,Double.valueOf(pwr),
+                        SEC,Double.valueOf(sec)
+                ));
+            }
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static final Map<HorizonsMaterial, List<HorizonsMaterialSpawnLocation>> HORIZONSMATERIAL_LOCATION = new HashMap<>();
 
     static {

@@ -102,11 +102,28 @@ public class MaterialService {
             }
             addFleetCarrierOrdersToTooltip(odysseyMaterial, vBox);
             addRecipesToTooltip(OdysseyBlueprintConstants.findRecipesContaining(odysseyMaterial), vBox);
+            if (odysseyMaterial instanceof Data data) {
+                addSpawnRatesToTooltip(data,vBox);
+            }
             addStatisticsToTooltip(odysseyMaterial, vBox);
         }
         return vBox;
 
 
+    }
+
+    private static void addSpawnRatesToTooltip(final Data data, final VBox vBox) {
+        final Map<DataPortType, Double> dataPortSpawnRates = SpawnConstants.DATA_SPAWN_CHANCE.get(data);
+        if(dataPortSpawnRates != null){
+            vBox.getChildren().add(LabelBuilder.builder().build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.spawnrates")).build());
+            final String rates = dataPortSpawnRates.entrySet().stream()
+                    .filter(entry->entry.getValue() > 0.01)
+                    .sorted((Comparator<Map.Entry<DataPortType, Double>>)(Comparator<?>) Map.Entry.comparingByValue().reversed())
+                    .map((entry) -> entry.getKey() + "(" + NUMBER_FORMAT.format(entry.getValue()) + "%)")
+                    .collect(Collectors.joining(", "));
+            vBox.getChildren().add(LabelBuilder.builder().withNonLocalizedText(rates).build());
+        }
     }
 
 
