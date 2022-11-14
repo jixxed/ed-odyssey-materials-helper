@@ -125,7 +125,7 @@ public class LifeSupportBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+300%", true),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+150%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON)))
+                            List.of(Engineer.ETIENNE_DORN)))
             ,
             HorizonsBlueprintType.SHIELDED,
             Map.of(
