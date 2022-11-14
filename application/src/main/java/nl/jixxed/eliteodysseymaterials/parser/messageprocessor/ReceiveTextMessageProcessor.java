@@ -7,9 +7,9 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PointToOdysseyResourceEvent;
 
@@ -40,7 +40,7 @@ public class ReceiveTextMessageProcessor implements MessageProcessor {
                         final String text;
                         final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                         final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
-                        if (MaterialService.isMaterialOnWishlist(odysseyMaterial)) {
+                        if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
                             text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Wishlist - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + getWishlistCount(odysseyMaterial);
                             NotificationService.showInformation(NotificationType.WISHLIST_POINT, "Material information", text);
                         } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {

@@ -12,8 +12,8 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -56,7 +56,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                         if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
                                 || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
                             NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
-                        } else if (MaterialService.isMaterialOnWishlist(material)) {
+                        } else if (WishlistService.isMaterialOnWishlist(material)) {
                             NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
                         }
                     });

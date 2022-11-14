@@ -54,7 +54,7 @@ public class FileProcessor {
             while ((line = lineReader.readLine()) != null) {
                 //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
-                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(JournalEventType.MATERIALCOLLECTED, JournalEventType.MATERIALTRADE, JournalEventType.ENGINEERCRAFT);
+                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(JournalEventType.MISSIONCOMPLETED,JournalEventType.MATERIALCOLLECTED, JournalEventType.MATERIALTRADE, JournalEventType.ENGINEERCRAFT);
                 if (jsonNode.get(EVENT) != null) {
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                     if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {

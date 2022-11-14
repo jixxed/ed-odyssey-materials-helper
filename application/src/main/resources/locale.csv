@@ -2352,3 +2352,5 @@ tab.settings.materials.max.range,Material trader max. distance(Ls) from star,Mat
 tab.settings.title.horizons.materials,Horizons Materials,Horizons Materials,Horizons Materialien,Horizons Materiales,Horizons Matériaux,Horizons Materiais,Горизонты материалы
 tab.engineer.pinned.blueprint,Pinned Blueprint,Pinned Blueprint,Pastete Blaupause,Blueprint anclado,Blueprint épinglé,Blueprint fixado,Приколоченный план
 material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn chance(Avg. 3-4 chances per dataport):,Spawn Chance (Avg. 3-4 Chancen pro Datenaport):,Chance de desagüe (avg. 3-4 posibilidades por papel de datos):,Spawn Chance (avg. 3-4 chances par données):,Chance de Spawn (Avg. 3-4 chances por Dataport):,Spawn Chance (Avg. 3-4 шансов на DataPort):
+tab.settings.url.scheme.checking,Checking...,,,,,,
+notification.collected.wishlist.material.notification,{0} {1}/{2},,,,,,

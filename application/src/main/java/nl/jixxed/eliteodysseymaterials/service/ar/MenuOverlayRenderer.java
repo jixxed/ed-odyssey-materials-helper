@@ -3,13 +3,12 @@ package nl.jixxed.eliteodysseymaterials.service.ar;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -53,7 +52,7 @@ public class MenuOverlayRenderer {
                 final int x = (int) (downloadMenu.getMenuItemX(index) + downloadMenu.getMenuTextWriteOffsetX());
                 final int y = (int) (menuItemY + downloadMenu.getMenuTextWriteOffsetY());
                 final Color color;
-                if (MaterialService.isMaterialOnWishlist(odysseyMaterial)) {
+                if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
                     final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_WISHLIST_COLOR, javafx.scene.paint.Color.LIME.toString()));
                     color = new Color((float) preference.getRed(),
                             (float) preference.getGreen(),
@@ -76,8 +75,8 @@ public class MenuOverlayRenderer {
                     final String text;
                     final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                     final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
-                    if (MaterialService.isMaterialOnWishlist(odysseyMaterial)) {
-                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.wishlist") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + getWishlistCount(odysseyMaterial);
+                    if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
+                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.wishlist") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getWishlistCount(odysseyMaterial);
                     } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
                         text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.blueprint") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
                     } else {
@@ -109,13 +108,5 @@ public class MenuOverlayRenderer {
     }
 
 
-    private static Integer getWishlistCount(final OdysseyMaterial odysseyMaterial) {
-        return ApplicationState.getInstance().getPreferredCommander().map(commander ->
-                ApplicationState.getInstance().getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
-                        .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
-                        .mapToInt(Integer::intValue)
-                        .sum()
-        ).orElse(0);
-    }
 
 }

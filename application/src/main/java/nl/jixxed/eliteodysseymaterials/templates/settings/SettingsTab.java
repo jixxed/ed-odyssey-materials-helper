@@ -46,6 +46,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -291,16 +293,34 @@ public class SettingsTab extends OdysseyTab {
         this.urlSchemeLinkingButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding(RegistryService.isRegistered() ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"))
                 .withOnAction(event -> {
-                    boolean isRegistered = RegistryService.isRegistered();
+                    final boolean isRegistered = RegistryService.isRegistered();
                     if (isRegistered) {
                         RegistryService.unregisterApplication();
                     } else {
                         RegistryService.registerApplication();
                     }
-                    isRegistered = RegistryService.isRegistered();
-                    this.registered.set(isRegistered);
-                    this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
-                    this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
+                    this.urlSchemeLinkingButton.setDisable(true);
+                    Executors.newSingleThreadScheduledExecutor().schedule(() -> {
+                        this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.url.scheme.checking"));
+                        boolean isRegisteredNow = RegistryService.isRegistered();
+                        final int retries = 10;
+                        int retry = 0;
+                        while(isRegistered == isRegisteredNow){
+                            try {
+                                isRegisteredNow = RegistryService.isRegistered();
+                                Thread.sleep(1000);
+                                if(retry++ == retries){
+                                    break;
+                                }
+                            } catch (final InterruptedException e) {
+                                log.error("Register check error",e);
+                            }
+                        }
+                        this.registered.set(isRegistered);
+                        this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
+                        this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
+                        this.urlSchemeLinkingButton.setDisable(false);
+                    }, 1, TimeUnit.SECONDS);
                 })
                 .build();
         this.urlSchemeLinkingActiveLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding(RegistryService.isRegistered() ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered")).build();
