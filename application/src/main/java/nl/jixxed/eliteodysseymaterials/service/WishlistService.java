@@ -1,10 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 
 public class WishlistService {
 
@@ -23,10 +22,39 @@ public class WishlistService {
     public static Integer getWishlistCount(final HorizonsMaterial horizonsMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                 APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
-                        .map(horizonsWishlistBlueprint -> ((HorizonsBlueprint) horizonsWishlistBlueprint).getRequiredAmount(horizonsMaterial))
-                        .mapToInt(Integer::intValue)
+                        .mapToInt(horizonsWishlistBlueprint -> {
+                            if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
+                                return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().mapToInt(entry -> {
+                                    final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
+                                    return blueprint.getRequiredAmount(horizonsMaterial) * entry.getValue();
+                                }).sum();
+                            } else {//other
+                                final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsWishlistBlueprint), getBlueprintGrade(horizonsWishlistBlueprint));
+                                return blueprint.getRequiredAmount(horizonsMaterial);
+                            }
+                        })
                         .sum()
         ).orElse(0);
+    }
+
+    private static HorizonsBlueprintType getBlueprintType(final WishlistBlueprint<HorizonsBlueprintName> blueprint) {
+        if (blueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {
+            return horizonsModuleWishlistBlueprint.getBlueprintType();
+        } else if (blueprint instanceof HorizonsExperimentalWishlistBlueprint horizonsExperimentalWishlistBlueprint) {
+            return horizonsExperimentalWishlistBlueprint.getBlueprintType();
+        } else if (blueprint instanceof HorizonsTechBrokerWishlistBlueprint horizonsTechBrokerWishlistBlueprint) {
+            return horizonsTechBrokerWishlistBlueprint.getBlueprintType();
+        } else if (blueprint instanceof HorizonsEngineerWishlistBlueprint) {
+            return HorizonsBlueprintType.ENGINEER;
+        }
+        return null;
+    }
+
+    private static HorizonsBlueprintGrade getBlueprintGrade(final WishlistBlueprint<HorizonsBlueprintName> blueprint) {
+        if (blueprint instanceof HorizonsSynthesisWishlistBlueprint horizonsSynthesisWishlistBlueprint) {
+            return horizonsSynthesisWishlistBlueprint.getBlueprintGrade();
+        }
+        return HorizonsBlueprintGrade.NONE;
     }
 
     public static boolean isMaterialOnWishlist(final OdysseyMaterial odysseyMaterial) {

@@ -10,10 +10,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Consumable;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.LocationService;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -57,7 +54,12 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                                 || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
                             NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
                         } else if (WishlistService.isMaterialOnWishlist(material)) {
-                            NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
+                            NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"),
+                                    LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification",
+                                            LocaleService.LocalizationKey.of(material.getLocalizationKey()),
+                                            StorageService.getMaterialStorage(material).getTotalValue(),
+                                            WishlistService.getWishlistCount(material))
+                            );
                         }
                     });
         }

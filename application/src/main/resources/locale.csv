@@ -2354,3 +2354,4 @@ tab.engineer.pinned.blueprint,Pinned Blueprint,Pinned Blueprint,Pastete Blaupaus
 material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn chance(Avg. 3-4 chances per dataport):,Spawn Chance (Avg. 3-4 Chancen pro Datenaport):,Chance de desagüe (avg. 3-4 posibilidades por papel de datos):,Spawn Chance (avg. 3-4 chances par données):,Chance de Spawn (Avg. 3-4 chances por Dataport):,Spawn Chance (Avg. 3-4 шансов на DataPort):
 tab.settings.url.scheme.checking,Checking...,,,,,,
 notification.collected.wishlist.material.notification,{0} {1}/{2},,,,,,
+notification.collected.wishlist.material.notification.horizons,{0}(+{1}) {2}/{3},,,,,,

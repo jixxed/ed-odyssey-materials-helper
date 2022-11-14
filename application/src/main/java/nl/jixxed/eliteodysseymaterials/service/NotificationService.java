@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,7 @@ public class NotificationService {
                     .darkStyle()
                     .title(title)
                     .text(text)
+                    .hideAfter(Duration.seconds(10))
                     .showInformation();
             if (!silent) {
                 playSound(notificationType);

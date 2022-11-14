@@ -49,7 +49,8 @@ public class LocaleService {
 
 
     private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
-        return MessageFormat.format(CSVResourceBundle.getResourceBundle(RESOURCE_BUNDLE_NAME, locale).getString(key), parameters);
+        final Object[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(Object[]::new);
+        return MessageFormat.format(CSVResourceBundle.getResourceBundle(RESOURCE_BUNDLE_NAME, locale).getString(key), localizedParams);
     }
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {

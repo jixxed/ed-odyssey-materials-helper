@@ -85,7 +85,7 @@ public class ImportService {
                         return (WishlistBlueprint<HorizonsBlueprintName>) bp;
                     } catch (final IllegalArgumentException ex) {
                         log.error(ex.getMessage());
-                        NotificationService.showWarning(NotificationType.IMPORT, "Unknown item", ex.getMessage(), true);
+                        NotificationService.showWarning(NotificationType.IMPORT, "Unknown item", String.join(":\n", ex.getMessage().split(": ")), true);
                         return null;
                     }
                 }).filter(Objects::nonNull).toList();
