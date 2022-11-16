@@ -33,6 +33,7 @@ public class NotificationService {
     public static void showInformation(final NotificationType notificationType, final String title, final String text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
+            log.info("NOTIFY: " + text);
             Notifications.create()
                     .darkStyle()
                     .title(title)
@@ -52,6 +53,7 @@ public class NotificationService {
     static void showWarning(final NotificationType notificationType, final String title, final String text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
+            log.warn("WARN: " + text);
             Notifications.create()
                     .darkStyle()
                     .title(title)
@@ -70,6 +72,7 @@ public class NotificationService {
     private static void showError(final NotificationType notificationType, final String title, final String text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
+            log.error("NOTIFY: " + text);
             Notifications.create()
                     .darkStyle()
                     .title(title)
