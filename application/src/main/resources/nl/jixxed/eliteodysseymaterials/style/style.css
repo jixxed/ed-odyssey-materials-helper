@@ -2197,6 +2197,12 @@
 
 }
 
+.blueprint-listing-label-experimental {
+    -fx-background-color: #2e92df;
+    /*-fx-text-fill: #2e92df !important;*/
+
+}
+
 .loadout-wishlist-create-new {
     -fx-font-style: italic;
 }

@@ -320,11 +320,13 @@ public class MaterialService {
                     titledPane.setContent(catBox);
                     titledPane.setExpanded(false);
                     vBox.getChildren().add(titledPane);
-                    final DestroyableLabel build = LabelBuilder.builder().withStyleClass("blueprint-listing-label").withText(blueprintListing.toStringBinding()).build();
+                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label","blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
+                    final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
                     catBox.getChildren().add(build);
                 } else {
                     //append
-                    final DestroyableLabel build = LabelBuilder.builder().withStyleClass("blueprint-listing-label").withText(blueprintListing.toStringBinding()).build();
+                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label","blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
+                    final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
                     catBox.getChildren().add(build);
                     catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 }
