@@ -58,7 +58,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
                                     LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification",
                                             LocaleService.LocalizationKey.of(material.getLocalizationKey()),
                                             StorageService.getMaterialStorage(material).getTotalValue(),
-                                            WishlistService.getWishlistCount(material))
+                                            WishlistService.getAllWishlistsCount(material))
                             );
                         }
                     });

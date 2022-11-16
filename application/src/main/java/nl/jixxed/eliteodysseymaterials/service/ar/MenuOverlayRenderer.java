@@ -76,7 +76,7 @@ public class MenuOverlayRenderer {
                     final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                     final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
                     if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
-                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.wishlist") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getWishlistCount(odysseyMaterial);
+                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.wishlist") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getAllWishlistsCount(odysseyMaterial);
                     } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
                         text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.blueprint") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
                     } else {

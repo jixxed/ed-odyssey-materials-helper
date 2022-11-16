@@ -9,7 +9,18 @@ public class WishlistService {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    public static Integer getWishlistCount(final OdysseyMaterial odysseyMaterial) {
+    public static Integer getCurrentWishlistCount(final OdysseyMaterial odysseyMaterial) {
+        return APPLICATION_STATE.getPreferredCommander().map(commander ->
+                        APPLICATION_STATE.getWishlists(commander.getFid()).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
+                                        .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
+                                        .mapToInt(Integer::intValue)
+                                        .sum())
+                                .sum())
+                .orElse(0);
+
+    }
+
+    public static Integer getAllWishlistsCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                 APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
                         .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
@@ -19,7 +30,7 @@ public class WishlistService {
 
     }
 
-    public static Integer getWishlistCount(final HorizonsMaterial horizonsMaterial) {
+    public static Integer getCurrentWishlistCount(final HorizonsMaterial horizonsMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                 APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
                         .mapToInt(horizonsWishlistBlueprint -> {
@@ -35,6 +46,24 @@ public class WishlistService {
                         })
                         .sum()
         ).orElse(0);
+    }
+
+    public static Integer getAllWishlistsCount(final HorizonsMaterial horizonsMaterial) {
+        return APPLICATION_STATE.getPreferredCommander().map(commander ->
+                APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
+                        .mapToInt(horizonsWishlistBlueprint -> {
+                            if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
+                                return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().mapToInt(entry -> {
+                                    final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
+                                    return blueprint.getRequiredAmount(horizonsMaterial) * entry.getValue();
+                                }).sum();
+                            } else {//other
+                                final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsWishlistBlueprint), getBlueprintGrade(horizonsWishlistBlueprint));
+                                return blueprint.getRequiredAmount(horizonsMaterial);
+                            }
+                        })
+                        .sum()
+                ).sum()).orElse(0);
     }
 
     private static HorizonsBlueprintType getBlueprintType(final WishlistBlueprint<HorizonsBlueprintName> blueprint) {
@@ -70,7 +99,18 @@ public class WishlistService {
         return APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getWishlists().stream()
                         .anyMatch(wishlist -> wishlist.getItems().stream()
-                                .anyMatch(wishlistBlueprint -> ((HorizonsBlueprint) wishlistBlueprint).hasIngredient(horizonsMaterial))))
+                                .anyMatch(wishlistBlueprint -> {
+                                    if (wishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
+                                        return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().anyMatch(entry -> {
+                                            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
+                                            return blueprint.hasIngredient(horizonsMaterial);
+                                        });
+                                    } else {//other
+                                        final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) wishlistBlueprint.getRecipeName(), getBlueprintType(wishlistBlueprint), getBlueprintGrade(wishlistBlueprint));
+                                        return blueprint.hasIngredient(horizonsMaterial);
+                                    }
+
+                                })))
                 .orElse(false);
 
     }

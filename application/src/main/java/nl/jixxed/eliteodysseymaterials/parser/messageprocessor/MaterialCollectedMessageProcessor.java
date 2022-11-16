@@ -29,7 +29,7 @@ public class MaterialCollectedMessageProcessor implements MessageProcessor {
                                 LocaleService.LocalizationKey.of(horizonsMaterial.getLocalizationKey()),
                                 journalMessage.get("Count").asInt(),
                                 StorageService.getMaterialCount(horizonsMaterial),
-                                WishlistService.getWishlistCount(horizonsMaterial)));
+                                WishlistService.getAllWishlistsCount(horizonsMaterial)));
             }
 
             EventService.publish(new StorageEvent(StoragePool.SHIP));
