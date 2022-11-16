@@ -26,7 +26,10 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
             if (Boolean.TRUE.equals(newValue) && getHorizonsMaterial() instanceof Commodity commodity && (this.getLeftAmount() - (StorageService.getCommodityCount(commodity, StoragePool.SHIP))) > 0) {
-                this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - (StorageService.getCommodityCount(commodity, StoragePool.SHIP)))));
+                this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - StorageService.getCommodityCount(commodity, StoragePool.SHIP))));
+                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
+            } else if (Boolean.TRUE.equals(newValue) && !(getHorizonsMaterial() instanceof Commodity) && (this.getLeftAmount() - (StorageService.getMaterialCount(getHorizonsMaterial()))) > 0) {
+                this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - StorageService.getMaterialCount(getHorizonsMaterial()))));
                 setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
             } else {
                 setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
