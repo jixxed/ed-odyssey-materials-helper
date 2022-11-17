@@ -110,7 +110,7 @@ public class ImportService {
 
     private static ImportResult importCoriolis(final String data) {
         final String decoded = convertBase64CompressedToJson(data);
-        log.info("Importing edsy data: " + decoded);
+        log.info("Importing coriolis data: " + decoded);
         if (decoded.isEmpty()) {
             throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
         }
