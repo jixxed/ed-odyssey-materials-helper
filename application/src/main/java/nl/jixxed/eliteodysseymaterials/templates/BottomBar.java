@@ -71,7 +71,7 @@ class BottomBar extends HBox {
                 .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders()))
                 .withValueChangeListener((obs, oldValue, newValue) -> Platform.runLater(() -> {
                     if (newValue != null) {
-                        PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue);
+                        PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue.getName() + ":" + newValue.getGameVersion().name());
                     }
                     if (oldValue != null && newValue != null) {
                         EventService.publish(new CommanderSelectedEvent(newValue));
@@ -104,9 +104,10 @@ class BottomBar extends HBox {
 
     private void afterAllCommandersListed() {
         if (!this.commanderSelect.getItems().isEmpty() && this.commanderSelect.getSelectionModel().getSelectedIndex() == -1) {
-            this.commanderSelect.getSelectionModel().select(this.commanderSelect.getItems().get(0));
-            PreferencesService.setPreference(PreferenceConstants.COMMANDER, this.commanderSelect.getItems().get(0));
-            EventService.publish(new CommanderSelectedEvent(this.commanderSelect.getItems().get(0)));
+            final Commander commander = this.commanderSelect.getItems().get(0);
+            this.commanderSelect.getSelectionModel().select(commander);
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" + commander.getGameVersion().name());
+            EventService.publish(new CommanderSelectedEvent(commander));
         }
     }
 
@@ -115,9 +116,15 @@ class BottomBar extends HBox {
         this.login.getStyleClass().remove("statusbar-login-hidden");
         this.commanderSelect.getItems().add(commanderAddedEvent.getCommander());
         final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
-        if (preferredName.isBlank() || commanderAddedEvent.getCommander().getName().equals(preferredName)) {
+        if (preferredName.isBlank() || isPreferredCommander(commanderAddedEvent.getCommander(), preferredName)) {
             this.commanderSelect.getSelectionModel().select(commanderAddedEvent.getCommander());
         }
+    }
+
+    private static boolean isPreferredCommander(final Commander addedCommander, final String preferredName) {
+        final String[] commanderVersion = preferredName.split(":");
+        final String version = (commanderVersion.length > 1) ? commanderVersion[1] : "LIVE";
+        return addedCommander.getName().equals(commanderVersion[0]) && addedCommander.getGameVersion().name().equals(version);
     }
 
     private void handleLoadGame(final LoadGameEvent loadGameEvent) {

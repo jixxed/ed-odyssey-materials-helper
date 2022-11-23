@@ -20,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
@@ -100,21 +101,23 @@ public class CAPIService {
                 Platform.runLater(() -> {
                             this.active.set(this.loadToken(APPLICATION_STATE.getPreferredCommander().orElse(null)));
                             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                final String pathname = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH);
-                                final File fleetCarrierFileDir = new File(pathname);
-                                fleetCarrierFileDir.mkdirs();
-                                final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
                                 if (this.timer != null) {
                                     this.timer.cancel();
                                 }
-                                this.timer = new Timer("Fleetcarrier-api-task", true);
-                                this.timerTask = new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        requestFleetCarrierData();
-                                    }
-                                };
-                                this.timer.scheduleAtFixedRate(this.timerTask, calculateDelay(fleetCarrierFile), 300L * 1000L);
+                                if(commander.getGameVersion().equals(GameVersion.LIVE)) {
+                                    final String pathname = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH);
+                                    final File fleetCarrierFileDir = new File(pathname);
+                                    fleetCarrierFileDir.mkdirs();
+                                    final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
+                                    this.timer = new Timer("Fleetcarrier-api-task", true);
+                                    this.timerTask = new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            requestFleetCarrierData();
+                                        }
+                                    };
+                                    this.timer.scheduleAtFixedRate(this.timerTask, calculateDelay(fleetCarrierFile), 300L * 1000L);
+                                }
                             });
                         }
                 );
@@ -240,7 +243,7 @@ public class CAPIService {
 
     private boolean loadToken(final Commander commander) {
         this.oAuth2AccessToken = null;
-        if (commander != null) {
+        if (commander != null && commander.getGameVersion().equals(GameVersion.LIVE)) {
             final String pathname = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH);
             final File capiTokenDir = new File(pathname);
             capiTokenDir.mkdirs();

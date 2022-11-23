@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
@@ -85,15 +86,23 @@ public class JournalWatcher {
     @SuppressWarnings("java:S1192")
     private void listCommander(final File file) {
         try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
+            GameVersion gameVersion = GameVersion.UNKNOWN;
             while (scanner.hasNext()) {
                 final String line = scanner.nextLine();
-
                 final JsonNode journalMessage = this.objectMapper.readTree(line);
                 final JsonNode eventNode = journalMessage.get("event");
-                if (eventNode.asText().equals("Commander")) {
+
+                if (eventNode.asText().equals("Fileheader")) {
+                    final String gameversion = journalMessage.get("gameversion").asText("");
+                    if (gameversion.startsWith("3")) {
+                        gameVersion = GameVersion.LEGACY;
+                    } else if (gameversion.startsWith("4")) {
+                        gameVersion = GameVersion.LIVE;
+                    }
+                } else if (eventNode.asText().equals("Commander") && !gameVersion.equals(GameVersion.UNKNOWN)) {
                     final JsonNode nameNode = journalMessage.get("Name");
                     final JsonNode fidNode = journalMessage.get("FID");
-                    APPLICATION_STATE.addCommander(nameNode.asText(), fidNode.asText());
+                    APPLICATION_STATE.addCommander(nameNode.asText(), fidNode.asText(), gameVersion);
                     break;
                 }
             }

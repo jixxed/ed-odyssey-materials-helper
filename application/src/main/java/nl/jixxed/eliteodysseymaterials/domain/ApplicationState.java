@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.domain;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
@@ -75,6 +76,8 @@ public class ApplicationState {
             Map.entry(Engineer.UNKNOWN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0))
     ));
     private GameMode gameMode = GameMode.NONE;
+    @Getter
+    private final GameVersion gameVersion = GameVersion.UNKNOWN;
 
     private ApplicationState() {
         final String fav = PreferencesService.getPreference("material.favourites", "");
@@ -394,25 +397,28 @@ public class ApplicationState {
 
     public Optional<Commander> getPreferredCommander() {
         final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
-        if (!preferredCommander.isBlank() && this.commanders.stream().anyMatch(commander -> commander.getName().equals(preferredCommander))) {
-            return this.commanders.stream().filter(commander -> commander.getName().equals(preferredCommander)).findFirst();
+        if (!preferredCommander.isBlank()) {
+            final String[] commanderVersion = preferredCommander.split(":");
+            if (this.commanders.stream().anyMatch(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(commanderVersion[1]))) {
+                return this.commanders.stream().filter(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(commanderVersion[1])).findFirst();
+            }
         }
         final Iterator<Commander> commanderIterator = this.commanders.iterator();
         if (commanderIterator.hasNext()) {
             final Commander commander = commanderIterator.next();
-            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName());
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" + commander.getGameVersion().name());
             return Optional.of(commander);
         }
         return Optional.empty();
     }
 
-    public void addCommander(final String name, final String fid) {
-        if (this.commanders.stream().noneMatch(commander -> commander.getName().equals(name))) {
-            final Commander commander = new Commander(name, fid);
+    public void addCommander(final String name, final String fid, final GameVersion gameVersion) {
+        if (this.commanders.stream().noneMatch(commander -> commander.getName().equals(name) && commander.getGameVersion().equals(gameVersion))) {
+            final Commander commander = new Commander(name, fid, gameVersion);
             this.commanders.add(commander);
             final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
             if (preferredCommander.isBlank()) {
-                PreferencesService.setPreference(PreferenceConstants.COMMANDER, name);
+                PreferencesService.setPreference(PreferenceConstants.COMMANDER, name + ":" + gameVersion.name());
             }
             EventService.publish(new CommanderAddedEvent(commander));
         }

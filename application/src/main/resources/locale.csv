@@ -2206,7 +2206,6 @@ search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,Fl
 search.sort.quantity_total,Total quantity,Total quantity,Gesamtmenge,Cantidad total,Quantité totale,Quantidade total,Общая численность
 search.filter.ship,Ship,Ship,Schiff,Barco,Bateau,Navio,Судно
 blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSD Injektion,Inyección de FSD,Injection de FSD,Injeção de FSD,FSD инъекция
-tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Ruft API Daten wie FleetCarrier Aktien und Bestellungen in einem Intervall von 5 Minuten ab,Recupera datos de API como stock de flotante y pedidos en un intervalo de 5 minutos,Récupère les données de l''API comme le stock et les commandes de FleetCarrier sur un intervalle de 5 minutes,Recupera dados da API como estoque de FleetCarrier e pedidos em um intervalo de 5 minutos,Получает данные API, такие как запасы FleetCarrier и заказы в 5 -минутном интервале
 tab.settings.title.odyssey.materials,Odyssey Materials,Odyssey Materials,Odyssey Materialien,Materiales de Odyssey,Matériaux Odyssey,Materiais Odyssey,Odyssey материалы
 tab.wishlist.option.all,All wishlists (read only),All wishlists (read only),Alle Wunschlisten (nur lesen),Todas las listas de deseos (solo lectura),Toutes les listes de souhaits (lecture seule),Todas as listas de desejos (somente leitura),Все списки желаний (только чтение)
 tab.settings.poll,Polling Mode,Polling Mode,Wahlmodus,Modo de votación,Mode d''interrogation,Modo de pesquisa,Режим опроса
@@ -2352,8 +2351,9 @@ tab.settings.materials.max.range,Material trader max. distance(Ls) from star,Mat
 tab.settings.title.horizons.materials,Horizons Materials,Horizons Materials,Horizons Materialien,Horizons Materiales,Horizons Matériaux,Horizons Materiais,Горизонты материалы
 tab.engineer.pinned.blueprint,Pinned Blueprint,Pinned Blueprint,Pastete Blaupause,Blueprint anclado,Blueprint épinglé,Blueprint fixado,Приколоченный план
 material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn chance(Avg. 3-4 chances per dataport):,Spawn Chance (Avg. 3-4 Chancen pro Datenaport):,Chance de desagüe (avg. 3-4 posibilidades por papel de datos):,Spawn Chance (avg. 3-4 chances par données):,Chance de Spawn (Avg. 3-4 chances por Dataport):,Spawn Chance (Avg. 3-4 шансов на DataPort):
-tab.settings.url.scheme.checking,Checking...,,,,,,
-notification.collected.wishlist.material.notification,{0} {1}/{2},,,,,,
-notification.collected.wishlist.material.notification.horizons,{0}(+{1}) {2}/{3},,,,,,
-tab.settings.ar.bartender.toggle,Bartender overlay,,,,,,
-tab.settings.ar.color.bartender,Bartender color,,,,,,
+tab.settings.url.scheme.checking,Checking...,Checking...,Überprüfung...,Comprobación...,Vérification...,Verificando...,Проверка...
+notification.collected.wishlist.material.notification,{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2}
+notification.collected.wishlist.material.notification.horizons,{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3}
+tab.settings.ar.bartender.toggle,Bartender overlay,Bartender overlay,Barkeeper Overlay,Superposición de barman,Superposition du barman,Sobreposição de barman,Бартендентный наложение
+tab.settings.ar.color.bartender,Bartender color,Bartender color,Barkeeper Farbe,Color de camarero,Couleur barman,Cor do barman,Бармен Цвет
+tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval. Only for LIVE accounts.,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval. Only for LIVE accounts.,Ruft API Daten wie FleetCarrier Aktien und Bestellungen in einem Intervall von 5 Minuten ab. Nur für Live Konten.,Recupera datos de API como el stock de FleetCarrier y las órdenes en un intervalo de 5 minutos. Solo para cuentas en vivo.,Récupère les données de l''API comme le stock et les commandes de FleetCarrier sur un intervalle de 5 minutes. Uniquement pour les comptes en direct.,Recupera dados da API como estoque de FleetCarrier e pedidos em um intervalo de 5 minutos. Apenas para contas ao vivo.,"Получает данные API, такие как запасы FleetCarrier и заказы в 5 -минутный интервал. Только для живых счетов."
