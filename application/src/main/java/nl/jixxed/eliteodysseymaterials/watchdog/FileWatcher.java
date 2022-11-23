@@ -65,9 +65,7 @@ public class FileWatcher implements Runnable {
         if (!this.thread.isAlive()) {
             this.folder = folder;
             if (this.folder.exists()) {
-                if (this.allowPolling) {
-                    addPollingMonitor();
-                }
+                setupObserver();
                 this.thread.start();
                 log.info("Thread started: " + this.thread.getName());
             }
@@ -77,27 +75,51 @@ public class FileWatcher implements Runnable {
         return this;
     }
 
-    private void addPollingMonitor() {
-        this.observer = new FileAlterationObserver(this.folder);
-        EventService.addStaticListener(PollingFileModeEvent.class, event -> {
-            if (event.isPollingEnabled()) {
-                if (!Iterables.contains(this.observer.getListeners(), this.pollingListener)) {
-                    this.observer.addListener(this.pollingListener);
-                    log.info("Polling added: " + this.thread.getName());
+    private void setupObserver() {
+            this.observer = new FileAlterationObserver(this.folder);
+            EventService.addStaticListener(PollingFileModeEvent.class, event -> {
+                if (event.isPollingEnabled()) {
+                    if (!Iterables.contains(this.observer.getListeners(), this.pollingListener)) {
+                        this.observer.addListener(this.pollingListener);
+                        log.info("Polling added: " + this.thread.getName());
+                    }
+                    startPollingMode();
+                } else {
+                    try {
+                        if(this.monitor!=null) {
+                            this.monitor.stop();
+                        }
+                    } catch (final Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    this.observer.removeListener(this.pollingListener);
+                    this.monitor = null;
+                    log.info("Polling removed: " + this.thread.getName());
                 }
+            });
+            if (PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, false)) {
+                this.observer.addListener(this.pollingListener);
+                startPollingMode();
+                log.info("Polling added: " + this.thread.getName());
             } else {
-                this.observer.removeListener(this.pollingListener);
-                log.info("Polling removed: " + this.thread.getName());
+                log.info("Polling not added: " + this.thread.getName());
             }
-        });
-        if (PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, false)) {
-            this.observer.addListener(this.pollingListener);
-            log.info("Polling added: " + this.thread.getName());
-        } else {
-            log.info("Polling not added: " + this.thread.getName());
+    }
+
+    private void startPollingMode() {
+        if (this.allowPolling && PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, false)) {
+            try {
+                if (this.monitor == null) {
+                    this.monitor = new FileAlterationMonitor(INTERVAL, this.observer);
+                    log.info("FileAlterationMonitor added: " + this.thread.getName());
+                }
+                this.monitor.start();
+            }catch (final IllegalStateException ex){//already running
+                log.warn("monitor already running");
+            }catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
         }
-        this.monitor = new FileAlterationMonitor(INTERVAL, this.observer);
-        log.info("FileAlterationMonitor added: " + this.thread.getName());
     }
 
     @Override
@@ -106,9 +128,8 @@ public class FileWatcher implements Runnable {
             final Path path = Paths.get(this.folder.getAbsolutePath());
             path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
             boolean poll = true;
-
-            if (this.allowPolling) {
-                this.monitor.start();
+            if (this.allowPolling && PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, false)) {
+                startPollingMode();
             }
             while (!this.thread.isInterrupted() && poll) {
                 poll = pollEvents(watchService);
@@ -117,7 +138,7 @@ public class FileWatcher implements Runnable {
             Thread.currentThread().interrupt();
         } finally {
             try {
-                if (this.allowPolling) {
+                if (this.allowPolling && this.monitor != null) {
                     this.monitor.stop();
                     log.info("terminated FileAlterationMonitor: " + this.thread.getName());
                 }
