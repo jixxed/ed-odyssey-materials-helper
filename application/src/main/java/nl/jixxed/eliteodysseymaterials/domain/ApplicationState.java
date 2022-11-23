@@ -399,8 +399,9 @@ public class ApplicationState {
         final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
         if (!preferredCommander.isBlank()) {
             final String[] commanderVersion = preferredCommander.split(":");
-            if (this.commanders.stream().anyMatch(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(commanderVersion[1]))) {
-                return this.commanders.stream().filter(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(commanderVersion[1])).findFirst();
+            final String version = (commanderVersion.length > 1) ? commanderVersion[1] : "LIVE";
+            if (this.commanders.stream().anyMatch(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(version))) {
+                return this.commanders.stream().filter(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(version)).findFirst();
             }
         }
         final Iterator<Commander> commanderIterator = this.commanders.iterator();
