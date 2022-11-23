@@ -2355,3 +2355,5 @@ material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn c
 tab.settings.url.scheme.checking,Checking...,,,,,,
 notification.collected.wishlist.material.notification,{0} {1}/{2},,,,,,
 notification.collected.wishlist.material.notification.horizons,{0}(+{1}) {2}/{3},,,,,,
+tab.settings.ar.bartender.toggle,Bartender overlay,,,,,,
+tab.settings.ar.color.bartender,Bartender color,,,,,,

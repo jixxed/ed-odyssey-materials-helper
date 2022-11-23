@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Arrays;
+import java.util.Locale;
+
 @AllArgsConstructor
 @Getter
 public enum Asset implements OdysseyMaterial {
@@ -81,4 +84,10 @@ public enum Asset implements OdysseyMaterial {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
+    public static Asset forLocalizedName(final String name, final Locale locale) {
+        return Arrays.stream(Asset.values())
+                .filter((Asset asset) -> LocaleService.getLocalizedStringForLocale(locale, asset.getLocalizationKey()).equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(Asset.UNKNOWN);
+    }
 }

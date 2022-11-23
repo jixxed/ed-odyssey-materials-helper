@@ -116,6 +116,8 @@ public class SettingsTab extends OdysseyTab {
     private Label pollLabel;
     private Label pollExplainLabel;
     private CheckBox pollCheckBox;
+    private DestroyableLabel arBartenderLabel;
+    private DestroyableToggleSwitch arBartenderButton;
 
     public SettingsTab(final Application application) {
         this.application = application;
@@ -232,10 +234,12 @@ public class SettingsTab extends OdysseyTab {
                     this.application.getHostServices().showDocument("https://aka.ms/vs/17/release/vc_redist.x64.exe")).withText(LocaleService.getStringBinding("tab.settings.ar.link")).build();
             final HBox arSetting = createARSetting();
             final HBox arLocaleSetting = createARLocaleSetting();
+            final HBox arBartenderSetting = createARBartenderSetting();
             final HBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
             final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
-            final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
-            final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting).buildVBox();
+            final HBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
+            final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.WHITE);
+            final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting,arBartenderSetting,arColorBartenderSetting).buildVBox();
             settings.getChildren().add(ar);
         }
         //Tracking
@@ -370,6 +374,20 @@ public class SettingsTab extends OdysseyTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.arOverlayLabel, this.arOverlayButton)
+                .buildHBox();
+    }
+    private HBox createARBartenderSetting() {
+        this.arBartenderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.bartender.toggle")).build();
+        this.arBartenderButton = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+                        PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE.equals(newValue));
+                        Platform.runLater(ARService::bartenderToggle);
+                })
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true))
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.arBartenderLabel, this.arBartenderButton)
                 .buildHBox();
     }
 

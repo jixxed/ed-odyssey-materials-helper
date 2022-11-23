@@ -41,13 +41,11 @@ public class PreferenceConstants {
     public static final String AR_IRRELEVANT_COLOR = "ar.irrelevant.color";
     public static final String AR_BLUEPRINT_COLOR = "ar.blueprint.color";
     public static final String AR_WISHLIST_COLOR = "ar.wishlist.color";
+    public static final String AR_BARTENDER_COLOR = "ar.bartender.color";
     public static final String AR_LOCALE = "ar.locale";
     public static final String AR_CHAR_WHITELIST = "ar.character.whitelist";
     public static final String POLLING_FILE_MODE = "polling.file.mode";
     public static final String HORIZONS_MATERIAL_TRADER_MAX_RANGE = "horizons.material.trader.max.range";
-
-
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
-
-
+    public static final String ENABLE_BARTENDER_AR =  "ar.bartender.enabled";
 }

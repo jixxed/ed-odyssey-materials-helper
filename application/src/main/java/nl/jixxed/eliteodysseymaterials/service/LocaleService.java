@@ -9,6 +9,7 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
+import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.helper.CSVResourceBundle;
@@ -126,6 +127,18 @@ public class LocaleService {
         return Arrays.stream(Data.values())
                 .filter(Predicate.not(Data::isUnknown))
                 .map(data -> LocaleService.getLocalizedStringForLocale(locale, data.getLocalizationKey()))
+                .flatMap(dataLocName -> Arrays.stream(dataLocName.split("")))
+                .map(string -> (Locale.forLanguageTag("ru").equals(locale)) ? string : string.toUpperCase())
+                .distinct()
+                .sorted()
+                .collect(Collectors.joining());
+    }
+
+    static String getAssetCharacterForCurrentARLocale() {
+        final Locale locale = ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getLocale();
+        return Arrays.stream(Asset.values())
+                .filter(Predicate.not(Asset::isUnknown))
+                .map(asset -> LocaleService.getLocalizedStringForLocale(locale, asset.getLocalizationKey()))
                 .flatMap(dataLocName -> Arrays.stream(dataLocName.split("")))
                 .map(string -> (Locale.forLanguageTag("ru").equals(locale)) ? string : string.toUpperCase())
                 .distinct()

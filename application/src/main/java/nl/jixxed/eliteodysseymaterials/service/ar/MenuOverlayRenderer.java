@@ -108,5 +108,53 @@ public class MenuOverlayRenderer {
     }
 
 
+    public static BufferedImage renderMenu(final BartenderMenu bartenderMenu) {
+        final BufferedImage bufferedImage = new BufferedImage((int) bartenderMenu.getContentWidth(), (int) bartenderMenu.getContentHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        final Graphics2D graphics = bufferedImage.createGraphics();
+
+        graphics.setColor(PreferencesService.getPreference(PreferenceConstants.AR_BARTENDER_COLOR,Color.WHITE));
+        if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
+            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderMenu.getHeaderFontSize())));
+        } else {
+            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderMenu.getHeaderFontSize())));
+        }
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+//        final Rectangle rectangle = Boolean.TRUE.equals((bartenderMenu.getSubMenu())) ? bartenderMenu.getSubMenuEntry() : bartenderMenu.getMenuEntry();
+
+//        final String text = bartenderMenu.getSubMenu().toString();
+        final FontMetrics fmHeader = graphics.getFontMetrics();
+        graphics.drawString("FC", bartenderMenu.getFleetCarrierHeaderPosition().x+ ((135 - fmHeader.stringWidth("FC"))/2), bartenderMenu.getFleetCarrierHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+        graphics.drawString("WL", bartenderMenu.getWishlistHeaderPosition().x+ ((135 - fmHeader.stringWidth("WL"))/2), bartenderMenu.getWishlistHeaderPosition().y + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+        graphics.drawString("Move the mousecursor over the cocktail for a rescan", (int)bartenderMenu.getMenu().getX()+10, (int)bartenderMenu.getMenu().getY()+ 10 + fmHeader.getHeight() - fmHeader.getDescent() + (int) (0.05 * fmHeader.getHeight()));
+
+        if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
+            graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderMenu.getFontSize())));
+        } else {
+            graphics.setFont(new Font("Euro Caps", Font.PLAIN, (int) (bartenderMenu.getFontSize())));
+        }
+
+        final FontMetrics fm = graphics.getFontMetrics();
+        bartenderMenu.visibleAssets.forEach(asset -> {
+            if (!asset.isUnknown()) {
+//                final Rectangle rectangle = bartenderMenu.getMenuItem(asset);
+//                graphics.drawRect((int) rectangle.getX(), (int) rectangle.getY(), (int) rectangle.getWidth(), (int) rectangle.getHeight());
+                final String fcValue = StorageService.getMaterialStorage(asset).getFleetCarrierValue().toString();
+                final String wlValue = WishlistService.getAllWishlistsCount(asset).toString();
+                graphics.drawString(fcValue, bartenderMenu.getFleetCarrierTextPosition(asset).x+ ((135 - fm.stringWidth(fcValue))/2), bartenderMenu.getFleetCarrierTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
+                graphics.drawString(wlValue, bartenderMenu.getWishlistTextPosition(asset).x + ((135 - fm.stringWidth(wlValue))/2), bartenderMenu.getWishlistTextPosition(asset).y + fm.getHeight() - fm.getDescent() + (int) (0.05 * fm.getHeight()));
+            }
+        });
+        //debugging
+//         graphics.setColor(Color.RED);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSubMenuDetectionLeftPixel().x -1,  (int)bartenderMenu.getMenu().getY() + bartenderMenu.getSubMenuDetectionLeftPixel().y -1, 3,3);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSubMenuDetectionRightPixel().x -1, (int)bartenderMenu.getMenu().getY() +  bartenderMenu.getSubMenuDetectionRightPixel().y -1, 3,3);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSellMenuDetectionLeftPixel().x -1,  (int)bartenderMenu.getMenu().getY() + bartenderMenu.getSellMenuDetectionLeftPixel().y -1, 3,3);
+//        graphics.drawRect( (int)bartenderMenu.getMenu().getX() + bartenderMenu.getSellMenuDetectionRightPixel().x -1, (int)bartenderMenu.getMenu().getY() +  bartenderMenu.getSellMenuDetectionRightPixel().y -1, 3,3);
+//        graphics.drawRect((int) bartenderMenu.getMenu().getX(), (int) bartenderMenu.getMenu().getY(), (int) bartenderMenu.getMenu().getWidth() - 1, (int) bartenderMenu.getMenu().getHeight() - 1);
+        graphics.dispose();
+        return bufferedImage;
+    }
 
 }
