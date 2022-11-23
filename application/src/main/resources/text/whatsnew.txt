@@ -1,3 +1,17 @@
+Version 1.101
+-------------
+Added bartender trading overlay with fleetcarrier and wishlist information
+- Feature is still beta, so it can be disabled in settings if it causes issues
+- Added color setting for overlay text color
+Added LIVE/LEGACY tagging in preparation for U14 account split
+- Only Live accounts will have functional CAPI(Frintier API) access
+List experimental blueprints in blue in horizons material tooltips
+Show remaining amount on hover for horizons wishlist materials
+Fixed CPU usage bug for unused filepollers (CPU was running at a couple percent usage when idle)
+Removed Lori Jameson from life support - reinforced - G5
+Fixed edomh url registration check. Would falsy report Unregistered while Registered and vice versa.
+Fixed horizons material pickup overflow when you maxed out storage when picking up more than the available capacity.
+
 Version 1.100
 -------------
 Add data spawnrates to tooltips
