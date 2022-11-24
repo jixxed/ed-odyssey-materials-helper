@@ -47,6 +47,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -54,7 +55,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SettingsTab extends OdysseyTab {
     private static final String TESS4J_DIR = new File(OsConstants.TESS4J).getPath();
-
+    private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private static final String SETTINGS_LABEL_CLASS = "settings-label";
     private static final String SETTINGS_LINK_CLASS = "settings-link";
     private static final String SETTINGS_DROPDOWN_CLASS = "settings-dropdown";
@@ -142,6 +143,9 @@ public class SettingsTab extends OdysseyTab {
             this.fontsizeSelect.setStyle(fontSizeStyle);
             this.languageSelect.setStyle(fontSizeStyle);
             this.readingDirectionSelect.setStyle(fontSizeStyle);
+        });
+        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            executorService.shutdownNow();
         });
     }
 
@@ -239,7 +243,7 @@ public class SettingsTab extends OdysseyTab {
             final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
             final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
             final HBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.WHITE);
-            final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting,arBartenderSetting,arColorBartenderSetting).buildVBox();
+            final VBox ar = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arBartenderSetting, arColorBartenderSetting).buildVBox();
             settings.getChildren().add(ar);
         }
         //Tracking
@@ -297,33 +301,36 @@ public class SettingsTab extends OdysseyTab {
         this.urlSchemeLinkingButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding(RegistryService.isRegistered() ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"))
                 .withOnAction(event -> {
-                    final boolean isRegistered = RegistryService.isRegistered();
-                    if (isRegistered) {
+                    this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.url.scheme.checking"));
+                    final boolean wasRegistered = RegistryService.isRegistered();
+                    if (wasRegistered) {
                         RegistryService.unregisterApplication();
                     } else {
                         RegistryService.registerApplication();
                     }
                     this.urlSchemeLinkingButton.setDisable(true);
-                    Executors.newSingleThreadScheduledExecutor().schedule(() -> {
-                        this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.url.scheme.checking"));
+                    executorService.schedule(() -> {
                         boolean isRegisteredNow = RegistryService.isRegistered();
                         final int retries = 10;
                         int retry = 0;
-                        while(isRegistered == isRegisteredNow){
+                        while (wasRegistered == isRegisteredNow) {
                             try {
                                 isRegisteredNow = RegistryService.isRegistered();
                                 Thread.sleep(1000);
-                                if(retry++ == retries){
+                                if (retry++ == retries) {
                                     break;
                                 }
                             } catch (final InterruptedException e) {
-                                log.error("Register check error",e);
+                                log.error("Register check error", e);
                             }
                         }
-                        this.registered.set(isRegistered);
-                        this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
-                        this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(isRegistered ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
-                        this.urlSchemeLinkingButton.setDisable(false);
+                        this.registered.set(isRegisteredNow);
+                        final boolean finalIsRegisteredNow = isRegisteredNow;
+                        Platform.runLater(() -> {
+                            this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
+                            this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
+                            this.urlSchemeLinkingButton.setDisable(false);
+                        });
                     }, 1, TimeUnit.SECONDS);
                 })
                 .build();
@@ -376,12 +383,13 @@ public class SettingsTab extends OdysseyTab {
                 .withNodes(this.arOverlayLabel, this.arOverlayButton)
                 .buildHBox();
     }
+
     private HBox createARBartenderSetting() {
         this.arBartenderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.bartender.toggle")).build();
         this.arBartenderButton = ToggleSwitchBuilder.builder()
                 .withSelectedChangeListener((observable, oldValue, newValue) -> {
-                        PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE.equals(newValue));
-                        Platform.runLater(ARService::bartenderToggle);
+                    PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE.equals(newValue));
+                    Platform.runLater(ARService::bartenderToggle);
                 })
                 .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true))
                 .build();
