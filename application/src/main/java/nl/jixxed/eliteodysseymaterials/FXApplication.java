@@ -199,7 +199,7 @@ public class FXApplication extends Application {
     private void setupFleetCarrierWatcher(final File watchedFolder, final Commander commander) {
 
         if (commander != null) {
-            final String pathname = OsConstants.CONFIG_DIRECTORY + "\\" + commander.getFid().toLowerCase(Locale.ENGLISH) + "" + (commander.getGameVersion().equals(GameVersion.LEGACY) ? ".legacy" : "");
+            final String pathname = OsConstants.CONFIG_DIRECTORY + "\\" + commander.getFid().toLowerCase(Locale.ENGLISH) + (commander.getGameVersion().equals(GameVersion.LEGACY) ? ".legacy" : "");
             final File watchedFolderFleetCarrier = new File(pathname);
             if (!watchedFolderFleetCarrier.exists()) {
                 watchedFolderFleetCarrier.mkdirs();
