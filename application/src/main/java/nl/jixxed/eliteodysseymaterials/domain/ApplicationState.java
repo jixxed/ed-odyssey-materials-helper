@@ -17,10 +17,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 
 @Slf4j
 public class ApplicationState {
@@ -28,7 +28,6 @@ public class ApplicationState {
     private static PreferencesService preferencesService;//defined so app folder gets created for lockfile
     private static FileLock fileLock;
     private static ApplicationState applicationState;
-    private final Function<OdysseyWishlistBlueprint, String> wishlistRecipeMapper = recipe -> (recipe.getRecipeName()).name() + ":" + recipe.isVisible();
     private final List<OdysseyMaterial> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
     private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
@@ -296,45 +295,73 @@ public class ApplicationState {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public HorizonsWishlists getHorizonsWishlists(final Commander commander) {
-        final String wishlists = PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), "N/A");
         try {
-            if (!wishlists.equals("N/A")) {
-                return OBJECT_MAPPER.readValue(wishlists, HorizonsWishlists.class);
-            } else {
-                return OBJECT_MAPPER.readValue(createHorizonsWishlist(commander), HorizonsWishlists.class);
+            final String pathname = commander.getCommanderFolder();
+            final File commanderFolder = new File(pathname);
+            commanderFolder.mkdirs();
+            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_WISHLIST_FILE);
+            String wishlistsFileContents;
+            if (wishlistsFile.exists()) {//load from file if exists
+                wishlistsFileContents = Files.readString(wishlistsFile.toPath());
+                if (wishlistsFileContents.isEmpty()) {//create default if empty
+                    createHorizonsWishlist(commander);
+                }
+            } else {//save to file from preferences
+                final String wishlistsPreference = PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), "");
+                if (wishlistsPreference.isBlank()) {
+                    createHorizonsWishlist(commander);
+                } else {
+                    final HorizonsWishlists wishlists = OBJECT_MAPPER.readValue(wishlistsPreference, HorizonsWishlists.class);
+                    saveHorizonsWishlists(commander, wishlists);
+                }
+                PreferencesService.removePreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander));
             }
-        } catch (final JsonProcessingException e) {
-            log.error("Failed to load wishlists", e);
+            wishlistsFileContents = Files.readString(wishlistsFile.toPath());
+            return OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+        } catch (final IOException e) {
+            throw new IllegalStateException("Unable to load horizons wishlists from configuration.", e);
         }
-        throw new IllegalStateException("Unable to load horizons wishlists from configuration.");
     }
 
     public Wishlists getWishlists(final Commander commander) {
-        final String wishlists = PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), "N/A");
         try {
-            if (!wishlists.equals("N/A")) {
-                return OBJECT_MAPPER.readValue(wishlists, Wishlists.class);
-            } else {
-                return OBJECT_MAPPER.readValue(createWishlist(commander), Wishlists.class);
+            final String pathname = commander.getCommanderFolder();
+            final File commanderFolder = new File(pathname);
+            commanderFolder.mkdirs();
+            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_WISHLIST_FILE);
+            String wishlistsFileContents;
+            if (wishlistsFile.exists()) {//load from file if exists
+                wishlistsFileContents = Files.readString(wishlistsFile.toPath());
+                if (wishlistsFileContents.isEmpty()) {//create default if empty
+                    createWishlist(commander);
+                }
+            } else {//save to file from preferences
+                final String wishlistsPreference = PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), "");
+                if (wishlistsPreference.isBlank()) {
+                    createWishlist(commander);
+                } else {
+                    final Wishlists wishlists = OBJECT_MAPPER.readValue(wishlistsPreference, Wishlists.class);
+                    saveWishlists(commander, wishlists);
+                }
+                PreferencesService.removePreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander));
             }
-        } catch (final JsonProcessingException e) {
-            log.error("Failed to load wishlists", e);
+            wishlistsFileContents = Files.readString(wishlistsFile.toPath());
+            return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+        } catch (final IOException e) {
+            throw new IllegalStateException("Unable to load wishlists from configuration.", e);
         }
-        throw new IllegalStateException("Unable to load wishlists from configuration.");
     }
 
-    private String createWishlist(final Commander commander) {
+    private void createWishlist(final Commander commander) {
         final Wishlists wishlists = new Wishlists();
         final Wishlist defaultWishlist = new Wishlist();
         defaultWishlist.setName("Default wishlist");
         wishlists.addWishlist(defaultWishlist);
         saveWishlists(commander, wishlists);
-        return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), "N/A");
     }
 
     public void saveHorizonsWishlists(final Commander commander, final HorizonsWishlists wishlists) {
         try {
-            PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), OBJECT_MAPPER.writeValueAsString(wishlists));
             final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(wishlists);
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
@@ -352,7 +379,6 @@ public class ApplicationState {
 
     public void saveWishlists(final Commander commander, final Wishlists wishlists) {
         try {
-            PreferencesService.setPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), OBJECT_MAPPER.writeValueAsString(wishlists));
             final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(wishlists);
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
@@ -380,37 +406,14 @@ public class ApplicationState {
         saveHorizonsWishlists(commander, wishlists);
     }
 
-    private String createHorizonsWishlist(final Commander commander) {
+    private void createHorizonsWishlist(final Commander commander) {
 
         final HorizonsWishlists wishlists = new HorizonsWishlists();
         final HorizonsWishlist defaultWishlist = new HorizonsWishlist();
         defaultWishlist.setName("Default wishlist");
         wishlists.addWishlist(defaultWishlist);
         saveHorizonsWishlists(commander, wishlists);
-        return PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), "N/A");
     }
-
-//    private String getOldStyleWishList2(final String fid) {
-//        final String recipes = PreferencesService.getPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, "");
-//        //transfer old style to new style
-//        final Wishlists wishlists = new Wishlists();
-//        final Wishlist defaultWishlist = new Wishlist();
-//        defaultWishlist.setName("Default wishlist");
-//        defaultWishlist.setItems(parseFIDWishlist(recipes));
-//        wishlists.addWishlist(defaultWishlist);
-//        try {
-//            PreferencesService.setPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
-//            //reset old style to empty
-//            PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX, new ArrayList<>(), this.wishlistRecipeMapper);
-//        } catch (final JsonProcessingException e) {
-//            log.error("Failed to save wishlists", e);
-//        }
-//        return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
-//    }
-
-//    private List<OdysseyWishlistBlueprint> parseFIDWishlist(final String recipes) {
-//        return WishlistHelper.convertWishlist(recipes);
-//    }
 
     public Set<Commander> getCommanders() {
         return this.commanders;
@@ -526,27 +529,41 @@ public class ApplicationState {
     }
 
     public LoadoutSetList getLoadoutSetList(final Commander commander) {
-        final String loadoutSetList = PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), "N/A");
         try {
-            if (!loadoutSetList.equals("N/A")) {
-                return OBJECT_MAPPER.readValue(loadoutSetList, LoadoutSetList.class);
-            } else {
-                return OBJECT_MAPPER.readValue(createLoadoutSetList(commander), LoadoutSetList.class);
+            final String pathname = commander.getCommanderFolder();
+            final File commanderFolder = new File(pathname);
+            commanderFolder.mkdirs();
+            final File loadoutsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_LOADOUTS_FILE);
+            String loadoutFileContents;
+            if (loadoutsFile.exists()) {//load from file if exists
+                loadoutFileContents = Files.readString(loadoutsFile.toPath());
+                if (loadoutFileContents.isEmpty()) {//create default if empty
+                    createLoadoutSetList(commander);
+                }
+            } else {//save to file from preferences
+                final String loadoutSetPreference = PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), "");
+                if (loadoutSetPreference.isBlank()) {
+                    createLoadoutSetList(commander);
+                } else {
+                    final LoadoutSetList loadoutSetList = OBJECT_MAPPER.readValue(loadoutSetPreference, LoadoutSetList.class);
+                    saveLoadoutSetList(commander, loadoutSetList);
+                }
+                PreferencesService.removePreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander));
             }
-        } catch (final JsonProcessingException e) {
-            log.error("Failed to load loadouts", e);
+            loadoutFileContents = Files.readString(loadoutsFile.toPath());
+            return OBJECT_MAPPER.readValue(loadoutFileContents, LoadoutSetList.class);
+        } catch (final IOException e) {
+            throw new IllegalStateException("Unable to load loadouts from configuration.", e);
         }
-        throw new IllegalStateException("Unable to load loadouts from configuration.");
     }
 
-    private String createLoadoutSetList(final Commander commander) {
+    private void createLoadoutSetList(final Commander commander) {
         final LoadoutSetList loadoutSetList = new LoadoutSetList();
         final LoadoutSet defaultLoadoutSet = new LoadoutSet();
         defaultLoadoutSet.setName("Default Loadout");
         defaultLoadoutSet.setLoadouts(List.of());
         loadoutSetList.addLoadoutSet(defaultLoadoutSet);
         saveLoadoutSetList(commander, loadoutSetList);
-        return PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), "N/A");
     }
 
     public void selectLoadoutSet(final String activeLoadoutSetUUID, final Commander commander) {
@@ -563,7 +580,6 @@ public class ApplicationState {
 
     public void saveLoadoutSetList(final Commander commander, final LoadoutSetList loadoutSetList) {
         try {
-            PreferencesService.setPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), OBJECT_MAPPER.writeValueAsString(loadoutSetList));
             final String loadoutJson = OBJECT_MAPPER.writeValueAsString(loadoutSetList);
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);

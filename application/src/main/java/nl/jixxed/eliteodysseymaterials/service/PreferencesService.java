@@ -119,4 +119,7 @@ public class PreferencesService {
     }
 
 
+    public static void removePreference(final String key) {
+        prop.remove(key);
+    }
 }
