@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LoadGameEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
@@ -211,6 +212,8 @@ public class ApplicationState {
     @SuppressWarnings("java:S2095")
     public boolean isLocked() {
         try {
+            final File configDir = new File(OsConstants.CONFIG_DIRECTORY);
+            configDir.mkdirs();
             fileLock = new FileOutputStream(OsConstants.LOCK).getChannel().tryLock();
         } catch (final IOException exception) {
             log.error("error acquiring lock", exception);

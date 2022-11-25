@@ -10,6 +10,7 @@ Further separation of LIVE/LEGACY accounts.
 Storage of wishlists, loadouts, material favourites and pinned blueprints moved into commander specific folders/files.
 Removed some legacy V1 code
 Fixed bug when setting custom color for bartender, causing overlay to stop working
+Fixed bug for missing lockfile preventing application launch
 
 Version 1.102
 -------------
