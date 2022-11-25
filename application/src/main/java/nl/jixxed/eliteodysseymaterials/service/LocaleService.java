@@ -69,7 +69,7 @@ public class LocaleService {
     }
 
     public static StringBinding getStringBinding(final OdysseyMaterial odysseyMaterial) {
-        return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(odysseyMaterial.getLocalizationKey()), new Object[0]) + (odysseyMaterial.isIllegal() ? "   \u20E0 " : "") + (APPLICATION_STATE.isFavourite(odysseyMaterial) ? " \u2605" : ""));
+        return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(odysseyMaterial.getLocalizationKey()), new Object[0]) + (odysseyMaterial.isIllegal() ? "   \u20E0 " : "") + (FavouriteService.isFavourite(odysseyMaterial) ? " \u2605" : ""));
     }
 
     public static StringBinding getStringBinding(final Supplier<String> supplier) {

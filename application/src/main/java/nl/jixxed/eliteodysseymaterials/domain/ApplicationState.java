@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
+import nl.jixxed.eliteodysseymaterials.enums.GameMode;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAddedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
@@ -24,7 +27,6 @@ public class ApplicationState {
 
     private static FileLock fileLock;
     private static ApplicationState applicationState;
-    private final List<OdysseyMaterial> favourites = new ArrayList<>();
     private final Set<Commander> commanders = new HashSet<>();
     private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
             Map.entry(Engineer.DOMINO_GREEN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
@@ -73,12 +75,6 @@ public class ApplicationState {
     private final GameVersion gameVersion = GameVersion.UNKNOWN;
 
     private ApplicationState() {
-        final String fav = PreferencesService.getPreference("material.favourites", "");
-        Arrays.stream(fav.split(","))
-                .filter(material -> !material.isBlank())
-                .map(OdysseyMaterial::subtypeForName)
-                .forEach(this.favourites::add);
-
 
         EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken())));
         EventService.addListener(this, LoadGameEvent.class, event -> this.gameMode = event.getGameMode());
@@ -161,22 +157,6 @@ public class ApplicationState {
         EventService.publish(new EngineerEvent());
     }
 
-    public <T extends OdysseyMaterial> boolean toggleFavourite(final T material) {
-        final boolean newState;
-        if (this.favourites.contains(material)) {
-            this.favourites.remove(material);
-            newState = false;
-        } else {
-            this.favourites.add(material);
-            newState = true;
-        }
-        PreferencesService.setPreference("material.favourites", this.favourites, OdysseyMaterial::name);
-        return newState;
-    }
-
-    public boolean isFavourite(final OdysseyMaterial odysseyMaterial) {
-        return this.favourites.contains(odysseyMaterial);
-    }
 
     public Set<Commander> getCommanders() {
         return this.commanders;

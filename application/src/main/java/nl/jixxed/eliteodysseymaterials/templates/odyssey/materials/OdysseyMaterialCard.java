@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.FavouriteService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -93,8 +94,8 @@ class OdysseyMaterialCard extends VBox implements Template {
         HBox.setHgrow(region, Priority.ALWAYS);
         MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial);
 
-        this.setFavourite(this.odysseyMaterial, APPLICATION_STATE.isFavourite(this.odysseyMaterial));
-        this.setOnMouseClicked(event -> setFavourite(this.odysseyMaterial, APPLICATION_STATE.toggleFavourite(this.odysseyMaterial)));
+        this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
+        this.setOnMouseClicked(event -> setFavourite(this.odysseyMaterial, FavouriteService.toggleFavourite(this.odysseyMaterial)));
 
         this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/fleetcarrier.png").build();
         this.wishlistImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/wishlist.png").build();
@@ -139,6 +140,9 @@ class OdysseyMaterialCard extends VBox implements Template {
             Platform.runLater(() -> this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum())));
             Platform.runLater(this::updateStyle);
         });
+        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+                Platform.runLater(this::updateMaterialCardStyle)
+        );
     }
 
     private void updateStyle() {
@@ -166,7 +170,7 @@ class OdysseyMaterialCard extends VBox implements Template {
     private void updateMaterialCardStyle() {
         this.image = createMaterialImage(this.odysseyMaterial);
         this.getStyleClass().removeAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_RELEVANT_CLASS);
-        this.setFavourite(this.odysseyMaterial, APPLICATION_STATE.isFavourite(this.odysseyMaterial));
+        this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
         if (this.odysseyMaterial.isUnknown()) {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS);
         } else if (this.odysseyMaterial instanceof Asset) {

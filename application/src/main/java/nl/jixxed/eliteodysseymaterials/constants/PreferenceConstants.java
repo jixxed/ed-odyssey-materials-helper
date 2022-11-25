@@ -46,4 +46,6 @@ public class PreferenceConstants {
     public static final String HORIZONS_MATERIAL_TRADER_MAX_RANGE = "horizons.material.trader.max.range";
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
     public static final String ENABLE_BARTENDER_AR =  "ar.bartender.enabled";
+    public static final String MATERIAL_FAVOURITES =  "material.favourites";
+
 }
