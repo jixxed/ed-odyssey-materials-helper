@@ -20,7 +20,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
@@ -116,15 +116,12 @@ class HorizonsEngineerCard extends EngineerCard {
     }
 
     private boolean hasPinnedBlueprint() {
-        final String preference = PreferencesService.getPreference("blueprint.pinned." + this.engineer.name(), "");
-        return !preference.isEmpty();
+       return PinnedBlueprintService.hasPinnedBlueprint(this.engineer);
     }
 
     private List<HBox> getPinnedBlueprintLabels() {
-        final String preference = PreferencesService.getPreference("blueprint.pinned." + this.engineer.name(), "");
-        final String[] split = preference.split(":");
-        HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.forName(split[0]), HorizonsBlueprintType.forName(split[1]), HorizonsBlueprintGrade.forDigit(split[2]));
-        blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(HorizonsBlueprintName.forName(split[0]), HorizonsBlueprintType.forName(split[1]), HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)));
+        HorizonsBlueprint blueprint = PinnedBlueprintService.getPinnedBlueprint(this.engineer);
+        blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(blueprint.getBlueprintName(), blueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)));
         return getBlueprints(Map.of(blueprint.getHorizonsBlueprintName(), Map.of(blueprint.getHorizonsBlueprintType(), Map.of(HorizonsBlueprintGrade.forDigit(HorizonsBlueprintConstants.getEngineerMaxGrade(blueprint, this.engineer)), blueprint))),true);
     }
 

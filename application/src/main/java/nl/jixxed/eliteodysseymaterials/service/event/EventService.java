@@ -48,7 +48,7 @@ public class EventService {
         return addStaticListener(5, eventClass, consumer);
     }
 
-    private static <T extends Event> EventListener<T> addStaticListener(final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+    public static <T extends Event> EventListener<T> addStaticListener(final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
         final EventListener<T> listener = new EventListener<>(priority, eventClass, consumer);
         logListener(null, listener, "register static");
         final List<EventListener<? extends Event>> eventListeners = LISTENERS_MAP.getOrDefault(eventClass, new ArrayList<>());

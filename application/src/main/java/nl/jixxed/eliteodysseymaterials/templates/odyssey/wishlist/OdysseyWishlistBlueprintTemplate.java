@@ -113,7 +113,7 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     @Override
     public void remove() {
         EventService.removeListener(this.storageEventEventListener);
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.REMOVED)));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.REMOVED)));
     }
 
     private void initFadeTransition() {
@@ -174,7 +174,7 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
                 this.visibilityButton.getStyleClass().remove(VISIBLE_STYLE_CLASS);
             }
         }
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.VISIBILITY_CHANGED)));
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.VISIBILITY_CHANGED)));
     }
 
     @Override

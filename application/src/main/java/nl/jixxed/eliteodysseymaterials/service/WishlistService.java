@@ -9,9 +9,9 @@ public class WishlistService {
 
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    public static Integer getCurrentWishlistCount(final OdysseyMaterial odysseyMaterial) {
+    public static Integer getAllWishlistsCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
-                        APPLICATION_STATE.getWishlists(commander.getFid()).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
+                        APPLICATION_STATE.getWishlists(commander).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
                                         .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
                                         .mapToInt(Integer::intValue)
                                         .sum())
@@ -19,10 +19,9 @@ public class WishlistService {
                 .orElse(0);
 
     }
-
-    public static Integer getAllWishlistsCount(final OdysseyMaterial odysseyMaterial) {
+    public static Integer getCurrentWishlistCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
-                APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
+                APPLICATION_STATE.getWishlists(commander).getSelectedWishlist().getItems().stream()
                         .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
                         .mapToInt(Integer::intValue)
                         .sum()
@@ -32,7 +31,7 @@ public class WishlistService {
 
     public static Integer getCurrentWishlistCount(final HorizonsMaterial horizonsMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
-                APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
+                APPLICATION_STATE.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream()
                         .mapToInt(horizonsWishlistBlueprint -> {
                             if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
                                 return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().mapToInt(entry -> {
@@ -50,7 +49,7 @@ public class WishlistService {
 
     public static Integer getAllWishlistsCount(final HorizonsMaterial horizonsMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
-                APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
+                APPLICATION_STATE.getHorizonsWishlists(commander).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
                         .mapToInt(horizonsWishlistBlueprint -> {
                             if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
                                 return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().mapToInt(entry -> {
@@ -88,7 +87,7 @@ public class WishlistService {
 
     public static boolean isMaterialOnWishlist(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getWishlists().stream()
+                .map(commander -> APPLICATION_STATE.getWishlists(commander).getWishlists().stream()
                         .anyMatch(wishlist -> wishlist.getItems().stream()
                                 .anyMatch(wishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(wishlistBlueprint.getRecipeName()).hasIngredient(odysseyMaterial))))
                 .orElse(false);
@@ -97,7 +96,7 @@ public class WishlistService {
 
     public static boolean isMaterialOnWishlist(final HorizonsMaterial horizonsMaterial) {
         return APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getWishlists().stream()
+                .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander).getWishlists().stream()
                         .anyMatch(wishlist -> wishlist.getItems().stream()
                                 .anyMatch(wishlistBlueprint -> {
                                     if (wishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules

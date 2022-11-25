@@ -44,7 +44,7 @@ public class HorizonsWishlist {
     public List<WishlistBlueprint<HorizonsBlueprintName>> getItems() {
         if (this == HorizonsWishlist.ALL) {
             return APPLICATION_STATE.getPreferredCommander()
-                    .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander.getFid()).getAllWishlists().stream()
+                    .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander).getAllWishlists().stream()
                             .filter(wishlist -> wishlist != HorizonsWishlist.ALL)
                             .flatMap(wishlist -> wishlist.getItems().stream())
                             .toList())

@@ -33,7 +33,6 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
@@ -105,7 +104,7 @@ public class CAPIService {
                                     this.timer.cancel();
                                 }
                                 if(commander.getGameVersion().equals(GameVersion.LIVE)) {
-                                    final String pathname = getCommanderFolder(commander);
+                                    final String pathname = commander.getCommanderFolder();
                                     final File fleetCarrierFileDir = new File(pathname);
                                     fleetCarrierFileDir.mkdirs();
                                     final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
@@ -130,10 +129,6 @@ public class CAPIService {
             }
             this.executor.shutdownNow();
         });
-    }
-
-    private static String getCommanderFolder(final Commander commander) {
-        return OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + commander.getFid().toLowerCase(Locale.ENGLISH) + (commander.getGameVersion().equals(GameVersion.LEGACY) ? ".legacy" : "");
     }
 
     private static long calculateDelay(final File fleetCarrierFile) {
@@ -200,7 +195,7 @@ public class CAPIService {
                         } else if (response.getCode() == 200) {
                             log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
                             // write response to file
-                            final String pathname = getCommanderFolder(commander);
+                            final String pathname = commander.getCommanderFolder();
                             final File fleetCarrierFileDir = new File(pathname);
                             fleetCarrierFileDir.mkdirs();
                             final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
@@ -248,7 +243,7 @@ public class CAPIService {
     private boolean loadToken(final Commander commander) {
         this.oAuth2AccessToken = null;
         if (commander != null && commander.getGameVersion().equals(GameVersion.LIVE)) {
-            final String pathname = getCommanderFolder(commander);
+            final String pathname = commander.getCommanderFolder();
             final File capiTokenDir = new File(pathname);
             capiTokenDir.mkdirs();
             final File capiTokenFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.CAPI_FILE);
@@ -278,7 +273,7 @@ public class CAPIService {
             try {
                 final String tokenJson = OBJECT_MAPPER.writeValueAsString(accessToken);
                 log.debug(tokenJson);
-                final String pathname = getCommanderFolder(commander);
+                final String pathname = commander.getCommanderFolder();
                 final File capiTokenDir = new File(pathname);
                 capiTokenDir.mkdirs();
                 final File capiTokenFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.CAPI_FILE);
@@ -295,7 +290,7 @@ public class CAPIService {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             try {
                 Platform.runLater(() -> this.active.set(false));
-                final String pathname = getCommanderFolder(commander);
+                final String pathname = commander.getCommanderFolder();
                 Files.delete(Path.of(pathname, AppConstants.CAPI_FILE));
             } catch (final IOException e) {
                 log.error("Failed to delete CAPI token file", e);

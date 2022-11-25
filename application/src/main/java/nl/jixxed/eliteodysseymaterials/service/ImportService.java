@@ -92,10 +92,10 @@ public class ImportService {
                 wishlist.setItems(wishlistBlueprintList);
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
-                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander.getFid());
+                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander);
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
-                APPLICATION_STATE.saveHorizonsWishlists(commander.getFid(), wishlists);
+                APPLICATION_STATE.saveHorizonsWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST, name);
             } else {
                 throw new EdsyDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
@@ -146,10 +146,10 @@ public class ImportService {
                 wishlist.setItems(wishlistBlueprintList);
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
-                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander.getFid());
+                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander);
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
-                APPLICATION_STATE.saveHorizonsWishlists(commander.getFid(), wishlists);
+                APPLICATION_STATE.saveHorizonsWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST, name);
             } else {
                 throw new CoriolisDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
@@ -187,13 +187,13 @@ public class ImportService {
             final ClipboardLoadout clipboardLoadout = OBJECT_MAPPER.readValue(decoded, ClipboardLoadout.class);
             if (Objects.equals(clipboardLoadout.getVersion(), 1)) {
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
-                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander);
                 final LoadoutSet loadoutSet = clipboardLoadout.getLoadoutSet();
                 final String loadoutSetName = loadoutSet.getName() + " - Imported";
                 loadoutSet.setName(loadoutSetName);
                 loadoutSetList.addLoadoutSet(loadoutSet);
                 loadoutSetList.setSelectedLoadoutSetUUID(loadoutSet.getUuid());
-                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                APPLICATION_STATE.saveLoadoutSetList(commander, loadoutSetList);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_LOADOUT, loadoutSetName);
 
             } else {
@@ -221,10 +221,10 @@ public class ImportService {
                 wishlist.setItems(clipboardWishlist.getWishlist().getItems());
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
-                final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+                final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander);
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
-                APPLICATION_STATE.saveWishlists(commander.getFid(), wishlists);
+                APPLICATION_STATE.saveWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST, name);
             } else {
                 throw new OdysseyWishlistDeeplinkException("The wishlist could not be imported because the link was made with a newer version of the app.");
@@ -251,10 +251,10 @@ public class ImportService {
                 wishlist.setItems(clipboardWishlist.getWishlist().getItems());
 
                 final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
-                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander.getFid());
+                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander);
                 wishlists.addWishlist(wishlist);
                 wishlists.setSelectedWishlistUUID(wishlist.getUuid());
-                APPLICATION_STATE.saveHorizonsWishlists(commander.getFid(), wishlists);
+                APPLICATION_STATE.saveHorizonsWishlists(commander, wishlists);
                 return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST, name);
             } else {
                 throw new OdysseyWishlistDeeplinkException("The horizons wishlist could not be imported because the link was made with a newer version of the app.");

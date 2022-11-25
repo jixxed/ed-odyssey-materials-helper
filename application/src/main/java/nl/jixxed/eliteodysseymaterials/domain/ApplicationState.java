@@ -5,20 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.constants.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.helper.WishlistHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -91,11 +89,11 @@ public class ApplicationState {
                         wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
                             switch (wishlistEvent.getAction()) {
                                 case ADDED ->
-                                        addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe.getRecipeName());
+                                        addToWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe.getRecipeName());
                                 case REMOVED ->
-                                        removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                                        removeFromWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
                                 case VISIBILITY_CHANGED ->
-                                        changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), wishlistRecipe);
+                                        changeVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), wishlistRecipe);
                                 case MODIFY -> {
                                 }
                             }
@@ -106,13 +104,13 @@ public class ApplicationState {
                         wishlistEvent.getWishlistBlueprints().forEach(horizonsWishlistBlueprint -> {
                             switch (wishlistEvent.getAction()) {
                                 case ADDED ->
-                                        addToHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                        addToHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), horizonsWishlistBlueprint);
                                 case REMOVED ->
-                                        removeFromHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                        removeFromHorizonsWishList(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), horizonsWishlistBlueprint);
                                 case VISIBILITY_CHANGED ->
-                                        changeHorizonsVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                        changeHorizonsVisibility(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), horizonsWishlistBlueprint);
                                 case MODIFY ->
-                                        modifyHorizonsBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getFid(), horizonsWishlistBlueprint);
+                                        modifyHorizonsBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), horizonsWishlistBlueprint);
                             }
                         })));
 
@@ -214,61 +212,61 @@ public class ApplicationState {
         return this.favourites.contains(odysseyMaterial);
     }
 
-    private void addToWishList(final String wishlistUUID, final String fid, final BlueprintName recipe) {
-        final Wishlists wishlists = getWishlists(fid);
+    private void addToWishList(final String wishlistUUID, final Commander commander, final BlueprintName recipe) {
+        final Wishlists wishlists = getWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
         wishlist.getItems().add(new OdysseyWishlistBlueprint((OdysseyBlueprintName) recipe, true));
-        saveWishlists(fid, wishlists);
+        saveWishlists(commander, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
 
-    private void addToHorizonsWishList(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint recipe) {
-        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+    private void addToHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint recipe) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
         wishlist.getItems().add(recipe);
-        saveHorizonsWishlists(fid, wishlists);
+        saveHorizonsWishlists(commander, wishlists);
         EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
     }
 
-    private void removeFromWishList(final String wishlistUUID, final String fid, final OdysseyWishlistBlueprint recipe) {
-        final Wishlists wishlists = getWishlists(fid);
+    private void removeFromWishList(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint recipe) {
+        final Wishlists wishlists = getWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
         final Optional<OdysseyWishlistBlueprint> found = wishlist.getItems().stream().filter(wishlistRecipe -> wishlistRecipe.equals(recipe)).findFirst();
         found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
-        saveWishlists(fid, wishlists);
+        saveWishlists(commander, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
 
-    private void removeFromHorizonsWishList(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint recipe) {
-        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+    private void removeFromHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint recipe) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
         final Optional<WishlistBlueprint<HorizonsBlueprintName>> found = wishlist.getItems().stream().filter(wishlistRecipe -> ((HorizonsWishlistBlueprint) wishlistRecipe).getUuid().equals(recipe.getUuid())).findFirst();
         found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
-        saveHorizonsWishlists(fid, wishlists);
+        saveHorizonsWishlists(commander, wishlists);
         EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
     }
 
-    private void changeVisibility(final String wishlistUUID, final String fid, final OdysseyWishlistBlueprint wishlistBlueprint) {
-        final Wishlists wishlists = getWishlists(fid);
+    private void changeVisibility(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint wishlistBlueprint) {
+        final Wishlists wishlists = getWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
         final Optional<OdysseyWishlistBlueprint> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistBlueprint.getRecipeName()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).findFirst();
         existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
-        saveWishlists(fid, wishlists);
+        saveWishlists(commander, wishlists);
         EventService.publish(new WishlistChangedEvent(wishlistUUID));
     }
 
-    private void changeHorizonsVisibility(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint wishlistBlueprint) {
-        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+    private void changeHorizonsVisibility(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint wishlistBlueprint) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
         final Optional<WishlistBlueprint<HorizonsBlueprintName>> existingRecipe = wishlist.getItems().stream().filter(recipe -> wishlistBlueprint.getUuid().equals(((HorizonsWishlistBlueprint) recipe).getUuid()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).
                 findFirst();
         existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
-        saveHorizonsWishlists(fid, wishlists);
+        saveHorizonsWishlists(commander, wishlists);
         EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
     }
 
-    private void modifyHorizonsBlueprint(final String wishlistUUID, final String fid, final HorizonsWishlistBlueprint wishlistBlueprint) {
-        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+    private void modifyHorizonsBlueprint(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint wishlistBlueprint) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
         final Optional<HorizonsWishlistBlueprint> existingRecipe = wishlist.getItems().stream()
                 .map(HorizonsWishlistBlueprint.class::cast)
@@ -279,31 +277,31 @@ public class ApplicationState {
                 moduleWishlistBlueprint.setBlueprintGradeRolls(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getBlueprintGradeRolls());
             }
         });
-        saveHorizonsWishlists(fid, wishlists);
+        saveHorizonsWishlists(commander, wishlists);
         EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
     }
 
-    public void selectHorizonsWishlist(final String wishlistUUID, final String fid) {
-        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+    public void selectHorizonsWishlist(final String wishlistUUID, final Commander commander) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         wishlists.setSelectedWishlistUUID(wishlistUUID);
-        saveHorizonsWishlists(fid, wishlists);
+        saveHorizonsWishlists(commander, wishlists);
     }
 
-    public void selectWishlist(final String wishlistUUID, final String fid) {
-        final Wishlists wishlists = getWishlists(fid);
+    public void selectWishlist(final String wishlistUUID, final Commander commander) {
+        final Wishlists wishlists = getWishlists(commander);
         wishlists.setSelectedWishlistUUID(wishlistUUID);
-        saveWishlists(fid, wishlists);
+        saveWishlists(commander, wishlists);
     }
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public HorizonsWishlists getHorizonsWishlists(final String fid) {
-        final String wishlists = PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, "N/A");
+    public HorizonsWishlists getHorizonsWishlists(final Commander commander) {
+        final String wishlists = PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), "N/A");
         try {
             if (!wishlists.equals("N/A")) {
                 return OBJECT_MAPPER.readValue(wishlists, HorizonsWishlists.class);
             } else {
-                return OBJECT_MAPPER.readValue(createHorizonsWishlist(fid), HorizonsWishlists.class);
+                return OBJECT_MAPPER.readValue(createHorizonsWishlist(commander), HorizonsWishlists.class);
             }
         } catch (final JsonProcessingException e) {
             log.error("Failed to load wishlists", e);
@@ -311,15 +309,13 @@ public class ApplicationState {
         throw new IllegalStateException("Unable to load horizons wishlists from configuration.");
     }
 
-    public Wishlists getWishlists(final String fid) {
-        final String wishlists = PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
+    public Wishlists getWishlists(final Commander commander) {
+        final String wishlists = PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), "N/A");
         try {
-            if (wishlists.equals("")) {
-                return OBJECT_MAPPER.readValue(getOldStyleWishList2(fid), Wishlists.class);
-            } else if (!wishlists.equals("N/A")) {
+            if (!wishlists.equals("N/A")) {
                 return OBJECT_MAPPER.readValue(wishlists, Wishlists.class);
             } else {
-                return OBJECT_MAPPER.readValue(getOldStyleWishList2(fid), Wishlists.class);
+                return OBJECT_MAPPER.readValue(createWishlist(commander), Wishlists.class);
             }
         } catch (final JsonProcessingException e) {
             log.error("Failed to load wishlists", e);
@@ -327,69 +323,94 @@ public class ApplicationState {
         throw new IllegalStateException("Unable to load wishlists from configuration.");
     }
 
-    public void saveHorizonsWishlists(final String fid, final HorizonsWishlists wishlists) {
+    private String createWishlist(final Commander commander) {
+        final Wishlists wishlists = new Wishlists();
+        final Wishlist defaultWishlist = new Wishlist();
+        defaultWishlist.setName("Default wishlist");
+        wishlists.addWishlist(defaultWishlist);
+        saveWishlists(commander, wishlists);
+        return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), "N/A");
+    }
+
+    public void saveHorizonsWishlists(final Commander commander, final HorizonsWishlists wishlists) {
         try {
-            PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
+            PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), OBJECT_MAPPER.writeValueAsString(wishlists));
+            final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(wishlists);
+            final String pathname = commander.getCommanderFolder();
+            final File commanderFolder = new File(pathname);
+            commanderFolder.mkdirs();
+            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_WISHLIST_FILE);
+            try (final FileOutputStream fileOutputStream = new FileOutputStream(wishlistsFile)) {
+                fileOutputStream.write(wishlistsJson.getBytes(StandardCharsets.UTF_8));
+            }
         } catch (final JsonProcessingException e) {
             log.error("Failed to save horizons wishlists", e);
+        } catch (final IOException e) {
+            log.error("Failed to save horizons wishlists to wishlists file", e);
         }
     }
 
-    public void saveWishlists(final String fid, final Wishlists wishlists) {
+    public void saveWishlists(final Commander commander, final Wishlists wishlists) {
         try {
-            PreferencesService.setPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
+            PreferencesService.setPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), OBJECT_MAPPER.writeValueAsString(wishlists));
+            final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(wishlists);
+            final String pathname = commander.getCommanderFolder();
+            final File commanderFolder = new File(pathname);
+            commanderFolder.mkdirs();
+            final File wishlistsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_WISHLIST_FILE);
+            try (final FileOutputStream fileOutputStream = new FileOutputStream(wishlistsFile)) {
+                fileOutputStream.write(wishlistsJson.getBytes(StandardCharsets.UTF_8));
+            }
         } catch (final JsonProcessingException e) {
-            log.error("Failed to save wishlists", e);
+            log.error("Failed to save odyssey wishlists", e);
+        } catch (final IOException e) {
+            log.error("Failed to save odyssey wishlists to wishlists file", e);
         }
     }
 
-    public void deleteWishlist(final String activeWishlistUUID, final String fid) {
-        final Wishlists wishlists = getWishlists(fid);
+    public void deleteWishlist(final String activeWishlistUUID, final Commander commander) {
+        final Wishlists wishlists = getWishlists(commander);
         wishlists.delete(activeWishlistUUID);
-        saveWishlists(fid, wishlists);
+        saveWishlists(commander, wishlists);
     }
 
-    public void deleteHorizonsWishlist(final String activeWishlistUUID, final String fid) {
-        final HorizonsWishlists wishlists = getHorizonsWishlists(fid);
+    public void deleteHorizonsWishlist(final String activeWishlistUUID, final Commander commander) {
+        final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         wishlists.delete(activeWishlistUUID);
-        saveHorizonsWishlists(fid, wishlists);
+        saveHorizonsWishlists(commander, wishlists);
     }
 
-    private String createHorizonsWishlist(final String fid) {
+    private String createHorizonsWishlist(final Commander commander) {
 
         final HorizonsWishlists wishlists = new HorizonsWishlists();
         final HorizonsWishlist defaultWishlist = new HorizonsWishlist();
         defaultWishlist.setName("Default wishlist");
         wishlists.addWishlist(defaultWishlist);
-        try {
-            PreferencesService.setPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
-        } catch (final JsonProcessingException e) {
-            log.error("Failed to save horizons wishlists", e);
-        }
-        return PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + fid, "N/A");
+        saveHorizonsWishlists(commander, wishlists);
+        return PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), "N/A");
     }
 
-    private String getOldStyleWishList2(final String fid) {
-        final String recipes = PreferencesService.getPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, "");
-        //transfer old style to new style
-        final Wishlists wishlists = new Wishlists();
-        final Wishlist defaultWishlist = new Wishlist();
-        defaultWishlist.setName("Default wishlist");
-        defaultWishlist.setItems(parseFIDWishlist(recipes));
-        wishlists.addWishlist(defaultWishlist);
-        try {
-            PreferencesService.setPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
-            //reset old style to empty
-            PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX, new ArrayList<>(), this.wishlistRecipeMapper);
-        } catch (final JsonProcessingException e) {
-            log.error("Failed to save wishlists", e);
-        }
-        return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
-    }
+//    private String getOldStyleWishList2(final String fid) {
+//        final String recipes = PreferencesService.getPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX + fid, "");
+//        //transfer old style to new style
+//        final Wishlists wishlists = new Wishlists();
+//        final Wishlist defaultWishlist = new Wishlist();
+//        defaultWishlist.setName("Default wishlist");
+//        defaultWishlist.setItems(parseFIDWishlist(recipes));
+//        wishlists.addWishlist(defaultWishlist);
+//        try {
+//            PreferencesService.setPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(wishlists));
+//            //reset old style to empty
+//            PreferencesService.setPreference(PreferenceConstants.WISHLIST_RECIPES_PREFIX, new ArrayList<>(), this.wishlistRecipeMapper);
+//        } catch (final JsonProcessingException e) {
+//            log.error("Failed to save wishlists", e);
+//        }
+//        return PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + fid, "N/A");
+//    }
 
-    private List<OdysseyWishlistBlueprint> parseFIDWishlist(final String recipes) {
-        return WishlistHelper.convertWishlist(recipes);
-    }
+//    private List<OdysseyWishlistBlueprint> parseFIDWishlist(final String recipes) {
+//        return WishlistHelper.convertWishlist(recipes);
+//    }
 
     public Set<Commander> getCommanders() {
         return this.commanders;
@@ -398,28 +419,36 @@ public class ApplicationState {
     public Optional<Commander> getPreferredCommander() {
         final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
         if (!preferredCommander.isBlank()) {
-            final String[] commanderVersion = preferredCommander.split(":");
-            final String version = (commanderVersion.length > 1) ? commanderVersion[1] : "LIVE";
-            if (this.commanders.stream().anyMatch(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(version))) {
-                return this.commanders.stream().filter(commander -> commander.getName().equals(commanderVersion[0]) && commander.getGameVersion().name().equals(version)).findFirst();
+            final String[] commanderFidVersion = preferredCommander.split(":");
+            final String name = commanderFidVersion[0];
+            final String version = (commanderFidVersion.length > 2) ? commanderFidVersion[2] : "LIVE";
+            final String fid = (commanderFidVersion.length > 2) ? commanderFidVersion[1] : "0";
+            if (this.commanders.stream().anyMatch(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().name().equals(version))) {
+                return this.commanders.stream().filter(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().name().equals(version)).findFirst();
             }
         }
         final Iterator<Commander> commanderIterator = this.commanders.iterator();
         if (commanderIterator.hasNext()) {
             final Commander commander = commanderIterator.next();
-            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" + commander.getGameVersion().name());
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" + commander.getFid() + ":" + commander.getGameVersion().name());
             return Optional.of(commander);
         }
         return Optional.empty();
     }
 
     public void addCommander(final String name, final String fid, final GameVersion gameVersion) {
-        if (this.commanders.stream().noneMatch(commander -> commander.getName().equals(name) && commander.getGameVersion().equals(gameVersion))) {
+        if (this.commanders.stream().noneMatch(commander -> commander.getName().equals(name) && commander.getFid().equals(fid) && commander.getGameVersion().equals(gameVersion))) {
             final Commander commander = new Commander(name, fid, gameVersion);
+            final boolean existingName = this.commanders.stream().anyMatch(commander1 -> commander1.getName().equals(name) && commander1.getGameVersion().equals(gameVersion));
             this.commanders.add(commander);
+            if (existingName) {
+                this.commanders.stream()
+                        .filter(commander1 -> commander1.getName().equals(name) && commander1.getGameVersion().equals(gameVersion))
+                        .forEach(commander1 -> commander1.setDuplicateName(true));
+            }
             final String preferredCommander = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
             if (preferredCommander.isBlank()) {
-                PreferencesService.setPreference(PreferenceConstants.COMMANDER, name + ":" + gameVersion.name());
+                PreferencesService.setPreference(PreferenceConstants.COMMANDER, name + ":" + fid + ":" + gameVersion.name());
             }
             EventService.publish(new CommanderAddedEvent(commander));
         }
@@ -496,13 +525,13 @@ public class ApplicationState {
         return getPreferredCommander().map(commander -> PreferencesService.getPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), "")).orElse("");
     }
 
-    public LoadoutSetList getLoadoutSetList(final String fid) {
-        final String loadoutSetList = PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + fid, "N/A");
+    public LoadoutSetList getLoadoutSetList(final Commander commander) {
+        final String loadoutSetList = PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), "N/A");
         try {
             if (!loadoutSetList.equals("N/A")) {
                 return OBJECT_MAPPER.readValue(loadoutSetList, LoadoutSetList.class);
             } else {
-                return OBJECT_MAPPER.readValue(createLoadoutSetList(fid), LoadoutSetList.class);
+                return OBJECT_MAPPER.readValue(createLoadoutSetList(commander), LoadoutSetList.class);
             }
         } catch (final JsonProcessingException e) {
             log.error("Failed to load loadouts", e);
@@ -510,41 +539,51 @@ public class ApplicationState {
         throw new IllegalStateException("Unable to load loadouts from configuration.");
     }
 
-    private String createLoadoutSetList(final String fid) {
+    private String createLoadoutSetList(final Commander commander) {
         final LoadoutSetList loadoutSetList = new LoadoutSetList();
         final LoadoutSet defaultLoadoutSet = new LoadoutSet();
         defaultLoadoutSet.setName("Default Loadout");
         defaultLoadoutSet.setLoadouts(List.of());
         loadoutSetList.addLoadoutSet(defaultLoadoutSet);
-        saveLoadoutSetList(fid, loadoutSetList);
-        return PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + fid, "N/A");
+        saveLoadoutSetList(commander, loadoutSetList);
+        return PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), "N/A");
     }
 
-    public void selectLoadoutSet(final String activeLoadoutSetUUID, final String fid) {
-        final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
+    public void selectLoadoutSet(final String activeLoadoutSetUUID, final Commander commander) {
+        final LoadoutSetList loadoutSetList = getLoadoutSetList(commander);
         loadoutSetList.setSelectedLoadoutSetUUID(activeLoadoutSetUUID);
-        saveLoadoutSetList(fid, loadoutSetList);
+        saveLoadoutSetList(commander, loadoutSetList);
     }
 
-    public void deleteLoadoutSet(final String activeLoadoutSetUUID, final String fid) {
-        final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
+    public void deleteLoadoutSet(final String activeLoadoutSetUUID, final Commander commander) {
+        final LoadoutSetList loadoutSetList = getLoadoutSetList(commander);
         loadoutSetList.delete(activeLoadoutSetUUID);
-        saveLoadoutSetList(fid, loadoutSetList);
+        saveLoadoutSetList(commander, loadoutSetList);
     }
 
-    public void saveLoadoutSetList(final String fid, final LoadoutSetList loadoutSetList) {
+    public void saveLoadoutSetList(final Commander commander, final LoadoutSetList loadoutSetList) {
         try {
-            PreferencesService.setPreference(PreferenceConstants.LOADOUTS_PREFIX + fid, OBJECT_MAPPER.writeValueAsString(loadoutSetList));
+            PreferencesService.setPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), OBJECT_MAPPER.writeValueAsString(loadoutSetList));
+            final String loadoutJson = OBJECT_MAPPER.writeValueAsString(loadoutSetList);
+            final String pathname = commander.getCommanderFolder();
+            final File commanderFolder = new File(pathname);
+            commanderFolder.mkdirs();
+            final File loadoutsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.ODYSSEY_LOADOUTS_FILE);
+            try (final FileOutputStream fileOutputStream = new FileOutputStream(loadoutsFile)) {
+                fileOutputStream.write(loadoutJson.getBytes(StandardCharsets.UTF_8));
+            }
         } catch (final JsonProcessingException e) {
             log.error("Failed to save loadouts", e);
+        } catch (final IOException e) {
+            log.error("Failed to save loadouts to loadouts file", e);
         }
     }
 
-    public void saveLoadoutSet(final String fid, final LoadoutSet loadoutSet) {
+    public void saveLoadoutSet(final Commander commander, final LoadoutSet loadoutSet) {
         if (!loadoutSet.equals(LoadoutSet.CURRENT)) {
-            final LoadoutSetList loadoutSetList = getLoadoutSetList(fid);
+            final LoadoutSetList loadoutSetList = getLoadoutSetList(commander);
             loadoutSetList.updateLoadoutSet(loadoutSet);
-            saveLoadoutSetList(fid, loadoutSetList);
+            saveLoadoutSetList(commander, loadoutSetList);
         }
     }
 
@@ -568,4 +607,7 @@ public class ApplicationState {
         }
     }
 
+    private String getFID(final Commander commander) {
+        return (commander.getGameVersion().equals(GameVersion.LEGACY)) ? commander.getFid() + ".legacy" : commander.getFid();
+    }
 }

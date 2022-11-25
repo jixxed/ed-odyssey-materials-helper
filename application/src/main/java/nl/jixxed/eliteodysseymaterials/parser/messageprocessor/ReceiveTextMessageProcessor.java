@@ -41,7 +41,7 @@ public class ReceiveTextMessageProcessor implements MessageProcessor {
                         final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                         final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
                         if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Wishlist - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + getWishlistCount(odysseyMaterial);
+                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Wishlist - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getAllWishlistsCount(odysseyMaterial);
                             NotificationService.showInformation(NotificationType.WISHLIST_POINT, "Material information", text);
                         } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
                             text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Engineer/Blueprint - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
@@ -58,12 +58,4 @@ public class ReceiveTextMessageProcessor implements MessageProcessor {
         });
     }
 
-    private static Integer getWishlistCount(final OdysseyMaterial odysseyMaterial) {
-        return ApplicationState.getInstance().getPreferredCommander().map(commander ->
-                ApplicationState.getInstance().getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream()
-                        .map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(odysseyMaterial))
-                        .mapToInt(Integer::intValue)
-                        .sum()
-        ).orElse(0);
-    }
 }

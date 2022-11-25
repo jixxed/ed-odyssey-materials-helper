@@ -290,12 +290,12 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
 
     private void saveLoadoutSet() {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander ->
-                APPLICATION_STATE.saveLoadoutSet(commander.getFid(), this.loadoutSet)
+                APPLICATION_STATE.saveLoadoutSet(commander, this.loadoutSet)
         );
     }
 
     private Wishlists loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander);
         if (this.addToWishlist != null) {
             this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
             this.addToWishlist.getItems().clear();
@@ -306,7 +306,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
                     if (wishlistBlueprints.isEmpty()) {
                         NotificationService.showWarning(NotificationType.ERROR, "Can't create wishlist", "No items to add");
                     } else {
-                        EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                        EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                     }
                 });
                 menuItem.setText(wishlist.getName());
@@ -319,11 +319,11 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
                 if (wishlistBlueprints.isEmpty()) {
                     NotificationService.showWarning(NotificationType.ERROR, "Can't create wishlist", "No items to add");
                 } else {
-                    final Wishlists odysseyWishlists = ApplicationState.getInstance().getWishlists(commander.getFid());
+                    final Wishlists odysseyWishlists = ApplicationState.getInstance().getWishlists(commander);
                     final Wishlist newWishlist = odysseyWishlists.createWishlist(this.loadoutSet.getName());
-                    ApplicationState.getInstance().saveWishlists(commander.getFid(), odysseyWishlists);
+                    ApplicationState.getInstance().saveWishlists(commander, odysseyWishlists);
                     EventService.publish(new WishlistCreatedEvent());//refreshes wishlist dropdown
-                    EventService.publish(new WishlistBlueprintEvent(commander.getFid(), newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                    EventService.publish(new WishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                 }
             });
             createNew.textProperty().bind(LocaleService.getStringBinding("loadout.create.new.wishlist"));

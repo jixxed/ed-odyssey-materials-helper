@@ -72,7 +72,7 @@ class BottomBar extends HBox {
                 .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders()))
                 .withValueChangeListener((obs, oldValue, newValue) -> Platform.runLater(() -> {
                     if (newValue != null) {
-                        PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue.getName() + ":" + newValue.getGameVersion().name());
+                        PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue.getName() + ":" + newValue.getFid() + ":" + newValue.getGameVersion().name());
                     }
                     if (oldValue != null && newValue != null) {
                         EventService.publish(new CommanderSelectedEvent(newValue));
@@ -107,7 +107,7 @@ class BottomBar extends HBox {
         if (!this.commanderSelect.getItems().isEmpty() && this.commanderSelect.getSelectionModel().getSelectedIndex() == -1) {
             final Commander commander = this.commanderSelect.getItems().get(0);
             this.commanderSelect.getSelectionModel().select(commander);
-            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" + commander.getGameVersion().name());
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" +commander.getFid() + ":" + commander.getGameVersion().name());
             EventService.publish(new CommanderSelectedEvent(commander));
         }
     }
@@ -123,9 +123,11 @@ class BottomBar extends HBox {
     }
 
     private static boolean isPreferredCommander(final Commander addedCommander, final String preferredName) {
-        final String[] commanderVersion = preferredName.split(":");
-        final String version = (commanderVersion.length > 1) ? commanderVersion[1] : "LIVE";
-        return addedCommander.getName().equals(commanderVersion[0]) && addedCommander.getGameVersion().name().equals(version);
+        final String[] commanderFidVersion = preferredName.split(":");
+        final String name = commanderFidVersion[0];
+        final String version = (commanderFidVersion.length > 2) ? commanderFidVersion[2] : "LIVE";
+        final String fid = (commanderFidVersion.length > 2) ? commanderFidVersion[1] : "0";
+        return addedCommander.getName().equals(name) && addedCommander.getFid().equals(fid) && addedCommander.getGameVersion().name().equals(version);
     }
 
     private void handleLoadGame(final LoadGameEvent loadGameEvent) {

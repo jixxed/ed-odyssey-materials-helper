@@ -195,11 +195,11 @@ class OdysseyBlueprintContent extends VBox {
     }
 
     private Wishlists loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander);
         this.addToWishlist.getItems().clear();
         final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().filter(wishlist -> wishlist != Wishlist.ALL).sorted(Comparator.comparing(Wishlist::getName)).map(wishlist -> {
             final MenuItem menuItem = new MenuItem();
-            menuItem.setOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint((OdysseyBlueprintName) this.blueprint.getBlueprintName(), true)), Action.ADDED)));
+            menuItem.setOnAction(event -> EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(new OdysseyWishlistBlueprint((OdysseyBlueprintName) this.blueprint.getBlueprintName(), true)), Action.ADDED)));
             menuItem.setText(wishlist.getName());
             return menuItem;
         }).toList();
@@ -275,7 +275,7 @@ class OdysseyBlueprintContent extends VBox {
         });
         EventService.addListener(this, WishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
-                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlists(commander.getFid()).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName())).count()).orElse(0L);
+                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName())).count()).orElse(0L);
                 if (count > 0L) {
                     this.countLabel.textProperty().bind(LocaleService.getStringBinding("blueprint.on.wishlist", count));
                 } else {

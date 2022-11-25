@@ -86,8 +86,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
 
     private void refreshContent() {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final String fid = commander.getFid();
-            final LoadoutSet selectedLoadoutSet = APPLICATION_STATE.getLoadoutSetList(fid).getSelectedLoadoutSet();
+            final LoadoutSet selectedLoadoutSet = APPLICATION_STATE.getLoadoutSetList(commander).getSelectedLoadoutSet();
             this.activeLoadoutSetUUID = selectedLoadoutSet.getUuid();
             this.loadoutItemsFlow.getChildren().stream().map(OdysseyLoadoutItem.class::cast).forEach(OdysseyLoadoutItem::destroy);
             this.loadoutItemsFlow.getChildren().clear();
@@ -115,7 +114,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     private Node initMenu() {
         this.addToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.add.all.to.wishlist")).build();
         final Set<LoadoutSet> items = APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getAllLoadoutSets())
+                .map(commander -> APPLICATION_STATE.getLoadoutSetList(commander).getAllLoadoutSets())
                 .orElse(Collections.emptySet());
         this.loadoutSetSelect = ComboBoxBuilder.builder(LoadoutSet.class)
                 .withStyleClass("loadout-select")
@@ -124,7 +123,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                             this.activeLoadoutSetUUID = newValue.getUuid();
-                            APPLICATION_STATE.selectLoadoutSet(this.activeLoadoutSetUUID, commander.getFid());
+                            APPLICATION_STATE.selectLoadoutSet(this.activeLoadoutSetUUID, commander);
                             EventService.publish(new LoadoutSetSelectedEvent(this.activeLoadoutSetUUID));
                         });
                     }
@@ -132,19 +131,19 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                 .build();
         final Map<String, EventHandler<ActionEvent>> suitMenuItems = Arrays.stream(Suit.values()).collect(Collectors.toMap(Suit::getLocalizationKey, suit -> event ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                    final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander);
                     final Loadout loadout = new Loadout(suit, 1, 5);
                     loadoutSetList.getSelectedLoadoutSet().addLoadout(loadout);
-                    APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                    APPLICATION_STATE.saveLoadoutSetList(commander, loadoutSetList);
                     refreshContent();
                 })));
         final MenuButton addSuitButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.add.suit")).withMenuItems(suitMenuItems).build();
         final Map<String, EventHandler<ActionEvent>> weaponMenuItems = Arrays.stream(Weapon.values()).collect(Collectors.toMap(Weapon::getLocalizationKey, weapon -> event ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                    final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander);
                     final Loadout loadout = new Loadout(weapon, 1, 5);
                     loadoutSetList.getSelectedLoadoutSet().addLoadout(loadout);
-                    APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                    APPLICATION_STATE.saveLoadoutSetList(commander, loadoutSetList);
                     refreshContent();
                 })));
         final MenuButton addWeaponButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.add.weapon")).withMenuItems(weaponMenuItems).build();
@@ -161,9 +160,9 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
             popOver.show(this.menuButton);
             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander);
                 loadoutSetList.createLoadoutSet(textField.getText());
-                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                APPLICATION_STATE.saveLoadoutSetList(commander, loadoutSetList);
                 textField.clear();
                 refreshLoadoutSetSelect();
                 popOver.hide();
@@ -186,9 +185,9 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
             popOver.show(this.menuButton);
             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander);
                 loadoutSetList.renameLoadoutSet(this.activeLoadoutSetUUID, textField.getText());
-                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                APPLICATION_STATE.saveLoadoutSetList(commander, loadoutSetList);
                 textField.clear();
                 refreshLoadoutSetSelect();
                 popOver.hide();
@@ -208,7 +207,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
             final Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                    APPLICATION_STATE.deleteLoadoutSet(this.activeLoadoutSetUUID, commander.getFid());
+                    APPLICATION_STATE.deleteLoadoutSet(this.activeLoadoutSetUUID, commander);
                     Platform.runLater(this::refreshLoadoutSetSelect);
 
                 });
@@ -221,10 +220,10 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
         final EventHandler<ActionEvent> cloneHandler = event -> {
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                 final LoadoutSet loadoutSet = this.loadoutSetSelect.getSelectionModel().getSelectedItem().cloneLoadoutSet();
-                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+                final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander);
                 loadoutSetList.addLoadoutSet(loadoutSet);
                 loadoutSetList.setSelectedLoadoutSetUUID(loadoutSet.getUuid());
-                APPLICATION_STATE.saveLoadoutSetList(commander.getFid(), loadoutSetList);
+                APPLICATION_STATE.saveLoadoutSetList(commander, loadoutSetList);
                 refreshLoadoutSetSelect();
             });
         };
@@ -255,7 +254,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
 
     private void refreshLoadoutSetSelect() {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander.getFid());
+            final LoadoutSetList loadoutSetList = APPLICATION_STATE.getLoadoutSetList(commander);
             final Set<LoadoutSet> items = loadoutSetList.getAllLoadoutSets();
             this.loadoutSetSelect.getItems().clear();
             this.loadoutSetSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(LoadoutSet::getName)).toList());
@@ -270,7 +269,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     }
 
     private Wishlists loadCommanderWishlists(final Commander commander) {
-        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander.getFid());
+        final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander);
         if (this.addToWishlist != null) {
             this.addToWishlist.getItems().stream().map(DestroyableMenuItem.class::cast).forEach(DestroyableMenuItem::destroy);
             this.addToWishlist.getItems().clear();
@@ -281,7 +280,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                     if (wishlistBlueprints.isEmpty()) {
                         NotificationService.showWarning(NotificationType.ERROR, "Can't add to wishlist", "No items to add");
                     } else {
-                        EventService.publish(new WishlistBlueprintEvent(commander.getFid(), wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                        EventService.publish(new WishlistBlueprintEvent(commander, wishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                     }
                 });
                 menuItem.setText(wishlist.getName());
@@ -294,11 +293,11 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                 if (wishlistBlueprints.isEmpty()) {
                     NotificationService.showWarning(NotificationType.ERROR, "Can't create wishlist", "No items to add");
                 } else {
-                    final Wishlists odysseyWishlists = ApplicationState.getInstance().getWishlists(commander.getFid());
+                    final Wishlists odysseyWishlists = ApplicationState.getInstance().getWishlists(commander);
                     final Wishlist newWishlist = odysseyWishlists.createWishlist(this.loadoutSetSelect.getSelectionModel().getSelectedItem().getName());
-                    ApplicationState.getInstance().saveWishlists(commander.getFid(), odysseyWishlists);
+                    ApplicationState.getInstance().saveWishlists(commander, odysseyWishlists);
                     EventService.publish(new WishlistCreatedEvent());//refreshes wishlist dropdown
-                    EventService.publish(new WishlistBlueprintEvent(commander.getFid(), newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
+                    EventService.publish(new WishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                 }
             });
             createNew.textProperty().bind(LocaleService.getStringBinding("loadout.create.new.wishlist"));
@@ -311,7 +310,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     private List<OdysseyWishlistBlueprint> getRequiredWishlistRecipes() {
         final List<OdysseyWishlistBlueprint> wishlistBlueprints = new ArrayList<>();
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            APPLICATION_STATE.getLoadoutSetList(commander.getFid()).getSelectedLoadoutSet().getLoadouts().forEach(loadout -> {
+            APPLICATION_STATE.getLoadoutSetList(commander).getSelectedLoadoutSet().getLoadouts().forEach(loadout -> {
                 final LevelValue recipes = loadout.getEquipment().getRecipes();
                 for (int level = loadout.getCurrentLevel() + 1; level <= loadout.getTargetLevel(); level++) {
                     final Object recipe = recipes.getValueForLevel(level);
