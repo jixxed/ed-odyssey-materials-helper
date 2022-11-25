@@ -62,7 +62,7 @@ public class HorizonsWishlists {
     }
 
     @JsonIgnore
-    void delete(final String wishlistUUID) {
+    public void delete(final String wishlistUUID) {
         this.wishlists.removeIf(wishlist -> wishlist.getUuid().equals(wishlistUUID));
         if (this.wishlists.isEmpty()) {
             createInitialWishlist();

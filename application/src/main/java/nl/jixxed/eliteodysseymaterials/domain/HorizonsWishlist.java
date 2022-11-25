@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +45,7 @@ public class HorizonsWishlist {
     public List<WishlistBlueprint<HorizonsBlueprintName>> getItems() {
         if (this == HorizonsWishlist.ALL) {
             return APPLICATION_STATE.getPreferredCommander()
-                    .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander).getAllWishlists().stream()
+                    .map(commander -> WishlistService.getHorizonsWishlists(commander).getAllWishlists().stream()
                             .filter(wishlist -> wishlist != HorizonsWishlist.ALL)
                             .flatMap(wishlist -> wishlist.getItems().stream())
                             .toList())

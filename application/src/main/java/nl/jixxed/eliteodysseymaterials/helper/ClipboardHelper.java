@@ -8,6 +8,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -32,7 +34,7 @@ public class ClipboardHelper {
     public static String createClipboardHorizonsWishlist() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
-                final ClipboardHorizonsWishlist wishlist = new ClipboardHorizonsWishlist("wishlist", 1, APPLICATION_STATE.getHorizonsWishlists(commander).getSelectedWishlist());
+                final ClipboardHorizonsWishlist wishlist = new ClipboardHorizonsWishlist("wishlist", 1, WishlistService.getHorizonsWishlists(commander).getSelectedWishlist());
                 wishlist.getWishlist().optimizeUUIDs();
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(wishlist);
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
@@ -47,7 +49,7 @@ public class ClipboardHelper {
     public static String createClipboardWishlist() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
-                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, APPLICATION_STATE.getWishlists(commander).getSelectedWishlist()));
+                final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, WishlistService.getWishlists(commander).getSelectedWishlist()));
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
                 return "edomh://wishlist/?" + wishlist64;
             } catch (final JsonProcessingException e) {
@@ -60,7 +62,7 @@ public class ClipboardHelper {
     public static String createClipboardLoadout() {
         return APPLICATION_STATE.getPreferredCommander().map(commander -> {
             try {
-                final String loadoutJson = OBJECT_MAPPER.writeValueAsString(new ClipboardLoadout("loadout", 1, APPLICATION_STATE.getLoadoutSetList(commander).getSelectedLoadoutSet()));
+                final String loadoutJson = OBJECT_MAPPER.writeValueAsString(new ClipboardLoadout("loadout", 1, LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet()));
                 final String loadout64 = convertJsonToBase64Compressed(loadoutJson);
                 return "edomh://loadout/?" + loadout64;
             } catch (final JsonProcessingException e) {

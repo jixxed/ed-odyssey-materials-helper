@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
@@ -203,7 +204,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
     }
 
     private HorizonsWishlists loadCommanderWishlists(final Commander commander) {
-        final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander);
+        final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
         this.addToWishlist.getItems().clear();
         final List<MenuItem> menuItems = wishlists.getAllWishlists().stream().filter(horizonsWishlist -> !horizonsWishlist.equals(HorizonsWishlist.ALL)).sorted(Comparator.comparing(HorizonsWishlist::getName)).flatMap(wishlist -> {
             final List<MenuItem> items = new ArrayList<>();
@@ -343,7 +344,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         }));
         this.eventListeners.add(EventService.addListener(this, HorizonsWishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
-                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> {
+                final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> {
                             if (wishlistRecipe instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {
                                 return horizonsModuleWishlistBlueprint.getRecipeName().equals(this.blueprint.getBlueprintName()) && horizonsModuleWishlistBlueprint.getBlueprintType().equals(this.blueprint.getHorizonsBlueprintType());
                             } else if (wishlistRecipe instanceof HorizonsExperimentalWishlistBlueprint horizonsExperimentalWishlistBlueprint) {

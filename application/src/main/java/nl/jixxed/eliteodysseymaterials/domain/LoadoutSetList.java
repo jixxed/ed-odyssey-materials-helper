@@ -66,7 +66,7 @@ public class LoadoutSetList {
     }
 
     @JsonIgnore
-    void updateLoadoutSet(final LoadoutSet loadoutSetToAdd) {
+    public void updateLoadoutSet(final LoadoutSet loadoutSetToAdd) {
         if (!loadoutSetToAdd.equals(LoadoutSet.CURRENT)) {
             this.loadoutSets.removeIf(loadoutSet -> loadoutSet.getUuid().equals(loadoutSetToAdd.getUuid()));
             this.loadoutSets.add(loadoutSetToAdd);

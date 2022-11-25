@@ -136,7 +136,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
         initLabels();
         initShortestPathTable();
         final Set<Wishlist> items = APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getWishlists(commander).getAllWishlists())
+                .map(commander -> WishlistService.getWishlists(commander).getAllWishlists())
                 .orElse(Collections.emptySet());
         this.wishlistSelect = ComboBoxBuilder.builder(Wishlist.class)
                 .withStyleClass("wishlist-select")
@@ -145,7 +145,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                             this.activeWishlistUUID = newValue.getUuid();
-                            APPLICATION_STATE.selectWishlist(this.activeWishlistUUID, commander);
+                            WishlistService.selectWishlist(this.activeWishlistUUID, commander);
                             EventService.publish(new WishlistSelectedEvent(this.activeWishlistUUID));
                         });
                     }
@@ -178,9 +178,9 @@ public class OdysseyWishlistTab extends OdysseyTab {
                             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
                             popOver.show(this.menuButton);
                             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander);
+                                final Wishlists wishlists = WishlistService.getWishlists(commander);
                                 wishlists.createWishlist(textField.getText());
-                                APPLICATION_STATE.saveWishlists(commander, wishlists);
+                                WishlistService.saveWishlists(commander, wishlists);
                                 textField.clear();
                                 refreshWishlistSelect();
                                 popOver.hide();
@@ -202,9 +202,9 @@ public class OdysseyWishlistTab extends OdysseyTab {
                             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
                             popOver.show(this.menuButton);
                             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander);
+                                final Wishlists wishlists = WishlistService.getWishlists(commander);
                                 wishlists.renameWishlist(this.activeWishlistUUID, textField.getText());
-                                APPLICATION_STATE.saveWishlists(commander, wishlists);
+                                WishlistService.saveWishlists(commander, wishlists);
                                 textField.clear();
                                 refreshWishlistSelect();
                                 popOver.hide();
@@ -224,7 +224,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
                             final Optional<ButtonType> result = alert.showAndWait();
                             if (result.get() == ButtonType.OK) {
                                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                    APPLICATION_STATE.deleteWishlist(this.activeWishlistUUID, commander);
+                                    WishlistService.deleteWishlist(this.activeWishlistUUID, commander);
                                     Platform.runLater(this::refreshWishlistSelect);
                                 });
                             }
@@ -258,7 +258,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
             PreferencesService.setPreference("blueprint.hide.completed", newValue);
             refreshContent();
         });
-        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getWishlists(commander).getSelectedWishlist().getItems().size()).orElse(0);
+        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getWishlists(commander).getSelectedWishlist().getItems().size()).orElse(0);
         this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
 
         this.engineerBlueprintsLine = BoxBuilder.builder().withNodes(this.engineerRecipesLabel, this.engineerRecipes).buildHBox();
@@ -316,8 +316,8 @@ public class OdysseyWishlistTab extends OdysseyTab {
         this.wishlistBlueprints.forEach(OdysseyWishlistBlueprintTemplate::onDestroy);
         this.wishlistBlueprints.clear();
         this.wishlistBlueprints.addAll(APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getWishlists(commander).getSelectedWishlist().getItems().stream()
-                        .map(wishlistRecipe -> new OdysseyWishlistBlueprintTemplate(APPLICATION_STATE.getWishlists(commander).getSelectedWishlist().getUuid(), wishlistRecipe))
+                .map(commander -> WishlistService.getWishlists(commander).getSelectedWishlist().getItems().stream()
+                        .map(wishlistRecipe -> new OdysseyWishlistBlueprintTemplate(WishlistService.getWishlists(commander).getSelectedWishlist().getUuid(), wishlistRecipe))
                         .toList()
                 )
                 .orElse(new ArrayList<>()));
@@ -365,7 +365,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
         });
         EventService.addListener(this, WishlistChangedEvent.class, wishlistChangedEvent -> {
             this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = APPLICATION_STATE.getWishlists(commander).getWishlist(this.activeWishlistUUID).getItems().size());
+            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = WishlistService.getWishlists(commander).getWishlist(this.activeWishlistUUID).getItems().size());
 
             this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
         });
@@ -397,7 +397,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
         });
         EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
-            final Wishlist selectedWishlist = APPLICATION_STATE.getWishlists(commanderSelectedEvent.getCommander()).getSelectedWishlist();
+            final Wishlist selectedWishlist = WishlistService.getWishlists(commanderSelectedEvent.getCommander()).getSelectedWishlist();
             this.activeWishlistUUID = selectedWishlist.getUuid();
             this.wishlistBlueprints.forEach(OdysseyWishlistBlueprintTemplate::onDestroy);
             this.wishlistBlueprints.clear();
@@ -454,7 +454,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
         this.wishlistBlueprints.clear();
         final List<OdysseyWishlistBlueprintTemplate> newWishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> {
-                    final Wishlist selectedWishlist = APPLICATION_STATE.getWishlists(commander).getSelectedWishlist();
+                    final Wishlist selectedWishlist = WishlistService.getWishlists(commander).getSelectedWishlist();
                     this.activeWishlistUUID = selectedWishlist.getUuid();
                     return selectedWishlist.getItems().stream()
                             .map(wishlistRecipe -> new OdysseyWishlistBlueprintTemplate(this.activeWishlistUUID, wishlistRecipe))
@@ -471,7 +471,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
 
     private void refreshWishlistSelect() {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final Wishlists wishlists = APPLICATION_STATE.getWishlists(commander);
+            final Wishlists wishlists = WishlistService.getWishlists(commander);
             final Set<Wishlist> items = wishlists.getAllWishlists();
             this.wishlistSelect.getItems().clear();
             this.wishlistSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(Wishlist::getName)).toList());

@@ -148,7 +148,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         initLabels();
         initShortestPathTable();
         final Set<HorizonsWishlist> items = APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander).getAllWishlists())
+                .map(commander -> WishlistService.getHorizonsWishlists(commander).getAllWishlists())
                 .orElse(Collections.emptySet());
         this.wishlistSelect = ComboBoxBuilder.builder(HorizonsWishlist.class)
                 .withStyleClass("wishlist-select")
@@ -157,7 +157,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                     if (newValue != null) {
                         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                             this.activeWishlistUUID = newValue.getUuid();
-                            APPLICATION_STATE.selectHorizonsWishlist(this.activeWishlistUUID, commander);
+                            WishlistService.selectHorizonsWishlist(this.activeWishlistUUID, commander);
                             EventService.publish(new HorizonsWishlistSelectedEvent(this.activeWishlistUUID));
                         });
                     }
@@ -191,9 +191,9 @@ public class HorizonsWishlistTab extends HorizonsTab {
                             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
                             popOver.show(this.menuButton);
                             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander);
+                                final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
                                 wishlists.createWishlist(textField.getText());
-                                APPLICATION_STATE.saveHorizonsWishlists(commander, wishlists);
+                                WishlistService.saveHorizonsWishlists(commander, wishlists);
                                 textField.clear();
                                 refreshWishlistSelect();
                                 popOver.hide();
@@ -215,9 +215,9 @@ public class HorizonsWishlistTab extends HorizonsTab {
                             popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_CENTER);
                             popOver.show(this.menuButton);
                             button.setOnAction(eventB -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander);
+                                final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
                                 wishlists.renameWishlist(this.activeWishlistUUID, textField.getText());
-                                APPLICATION_STATE.saveHorizonsWishlists(commander, wishlists);
+                                WishlistService.saveHorizonsWishlists(commander, wishlists);
                                 textField.clear();
                                 refreshWishlistSelect();
                                 popOver.hide();
@@ -237,7 +237,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                             final Optional<ButtonType> result = alert.showAndWait();
                             if (result.get() == ButtonType.OK) {
                                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                    APPLICATION_STATE.deleteHorizonsWishlist(this.activeWishlistUUID, commander);
+                                    WishlistService.deleteHorizonsWishlist(this.activeWishlistUUID, commander);
                                     Platform.runLater(this::refreshWishlistSelect);
                                 });
                             }
@@ -279,7 +279,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
             PreferencesService.setPreference("blueprint.hide.completed", newValue);
             refreshContent();
         });
-        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander).getSelectedWishlist().getItems().size()).orElse(0);
+        this.wishlistSize = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().size()).orElse(0);
         this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
 
         this.engineerBlueprintsLine = BoxBuilder.builder().withNodes(this.engineerRecipesLabel, this.engineerRecipes).buildHBox();
@@ -344,8 +344,8 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.wishlistBlueprints.forEach(WishlistBlueprintTemplate::onDestroy);
         this.wishlistBlueprints.clear();
         this.wishlistBlueprints.addAll(APPLICATION_STATE.getPreferredCommander()
-                .map(commander -> APPLICATION_STATE.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream()
-                        .map(wishlistRecipe -> createWishListBlueprintTemplate(wishlistRecipe, APPLICATION_STATE.getHorizonsWishlists(commander).getSelectedWishlist().getUuid()))
+                .map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream()
+                        .map(wishlistRecipe -> createWishListBlueprintTemplate(wishlistRecipe, WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getUuid()))
                         .toList()
                 )
                 .orElse(new ArrayList<>()));
@@ -401,7 +401,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         });
         EventService.addListener(this, HorizonsWishlistChangedEvent.class, wishlistChangedEvent -> {
             this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = APPLICATION_STATE.getHorizonsWishlists(commander).getWishlist(this.activeWishlistUUID).getItems().size());
+            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = WishlistService.getHorizonsWishlists(commander).getWishlist(this.activeWishlistUUID).getItems().size());
 
             this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
         });
@@ -433,7 +433,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         });
         EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
-            final HorizonsWishlist selectedWishlist = APPLICATION_STATE.getHorizonsWishlists(commanderSelectedEvent.getCommander()).getSelectedWishlist();
+            final HorizonsWishlist selectedWishlist = WishlistService.getHorizonsWishlists(commanderSelectedEvent.getCommander()).getSelectedWishlist();
             this.activeWishlistUUID = selectedWishlist.getUuid();
             this.wishlistBlueprints.forEach(WishlistBlueprintTemplate::onDestroy);
             this.wishlistBlueprints.clear();
@@ -489,7 +489,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.wishlistBlueprints.clear();
         final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> newWishlistBlueprints = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> {
-                    final HorizonsWishlist selectedWishlist = APPLICATION_STATE.getHorizonsWishlists(commander).getSelectedWishlist();
+                    final HorizonsWishlist selectedWishlist = WishlistService.getHorizonsWishlists(commander).getSelectedWishlist();
                     this.activeWishlistUUID = selectedWishlist.getUuid();
                     return selectedWishlist.getItems().stream()
                             .map(wishlistRecipe -> createWishListBlueprintTemplate(wishlistRecipe, this.activeWishlistUUID))
@@ -513,7 +513,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
 
     private void refreshWishlistSelect() {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-            final HorizonsWishlists wishlists = APPLICATION_STATE.getHorizonsWishlists(commander);
+            final HorizonsWishlists wishlists = WishlistService.getHorizonsWishlists(commander);
             final Set<HorizonsWishlist> items = wishlists.getAllWishlists();
             this.wishlistSelect.getItems().clear();
             this.wishlistSelect.getItems().addAll(items.stream().sorted(Comparator.comparing(HorizonsWishlist::getName)).toList());
