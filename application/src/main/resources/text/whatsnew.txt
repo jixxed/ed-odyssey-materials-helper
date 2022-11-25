@@ -1,3 +1,16 @@
+Version 2.0
+-------------
+New mayor version - breaking compatability with older versions!!!
+ - Recent versions should migrate settings without issues
+Pinned blueprints were not yet commander specific. Now they are, but you will need to set them again.
+- If you need access to the old pinned blueprints:
+  %localappdata%\odyssey-materials-helper\pref.properties -> keys starting with "blueprint.pinned."
+  Or run v1.102 portable version and write them down
+Further separation of LIVE/LEGACY accounts.
+Storage of wishlists, loadouts, material favourites and pinned blueprints moved into commander specific folders/files.
+Removed some legacy V1 code
+Fixed bug when setting custom color for bartender, causing overlay to stop working
+
 Version 1.102
 -------------
 Actually fixed edomh url registration check.
