@@ -112,7 +112,13 @@ public class MenuOverlayRenderer {
         final BufferedImage bufferedImage = new BufferedImage((int) bartenderMenu.getContentWidth(), (int) bartenderMenu.getContentHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         final Graphics2D graphics = bufferedImage.createGraphics();
 
-        graphics.setColor(PreferencesService.getPreference(PreferenceConstants.AR_BARTENDER_COLOR,Color.WHITE));
+        final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_BARTENDER_COLOR, javafx.scene.paint.Color.WHITE.toString()));
+        final Color color = new Color((float) preference.getRed(),
+                (float) preference.getGreen(),
+                (float) preference.getBlue(),
+                (float) preference.getOpacity());
+        graphics.setColor(color);
+
         if (Locale.forLanguageTag("ru").equals(LocaleService.getCurrentLocale())) {
             graphics.setFont(new Font("Eurostile-Roman", Font.PLAIN, (int) (bartenderMenu.getHeaderFontSize())));
         } else {
