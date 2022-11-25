@@ -2,13 +2,10 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAddedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -19,8 +16,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileLock;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 public class ApplicationState {
@@ -227,69 +222,6 @@ public class ApplicationState {
 
     public void resetCommanders() {
         this.commanders.clear();
-    }
-
-    public int amountCraftable(final OdysseyBlueprintName odysseyBlueprintName) {
-        final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
-        final AtomicInteger lowestAmount = new AtomicInteger(9999);
-        blueprint.getMaterialCollection(OdysseyMaterial.class).forEach((material, amountRequired) -> {
-            final int amountCraftable = StorageService.getMaterialStorage(material).getTotalValue() / amountRequired;
-            lowestAmount.set(Math.min(amountCraftable, lowestAmount.get()));
-        });
-        return lowestAmount.get();
-    }
-
-    public Craftability getCraftability(final OdysseyBlueprintName odysseyBlueprintName) {
-        final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
-        if (blueprint instanceof EngineerBlueprint engineerBlueprint) {
-            return engineerBlueprint.getCraftability();
-        } else {
-            final AtomicBoolean hasGoods = new AtomicBoolean(true);
-            final AtomicBoolean hasData = new AtomicBoolean(true);
-            final AtomicBoolean hasAssets = new AtomicBoolean(true);
-            blueprint.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-            blueprint.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-            blueprint.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
-            if (!hasGoods.get() || !hasData.get()) {
-                return Craftability.NOT_CRAFTABLE;
-            } else if (hasGoods.get() && hasData.get() && !hasAssets.get()) {
-                return Craftability.CRAFTABLE_WITH_TRADE;
-            } else {
-                return Craftability.CRAFTABLE;
-            }
-        }
-    }
-
-    public Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1));
-    }
-
-    public Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Integer> horizonsBlueprintGrades) {
-        final List<Craftability> craftabilities = horizonsBlueprintGrades.entrySet().stream().map(horizonsBlueprintGradeRolls -> {
-            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGradeRolls.getKey());
-            final AtomicBoolean hasRaw = new AtomicBoolean(true);
-            final AtomicBoolean hasEncoded = new AtomicBoolean(true);
-            final AtomicBoolean hasManufactured = new AtomicBoolean(true);
-            final AtomicBoolean hasCommodity = new AtomicBoolean(true);
-            final Integer numberOfRolls = horizonsBlueprintGradeRolls.getValue();
-            blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
-            blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
-            blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
-            blueprint.getMaterialCollection(Commodity.class).forEach((material, amountRequired) -> hasCommodity.set(hasCommodity.get() && (StorageService.getCommodityCount((Commodity) material, StoragePool.SHIP) - (amountRequired * numberOfRolls)) >= 0));
-            if (!hasRaw.get() || !hasEncoded.get() || !hasManufactured.get()) {
-                return Craftability.NOT_CRAFTABLE;
-            } else if (hasRaw.get() && hasEncoded.get() && hasManufactured.get() && !hasCommodity.get()) {
-                return Craftability.CRAFTABLE_WITH_TRADE;
-            } else {
-                return Craftability.CRAFTABLE;
-            }
-        }).toList();
-        if (craftabilities.stream().allMatch(Craftability.CRAFTABLE::equals)) {
-            return Craftability.CRAFTABLE;
-        } else if (craftabilities.stream().allMatch(craftability -> Craftability.CRAFTABLE.equals(craftability) || Craftability.CRAFTABLE_WITH_TRADE.equals(craftability))) {
-            return Craftability.CRAFTABLE_WITH_TRADE;
-        }
-        return Craftability.NOT_CRAFTABLE;
     }
 
     public String getMarketPlaceToken() {

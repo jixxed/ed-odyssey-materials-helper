@@ -119,7 +119,7 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
             Tooltip.install(this.wishlistRecipeName, this.tooltip);
         }
         initFadeTransition();
-        final Craftability craftability = APPLICATION_STATE.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
+        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
         this.canCraft(craftability);
     }
 
@@ -139,7 +139,7 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
 
     private void initEventHandling() {
         this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
-            final Craftability craftability = APPLICATION_STATE.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
+            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
             this.canCraft(craftability);
         });
     }

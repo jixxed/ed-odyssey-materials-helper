@@ -124,7 +124,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                                                     LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
                                                     LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
                                                     this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))));
-                                            final Craftability craftability = APPLICATION_STATE.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+                                            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
                                             this.canCraft(craftability);
                                         }));
                                         buttonIntField.getStyleClass().add("wishlist-rolls-select");
@@ -167,7 +167,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
         Tooltip.install(this.wishlistRecipeName, this.tooltip);
 
         initFadeTransition();
-        final Craftability craftability = APPLICATION_STATE.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
         this.canCraft(craftability);
     }
 
@@ -191,7 +191,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
 
     private void initEventHandling() {
         this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
-            final Craftability craftability = APPLICATION_STATE.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
             this.canCraft(craftability);
         });
     }

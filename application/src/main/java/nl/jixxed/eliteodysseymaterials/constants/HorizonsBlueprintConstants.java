@@ -14,8 +14,10 @@ import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -148,6 +150,37 @@ public abstract class HorizonsBlueprintConstants {
         return Collections.emptyMap();
     }
 
+    public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1));
+    }
+
+    public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Integer> horizonsBlueprintGrades) {
+        final List<Craftability> craftabilities = horizonsBlueprintGrades.entrySet().stream().map(horizonsBlueprintGradeRolls -> {
+            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGradeRolls.getKey());
+            final AtomicBoolean hasRaw = new AtomicBoolean(true);
+            final AtomicBoolean hasEncoded = new AtomicBoolean(true);
+            final AtomicBoolean hasManufactured = new AtomicBoolean(true);
+            final AtomicBoolean hasCommodity = new AtomicBoolean(true);
+            final Integer numberOfRolls = horizonsBlueprintGradeRolls.getValue();
+            blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
+            blueprint.getMaterialCollection(Commodity.class).forEach((material, amountRequired) -> hasCommodity.set(hasCommodity.get() && (StorageService.getCommodityCount((Commodity) material, StoragePool.SHIP) - (amountRequired * numberOfRolls)) >= 0));
+            if (!hasRaw.get() || !hasEncoded.get() || !hasManufactured.get()) {
+                return Craftability.NOT_CRAFTABLE;
+            } else if (hasRaw.get() && hasEncoded.get() && hasManufactured.get() && !hasCommodity.get()) {
+                return Craftability.CRAFTABLE_WITH_TRADE;
+            } else {
+                return Craftability.CRAFTABLE;
+            }
+        }).toList();
+        if (craftabilities.stream().allMatch(Craftability.CRAFTABLE::equals)) {
+            return Craftability.CRAFTABLE;
+        } else if (craftabilities.stream().allMatch(craftability -> Craftability.CRAFTABLE.equals(craftability) || Craftability.CRAFTABLE_WITH_TRADE.equals(craftability))) {
+            return Craftability.CRAFTABLE_WITH_TRADE;
+        }
+        return Craftability.NOT_CRAFTABLE;
+    }
     public static int getEngineerMaxGrade(final HorizonsBlueprint horizonsBlueprint1, final Engineer engineer) {
         return RECIPES.values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())

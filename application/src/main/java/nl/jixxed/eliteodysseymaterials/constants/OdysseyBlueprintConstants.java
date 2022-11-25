@@ -5,8 +5,10 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -60,6 +62,26 @@ public abstract class OdysseyBlueprintConstants {
                         .filter(stringIngredientsEntry -> stringIngredientsEntry.getValue().getMaterialCollection(odysseyMaterial.getClass()).containsKey(odysseyMaterial))
                         .forEach(entry -> newMap.put(entry.getKey(), entry.getValue().getMaterialCollection(odysseyMaterial.getClass()).get(odysseyMaterial))));
         return newMap;
+    }
+    public static Craftability getCraftability(final OdysseyBlueprintName odysseyBlueprintName) {
+        final OdysseyBlueprint blueprint = OdysseyBlueprintConstants.getRecipe(odysseyBlueprintName);
+        if (blueprint instanceof EngineerBlueprint engineerBlueprint) {
+            return engineerBlueprint.getCraftability();
+        } else {
+            final AtomicBoolean hasGoods = new AtomicBoolean(true);
+            final AtomicBoolean hasData = new AtomicBoolean(true);
+            final AtomicBoolean hasAssets = new AtomicBoolean(true);
+            blueprint.getMaterialCollection(Good.class).forEach((material, amountRequired) -> hasGoods.set(hasGoods.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+            blueprint.getMaterialCollection(Data.class).forEach((material, amountRequired) -> hasData.set(hasData.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+            blueprint.getMaterialCollection(Asset.class).forEach((material, amountRequired) -> hasAssets.set(hasAssets.get() && (StorageService.getMaterialStorage(material).getTotalValue() - amountRequired) >= 0));
+            if (!hasGoods.get() || !hasData.get()) {
+                return Craftability.NOT_CRAFTABLE;
+            } else if (hasGoods.get() && hasData.get() && !hasAssets.get()) {
+                return Craftability.CRAFTABLE_WITH_TRADE;
+            } else {
+                return Craftability.CRAFTABLE;
+            }
+        }
     }
 
     private static boolean isBlueprintIngredient(final OdysseyMaterial odysseyMaterial) {

@@ -106,7 +106,7 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
             Tooltip.install(this.wishlistRecipeName, this.tooltip);
         }
         initFadeTransition();
-        final Craftability craftability = APPLICATION_STATE.getCraftability((OdysseyBlueprintName) this.getRecipeName());
+        final Craftability craftability = OdysseyBlueprintConstants.getCraftability((OdysseyBlueprintName) this.getRecipeName());
         this.canCraft(craftability);
     }
 
@@ -126,7 +126,7 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
 
     private void initEventHandling() {
         this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
-            final Craftability craftability = APPLICATION_STATE.getCraftability((OdysseyBlueprintName) this.getRecipeName());
+            final Craftability craftability = OdysseyBlueprintConstants.getCraftability((OdysseyBlueprintName) this.getRecipeName());
             this.canCraft(craftability);
         });
     }
