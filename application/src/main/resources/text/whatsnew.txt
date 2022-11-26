@@ -1,6 +1,11 @@
+Version 2.1
+-------------
+Fix: Consider SOLO mode for AR/pickup notifications/exports
+LIVE/LEGACY mode now only reads the appropriate journals
+
 Version 2.0
 -------------
-New mayor version - breaking compatability with older versions!!!
+New mayor version - breaking compatibility with older versions!!!
  - Recent versions should migrate settings without issues
 Pinned blueprints were not yet commander specific. Now they are, but you will need to set them again.
 - If you need access to the old pinned blueprints:
