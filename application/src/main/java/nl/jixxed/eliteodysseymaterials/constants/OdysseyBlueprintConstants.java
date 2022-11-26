@@ -116,7 +116,8 @@ public abstract class OdysseyBlueprintConstants {
     }
 
     public static boolean isEngineeringOrBlueprintIngredientWithOverride(final OdysseyMaterial odysseyMaterial) {
-        return isEngineeringIngredient(odysseyMaterial) || isBlueprintIngredientWithOverride(odysseyMaterial);
+        final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : OdysseyBlueprintConstants.isEngineeringIngredient(odysseyMaterial);
+        return isEngineerUnlockMaterial || isBlueprintIngredientWithOverride(odysseyMaterial);
     }
 
     public static boolean isEngineeringIngredient(final OdysseyMaterial odysseyMaterial) {
