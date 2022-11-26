@@ -150,13 +150,23 @@ public class JournalWatcher {
         final Optional<Commander> preferredCommander = APPLICATION_STATE.getPreferredCommander();
         return preferredCommander.map(commander -> {
             try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
+                GameVersion gameVersion = GameVersion.UNKNOWN;
+
                 while (scanner.hasNext()) {
                     final String line = scanner.nextLine();
                     final JsonNode journalMessage = this.objectMapper.readTree(line);
                     final JsonNode eventNode = journalMessage.get("event");
-                    if (eventNode.asText().equals("Commander")) {
+                    if (eventNode.asText().equals("Fileheader")) {
+                        final String gameversion = journalMessage.get("gameversion").asText("");
+                        if (gameversion.startsWith("3")) {
+                            gameVersion = GameVersion.LEGACY;
+                        } else if (gameversion.startsWith("4")) {
+                            gameVersion = GameVersion.LIVE;
+                        }
+                    } else if (eventNode.asText().equals("Commander")) {
                         final JsonNode nameNode = journalMessage.get("Name");
-                        return nameNode.asText().equals(commander.getName());
+                        final JsonNode fidNode = journalMessage.get("FID");
+                        return gameVersion.equals(commander.getGameVersion()) && nameNode.asText().equals(commander.getName()) && fidNode.asText().equals(commander.getFid());
                     }
                 }
             } catch (final IOException e) {
