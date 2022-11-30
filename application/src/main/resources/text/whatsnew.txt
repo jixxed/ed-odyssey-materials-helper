@@ -1,7 +1,8 @@
 Version 2.2
 -------------
 Add caustic sinks synthesis blueprint
-Add new commodities and materials for U14
+Add new commodities and materials for U14 that have been identified so far
+Enable Legacy CAPI Services
 
 Version 2.1
 -------------
