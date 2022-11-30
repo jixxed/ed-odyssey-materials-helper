@@ -242,7 +242,7 @@ public class CAPIService {
     private boolean loadToken(final Commander commander) {
         this.oAuth2AccessToken = null;
         if (commander != null) {
-            final String pathname = commander.getCommanderFolder();
+            final String pathname = commander.getLiveCommanderFolder();
             final File capiTokenDir = new File(pathname);
             capiTokenDir.mkdirs();
             final File capiTokenFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.CAPI_FILE);
@@ -272,7 +272,7 @@ public class CAPIService {
             try {
                 final String tokenJson = OBJECT_MAPPER.writeValueAsString(accessToken);
                 log.debug(tokenJson);
-                final String pathname = commander.getCommanderFolder();
+                final String pathname = commander.getLiveCommanderFolder();
                 final File capiTokenDir = new File(pathname);
                 capiTokenDir.mkdirs();
                 final File capiTokenFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.CAPI_FILE);
@@ -289,7 +289,7 @@ public class CAPIService {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             try {
                 Platform.runLater(() -> this.active.set(false));
-                final String pathname = commander.getCommanderFolder();
+                final String pathname = commander.getLiveCommanderFolder();
                 Files.delete(Path.of(pathname, AppConstants.CAPI_FILE));
             } catch (final IOException e) {
                 log.error("Failed to delete CAPI token file", e);
