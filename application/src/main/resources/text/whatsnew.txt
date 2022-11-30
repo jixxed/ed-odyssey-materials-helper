@@ -1,3 +1,10 @@
+Version 2.3
+-------------
+Added notifications for unknown materials/commodities
+Added automated reporting of unknown materials/commodities
+Added newly discovered material
+Updated LIVE item styling/labeling
+
 Version 2.2
 -------------
 Add caustic sinks synthesis blueprint
