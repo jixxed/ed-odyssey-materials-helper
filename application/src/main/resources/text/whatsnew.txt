@@ -1,3 +1,8 @@
+Version 2.2
+-------------
+Add caustic sinks synthesis blueprint
+Add new commodities and materials for U14
+
 Version 2.1
 -------------
 Fix: Consider SOLO mode for AR/pickup notifications/exports

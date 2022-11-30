@@ -103,20 +103,18 @@ public class CAPIService {
                                 if (this.timer != null) {
                                     this.timer.cancel();
                                 }
-                                if (commander.getGameVersion().equals(GameVersion.LIVE)) {
-                                    final String pathname = commander.getCommanderFolder();
-                                    final File fleetCarrierFileDir = new File(pathname);
-                                    fleetCarrierFileDir.mkdirs();
-                                    final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
-                                    this.timer = new Timer("Fleetcarrier-api-task", true);
-                                    this.timerTask = new TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            requestFleetCarrierData();
-                                        }
-                                    };
-                                    this.timer.scheduleAtFixedRate(this.timerTask, calculateDelay(fleetCarrierFile), 300L * 1000L);
-                                }
+                                final String pathname = commander.getCommanderFolder();
+                                final File fleetCarrierFileDir = new File(pathname);
+                                fleetCarrierFileDir.mkdirs();
+                                final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
+                                this.timer = new Timer("Fleetcarrier-api-task", true);
+                                this.timerTask = new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        requestFleetCarrierData();
+                                    }
+                                };
+                                this.timer.scheduleAtFixedRate(this.timerTask, calculateDelay(fleetCarrierFile), 300L * 1000L);
                             });
                         }
                 );
@@ -243,7 +241,7 @@ public class CAPIService {
 
     private boolean loadToken(final Commander commander) {
         this.oAuth2AccessToken = null;
-        if (commander != null && commander.getGameVersion().equals(GameVersion.LIVE)) {
+        if (commander != null) {
             final String pathname = commander.getCommanderFolder();
             final File capiTokenDir = new File(pathname);
             capiTokenDir.mkdirs();
