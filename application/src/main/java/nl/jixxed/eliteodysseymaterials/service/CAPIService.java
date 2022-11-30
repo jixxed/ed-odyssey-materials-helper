@@ -103,7 +103,7 @@ public class CAPIService {
                                 if (this.timer != null) {
                                     this.timer.cancel();
                                 }
-                                if(commander.getGameVersion().equals(GameVersion.LIVE)) {
+                                if (commander.getGameVersion().equals(GameVersion.LIVE)) {
                                     final String pathname = commander.getCommanderFolder();
                                     final File fleetCarrierFileDir = new File(pathname);
                                     fleetCarrierFileDir.mkdirs();
@@ -172,7 +172,8 @@ public class CAPIService {
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
 
                 this.executor.submit(() -> {
-                    final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, "https://companion.orerve.net/fleetcarrier");
+                    final String url = GameVersion.LEGACY.equals(commander.getGameVersion()) ? "https://legacy-companion.orerve.net/fleetcarrier" : "https://companion.orerve.net/fleetcarrier";
+                    final OAuthRequest oAuthRequest = new OAuthRequest(Verb.GET, url);
                     this.service.signRequest(this.oAuth2AccessToken, oAuthRequest);
                     try {
                         Response response = this.service.execute(oAuthRequest);
@@ -180,7 +181,7 @@ public class CAPIService {
                         if (response.getCode() == 401) {
                             log.warn("Frontier API returned unauthorized. Attempting to refresh token.");
                             refreshToken();
-                            final OAuthRequest oAuthRequest2 = new OAuthRequest(Verb.GET, "https://companion.orerve.net/fleetcarrier");
+                            final OAuthRequest oAuthRequest2 = new OAuthRequest(Verb.GET, url);
                             this.service.signRequest(this.oAuth2AccessToken, oAuthRequest2);
                             response = this.service.execute(oAuthRequest2);
                         }
