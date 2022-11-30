@@ -2365,3 +2365,4 @@ material.encoded.tg_shutdowndata,Massive Energy Surge Analytics,Massive Energy S
 material.manufactured.tg_causticgeneratorparts,Corrosive Mechanisms,Corrosive Mechanisms,,,,,
 material.manufactured.tg_causticshard,Caustic Shard,Caustic Shard,,,,,
 blueprint.horizons.name.caustic_sinks,Caustic Sinks,Caustic Sinks,,,,,
+blueprint.horizons.description.caustic_sinks,Refills Caustic sinks for a single module. Basic synthesis provides a full restock of the launcher''s supplies.,Refills Caustic sinks for a single module. Basic synthesis provides a full restock of the launcher''s supplies.,,,,,
