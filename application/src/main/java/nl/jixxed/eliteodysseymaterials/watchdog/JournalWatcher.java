@@ -92,7 +92,7 @@ public class JournalWatcher {
                 final JsonNode journalMessage = this.objectMapper.readTree(line);
                 final JsonNode eventNode = journalMessage.get("event");
 
-                if (eventNode.asText().equals("Fileheader")) {
+                if (eventNode.asText().equalsIgnoreCase("Fileheader")) {
                     final String gameversion = journalMessage.get("gameversion").asText("");
                     if (gameversion.startsWith("3")) {
                         gameVersion = GameVersion.LEGACY;
@@ -156,7 +156,7 @@ public class JournalWatcher {
                     final String line = scanner.nextLine();
                     final JsonNode journalMessage = this.objectMapper.readTree(line);
                     final JsonNode eventNode = journalMessage.get("event");
-                    if (eventNode.asText().equals("Fileheader")) {
+                    if (eventNode.asText().equalsIgnoreCase("Fileheader")) {
                         final String gameversion = journalMessage.get("gameversion").asText("");
                         if (gameversion.startsWith("3")) {
                             gameVersion = GameVersion.LEGACY;
