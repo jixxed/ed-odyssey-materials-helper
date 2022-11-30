@@ -11,6 +11,7 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -48,10 +49,19 @@ public class HorizonsMaterialCard extends VBox implements Template {
     @Override
     public void initComponents() {
         this.getStyleClass().add("horizons-materialcard");
+        if(GameVersion.LIVE.equals(this.material.getGameVersion())){
+            this.getStyleClass().add("horizons-materialcard-live");
+        }
         if (HorizonsMaterialType.THARGOID.equals(this.material.getMaterialType())) {
             this.getStyleClass().add("horizons-materialcard-thargoid");
+            if(GameVersion.LIVE.equals(this.material.getGameVersion())){
+                this.getStyleClass().add("horizons-materialcard-thargoid-live");
+            }
         } else if (HorizonsMaterialType.GUARDIAN.equals(this.material.getMaterialType())) {
             this.getStyleClass().add("horizons-materialcard-guardian");
+            if(GameVersion.LIVE.equals(this.material.getGameVersion())){
+                this.getStyleClass().add("horizons-materialcard-guardian-live");
+            }
         }
         this.gradeImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(this.material.getRarity().getImagePath()).build();
         this.nameLabel = LabelBuilder.builder()

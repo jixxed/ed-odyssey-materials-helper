@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -49,7 +50,9 @@ public class HorizonsCommodityCard extends VBox implements Template {
     @Override
     public void initComponents() {
         this.getStyleClass().add("horizons-commoditycard");
-
+        if (GameVersion.LIVE.equals(this.commodity.getGameVersion())) {
+            this.getStyleClass().add("horizons-commoditycard-live");
+        }
         this.typeImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-commoditycard-image").withImage(this.commodity.getCommodityType().getImagePath()).build();
         this.nameLabel = LabelBuilder.builder()
                 .withStyleClass("horizons-commoditycard-name")

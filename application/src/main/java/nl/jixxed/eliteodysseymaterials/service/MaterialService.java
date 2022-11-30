@@ -58,6 +58,9 @@ public class MaterialService {
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
         } else {
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey())).build());
+            if (GameVersion.LIVE.equals(horizonsMaterial.getGameVersion())) {
+                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding((horizonsMaterial instanceof Commodity commodity) ? "material.tooltip.is.live.commodity" : "material.tooltip.is.live")).build());
+            }
             if (horizonsMaterial instanceof Commodity commodity) {
                 vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.type") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()))).build());
                 vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.isRareCommodity() ? "material.tooltip.text.yes" : "material.tooltip.text.no"))).build());
@@ -320,12 +323,12 @@ public class MaterialService {
                     titledPane.setContent(catBox);
                     titledPane.setExpanded(false);
                     vBox.getChildren().add(titledPane);
-                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label","blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
+                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
                     catBox.getChildren().add(build);
                 } else {
                     //append
-                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label","blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
+                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
                     catBox.getChildren().add(build);
                     catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));

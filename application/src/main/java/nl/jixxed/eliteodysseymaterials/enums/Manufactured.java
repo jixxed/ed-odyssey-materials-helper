@@ -11,6 +11,7 @@ public enum Manufactured implements HorizonsMaterial {
     BASICCONDUCTORS(Rarity.VERY_COMMON, HorizonsMaterialType.CONDUCTIVE),
     TG_BIOMECHANICALCONDUITS(Rarity.STANDARD, HorizonsMaterialType.THARGOID),//tg_biomechanicalconduits
     BIOTECHCONDUCTORS(Rarity.VERY_RARE, HorizonsMaterialType.CONDUCTIVE),
+    TG_CAUSTICCRYSTAL(Rarity.RARE, HorizonsMaterialType.THARGOID,GameVersion.LIVE),//
     TG_CAUSTICSHARD(Rarity.COMMON, HorizonsMaterialType.THARGOID,GameVersion.LIVE),//
     CHEMICALDISTILLERY(Rarity.STANDARD, HorizonsMaterialType.CHEMICAL),
     CHEMICALMANIPULATORS(Rarity.RARE, HorizonsMaterialType.CHEMICAL),

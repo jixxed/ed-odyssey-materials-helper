@@ -1036,7 +1036,7 @@
 }
 
 .blueprint-description {
-    -fx-padding: 0 0 0 10;
+    -fx-padding: 0 0 0 1em;
 }
 
 .recipe-modifier {
@@ -1873,14 +1873,27 @@
     -fx-max-width: 16em;
 }
 
-.horizons-materialcard-thargoid {
-    -fx-background-color: #3b1b00;
-
+.horizons-materialcard-live {
+    -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%);
+    /*-fx-border-color: #0f0f0f;*/
+    /*-fx-border-width: 1;*/
 }
 
+.horizons-materialcard-thargoid {
+    -fx-background-color: #3b1b00;
+}
+.horizons-materialcard-thargoid-live {
+    -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #3b1b00 0%, #5b2d00 25%, #3b1b00 50%, #5b2d00 75%);
+    /*-fx-border-color: #0f0f0f;*/
+    /*-fx-border-width: 1;*/
+}
 .horizons-materialcard-guardian {
     -fx-background-color: #270136;
-
+}
+.horizons-materialcard-guardian-live {
+    -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #270136 0%, #450362 25%, #270136 50%, #450362 75%);
+    /*-fx-border-color: #0f0f0f;*/
+    /*-fx-border-width: 1;*/
 }
 
 .horizons-materialcard-image {
@@ -2140,6 +2153,12 @@
     -fx-pref-width: 17.9em;
     -fx-min-width: 17.9em;
     -fx-max-width: 17.9em;
+}
+
+.horizons-commoditycard-live {
+    -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%);
+    -fx-border-color: #0f0f0f;
+    -fx-border-width: 1;
 }
 
 .horizons-commoditycard-firstline {
@@ -2487,4 +2506,11 @@
     -fx-pref-height: 2em;
     -fx-max-height: 2em;
     -fx-focus-traversable: false;
+}
+.recipe-live{
+    -fx-font-weight: normal;
+    -fx-label-padding: 0 0 1em 1em;
+    -fx-max-width: 35.5em;
+    -fx-underline: true;
+
 }

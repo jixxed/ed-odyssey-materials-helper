@@ -13,7 +13,6 @@ import java.util.Iterator;
 
 @Slf4j
 public class MissionCompletedMessageProcessor implements MessageProcessor {
-
     @Override
     public void process(final JsonNode journalMessage) {
         if (journalMessage.has("MaterialsReward")) {
@@ -33,6 +32,18 @@ public class MissionCompletedMessageProcessor implements MessageProcessor {
                     //not a horizons material reward
                     log.warn("Material was not a Horizons material: " + name);
                 }
+                //disabled because shiplocker event precedes this event
+//                try {
+//                    final OdysseyMaterial odysseyMaterial = OdysseyMaterial.subtypeForName(name);
+//                    if (!odysseyMaterial.isUnknown()) {
+//                        final Storage materialStorage = StorageService.getMaterialStorage(odysseyMaterial);
+//                        materialStorage.setValue(materialStorage.getShipLockerValue() + jsonNode.get("Count").asInt(),StoragePool.SHIPLOCKER);
+//                    }
+//                    EventService.publish(new StorageEvent(StoragePool.SHIPLOCKER));
+//                } catch (final IllegalArgumentException ex) {
+//                    //not a horizons material reward
+//                    log.warn("Material was not an Odyssey material: " + name);
+//                }
             });
         }
     }

@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerBlueprintLabel;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
@@ -134,6 +135,12 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
 
         this.recipeHeader = BoxBuilder.builder().withNodes(descriptionTitle, descriptionRegion).buildHBox();
 
+        this.getChildren().add(this.recipeHeader);
+        if(GameVersion.LIVE.equals(this.blueprint.getGameVersion())) {
+            final DestroyableLabel liveOnly = LabelBuilder.builder()
+                    .withStyleClass("recipe-live").withText(LocaleService.getStringBinding("blueprint.is.live")).build();
+            this.getChildren().add(liveOnly);
+        }
         final Text description = TextBuilder.builder()
                 .withStyleClass("blueprint-description-text")
                 .withWrappingWidth(465D)
@@ -141,7 +148,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 .build();
         final TextFlow textFlow = new TextFlow(description);
         textFlow.getStyleClass().add("blueprint-description");
-        this.getChildren().addAll(this.recipeHeader, textFlow);
+        this.getChildren().add( textFlow);
     }
 
     @SuppressWarnings("java:S1192")

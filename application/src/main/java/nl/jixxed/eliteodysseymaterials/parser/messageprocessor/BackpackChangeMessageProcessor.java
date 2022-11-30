@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.BackpackChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
+import java.util.Objects;
 import java.util.Spliterators;
 import java.util.stream.StreamSupport;
 
@@ -47,7 +48,14 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
         if (added != null && !added.isEmpty()) {
             StreamSupport.stream(added.spliterator(), false)
                     .filter(jsonNode -> jsonNode.get("MissionID") == null)
-                    .map(jsonNode -> OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText()))
+                    .map(jsonNode -> {
+                        try {
+                            return OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText());
+                        } catch (final IllegalArgumentException e) {
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
                     .filter(material -> !(material instanceof Consumable))
                     .forEach(material -> {
                         if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
@@ -67,7 +75,13 @@ public class BackpackChangeMessageProcessor implements MessageProcessor {
 
     private void publishBackpackChangeEvents(final ArrayNode arrayNode, final Operation operation, final String timestamp) {
         StreamSupport.stream((arrayNode != null) ? arrayNode.spliterator() : Spliterators.emptySpliterator(), false)
-                .forEach(jsonNode -> EventService.publish(createEvent(operation, jsonNode, timestamp)));
+                .forEach(jsonNode -> {
+                    try {
+                        EventService.publish(createEvent(operation, jsonNode, timestamp));
+                    } catch (final IllegalArgumentException e) {
+                        NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", jsonNode.get("Name").asText() + "\nPlease report!");
+                    }
+                });
     }
 
     private BackpackChangeEvent createEvent(final Operation operation, final JsonNode jsonNode, final String timestamp) {
