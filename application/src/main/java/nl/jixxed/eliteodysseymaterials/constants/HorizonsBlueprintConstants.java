@@ -333,6 +333,7 @@ public abstract class HorizonsBlueprintConstants {
         SYNTHESIS.put(HorizonsBlueprintName.SEISMIC_CHARGE_MUNITIONS, SynthesisBlueprints.SEISMIC_CHARGE_MUNITIONS);
         SYNTHESIS.put(HorizonsBlueprintName.SHOCK_CANNON_MUNITIONS, SynthesisBlueprints.SHOCK_CANNON_MUNITIONS);
         SYNTHESIS.put(HorizonsBlueprintName.SMALL_CALIBRE_MUNITIONS, SynthesisBlueprints.SMALL_CALIBRE_MUNITIONS);
+        SYNTHESIS.put(HorizonsBlueprintName.CAUSTIC_SINKS, SynthesisBlueprints.CAUSTIC_SINKS);
         SYNTHESIS.put(HorizonsBlueprintName.SRV_AMMO_RESTOCK, SynthesisBlueprints.SRV_AMMO_RESTOCK);
         SYNTHESIS.put(HorizonsBlueprintName.SRV_REFUEL, SynthesisBlueprints.SRV_REFUEL);
         SYNTHESIS.put(HorizonsBlueprintName.SRV_REPAIR, SynthesisBlueprints.SRV_REPAIR);

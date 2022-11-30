@@ -334,6 +334,8 @@ public enum Commodity implements HorizonsMaterial {
     THARGOIDTISSUESAMPLETYPE2(CommodityType.SALVAGE, FALSE),
     THARGOIDTISSUESAMPLETYPE3(CommodityType.SALVAGE, FALSE),
     THARGOIDTISSUESAMPLETYPE4(CommodityType.SALVAGE, FALSE),
+    THARGOIDTISSUESAMPLETYPE5(CommodityType.SALVAGE, FALSE, GameVersion.LIVE),
+    THARGOIDGENERATORTISSUESAMPLE(CommodityType.SALVAGE, FALSE, GameVersion.LIVE),
     THEHUTTONMUG(CommodityType.CONSUMER_ITEMS, TRUE),
     THERMALCOOLINGUNITS(CommodityType.MACHINERY, FALSE),
     THORIUM(CommodityType.METALS, FALSE),
@@ -354,6 +356,7 @@ public enum Commodity implements HorizonsMaterial {
     UNKNOWNBIOLOGICALMATTER(CommodityType.SALVAGE, FALSE),
     UNKNOWNRESIN(CommodityType.SALVAGE, FALSE),
     UNKNOWNTECHNOLOGYSAMPLES(CommodityType.SALVAGE, FALSE),
+    UNOCCUPIEDESCAPEPOD(CommodityType.SALVAGE, FALSE, GameVersion.LIVE),
     UNSTABLEDATACORE(CommodityType.SALVAGE, FALSE),
     URANINITE(CommodityType.MINERALS, FALSE),
     URANIUM(CommodityType.METALS, FALSE),
@@ -390,6 +393,13 @@ public enum Commodity implements HorizonsMaterial {
     UNKNOWN(CommodityType.UNKNOWN, FALSE);
     private final CommodityType commodityType;
     private final boolean rareCommodity;
+    private final GameVersion gameVersion;
+
+    Commodity(final CommodityType commodityType, final boolean rareCommodity) {
+        this.commodityType = commodityType;
+        this.rareCommodity = rareCommodity;
+        this.gameVersion = GameVersion.LEGACY;
+    }
 
     @Override
     public String getLocalizationKey() {

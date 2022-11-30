@@ -686,4 +686,16 @@ public class SynthesisBlueprints {
                     Map.of(),
                     List.of()));
 
+
+    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> CAUSTIC_SINKS = Map.of(
+            HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.CAUSTIC_SINKS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
+                    Map.of(
+                            Manufactured.CHEMICALSTORAGEUNITS, 1,
+                            Manufactured.GALVANISINGALLOYS, 1,
+                            Manufactured.TG_CAUSTICSHARD, 4,
+                            Manufactured.TG_CAUSTICGENERATORPARTS, 2),
+                    Map.of(),
+                    List.of(),
+                    GameVersion.LIVE));
+
 }

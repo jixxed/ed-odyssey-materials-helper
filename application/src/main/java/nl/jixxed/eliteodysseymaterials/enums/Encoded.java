@@ -39,6 +39,8 @@ public enum Encoded implements HorizonsMaterial {
     ANCIENTHISTORICALDATA(Rarity.VERY_COMMON, HorizonsMaterialType.GUARDIAN),//Pattern Gamma Obelisk Data
     SHIELDFREQUENCYDATA(Rarity.VERY_RARE, HorizonsMaterialType.SHIELD_DATA),
     SECURITYFIRMWARE(Rarity.RARE, HorizonsMaterialType.ENCODED_FIRMWARE),
+    TG_INTERDICTIONDATA(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
+    TG_SHUTDOWNDATA(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
     TG_SHIPFLIGHTDATA(Rarity.STANDARD, HorizonsMaterialType.THARGOID),
     TG_SHIPSYSTEMSDATA(Rarity.RARE, HorizonsMaterialType.THARGOID),
     LEGACYFIRMWARE(Rarity.VERY_COMMON, HorizonsMaterialType.ENCODED_FIRMWARE),
@@ -57,6 +59,13 @@ public enum Encoded implements HorizonsMaterial {
 
     private final Rarity rarity;
     private final HorizonsMaterialType materialType;
+    private final GameVersion gameVersion;
+
+    Encoded(final Rarity rarity, final HorizonsMaterialType materialType) {
+        this.rarity = rarity;
+        this.materialType = materialType;
+        this.gameVersion = GameVersion.LEGACY;
+    }
 
     @Override
     public String getLocalizationKey() {

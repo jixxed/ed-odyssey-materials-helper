@@ -101,6 +101,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     SMALL_CALIBRE_MUNITIONS(BlueprintCategory.SYNTHESIS),
     SRV_AMMO_RESTOCK(BlueprintCategory.SYNTHESIS),
     SRV_REFUEL(BlueprintCategory.SYNTHESIS),
+    CAUSTIC_SINKS(BlueprintCategory.SYNTHESIS),
     SRV_REPAIR(BlueprintCategory.SYNTHESIS),
     SUB_SURFACE_DISPLACEMENT_MUNITIONS(BlueprintCategory.SYNTHESIS),
     //Techbroker

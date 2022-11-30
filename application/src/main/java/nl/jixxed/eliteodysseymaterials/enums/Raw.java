@@ -40,7 +40,13 @@ public enum Raw implements HorizonsMaterial {
     UNKNOWN(Rarity.UNKNOWN, HorizonsMaterialType.UNKNOWN);
     private final Rarity rarity;
     private final HorizonsMaterialType materialType;
+    private final GameVersion gameVersion;
 
+    Raw(final Rarity rarity, final HorizonsMaterialType materialType) {
+        this.rarity = rarity;
+        this.materialType = materialType;
+        this.gameVersion = GameVersion.LEGACY;
+    }
     @Override
     public String getLocalizationKey() {
         return "material.raw." + this.name().toLowerCase();

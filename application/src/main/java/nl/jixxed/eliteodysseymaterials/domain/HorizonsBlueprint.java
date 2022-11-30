@@ -31,6 +31,8 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
     private final Map<HorizonsModifier, HorizonsModifierValue> modifiers;
     @Getter
     private final List<Engineer> engineers;
+    @Getter
+    private final GameVersion gameVersion;
 
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends HorizonsMaterial, Integer> materials) {
         this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), null);
@@ -44,7 +46,7 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         this(horizonsBlueprintName, horizonsBlueprintType, HorizonsBlueprintGrade.NONE, materials, modifiers, engineers);
     }
 
-    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers, final GameVersion gameVersion) {
         this.horizonsBlueprintName = horizonsBlueprintName;
         this.horizonsBlueprintType = horizonsBlueprintType;
         this.horizonsBlueprintGrade = horizonsBlueprintGrade;
@@ -54,6 +56,11 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         this.encoded = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Encoded).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.manufactured = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Manufactured).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         this.commodities = materials.entrySet().stream().filter(materialIntegerEntry -> materialIntegerEntry.getKey() instanceof Commodity).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        this.gameVersion = gameVersion;
+    }
+
+    public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
+        this(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade, materials, modifiers, engineers, GameVersion.LEGACY);
     }
 
     public <T extends HorizonsMaterial> Map<HorizonsMaterial, Integer> getMaterialCollection(final Class<T> clazz) {

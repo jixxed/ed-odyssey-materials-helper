@@ -54,6 +54,8 @@ public interface HorizonsMaterial extends Material {
 
     Rarity getRarity();
 
+    GameVersion getGameVersion();
+
     String name();
 
     default int getMaxAmount() {

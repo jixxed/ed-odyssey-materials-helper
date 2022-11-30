@@ -11,6 +11,7 @@ public enum Manufactured implements HorizonsMaterial {
     BASICCONDUCTORS(Rarity.VERY_COMMON, HorizonsMaterialType.CONDUCTIVE),
     TG_BIOMECHANICALCONDUITS(Rarity.STANDARD, HorizonsMaterialType.THARGOID),//tg_biomechanicalconduits
     BIOTECHCONDUCTORS(Rarity.VERY_RARE, HorizonsMaterialType.CONDUCTIVE),
+    TG_CAUSTICSHARD(Rarity.COMMON, HorizonsMaterialType.THARGOID,GameVersion.LIVE),//
     CHEMICALDISTILLERY(Rarity.STANDARD, HorizonsMaterialType.CHEMICAL),
     CHEMICALMANIPULATORS(Rarity.RARE, HorizonsMaterialType.CHEMICAL),
     CHEMICALPROCESSORS(Rarity.COMMON, HorizonsMaterialType.CHEMICAL),
@@ -21,6 +22,7 @@ public enum Manufactured implements HorizonsMaterial {
     CONDUCTIVECOMPONENTS(Rarity.COMMON, HorizonsMaterialType.CONDUCTIVE),
     CONDUCTIVEPOLYMERS(Rarity.RARE, HorizonsMaterialType.CONDUCTIVE),
     CONFIGURABLECOMPONENTS(Rarity.RARE, HorizonsMaterialType.MECHANICAL_COMPONENTS),
+    TG_CAUSTICGENERATORPARTS(Rarity.STANDARD, HorizonsMaterialType.THARGOID,GameVersion.LIVE),//
     FEDCORECOMPOSITES(Rarity.VERY_RARE, HorizonsMaterialType.COMPOSITE),//fedcorecomposites
     CRYSTALSHARDS(Rarity.VERY_COMMON, HorizonsMaterialType.CRYSTALS),
     ELECTROCHEMICALARRAYS(Rarity.STANDARD, HorizonsMaterialType.CAPACITORS),
@@ -75,7 +77,13 @@ public enum Manufactured implements HorizonsMaterial {
     UNKNOWN(Rarity.UNKNOWN, HorizonsMaterialType.UNKNOWN);
     private final Rarity rarity;
     private final HorizonsMaterialType materialType;
+    private final GameVersion gameVersion;
 
+    Manufactured(final Rarity rarity, final HorizonsMaterialType materialType) {
+        this.rarity = rarity;
+        this.materialType = materialType;
+        this.gameVersion = GameVersion.LEGACY;
+    }
     @Override
     public String getLocalizationKey() {
         return "material.manufactured." + this.name().toLowerCase();
