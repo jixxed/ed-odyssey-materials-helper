@@ -2358,7 +2358,7 @@ tab.settings.ar.bartender.toggle,Bartender overlay,Bartender overlay,Barkeeper O
 tab.settings.ar.color.bartender,Bartender color,Bartender color,Barkeeper Farbe,Color de camarero,Couleur barman,Cor do barman,Бармен Цвет
 material.commodity.thargoidgeneratortissuesample,Thargoid Generator Tissue Sample,Thargoid Generator Tissue Sample,Thargoidengenerator-Gewebeprobe,Muestra de tejido de Generador Thargoide,Échantillon de tissu d''un Générateur thargoid,Amostra de tecido da Thargoid Gerador,Образец ткани генератора Thargoid
 material.commodity.thargoidtissuesampletype5,Thargoid Orthrus Tissue Sample,Thargoid Orthrus Tissue Sample,ThargoidenOrthrus-Gewebeprobe,Muestra de tejido de Orthrus Thargoide,Échantillon de tissu d''un Orthrus thargoid,Amostra de tecido da Thargoid Orthrus,Образец ткани таргоидского корабля «Гидра»
-material.commodity.unoccupiedescapepod,Unoccupied Escape Pod,Unoccupied Escape Pod,Unbesetzte Fluchtkapsel,Podaz de escape desocupado,Pod évadé inoccupé,Pods de fuga desocupada,Незамеченная капсула Escape
+material.commodity.unocuppiedescapepod,Unoccupied Escape Pod,Unoccupied Escape Pod,Unbesetzte Fluchtkapsel,Podaz de escape desocupado,Pod évadé inoccupé,Pods de fuga desocupada,Незамеченная капсула Escape
 material.encoded.tg_interdictiondata,Thargoid Interdiction Telemetry,Thargoid Interdiction Telemetry,,,,,
 material.encoded.tg_shutdowndata,Massive Energy Surge Analytics,Massive Energy Surge Analytics,,,,,
 material.manufactured.tg_causticgeneratorparts,Corrosive Mechanisms,Corrosive Mechanisms,,,,,

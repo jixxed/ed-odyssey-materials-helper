@@ -356,7 +356,7 @@ public enum Commodity implements HorizonsMaterial {
     UNKNOWNBIOLOGICALMATTER(CommodityType.SALVAGE, FALSE),
     UNKNOWNRESIN(CommodityType.SALVAGE, FALSE),
     UNKNOWNTECHNOLOGYSAMPLES(CommodityType.SALVAGE, FALSE),
-    UNOCCUPIEDESCAPEPOD(CommodityType.SALVAGE, FALSE, GameVersion.LIVE),
+    UNOCUPPIEDESCAPEPOD(CommodityType.SALVAGE, FALSE, GameVersion.LIVE),
     UNSTABLEDATACORE(CommodityType.SALVAGE, FALSE),
     URANINITE(CommodityType.MINERALS, FALSE),
     URANIUM(CommodityType.METALS, FALSE),
