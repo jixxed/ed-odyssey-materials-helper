@@ -146,8 +146,12 @@ public class FileProcessor {
     public static synchronized void processStatusFile(final File file) {
         try {
             final String status = Files.readString(file.toPath());
-            final JsonNode jsonNode = OBJECT_MAPPER.readTree(status);
-            Platform.runLater(() -> ApplicationState.getInstance().updateWithFlags(jsonNode.get("Flags").asInt(), jsonNode.get("Flags2").asInt()));
+            if(!status.isBlank()) {//status file can be empty
+                final JsonNode jsonNode = OBJECT_MAPPER.readTree(status);
+                if(jsonNode.has("Flags") && jsonNode.has("Flags2")) {
+                    Platform.runLater(() -> ApplicationState.getInstance().updateWithFlags(jsonNode.get("Flags").asInt(), jsonNode.get("Flags2").asInt()));
+                }
+            }
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
