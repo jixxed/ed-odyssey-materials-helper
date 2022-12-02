@@ -437,6 +437,29 @@ public class TechbrokerBlueprints {
                             Raw.PHOSPHORUS, 28),
                     Map.of(),
                     List.of()
+            )),
+            Map.entry(HorizonsBlueprintType.E2_SIRIUS_CORPORATION_AX_MISSILE_RACK, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.E2_SIRIUS_CORPORATION_AX_MISSILE_RACK,
+                    Map.of(
+                            Manufactured.MECHANICALEQUIPMENT, 12,
+                            Manufactured.HEATDISPERSIONPLATE, 6,
+                            Raw.VANADIUM, 8,
+                            Manufactured.HIGHDENSITYCOMPOSITES, 5,
+                            Manufactured.MILITARYSUPERCAPACITORS, 5
+                    ),
+                    Map.of(),
+                    List.of()
+            )),
+            Map.entry(HorizonsBlueprintType.C3_SIRIUS_CORPORATION_AX_MISSILE_RACK, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.C3_SIRIUS_CORPORATION_AX_MISSILE_RACK,
+                    Map.of(
+                            Manufactured.MECHANICALEQUIPMENT, 20,
+                            Manufactured.HEATDISPERSIONPLATE, 9,
+                            Raw.VANADIUM, 13,
+                            Manufactured.HIGHDENSITYCOMPOSITES, 10,
+                            Raw.TECHNETIUM,3,
+                            Manufactured.MILITARYSUPERCAPACITORS, 10
+                    ),
+                    Map.of(),
+                    List.of()
             )));
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> HUMAN_MODULES = Map.of(
             HorizonsBlueprintType.ENGINEERED_DETAILED_SURFACE_SCANNER_V1,
@@ -459,13 +482,17 @@ public class TechbrokerBlueprints {
                     Map.of(),
                     List.of()
             ),
-//            HorizonsBlueprintType.ENGINEERED_HEAT_SINK_LAUNCHER_V1,
-//            new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_HEAT_SINK_LAUNCHER_V1,
-//                    Map.of(
-//                    ),
-//                    Map.of(),
-//                    List.of()
-//            ),
+            HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER,
+            new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER,
+                    Map.of(
+                            Manufactured.MECHANICALSCRAP, 8,
+                            Raw.NIOBIUM, 6,
+                            Raw.VANADIUM, 6,
+                            Manufactured.MECHANICALCOMPONENTS, 5
+                    ),
+                    Map.of(),
+                    List.of()
+            ),
             HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
                     Map.of(
                             Commodity.METAALLOYS, 16,

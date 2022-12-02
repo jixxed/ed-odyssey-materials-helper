@@ -2269,8 +2269,6 @@ search.grouping.none,None,None,Keiner,Ninguna,Aucun,Nenhum,Никто
 search.grouping.placeholder,Group materials,Group materials,Gruppenmaterialien,Materiales grupales,Matériaux de groupe,Materiais de grupo,Групповые материалы
 search.sort.grade,Grade,Grade,Klasse,Calificación,Noter,Avaliar,Оценка
 search.sort.quantity_required,Quantity required,Quantity required,Erforderliche Menge,Cantidad requerida,Quantité Nécessaire,Quantidade Requerida,Требуемое Количество
-blueprint.horizons.type.engineered_heat_sink_launcher_v1,Engineered Heat Sink Launcher V1,Engineered Heat Sink Launcher V1,,,,,
-blueprint.horizons.type.description.engineered_heat_sink_launcher_v1,"A pre-engineered Heat Sink Launcher with 5 heat sinks and 75% longer recharge time. Compared to the player-engineered version, the pre-engineered version adds 1 additional heat sink for 2.5s longer recharge, but does not carry the increased mass penalty. The modules are available through technology brokers on Sirius Corporation megaships: Chariot of Rhea, El Centinela Cadejo, Kumiho Sky, Spirit of Laelaps and The Witness Odysseus",,,,,,
 settings.button.export.inventory,Export Inventory,Export Inventory,Inventar exportieren,Inventario de exportación,Inventaire d''exportation,Inventário de exportação,Экспортный инвентарь
 settings.button.export.inventory.save,Save,Save,Speichern,Ahorrar,sauvegarder,Salvar,Сохранять
 material.commodity.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnue,Desconhecido,Неизвестный
@@ -2370,3 +2368,9 @@ tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders 
 material.tooltip.is.live,LIVE only material,LIVE only material,,,,,
 material.tooltip.is.live.commodity,LIVE only commodity,LIVE only commodity,,,,,
 blueprint.is.live,LIVE only blueprint,LIVE only blueprint,,,,,
+blueprint.horizons.type.sirius_heat_sink_launcher,Sirius Heat Sink Launcher,Sirius Heat Sink Launcher,,,,,
+blueprint.horizons.type.description.sirius_heat_sink_launcher,"A pre-engineered Heat Sink Launcher with 5 heat sinks and 75% longer recharge time. Compared to the player-engineered version, the pre-engineered version adds 1 additional heat sink for 2.5s longer recharge, but does not carry the increased mass penalty. The module is available through technology brokers on Sirius Corporation megaships: Chariot of Rhea, El Centinela Cadejo, Kumiho Sky, Spirit of Laelaps and The Witness Odysseus.",,,,,,
+blueprint.horizons.type.e2_sirius_corporation_ax_missile_rack,E2 Sirius Corporation AX Missile Rack,,,,,,
+blueprint.horizons.type.description.e2_sirius_corporation_ax_missile_rack,A pre-engineered Size 2 AX Missile Rack with increased ammo capacity and fire rate with reduced reload time at the cost of slightly reduced damage and increased mass. The warheads are tipped with a compound hazardous for Thargoid vessels.,,,,,,
+blueprint.horizons.type.c3_sirius_corporation_ax_missile_rack,C3 Sirius Corporation AX Missile Rack,,,,,,
+blueprint.horizons.type.description.c3_sirius_corporation_ax_missile_rack,A pre-engineered Size 3 AX Missile Rack with increased ammo capacity and fire rate with reduced reload time at the cost of slightly reduced damage and increased mass. The warheads are tipped with a compound hazardous for Thargoid vessels.,,,,,,
