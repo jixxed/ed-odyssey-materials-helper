@@ -12,12 +12,7 @@ public class CargoTransferMessageProcessor implements MessageProcessor {
     @Override
     @SuppressWarnings("java:S1192")
     public void process(final JsonNode journalMessage) {
-//        if (journalMessage.get("Inventory") == null) {
-//            EventService.publish(new CargoEvent(journalMessage.get("timestamp").asText()));
-//            return;
-//        }
         journalMessage.get("Transfers").elements().forEachRemaining(transfer -> {
-            //{ "Type":"unknownartifact", "Type_Localised":"Thargoid Sensor", "Count":1, "Direction":"tocarrier" }
             if ("tocarrier".equals(transfer.get("Direction").asText())) {
                 final Commodity commodity = Commodity.forName(transfer.get("Type").asText());
                 if (commodity.isUnknown()) {

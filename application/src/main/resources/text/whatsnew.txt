@@ -1,3 +1,9 @@
+Version 2.4
+-------------
+Add new Sirius techbroker blueprints (Heatsink Launcher, AX Missile Racks)
+Fix missing numbers for quantities on horizons material cards with small text size configured
+Fix unocuppiedescapepod commodity (misspelled in journals)
+
 Version 2.3
 -------------
 Added notifications for unknown materials/commodities
