@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
@@ -54,7 +55,7 @@ public class FileProcessor {
             while ((line = lineReader.readLine()) != null) {
                 //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
-                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(JournalEventType.MISSIONCOMPLETED,JournalEventType.MATERIALCOLLECTED, JournalEventType.MATERIALTRADE, JournalEventType.ENGINEERCRAFT);
+                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(JournalEventType.MISSIONCOMPLETED, JournalEventType.MATERIALCOLLECTED, JournalEventType.MATERIALTRADE, JournalEventType.ENGINEERCRAFT);
                 if (jsonNode.get(EVENT) != null) {
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                     if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {
@@ -140,6 +141,16 @@ public class FileProcessor {
 
     public static synchronized void processStateFile(final File file, final JournalEventType journalEventType) {
         Platform.runLater(() -> MessageHandler.handleMessage(file, journalEventType));
+    }
+
+    public static synchronized void processStatusFile(final File file) {
+        try {
+            final String status = Files.readString(file.toPath());
+            final JsonNode jsonNode = OBJECT_MAPPER.readTree(status);
+            Platform.runLater(() -> ApplicationState.getInstance().updateWithFlags(jsonNode.get("Flags").asInt(), jsonNode.get("Flags2").asInt()));
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

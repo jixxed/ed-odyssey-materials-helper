@@ -40,6 +40,7 @@ public enum JournalEventType {
     MARKETBUY("MarketBuy"),
     MARKETSELL("MarketSell"),
     CARGO("Cargo"),
+    CARGOTRANSFER("CargoTransfer"),
     TECHNOLOGYBROKER("TechnologyBroker"),
     SUITLOADOUT("SuitLoadout"),
     SWITCHSUITLOADOUT("SuitLoadout");

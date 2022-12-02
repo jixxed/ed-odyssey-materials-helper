@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.CargoEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -18,13 +19,23 @@ public class CargoMessageProcessor implements MessageProcessor {
             return;
         }
         if ("Ship".equals(journalMessage.get("Vessel").asText())) {
-            StorageService.resetHorizonsCommodityCounts();
-            journalMessage.get("Inventory").elements().forEachRemaining(jsonNode -> {
-                final Commodity commodity = Commodity.forName(jsonNode.get("Name").asText());
-                StorageService.addCommodity(commodity, StoragePool.SHIP, jsonNode.get("Count").asInt());
-            });
-            EventService.publish(new StorageEvent(StoragePool.SHIP));
+            processCargo(journalMessage, StoragePool.SHIP, StorageService::resetHorizonsCommodityCounts);
+        } else if ("Srv".equals(journalMessage.get("Vessel").asText())) {
+            processCargo(journalMessage, StoragePool.SRV, StorageService::resetSrvCounts);
         }
 
+    }
+
+    private void processCargo(final JsonNode journalMessage, final StoragePool storagePool, final Runnable storageResetRunnable) {
+        storageResetRunnable.run();
+        journalMessage.get("Inventory").elements().forEachRemaining(jsonNode -> {
+            final Commodity commodity = Commodity.forName(jsonNode.get("Name").asText());
+            if (commodity.isUnknown()) {
+                ReportService.reportMaterial(journalMessage);
+            } else {
+                StorageService.addCommodity(commodity, storagePool, jsonNode.get("Count").asInt());
+            }
+        });
+        EventService.publish(new StorageEvent(storagePool));
     }
 }

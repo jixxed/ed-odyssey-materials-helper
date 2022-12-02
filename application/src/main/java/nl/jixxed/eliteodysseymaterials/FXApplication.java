@@ -30,10 +30,7 @@ import nl.jixxed.eliteodysseymaterials.service.exception.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.URLSchemeDialog;
-import nl.jixxed.eliteodysseymaterials.watchdog.DeeplinkWatcher;
-import nl.jixxed.eliteodysseymaterials.watchdog.GameStateWatcher;
-import nl.jixxed.eliteodysseymaterials.watchdog.JournalWatcher;
-import nl.jixxed.eliteodysseymaterials.watchdog.TimeStampedGameStateWatcher;
+import nl.jixxed.eliteodysseymaterials.watchdog.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
@@ -53,6 +50,7 @@ public class FXApplication extends Application {
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private GameStateWatcher fleetCarrierWatcher;
+    private StatusWatcher statusWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final DeeplinkWatcher deeplinkWatcher = new DeeplinkWatcher();
     private Stage primaryStage;
@@ -193,6 +191,7 @@ public class FXApplication extends Application {
         this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
         this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
         this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
+        this.statusWatcher = new StatusWatcher(watchedFolder, FileProcessor::processStatusFile, AppConstants.STATUS_FILE);
 
 
     }
@@ -400,6 +399,7 @@ public class FXApplication extends Application {
         StorageService.resetShipLockerCounts();
         StorageService.resetBackPackCounts();
         StorageService.resetFleetCarrierCounts();
+        StorageService.resetSrvCounts();
         StorageService.resetHorizonsMaterialCounts();
         StorageService.resetHorizonsCommodityCounts();
         if (this.fleetCarrierWatcher != null) {
@@ -410,6 +410,7 @@ public class FXApplication extends Application {
         this.timeStampedBackPackWatcher.stop();
         this.journalWatcher.stop();
         this.deeplinkWatcher.stop();
+        this.statusWatcher.stop();
         setupDeeplinkWatcher();
         setupStorageWatchers(watchedFolder);
     }

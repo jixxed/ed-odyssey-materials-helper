@@ -64,6 +64,7 @@ public class Storage {
             case SHIPLOCKER -> this.shipLocker;
             case FLEETCARRIER -> this.fleetCarrier;
             case SHIP -> null;
+            case SRV -> null;
         };
     }
 }

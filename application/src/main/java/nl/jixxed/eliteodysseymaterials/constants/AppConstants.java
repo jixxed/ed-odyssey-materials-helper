@@ -21,4 +21,6 @@ public class AppConstants {
     public static final String HORIZONS_PINNED_BLUEPRINTS_FILE = "horizons_pinned_blueprints.json";
     public static final String ODYSSEY_FAVOURITES_FILE = "odyssey_favourites.json";
     public static final String CARGO_FILE = "Cargo.json";
+    public static final String STATUS_FILE = "Status.json";
+
 }

@@ -166,9 +166,11 @@ public enum HorizonsBlueprintType {
     MODIFIED_MINING_LASER_FIXED_SMALL(false),
     ENGINEERED_DETAILED_SURFACE_SCANNER_V1(false),
     ENGINEERED_FSD_V1(false),
-    ENGINEERED_HEAT_SINK_LAUNCHER_V1(false),
+    SIRIUS_HEAT_SINK_LAUNCHER(false),
     CORROSION_RESISTANT_CARGO_RACK(false),
-    BOBBLEHEAD(false);
+    BOBBLEHEAD(false),
+    E2_SIRIUS_CORPORATION_AX_MISSILE_RACK(false),
+    C3_SIRIUS_CORPORATION_AX_MISSILE_RACK(false);
     @Getter
     private final boolean experimental;
 

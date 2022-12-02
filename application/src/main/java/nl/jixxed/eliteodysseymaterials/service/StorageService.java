@@ -23,6 +23,8 @@ public class StorageService {
     @Getter
     private static final Map<Commodity, Integer> commoditiesShip = new EnumMap<>(Commodity.class);
     @Getter
+    private static final Map<Commodity, Integer> commoditiesSrv = new EnumMap<>(Commodity.class);
+    @Getter
     private static final Map<Commodity, Integer> commoditiesFleetcarrier = new EnumMap<>(Commodity.class);
     @Getter
     private static final Map<Good, Storage> goods = new EnumMap<>(Good.class);
@@ -85,6 +87,8 @@ public class StorageService {
             commoditiesFleetcarrier.put(commodity, commoditiesFleetcarrier.get(commodity) + amount);
         } else if (StoragePool.SHIP.equals(storagePool)) {
             commoditiesShip.put(commodity, commoditiesShip.get(commodity) + amount);
+        } else if (StoragePool.SRV.equals(storagePool)) {
+            commoditiesSrv.put(commodity, commoditiesSrv.get(commodity) + amount);
         } else {
             throw new IllegalArgumentException("storagePool not supported");
         }
@@ -108,6 +112,8 @@ public class StorageService {
             return commoditiesFleetcarrier.getOrDefault(commodity, 0);
         } else if (StoragePool.SHIP.equals(storagePool)) {
             return commoditiesShip.getOrDefault(commodity, 0);
+        } else if (StoragePool.SRV.equals(storagePool)) {
+            return commoditiesSrv.getOrDefault(commodity, 0);
         }
         throw new IllegalArgumentException("Unknown storagePool for commodity");
     }
@@ -124,6 +130,12 @@ public class StorageService {
         getGoods().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
         Arrays.stream(Commodity.values()).forEach(material ->
                 getCommoditiesFleetcarrier().put(material, 0)
+        );
+    }
+
+    public static void resetSrvCounts() {
+        Arrays.stream(Commodity.values()).forEach(material ->
+                getCommoditiesSrv().put(material, 0)
         );
     }
 
@@ -170,10 +182,11 @@ public class StorageService {
         Arrays.stream(Manufactured.values()).forEach(material ->
                 getManufactured().put(material, 0)
         );
-        Arrays.stream(Commodity.values()).forEach(material ->
-                getCommoditiesShip().put(material, 0)
-        );
-
+        Arrays.stream(Commodity.values()).forEach(material -> {
+            getCommoditiesShip().put(material, 0);
+            getCommoditiesFleetcarrier().put(material, 0);
+            getCommoditiesSrv().put(material, 0);
+        });
     }
 
     public static Integer getStorageTotal(final OdysseyStorageType storageType, final StoragePool... storagePools) {
