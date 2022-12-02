@@ -1277,7 +1277,6 @@ material.commodity.uraninite,Uraninite,Uraninite,Uraninit,Uraninita,Uraninite,Ur
 material.commodity.drones,Limpets,Limpets,Limpets,Limpets,Limpets,Limpets,Limpets
 material.commodity.airelics,AI Relics,AI Relics,KI-Relikte,Reliquias de IA,Reliquats d''IA,Relíquias de IA,Фрагменты ИИ
 material.commodity.ancientcasket,Guardian Casket,Guardian Casket,Guardianschatulle,Féretro guardián,Cercueil des Guardians,Caixão Guardian,Шкатулка Стражей
-material.commodity.ancientkey,Ancient Key,Ancient Key,Uralter Schlüssel,Llave antigua,Clé antique,Chave Antiga,Древний ключ
 material.commodity.ancientorb,Guardian Orb,Guardian Orb,Guardiankugel,Orbe guardián,Orbe des Guardians,Orbe Guardian,Сфера Стражей
 material.commodity.ancientrelic,Guardian Relic,Guardian Relic,Guardian-Relikt,Reliquia guardián,Relique des Guardians,Relíquia Guardian,Реликвия Стражей
 material.commodity.ancienttablet,Guardian Tablet,Guardian Tablet,Guardiantafel,Tablilla guardián,Tablette des Guardians,Tábua Guardian,Табличка Стражей
@@ -1542,11 +1541,6 @@ material.data.weaponinventory,Weapon Inventory,Weapon Inventory,Waffeninventarli
 material.data.weapontestdata,Weapon Test Data,Weapon Test Data,Waffentestdaten,Datos de pruebas armamentísticas,Données de test d''armes,Dados de testes de arma,Сведения об испытаниях вооружения
 material.data.xenodefenceprotocols,Xeno-Defence Protocols,Xeno-Defence Protocols,Xeno-Abwehr-Protokolle,Protocolos de xenodefensa,Protocoles anti-xénomorphes,Protocolos de defesa antixeno,Алгоритм противодействия инопланетной угрозе
 material.encoded.adaptiveencryptors,Adaptive Encryptors Capture,Adaptive Encryptors Capture,Adaptive Verschlüsselungserfassung,Captura de encriptadores adaptativos,Capture de cryptage évolutif,Encriptadores adaptativos capturados,Захват адаптивного шифровальщика
-material.encoded.ancientbiologicaldata,Pattern Alpha Obelisk Data,Pattern Alpha Obelisk Data,Alpha-Muster-Obeliskendaten,Datos de obelisco de patrón alfa,Données d''obélisque de type alpha,Dados de Obelisco de Padrão Alfa,Данные с обелиска «Альфа»
-material.encoded.ancientculturaldata,Pattern Beta Obelisk Data,Pattern Beta Obelisk Data,Beta-Muster-Obeliskendaten,Datos de obelisco de patrón beta,Données d''obélisque de type bêta,Dados de Obelisco de Padrão Beta,Данные с обелиска «Бета»
-material.encoded.ancienthistoricaldata,Pattern Gamma Obelisk Data,Pattern Gamma Obelisk Data,Gamma-Muster-Obeliskendaten,Datos de obelisco de patrón gamma,Données d''obélisque de type gamma,Dados de Obelisco de Padrão Gama,Данные с обелиска «Гамма»
-material.encoded.ancientlanguagedata,Pattern Delta Obelisk Data,Pattern Delta Obelisk Data,Delta-Muster-Obeliskendaten,Datos de obelisco de patrón delta,Données d''obélisque de type delta,Dados de Obelisco de Padrão Delta,Данные с обелиска «Дельта»
-material.encoded.ancienttechnologicaldata,Pattern Epsilon Obelisk Data,Pattern Epsilon Obelisk Data,Epsilon-Muster-Obeliskendaten,Datos de obelisco de patrón epsilon,Données d''obélisque de type epsilon,Dados de Obelisco de Padrão Epsilon,Данные с обелиска «Эпсилон»
 material.encoded.archivedemissiondata,Irregular Emission Data,Irregular Emission Data,Irreguläre Emissionsdaten,Datos de emisión irregulares,Données d''émissions aberrantes,Dados de emissão irregulares,Нестандартные данные об излучении
 material.encoded.bulkscandata,Anomalous Bulk Scan Data,Anomalous Bulk Scan Data,Anormale Massen-Scan-Daten,Datos de escáner en bruto anómalos,Fichier volumineux de données d''analyse anormal,Dados brutos de escâner anômalos,Аномальный массив данных сканирования
 material.encoded.classifiedscandata,Classified Scan Fragment,Classified Scan Fragment,Geheimes Scan-Fragment,Fragmento de escáner clasificado,Données d''analyse classifiées parcellaires,Fragmentos de escaneamentos confidenciais,Засекреченные фрагменты данных сканирования
@@ -1580,8 +1574,6 @@ material.encoded.shieldsoakanalysis,Inconsistent Shield Soak Analysis,Inconsiste
 material.encoded.symmetrickeys,Open Symmetric Keys,Open Symmetric Keys,Offene symmetrische Schlüssel,Claves simétricas abiertas,Clés symétriques ouvertes,Chaves simétricas abertas,Открытые симметричные ключи
 material.encoded.tg_compositiondata,Thargoid Material Composition Data,Thargoid Material Composition Data,Materialzusammensetzungsdaten der Thargoiden,Datos de composición material Thargoide,Données de composition de matériau thargoid,Dados de Composição de Material Thargoid,Данные о составе таргоидских материалов
 material.encoded.tg_residuedata,Thargoid Residue Data,Thargoid Residue Data,Thargoiden-Rückstandsdaten,Datos residuales Thargoides,Données de résidu thargoid,Dados de Resíduos Thargoid,Данных об осадке таргоидского происхождения
-material.encoded.tg_shipflightdata,Ship Flight Data,Ship Flight Data,Schiffsflugdaten,Datos de vuelos de nave,Données de vol de vaisseau,Dados de Voo da Nave,Полетные данные корабля
-material.encoded.tg_shipsystemsdata,Ship Systems Data,Ship Systems Data,Schiffssysteme-Daten,Datos de sistemas de nave,Données de systèmes de vaisseau,Dados do Sistema da Nave,Данные бортовых систем корабля
 material.encoded.tg_structuraldata,Thargoid Structural Data,Thargoid Structural Data,Thargoiden-Strukturdaten,Datos estructurales Thargoides,Données de structure thargoid,Dados de Estrutura Thargoid,Данные о структуре таргоидского объекта
 material.encoded.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестно
 material.encoded.unknownshipsignature,Thargoid Ship Signature,Thargoid Ship Signature,Thargoiden-Schiffssignatur,Firma térmica de nave Thargoide,Signature de vaisseau thargoid,Assinatura de Nave Thargoid,Сигнатура таргоидского корабля
@@ -1683,10 +1675,6 @@ material.manufactured.salvagedalloys,Salvaged Alloys,Salvaged Alloys,Geborgene L
 material.manufactured.shieldemitters,Shield Emitters,Shield Emitters,Schildemitter,Emisor de escudos,Émetteurs de bouclier,Emissores de escudo,Щитоизлучатели
 material.manufactured.shieldingsensors,Shielding Sensors,Shielding Sensors,Schildsensoren,Sensores de escudo,Capteurs de bouclier,Sensores para proteção,Сенсоры системы экранирования
 material.manufactured.temperedalloys,Tempered Alloys,Tempered Alloys,Vergütete Legierungen,Aleaciones templadas,Alliages trempés,Ligas temperadas,Закаленные сплавы
-material.manufactured.tg_biomechanicalconduits,Bio-Mechanical Conduits,Bio-Mechanical Conduits,Biomechanische Leiter,Conductos biomecánicos,Conduits biomécaniques,Condutor Biomecânico,Биомеханические энергопроводники
-material.manufactured.tg_propulsionelement,Propulsion Elements,Propulsion Elements,Schubantriebelemente,Elementos de propulsión,Éléments de propulsion,Elementos de Propulsão,Реактивные элементы
-material.manufactured.tg_weaponparts,Weapon Parts,Weapon Parts,Waffenteile,Piezas de armamento,Pièces d''armement,Peças de Arma,Детали вооружения
-material.manufactured.tg_wreckagecomponents,Wreckage Components,Wreckage Components,Wrackteilkomponenten,Restos de accidentes,Débris d''épave,Restos de componentes,Обломки кораблекрушений
 material.manufactured.thermicalloys,Thermic Alloys,Thermic Alloys,Thermische Legierungen,Aleaciones térmicas,Alliages thermiques,Ligas térmicas,Термические сплавы
 material.manufactured.uncutfocuscrystals,Flawed Focus Crystals,Flawed Focus Crystals,Fehlerhafte Fokuskristalle,Cristales de convergencia imperfectos,Cristaux de focalisation imparfaits,Cristais de focalização falhos,Поврежденные фокусировочные кристаллы
 material.manufactured.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестно
@@ -2354,14 +2342,8 @@ notification.collected.wishlist.material.notification,{0} {1}/{2},{0} {1}/{2},{0
 notification.collected.wishlist.material.notification.horizons,{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3}
 tab.settings.ar.bartender.toggle,Bartender overlay,Bartender overlay,Barkeeper Overlay,Superposición de barman,Superposition du barman,Sobreposição de barman,Бартендентный наложение
 tab.settings.ar.color.bartender,Bartender color,Bartender color,Barkeeper Farbe,Color de camarero,Couleur barman,Cor do barman,Бармен Цвет
-material.commodity.thargoidgeneratortissuesample,Thargoid Generator Tissue Sample,Thargoid Generator Tissue Sample,Thargoidengenerator-Gewebeprobe,Muestra de tejido de Generador Thargoide,Échantillon de tissu d''un Générateur thargoid,Amostra de tecido da Thargoid Gerador,Образец ткани генератора Thargoid
 material.commodity.thargoidtissuesampletype5,Thargoid Orthrus Tissue Sample,Thargoid Orthrus Tissue Sample,ThargoidenOrthrus-Gewebeprobe,Muestra de tejido de Orthrus Thargoide,Échantillon de tissu d''un Orthrus thargoid,Amostra de tecido da Thargoid Orthrus,Образец ткани таргоидского корабля «Гидра»
 material.commodity.unocuppiedescapepod,Unoccupied Escape Pod,Unoccupied Escape Pod,Unbesetzte Fluchtkapsel,Podaz de escape desocupado,Pod évadé inoccupé,Pods de fuga desocupada,Незамеченная капсула Escape
-material.encoded.tg_interdictiondata,Thargoid Interdiction Telemetry,Thargoid Interdiction Telemetry,,,,,
-material.encoded.tg_shutdowndata,Massive Energy Surge Analytics,Massive Energy Surge Analytics,,,,,
-material.manufactured.tg_causticgeneratorparts,Corrosive Mechanisms,Corrosive Mechanisms,,,,,
-material.manufactured.tg_causticshard,Caustic Shard,Caustic Shard,,,,,
-material.manufactured.tg_causticcrystal,Caustic Crystal,Caustic Crystal,,,,,Едкий кристалл
 blueprint.horizons.name.caustic_sinks,Caustic Sinks,Caustic Sinks,,,,,
 blueprint.horizons.description.caustic_sinks,Refills Caustic sinks for a single module. Basic synthesis provides a full restock of the launcher''s supplies.,Refills Caustic sinks for a single module. Basic synthesis provides a full restock of the launcher''s supplies.,,,,,
 tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Ruft API Daten wie FleetCarrier Aktien und Bestellungen in einem Intervall von 5 Minuten ab,Recupera datos de API como stock de flotante y pedidos en un intervalo de 5 minutos,Récupère les données de l''API comme le stock et les commandes de FleetCarrier sur un intervalle de 5 minutes,Recupera dados da API como estoque de FleetCarrier e pedidos em um intervalo de 5 minutos,Получает данные API, такие как запасы FleetCarrier и заказы в 5 -минутном интервале
@@ -2374,3 +2356,22 @@ blueprint.horizons.type.e2_sirius_corporation_ax_missile_rack,E2 Sirius Corporat
 blueprint.horizons.type.description.e2_sirius_corporation_ax_missile_rack,A pre-engineered Size 2 AX Missile Rack with increased ammo capacity and fire rate with reduced reload time at the cost of slightly reduced damage and increased mass. The warheads are tipped with a compound hazardous for Thargoid vessels. The module must be unlocked repeatedly in order to obtain multiple copies.,,,,,,
 blueprint.horizons.type.c3_sirius_corporation_ax_missile_rack,C3 Sirius Corporation AX Missile Rack,,,,,,
 blueprint.horizons.type.description.c3_sirius_corporation_ax_missile_rack,A pre-engineered Size 3 AX Missile Rack with increased ammo capacity and fire rate with reduced reload time at the cost of slightly reduced damage and increased mass. The warheads are tipped with a compound hazardous for Thargoid vessels. The module must be unlocked repeatedly in order to obtain multiple copies.,,,,,,
+material.encoded.tg_shipflightdata,Ship Flight Data (Thargoid),Ship Flight Data (Thargoid),Schiffsflugdaten,Datos de vuelos de nave,Données de vol de vaisseau,Dados de Voo da Nave,Полетные данные корабля
+material.encoded.tg_shipsystemsdata,Ship Systems Data (Thargoid),Ship Systems Data (Thargoid),Schiffssysteme-Daten,Datos de sistemas de nave,Données de systèmes de vaisseau,Dados do Sistema da Nave,Данные бортовых систем корабля
+material.manufactured.tg_biomechanicalconduits,Bio-Mechanical Conduits (Thargoid),Bio-Mechanical Conduits (Thargoid),Biomechanische Leiter,Conductos biomecánicos,Conduits biomécaniques,Condutor Biomecânico,Биомеханические энергопроводники
+material.manufactured.tg_propulsionelement,Propulsion Elements (Thargoid),Propulsion Elements (Thargoid),Schubantriebelemente,Elementos de propulsión,Éléments de propulsion,Elementos de Propulsão,Реактивные элементы
+material.manufactured.tg_weaponparts,Weapon Parts (Thargoid),Weapon Parts (Thargoid),Waffenteile,Piezas de armamento,Pièces d''armement,Peças de Arma,Детали вооружения
+material.manufactured.tg_wreckagecomponents,Wreckage Components (Thargoid),Wreckage Components (Thargoid),Wrackteilkomponenten,Restos de accidentes,Débris d''épave,Restos de componentes,Обломки кораблекрушений
+material.encoded.ancientbiologicaldata,Pattern Alpha Obelisk Data (Guardian),Pattern Alpha Obelisk Data (Guardian),Alpha-Muster-Obeliskendaten,Datos de obelisco de patrón alfa,Données d''obélisque de type alpha,Dados de Obelisco de Padrão Alfa,Данные с обелиска «Альфа»
+material.encoded.ancientculturaldata,Pattern Beta Obelisk Data (Guardian),Pattern Beta Obelisk Data (Guardian),Beta-Muster-Obeliskendaten,Datos de obelisco de patrón beta,Données d''obélisque de type bêta,Dados de Obelisco de Padrão Beta,Данные с обелиска «Бета»
+material.encoded.ancienthistoricaldata,Pattern Gamma Obelisk Data (Guardian),Pattern Gamma Obelisk Data (Guardian),Gamma-Muster-Obeliskendaten,Datos de obelisco de patrón gamma,Données d''obélisque de type gamma,Dados de Obelisco de Padrão Gama,Данные с обелиска «Гамма»
+material.encoded.ancientlanguagedata,Pattern Delta Obelisk Data (Guardian),Pattern Delta Obelisk Data (Guardian),Delta-Muster-Obeliskendaten,Datos de obelisco de patrón delta,Données d''obélisque de type delta,Dados de Obelisco de Padrão Delta,Данные с обелиска «Дельта»
+material.encoded.ancienttechnologicaldata,Pattern Epsilon Obelisk Data (Guardian),Pattern Epsilon Obelisk Data (Guardian),Epsilon-Muster-Obeliskendaten,Datos de obelisco de patrón epsilon,Données d''obélisque de type epsilon,Dados de Obelisco de Padrão Epsilon,Данные с обелиска «Эпсилон»
+material.commodity.ancientkey,Ancient Key (Guardian),Ancient Key (Guardian),Uralter Schlüssel,Llave antigua,Clé antique,Chave Antiga,Древний ключ
+material.commodity.thargoidgeneratortissuesample,Caustic Tissue Sample (Thargoid),Caustic Tissue Sample (Thargoid),Thargoidengenerator-Gewebeprobe,Muestra de tejido de Generador Thargoide,Échantillon de tissu d''un Générateur thargoid,Amostra de tecido da Thargoid Gerador,Образец ткани генератора Thargoid
+material.encoded.tg_interdictiondata,Thargoid Interdiction Telemetry (Thargoid),Thargoid Interdiction Telemetry (Thargoid),,,,,
+material.encoded.tg_shutdowndata,Massive Energy Surge Analytics (Thargoid),Massive Energy Surge Analytics (Thargoid),,,,,
+material.manufactured.tg_causticgeneratorparts,Corrosive Mechanisms (Thargoid),Corrosive Mechanisms (Thargoid),,,,,
+material.manufactured.tg_causticshard,Caustic Shard (Thargoid),Caustic Shard (Thargoid),,,,,
+material.manufactured.tg_causticcrystal,Caustic Crystal (Thargoid),Caustic Crystal (Thargoid),,,,,Едкий кристалл
+
