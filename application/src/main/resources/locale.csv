@@ -2274,7 +2274,7 @@ settings.button.export.inventory.save,Save,Save,Speichern,Ahorrar,sauvegarder,Sa
 material.commodity.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnue,Desconhecido,Неизвестный
 spawn.location.type.dataport.agr,Agricultural Data Port,Agricultural Data Port,Landwirtschaftlich,Agrícola,Agriculture,Agrícola,Порт данных в здании Сельскохозяйственного производства
 spawn.location.type.dataport.cmd,Command Data Port,Command Data Port,Befehl,Comando,Commande,Comando,Порт данных в здании Командного центра 
-spawn.location.type.dataport.ext,Extraction Data Port,Extraction Data Port,Extraktion,Extracción,Extraction,Extração,Порт данных в здании Добывабщей установки
+spawn.location.type.dataport.ext,Extraction Data Port,Extraction Data Port,Extraktion,Extracción,Extraction,Extração,Порт данных в здании Добывающей установки
 spawn.location.type.dataport.hab,Habitat Data Port,Habitat Data Port,Lebensraum,Hábitat,Habitat,Habitat,Порт данных в здании Жилого модуля 
 spawn.location.type.dataport.ind,Industrial Data Port,Industrial Data Port,Industriell,Industrial,Industriel,Industrial,Порт данных в здании Производства
 spawn.location.type.dataport.lab,Laboratory Data Port,Laboratory Data Port,Labor,Laboratorio,Laboratoire,Laboratório,Порт данных в здании Биологической лаборатории
