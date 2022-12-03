@@ -1,0 +1,14 @@
+messageKey,,en,de,es,fr,pt,ru
+blueprint.category.name.blueprints,Blueprints,Blueprints,Bauplan,Planos,Plans,Blueprints,Чертежи
+blueprint.category.name.core_internal,Core Internals,Core Internals,Intern (Basis),Internales núcleos,Noyau internes,Principais internos,Основное оборудование
+blueprint.category.name.engineer_unlocks,Engineer Unlocks,Engineer Unlocks,Ingenieur-Freischaltungen,Desbloqueo del ingeniero,"Ingénieurs, Déverrouillage",Desbloqueios do engenheiro,Разблокировка инженеров
+blueprint.category.name.experimental_effects,Experimental Effects,Experimental Effects,Experimentelle Effekte,Efectos experimentales,Effets expérimentaux,Efeitos experimentais,Экспериментальные эффекты
+blueprint.category.name.hardpoint,Hardpoints,Hardpoints,Waffenaufhängungen,Puntos duros,Points durs,Hardpoints,Гнёзда
+blueprint.category.name.optional_internal,Optional Internals,Optional Internals,Intern (Optional),Internales opcionales,Internes facultatifs,Internos opcionais,Доп. Оборудование
+blueprint.category.name.suit_grades,Suit Grades,Suit Grades,Anzugstufen,Grados del traje,Niveaux de combinaison,Graus de terno,Уровни костюма
+blueprint.category.name.suit_modules,Suit Modules,Suit Modules,Anzug Modifikationen,Módulos de trajes,Modules de combinaison,Módulos de traje,Модули для костюма
+blueprint.category.name.synthesis,Synthesis,Synthesis,Synthese ,Síntesis,Synthèse,Síntese,Синтез
+blueprint.category.name.techbroker,Techbroker Blueprints,Techbroker Blueprints,Technologie Händler Bauplan,Planos de techbroker,Blueprints TechBroker,Blueprints do TechBroker,Чертежи техноброкеров
+blueprint.category.name.utility_mount,Utility Mounts,Utility Mounts,Werkzeug Aufhängungen,Soporte de servicios públicos,Supports de services publics,Montagens de utilidade,Внешнее оборудование
+blueprint.category.name.weapon_grades,Weapon Grades,Weapon Grades,Waffenstufen,Grados de armas,Niveaux d''armes,Graus de armas,Уровни оружия
+blueprint.category.name.weapon_modules,Weapon Modules,Weapon Modules,Waffen Modifikationen,Módulos de armas,Modules d''armes,Módulos de arma,Модули для оружия

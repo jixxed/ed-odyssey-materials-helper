@@ -1,0 +1,91 @@
+messageKey,,en,de,es,fr,pt,ru
+modifier.horizons.name.all_resistances,All Resistances,All Resistances,Alle Widerstände,Todas las resistencias,Toutes les résistances,Todas as resistências,Все сопротивления
+modifier.horizons.name.ammo_capacity,Ammo Capacity,Ammo Capacity,Munitionskapazität,Capacidad de munición,Capacité de munitions,Capacidade de munição,Макс. боекомплект
+modifier.horizons.name.ammo_maximum,Ammo Maximum,Ammo Maximum,Munition maximal,Munición máxima,Mamo maximum,Munição máxima,Макс. боекомплект
+modifier.horizons.name.anti_xeno_damage,Anti Xeno Damage,Anti Xeno Damage,Anti -Xeno -Schaden,Daño anti xeno,Dommages anti xéno,Dano anti -xeno,АИ урон
+modifier.horizons.name.area_fsds_reboot,Area FSD''s Reboot,Area FSD''s Reboot,Neustart des Bereichs FSD,Reinicio del área FSD,Redémarrage de la zone FSD,Reinicialização da área FSD,Перезагрузка FSD в области действия
+modifier.horizons.name.area_heat_increased_sensors_disrupted,Area Heat Increased Sensors Disrupted,Area Heat Increased Sensors Disrupted,Die Flächenwärme erhöhte die Sensoren gestört,Área Calor aumentó los sensores,La chaleur de la zone a augmenté les capteurs perturbés,O calor da área aumentou os sensores interrompidos,"Нагревает, вызывает сбой в работе сенсоров в области действия"
+modifier.horizons.name.armour_piercing,Armour Piercing,Armour Piercing,Panzerung durchdringen,Perforación de armadura,Perçage d''armure,Piercing de armadura,Бронебойность
+modifier.horizons.name.auto_reload_while_firing,Auto Reload While Firing,Auto Reload While Firing,Automatische Neulade beim Schießen neu laden,Recarga automática mientras se dispara,Rechargement automatique pendant le tir,Recarregar automaticamente durante o disparo,Перезарядка во время стрельбы
+modifier.horizons.name.boot_time,Boot Time,Boot Time,Bootzeit,Tiempo de arranque,Temps de démarrage,Tempo de inicialização,Время загрузки
+modifier.horizons.name.broken_regen_rate,Broken Regen Rate,Broken Regen Rate,Gebrochene Regenrate,Tasa de regeneración rota,Taux de régénie cassé,Taxa de regeneração quebrada,Скорость восстановления
+modifier.horizons.name.burst_rate_of_fire,Burst Rate Of Fire,Burst Rate Of Fire,Brennrate des Feuers,Ráfaga de fuego,Éclatement de feu,Taxa de incêndio,Скорострельность очереди
+modifier.horizons.name.burst_size,Burst Size,Burst Size,Burstgröße,Tamaño de ráfaga,Taille de l''éclatement,Tamanho da explosão,Длина очереди
+modifier.horizons.name.clip_size,Clip Size,Clip Size,Filmgröße,Tamaño de clip,Taille du clip,Tamanho do clipe,Размер боекомплекта
+modifier.horizons.name.damage,Damage,Damage,Schaden,Daño,Dégâts,Dano,Урон
+modifier.horizons.name.damage_boost,Damage Boost,Damage Boost,Schadensschub,Impulso de daño,Boost des dégâts,Aumento de danos,Бонусный урон
+modifier.horizons.name.damage_falloff_start,Damage Falloff Start,Damage Falloff Start,Schadenserscheinungsstart,Inicio de caída de daños,Début des dégâts,Danificar o início da queda,Радиус полного урона
+modifier.horizons.name.damage_increases_with_heat_level,Damage Increases With Heat Level,Damage Increases With Heat Level,Der Schaden nimmt mit dem Wärmespiegel zu,El daño aumenta con el nivel de calor,Les dommages augmentent avec le niveau de chaleur,Dano aumenta com o nível de calor,Увеличивает урон при высоком нагреве
+modifier.horizons.name.damage_partially_explosive,Damage Partially Explosive,Damage Partially Explosive,Teilweise explosiv Schaden,Daño parcialmente explosivo,Dommages partiellement explosifs,Dano parcialmente explosivo,Часть урона становится взрывным
+modifier.horizons.name.damage_partially_kinetic,Damage Partially Kinetic,Damage Partially Kinetic,Teilweise kinetisch schädigen,Daño parcialmente cinético,Dommages partiellement cinétiques,Danos parcialmente cinéticos,Часть урона становится кинетическим
+modifier.horizons.name.damage_partially_thermal,Damage Partially Thermal,Damage Partially Thermal,Teilweise thermisch schaden,Daño parcialmente térmico,Dommage partiellement thermique,Dano parcialmente térmico,Часть урона становится тепловым
+modifier.horizons.name.distributor_draw,Distributor Draw,Distributor Draw,Distributor Draw,Distribución de distribuidores,Trache du distributeur,Desenho do distribuidor,Тяга распределителя
+modifier.horizons.name.duration,Duration,Duration,Dauer,Duración,Durée,Duração,Продолжительность
+modifier.horizons.name.effectiveness_increase_against_munitions,Effectiveness Increase Against Munitions,Effectiveness Increase Against Munitions,Effektivitätserhöhung gegen Munition,Aumento de la efectividad contra las municiones,Augmentation de l''efficacité contre les munitions,Aumento da eficácia contra munições,Повышение эффективности боеприпасов
+modifier.horizons.name.engines_capacity,Engines Capacity,Engines Capacity,Motorenkapazität,Capacidad de motores,Capacités de moteurs,Capacidade de motores,Ресурс двигателей
+modifier.horizons.name.engines_recharge,Engines Recharge,Engines Recharge,Motoren laden,Recarga de motores,Moteurs recharge,Motores recarregam,Перезарядка двигателей
+modifier.horizons.name.explosive_resistance,Explosive Resistance,Explosive Resistance,Sprengresistenz,Resistencia explosiva,Résistance explosive,Resistência explosiva,Сопр. взрывам
+modifier.horizons.name.facing_limit,Facing Limit,Facing Limit,Gesichtsbegrenzung,Límite de enfrentamiento,Limite,Limite de frente,Ограничение угла перехвата
+modifier.horizons.name.fuel_efficiency,Fuel Efficiency,Fuel Efficiency,Kraftstoffeffizienz,Eficiencia de combustible,La consommation de carburant,Eficiência do combustível,Эффективность топлива
+modifier.horizons.name.heat_dissipation,Heat Dissipation,Heat Dissipation,Wärmeableitung,Disipación de calor,Dissipation de la chaleur,Dissipação de calor,Бонусное теплорассеяние
+modifier.horizons.name.heat_efficiency,Heat Efficiency,Heat Efficiency,Wärmeeffizienz,Eficiencia de calor,Efficacité thermique,Eficiência térmica,Теплоэффективность
+modifier.horizons.name.heat_reduced_when_striking_a_target,Heat Reduced When Striking A Target,Heat Reduced When Striking A Target,"Wärme reduziert, wenn ein Ziel getroffen wird",El calor se redujo cuando golpee un objetivo,La chaleur réduite lors de la frappe d''une cible,O calor reduziu ao atingir um alvo,Охлаждает корабль при попадании по цели
+modifier.horizons.name.hull_boost,Hull Boost,Hull Boost,Rumpfschub,Impulso de casco,Boost de la coque,Boost de casco,Усиление корпуса
+modifier.horizons.name.hull_reinforcement,Hull Reinforcement,Hull Reinforcement,Rumpfverstärkung,Refuerzo de casco,Renforcement de la coque,Reforço do casco,Усилитель корпуса
+modifier.horizons.name.hull_strength,Hull Strength,Hull Strength,Rumpfstärke,Fuerza del casco,Force de coque,Força do casco,Прочность корпуса
+modifier.horizons.name.integrity,Integrity,Integrity,Integrität,Integridad,Intégrité,Integridade,Целостность
+modifier.horizons.name.jitter,Jitter,Jitter,Jitter,Estar nervioso,Giron,Jitter,Колебания
+modifier.horizons.name.jump_range,Jump Range,Jump Range,Sprungbereich,Rango de salto,Plage de saut,Alcance de salto,Расстояние прыжка
+modifier.horizons.name.kinetic_resistance,Kinetic Resistance,Kinetic Resistance,Kinetischer Widerstand,Resistencia cinética,Résistance cinétique,Resistência cinética,Сопр. кинетическому урону
+modifier.horizons.name.limpets,Limpets,Limpets,Limpets,Lente de mano,Limpets,Limpets,Дроны
+modifier.horizons.name.mass,Mass,Mass,Masse,Masa,Masse,Massa,Масса
+modifier.horizons.name.maximum_fuel_per_jump,Maximum Fuel Per Jump,Maximum Fuel Per Jump,Maximaler Kraftstoff pro Sprung,Combustible máximo por salto,Carburant maximum par saut,Combustível máximo por salto,Макс. топлива на прыжок
+modifier.horizons.name.maximum_range,Maximum Range,Maximum Range,Maximale Reichweite,Rango maximo,Plage maximale,Faixa máxima,Максимальная дальность
+modifier.horizons.name.no_damage_to_untargeted_ships,No Damage To Untargeted Ships,No Damage To Untargeted Ships,Kein Schaden an nicht gezielten Schiffen,No hay daño a los barcos no dirigidos,Aucun dommage aux navires non ciblés,Sem danos a navios não direcionados,"Не наносит урон кораблям, которые не выбраны в цель"
+modifier.horizons.name.optimal_mass,Optimal Mass,Optimal Mass,Optimale Masse,Masa óptima,Masse optimale,Massa ideal,Оптимальная масса
+modifier.horizons.name.optimal_multiplier,Optimal Multiplier,Optimal Multiplier,Optimaler Multiplikator,Multiplicador óptimo,Multiplicateur optimal,Multiplicador ideal,Оптимальный усилитель
+modifier.horizons.name.optimal_strength,Optimal Strength,Optimal Strength,Optimale Stärke,Fuerza óptima,Force optimale,Força ideal,Оптимальная прочность
+modifier.horizons.name.part_of_damage_through_shields,Part Of Damage Through Shields,Part Of Damage Through Shields,Teil des Schadens durch Schilde,Parte del daño a través de los escudos,Une partie des dégâts par des boucliers,Parte dos danos através de escudos,Часть урона проходит сквозь щиты
+modifier.horizons.name.power_capacity,Power Capacity,Power Capacity,Leistungskapazität,Capacidad de potencia,La capacité de puissance,Capacidade de energia,Общий ресурс
+modifier.horizons.name.power_draw,Power Draw,Power Draw,Krafte,Poder de dibujo,Tirage au sort,Consumo de energia,Потребление энергии
+modifier.horizons.name.power_generation,Power Generation,Power Generation,Stromerzeugung,Generación de energía,La production d''énergie,Geração de energia,Мощность
+modifier.horizons.name.power_recharge,Power Recharge,Power Recharge,Machtaufladung,Recarga de poder,Recharge de puissance,Recarga de energia,Общая перезарядка
+modifier.horizons.name.probe_radius,Probe Radius,Probe Radius,Sondenradius,Radio de la sonda,Rayon de sonde,Raio da sonda,Радиус действия зонда
+modifier.horizons.name.range,Range,Range,Bereich,Distancia,Varier,Alcance,Дальность
+modifier.horizons.name.rate_of_fire,Rate Of Fire,Rate Of Fire,Feuerrate,Cadencia de fuego,Taux de feu,Taxa de incêndio,Скорость стрельбы
+modifier.horizons.name.refill,Refill,Refill,Nachfüllung,Rellenar,Recharge,Reabastecer,Пополнение
+modifier.horizons.name.regen_rate,Regen Rate,Regen Rate,Regenrate,Tasa de regencia,Taux de régénération,Taxa de regeneração,Скорость восстановления при пробое
+modifier.horizons.name.reload_from_ship_fuel,Reload From Ship Fuel,Reload From Ship Fuel,Vom Schiffskraftstoff neu laden,Recargar del combustible del barco,Recharger le carburant du navire,Recarregue com combustível de navio,Пополняет боеприпасы из топлива
+modifier.horizons.name.reload_time,Reload Time,Reload Time,Nachladezeit,Tiempo de recarga,Temps de rechargement,Tempo de recarregamento,Время перезарядки
+modifier.horizons.name.repair_speed,Repair Speed,Repair Speed,Reparaturgeschwindigkeit,Velocidad de reparación,Vitesse de réparation,Velocidade de reparo,Скорость ремонта
+modifier.horizons.name.scan_angle,Scan Angle,Scan Angle,Scanwinkel,Ángulo de escaneo,Angle de balayage,Ângulo de varredura,Угол сканирования
+modifier.horizons.name.scan_range,Scan Range,Scan Range,Scanbereich,Rango de escaneo,Plage de balayage,Intervalo de varredura,Типовой диапазон
+modifier.horizons.name.scan_time,Scan Time,Scan Time,Scan Zeit,Tiempo de escaneo,Temps de balayage,Hora da varredura,Время сканирования
+modifier.horizons.name.shield_boost,Shield Boost,Shield Boost,Schildschub,Impulso de escudo,Boost de bouclier,Boost de escudo,Усиление щитов
+modifier.horizons.name.shield_reinforcement,Shield Reinforcement,Shield Reinforcement,Schildverstärkung,Refuerzo de escudo,Armature du bouclier,Reforço de escudo,Усилитель щита
+modifier.horizons.name.shielded_target_heat_increased,Shielded Target Heat Increased,Shielded Target Heat Increased,Die abgeschirmte Zielwärme nahm zu,El calor objetivo protegido aumentó,La chaleur cible blindé a augmenté,O calor alvo blindado aumentou,Температура цели с щитом увеличилась
+modifier.horizons.name.shot_speed,Shot Speed,Shot Speed,Schussgeschwindigkeit,Velocidad de disparo,Vitesse de tir,Velocidade de tiro,Скорость выстрела
+modifier.horizons.name.spin_up_time,Spin Up Time,Spin Up Time,Zeit drehen,Tiempo de giro,Temps de rotation,Tempo de rotação,Время раскрутки
+modifier.horizons.name.systems_capacity,Systems Capacity,Systems Capacity,Systemkapazität,Capacidad de sistemas,Capacité des systèmes,Capacidade de sistemas,Ресурс систем
+modifier.horizons.name.systems_recharge,Systems Recharge,Systems Recharge,Systemaufladung,Recarga de sistemas,Systèmes recharge,Recarrega de sistemas,Перезарядка систем
+modifier.horizons.name.target_armor_hardness_reduced,Target Armor Hardness Reduced,Target Armor Hardness Reduced,Zielpanzerhärte reduziert,La dureza de la armadura objetivo reducida,La dureté de l''armure cible réduite,A dureza da armadura alvo reduzida,Прочность брони у цели уменьшается
+modifier.horizons.name.target_fsd_inhibited,Target FSD Inhibited,Target FSD Inhibited,Ziel FSD gehemmt,FSD objetivo inhibido,Le FSD cible inhibé,FSD alvo inibido,Замедляет зарядку FSD цели
+modifier.horizons.name.target_fsd_reboots,Target FSD Reboots,Target FSD Reboots,Target FSD -Neustarts,Reiniciar el objetivo FSD,Redémarrage de FSD cible,Alvo reiniciações do FSD,Перезагружает FSD цели
+modifier.horizons.name.target_gimbal_turret_tracking_reduced,Target Gimbal Turret Tracking Reduced,Target Gimbal Turret Tracking Reduced,Zielgimbal -Turmverfolgung reduziert,El seguimiento de la torreta de cardán objetivo reducido,Le suivi de la tourelle cible réduit,Rastreamento de torre cardal alvo reduzido,Сбивает с наводки орудия
+modifier.horizons.name.target_heat_increased,Target Heat Increased,Target Heat Increased,Zielwärme stieg,El calor objetivo aumentó,La chaleur cible a augmenté,O calor alvo aumentou,Нагревает цель
+modifier.horizons.name.target_loses_target_lock,Target Loses Target Lock,Target Loses Target Lock,Target verliert das Zielschloss,El objetivo pierde el bloqueo objetivo,Target perd le verrouillage cible,O alvo perde o bloqueio de alvo,Сбивает захват цели
+modifier.horizons.name.target_module_damage,Target Module Damage,Target Module Damage,Zielmodulschaden,Daño del módulo de destino,Dommages causés par le module cible,Dano ao módulo de destino,Повреждение внутренних модулей цели
+modifier.horizons.name.target_modules_malfunctions,Target Modules Malfunctions,Target Modules Malfunctions,Zielmodule Fehlfunktionen,Los módulos de destino se hacen mal funcionamiento,Dysfonctionnement des modules cibles,Módulos de destino Má funcionamento,Сбои модулей у цели
+modifier.horizons.name.target_pushed_off_course,Target Pushed Off Course,Target Pushed Off Course,Zielabstieg der Kurs ab,Target empujó fuera del curso,Target poussé hors cours,Target empurrou o curso,Отталкивает цель
+modifier.horizons.name.target_sensor_acuity_reduced,Target Sensor Acuity Reduced,Target Sensor Acuity Reduced,Zielsensorschärfe reduziert,La agudeza del sensor objetivo reducida,L''acuité du capteur cible réduit,Acuidade do sensor alvo reduzida,Уменьшается точность сенсоров у цели
+modifier.horizons.name.target_shield_cell_disrupted,Target Shield Cell Disrupted,Target Shield Cell Disrupted,Zielschildzelle gestört,Célula de escudo objetivo interrumpida,Cellule du bouclier cible perturbé,Célula de escudo alvo interrompida,Повреждает щитовую ячейку
+modifier.horizons.name.target_shield_generator_damaged,Target Shield Generator Damaged,Target Shield Generator Damaged,Zielschildgenerator beschädigt,Generador de escudo objetivo dañado,Générateur de bouclier cible endommagé,Gerador de escudo -alvo danificado,Повреждает щитогенератор у цели
+modifier.horizons.name.target_signature_increased,Target Signature Increased,Target Signature Increased,Zielsignatur stieg,La firma objetivo aumentó,La signature cible a augmenté,A assinatura alvo aumentou,Сигнатура цели увеличилась
+modifier.horizons.name.target_speed_reduced,Target Speed Reduced,Target Speed Reduced,Zielgeschwindigkeit reduziert,Velocidad objetivo reducida,La vitesse cible réduite,Velocidade alvo reduzida,Уменьшает скорость цели
+modifier.horizons.name.target_thrusters_reboot,Target Thrusters Reboot,Target Thrusters Reboot,Target Thrusters Neustart,Reiniciar los propulsores del objetivo,Redémarrage des propulseurs cibles,Reinicialização dos propulsores de destino,Перезапускает двигатели цели
+modifier.horizons.name.target_wing_shields_regenerated,Target Wing Shields Regenerated,Target Wing Shields Regenerated,Target Wing Shields regeneriert,Escudos de ala objetivo regenerados,Les boucliers d''aile cible régénérés,Escudos de asa alvo regenerados,Щиты цели в крыле регенерируют
+modifier.horizons.name.thermal_load,Thermal Load,Thermal Load,Wärmebelastung,Carga térmica,Charge thermique,Carga térmica,Тепловая нагрузка
+modifier.horizons.name.thermal_resistance,Thermal Resistance,Thermal Resistance,Wärmewiderstand,Resistencia termica,Résistance thermique,Resistência térmica,Сопр. термическому урону
+modifier.horizons.name.weapons_capacity,Weapons Capacity,Weapons Capacity,Waffenkapazität,Capacidad de armas,Capacité d''armes,Capacidade de armas,Орудийный ресурс
+modifier.horizons.name.weapons_recharge,Weapons Recharge,Weapons Recharge,Waffenaufladung,Recarga de armas,Recharge des armes,Recarrega de armas,Перезарядка оружия
+modifier.horizons.name.wing_shield_regeneration_increased,Wing Shield Regeneration Increased,Wing Shield Regeneration Increased,Die Regeneration der Flügelschildsteigerung nahm zu,La regeneración del escudo del ala aumentó,La régénération du bouclier des ailes a augmenté,A regeneração do escudo da asa aumentou,Регенерация щита союзника в крыле увеличилась

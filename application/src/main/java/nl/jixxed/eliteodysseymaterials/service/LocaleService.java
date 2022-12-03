@@ -23,7 +23,38 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class LocaleService {
-    private static final String RESOURCE_BUNDLE_NAME = "locale";
+    private static final String[] RESOURCE_BUNDLE_NAMES = {
+            "blueprint/horizons/category",
+            "blueprint/horizons/description",
+            "blueprint/horizons/modifier",
+            "blueprint/horizons/names",
+            "blueprint/horizons/type.description",
+            "blueprint/horizons/type.names",
+            "blueprint/odyssey/category",
+            "blueprint/odyssey/description",
+            "blueprint/odyssey/modifier",
+            "blueprint/odyssey/names",
+            "blueprint/odyssey/tips",
+            "engineer/names",
+            "loadout/equipment",
+            "loadout/modification",
+            "loadout/stat.group",
+            "loadout/stat.name",
+            "loadout/stat.value",
+            "material/horizons/category",
+            "material/horizons/commodity",
+            "material/horizons/commodity.type",
+            "material/horizons/encoded",
+            "material/horizons/manufactured",
+            "material/horizons/raw",
+            "material/horizons/spawn",
+            "material/odyssey/asset",
+            "material/odyssey/consumable",
+            "material/odyssey/data",
+            "material/odyssey/good",
+            "material/odyssey/spawn",
+            "application"
+    };
     private static Locale currentLocale = Locale.ENGLISH;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
@@ -37,7 +68,7 @@ public class LocaleService {
 
     public static void setCurrentLocale(final Locale locale) {
         currentLocale = locale;
-        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle(RESOURCE_BUNDLE_NAME, currentLocale));
+        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle( currentLocale,RESOURCE_BUNDLE_NAMES));
     }
 
     public static String getLocalizedStringForCurrentLocale(final String key, final Object... parameters) {
@@ -51,7 +82,7 @@ public class LocaleService {
 
     private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
         final Object[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(Object[]::new);
-        return MessageFormat.format(CSVResourceBundle.getResourceBundle(RESOURCE_BUNDLE_NAME, locale).getString(key), localizedParams);
+        return MessageFormat.format(CSVResourceBundle.getResourceBundle(locale,RESOURCE_BUNDLE_NAMES).getString(key), localizedParams);
     }
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {
