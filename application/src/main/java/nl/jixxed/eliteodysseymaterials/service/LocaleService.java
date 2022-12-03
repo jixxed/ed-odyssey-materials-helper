@@ -36,6 +36,7 @@ public class LocaleService {
             "blueprint/odyssey/names",
             "blueprint/odyssey/tips",
             "engineer/names",
+            "engineer/specialisation",
             "loadout/equipment",
             "loadout/modification",
             "loadout/stat.group",
@@ -53,7 +54,18 @@ public class LocaleService {
             "material/odyssey/data",
             "material/odyssey/good",
             "material/odyssey/spawn",
-            "application"
+            "material/trade",
+            "application",
+            "blueprint",
+            "menu",
+            "tab.bartender",
+            "tab.engineer",
+            "tab.loadout",
+            "tab.overview",
+            "tab.settings",
+            "tab.trade",
+            "tab.wishlist",
+            "tooltip"
     };
     private static Locale currentLocale = Locale.ENGLISH;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();

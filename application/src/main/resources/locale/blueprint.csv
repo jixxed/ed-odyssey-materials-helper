@@ -1,0 +1,22 @@
+messageKey,,en,de,es,fr,pt,ru
+blueprint.add.to.wishlist,Add to wishlist,Add to wishlist,Zur Wunschliste hinzufügen,Agregar a la lista de deseos,Ajouter à la liste de souhaits,Adicionar à lista de desejos,Добавить в список желаемого
+blueprint.header.available,Available,Available,Verfügbar,Disponible,Disponible,Disponível,Доступно
+blueprint.header.give,Give,Give,Geben,Dar,Donner,Dê,Дайте
+blueprint.header.material,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
+blueprint.header.objective,Objectives,Objectives,Ziele,Objetivos,Objectifs,Objetivos,Цели
+blueprint.header.receive,Receive,Receive,Empfangen,Recibir,Recevoir,Receber,Получить
+blueprint.header.required,Required,Required,Erforderlich,Obligatorio,Obligatoire,Obrigatório,Требуется
+blueprint.label.completed.referrals,Completed Referrals,Completed Referrals,Abgeschlossene Empfehlungen,Referencias completadas,Parrainages terminés,Referências concluídas,Завершенные рефералы
+blueprint.label.description,Description,Description,Beschreibung,Descripción,Description,Descrição,Описание
+blueprint.label.engineers,Engineers crafting this blueprint:,Engineers crafting this blueprint:,"Ingenieure, die diese Blaupause erstellen:",Ingenieros que elaboran este plano:,Ingénieurs créant ce plan:,Engenheiros elaborando este blueprint:,"Инженеры, создающие этот чертеж:"
+blueprint.label.modifiers,Modifiers,Modifiers,Modifikatoren,Modificadores,Modificateurs,Modificadores,Модификаторы
+blueprint.on.wishlist,{0} on wishlist,{0} on wishlist,{0} auf Wunschliste,{0} en la lista de deseos,{0} sur la liste de souhaits,{0} na lista de desejos,{0} в списке желаний
+blueprint.category.name.blueprints,Blueprints,Blueprints,Bauplan,Planos,Plans,Blueprints,Чертежи
+blueprint.synthesis.grade1,BASIC,BASIC,BASIC,BÁSICO,BASIQUE,Básico,БАЗОВЫЙ
+blueprint.synthesis.grade2,STANDARD,STANDARD,STANDARD,ESTÁNDAR,LA NORME,PADRÃO,СТАНДАРТНЫЙ
+blueprint.synthesis.grade3,PREMIUM,PREMIUM,PRÄMIE,DE PRIMERA CALIDAD,PRIME,PRÊMIO,ПРЕМИУМ
+blueprint.label.tips,Tips,Tips,Tipps,Puntas,Des astuces,Pontas,Советы
+blueprint.engineer.pinnable.tooltip,Double-click to pin blueprint to this engineer,Double-click to pin blueprint to this engineer,"Doppelklicken Sie auf diesen Ingenieur, um Blaupause zu erhalten",Haga doble clic para pintar un plan a este ingeniero,Double-cliquez pour épingler Blueprint à cet ingénieur,Clique duas vezes para prender o plano para este engenheiro,"Дважды щелкните, чтобы прикрепить чертеж к этому инженеру"
+blueprint.add.to.wishlist.all.grade,Add all grades to {0},Add all grades to {0},Fügen Sie alle Noten zu {0} hinzu,Agregue todos los grados a {0},Ajouter toutes les notes à {0},Adicione todas as notas a {0},Добавьте все апгрейды в {0}
+blueprint.add.to.wishlist.single.grade,Add this grade to {0},Add this grade to {0},Fügen Sie diese Note zu {0} hinzu,Agregue esta calificación a {0},Ajoutez cette note à {0},Adicione esta nota a {0},Добавьте этот апгрейд в {0}
+blueprint.is.live,LIVE only blueprint,LIVE only blueprint,,,,,Чертеж для LIVE-версии
