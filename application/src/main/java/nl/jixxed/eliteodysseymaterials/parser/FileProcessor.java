@@ -153,7 +153,7 @@ public class FileProcessor {
                 }
             }
         } catch (final IOException e) {
-            throw new RuntimeException(e);
+            log.error("Read error", e);
         }
     }
 }
