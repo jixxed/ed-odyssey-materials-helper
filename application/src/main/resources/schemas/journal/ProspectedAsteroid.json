@@ -60,5 +60,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Materials", "Content", "Content_Localised", "Remaining" ]
+  "required" : [ "Materials", "Content", "Remaining" ]
 }

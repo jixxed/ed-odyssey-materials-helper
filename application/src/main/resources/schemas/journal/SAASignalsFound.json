@@ -63,7 +63,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Genus", "Genus_Localised" ]
+        "required" : [ "Genus" ]
       }
     }
   },

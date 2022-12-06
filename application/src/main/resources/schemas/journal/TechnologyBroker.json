@@ -58,7 +58,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Name", "Name_Localised", "Count" ]
+        "required" : [ "Name", "Count" ]
       }
     },
     "Materials" : {

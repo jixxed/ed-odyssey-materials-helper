@@ -41,5 +41,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "ScanType", "Genus", "Species", "Species_Localised", "SystemAddress", "Body" ]
+  "required" : [ "ScanType", "Genus", "Species", "SystemAddress", "Body" ]
 }

@@ -47,7 +47,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Genus", "Species", "Species_Localised", "Value", "Bonus" ]
+        "required" : [ "Genus", "Species", "Value", "Bonus" ]
       }
     }
   },

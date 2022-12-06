@@ -47,5 +47,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "StorageSlot", "StoredItem", "StoredItem_Localised", "ServerId", "TransferCost", "TransferTime", "Ship", "ShipID" ]
+  "required" : [ "StorageSlot", "StoredItem", "ServerId", "TransferCost", "TransferTime", "Ship", "ShipID" ]
 }

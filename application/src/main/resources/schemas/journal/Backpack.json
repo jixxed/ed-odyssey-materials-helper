@@ -104,7 +104,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Name", "Name_Localised", "OwnerID", "Count" ]
+        "required" : [ "Name", "OwnerID", "Count" ]
       }
     },
     "Data" : {

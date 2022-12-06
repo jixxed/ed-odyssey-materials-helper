@@ -359,5 +359,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemEconomy_Localised", "SystemSecondEconomy", "SystemSecondEconomy_Localised", "SystemGovernment", "SystemGovernment_Localised", "SystemSecurity", "SystemSecurity_Localised", "Population", "Body", "BodyID", "BodyType", "JumpDist", "FuelUsed", "FuelLevel" ]
+  "required" : [ "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType", "JumpDist", "FuelUsed", "FuelLevel" ]
 }

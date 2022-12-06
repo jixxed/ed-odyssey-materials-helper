@@ -28,5 +28,5 @@
     }
   },
   "additionalProperties": false,
-  "required" : [ "Module", "Module_Localised", "FullyRepaired", "Health" ]
+  "required" : [ "Module", "FullyRepaired", "Health" ]
 }

@@ -26,5 +26,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Power", "Type", "Type_Localised", "Count" ]
+  "required" : [ "Power", "Type", "Count" ]
 }

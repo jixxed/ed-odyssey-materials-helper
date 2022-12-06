@@ -443,7 +443,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Name", "Name_Localised", "Proportion" ]
+        "required" : [ "Name", "Proportion" ]
       }
     },
     "Latitude" : {
@@ -472,5 +472,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Docked", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemEconomy_Localised", "SystemSecondEconomy", "SystemSecondEconomy_Localised", "SystemGovernment", "SystemGovernment_Localised", "SystemSecurity", "SystemSecurity_Localised", "Population", "Body", "BodyID", "BodyType" ]
+  "required" : [ "Docked", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType" ]
 }

@@ -96,7 +96,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Name", "Name_Localised", "StorageSlot", "BuyPrice", "Hot" ]
+        "required" : [ "Name", "StorageSlot", "BuyPrice", "Hot" ]
       }
     }
   },

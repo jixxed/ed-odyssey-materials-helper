@@ -113,7 +113,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "id", "Name", "Name_Localised", "Category", "Category_Localised", "BuyPrice", "SellPrice", "MeanPrice", "StockBracket", "DemandBracket", "Stock", "Demand", "Consumer", "Producer", "Rare" ]
+        "required" : [ "id", "Name", "Category", "BuyPrice", "SellPrice", "MeanPrice", "StockBracket", "DemandBracket", "Stock", "Demand", "Consumer", "Producer", "Rare" ]
       }
     }
   },

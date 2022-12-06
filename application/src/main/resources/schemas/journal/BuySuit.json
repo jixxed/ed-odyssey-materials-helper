@@ -34,5 +34,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Name", "Name_Localised", "Price", "SuitID", "SuitMods" ]
+  "required" : [ "Name", "Price", "SuitID", "SuitMods" ]
 }

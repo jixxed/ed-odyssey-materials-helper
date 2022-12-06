@@ -18,5 +18,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Message", "Message_Localised" ]
+  "required" : [ "Message" ]
 }

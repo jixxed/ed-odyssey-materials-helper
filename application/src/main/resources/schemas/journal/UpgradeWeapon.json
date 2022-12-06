@@ -56,5 +56,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Name", "Name_Localised", "Class", "SuitModuleID", "Cost" ]
+  "required" : [ "Name", "Class", "SuitModuleID", "Cost" ]
 }

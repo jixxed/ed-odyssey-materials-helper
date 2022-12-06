@@ -116,5 +116,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "EntryID", "Name", "Name_Localised", "SubCategory", "SubCategory_Localised", "Category", "Category_Localised", "Region", "Region_Localised", "System", "SystemAddress" ]
+  "required" : [ "EntryID", "Name", "SubCategory", "Category", "Region", "System", "SystemAddress" ]
 }

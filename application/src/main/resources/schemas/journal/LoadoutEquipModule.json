@@ -65,5 +65,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "LoadoutName", "SuitID", "SuitName", "SuitName_Localised", "LoadoutID", "SlotName", "ModuleName", "ModuleName_Localised", "Class", "WeaponMods", "SuitModuleID" ]
+  "required" : [ "LoadoutName", "SuitID", "SuitName", "LoadoutID", "SlotName", "ModuleName", "Class", "WeaponMods", "SuitModuleID" ]
 }

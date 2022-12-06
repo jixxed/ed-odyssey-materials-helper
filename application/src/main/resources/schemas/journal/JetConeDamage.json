@@ -16,5 +16,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Module", "Module_Localised" ]
+  "required" : [ "Module" ]
 }

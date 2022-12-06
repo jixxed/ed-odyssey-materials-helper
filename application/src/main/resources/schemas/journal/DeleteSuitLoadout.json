@@ -31,5 +31,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "SuitID", "SuitName", "SuitName_Localised", "LoadoutID", "LoadoutName" ]
+  "required" : [ "SuitID", "SuitName", "LoadoutID", "LoadoutName" ]
 }

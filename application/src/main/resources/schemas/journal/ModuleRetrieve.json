@@ -68,5 +68,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "MarketID", "Slot", "RetrievedItem", "RetrievedItem_Localised", "Ship", "ShipID", "Hot" ]
+  "required" : [ "MarketID", "Slot", "RetrievedItem", "Ship", "ShipID", "Hot" ]
 }

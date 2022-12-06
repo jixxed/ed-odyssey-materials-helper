@@ -88,7 +88,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Name", "Name_Localised", "Proportion" ]
+        "required" : [ "Name", "Proportion" ]
       }
     },
     "Taxi" : {
@@ -304,7 +304,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Name", "FactionState", "Government", "Influence", "Allegiance", "Happiness", "Happiness_Localised", "MyReputation" ]
+        "required" : [ "Name", "FactionState", "Government", "Influence", "Allegiance", "Happiness", "MyReputation" ]
       }
     },
     "SystemFaction" : {
@@ -407,5 +407,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Docked", "StationName", "StationType", "MarketID", "StationFaction", "StationGovernment", "StationGovernment_Localised", "StationServices", "StationEconomy", "StationEconomy_Localised", "StationEconomies", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemEconomy_Localised", "SystemSecondEconomy", "SystemSecondEconomy_Localised", "SystemGovernment", "SystemGovernment_Localised", "SystemSecurity", "SystemSecurity_Localised", "Population", "Body", "BodyID", "BodyType" ]
+  "required" : [ "Docked", "StationName", "StationType", "MarketID", "StationFaction", "StationGovernment", "StationServices", "StationEconomy", "StationEconomies", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType" ]
 }

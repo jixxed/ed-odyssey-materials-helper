@@ -54,7 +54,7 @@
           "examples" : [ "Unknown", "Internal Security Service", "System Authority Vessel" ]
         }
       },
-      "required" : [ "KillerName", "KillerShip", "KillerRank", "KillerName_Localised" ]
+      "required" : [ "KillerName", "KillerShip", "KillerRank" ]
     }
   },
   "additionalProperties" : false,

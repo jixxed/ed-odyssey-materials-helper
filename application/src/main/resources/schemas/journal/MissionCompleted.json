@@ -111,7 +111,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Name", "Category", "Category_Localised", "Count" ]
+        "required" : [ "Name", "Category", "Count" ]
       }
     },
     "FactionEffects" : {
@@ -148,7 +148,7 @@
                 }
               },
               "additionalProperties" : false,
-              "required" : [ "Effect", "Effect_Localised", "Trend" ]
+              "required" : [ "Effect", "Trend" ]
             }
           },
           "Influence" : {

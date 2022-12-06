@@ -42,7 +42,7 @@
           }
         },
         "additionalProperties" : false,
-        "required" : [ "Type", "Type_Localised", "Count" ]
+        "required" : [ "Type", "Count" ]
       }
     }
   },

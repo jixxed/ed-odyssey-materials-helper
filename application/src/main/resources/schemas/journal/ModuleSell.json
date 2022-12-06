@@ -41,5 +41,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "MarketID", "Slot", "SellItem", "SellItem_Localised", "SellPrice", "Ship", "ShipID" ]
+  "required" : [ "MarketID", "Slot", "SellItem", "SellPrice", "Ship", "ShipID" ]
 }
