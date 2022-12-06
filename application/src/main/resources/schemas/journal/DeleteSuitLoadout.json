@@ -1,0 +1,35 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when the player deletes a suit loadout",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "SuitID" : {
+      "title" : "SuitID",
+      "type" : "integer",
+      "examples" : [ 1722478814612428, 1703397409838859, 1700215335054978 ]
+    },
+    "SuitName" : {
+      "title" : "SuitName",
+      "type" : "string",
+      "examples" : [ "utilitysuit_class2", "tacticalsuit_class3", "flightsuit" ]
+    },
+    "SuitName_Localised" : {
+      "title" : "SuitName_Localised",
+      "type" : "string",
+      "examples" : [ "$UtilitySuit_Class1_Name;", "$TacticalSuit_Class1_Name;", "Flight Suit" ]
+    },
+    "LoadoutID" : {
+      "title" : "LoadoutID",
+      "type" : "integer",
+      "examples" : [ 4293000023, 4293000000, 4293000006 ]
+    },
+    "LoadoutName" : {
+      "title" : "LoadoutName",
+      "type" : "string",
+      "examples" : [ "Scavenger", "Tanky", "Explorer" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SuitID", "SuitName", "SuitName_Localised", "LoadoutID", "LoadoutName" ]
+}

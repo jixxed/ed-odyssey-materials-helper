@@ -1,0 +1,41 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When picking up items from the ground",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "tungstencarbide", "energycell", "compressionliquefiedgas" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+	  "description": "The localised value will be omitted if it is exactly the same as Name",
+      "type" : "string",
+      "examples" : [ "Tungsten Carbide", "Energy Cell", "Compression-Liquefied Gas" ]
+    },
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "Component", "Consumable", "Item" ]
+    },
+    "OwnerID" : {
+      "title" : "OwnerID",
+      "type" : "integer",
+      "examples" : [ 0, 2953835433, 2953835425 ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 1, 4, 8 ]
+    },
+    "Stolen" : {
+      "title" : "Stolen",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "Type", "OwnerID", "Count", "Stolen" ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when paying fines",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Amount" : {
+      "title" : "Amount",
+      "description": "Total amount paid, including any broker fee",
+      "type" : "integer",
+      "examples" : [ 550217, 4875, 23875 ]
+    },
+    "AllFines" : {
+      "title" : "AllFines",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 5, 12, 34 ]
+    },
+    "BrokerPercentage" : {
+      "title" : "BrokerPercentage",
+      "description": "Present if paid via a broker",
+      "type" : "number",
+      "examples" : [ 25.0 ]
+    },
+    "Faction" : {
+      "title" : "Faction",
+      "description": "If paying off an individual faction's fines",
+      "type" : "string",
+      "examples" : [ "Harow Commodities", "Cara Partnership", "HIP 44997 Legal Partners" ]
+    },
+    "Faction_Localised" : {
+      "title" : "Faction_Localised",
+      "description": "If paying off an individual faction's fines",
+      "type" : "string",
+      "examples" : [ "Independent" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Amount", "ShipID" ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This is written when a crew member's combat rank increases",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "NpcCrewName" : {
+      "title" : "NpcCrewName",
+      "type" : "string",
+      "examples" : [ "Edmundo Frash" ]
+    },
+    "NpcCrewId" : {
+      "title" : "NpcCrewId",
+      "type" : "integer",
+      "examples" : [ 218204548 ]
+    },
+    "RankCombat" : {
+      "title" : "RankCombat",
+      "type" : "integer",
+      "examples" : [ 5 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "NpcCrewName", "NpcCrewId", "RankCombat" ]
+}

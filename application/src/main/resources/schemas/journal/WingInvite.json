@@ -1,0 +1,15 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the player is invited to a wing",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Alice", "Bob", "Mallory" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name" ]
+}

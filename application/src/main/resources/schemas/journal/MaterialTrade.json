@@ -1,0 +1,78 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when exchanging materials at the Material trader contact",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3230671360, 3224503040, 3230033664 ]
+    },
+    "TraderType" : {
+      "title" : "TraderType",
+      "type" : "string",
+      "examples" : [ "manufactured", "encoded", "raw" ]
+    },
+    "Paid" : {
+      "title" : "Paid",
+      "type" : "object",
+      "properties" : {
+        "Material" : {
+          "title" : "Material",
+          "type" : "string",
+          "examples" : [ "protolightalloys", "pharmaceuticalisolators", "militarygradealloys" ]
+        },
+        "Material_Localised" : {
+          "title" : "Material_Localised",
+          "description": "The localised value will be omitted if it is exactly the same as Material",
+          "type" : "string",
+          "examples" : [ "Proto Light Alloys", "Pharmaceutical Isolators", "Military Grade Alloys" ]
+        },
+        "Category" : {
+          "title" : "Category",
+          "type" : "string",
+          "examples" : [ "Manufactured", "Encoded", "Raw" ]
+        },
+        "Quantity" : {
+          "title" : "Quantity",
+          "type" : "integer",
+          "examples" : [ 60, 14, 40 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Material", "Category", "Quantity" ]
+    },
+    "Received" : {
+      "title" : "Received",
+      "type" : "object",
+      "properties" : {
+        "Material" : {
+          "title" : "Material",
+          "type" : "string",
+          "examples" : [ "protoradiolicalloys", "phasealloys", "chemicalmanipulators" ]
+        },
+        "Material_Localised" : {
+          "title" : "Material_Localised",
+          "description": "The localised value will be omitted if it is exactly the same as Material",
+          "type" : "string",
+          "examples" : [ "Proto Radiolic Alloys", "Phase Alloys", "Chemical Manipulators" ]
+        },
+        "Category" : {
+          "title" : "Category",
+          "type" : "string",
+          "examples" : [ "Manufactured", "Encoded", "Raw" ]
+        },
+        "Quantity" : {
+          "title" : "Quantity",
+          "type" : "integer",
+          "examples" : [ 10, 42, 120 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Material", "Category", "Quantity" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "TraderType", "Paid", "Received" ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when repairing modules using the Auto Field Maintenance Unit (AFMU)",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Module" : {
+      "title" : "Module",
+      "type" : "string",
+      "examples" : [ "$int_hyperdrive_size5_class5_name;", "$int_engine_size4_class2_name;", "$int_shieldgenerator_size3_class5_strong_name;" ]
+    },
+    "Module_Localised" : {
+      "title" : "Module_Localised",
+      "type" : "string",
+      "examples" : [ "FSD", "Thrusters", "Prismatic Shield" ]
+    },
+    "FullyRepaired" : {
+      "title" : "FullyRepaired",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "Health" : {
+      "title" : "Health",
+      "type" : "number",
+      "minimum": 0,
+      "maximum": 1,
+      "examples" : [ 1.0, 0.998922, 0.564085 ]
+    }
+  },
+  "additionalProperties": false,
+  "required" : [ "Module", "Module_Localised", "FullyRepaired", "Health" ]
+}

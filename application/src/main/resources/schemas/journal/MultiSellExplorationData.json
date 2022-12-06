@@ -1,0 +1,46 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when selling exploration data in Cartographics, a page at a time",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Discovered" : {
+      "title" : "Discovered",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "SystemName" : {
+            "title" : "SystemName",
+            "type" : "string",
+            "examples" : [ "HD 111990", "NGC 4755 BK 125", "HR 4876" ]
+          },
+          "NumBodies" : {
+            "title" : "NumBodies",
+            "type" : "integer",
+            "examples" : [ 9, 7, 4 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "SystemName", "NumBodies" ]
+      }
+    },
+    "BaseValue" : {
+      "title" : "BaseValue",
+      "type" : "integer",
+      "examples" : [ 2842803, 2415839, 3663580 ]
+    },
+    "Bonus" : {
+      "title" : "Bonus",
+      "type" : "integer",
+      "examples" : [ 0, 72000, 66804 ]
+    },
+    "TotalEarnings" : {
+      "title" : "TotalEarnings",
+      "type" : "integer",
+      "examples" : [ 2842803, 2487839, 3663580 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Discovered", "BaseValue", "Bonus", "TotalEarnings" ]
+}

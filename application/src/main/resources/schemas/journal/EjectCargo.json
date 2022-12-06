@@ -1,0 +1,42 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When cargo is ejected",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "ancientrelic", "unknownresin", "drones" ]
+    },
+    "Type_Localised" : {
+      "title" : "Type_Localised",
+      "description": "The localised value will be omitted if it is exactly the same as Type",
+      "type" : "string",
+      "examples" : [ "Guardian Relic", "Thargoid Resin", "Limpet" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 1, 64, 4 ]
+    },
+    "Abandoned" : {
+      "title" : "Abandoned",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "MissionID" : {
+      "title" : "MissionID",
+      "type" : "integer",
+      "examples" : [ 893685790, 893984220 ]
+    },
+    "PowerplayOrigin" : {
+      "title" : "PowerplayOrigin",
+      "description": "If the cargo is related to powerplay delivery from outlying systems back to the centre. Starsystem name.",
+      "type" : "string",
+      "examples" : [ "Celaeno", "Panoi", "HIP 20485" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type", "Count", "Abandoned" ]
+}

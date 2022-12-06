@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when launching a fighter",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Loadout" : {
+      "title" : "Loadout",
+      "type" : "string",
+      "examples" : [ "zero", "one", "three" ]
+    },
+    "ID" : {
+      "title" : "ID",
+      "type" : "integer",
+      "examples" : [ 68, 69, 25 ]
+    },
+    "PlayerControlled" : {
+      "title" : "PlayerControlled",
+      "description": "Whether player is controlling the fighter from launch",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Loadout", "ID", "PlayerControlled" ]
+}

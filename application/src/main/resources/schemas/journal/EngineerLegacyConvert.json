@@ -1,0 +1,87 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when converting a pre-2.4 engineered module. This is generated when converting, or previewing a conversion of a legacy module to the new system.",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Slot" : {
+      "title" : "Slot",
+      "type" : "string",
+      "examples" : [ "Slot03_Size3" ]
+    },
+    "Module" : {
+      "title" : "Module",
+      "type" : "string",
+      "examples" : [ "int_dronecontrol_collection_size3_class5" ]
+    },
+    "IsPreview" : {
+      "title" : "IsPreview",
+      "description": "To indicate whether this entry has been generated from a conversion, or just a preview.",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "Engineer" : {
+      "title" : "Engineer",
+      "type" : "string",
+      "examples" : [ "Ram Tah" ]
+    },
+    "EngineerID" : {
+      "title" : "EngineerID",
+      "type" : "integer",
+      "examples" : [ 300110 ]
+    },
+    "BlueprintID" : {
+      "title" : "BlueprintID",
+      "type" : "integer",
+      "examples" : [ 128731526 ]
+    },
+    "BlueprintName" : {
+      "title" : "BlueprintName",
+      "type" : "string",
+      "examples" : [ "Misc_LightWeight" ]
+    },
+    "Level" : {
+      "title" : "Level",
+      "type" : "integer",
+      "examples" : [ 1 ]
+    },
+    "Quality" : {
+      "title" : "Quality",
+      "type" : "number",
+      "examples" : [ 0.955 ]
+    },
+    "Modifiers" : {
+      "title" : "Modifiers",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Label" : {
+            "title" : "Label",
+            "type" : "string",
+            "examples" : [ "Mass", "Integrity" ]
+          },
+          "Value" : {
+            "title" : "Value",
+            "type" : "number",
+            "examples" : [ 4.436, 81.0 ]
+          },
+          "OriginalValue" : {
+            "title" : "OriginalValue",
+            "type" : "number",
+            "examples" : [ 8.0, 90.0 ]
+          },
+          "LessIsGood" : {
+            "title" : "LessIsGood",
+            "type" : "integer",
+            "examples" : [ 1, 0 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Label", "Value", "OriginalValue", "LessIsGood" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Slot", "Module", "IsPreview", "Engineer", "EngineerID", "BlueprintID", "BlueprintName", "Level", "Quality", "Modifiers" ]
+}

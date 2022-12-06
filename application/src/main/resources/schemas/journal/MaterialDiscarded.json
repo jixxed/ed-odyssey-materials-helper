@@ -1,0 +1,32 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: if materials are discarded",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Category" : {
+      "title" : "Category",
+      "type" : "string",
+      "examples" : [ "Raw" ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "sulphur" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "description": "Number of units discarded",
+      "type" : "integer",
+      "examples" : [ 5 ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+	  "description": "The localised value will be omitted if it is exactly the same as Name",
+      "type" : "string",
+      "examples" : [ "Sensor Fragment", "Classified Scan Databanks", "Unidentified Scan Archives" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Category", "Name", "Count" ]
+}

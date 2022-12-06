@@ -1,0 +1,50 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: at startup",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Combat" : {
+      "title" : "Combat",
+      "type" : "integer",
+      "examples" : [ 6, 7, 5 ]
+    },
+    "Trade" : {
+      "title" : "Trade",
+      "type" : "integer",
+      "examples" : [ 9, 8, 13 ]
+    },
+    "Explore" : {
+      "title" : "Explore",
+      "type" : "integer",
+      "examples" : [ 8, 9, 10 ]
+    },
+    "Soldier" : {
+      "title" : "Soldier",
+      "type" : "integer",
+      "examples" : [ 5, 6, 1 ]
+    },
+    "Exobiologist" : {
+      "title" : "Exobiologist",
+      "type" : "integer",
+      "examples" : [ 0, 8, 2 ]
+    },
+    "Empire" : {
+      "title" : "Empire",
+      "type" : "integer",
+      "examples" : [ 12, 0, 14 ]
+    },
+    "Federation" : {
+      "title" : "Federation",
+      "type" : "integer",
+      "examples" : [ 12, 0, 14 ]
+    },
+    "CQC" : {
+      "title" : "CQC",
+      "type" : "integer",
+      "examples" : [ 0, 3, 6 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Combat", "Trade", "Explore", "Empire", "Federation", "CQC" ]
+}

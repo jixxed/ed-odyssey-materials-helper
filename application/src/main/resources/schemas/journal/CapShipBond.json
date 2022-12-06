@@ -1,0 +1,25 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: The player has been rewarded for a capital ship combat",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Reward" : {
+      "title" : "Reward",
+      "type" : "integer",
+      "examples" : [ 500000 ]
+    },
+    "AwardingFaction" : {
+      "title" : "AwardingFaction",
+      "type" : "string",
+      "examples" : [ "Eurybia Blue Mafia" ]
+    },
+    "VictimFaction" : {
+      "title" : "VictimFaction",
+      "type" : "string",
+      "examples" : [ "Keltim Empire League" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Reward", "AwardingFaction", "VictimFaction" ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when using the discovery scanner, and new body discoveries are displayed in the cockpit info window. Note you can get two or three of these in a row, where some bodies are discovered by the automatic passive scan, before the active scan is complete.",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 44753062275, 283358791091, 17845513671211 ]
+    },
+    "Bodies" : {
+      "title" : "Bodies",
+      "description": "Number of new bodies discovered",
+      "type" : "integer",
+      "examples" : [ 1 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SystemAddress", "Bodies" ]
+}

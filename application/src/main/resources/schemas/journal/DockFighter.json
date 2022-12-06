@@ -1,0 +1,15 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when docking a fighter back with the mothership",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "ID" : {
+      "title" : "ID",
+      "type" : "integer",
+      "examples" : [ 68, 69, 25 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ID" ]
+}

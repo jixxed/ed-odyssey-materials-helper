@@ -1,0 +1,38 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when a player sells a flight suit",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "SuitID" : {
+      "title" : "SuitID",
+      "type" : "integer",
+      "examples" : [ 1750365504380639, 1700368583180959, 1700368586180690 ]
+    },
+    "SuitMods" : {
+      "title" : "SuitMods",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "suit_increasedmeleedamage", "suit_increasedsprintduration", "suit_reducedtoolbatteryconsumption" ]
+      }
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "explorationsuit_class1", "utilitysuit_class1", "tacticalsuit_class1" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "type" : "string",
+      "examples" : [ "Artemis Suit", "Maverick Suit", "Dominator Suit" ]
+    },
+    "Price" : {
+      "title" : "Price",
+      "type" : "integer",
+      "examples" : [ 90000, 270000, 450000 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SuitID", "SuitMods", "Name", "Name_Localised", "Price" ]
+}

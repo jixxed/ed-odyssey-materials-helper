@@ -1,0 +1,102 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when a player (on foot) gets into a ship or SRV",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "SRV" : {
+      "title" : "SRV",
+      "description": "true if getting into SRV, false if getting into a ship",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Taxi" : {
+      "title" : "Taxi",
+      "description": "true when boarding a taxi transport ship",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Multicrew" : {
+      "title" : "Multicrew",
+      "description": "true when boarding another player’s vessel",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "ID" : {
+      "title" : "ID",
+      "description": "player’s ship ID (if players own vessel)",
+      "type" : "integer",
+      "examples" : [ 5, 33, 25 ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 20485", "Panoi", "Siris" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 3657265287866, 6955800204002, 7269634614689 ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "HIP 20485 A 1", "Panoi", "HIP 20485 C 5" ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 11, 0, 35 ]
+    },
+    "OnStation" : {
+      "title" : "OnStation",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "OnPlanet" : {
+      "title" : "OnPlanet",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "StationName" : {
+      "title" : "StationName",
+      "description": "if at a station",
+      "type" : "string",
+      "examples" : [ "Shinn Enterprise", "Bowersox Terminal", "Penal Ship Y-32" ]
+    },
+    "StationType" : {
+      "title" : "StationType",
+      "description": "if at a station",
+      "type" : "string",
+      "examples" : [ "Coriolis", "Outpost", "MegaShip" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3222025216, 3221924608, 128831127 ]
+    },
+    "Crew" : {
+      "title" : "Crew",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Alice", "Bob", "Mallory" ]
+          },
+          "Role" : {
+            "title" : "Role",
+            "type" : "string",
+            "examples" : [ "Helm", "Idle", "FireCon" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Role" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SRV", "Taxi", "Multicrew", "StarSystem", "SystemAddress", "Body", "BodyID", "OnStation", "OnPlanet" ]
+}

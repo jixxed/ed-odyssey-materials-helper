@@ -1,0 +1,92 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This is written when there is any change to the contents of the suit backpack – note this can be written at the same time as other events like UseConsumable",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Added" : {
+      "title" : "Added",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "tungstencarbide", "energycell", "compressionliquefiedgas" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Tungsten Carbide", "Energy Cell", "Compression-Liquefied Gas" ]
+          },
+          "OwnerID" : {
+            "title" : "OwnerID",
+            "type" : "integer",
+            "examples" : [ 0, 2953835433, 2953835425 ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 1, 3, 2 ]
+          },
+          "Type" : {
+            "title" : "Type",
+            "type" : "string",
+            "examples" : [ "Component", "Consumable", "Item" ]
+          },
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 839014036, 868354915, 868354970 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "OwnerID", "Count", "Type" ]
+      }
+    },
+    "Removed" : {
+      "title" : "Removed",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "energycell", "amm_grenade_emp", "amm_grenade_frag" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Energy Cell", "Shield Disruptor", "Frag Grenade" ]
+          },
+          "OwnerID" : {
+            "title" : "OwnerID",
+            "type" : "integer",
+            "examples" : [ 0, 2954264951, 2952913247 ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 1, 8, 4 ]
+          },
+          "Type" : {
+            "title" : "Type",
+            "type" : "string",
+            "examples" : [ "Consumable", "Component", "Item" ]
+          },
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 839014036, 895446120, 895536604 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "OwnerID", "Count", "Type" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

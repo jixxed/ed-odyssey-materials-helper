@@ -1,0 +1,15 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when using any type of drone/limpet",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "Prospector", "Collection", "Repair" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type" ]
+}

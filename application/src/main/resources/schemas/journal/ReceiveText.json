@@ -1,0 +1,35 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when a text message is received from another player or npc",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "From" : {
+      "title" : "From",
+      "type" : "string",
+      "examples" : [ "", "FleetCarrierName A1A-B2B", "$ShipName_Police_Independent;" ]
+    },
+    "Message" : {
+      "title" : "Message",
+      "type" : "string",
+      "examples" : [ "$COMMS_entered:#name=Asterope;", "$COMMS_entered:#name=Celaeno;", "$STATION_NoFireZone_entered;" ]
+    },
+    "Message_Localised" : {
+      "title" : "Message_Localised",
+      "type" : "string",
+      "examples" : [ "Entered Channel: Asterope", "Entered Channel: Celaeno", "No fire zone entered." ]
+    },
+    "Channel" : {
+      "title" : "Channel",
+      "type" : "string",
+      "examples" : [ "npc", "starsystem", "local" ]
+    },
+    "From_Localised" : {
+      "title" : "From_Localised",
+      "type" : "string",
+      "examples" : [ "System Authority Vessel", "System", "Cruise Ship" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "From", "Message", "Channel" ]
+}

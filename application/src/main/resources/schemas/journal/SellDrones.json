@@ -1,0 +1,30 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when selling unwanted drones back to the market",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "Drones" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 16, 20, 56 ]
+    },
+    "SellPrice" : {
+      "title" : "SellPrice",
+      "type" : "integer",
+      "examples" : [ 101, 100, 90 ]
+    },
+    "TotalSale" : {
+      "title" : "TotalSale",
+      "type" : "integer",
+      "examples" : [ 1616, 2020, 5656 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type", "Count", "SellPrice", "TotalSale" ]
+}

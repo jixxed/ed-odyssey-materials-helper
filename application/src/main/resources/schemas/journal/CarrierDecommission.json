@@ -1,0 +1,25 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "At the time the player requests decommission",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3700005632 ]
+    },
+    "ScrapRefund" : {
+      "title" : "ScrapRefund",
+      "type" : "integer",
+      "examples" : [ 1746872629 ]
+    },
+    "ScrapTime" : {
+      "title" : "ScrapTime",
+      "type" : "integer",
+      "examples" : [ 1584601200 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "ScrapRefund", "ScrapTime" ]
+}

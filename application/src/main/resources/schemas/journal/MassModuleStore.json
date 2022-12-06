@@ -1,0 +1,75 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when putting multiple modules into storage",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 128666762, 3705689344, 128988470 ]
+    },
+    "Ship" : {
+      "title" : "Ship",
+      "type" : "string",
+      "examples" : [ "asp", "cutter", "anaconda" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 5, 25, 7 ]
+    },
+    "Items" : {
+      "title" : "Items",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Slot" : {
+            "title" : "Slot",
+            "type" : "string",
+            "examples" : [ "Slot03_Size3", "Slot04_Size3", "Slot06_Size2" ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "$int_repairer_size3_class5_name;", "$int_dronecontrol_repair_size3_class3_name;", "$int_cargorack_size2_class1_name;" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "AFM Unit", "Repair", "Cargo Rack" ]
+          },
+          "Hot" : {
+            "title" : "Hot",
+            "description": "If there is a fine/bounty associated with the module",
+            "type" : "boolean",
+            "examples" : [ false ]
+          },
+          "EngineerModifications" : {
+            "title" : "EngineerModifications",
+            "description": "Only if modifications are present",
+            "type" : "string",
+            "examples" : [ "Weapon_Efficient", "Weapon_HighCapacity", "ShieldBooster_Thermic" ]
+          },
+          "Level" : {
+            "title" : "Level",
+            "type" : "integer",
+            "examples" : [ 5, 3, 4 ]
+          },
+          "Quality" : {
+            "title" : "Quality",
+            "type" : "number",
+            "minimum": 0,
+            "maximum": 1,
+            "examples" : [ 0.921, 0.9058, 1.0 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Slot", "Name", "Name_Localised", "Hot" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "Ship", "ShipID", "Items" ]
+}

@@ -1,0 +1,121 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "FID" : {
+      "title" : "FID",
+      "type" : "string",
+      "examples" : [ "F123456" ]
+    },
+    "Commander" : {
+      "title" : "Commander",
+      "type" : "string",
+      "examples" : [ "Alice", "Bob", "Mallory" ]
+    },
+    "Horizons" : {
+      "title" : "Horizons",
+      "description": "Whether Game has Horizons enabled.",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "Odyssey" : {
+      "title" : "Odyssey",
+      "description": "Whether Game has Odyssey enabled. Only present if in Odyssey game mode",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "Ship" : {
+      "title" : "Ship",
+      "type" : "string",
+      "examples" : [ "Krait_MkII", "UtilitySuit_Class5", "Asp" ]
+    },
+    "Ship_Localised" : {
+      "title" : "Ship_Localised",
+      "type" : "string",
+      "examples" : [ "Krait Mk II", "$UtilitySuit_Class1_Name;", "Asp Explorer" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 18, 4293000004, 5 ]
+    },
+    "ShipName" : {
+      "title" : "ShipName",
+      "description": "User-defined ship name",
+      "type" : "string",
+      "examples" : [ "Goidgobbler", "", "Starhopper" ]
+    },
+    "ShipIdent" : {
+      "title" : "ShipIdent",
+      "description": "User-defined ship ID string",
+      "type" : "string",
+      "examples" : [ "ASP-01", "", "KM2-02" ]
+    },
+    "FuelLevel" : {
+      "title" : "FuelLevel",
+      "description": "Current fuel level",
+      "type" : "number",
+      "examples" : [ 31.873062, 31.243063, 1.0 ]
+    },
+    "FuelCapacity" : {
+      "title" : "FuelCapacity",
+      "description": "Size of main tank",
+      "type" : "number",
+      "examples" : [ 32.0, 1.0, 16.0 ]
+    },
+    "GameMode" : {
+      "title" : "GameMode",
+      "description": "Open, Solo or Group",
+      "type" : "string",
+      "examples" : [ "Solo", "Group", "Open" ]
+    },
+    "Credits" : {
+      "title" : "Credits",
+      "description": "Current credit balance",
+      "type" : "integer",
+      "examples" : [ 1774886079, 1775449365, 1775448690 ]
+    },
+    "Loan" : {
+      "title" : "Loan",
+      "description": "Current loan",
+      "type" : "integer",
+      "examples" : [ 0 ]
+    },
+    "language" : {
+      "title" : "language",
+      "type" : "string",
+      "examples" : [ "English/UK", "Russian/RU", "French/FR" ]
+    },
+    "gameversion" : {
+      "title" : "gameversion",
+      "type" : "string",
+      "examples" : [ "4.0.0.1200", "4.0.0.1201", "4.0.0.1300" ]
+    },
+    "build" : {
+      "title" : "build",
+      "type" : "string",
+      "examples" : [ "r282108/r0 ", "r282352/r0 ", "r284072/r0 " ]
+    },
+    "Group" : {
+      "title" : "Group",
+      "description": "name of group (if in a group session)",
+      "type" : "string",
+      "examples" : [ "Group A", "Group B", "Group C" ]
+    },
+    "StartLanded" : {
+      "title" : "StartLanded",
+      "description": "Only present if landed",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "StartDead" : {
+      "title" : "StartDead",
+      "description": "only present if starting dead: see Resurrect",
+      "type" : "boolean",
+      "examples" : [ true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "FID", "Commander", "Horizons", "Credits", "Loan" ]
+}

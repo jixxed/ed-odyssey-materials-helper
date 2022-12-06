@@ -1,0 +1,15 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when under fire (same time as the Under Attack voice message)",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Target" : {
+      "title" : "Target",
+      "type" : "string",
+      "examples" : [ "Fighter", "You", "Mothership" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

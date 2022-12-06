@@ -1,0 +1,24 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3705124096 ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Aoi TSURARA", "Aoi Tsurara  ", "Aoi Tsurara " ]
+    },
+    "Callsign" : {
+      "title" : "Callsign",
+      "type" : "string",
+      "examples" : [ "X6H-B4Z" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "Name", "Callsign" ]
+}

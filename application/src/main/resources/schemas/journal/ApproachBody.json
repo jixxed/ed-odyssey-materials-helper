@@ -1,0 +1,30 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when in Supercruise, and distance from planet drops to within the 'Orbital Cruise' zone",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 20485", "Siris", "Sol" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 3657265287866, 7269634614689, 10477373803 ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "HIP 20485 C 5", "Siris 5 c", "Vanth" ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 35, 40, 38 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "StarSystem", "SystemAddress", "Body", "BodyID" ]
+}

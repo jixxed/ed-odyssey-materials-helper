@@ -1,0 +1,45 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the player’s rank increases. Only the relevant ranks are included.",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Explore" : {
+      "title" : "Explore",
+      "type" : "integer",
+      "examples" : [ 9, 10, 4 ]
+    },
+    "Combat" : {
+      "title" : "Combat",
+      "type" : "integer",
+      "examples" : [ 7, 6, 9 ]
+    },
+    "Soldier" : {
+      "title" : "Soldier",
+      "type" : "integer",
+      "examples" : [ 6, 2, 3 ]
+    },
+    "Federation" : {
+      "title" : "Federation",
+      "type" : "integer",
+      "examples" : [ 24, 12, 1 ]
+    },
+    "Exobiologist" : {
+      "title" : "Exobiologist",
+      "type" : "integer",
+      "examples" : [ 2, 9, 11 ]
+    },
+    "Empire" : {
+      "title" : "Empire",
+      "type" : "integer",
+      "examples" : [ 14 ]
+    },
+    "Trade" : {
+      "title" : "Trade",
+      "type" : "integer",
+      "examples" : [ 9, 10, 11 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

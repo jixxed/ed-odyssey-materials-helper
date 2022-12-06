@@ -1,0 +1,22 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when scanning a data link",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Message" : {
+      "title" : "Message",
+      "description": "Message identifier from data link",
+      "type" : "string",
+      "examples" : [ "$DATAPOINT_GAMEPLAY_complete;", "$DataLink_ScannedInfo_Operations;", "$DataLink_ScannedInfo_Power_2;" ]
+    },
+    "Message_Localised" : {
+      "title" : "Message_Localised",
+      "description": "Localized message from data link",
+      "type" : "string",
+      "examples" : [ "Alert: All Data Point telemetry links established, Intel package created.", "Op-Net accessed", "Fuel routing system accessed" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Message", "Message_Localised" ]
+}

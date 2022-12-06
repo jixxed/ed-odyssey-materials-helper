@@ -1,0 +1,43 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when purchasing a new hand weapon",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Wpn_S_Pistol_Laser_SAuto", "Wpn_M_AssaultRifle_Kinetic_FAuto", "Wpn_M_Sniper_Plasma_Charged" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "type" : "string",
+      "examples" : [ "TK Zenith", "Karma AR-50", "Manticore Executioner" ]
+    },
+    "Class" : {
+      "title" : "Class",
+      "type" : "integer",
+      "examples" : [ 3, 2, 1 ]
+    },
+    "Price" : {
+      "title" : "Price",
+      "type" : "integer",
+      "examples" : [ 1250000, 625000, 875000 ]
+    },
+    "SuitModuleID" : {
+      "title" : "SuitModuleID",
+      "type" : "integer",
+      "examples" : [ 1734434014695577, 1701563074550582, 1702819362160345 ]
+    },
+    "WeaponMods" : {
+      "title" : "WeaponMods",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "weapon_stability", "weapon_suppression_unpressurised", "weapon_range" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "Name_Localised", "Class", "Price", "SuitModuleID", "WeaponMods" ]
+}

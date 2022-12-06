@@ -1,0 +1,15 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "At the time the player cancels decommission",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3700005632 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID" ]
+}

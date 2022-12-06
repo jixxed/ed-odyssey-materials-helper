@@ -1,0 +1,45 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when selling a module in outfitting",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 128666762, 129009496, 3705689344 ]
+    },
+    "Slot" : {
+      "title" : "Slot",
+      "type" : "string",
+      "examples" : [ "SmallHardpoint2", "SmallHardpoint1", "Slot01_Size6" ]
+    },
+    "SellItem" : {
+      "title" : "SellItem",
+      "type" : "string",
+      "examples" : [ "$hpt_pulselaser_fixed_small_name;", "$int_cargorack_size5_class1_name;", "$int_cargorack_size2_class1_name;" ]
+    },
+    "SellItem_Localised" : {
+      "title" : "SellItem_Localised",
+      "type" : "string",
+      "examples" : [ "Pulse Laser", "Cargo Rack", "Supercruise Assist" ]
+    },
+    "SellPrice" : {
+      "title" : "SellPrice",
+      "type" : "integer",
+      "examples" : [ 1980, 100409, 2925 ]
+    },
+    "Ship" : {
+      "title" : "Ship",
+      "type" : "string",
+      "examples" : [ "asp", "anaconda", "empire_courier" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 34, 38, 39 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "Slot", "SellItem", "SellItem_Localised", "SellPrice", "Ship", "ShipID" ]
+}

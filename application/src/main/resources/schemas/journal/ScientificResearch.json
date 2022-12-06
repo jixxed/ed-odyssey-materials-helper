@@ -1,0 +1,36 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when contributing materials to a research community goal",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3228867072 ]
+    },
+    "Category" : {
+      "title" : "Category",
+      "type" : "string",
+      "examples" : [ "Raw", "Manufactured", "Encoded" ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "sulphur", "manganese", "nickel" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "description": "The localised value will be omitted if it is exactly the same as Name",
+      "type" : "string",
+      "examples" : [ "Sensor Fragment", "Classified Scan Databanks", "Unidentified Scan Archives" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 3, 300, 150 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "Name", "Category", "Count" ]
+}

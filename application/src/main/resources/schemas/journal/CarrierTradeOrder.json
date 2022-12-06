@@ -1,0 +1,53 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "The carrier owner has requested the carrier buys or sells goods (or cancels such an order)",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3707430144, 3705124096 ]
+    },
+    "BlackMarket" : {
+      "title" : "BlackMarket",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Commodity" : {
+      "title" : "Commodity",
+      "type" : "string",
+      "examples" : [ "largecapacitypowerregulator", "buildingschematic", "powergridassembly" ]
+    },
+    "Commodity_Localised" : {
+      "title" : "Commodity_Localised",
+      "type" : "string",
+      "examples" : [ "Power Regulator", "Building Schematic", "Energy Grid Assembly" ]
+    },
+    "PurchaseOrder" : {
+	  "description": "PurchaseOrder or SaleOrder or CancelTrade",
+      "title" : "PurchaseOrder",
+      "type" : "integer",
+      "examples" : [ 100, 206, 1 ]
+    },
+    "SaleOrder" : {
+	  "description": "PurchaseOrder or SaleOrder or CancelTrade",
+      "title" : "SaleOrder",
+      "type" : "integer",
+      "examples" : [ 100, 5, 21000 ]
+    },
+    "CancelTrade" : {
+	  "description": "PurchaseOrder or SaleOrder or CancelTrade",
+      "title" : "CancelTrade",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "Price" : {
+      "title" : "Price",
+      "type" : "integer",
+      "examples" : [ 500000, 250000, 2500 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "BlackMarket", "Commodity" ]
+}

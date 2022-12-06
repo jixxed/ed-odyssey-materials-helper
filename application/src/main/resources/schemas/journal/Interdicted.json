@@ -1,0 +1,43 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: player was interdicted by player or npc",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Submitted" : {
+      "title" : "Submitted",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Interdictor" : {
+      "title" : "Interdictor",
+      "type" : "string",
+      "examples" : [ "Bob Royall", "Markus Klaus", "Dirk Gently" ]
+    },
+    "IsPlayer" : {
+      "title" : "IsPlayer",
+      "description": "Whether player or npc",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "Faction" : {
+      "title" : "Faction",
+      "description": "If npc",
+      "type" : "string",
+      "examples" : [ "Royal Phoenix Corporation", "The Ant Hill Mob", "LFT 926 Blue Hand Gang" ]
+    },
+    "Power" : {
+      "title" : "Power",
+      "description": "If npc is working for a power",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Interdictor_Localised" : {
+      "title" : "Interdictor_Localised",
+      "type" : "string",
+      "examples" : [ "System Authority Vessel", "Allied Police Forces", "Federal Security Service" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Submitted", "IsPlayer" ]
+}

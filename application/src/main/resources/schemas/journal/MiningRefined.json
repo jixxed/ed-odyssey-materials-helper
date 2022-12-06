@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when mining fragments are converted unto a unit of cargo by refinery",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "$gallite_name;", "$bertrandite_name;", "$platinum_name;" ]
+    },
+    "Type_Localised" : {
+      "title" : "Type_Localised",
+      "type" : "string",
+      "examples" : [ "Gallite", "Bertrandite", "Platinum" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type", "Type_Localised" ]
+}

@@ -1,0 +1,67 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When trading with a Fleet Carrier Bartender for materials, a file is written with the pricelist to FCMaterials.json",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705124096, 3707953408, 3706338816 ]
+    },
+    "CarrierName" : {
+      "title" : "CarrierName",
+      "type" : "string",
+      "examples" : [ "Carrier Name" ]
+    },
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "string",
+      "examples" : [ "A1A-B2B" ]
+    },
+    "Items":{
+      "title": "Items",
+      "description": "Only included in FCMaterials.json",
+      "type": "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "title" : "id",
+            "type" : "number",
+            "examples" : [ 128961556, 128972334, 128961527 ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "$californium_name;", "$aerogel_name;", "$culinaryrecipes_name;" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Californium", "Aerogel", "Culinary Recipes" ]
+          },
+          "Price" : {
+            "title" : "Price",
+            "type" : "number",
+            "examples" : [ 74000, 1000, 400 ]
+          },
+          "Stock" : {
+            "title" : "Stock",
+            "type" : "number",
+            "examples" : [ 0, 20, 18 ]
+          },
+          "Demand" : {
+            "title" : "Demand",
+            "type" : "number",
+            "examples" : [ 0, 1, 98 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "id", "Name", "Price", "Stock", "Demand" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "CarrierName", "CarrierID" ]
+}

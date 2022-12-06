@@ -1,0 +1,41 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "At the time the player requests the jump, not the jump itself",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3707430144, 3705124096 ]
+    },
+    "SystemName" : {
+      "title" : "SystemName",
+      "type" : "string",
+      "examples" : [ "Celaeno", "HIP 20485", "Synuefai UY-J b54-1" ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "Celaeno 2", "Synuefai UY-J b54-1 A", "Swoiwns ZD-B d1" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 198875014308, 3657265287866, 2867023521233 ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 10, 11, 2 ]
+    },
+    "DepartureTime" : {
+      "title" : "DepartureTime",
+      "type" : "string",
+      "format" : "date-time",
+      "examples" : [ "2022-11-29T23:48:28Z", "2022-12-01T10:01:24Z", "2022-12-02T01:16:22Z" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "SystemName", "SystemAddress", "BodyID" ]
+}

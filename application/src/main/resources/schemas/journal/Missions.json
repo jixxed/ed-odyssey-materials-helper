@@ -1,0 +1,106 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: at startup",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Active" : {
+      "title" : "Active",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 868354915, 868354949, 868354970 ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Mission_OnFoot_Hack_Download_Covert_MB_name", "Mission_OnFoot_Hack_Download_MB_name", "Mission_OnFoot_Sabotage_Power_MB_name" ]
+          },
+          "PassengerMission" : {
+            "title" : "PassengerMission",
+            "type" : "boolean",
+            "examples" : [ false, true ]
+          },
+          "Expires" : {
+            "title" : "Expires",
+            "description": "Time left in seconds",
+            "type" : "integer",
+            "examples" : [ 23337, 24071, 23981 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "MissionID", "Name", "PassengerMission", "Expires" ]
+      }
+    },
+    "Failed" : {
+      "title" : "Failed",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 868354915, 868354949, 868354970 ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Mission_OnFoot_Hack_Download_Covert_MB_name", "Mission_OnFoot_Hack_Download_MB_name", "Mission_OnFoot_Sabotage_Power_MB_name" ]
+          },
+          "PassengerMission" : {
+            "title" : "PassengerMission",
+            "type" : "boolean",
+            "examples" : [ false, true ]
+          },
+          "Expires" : {
+            "title" : "Expires",
+            "description": "Time left in seconds",
+            "type" : "integer",
+            "examples" : [ 0 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "MissionID", "Name", "PassengerMission", "Expires" ]
+      }
+    },
+    "Complete" : {
+      "title" : "Complete",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 868354915, 868354949, 868354970 ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Mission_OnFoot_Hack_Download_Covert_MB_name", "Mission_OnFoot_Hack_Download_MB_name", "Mission_OnFoot_Sabotage_Power_MB_name" ]
+          },
+          "PassengerMission" : {
+            "title" : "PassengerMission",
+            "type" : "boolean",
+            "examples" : [ false, true ]
+          },
+          "Expires" : {
+            "title" : "Expires",
+            "description": "Time left in seconds",
+            "type" : "integer",
+            "examples" : [ 23337, 24071, 23981 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "MissionID", "Name", "PassengerMission", "Expires" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Active", "Failed", "Complete" ]
+}

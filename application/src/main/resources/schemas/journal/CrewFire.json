@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when dismissing a member of crew",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Alice", "Bob", "Mallory" ]
+    },
+    "CrewID" : {
+      "title" : "CrewID",
+      "type" : "integer",
+      "examples" : [ 216828288, 218204548, 230047524 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "CrewID" ]
+}

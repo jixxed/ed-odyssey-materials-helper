@@ -1,0 +1,69 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when accessing shipyard in a station. The full price list is written to a separate file, in the same folder as the journal, Shipyard.json",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3700367104, 128666762 ]
+    },
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Jameson Memorial" ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "Celaeno", "HIP 20485", "Swoiwns ZD-B d1" ]
+    },
+    "Horizons" : {
+      "title" : "Horizons",
+      "description": "Only written in Shipyard.json",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "AllowCobraMkIV" : {
+      "title" : "AllowCobraMkIV",
+      "description": "Only written in Shipyard.json",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "PriceList" : {
+      "title" : "PriceList",
+      "description": "Only written in Shipyard.json",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "title" : "id",
+            "type" : "integer",
+            "examples" : [ 128049249, 128049255, 128049261 ]
+          },
+          "ShipType" : {
+            "title" : "ShipType",
+            "type" : "string",
+            "examples" : [ "sidewinder", "eagle", "hauler" ]
+          },
+          "ShipPrice" : {
+            "title" : "ShipPrice",
+            "type" : "integer",
+            "examples" : [ 24336, 34071, 40094 ]
+          },
+          "ShipType_Localised" : {
+            "title" : "ShipType_Localised",
+            "type" : "string",
+            "examples" : [ "Imperial Eagle" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "id", "ShipType", "ShipPrice" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "StationName", "StarSystem" ]
+}

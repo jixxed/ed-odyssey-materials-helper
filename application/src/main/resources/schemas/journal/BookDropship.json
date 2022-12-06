@@ -1,0 +1,30 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when signing up to fight at a recruitment desk",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Retreat" : {
+      "title" : "Retreat",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 0 ]
+    },
+    "DestinationSystem" : {
+      "title" : "DestinationSystem",
+      "type" : "string",
+      "examples" : [ "HIP 44137", "Coriabog", "Inmutha" ]
+    },
+    "DestinationLocation" : {
+      "title" : "DestinationLocation",
+      "type" : "string",
+      "examples" : [ "Vidal Metallurgic Territory", "Alexandrov Observatory", "Singh Analytics Institution" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Cost", "DestinationSystem", "DestinationLocation" ]
+}

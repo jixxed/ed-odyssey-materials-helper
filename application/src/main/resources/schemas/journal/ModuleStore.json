@@ -1,0 +1,72 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when storing a module in Outfitting",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 128666762, 128679559 ]
+    },
+    "Slot" : {
+      "title" : "Slot",
+      "type" : "string",
+      "examples" : [ "Slot03_Size3", "Slot06_Size2", "Slot07_Size2" ]
+    },
+    "StoredItem" : {
+      "title" : "StoredItem",
+      "type" : "string",
+      "examples" : [ "$int_cargorack_size3_class1_name;", "$int_cargorack_size2_class1_name;", "$int_cargorack_size5_class1_name;" ]
+    },
+    "ReplacementItem" : {
+      "title" : "ReplacementItem",
+      "description": "If a core module is stored. Documented, but appears to be unused.",
+      "type" : "string",
+      "examples" : [ "$int_engine_size4_class5_name;", "$int_powerplant_size3_class5_name;", "$int_hyperdrive_size5_class5_name;" ]
+    },
+    "StoredItem_Localised" : {
+      "title" : "StoredItem_Localised",
+      "description": "If a core module is stored. Documented, but appears to be unused.",
+      "type" : "string",
+      "examples" : [ "Engine", "Power Plant", "FSD Drive" ]
+    },
+    "Ship" : {
+      "title" : "Ship",
+      "type" : "string",
+      "examples" : [ "asp", "federation_corvette", "cutter" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 5, 29, 25 ]
+    },
+    "Hot" : {
+      "title" : "Hot",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "EngineerModifications" : {
+      "title" : "EngineerModifications",
+      "type" : "string",
+      "examples" : [ "FSD_LongRange", "ShieldGenerator_Thermic", "Misc_HeatSinkCapacity" ]
+    },
+    "Level" : {
+      "title" : "Level",
+      "type" : "integer",
+      "examples" : [ 5, 1, 3 ]
+    },
+    "Quality" : {
+      "title" : "Quality",
+      "type" : "number",
+      "examples" : [ 1.0, 0.978, 0.9569 ]
+    },
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 5, 29, 25 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "Slot", "StoredItem", "Ship", "ShipID" ]
+}

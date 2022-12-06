@@ -1,0 +1,15 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when repairing everything",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 204, 1827, 4910 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Cost" ]
+}

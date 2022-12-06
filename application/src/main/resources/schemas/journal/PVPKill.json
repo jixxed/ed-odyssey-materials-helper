@@ -1,0 +1,24 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when this player has killed another player",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Victim" : {
+      "title" : "Victim",
+      "description": "Name of the victim",
+      "type" : "string",
+      "examples" : [ "Commander name" ]
+    },
+    "CombatRank" : {
+      "title" : "CombatRank",
+      "description": "Victim’s rank in range 0..8",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 8,
+      "examples" : [ 8, 6, 7 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Victim", "CombatRank" ]
+}

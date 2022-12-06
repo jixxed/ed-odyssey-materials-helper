@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when a new material is discovered",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Category" : {
+      "title" : "Category",
+      "type" : "string",
+      "examples" : [ "Encoded", "Manufactured", "Raw" ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "classifiedscandata", "tg_shutdowndata", "tg_causticgeneratorparts" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+	  "description": "The localised value will be omitted if it is exactly the same as Name",
+      "type" : "string",
+      "examples" : [ "Classified Scan Fragment", "Massive Energy Surge Analytics", "Corrosive Mechanisms" ]
+    },
+    "DiscoveryNumber" : {
+      "title" : "DiscoveryNumber",
+      "type" : "integer",
+      "examples" : [ 38, 39, 64 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Category", "Name", "DiscoveryNumber" ]
+}

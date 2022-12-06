@@ -1,0 +1,91 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: at startup, when loading from main menu into game",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Raw" : {
+      "title" : "Raw",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "iron", "nickel", "carbon" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "description": "The localised value will be omitted if it is exactly the same as Name",
+            "type" : "string",
+            "examples" : [ "Хром", "Углерод", "Железо" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 248, 250, 266 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count" ]
+      }
+    },
+    "Manufactured" : {
+      "title" : "Manufactured",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "hybridcapacitors", "protoradiolicalloys", "protolightalloys" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "description": "The localised value will be omitted if it is exactly the same as Name",
+            "type" : "string",
+            "examples" : [ "Hybrid Capacitors", "Proto Radiolic Alloys", "Proto Light Alloys" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 60, 18, 107 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count" ]
+      }
+    },
+    "Encoded" : {
+      "title" : "Encoded",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "shieldsoakanalysis", "shieldpatternanalysis", "shielddensityreports" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "description": "The localised value will be omitted if it is exactly the same as Name",
+            "type" : "string",
+            "examples" : [ "Inconsistent Shield Soak Analysis", "Aberrant Shield Pattern Analysis", "Untypical Shield Scans" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 86, 83, 125 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Raw", "Manufactured", "Encoded" ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when a mission is updated with a new destination",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MissionID" : {
+      "title" : "MissionID",
+      "type" : "integer",
+      "examples" : [ 868354915, 868354970, 869372871 ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Mission_OnFoot_Hack_Download_Covert_MB", "Mission_OnFoot_Hack_Download_MB", "Mission_OnFoot_Hack_Download_Offline_MB" ]
+    },
+    "NewDestinationStation" : {
+      "title" : "NewDestinationStation",
+      "type" : "string",
+      "examples" : [ "Bowersox Terminal", "Hardy Orbital", "Jameson Memorial" ]
+    },
+    "NewDestinationSystem" : {
+      "title" : "NewDestinationSystem",
+      "type" : "string",
+      "examples" : [ "Latorioson", "Asooraja", "Shinrarta Dezhra" ]
+    },
+    "OldDestinationStation" : {
+      "title" : "OldDestinationStation",
+      "type" : "string",
+      "examples" : [ "Watanabe Botanical Nursery", "Pomeroy Analytics Installation", "Okusanya Manufacturing Hub" ]
+    },
+    "OldDestinationSystem" : {
+      "title" : "OldDestinationSystem",
+      "type" : "string",
+      "examples" : [ "Latorioson", "Asooraja", "Fenrichua" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MissionID", "Name", "NewDestinationStation", "NewDestinationSystem", "OldDestinationStation", "OldDestinationSystem" ]
+}

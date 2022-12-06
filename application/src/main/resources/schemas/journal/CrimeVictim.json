@@ -1,0 +1,32 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when another player commits a crime against the current player",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Offender" : {
+      "title" : "Offender",
+      "type" : "string",
+      "examples" : [ "jixxed", "Sam Ishum", "Jake Larson" ]
+    },
+    "CrimeType" : {
+      "title" : "CrimeType",
+      "type" : "string",
+      "examples" : [ "onFoot_identityTheft", "assault", "onFoot_failureToSubmitToPolice" ]
+    },
+    "Fine" : {
+      "title" : "Fine",
+      "description": "Fine or Bounty",
+      "type" : "integer",
+      "examples" : [ 500 ]
+    },
+    "Bounty" : {
+      "title" : "Bounty",
+      "description": "Fine or Bounty",
+      "type" : "integer",
+      "examples" : [ 600, 450, 300 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Offender", "CrimeType" ]
+}

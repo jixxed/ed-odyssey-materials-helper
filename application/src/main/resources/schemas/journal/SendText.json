@@ -1,0 +1,25 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when a text message is sent to another player",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "To" : {
+      "title" : "To",
+      "type" : "string",
+      "examples" : [ "Alice", "Bob", "Mallory" ]
+    },
+    "Message" : {
+      "title" : "Message",
+      "type" : "string",
+      "examples" : [ "CMDR Alice waved at CMDR Mallory", "CMDR Bob waved at CMDR Alice", "CMDR Mallory waved at CMDR Bob" ]
+    },
+    "Sent" : {
+      "title" : "Sent",
+      "type" : "boolean",
+      "examples" : [ true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "To", "Message", "Sent" ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the player's SRV is destroyed",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "ID" : {
+      "title" : "ID",
+      "type" : "integer",
+      "examples" : [ 37, 34, 65 ]
+    },
+    "SRVType" : {
+      "title" : "SRVType",
+      "type" : "string",
+      "examples" : [ "testbuggy", "combat_multicrew_srv_01" ]
+    },
+    "SRVType_Localised" : {
+      "title" : "SRVType_Localised",
+      "type" : "string",
+      "examples" : [ "SRV Scarab", "SRV Scorpion" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ID" ]
+}

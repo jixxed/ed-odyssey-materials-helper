@@ -1,0 +1,43 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when selling exploration data in Cartographics",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Systems" : {
+      "title" : "Systems",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "Phraa Blao SO-O d7-28", "Dryao Ain ZQ-C c26-0", "Laso CM-K d9-9" ]
+      }
+    },
+    "Discovered" : {
+      "title" : "Discovered",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "Phraa Blao SO-O d7-28 A", "Phraa Blao SO-O d7-28 C", "Phraa Blao SO-O d7-28 B" ]
+      }
+    },
+    "BaseValue" : {
+      "title" : "BaseValue",
+      "type" : "integer",
+      "examples" : [ 8701, 4539, 2387 ]
+    },
+    "Bonus" : {
+      "title" : "Bonus",
+      "description": "Bonus for first discoveries",
+      "type" : "integer",
+      "examples" : [ 6489, 0, 1913 ]
+    },
+    "TotalEarnings" : {
+      "title" : "TotalEarnings",
+      "description": "Total credits received (including for example the 200% bonus if rank 5 with Li Yong Rui)",
+      "type" : "integer",
+      "examples" : [ 10951, 4539, 3137 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Systems", "Discovered", "BaseValue", "Bonus", "TotalEarnings" ]
+}

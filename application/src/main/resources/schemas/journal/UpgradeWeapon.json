@@ -1,0 +1,60 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "wpn_m_assaultrifle_laser_fauto", "wpn_s_pistol_kinetic_sauto", "wpn_m_sniper_plasma_charged" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "type" : "string",
+      "examples" : [ "TK Aphelion", "Karma P-15", "Manticore Executioner" ]
+    },
+    "Class" : {
+      "title" : "Class",
+      "type" : "integer",
+      "examples" : [ 5, 4, 2 ]
+    },
+    "SuitModuleID" : {
+      "title" : "SuitModuleID",
+      "type" : "integer",
+      "examples" : [ 1700585855356669, 1700575777091218, 1700314469329676 ]
+    },
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 6250000, 1500000, 2500000 ]
+    },
+    "Resources" : {
+      "title" : "Resources",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "weaponschematic", "ionisedgas", "manufacturinginstructions" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Weapon Schematic", "Ionised Gas", "Manufacturing Instructions" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 1, 5 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "Name_Localised", "Class", "SuitModuleID", "Cost" ]
+}

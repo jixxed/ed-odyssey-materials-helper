@@ -1,0 +1,23 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when receiving payment for powerplay combat",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Power" : {
+      "title" : "Power",
+      "type" : "string",
+      "examples" : [ "Felicia Winters" ]
+    },
+    "Systems" : {
+      "title" : "Systems",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "Lundji", "Sol" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Power", "Systems" ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when scanning some types of data links",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "$Datascan_TouristBeacon;", "$Datascan_ListeningPost;", "$Datascan_ShipUplink;" ]
+    },
+    "Type_Localised" : {
+      "title" : "Type_Localised",
+      "type" : "string",
+      "examples" : [ "Tourist Beacon", "Listening Post", "Ship Uplink" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type" ]
+}

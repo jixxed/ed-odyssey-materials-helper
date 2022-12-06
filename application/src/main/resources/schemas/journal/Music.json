@@ -1,0 +1,14 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MusicTrack" : {
+      "title" : "MusicTrack",
+      "type" : "string",
+      "examples" : [ "NoTrack", "Exploration", "FleetCarrier_Managment" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MusicTrack" ]
+}

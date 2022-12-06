@@ -1,0 +1,51 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when requesting a module is transferred from storage at another station",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "StorageSlot" : {
+      "title" : "StorageSlot",
+      "type" : "integer",
+      "examples" : [ 100, 101, 87 ]
+    },
+    "StoredItem" : {
+      "title" : "StoredItem",
+      "type" : "string",
+      "examples" : [ "$int_multidronecontrol_rescue_size3_class3_name;", "$int_multidronecontrol_mining_size3_class3_name;", "$int_multidronecontrol_operations_size3_class4_name;" ]
+    },
+    "StoredItem_Localised" : {
+      "title" : "StoredItem_Localised",
+      "type" : "string",
+      "examples" : [ "Rescue Multi-Limpet Controller", "Mining Multi-Limpet Controller", "Operations Multi-Limpet Controller" ]
+    },
+    "ServerId" : {
+      "title" : "ServerId",
+      "type" : "integer",
+      "examples" : [ 129001926, 129001922, 129001924 ]
+    },
+    "TransferCost" : {
+      "title" : "TransferCost",
+      "type" : "integer",
+      "examples" : [ 1166, 1805, 176 ]
+    },
+    "TransferTime" : {
+      "title" : "TransferTime",
+      "description": "In seconds",
+      "type" : "integer",
+      "examples" : [ 4316, 356, 2564 ]
+    },
+    "Ship" : {
+      "title" : "Ship",
+      "type" : "string",
+      "examples" : [ "asp", "anaconda", "federation_corvette" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 5, 7, 29 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "StorageSlot", "StoredItem", "StoredItem_Localised", "ServerId", "TransferCost", "TransferTime", "Ship", "ShipID" ]
+}

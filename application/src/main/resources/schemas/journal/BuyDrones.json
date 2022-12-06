@@ -1,0 +1,30 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when purchasing drones",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "Drones" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 105, 20, 1 ]
+    },
+    "BuyPrice" : {
+      "title" : "BuyPrice",
+      "type" : "integer",
+      "examples" : [ 122, 101, 82 ]
+    },
+    "TotalCost" : {
+      "title" : "TotalCost",
+      "type" : "integer",
+      "examples" : [ 12810, 2020, 82 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type", "Count", "BuyPrice", "TotalCost" ]
+}

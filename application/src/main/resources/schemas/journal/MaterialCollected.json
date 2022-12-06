@@ -1,0 +1,32 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: whenever materials are collected",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Category" : {
+      "title" : "Category",
+      "type" : "string",
+      "examples" : [ "Raw", "Manufactured", "Encoded" ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "sulphur", "manganese", "nickel" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "description": "Number of units collected",
+      "type" : "integer",
+      "examples" : [ 3, 9, 6 ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+	  "description": "The localised value will be omitted if it is exactly the same as Name",
+      "type" : "string",
+      "examples" : [ "Sensor Fragment", "Classified Scan Databanks", "Unidentified Scan Archives" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Category", "Name", "Count" ]
+}

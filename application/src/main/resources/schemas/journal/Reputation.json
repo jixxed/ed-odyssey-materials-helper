@@ -1,0 +1,38 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: at startup (after Rank and Progress). This gives the player's reputation (on a scale of -100..+100) with the superpowers",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Empire" : {
+      "title" : "Empire",
+      "type" : "number",
+      "minimum": -100,
+      "maximum": 100,
+      "examples" : [ 5.42526, 11.6653, 12.0872 ]
+    },
+    "Federation" : {
+      "title" : "Federation",
+      "type" : "number",
+      "minimum": -100,
+      "maximum": 100,
+      "examples" : [ 1.56348, -0.83652, -6.02652 ]
+    },
+    "Alliance" : {
+      "title" : "Alliance",
+      "type" : "number",
+      "minimum": -100,
+      "maximum": 100,
+      "examples" : [ 71.8815, 90.176201, 89.642403 ]
+    },
+    "Independent" : {
+      "title" : "Independent",
+      "type" : "number",
+      "minimum": -100,
+      "maximum": 100,
+      "examples" : [ -38.199299, 74.849998, 50.513199 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ ]
+}

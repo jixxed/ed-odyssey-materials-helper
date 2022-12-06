@@ -1,0 +1,40 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When discarding on-foot items from the player's inventory",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "electricalfuse", "epoxyadhesive", "memorychip" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "type" : "string",
+      "examples" : [ "Electrical Fuse", "Epoxy Adhesive", "Memory Chip" ]
+    },
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "Component", "Item", "Data" ]
+    },
+    "OwnerID" : {
+      "title" : "OwnerID",
+      "type" : "integer",
+      "examples" : [ 0, 5352618, 175185 ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 2, 1, 3 ]
+    },
+    "MissionID" : {
+      "title" : "MissionID",
+      "type" : "integer",
+      "examples" : [ 783435849, 787675873, 836665374 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "Type", "OwnerID", "Count" ]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when receiving information about a change in a friend's status. Also written at startup for friends who are already online.",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Status" : {
+      "title" : "Status",
+      "description": "One of the following: Requested, Declined, Added, Lost, Offline, Online",
+      "type" : "string",
+      "examples" : [ "Online", "Offline", "Added" ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "description": "the friend's commander name",
+      "type" : "string",
+      "examples" : [ "Alice", "Bob", "Mallory" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Status", "Name" ]
+}

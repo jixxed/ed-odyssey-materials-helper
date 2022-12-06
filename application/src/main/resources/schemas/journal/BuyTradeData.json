@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when buying trade data in the galaxy map",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "System" : {
+      "title" : "System",
+      "type" : "string",
+      "examples" : [ "Pleione", "LFT 509", "HIP 42563" ]
+    },
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 100 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "System", "Cost" ]
+}

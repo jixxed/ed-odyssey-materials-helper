@@ -1,0 +1,48 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the player requests docking at a station",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3701165824, 3222025216 ]
+    },
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Shinn Enterprise" ]
+    },
+    "StationType" : {
+      "title" : "StationType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "Coriolis", "CraterOutpost" ]
+    },
+    "LandingPads" : {
+      "title" : "LandingPads",
+      "type" : "object",
+      "properties" : {
+        "Small" : {
+          "title" : "Small",
+          "type" : "integer",
+          "examples" : [ 4, 17, 2 ]
+        },
+        "Medium" : {
+          "title" : "Medium",
+          "type" : "integer",
+          "examples" : [ 4, 18, 1 ]
+        },
+        "Large" : {
+          "title" : "Large",
+          "type" : "integer",
+          "examples" : [ 8, 9, 2 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Small", "Medium", "Large" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "StationName", "StationType" ]
+}
