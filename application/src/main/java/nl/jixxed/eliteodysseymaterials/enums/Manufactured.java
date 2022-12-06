@@ -113,4 +113,13 @@ public enum Manufactured implements HorizonsMaterial {
     public HorizonsStorageType getStorageType() {
         return HorizonsStorageType.MANUFACTURED;
     }
+
+
+    @Override
+    public int getMaxAmount() {
+        if (this == TG_CAUSTICCRYSTAL || this == TG_CAUSTICSHARD) {
+            return 200;
+        }
+        return this.getRarity().getMaxAmount();
+    }
 }
