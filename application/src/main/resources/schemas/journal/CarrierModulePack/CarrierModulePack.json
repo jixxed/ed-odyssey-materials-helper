@@ -1,0 +1,40 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3705689344 ]
+    },
+    "Operation" : {
+      "title" : "Operation",
+      "type" : "string",
+      "examples" : [ "SellPack", "BuyPack", "RestockPack" ]
+    },
+    "PackTheme" : {
+      "title" : "PackTheme",
+      "type" : "string",
+      "examples" : [ "Sensors", "Mining Utilities", "VehicleSupport" ]
+    },
+    "PackTier" : {
+      "title" : "PackTier",
+      "type" : "integer",
+      "examples" : [ 3, 1, 2 ]
+    },
+    "Refund" : {
+      "title" : "Refund",
+      "type" : "integer",
+      "examples" : [ 345554641, 554315009, 19160455 ]
+    },
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 9554600, 566276585, 19181515 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "Operation", "PackTheme", "PackTier" ]
+}

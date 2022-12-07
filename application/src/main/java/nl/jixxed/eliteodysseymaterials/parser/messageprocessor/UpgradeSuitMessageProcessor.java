@@ -1,12 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.journalevents.UpgradeSuit.UpgradeSuit;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.Map;
 //        { "timestamp":"2020-10-06T09:37:49Z", "event":"UpgradeSuit", "Name":"utilitysuit_class1",
 //        "Name_Localised":"Utility Suit", "Class":2, "Cost":100000 }
 
-public class UpgradeSuitMessageProcessor implements MessageProcessor {
+public class UpgradeSuitMessageProcessor implements MessageProcessor<UpgradeSuit> {
     private static final Map<String, OdysseyBlueprint> BLUEPRINT_MAPPING = Map.ofEntries(
             Map.entry("utilitysuit_class1", OdysseyBlueprintConstants.getRecipe(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_1_2)),
             Map.entry("utilitysuit_class2", OdysseyBlueprintConstants.getRecipe(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_2_3)),
@@ -36,13 +36,19 @@ public class UpgradeSuitMessageProcessor implements MessageProcessor {
     );
 
     @Override
-    public void process(final JsonNode journalMessage) {
-        final String name = journalMessage.get("Name").asText();
+    public void process(final UpgradeSuit event) {
+
+        final String name = event.getName();
         final OdysseyBlueprint odysseyBlueprint = BLUEPRINT_MAPPING.get(name);
         odysseyBlueprint.getMaterialCollection(OdysseyMaterial.class).forEach((key, value) -> {
             final Storage materialStorage = StorageService.getMaterialStorage(key);
             materialStorage.setValue(materialStorage.getValue(StoragePool.SHIPLOCKER) - value, StoragePool.SHIPLOCKER);
         });
+    }
+
+    @Override
+    public Class<UpgradeSuit> getMessageClass() {
+        return UpgradeSuit.class;
     }
 
 }

@@ -1,0 +1,27 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: Player has escaped interdiction",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Interdictor" : {
+      "title" : "Interdictor",
+      "type" : "string",
+      "examples" : [ "$ShipName_Police_Independent;", "Markus Klaus", "Bob Royall" ]
+    },
+    "Interdictor_Localised" : {
+      "title" : "Interdictor_Localised",
+      "type" : "string",
+      "examples" : [ "System Authority Vessel", "Federal Security Service", "Internal Security Service" ]
+    },
+    "IsPlayer" : {
+      "title" : "IsPlayer",
+      "description": "Whether player or npc",
+      "type" : "boolean",
+      "examples" : [ false ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Interdictor", "IsPlayer" ]
+}

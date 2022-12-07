@@ -1,0 +1,58 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when requesting a ship at another station be transported to this station",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "ShipType" : {
+      "title" : "ShipType",
+      "type" : "string",
+      "examples" : [ "Asp", "Cutter", "Python" ]
+    },
+    "ShipType_Localised" : {
+      "title" : "ShipType_Localised",
+      "type" : "string",
+      "examples" : [ "Asp Explorer", "Imperial Cutter", "Imperial Courier" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 5, 25, 34 ]
+    },
+    "System" : {
+      "title" : "System",
+      "description": "Location of the ship",
+      "type" : "string",
+      "examples" : [ "LFT 926", "Shinrarta Dezhra", "Cloomeia FG-Y e95" ]
+    },
+    "ShipMarketID" : {
+      "title" : "ShipMarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 128666762, 3703568640 ]
+    },
+    "Distance" : {
+      "title" : "Distance",
+      "type" : "number",
+      "examples" : [ 5.600031, 27306.621094, 12865.205078 ]
+    },
+    "TransferPrice" : {
+      "title" : "TransferPrice",
+      "type" : "integer",
+      "examples" : [ 23053, 300353, 70642812 ]
+    },
+    "TransferTime" : {
+      "title" : "TransferTime",
+      "description": "Time taken in seconds",
+      "type" : "integer",
+      "examples" : [ 356, 273366, 128952 ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 128666762, 3705689344, 3229301760 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ShipType", "ShipID", "System", "ShipMarketID", "Distance", "TransferPrice", "TransferTime", "MarketID" ]
+}

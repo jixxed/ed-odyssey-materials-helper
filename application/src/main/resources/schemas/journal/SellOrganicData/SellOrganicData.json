@@ -1,0 +1,57 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event records that a player has sold organic data (see ScanOrganic)",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 128927917, 3226858240 ]
+    },
+    "BioData" : {
+      "title" : "BioData",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Genus" : {
+            "title" : "Genus",
+            "type" : "string",
+            "examples" : [ "$Codex_Ent_Fonticulus_Genus_Name;", "$Codex_Ent_Bacterial_Genus_Name;", "$Codex_Ent_Stratum_Genus_Name;" ]
+          },
+          "Genus_Localised" : {
+            "title" : "Genus_Localised",
+            "type" : "string",
+            "examples" : [ "Fonticulua", "Bacterium", "Stratum" ]
+          },
+          "Species" : {
+            "title" : "Species",
+            "type" : "string",
+            "examples" : [ "$Codex_Ent_Fonticulus_02_Name;", "$Codex_Ent_Bacterial_12_Name;", "$Codex_Ent_Stratum_02_Name;" ]
+          },
+          "Species_Localised" : {
+            "title" : "Species_Localised",
+            "type" : "string",
+            "examples" : [ "Fonticulua Campestris", "Bacterium Cerbrus", "Stratum Paleas" ]
+          },
+          "Value" : {
+            "title" : "Value",
+            "type" : "integer",
+            "examples" : [ 63600, 121300, 102500 ]
+          },
+          "Bonus" : {
+            "title" : "Bonus",
+            "type" : "integer",
+            "examples" : [ 0, 121300, 102500 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Genus", "Species", "Value", "Bonus" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "BioData" ]
+}

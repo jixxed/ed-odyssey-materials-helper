@@ -1,11 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.jixxed.eliteodysseymaterials.journalevents.SendText.SendText;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -17,11 +17,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class SendTextMessageProcessor implements MessageProcessor {
-
+public class SendTextMessageProcessor implements MessageProcessor<SendText> {
     @Override
-    public void process(final JsonNode journalMessage) {
-        final String message = asTextOrBlank(journalMessage, "Message");
+    public void process(final SendText event) {
+        final String message = event.getMessage();
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             if (message.startsWith("CMDR " + commander.getName())) {
                 final Pattern pattern = Pattern.compile("^.*\\((.*)\\)$");
@@ -51,5 +50,8 @@ public class SendTextMessageProcessor implements MessageProcessor {
         });
     }
 
-
+    @Override
+    public Class<SendText> getMessageClass() {
+        return SendText.class;
+    }
 }

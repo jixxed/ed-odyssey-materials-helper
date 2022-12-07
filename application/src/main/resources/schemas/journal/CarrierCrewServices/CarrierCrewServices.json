@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "Changes to crew",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3707430144, 3705124096 ]
+    },
+    "CrewRole" : {
+      "title" : "CrewRole",
+      "type" : "string",
+      "examples" : [ "Bartender", "VistaGenomics", "PioneerSupplies" ]
+    },
+    "Operation" : {
+      "title" : "Operation",
+      "type" : "string",
+      "examples" : [ "Activate", "Replace", "Deactivate", "Resume", "Pause" ]
+    },
+    "CrewName" : {
+      "title" : "CrewName",
+      "type" : "string",
+      "examples" : [ "Kareem Pickett", "Floyd Hughes", "Coleman Sims" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "CrewRole", "Operation", "CrewName" ]
+}

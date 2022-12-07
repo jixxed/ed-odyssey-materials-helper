@@ -1,0 +1,158 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when starting a mission",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Faction" : {
+      "title" : "Faction",
+      "description": "Faction offering mission",
+      "type" : "string",
+      "examples" : [ "Leavism's Ending", "Simbad Regime", "Latorioson Blue Universal Ex" ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Mission_OnFoot_Hack_Download_Covert_MB", "Mission_OnFoot_Hack_Download_MB", "Mission_OnFoot_Sabotage_Power_MB" ]
+    },
+    "LocalisedName" : {
+      "title" : "LocalisedName",
+      "type" : "string",
+      "examples" : [ "Download Surveillance Logs from a data port", "Download Medical Records from a data port", "Download Employee Genetic Data from a data port" ]
+    },
+    "Commodity" : {
+      "title" : "Commodity",
+      "type" : "string",
+      "examples" : [ "$SurveilleanceLogs_Name;", "$MedicalRecords_Name;", "$EmployeeGeneticData_Name;" ]
+    },
+    "Commodity_Localised" : {
+      "title" : "Commodity_Localised",
+      "type" : "string",
+      "examples" : [ "Surveillance Logs", "Medical Records", "Employee Genetic Data" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "description": "Number required to deliver",
+      "type" : "integer",
+      "examples" : [ 1, 202, 195 ]
+    },
+    "Expiry" : {
+      "title" : "Expiry",
+      "description": "Mission expiry time, in ISO 8601",
+      "type" : "string",
+      "format" : "date-time",
+      "examples" : [ "2022-05-22T17:15:36Z", "2022-05-22T17:27:50Z", "2022-05-22T17:26:20Z" ]
+    },
+    "Wing" : {
+      "title" : "Wing",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Influence" : {
+      "title" : "Influence",
+      "type" : "string",
+      "examples" : [ "++", "+", "None" ]
+    },
+    "Reputation" : {
+      "title" : "Reputation",
+      "type" : "string",
+      "examples" : [ "++", "+", "None" ]
+    },
+    "Reward" : {
+      "title" : "Reward",
+      "type" : "integer",
+      "examples" : [ 298488, 189591, 320312 ]
+    },
+    "MissionID" : {
+      "title" : "MissionID",
+      "type" : "integer",
+      "examples" : [ 868354915, 868354949, 868354970 ]
+    },
+    "TargetType" : {
+      "title" : "TargetType",
+      "type" : "string",
+      "examples" : [ "$MissionUtil_FactionTag_PirateLord;", "$MissionUtil_FactionTag_Skimmer;", "$MissionUtil_FactionTag_AIHumanoid;" ]
+    },
+    "TargetType_Localised" : {
+      "title" : "TargetType_Localised",
+      "type" : "string",
+      "examples" : [ "Known Pirate", "Sentry Skimmer", "Faction Members" ]
+    },
+    "TargetFaction" : {
+      "title" : "TargetFaction",
+      "type" : "string",
+      "examples" : [ "Nuenets Blue Crew", "Kipsigines Vision Partners", "44th Vulture Syndicate" ]
+    },
+    "DestinationSystem" : {
+      "title" : "DestinationSystem",
+      "type" : "string",
+      "examples" : [ "Nuenets", "Shinrarta Dezhra", "LDS 413" ]
+    },
+    "DestinationStation" : {
+      "title" : "DestinationStation",
+      "type" : "string",
+      "examples" : [ "Ryazanski Dock", "Jameson Memorial", "Ockels Relay" ]
+    },
+    "NewDestinationSystem" : {
+      "title" : "DestinationSystem",
+      "description": "If it has been redirected",
+      "type" : "string",
+      "examples" : [ "Nuenets", "Shinrarta Dezhra", "LDS 413" ]
+    },
+    "NewDestinationStation" : {
+      "title" : "DestinationStation",
+      "description": "If it has been redirected",
+      "type" : "string",
+      "examples" : [ "Ryazanski Dock", "Jameson Memorial", "Ockels Relay" ]
+    },
+    "Target" : {
+      "title" : "Target",
+      "type" : "string",
+      "examples" : [ "Jeremy Rayner", "$MissionUtil_FactionTag_Datalink;", "Karissa Kennedy" ]
+    },
+    "Donation" : {
+      "title" : "Donation",
+      "type" : "string",
+      "examples" : [ "575000", "1000000", "450000" ]
+    },
+    "Target_Localised" : {
+      "title" : "Target_Localised",
+      "type" : "string",
+      "examples" : [ "Data Link", "Hub Access Terminal", "Turret" ]
+    },
+    "DestinationSettlement" : {
+      "title" : "DestinationSettlement",
+      "type" : "string",
+      "examples" : [ "Skoropadsky Boarding Site", "Cataldo Excavation Hub", "Degefa Extraction Platform" ]
+    },
+    "KillCount" : {
+      "title" : "KillCount",
+      "description": "Number of targets",
+      "type" : "integer",
+      "examples" : [ 9, 13, 5 ]
+    },
+    "PassengerCount" : {
+      "title" : "PassengerCount",
+      "type" : "integer",
+      "examples" : [ 4, 3, 16 ]
+    },
+    "PassengerVIPs" : {
+      "title" : "PassengerVIPs",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "PassengerWanted" : {
+      "title" : "PassengerWanted",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "PassengerType" : {
+      "title" : "PassengerType",
+      "type" : "string",
+      "examples" : [ "Tourist", "Criminal", "Explorer" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Faction", "Name", "LocalisedName", "Wing", "Influence", "Reputation", "MissionID" ]
+}

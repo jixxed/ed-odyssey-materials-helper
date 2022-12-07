@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "SquadronName" : {
+      "title" : "SquadronName",
+      "type" : "string",
+      "examples" : [ "TestSquadron" ]
+    },
+    "CurrentRank" : {
+      "title" : "CurrentRank",
+      "type" : "integer",
+      "examples" : [ 3, 0, 4 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SquadronName", "CurrentRank" ]
+}

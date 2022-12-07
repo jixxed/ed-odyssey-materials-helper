@@ -1,15 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.journalevents.ApproachSettlement.ApproachSettlement;
 
 @Getter
+@RequiredArgsConstructor
 public class ApproachSettlementJournalEvent extends JournalEvent {
-    private final String body;
-    private final String name;
-
-    public ApproachSettlementJournalEvent(final String timeStamp, final String body, final String name) {
-        super(timeStamp);
-        this.body = body;
-        this.name = name;
-    }
+    private final ApproachSettlement approachSettlement;
 }

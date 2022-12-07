@@ -1,0 +1,16 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when leaving a power",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Power" : {
+      "title" : "Power",
+      "type" : "string",
+      "examples" : [ "Li Yong-Rui" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Power" ]
+}

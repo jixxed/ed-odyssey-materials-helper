@@ -1,0 +1,364 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when jumping from one star system to another",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Taxi" : {
+      "title" : "Taxi",
+      "description": "True when inside a taxi transport ship",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Multicrew" : {
+      "title" : "Multicrew",
+      "description": "True when inside another player's ship",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "description": "Name of destination starsystem",
+      "type" : "string",
+      "examples" : [ "Celaeno", "Tascheter Sector EL-Y b5", "LHS 1443" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 198875014308, 11665802143105, 5068732442009 ]
+    },
+    "StarPos" : {
+      "title" : "StarPos",
+      "description": "star position, as a Json array [x, y, z], relative to Sol in Ly",
+      "type" : "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items" : {
+        "type" : "number",
+        "examples" : [ -81.09375, -148.3125, -337.09375 ]
+      }
+    },
+    "SystemAllegiance" : {
+      "title" : "SystemAllegiance",
+      "type" : "string",
+      "examples" : [ "Independent", "", "Empire" ]
+    },
+    "SystemEconomy" : {
+      "title" : "SystemEconomy",
+      "type" : "string",
+      "examples" : [ "$economy_Industrial;", "$economy_None;", "$economy_Refinery;" ]
+    },
+    "SystemEconomy_Localised" : {
+      "title" : "SystemEconomy_Localised",
+      "type" : "string",
+      "examples" : [ "Industrial", "None", "Refinery" ]
+    },
+    "SystemSecondEconomy" : {
+      "title" : "SystemSecondEconomy",
+      "type" : "string",
+      "examples" : [ "$economy_None;", "$economy_Industrial;", "$economy_Extraction;" ]
+    },
+    "SystemSecondEconomy_Localised" : {
+      "title" : "SystemSecondEconomy_Localised",
+      "type" : "string",
+      "examples" : [ "None", "Industrial", "Extraction" ]
+    },
+    "SystemGovernment" : {
+      "title" : "SystemGovernment",
+      "type" : "string",
+      "examples" : [ "$government_Cooperative;", "$government_None;", "$government_Feudal;" ]
+    },
+    "SystemGovernment_Localised" : {
+      "title" : "SystemGovernment_Localised",
+      "type" : "string",
+      "examples" : [ "Cooperative", "None", "Feudal" ]
+    },
+    "SystemSecurity" : {
+      "title" : "SystemSecurity",
+      "type" : "string",
+      "examples" : [ "$SYSTEM_SECURITY_low;", "$GAlAXY_MAP_INFO_state_anarchy;", "$SYSTEM_SECURITY_medium;" ]
+    },
+    "SystemSecurity_Localised" : {
+      "title" : "SystemSecurity_Localised",
+      "type" : "string",
+      "examples" : [ "Low Security", "Anarchy", "Medium Security" ]
+    },
+    "Population" : {
+      "title" : "Population",
+      "type" : "integer",
+      "examples" : [ 1200000, 0, 2654856 ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "Celaeno", "Tascheter Sector EL-Y b5", "LHS 1443 A" ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 0, 1, 2 ]
+    },
+    "BodyType" : {
+      "title" : "BodyType",
+      "type" : "string",
+      "examples" : [ "Star", "Null" ]
+    },
+    "JumpDist" : {
+      "title" : "JumpDist",
+      "description": "Distance jumped",
+      "type" : "number",
+      "examples" : [ 5.701, 55.359, 55.446 ]
+    },
+    "FuelUsed" : {
+      "title" : "FuelUsed",
+      "type" : "number",
+      "examples" : [ 0.126384, 4.843642, 4.714942 ]
+    },
+    "FuelLevel" : {
+      "title" : "FuelLevel",
+      "type" : "number",
+      "examples" : [ 30.486679, 27.156359, 22.441418 ]
+    },
+    "Factions" : {
+      "title" : "Factions",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Anti Xeno Initiative", "The Hive", "Operation Ida" ]
+          },
+          "FactionState" : {
+            "title" : "FactionState",
+            "type" : "string",
+            "examples" : [ "Boom", "Investment", "None" ]
+          },
+          "Government" : {
+            "title" : "Government",
+            "type" : "string",
+            "examples" : [ "Patronage", "Cooperative", "Democracy" ]
+          },
+          "Influence" : {
+            "title" : "Influence",
+            "type" : "number",
+            "examples" : [ 0.118881, 0.183816, 0.566434 ]
+          },
+          "Allegiance" : {
+            "title" : "Allegiance",
+            "type" : "string",
+            "examples" : [ "Independent", "Federation", "Empire" ]
+          },
+          "Happiness" : {
+            "title" : "Happiness",
+            "type" : "string",
+            "examples" : [ "$Faction_HappinessBand2;", "$Faction_HappinessBand3;", "$Faction_HappinessBand1;" ]
+          },
+          "Happiness_Localised" : {
+            "title" : "Happiness_Localised",
+            "description": "Happiness values are: Elated, Happy, Discontented, Unhappy, Despondent",
+            "type" : "string",
+            "examples" : [ "Happy", "Discontented", "Elated" ]
+          },
+          "MyReputation" : {
+            "title" : "MyReputation",
+            "type" : "number",
+            "examples" : [ 0.0, 25.818399, 60.496498 ]
+          },
+          "ActiveStates" : {
+            "title" : "ActiveStates",
+            "description": "Array with State names (Note active states do not have a Trend value)",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "State" : {
+                  "title" : "State",
+                  "type" : "string",
+                  "examples" : [ "Boom", "Investment", "Expansion" ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "State" ]
+            }
+          },
+          "RecoveringStates" : {
+            "title" : "RecoveringStates",
+            "description": "Array (if any) with State name and Trend value",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "State" : {
+                  "title" : "State",
+                  "type" : "string",
+                  "examples" : [ "PublicHoliday", "Outbreak", "Boom" ]
+                },
+                "Trend" : {
+                  "title" : "Trend",
+                  "type" : "integer",
+                  "examples" : [ 0 ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "State", "Trend" ]
+            }
+          },
+          "PendingStates" : {
+            "title" : "PendingStates",
+            "description": "Array (if any) with State name and Trend value",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "State" : {
+                  "title" : "State",
+                  "type" : "string",
+                  "examples" : [ "Expansion", "CivilWar", "Outbreak" ]
+                },
+                "Trend" : {
+                  "title" : "Trend",
+                  "type" : "integer",
+                  "examples" : [ 0 ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "State", "Trend" ]
+            }
+          },
+          "SquadronFaction" : {
+            "title" : "SquadronFaction",
+            "description": "If player is in squadron aligned to this faction",
+            "type" : "boolean",
+            "examples" : [ true ]
+          },
+          "HappiestSystem" : {
+            "title" : "HappiestSystem",
+            "description": "If player squadron faction, and this is happiest system",
+            "type" : "boolean",
+            "examples" : [ true ]
+          },
+          "HomeSystem" : {
+            "title" : "HomeSystem",
+            "description": "If player squadron faction, and this is home system",
+            "type" : "boolean",
+            "examples" : [ true ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "FactionState", "Government", "Influence", "Allegiance", "Happiness", "MyReputation" ]
+      }
+    },
+    "SystemFaction" : {
+      "title" : "SystemFaction",
+      "description": "System controlling faction",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "Operation Ida", "Knights of Karma", "Pilot Syndicate 4" ]
+        },
+        "FactionState" : {
+          "title" : "FactionState",
+          "type" : "string",
+          "examples" : [ "Investment", "Boom", "Expansion" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name" ]
+    },
+    "Powers" : {
+      "title" : "Powers",
+      "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
+      }
+    },
+    "PowerplayState" : {
+      "title" : "PowerplayState",
+      "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
+      "type" : "string",
+      "examples" : [ "Contested", "Exploited", "Controlled" ]
+    },
+    "Conflicts" : {
+      "title" : "Conflicts",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "WarType" : {
+            "title" : "WarType",
+            "type" : "string",
+            "examples" : [ "civilwar", "war", "election" ]
+          },
+          "Status" : {
+            "title" : "Status",
+            "type" : "string",
+            "examples" : [ "active", "pending", "" ]
+          },
+          "Faction1" : {
+            "title" : "Faction1",
+            "type" : "object",
+            "properties" : {
+              "Name" : {
+                "title" : "Name",
+                "type" : "string",
+                "examples" : [ "United HIP 20485 Future", "Gucumadhyas Incorporated", "Alliance of Wadjang" ]
+              },
+              "Stake" : {
+                "title" : "Stake",
+                "type" : "string",
+                "examples" : [ "Saavedra Depot", "Sagan Landing", "Vespucci Installation" ]
+              },
+              "WonDays" : {
+                "title" : "WonDays",
+                "type" : "integer",
+                "examples" : [ 0, 1, 2 ]
+              }
+            },
+            "additionalProperties" : false,
+            "required" : [ "Name", "Stake", "WonDays" ]
+          },
+          "Faction2" : {
+            "title" : "Faction2",
+            "type" : "object",
+            "properties" : {
+              "Name" : {
+                "title" : "Name",
+                "type" : "string",
+                "examples" : [ "HIP 20485 Corp.", "Bureau of Gucumadhyas Liberty Party", "Asooraja Netcoms Inc" ]
+              },
+              "Stake" : {
+                "title" : "Stake",
+                "type" : "string",
+                "examples" : [ "Malchiodi Works", "Joint Biological Scientific", "Galactic Energy Exploration" ]
+              },
+              "WonDays" : {
+                "title" : "WonDays",
+                "type" : "integer",
+                "examples" : [ 0, 4, 1 ]
+              }
+            },
+            "additionalProperties" : false,
+            "required" : [ "Name", "Stake", "WonDays" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "WarType", "Status", "Faction1", "Faction2" ]
+      }
+    },
+    "BoostUsed" : {
+      "title" : "BoostUsed",
+      "description": "Whether FSD boost was used",
+      "type" : "integer",
+      "examples" : [ 4, 1, 3 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType", "JumpDist", "FuelUsed", "FuelLevel" ]
+}

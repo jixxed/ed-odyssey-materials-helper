@@ -1,0 +1,133 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "description": "definitions for backpack and shiplocker events",
+  "definitions" : {
+    "Item" : {
+      "title" : "Item",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "refinementprocesssample", "chemicalsample", "mutageniccatalyst" ]
+        },
+        "Name_Localised" : {
+          "title" : "Name_Localised",
+          "type" : "string",
+          "examples" : [ "Refinement Process Sample", "Chemical Sample", "Mutagenic Catalyst" ]
+        },
+        "OwnerID" : {
+          "title" : "OwnerID",
+          "type" : "integer",
+          "examples" : [ 0, 2953036023, 5352618 ]
+        },
+        "MissionID" : {
+          "title" : "MissionID",
+          "type" : "integer",
+          "examples" : [ 779192772, 784083658, 784158082 ]
+        },
+        "Count" : {
+          "title" : "Count",
+          "type" : "integer",
+          "examples" : [ 1, 41, 8 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name", "OwnerID", "Count" ]
+    },
+    "Component" : {
+      "title" : "Component",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "graphene", "aerogel", "chemicalcatalyst" ]
+        },
+        "OwnerID" : {
+          "title" : "OwnerID",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Count" : {
+          "title" : "Count",
+          "type" : "integer",
+          "examples" : [ 114, 2, 4 ]
+        },
+        "Name_Localised" : {
+          "title" : "Name_Localised",
+          "type" : "string",
+          "examples" : [ "Chemical Catalyst", "Chemical Superbase", "Circuit Board" ]
+        },
+        "MissionID" : {
+          "title" : "MissionID",
+          "type" : "integer",
+          "examples" : [ 836665448, 836922172, 836961350 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name", "OwnerID", "Count" ]
+    },
+    "Consumable" : {
+      "title" : "Consumable",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "healthpack", "energycell", "amm_grenade_emp" ]
+        },
+        "Name_Localised" : {
+          "title" : "Name_Localised",
+          "type" : "string",
+          "examples" : [ "Medkit", "Energy Cell", "Shield Disruptor" ]
+        },
+        "OwnerID" : {
+          "title" : "OwnerID",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        },
+        "Count" : {
+          "title" : "Count",
+          "type" : "integer",
+          "examples" : [ 100, 99, 97 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name", "OwnerID", "Count" ]
+    },
+    "Data" : {
+      "title" : "Data",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "virus", "slushfundlogs", "employeegeneticdata" ]
+        },
+        "OwnerID" : {
+          "title" : "OwnerID",
+          "type" : "integer",
+          "examples" : [ 5352618, 0, 175185 ]
+        },
+        "MissionID" : {
+          "title" : "MissionID",
+          "type" : "integer",
+          "examples" : [ 779372801, 780055610, 783435673 ]
+        },
+        "Count" : {
+          "title" : "Count",
+          "type" : "integer",
+          "examples" : [ 1, 3, 4 ]
+        },
+        "Name_Localised" : {
+          "title" : "Name_Localised",
+          "type" : "string",
+          "examples" : [ "Slush Fund Logs", "Employee Genetic Data", "Medical Records" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name", "OwnerID", "Count" ]
+    }
+  }
+}

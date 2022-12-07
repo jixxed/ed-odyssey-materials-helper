@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the reboot repair function is used",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Modules" : {
+      "title" : "Modules",
+      "description": "Array of names of modules repaired",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "CargoHatch", "LifeSupport", "LargeHardpoint1" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Modules" ]
+}

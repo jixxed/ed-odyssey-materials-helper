@@ -1,0 +1,41 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When exiting a shuttle dropship at a conflict zone",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 44137", "Kenna", "Coriabog" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 358931829434, 4756776882898, 16063311783361 ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "HIP 44137 AB 2 a", "Kenna 2 b", "Coriabog 4 b a" ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 13, 43, 45 ]
+    },
+    "OnStation" : {
+      "title" : "OnStation",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "OnPlanet" : {
+      "title" : "OnPlanet",
+      "type" : "boolean",
+      "examples" : [ true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "StarSystem", "SystemAddress", "Body", "BodyID", "OnStation", "OnPlanet" ]
+}

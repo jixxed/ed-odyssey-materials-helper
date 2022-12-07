@@ -1,0 +1,56 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when moving a module to a different slot on the ship",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 128666762, 128679559 ]
+    },
+    "FromSlot" : {
+      "title" : "FromSlot",
+      "type" : "string",
+      "examples" : [ "Slot03_Size3", "Slot04_Size3", "Slot03_Size7" ]
+    },
+    "ToSlot" : {
+      "title" : "ToSlot",
+      "type" : "string",
+      "examples" : [ "Slot06_Size2", "Slot08_Size1", "Slot04_Size6" ]
+    },
+    "FromItem" : {
+      "title" : "FromItem",
+      "type" : "string",
+      "examples" : [ "$int_buggybay_size2_class2_name;", "$int_detailedsurfacescanner_tiny_name;", "$int_shieldcellbank_size6_class5_name;" ]
+    },
+    "FromItem_Localised" : {
+      "title" : "FromItem_Localised",
+      "type" : "string",
+      "examples" : [ "Planetary Vehicle Hangar", "Surface Scanner", "Shield Cell Bank" ]
+    },
+    "ToItem" : {
+      "title" : "ToItem",
+      "type" : "string",
+      "examples" : [ "Null", "$int_hullreinforcement_size3_class2_name;", "$int_corrosionproofcargorack_size4_class1_name;" ]
+    },
+    "ToItem_Localised" : {
+      "title" : "ToItem_Localised",
+      "type" : "string",
+      "examples" : [ "Hull Reinforcement", "Anti-Corrosion Cargo Rack", "Cargo Rack" ]
+    },
+    "Ship" : {
+      "title" : "Ship",
+      "type" : "string",
+      "examples" : [ "asp", "federation_corvette", "cutter" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 5, 29, 25 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "FromSlot", "ToSlot", "FromItem", "ToItem", "Ship", "ShipID" ]
+}

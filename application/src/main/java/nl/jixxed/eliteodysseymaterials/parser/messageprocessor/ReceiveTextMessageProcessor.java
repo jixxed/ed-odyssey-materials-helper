@@ -1,11 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
+import nl.jixxed.eliteodysseymaterials.journalevents.ReceiveText.ReceiveText;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -17,15 +17,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class ReceiveTextMessageProcessor implements MessageProcessor {
+public class ReceiveTextMessageProcessor implements MessageProcessor<ReceiveText> {
 
     private static final String FROM = "$CHAT_System;";
 
     @Override
-    public void process(final JsonNode journalMessage) {
-        final String from = asTextOrBlank(journalMessage, "From");
-        final String message = asTextOrBlank(journalMessage, "Message");
-        final String message_localised = asTextOrBlank(journalMessage, "Message_Localised");
+    public void process(final ReceiveText event) {
+        final String from = event.getFrom();
+        final String message = event.getMessage();
+        final String message_localised = event.getMessage_Localised().orElse("");
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             if (FROM.equals(from)
                     && message.contains("name=" + commander.getName())
@@ -56,6 +56,10 @@ public class ReceiveTextMessageProcessor implements MessageProcessor {
                 }
             }
         });
+    }
+    @Override
+    public Class<ReceiveText> getMessageClass() {
+        return ReceiveText.class;
     }
 
 }

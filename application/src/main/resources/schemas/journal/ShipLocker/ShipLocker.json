@@ -1,0 +1,39 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "Lists the contents of the ship locker, eg at startup. The full contents are written to a separate file, ShipLocker.json. The full list is also written into the journal at startup (if in a ship) and when boarding a ship. The shiplocker.json file is updated when the locker contents are changed.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Items" : {
+      "title" : "Items",
+      "type" : "array",
+      "items" : {
+        "$ref": "../common/ShipLockerBackpack.json#definitions/Item"
+      }
+    },
+    "Components" : {
+      "title" : "Components",
+      "type" : "array",
+      "items" : {
+        "$ref": "../common/ShipLockerBackpack.json#definitions/Component"
+      }
+    },
+    "Consumables" : {
+      "title" : "Consumables",
+      "type" : "array",
+      "items" : {
+        "$ref": "../common/ShipLockerBackpack.json#definitions/Consumable"
+      }
+    },
+    "Data" : {
+      "title" : "Data",
+      "type" : "array",
+      "items" : {
+        "$ref": "../common/ShipLockerBackpack.json#definitions/Data"
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

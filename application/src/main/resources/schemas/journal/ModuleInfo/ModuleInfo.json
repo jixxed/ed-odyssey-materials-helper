@@ -1,0 +1,43 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "description": "When written: when looking at the cockpit Right Hand Side modules info panel, if data has changed. This also writes a ModulesInfo.json file alongside the journal, listing the modules in the same order as displayed.",
+  "properties" : {
+    "Modules" : {
+      "title" : "Modules",
+      "description": "When written to ModulesInfo.json",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Slot" : {
+            "title" : "Slot",
+            "type" : "string",
+            "examples" : [ "MainEngines", "MediumHardpoint1", "Slot03_Size2" ]
+          },
+          "Item" : {
+            "title" : "Item",
+            "type" : "string",
+            "examples" : [ "int_engine_size3_class5", "hpt_beamlaser_turret_medium", "int_shieldgenerator_size2_class1" ]
+          },
+          "Power" : {
+            "title" : "Power",
+            "type" : "number",
+            "examples" : [ 3.72, 0.93, 0.9 ]
+          },
+          "Priority" : {
+            "title" : "Priority",
+            "type" : "integer",
+            "examples" : [ 0, 2 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Slot", "Item", "Power" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

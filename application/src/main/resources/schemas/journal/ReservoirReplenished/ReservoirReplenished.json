@@ -1,0 +1,21 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When fuel is moved from one fuel tank to another",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "FuelMain" : {
+      "title" : "FuelMain",
+      "type" : "number",
+      "examples" : [ 31.243063, 30.613064, 29.85668 ]
+    },
+    "FuelReservoir" : {
+      "title" : "FuelReservoir",
+      "type" : "number",
+      "examples" : [ 0.63, 0.74, 1.13 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "FuelMain", "FuelReservoir" ]
+}

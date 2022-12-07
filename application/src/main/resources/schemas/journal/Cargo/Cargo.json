@@ -1,0 +1,57 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: at startup, note this is now written slightly later in startup, after we have initialised missions, so we can detect if any cargo came from an abandoned delivery mission. The first Cargo event in the file will contain the full inventory, others just indicate a separate file has been written. The full data is now written to a separate file Cargo.json. A simple event (with no parameters) is written to the main journal file when the cargo file is updated.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Vessel" : {
+      "title" : "Vessel",
+      "type" : "string",
+      "examples" : [ "Ship", "SRV" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 16, 0, 1 ]
+    },
+    "Inventory" : {
+      "title" : "Inventory",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "drones", "metaalloys", "bertrandite" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Limpet", "Meta-Alloys", "Guardian Relic" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 16, 1, 5 ]
+          },
+          "Stolen" : {
+            "title" : "Stolen",
+            "type" : "integer",
+            "examples" : [ 0, 1, 7 ]
+          },
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 811118045, 811114594, 893617620 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count", "Stolen" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Vessel", "Count" ]
+}

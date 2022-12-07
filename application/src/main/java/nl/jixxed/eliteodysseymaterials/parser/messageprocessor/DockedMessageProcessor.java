@@ -1,16 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import nl.jixxed.eliteodysseymaterials.journalevents.Docked.Docked;
 import nl.jixxed.eliteodysseymaterials.service.event.DockedJournalEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
-public class DockedMessageProcessor implements MessageProcessor {
+public class DockedMessageProcessor implements MessageProcessor<Docked> {
+
 
     @Override
-    public void process(final JsonNode journalMessage) {
-        final String timestamp = asTextOrBlank(journalMessage, "timestamp");
-        final String station = asTextOrBlank(journalMessage, "StationName");
-        final String starSystem = asTextOrBlank(journalMessage, "StarSystem");
-        EventService.publish(new DockedJournalEvent(timestamp, starSystem, station));
+    public void process(final Docked event) {
+        EventService.publish(new DockedJournalEvent(event));
+    }
+
+    @Override
+    public Class<Docked> getMessageClass() {
+        return Docked.class;
     }
 }

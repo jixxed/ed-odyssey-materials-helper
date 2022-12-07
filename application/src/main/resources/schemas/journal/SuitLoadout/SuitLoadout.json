@@ -1,0 +1,88 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when starting on-foot or when disembarking",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "SuitID" : {
+      "title" : "SuitID",
+      "type" : "integer",
+      "examples" : [ 1700585833788820, 1700584662244668, 1722394975087596 ]
+    },
+    "SuitName" : {
+      "title" : "SuitName",
+      "type" : "string",
+      "examples" : [ "utilitysuit_class5", "tacticalsuit_class3", "utilitysuit_class3" ]
+    },
+    "SuitName_Localised" : {
+      "title" : "SuitName_Localised",
+      "type" : "string",
+      "examples" : [ "$UtilitySuit_Class1_Name;", "$TacticalSuit_Class1_Name;", "$ExplorationSuit_Class1_Name;" ]
+    },
+    "SuitMods" : {
+      "title" : "SuitMods",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "suit_backpackcapacity", "suit_increasedsprintduration", "suit_improvedjumpassist" ]
+      }
+    },
+    "LoadoutID" : {
+      "title" : "LoadoutID",
+      "type" : "integer",
+      "examples" : [ 4293000004, 4293000000, 4293000002 ]
+    },
+    "LoadoutName" : {
+      "title" : "LoadoutName",
+      "type" : "string",
+      "examples" : [ "maverick", "no reload test", "tooltest" ]
+    },
+    "Modules" : {
+      "title" : "Modules",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "SlotName" : {
+            "title" : "SlotName",
+            "type" : "string",
+            "examples" : [ "PrimaryWeapon1", "SecondaryWeapon", "PrimaryWeapon2" ]
+          },
+          "SuitModuleID" : {
+            "title" : "SuitModuleID",
+            "type" : "integer",
+            "examples" : [ 1700314469329676, 1700314451340369, 1700362936206349 ]
+          },
+          "ModuleName" : {
+            "title" : "ModuleName",
+            "type" : "string",
+            "examples" : [ "wpn_m_sniper_plasma_charged", "wpn_s_pistol_plasma_charged", "wpn_m_assaultrifle_laser_fauto" ]
+          },
+          "ModuleName_Localised" : {
+            "title" : "ModuleName_Localised",
+            "type" : "string",
+            "examples" : [ "Manticore Executioner", "Manticore Tormentor", "TK Aphelion" ]
+          },
+          "Class" : {
+            "title" : "Class",
+            "type" : "integer",
+            "examples" : [ 5, 1, 3 ]
+          },
+          "WeaponMods" : {
+            "title" : "WeaponMods",
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "examples" : [ "weapon_suppression_unpressurised", "weapon_handling", "weapon_reloadspeed" ]
+            }
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "SlotName", "SuitModuleID", "ModuleName", "Class", "WeaponMods" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SuitID", "SuitName", "SuitMods", "LoadoutID", "LoadoutName", "Modules" ]
+}

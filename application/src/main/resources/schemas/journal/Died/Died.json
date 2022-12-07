@@ -1,0 +1,63 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: player was killed",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "KillerName" : {
+      "title" : "KillerName",
+      "description": "When killed by a single entity",
+      "type" : "string",
+      "examples" : [ "Cmdr banana", "$UNKNOWN;", "Cmdr apple" ]
+    },
+    "KillerShip" : {
+      "title" : "KillerShip",
+      "description": "When killed by a single entity",
+      "type" : "string",
+      "examples" : [ "utilitysuit_class5", "ps_turretbasemedium02_6m", "scout_q" ]
+    },
+    "KillerRank" : {
+      "title" : "KillerRank",
+      "description": "When killed by a single entity",
+      "type" : "string",
+      "examples" : [ "Master", "Elite", "Deadly" ]
+    },
+    "KillerName_Localised" : {
+      "title" : "KillerName_Localised",
+      "description": "When killed by a single entity",
+      "type" : "string",
+      "examples" : [ "Unknown", "Internal Security Service", "System Authority Vessel" ]
+    },
+    "Killers" : {
+      "title" : "Killers",
+      "description": "When killed by a wing",
+      "type" : "array",
+      "items" : {
+        "KillerName" : {
+          "title" : "KillerName",
+          "type" : "string",
+          "examples" : [ "Cmdr Alice", "$UNKNOWN;", "Cmdr Bob" ]
+        },
+        "KillerShip" : {
+          "title" : "KillerShip",
+          "type" : "string",
+          "examples" : [ "utilitysuit_class5", "ps_turretbasemedium02_6m", "scout_q" ]
+        },
+        "KillerRank" : {
+          "title" : "KillerRank",
+          "type" : "string",
+          "examples" : [ "Master", "Elite", "Deadly" ]
+        },
+        "KillerName_Localised" : {
+          "title" : "KillerName_Localised",
+          "type" : "string",
+          "examples" : [ "Unknown", "Internal Security Service", "System Authority Vessel" ]
+        }
+      },
+      "required" : [ "KillerName", "KillerShip", "KillerRank" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

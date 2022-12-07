@@ -1,13 +1,21 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import nl.jixxed.eliteodysseymaterials.journalevents.Resupply.Resupply;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
-public class ResupplyMessageProcessor implements MessageProcessor {
-    @Override
-    public void process(final JsonNode journalMessage) {
-        EventService.publish(new BackpackEvent(journalMessage.get("timestamp").asText()));
+import java.time.format.DateTimeFormatter;
 
+public class ResupplyMessageProcessor implements MessageProcessor<Resupply> {
+
+    @Override
+    public void process(final Resupply event) {
+        final String timestamp = event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+        EventService.publish(new BackpackEvent(timestamp));
+    }
+
+    @Override
+    public Class<Resupply> getMessageClass() {
+        return Resupply.class;
     }
 }

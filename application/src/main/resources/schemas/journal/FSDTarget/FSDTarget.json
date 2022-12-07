@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when selecting a star system to jump to. When following a multi-jump route, this will typically appear for the next star, during a jump, ie after StartJump but before the FSDJump",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Celaeno", "Tascheter Sector EL-Y b5", "LHS 1443" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 198875014308, 11665802143105, 5068732442009 ]
+    },
+    "StarClass" : {
+      "title" : "StarClass",
+      "type" : "string",
+      "examples" : [ "B", "TTS", "M" ]
+    },
+    "RemainingJumpsInRoute" : {
+      "title" : "RemainingJumpsInRoute",
+      "type" : "integer",
+      "examples" : [ 1, 4, 3 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "SystemAddress", "StarClass" ]
+}

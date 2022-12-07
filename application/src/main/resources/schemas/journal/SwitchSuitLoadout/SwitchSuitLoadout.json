@@ -1,0 +1,88 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when a player selects a different flight suit from the ship’s locker",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "SuitID" : {
+      "title" : "SuitID",
+      "type" : "integer",
+      "examples" : [ 1700584662244668, 1722394975087596, 1722459290508954 ]
+    },
+    "SuitName" : {
+      "title" : "SuitName",
+      "type" : "string",
+      "examples" : [ "tacticalsuit_class3", "utilitysuit_class3", "utilitysuit_class5" ]
+    },
+    "SuitName_Localised" : {
+      "title" : "SuitName_Localised",
+      "type" : "string",
+      "examples" : [ "$TacticalSuit_Class1_Name;", "$UtilitySuit_Class1_Name;", "$ExplorationSuit_Class1_Name;" ]
+    },
+    "SuitMods" : {
+      "title" : "SuitMods",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "suit_increasedo2capacity", "suit_reducedtoolbatteryconsumption", "suit_backpackcapacity" ]
+      }
+    },
+    "LoadoutID" : {
+      "title" : "LoadoutID",
+      "type" : "integer",
+      "examples" : [ 4293000000, 4293000002, 4293000006 ]
+    },
+    "LoadoutName" : {
+      "title" : "LoadoutName",
+      "type" : "string",
+      "examples" : [ "no reload test", "tooltest", "MAv red tool" ]
+    },
+    "Modules" : {
+      "title" : "Modules",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "SlotName" : {
+            "title" : "SlotName",
+            "type" : "string",
+            "examples" : [ "PrimaryWeapon1", "PrimaryWeapon2", "SecondaryWeapon" ]
+          },
+          "SuitModuleID" : {
+            "title" : "SuitModuleID",
+            "type" : "integer",
+            "examples" : [ 1700362936206349, 1700314434564508, 1700314469329676 ]
+          },
+          "ModuleName" : {
+            "title" : "ModuleName",
+            "type" : "string",
+            "examples" : [ "wpn_m_assaultrifle_laser_fauto", "wpn_m_submachinegun_kinetic_fauto", "wpn_m_sniper_plasma_charged" ]
+          },
+          "ModuleName_Localised" : {
+            "title" : "ModuleName_Localised",
+            "type" : "string",
+            "examples" : [ "TK Aphelion", "Karma C-44", "Manticore Executioner" ]
+          },
+          "Class" : {
+            "title" : "Class",
+            "type" : "integer",
+            "examples" : [ 1, 5, 3 ]
+          },
+          "WeaponMods" : {
+            "title" : "WeaponMods",
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "examples" : [ "weapon_suppression_unpressurised", "weapon_handling", "weapon_reloadspeed" ]
+            }
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "SlotName", "SuitModuleID", "ModuleName", "Class", "WeaponMods" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SuitID", "SuitName", "SuitMods", "LoadoutID", "LoadoutName", "Modules" ]
+}

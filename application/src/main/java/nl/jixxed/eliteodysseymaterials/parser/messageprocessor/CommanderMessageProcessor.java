@@ -1,17 +1,22 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
+import nl.jixxed.eliteodysseymaterials.journalevents.Commander.Commander;
 
-public class CommanderMessageProcessor implements MessageProcessor {
+public class CommanderMessageProcessor implements MessageProcessor<Commander> {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     @Override
-    public void process(final JsonNode journalMessage) {
-        if (journalMessage.get("Name") != null && !APPLICATION_STATE.getGameVersion().equals(GameVersion.UNKNOWN)) {
-            APPLICATION_STATE.addCommander(journalMessage.get("Name").asText(), journalMessage.get("FID").asText(), APPLICATION_STATE.getGameVersion());
+    public void process(final Commander commander) {
+        if (!APPLICATION_STATE.getGameVersion().equals(GameVersion.UNKNOWN)) {
+            APPLICATION_STATE.addCommander(commander.getName(), commander.getFID(), APPLICATION_STATE.getGameVersion());
         }
 
+    }
+
+    @Override
+    public Class<Commander> getMessageClass() {
+        return Commander.class;
     }
 }

@@ -1,0 +1,36 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when performing a full system scan (Honk)",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Progress" : {
+      "title" : "Progress",
+      "type" : "number",
+      "examples" : [ 1.0, 0.391172, 0.263902 ]
+    },
+    "BodyCount" : {
+      "title" : "BodyCount",
+      "type" : "integer",
+      "examples" : [ 14, 21, 40 ]
+    },
+    "NonBodyCount" : {
+      "title" : "NonBodyCount",
+      "type" : "integer",
+      "examples" : [ 15, 7, 24 ]
+    },
+    "SystemName" : {
+      "title" : "SystemName",
+      "type" : "string",
+      "examples" : [ "HIP 21383", "Turdet", "Koleti" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 732048640355, 7269097743753, 4030600300907 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Progress", "BodyCount", "NonBodyCount", "SystemName", "SystemAddress" ]
+}

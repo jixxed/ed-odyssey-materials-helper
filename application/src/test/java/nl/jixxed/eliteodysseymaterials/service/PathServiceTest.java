@@ -59,7 +59,7 @@ class PathServiceTest {
         );
         LocationService.getCurrentStarSystem();
 
-        EventService.publish(new LocationJournalEvent("", Engineer.ODEN_GEIGER.getStarSystem(), "", "", true));
+        EventService.publish(new LocationJournalEvent(Engineer.ODEN_GEIGER.getStarSystem(), "", "", true));
 
         final List<PathItem<OdysseyBlueprintName>> pathItems = PathService.calculateOdysseyShortestPath(wishlistBlueprints);
 
@@ -88,7 +88,7 @@ class PathServiceTest {
         );
         LocationService.getCurrentStarSystem();
 
-        EventService.publish(new LocationJournalEvent("", Engineer.DOMINO_GREEN.getStarSystem(), "", "", true));
+        EventService.publish(new LocationJournalEvent(Engineer.DOMINO_GREEN.getStarSystem(), "", "", true));
         final List<PathItem<OdysseyBlueprintName>> pathItems = PathService.calculateOdysseyShortestPath(wishlistBlueprints);
 
         assertAll(() -> {

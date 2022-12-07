@@ -1,0 +1,412 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This is similar to FSDJump and Location, but it is written if the player is online and docked at a fleet carrier when the carrier jumps. Note it does not include the distance jumped, or fuel used.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Docked" : {
+      "title" : "Docked",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B" ]
+    },
+    "StationType" : {
+      "title" : "StationType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3707430144, 3700382464 ]
+    },
+    "StationFaction" : {
+      "title" : "StationFaction",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "FleetCarrier" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name" ]
+    },
+    "StationGovernment" : {
+      "title" : "StationGovernment",
+      "type" : "string",
+      "examples" : [ "$government_Carrier;" ]
+    },
+    "StationGovernment_Localised" : {
+      "title" : "StationGovernment_Localised",
+      "type" : "string",
+      "examples" : [ "Private Ownership" ]
+    },
+    "StationServices" : {
+      "title" : "StationServices",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "dock", "autodock", "commodities" ]
+      }
+    },
+    "StationEconomy" : {
+      "title" : "StationEconomy",
+      "type" : "string",
+      "examples" : [ "$economy_Carrier;" ]
+    },
+    "StationEconomy_Localised" : {
+      "title" : "StationEconomy_Localised",
+      "type" : "string",
+      "examples" : [ "Private Enterprise" ]
+    },
+    "StationEconomies" : {
+      "title" : "StationEconomies",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "$economy_Carrier;" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Private Enterprise" ]
+          },
+          "Proportion" : {
+            "title" : "Proportion",
+            "type" : "number",
+            "examples" : [ 1.0 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Proportion" ]
+      }
+    },
+    "Taxi" : {
+      "title" : "Taxi",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "Multicrew" : {
+      "title" : "Multicrew",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "description": "Name of destination starsystem",
+      "type" : "string",
+      "examples" : [ "Apotanites", "Corin", "Colonia" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 2793649703291, 3657466548970, 3238296097059 ]
+    },
+    "StarPos" : {
+      "title" : "StarPos",
+      "description": "star position, as a Json array [x, y, z], relative to Sol in Ly",
+      "type" : "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items" : {
+        "type" : "number",
+        "examples" : [ -81.09375, -148.3125, -337.09375 ]
+      }
+    },
+    "SystemAllegiance" : {
+      "title" : "SystemAllegiance",
+      "type" : "string",
+      "examples" : [ "Independent", "Empire", "" ]
+    },
+    "SystemEconomy" : {
+      "title" : "SystemEconomy",
+      "type" : "string",
+      "examples" : [ "$economy_Agri;", "$economy_Tourism;", "$economy_None;" ]
+    },
+    "SystemEconomy_Localised" : {
+      "title" : "SystemEconomy_Localised",
+      "type" : "string",
+      "examples" : [ "Agriculture", "Tourism", "None" ]
+    },
+    "SystemSecondEconomy" : {
+      "title" : "SystemSecondEconomy",
+      "type" : "string",
+      "examples" : [ "$economy_Colony;", "$economy_Refinery;", "$economy_HighTech;" ]
+    },
+    "SystemSecondEconomy_Localised" : {
+      "title" : "SystemSecondEconomy_Localised",
+      "type" : "string",
+      "examples" : [ "Colony", "Refinery", "High Tech" ]
+    },
+    "SystemGovernment" : {
+      "title" : "SystemGovernment",
+      "type" : "string",
+      "examples" : [ "$government_Cooperative;", "$government_Corporate;", "$government_None;" ]
+    },
+    "SystemGovernment_Localised" : {
+      "title" : "SystemGovernment_Localised",
+      "type" : "string",
+      "examples" : [ "Cooperative", "Corporate", "None" ]
+    },
+    "SystemSecurity" : {
+      "title" : "SystemSecurity",
+      "type" : "string",
+      "examples" : [ "$SYSTEM_SECURITY_medium;", "$SYSTEM_SECURITY_low;", "$GAlAXY_MAP_INFO_state_anarchy;" ]
+    },
+    "SystemSecurity_Localised" : {
+      "title" : "SystemSecurity_Localised",
+      "type" : "string",
+      "examples" : [ "Medium Security", "Low Security", "Anarchy" ]
+    },
+    "Population" : {
+      "title" : "Population",
+      "type" : "integer",
+      "examples" : [ 64279, 1524923468, 583869 ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "Apotanites 1 e", "Corin 4", "Colonia 2 d" ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 20, 11, 13 ]
+    },
+    "BodyType" : {
+      "title" : "BodyType",
+      "type" : "string",
+      "examples" : [ "Planet", "Star", "Null" ]
+    },
+    "Factions" : {
+      "title" : "Factions",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Allies of Foss", "Bureau of Apotanites Flag", "Co-operative of Apotanites" ]
+          },
+          "FactionState" : {
+            "title" : "FactionState",
+            "type" : "string",
+            "examples" : [ "None", "CivilUnrest", "Expansion" ]
+          },
+          "Government" : {
+            "title" : "Government",
+            "type" : "string",
+            "examples" : [ "Cooperative", "Dictatorship", "Patronage" ]
+          },
+          "Influence" : {
+            "title" : "Influence",
+            "type" : "number",
+            "examples" : [ 0.118, 0.075, 0.732 ]
+          },
+          "Allegiance" : {
+            "title" : "Allegiance",
+            "type" : "string",
+            "examples" : [ "Independent", "Empire", "Federation" ]
+          },
+          "Happiness" : {
+            "title" : "Happiness",
+            "type" : "string",
+            "examples" : [ "$Faction_HappinessBand2;", "$Faction_HappinessBand1;", "$Faction_HappinessBand3;" ]
+          },
+          "Happiness_Localised" : {
+            "title" : "Happiness_Localised",
+            "type" : "string",
+            "examples" : [ "Happy", "Elated", "Discontented" ]
+          },
+          "MyReputation" : {
+            "title" : "MyReputation",
+            "type" : "number",
+            "examples" : [ 6.06, -9.9, 0.0 ]
+          },
+          "PendingStates" : {
+            "title" : "PendingStates",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "State" : {
+                  "title" : "State",
+                  "type" : "string",
+                  "examples" : [ "CivilWar", "Boom", "Outbreak" ]
+                },
+                "Trend" : {
+                  "title" : "Trend",
+                  "type" : "integer",
+                  "examples" : [ 0 ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "State", "Trend" ]
+            }
+          },
+          "ActiveStates" : {
+            "title" : "ActiveStates",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "State" : {
+                  "title" : "State",
+                  "type" : "string",
+                  "examples" : [ "CivilUnrest", "PublicHoliday", "Expansion" ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "State" ]
+            }
+          },
+          "SquadronFaction" : {
+            "title" : "SquadronFaction",
+            "type" : "boolean",
+            "examples" : [ true ]
+          },
+          "HomeSystem" : {
+            "title" : "HomeSystem",
+            "type" : "boolean",
+            "examples" : [ true ]
+          },
+          "RecoveringStates" : {
+            "title" : "RecoveringStates",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "State" : {
+                  "title" : "State",
+                  "type" : "string",
+                  "examples" : [ "PublicHoliday", "Outbreak", "PirateAttack" ]
+                },
+                "Trend" : {
+                  "title" : "Trend",
+                  "type" : "integer",
+                  "examples" : [ 0 ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "State", "Trend" ]
+            }
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "FactionState", "Government", "Influence", "Allegiance", "Happiness", "MyReputation" ]
+      }
+    },
+    "SystemFaction" : {
+      "title" : "SystemFaction",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "Rook Platoon", "Corin Jet State Corporation", "Jaques" ]
+        },
+        "FactionState" : {
+          "title" : "FactionState",
+          "type" : "string",
+          "examples" : [ "Expansion", "Investment", "Boom" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name" ]
+    },
+    "Conflicts" : {
+      "title" : "Conflicts",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "WarType" : {
+            "title" : "WarType",
+            "type" : "string",
+            "examples" : [ "civilwar", "election" ]
+          },
+          "Status" : {
+            "title" : "Status",
+            "type" : "string",
+            "examples" : [ "pending", "active" ]
+          },
+          "Faction1" : {
+            "title" : "Faction1",
+            "type" : "object",
+            "properties" : {
+              "Name" : {
+                "title" : "Name",
+                "type" : "string",
+                "examples" : [ "Bureau of Apotanites Flag", "Corin Empire Group", "People's LHS 6427 Free" ]
+              },
+              "Stake" : {
+                "title" : "Stake",
+                "type" : "string",
+                "examples" : [ "Rahman Nutrition Holdings", "Ing Point", "Brazier Prospecting Facility" ]
+              },
+              "WonDays" : {
+                "title" : "WonDays",
+                "type" : "integer",
+                "examples" : [ 0, 3 ]
+              }
+            },
+            "additionalProperties" : false,
+            "required" : [ "Name", "Stake", "WonDays" ]
+          },
+          "Faction2" : {
+            "title" : "Faction2",
+            "type" : "object",
+            "properties" : {
+              "Name" : {
+                "title" : "Name",
+                "type" : "string",
+                "examples" : [ "Co-operative of Apotanites", "Corin Fortune Exchange", "LHS 6427 Universal Partners" ]
+              },
+              "Stake" : {
+                "title" : "Stake",
+                "type" : "string",
+                "examples" : [ "Zimmermann Drilling Hub", "Kryyst's Shelter", "" ]
+              },
+              "WonDays" : {
+                "title" : "WonDays",
+                "type" : "integer",
+                "examples" : [ 0 ]
+              }
+            },
+            "additionalProperties" : false,
+            "required" : [ "Name", "Stake", "WonDays" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "WarType", "Status", "Faction1", "Faction2" ]
+      }
+    },
+    "Powers" : {
+      "title" : "Powers",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "A. Lavigny-Duval", "Zachary Hudson", "Li Yong-Rui" ]
+      }
+    },
+    "PowerplayState" : {
+      "title" : "PowerplayState",
+      "type" : "string",
+      "examples" : [ "Exploited", "Controlled", "Contested" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Docked", "StationName", "StationType", "MarketID", "StationFaction", "StationGovernment", "StationServices", "StationEconomy", "StationEconomies", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType" ]
+}

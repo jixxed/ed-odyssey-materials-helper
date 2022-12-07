@@ -1,0 +1,36 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: liftoff from a landing pad in a station, outpost or settlement",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Shinn Enterprise" ]
+    },
+    "StationType" : {
+      "title" : "StationType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "Coriolis", "CraterOutpost" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3701165824, 3222025216 ]
+    },
+    "Taxi" : {
+      "title" : "Taxi",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "Multicrew" : {
+      "title" : "Multicrew",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "StationName", "StationType", "MarketID" ]
+}

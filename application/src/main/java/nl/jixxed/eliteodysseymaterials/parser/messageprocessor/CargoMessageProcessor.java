@@ -1,41 +1,49 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.journalevents.Cargo.Cargo;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.CargoEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
-public class CargoMessageProcessor implements MessageProcessor {
+import java.time.format.DateTimeFormatter;
+
+public class CargoMessageProcessor implements MessageProcessor<Cargo> {
 
     @Override
     @SuppressWarnings("java:S1192")
-    public void process(final JsonNode journalMessage) {
-        if (journalMessage.get("Inventory") == null) {
-            EventService.publish(new CargoEvent(journalMessage.get("timestamp").asText()));
+    public void process(final Cargo event) {
+        if (event.getInventory().isEmpty()) {
+            final String timestamp = event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+            EventService.publish(new CargoEvent(timestamp));
             return;
         }
-        if ("Ship".equals(journalMessage.get("Vessel").asText())) {
-            processCargo(journalMessage, StoragePool.SHIP, StorageService::resetHorizonsCommodityCounts);
-        } else if ("Srv".equals(journalMessage.get("Vessel").asText())) {
-            processCargo(journalMessage, StoragePool.SRV, StorageService::resetSrvCounts);
+        if ("Ship".equals(event.getVessel())) {
+            processCargo(event, StoragePool.SHIP, StorageService::resetHorizonsCommodityCounts);
+        } else if ("Srv".equals(event.getVessel())) {
+            processCargo(event, StoragePool.SRV, StorageService::resetSrvCounts);
         }
 
     }
 
-    private void processCargo(final JsonNode journalMessage, final StoragePool storagePool, final Runnable storageResetRunnable) {
+    private void processCargo(final Cargo event, final StoragePool storagePool, final Runnable storageResetRunnable) {
         storageResetRunnable.run();
-        journalMessage.get("Inventory").elements().forEachRemaining(jsonNode -> {
-            final Commodity commodity = Commodity.forName(jsonNode.get("Name").asText());
+        event.getInventory().ifPresent(inventory -> inventory.forEach(inventoryItem -> {
+            final Commodity commodity = Commodity.forName(inventoryItem.getName());
             if (commodity.isUnknown()) {
-                ReportService.reportMaterial(journalMessage);
+                ReportService.reportMaterial(inventoryItem);
             } else {
-                StorageService.addCommodity(commodity, storagePool, jsonNode.get("Count").asInt());
+                StorageService.addCommodity(commodity, storagePool, inventoryItem.getCount().intValue());
             }
-        });
+        }));
         EventService.publish(new StorageEvent(storagePool));
+    }
+
+    @Override
+    public Class<Cargo> getMessageClass() {
+        return Cargo.class;
     }
 }

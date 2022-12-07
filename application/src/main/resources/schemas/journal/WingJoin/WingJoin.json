@@ -1,0 +1,20 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: this player has joined a wing",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Others" : {
+      "title" : "Others",
+      "description": "Other player names already in wing",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "Alice", "Bob", "Mallory" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Others" ]
+}

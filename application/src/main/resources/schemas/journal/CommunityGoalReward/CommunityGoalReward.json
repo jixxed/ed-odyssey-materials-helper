@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when receiving a reward for a community goal",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "CGID" : {
+      "title" : "CGID",
+      "type" : "integer",
+      "examples" : [ 754, 758, 690 ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Operation Tyndareus Reacts to Thargoid Fleet", "Disrupt Azimuth's Resource Campaign", "The Colonia Bridge Project 2nd Phase - Alcor" ]
+    },
+    "System" : {
+      "title" : "System",
+      "type" : "string",
+      "examples" : [ "Andecavi", "Wandrama", "Alcor" ]
+    },
+    "Reward" : {
+      "title" : "Reward",
+      "type" : "integer",
+      "examples" : [ 8000000, 2400000, 10000000 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CGID", "Name", "System", "Reward" ]
+}

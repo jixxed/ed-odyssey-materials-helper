@@ -1,15 +1,15 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import nl.jixxed.eliteodysseymaterials.journalevents.BuyMicroResources.BuyMicroResources;
 
-public class BuyMicroResourcesMessageProcessor implements MessageProcessor {
+public class BuyMicroResourcesMessageProcessor implements MessageProcessor<BuyMicroResources> {
     @Override
-    public void process(final JsonNode journalMessage) {
-//        final Iterator<JsonNode> microResources = journalMessage.get("MicroResources").elements();
-//        microResources.forEachRemaining(microResource -> {
-//            final OdysseyMaterial odysseyMaterial = OdysseyMaterial.subtypeForName(microResource.get("Name").asText());
-//            final Storage materialStorage = StorageService.getMaterialStorage(odysseyMaterial);
-//            materialStorage.setValue(materialStorage.getValue(StoragePool.SHIPLOCKER));
-//        });
+    public void process(final BuyMicroResources event) {
+
+    }
+
+    @Override
+    public Class<BuyMicroResources> getMessageClass() {
+        return null;
     }
 }

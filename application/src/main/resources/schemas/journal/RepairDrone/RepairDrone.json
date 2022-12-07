@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the player's ship has been repaired by a repair drone. Each of the values indicate the amount of damage that has been repaired",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "HullRepaired" : {
+      "title" : "HullRepaired",
+      "type" : "number",
+      "examples" : [ 310.007385, 310.007324, 309.998169 ]
+    },
+    "CockpitRepaired" : {
+      "title" : "CockpitRepaired",
+      "type" : "number",
+      "examples" : [ 4.391763, 0.02048, 0.2048 ]
+    },
+    "CorrosionRepaired" : {
+      "title" : "CorrosionRepaired",
+      "type" : "number",
+      "examples" : [ 24.0, 10.0, 30.0 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

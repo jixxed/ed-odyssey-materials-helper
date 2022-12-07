@@ -1,0 +1,21 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when scanning a navigation beacon, before the scan data for all the bodies in the system is written into the journal",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 8216113749, 9466778953105, 190289282228 ]
+    },
+    "NumBodies" : {
+      "title" : "NumBodies",
+      "type" : "integer",
+      "examples" : [ 50, 16, 13 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SystemAddress", "NumBodies" ]
+}

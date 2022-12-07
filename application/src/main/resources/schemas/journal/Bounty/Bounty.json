@@ -1,0 +1,78 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: player is awarded a bounty for a kill",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Rewards" : {
+      "title" : "Rewards",
+	  "description": "An array of Faction names and the Reward values, as the target can have multiple bounties payable by different factions. Not used for skimmers.(See Reward)",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Faction" : {
+            "title" : "Faction",
+            "type" : "string",
+            "examples" : [ "United HIP 20485 Nationalists", "Aristocrats of Latorioson", "Latorioson Vision Ltd" ]
+          },
+          "Reward" : {
+            "title" : "Reward",
+            "type" : "integer",
+            "examples" : [ 1400, 8800, 13300 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Faction", "Reward" ]
+      }
+    },
+    "Target" : {
+      "title" : "Target",
+	  "description": "type of ship",
+      "type" : "string",
+      "examples" : [ "citizensuitai_industrial", "citizensuitai_scientific", "assaultsuitai_class2" ]
+    },
+    "Target_Localised" : {
+      "title" : "Target_Localised",
+      "type" : "string",
+      "examples" : [ "Technician", "Researcher", "$AssaultSuitAI_Class1_Name;" ]
+    },
+    "TotalReward" : {
+      "title" : "TotalReward",
+	  "description": "Not used for skimmers.",
+      "type" : "integer",
+      "examples" : [ 1400, 8800, 13300 ]
+    },
+    "VictimFaction" : {
+      "title" : "VictimFaction",
+      "type" : "string",
+      "examples" : [ "Pilot Syndicate 4", "Leavism's Ending", "Galileo Corporation" ]
+    },
+    "VictimFaction_Localised" : {
+      "title" : "VictimFaction_Localised",
+      "type" : "string",
+      "examples" : [ "Pirates", "None" ]
+    },
+    "SharedWithOthers" : {
+      "title" : "SharedWithOthers",
+	  "description": "Not used for skimmers.",
+	  "description": "if credit for the kill is shared with other players, this has the number of other players involved",
+      "type" : "integer",
+      "examples" : [ 1 ]
+    },
+    "Reward" : {
+      "title" : "Reward",
+	  "description": "Used instead of Rewards when the bounty is for a skimmer",
+      "type" : "integer",
+      "examples" : [ 0, 1000 ]
+    },
+    "Faction" : {
+      "title" : "Faction",
+      "type" : "string",
+      "examples" : [ "Educated Pilots Association" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Target", "VictimFaction" ]
+}

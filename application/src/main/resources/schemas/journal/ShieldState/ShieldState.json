@@ -1,0 +1,17 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when shields are disabled in combat, or recharged",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "ShieldsUp" : {
+      "title" : "ShieldsUp",
+      "description": "false when disabled, true when restored",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ShieldsUp" ]
+}

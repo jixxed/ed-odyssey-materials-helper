@@ -1,0 +1,42 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when purchasing goods in the market",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3226155264, 3228688640, 3224133120 ]
+    },
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "tritium", "water", "xihecompanions" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 784, 720, 704 ]
+    },
+    "BuyPrice" : {
+      "title" : "BuyPrice",
+      "type" : "integer",
+      "examples" : [ 50005, 42, 4666 ]
+    },
+    "TotalCost" : {
+      "title" : "TotalCost",
+      "type" : "integer",
+      "examples" : [ 39203920, 30240, 29568 ]
+    },
+    "Type_Localised" : {
+      "title" : "Type_Localised",
+      "description": "The localised value will be omitted if it is exactly the same as Type",
+      "type" : "string",
+      "examples" : [ "Xihe Biomorphic Companions", "Kongga Ale", "Personal Weapons" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "Type", "Count", "BuyPrice", "TotalCost" ]
+}

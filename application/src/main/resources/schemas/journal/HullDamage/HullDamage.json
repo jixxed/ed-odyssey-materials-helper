@@ -1,0 +1,28 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when hull health drops below a threshold (20% steps)",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Health" : {
+      "title" : "Health",
+      "type" : "number",
+      "examples" : [ 0.761888, 0.779891, 0.578194 ]
+    },
+    "PlayerPilot" : {
+      "title" : "PlayerPilot",
+      "description": "True if player is piloting the ship/fighter taking damage",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "Fighter" : {
+      "title" : "Fighter",
+      "description": "True for ship-launched fighter",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Health", "PlayerPilot" ]
+}

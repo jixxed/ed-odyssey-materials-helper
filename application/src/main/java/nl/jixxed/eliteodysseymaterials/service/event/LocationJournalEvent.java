@@ -10,8 +10,7 @@ public class LocationJournalEvent extends JournalEvent {
     private final String stationName;
     private final Boolean first;
 
-    public LocationJournalEvent(final String timeStamp, final StarSystem starSystem, final String body, final String stationName, final Boolean first) {
-        super(timeStamp);
+    public LocationJournalEvent( final StarSystem starSystem, final String body, final String stationName, final Boolean first) {
         this.starSystem = starSystem;
         this.body = body;
         this.stationName = stationName;

@@ -1,0 +1,99 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when using the Technology Broker to unlock new purchasable technology",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "BrokerType" : {
+      "title" : "BrokerType",
+      "type" : "string",
+      "examples" : [ "human", "sirius", "guardian" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3228761344, 129009496, 3226093824 ]
+    },
+    "ItemsUnlocked" : {
+      "title" : "ItemsUnlocked",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Int_Hyperdrive_Size5_Class5", "Hpt_HeatSinkLauncher_Turret_Tiny", "Int_DetailedSurfaceScanner_Tiny" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "$Int_Hyperdrive_Size2_Class1_Name;", "Heatsink", "Surface Scanner" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name" ]
+      }
+    },
+    "Commodities" : {
+      "title" : "Commodities",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "metaalloys", "radiationbaffle", "neofabricinsulation" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Meta-Alloys", "Radiation Baffle", "Neofabric Insulation" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 16, 22, 12 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count" ]
+      }
+    },
+    "Materials" : {
+      "title" : "Materials",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "dataminedwake", "tellurium", "electrochemicalarrays" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Datamined Wake Exceptions", "Electrochemical Arrays", "Chemical Processors" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 18, 26, 28 ]
+          },
+          "Category" : {
+            "title" : "Category",
+            "type" : "string",
+            "examples" : [ "Encoded", "Raw", "Manufactured" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count", "Category" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "BrokerType", "MarketID", "ItemsUnlocked", "Commodities", "Materials" ]
+}

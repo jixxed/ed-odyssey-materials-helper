@@ -1,0 +1,16 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: if the journal file grows to 500k lines, we write this event, close the file, and start a new one. The new journalname will increase the partnumber, ex: {datetime}.02.log. The new journal will start with a Fileheader and continue.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Part" : {
+      "title" : "Part",
+      "type" : "integer",
+      "examples" : [ 2, 3 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Part" ]
+}

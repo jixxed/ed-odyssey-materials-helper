@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when flying away from a planet, and distance increases above the 'Orbital Cruise' altitude",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 20485", "Sol", "Latorioson" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 3657265287866, 10477373803, 671222670713 ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "HIP 20485 C 5", "Vanth", "Actaea" ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 35, 38, 15 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "StarSystem", "SystemAddress", "Body", "BodyID" ]
+}

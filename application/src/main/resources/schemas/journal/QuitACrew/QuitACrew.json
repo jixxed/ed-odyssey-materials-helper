@@ -1,0 +1,22 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Captain" : {
+      "title" : "Captain",
+      "description" : "Helm player's commander name",
+      "type" : "string",
+      "examples" : [ "Alice", "Bob" ]
+    },
+    "Telepresence" : {
+      "title" : "Telepresence",
+      "description": "only from Odyssey build",
+      "type" : "boolean",
+      "examples" : [ false ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Captain" ]
+}

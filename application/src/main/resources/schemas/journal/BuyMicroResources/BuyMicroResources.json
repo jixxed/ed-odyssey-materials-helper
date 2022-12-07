@@ -1,0 +1,82 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when buying microresources",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+	  "description": "Old format (used for example at supplies vendor)",
+      "type" : "string",
+      "examples" : [ "bypass", "amm_grenade_frag", "amm_grenade_emp" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+	  "description": "Old format (used for example at supplies vendor)",
+      "type" : "string",
+      "examples" : [ "E-Breach", "Frag Grenade", "Shield Disruptor" ]
+    },
+    "Category" : {
+      "title" : "Category",
+      "type" : "string",
+      "examples" : [ "Consumable" ]
+    },
+    "Count" : {
+      "title" : "Count",
+	  "description": "Old format (used for example at supplies vendor)",
+      "type" : "integer",
+      "examples" : [ 1, 8, 7 ]
+    },
+    "Price" : {
+      "title" : "Price",
+      "type" : "integer",
+      "examples" : [ 25000, 16000, 14000 ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3221924608, 128927917, 3227846912 ]
+    },
+    "TotalCount" : {
+      "title" : "TotalCount",
+	  "description": "New format (eg at Fleet Carrier bartender)",
+      "type" : "integer",
+      "examples" : [ 2 ]
+    },
+    "MicroResources" : {
+      "title" : "MicroResources",
+	  "description": "New format (eg at Fleet Carrier bartender)",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "opinionpolls" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Opinion Polls" ]
+          },
+          "Category" : {
+            "title" : "Category",
+            "type" : "string",
+            "examples" : [ "Data" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 2 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Category", "Count" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Price", "MarketID" ]
+}

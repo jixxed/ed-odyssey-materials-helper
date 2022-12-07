@@ -1,0 +1,38 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "Player transfers credits to/from carrier",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3707430144, 3705689344, 3705124096 ]
+    },
+    "Deposit" : {
+      "title" : "Deposit",
+      "type" : "integer",
+      "examples" : [ 1568400000, 2122500000, 872810000 ]
+    },
+    "Withdraw" : {
+      "title" : "Withdraw",
+      "type" : "integer",
+      "examples" : [ 4060, 869994, 2370000 ]
+    },
+    "PlayerBalance" : {
+      "title" : "PlayerBalance",
+	  "description": "Player balance after transfer",
+      "type" : "integer",
+      "examples" : [ 500008232, 2435383946, 173416954 ]
+    },
+    "CarrierBalance" : {
+      "title" : "CarrierBalance",
+	  "description": "Carrier balance after transfer",
+      "type" : "integer",
+      "examples" : [ 1568400000, 3058818193, 1490320265 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "PlayerBalance", "CarrierBalance" ]
+}

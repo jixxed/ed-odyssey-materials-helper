@@ -1,0 +1,106 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when first visiting Outfitting, and when the set of stored modules has changed",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3225943808, 3700367104 ]
+    },
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Smith Enterprise" ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 20485", "Swoiwns ZD-B d1", "Synuefai LW-N b52-1" ]
+    },
+    "Items" : {
+      "title" : "Items",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "$hpt_basicmissilerack_fixed_medium_name;", "$int_hyperdrive_size4_class5_name;", "$int_detailedsurfacescanner_tiny_name;" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Seeker Missile Rack", "FSD", "Surface Scanner" ]
+          },
+          "StorageSlot" : {
+            "title" : "StorageSlot",
+            "type" : "integer",
+            "examples" : [ 10, 17, 73 ]
+          },
+          "StarSystem" : {
+            "title" : "StarSystem",
+            "type" : "string",
+            "examples" : [ "HIP 20485", "Bodhinga", "Shinrarta Dezhra" ]
+          },
+          "MarketID" : {
+            "title" : "MarketID",
+            "type" : "integer",
+            "examples" : [ 3705689344, 3225728000, 128666762 ]
+          },
+          "TransferCost" : {
+            "title" : "TransferCost",
+            "type" : "integer",
+            "examples" : [ 0, 110, 130 ]
+          },
+          "TransferTime" : {
+            "title" : "TransferTime",
+            "type" : "integer",
+            "examples" : [ 0, 3856, 2235 ]
+          },
+          "BuyPrice" : {
+            "title" : "BuyPrice",
+            "type" : "integer",
+            "examples" : [ 0, 504, 1411 ]
+          },
+          "Hot" : {
+            "title" : "Hot",
+            "type" : "boolean",
+            "examples" : [ false, true ]
+          },
+          "EngineerModifications" : {
+            "title" : "EngineerModifications",
+            "description": "If engineered module",
+            "type" : "string",
+            "examples" : [ "Weapon_HighCapacity", "FSD_LongRange", "Sensor_Expanded" ]
+          },
+          "Level" : {
+            "title" : "Level",
+            "description": "If engineered module",
+            "type" : "integer",
+            "examples" : [ 5, 1, 4 ]
+          },
+          "Quality" : {
+            "title" : "Quality",
+            "description": "If engineered module",
+            "type" : "number",
+            "examples" : [ 1.0, 0.0, 0.732 ]
+          },
+          "InTransit" : {
+            "title" : "InTransit",
+            "description": "If the module is being transferred",
+            "type" : "boolean",
+            "examples" : [ true ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "StorageSlot", "BuyPrice", "Hot" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "StationName", "StarSystem", "Items" ]
+}

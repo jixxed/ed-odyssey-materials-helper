@@ -1,8 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.GameMode;
+import nl.jixxed.eliteodysseymaterials.journalevents.LoadGame.LoadGame;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LoadGameEvent;
 
@@ -29,12 +29,16 @@ import nl.jixxed.eliteodysseymaterials.service.event.LoadGameEvent;
  * - gameversion
  * - build
  */
-public class LoadGameMessageProcessor implements MessageProcessor {
+public class LoadGameMessageProcessor implements MessageProcessor<LoadGame> {
+    @Override
+    public void process(final LoadGame event) {
+        final String gameMode = event.getGameMode().orElse("none");
+        final Expansion expansion = event.getOdyssey().orElse(false) ? Expansion.ODYSSEY : Expansion.HORIZONS;
+        EventService.publish(new LoadGameEvent(GameMode.valueOf(gameMode.toUpperCase()), expansion));
+    }
 
     @Override
-    public void process(final JsonNode journalMessage) {
-        final String gameMode = journalMessage.get("GameMode").asText();
-        final Expansion expansion = journalMessage.get("Odyssey") != null && journalMessage.get("Odyssey").asBoolean() ? Expansion.ODYSSEY : Expansion.HORIZONS;
-        EventService.publish(new LoadGameEvent(GameMode.valueOf(gameMode.toUpperCase()), expansion));
+    public Class<LoadGame> getMessageClass() {
+        return LoadGame.class;
     }
 }

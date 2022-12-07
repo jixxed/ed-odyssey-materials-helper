@@ -1,0 +1,46 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "Player has bought a fleet carrier",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3707430144, 3705124096 ]
+    },
+    "BoughtAtMarket" : {
+      "title" : "BoughtAtMarket",
+      "type" : "integer",
+      "examples" : [ 128667761, 3223259392 ]
+    },
+    "Location" : {
+      "title" : "Location",
+      "type" : "string",
+      "examples" : [ "Eol Prou LW-L c8-197", "Mitnahas" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 54218827539018, 7267218695553 ]
+    },
+    "Price" : {
+      "title" : "Price",
+      "type" : "integer",
+      "examples" : [ 3500000000, 5000000000 ]
+    },
+    "Variant" : {
+      "title" : "Variant",
+      "type" : "string",
+      "examples" : [ "CarrierDockB" ]
+    },
+    "Callsign" : {
+      "title" : "Callsign",
+      "type" : "string",
+      "examples" : [ "A1A-B2B" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "BoughtAtMarket", "Location", "SystemAddress", "Price", "Variant", "Callsign" ]
+}

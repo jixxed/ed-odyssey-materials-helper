@@ -1,0 +1,121 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when a new discovery is added to the Codex",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "EntryID" : {
+      "title" : "EntryID",
+      "type" : "integer",
+      "examples" : [ 1100801, 1102300, 1100701 ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "$Codex_Ent_L_Type_Name;", "$Codex_Ent_Neutron_Stars_Name;", "$Codex_Ent_M_Type_Name;" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "type" : "string",
+      "examples" : [ "L Type Star", "Neutron Star", "M Type Star" ]
+    },
+    "SubCategory" : {
+      "title" : "SubCategory",
+      "type" : "string",
+      "examples" : [ "$Codex_SubCategory_Stars;", "$Codex_SubCategory_Terrestrials;", "$Codex_SubCategory_Gas_Giants;" ]
+    },
+    "SubCategory_Localised" : {
+      "title" : "SubCategory_Localised",
+      "type" : "string",
+      "examples" : [ "Stars", "Terrestrial planets", "Gas giant planets" ]
+    },
+    "Category" : {
+      "title" : "Category",
+      "type" : "string",
+      "examples" : [ "$Codex_Category_StellarBodies;", "$Codex_Category_Civilisations;", "$Codex_Category_Biology;" ]
+    },
+    "Category_Localised" : {
+      "title" : "Category_Localised",
+      "type" : "string",
+      "examples" : [ "Astronomical Bodies", "Xenological", "Biological and Geological" ]
+    },
+    "Region" : {
+      "title" : "Region",
+      "type" : "string",
+      "examples" : [ "$Codex_RegionName_35;", "$Codex_RegionName_18;", "$Codex_RegionName_34;" ]
+    },
+    "Region_Localised" : {
+      "title" : "Region_Localised",
+      "type" : "string",
+      "examples" : [ "Outer Orion Spur", "Inner Orion Spur", "Sanguineous Rim" ]
+    },
+    "System" : {
+      "title" : "System",
+      "type" : "string",
+      "examples" : [ "Blaa Eoq WN-Q a73-0", "Blaa Eoq IZ-M d8-14", "Blaa Eoq ET-Q b38-0" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 5790152675952, 492352555595, 730815146313 ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 0, 1, 2 ]
+    },
+    "Latitude" : {
+      "title" : "Latitude",
+      "type" : "number",
+      "minimum": -90,
+      "maximum": 90,
+      "examples" : [ -20.319307, 20.352921, -2.925347 ]
+    },
+    "Longitude" : {
+      "title" : "Longitude",
+      "type" : "number",
+      "minimum": -180,
+      "maximum": 180,
+      "examples" : [ 135.494843, -135.307236, 60.841995 ]
+    },
+    "VoucherAmount" : {
+      "title" : "VoucherAmount",
+      "type" : "integer",
+      "examples" : [ 2500, 50000 ]
+    },
+    "NearestDestination" : {
+      "title" : "NearestDestination",
+	  "description": "The NearestDestination is added if within 50km of a location listed in the navigation panel",
+      "type" : "string",
+      "examples" : [ "$Settlement_Unflattened_WreckedUnknown:#index=5;", "", "$Fixed_Event_Life_Ring;" ]
+    },
+    "NearestDestination_Localised" : {
+      "title" : "NearestDestination_Localised",
+      "type" : "string",
+      "examples" : [ "Crashed Thargoid Ship", "Notable stellar phenomena", "$POIScene_Trap_Cargo_02; " ]
+    },
+    "IsNewEntry" : {
+	  "description": "The IsNewEntry field is optional depending on the results of the scan",
+      "title" : "IsNewEntry",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "NewTraitsDiscovered" : {
+	  "description": "The NewTraitsDiscovered field is optional depending on the results of the scan",
+      "title" : "IsNewEntry",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+	"Traits" : {
+      "title" : "Traits",
+	  "description": "The Traits field is only available for entries that have unlocked traits",
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "EntryID", "Name", "SubCategory", "Category", "Region", "System", "SystemAddress" ]
+}

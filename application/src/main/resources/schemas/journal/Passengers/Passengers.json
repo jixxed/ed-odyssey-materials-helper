@@ -1,0 +1,48 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: at startup, when loading the saved game file",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Manifest" : {
+      "title" : "Manifest",
+      "description": "Array of passenger records",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 799410896, 841578018, 841577937 ]
+          },
+          "Type" : {
+            "title" : "Type",
+            "type" : "string",
+            "examples" : [ "Explorer", "Tourist", "Business" ]
+          },
+          "VIP" : {
+            "title" : "VIP",
+            "type" : "boolean",
+            "examples" : [ true ]
+          },
+          "Wanted" : {
+            "title" : "Wanted",
+            "type" : "boolean",
+            "examples" : [ false, true ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 7, 9, 13 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "MissionID", "Type", "VIP", "Wanted", "Count" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Manifest" ]
+}

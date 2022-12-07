@@ -205,7 +205,7 @@ public class FXApplication extends Application {
                 watchedFolderFleetCarrier.mkdirs();
             }
             this.fleetCarrierWatcher = new GameStateWatcher();
-            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processStateFile(file, JournalEventType.FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, StoragePool.FLEETCARRIER);
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPI_FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, StoragePool.FLEETCARRIER);
         }
 
     }

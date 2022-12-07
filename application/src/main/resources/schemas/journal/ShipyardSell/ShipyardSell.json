@@ -1,0 +1,47 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when selling a ship stored in the shipyard",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "ShipType" : {
+      "title" : "ShipType",
+      "type" : "string",
+      "examples" : [ "sidewinder", "type7", "anaconda" ]
+    },
+    "SellShipID" : {
+      "title" : "SellShipID",
+      "type" : "integer",
+      "examples" : [ 36, 68, 6 ]
+    },
+    "ShipPrice" : {
+      "title" : "ShipPrice",
+      "type" : "integer",
+      "examples" : [ 28080, 12730985, 104262846 ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3226858240, 128666762 ]
+    },
+    "ShipType_Localised" : {
+      "title" : "ShipType_Localised",
+      "type" : "string",
+      "examples" : [ "Type-7 Transporter", "Asp Explorer", "Fer-de-Lance" ]
+    },
+    "System" : {
+      "title" : "System",
+      "description": "If ship is in another system",
+      "type" : "string",
+      "examples" : [ "Zeaex", "Wiliajuk", "Harow" ]
+    },
+    "ShipMarketID" : {
+      "title" : "ShipMarketID",
+      "type" : "integer",
+      "examples" : [ 128110840, 3227808512, 3706338816 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ShipType", "SellShipID", "ShipPrice", "MarketID" ]
+}

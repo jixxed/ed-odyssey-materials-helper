@@ -1,0 +1,22 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when in a crew on someone else's ship, player switched crew role",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Role" : {
+      "title" : "Role",
+      "type" : "string",
+      "examples" : [ "OnFoot", "Helm", "Idle", "FireCon", "FighterCon" ]
+    },
+    "Telepresence" : {
+      "title" : "Telepresence",
+	  "description": "Only from Odyssey build",
+      "type" : "bool",
+      "examples" : [ true ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Role" ]
+}

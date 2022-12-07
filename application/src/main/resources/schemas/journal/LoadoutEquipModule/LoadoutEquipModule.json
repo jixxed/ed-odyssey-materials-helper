@@ -1,0 +1,70 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when a player adds a weapon to a suit loadout",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "LoadoutName" : {
+      "title" : "LoadoutName",
+      "type" : "string",
+      "examples" : [ "maverick", "dominator", "artemis" ]
+    },
+    "SuitID" : {
+      "title" : "SuitID",
+      "type" : "integer",
+      "examples" : [ 1700585833788820, 1700575810179595, 1700567461457237 ]
+    },
+    "SuitName" : {
+      "title" : "SuitName",
+      "type" : "string",
+      "examples" : [ "utilitysuit_class5", "tacticalsuit_class5", "explorationsuit_class2" ]
+    },
+    "SuitName_Localised" : {
+      "title" : "SuitName_Localised",
+      "type" : "string",
+      "examples" : [ "$UtilitySuit_Class1_Name;", "$TacticalSuit_Class1_Name;", "$ExplorationSuit_Class1_Name;" ]
+    },
+    "LoadoutID" : {
+      "title" : "LoadoutID",
+      "type" : "integer",
+      "examples" : [ 4293000004, 4293000005, 4293000006 ]
+    },
+    "SlotName" : {
+      "title" : "SlotName",
+      "type" : "string",
+      "examples" : [ "PrimaryWeapon1", "SecondaryWeapon", "PrimaryWeapon2" ]
+    },
+    "ModuleName" : {
+      "title" : "ModuleName",
+      "description": "New weapon or other item added to loadout",
+      "type" : "string",
+      "examples" : [ "wpn_m_sniper_plasma_charged", "wpn_s_pistol_plasma_charged", "wpn_m_shotgun_plasma_doublebarrel" ]
+    },
+    "ModuleName_Localised" : {
+      "title" : "ModuleName_Localised",
+      "type" : "string",
+      "examples" : [ "Manticore Executioner", "Manticore Tormentor", "Manticore Intimidator" ]
+    },
+    "Class" : {
+      "title" : "Class",
+      "type" : "integer",
+      "examples" : [ 4, 5, 2 ]
+    },
+    "WeaponMods" : {
+      "title" : "WeaponMods",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "weapon_stability", "weapon_handling", "weapon_suppression_unpressurised" ]
+      }
+    },
+    "SuitModuleID" : {
+      "title" : "SuitModuleID",
+      "type" : "integer",
+      "examples" : [ 1700314469329676, 1700314451340369, 1700314462068060 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "LoadoutName", "SuitID", "SuitName", "LoadoutID", "SlotName", "ModuleName", "Class", "WeaponMods", "SuitModuleID" ]
+}

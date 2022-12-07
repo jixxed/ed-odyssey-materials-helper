@@ -142,6 +142,9 @@ public class FileProcessor {
     public static synchronized void processStateFile(final File file, final JournalEventType journalEventType) {
         Platform.runLater(() -> MessageHandler.handleMessage(file, journalEventType));
     }
+    public static synchronized void processCapiFile(final File file, final JournalEventType journalEventType) {
+        Platform.runLater(() -> MessageHandler.handleCapiMessage(file, journalEventType));
+    }
 
     public static synchronized void processStatusFile(final File file) {
         try {

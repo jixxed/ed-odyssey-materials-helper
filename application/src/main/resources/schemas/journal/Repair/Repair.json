@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when repairing the ship. When repairing on a FleetCarrier, you can get a list of the modules repaired",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 8310, 29660, 8890 ]
+    },
+    "Item" : {
+      "description": "all, wear, hull, paint, or name of module",
+      "title" : "Item",
+      "type" : "string",
+      "examples" : [ "Wear", "Paint", "All" ]
+    },
+    "Items" : {
+      "title" : "Items",
+      "description": "when repairing on a FleetCarrier",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "$asp_cockpit_name;", "Hull", "$modularcargobaydoor_name;" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Cost" ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when delivering items to a Search and Rescue contact",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 128666762 ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "occupiedcryopod", "damagedescapepod" ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "type" : "string",
+      "examples" : [ "Occupied Escape Pod", "Damaged Escape Pod" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 6, 3 ]
+    },
+    "Reward" : {
+      "title" : "Reward",
+      "type" : "integer",
+      "examples" : [ 164376, 45855 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "Name", "Count", "Reward" ]
+}

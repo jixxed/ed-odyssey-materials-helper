@@ -1,6 +1,0 @@
-{
-  "$schema" : "https://json-schema.org/draft/2020-12/schema",
-  "type" : "object",
-  "description": "When written: this player has left a wing",
-  "extends" : { "$ref": "Event.json" }
-}

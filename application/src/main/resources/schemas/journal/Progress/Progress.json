@@ -1,0 +1,75 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: at startup",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Combat" : {
+      "title" : "Combat",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 41, 42, 43 ]
+    },
+    "Trade" : {
+      "title" : "Trade",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 43, 44, 45 ]
+    },
+    "Explore" : {
+      "title" : "Explore",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 36, 38, 43 ]
+    },
+    "Soldier" : {
+      "title" : "Soldier",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 31, 32, 33 ]
+    },
+    "Exobiologist" : {
+      "title" : "Exobiologist",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 0, 4, 82 ]
+    },
+    "Empire" : {
+      "title" : "Empire",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 54, 57, 24 ]
+    },
+    "Federation" : {
+      "title" : "Federation",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 17, 18, 19 ]
+    },
+    "CQC" : {
+      "title" : "CQC",
+      "description": "Percentage progress to next rank",
+      "type" : "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "examples" : [ 0, 18, 45 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Combat", "Trade", "Explore", "Empire", "Federation", "CQC" ]
+}

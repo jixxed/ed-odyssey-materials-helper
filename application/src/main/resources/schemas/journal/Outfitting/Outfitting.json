@@ -1,0 +1,59 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "Written when accessing the outfitting menu. The full parts pricelist is written to a separate file Outfitting.json.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3225943808, 3700367104 ]
+    },
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Smith Enterprise" ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 20485", "Swoiwns ZD-B d1", "Synuefai LW-N b52-1" ]
+    },
+    "Horizons" : {
+      "title" : "Horizons",
+      "description": "Only written in Outfitting.json",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "Items" : {
+      "title" : "Items",
+      "description": "Only written in Outfitting.json",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "title" : "id",
+            "type" : "integer",
+            "examples" : [ 128049382, 128049383, 128049385 ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "hpt_pulselaser_fixed_medium", "hpt_pulselaser_fixed_large", "hpt_pulselaser_gimbal_small" ]
+          },
+          "BuyPrice" : {
+            "title" : "BuyPrice",
+            "type" : "integer",
+            "examples" : [ 16731, 66924, 6275 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "id", "Name", "BuyPrice" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "MarketID", "StationName", "StarSystem" ]
+}

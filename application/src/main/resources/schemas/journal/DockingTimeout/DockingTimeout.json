@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when a docking request has timed out",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3701165824, 3222025216 ]
+    },
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Shinn Enterprise" ]
+    },
+    "StationType" : {
+      "title" : "StationType",
+      "type" : "string",
+      "examples" : [ "FleetCarrier", "Coriolis", "CraterOutpost" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [  ]
+}

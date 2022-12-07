@@ -1,0 +1,40 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "part" : {
+      "title" : "part",
+      "description": "The file part number",
+      "type" : "integer",
+      "examples" : [ 1 ]
+    },
+    "language" : {
+      "title" : "language",
+      "description": "The language code",
+      "type" : "string",
+      "examples" : [ "English/UK", "Russian/RU", "French/FR" ]
+    },
+    "Odyssey" : {
+      "title" : "Odyssey",
+      "description": "True for gameversions >= 4.0, both Horizons and Odyssey.",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "gameversion" : {
+      "title" : "gameversion",
+      "description": "Which version of the game produced the log (will indicate if beta)",
+      "type" : "string",
+      "examples" : [ "4.0.0.1200", "4.0.0.1201", "4.0.0.1300" ]
+    },
+    "build" : {
+      "title" : "build",
+      "description": "Game build number",
+      "type" : "string",
+      "examples" : [ "r282108/r0 ", "r282352/r0 ", "r284072/r0 " ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "part", "language", "Odyssey", "gameversion", "build" ]
+}

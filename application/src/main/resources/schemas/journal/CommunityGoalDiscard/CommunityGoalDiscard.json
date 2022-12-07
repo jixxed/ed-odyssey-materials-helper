@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when opting out of a community goal",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "CGID" : {
+      "title" : "CGID",
+      "type" : "integer",
+      "examples" : [ 661, 677, 684 ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Engineered Detailed Surface Scanner Initiative", "Support Wreaken Construction Mining Campaign", "Support the Federation's Attempt to Capture Yuri Grom" ]
+    },
+    "System" : {
+      "title" : "System",
+      "type" : "string",
+      "examples" : [ "Luyten's Star", "EGM 559", "Delta Pavonis" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "CGID", "Name", "System" ]
+}

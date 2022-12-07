@@ -1,12 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.journalevents.UpgradeWeapon.UpgradeWeapon;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.Map;
@@ -20,7 +20,7 @@ import java.util.Map;
 //        { "timestamp":"2020-10-06T09:38:23Z", "event":"UpgradeWeapon",
 //        "Name":"wpn_s_pistol_plasma_charged", "Name_Localised":"Manticore Tormentor", "Class":2,
 //        "Cost":0 }
-public class UpgradeWeaponMessageProcessor implements MessageProcessor {
+public class UpgradeWeaponMessageProcessor implements MessageProcessor<UpgradeWeapon> {
     private static final Map<Integer, OdysseyBlueprint> BLUEPRINT_MAPPING_KARMA = Map.ofEntries(
             Map.entry(2, OdysseyBlueprintConstants.getRecipe(OdysseyBlueprintName.KARMA_1_2)),
             Map.entry(3, OdysseyBlueprintConstants.getRecipe(OdysseyBlueprintName.KARMA_2_3)),
@@ -44,9 +44,10 @@ public class UpgradeWeaponMessageProcessor implements MessageProcessor {
     );
 
     @Override
-    public void process(final JsonNode journalMessage) {
-        final String name = journalMessage.get("Name").asText();
-        final Integer targetClass = journalMessage.get("Class").asInt();
+    public void process(final UpgradeWeapon event) {
+
+        final String name = event.getName();
+        final Integer targetClass = event.getClass_().intValue();
         final OdysseyBlueprint odysseyBlueprint;
         if (name.contains("laser")) {
             odysseyBlueprint = BLUEPRINT_MAPPING_TK.get(targetClass);
@@ -59,5 +60,10 @@ public class UpgradeWeaponMessageProcessor implements MessageProcessor {
             final Storage materialStorage = StorageService.getMaterialStorage(key);
             materialStorage.setValue(materialStorage.getValue(StoragePool.SHIPLOCKER) - value, StoragePool.SHIPLOCKER);
         });
+    }
+
+    @Override
+    public Class<UpgradeWeapon> getMessageClass() {
+        return UpgradeWeapon.class;
     }
 }

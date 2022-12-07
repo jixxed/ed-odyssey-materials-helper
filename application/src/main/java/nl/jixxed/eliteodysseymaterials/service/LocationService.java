@@ -20,17 +20,17 @@ public class LocationService {
 
     static {
         EventService.addStaticListener(ApproachBodyJournalEvent.class, event -> {//When approaching body
-            body = event.getBody();
+            body = event.getApproachBody().getBody();
             station = "";
             notifyListeners();
         });
         EventService.addStaticListener(ApproachSettlementJournalEvent.class, event -> {//when approaching settlement, also on startup if at settlement
-            body = event.getBody();
+            body = event.getApproachSettlement().getBodyName();
             station = "";
             notifyListeners();
         });
         EventService.addStaticListener(DockedJournalEvent.class, event -> {//Always player controlled
-            station = event.getStationName();
+            station = event.getDocked().getStationName();
             notifyListeners();
         });
         EventService.addStaticListener(FSDJumpJournalEvent.class, event -> {//After jump to other system
@@ -44,7 +44,7 @@ public class LocationService {
             notifyListeners();
         });
         EventService.addStaticListener(LiftOffJournalEvent.class, event -> {//can be either player or AI controlled
-            if (event.getPlayerControlled() || event.getTaxi()) {// both false means ship sent away
+            if (event.getLiftoff().getPlayerControlled() || event.getLiftoff().getTaxi().orElse(false)) {// both false means ship sent away
                 station = "";
                 latitude = DEFAULT_LATITUDE;
                 longitude = DEFAULT_LONGITUDE;
@@ -69,9 +69,9 @@ public class LocationService {
             notifyListeners();
         });
         EventService.addStaticListener(TouchdownJournalEvent.class, event -> {//can be either player or AI controlled
-            station = event.getNearestDestination();
-            latitude = event.getLatitude() != null ? event.getLatitude() : DEFAULT_LATITUDE;
-            longitude = event.getLongitude() != null ? event.getLongitude() : DEFAULT_LONGITUDE;
+            station = event.getTouchdown().getNearestDestination().orElse("");
+            latitude = event.getTouchdown().getLatitude().orElse( DEFAULT_LATITUDE);
+            longitude = event.getTouchdown().getLongitude().orElse( DEFAULT_LONGITUDE);
 
             notifyListeners();
         });

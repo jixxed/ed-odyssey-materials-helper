@@ -1,0 +1,35 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "SuitID" : {
+      "title" : "SuitID",
+      "type" : "integer",
+      "examples" : [ 1702007358392257, 1703514026864984, 1705338124035131 ]
+    },
+    "SuitName" : {
+      "title" : "SuitName",
+      "type" : "string",
+      "examples" : [ "explorationsuit_class3", "tacticalsuit_class5", "explorationsuit_class5" ]
+    },
+    "SuitName_Localised" : {
+      "title" : "SuitName_Localised",
+      "type" : "string",
+      "examples" : [ "$ExplorationSuit_Class1_Name;", "$TacticalSuit_Class1_Name;", "$UtilitySuit_Class1_Name;" ]
+    },
+    "LoadoutID" : {
+      "title" : "LoadoutID",
+      "type" : "integer",
+      "examples" : [ 4293000004, 4293000002, 4293000000 ]
+    },
+    "LoadoutName" : {
+      "title" : "LoadoutName",
+      "type" : "string",
+      "examples" : [ "Discoverer", "Scavenger", "Tanky" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SuitID", "SuitName", "LoadoutID", "LoadoutName" ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when scanning a datalink generates a reward",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Reward" : {
+      "title" : "Reward",
+      "type" : "integer",
+      "examples" : [ 5268, 11787, 15590 ]
+    },
+    "VictimFaction" : {
+      "title" : "VictimFaction",
+      "type" : "string",
+      "examples" : [ "Empire", "Alliance", "Federation" ]
+    },
+    "PayeeFaction" : {
+      "title" : "PayeeFaction",
+      "type" : "string",
+      "examples" : [ "Federation", "Empire", "Alliance" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Reward", "VictimFaction", "PayeeFaction" ]
+}

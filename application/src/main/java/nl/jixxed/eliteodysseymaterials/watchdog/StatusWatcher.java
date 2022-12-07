@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 @Slf4j
 public class StatusWatcher {
     private Optional<File> watchedFile = Optional.empty();
-    private FileWatcher fileWatcher;
+    private final FileWatcher fileWatcher;
 
     public StatusWatcher(final File folder, final Consumer<File> fileProcessor, final String filename) {
         findFile(folder, filename);

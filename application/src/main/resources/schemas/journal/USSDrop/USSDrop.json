@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when dropping from Supercruise at a Unidentified Signal Source",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "USSType" : {
+      "title" : "USSType",
+      "type" : "string",
+      "examples" : [ "$USS_Type_Salvage;", "$USS_Type_MissionTarget;", "$USS_Type_ValuableSalvage;" ]
+    },
+    "USSType_Localised" : {
+      "title" : "USSType_Localised",
+      "type" : "string",
+      "examples" : [ "Degraded emissions", "Target", "Encoded emissions" ]
+    },
+    "USSThreat" : {
+      "title" : "USSThreat",
+      "type" : "integer",
+      "examples" : [ 0, 6, 2 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "USSType", "USSThreat" ]
+}

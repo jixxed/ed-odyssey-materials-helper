@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: after a new ship has been purchased",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "ShipType" : {
+      "title" : "ShipType",
+      "type" : "string",
+      "examples" : [ "asp", "anaconda", "sidewinder" ]
+    },
+    "ShipType_Localised" : {
+      "title" : "ShipType_Localised",
+      "type" : "string",
+      "examples" : [ "Asp Explorer", "Krait Phantom", "Type-7 Transporter" ]
+    },
+    "NewShipID" : {
+      "title" : "NewShipID",
+      "type" : "integer",
+      "examples" : [ 34, 38, 39 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ShipType", "NewShipID" ]
+}

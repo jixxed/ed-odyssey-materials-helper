@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
@@ -10,11 +8,15 @@ import nl.jixxed.eliteodysseymaterials.enums.Consumable;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
+import nl.jixxed.eliteodysseymaterials.journalevents.BackpackChange.BackpackChange;
+import nl.jixxed.eliteodysseymaterials.journalevents.BackpackChange.ChangeEntry;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackChangeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 import java.util.Spliterators;
 import java.util.stream.StreamSupport;
@@ -31,64 +33,70 @@ import java.util.stream.StreamSupport;
  * - Count
  * - Type
  */
-public class BackpackChangeMessageProcessor implements MessageProcessor {
+public class BackpackChangeMessageProcessor implements MessageProcessor<BackpackChange> {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     public BackpackChangeMessageProcessor() {
     }
 
     @Override
-    public void process(final JsonNode journalMessage) {
-        EventService.publish(new BackpackEvent(journalMessage.get("timestamp").asText()));
-        final ArrayNode added = (ArrayNode) journalMessage.get("Added");
-        final ArrayNode removed = (ArrayNode) journalMessage.get("Removed");
-        final String timestamp = journalMessage.get("timestamp").asText();
-        publishBackpackChangeEvents(added, Operation.ADDED, timestamp);
-        publishBackpackChangeEvents(removed, Operation.REMOVED, timestamp);
-        if (added != null && !added.isEmpty()) {
-            StreamSupport.stream(added.spliterator(), false)
-                    .filter(jsonNode -> jsonNode.get("MissionID") == null)
-                    .map(jsonNode -> {
-                        try {
-                            return OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText());
-                        } catch (final IllegalArgumentException e) {
-                            return null;
-                        }
-                    })
-                    .filter(Objects::nonNull)
-                    .filter(material -> !(material instanceof Consumable))
-                    .forEach(material -> {
-                        if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
-                                || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
-                            NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
-                        } else if (WishlistService.isMaterialOnWishlist(material)) {
-                            NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"),
-                                    LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification",
-                                            LocaleService.LocalizationKey.of(material.getLocalizationKey()),
-                                            StorageService.getMaterialStorage(material).getTotalValue(),
-                                            WishlistService.getAllWishlistsCount(material))
-                            );
-                        }
-                    });
-        }
+    public Class<BackpackChange> getMessageClass() {
+        return BackpackChange.class;
     }
 
-    private void publishBackpackChangeEvents(final ArrayNode arrayNode, final Operation operation, final String timestamp) {
-        StreamSupport.stream((arrayNode != null) ? arrayNode.spliterator() : Spliterators.emptySpliterator(), false)
-                .forEach(jsonNode -> {
+    @Override
+    public void process(final BackpackChange event) {
+        final String timestamp = event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+        EventService.publish(new BackpackEvent(timestamp));
+        event.getAdded().ifPresent(added -> publishBackpackChangeEvents(added, Operation.ADDED, timestamp));
+        event.getRemoved().ifPresent(removed -> publishBackpackChangeEvents(removed, Operation.REMOVED, timestamp));
+        event.getAdded().ifPresent(added -> {
+            if (!added.isEmpty()) {
+                added.stream()
+                        .filter(changeEntry -> changeEntry.getMissionID().isEmpty())
+                        .map(changeEntry -> {
+                            try {
+                                return OdysseyMaterial.subtypeForName(changeEntry.getName());
+                            } catch (final IllegalArgumentException e) {
+                                return null;
+                            }
+                        })
+                        .filter(Objects::nonNull)
+                        .filter(material -> !(material instanceof Consumable))
+                        .forEach(material -> {
+                            if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
+                                    || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
+                                NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
+                            } else if (WishlistService.isMaterialOnWishlist(material)) {
+                                NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"),
+                                        LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification",
+                                                LocaleService.LocalizationKey.of(material.getLocalizationKey()),
+                                                StorageService.getMaterialStorage(material).getTotalValue(),
+                                                WishlistService.getAllWishlistsCount(material))
+                                );
+                            }
+                        });
+            }
+        });
+
+    }
+
+    private void publishBackpackChangeEvents(final List<ChangeEntry> changeEntries, final Operation operation, final String timestamp) {
+        StreamSupport.stream((changeEntries != null) ? changeEntries.spliterator() : Spliterators.emptySpliterator(), false)
+                .forEach(changeEntry -> {
                     try {
-                        EventService.publish(createEvent(operation, jsonNode, timestamp));
+                        EventService.publish(createEvent(operation, changeEntry, timestamp));
                     } catch (final IllegalArgumentException e) {
-                        NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", jsonNode.get("Name").asText() + "\nPlease report!");
+                        NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", changeEntry.getName() + "\nPlease report!");
                     }
                 });
     }
 
-    private BackpackChangeEvent createEvent(final Operation operation, final JsonNode jsonNode, final String timestamp) {
+    private BackpackChangeEvent createEvent(final Operation operation, final ChangeEntry changeEntry, final String timestamp) {
         final Location currentLocation = LocationService.getCurrentLocation();
         return BackpackChangeEvent.builder()
-                .odysseyMaterial(OdysseyMaterial.subtypeForName(jsonNode.get("Name").asText()))
-                .amount(jsonNode.get("Count").asInt())
+                .odysseyMaterial(OdysseyMaterial.subtypeForName(changeEntry.getName()))
+                .amount(changeEntry.getCount().intValue())
                 .operation(operation)
                 .timestamp(timestamp)
                 .commander(APPLICATION_STATE.getPreferredCommander().map(Commander::getName).orElse(""))

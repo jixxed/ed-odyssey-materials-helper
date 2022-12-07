@@ -1,0 +1,88 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged when the player creates a new suit loadout",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "SuitID" : {
+      "title" : "SuitID",
+      "type" : "integer",
+      "examples" : [ 1722459265319146, 1722471630829214, 1700215335054978 ]
+    },
+    "SuitName" : {
+      "title" : "SuitName",
+      "type" : "string",
+      "examples" : [ "explorationsuit_class2", "explorationsuit_class3", "flightsuit" ]
+    },
+    "SuitName_Localised" : {
+      "title" : "SuitName_Localised",
+      "type" : "string",
+      "examples" : [ "$ExplorationSuit_Class1_Name;", "Flight Suit", "$TacticalSuit_Class1_Name;" ]
+    },
+    "SuitMods" : {
+      "title" : "SuitMods",
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "suit_increasedbatterycapacity", "suit_improvedjumpassist", "suit_improvedradar" ]
+      }
+    },
+    "LoadoutID" : {
+      "title" : "LoadoutID",
+      "type" : "integer",
+      "examples" : [ 4293000016, 4293000018, 4293000019 ]
+    },
+    "LoadoutName" : {
+      "title" : "LoadoutName",
+      "type" : "string",
+      "examples" : [ "Artemis extra power", "JA TEST", "flight suit" ]
+    },
+    "Modules" : {
+      "title" : "Modules",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "SlotName" : {
+            "title" : "SlotName",
+            "type" : "string",
+            "examples" : [ "PrimaryWeapon1", "PrimaryWeapon2", "SecondaryWeapon" ]
+          },
+          "SuitModuleID" : {
+            "title" : "SuitModuleID",
+            "type" : "integer",
+            "examples" : [ 1722576686732033, 1700362936206349, 1700314434564508 ]
+          },
+          "ModuleName" : {
+            "title" : "ModuleName",
+            "type" : "string",
+            "examples" : [ "wpn_m_assaultrifle_laser_fauto", "wpn_m_submachinegun_kinetic_fauto", "wpn_m_sniper_plasma_charged" ]
+          },
+          "ModuleName_Localised" : {
+            "title" : "ModuleName_Localised",
+            "type" : "string",
+            "examples" : [ "TK Aphelion", "Karma C-44", "Manticore Executioner" ]
+          },
+          "Class" : {
+            "title" : "Class",
+            "type" : "integer",
+            "examples" : [ 3, 1, 2 ]
+          },
+          "WeaponMods" : {
+            "title" : "WeaponMods",
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "examples" : [ "weapon_accuracy", "weapon_suppression_unpressurised", "weapon_handling" ]
+            }
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "SlotName", "SuitModuleID", "ModuleName", "Class", "WeaponMods" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "SuitID", "SuitName", "SuitMods", "LoadoutID", "LoadoutName", "Modules" ]
+}

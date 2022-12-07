@@ -1,0 +1,41 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when switching to another ship already stored at this station",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "ShipType" : {
+      "title" : "ShipType",
+      "type" : "string",
+      "examples" : [ "asp", "cutter", "empire_trader" ]
+    },
+    "ShipType_Localised" : {
+      "title" : "ShipType_Localised",
+      "type" : "string",
+      "examples" : [ "Asp Explorer", "Imperial Cutter", "Imperial Clipper" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 5, 25, 11 ]
+    },
+    "StoreOldShip" : {
+      "title" : "StoreOldShip",
+      "type" : "string",
+      "examples" : [ "Krait_MkII", "Asp", "Cutter" ]
+    },
+    "StoreShipID" : {
+      "title" : "StoreShipID",
+      "type" : "integer",
+      "examples" : [ 18, 5, 25 ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 128666762, 3228917248 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ShipType", "ShipID", "StoreOldShip", "StoreShipID", "MarketID" ]
+}

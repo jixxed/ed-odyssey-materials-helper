@@ -1,0 +1,138 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when visiting shipyard",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "StationName" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "A1A-B2B", "Jameson Memorial" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3700367104, 128666762 ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "Celaeno", "HIP 20485", "Swoiwns ZD-B d1" ]
+    },
+    "ShipsHere" : {
+      "title" : "ShipsHere",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "ShipID" : {
+            "title" : "ShipID",
+            "type" : "integer",
+            "examples" : [ 32, 31, 0 ]
+          },
+          "ShipType" : {
+            "title" : "ShipType",
+            "type" : "string",
+            "examples" : [ "vulture", "empire_courier", "sidewinder" ]
+          },
+          "Value" : {
+            "title" : "Value",
+            "type" : "integer",
+            "examples" : [ 0, 46998, 210072 ]
+          },
+          "Hot" : {
+            "title" : "Hot",
+            "type" : "boolean",
+            "examples" : [ false, true ]
+          },
+          "ShipType_Localised" : {
+            "title" : "ShipType_Localised",
+            "type" : "string",
+            "examples" : [ "Imperial Courier", "Viper Mk III", "Type-6 Transporter" ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "SHIFTY", "JOBHOPPER", "STARHOPPER" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "ShipID", "ShipType", "Value", "Hot" ]
+      }
+    },
+    "ShipsRemote" : {
+      "title" : "ShipsRemote",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "ShipID" : {
+            "title" : "ShipID",
+            "type" : "integer",
+            "examples" : [ 0, 2, 3 ]
+          },
+          "ShipType" : {
+            "title" : "ShipType",
+            "type" : "string",
+            "examples" : [ "SideWinder", "Hauler", "Viper" ]
+          },
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "SHIFTY", "", "PREDATOR" ]
+          },
+          "StarSystem" : {
+            "title" : "StarSystem",
+            "description": "If the ship is not in transit",
+            "type" : "string",
+            "examples" : [ "Nuenets", "LFT 926", "Shinrarta Dezhra" ]
+          },
+          "ShipMarketID" : {
+            "title" : "ShipMarketID",
+            "description": "If the ship is not in transit",
+            "type" : "integer",
+            "examples" : [ 3705689344, 128666762, 3703568640 ]
+          },
+          "TransferPrice" : {
+            "title" : "TransferPrice",
+            "description": "If the ship is not in transit",
+            "type" : "integer",
+            "examples" : [ 24311, 39042, 171040 ]
+          },
+          "TransferTime" : {
+            "title" : "TransferTime",
+            "description": "If the ship is not in transit",
+            "type" : "integer",
+            "examples" : [ 121682, 356, 4719 ]
+          },
+          "Value" : {
+            "title" : "Value",
+            "type" : "integer",
+            "examples" : [ 0, 46998, 210072 ]
+          },
+          "Hot" : {
+            "title" : "Hot",
+            "type" : "boolean",
+            "examples" : [ false, true ]
+          },
+          "ShipType_Localised" : {
+            "title" : "ShipType_Localised",
+            "type" : "string",
+            "examples" : [ "Viper Mk III", "Type-6 Transporter", "Type-9 Heavy" ]
+          },
+          "InTransit" : {
+            "title" : "InTransit",
+            "description": "If the ship is in transit",
+            "type" : "boolean",
+            "examples" : [ true ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "ShipID", "ShipType", "Value", "Hot" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "StationName", "MarketID", "StarSystem", "ShipsHere", "ShipsRemote" ]
+}

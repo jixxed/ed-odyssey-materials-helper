@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.GameMode;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
+import nl.jixxed.eliteodysseymaterials.journalevents.ShipLocker.ShipLocker;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -140,7 +143,7 @@ class OdysseyMaterialTrackingServiceTest {
         EventService.publish(event58);
         EventService.publish(event59);
         assertThat(MaterialTrackingService.BACKPACK_CHANGE_EVENTS).containsExactlyInAnyOrder(event53, event54, event55, event56, event57, event58, event59);
-        EventService.publish(new ShipLockerEvent("2021-12-15T19:04:56Z"));// should remove -2s - +2s -> 54-58
+        EventService.publish(new ShipLockerEvent((ShipLocker) (new ShipLocker.ShipLockerBuilder()).withTimestamp(LocalDateTime.of(2021,12,15,19,4,56)).build()));// should remove -2s - +2s -> 54-58
         assertThat(MaterialTrackingService.BACKPACK_CHANGE_EVENTS).containsExactlyInAnyOrder(event53, event59);
     }
 }

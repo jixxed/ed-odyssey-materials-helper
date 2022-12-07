@@ -1,0 +1,27 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: Creating a new commander",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "HRC1" ]
+    },
+    "FID" : {
+      "title" : "FID",
+      "type" : "string",
+      "examples" : [ "F44396" ]
+    },
+    "Package" : {
+      "title" : "Package",
+      "description": "Selected starter package",
+      "type" : "string",
+      "examples" : [ "ImperialBountyHunter" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "FID", "Package" ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when scooping fuel from a star",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Scooped" : {
+      "title" : "Scooped",
+      "description": "Tons fuel scooped",
+      "type" : "number",
+      "examples" : [ 3.375821, 0.382492, 0.15318 ]
+    },
+    "Total" : {
+      "title" : "Total",
+      "description": "Total fuel level after scooping",
+      "type" : "number",
+      "examples" : [ 25.817244, 18.662706, 15.467442 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Scooped", "Total" ]
+}

@@ -1,16 +1,16 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
+import nl.jixxed.eliteodysseymaterials.journalevents.MaterialTrade.MaterialTrade;
 
 import java.util.Iterator;
 import java.util.Map;
 
 public interface HorizonsParser {
 
-    default void parse(final Iterator<JsonNode> items, final Map<HorizonsMaterial, Integer> storage) {
-        items.forEachRemaining(item -> parse(item, storage));
+    default void parse(final Iterator<MaterialTrade> events, final Map<HorizonsMaterial, Integer> storage) {
+        events.forEachRemaining(event -> parse(event, storage));
     }
 
-    void parse(final JsonNode item, Map<HorizonsMaterial, Integer> storage);
+    void parse(final MaterialTrade event, Map<HorizonsMaterial, Integer> storage);
 }

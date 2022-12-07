@@ -1,0 +1,16 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when purchasing ammunition",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Cost" : {
+      "title" : "Cost",
+      "type" : "integer",
+      "examples" : [ 32, 1522, 493 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Cost" ]
+}

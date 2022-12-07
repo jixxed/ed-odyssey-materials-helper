@@ -1,0 +1,83 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when taking off from planet surface",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "PlayerControlled" : {
+      "title" : "PlayerControlled",
+      "description": "false if ship dismissed when player is in SRV, true if player is taking off",
+      "type" : "boolean",
+      "examples" : [ true, false ]
+    },
+    "Taxi" : {
+      "title" : "Taxi",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "Multicrew" : {
+      "title" : "Multicrew",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "HIP 20485", "Sol", "Latorioson" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 3657265287866, 10477373803, 671222670713 ]
+    },
+    "Body" : {
+      "title" : "Body",
+      "type" : "string",
+      "examples" : [ "HIP 20485 C 5", "Vanth", "Actaea" ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 35, 38, 11 ]
+    },
+    "OnStation" : {
+      "title" : "OnStation",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "OnPlanet" : {
+      "title" : "OnPlanet",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
+    "Latitude" : {
+      "title" : "Latitude",
+      "description": "only if player flying in ship)",
+      "type" : "number",
+      "minimum": -90,
+      "maximum": 90,
+      "examples" : [ -1.477483, -40.646881, 22.613714 ]
+    },
+    "Longitude" : {
+      "title" : "Longitude",
+      "description": "only if player flying in ship)",
+      "type" : "number",
+      "minimum": -180,
+      "maximum": 180,
+      "examples" : [ -17.250286, -17.250288, -44.13446 ]
+    },
+    "NearestDestination" : {
+      "title" : "NearestDestination",
+      "type" : "string",
+      "examples" : [ "Foster Synthetics Exchange", "Uutoni Extraction Platform", "$SAA_Unknown_Signal:#type=$SAA_SignalType_Human;:#index=0;" ]
+    },
+    "NearestDestination_Localised" : {
+      "title" : "NearestDestination_Localised",
+      "type" : "string",
+      "examples" : [ "Human Signal (0)", "Ancient Ruins (1)", "Crashed Thargoid Ship" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "PlayerControlled" ]
+}

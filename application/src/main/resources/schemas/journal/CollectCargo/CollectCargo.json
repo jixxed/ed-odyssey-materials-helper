@@ -1,0 +1,32 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when scooping cargo from space or planet surface",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "AncientRelic", "unknownresin", "unknownbiologicalmatter" ]
+    },
+    "Type_Localised" : {
+      "title" : "Type_Localised",
+	  "description": "The localised value will be omitted if it is exactly the same as Type",
+      "type" : "string",
+      "examples" : [ "Guardian Relic", "Thargoid Resin", "Thargoid Biological Matter" ]
+    },
+    "Stolen" : {
+      "title" : "Stolen",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
+    "MissionID" : {
+      "title" : "MissionID",
+      "type" : "integer",
+      "examples" : [ 810908315, 810908321, 810908401 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type", "Stolen" ]
+}

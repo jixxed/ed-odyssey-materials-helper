@@ -1,15 +1,17 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import nl.jixxed.eliteodysseymaterials.journalevents.SupercruiseEntry.SupercruiseEntry;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.SupercruiseEntryJournalEvent;
 
-public class SupercruiseEntryMessageProcessor implements MessageProcessor {
-
+public class SupercruiseEntryMessageProcessor implements MessageProcessor<SupercruiseEntry> {
     @Override
-    public void process(final JsonNode journalMessage) {
-        final String timestamp = journalMessage.get("timestamp").asText();
-        final String starSystem = journalMessage.get("StarSystem").asText();
-        EventService.publish(new SupercruiseEntryJournalEvent(timestamp, starSystem));
+    public void process(final SupercruiseEntry event) {
+
+        EventService.publish(new SupercruiseEntryJournalEvent(event));
+    }
+    @Override
+    public Class<SupercruiseEntry> getMessageClass() {
+        return SupercruiseEntry.class;
     }
 }

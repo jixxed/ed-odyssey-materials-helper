@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when assigning a name to the ship in Starport Services",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Ship" : {
+      "title" : "Ship",
+      "type" : "string",
+      "examples" : [ "asp", "python", "empire_courier" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "type" : "integer",
+      "examples" : [ 34, 27, 12 ]
+    },
+    "UserShipName" : {
+      "title" : "UserShipName",
+      "type" : "string",
+      "examples" : [ "Goidgobbler", "", "Starhopper" ]
+    },
+    "UserShipId" : {
+      "title" : "UserShipId",
+      "type" : "string",
+      "examples" : [ "ASP-01", "", "KM2-02" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Ship", "ShipID", "UserShipName", "UserShipId" ]
+}

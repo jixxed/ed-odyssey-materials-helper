@@ -1,0 +1,16 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the player's ship has been scanned (The Scan Detected indication is at the start of the scan, this is written at the end of a successful scan)",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "ScanType" : {
+      "title" : "ScanType",
+      "type" : "string",
+      "examples" : [ "Cargo", "Crime", "Data" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ScanType" ]
+}

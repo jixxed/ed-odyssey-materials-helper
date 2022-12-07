@@ -1,0 +1,55 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when approaching a planetary settlement",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Foster Synthetics Exchange", "Nevermore Terrace", "Uutoni Extraction Platform" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3814679040, 128973415, 3807125248 ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 3657265287866, 7269634614689, 10477373803 ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 35, 40, 38 ]
+    },
+    "BodyName" : {
+      "title" : "BodyName",
+      "type" : "string",
+      "examples" : [ "HIP 20485 C 5", "Siris 5 c", "Vanth" ]
+    },
+    "Latitude" : {
+      "title" : "Latitude",
+      "type" : "number",
+      "minimum": -90,
+      "maximum": 90,
+      "examples" : [ -1.477483, -40.646881, 22.613714 ]
+    },
+    "Longitude" : {
+      "title" : "Longitude",
+      "type" : "number",
+      "minimum": -180,
+      "maximum": 180,
+      "examples" : [ -17.250286, -17.250288, -44.13446 ]
+    },
+    "Name_Localised" : {
+      "title" : "Name_Localised",
+      "type" : "string",
+      "examples" : [ "Ancient Ruins (1)", "Ancient Ruins (3)", "Ancient Ruins (2)" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Name", "SystemAddress", "BodyID", "BodyName" ]
+}

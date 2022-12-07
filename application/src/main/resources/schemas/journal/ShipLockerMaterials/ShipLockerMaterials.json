@@ -1,0 +1,150 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "Same as ShipLocker, but discontinued.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Items" : {
+      "title" : "Items",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "degradedpowerregulator", "gmeds", "healthmonitor" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Degraded Power Regulator", "G-Meds", "Health Monitor" ]
+          },
+          "OwnerID" : {
+            "title" : "OwnerID",
+            "type" : "integer",
+            "examples" : [ 0, 2956170072, 2953282931 ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 9, 38, 44 ]
+          },
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 773162298, 774672117, 777569599 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "OwnerID", "Count" ]
+      }
+    },
+    "Components" : {
+      "title" : "Components",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "circuitboard", "circuitswitch", "electricalfuse" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Circuit Board", "Circuit Switch", "Electrical Fuse" ]
+          },
+          "OwnerID" : {
+            "title" : "OwnerID",
+            "type" : "integer",
+            "examples" : [ 0 ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 43, 68, 37 ]
+          },
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 777415191, 780533841 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "OwnerID", "Count" ]
+      }
+    },
+    "Consumables" : {
+      "title" : "Consumables",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "healthpack", "energycell", "amm_grenade_emp" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Medkit", "Energy Cell", "Shield Disruptor" ]
+          },
+          "OwnerID" : {
+            "title" : "OwnerID",
+            "type" : "integer",
+            "examples" : [ 0 ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 96, 94, 99 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "OwnerID", "Count" ]
+      }
+    },
+    "Data" : {
+      "title" : "Data",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "manufacturinginstructions", "radioactivitydata", "stellaractivitylogs" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Manufacturing Instructions", "Radioactivity Data", "Stellar Activity Logs" ]
+          },
+          "OwnerID" : {
+            "title" : "OwnerID",
+            "type" : "integer",
+            "examples" : [ 0, 5352618, 175185 ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 43, 31, 21 ]
+          },
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 777415407, 779372801, 779372247 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "OwnerID", "Count" ]
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Items", "Components", "Consumables", "Data" ]
+}

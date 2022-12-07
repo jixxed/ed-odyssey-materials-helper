@@ -1,0 +1,23 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when in multicrew, in Helm player's log, when a crew member launches a fighter",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Telepresence" : {
+      "title" : "Telepresence",
+      "description": "only from Odyssey build",
+      "type" : "boolean",
+      "examples" : [ false ]
+    },
+    "Crew" : {
+      "title" : "Crew",
+      "description": "Name of crew member launching in fighter",
+      "type" : "string",
+      "examples" : [ "Alice", "Bob" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Telepresence", "Crew" ]
+}

@@ -1,0 +1,6 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when the self destruct function is used",
+  "extends" : { "$ref": "../_Event.json"}
+}

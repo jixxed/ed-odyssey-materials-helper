@@ -1,0 +1,16 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged if the player cancels their journey to a combat zone",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Refund" : {
+      "title" : "Refund",
+      "type" : "integer",
+      "examples" : [ 0 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Refund" ]
+}

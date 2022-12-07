@@ -1,30 +1,32 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.journalevents.Materials.Materials;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
-public class MaterialsMessageProcessor implements MessageProcessor {
-
+public class MaterialsMessageProcessor implements MessageProcessor<Materials> {
     @Override
-    @SuppressWarnings("java:S1192")
-    public void process(final JsonNode journalMessage) {
+    public void process(final Materials event) {
         StorageService.resetHorizonsMaterialCounts();
-        journalMessage.get("Raw").elements().forEachRemaining(jsonNode -> {
-            final HorizonsMaterial horizonsMaterial = Raw.forName(jsonNode.get("Name").asText());
-            StorageService.addMaterial(horizonsMaterial, jsonNode.get("Count").asInt());
+        event.getRaw().forEach(raw -> {
+            final HorizonsMaterial horizonsMaterial = Raw.forName(raw.getName());
+            StorageService.addMaterial(horizonsMaterial, raw.getCount().intValue());
         });
-        journalMessage.get("Manufactured").elements().forEachRemaining(jsonNode -> {
-            final HorizonsMaterial horizonsMaterial = Manufactured.forName(jsonNode.get("Name").asText());
-            StorageService.addMaterial(horizonsMaterial, jsonNode.get("Count").asInt());
+        event.getManufactured().forEach(manufactured -> {
+            final HorizonsMaterial horizonsMaterial = Manufactured.forName(manufactured.getName());
+            StorageService.addMaterial(horizonsMaterial, manufactured.getCount().intValue());
         });
-        journalMessage.get("Encoded").elements().forEachRemaining(jsonNode -> {
-            final HorizonsMaterial horizonsMaterial = Encoded.forName(jsonNode.get("Name").asText());
-            StorageService.addMaterial(horizonsMaterial, jsonNode.get("Count").asInt());
+        event.getEncoded().forEach(encoded -> {
+            final HorizonsMaterial horizonsMaterial = Encoded.forName(encoded.getName());
+            StorageService.addMaterial(horizonsMaterial, encoded.getCount().intValue());
         });
         EventService.publish(new StorageEvent(StoragePool.SHIP));
 
+    }
+    @Override
+    public Class<Materials> getMessageClass() {
+        return Materials.class;
     }
 }

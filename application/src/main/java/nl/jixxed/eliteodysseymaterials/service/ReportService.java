@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
@@ -12,10 +11,10 @@ import java.net.http.HttpResponse;
 @Slf4j
 public class ReportService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    public static void reportMaterial(final JsonNode journalMessage) {
+    public static void reportMaterial(final Object material) {
         final Runnable run = () -> {
             try {
-                final String data = OBJECT_MAPPER.writeValueAsString(journalMessage);
+                final String data = OBJECT_MAPPER.writeValueAsString(material);
                 log.info(data);
                 final HttpClient httpClient = HttpClient.newHttpClient();
                 final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");

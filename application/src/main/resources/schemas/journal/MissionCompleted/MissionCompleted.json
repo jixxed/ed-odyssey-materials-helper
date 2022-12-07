@@ -1,0 +1,264 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when a mission is completed",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Faction" : {
+      "title" : "Faction",
+      "type" : "string",
+      "examples" : [ "Asooraja Netcoms Inc", "Alliance of Wadjang", "Asooraja Gold Dragons" ]
+    },
+    "Name" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Mission_OnFoot_Hack_Download_Offline_MB_name", "Mission_OnFoot_Hack_Download_MB_name", "Mission_OnFoot_Hack_Download_Covert_MB_name" ]
+    },
+    "MissionID" : {
+      "title" : "MissionID",
+      "type" : "integer",
+      "examples" : [ 869506868, 869506883, 869562920 ]
+    },
+    "Commodity" : {
+      "title" : "Commodity",
+      "type" : "string",
+      "examples" : [ "$PatrolRoutes_Name;", "$Kompromat_Name;", "$EmployeeGeneticData_Name;" ]
+    },
+    "Commodity_Localised" : {
+      "title" : "Commodity_Localised",
+      "type" : "string",
+      "examples" : [ "Patrol Routes", "Kompromat", "Employee Genetic Data" ]
+    },
+    "Count" : {
+      "title" : "Count",
+      "type" : "integer",
+      "examples" : [ 1, 195, 220 ]
+    },
+    "Reward" : {
+      "title" : "Reward",
+      "type" : "integer",
+      "examples" : [ 221176, 100656, 238235 ]
+    },
+    "PermitsAwarded" : {
+      "title": "PermitsAwarded",
+      "description": "Appears in journal manual, but not in actual events.",
+      "type": "array",
+      "items" : {
+        "type" : "string",
+        "examples" : [ "permit", "permit", "permit" ]
+      }
+    },
+    "CommodityReward" : {
+      "title" : "CommodityReward",
+      "description": "Names and counts of any commodity rewards",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "ModularTerminals", "Bauxite" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "description": "The localised value will be omitted if it is exactly the same as Name",
+            "type" : "string",
+            "examples" : [ "Modular Terminals" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 5, 2, 3 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Count" ]
+      }
+    },
+    "MaterialsReward" : {
+      "title" : "MaterialsReward",
+      "description": "Name, category and count of any material rewards",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "ChemicalInventory", "PatrolRoutes", "PharmaceuticalPatents" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "description": "The localised value will be omitted if it is exactly the same as Name",
+            "type" : "string",
+            "examples" : [ "Chemical Inventory", "Patrol Routes", "Pharmaceutical Patents" ]
+          },
+          "Category" : {
+            "title" : "Category",
+            "type" : "string",
+            "examples" : [ "$MICRORESOURCE_CATEGORY_Data;", "$MICRORESOURCE_CATEGORY_Encoded;", "$MICRORESOURCE_CATEGORY_Manufactured;" ]
+          },
+          "Category_Localised" : {
+            "title" : "Category_Localised",
+            "type" : "string",
+            "examples" : [ "Data", "Encoded", "Données" ]
+          },
+          "Count" : {
+            "title" : "Count",
+            "type" : "integer",
+            "examples" : [ 5, 2, 3 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Category", "Count" ]
+      }
+    },
+    "FactionEffects" : {
+      "title" : "FactionEffects",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Faction" : {
+            "title" : "Faction",
+            "type" : "string",
+            "examples" : [ "Asooraja Netcoms Inc", "Alliance of Wadjang", "Asooraja Gold Dragons" ]
+          },
+          "Effects" : {
+            "title" : "Effects",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "Effect" : {
+                  "title" : "Effect",
+                  "type" : "string",
+                  "examples" : [ "$MISSIONUTIL_Interaction_Summary_EP_up;", "$MISSIONUTIL_Interaction_Summary_SP_up;", "$MISSIONUTIL_Interaction_Summary_EP_down;" ]
+                },
+                "Effect_Localised" : {
+                  "title" : "Effect_Localised",
+                  "type" : "string",
+                  "examples" : [ "The economic status of $#MinorFaction; has improved in the $#System; system.", "The security status of $#MinorFaction; has improved in the $#System; system.", "The economic status of $#MinorFaction; has declined in the $#System; system." ]
+                },
+                "Trend" : {
+                  "title" : "Trend",
+                  "type" : "string",
+                  "examples" : [ "UpGood", "DownBad", "DownGood" ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "Effect", "Trend" ]
+            }
+          },
+          "Influence" : {
+            "title" : "Influence",
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "SystemAddress" : {
+                  "title" : "SystemAddress",
+                  "type" : "integer",
+                  "examples" : [ 3107442332354, 908620337866, 2557820834522 ]
+                },
+                "Trend" : {
+                  "title" : "Trend",
+                  "type" : "string",
+                  "examples" : [ "UpGood", "DownBad" ]
+                },
+                "Influence" : {
+                  "title" : "Influence",
+                  "type" : "string",
+                  "examples" : [ "++", "+", "+++" ]
+                }
+              },
+              "additionalProperties" : false,
+              "required" : [ "SystemAddress", "Trend", "Influence" ]
+            }
+          },
+          "ReputationTrend" : {
+            "title" : "ReputationTrend",
+            "type" : "string",
+            "examples" : [ "UpGood", "DownBad" ]
+          },
+          "Reputation" : {
+            "title" : "Reputation",
+            "type" : "string",
+            "examples" : [ "++", "+", "++++" ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Faction", "Effects", "Influence", "ReputationTrend", "Reputation" ]
+      }
+    },
+    "Donation" : {
+      "title" : "Donation",
+      "type" : "string",
+      "examples" : [ "575000", "1000000", "450000" ]
+    },
+    "Donated" : {
+      "title" : "Donated",
+      "type" : "integer",
+      "examples" : [ 575000, 1000000, 450000 ]
+    },
+    "TargetFaction" : {
+      "title" : "TargetFaction",
+      "type" : "string",
+      "examples" : [ "Kipsigines Vision Partners", "44th Vulture Syndicate", "Skeggiko O Jet Natural Inc" ]
+    },
+    "DestinationSystem" : {
+      "title" : "DestinationSystem",
+      "type" : "string",
+      "examples" : [ "LDS 413", "Shinrarta Dezhra", "LHS 317" ]
+    },
+    "DestinationStation" : {
+      "title" : "DestinationStation",
+      "type" : "string",
+      "examples" : [ "Ockels Relay", "Jameson Memorial", "Agnesi Bastion" ]
+    },
+    "Target" : {
+      "title" : "Target",
+      "type" : "string",
+      "examples" : [ "$MissionUtil_FactionTag_Datalink;", "Karissa Kennedy", "Esmeralda Garrison" ]
+    },
+    "Target_Localised" : {
+      "title" : "Target_Localised",
+      "type" : "string",
+      "examples" : [ "Data Link", "Hub Access Terminal", "Fuel Depot" ]
+    },
+    "DestinationSettlement" : {
+      "title" : "DestinationSettlement",
+      "type" : "string",
+      "examples" : [ "Skoropadsky Boarding Site", "Cataldo Excavation Hub", "Degefa Extraction Platform" ]
+    },
+    "TargetType" : {
+      "title" : "TargetType",
+      "type" : "string",
+      "examples" : [ "$MissionUtil_FactionTag_Skimmer;", "$MissionUtil_FactionTag_AIHumanoid;", "$MissionUtil_FactionTag_GuardHumanoid;" ]
+    },
+    "TargetType_Localised" : {
+      "title" : "TargetType_Localised",
+      "type" : "string",
+      "examples" : [ "Sentry Skimmer", "Faction Members", "Guards" ]
+    },
+    "KillCount" : {
+      "title" : "KillCount",
+      "type" : "integer",
+      "examples" : [ 9, 13, 7 ]
+    },
+    "NewDestinationSystem" : {
+      "title" : "NewDestinationSystem",
+      "type" : "string",
+      "examples" : [ "Harow", "Robigo", "Bediae" ]
+    },
+    "NewDestinationStation" : {
+      "title" : "NewDestinationStation",
+      "type" : "string",
+      "examples" : [ "Crown Depot", "Otiman Dock", "Jameson Memorial" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Faction", "Name", "MissionID" ]
+}
