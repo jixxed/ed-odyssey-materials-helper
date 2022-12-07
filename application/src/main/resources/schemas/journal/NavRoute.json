@@ -1,7 +1,7 @@
 {
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
-  "description": "When plotting a multi-star route, the file “NavRoute.json” is written in the same directory as the journal, with a list of stars along that route",
+  "description": "When plotting a multi-star route, the file NavRoute.json is written in the same directory as the journal, with a list of stars along that route",
   "extends" : { "$ref": "Event.json" },
   "properties" : {
     "Route" : {

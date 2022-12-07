@@ -1,7 +1,7 @@
 {
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
-  "description": "This event is written when completing a “Full Spectrum Scan” of a starsystem, to list the number of SAA signals found in the system (as shown in-game in the top-right panel)",
+  "description": "This event is written when completing a Full Spectrum Scan of a starsystem, to list the number of SAA signals found in the system (as shown in-game in the top-right panel)",
   "extends" : { "$ref": "Event.json" },
   "properties" : {
     "BodyName" : {

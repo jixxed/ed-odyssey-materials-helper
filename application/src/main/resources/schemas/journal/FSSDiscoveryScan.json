@@ -1,7 +1,7 @@
 {
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
-  "description": "When written: when performing a full system scan (“Honk”)",
+  "description": "When written: when performing a full system scan (Honk)",
   "extends" : { "$ref": "Event.json" },
   "properties" : {
     "Progress" : {
