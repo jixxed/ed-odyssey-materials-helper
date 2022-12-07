@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ class MessageHandler {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     static{
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+        OBJECT_MAPPER.registerModule( new JavaTimeModule());
     }
     private static final Map<JournalEventType, MessageProcessor<? extends Event>> messageProcessors = Map.ofEntries(
             Map.entry(JournalEventType.COMMANDER, new CommanderMessageProcessor()),

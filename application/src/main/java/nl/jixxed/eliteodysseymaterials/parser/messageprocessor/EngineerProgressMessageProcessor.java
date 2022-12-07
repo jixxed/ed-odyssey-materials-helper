@@ -18,9 +18,9 @@ public class EngineerProgressMessageProcessor implements MessageProcessor<Engine
     @Override
     public void process(final EngineerProgress engineerProgress) {
         if (engineerProgress.getEngineers().isPresent()) {
-            engineerProgress.getEngineers().get().forEach(engineer -> processEngineerProgressItem(Optional.ofNullable(engineer.getEngineer()), Optional.ofNullable(engineer.getProgress()), engineer.getRankProgress()));
+            engineerProgress.getEngineers().get().forEach(engineer -> processEngineerProgressItem(Optional.ofNullable(engineer.getEngineer()), Optional.ofNullable(engineer.getProgress()), engineer.getRankProgress(), engineer.getRank()));
         } else if (engineerProgress.getEngineer().isPresent()) {
-            processEngineerProgressItem(engineerProgress.getEngineer(), engineerProgress.getProgress(), engineerProgress.getRankProgress());
+            processEngineerProgressItem(engineerProgress.getEngineer(), engineerProgress.getProgress(), engineerProgress.getRankProgress(), engineerProgress.getRank());
         }
     }
 
@@ -29,22 +29,21 @@ public class EngineerProgressMessageProcessor implements MessageProcessor<Engine
         return EngineerProgress.class;
     }
 
-    private static void processEngineerProgressItem(final Optional<String> engineer, final Optional<String> progress, final Optional<Long> rankProgress) {
+    private static void processEngineerProgressItem(final Optional<String> engineer, final Optional<String> progress, final Optional<Long> rankProgress, final Optional<Long> engineerRank) {
         if (engineer.isPresent() && progress.isPresent()) {
             final String engineerName = engineer.get();
             final EngineerState engineerState = EngineerState.forName(progress.get());
-            final Integer rank;
-            if (rankProgress.isPresent()) {
-                rank = rankProgress.get().intValue();
-            } else if (EngineerState.INVITED.equals(engineerState)) {
-                rank = -1;
-            } else if (EngineerState.KNOWN.equals(engineerState)) {
-                rank = -2;
-            } else if (EngineerState.UNKNOWN.equals(engineerState)) {
-                rank = -3;
-            } else {
-                rank = 0;
-            }
+            final Integer rank = engineerRank.map(Long::intValue).orElseGet(() -> {
+                if (EngineerState.INVITED.equals(engineerState)) {
+                    return  -1;
+                } else if (EngineerState.KNOWN.equals(engineerState)) {
+                    return -2;
+                } else if (EngineerState.UNKNOWN.equals(engineerState)) {
+                    return -3;
+                } else {
+                    return 0;
+                }
+            });
             final Integer rankProgressValue = rankProgress.orElse(0L).intValue();
             switch (engineerName) {
                 case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, engineerState);

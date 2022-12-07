@@ -122,6 +122,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.2'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.5'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'commons-io:commons-io:2.11.0'
@@ -275,7 +276,7 @@ jsonSchema2Pojo {
 
     // Whether to include a javax.annotation.Generated (Java 8 and lower) or
     // javax.annotation.processing.Generated (Java 9+) in on generated types (default true).
-    includeGeneratedAnnotation = true
+    includeGeneratedAnnotation = false
 
     // Whether to generate builder-style methods of the form withXxx(value) (that return this),
     // alongside the standard, void-return setters.
