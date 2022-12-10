@@ -1,11 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.journalevents.Backpack.Backpack;
 import nl.jixxed.eliteodysseymaterials.parser.AssetParser;
 import nl.jixxed.eliteodysseymaterials.parser.DataParser;
 import nl.jixxed.eliteodysseymaterials.parser.GoodParser;
 import nl.jixxed.eliteodysseymaterials.parser.mapping.MaterialMapping;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Backpack.Backpack;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;

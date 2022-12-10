@@ -1,0 +1,104 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/fssbodysignals/1#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "type"                  : "object",
+            "additionalProperties"  : true,
+            "required"              : [ "uploaderID", "softwareName", "softwareVersion" ],
+            "properties"            : {
+                "uploaderID": {
+                    "type"          : "string"
+                },
+                "gameversion": {
+                    "type"          : "string",
+                    "description"   : "From Fileheader event if available, else LoadGame if available there."
+                },
+                "gamebuild": {
+                    "type"          : "string",
+                    "description"   : "The `build` value from a Fileheader event if available, else LoadGame if available there."
+                },
+                "softwareName": {
+                    "type"          : "string"
+                },
+                "softwareVersion": {
+                    "type"          : "string"
+                },
+                "gatewayTimestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time",
+                    "description"   : "Timestamp upon receipt at the gateway. If present, this property will be overwritten by the gateway; submitters are not intended to populate this property."
+                }
+            }
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal, minus the Localised strings and the properties marked below as 'disallowed'",
+            "additionalProperties"  : false,
+            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress", "BodyID", "Signals" ],
+            "properties"            : {
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "event" : {
+                    "enum"          : [ "FSSBodySignals" ]
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },
+                "StarSystem": {
+                    "type"          : "string",
+                    "minLength"     : 1
+                },
+                "StarPos": {
+                    "type"          : "array",
+                    "items"         : { "type": "number" },
+                    "minItems"      : 3,
+                    "maxItems"      : 3,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                },
+                "SystemAddress": {
+                    "type"          : "integer"
+                },
+                "BodyID"             : {
+                    "type"          : "integer"
+                },
+                "BodyName": {
+                    "type"          : "string",
+                    "minLength"     : 1
+                },
+                "Signals": {
+                    "type"          : "array",
+                    "items"         : {
+                        "type"          : "object",
+                        "additionalProperties"  : false,
+                        "required"              : [ "Type", "Count" ],
+                        "properties"            : {
+                            "Type"             : {
+                                "type"          : "string"
+                            },
+                            "Count"             : {
+                                "type"          : "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "disallowed" : { "not" : { "type": [ "array", "boolean", "integer", "number", "null", "object", "string" ] } }
+    }
+}

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum JournalEventType {
+    FILEHEADER("Fileheader"),
+    CARRIERJUMP("CarrierJump"),
     COMMANDER("Commander"),
     ENGINEERPROGRESS("EngineerProgress"),
     EMBARK("Embark"),
@@ -43,7 +45,23 @@ public enum JournalEventType {
     CARGOTRANSFER("CargoTransfer"),
     TECHNOLOGYBROKER("TechnologyBroker"),
     SUITLOADOUT("SuitLoadout"),
-    SWITCHSUITLOADOUT("SuitLoadout");
+    SWITCHSUITLOADOUT("SuitLoadout"),
+    CODEXENTRY("CodexEntry"),
+    SHIPYARD("Shipyard"),
+    OUTFITTING("Outfitting"),
+    MARKET("Market"),
+    NAVROUTE("NavRoute"),
+    NAVROUTECLEAR("NavRouteClear"),
+    MODULEINFO("ModuleInfo"),
+    FCMATERIALS("FCMaterials"),
+    SCAN("Scan"),
+    SCANBARYCENTRE("ScanBaryCentre"),
+    SAASIGNALSFOUND("SAASignalsFound"),
+    FSSSIGNALDISCOVERED("FSSSignalDiscovered"),
+    FSSALLBODIESFOUND("FSSAllBodiesFound"),
+    FSSBODYSIGNALS("FSSBodySignals"),
+    FSSDISCOVERYSCAN("FSSDiscoveryScan"),
+    NAVBEACONSCAN("NavBeaconScan");
     private final String name;
 
     public static JournalEventType forName(final String name) {

@@ -2,10 +2,10 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.journalevents.MaterialTrade.MaterialTrade;
 import nl.jixxed.eliteodysseymaterials.parser.EncodedTradeParser;
 import nl.jixxed.eliteodysseymaterials.parser.ManufacturedTradeParser;
 import nl.jixxed.eliteodysseymaterials.parser.RawTradeParser;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialTrade.MaterialTrade;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;

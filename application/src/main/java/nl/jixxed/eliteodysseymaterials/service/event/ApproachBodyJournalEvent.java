@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service.event;
 
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.journalevents.ApproachBody.ApproachBody;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ApproachBody.ApproachBody;
 
 @Getter
 public class ApproachBodyJournalEvent extends JournalEvent {

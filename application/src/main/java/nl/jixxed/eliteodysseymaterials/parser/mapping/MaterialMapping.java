@@ -12,13 +12,13 @@ public class MaterialMapping {
     private Optional<String> name_Localised;
     private Optional<Long> missionID;
 
-    public static MaterialMapping map(final nl.jixxed.eliteodysseymaterials.journalevents.Backpack.Component material) {
+    public static MaterialMapping map(final nl.jixxed.eliteodysseymaterials.schemas.journal.Backpack.Component material) {
         return map(material.getName(), material.getOwnerID(), material.getCount(), material.getName_Localised(), material.getMissionID());
     }
-    public static MaterialMapping map(final nl.jixxed.eliteodysseymaterials.journalevents.Backpack.Item material) {
+    public static MaterialMapping map(final nl.jixxed.eliteodysseymaterials.schemas.journal.Backpack.Item material) {
         return map(material.getName(), material.getOwnerID(), material.getCount(), material.getName_Localised(), material.getMissionID());
     }
-    public static MaterialMapping map(final nl.jixxed.eliteodysseymaterials.journalevents.Backpack.Data material) {
+    public static MaterialMapping map(final nl.jixxed.eliteodysseymaterials.schemas.journal.Backpack.Data material) {
         return map(material.getName(), material.getOwnerID(), material.getCount(), material.getName_Localised(), material.getMissionID());
     }
 

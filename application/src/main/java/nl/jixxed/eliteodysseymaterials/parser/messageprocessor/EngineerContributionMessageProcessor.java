@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.journalevents.EngineerContribution.EngineerContribution;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.EngineerContribution.EngineerContribution;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -30,6 +30,6 @@ public class EngineerContributionMessageProcessor implements MessageProcessor<En
 
     @Override
     public Class<EngineerContribution> getMessageClass() {
-        return null;
+        return EngineerContribution.class;
     }
 }

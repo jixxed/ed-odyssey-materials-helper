@@ -119,6 +119,8 @@ public class SettingsTab extends OdysseyTab {
     private CheckBox pollCheckBox;
     private DestroyableLabel arBartenderLabel;
     private DestroyableToggleSwitch arBartenderButton;
+    private DestroyableLabel eddnLabel;
+    private DestroyableToggleSwitch eddnButton;
 
     public SettingsTab(final Application application) {
         this.application = application;
@@ -251,8 +253,9 @@ public class SettingsTab extends OdysseyTab {
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.settings.title.tracking"))
                 .build();
+        final HBox eddnSetting = createEDDNSetting();
         final HBox trackingOptOutSetting = createTrackingOptOutSetting();
-        final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting).buildVBox();
+        final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting, eddnSetting).buildVBox();
         settings.getChildren().add(tracking);
 
         this.scrollPane = ScrollPaneBuilder.builder()
@@ -381,6 +384,20 @@ public class SettingsTab extends OdysseyTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.arOverlayLabel, this.arOverlayButton)
+                .buildHBox();
+    }
+
+    private HBox createEDDNSetting() {
+        this.eddnLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.eddn.toggle")).build();
+        this.eddnButton = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.EDDN_ENABLED, Boolean.TRUE.equals(newValue));
+                })
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.EDDN_ENABLED, Boolean.FALSE))
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.eddnLabel, this.eddnButton)
                 .buildHBox();
     }
 

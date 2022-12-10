@@ -1,0 +1,102 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "$ref": "../definitions.json#/definitions/header"
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
+            "additionalProperties"  : true,
+            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress" ],
+            "properties"            : {
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "event" : {
+                    "type"          : "string"
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },
+                "BodyName" : {
+                    "title" : "BodyName",
+                    "type" : "string",
+                    "examples" : [ "90482 Orcus", "Vanth", "Salacia" ]
+                },
+                "SystemAddress" : {
+                    "title" : "SystemAddress",
+                    "type" : "integer",
+                    "examples" : [ 10477373803, 44753062275, 593108606041 ]
+                },
+                "BodyID" : {
+                    "title" : "BodyID",
+                    "type" : "integer",
+                    "examples" : [ 34, 35, 37 ]
+                },
+                "Signals" : {
+                    "title" : "Signals",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Type" : {
+                                "title" : "Type",
+                                "type" : "string",
+                                "examples" : [ "$SAA_SignalType_Human;", "$SAA_SignalType_Geological;", "Serendibite" ]
+                            },
+                            "Count" : {
+                                "title" : "Count",
+                                "type" : "integer",
+                                "examples" : [ 2, 3, 6 ]
+                            }
+                        },
+                        "additionalProperties" : false,
+                        "required" : [ "Type", "Count" ]
+                    }
+                },
+                "Genuses" : {
+                    "title" : "Genuses",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Genus" : {
+                                "title" : "Genus",
+                                "type" : "string",
+                                "examples" : [ "$Codex_Ent_Aleoids_Genus_Name;", "$Codex_Ent_Bacterial_Genus_Name;", "$Codex_Ent_Fungoids_Genus_Name;" ]
+                            }
+                        },
+                        "additionalProperties" : false,
+                        "required" : [ "Genus" ]
+                    }
+                },
+                "StarSystem": {
+                    "type"          : "string",
+                    "minLength"     : 1,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                },
+                "StarPos": {
+                    "type"          : "array",
+                    "items"         : { "type": "number" },
+                    "minItems"      : 3,
+                    "maxItems"      : 3,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                }
+            }
+        }
+    }
+}

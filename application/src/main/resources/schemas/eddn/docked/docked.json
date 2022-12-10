@@ -1,0 +1,119 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "$ref": "../definitions.json#/definitions/header"
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
+            "additionalProperties"  : true,
+            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress" ],
+            "properties"            : {
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "event" : {
+                    "type"          : "string"
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },                 
+                "StarSystem": {
+                    "type"          : "string",
+                    "minLength"     : 1,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                },
+                "StarPos": {
+                    "type"          : "array",
+                    "items"         : { "type": "number" },
+                    "minItems"      : 3,
+                    "maxItems"      : 3,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                },
+                "SystemAddress": {
+                    "type"          : "integer",
+                    "description"   : "Should be added by the sender if not present in the journal event"
+                },
+                "StationName" : {
+                    "title" : "StationName",
+                    "type" : "string",
+                    "examples" : [ "A1A-B2B", "Shinn Enterprise" ]
+                },
+                "StationType" : {
+                    "title" : "StationType",
+                    "type" : "string",
+                    "examples" : [ "FleetCarrier", "Coriolis", "CraterOutpost" ]
+                },
+                "MarketID" : {
+                    "title" : "MarketID",
+                    "type" : "integer",
+                    "examples" : [ 3705689344, 3701165824, 3222025216 ]
+                },
+                "StationFaction" : {
+                    "$ref": "../definitions.json#/definitions/SystemFaction"
+                },
+                "StationGovernment" : {
+                    "title" : "StationGovernment",
+                    "type" : "string",
+                    "examples" : [ "$government_Carrier;", "$government_Corporate;", "$government_Engineer;" ]
+                },
+                "StationServices" : {
+                    "title" : "StationServices",
+                    "description": "StationServices can include: Dock, Autodock, BlackMarket, Commodities, Contacts, Exploration, Initiatives, Missions, Outfitting, CrewLounge, Rearm, Refuel, Repair, Shipyard, Tuning, Workshop, MissionsGenerated, Facilitator, Research, FlightController, StationOperations, OnDockMission, Powerplay, SearchAndRescue. New in v3.7: shop, carriermanagement, carrierfuel, carriervendor, livery, modulepacks, voucherredemption",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "string",
+                        "examples" : [ "dock", "autodock", "blackmarket" ]
+                    }
+                },
+                "StationEconomy" : {
+                    "title" : "StationEconomy",
+                    "description": "Only if station has a single economy",
+                    "type" : "string",
+                    "examples" : [ "$economy_Carrier;", "$economy_Industrial;", "$economy_Colony;" ]
+                },
+                "StationEconomies" : {
+                    "title" : "StationEconomies",
+                    "description": "Only if station has multiple economies",
+                    "type" : "array",
+                    "items" : {
+                        "$ref": "../definitions.json#/definitions/StationEconomy"
+                    }
+                },
+                "DistFromStarLS" : {
+                    "title" : "DistFromStarLS",
+                    "type" : "number",
+                    "examples" : [ 8370.582637, 0.0, 11.433206 ]
+                },
+                "LandingPads" : {
+                    "title" : "LandingPads",
+                    "$ref": "../definitions.json#/definitions/LandingPads"
+                },
+                "StationAllegiance" : {
+                    "title" : "StationAllegiance",
+                    "type" : "string",
+                    "examples" : [ "Federation", "Alliance", "PilotsFederation" ]
+                },
+                "StationState" : {
+                    "title" : "StationState",
+                    "type" : "string",
+                    "examples" : [ "Damaged", "UnderRepairs" ]
+                }
+            }
+        }
+    }
+}

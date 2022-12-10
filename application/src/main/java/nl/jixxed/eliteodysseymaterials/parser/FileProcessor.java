@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.parser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.io.CountingInputStream;
 import javafx.application.Platform;
 import lombok.AccessLevel;
@@ -10,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Status.Status;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 
@@ -23,6 +26,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -31,6 +36,10 @@ public class FileProcessor {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final String EVENT = "event";
     private static long position = 0L;
+
+    static {
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+    }
 
     public static synchronized void resetAndProcessJournal(final File file) {
         position = 0L;
@@ -55,7 +64,26 @@ public class FileProcessor {
             while ((line = lineReader.readLine()) != null) {
                 //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
-                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(JournalEventType.MISSIONCOMPLETED, JournalEventType.MATERIALCOLLECTED, JournalEventType.MATERIALTRADE, JournalEventType.ENGINEERCRAFT);
+                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(
+                        JournalEventType.MISSIONCOMPLETED,
+                        JournalEventType.MATERIALCOLLECTED,
+                        JournalEventType.MATERIALTRADE,
+                        JournalEventType.ENGINEERCRAFT,
+                        JournalEventType.LOCATION,
+                        JournalEventType.FSDJUMP,
+                        JournalEventType.CARRIERJUMP,
+                        JournalEventType.APPROACHSETTLEMENT,
+                        JournalEventType.CODEXENTRY,
+                        JournalEventType.DOCKED,
+                        JournalEventType.FSSALLBODIESFOUND,
+                        JournalEventType.FSSSIGNALDISCOVERED,
+                        JournalEventType.FSSBODYSIGNALS,
+                        JournalEventType.FSSDISCOVERYSCAN,
+                        JournalEventType.NAVBEACONSCAN,
+                        JournalEventType.SAASIGNALSFOUND,
+                        JournalEventType.SCANBARYCENTRE,
+                        JournalEventType.SCAN
+                );
                 if (jsonNode.get(EVENT) != null) {
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                     if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {
@@ -82,7 +110,7 @@ public class FileProcessor {
                 position = is.getCount();
             }
 
-            messages.entrySet().stream()
+            final List<String> singleMessages = messages.entrySet().stream()
                     .sorted(Comparator.comparing(entry -> {
                         try {
                             return OBJECT_MAPPER.readTree(entry.getValue()).get("timestamp").asText();
@@ -93,9 +121,17 @@ public class FileProcessor {
                     }))
                     .filter(entry -> (!entry.getKey().equals(JournalEventType.BACKPACKCHANGE) && !entry.getKey().equals(JournalEventType.BACKPACK)) || backpackAfterShiplocker(messages, entry))
                     .map(Map.Entry::getValue)
+                    .collect(Collectors.toList());
+            Stream.concat(singleMessages.stream(), alwaysProcessMessages.stream())
+                    .sorted(Comparator.comparing(event -> {
+                        try {
+                            return OBJECT_MAPPER.readTree(event).get("timestamp").asText();
+                        } catch (final JsonProcessingException e) {
+                            log.error("Failed to read timestamp for event", e);
+                        }
+                        return "";
+                    }))
                     .forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
-
-            alwaysProcessMessages.forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
 
         } catch (final JsonProcessingException e) {
             log.error("Read error", e);
@@ -139,21 +175,30 @@ public class FileProcessor {
         }
     }
 
-    public static synchronized void processStateFile(final File file, final JournalEventType journalEventType) {
+    public static synchronized void processCargoStateFile(final File file, final JournalEventType journalEventType) {
         Platform.runLater(() -> MessageHandler.handleMessage(file, journalEventType));
     }
+
+    public static synchronized void processOtherStateFile(final File file) {
+        Platform.runLater(() -> MessageHandler.handleStateFileMessage(file));
+    }
+
     public static synchronized void processCapiFile(final File file, final JournalEventType journalEventType) {
         Platform.runLater(() -> MessageHandler.handleCapiMessage(file, journalEventType));
     }
 
     public static synchronized void processStatusFile(final File file) {
         try {
-            final String status = Files.readString(file.toPath());
-            if(!status.isBlank()) {//status file can be empty
-                final JsonNode jsonNode = OBJECT_MAPPER.readTree(status);
-                if(jsonNode.has("Flags") && jsonNode.has("Flags2")) {
-                    Platform.runLater(() -> ApplicationState.getInstance().updateWithFlags(jsonNode.get("Flags").asInt(), jsonNode.get("Flags2").asInt()));
-                }
+            final String statusFileContents = Files.readString(file.toPath());
+            log.info(statusFileContents);
+            if (!statusFileContents.isBlank()) {//status file can be empty
+                final Status status = OBJECT_MAPPER.readValue(statusFileContents, Status.class);
+                Platform.runLater(() -> {
+                    if (status.getFlags2().isPresent()) {
+                        ApplicationState.getInstance().updateWithFlags(status.getFlags().intValue(), status.getFlags2().get().intValue());
+                    }
+                    LocationService.setStatusBodyName(status.getBodyName());
+                });
             }
         } catch (final IOException e) {
             log.error("Read error", e);

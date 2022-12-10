@@ -119,6 +119,7 @@ class BottomBar extends HBox {
         final String preferredName = PreferencesService.getPreference(PreferenceConstants.COMMANDER, "");
         if (preferredName.isBlank() || isPreferredCommander(commanderAddedEvent.getCommander(), preferredName)) {
             this.commanderSelect.getSelectionModel().select(commanderAddedEvent.getCommander());
+            EventService.publish(new CommanderSelectedEvent(commanderAddedEvent.getCommander()));
         }
     }
 

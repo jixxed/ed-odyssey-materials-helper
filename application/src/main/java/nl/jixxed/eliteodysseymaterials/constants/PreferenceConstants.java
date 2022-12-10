@@ -48,4 +48,7 @@ public class PreferenceConstants {
     public static final String ENABLE_BARTENDER_AR =  "ar.bartender.enabled";
     public static final String MATERIAL_FAVOURITES =  "material.favourites";
 
+    public static final String USER_LATEST_EDDN_TRANSMIT = "latest.eddn.transmit";
+    public static final String EDDN_ENABLED = "eddn.enabled";
+    public static final String EDDN_ASKED = "eddn.asked";
 }

@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.journalevents.Resupply.Resupply;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Resupply.Resupply;
 import nl.jixxed.eliteodysseymaterials.service.event.BackpackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 

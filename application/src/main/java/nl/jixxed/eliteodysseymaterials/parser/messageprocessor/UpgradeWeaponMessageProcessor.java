@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.journalevents.UpgradeWeapon.UpgradeWeapon;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.UpgradeWeapon.UpgradeWeapon;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.Map;

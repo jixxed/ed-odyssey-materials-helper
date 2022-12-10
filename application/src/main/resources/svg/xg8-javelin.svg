@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="870" height="640" clip-rule="evenodd" fill-rule="evenodd"
+     image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
+     version="1.1" viewBox="0 0 870 640" xml:space="preserve" style="stroke: var(--outline);">
+<g><path d="m659.7 405.5h-19v19h19z" data-es="internaldistributor" class="es-place es-internal-place" data-hover="0"><desc>{ "type": "internal", "i": "distributor" }</desc></path>
+    <path d="m229.9 405.5h-19v19h19z" data-es="internal1" class="es-place es-internal-place" data-hover="0"><desc>{ "type": "internal", "i": "1" }</desc></path>
+    <path d="m286.3 398.9h-19v19h19z" data-es="internalPP" class="es-place es-internal-place" data-hover="0"><desc>{ "type": "internal", "i": "PP" }</desc></path>
+    <path d="m229.6 509.6h-19v19h19z" data-es="internaldrive" class="es-place es-internal-place" data-hover="0"><desc>{ "type": "internal", "i": "drive" }</desc></path>
+    <path d="m128.6 509.6h-19v19h19z" data-es="internaldrive" class="es-place es-internal-place" data-hover="0"><desc>{ "type": "internal", "i": "drive" }</desc></path>
+    <path d="m330.5 509.6h-19v19h19z" data-es="internaldrive" class="es-place es-internal-place" data-hover="0"><desc>{ "type": "internal", "i": "drive" }</desc></path></g>
+    <g transform="translate(1243)" fill="none"><g><path d="m-1028 330.8-24.26 56.96-7.547 2.719-18.38-17.98-14.67 14.46 6.724 47.69 1.64-0.5761 0.6436 2.328-2.096 2.916 13.49 12.87 20.77-14.92 0.1041-5.199 23.96 32.45 4.76 0.1209 4.76-0.1209 23.96-32.45 0.1042 5.199 20.77 14.92 13.49-12.87-2.096-2.916 0.6435-2.328 1.64 0.5761 6.724-47.69-14.67-14.46-18.38 17.98-7.547-2.719-24.26-56.96-5.148 0.0331z" stroke-width="1.764"></path><g
+            stroke-width="1.235"><path d="m-1022 388.3-6.823-0.0745-6.514 3.426-16.07-3.865"></path>
+        <path d="m-1022 366.8-10.28 0.0135-12.29 3.778"></path>
+        <path d="m-1036 391.7 3.052-24.81"></path>
+        <path d="m-1051 432.1-0.1234-18.35-2.736-0.4582-21.39-27.6-17.02 1.302"></path>
+        <path d="m-1083 436.4 19.66-16.68-0.7058-13.24-13.47-20.19"></path>
+        <path d="m-1059 406.7-0.08-16.24"></path>
+        <path d="m-1022 431.3-3.416 0.0277-4.17-9.003-16.94-8.376-4.326-0.2152"></path>
+        <path d="m-1022 456.4-2.899 5e-3 -25.9-31.13"></path>
+        <path d="m-1027 464.6 1.861-8.18"></path>
+        <path d="m-1047 414 1.182-11.54 15.99-8.652 7.348-0.0751"></path></g><ellipse
+            transform="matrix(.7467 .6652 -.6717 .7409 0 0)" cx="-490.6" cy="1014" rx="3.58" ry="2.961"
+            stroke-width="1.235"></ellipse><g stroke-width="1.235"><path d="m-1026 431.3-0.103 15.39-4.002 3.539"></path>
+        <path d="m-1030 393.8-0.2383 28.57"></path>
+        <path d="m-1059 397.8 6.892 0.0217 2.077 16.21"></path></g><path
+            d="m-1120 378.9 9.528-142.2-65.01 164-5.288 35.87 5.756 3.193-0.4936 31.51 6.793 6.642 6.9-15.69 40.36 66.73 6.566-11.23 5.827-70.65-8.036-8.714 3.448-46.34z"
+            stroke-width="1.764"></path></g>
+        <path d="m-1116 411.1 25.18-11.21" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <path d="m-1118 438.4 30.28-13.47" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <g><path d="m-1028 330.8 1.909-61.76 3.239-2.958 3.239 2.958 1.909 61.76" stroke-width="1.764"></path>
+            <g stroke-width="1.235"><path d="m-1118 438.4-8.424-4.911-11.57 4.696-13.96 10.85-23.97-9.24"></path>
+                <path d="m-1111 461.2-15.36-27.66 5.516-54.63"></path>
+                <path d="m-1115 517.8-7.269-8.253-12.95-3.427"></path>
+                <path d="m-1151 449 12.91-22.34 23.4-172.1"></path>
+                <path d="m-1123 509.5 8.176-55.93"></path>
+                <path d="m-1123 509.5-28.89-60.48"></path>
+                <path d="m-1139 426.7-37.35-25.96"></path>
+                <path d="m-1162 462.3 6.088-15.05"></path>
+                <path d="m-1112 257.6-4.698-5.311"></path>
+                <path d="m-1022 388.3 6.823-0.0745 6.514 3.426 16.07-3.865"></path>
+                <path d="m-1022 366.8 10.28 0.0135 12.29 3.778"></path>
+                <path d="m-1009 391.7-3.052-24.81"></path>
+                <path d="m-993.8 432.1 0.1234-18.35 2.736-0.4582 21.39-27.6 17.02 1.302"></path>
+                <path d="m-961.5 436.4-19.66-16.68 0.7057-13.24 13.47-20.19"></path>
+                <path d="m-985.6 406.7 0.08-16.24"></path>
+                <path d="m-1022 431.3 3.416 0.0277 4.17-9.003 16.94-8.376 4.326-0.2152"></path>
+                <path d="m-1022 456.4 2.899 5e-3 25.9-31.13"></path>
+                <path d="m-1018 464.6-1.861-8.18"></path>
+                <path d="m-998 414-1.182-11.54-15.99-8.652-7.348-0.0751"></path></g>
+            <ellipse transform="matrix(-.7467 .6652 .6717 .7409 0 0)" cx="1024" cy="-346.6" rx="3.58" ry="2.961"
+                     stroke-width="1.235"></ellipse>
+            <g stroke-width="1.235"><path d="m-1019 431.3 0.1029 15.39 4.002 3.539"></path>
+                <path d="m-1015 393.8 0.2383 28.57"></path>
+                <path d="m-985.8 397.8-6.892 0.0217-2.077 16.21"></path></g>
+            <path d="m-924.5 378.9-9.528-142.2 65.01 164 5.288 35.87-5.756 3.193 0.4936 31.51-6.793 6.642-6.9-15.69-40.36 66.73-6.566-11.23-5.827-70.65 8.036-8.714-3.448-46.34z"
+                  stroke-width="1.764"></path></g>
+        <path d="m-929.4 411.1-25.18-11.21" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <path d="m-927.4 438.4-30.28-13.47" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <g><path d="m-1018 464.6 0.011 46.44-2.451 14.51-2.321 3.496-2.32-3.496-2.451-14.51 0.011-46.44" stroke-width="1.764"></path>
+            <path d="m-1004 362.7-16.54-122.6-1.954-1.897-1.954 1.897-16.54 122.6" stroke-width="1.764"></path>
+            <g stroke-width="1.235"><path d="m-927.4 438.4 8.424-4.911 11.57 4.696 13.96 10.85 23.97-9.24"></path>
+                <path d="m-934.4 461.2 15.36-27.66-5.516-54.63"></path>
+                <path d="m-929.7 517.8 7.269-8.253 12.95-3.427"></path>
+                <path d="m-893.5 449-12.91-22.34-23.4-172.1"></path>
+                <path d="m-922.4 509.5-8.176-55.93"></path>
+                <path d="m-922.4 509.5 28.89-60.48"></path>
+                <path d="m-906.4 426.7 37.35-25.96"></path>
+                <path d="m-882.7 462.3-6.087-15.05"></path>
+                <path d="m-932.7 257.6 4.698-5.311"></path></g></g></g>
+    <g transform="translate(1049)" fill="none"><path d="m-417.2 361.7-10.97 26.11-7.547 2.719-18.38-17.98-14.67 14.46 6.724 47.69 1.64-0.5761 0.6436 2.328-2.096 2.916 13.49 12.87 17.5-8.2 4.435-5.464" stroke-width="1.764"></path>
+        <path d="m-496.7 378.9 9.528-142.2-65.01 164-5.288 35.87 5.756 3.193-0.4936 31.51 6.793 6.642 6.9-15.69 40.36 66.73 6.566-11.23 5.827-70.65-8.036-8.714 3.448-46.34z"
+              stroke-width="1.764"></path>
+        <path d="m-491.9 411.1 25.18-11.21" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <path d="m-493.8 438.4 30.28-13.47" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <g><path d="m-398.8 454-14.47 6.346-14.74-23.93 11.5-79.59 15.76-116.8 1.954-1.897 1.954 1.897 15.76 116.8 11.5 79.59-14.74 23.93-14.47-6.346" stroke-width="1.764"></path>
+            <path d="m-486.9 461.2-15.36-27.66 5.516-54.63" stroke-width="1.235"></path>
+            <path d="m-488.6 257.6-3.996 2.806-0.7016-8.117" stroke-width="1.235"></path>
+            <path d="m-410.3 459.2 6.717 7.597-0.0105 44.24 2.451 14.51 2.32 3.496 2.32-3.496 2.451-14.51-0.0105-44.24 6.717-7.597"
+                  stroke-width="1.764"></path>
+            <g stroke-width="1.235"><path d="m-459.8 436.4 12.28-8.595-5.019-24.9 16.78-12.43"></path>
+                <path d="m-428.2 387.8-10.79 29.04 11.47 15.27"></path>
+                <path d="m-403.1 256.5 0.5842 158.2 3.719 39.41"></path>
+                <path d="m-402.5 414.6-25.01 17.47"></path>
+                <path d="m-398.8 454v-206.3"></path>
+                <path d="m-491.6 517.8-9.644-12-15.2-6.427"></path>
+                <path d="m-493.3 252.3-58.48 187.5"></path>
+                <path d="m-493.3 252.3-45.28 210"></path>
+                <path d="m-502.3 433.5-6.818-11.31 16.5-161.8"></path>
+                <path d="m-501.3 505.8 5.263-60.27"></path>
+                <path d="m-509.1 422.2-42.68 17.61"></path></g>
+            <path d="m-380.4 361.7 10.97 26.11 7.547 2.719 18.38-17.98 14.67 14.46-6.724 47.69-1.64-0.5761-0.6436 2.328 2.096 2.916-13.49 12.87-17.5-8.2-4.435-5.464"
+                  stroke-width="1.764"></path>
+            <path d="m-300.9 378.9-9.528-142.2 65.01 164 5.288 35.87-5.756 3.193 0.4936 31.51-6.793 6.642-6.9-15.69-40.36 66.73-6.566-11.23-5.827-70.65 8.036-8.714-3.448-46.34z"
+                  stroke-width="1.764"></path></g>
+        <path d="m-305.7 411.1-25.18-11.21" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <path d="m-303.8 438.4-30.28-13.47" stroke-dasharray="1.23500001, 1.23500001" stroke-width="1.235"></path>
+        <g stroke-width="1.235"><path d="m-310.7 461.2 15.36-27.66-5.516-54.63"></path>
+            <path d="m-309 257.6 3.996 2.806 0.7016-8.117"></path>
+            <path d="m-337.8 436.4-12.28-8.595 5.019-24.9-16.78-12.43"></path>
+            <path d="m-369.4 387.8 10.79 29.04-11.47 15.27"></path>
+            <path d="m-394.5 256.5-0.5842 158.2-3.719 39.41"></path>
+            <path d="m-395.1 414.6 25.01 17.47"></path>
+            <path d="m-398.8 454v-206.3"></path>
+            <path d="m-395.3 250.1-3.498-2.357-3.498 2.357"></path>
+            <path d="m-306 517.8 9.644-12 15.2-6.427"></path>
+            <path d="m-304.3 252.3 58.48 187.5"></path>
+            <path d="m-304.3 252.3 45.28 210"></path>
+            <path d="m-295.4 433.5 6.818-11.31-16.5-161.8"></path>
+            <path d="m-296.3 505.8-5.263-60.27"></path>
+            <path d="m-288.5 422.2 42.68 17.61"></path>
+            <path d="m-394 511-4.772-3.392-4.772 3.392"></path></g></g>
+    <g><rect x="430.8" y="128.2" width="8.144" height="8.073" fill="#979797" stroke-width="3.587" data-es="gunsight0" data-es-true-distance-shift="21.449731489697196" style="stroke: none;"><desc>{ "type": "gunsight", "cl": "gun", "i": 0 }</desc></rect>
+        <g fill="none" stroke="#979797" stroke-width="3.587"><path d="m442.9 86.92c21.52 3.996 37.82 22.87 37.82 45.55 0 5.371-0.9139 10.53-2.595 15.33m-7.842 13.97c-8.496 10.4-21.42 17.03-35.89 17.03-14.38 0-27.24-6.555-35.74-16.84m-7.716-13.37c-1.862-5.019-2.88-10.45-2.88-16.12 0-23.05 16.84-42.18 38.89-45.74"></path>
+            <g><path d="m434.9 71.19v15.85"></path>
+                <path d="m395.6 155.1-13.68 8.014"></path>
+                <path d="m474.2 155.1 13.68 8.014"></path></g></g>
+        <g><circle cx="434.872" cy="138.17" r="3.783" fill="#979797" stroke-width="0" data-es="hard_point1" class="es-gun" data-es-x="434.8999938964844" data-es-y="135.1999969482422" data-hover="0" data-sel="0"><desc>{ "type": "hard_point", "cl": "gun", "i": 1 }</desc></circle>
+            <circle cx="434.9" cy="138.6" r="3.783" fill="#979797" stroke-width="3.587" data-es="gunsight1"
+                    style="stroke: none; display: none;"><desc>{ "type": "gunsight", "cl": "gun", "i": 1 }</desc></circle>
+            <path d="m206.5 538.9h28.57l-14.28 15.07z" fill="#f39745" stroke-width="1.764" data-es="miscthrusters"
+                  class="es-place es-misc-place" data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <rect x="119.3" y="225.6" width="23.89" height="23.57" rx="11.22" ry="11.22" fill="#4df346"
+                  stroke-width="1.661" data-es="hard_point1" class="es-place es-hard_point-place" data-hover="0"
+                  data-sel="0"><desc>{ "type": "hard_point", "i": 1 }</desc></rect>
+            <path d="m225.5 330.8h-10.3l-24.26 56.96 16.07 3.865 6.514-3.426h13.65l6.514 3.426 16.07-3.865z"
+                  fill="#f39746" stroke-width="1.764" data-es="othercanopy" class="es-place es-other-place"
+                  data-hover="0"><desc>{ "type": "other", "i": "canopy" }</desc></path></g>
+        <g fill="#f39745" stroke-width="1.764"><ellipse transform="rotate(34.55)" cx="402.2" cy="239" rx="6.089" ry="5.1" data-es="miscthrusters" class="es-place es-misc-place" data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></ellipse>
+            <ellipse transform="matrix(-.8236 .5671 .5671 .8236 0 0)" cx="39.06" cy="488.7" rx="6.089" ry="5.1"
+                     data-es="miscthrusters" class="es-place es-misc-place" data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></ellipse>
+            <path d="m141.1 363.7h28.57l-14.28-15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <path d="m270.6 363.7h28.57l-14.28-15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <path d="m571.1 363.7h28.57l-14.28-15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <path d="m700.6 363.7h28.57l-14.28-15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path></g>
+        <g fill="#4df346" stroke-width="1.661"><rect x="208.3" y="225.6" width="23.89" height="23.57" rx="11.22" ry="11.22" data-es="hard_point1" class="es-place es-hard_point-place" data-hover="0" data-sel="0"><desc>{ "type": "hard_point", "i": 1 }</desc></rect>
+            <rect x="297" y="225.6" width="23.89" height="23.57" rx="11.22" ry="11.22" data-es="hard_point1"
+                  class="es-place es-hard_point-place" data-hover="0" data-sel="0"><desc>{ "type": "hard_point", "i": 1 }</desc></rect>
+            <rect x="549.4" y="226.3" width="23.89" height="23.57" rx="11.22" ry="11.22" data-es="hard_point1"
+                  class="es-place es-hard_point-place" data-hover="0" data-sel="0"><desc>{ "type": "hard_point", "i": 1 }</desc></rect>
+            <rect x="638.5" y="226.3" width="23.89" height="23.57" rx="11.22" ry="11.22" data-es="hard_point1"
+                  class="es-place es-hard_point-place" data-hover="0" data-sel="0"><desc>{ "type": "hard_point", "i": 1 }</desc></rect>
+            <rect x="726.9" y="226.3" width="23.89" height="23.57" rx="11.22" ry="11.22" data-es="hard_point1"
+                  class="es-place es-hard_point-place" data-hover="0" data-sel="0"><desc>{ "type": "hard_point", "i": 1 }</desc></rect></g>
+        <g fill="#f39745" stroke-width="1.764"><path d="m106 538.9h28.57l-14.28 15.07z" data-es="miscthrusters" class="es-place es-misc-place" data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <path d="m305.1 538.9h28.57l-14.28 15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <path d="m636.7 538.9h28.57l-14.28 15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <path d="m536.2 538.9h28.57l-14.28 15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path>
+            <path d="m735.3 538.9h28.57l-14.28 15.07z" data-es="miscthrusters" class="es-place es-misc-place"
+                  data-hover="0"><desc>{ "type": "misc", "i": "thrusters" }</desc></path></g></g></svg>

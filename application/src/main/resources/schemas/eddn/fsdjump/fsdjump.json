@@ -1,0 +1,138 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "$ref": "../definitions.json#/definitions/header"
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
+            "additionalProperties"  : true,
+            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress" ],
+            "properties"            : {
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "event" : {
+                    "type"          : "string"
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },
+                "StarSystem" : {
+                    "title" : "StarSystem",
+                    "description": "Name of destination starsystem",
+                    "type" : "string",
+                    "examples" : [ "Celaeno", "Tascheter Sector EL-Y b5", "LHS 1443" ]
+                },
+                "SystemAddress" : {
+                    "title" : "SystemAddress",
+                    "type" : "integer",
+                    "examples" : [ 198875014308, 11665802143105, 5068732442009 ]
+                },
+                "StarPos" : {
+                    "title" : "StarPos",
+                    "description": "star position, as a Json array [x, y, z], relative to Sol in Ly",
+                    "type" : "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "items" : {
+                        "type" : "number",
+                        "examples" : [ -81.09375, -148.3125, -337.09375 ]
+                    }
+                },
+                "SystemAllegiance" : {
+                    "title" : "SystemAllegiance",
+                    "type" : "string",
+                    "examples" : [ "Independent", "", "Empire" ]
+                },
+                "SystemEconomy" : {
+                    "title" : "SystemEconomy",
+                    "type" : "string",
+                    "examples" : [ "$economy_Industrial;", "$economy_None;", "$economy_Refinery;" ]
+                },
+                "SystemSecondEconomy" : {
+                    "title" : "SystemSecondEconomy",
+                    "type" : "string",
+                    "examples" : [ "$economy_None;", "$economy_Industrial;", "$economy_Extraction;" ]
+                },
+                "SystemGovernment" : {
+                    "title" : "SystemGovernment",
+                    "type" : "string",
+                    "examples" : [ "$government_Cooperative;", "$government_None;", "$government_Feudal;" ]
+                },
+                "SystemSecurity" : {
+                    "title" : "SystemSecurity",
+                    "type" : "string",
+                    "examples" : [ "$SYSTEM_SECURITY_low;", "$GAlAXY_MAP_INFO_state_anarchy;", "$SYSTEM_SECURITY_medium;" ]
+                },
+                "Population" : {
+                    "title" : "Population",
+                    "type" : "integer",
+                    "examples" : [ 1200000, 0, 2654856 ]
+                },
+                "Body" : {
+                    "title" : "Body",
+                    "type" : "string",
+                    "examples" : [ "Celaeno", "Tascheter Sector EL-Y b5", "LHS 1443 A" ]
+                },
+                "BodyID" : {
+                    "title" : "BodyID",
+                    "type" : "integer",
+                    "examples" : [ 0, 1, 2 ]
+                },
+                "BodyType" : {
+                    "title" : "BodyType",
+                    "type" : "string",
+                    "examples" : [ "Star", "Null" ]
+                },
+
+                "Factions" : {
+                    "title" : "Factions",
+                    "type" : "array",
+                    "items" : {
+                        "$ref": "../definitions.json#/definitions/Faction"
+                    }
+                },
+                "SystemFaction" : {
+                    "$ref": "../definitions.json#/definitions/SystemFaction"
+                },
+                "Conflicts" : {
+                    "title" : "Conflicts",
+                    "type" : "array",
+                    "items" : {
+                        "$ref": "../definitions.json#/definitions/Conflict"
+                    }
+                },
+                "Powers" : {
+                    "title" : "Powers",
+                    "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "string",
+                        "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
+                    }
+                },
+                "PowerplayState" : {
+                    "title" : "PowerplayState",
+                    "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
+                    "type" : "string",
+                    "examples" : [ "Contested", "Exploited", "Controlled" ]
+                }
+            }
+        }
+    }
+}

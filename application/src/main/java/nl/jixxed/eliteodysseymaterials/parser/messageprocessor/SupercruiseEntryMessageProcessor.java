@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.journalevents.SupercruiseEntry.SupercruiseEntry;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.SupercruiseEntry.SupercruiseEntry;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.SupercruiseEntryJournalEvent;
 

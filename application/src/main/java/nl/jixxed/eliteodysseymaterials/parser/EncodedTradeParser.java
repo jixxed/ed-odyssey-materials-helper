@@ -3,9 +3,9 @@ package nl.jixxed.eliteodysseymaterials.parser;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.Encoded;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
-import nl.jixxed.eliteodysseymaterials.journalevents.MaterialTrade.MaterialTrade;
-import nl.jixxed.eliteodysseymaterials.journalevents.MaterialTrade.Paid;
-import nl.jixxed.eliteodysseymaterials.journalevents.MaterialTrade.Received;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialTrade.MaterialTrade;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialTrade.Paid;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialTrade.Received;
 
 import java.util.Map;
 

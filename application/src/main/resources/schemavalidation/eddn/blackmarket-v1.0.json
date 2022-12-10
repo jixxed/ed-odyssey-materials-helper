@@ -1,0 +1,72 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/blackmarket/1#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "type"                  : "object",
+            "additionalProperties"  : true,
+            "required"              : [ "uploaderID", "softwareName", "softwareVersion" ],
+            "properties"            : {
+                "uploaderID": {
+                    "type"          : "string"
+                },
+                "softwareName": {
+                    "type"          : "string"
+                },
+                "softwareVersion": {
+                    "type"          : "string"
+                },
+                "gatewayTimestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time",
+                    "description"   : "Timestamp upon receipt at the gateway. If present, this property will be overwritten by the gateway; submitters are not intended to populate this property."
+                }
+            }
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below as 'disallowed'",
+            "additionalProperties"  : true,
+            "required"              : [ "systemName", "stationName", "timestamp", "name", "sellPrice", "prohibited" ],
+            "properties"            : {
+                "systemName": {
+                    "type"          : "string",
+                    "minLength"     : 1
+                },
+                "stationName": {
+                    "type"          : "string",
+                    "minLength"     : 1
+                },                
+                "marketId": {
+                    "type"          : "integer",
+                    "renamed"       : "MarketID"
+                },
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "name": {
+                    "type"          : "string",
+                    "renamed"       : "Type",
+                    "minLength"     : 1,
+                    "description"   : "Commodity name as returned by the MarketSell entry in the Journal"
+                },
+                "sellPrice": {
+                    "type"          : "integer",
+                    "description"   : "Price to sell to the market"
+                },
+                "prohibited": {
+                    "type"          : "boolean",
+                    "renamed"       : "IllegalGoods",
+                    "description"   : "Whether the commodity is prohibited at this station"
+                }
+            }
+        }
+    }
+}

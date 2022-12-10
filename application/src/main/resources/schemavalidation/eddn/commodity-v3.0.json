@@ -1,0 +1,178 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/commodity/3#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "type"                  : "object",
+            "additionalProperties"  : true,
+            "required"              : [ "uploaderID", "softwareName", "softwareVersion" ],
+            "properties"            : {
+                "uploaderID": {
+                    "type"          : "string"
+                },
+                "gameversion": {
+                    "type"          : "string",
+                    "description"   : "Fileheader->gameversion, else LoadGame->gameversion, else 'CAPI-market', else ''."
+                },
+                "gamebuild": {
+                    "type"          : "string",
+                    "description"   : "Fileheader->build, else LoadGame->build, else 'CAPI-market', else ''."
+                },
+                "softwareName": {
+                    "type"          : "string"
+                },
+                "softwareVersion": {
+                    "type"          : "string"
+                },
+                "gatewayTimestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time",
+                    "description"   : "Timestamp upon receipt at the gateway. If present, this property will be overwritten by the gateway; submitters are not intended to populate this property."
+                }
+            }
+        },
+        "message": {
+            "type"                  : "object",
+            "additionalProperties"  : false,
+            "required"              : [ "systemName", "stationName", "marketId", "timestamp", "commodities" ],
+            "properties"            : {
+                "systemName": {
+                    "type"      : "string",
+                    "minLength" : 1
+                },
+                "stationName": {
+                    "type"      : "string",
+                    "renamed"   : "StarSystem",
+                    "minLength" : 1
+                },                
+                "marketId": {
+                    "type"      : "integer",
+                    "renamed"   : "MarketID"
+                },
+                "horizons": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },                
+                "timestamp": {
+                    "type"      : "string",
+                    "format"    : "date-time"
+                },
+                "commodities": {
+                    "type"      : "array",
+                    "description" : "Commodities returned by the Companion API, with illegal commodities omitted",
+                    "items"     : {
+                        "type"                  : "object",
+                        "additionalProperties"  : false,
+                        "required"              : [ "name", "meanPrice", "buyPrice", "stock", "stockBracket", "sellPrice", "demand", "demandBracket" ],
+                        "properties"            : {
+                            "name": {
+                                "type"          : "string",
+                                "renamed"       : "Name",
+                                "minLength"     : 1,
+                                "description"   : "Symbolic name as returned by the Companion API"
+                            },
+                            "meanPrice": {
+                                "type"          : "integer",
+                                "renamed"       : "MeanPrice"
+                            },
+                            "buyPrice": {
+                                "type"          : "integer",
+                                "renaamed"      : "BuyPrice",
+                                "description"   : "Price to buy from the market"
+                            },
+                            "stock": {
+                                "type"          : "integer",
+                                "renamed"       : "Stock"
+                            },
+                            "stockBracket": {
+                                "$ref"          : "#/definitions/levelType",
+                                "renamed"       : "StockBracket"
+                            },
+                            "sellPrice": {
+                                "type"          : "integer",
+                                "renamed"       : "SellPrice",
+                                "description"   : "Price to sell to the market"
+                            },
+                            "demand": {
+                                "type"          : "integer",
+                                "renamed"       : "Demand"
+                            },
+                            "demandBracket": {
+                                "$ref"          : "#/definitions/levelType",
+                                "renamed"       : "DemandBracket"
+                            },
+                            "statusFlags": {
+                                "type"          : "array",
+                                "minItems"      : 1,
+                                "uniqueItems"   : true,
+                                "items"         : {
+                                    "type"          : "string",
+                                    "minLength"     : 1
+                                }
+                            },
+                            "Producer": {
+                                "$ref"          : "#/definitions/disallowed",
+                                "description"   : "Not present in CAPI data, so removed from Journal-sourced data"
+                            },
+                            "Rare" : {
+                                "$ref"          : "#/definitions/disallowed",
+                                "description"   : "Not present in CAPI data, so removed from Journal-sourced data"
+                            },
+                            "id": {
+                                "$ref"          : "#/definitions/disallowed",
+                                "description"   : "Not wanted for historical reasons?"
+                            }
+                        }
+                    }
+                },
+                "economies": {
+                    "type"      : "array",
+                    "items"     : {
+                        "type"                  : "object",
+                        "additionalProperties"  : false,
+                        "required"              : [ "name", "proportion" ],
+                        "properties"            : {
+                            "name": {
+                                "type"          : "string",
+                                "minLength"     : 1,
+                                "description"   : "Economy type as returned by the Companion API"
+                            },
+                            "proportion": {
+                                "type"          : "number"
+                            }
+                        }
+                    }
+                },
+                "prohibited": {
+                    "type"          : "array",
+                    "uniqueItems"   : true,
+                    "items"         : {
+                        "type"          : "string",
+                        "minLength"     : 1
+                    }
+                },
+                "StationType": {
+                    "$ref"          : "#/definitions/disallowed",
+                    "description"   : "Not present in CAPI data, so removed from Journal-sourced data"
+                }
+            }
+        }
+    },
+    "definitions": {
+        "disallowed" : { "not" : { "type": [ "array", "boolean", "integer", "number", "null", "object", "string" ] } },
+        "levelType": {
+            "enum"          : [0, 1, 2, 3, ""],
+            "description"   : "Note: A value of \"\" indicates that the commodity is not normally sold/purchased at this station, but is currently temporarily for sale/purchase"
+        }
+    }
+}

@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.journalevents.Liftoff.Liftoff;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Liftoff.Liftoff;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LiftOffJournalEvent;
 

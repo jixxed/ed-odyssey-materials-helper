@@ -1565,6 +1565,12 @@
     -fx-wrap-text: true;
 }
 
+.eddn-dialog-text {
+    -fx-font-size: 1.2em;
+    -fx-padding: 4px;
+    -fx-wrap-text: true;
+}
+
 .loadout-box {
     -fx-padding: 5px;
 }

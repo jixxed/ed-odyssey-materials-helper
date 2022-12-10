@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public class Location {
     private final StarSystem starSystem;
     private final String body;
+    private final Long bodyID;
     private final String station;
     private final Double latitude;
     private final Double longitude;

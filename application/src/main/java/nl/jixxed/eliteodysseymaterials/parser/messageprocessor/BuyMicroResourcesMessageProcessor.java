@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.journalevents.BuyMicroResources.BuyMicroResources;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.BuyMicroResources.BuyMicroResources;
 
 public class BuyMicroResourcesMessageProcessor implements MessageProcessor<BuyMicroResources> {
     @Override
@@ -10,6 +10,6 @@ public class BuyMicroResourcesMessageProcessor implements MessageProcessor<BuyMi
 
     @Override
     public Class<BuyMicroResources> getMessageClass() {
-        return null;
+        return BuyMicroResources.class;
     }
 }

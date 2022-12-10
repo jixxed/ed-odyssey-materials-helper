@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Slf4j
-public class StatusWatcher {
+public class StateFileWatcher {
     private Optional<File> watchedFile = Optional.empty();
     private final FileWatcher fileWatcher;
 
-    public StatusWatcher(final File folder, final Consumer<File> fileProcessor, final String filename) {
+    public StateFileWatcher(final File folder, final Consumer<File> fileProcessor, final String filename) {
         findFile(folder, filename);
         this.watchedFile.ifPresent(fileProcessor);
-        this.fileWatcher = new FileWatcher("Status Watcher Thread", true).withListener(new FileListener() {
+        this.fileWatcher = new FileWatcher(filename + " Watcher Thread", true).withListener(new FileListener() {
             @Override
             public void onCreated(final FileEvent event) {
                 handleFile(event, fileProcessor);
@@ -30,7 +30,7 @@ public class StatusWatcher {
             private void handleFile(final FileEvent event, final Consumer<File> fileProcessor) {
                 final File file = event.getFile();
                 if (file.isFile() && file.getName().equals(filename)) {
-                    StatusWatcher.this.watchedFile = Optional.of(file);
+                    StateFileWatcher.this.watchedFile = Optional.of(file);
                     fileProcessor.accept(file);
                 }
 

@@ -29,7 +29,7 @@
         "properties" : {
           "id" : {
             "title" : "id",
-            "type" : "number",
+            "type" : "integer",
             "examples" : [ 128961556, 128972334, 128961527 ]
           },
           "Name" : {
@@ -44,17 +44,17 @@
           },
           "Price" : {
             "title" : "Price",
-            "type" : "number",
+            "type" : "integer",
             "examples" : [ 74000, 1000, 400 ]
           },
           "Stock" : {
             "title" : "Stock",
-            "type" : "number",
+            "type" : "integer",
             "examples" : [ 0, 20, 18 ]
           },
           "Demand" : {
             "title" : "Demand",
-            "type" : "number",
+            "type" : "integer",
             "examples" : [ 0, 1, 98 ]
           }
         },

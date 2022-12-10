@@ -1,0 +1,398 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "$ref": "../definitions.json#/definitions/header"
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
+            "additionalProperties"  : true,
+            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress" ],
+            "properties"            : {
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "event" : {
+                    "type"          : "string"
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },
+                "ScanType" : {
+                    "title" : "ScanType",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "string",
+                    "examples" : [ "AutoScan", "Detailed", "NavBeaconDetail" ]
+                },
+                "BodyName" : {
+                    "title" : "BodyName",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "string",
+                    "examples" : [ "Celaeno 2", "Tascheter Sector EL-Y b5", "LHS 1443 A" ]
+                },
+                "BodyID" : {
+                    "title" : "BodyID",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "integer",
+                    "examples" : [ 10, 0, 1 ]
+                },
+                "Parents" : {
+                    "title" : "Parents",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Star" : {
+                                "title" : "Star",
+                                "type" : "integer",
+                                "examples" : [ 0, 1, 2 ]
+                            },
+                            "Null" : {
+                                "title" : "Null",
+                                "type" : "integer",
+                                "examples" : [ 0, 1, 2 ]
+                            },
+                            "Ring" : {
+                                "title" : "Ring",
+                                "type" : "integer",
+                                "examples" : [ 1, 15, 7 ]
+                            },
+                            "Planet" : {
+                                "title" : "Planet",
+                                "type" : "integer",
+                                "examples" : [ 39, 9, 6 ]
+                            }
+                        },
+                        "additionalProperties" : false
+                    }
+                },
+                "StarSystem" : {
+                    "title" : "StarSystem",
+                    "description": "Written for Star",
+                    "type" : "string",
+                    "examples" : [ "Celaeno", "Tascheter Sector EL-Y b5", "LHS 1443" ]
+                },
+                "SystemAddress" : {
+                    "title" : "SystemAddress",
+                    "description": "Written for Star",
+                    "type" : "integer",
+                    "examples" : [ 198875014308, 11665802143105, 5068732442009 ]
+                },
+                "DistanceFromArrivalLS" : {
+                    "title" : "DistanceFromArrivalLS",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 8370.586818, 0.0, 24.357122 ]
+                },
+                "TidalLock" : {
+                    "title" : "TidalLock",
+                    "description": "Written for Planet/Moon",
+                    "type" : "boolean",
+                    "examples" : [ false, true ]
+                },
+                "TerraformState" : {
+                    "title" : "TerraformState",
+                    "description": "Written for Planet/Moon",
+                    "type" : "string",
+                    "examples" : [ "", "Terraformable", "Terraformed" ]
+                },
+                "PlanetClass" : {
+                    "title" : "PlanetClass",
+                    "description": "Written for Planet/Moon",
+                    "type" : "string",
+                    "examples" : [ "High metal content body", "Icy body", "Sudarsky class I gas giant" ]
+                },
+                "Atmosphere" : {
+                    "title" : "Atmosphere",
+                    "description": "Written for Planet/Moon",
+                    "type" : "string",
+                    "examples" : [ "hot thick water atmosphere", "", "thin nitrogen atmosphere" ]
+                },
+                "AtmosphereType" : {
+                    "title" : "AtmosphereType",
+                    "description": "Written for Planet/Moon",
+                    "type" : "string",
+                    "examples" : [ "Water", "None", "Nitrogen" ]
+                },
+                "AtmosphereComposition" : {
+                    "title" : "AtmosphereComposition",
+                    "description": "Written for Planet/Moon",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Name" : {
+                                "title" : "Name",
+                                "type" : "string",
+                                "examples" : [ "Water", "Nitrogen", "Ammonia" ]
+                            },
+                            "Percent" : {
+                                "title" : "Percent",
+                                "type" : "number",
+                                "examples" : [ 99.124542, 0.492685, 0.302259 ]
+                            }
+                        },
+                        "additionalProperties" : false,
+                        "required" : [ "Name", "Percent" ]
+                    }
+                },
+                "Volcanism" : {
+                    "title" : "Volcanism",
+                    "description": "Written for Planet/Moon",
+                    "type" : "string",
+                    "examples" : [ "major silicate vapour geysers volcanism", "", "major rocky magma volcanism" ]
+                },
+                "MassEM" : {
+                    "title" : "MassEM",
+                    "description": "Body mass. Written for Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 4.880573, 0.257221, 0.284099 ]
+                },
+                "Radius" : {
+                    "title" : "Radius",
+                    "description": "Written for Star",
+                    "type" : "number",
+                    "examples" : [ 9575746.0, 3.60973152E8, 4.00260544E8 ]
+                },
+                "SurfaceGravity" : {
+                    "title" : "SurfaceGravity",
+                    "description": "Written for Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 21.214608, 6.358215, 6.599853 ]
+                },
+                "SurfaceTemperature" : {
+                    "title" : "SurfaceTemperature",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 1442.12085, 2122.0, 3404.0 ]
+                },
+                "SurfacePressure" : {
+                    "title" : "SurfacePressure",
+                    "description": "Written for Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 5.377658368E9, 0.0, 1030.144409 ]
+                },
+                "Landable" : {
+                    "title" : "Landable",
+                    "description": "Written for Planet/Moon",
+                    "type" : "boolean",
+                    "examples" : [ false, true ]
+                },
+                "Composition" : {
+                    "title" : "Composition",
+                    "description": "Written for Planet/Moon",
+                    "type" : "object",
+                    "properties" : {
+                        "Ice" : {
+                            "title" : "Ice",
+                            "type" : "number",
+                            "examples" : [ 0.008881, 0.0, 0.825387 ]
+                        },
+                        "Rock" : {
+                            "title" : "Rock",
+                            "type" : "number",
+                            "examples" : [ 0.661355, 0.672238, 0.159098 ]
+                        },
+                        "Metal" : {
+                            "title" : "Metal",
+                            "type" : "number",
+                            "examples" : [ 0.329764, 0.327762, 0.015514 ]
+                        }
+                    },
+                    "additionalProperties" : false,
+                    "required" : [ "Ice", "Rock", "Metal" ]
+                },
+                "SemiMajorAxis" : {
+                    "title" : "SemiMajorAxis",
+                    "description": "Orbital Parameters for any Star/Planet/Moon (except main star of single-star system)",
+                    "type" : "number",
+                    "examples" : [ 2.4418349266052246E12, 3.9276113510131836E12, 6.066894054412842E9 ]
+                },
+                "Eccentricity" : {
+                    "title" : "Eccentricity",
+                    "description": "Orbital Parameters for any Star/Planet/Moon (except main star of single-star system)",
+                    "type" : "number",
+                    "examples" : [ 0.798885, 0.193603, 0.083087 ]
+                },
+                "OrbitalInclination" : {
+                    "title" : "OrbitalInclination",
+                    "description": "Orbital Parameters for any Star/Planet/Moon (except main star of single-star system)",
+                    "type" : "number",
+                    "examples" : [ -58.522447, 90.915675, 58.871234 ]
+                },
+                "Periapsis" : {
+                    "title" : "Periapsis",
+                    "description": "Orbital Parameters for any Star/Planet/Moon (except main star of single-star system)",
+                    "type" : "number",
+                    "examples" : [ 10.00731, 282.962726, 155.180146 ]
+                },
+                "OrbitalPeriod" : {
+                    "title" : "OrbitalPeriod",
+                    "description": "Orbital Parameters for any Star/Planet/Moon (except main star of single-star system)",
+                    "type" : "number",
+                    "examples" : [ 1.064090549945831E9, 3.1656362414360046E10, 676484.233141 ]
+                },
+                "AscendingNode" : {
+                    "title" : "AscendingNode",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 170.049891, 171.684212, -133.96371 ]
+                },
+                "MeanAnomaly" : {
+                    "title" : "MeanAnomaly",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 313.759234, 172.208739, 357.274807 ]
+                },
+                "RotationPeriod" : {
+                    "title" : "RotationPeriod",
+                    "description": "Written for Star/Planet/Moon. If rotating (in seconds)",
+                    "type" : "number",
+                    "examples" : [ 168284.111267, 151337.187838, 202116.091725 ]
+                },
+                "AxialTilt" : {
+                    "title" : "AxialTilt",
+                    "description": "If rotating. Written for Star/Planet/Moon",
+                    "type" : "number",
+                    "examples" : [ 0.243948, 0.0, 0.110391 ]
+                },
+                "WasDiscovered" : {
+                    "title" : "WasDiscovered",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "boolean",
+                    "examples" : [ true, false ]
+                },
+                "WasMapped" : {
+                    "title" : "WasMapped",
+                    "description": "Written for Star/Planet/Moon",
+                    "type" : "boolean",
+                    "examples" : [ true, false ]
+                },
+                "StarType" : {
+                    "title" : "StarType",
+                    "description": "Written for Star",
+                    "type" : "string",
+                    "examples" : [ "TTS", "M", "T" ]
+                },
+                "Subclass" : {
+                    "title" : "Subclass",
+                    "description": "Written for Star",
+                    "type" : "integer",
+                    "examples" : [ 9, 6, 8 ]
+                },
+                "StellarMass" : {
+                    "title" : "StellarMass",
+                    "description": "Written for Star",
+                    "type" : "number",
+                    "examples" : [ 0.3125, 0.417969, 0.035156 ]
+                },
+                "AbsoluteMagnitude" : {
+                    "title" : "AbsoluteMagnitude",
+                    "description": "Written for Star",
+                    "type" : "number",
+                    "examples" : [ 10.60585, 8.327072, 18.502441 ]
+                },
+                "Age_MY" : {
+                    "title" : "Age_MY",
+                    "description": "Written for Star",
+                    "type" : "integer",
+                    "examples" : [ 206, 3280, 1142 ]
+                },
+                "Luminosity" : {
+                    "title" : "Luminosity",
+                    "description": "Written for Star",
+                    "type" : "string",
+                    "examples" : [ "VI", "V", "Va" ]
+                },
+                "Rings" : {
+                    "title" : "Rings",
+                    "description": "Written for Star/Planet/Moon. If rings present.",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Name" : {
+                                "title" : "Name",
+                                "type" : "string",
+                                "examples" : [ "Turdet C A Belt", "Latorioson A Belt", "Latorioson B Belt" ]
+                            },
+                            "RingClass" : {
+                                "title" : "RingClass",
+                                "type" : "string",
+                                "examples" : [ "eRingClass_MetalRich", "eRingClass_Metalic", "eRingClass_Icy" ]
+                            },
+                            "MassMT" : {
+                                "title" : "MassMT",
+                                "description": "In megatons",
+                                "type" : "number",
+                                "examples" : [ 4.8319E13, 7.6821E13, 3.5724E15 ]
+                            },
+                            "InnerRad" : {
+                                "title" : "InnerRad",
+                                "type" : "number",
+                                "examples" : [ 3.5606E8, 7.4575E8, 2.9865E10 ]
+                            },
+                            "OuterRad" : {
+                                "title" : "OuterRad",
+                                "type" : "number",
+                                "examples" : [ 1.3252E9, 1.7461E9, 1.8963E11 ]
+                            }
+                        },
+                        "additionalProperties" : false,
+                        "required" : [ "Name", "RingClass", "MassMT", "InnerRad", "OuterRad" ]
+                    }
+                },
+                "Materials" : {
+                    "title" : "Materials",
+                    "description": "Written for Planet/Moon",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "object",
+                        "properties" : {
+                            "Name" : {
+                                "title" : "Name",
+                                "type" : "string",
+                                "examples" : [ "iron", "nickel", "sulphur" ]
+                            },
+                            "Percent" : {
+                                "title" : "Percent",
+                                "type" : "number",
+                                "examples" : [ 21.92185, 16.580769, 15.561681 ]
+                            }
+                        },
+                        "additionalProperties" : false,
+                        "required" : [ "Name", "Percent" ]
+                    }
+                },
+                "ReserveLevel" : {
+                    "title" : "ReserveLevel",
+                    "description": "Written for Planet/Moon. If rings present.",
+                    "type" : "string",
+                    "examples" : [ "MajorResources", "PristineResources", "CommonResources" ]
+                },
+                "StarPos": {
+                    "type"          : "array",
+                    "items"         : { "type": "number" },
+                    "minItems"      : 3,
+                    "maxItems"      : 3,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,63 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/shipyard/2#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required"              : [ "$schemaRef", "header", "message" ],
+    "properties"            : {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "$ref": "../definitions.json#/definitions/header"
+        },
+        "message": {
+            "type"                  : "object",
+            "additionalProperties"  : false,
+            "required"              : [ "systemName", "stationName", "marketId", "timestamp", "ships" ],
+            "properties"            : {
+                "systemName": {
+                    "type"          : "string",
+                    "renamed"       : "StarSystem",
+                    "minLength"     : 1
+                },
+                "stationName": {
+                    "type"          : "string",
+                    "renamed"       : "StationName",
+                    "minLength"     : 1
+                },                
+                "marketId": {
+                    "type"          : "integer",
+                    "renamed"       : "MarketID"
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },                 
+                "allowCobraMkIV": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr can purchase the Cobra MkIV or not."
+                },
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "ships": {
+                    "type"          : "array",
+                    "renamed"       : "PriceList",
+                    "minItems"      : 1,
+                    "uniqueItems"   : true,
+                    "items"         : {
+                        "type"          : "string",
+                        "minLength"     : 1,
+                        "description"   : "Ship symbolic name. i.e. one of: SideWinder, Adder, Anaconda, Asp, Asp_Scout CobraMkIII, CobraMkIV, Cutter, DiamondBack, DiamondBackXL, Eagle, Empire_Courier, Empire_Eagle, Empire_Trader, Federation_Corvette, Federation_Dropship, Federation_Dropship_MkII, Federation_Gunship, FerDeLance, Hauler, Independant_Trader, Orca, Python, Type6, Type7, Type9, Viper, Viper_MkIV, Vulture"
+                    }
+                }
+            }
+        }
+    }
+}

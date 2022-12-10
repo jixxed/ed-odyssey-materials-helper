@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.journalevents.Embark.Embark;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Embark.Embark;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 public class EmbarkMessageProcessor implements MessageProcessor<Embark> {

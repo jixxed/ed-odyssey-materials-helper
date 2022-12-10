@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
-import nl.jixxed.eliteodysseymaterials.journalevents.Commander.Commander;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Commander.Commander;
 
 public class CommanderMessageProcessor implements MessageProcessor<Commander> {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -12,7 +12,6 @@ public class CommanderMessageProcessor implements MessageProcessor<Commander> {
         if (!APPLICATION_STATE.getGameVersion().equals(GameVersion.UNKNOWN)) {
             APPLICATION_STATE.addCommander(commander.getName(), commander.getFID(), APPLICATION_STATE.getGameVersion());
         }
-
     }
 
     @Override

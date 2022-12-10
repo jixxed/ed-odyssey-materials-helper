@@ -55,7 +55,7 @@ public class JournalWatcher {
                 }
 
                 private boolean isValidOdysseyJournal(final File file) {
-                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && isNewerThan2020(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX) && isNewerThan2020(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
                 }
             }).watch(folder);
         });
@@ -73,6 +73,7 @@ public class JournalWatcher {
         try {
             Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
+                    .filter(file -> file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX))
                     .filter(this::isNewerThan2020)
                     .filter(this::hasFileHeader)
                     .filter(this::hasCommanderHeader)
@@ -115,6 +116,7 @@ public class JournalWatcher {
         try {
             this.currentlyWatchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
+                    .filter(file -> file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX))
                     .filter(this::isNewerThan2020)
                     .filter(this::hasFileHeader)
                     .filter(this::isSelectedCommander)

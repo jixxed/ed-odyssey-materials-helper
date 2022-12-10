@@ -57,6 +57,11 @@
             "type" : "string",
             "examples" : [ "$MARKET_category_metals;" ]
           },
+          "Legality" : {
+            "title" : "Legality",
+            "type" : "string",
+            "examples" : [ "$MARKET_category_metals;" ]
+          },
           "Category_Localised" : {
             "title" : "Category_Localised",
             "type" : "string",

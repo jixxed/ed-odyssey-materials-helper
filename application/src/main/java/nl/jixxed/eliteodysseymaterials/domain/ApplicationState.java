@@ -1,13 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.Engineer;
-import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
-import nl.jixxed.eliteodysseymaterials.enums.GameMode;
-import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
+import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Fileheader.Fileheader;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAddedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
@@ -25,7 +24,11 @@ import java.util.*;
 public class ApplicationState {
     @SuppressWarnings("java:S1068")
     private static PreferencesService preferencesService;//defined so app folder gets created for lockfile
-
+    @Getter
+    private Expansion expansion = Expansion.HORIZONS;
+    @Getter
+    @Setter
+    private Fileheader fileheader;
     private static FileLock fileLock;
     private static ApplicationState applicationState;
     private final Set<Commander> commanders = new HashSet<>();
@@ -73,14 +76,18 @@ public class ApplicationState {
     ));
     private GameMode gameMode = GameMode.NONE;
     @Getter
-    private final GameVersion gameVersion = GameVersion.UNKNOWN;
+    @Setter
+    private static GameVersion gameVersion = GameVersion.UNKNOWN;
     private int flags = 0;
     private int flags2 = 0;
 
     private ApplicationState() {
 
         EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken())));
-        EventService.addListener(this, LoadGameEvent.class, event -> this.gameMode = event.getGameMode());
+        EventService.addListener(this, LoadGameEvent.class, event -> {
+            this.gameMode = event.getGameMode();
+            this.expansion = event.getExpansion();
+        });
     }
 
     public static ApplicationState getInstance() {
@@ -304,4 +311,5 @@ public class ApplicationState {
     public boolean playerOnFoot(){
         return (this.flags2 & 1) > 0;
     }
+
 }

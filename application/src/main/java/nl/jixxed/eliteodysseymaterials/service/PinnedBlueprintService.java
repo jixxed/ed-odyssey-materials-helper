@@ -17,9 +17,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,20 +37,20 @@ public class PinnedBlueprintService {
     static {
         EventService.addStaticListener(0, CommanderSelectedEvent.class, event -> {
             load(event.getCommander());
-            log.info("pinned blueprints loaded");
+            log.info("pinned blueprints loaded for: " + event.getCommander().getName() + " - " + event.getCommander().getGameVersion());
         });
-        EventService.addStaticListener(0, JournalInitEvent.class, event -> {
-            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
-                load(commander);
-                log.info("pinned blueprints loaded");
-            });
-        });
-        EventService.addStaticListener(0, EngineerEvent.class, event -> {
-            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
-                load(commander);
-                log.info("pinned blueprints loaded");
-            });
-        });
+//        EventService.addStaticListener(0, JournalInitEvent.class, event -> {
+//            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+//                load(commander);
+//                log.info("pinned blueprints loaded");
+//            });
+//        });
+//        EventService.addStaticListener(0, EngineerEvent.class, event -> {
+//            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+//                load(commander);
+//                log.info("pinned blueprints loaded");
+//            });
+//        });
 
     }
 
@@ -99,19 +97,17 @@ public class PinnedBlueprintService {
         commanderFolder.mkdirs();
         final File pinnedBlueprintsFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.HORIZONS_PINNED_BLUEPRINTS_FILE);
         try {
-            if(pinnedBlueprintsFile.exists()) {
+            if (pinnedBlueprintsFile.exists()) {
                 final TypeReference<HashMap<Engineer, HorizonsBlueprintJson>> typeRef = new TypeReference<HashMap<Engineer, HorizonsBlueprintJson>>() {
                 };
                 final HashMap<Engineer, HorizonsBlueprintJson> pinnedBlueprintsMap = OBJECT_MAPPER.readValue(Files.readString(pinnedBlueprintsFile.toPath()), typeRef);
                 pinnedBlueprintsMap.forEach((engineer, horizonsBlueprintJson) -> {
                     final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
-                    if (engineerRank > 0) {
-                        pinnedBlueprints.put(engineer, (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(
-                                HorizonsBlueprintName.forName(horizonsBlueprintJson.getName()),
-                                HorizonsBlueprintType.forName(horizonsBlueprintJson.getType()),
-                                HorizonsBlueprintGrade.forDigit(engineerRank)
-                        ));
-                    }
+                    pinnedBlueprints.put(engineer, (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(
+                            HorizonsBlueprintName.forName(horizonsBlueprintJson.getName()),
+                            HorizonsBlueprintType.forName(horizonsBlueprintJson.getType()),
+                            HorizonsBlueprintGrade.forDigit(Math.max(engineerRank, 1))
+                    ));
                 });
             }
 

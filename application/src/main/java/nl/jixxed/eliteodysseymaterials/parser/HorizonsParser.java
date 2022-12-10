@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
-import nl.jixxed.eliteodysseymaterials.journalevents.MaterialTrade.MaterialTrade;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialTrade.MaterialTrade;
 
 import java.util.Iterator;
 import java.util.Map;

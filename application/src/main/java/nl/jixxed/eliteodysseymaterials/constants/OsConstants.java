@@ -21,8 +21,6 @@ public class OsConstants {
     public static String STATISTICS;
     public static String CUSTOM_CSS;
     public static String TESS4J;
-    public static String OLD_PREFERENCES;
-    public static String OLD_CUSTOM_CSS;
     public static String OS_SLASH;
 
     static {
@@ -45,8 +43,6 @@ public class OsConstants {
         LOCK = CONFIG_DIRECTORY + "\\lock";
         STATISTICS = CONFIG_DIRECTORY + "\\material-report.json";
         CUSTOM_CSS = CONFIG_DIRECTORY + "\\style.css";
-        OLD_PREFERENCES = System.getenv(PROGRAMDATA) + "\\odyssey-materials-helper\\pref.properties";
-        OLD_CUSTOM_CSS = System.getenv(PROGRAMDATA) + "\\odyssey-materials-helper\\style.css";
         OS_SLASH = "\\";
     }
 

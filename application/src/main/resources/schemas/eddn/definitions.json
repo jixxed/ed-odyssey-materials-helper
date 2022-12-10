@@ -1,0 +1,247 @@
+{
+  "$schema"               : "http://json-schema.org/draft-04/schema#",
+  "description": "Definitions for EDDN messages",
+  "definitions": {
+    "header": {
+      "type"                  : "object",
+      "title": "Header",
+      "description": "Header for EDDN messages",
+      "properties"            : {
+        "uploaderID": {
+          "type"          : "string"
+        },
+        "gameversion": {
+          "type"          : "string",
+          "description"   : "Fileheader->gameversion, else LoadGame->gameversion, else CAPI-market or CAPI-shipyard if CAPI, else blank."
+        },
+        "gamebuild": {
+          "type"          : "string",
+          "description"   : "Fileheader->build, else LoadGame->build, else CAPI-market or CAPI-shipyard if CAPI, else blank."
+        },
+        "softwareName": {
+          "type"          : "string"
+        },
+        "softwareVersion": {
+          "type"          : "string"
+        }
+      },
+      "additionalProperties"  : true,
+      "required"              : [ "uploaderID", "softwareName", "softwareVersion" ]
+    },
+    "SystemFaction" : {
+      "title" : "SystemFaction",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "Rook Platoon", "Corin Jet State Corporation", "Jaques" ]
+        },
+        "FactionState" : {
+          "title" : "FactionState",
+          "type" : "string",
+          "examples" : [ "Expansion", "Investment", "Boom" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name" ]
+    },
+    "StationEconomy" : {
+      "title" : "StationEconomy",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "$economy_Carrier;" ]
+        },
+        "Proportion" : {
+          "title" : "Proportion",
+          "type" : "number",
+          "examples" : [ 1.0 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name", "Proportion" ]
+    },
+    "Faction" : {
+      "title" : "Faction",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "Allies of Foss", "Bureau of Apotanites Flag", "Co-operative of Apotanites" ]
+        },
+        "FactionState" : {
+          "title" : "FactionState",
+          "type" : "string",
+          "examples" : [ "None", "CivilUnrest", "Expansion" ]
+        },
+        "Government" : {
+          "title" : "Government",
+          "type" : "string",
+          "examples" : [ "Cooperative", "Dictatorship", "Patronage" ]
+        },
+        "Influence" : {
+          "title" : "Influence",
+          "type" : "number",
+          "examples" : [ 0.118, 0.075, 0.732 ]
+        },
+        "Allegiance" : {
+          "title" : "Allegiance",
+          "type" : "string",
+          "examples" : [ "Independent", "Empire", "Federation" ]
+        },
+        "Happiness" : {
+          "title" : "Happiness",
+          "type" : "string",
+          "examples" : [ "$Faction_HappinessBand2;", "$Faction_HappinessBand1;", "$Faction_HappinessBand3;" ]
+        },
+        "PendingStates" : {
+          "title" : "PendingStates",
+          "type" : "array",
+          "items" : {
+            "$ref": "./definitions.json#/definitions/PendingState"
+          }
+        },
+        "ActiveStates" : {
+          "title" : "ActiveStates",
+          "type" : "array",
+          "items" : {
+            "$ref": "./definitions.json#/definitions/ActiveState"
+          }
+        },
+        "RecoveringStates" : {
+          "title" : "RecoveringStates",
+          "type" : "array",
+          "items" : {
+            "$ref": "./definitions.json#/definitions/RecoveringState"
+          }
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name", "FactionState", "Government", "Influence", "Allegiance", "Happiness"]
+    },
+    "PendingState" : {
+      "title" : "PendingState",
+      "type" : "object",
+      "properties" : {
+        "State" : {
+          "title" : "State",
+          "type" : "string",
+          "examples" : [ "CivilWar", "Boom", "Outbreak" ]
+        },
+        "Trend" : {
+          "title" : "Trend",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "State", "Trend" ]
+    },
+    "ActiveState" : {
+      "title" : "ActiveState",
+      "type" : "object",
+      "properties" : {
+        "State" : {
+          "title" : "State",
+          "type" : "string",
+          "examples" : [ "CivilUnrest", "PublicHoliday", "Expansion" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "State" ]
+    },
+    "RecoveringState" : {
+      "title" : "RecoveringState",
+      "type" : "object",
+      "properties" : {
+        "State" : {
+          "title" : "State",
+          "type" : "string",
+          "examples" : [ "PublicHoliday", "Outbreak", "PirateAttack" ]
+        },
+        "Trend" : {
+          "title" : "Trend",
+          "type" : "integer",
+          "examples" : [ 0 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "State", "Trend" ]
+    },
+    "Conflict" : {
+      "title" : "Conflict",
+      "type" : "object",
+      "properties" : {
+        "WarType" : {
+          "title" : "WarType",
+          "type" : "string",
+          "examples" : [ "civilwar", "election" ]
+        },
+        "Status" : {
+          "title" : "Status",
+          "type" : "string",
+          "examples" : [ "pending", "active" ]
+        },
+        "Faction1" : {
+          "title" : "Faction1",
+          "$ref": "./definitions.json#/definitions/ConflictFaction"
+        },
+        "Faction2" : {
+          "title" : "Faction2",
+          "$ref": "./definitions.json#/definitions/ConflictFaction"
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "WarType", "Status", "Faction1", "Faction2" ]
+    },
+    "ConflictFaction" : {
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "Bureau of Apotanites Flag", "Corin Empire Group", "People's LHS 6427 Free" ]
+        },
+        "Stake" : {
+          "title" : "Stake",
+          "type" : "string",
+          "examples" : [ "Rahman Nutrition Holdings", "Ing Point", "Brazier Prospecting Facility" ]
+        },
+        "WonDays" : {
+          "title" : "WonDays",
+          "type" : "integer",
+          "examples" : [ 0, 3 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name", "Stake", "WonDays" ]
+    },
+    "LandingPads" : {
+      "title" : "LandingPads",
+      "type" : "object",
+      "properties" : {
+        "Small" : {
+          "title" : "Small",
+          "type" : "integer",
+          "examples" : [ 4, 17, 2 ]
+        },
+        "Medium" : {
+          "title" : "Medium",
+          "type" : "integer",
+          "examples" : [ 4, 18, 1 ]
+        },
+        "Large" : {
+          "title" : "Large",
+          "type" : "integer",
+          "examples" : [ 8, 9, 2 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Small", "Medium", "Large" ]
+    }
+  }
+}

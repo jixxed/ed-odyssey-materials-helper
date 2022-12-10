@@ -115,14 +115,15 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
     testImplementation 'org.assertj:assertj-core:3.22.0'
-
-
+    implementation 'org.leadpony.justify:justify:3.1.0'
+    implementation 'org.glassfish:jakarta.json:2.0.0:module'
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.3'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.5'
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'commons-io:commons-io:2.11.0'
@@ -259,7 +260,7 @@ test {
 jsonSchema2Pojo {
 
     // Location of the JSON Schema file(s). This may refer to a single file or a directory of files.
-    source = Set.of(file("${sourceSets.main.output.resourcesDir}/schemas/journal/"))
+    source = Set.of(file("${sourceSets.main.output.resourcesDir}/schemas/"))
 
     // Target directory for generated Java source files. The plugin will add this directory to the
     // java source set so the compiler will find and compile the newly generated source files.
@@ -267,7 +268,7 @@ jsonSchema2Pojo {
 
     // Package name used for generated Java classes (for types where a fully qualified name has not
     // been supplied in the schema using the 'javaType' property).
-    targetPackage = 'nl.jixxed.eliteodysseymaterials.journalevents'
+    targetPackage = 'nl.jixxed.eliteodysseymaterials.schemas'
 
     // Whether to allow 'additional' properties to be supported in classes by adding a map to
     // hold these. This is true by default, meaning that the schema rule 'additionalProperties'

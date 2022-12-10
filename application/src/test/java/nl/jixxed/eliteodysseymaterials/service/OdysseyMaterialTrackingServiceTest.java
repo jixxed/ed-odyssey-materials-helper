@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.GameMode;
 import nl.jixxed.eliteodysseymaterials.enums.Operation;
-import nl.jixxed.eliteodysseymaterials.journalevents.ShipLocker.ShipLocker;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipLocker.ShipLocker;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

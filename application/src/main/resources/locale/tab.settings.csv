@@ -67,3 +67,4 @@ tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders 
 ar.overlay.wishlist,Wishlist,Wishlist,Wunschzettel,Lista de deseos,Liste de souhaits,Lista de Desejos,Список желаемого
 ar.overlay.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Hors du sujet,Irrelevante,Ненужный
 ar.overlay.blueprint,Engineer/Blueprint,Engineer/Blueprint,Ingenieur/Blaupause,Ingeniero/plan,Ingénieur/plan,Engenheiro/Blueprint,Инженер/чертеж
+tab.settings.eddn.toggle,Share galaxy data with EDDN,,,,,,

@@ -1,0 +1,152 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/fcmaterials_capi/1",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "type"                  : "object",
+            "additionalProperties"  : true,
+            "required"              : [ "uploaderID", "softwareName", "softwareVersion" ],
+            "properties"            : {
+                "uploaderID": {
+                    "type"          : "string"
+                },
+                "gameversion": {
+                    "type"          : "string",
+                    "description"   : "Value of 'CAPI-market' if possible, else empty string."
+                },
+                "gamebuild": {
+                    "type"          : "string",
+                    "description"   : "Value of 'CAPI-market' if possible, else empty string."
+                },
+                "softwareName": {
+                    "type"          : "string"
+                },
+                "softwareVersion": {
+                    "type"          : "string"
+                },
+                "gatewayTimestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time",
+                    "description"   : "Timestamp upon receipt at the gateway. If present, this property will be overwritten by the gateway; submitters are not intended to populate this property."
+                }
+            }
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus the Localised strings and the properties marked below as 'disallowed'",
+            "additionalProperties"  : false,
+            "required"              : [ "timestamp", "event", "MarketID", "CarrierID", "Items" ],
+            "properties"            : {
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "event" : {
+                    "enum"          : [ "FCMaterials" ]
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+                },
+                "odyssey": {
+                    "type"          : "boolean",
+                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+                },
+
+                "MarketID": {
+                    "type"          : "integer"
+                },
+
+                "CarrierID": {
+                    "type"          : "string",
+                    "minLength"     : 1
+                },
+
+                "Items": {
+                    "properties": {
+                        "purchases": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "required": [ "name", "price", "outstanding", "total" ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    },
+                                    "locName": {
+                                        "$ref": "#/definitions/disallowed"
+                                    },
+                                    "outstanding": {
+                                        "type": "integer"
+                                    },
+                                    "price": {
+                                        "type": "integer"
+                                    },
+                                    "total": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "sales": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "$comment": "If there are no items then sales is an empty array",
+                                    "minItems": 0,
+                                    "maxItems": 0
+                                },
+                                {
+                                    "type": "object",
+                                    "$comment": "If there ARE items then sales is an object, *NOT* an array",
+                                    "patternProperties": {
+                                        "^[0-9]+$": {
+                                            "type"      : "object",
+                                            "required"  : [ "id", "name", "price", "stock" ],
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "id"    : {
+                                                    "type"  : "integer"
+                                                },
+                                                "name"  : {
+                                                    "type"  : "string",
+                                                    "minLength": 1
+                                                },
+                                                "locName"   : {
+                                                    "$ref": "#/definitions/disallowed"
+                                                },
+                                                "price" : {
+                                                    "type": "integer"
+                                                },
+                                                "stock": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "disallowed": {
+            "not" : {
+                "type": [
+                    "array", "boolean", "integer", "number", "null", "object", "string"
+                ]
+            }
+        }
+    }
+}

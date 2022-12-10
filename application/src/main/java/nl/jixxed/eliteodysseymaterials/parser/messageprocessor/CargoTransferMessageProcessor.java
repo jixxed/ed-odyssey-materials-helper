@@ -3,7 +3,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.journalevents.CargoTransfer.CargoTransfer;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.CargoTransfer.CargoTransfer;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 

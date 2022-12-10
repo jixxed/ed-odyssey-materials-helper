@@ -21,13 +21,13 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.helper.FileHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.exception.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
+import nl.jixxed.eliteodysseymaterials.templates.dialog.EDDNDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.URLSchemeDialog;
 import nl.jixxed.eliteodysseymaterials.watchdog.*;
@@ -37,7 +37,6 @@ import java.awt.*;
 import java.io.*;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Pattern;
 
 @Slf4j
 public class FXApplication extends Application {
@@ -50,11 +49,18 @@ public class FXApplication extends Application {
     private TimeStampedGameStateWatcher timeStampedShipLockerWatcher;
     private TimeStampedGameStateWatcher timeStampedBackPackWatcher;
     private GameStateWatcher fleetCarrierWatcher;
-    private StatusWatcher statusWatcher;
+    private StateFileWatcher statusWatcher;
     private final JournalWatcher journalWatcher = new JournalWatcher();
     private final DeeplinkWatcher deeplinkWatcher = new DeeplinkWatcher();
     private Stage primaryStage;
+    private TimeStampedGameStateWatcher shipyardWatcher;
+    private TimeStampedGameStateWatcher outfittingWatcher;
+    private TimeStampedGameStateWatcher marketWatcher;
+    private TimeStampedGameStateWatcher navrouteWatcher;
+    private TimeStampedGameStateWatcher modulesinfoWatcher;
+    private TimeStampedGameStateWatcher fcMaterialsWatcher;
 
+    private boolean initialized = false;
     public Stage getPrimaryStage() {
         return this.primaryStage;
     }
@@ -75,6 +81,7 @@ public class FXApplication extends Application {
             PreferencesService.setPreference(PreferenceConstants.APP_SETTINGS_VERSION, System.getProperty("app.version"));
             whatsnewPopup();
             urlSchemePopup();
+            eddnPopup();
             MaterialTrackingService.initialize();
             CAPIService.getInstance(this);
             this.applicationLayout = new ApplicationLayout(this);
@@ -102,9 +109,6 @@ public class FXApplication extends Application {
         }
     }
 
-    private final Pattern p = Pattern.compile(".*<ScreenHeight>(.*?)<\\/ScreenHeight>.*");
-
-
     private void showAlert(final Exception ex) {
         final Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setResizable(true);
@@ -121,7 +125,15 @@ public class FXApplication extends Application {
 
     private void initEventHandling() {
         EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder(new File(event.getPath())));
-        EventService.addListener(this, CommanderSelectedEvent.class, event -> reset(this.journalWatcher.getWatchedFolder()));
+        EventService.addListener(this, CommanderSelectedEvent.class, event -> {
+            UserPreferencesService.loadUserPreferences(event.getCommander());
+            if (this.initialized) {
+                reset(this.journalWatcher.getWatchedFolder());
+            }
+        });
+        EventService.addListener(this, CommanderAllListedEvent.class, event -> {
+            this.initialized = true;
+        });
         EventService.addListener(this, JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
@@ -187,11 +199,17 @@ public class FXApplication extends Application {
 
     private void setupStorageWatchers(final File watchedFolder) {
 
-        this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, StoragePool.SHIP);
-        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, StoragePool.SHIPLOCKER);
-        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, StoragePool.BACKPACK);
+        this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, JournalEventType.CARGO);
+        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, JournalEventType.SHIPLOCKER);
+        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, JournalEventType.BACKPACK);
         this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
-        this.statusWatcher = new StatusWatcher(watchedFolder, FileProcessor::processStatusFile, AppConstants.STATUS_FILE);
+        this.statusWatcher = new StateFileWatcher(watchedFolder, FileProcessor::processStatusFile, AppConstants.STATUS_FILE);
+        this.shipyardWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.SHIPYARD_FILE, JournalEventType.SHIPYARD);
+        this.outfittingWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.OUTFITTING_FILE, JournalEventType.OUTFITTING);
+        this.marketWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MARKET_FILE, JournalEventType.MARKET);
+        this.navrouteWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.NAVROUTE_FILE, JournalEventType.NAVROUTE);
+        this.modulesinfoWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MODULESINFO_FILE, JournalEventType.MODULEINFO);
+        this.fcMaterialsWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.FCMATERIALS_FILE, JournalEventType.FCMATERIALS);
 
 
     }
@@ -205,7 +223,7 @@ public class FXApplication extends Application {
                 watchedFolderFleetCarrier.mkdirs();
             }
             this.fleetCarrierWatcher = new GameStateWatcher();
-            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPI_FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, StoragePool.FLEETCARRIER);
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPI_FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, JournalEventType.CAPI_FLEETCARRIER);
         }
 
     }
@@ -331,13 +349,6 @@ public class FXApplication extends Application {
     @SuppressWarnings("java:S899")
     private void addCustomCss(final Scene scene) throws IOException {
         final File customCss = new File(OsConstants.CUSTOM_CSS);
-        if (OsConstants.OLD_CUSTOM_CSS != null) {
-            final File oldCustomCss = new File(OsConstants.OLD_CUSTOM_CSS);
-            if (!customCss.exists() && oldCustomCss.exists()) {
-                customCss.createNewFile();
-                FileHelper.copyFileContents(oldCustomCss, customCss);
-            }
-        }
         if (customCss.exists()) {
             importCustomCss(scene, customCss);
         }
@@ -356,6 +367,22 @@ public class FXApplication extends Application {
             urlSchemeStage.setScene(urlSchemeScene);
             urlSchemeStage.titleProperty().set("Register url scheme");
             urlSchemeStage.showAndWait();
+        }
+    }
+
+    private void eddnPopup() {
+        final boolean urlSchemeAsked = PreferencesService.getPreference(PreferenceConstants.EDDN_ASKED, false).equals(true);
+        if (!urlSchemeAsked) {
+            final Stage eddnStage = new Stage();
+
+            final Scene eddnScene = new Scene(new EDDNDialog(eddnStage), 640, 175);
+            eddnStage.initModality(Modality.APPLICATION_MODAL);
+            final JMetro jMetro = new JMetro(Style.DARK);
+            jMetro.setScene(eddnScene);
+            eddnScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+            eddnStage.setScene(eddnScene);
+            eddnStage.titleProperty().set("EDDN Support");
+            eddnStage.showAndWait();
         }
     }
 
@@ -411,6 +438,13 @@ public class FXApplication extends Application {
         this.journalWatcher.stop();
         this.deeplinkWatcher.stop();
         this.statusWatcher.stop();
+
+        this.shipyardWatcher.stop();
+        this.outfittingWatcher.stop();
+        this.marketWatcher.stop();
+        this.navrouteWatcher.stop();
+        this.modulesinfoWatcher.stop();
+        this.fcMaterialsWatcher.stop();
         setupDeeplinkWatcher();
         setupStorageWatchers(watchedFolder);
     }

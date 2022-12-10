@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
-import nl.jixxed.eliteodysseymaterials.journalevents.EngineerProgress.EngineerProgress;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.EngineerProgress.EngineerProgress;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 

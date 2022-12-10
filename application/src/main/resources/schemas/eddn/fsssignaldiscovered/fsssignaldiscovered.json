@@ -1,0 +1,82 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/fsssignaldiscovered/1#",
+    "description"           : "EDDN schema for FSSSignalDiscovered Journal events.  Full documentation at https://github.com/EDCD/EDDN/tree/master/schemas/fsssignaldiscovered-README.md",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "$ref": "../definitions.json#/definitions/header"
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below as 'disallowed'",
+            "additionalProperties"  : false,
+            "required"              : [ "event", "timestamp", "SystemAddress", "StarSystem", "StarPos", "signals"],
+            "properties"            : {
+                "event": {
+                    "type"          : "string"
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time",
+                    "description"   : "Duplicate of the first signal's timestamp, for commonality with other schemas."
+                },
+                "SystemAddress": {
+                    "type": "integer"
+                },
+                "signals": {
+                    "type": "array",
+                    "description": "Array of FSSSignalDiscovered events",
+                    "minItems": 1,
+                    "items": {
+                        "type": "object",
+                        "required": ["timestamp", "SignalName"],
+                        "description": "Single FSSSignalDiscovered event",
+                        "properties": {
+                            "timestamp": {
+                                "type"          : "string",
+                                "format"        : "date-time"
+                            },
+                            "SignalName": { "type":  "string" },
+                            "IsStation": { "type": "boolean" },
+                            "USSType": {
+                              "type": "string",
+                               "not": {
+                                    "pattern": "^\\$USS_Type_MissionTarget;$"
+                                }
+                            },
+                            "SpawningState": {"type":  "string"},
+                            "SpawningFaction" : {"type":  "string"},
+                            "ThreatLevel": {"type": "integer" }
+                        }
+                    }
+                },
+                "StarSystem": {
+                    "type"          : "string",
+                    "minLength"     : 1,
+                    "description": "Should be added by the sender"
+                },
+                "StarPos": {
+                    "type"          : "array",
+                    "items"         : { "type": "number" },
+                    "minItems"      : 3,
+                    "maxItems"      : 3,
+                    "description"   : "Should be added by the sender"
+                }
+            }
+        }
+    }
+}

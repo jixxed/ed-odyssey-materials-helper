@@ -4,7 +4,8 @@ import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.SystemEconomy;
 import nl.jixxed.eliteodysseymaterials.enums.SystemGovernment;
 import nl.jixxed.eliteodysseymaterials.enums.SystemSecurity;
-import nl.jixxed.eliteodysseymaterials.journalevents.Location.Location;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Location;
+import nl.jixxed.eliteodysseymaterials.service.EDDNService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
@@ -33,9 +34,10 @@ public class LocationMessageProcessor implements MessageProcessor<Location> {
             final double x = event.getStarPos().get(0);
             final double y = event.getStarPos().get(1);
             final double z = event.getStarPos().get(2);
-            EventService.publish(new LocationJournalEvent(new StarSystem(starSystem, SystemEconomy.forKey(economy), SystemEconomy.forKey(secondEconomy), SystemGovernment.forKey(government), SystemSecurity.forKey(security), factionState, x, y, z), body, station, this.isFirstLocationEventInJournal));
+            EventService.publish(new LocationJournalEvent(event, new StarSystem(starSystem, SystemEconomy.forKey(economy), SystemEconomy.forKey(secondEconomy), SystemGovernment.forKey(government), SystemSecurity.forKey(security), factionState, x, y, z), body, station, this.isFirstLocationEventInJournal));
             this.isFirstLocationEventInJournal = Boolean.FALSE;
         }
+        EDDNService.location(event);
     }
 
     @Override

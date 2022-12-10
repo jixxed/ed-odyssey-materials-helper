@@ -7,7 +7,7 @@ import nl.jixxed.eliteodysseymaterials.enums.Suit;
 import nl.jixxed.eliteodysseymaterials.enums.SuitModification;
 import nl.jixxed.eliteodysseymaterials.enums.Weapon;
 import nl.jixxed.eliteodysseymaterials.enums.WeaponModification;
-import nl.jixxed.eliteodysseymaterials.journalevents.SuitLoadout.SuitLoadout;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.SuitLoadout.SuitLoadout;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LoadoutEvent;
 

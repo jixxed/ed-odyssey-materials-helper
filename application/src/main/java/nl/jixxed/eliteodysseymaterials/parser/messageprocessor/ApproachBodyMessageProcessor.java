@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.journalevents.ApproachBody.ApproachBody;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ApproachBody.ApproachBody;
 import nl.jixxed.eliteodysseymaterials.service.event.ApproachBodyJournalEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 

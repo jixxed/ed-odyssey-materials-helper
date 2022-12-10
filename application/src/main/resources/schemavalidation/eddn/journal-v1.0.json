@@ -1,0 +1,127 @@
+{
+    "$schema"               : "http://json-schema.org/draft-04/schema#",
+    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
+    "type"                  : "object",
+    "additionalProperties"  : false,
+    "required": [ "$schemaRef", "header", "message" ],
+    "properties": {
+        "$schemaRef": {
+            "type"                  : "string"
+        },
+        "header": {
+            "type"                  : "object",
+            "additionalProperties"  : true,
+            "required"              : [ "uploaderID", "softwareName", "softwareVersion" ],
+            "properties"            : {
+                "uploaderID": {
+                    "type"          : "string"
+                },
+                "gameversion": {
+                    "type"          : "string",
+                    "description"   : "From Fileheader event if available, else LoadGame if available there."
+                },
+                "gamebuild": {
+                    "type"          : "string",
+                    "description"   : "The `build` value from a Fileheader event if available, else LoadGame if available there."
+                },
+                "softwareName": {
+                    "type"          : "string"
+                },
+                "softwareVersion": {
+                    "type"          : "string"
+                },
+                "gatewayTimestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time",
+                    "description"   : "Timestamp upon receipt at the gateway. If present, this property will be overwritten by the gateway; submitters are not intended to populate this property."
+                }
+            }
+        },
+        "message": {
+            "type"                  : "object",
+            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below as 'disallowed'",
+            "additionalProperties"  : true,
+            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress" ],
+            "properties"            : {
+                "timestamp": {
+                    "type"          : "string",
+                    "format"        : "date-time"
+                },
+                "event" : {
+                    "enum"          : [ "Docked", "FSDJump", "Scan", "Location", "SAASignalsFound", "CarrierJump", "CodexEntry" ]
+                },
+                "horizons": {
+                    "type"          : "boolean",
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
+                },
+                "odyssey": {
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
+                },                 
+                "StarSystem": {
+                    "type"          : "string",
+                    "minLength"     : 1,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                },
+                "StarPos": {
+                    "type"          : "array",
+                    "items"         : { "type": "number" },
+                    "minItems"      : 3,
+                    "maxItems"      : 3,
+                    "description"   : "Must be added by the sender if not present in the journal event"
+                },
+                "SystemAddress": {
+                    "type"          : "integer",
+                    "description"   : "Should be added by the sender if not present in the journal event"
+                },
+
+                "Factions": {
+                    "type"          : "array",
+                    "description"   : "Present in Location, FSDJump and CarrierJump messages",
+                    "items" : {
+                        "type"      : "object",
+                        "properties": {
+                            "HappiestSystem"  : { "$ref" : "#/definitions/disallowed" },
+                            "HomeSystem"      : { "$ref" : "#/definitions/disallowed" },
+                            "MyReputation"    : { "$ref" : "#/definitions/disallowed" },
+                            "SquadronFaction" : { "$ref" : "#/definitions/disallowed" }
+                        },
+                        "patternProperties"   : {
+                            "_Localised$"     : { "$ref" : "#/definitions/disallowed" }
+                        }
+                    }
+                },
+                
+                "ActiveFine"          : { "$ref" : "#/definitions/disallowed" },
+                "CockpitBreach"       : { "$ref" : "#/definitions/disallowed" },
+                "BoostUsed"           : { "$ref" : "#/definitions/disallowed" },
+                "FuelLevel"           : { "$ref" : "#/definitions/disallowed" },
+                "FuelUsed"            : { "$ref" : "#/definitions/disallowed" },
+                "JumpDist"            : { "$ref" : "#/definitions/disallowed" },
+                "Latitude"            : { "$ref" : "#/definitions/disallowed" },
+                "Longitude"           : { "$ref" : "#/definitions/disallowed" },
+                "Wanted"              : { "$ref" : "#/definitions/disallowed" },
+                "IsNewEntry"          : { "$ref" : "#/definitions/disallowed" },
+                "NewTraitsDiscovered" : { "$ref" : "#/definitions/disallowed" },
+                "Traits"              : { "$ref" : "#/definitions/disallowed" },
+                "VoucherAmount"       : { "$ref" : "#/definitions/disallowed" }
+            },
+            "patternProperties"     : {
+                "_Localised$"       : { "$ref" : "#/definitions/disallowed" },
+                "^(Materials|StationEconomies|Signals)$" : {
+                    "type"          : "array",
+                    "description"   : "Present in Scan, Docked and SAASignalsFound messages",
+                    "items" : {
+                        "type"      : "object",
+                        "patternProperties"     : {
+                            "_Localised$"       : { "$ref" : "#/definitions/disallowed" }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "disallowed" : { "not" : { "type": [ "array", "boolean", "integer", "number", "null", "object", "string" ] } }
+    }
+}

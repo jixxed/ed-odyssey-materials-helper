@@ -1,6 +1,18 @@
 {
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
-  "description": "When written: When the current plotted nav route is cleared",
-  "extends" : { "$ref": "../_Event.json"}
+  "description": "When written: When the current plotted nav route is cleared. Can be written to NavRoute.json with an empty Route array.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Route" : {
+      "title" : "Route",
+      "type" : "array",
+      "items" : {
+        "type" : "object"
+      }
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ ]
 }
