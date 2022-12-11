@@ -103,7 +103,7 @@ public class EDDNService {
                             approachSettlement.getLongitude().ifPresent(longitude -> {
                                 final Expansion expansion = APPLICATION_STATE.getExpansion();
                                 send(new Approachsettlement.ApproachsettlementBuilder()
-                                        .with$schemaRef("https://eddn.edcd.io/schemas/approachsettlement/1" + (isTestMode() ? "/test" : "#"))
+                                        .with$schemaRef("https://eddn.edcd.io/schemas/approachsettlement/1" + (isTestMode() ? "/test" : ""))
                                         .withHeader(buildHeader(commander))
                                         .withMessage(EDDNApproachSettlementMapper.mapToEDDN(approachSettlement, expansion))
                                         .build(), approachSettlement, "approachsettlement-v1.0.json");
@@ -115,7 +115,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.location.Location.LocationBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNLocationMapper.mapToEDDN(location, expansion))
                     .build(), location, "journal-v1.0.json");
@@ -127,7 +127,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.codexentry.Codexentry.CodexentryBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/codexentry/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/codexentry/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNCodexEntryMapper.mapToEDDN(codexEntry, expansion))
                     .build(), codexEntry, "codexentry-v1.0.json");
@@ -139,7 +139,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.docked.Docked.DockedBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNDockedMapper.mapToEDDN(docked, expansion))
                     .build(), docked, "journal-v1.0.json");
@@ -151,7 +151,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Carrierjump.CarrierjumpBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNCarrierJumpMapper.mapToEDDN(carrierjump, expansion))
                     .build(), carrierjump, "journal-v1.0.json");
@@ -164,7 +164,7 @@ public class EDDNService {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final Expansion expansion = APPLICATION_STATE.getExpansion();
                 send(new Commodity.CommodityBuilder()
-                        .with$schemaRef("https://eddn.edcd.io/schemas/commodity/3" + (isTestMode() ? "/test" : "#"))
+                        .with$schemaRef("https://eddn.edcd.io/schemas/commodity/3" + (isTestMode() ? "/test" : ""))
                         .withHeader(buildHeader(commander))
                         .withMessage(EDDNCommodityMapper.mapToEDDN(market, expansion))
                         .build(), market, "commodity-v3.0.json", 15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
@@ -180,7 +180,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Fcmaterials.FcmaterialsBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/fcmaterials_journal/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/fcmaterials_journal/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNFCMaterialsJournalMapper.mapToEDDN(fcmaterialsjournal, expansion))
                     .build(), fcmaterialsjournal, "fcmaterials_journal-v1.0.json",15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
@@ -191,7 +191,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Fsdjump.FsdjumpBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNFSDJumpMapper.mapToEDDN(fsdjump, expansion))
                     .build(), fsdjump, "journal-v1.0.json");
@@ -203,7 +203,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Fssallbodiesfound.FssallbodiesfoundBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/fssallbodiesfound/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/fssallbodiesfound/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNFSSAllBodiesFoundMapper.mapToEDDN(fssallbodiesfound, expansion))
                     .build(), fssallbodiesfound, "fssallbodiesfound-v1.0.json");
@@ -214,7 +214,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Fssbodysignals.FssbodysignalsBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/fssbodysignals/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/fssbodysignals/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNFSSBodySignalsMapper.mapToEDDN(fssbodysignals, expansion))
                     .build(), fssbodysignals, "fssbodysignals-v1.0.json");
@@ -225,7 +225,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Fssdiscoveryscan.FssdiscoveryscanBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/fssdiscoveryscan/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/fssdiscoveryscan/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNFSSDiscoveryScanMapper.mapToEDDN(fssdiscoveryscan, expansion))
                     .build(), fssdiscoveryscan, "fssdiscoveryscan-v1.0.json");
@@ -252,7 +252,7 @@ public class EDDNService {
                 ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                     final Expansion expansion = APPLICATION_STATE.getExpansion();
                     send(new Fsssignaldiscovered.FsssignaldiscoveredBuilder()
-                            .with$schemaRef("https://eddn.edcd.io/schemas/fsssignaldiscovered/1" + (isTestMode() ? "/test" : "#"))
+                            .with$schemaRef("https://eddn.edcd.io/schemas/fsssignaldiscovered/1" + (isTestMode() ? "/test" : ""))
                             .withHeader(buildHeader(commander))
                             .withMessage(EDDNFSSSignalDiscoveredMapper.mapToEDDN(fssSignalDiscoveredList, expansion))
                             .build(), new FSSSignalDiscovered.FSSSignalDiscoveredBuilder().withEvent("FSSSignalDiscovered").withTimestamp(timestamp).build(), "fsssignaldiscovered-v1.0.json");
@@ -270,7 +270,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Navbeaconscan.NavbeaconscanBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/navbeaconscan/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/navbeaconscan/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNNavBeaconScanMapper.mapToEDDN(navbeaconscan, expansion))
                     .build(), navbeaconscan, "navbeaconscan-v1.0.json");
@@ -282,7 +282,7 @@ public class EDDNService {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final Expansion expansion = APPLICATION_STATE.getExpansion();
                 send(new Navroute.NavrouteBuilder()
-                        .with$schemaRef("https://eddn.edcd.io/schemas/navroute/1" + (isTestMode() ? "/test" : "#"))
+                        .with$schemaRef("https://eddn.edcd.io/schemas/navroute/1" + (isTestMode() ? "/test" : ""))
                         .withHeader(buildHeader(commander))
                         .withMessage(EDDNNavRouteMapper.mapToEDDN(navroute, expansion))
                         .build(), navroute, "navroute-v1.0.json",15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
@@ -295,7 +295,7 @@ public class EDDNService {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final Expansion expansion = APPLICATION_STATE.getExpansion();
                 send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.outfitting.Outfitting.OutfittingBuilder()
-                        .with$schemaRef("https://eddn.edcd.io/schemas/outfitting/2" + (isTestMode() ? "/test" : "#"))
+                        .with$schemaRef("https://eddn.edcd.io/schemas/outfitting/2" + (isTestMode() ? "/test" : ""))
                         .withHeader(buildHeader(commander))
                         .withMessage(EDDNOutfittingMapper.mapToEDDN(outfitting, expansion))
                         .build(), outfitting, "outfitting-v2.0.json",15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
@@ -307,7 +307,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Saasignalsfound.SaasignalsfoundBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNSAASignalsFoundMapper.mapToEDDN(saasignalsfound, expansion))
                     .build(), saasignalsfound, "journal-v1.0.json");
@@ -318,7 +318,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.scan.Scan.ScanBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/journal/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNScanMapper.mapToEDDN(scan, expansion))
                     .build(), scan, "journal-v1.0.json");
@@ -330,7 +330,7 @@ public class EDDNService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             final Expansion expansion = APPLICATION_STATE.getExpansion();
             send(new Scanbarycentre.ScanbarycentreBuilder()
-                    .with$schemaRef("https://eddn.edcd.io/schemas/scanbarycentre/1" + (isTestMode() ? "/test" : "#"))
+                    .with$schemaRef("https://eddn.edcd.io/schemas/scanbarycentre/1" + (isTestMode() ? "/test" : ""))
                     .withHeader(buildHeader(commander))
                     .withMessage(EDDNScanBaryCentreMapper.mapToEDDN(scanbarycentre, expansion))
                     .build(), scanbarycentre, "scanbarycentre-v1.0.json");
@@ -344,7 +344,7 @@ public class EDDNService {
                     if (!prices.isEmpty()) {
                         final Expansion expansion = APPLICATION_STATE.getExpansion();
                         send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.shipyard.Shipyard.ShipyardBuilder()
-                                .with$schemaRef("https://eddn.edcd.io/schemas/shipyard/2" + (isTestMode() ? "/test" : "#"))
+                                .with$schemaRef("https://eddn.edcd.io/schemas/shipyard/2" + (isTestMode() ? "/test" : ""))
                                 .withHeader(buildHeader(commander))
                                 .withMessage(EDDNShipyardMapper.mapToEDDN(shipyard, expansion))
                                 .build(), shipyard, "shipyard-v2.0.json",15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
@@ -371,7 +371,6 @@ public class EDDNService {
         final boolean isLive = ApplicationState.getInstance().getGameVersion().equals(GameVersion.LIVE);
         final boolean isNew = isNew(event, delaySecondsAllowed);
         final Boolean isEnabled = PreferencesService.getPreference(PreferenceConstants.EDDN_ENABLED, Boolean.FALSE);
-        log.info("status: " + isLive + "/" + isNew + "/" + isEnabled);
         if (isLive && isNew && isEnabled) {
             final Runnable run = () -> {
                 try {
@@ -412,7 +411,6 @@ public class EDDNService {
 
     private static boolean isNew(final Event event, final int delaySecondsAllowed) {
         final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.USER_LATEST_EVENT, MIN_DATETIME).minusSeconds(delaySecondsAllowed);
-        log.info(event.getTimestamp() + " >= " + lastTimestamp);
         return event.getTimestamp().isAfter(lastTimestamp) || event.getTimestamp().isEqual(lastTimestamp);
     }
 
