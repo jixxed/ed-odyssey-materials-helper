@@ -33,21 +33,27 @@ public class DeeplinkWatcher {
         this.fileWatcher = new FileWatcher("Deeplink Watcher Thread").withListener(new FileAdapter() {
             @Override
             public void onCreated(final FileEvent event) {
-                log.debug("Created: " + event.getFile().toString());
+                if (filename.equals(event.getFile().getName())) {
+                    log.debug("Created: " + event.getFile().toString());
+                }
                 handleFile(event, fileProcessor);
 
             }
 
             @Override
             public void onModified(final FileEvent event) {
-                log.debug("Modified: " + event.getFile().toString());
+                if (filename.equals(event.getFile().getName())) {
+                    log.debug("Modified: " + event.getFile().toString());
+                }
                 handleFile(event, fileProcessor);
 
             }
 
             @Override
             public void onDeleted(final FileEvent event) {
-                log.debug("Deleted: " + event.getFile().toString());
+                if (filename.equals(event.getFile().getName())) {
+                    log.debug("Deleted: " + event.getFile().toString());
+                }
             }
 
             private void handleFile(final FileEvent event, final Consumer<String> fileProcessor) {

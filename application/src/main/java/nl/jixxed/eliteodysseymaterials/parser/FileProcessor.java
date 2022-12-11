@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -34,6 +35,12 @@ import java.util.stream.Stream;
 public class FileProcessor {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    static {
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+    }
+
     private static final String EVENT = "event";
     private static long position = 0L;
 
@@ -190,7 +197,7 @@ public class FileProcessor {
     public static synchronized void processStatusFile(final File file) {
         try {
             final String statusFileContents = Files.readString(file.toPath());
-            log.info(statusFileContents);
+//            log.info(statusFileContents);
             if (!statusFileContents.isBlank()) {//status file can be empty
                 final Status status = OBJECT_MAPPER.readValue(statusFileContents, Status.class);
                 Platform.runLater(() -> {

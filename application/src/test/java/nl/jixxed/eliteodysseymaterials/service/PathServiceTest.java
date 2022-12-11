@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.EngineerState;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Location;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistBlueprintTemplate;
@@ -59,7 +60,13 @@ class PathServiceTest {
         );
         LocationService.getCurrentStarSystem();
 
-        EventService.publish(new LocationJournalEvent(Engineer.ODEN_GEIGER.getStarSystem(), "", "", true));
+        EventService.publish(new LocationJournalEvent(new Location.LocationBuilder()
+                .withBody("A")
+                .withBodyID(1L)
+                .withSystemAddress(123L)
+                .withStarPos(List.of(Engineer.ODEN_GEIGER.getStarSystem().getX(),Engineer.ODEN_GEIGER.getStarSystem().getY(),Engineer.ODEN_GEIGER.getStarSystem().getZ()))
+                .withStarSystem(Engineer.ODEN_GEIGER.getStarSystem().getName())
+                .build(),Engineer.ODEN_GEIGER.getStarSystem(), "", "", true));
 
         final List<PathItem<OdysseyBlueprintName>> pathItems = PathService.calculateOdysseyShortestPath(wishlistBlueprints);
 
@@ -88,7 +95,13 @@ class PathServiceTest {
         );
         LocationService.getCurrentStarSystem();
 
-        EventService.publish(new LocationJournalEvent(Engineer.DOMINO_GREEN.getStarSystem(), "", "", true));
+        EventService.publish(new LocationJournalEvent(new Location.LocationBuilder()
+                .withBody("A")
+                .withBodyID(1L)
+                .withSystemAddress(123L)
+                .withStarPos(List.of(Engineer.DOMINO_GREEN.getStarSystem().getX(),Engineer.DOMINO_GREEN.getStarSystem().getY(),Engineer.DOMINO_GREEN.getStarSystem().getZ()))
+                .withStarSystem(Engineer.DOMINO_GREEN.getStarSystem().getName())
+                .build(),Engineer.DOMINO_GREEN.getStarSystem(), "", "", true));
         final List<PathItem<OdysseyBlueprintName>> pathItems = PathService.calculateOdysseyShortestPath(wishlistBlueprints);
 
         assertAll(() -> {

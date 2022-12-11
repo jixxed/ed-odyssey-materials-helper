@@ -6,11 +6,12 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OutfittingEvent;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class OutfittingMessageProcessor implements MessageProcessor<Outfitting> {
     @Override
     public void process(final Outfitting event) {
-        if(event.getItems().isEmpty()) {
+        if(event.getItems().map(List::isEmpty).orElse(true)) {
             EventService.publish(new OutfittingEvent(event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))));
         }else {
             EDDNService.outfitting(event);

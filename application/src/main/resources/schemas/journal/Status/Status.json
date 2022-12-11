@@ -128,7 +128,12 @@
         "Name" : {
           "title" : "Name",
           "type" : "string",
-          "examples" : [ "HEAD IN THE CLOUDS V1B-WQB" ]
+          "examples" : [ "Harow" ]
+        },
+        "Name_Localised" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "Harow" ]
         }
       },
       "additionalProperties" : false,

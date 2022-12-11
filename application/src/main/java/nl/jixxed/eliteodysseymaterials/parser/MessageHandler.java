@@ -117,10 +117,9 @@ class MessageHandler {
                     messageProcessor.process(event);
                     EventService.publish(new JournalLineProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
                 }
-                if (EDDNService.isFlushTriggerEvent(jsonNode.get(EVENT).asText())) {
                     final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-                    EDDNService.flushfsssignaldiscovered(timestamp);
-                }
+                    EDDNService.anyEvent(journalEventType, timestamp);
+
             } else {
                 log.warn("EVENT NULL: " + jsonNode.toPrettyString());
             }
@@ -147,10 +146,8 @@ class MessageHandler {
                 messageProcessor.process(event);
                 EventService.publish(new JournalLineProcessedEvent("now", journalEventType, file));
             }
-            if (EDDNService.isFlushTriggerEvent(jsonNode.get(EVENT).asText())) {
-                final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-                EDDNService.flushfsssignaldiscovered(timestamp);
-            }
+            final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+            EDDNService.anyEvent(journalEventType, timestamp);
         } catch (final JsonProcessingException e) {
             log.error("Error processing json message", e);
         } catch (final IOException e) {
@@ -164,17 +161,16 @@ class MessageHandler {
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
             final String eventName = jsonNode.get(EVENT).asText();
             log.info("event: " + eventName + "("+jsonNode.get(TIMESTAMP).asText()+")");
-            final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(eventName);
+            final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
+            final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
             if (messageProcessor != null) {
                 final Class<? extends Event> messageClass = messageProcessor.getMessageClass();
                 final Event event = OBJECT_MAPPER.readValue(message, messageClass);
                 messageProcessor.process(event);
                 EventService.publish(new JournalLineProcessedEvent("now", JournalEventType.forName(eventName), file));
             }
-            if (EDDNService.isFlushTriggerEvent(jsonNode.get(EVENT).asText())) {
-                final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-                EDDNService.flushfsssignaldiscovered(timestamp);
-            }
+            final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+            EDDNService.anyEvent(journalEventType, timestamp);
         } catch (final JsonProcessingException e) {
             log.error("Error processing json message", e);
         } catch (final IOException e) {

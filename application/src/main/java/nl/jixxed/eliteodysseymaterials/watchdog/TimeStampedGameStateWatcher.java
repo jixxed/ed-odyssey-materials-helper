@@ -151,7 +151,6 @@ public class TimeStampedGameStateWatcher {
         if (this.file != null) {
             try {
                 final String message = Files.readString(file.toPath());
-
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
                 if (jsonNode.get("event") != null
                         && Arrays.stream(this.eventType).anyMatch(event -> jsonNode.get("event").asText().equalsIgnoreCase(event.name()))

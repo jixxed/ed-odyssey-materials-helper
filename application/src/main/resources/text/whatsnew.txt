@@ -1,3 +1,11 @@
+Version 2.5
+-------------
+Add EDDN integration (enable/disable through Settings)
+Set new max values for caustic crystal/shards
+Add a fix for disappearing engineer pins
+Handle corrupted status.json file gracefully (caused by game crashes)
+Add Guardian/Thargoid to material names in English for easier search
+
 Version 2.4
 -------------
 Add new Sirius techbroker blueprints (Heatsink Launcher, AX Missile Racks)

@@ -1,21 +1,25 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.parser.mapping.MaterialMapping;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Backpack.Backpack;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipLocker.ShipLocker;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 class DataParserTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    {
+        this.objectMapper.registerModule(new JavaTimeModule());
+    }
     @Test
     void parse_shiplocker() throws IOException {
         final Map<Data, Storage> data = new HashMap<>();
@@ -24,11 +28,10 @@ class DataParserTest {
         data.put(Data.BIOMETRICDATA, new Storage());
         data.put(Data.NOCDATA, new Storage());
 
-        final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_good.json"));
-        final Iterator<JsonNode> items = jsonNode.get("Data").elements();
+        final ShipLocker shipLocker = this.objectMapper.readValue(DataParserTest.class.getResourceAsStream("/parser/shiplocker_good.json"), ShipLocker.class);
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.SHIPLOCKER, data);
+        dataParser.parse(shipLocker.getData().map(components -> components.stream().map(MaterialMapping::map).toList()).orElseThrow(IllegalArgumentException::new), StoragePool.SHIPLOCKER, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.VIRUS, Storage.of(0, 1),
@@ -44,11 +47,10 @@ class DataParserTest {
         data.put(Data.SLUSHFUNDLOGS, new Storage());
         data.put(Data.NOCDATA, new Storage());
 
-        final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/shiplocker_unknown.json"));
-        final Iterator<JsonNode> items = jsonNode.get("Data").elements();
+        final ShipLocker shipLocker = this.objectMapper.readValue(DataParserTest.class.getResourceAsStream("/parser/shiplocker_unknown.json"), ShipLocker.class);
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.SHIPLOCKER, data);
+        dataParser.parse(shipLocker.getData().map(components -> components.stream().map(MaterialMapping::map).toList()).orElseThrow(IllegalArgumentException::new), StoragePool.SHIPLOCKER, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.SLUSHFUNDLOGS, Storage.of(0, 1),
@@ -68,11 +70,10 @@ class DataParserTest {
         data.put(Data.BIOMETRICDATA, new Storage());
         data.put(Data.NOCDATA, new Storage());
 
-        final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_good.json"));
-        final Iterator<JsonNode> items = jsonNode.get("Data").elements();
+        final Backpack backpack = this.objectMapper.readValue(DataParserTest.class.getResourceAsStream("/parser/backpack_good.json"), Backpack.class);
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.BACKPACK, data);
+        dataParser.parse(backpack.getData().map(components -> components.stream().map(MaterialMapping::map).toList()).orElseThrow(IllegalArgumentException::new), StoragePool.BACKPACK, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.VIRUS, Storage.of(1, 0),
@@ -88,11 +89,10 @@ class DataParserTest {
         data.put(Data.SLUSHFUNDLOGS, new Storage());
         data.put(Data.NOCDATA, new Storage());
 
-        final JsonNode jsonNode = this.objectMapper.readTree(DataParserTest.class.getResourceAsStream("/parser/backpack_unknown.json"));
-        final Iterator<JsonNode> items = jsonNode.get("Data").elements();
+        final Backpack backpack = this.objectMapper.readValue(DataParserTest.class.getResourceAsStream("/parser/backpack_unknown.json"), Backpack.class);
         final DataParser dataParser = new DataParser();
 
-        dataParser.parse(items, StoragePool.BACKPACK, data);
+        dataParser.parse(backpack.getData().map(components -> components.stream().map(MaterialMapping::map).toList()).orElseThrow(IllegalArgumentException::new), StoragePool.BACKPACK, data);
 
         Assertions.assertThat(data).containsExactlyInAnyOrderEntriesOf(Map.of(
                 Data.SLUSHFUNDLOGS, Storage.of(1, 0),

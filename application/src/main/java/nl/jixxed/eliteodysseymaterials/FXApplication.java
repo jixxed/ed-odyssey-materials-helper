@@ -69,6 +69,7 @@ public class FXApplication extends Application {
     public void start(final Stage primaryStage) {
         NotificationService.init();
         PinnedBlueprintService.init();
+        EDDNService.init();
         try {
             try {
                 final GraphicsEnvironment ge =

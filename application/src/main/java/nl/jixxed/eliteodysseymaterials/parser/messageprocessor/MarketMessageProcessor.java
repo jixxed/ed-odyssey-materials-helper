@@ -6,11 +6,12 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketEvent;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class MarketMessageProcessor implements MessageProcessor<Market> {
     @Override
     public void process(final Market event) {
-        if(event.getItems().isEmpty()) {
+        if(event.getItems().map(List::isEmpty).orElse(true)) {
             EventService.publish(new MarketEvent(event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))));
         }else {
             EDDNService.commodity(event);
