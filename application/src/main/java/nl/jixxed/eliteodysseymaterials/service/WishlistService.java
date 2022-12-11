@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.*;
+import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
+import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -15,15 +18,16 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Optional;
+
 @Slf4j
 public class WishlistService {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
-    static{
+    static {
 
-        EventService.addStaticListener( 0, WishlistBlueprintEvent.class,
+        EventService.addStaticListener(0, WishlistBlueprintEvent.class,
                 wishlistEvent -> Platform.runLater(() ->
                         wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
                             switch (wishlistEvent.getAction()) {
@@ -38,7 +42,7 @@ public class WishlistService {
                             }
                         })));
 
-        EventService.addStaticListener( 0, HorizonsWishlistBlueprintEvent.class,
+        EventService.addStaticListener(0, HorizonsWishlistBlueprintEvent.class,
                 wishlistEvent -> Platform.runLater(() ->
                         wishlistEvent.getWishlistBlueprints().forEach(horizonsWishlistBlueprint -> {
                             switch (wishlistEvent.getAction()) {
@@ -64,6 +68,7 @@ public class WishlistService {
                 .orElse(0);
 
     }
+
     public static Integer getCurrentWishlistCount(final OdysseyMaterial odysseyMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                 getWishlists(commander).getSelectedWishlist().getItems().stream()
@@ -255,19 +260,20 @@ public class WishlistService {
                     createHorizonsWishlist(commander);
                 }
             } else {//save to file from preferences
-                final String wishlistsPreference = PreferencesService.getPreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander), "");
-                if (wishlistsPreference.isBlank()) {
-                    createHorizonsWishlist(commander);
-                } else {
-                    final HorizonsWishlists wishlists = OBJECT_MAPPER.readValue(wishlistsPreference, HorizonsWishlists.class);
-                    saveHorizonsWishlists(commander, wishlists);
-                }
-                PreferencesService.removePreference(PreferenceConstants.HORIZONS_WISHLISTS_PREFIX + getFID(commander));
+                createHorizonsWishlist(commander);
             }
             wishlistsFileContents = Files.readString(wishlistsFile.toPath());
-            return OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+            try {
+                return OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+            } catch (final IOException e) {
+                log.warn("Unable to load horizons wishlists from configuration. Try to create new one.", e);
+                createHorizonsWishlist(commander);
+                wishlistsFileContents = Files.readString(wishlistsFile.toPath());
+                return OBJECT_MAPPER.readValue(wishlistsFileContents, HorizonsWishlists.class);
+            }
         } catch (final IOException e) {
-            throw new IllegalStateException("Unable to load horizons wishlists from configuration.", e);
+            log.error("Unable to load horizons wishlists from configuration.", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -284,19 +290,20 @@ public class WishlistService {
                     createWishlist(commander);
                 }
             } else {//save to file from preferences
-                final String wishlistsPreference = PreferencesService.getPreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander), "");
-                if (wishlistsPreference.isBlank()) {
-                    createWishlist(commander);
-                } else {
-                    final Wishlists wishlists = OBJECT_MAPPER.readValue(wishlistsPreference, Wishlists.class);
-                    saveWishlists(commander, wishlists);
-                }
-                PreferencesService.removePreference(PreferenceConstants.WISHLISTS_PREFIX + getFID(commander));
+                createWishlist(commander);
             }
             wishlistsFileContents = Files.readString(wishlistsFile.toPath());
-            return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+            try {
+                return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+            } catch (final IOException e) {
+                log.warn("Unable to load wishlists from configuration. Try to create new one.", e);
+                createWishlist(commander);
+                wishlistsFileContents = Files.readString(wishlistsFile.toPath());
+                return OBJECT_MAPPER.readValue(wishlistsFileContents, Wishlists.class);
+            }
         } catch (final IOException e) {
-            throw new IllegalStateException("Unable to load wishlists from configuration.", e);
+            log.error("Unable to load wishlists from configuration.", e);
+            throw new RuntimeException(e);
         }
     }
 

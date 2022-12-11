@@ -205,7 +205,7 @@ public class JournalWatcher {
             }
 
         } catch (final IOException e) {
-            log.error("Error checking for commander header", e);
+            log.error("Error checking for commander header in file: " + file.getName(), e);
         }
         return false;
     }

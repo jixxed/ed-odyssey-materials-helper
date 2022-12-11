@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSetList;
@@ -34,19 +33,20 @@ public class LoadoutService {
                     createLoadoutSetList(commander);
                 }
             } else {//save to file from preferences
-                final String loadoutSetPreference = PreferencesService.getPreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander), "");
-                if (loadoutSetPreference.isBlank()) {
-                    createLoadoutSetList(commander);
-                } else {
-                    final LoadoutSetList loadoutSetList = OBJECT_MAPPER.readValue(loadoutSetPreference, LoadoutSetList.class);
-                    saveLoadoutSetList(commander, loadoutSetList);
-                }
-                PreferencesService.removePreference(PreferenceConstants.LOADOUTS_PREFIX + getFID(commander));
+                createLoadoutSetList(commander);
             }
             loadoutFileContents = Files.readString(loadoutsFile.toPath());
-            return OBJECT_MAPPER.readValue(loadoutFileContents, LoadoutSetList.class);
+            try{
+                return OBJECT_MAPPER.readValue(loadoutFileContents, LoadoutSetList.class);
+            }catch (final IOException e) {
+                log.warn("Unable to load loadouts from configuration. Try to create new one.", e);
+                createLoadoutSetList(commander);
+                loadoutFileContents = Files.readString(loadoutsFile.toPath());
+                return OBJECT_MAPPER.readValue(loadoutFileContents, LoadoutSetList.class);
+            }
         } catch (final IOException e) {
-            throw new IllegalStateException("Unable to load loadouts from configuration.", e);
+            log.error("Unable to load loadouts from configuration.", e);
+            throw new RuntimeException(e);
         }
     }
 

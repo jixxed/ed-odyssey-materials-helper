@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -33,7 +32,7 @@ public class FavouriteService {
         EventService.addStaticListener(0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             load(commanderSelectedEvent.getCommander());
         });
-        EventService.addStaticListener(0, CommanderAllListedEvent.class, commanderAllListedEvent  -> {
+        EventService.addStaticListener(0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> load(commander)
             );
         });
@@ -62,6 +61,7 @@ public class FavouriteService {
         final TypeReference<List<String>> typeRef = new TypeReference<List<String>>() {
         };
         FAVOURITES.clear();
+        List<String> favourites = Collections.emptyList();
         try {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
@@ -74,26 +74,18 @@ public class FavouriteService {
                     save(commander, new ArrayList<>());
                 }
             } else {//save to file from preferences
-                final String favouritesPreference = PreferencesService.getPreference(PreferenceConstants.MATERIAL_FAVOURITES, "");
-                if (favouritesPreference.isBlank()) {
-                    save(commander, new ArrayList<>());
-                } else {
-                    final List<OdysseyMaterial> favourites = Arrays.stream(favouritesPreference.split(","))
-                            .filter(material -> !material.isBlank())
-                            .map(OdysseyMaterial::subtypeForName)
-                            .toList();
-                    save(commander, favourites);
-                }
-                PreferencesService.removePreference(PreferenceConstants.MATERIAL_FAVOURITES);
+                save(commander, new ArrayList<>());
             }
             favouritesFileContents = Files.readString(favouritesFile.toPath());
-            FAVOURITES.addAll(OBJECT_MAPPER.readValue(favouritesFileContents, typeRef).stream().map(OdysseyMaterial::subtypeForName).toList());
+            favourites = OBJECT_MAPPER.readValue(favouritesFileContents, typeRef);
+
         } catch (final IOException e) {
-            throw new IllegalStateException("Unable to load odyssey favourites from configuration.", e);
+            log.warn("Unable to load odyssey favourites from configuration. WIll initialize empty", e);
         }
+        FAVOURITES.addAll(favourites.stream().map(OdysseyMaterial::subtypeForName).toList());
     }
 
-    public static void save(final Commander commander, final List<OdysseyMaterial> favourites) {
+    private static void save(final Commander commander, final List<OdysseyMaterial> favourites) {
         try {
             final String wishlistsJson = OBJECT_MAPPER.writeValueAsString(favourites.stream().map(OdysseyMaterial::name).toList());
             final String pathname = commander.getCommanderFolder();

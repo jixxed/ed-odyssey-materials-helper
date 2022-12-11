@@ -17,9 +17,6 @@ public class PreferenceConstants {
     public static final String JOURNAL_FOLDER = "journal.folder";
     public static final String COMMANDER = "commander";
     public static final String ORIENTATION = "orientation";
-    public static final String LOADOUTS_PREFIX = "loadouts.";
-    public static final String WISHLISTS_PREFIX = "wishlists.";
-    public static final String HORIZONS_WISHLISTS_PREFIX = "wishlists.horizons.";
     public static final String RECIPES_VISIBLE = "recipes.visible";
     public static final String HORIZONS_RECIPES_VISIBLE = "horizons.recipes.visible";
     public static final String SOLO_MODE = "solo.mode";
@@ -46,8 +43,6 @@ public class PreferenceConstants {
     public static final String HORIZONS_MATERIAL_TRADER_MAX_RANGE = "horizons.material.trader.max.range";
     public static final String MARKETPLACE_TOKEN_PREFIX = "marketplace.token.";
     public static final String ENABLE_BARTENDER_AR =  "ar.bartender.enabled";
-    public static final String MATERIAL_FAVOURITES =  "material.favourites";
-
     public static final String USER_LATEST_EVENT = "latest.event";
     public static final String EDDN_ENABLED = "eddn.enabled";
     public static final String EDDN_ASKED = "eddn.asked";
