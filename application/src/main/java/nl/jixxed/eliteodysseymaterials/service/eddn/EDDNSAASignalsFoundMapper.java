@@ -19,7 +19,7 @@ public class EDDNSAASignalsFoundMapper extends EDDNMapper {
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withBodyID(saaSignalsFound.getBodyID())
                 .withBodyName(saaSignalsFound.getBodyName())
-                .withGenuses(saaSignalsFound.getGenuses()
+                .withGenuses(mapToNullIfEmptyList(saaSignalsFound.getGenuses())
                         .map(genuses -> genuses.stream()
                                 .map(genuse -> new Genuse.GenuseBuilder()
                                         .withGenus(genuse.getGenus())

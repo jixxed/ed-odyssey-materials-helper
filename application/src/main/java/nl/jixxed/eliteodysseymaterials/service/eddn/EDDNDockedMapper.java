@@ -29,7 +29,7 @@ public class EDDNDockedMapper extends EDDNMapper {
                         .build()).orElse(null))
                 .withMarketID(docked.getMarketID())
                 .withStationAllegiance(docked.getStationAllegiance().orElse(null))
-                .withStationEconomies(docked.getStationEconomies().map(stationEconomies -> stationEconomies.stream()
+                .withStationEconomies(mapToNullIfEmptyList(docked.getStationEconomies()).map(stationEconomies -> stationEconomies.stream()
                         .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
                                 .withName(stationEconomy.getName())
                                 .withProportion(stationEconomy.getProportion())

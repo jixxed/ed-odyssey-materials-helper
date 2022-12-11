@@ -17,7 +17,7 @@ public class EDDNFCMaterialsJournalMapper extends EDDNMapper {
                 .withCarrierID(fcMaterials.getCarrierID())
                 .withMarketID(fcMaterials.getMarketID())
                 .withCarrierName(fcMaterials.getCarrierName())
-                .withItems(fcMaterials.getItems()
+                .withItems(mapToNullIfEmptyList(fcMaterials.getItems())
                         .map(items -> items.stream()
                                 .map(item -> new Item.ItemBuilder()
                                         .withName(item.getName())

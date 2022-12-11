@@ -15,7 +15,7 @@ public class EDDNCommodityMapper extends EDDNMapper {
                 .withEvent(market.getEvent())
                 .withSystemName(market.getStarSystem())
                 .withStationName(market.getStationName())
-                .withCommodities(market.getItems()
+                .withCommodities(mapToNullIfEmptyList(market.getItems())
                         .map(items -> items.stream()
                                 .map(item -> new Item.ItemBuilder()
                                         .withName(item.getName())

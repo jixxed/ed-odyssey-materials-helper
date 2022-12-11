@@ -12,7 +12,7 @@ public class EDDNNavRouteMapper extends EDDNMapper {
                 .withEvent(navRoute.getEvent())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
-                .withRoute(navRoute.getRoute()
+                .withRoute(mapToNullIfEmptyList(navRoute.getRoute())
                         .map(routes -> routes.stream()
                                 .map(route -> new Route.RouteBuilder()
                                         .withStarPos(route.getStarPos())
