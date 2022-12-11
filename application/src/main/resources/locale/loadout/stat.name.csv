@@ -13,13 +13,13 @@ loadout.stat.name.damage_type,Damage type,Damage type,Schadenstyp,Tipo de daño,
 loadout.stat.name.data_capacity,Data capacity,Data capacity,Datenkapazität,Capacidad de datos,Capacité de données,Capacidade de dados,Вместимость данных
 loadout.stat.name.effective_range,Effective range,Effective range,Effektive Reichweite,Rango efectivo,Plage effective,Alcance efetivo,Эффективная дальность
 loadout.stat.name.emergency_air,Emergency air,Emergency air,Notluft,Aire de emergencia,Air d''urgence,Ar de emergência,Аварийный запас воздуха
-loadout.stat.name.energylink_overload_power_usage,Energylink Overload Power Usage,Energylink Overload Power Usage,Energylink-Überlastungsstromverbrauch,Uso de energía de sobrecarga de Energylink,Utilisation de la puissance de surcharge d''Energylink,Uso de energia de sobrecarga do Energylink,Расход энергии Энерголинком при перегрузке
+loadout.stat.name.energylink_overload_power_usage,Energylink Overload Power Usage,Energylink Overload Power Usage,Energylink-Überlastungsstromverbrauch,Uso de energía de sobrecarga de Energylink,Utilisation de la puissance de surcharge d''Energylink,Uso de energia de sobrecarga do Energylink,Расход энергии Энерголинком в режиме перегрузки
 loadout.stat.name.energylink_recharge_time,Energylink Recharge Time,Energylink Recharge Time,Energylink-Aufladezeit,Tiempo de recarga de Energylink,Durée de recharge du lien énergétique,Tempo de recarga do Energylink,Время зарядки Энерголинка
 loadout.stat.name.explosive_resist,Explosive resist,Explosive resist,Sprengstoffresist,Resistencia explosiva,Résistance explosive,Resistência explosiva,Сопр. взрывному урону
 loadout.stat.name.fire_mode,Fire mode,Fire mode,Feuermodus,Modo fuego,Mode incendie,Modo de incêndio,Режим стрельбы
 loadout.stat.name.footsteps_audible_range,Footsteps audible range,Footsteps audible range,Schritte hörbarer Bereich,Rango audible de pasos,Plage audible des pas,Alcance audível dos passos,Радиус слышимости шагов
 loadout.stat.name.goods_capacity,Goods capacity,Goods capacity,Warenkapazität,Capacidad de mercancías,Capacité des marchandises,Capacidade de mercadorias,Вместимость товаров
-loadout.stat.name.handling,Handling,Handling,Handhabung,Manejo,Gestion,Manuseio,Обработка
+loadout.stat.name.handling,Handling,Handling,Handhabung,Manejo,Gestion,Manuseio,Обращение
 loadout.stat.name.headshot_damage,Headshot damage,Headshot damage,Kopfschussschaden,Daño por disparo en la cabeza,Dommages par balle à la tête,Dano de tiro na cabeça,Урон от выстрела в голову
 loadout.stat.name.health,Health,Health,Gesundheit,Salud,Santé,Saúde,Здоровье
 loadout.stat.name.hip_fire_accuracy,Hip fire accuracy,Hip fire accuracy,Hüftfeuergenauigkeit,Precisión de tiro de cadera,Précision du tir à la hanche,Precisão de tiro de quadril,Точность стрельбы от бедра
@@ -28,7 +28,7 @@ loadout.stat.name.lateral_speed,Lateral Speed,Lateral Speed,Quergeschwindigkeit,
 loadout.stat.name.lights_power_usage,Lights Power Usage,Lights Power Usage,Lichtverbrauch,Uso de energía de las luces,Consommation d''énergie des lumières,Uso de energia das luzes,Расход энергии фонариком
 loadout.stat.name.los_analysis_range,Line of sight analysis range,Line of sight analysis range,Sichtlinienanalysebereich,Rango de análisis de línea de visión,Plage d''analyse de la ligne de visée,Faixa de análise de linha de visão,Дальность анализа
 loadout.stat.name.los_analysis_time,Line of sight analysis time,Line of sight analysis time,Sichtlinienanalysezeit,Tiempo de análisis de línea de visión,Temps d''analyse de la ligne de visée,Tempo de análise da linha de visão,Время анализа цели
-loadout.stat.name.magazine_size,Magazine size,Magazine size,Magazingröße,Tamaño de la revista,Taille du magazine,Tamanho da revista,Размер обоймы
+loadout.stat.name.magazine_size,Magazine size,Magazine size,Magazingröße,Tamaño de la revista,Taille du magazine,Tamanho da revista,Размер магазина
 loadout.stat.name.mass,Mass,Mass,Masse,Masa,Masse,Massa,Масса
 loadout.stat.name.modification_slots,Modification slots,Modification slots,Modifikations-Slots,Ranuras de modificación,Emplacements de modification,Slots de modificação,Слоты для модов
 loadout.stat.name.night_vision,Night vision,Night vision,Nachtsicht,Visión nocturna,Vision nocturne,Visão noturna,Ночное видение
@@ -61,7 +61,7 @@ loadout.stat.name.walk_speed,Walk Speed,Walk Speed,Gehgeschwindigkeit,Velocidad 
 loadout.stat.name.walk_speed_carbine_shotgun,Walk Speed Carbine/Shotgun,Walk Speed Carbine/Shotgun,Gehschneller Karabiner/Schrotflinte,Carabina/escopeta de velocidad al caminar,Carabine/Fusil à vitesse de marche,Carbina/espingarda de alta velocidade,Скорость ходьбы с карабином/дробовиком
 loadout.stat.name.walk_speed_pistol,Walk Speed Pistol,Walk Speed Pistol,Walk-Speed-Pistole,Pistola de velocidad al caminar,Pistolet de vitesse de marche,Pistola de caminhada,Скорость ходьбы с пистолетом
 loadout.stat.name.walk_speed_rifle,Walk Speed Rifle,Walk Speed Rifle,Gehgeschwindigkeitsgewehr,Rifle de velocidad al caminar,Fusil de vitesse de marche,Espingarda de caminhada,Скорость ходьбы с винтовкой
-loadout.stat.name.walk_speed_sniper_launcher,Walk Speed Sniper/Launcher,Walk Speed Sniper/Launcher,Walk Speed Sniper/Launcher,Lanzador/francotirador de velocidad al caminar,Sniper/lanceur de vitesse de marche,Atirador/lançador de velocidade de caminhada,Скорость хотьбы со снайперкой
+loadout.stat.name.walk_speed_sniper_launcher,Walk Speed Sniper/Launcher,Walk Speed Sniper/Launcher,Walk Speed Sniper/Launcher,Lanzador/francotirador de velocidad al caminar,Sniper/lanceur de vitesse de marche,Atirador/lançador de velocidade de caminhada,Скорость хотьбы со снайперкой/ракетницей
 loadout.stat.name.geneticsampler_power_usage,Genetic sampler power usage,Genetic sampler power usage,Genetische Sampler -Leistungsverbrauch,Uso de potencia de muestras genéticas,Utilisation de puissance d''échantillonneur génétique,Uso de energia de amostrador genético,Расход энергии сборщиком генетических образцов
 loadout.stat.name.profilescanner_power_usage,Profile scanner power usage,Profile scanner power usage,Profil -Scanner -Stromverbrauch,Uso de energía del escáner de perfil,Utilisation d''alimentation du scanner de profil,Uso de energia do scanner de perfil,Расход энергии анализатором профиля
 loadout.stat.name.energylink_recharge_rate,Energylink recharge rate,Energylink recharge rate,EnergyLink -Aufladungsrate,Tasa de recarga de enlaces energéticos,Taux de recharge de l''énergie,Taxa de recarga Energylink,Скорость заряда энерголинка
@@ -73,7 +73,7 @@ loadout.stat.name.energylink_discharge_rate,Energylink discharge rate,Energylink
 loadout.stat.name.battery_recharge_duration,Battery recharge duration,Battery recharge duration,Batterieaufladungsdauer,Duración de recarga de batería,Durée de recharge de la batterie,Duração da recarga da bateria,Время зарядки аккумулятора
 loadout.stat.name.draw_speed,Draw speed,Draw speed,Geschwindigkeit zeichnen,Velocidad de dibujo,Dessiner,Desenhe velocidade,Скорость доставания
 loadout.stat.name.stow_speed,Stow speed,Stow speed,Staugeschwindigkeit,Velocidad de montaje,Vitesse de rangement,Velocidade de armazenamento,Скорость убирания
-loadout.stat.name.ads_speed,ADS Speed,ADS Speed,Anzeigengeschwindigkeit,Velocidad de anuncios,Vitesse d''annonces,Velocidade de anúncios,Реклама прицеливания
+loadout.stat.name.ads_speed,ADS Speed,ADS Speed,Anzeigengeschwindigkeit,Velocidad de anuncios,Vitesse d''annonces,Velocidade de anúncios,Скорость прицеливания
 loadout.stat.name.jump_assist_battery_consumption,Jump assist recharge battery consumption,Jump assist recharge battery consumption,Batterieverbrauch der Sprunghilfe,Asistir asistencia de salto consumo de batería,Sauter Assist Recharge Battery Consommation,Salto Assistência de assistência ao consumo de bateria,Расход заряда батареи
 loadout.stat.name.jump_assist_duration,Jump assist duration,Jump assist duration,Sprungassistentendauer,Duración de asistencia de salto,Durée de saut,Duração de assistência ao salto,Длительность прыжка
 loadout.stat.name.jump_assist_recharge,Jump assist recharge duration,Jump assist recharge duration,Aufladen der Sprunghilfe,Duración de recarga de asistencia de salto,Durée de recharge de saut,Jump Assist Recarrege Duration,Кулдаун для прыжков
