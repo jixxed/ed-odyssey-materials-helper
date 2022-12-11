@@ -11,6 +11,7 @@ public class EDDNShipyardMapper extends EDDNMapper {
     public static Message mapToEDDN(final Shipyard shipyard, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(shipyard.getTimestamp())
+                .withEvent(shipyard.getEvent())
                 .withAllowCobraMkIV(shipyard.getAllowCobraMkIV().orElse(null))
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))

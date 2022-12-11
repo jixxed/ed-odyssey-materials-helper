@@ -1,6 +1,7 @@
 {
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
+  "javaType" : "nl.jixxed.eliteodysseymaterials.schemas.journal.Event",
   "title": "Event",
   "description": "Generic Event",
   "properties" : {

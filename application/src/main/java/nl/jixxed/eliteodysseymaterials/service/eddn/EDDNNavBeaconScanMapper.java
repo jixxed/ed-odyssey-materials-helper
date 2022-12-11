@@ -8,8 +8,8 @@ import nl.jixxed.eliteodysseymaterials.service.LocationService;
 public class EDDNNavBeaconScanMapper extends EDDNMapper {
     public static Message mapToEDDN(final NavBeaconScan navBeaconScan, final Expansion expansion) {
         return new Message.MessageBuilder()
-                .withEvent(navBeaconScan.getEvent())
                 .withTimestamp(navBeaconScan.getTimestamp())
+                .withEvent(navBeaconScan.getEvent())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withStarPos(LocationService.getCurrentStarPos(navBeaconScan.getSystemAddress()))

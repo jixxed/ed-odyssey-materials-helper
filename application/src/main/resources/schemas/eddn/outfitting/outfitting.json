@@ -14,8 +14,11 @@
         "message": {
             "type"                  : "object",
             "additionalProperties"  : false,
-            "required"              : [ "systemName", "stationName", "marketId", "timestamp", "modules" ],
+            "required"              : [ "systemName", "stationName", "marketId", "timestamp", "modules", "event" ],
             "properties"            : {
+                "event" : {
+                    "type"          : "string"
+                },
                 "systemName": {
                     "type"      : "string",
                     "renamed"   : "StarSystem",

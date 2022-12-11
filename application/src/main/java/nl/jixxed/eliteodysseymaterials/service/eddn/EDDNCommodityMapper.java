@@ -12,6 +12,7 @@ public class EDDNCommodityMapper extends EDDNMapper {
     public static Message mapToEDDN(final Market market, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(market.getTimestamp())
+                .withEvent(market.getEvent())
                 .withSystemName(market.getStarSystem())
                 .withStationName(market.getStationName())
                 .withCommodities(market.getItems()
