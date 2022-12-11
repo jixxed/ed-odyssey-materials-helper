@@ -93,6 +93,7 @@ public class MaterialTrackingService {
                 log.info("Load material statistics finished");
             } catch (final IOException ex) {
                 log.error("Load material statistics failed", ex);
+                log.info("Deleted file due to suspected corruption: " + statisticsFile.delete());
                 Platform.runLater(() ->
                         NotificationService.showError(NotificationType.ERROR, "Error", "Failed to download material statistics.")
                 );

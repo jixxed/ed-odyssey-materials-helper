@@ -1,6 +1,7 @@
 Version 2.6
 -------------
 Fix for EDDN messages with empty list properties
+Handle reading more files that can potentially be corrupted gracefully
 
 Version 2.5
 -------------

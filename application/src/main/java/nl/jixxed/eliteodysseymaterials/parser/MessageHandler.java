@@ -124,12 +124,12 @@ class MessageHandler {
                 log.warn("EVENT NULL: " + jsonNode.toPrettyString());
             }
         } catch (final JsonProcessingException e) {
-            log.error("Error processing json message", e);
+            log.error("Error processing json message from: " + file.getName(), e);
         }
     }
 
     /**
-     * Cargo state file
+     * Cargo/Shiplocker/Backpack state file
      * @param file
      * @param journalEventType
      */
@@ -151,7 +151,7 @@ class MessageHandler {
         } catch (final JsonProcessingException e) {
             log.error("Error processing json message", e);
         } catch (final IOException e) {
-            log.error("Error processing ShipLocker or Backpack", e);
+            log.error("Error processing Cargo file: " + file.getName(), e);
         }
     }
 
@@ -174,7 +174,7 @@ class MessageHandler {
         } catch (final JsonProcessingException e) {
             log.error("Error processing json message", e);
         } catch (final IOException e) {
-            log.error("Error processing ShipLocker or Backpack", e);
+            log.error("Error processing State file: " + file.getName(), e);
         }
     }
 
@@ -191,7 +191,7 @@ class MessageHandler {
         } catch (final JsonProcessingException e) {
             log.error("Error processing json message", e);
         } catch (final IOException e) {
-            log.error("Error processing ShipLocker or Backpack", e);
+            log.error("Error processing CAPI", e);
         }
     }
 }
