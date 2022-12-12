@@ -12,7 +12,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class BackpackMessageProcessor implements MessageProcessor<Backpack> {
@@ -23,7 +22,7 @@ public class BackpackMessageProcessor implements MessageProcessor<Backpack> {
     @Override
     public void process(final Backpack event) {
 
-        if (event.getComponents().map(List::isEmpty).orElse(true) || event.getData().map(List::isEmpty).orElse(true) || event.getItems().map(List::isEmpty).orElse(true)) {
+        if (event.getComponents().isEmpty() || event.getData().isEmpty() || event.getItems().isEmpty()) {
             final String timestamp = event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
             EventService.publish(new BackpackEvent(timestamp));
             return;

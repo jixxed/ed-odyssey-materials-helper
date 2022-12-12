@@ -6,12 +6,11 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.NavRouteEvent;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class NavRouteMessageProcessor implements MessageProcessor<NavRoute> {
     @Override
     public void process(final NavRoute event) {
-        if(event.getRoute().map(List::isEmpty).orElse(true)) {
+        if(event.getRoute().isEmpty()) {
             EventService.publish(new NavRouteEvent(event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))));
         }else {
             EDDNService.navroute(event);
