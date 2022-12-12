@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.ShipLockerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShipLockerMessageProcessor implements MessageProcessor<ShipLocker> {
@@ -21,7 +22,7 @@ public class ShipLockerMessageProcessor implements MessageProcessor<ShipLocker> 
     @Override
     public void process(final ShipLocker event) {
 
-        if (event.getComponents().isEmpty() || event.getData().isEmpty() || event.getItems().isEmpty()) {
+        if (event.getComponents().map(List::isEmpty).orElse(true) || event.getData().map(List::isEmpty).orElse(true) || event.getItems().map(List::isEmpty).orElse(true)) {
             EventService.publish(new ShipLockerEvent(event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))));
             return;
         }

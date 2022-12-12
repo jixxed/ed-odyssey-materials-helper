@@ -10,13 +10,14 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class CargoMessageProcessor implements MessageProcessor<Cargo> {
 
     @Override
     @SuppressWarnings("java:S1192")
     public void process(final Cargo event) {
-        if (event.getInventory().isEmpty()) {
+        if (event.getInventory().map(List::isEmpty).orElse(true)) {
             final String timestamp = event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
             EventService.publish(new CargoEvent(timestamp));
             return;
