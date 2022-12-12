@@ -25,6 +25,7 @@
       "title" : "Factions",
       "description": "For type bounty",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

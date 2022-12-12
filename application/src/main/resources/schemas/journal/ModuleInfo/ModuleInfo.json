@@ -9,6 +9,7 @@
       "title" : "Modules",
       "description": "When written to ModulesInfo.json",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

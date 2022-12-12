@@ -8,6 +8,7 @@
     "CurrentGoals" : {
       "title" : "CurrentGoals",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

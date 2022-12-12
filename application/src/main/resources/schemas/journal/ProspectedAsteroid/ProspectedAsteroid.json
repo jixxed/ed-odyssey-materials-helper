@@ -8,6 +8,7 @@
     "Materials" : {
       "title" : "Materials",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

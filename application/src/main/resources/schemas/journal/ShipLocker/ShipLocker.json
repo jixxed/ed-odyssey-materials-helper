@@ -8,6 +8,7 @@
     "Items" : {
       "title" : "Items",
       "type" : "array",
+      "default": null,
       "items" : {
         "$ref": "../common/ShipLockerBackpack.json#definitions/Item"
       }
@@ -15,6 +16,7 @@
     "Components" : {
       "title" : "Components",
       "type" : "array",
+      "default": null,
       "items" : {
         "$ref": "../common/ShipLockerBackpack.json#definitions/Component"
       }
@@ -22,6 +24,7 @@
     "Consumables" : {
       "title" : "Consumables",
       "type" : "array",
+      "default": null,
       "items" : {
         "$ref": "../common/ShipLockerBackpack.json#definitions/Consumable"
       }
@@ -29,6 +32,7 @@
     "Data" : {
       "title" : "Data",
       "type" : "array",
+      "default": null,
       "items" : {
         "$ref": "../common/ShipLockerBackpack.json#definitions/Data"
       }

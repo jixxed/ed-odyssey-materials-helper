@@ -13,6 +13,7 @@
     "SuitMods" : {
       "title" : "SuitMods",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "suit_increasedmeleedamage", "suit_increasedsprintduration", "suit_reducedtoolbatteryconsumption" ]

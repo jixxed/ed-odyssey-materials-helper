@@ -18,6 +18,7 @@
     "Inventory" : {
       "title" : "Inventory",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

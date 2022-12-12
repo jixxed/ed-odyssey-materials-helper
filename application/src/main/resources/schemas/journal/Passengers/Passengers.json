@@ -9,6 +9,7 @@
       "title" : "Manifest",
       "description": "Array of passenger records",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

@@ -8,6 +8,7 @@
     "Route" : {
       "title" : "Route",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object"
       }

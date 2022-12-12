@@ -8,6 +8,7 @@
     "Offered" : {
       "title" : "Offered",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

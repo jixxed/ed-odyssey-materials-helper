@@ -15,6 +15,7 @@
       "title" : "Materials",
       "description": "Materials used with quantities",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

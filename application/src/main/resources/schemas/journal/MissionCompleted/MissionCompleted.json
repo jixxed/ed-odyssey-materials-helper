@@ -53,6 +53,7 @@
       "title" : "CommodityReward",
       "description": "Names and counts of any commodity rewards",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -81,6 +82,7 @@
       "title" : "MaterialsReward",
       "description": "Name, category and count of any material rewards",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -118,6 +120,7 @@
     "FactionEffects" : {
       "title" : "FactionEffects",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -129,6 +132,7 @@
           "Effects" : {
             "title" : "Effects",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {
@@ -155,6 +159,7 @@
           "Influence" : {
             "title" : "Influence",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {

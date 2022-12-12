@@ -8,6 +8,7 @@
     "Added" : {
       "title" : "Added",
       "type" : "array",
+      "default": null,
       "items" : {
         "$ref": "#/definitions/changeEntry"
       }
@@ -15,6 +16,7 @@
     "Removed" : {
       "title" : "Removed",
       "type" : "array",
+      "default": null,
       "items" : {
         "$ref": "#/definitions/changeEntry"
       }

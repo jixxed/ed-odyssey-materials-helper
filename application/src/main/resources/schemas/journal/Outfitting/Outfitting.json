@@ -30,6 +30,7 @@
       "title" : "Items",
       "description": "Only written in Outfitting.json",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

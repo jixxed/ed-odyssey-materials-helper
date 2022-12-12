@@ -33,6 +33,7 @@
     "WeaponMods" : {
       "title" : "WeaponMods",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "weapon_stability", "weapon_suppression_unpressurised", "weapon_range" ]

@@ -9,6 +9,7 @@
       "title" : "Rewards",
 	  "description": "An array of Faction names and the Reward values, as the target can have multiple bounties payable by different factions. Not used for skimmers.(See Reward)",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

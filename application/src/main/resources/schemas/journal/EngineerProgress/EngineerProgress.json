@@ -9,6 +9,7 @@
       "title" : "Engineers",
       "description": "Summary at startup",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

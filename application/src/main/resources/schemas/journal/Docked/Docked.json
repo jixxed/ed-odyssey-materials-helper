@@ -72,6 +72,7 @@
       "title" : "StationServices",
       "description": "StationServices can include: Dock, Autodock, BlackMarket, Commodities, Contacts, Exploration, Initiatives, Missions, Outfitting, CrewLounge, Rearm, Refuel, Repair, Shipyard, Tuning, Workshop, MissionsGenerated, Facilitator, Research, FlightController, StationOperations, OnDockMission, Powerplay, SearchAndRescue. New in v3.7: shop, carriermanagement, carrierfuel, carriervendor, livery, modulepacks, voucherredemption",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "dock", "autodock", "blackmarket" ]
@@ -93,6 +94,7 @@
       "title" : "StationEconomies",
       "description": "Only if station has multiple economies",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

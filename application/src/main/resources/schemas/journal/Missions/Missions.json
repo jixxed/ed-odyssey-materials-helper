@@ -8,6 +8,7 @@
     "Active" : {
       "title" : "Active",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -40,6 +41,7 @@
     "Failed" : {
       "title" : "Failed",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -72,6 +74,7 @@
     "Complete" : {
       "title" : "Complete",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

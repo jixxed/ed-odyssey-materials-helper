@@ -9,6 +9,7 @@
       "title" : "Others",
       "description": "Other player names already in wing",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "Alice", "Bob", "Mallory" ]

@@ -159,6 +159,7 @@
     "Crew" : {
       "title" : "Crew",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -190,6 +191,7 @@
     "ShipPacks" : {
       "title" : "ShipPacks",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -211,6 +213,7 @@
     "ModulePacks" : {
       "title" : "ModulePacks",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

@@ -23,6 +23,7 @@
     "ShipsHere" : {
       "title" : "ShipsHere",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -64,6 +65,7 @@
     "ShipsRemote" : {
       "title" : "ShipsRemote",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

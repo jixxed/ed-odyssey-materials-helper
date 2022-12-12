@@ -18,6 +18,7 @@
     "Ingredients" : {
       "title" : "Ingredients",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -77,6 +78,7 @@
     "Modifiers" : {
       "title" : "Modifiers",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

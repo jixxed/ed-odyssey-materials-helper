@@ -123,6 +123,7 @@
     "Factions" : {
       "title" : "Factions",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -171,6 +172,7 @@
             "title" : "ActiveStates",
             "description": "Array with State names (Note active states do not have a Trend value)",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {
@@ -188,6 +190,7 @@
             "title" : "RecoveringStates",
             "description": "Array (if any) with State name and Trend value",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {
@@ -210,6 +213,7 @@
             "title" : "PendingStates",
             "description": "Array (if any) with State name and Trend value",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {
@@ -274,6 +278,7 @@
       "title" : "Powers",
       "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
@@ -288,6 +293,7 @@
     "Conflicts" : {
       "title" : "Conflicts",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

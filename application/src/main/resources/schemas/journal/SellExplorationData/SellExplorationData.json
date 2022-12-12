@@ -8,6 +8,7 @@
     "Systems" : {
       "title" : "Systems",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "Phraa Blao SO-O d7-28", "Dryao Ain ZQ-C c26-0", "Laso CM-K d9-9" ]
@@ -16,6 +17,7 @@
     "Discovered" : {
       "title" : "Discovered",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "Phraa Blao SO-O d7-28 A", "Phraa Blao SO-O d7-28 C", "Phraa Blao SO-O d7-28 B" ]

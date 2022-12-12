@@ -33,6 +33,7 @@
     "Resources" : {
       "title" : "Resources",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

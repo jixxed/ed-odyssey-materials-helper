@@ -23,6 +23,7 @@
     "Signals" : {
       "title" : "Signals",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -49,6 +50,7 @@
     "Genuses" : {
       "title" : "Genuses",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

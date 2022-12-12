@@ -48,6 +48,7 @@
       "title" : "MicroResources",
 	  "description": "New format (eg at Fleet Carrier bartender)",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

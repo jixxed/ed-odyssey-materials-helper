@@ -79,6 +79,7 @@
     "Crew" : {
       "title" : "Crew",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

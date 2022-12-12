@@ -28,6 +28,7 @@
     "SuitMods" : {
       "title" : "SuitMods",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "suit_backpackcapacity", "suit_increasedammoreserves", "suit_adsmovementspeed" ]

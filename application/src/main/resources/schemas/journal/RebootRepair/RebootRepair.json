@@ -9,6 +9,7 @@
       "title" : "Modules",
       "description": "Array of names of modules repaired",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "CargoHatch", "LifeSupport", "LargeHardpoint1" ]

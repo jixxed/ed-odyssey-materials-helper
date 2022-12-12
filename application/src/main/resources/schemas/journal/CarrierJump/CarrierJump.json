@@ -51,6 +51,7 @@
     "StationServices" : {
       "title" : "StationServices",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "dock", "autodock", "commodities" ]
@@ -69,6 +70,7 @@
     "StationEconomies" : {
       "title" : "StationEconomies",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -192,6 +194,7 @@
     "Factions" : {
       "title" : "Factions",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -238,6 +241,7 @@
           "PendingStates" : {
             "title" : "PendingStates",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {
@@ -259,6 +263,7 @@
           "ActiveStates" : {
             "title" : "ActiveStates",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {
@@ -285,6 +290,7 @@
           "RecoveringStates" : {
             "title" : "RecoveringStates",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "object",
               "properties" : {
@@ -329,6 +335,7 @@
     "Conflicts" : {
       "title" : "Conflicts",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -396,6 +403,7 @@
     "Powers" : {
       "title" : "Powers",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "A. Lavigny-Duval", "Zachary Hudson", "Li Yong-Rui" ]

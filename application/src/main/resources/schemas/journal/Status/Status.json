@@ -13,6 +13,7 @@
     "Pips" : {
       "title" : "Pips",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "integer",
         "examples" : [ 2, 8, 4 ]

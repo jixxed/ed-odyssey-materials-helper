@@ -13,6 +13,7 @@
     "Systems" : {
       "title" : "Systems",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "Lundji", "Sol" ]

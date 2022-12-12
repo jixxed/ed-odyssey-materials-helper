@@ -8,6 +8,7 @@
     "Transfers" : {
       "title" : "Transfers",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

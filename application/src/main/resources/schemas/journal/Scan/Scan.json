@@ -27,6 +27,7 @@
       "title" : "Parents",
       "description": "Written for Star/Planet/Moon",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -106,6 +107,7 @@
       "title" : "AtmosphereComposition",
       "description": "Written for Planet/Moon",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -296,6 +298,7 @@
       "title" : "Rings",
       "description": "Written for Star/Planet/Moon. If rings present.",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -334,6 +337,7 @@
       "title" : "Materials",
       "description": "Written for Planet/Moon",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

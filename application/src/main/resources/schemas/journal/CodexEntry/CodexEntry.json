@@ -111,6 +111,7 @@
       "title" : "Traits",
 	  "description": "The Traits field is only available for entries that have unlocked traits",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string"
       }

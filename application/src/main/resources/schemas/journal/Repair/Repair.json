@@ -20,6 +20,7 @@
       "title" : "Items",
       "description": "when repairing on a FleetCarrier",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "$asp_cockpit_name;", "Hull", "$modularcargobaydoor_name;" ]

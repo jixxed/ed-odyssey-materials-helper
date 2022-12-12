@@ -23,6 +23,7 @@
     "WeaponMods" : {
       "title" : "WeaponMods",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "weapon_reloadspeed", "weapon_handling", "weapon_headshotdamage" ]

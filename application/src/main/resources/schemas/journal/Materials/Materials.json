@@ -8,6 +8,7 @@
     "Raw" : {
       "title" : "Raw",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -35,6 +36,7 @@
     "Manufactured" : {
       "title" : "Manufactured",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -62,6 +64,7 @@
     "Encoded" : {
       "title" : "Encoded",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

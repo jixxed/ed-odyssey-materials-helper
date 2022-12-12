@@ -36,6 +36,7 @@
       "title" : "PriceList",
       "description": "Only written in Shipyard.json",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

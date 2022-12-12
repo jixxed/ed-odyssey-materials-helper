@@ -34,6 +34,7 @@
       "title" : "Items",
       "description": "When written to Market.json",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

@@ -59,6 +59,7 @@
     "WeaponMods" : {
       "title" : "WeaponMods",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "weapon_handling", "weapon_clipsize", "weapon_backpackreloading" ]

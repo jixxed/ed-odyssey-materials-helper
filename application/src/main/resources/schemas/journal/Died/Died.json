@@ -33,6 +33,7 @@
       "title" : "Killers",
       "description": "When killed by a wing",
       "type" : "array",
+      "default": null,
       "items" : {
         "KillerName" : {
           "title" : "KillerName",

@@ -23,6 +23,7 @@
     "Items" : {
       "title" : "Items",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {

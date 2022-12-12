@@ -23,6 +23,7 @@
     "SuitMods" : {
       "title" : "SuitMods",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "string",
         "examples" : [ "suit_backpackcapacity", "suit_increasedsprintduration", "suit_improvedjumpassist" ]
@@ -41,6 +42,7 @@
     "Modules" : {
       "title" : "Modules",
       "type" : "array",
+      "default": null,
       "items" : {
         "type" : "object",
         "properties" : {
@@ -72,6 +74,7 @@
           "WeaponMods" : {
             "title" : "WeaponMods",
             "type" : "array",
+            "default": null,
             "items" : {
               "type" : "string",
               "examples" : [ "weapon_suppression_unpressurised", "weapon_handling", "weapon_reloadspeed" ]
