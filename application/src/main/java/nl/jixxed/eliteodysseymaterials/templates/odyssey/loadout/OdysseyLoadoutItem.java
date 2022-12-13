@@ -428,7 +428,10 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
         final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
         final String targetLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getTargetLevel());
         final List<SelectedModification> modifications = new ArrayList<>(Arrays.asList(this.loadout.getModifications()));
-        if (this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit).anyMatch(loadoutItem -> Arrays.stream(loadoutItem.getModifications()).map(SelectedModification::getModification).anyMatch(SuitModification.EXTRA_AMMO_CAPACITY::equals))) {
+        if (this.loadout.getEquipment() instanceof Weapon && this.loadoutSet.getLoadouts().stream().filter(loadoutItem -> loadoutItem.getEquipment() instanceof Suit)
+                .anyMatch(loadoutItem -> Arrays.stream(loadoutItem.getModifications())
+                        .map(SelectedModification::getModification)
+                        .anyMatch(SuitModification.EXTRA_AMMO_CAPACITY::equals))) {
             modifications.add(new SelectedModification(SuitModification.EXTRA_AMMO_CAPACITY, false));
         }
         final List<Modification> modifications1 = modifications.stream().map(SelectedModification::getModification).filter(Objects::nonNull).toList();

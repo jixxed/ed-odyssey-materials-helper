@@ -1,3 +1,7 @@
+Version 2.8
+-------------
+Fix for Extra Ammo Capacity being cross-applied to other suits in loadouts
+
 Version 2.7
 -------------
 Fix for backpack/shiplocker/ship cargo jumping/sticking to 0
