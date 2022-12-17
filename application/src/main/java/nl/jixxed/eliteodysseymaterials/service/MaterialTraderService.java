@@ -1,6 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
@@ -17,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MaterialTraderService {
     private static final List<MaterialTrader> MATERIAL_TRADERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();

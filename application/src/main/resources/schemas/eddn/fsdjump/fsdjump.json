@@ -32,6 +32,18 @@
                     "type"      : "boolean",
                     "description" : "Whether the sending Cmdr has an Odyssey expansion."
                 },
+                "Taxi" : {
+                    "title" : "Taxi",
+                    "description": "True when inside a taxi transport ship",
+                    "type" : "boolean",
+                    "examples" : [ false, true ]
+                },
+                "Multicrew" : {
+                    "title" : "Multicrew",
+                    "description": "True when inside another player's ship",
+                    "type" : "boolean",
+                    "examples" : [ false, true ]
+                },
                 "StarSystem" : {
                     "title" : "StarSystem",
                     "description": "Name of destination starsystem",
