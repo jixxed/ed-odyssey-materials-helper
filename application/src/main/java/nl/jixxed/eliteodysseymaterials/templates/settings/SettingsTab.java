@@ -120,6 +120,7 @@ public class SettingsTab extends OdysseyTab {
     private DestroyableLabel arBartenderLabel;
     private DestroyableToggleSwitch arBartenderButton;
     private DestroyableLabel eddnLabel;
+    private DestroyableLabel eddnExplainLabel;
     private DestroyableToggleSwitch eddnButton;
 
     public SettingsTab(final Application application) {
@@ -389,6 +390,7 @@ public class SettingsTab extends OdysseyTab {
 
     private HBox createEDDNSetting() {
         this.eddnLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.eddn.toggle")).build();
+        this.eddnExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.eddn.explain")).build();
         this.eddnButton = ToggleSwitchBuilder.builder()
                 .withSelectedChangeListener((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.EDDN_ENABLED, Boolean.TRUE.equals(newValue));
@@ -397,7 +399,7 @@ public class SettingsTab extends OdysseyTab {
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.eddnLabel, this.eddnButton)
+                .withNodes(this.eddnLabel, this.eddnButton, this.eddnExplainLabel)
                 .buildHBox();
     }
 

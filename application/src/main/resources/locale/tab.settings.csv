@@ -68,3 +68,4 @@ ar.overlay.wishlist,Wishlist,Wishlist,Wunschzettel,Lista de deseos,Liste de souh
 ar.overlay.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Hors du sujet,Irrelevante,Ненужный
 ar.overlay.blueprint,Engineer/Blueprint,Engineer/Blueprint,Ingenieur/Blaupause,Ingeniero/plan,Ingénieur/plan,Engenheiro/Blueprint,Инженер/чертеж
 tab.settings.eddn.toggle,Share galaxy data with EDDN,,,,,,
+tab.settings.eddn.explain,EDDN requests you to only use one app at a time to share data to reduce server load,,,,,,
