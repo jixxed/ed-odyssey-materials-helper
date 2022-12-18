@@ -41,11 +41,11 @@ public class EDDNDialog extends VBox implements Template {
         final Region regionV = new Region();
         VBox.setVgrow(regionV, Priority.ALWAYS);
         final HBox buttons = BoxBuilder.builder().withNodes(region,
-                ButtonBuilder.builder().withNonLocalizedText("Yes").withOnAction(event -> {
+                ButtonBuilder.builder().withText(LocaleService.getStringBinding("eddn.registration.yes")).withOnAction(event -> {
                     PreferencesService.setPreference(PreferenceConstants.EDDN_ENABLED, true);
                     this.stage.close();
                 }).build(),
-                ButtonBuilder.builder().withNonLocalizedText("No").withOnAction(event -> this.stage.close()).build()
+                ButtonBuilder.builder().withText(LocaleService.getStringBinding("eddn.registration.no")).withOnAction(event -> this.stage.close()).build()
         ).buildHBox();
         buttons.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.getStyleClass().add("urlscheme-dialog");

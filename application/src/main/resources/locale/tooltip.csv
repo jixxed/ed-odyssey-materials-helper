@@ -24,5 +24,5 @@ material.tooltip.statistics.runs,Most collected in a single visit:,Most collecte
 material.tooltip.statistics.settlements,Most collected in locations:,Most collected in locations:,Am meisten an Orten gesammelt:,La más recolectada en ubicaciones:,La plupart collectés dans les endroits:,Mais coletado em locais:,Большинство собрано в местах:
 material.tooltip.spawnlocations,Where to find:,Where to find:,Wo findet man:,Donde encontrar:,Où trouver:,Onde achar:,Где найти:
 material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn chance(Avg. 3-4 chances per dataport):,Spawn Chance (Avg. 3-4 Chancen pro Datenaport):,Chance de desagüe (avg. 3-4 posibilidades por papel de datos):,Spawn Chance (avg. 3-4 chances par données):,Chance de Spawn (Avg. 3-4 chances por Dataport):,Spawn Chance (Avg. 3-4 шансов на DataPort):
-material.tooltip.is.live,LIVE only material,LIVE only material,,,,,Материал для LIVE-версии
-material.tooltip.is.live.commodity,LIVE only commodity,LIVE only commodity,,,,,Товар для LIVE-версии
+material.tooltip.is.live,LIVE-only material,LIVE-only material,Nur LIVE-Material,Material solo en LIVE,Matériel en LIVE uniquement,Material somente ao LIVE,Материал для LIVE-версии
+material.tooltip.is.live.commodity,LIVE-only commodity,LIVE-only commodity,Nur LIVE-Ware,Productos básicos solo en LIVE,Marchandise en LIVE,Mercadoria apenas ao LIVE,Товар для LIVE-версии
