@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PollingFileModeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
@@ -13,6 +14,8 @@ import org.apache.commons.io.monitor.FileAlterationObserver;
 
 import java.io.File;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -27,6 +30,7 @@ public class FileWatcher implements Runnable {
     private FileAlterationObserver observer;
     private FileAlterationMonitor monitor;
     private final boolean allowPolling;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     FileWatcher(final String threadName) {
         this(threadName, false);
@@ -37,9 +41,9 @@ public class FileWatcher implements Runnable {
         this.thread = new Thread(this);
         this.thread.setName(threadName);
         this.thread.setDaemon(true);
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             stop();
-        });
+        }));
         this.pollingListener = new FileAlterationListenerAdaptor() {
             @Override
             public void onFileChange(final File file) {
@@ -77,7 +81,7 @@ public class FileWatcher implements Runnable {
 
     private void setupObserver() {
             this.observer = new FileAlterationObserver(this.folder);
-            EventService.addStaticListener(PollingFileModeEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(PollingFileModeEvent.class, event -> {
                 if (event.isPollingEnabled()) {
                     if (!Iterables.contains(this.observer.getListeners(), this.pollingListener)) {
                         this.observer.addListener(this.pollingListener);
@@ -96,7 +100,7 @@ public class FileWatcher implements Runnable {
                     this.monitor = null;
                     log.info("Polling removed: " + this.thread.getName());
                 }
-            });
+            }));
             if (PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, false)) {
                 this.observer.addListener(this.pollingListener);
                 startPollingMode();

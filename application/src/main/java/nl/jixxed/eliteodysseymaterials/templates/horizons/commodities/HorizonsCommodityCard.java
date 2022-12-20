@@ -16,10 +16,14 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HorizonsCommodityCard extends VBox implements Template {
     private DestroyableResizableImageView typeImage;
@@ -40,6 +44,7 @@ public class HorizonsCommodityCard extends VBox implements Template {
     private Region region2;
     @Getter
     private final Commodity commodity;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsCommodityCard(final Commodity commodity) {
         this.commodity = commodity;
@@ -83,11 +88,11 @@ public class HorizonsCommodityCard extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.FLEETCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 updateQuantity();
             }
-        });
+        }));
     }
 
     private void updateQuantity() {

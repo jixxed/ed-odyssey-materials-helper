@@ -17,11 +17,15 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.ConnectionWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class OdysseyTradeTab extends OdysseyTab {
@@ -37,6 +41,7 @@ public class OdysseyTradeTab extends OdysseyTab {
     private boolean reconnect = true;
     private Thread thread;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     @Override
     public OdysseyTabs getTabType() {
         return OdysseyTabs.TRADE;
@@ -109,7 +114,7 @@ public class OdysseyTradeTab extends OdysseyTab {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
             final boolean connected = connectionWebSocketEvent.isConnected();
             if (connected) {
                 this.status.textProperty().bind(LocaleService.getStringBinding("tab.trade.status.connected"));
@@ -125,12 +130,12 @@ public class OdysseyTradeTab extends OdysseyTab {
                     connect();
                 }
             }
-        });
-        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.close());
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.close()));
 
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             this.stop();
-        });
+        }));
     }
 
     private void connect() {

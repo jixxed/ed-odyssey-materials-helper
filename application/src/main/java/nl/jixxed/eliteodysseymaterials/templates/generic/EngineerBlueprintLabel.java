@@ -25,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import java.util.function.Consumer;
 
 public class EngineerBlueprintLabel extends HBox implements DestroyableComponent {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private final Engineer engineer;
     private final int rank;
     private final boolean exact;
@@ -73,20 +75,20 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
 
 
     private void initEventHandling() {
-        EventService.addListener(this, EngineerEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, EngineerEvent.class, event -> {
             update();
-        });
-        EventService.addListener(this, EngineerPinEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, EngineerPinEvent.class, event -> {
             if (this.engineer.equals(event.getEngineer()) && !this.horizonsBlueprint.equals(event.getHorizonsBlueprint())) {
                 update();
             }
-        });
-        EventService.addListener(this, CommanderSelectedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, event -> {
             update();
-        });
-        EventService.addStaticListener(0, JournalInitEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addStaticListener(0, JournalInitEvent.class, event -> {
             update();
-        });
+        }));
     }
 
     private void update() {

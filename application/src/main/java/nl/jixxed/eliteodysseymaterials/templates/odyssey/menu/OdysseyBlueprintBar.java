@@ -18,12 +18,11 @@ import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.About;
 
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public
@@ -32,6 +31,7 @@ class OdysseyBlueprintBar extends Accordion {
     private TitledPane[] categoryTitledPanes;
     private TitledPane aboutTitledPane;
     private final Application application;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public OdysseyBlueprintBar(final Application application) {
         this.application = application;
@@ -181,12 +181,12 @@ class OdysseyBlueprintBar extends Accordion {
     private Map<OdysseyBlueprintName, Node> createRecipeContent(final Map.Entry<BlueprintCategory, Map<OdysseyBlueprintName, ? extends OdysseyBlueprint>> recipesEntry, final ComboBox<OdysseyBlueprintName> comboBox, final TitledPane categoryTitledPane) {
         final Map<OdysseyBlueprintName, Node> contents = new EnumMap<>(OdysseyBlueprintName.class);
         recipesEntry.getValue().forEach((key, value) -> {
-            EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
+            this.eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
                 if (blueprintClickEvent.getBlueprintName().equals(key)) {
                     comboBox.getSelectionModel().select(key);
                     this.setExpandedPane(categoryTitledPane);
                 }
-            });
+            }));
             final OdysseyBlueprintContent odysseyBlueprintContent = new OdysseyBlueprintContent(value);
             contents.put(key, odysseyBlueprintContent);
         });

@@ -6,9 +6,13 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.TradeOdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialIngredient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("java:S2160")
 class OdysseyTradeIngredient extends OdysseyMaterialIngredient {
@@ -17,6 +21,7 @@ class OdysseyTradeIngredient extends OdysseyMaterialIngredient {
     private static final String INGREDIENT_UNFILLED_CLASS = "trade-ingredient-unfilled";
     private final Boolean isGiven;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     OdysseyTradeIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountAvailable, final Integer tradeAmount, final boolean isGiven) {
         super(storageType, odysseyMaterial, amountAvailable, tradeAmount);
         this.isGiven = isGiven;

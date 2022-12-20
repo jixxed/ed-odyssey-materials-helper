@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 
@@ -23,16 +24,17 @@ public class LoadoutSet {
     private String uuid = UUID.randomUUID().toString();
     private String name;
     private List<Loadout> loadouts = new ArrayList<>();
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     @JsonIgnore
     public static final LoadoutSet CURRENT = new LoadoutSet("0", "Current Loadout (read only)", new ArrayList<>());
 
     static {
-        EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> {
             if (!journalInitEvent.isInitialised()) {
                 CURRENT.loadouts.clear();
             }
-        });
+        }));
     }
 
     @Override

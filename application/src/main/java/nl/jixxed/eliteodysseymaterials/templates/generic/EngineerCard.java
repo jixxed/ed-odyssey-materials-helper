@@ -20,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -45,6 +46,7 @@ public class EngineerCard extends VBox {
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
                             .build()).buildHBox();
     protected static final String ENGINEER_CATEGORY_STYLE_CLASS = "engineer-category";
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -71,7 +73,7 @@ public class EngineerCard extends VBox {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationChangedEvent.getCurrentStarSystem().getX(), locationChangedEvent.getCurrentStarSystem().getY(), locationChangedEvent.getCurrentStarSystem().getZ())) + "Ly)"));
+        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationChangedEvent.getCurrentStarSystem().getX(), locationChangedEvent.getCurrentStarSystem().getY(), locationChangedEvent.getCurrentStarSystem().getZ())) + "Ly)")));
     }
 
     private void initComponents() {

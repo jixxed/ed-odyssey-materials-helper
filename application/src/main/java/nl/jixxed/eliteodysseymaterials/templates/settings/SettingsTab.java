@@ -30,6 +30,7 @@ import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.ButtonIntField;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
@@ -42,10 +43,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -123,6 +121,7 @@ public class SettingsTab extends OdysseyTab {
     private DestroyableLabel eddnExplainLabel;
     private DestroyableToggleSwitch eddnButton;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     public SettingsTab(final Application application) {
         this.application = application;
         initComponents();
@@ -140,16 +139,16 @@ public class SettingsTab extends OdysseyTab {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontSizeStyle = "-fx-font-size: " + fontSizeEvent.getFontSize() + "px;";
             this.journalSelectButton.setStyle(fontSizeStyle);
             this.fontsizeSelect.setStyle(fontSizeStyle);
             this.languageSelect.setStyle(fontSizeStyle);
             this.readingDirectionSelect.setStyle(fontSizeStyle);
-        });
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             executorService.shutdownNow();
-        });
+        }));
     }
 
     private void initComponents() {
@@ -380,7 +379,7 @@ public class SettingsTab extends OdysseyTab {
                 })
                 .withSelected(PreferencesService.getPreference(PreferenceConstants.ENABLE_AR, false))
                 .build();
-        EventService.addListener(this, ARDisableEvent.class, event -> this.arOverlayButton.setSelected(false));
+        this.eventListeners.add(EventService.addListener(this, ARDisableEvent.class, event -> this.arOverlayButton.setSelected(false)));
         this.arOverlayButton.setDisable(!OsCheck.isWindows());
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)

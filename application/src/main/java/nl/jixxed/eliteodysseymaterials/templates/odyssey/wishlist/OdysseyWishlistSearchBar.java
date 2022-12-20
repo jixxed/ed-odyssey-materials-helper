@@ -20,9 +20,12 @@ import nl.jixxed.eliteodysseymaterials.enums.WishlistMaterialGrouping;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyWishlistSearchEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -34,6 +37,7 @@ class OdysseyWishlistSearchBar extends HBox {
     private ComboBox<WishlistMaterialGrouping> groupMaterialsComboBox;
     private ComboBox<OdysseyWishlistMaterialSort> sortMaterialsComboBox;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     public OdysseyWishlistSearchBar() {
         initComponents();
         initEventHandling();
@@ -116,13 +120,13 @@ class OdysseyWishlistSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.groupMaterialsComboBox.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
             this.sortMaterialsComboBox.styleProperty().set(fontStyle);
-        });
+        }));
     }
 
     private void setDefaultOptions() {

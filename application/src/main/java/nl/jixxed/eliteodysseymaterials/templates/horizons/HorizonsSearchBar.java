@@ -15,6 +15,9 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngi
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistSearchBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 class HorizonsSearchBar extends HBox {
 
@@ -24,6 +27,7 @@ class HorizonsSearchBar extends HBox {
     private HorizonsCommoditiesSearchBar commoditiesSearchBar;
     private HorizonsWishlistSearchBar horizonsWishlistSearchBar;
     private HorizonsEngineerSearchBar horizonsEngineerSearchBar;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsSearchBar() {
         initComponents();
@@ -67,14 +71,14 @@ class HorizonsSearchBar extends HBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<"));
+        this.eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
         //hack for component resizing on other fontsizes
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.button.styleProperty().set(fontStyle);
-        });
-        EventService.addListener(this, HorizonsTabSelectedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, HorizonsTabSelectedEvent.class, event -> {
             if (HorizonsTabs.COMMODITIES.equals(event.getSelectedTab())) {
                 if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.horizonsWishlistSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
                     this.getChildren().remove(this.materialSearchBar);
@@ -104,7 +108,7 @@ class HorizonsSearchBar extends HBox {
                     this.getChildren().add(this.materialSearchBar);
                 }
             }
-        });
+        }));
     }
 
     private boolean isRecipeBarVisible() {

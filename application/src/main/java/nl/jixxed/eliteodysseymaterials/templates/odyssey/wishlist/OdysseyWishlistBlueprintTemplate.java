@@ -48,7 +48,6 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     private final Set<OdysseyWishlistIngredient> otherIngredients = new HashSet<>();
     private EventListener<StorageEvent> storageEventEventListener;
     private Tooltip tooltip;
-
     public OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final OdysseyWishlistBlueprint odysseyWishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.odysseyWishlistBlueprint = odysseyWishlistBlueprint;

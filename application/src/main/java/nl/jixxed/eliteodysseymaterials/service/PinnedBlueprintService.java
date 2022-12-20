@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.io.File;
@@ -24,28 +25,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class PinnedBlueprintService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Map<Engineer, HorizonsBlueprint> pinnedBlueprints = new EnumMap<>(Engineer.class);
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
-        EventService.addStaticListener(0, CommanderSelectedEvent.class, event -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, CommanderSelectedEvent.class, event -> {
             load(event.getCommander());
             log.info("pinned blueprints loaded for: " + event.getCommander().getName() + " - " + event.getCommander().getGameVersion());
-        });
-//        EventService.addStaticListener(0, JournalInitEvent.class, event -> {
+        }));
+//        eventListeners.add(EventService.addStaticListener(0, JournalInitEvent.class, event -> {
 //            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
 //                load(commander);
 //                log.info("pinned blueprints loaded");
 //            });
 //        });
-//        EventService.addStaticListener(0, EngineerEvent.class, event -> {
+//        eventListeners.add(EventService.addStaticListener(0, EngineerEvent.class, event -> {
 //            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
 //                load(commander);
 //                log.info("pinned blueprints loaded");

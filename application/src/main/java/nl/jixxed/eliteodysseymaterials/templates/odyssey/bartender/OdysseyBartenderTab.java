@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.AssetType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
@@ -41,6 +42,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
     private DestroyableLabel title;
     private VBox right;
     private final BooleanProperty detailView = new SimpleBooleanProperty(false);
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public OdysseyBartenderTab() {
         initComponents();
@@ -111,7 +113,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, OdysseyBartenderMaterialSelectedEvent.class, odysseyBartenderMaterialSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(this, OdysseyBartenderMaterialSelectedEvent.class, odysseyBartenderMaterialSelectedEvent -> {
             this.detailView.set(true);
             this.title.textProperty().bind(LocaleService.getStringBinding("tabs.bartender.select.material.trade"));
             final OdysseyBartenderMaterial odysseyBartenderMaterial = odysseyBartenderMaterialSelectedEvent.getOdysseyBartenderMaterial();
@@ -131,10 +133,10 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
                 this.right.getChildren().add(0, this.odysseyBartenderResult);
             }
 
-        });
-        EventService.addListener(this, 9, CommanderSelectedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, 9, CommanderSelectedEvent.class, event -> {
             resetView();
-        });
+        }));
     }
 
     @Override

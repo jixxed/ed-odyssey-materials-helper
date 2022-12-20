@@ -17,13 +17,11 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialTotals;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
@@ -40,6 +38,7 @@ public class OdysseyMaterialOverview extends VBox {
     private final Map<OdysseyMaterial, OdysseyMaterialCard> materialCards = new HashMap<>();
     private Search currentSearch = new Search("", OdysseyMaterialSort.ALPHABETICAL, OdysseyMaterialShow.ALL);
     private ChangeListener<Number> resizeListener;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     OdysseyMaterialOverview(final ScrollPane scrollPane) {
         this.scrollPane = scrollPane;
@@ -85,13 +84,13 @@ public class OdysseyMaterialOverview extends VBox {
 
     private void initEventHandling() {
 
-        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event -> {
             Platform.runLater(() -> {
                 this.updateContent(this.currentSearch);
                 layoutChildren();
             });
-        });
-        EventService.addListener(this, OrientationChangeEvent.class, orientationChangeEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, OrientationChangeEvent.class, orientationChangeEvent -> {
             final Orientation orientation = orientationChangeEvent.getMaterialOrientation().getOrientation();
             this.assetChemicalFlow.setOrientation(orientation);
             this.assetCircuitFlow.setOrientation(orientation);
@@ -99,24 +98,24 @@ public class OdysseyMaterialOverview extends VBox {
             this.goodFlow.setOrientation(orientation);
             this.dataFlow.setOrientation(orientation);
             Platform.runLater(() -> this.updateContent(this.currentSearch));
-        });
-        EventService.addListener(this, 1, SearchEvent.class, searchEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, 1, SearchEvent.class, searchEvent -> {
             this.currentSearch = searchEvent.getSearch();
             Platform.runLater(() -> {
                 this.updateContent(this.currentSearch);
                 layoutChildren();
             });
 
-        });
-        EventService.addListener(this, CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch)));
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch))));
         Observable
-                .create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
+                .create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
                     if (JournalEventType.BACKPACK.equals(journalProcessedEvent.getJournalEventType())
                             || JournalEventType.EMBARK.equals(journalProcessedEvent.getJournalEventType())
                             || JournalEventType.SHIPLOCKER.equals(journalProcessedEvent.getJournalEventType())) {
                         emitter.onNext(journalProcessedEvent);
                     }
-                }))
+                })))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(journalProcessedEvent -> Platform.runLater(() -> this.updateContent(this.currentSearch)));

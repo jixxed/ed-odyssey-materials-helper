@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,36 +24,37 @@ public class LocationService {
     @Getter
     @Setter
     private static Optional<String> statusBodyName;
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
 
     private LocationService() {
     }
 
     static {
-        EventService.addStaticListener(ApproachBodyJournalEvent.class, event -> {//When approaching body
+        EVENT_LISTENERS.add(EventService.addStaticListener(ApproachBodyJournalEvent.class, event -> {//When approaching body
             body = event.getApproachBody().getBody();
             bodyID = event.getApproachBody().getBodyID();
             station = "";
             notifyListeners();
-        });
-        EventService.addStaticListener(ApproachSettlementJournalEvent.class, event -> {//when approaching settlement, also on startup if at settlement
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(ApproachSettlementJournalEvent.class, event -> {//when approaching settlement, also on startup if at settlement
             body = event.getApproachSettlement().getBodyName();
             bodyID = event.getApproachSettlement().getBodyID();
             station = "";
             notifyListeners();
-        });
-        EventService.addStaticListener(DockedJournalEvent.class, event -> {//Always player controlled
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(DockedJournalEvent.class, event -> {//Always player controlled
             station = event.getDocked().getStationName();
             notifyListeners();
-        });
-        EventService.addStaticListener(FSDJumpJournalEvent.class, event -> {//After jump to other system
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(FSDJumpJournalEvent.class, event -> {//After jump to other system
             currentStarSystem = event.getStarSystem();
             currentSystemAddress = event.getEvent().getSystemAddress();
             body = event.getBody();
             bodyID = event.getEvent().getBodyID();
             notifyListeners();
-        });
-        EventService.addStaticListener(CarrierJumpJournalEvent.class, event -> {//After jump to other system
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(CarrierJumpJournalEvent.class, event -> {//After jump to other system
             if (event.getEvent().getDocked()) {//should always be true, but let's be safe
                 currentStarSystem = event.getStarSystem();
                 currentSystemAddress = event.getEvent().getSystemAddress();
@@ -60,22 +62,22 @@ public class LocationService {
                 bodyID = event.getEvent().getBodyID();
                 notifyListeners();
             }
-        });
-        EventService.addStaticListener(LeaveBodyJournalEvent.class, event -> {//on leaving body
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(LeaveBodyJournalEvent.class, event -> {//on leaving body
             body = "";
             bodyID = null;
             station = "";
             notifyListeners();
-        });
-        EventService.addStaticListener(LiftOffJournalEvent.class, event -> {//can be either player or AI controlled
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(LiftOffJournalEvent.class, event -> {//can be either player or AI controlled
             if (event.getLiftoff().getPlayerControlled() || event.getLiftoff().getTaxi().orElse(false)) {// both false means ship sent away
                 station = "";
                 latitude = DEFAULT_LATITUDE;
                 longitude = DEFAULT_LONGITUDE;
             }
             notifyListeners();
-        });
-        EventService.addStaticListener(LocationJournalEvent.class, event -> {//at startup or upon respawn
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(LocationJournalEvent.class, event -> {//at startup or upon respawn
             currentStarSystem = event.getStarSystem();
             currentSystemAddress = event.getLocation().getSystemAddress();
             body = event.getBody();
@@ -87,26 +89,26 @@ public class LocationService {
                 station = event.getStationName();
             }
             notifyListeners();
-        });
-        EventService.addStaticListener(SupercruiseEntryJournalEvent.class, event -> {//on entering SC
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(SupercruiseEntryJournalEvent.class, event -> {//on entering SC
             station = "";
             latitude = DEFAULT_LATITUDE;
             longitude = DEFAULT_LONGITUDE;
             notifyListeners();
-        });
-        EventService.addStaticListener(TouchdownJournalEvent.class, event -> {//can be either player or AI controlled
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(TouchdownJournalEvent.class, event -> {//can be either player or AI controlled
             station = event.getTouchdown().getNearestDestination().orElse("");
             latitude = event.getTouchdown().getLatitude().orElse(DEFAULT_LATITUDE);
             longitude = event.getTouchdown().getLongitude().orElse(DEFAULT_LONGITUDE);
 
             notifyListeners();
-        });
-        EventService.addStaticListener(UndockedJournalEvent.class, event -> {//Always player controlled
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(UndockedJournalEvent.class, event -> {//Always player controlled
             station = "";
             latitude = DEFAULT_LATITUDE;
             longitude = DEFAULT_LONGITUDE;
             notifyListeners();
-        });
+        }));
     }
 
     public static StarSystem getCurrentStarSystem() {

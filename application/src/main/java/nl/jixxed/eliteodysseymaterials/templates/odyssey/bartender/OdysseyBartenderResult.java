@@ -5,6 +5,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderAmountSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
@@ -12,7 +13,9 @@ import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OdysseyBartenderResult extends VBox implements Template {
@@ -22,6 +25,7 @@ public class OdysseyBartenderResult extends VBox implements Template {
     private DestroyableLabel totalOffered;
     private DestroyableLabel wasted;
     private DestroyableLabel toReceive;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     OdysseyBartenderResult() {
         initComponents();
@@ -54,16 +58,16 @@ public class OdysseyBartenderResult extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, OdysseyBartenderMaterialSelectedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, OdysseyBartenderMaterialSelectedEvent.class, event -> {
             this.selectedAsset = event.getOdysseyBartenderMaterial().getAsset();
             recalculate();
-        });
-        EventService.addListener(this, OdysseyBartenderAmountSelectedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, OdysseyBartenderAmountSelectedEvent.class, event -> {
             final Asset asset = event.getAsset();
             final Integer amountSelected = event.getAmountSelected();
             this.tradeList.put(asset, amountSelected);
             recalculate();
-        });
+        }));
     }
 
     void reset() {

@@ -35,6 +35,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -59,6 +60,7 @@ public class FXApplication extends Application {
     private TimeStampedGameStateWatcher navrouteWatcher;
     private TimeStampedGameStateWatcher modulesinfoWatcher;
     private TimeStampedGameStateWatcher fcMaterialsWatcher;
+    private final java.util.List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private boolean initialized = false;
     public Stage getPrimaryStage() {
@@ -125,25 +127,25 @@ public class FXApplication extends Application {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder(new File(event.getPath())));
-        EventService.addListener(this, CommanderSelectedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, WatchedFolderChangedEvent.class, event -> resetWatchedFolder(new File(event.getPath()))));
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, event -> {
             UserPreferencesService.loadUserPreferences(event.getCommander());
             if (this.initialized) {
                 reset(this.journalWatcher.getWatchedFolder());
             }
-        });
-        EventService.addListener(this, CommanderAllListedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
             this.initialized = true;
-        });
-        EventService.addListener(this, JournalInitEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
             }
-        });
-        EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
             this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
             EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
-        });
+        }));
         this.primaryStage.setOnCloseRequest(event -> {
             try {
                 EventService.publish(new TerminateApplicationEvent());
@@ -155,7 +157,7 @@ public class FXApplication extends Application {
                 //don't care
             }
         });
-        EventService.addListener(this, SaveWishlistEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, SaveWishlistEvent.class, event -> {
             final FileChooser fileChooser = new FileChooser();
             //Set extension filter for text files
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
@@ -172,8 +174,8 @@ public class FXApplication extends Application {
                     saveXlsToFile(event.getXlsSupplier().get(), file);
                 }
             }
-        });
-        EventService.addListener(this, SaveInventoryEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, SaveInventoryEvent.class, event -> {
             final FileChooser fileChooser = new FileChooser();
             //Set extension filter for text files
 //            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
@@ -190,7 +192,7 @@ public class FXApplication extends Application {
                     saveXlsToFile(event.getXlsSupplier().get(), file);
                 }
             }
-        });
+        }));
     }
 
     private void setupWatchers() {

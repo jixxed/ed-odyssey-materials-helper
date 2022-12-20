@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ar.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.overlay.ar.AROverlay;
@@ -101,9 +102,10 @@ public class ARService {
     private static final ScreenshotService screenshotService = GDIScreenshotService.getInstance();
     private static final ExecutorService executorService = Executors.newFixedThreadPool(6);
     private static final Pattern DATA_PORT_NAME_PATTERN = Pattern.compile("^([A-Z]*[\s]?DATA PORT)[\s]?([\\d]{0,2})$");
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             if (timer != null) {
                 timer.cancel();
                 timerDisplay.cancel();
@@ -111,14 +113,14 @@ public class ARService {
                 animationTimer.stop();
                 log.info("AR Service shutdown finished.");
             }
-        });
+        }));
 
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
                     NativeLibrary.getInstance("user32").dispose();
                     NativeLibrary.getInstance("gdi32").dispose();
 
                 }
-        );
+        ));
     }
     public static void bartenderToggle() {
         bartenderOverlayEnabled.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));

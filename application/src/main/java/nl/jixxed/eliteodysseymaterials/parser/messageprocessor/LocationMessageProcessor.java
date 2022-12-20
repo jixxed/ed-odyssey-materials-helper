@@ -6,19 +6,24 @@ import nl.jixxed.eliteodysseymaterials.enums.SystemGovernment;
 import nl.jixxed.eliteodysseymaterials.enums.SystemSecurity;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Location;
 import nl.jixxed.eliteodysseymaterials.service.EDDNService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LocationMessageProcessor implements MessageProcessor<Location> {
     private Boolean isFirstLocationEventInJournal = Boolean.TRUE;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public LocationMessageProcessor() {
-        EventService.addListener(this, JournalInitEvent.class, journalInitEvent -> {
+        eventListeners.add(EventService.addListener(this, JournalInitEvent.class, journalInitEvent -> {
             if (!journalInitEvent.isInitialised()) {
                 this.isFirstLocationEventInJournal = Boolean.FALSE;
             }
-        });
+        }));
     }
     @Override
     public void process(final Location event) {

@@ -8,10 +8,8 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Fileheader.Fileheader;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.CommanderAddedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.LoadGameEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
 
 import java.io.File;
@@ -32,6 +30,7 @@ public class ApplicationState {
     private static FileLock fileLock;
     private static ApplicationState applicationState;
     private final Set<Commander> commanders = new HashSet<>();
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private final Map<Engineer, EngineerStatus> engineerStates = new EnumMap<>(Map.ofEntries(
             Map.entry(Engineer.DOMINO_GREEN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
             Map.entry(Engineer.HERO_FERRARI, new EngineerStatus(EngineerState.UNKNOWN, 0, 0)),
@@ -83,11 +82,11 @@ public class ApplicationState {
 
     private ApplicationState() {
 
-        EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken())));
-        EventService.addListener(this, LoadGameEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken()))));
+        this.eventListeners.add(EventService.addListener(this, LoadGameEvent.class, event -> {
             this.gameMode = event.getGameMode();
             this.expansion = event.getExpansion();
-        });
+        }));
     }
 
     public static ApplicationState getInstance() {

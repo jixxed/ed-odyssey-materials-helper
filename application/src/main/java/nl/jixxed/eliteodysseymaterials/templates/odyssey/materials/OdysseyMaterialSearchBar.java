@@ -22,6 +22,8 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -33,6 +35,7 @@ class OdysseyMaterialSearchBar extends HBox {
     private ComboBox<OdysseyMaterialShow> showMaterialsComboBox;
     private ComboBox<OdysseyMaterialSort> sortMaterialsComboBox;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     public OdysseyMaterialSearchBar() {
         initComponents();
         initEventHandling();
@@ -129,14 +132,14 @@ class OdysseyMaterialSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.showMaterialsComboBox.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
             this.sortMaterialsComboBox.styleProperty().set(fontStyle);
-        });
-        EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
             if (OdysseyTabs.OVERVIEW.equals(event.getSelectedTab())) {
                 this.textField.setDisable(false);
                 this.showMaterialsComboBox.setDisable(false);
@@ -146,10 +149,10 @@ class OdysseyMaterialSearchBar extends HBox {
                 this.showMaterialsComboBox.setDisable(true);
                 this.sortMaterialsComboBox.setDisable(true);
             }
-        });
-        EventService.addListener(this, SoloModeEvent.class, soloModeEvent ->
+        }));
+        this.eventListeners.add(EventService.addListener(this, SoloModeEvent.class, soloModeEvent ->
                 EventService.publish(new SearchEvent(new Search(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox))))
-        );
+        ));
     }
 
     private void setDefaultOptions() {

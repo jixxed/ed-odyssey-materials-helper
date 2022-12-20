@@ -38,6 +38,7 @@ class OdysseyBlueprintContent extends VBox {
     private Label countLabel;
     private HBox recipeHeader;
     private MenuButton addToWishlist;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     OdysseyBlueprintContent(final OdysseyBlueprint blueprint) {
         this.blueprint = blueprint;
@@ -252,29 +253,29 @@ class OdysseyBlueprintContent extends VBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
                     loadInitialCount(wishlists);
                 });
             }
-        });
-        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 final Wishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
                 loadInitialCount(wishlists);
             }
-        });
-        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
                     loadInitialCount(wishlists);
                 });
             }
-        });
-        EventService.addListener(this, WishlistChangedEvent.class, wishlistEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, WishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
                 final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName())).count()).orElse(0L);
                 if (count > 0L) {
@@ -283,7 +284,7 @@ class OdysseyBlueprintContent extends VBox {
                     this.countLabel.textProperty().bind(LocaleService.getStringBinding(() -> ""));
                 }
             }
-        });
+        }));
     }
 
     private List<OdysseyMaterialIngredient> getRecipeIngredients(final Class<? extends OdysseyMaterial> materialClass, final OdysseyStorageType storageType, final Map<? extends OdysseyMaterial, Storage> materialMap) {

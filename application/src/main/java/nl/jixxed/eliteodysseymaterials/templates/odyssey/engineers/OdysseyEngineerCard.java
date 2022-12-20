@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerCard;
@@ -30,8 +31,9 @@ class OdysseyEngineerCard extends EngineerCard {
     private List<HBox> suitBlueprintLabels;
     private Label weaponModulesTitle;
     private List<HBox> weaponBlueprintLabels;
-    protected HBox specialisation;
+    private HBox specialisation;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     OdysseyEngineerCard(final Engineer engineer) {
         super(engineer);
         initComponents();
@@ -57,7 +59,7 @@ class OdysseyEngineerCard extends EngineerCard {
 
     @SuppressWarnings("java:S2177")
     private void initEventHandling(final Engineer engineer) {
-        EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
+        this.eventListeners.add(EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
             if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
@@ -68,7 +70,7 @@ class OdysseyEngineerCard extends EngineerCard {
                 this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
                 this.getChildren().addAll(this.unlockRequirementsLabels);
             }
-        });
+        }));
     }
 
     private HBox getEngineerSpecialisation() {

@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.service.ar.OcrConstants;
 import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.tess4j.ITesseract;
@@ -17,6 +18,8 @@ import nl.jixxed.tess4j.util.LoadLibs;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
@@ -24,6 +27,7 @@ public class OCRService {
     private static final ITesseract instance;  // JNA Interface Mapping
     private static final String TESS_DATA_PATH = "tess.data.path";
     private static final String LEPT_DATA_PATH = "lept.data.path";
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
 
@@ -34,12 +38,12 @@ public class OCRService {
         instance.setLanguage(ApplicationLocale.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_LOCALE, "ENGLISH")).getIso6392B());
 
         setCharWhitelist(LocaleService.getDataCharacterForCurrentARLocale());
-        EventService.addStaticListener(ARLocaleChangeEvent.class, arLocaleChangeEvent -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(ARLocaleChangeEvent.class, arLocaleChangeEvent -> {
                     instance.setLanguage(arLocaleChangeEvent.getLocale().getIso6392B());
                     setCharWhitelist(LocaleService.getDataCharacterForCurrentARLocale());
                 }
-        );
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        ));
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
                     try {
                         NativeLibrary.getInstance(LoadLibs.getTesseractLibName()).dispose();
                         NativeLibrary.getInstance(LoadLibs.getLeptonicaLibName()).dispose();
@@ -47,7 +51,7 @@ public class OCRService {
                         log.error("Failed to free resources", e);
                     }
                 }
-        );
+        ));
     }
 
     static void setCharWhitelist(final String characters) {

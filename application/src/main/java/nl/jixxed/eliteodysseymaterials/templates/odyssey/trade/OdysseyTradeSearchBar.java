@@ -20,11 +20,10 @@ import nl.jixxed.eliteodysseymaterials.enums.TradeShow;
 import nl.jixxed.eliteodysseymaterials.enums.TradeSort;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.TradeSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -35,6 +34,7 @@ class OdysseyTradeSearchBar extends HBox {
     private TextField textField;
     private ComboBox<TradeShow> showTradeComboBox;
     private ComboBox<TradeSort> sortTradeComboBox;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public OdysseyTradeSearchBar() {
         initComponents();
@@ -119,16 +119,16 @@ class OdysseyTradeSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.showTradeComboBox.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
             this.sortTradeComboBox.styleProperty().set(fontStyle);
-        });
-        EventService.addListener(this, SoloModeEvent.class, soloModeEvent ->
+        }));
+        this.eventListeners.add(EventService.addListener(this, SoloModeEvent.class, soloModeEvent ->
                 EventService.publish(new TradeSearchEvent(new TradeSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortTradeComboBox), getShowOrDefault(this.showTradeComboBox))))
-        );
+        ));
     }
 
     private void setDefaultOptions() {

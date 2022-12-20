@@ -12,18 +12,22 @@ import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class HorizonsCommoditiesOverview extends VBox implements Template {
     private HorizonsCommodityCard[] commodityCards;
     private CommoditiesSearch currentSearch = new CommoditiesSearch("", HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesShow.ALL);
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsCommoditiesOverview() {
         initComponents();
@@ -73,15 +77,15 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
             if (StoragePool.SHIP.equals(storageEvent.getStoragePool()) || StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
                 Platform.runLater(this::update);
 
             }
-        });
-        EventService.addListener(this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
             Platform.runLater(this::update);
-        });
+        }));
     }
 }

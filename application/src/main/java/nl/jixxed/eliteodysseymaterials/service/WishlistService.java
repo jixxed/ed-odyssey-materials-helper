@@ -17,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -24,10 +26,11 @@ public class WishlistService {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
 
-        EventService.addStaticListener(0, WishlistBlueprintEvent.class,
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, WishlistBlueprintEvent.class,
                 wishlistEvent -> Platform.runLater(() ->
                         wishlistEvent.getWishlistBlueprints().forEach(wishlistRecipe -> {
                             switch (wishlistEvent.getAction()) {
@@ -40,9 +43,9 @@ public class WishlistService {
                                 case MODIFY -> {
                                 }
                             }
-                        })));
+                        }))));
 
-        EventService.addStaticListener(0, HorizonsWishlistBlueprintEvent.class,
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, HorizonsWishlistBlueprintEvent.class,
                 wishlistEvent -> Platform.runLater(() ->
                         wishlistEvent.getWishlistBlueprints().forEach(horizonsWishlistBlueprint -> {
                             switch (wishlistEvent.getAction()) {
@@ -55,7 +58,7 @@ public class WishlistService {
                                 case MODIFY ->
                                         modifyHorizonsBlueprint(wishlistEvent.getWishlistUUID(), wishlistEvent.getCommander(), horizonsWishlistBlueprint);
                             }
-                        })));
+                        }))));
     }
 
     public static Integer getAllWishlistsCount(final OdysseyMaterial odysseyMaterial) {

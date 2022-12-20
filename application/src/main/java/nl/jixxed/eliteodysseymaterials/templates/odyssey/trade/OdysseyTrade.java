@@ -20,10 +20,13 @@ import nl.jixxed.eliteodysseymaterials.enums.TradeStatus;
 import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.XMessageWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.XMessage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -44,6 +47,7 @@ abstract class OdysseyTrade extends FlowPane {
     protected OdysseyTradeIngredient offerIngredient;
     protected OdysseyTradeIngredient receiveIngredient;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     @Setter
     private Optional<Consumer<TradeSpec>> callback = Optional.empty();
     private Stage chatStage;
@@ -100,7 +104,7 @@ abstract class OdysseyTrade extends FlowPane {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
             final XMessage message = xMessageWebSocketEvent.getXMessageMessage().getMessage();
             if (message.getOfferId().equals(this.offerId)) {
                 if (this.chatStage != null && this.chatStage.isShowing()) {
@@ -110,7 +114,7 @@ abstract class OdysseyTrade extends FlowPane {
                     NotificationService.showInformation(NotificationType.TRADE, LocaleService.getLocalizedStringForCurrentLocale("notification.trade.message.from", message.getInfo().getNickname()), message.getText());
                 }
             }
-        });
+        }));
     }
 
     private void initComponents() {

@@ -24,6 +24,9 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 class OdysseyMaterialCard extends VBox implements Template {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -47,6 +50,7 @@ class OdysseyMaterialCard extends VBox implements Template {
     private DestroyableResizableImageView backpackImage;
     private DestroyableResizableImageView shipImage;
 //    private DestroyableResizableImageView totalImage;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     OdysseyMaterialCard(final OdysseyMaterial odysseyMaterial) {
         this.odysseyMaterial = odysseyMaterial;
@@ -109,14 +113,14 @@ class OdysseyMaterialCard extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, CommanderSelectedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, event -> {
             this.fleetCarrierAmount.setText(String.valueOf(0));
             this.backpackAmount.setText(String.valueOf(0));
             this.shiplockerAmount.setText(String.valueOf(0));
             this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum()));
             this.totalAmount.setText(String.valueOf(0));
-        });
-        EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
             if (StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
                 this.fleetCarrierAmount.setText(String.valueOf(this.amounts.getFleetCarrierValue()));
             } else if (StoragePool.BACKPACK.equals(storageEvent.getStoragePool())) {
@@ -126,23 +130,23 @@ class OdysseyMaterialCard extends VBox implements Template {
             }
             this.totalAmount.setText(String.valueOf(this.amounts.getTotalValue()));
             Platform.runLater(this::updateStyle);
-        });
+        }));
 
-        EventService.addListener(this, SearchEvent.class, searchEvent -> {
+        this.eventListeners.add(EventService.addListener(this, SearchEvent.class, searchEvent -> {
             this.materialShow = searchEvent.getSearch().getMaterialShow();
             Platform.runLater(this::updateStyle);
-        });
+        }));
 
-        EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event ->
+        this.eventListeners.add(EventService.addListener(this, IrrelevantMaterialOverrideEvent.class, event ->
                 Platform.runLater(this::updateMaterialCardStyle)
-        );
-        EventService.addListener(this, 9, WishlistBlueprintEvent.class, event -> {
+        ));
+        this.eventListeners.add(EventService.addListener(this, 9, WishlistBlueprintEvent.class, event -> {
             Platform.runLater(() -> this.wishlistAmount.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.odysseyMaterial)).mapToInt(Integer::intValue).sum())));
             Platform.runLater(this::updateStyle);
-        });
-        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
                 Platform.runLater(this::updateMaterialCardStyle)
-        );
+        ));
     }
 
     private void updateStyle() {

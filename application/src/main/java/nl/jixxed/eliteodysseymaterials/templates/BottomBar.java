@@ -30,11 +30,14 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 class BottomBar extends HBox {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private String system = "";
     private String body = "";
@@ -90,17 +93,17 @@ class BottomBar extends HBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged);
-        EventService.addListener(this, LocationChangedEvent.class, this::updateLocationLabel);
-        EventService.addListener(this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel);
-        EventService.addListener(this, EngineerEvent.class, event -> hideLoginRequest());
-        EventService.addListener(this, CommanderAddedEvent.class, this::handleAddedCommander);
-        EventService.addListener(this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed());
-        EventService.addListener(this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear());
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px"));
-        EventService.addListener(this, LoadGameEvent.class, this::handleLoadGame);
-        EventService.addListener(this, JournalInitEvent.class, event -> updateApiLabel());
-        EventService.addListener(this, CapiFleetCarrierEvent.class, event -> updateApiLabel());
+        this.eventListeners.add(EventService.addListener(this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged));
+        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, this::updateLocationLabel));
+        this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel));
+        this.eventListeners.add(EventService.addListener(this, EngineerEvent.class, event -> hideLoginRequest()));
+        this.eventListeners.add(EventService.addListener(this, CommanderAddedEvent.class, this::handleAddedCommander));
+        this.eventListeners.add(EventService.addListener(this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed()));
+        this.eventListeners.add(EventService.addListener(this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear()));
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px")));
+        this.eventListeners.add(EventService.addListener(this, LoadGameEvent.class, this::handleLoadGame));
+        this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> updateApiLabel()));
+        this.eventListeners.add(EventService.addListener(this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
     }
 
     private void afterAllCommandersListed() {

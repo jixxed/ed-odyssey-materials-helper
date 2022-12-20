@@ -33,6 +33,8 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
@@ -43,6 +45,7 @@ import java.util.concurrent.Executors;
 public class CAPIService {
     private static CAPIService capiService;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final Application application;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -64,7 +67,7 @@ public class CAPIService {
 //                .debug()
                 .build(FrontierApi.instance());
 
-        EventService.addListener(this, CapiOAuthCallbackEvent.class, event -> {
+        EVENT_LISTENERS.add(EventService.addListener(this, CapiOAuthCallbackEvent.class, event -> {
             log.info(event.getCode());
             log.info(event.getState());
             this.executor.submit(() -> {
@@ -93,9 +96,9 @@ public class CAPIService {
                 }
             });
             requestFleetCarrierData();
-        });
-        EventService.addListener(this, TerminateApplicationEvent.class, terminateApplicationEvent -> this.executor.shutdownNow());
-        EventService.addListener(this, JournalInitEvent.class, event -> {
+        }));
+        EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, terminateApplicationEvent -> this.executor.shutdownNow()));
+        EVENT_LISTENERS.add(EventService.addListener(this, JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 Platform.runLater(() -> {
                             this.active.set(this.loadToken(APPLICATION_STATE.getPreferredCommander().orElse(null)));
@@ -120,13 +123,13 @@ public class CAPIService {
                 );
 
             }
-        });
-        EventService.addListener(this, TerminateApplicationEvent.class, event -> {
+        }));
+        EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {
             if (this.timer != null) {
                 this.timer.cancel();
             }
             this.executor.shutdownNow();
-        });
+        }));
     }
 
     private static long calculateDelay(final File fleetCarrierFile) {

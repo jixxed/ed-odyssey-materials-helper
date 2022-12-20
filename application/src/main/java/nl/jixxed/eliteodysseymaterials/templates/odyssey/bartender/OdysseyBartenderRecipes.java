@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialHoverEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class OdysseyBartenderRecipes extends VBox implements Template {
     private DestroyableLabel title;
     private final List<DestroyableLabel> recipes = new ArrayList<>();
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     OdysseyBartenderRecipes() {
         initComponents();
@@ -35,7 +37,7 @@ public class OdysseyBartenderRecipes extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, OdysseyBartenderMaterialHoverEvent.class, event -> update(event.getAsset()));
+        this.eventListeners.add(EventService.addListener(this, OdysseyBartenderMaterialHoverEvent.class, event -> update(event.getAsset())));
     }
 
     private void update(final Asset asset) {

@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModificationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
@@ -56,6 +57,7 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
     private ScheduledThreadPoolExecutor executor;
 
     private ScheduledFuture<?> scheduledFuture;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     OdysseyLoadoutModification(final Loadout loadout, final Integer position, final OdysseyLoadoutItem loadoutItem) {
         this.loadout = loadout;
@@ -284,12 +286,16 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
-            if (this.scheduledFuture != null) {
-                this.scheduledFuture.cancel(true);
-            }
-            this.executor.shutdownNow();
-        });
+        this.eventListeners.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {
+            stopExecutor();
+        }));
+    }
+
+    private void stopExecutor() {
+        if (this.scheduledFuture != null) {
+            this.scheduledFuture.cancel(true);
+        }
+        this.executor.shutdownNow();
     }
 
     @Override
@@ -302,6 +308,7 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
         this.loadoutItem = null;
         this.imageView = null;
         this.label = null;
+        stopExecutor();
     }
 
     @Override

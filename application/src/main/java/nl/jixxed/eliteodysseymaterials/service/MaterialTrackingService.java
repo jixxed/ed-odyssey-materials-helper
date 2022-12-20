@@ -47,7 +47,7 @@ public class MaterialTrackingService {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     static final List<BackpackChangeEvent> BACKPACK_CHANGE_EVENTS = new ArrayList<>();
     private static boolean isEnabled = false;
-    private static final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
     private static final Map<String, Terminal> TERMINAL_DATAS = new ConcurrentHashMap<>();
     private static Thread thread;
@@ -62,15 +62,15 @@ public class MaterialTrackingService {
         log.debug("Initialize MaterialTrackingService");
         close();
         BACKPACK_CHANGE_EVENTS.clear();
-        eventListeners.add(EventService.addStaticListener(BackpackChangeEvent.class, MaterialTrackingService::processEvent));
-        eventListeners.add(EventService.addStaticListener(SupercruiseEntryJournalEvent.class, superCruiseEntryJournalEvent -> publish()));//send on SC entry
-        eventListeners.add(EventService.addStaticListener(LocationJournalEvent.class, locationJournalEvent -> publish()));//send on relog or respawn
-        eventListeners.add(EventService.addStaticListener(CommanderSelectedEvent.class, commanderSelectedEvent -> publish()));
-        eventListeners.add(EventService.addStaticListener(ShipLockerEvent.class, shipLockerEvent -> clearChanges(shipLockerEvent.getTimestamp())));
-        eventListeners.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> isEnabled = journalInitEvent.isInitialised()));
-        EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(BackpackChangeEvent.class, MaterialTrackingService::processEvent));
+        EVENT_LISTENERS.add(EventService.addStaticListener(SupercruiseEntryJournalEvent.class, superCruiseEntryJournalEvent -> publish()));//send on SC entry
+        EVENT_LISTENERS.add(EventService.addStaticListener(LocationJournalEvent.class, locationJournalEvent -> publish()));//send on relog or respawn
+        EVENT_LISTENERS.add(EventService.addStaticListener(CommanderSelectedEvent.class, commanderSelectedEvent -> publish()));
+        EVENT_LISTENERS.add(EventService.addStaticListener(ShipLockerEvent.class, shipLockerEvent -> clearChanges(shipLockerEvent.getTimestamp())));
+        EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> isEnabled = journalInitEvent.isInitialised()));
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             close();
-        });
+        }));
         //check if statistics file exists
         thread = new Thread(() -> {
             log.info("Start load material statistics");
@@ -122,7 +122,7 @@ public class MaterialTrackingService {
 
     public static synchronized void close() {
         log.debug("Close MaterialTrackingService");
-        eventListeners.forEach(EventService::removeListener);
+        EVENT_LISTENERS.forEach(EventService::removeListener);
         publish();
         if (thread != null) {
             thread.interrupt();

@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
@@ -53,6 +54,7 @@ class HorizonsEngineerCard extends EngineerCard {
     private SegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment present;
     private TypeSegment notPresent;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsEngineerCard(final Engineer engineer) {
         super(engineer);
@@ -133,17 +135,17 @@ class HorizonsEngineerCard extends EngineerCard {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        EventService.addListener(this, JournalInitEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 updatePinnedBlueprint();
             }
-        });
-        EventService.addListener(this, 9, EngineerPinEvent.class, engineerPinEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, 9, EngineerPinEvent.class, engineerPinEvent -> {
             if (this.engineer.equals(engineerPinEvent.getEngineer())) {
                 updatePinnedBlueprint();
             }
-        });
-        EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
             final Integer rank = APPLICATION_STATE.getEngineerRank(this.engineer);
@@ -167,7 +169,7 @@ class HorizonsEngineerCard extends EngineerCard {
                 this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
                 this.getChildren().addAll(this.unlockRequirementsLabels);
             }
-        });
+        }));
     }
 
     private void updatePinnedBlueprint() {

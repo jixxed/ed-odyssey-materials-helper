@@ -17,12 +17,15 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialTraderService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HorizonsNearestTrader extends VBox implements Template {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
@@ -37,6 +40,7 @@ public class HorizonsNearestTrader extends VBox implements Template {
     private Label distance;
     private String system = "";
     private DestroyableResizableImageView copyIcon;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsNearestTrader(final HorizonsStorageType type) {
         this.type = type;
@@ -55,9 +59,9 @@ public class HorizonsNearestTrader extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, LocationChangedEvent.class, locationEvent -> {
+        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationEvent -> {
             update();
-        });
+        }));
     }
 
     private void update() {

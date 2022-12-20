@@ -12,13 +12,16 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class HorizonsMaterialOverview extends VBox implements Template {
 
@@ -26,6 +29,7 @@ public class HorizonsMaterialOverview extends VBox implements Template {
     private HorizonsMaterialCard[] encodedCards;
     private HorizonsMaterialCard[] manufacturedCards;
     private HBox nearestTraders;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     HorizonsMaterialOverview() {
         initComponents();
         initEventHandling();
@@ -91,8 +95,8 @@ public class HorizonsMaterialOverview extends VBox implements Template {
     @Override
     public void initEventHandling() {
         //NOOP
-        EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
             update(horizonsMaterialSearchEvent.getSearch());
-        });
+        }));
     }
 }

@@ -14,11 +14,10 @@ import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsTabSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -27,6 +26,7 @@ class HorizonsMaterialSearchBar extends HBox {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private TextField textField;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public HorizonsMaterialSearchBar() {
         initComponents();
@@ -67,14 +67,14 @@ class HorizonsMaterialSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
-        });
-        EventService.addListener(this, HorizonsTabSelectedEvent.class, event ->
+        }));
+        this.eventListeners.add(EventService.addListener(this, HorizonsTabSelectedEvent.class, event ->
                 this.textField.setDisable(!HorizonsTabs.MATERIALS.equals(event.getSelectedTab()))
-        );
+        ));
     }
 
     @SuppressWarnings("java:S1144")

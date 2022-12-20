@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
@@ -28,6 +29,8 @@ import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegme
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import org.controlsfx.control.SegmentedBar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class HorizonsMaterialCard extends VBox implements Template {
@@ -39,6 +42,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
     private final HorizonsMaterial material;
     private TypeSegment present;
     private TypeSegment notPresent;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsMaterialCard(final HorizonsMaterial material) {
         this.material = material;
@@ -88,7 +92,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 final Integer materialCount = StorageService.getMaterialCount(this.material);
                 final Integer maxAmount = this.material.getMaxAmount();
@@ -98,11 +102,11 @@ public class HorizonsMaterialCard extends VBox implements Template {
                 this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getMaxAmount() / 7));
                 this.notPresent.setText(String.valueOf(availableStorage));
             }
-        });
+        }));
 
-        EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
             update(horizonsMaterialSearchEvent.getSearch());
-        });
+        }));
     }
 
     private void update(final String search) {

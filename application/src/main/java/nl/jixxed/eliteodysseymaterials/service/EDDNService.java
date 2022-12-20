@@ -50,6 +50,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Scan.Scan;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanBaryCentre.ScanBaryCentre;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard.Shipyard;
 import nl.jixxed.eliteodysseymaterials.service.eddn.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import org.apache.commons.io.input.CharSequenceInputStream;
@@ -79,6 +80,7 @@ public class EDDNService {
     private static final ProblemHandler PROBLEM_HANDLER = ProblemHandler.throwing();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final LocalDateTime MIN_DATETIME = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
 
     public static void init() {
@@ -86,12 +88,12 @@ public class EDDNService {
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
         JSON_VALIDATION_SERVICE.createProblemPrinter(log::error);
-        EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> {
             if (!journalInitEvent.isInitialised()) {
                 final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.USER_LATEST_EVENT, MIN_DATETIME);
                 UserPreferencesService.setPreference(PreferenceConstants.USER_LATEST_EVENT, lastTimestamp.plusSeconds(1));
             }
-        });
+        }));
     }
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final List<FSSSignalDiscovered> fssSignalDiscoveredList = new ArrayList<>();

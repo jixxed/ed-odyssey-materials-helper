@@ -8,10 +8,12 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyEngineerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class OdysseyEngineersTab extends OdysseyTab {
     private final String query = "";
     private OdysseyEngineerCard[] odysseyEngineerCards;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     public OdysseyEngineersTab() {
         initComponents();
         initEventHandling();
@@ -47,9 +50,9 @@ public class OdysseyEngineersTab extends OdysseyTab {
 
 
     private void initEventHandling() {
-        EventService.addListener(this, OdysseyEngineerSearchEvent.class, odysseyEngineerSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(this, OdysseyEngineerSearchEvent.class, odysseyEngineerSearchEvent -> {
             update(odysseyEngineerSearchEvent.getSearch());
-        });
+        }));
     }
 
     private void update(final String search) {

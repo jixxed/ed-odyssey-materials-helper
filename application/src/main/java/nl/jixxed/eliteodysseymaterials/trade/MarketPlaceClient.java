@@ -9,6 +9,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.Info;
@@ -28,10 +29,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 @Slf4j
 public class MarketPlaceClient {
@@ -43,6 +41,7 @@ public class MarketPlaceClient {
     private final Timer timer;
     private final TimerTask task;
     private static MarketPlaceClient marketPlaceClient;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public static MarketPlaceClient getInstance() {
         try {
@@ -75,10 +74,10 @@ public class MarketPlaceClient {
         };
         this.timer = new Timer("Websocket-keep-alive", true);
         this.timer.scheduleAtFixedRate(this.task, 0, 59L * 1000L);
-        EventService.addListener(this, TerminateApplicationEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {
             close();
             destroy();
-        });
+        }));
     }
 
     public void connect() {

@@ -19,6 +19,7 @@ import nl.jixxed.eliteodysseymaterials.enums.TradeOdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.ConnectionWebSocketEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
@@ -46,16 +47,17 @@ class OdysseyTradeCreateBlock extends VBox {
     private Label receiveAmount;
     private IntField receiveAmountInput;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     OdysseyTradeCreateBlock() {
         initComponents();
         initEventHandling();
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
             final boolean connected = connectionWebSocketEvent.isConnected();
             this.setConnected(connected);
-        });
+        }));
     }
 
     private void initComponents() {

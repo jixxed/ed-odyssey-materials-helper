@@ -4,14 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -20,6 +19,7 @@ public class TimeStampedGameStateWatcher {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final GameStateWatcher gameStateWatcher = new GameStateWatcher();
     private final AtomicReference<String> timeStamp = new AtomicReference<>("");
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private final JournalEventType[] eventType;
     private final Consumer<File> fileProcessor;
     private File file = null;
@@ -35,7 +35,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.SHIPLOCKER,consumer);
-            EventService.addListener(this, ShipLockerEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, ShipLockerEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.BACKPACK)) {
             final Consumer<BackpackEvent> consumer = (BackpackEvent backpackEvent) -> {
@@ -43,7 +43,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.BACKPACK,consumer);
-            EventService.addListener(this, BackpackEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, BackpackEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.CARGO)) {
             final Consumer<CargoEvent> consumer = (CargoEvent cargoEvent) -> {
@@ -51,7 +51,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.CARGO,consumer);
-            EventService.addListener(this, CargoEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, CargoEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.MARKET)) {
             final Consumer<MarketEvent> consumer = (MarketEvent marketEvent) -> {
@@ -59,7 +59,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.MARKET,consumer);
-            EventService.addListener(this, MarketEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, MarketEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.NAVROUTE)) {
             final Consumer<NavRouteEvent> consumer = (NavRouteEvent navRouteEvent) -> {
@@ -67,7 +67,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.NAVROUTE,consumer);
-            EventService.addListener(this, NavRouteEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, NavRouteEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.NAVROUTECLEAR)) {
             final Consumer<NavRouteClearEvent> consumer = (NavRouteClearEvent navRouteClearEvent) -> {
@@ -75,7 +75,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.NAVROUTECLEAR,consumer);
-            EventService.addListener(this, NavRouteClearEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, NavRouteClearEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.OUTFITTING)) {
             final Consumer<OutfittingEvent> consumer = (OutfittingEvent outfittingEvent) -> {
@@ -83,7 +83,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.OUTFITTING,consumer);
-            EventService.addListener(this, OutfittingEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, OutfittingEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.SHIPYARD)) {
             final Consumer<ShipyardEvent> consumer = (ShipyardEvent shipyardEvent) -> {
@@ -91,7 +91,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.SHIPYARD,consumer);
-            EventService.addListener(this, ShipyardEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, ShipyardEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.MODULEINFO)) {
             final Consumer<ModuleInfoEvent> consumer = (ModuleInfoEvent moduleInfoEvent) -> {
@@ -99,7 +99,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.MODULEINFO,consumer);
-            EventService.addListener(this, ModuleInfoEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, ModuleInfoEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.FCMATERIALS)) {
             final Consumer<FCMaterialsEvent> consumer = (FCMaterialsEvent fcMaterialsEvent) -> {
@@ -107,7 +107,7 @@ public class TimeStampedGameStateWatcher {
                 this.process(this.file);
             };
             this.eventConsumers.put(JournalEventType.FCMATERIALS,consumer);
-            EventService.addListener(this, FCMaterialsEvent.class, consumer);
+            this.eventListeners.add(EventService.addListener(this, FCMaterialsEvent.class, consumer));
         }
     }
 

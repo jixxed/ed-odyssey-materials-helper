@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
 import java.io.File;
@@ -27,15 +28,16 @@ public class FavouriteService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static final List<OdysseyMaterial> FAVOURITES = new ArrayList<>();
+    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {
-        EventService.addStaticListener(0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             load(commanderSelectedEvent.getCommander());
-        });
-        EventService.addStaticListener(0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> load(commander)
             );
-        });
+        }));
     }
 
     public static boolean isFavourite(final OdysseyMaterial odysseyMaterial) {

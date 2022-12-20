@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.enums.TradeType;
 import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.trade.*;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
@@ -44,6 +45,7 @@ public class TradeSpec {
     @Setter
     private Optional<Consumer<TradeSpec>> callback = Optional.empty();
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     @SuppressWarnings("java:S107")
     public TradeSpec(final String offerId, final OdysseyMaterial offerOdysseyMaterial, final int offerAmount, final OdysseyMaterial receiveOdysseyMaterial, final int receiveAmount, final StarSystem starSystem, final TradeType tradeType, final TradeStatus tradeStatus, final String bid, final String acceptedTokenHash, final String ownerHash) {
         this.offerId = offerId;
@@ -87,7 +89,7 @@ public class TradeSpec {
 
     @SuppressWarnings("java:S3776")
     private void initEventHandling() {
-        EventService.addListener(this, 1, XBidPullWebSocketEvent.class, xBidPullWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, 1, XBidPullWebSocketEvent.class, xBidPullWebSocketEvent -> {
             final Offer bidOffer = xBidPullWebSocketEvent.getXBidPullMessage().getOffer();
             if (getOfferId().equals(bidOffer.getOfferId())) {
                 if (isBidFromMe()) {
@@ -116,9 +118,9 @@ public class TradeSpec {
                 }
                 this.callback.ifPresent(c -> c.accept(this));
             }
-        });
+        }));
 
-        EventService.addListener(this, 1, XBidPushWebSocketEvent.class, xBidPushWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, 1, XBidPushWebSocketEvent.class, xBidPushWebSocketEvent -> {
             final Offer bidOffer = xBidPushWebSocketEvent.getXBidPushMessage().getOffer();
             if (getOfferId().equals(bidOffer.getOfferId()) && !hasBid()) {
                 this.bid = bidOffer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).map(XBid::getTokenhash).findFirst().orElse("");
@@ -142,9 +144,9 @@ public class TradeSpec {
                 }
                 this.callback.ifPresent(c -> c.accept(this));
             }
-        });
+        }));
 
-        EventService.addListener(this, 1, XBidAcceptWebSocketEvent.class, xBidAcceptWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, 1, XBidAcceptWebSocketEvent.class, xBidAcceptWebSocketEvent -> {
             final Offer bidOffer = xBidAcceptWebSocketEvent.getXBidAcceptMessage().getOffer();
             final Optional<XBid> acceptedBid = bidOffer.getXbids().stream().sorted(Comparator.comparingLong(XBid::getTimestamp)).filter(XBid::getAccepted).findFirst();
             final boolean accepted = acceptedBid.map(XBid::getAccepted).orElse(Boolean.FALSE);
@@ -180,38 +182,38 @@ public class TradeSpec {
                 }
                 this.callback.ifPresent(c -> c.accept(this));
             }
-        });
+        }));
 
-        EventService.addListener(this, 1, DropOffersWebSocketEvent.class, dropOffersWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, 1, DropOffersWebSocketEvent.class, dropOffersWebSocketEvent -> {
             final List<String> offers = dropOffersWebSocketEvent.getDropOffersMessage().getOfferIds();
             if (offers.contains(this.getOfferId())) {
                 this.tradeStatus = TradeStatus.REMOVED;
                 this.callback.ifPresent(c -> c.accept(this));
             }
-        });
+        }));
 
-        EventService.addListener(this, 1, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, 1, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
             final XMessage message = xMessageWebSocketEvent.getXMessageMessage().getMessage();
             if (message.getOfferId().equals(this.offerId)) {
                 this.chat += message.getInfo().getNickname() + "(" + message.getInfo().getLocation() + "): " + message.getText() + "\n";
             }
-        });
+        }));
 
-        EventService.addListener(this, 1, OnlineOffersWebSocketEvent.class, onlineOffersWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, 1, OnlineOffersWebSocketEvent.class, onlineOffersWebSocketEvent -> {
             final List<Offer> offers = onlineOffersWebSocketEvent.getOnlineOffersMessage().getOffers();
             if (offers != null && offers.stream().anyMatch(offer -> offer.getOfferId().equals(getOfferId()))) {
                 this.tradeStatus = calculateTradeStatus();
                 this.callback.ifPresent(c -> c.accept(this));
             }
-        });
+        }));
 
-        EventService.addListener(this, 1, OfflineOffersWebSocketEvent.class, offlineOffersWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(this, 1, OfflineOffersWebSocketEvent.class, offlineOffersWebSocketEvent -> {
             final List<String> offers = offlineOffersWebSocketEvent.getOfflineOffersMessage().getOfferIds();
             if (offers.contains(getOfferId())) {
                 this.tradeStatus = TradeStatus.OFFLINE;
                 this.callback.ifPresent(c -> c.accept(this));
             }
-        });
+        }));
 
     }
 

@@ -24,6 +24,9 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.menu.OdysseyBlueprintBa
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.trade.OdysseyTradeTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistTab;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("java:S110")
 @Slf4j
 public
@@ -39,6 +42,7 @@ class OdysseyContentArea extends AnchorPane {
     private TabPane tabs;
     private VBox body;
     private OdysseyBartenderTab odysseyBartenderTab;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public OdysseyContentArea(final Application application) {
         initComponents(application);
@@ -87,32 +91,32 @@ class OdysseyContentArea extends AnchorPane {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, WishlistBlueprintEvent.class, wishlistEvent -> {
+        this.eventListeners.add(EventService.addListener(this, WishlistBlueprintEvent.class, wishlistEvent -> {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 this.tabs.getSelectionModel().select(this.wishlistTab);
             }
-        });
-        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
             this.odysseyBlueprintBar.setVisible(true);
             PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, true);
-        });
-        EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth()));
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth()));
-        EventService.addListener(this, MenuButtonClickedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth())));
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.odysseyBlueprintBar.getWidth())));
+        this.eventListeners.add(EventService.addListener(this, MenuButtonClickedEvent.class, event -> {
             if (Expansion.ODYSSEY.equals(event.getExpansion())) {
                 final boolean visibility = !this.odysseyBlueprintBar.isVisible();
                 this.odysseyBlueprintBar.setVisible(visibility);
                 PreferencesService.setPreference(PreferenceConstants.RECIPES_VISIBLE, visibility);
             }
-        });
+        }));
 
-        EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
+        this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST)) {
                 this.tabs.getSelectionModel().select(this.wishlistTab);
             } else if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_LOADOUT)) {
                 this.tabs.getSelectionModel().select(this.loadoutEditorTab);
             }
-        });
+        }));
     }
 
     private boolean isRecipeBarVisible() {

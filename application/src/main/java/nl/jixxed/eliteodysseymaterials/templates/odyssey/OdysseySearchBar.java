@@ -15,6 +15,9 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMateri
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.trade.OdysseyTradeSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistSearchBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 class OdysseySearchBar extends HBox {
 
@@ -25,6 +28,7 @@ class OdysseySearchBar extends HBox {
     private OdysseyWishlistSearchBar wishlistSearchBar;
     private OdysseyEngineerSearchBar engineerSearchBar;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     OdysseySearchBar() {
         initComponents();
         initEventHandling();
@@ -67,14 +71,14 @@ class OdysseySearchBar extends HBox {
     }
 
     private void initEventHandling() {
-        EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<"));
+        this.eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
         //hack for component resizing on other fontsizes
-        EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.button.styleProperty().set(fontStyle);
-        });
-        EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
             if (OdysseyTabs.TRADE.equals(event.getSelectedTab())) {
                 if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.wishlistSearchBar) || this.getChildren().contains(this.engineerSearchBar)) {
                     this.getChildren().remove(this.materialSearchBar);
@@ -104,7 +108,7 @@ class OdysseySearchBar extends HBox {
                     this.getChildren().add(this.materialSearchBar);
                 }
             }
-        });
+        }));
     }
 
     private boolean isRecipeBarVisible() {

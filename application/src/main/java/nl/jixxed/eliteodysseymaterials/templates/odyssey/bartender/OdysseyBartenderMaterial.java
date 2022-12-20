@@ -22,6 +22,9 @@ import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OdysseyBartenderMaterial extends HBox implements Template {
     @Getter
     private final Asset asset;
@@ -46,6 +49,7 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
     private DestroyableLabel shipLabel;
     private DestroyableLabel fleetCarrierLabel;
     private EventHandler<MouseEvent> mouseEventEventHandler;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     OdysseyBartenderMaterial(final Asset asset) {
         this.asset = asset;
@@ -132,24 +136,24 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
 
     @Override
     public void initEventHandling() {
-        EventService.addListener(this, StorageEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, event -> {
             this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
             this.backpackLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getBackPackValue()));
             this.shipLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getShipLockerValue()));
             this.fleetCarrierLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getFleetCarrierValue()));
             updateStyle();
-        });
-        EventService.addListener(this, 9, WishlistBlueprintEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, 9, WishlistBlueprintEvent.class, event -> {
             Platform.runLater(() -> {
                 this.wishlistLabel.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum()));
                 updateStyle();
             });
-        });
-        EventService.addListener(this, 9, CommanderSelectedEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, 9, CommanderSelectedEvent.class, event -> {
             this.wishlistLabel.setText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum()));
             setLayoutMode(LayoutMode.DEFAULT);
             updateStyle();
-        });
+        }));
     }
 
     void setLayoutMode(final LayoutMode mode) {

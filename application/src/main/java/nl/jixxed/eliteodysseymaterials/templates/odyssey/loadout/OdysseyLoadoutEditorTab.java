@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -43,6 +44,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     private FlowPane loadoutItemsFlow;
     private MenuButton menuButton;
     private DestroyableMenuButton addToWishlist;
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public OdysseyLoadoutEditorTab() {
         initComponents();
@@ -57,32 +59,32 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     @Override
     public void initEventHandling() {
 
-        EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
-        });
-        EventService.addListener(this, AfterFontSizeSetEvent.class, event -> refreshContent());
-        EventService.addListener(this, LanguageChangedEvent.class, event -> refreshContent());
-        EventService.addListener(this, LoadoutSetSelectedEvent.class, loadoutSetSelectedEvent -> refreshContent());
-        EventService.addListener(this, LoadoutRemovedEvent.class, loadoutRemovedEvent -> refreshContent());
-        EventService.addListener(this, LoadoutMovedEvent.class, loadoutMovedEvent -> refreshContent());
-        EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+        }));
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, event -> refreshContent()));
+        this.eventListeners.add(EventService.addListener(this, LanguageChangedEvent.class, event -> refreshContent()));
+        this.eventListeners.add(EventService.addListener(this, LoadoutSetSelectedEvent.class, loadoutSetSelectedEvent -> refreshContent()));
+        this.eventListeners.add(EventService.addListener(this, LoadoutRemovedEvent.class, loadoutRemovedEvent -> refreshContent()));
+        this.eventListeners.add(EventService.addListener(this, LoadoutMovedEvent.class, loadoutMovedEvent -> refreshContent()));
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
             refreshLoadoutSetSelect();
             refreshContent();
             loadCommanderWishlists(commanderSelectedEvent.getCommander());
-        });
-        EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             refreshLoadoutSetSelect();
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
-        });
-        EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_LOADOUT)) {
                 refreshLoadoutSetSelect();
             }
-        });
-        EventService.addListener(this, 9, LoadoutEvent.class, event -> {
+        }));
+        this.eventListeners.add(EventService.addListener(this, 9, LoadoutEvent.class, event -> {
             refreshCurrentLoadout();
-        });
+        }));
 
     }
 

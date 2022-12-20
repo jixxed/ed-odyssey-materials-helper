@@ -16,11 +16,14 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @EqualsAndHashCode(callSuper = false)
@@ -34,6 +37,7 @@ class OdysseyTradeRequest extends OdysseyTrade {
     private Label statusLabel;
     private HBox buttonBox;
 
+    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
@@ -144,11 +148,11 @@ class OdysseyTradeRequest extends OdysseyTrade {
 
     @SuppressWarnings("java:S2177")
     private void initEventHandling() {
-        EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> {
+        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> {
             final StarSystem currentStarSystem = locationChangedEvent.getCurrentStarSystem();
             final Double distance = LocationService.calculateDistance(currentStarSystem, getStarSystem());
             this.distanceLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.distance", getStarSystem().getName(), NUMBER_FORMAT.format(distance)));
-        });
+        }));
 
     }
 
