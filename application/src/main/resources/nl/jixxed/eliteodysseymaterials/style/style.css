@@ -1570,6 +1570,18 @@
     -fx-padding: 4px;
     -fx-wrap-text: true;
 }
+.version-dialog-text {
+    -fx-font-size: 1.2em;
+    -fx-padding: 4px;
+    -fx-wrap-text: true;
+}
+
+.version-dialog-download-link {
+    -fx-font-size: 1.2em;
+    -fx-padding: 4px;
+    -fx-wrap-text: true;
+}
+
 
 .loadout-box {
     -fx-padding: 5px;

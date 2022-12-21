@@ -30,6 +30,7 @@ import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.EDDNDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.URLSchemeDialog;
+import nl.jixxed.eliteodysseymaterials.templates.dialog.VersionDialog;
 import nl.jixxed.eliteodysseymaterials.watchdog.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -85,6 +86,7 @@ public class FXApplication extends Application {
             whatsnewPopup();
             urlSchemePopup();
             eddnPopup();
+            versionPopup();
             MaterialTrackingService.initialize();
             CAPIService.getInstance(this);
             this.applicationLayout = new ApplicationLayout(this);
@@ -388,7 +390,30 @@ public class FXApplication extends Application {
             eddnStage.showAndWait();
         }
     }
+private void versionPopup(){
+    if (!VersionService.isBeta()) {
+        final String buildVersion = VersionService.getBuildVersion();
+        String latestVersion = "";
+        try {
+            latestVersion = VersionService.getLatestVersion();
+        } catch (final IOException e) {
+            log.error("Error retrieving latest version", e);
+        }
 
+//        if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion)) {
+            final Stage versionStage = new Stage();
+
+            final Scene versionScene = new Scene(new VersionDialog(versionStage, this), 640, 175);
+            versionStage.initModality(Modality.APPLICATION_MODAL);
+            final JMetro jMetro = new JMetro(Style.DARK);
+            jMetro.setScene(versionScene);
+            versionScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+            versionStage.setScene(versionScene);
+            versionStage.titleProperty().set("New version");
+            versionStage.showAndWait();
+        }
+//    }
+}
     private void whatsnewPopup() {
         final boolean whatsNewSeen = PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "").equals(PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
         if (!whatsNewSeen || !PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {

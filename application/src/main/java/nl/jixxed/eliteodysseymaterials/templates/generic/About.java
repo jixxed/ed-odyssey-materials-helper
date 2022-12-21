@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -13,16 +11,13 @@ import nl.jixxed.eliteodysseymaterials.builder.HyperlinkBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 @Slf4j
 public
 class About extends VBox {
-    private final boolean isBeta = false;
     private final String betaVersion = "1.80-beta13";
     private Label versionLabel;
     private Hyperlink link;
@@ -61,16 +56,16 @@ class About extends VBox {
     }
 
     private void versionCheck() {
-        if (!this.isBeta) {
-            final String buildVersion = getBuildVersion();
+        if (!VersionService.isBeta()) {
+            final String buildVersion = VersionService.getBuildVersion();
             String latestVersion = "";
             try {
-                latestVersion = getLatestVersion();
+                latestVersion = VersionService.getLatestVersion();
             } catch (final IOException e) {
                 log.error("Error retrieving latest version", e);
             }
 
-            if (getBuildVersion() == null) {
+            if (VersionService.getBuildVersion() == null) {
                 this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", "dev"));
             } else if (buildVersion.equals(latestVersion)) {
                 this.versionLabel.textProperty().bind(LocaleService.getStringBinding("menu.about.version", buildVersion));
@@ -84,18 +79,4 @@ class About extends VBox {
         }
     }
 
-
-    private String getLatestVersion() throws IOException {
-        final URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
-        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestProperty("accept", "application/json");
-        final InputStream responseStream = connection.getInputStream();
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final JsonNode response = objectMapper.readTree(responseStream);
-        return response.get("tag_name").asText();
-    }
-
-    private static String getBuildVersion() {
-        return System.getProperty("app.version");
-    }
 }
