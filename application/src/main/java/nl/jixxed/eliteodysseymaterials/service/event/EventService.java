@@ -16,6 +16,8 @@ public class EventService {
     private static final Map<Class<? extends Event>, List<WeakReference<EventListener<? extends Event>>>> LISTENERS_MAP = new HashMap<>();
 
     public static <T extends Event> void publish(final T event) {
+        //clean up null references
+        LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).removeIf(ref -> ref.get() == null);
         LISTENERS_MAP.getOrDefault(event.getClass(), Collections.emptyList()).stream()
                 .filter(ref ->ref.get() != null)
                 .sorted(Comparator.comparingInt(ref-> ref.get().getPriority()))
