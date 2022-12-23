@@ -390,6 +390,58 @@ public enum Commodity implements HorizonsMaterial {
     XIHECOMPANIONS(CommodityType.TECHNOLOGY, TRUE),
     YASOKONDILEAF(CommodityType.LEGAL_DRUGS, TRUE),
     ZEESSZEANTGLUE(CommodityType.CONSUMER_ITEMS, TRUE),
+    // Edmund Mahon
+    ALLIANCELEGASLATIVECONTRACTS(CommodityType.POWERPLAY, FALSE),
+    ALLIANCELEGASLATIVERECORDS(CommodityType.POWERPLAY, FALSE),
+    ALLIANCETRADEAGREEMENTS(CommodityType.POWERPLAY, FALSE),
+    // Aisling Duval
+    AISLINGMEDIAMATERIALS(CommodityType.POWERPLAY, FALSE),
+    AISLINGPROMOTIONALMATERIALS(CommodityType.POWERPLAY, FALSE),
+    AISLINGSEALEDCONTRACTS(CommodityType.POWERPLAY, FALSE),
+    // Arissa Lavigny Duval
+    LAVIGNYGARISONSUPPLIES(CommodityType.POWERPLAY, FALSE),
+    LAVIGNYCORRUPTIONDOSSIERS(CommodityType.POWERPLAY, FALSE),
+//    LAVIGNYFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    // Denton Patreus
+    PATREUSGARISONSUPPLIES(CommodityType.POWERPLAY, FALSE),
+//    PATREUSMARKEDMILITARYARMS(CommodityType.POWERPLAY, FALSE),//unverified
+//    PATREUSFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    // Zemini Torval
+//    TORVALTRADEAGREEMENTS(CommodityType.POWERPLAY, FALSE),//unverified
+//    TORVALPOLITICALPRISONERS(CommodityType.POWERPLAY, FALSE),//unverified
+    TORVALDEEDS(CommodityType.POWERPLAY, FALSE),//zemini
+    // Felicia Winters
+//    LIBERALPROPAGANDA(CommodityType.POWERPLAY, FALSE),//unverified
+//    LIBERALFEDERALAID(CommodityType.POWERPLAY, FALSE),//unverified
+//    LIBERALFEDERALPACKAGES(CommodityType.POWERPLAY, FALSE),//unverified
+    // Zachery Hudson
+    REPUBLICANGARISONSUPPLIES(CommodityType.POWERPLAY, FALSE),
+//    REPUBLICANFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    RESTRICTEDINTEL(CommodityType.POWERPLAY, FALSE),
+    // Archon Delaine
+//    ONIONHEADDERIVATIVES(CommodityType.POWERPLAY, FALSE),//unverified
+//    ONIONHEADSAMPLES(CommodityType.POWERPLAY, FALSE),//unverified
+    ILLICITCONSIGNMENT(CommodityType.POWERPLAY, FALSE),
+    MARKEDSLAVES(CommodityType.POWERPLAY, FALSE),
+    // Li Yong-Rui
+    SIRIUSCOMMERCIALCONTRACTS(CommodityType.POWERPLAY, FALSE),
+    SIRIUSINDUSTRIALEQUIPMENT(CommodityType.POWERPLAY, FALSE),
+    SIRIUSFRANCHISEPACKAGE(CommodityType.POWERPLAY, FALSE),
+    // Pranav Antal
+//    UTOPIANSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    UTOPIANPUBLICITY(CommodityType.POWERPLAY, FALSE),
+    UTOPIANDISSIDENT(CommodityType.POWERPLAY, FALSE),
+    // Yuri Grom
+    GROMCOUNTERINTELLIGENCE(CommodityType.POWERPLAY, FALSE),
+    UNDERGROUNDSUPPORT(CommodityType.POWERPLAY, FALSE),
+//    GROMMILITARYSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    // Unknown, but powerplay related
+    IMPERIALPRISONER(CommodityType.POWERPLAY, FALSE),
+//    UNMARKEDMILITARYSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+//    REVOLUTIONARYSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+//    CORERESTRICTEDPACKAGE(CommodityType.POWERPLAY, FALSE),//unverified
+//    OUTOFDATEGOODS(CommodityType.POWERPLAY, FALSE),//unverified
+
     UNKNOWN(CommodityType.UNKNOWN, FALSE);
     private final CommodityType commodityType;
     private final boolean rareCommodity;

@@ -64,6 +64,7 @@ public class FXApplication extends Application {
     private final java.util.List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private boolean initialized = false;
+
     public Stage getPrimaryStage() {
         return this.primaryStage;
     }
@@ -390,30 +391,32 @@ public class FXApplication extends Application {
             eddnStage.showAndWait();
         }
     }
-private void versionPopup(){
-    if (!VersionService.isBeta()) {
-        final String buildVersion = VersionService.getBuildVersion();
-        String latestVersion = "";
-        try {
-            latestVersion = VersionService.getLatestVersion();
-        } catch (final IOException e) {
-            log.error("Error retrieving latest version", e);
-        }
 
-//        if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion)) {
-            final Stage versionStage = new Stage();
+    private void versionPopup() {
+        if (!VersionService.isBeta()) {
+            final String buildVersion = VersionService.getBuildVersion();
+            String latestVersion = "";
+            try {
+                latestVersion = VersionService.getLatestVersion();
+            } catch (final IOException e) {
+                log.error("Error retrieving latest version", e);
+            }
 
-            final Scene versionScene = new Scene(new VersionDialog(versionStage, this), 640, 175);
-            versionStage.initModality(Modality.APPLICATION_MODAL);
-            final JMetro jMetro = new JMetro(Style.DARK);
-            jMetro.setScene(versionScene);
-            versionScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
-            versionStage.setScene(versionScene);
-            versionStage.titleProperty().set("New version");
-            versionStage.showAndWait();
+            if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion)) {
+                final Stage versionStage = new Stage();
+
+                final Scene versionScene = new Scene(new VersionDialog(versionStage, this), 640, 175);
+                versionStage.initModality(Modality.APPLICATION_MODAL);
+                final JMetro jMetro = new JMetro(Style.DARK);
+                jMetro.setScene(versionScene);
+                versionScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
+                versionStage.setScene(versionScene);
+                versionStage.titleProperty().set("New version");
+                versionStage.showAndWait();
+            }
         }
-//    }
-}
+    }
+
     private void whatsnewPopup() {
         final boolean whatsNewSeen = PreferencesService.getPreference(PreferenceConstants.WHATS_NEW_VERSION, "").equals(PreferencesService.getPreference(PreferenceConstants.APP_SETTINGS_VERSION, "0"));
         if (!whatsNewSeen || !PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {

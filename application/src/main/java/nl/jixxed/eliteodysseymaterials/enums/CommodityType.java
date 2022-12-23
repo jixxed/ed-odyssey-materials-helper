@@ -17,6 +17,7 @@ public enum CommodityType {
     TEXTILES,
     WASTE,
     WEAPONS,
+    POWERPLAY,
     UNKNOWN;
 
     public String getLocalizationKey() {
