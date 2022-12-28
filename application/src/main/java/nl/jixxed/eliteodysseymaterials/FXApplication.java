@@ -64,6 +64,7 @@ public class FXApplication extends Application {
     private final java.util.List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private boolean initialized = false;
+    private final AtomicReference<EventListener<CommanderAllListedEvent>> deeplinkReference = new AtomicReference<>();
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
@@ -94,10 +95,10 @@ public class FXApplication extends Application {
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
+            setupDeeplinkWatcher();
             setupWatchers();
 
             initEventHandling();
-            setupDeeplinkWatcher();
             final Scene scene = createApplicationScene();
             setupStyling(scene);
             primaryStage.setScene(scene);
@@ -235,8 +236,8 @@ public class FXApplication extends Application {
     }
 
     private void setupDeeplinkWatcher() {
-        final AtomicReference<EventListener<CommanderAllListedEvent>> reference = new AtomicReference<>();
-        reference.set(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
+
+        this.deeplinkReference.set(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
 
             final File deeplinkWatchedFolder = new File(OsConstants.DEEPLINK_FOLDER);
             this.deeplinkWatcher.watch(deeplinkWatchedFolder, deeplink -> {
@@ -266,7 +267,7 @@ public class FXApplication extends Application {
                     }
                 }
             }, AppConstants.DEEPLINK_FILE);
-            EventService.removeListener(reference.get());
+            EventService.removeListener(this.deeplinkReference.get());
 
         }));
 
