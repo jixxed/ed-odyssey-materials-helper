@@ -401,10 +401,10 @@ public enum Commodity implements HorizonsMaterial {
     // Arissa Lavigny Duval
     LAVIGNYGARISONSUPPLIES(CommodityType.POWERPLAY, FALSE),
     LAVIGNYCORRUPTIONDOSSIERS(CommodityType.POWERPLAY, FALSE),
-//    LAVIGNYFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    //    LAVIGNYFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
     // Denton Patreus
     PATREUSGARISONSUPPLIES(CommodityType.POWERPLAY, FALSE),
-//    PATREUSMARKEDMILITARYARMS(CommodityType.POWERPLAY, FALSE),//unverified
+    //    PATREUSMARKEDMILITARYARMS(CommodityType.POWERPLAY, FALSE),//unverified
 //    PATREUSFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
     // Zemini Torval
 //    TORVALTRADEAGREEMENTS(CommodityType.POWERPLAY, FALSE),//unverified
@@ -416,7 +416,7 @@ public enum Commodity implements HorizonsMaterial {
 //    LIBERALFEDERALPACKAGES(CommodityType.POWERPLAY, FALSE),//unverified
     // Zachery Hudson
     REPUBLICANGARISONSUPPLIES(CommodityType.POWERPLAY, FALSE),
-//    REPUBLICANFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    //    REPUBLICANFIELDSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
     RESTRICTEDINTEL(CommodityType.POWERPLAY, FALSE),
     // Archon Delaine
 //    ONIONHEADDERIVATIVES(CommodityType.POWERPLAY, FALSE),//unverified
@@ -434,7 +434,7 @@ public enum Commodity implements HorizonsMaterial {
     // Yuri Grom
     GROMCOUNTERINTELLIGENCE(CommodityType.POWERPLAY, FALSE),
     UNDERGROUNDSUPPORT(CommodityType.POWERPLAY, FALSE),
-//    GROMMILITARYSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
+    //    GROMMILITARYSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
     // Unknown, but powerplay related
     IMPERIALPRISONER(CommodityType.POWERPLAY, FALSE),
 //    UNMARKEDMILITARYSUPPLIES(CommodityType.POWERPLAY, FALSE),//unverified
@@ -495,5 +495,9 @@ public enum Commodity implements HorizonsMaterial {
         return Arrays.stream(Commodity.values())
                 .filter(commodity -> commodity.getCommodityType().equals(commodityType))
                 .toList().toArray(Commodity[]::new);
+    }
+
+    public boolean alwaysReport() {
+        return CommodityType.POWERPLAY.equals(this.commodityType);
     }
 }

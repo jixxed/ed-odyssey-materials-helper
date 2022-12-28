@@ -1,6 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
@@ -13,6 +16,11 @@ import java.net.http.HttpResponse;
 @Slf4j
 public class ReportService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    static {
+        OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+    }
     public static void reportMaterial(final Object material) {
         final String buildVersion = VersionService.getBuildVersion();
         if(buildVersion != null) {

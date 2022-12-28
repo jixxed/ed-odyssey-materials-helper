@@ -3,7 +3,7 @@ Version 2.8
 Fix for Extra Ammo Capacity being cross-applied to other suits in loadouts
 Add some known powerplay commodities
 Add new version notification for portable releases
-
+Add horizons engineer reputation gain tips
 
 Version 2.7
 -------------

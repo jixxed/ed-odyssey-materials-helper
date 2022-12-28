@@ -18,6 +18,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_a_learn",
                     "blueprint.description.horizons.engineer_a_invite",
                     "blueprint.description.horizons.engineer_a_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellexploration"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.ELVIRA_MARTUUK)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A1 = new HorizonsEngineerBlueprint(
@@ -25,6 +27,7 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_a1_learn",
                     "blueprint.description.horizons.engineer_a1_invite",
                     "blueprint.description.horizons.engineer_a1_unlock"),
+            List.of("blueprint.label.leveling.crafting"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.MEL_BRANDON)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A2 = new HorizonsEngineerBlueprint(
@@ -33,6 +36,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_a2_learn",
                     "blueprint.description.horizons.engineer_a2_invite",
                     "blueprint.description.horizons.engineer_a2_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.ZACARIAH_NEMO)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A3 = new HorizonsEngineerBlueprint(
@@ -41,6 +46,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_a3_learn",
                     "blueprint.description.horizons.engineer_a3_invite",
                     "blueprint.description.horizons.engineer_a3_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.MARCO_QWENT)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A3A = new HorizonsEngineerBlueprint(
@@ -49,6 +56,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_a3a_learn",
                     "blueprint.description.horizons.engineer_a3a_invite",
                     "blueprint.description.horizons.engineer_a3a_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellexploration"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.PROFESSOR_PALIN)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A3B = new HorizonsEngineerBlueprint(
@@ -57,6 +66,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_a3b_learn",
                     "blueprint.description.horizons.engineer_a3b_invite",
                     "blueprint.description.horizons.engineer_a3b_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellexploration"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.LORI_JAMESON)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A3C = new HorizonsEngineerBlueprint(
@@ -65,6 +76,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_a3c_learn",
                     "blueprint.description.horizons.engineer_a3c_invite",
                     "blueprint.description.horizons.engineer_a3c_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellexploration"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.CHLOE_SEDESI)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_B = new HorizonsEngineerBlueprint(
@@ -72,6 +85,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_b_learn",
                     "blueprint.description.horizons.engineer_b_invite",
                     "blueprint.description.horizons.engineer_b_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.THE_DWELLER)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_B1 = new HorizonsEngineerBlueprint(
@@ -80,6 +95,7 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_b1_learn",
                     "blueprint.description.horizons.engineer_b1_invite",
                     "blueprint.description.horizons.engineer_b1_unlock"),
+            List.of("blueprint.label.leveling.crafting"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.MARSHA_HICKS)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_B2 = new HorizonsEngineerBlueprint(
@@ -88,6 +104,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_b2_learn",
                     "blueprint.description.horizons.engineer_b2_invite",
                     "blueprint.description.horizons.engineer_b2_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.LEI_CHEUNG)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_B2A = new HorizonsEngineerBlueprint(
@@ -96,6 +114,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_b2a_learn",
                     "blueprint.description.horizons.engineer_b2a_invite",
                     "blueprint.description.horizons.engineer_b2a_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellexploration"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.RAM_TAH)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_C = new HorizonsEngineerBlueprint(
@@ -104,6 +124,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_c_learn",
                     "blueprint.description.horizons.engineer_c_invite",
                     "blueprint.description.horizons.engineer_c_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellexploration"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.FELICITY_FARSEER)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_C1 = new HorizonsEngineerBlueprint(
@@ -111,6 +133,9 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_c1_learn",
                     "blueprint.description.horizons.engineer_c1_invite",
                     "blueprint.description.horizons.engineer_c1_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellbounties",
+                    "blueprint.label.leveling.sellbonds"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.JURI_ISHMAAK)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_C1A = new HorizonsEngineerBlueprint(
@@ -118,6 +143,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_c1a_learn",
                     "blueprint.description.horizons.engineer_c1a_invite",
                     "blueprint.description.horizons.engineer_c1a_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellbounties"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.COLONEL_BRIS_DEKKER)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_C1B = new HorizonsEngineerBlueprint(
@@ -126,6 +153,9 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_c1b_learn",
                     "blueprint.description.horizons.engineer_c1b_invite",
                     "blueprint.description.horizons.engineer_c1b_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellexploration",
+                    "blueprint.label.leveling.sellbonds"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.THE_SARGE)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D = new HorizonsEngineerBlueprint(
@@ -133,6 +163,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_d_learn",
                     "blueprint.description.horizons.engineer_d_invite",
                     "blueprint.description.horizons.engineer_d_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellbounties"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.TOD_THE_BLASTER_MCQUINN)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D1 = new HorizonsEngineerBlueprint(
@@ -141,6 +173,7 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_d1_learn",
                     "blueprint.description.horizons.engineer_d1_invite",
                     "blueprint.description.horizons.engineer_d1_unlock"),
+            List.of("blueprint.label.leveling.crafting"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.PETRA_OLMANOVA)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D2 = new HorizonsEngineerBlueprint(
@@ -149,6 +182,9 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_d2_learn",
                     "blueprint.description.horizons.engineer_d2_invite",
                     "blueprint.description.horizons.engineer_d2_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities",
+                    "blueprint.label.leveling.sellexploration"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.SELENE_JEAN)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D2A = new HorizonsEngineerBlueprint(
@@ -157,6 +193,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_d2a_learn",
                     "blueprint.description.horizons.engineer_d2a_invite",
                     "blueprint.description.horizons.engineer_d2a_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.DIDI_VATERMANN)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D2B = new HorizonsEngineerBlueprint(
@@ -165,6 +203,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_d2b_learn",
                     "blueprint.description.horizons.engineer_d2b_invite",
                     "blueprint.description.horizons.engineer_d2b_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.BILL_TURNER)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E = new HorizonsEngineerBlueprint(
@@ -173,6 +213,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_e_learn",
                     "blueprint.description.horizons.engineer_e_invite",
                     "blueprint.description.horizons.engineer_e_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.LIZ_RYDER)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E1 = new HorizonsEngineerBlueprint(
@@ -181,6 +223,7 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_e1_learn",
                     "blueprint.description.horizons.engineer_e1_invite",
                     "blueprint.description.horizons.engineer_e1_unlock"),
+            List.of("blueprint.label.leveling.crafting"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.ETIENNE_DORN)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E2 = new HorizonsEngineerBlueprint(
@@ -189,6 +232,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_e2_learn",
                     "blueprint.description.horizons.engineer_e2_invite",
                     "blueprint.description.horizons.engineer_e2_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.HERA_TANI)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E2A = new HorizonsEngineerBlueprint(
@@ -197,6 +242,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_e2a_learn",
                     "blueprint.description.horizons.engineer_e2a_invite",
                     "blueprint.description.horizons.engineer_e2a_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellbounties"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.BROO_TARQUIN)
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E2B = new HorizonsEngineerBlueprint(
@@ -205,6 +252,8 @@ public class EngineerBlueprints {
             List.of("blueprint.description.horizons.engineer_e2b_learn",
                     "blueprint.description.horizons.engineer_e2b_invite",
                     "blueprint.description.horizons.engineer_e2b_unlock"),
+            List.of("blueprint.label.leveling.crafting",
+                    "blueprint.label.leveling.sellcommodities"),
             () -> APPLICATION_STATE.isEngineerUnlockedExact(Engineer.TIANA_FORTUNE)
     );
 }

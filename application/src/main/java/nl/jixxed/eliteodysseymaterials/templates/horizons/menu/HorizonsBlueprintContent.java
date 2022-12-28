@@ -92,6 +92,9 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
             initRecipe();
             initIngredients();
         }
+        if (this.blueprint instanceof HorizonsEngineerBlueprint engineerBlueprint) {
+            initTips(engineerBlueprint);
+        }
 
         if (!(this.blueprint instanceof HorizonsEngineerBlueprint) && !this.blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.SYNTHESIS) && !HorizonsBlueprintConstants.getTechbrokerUnlocks().containsKey(this.blueprint.getHorizonsBlueprintName())) {
             initEngineers();
@@ -100,7 +103,6 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
 
 
     }
-
 
     private void loadIngredients() {
         this.ingredients.addAll(getRecipeIngredients(this.blueprint, Raw.class, HorizonsStorageType.RAW, StorageService.getRaw()));
@@ -123,6 +125,18 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         final FlowPane ingredientFlow = FlowPaneBuilder.builder().withStyleClass("recipe-ingredient-flow").withNodes(this.ingredients.stream().filter(ingredient -> ingredient.getType().equals(HorizonsStorageType.OTHER)).toList()).build();
         this.getChildren().add(ingredientFlow);
     }
+
+    private void initTips(final HorizonsEngineerBlueprint engineerBlueprint) {
+
+        final Label levelingHeader = LabelBuilder.builder()
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
+                .withText(LocaleService.getStringBinding("blueprint.label.leveling"))
+                .build();
+        this.getChildren().add(levelingHeader);
+        final FlowPane levelingFlow = FlowPaneBuilder.builder().withStyleClass("recipe-ingredient-flow").withNodes(engineerBlueprint.getLeveling().stream().map(levelingTip -> BoxBuilder.builder().withStyleClass("leveling").withNode(LabelBuilder.builder().withStyleClass("leveling-name").withText(LocaleService.getStringBinding(levelingTip)).build()).buildVBox()).toList()).build();
+        this.getChildren().add(levelingFlow);
+    }
+
 
     private void initDescription() {
         final Label descriptionTitle = LabelBuilder.builder()

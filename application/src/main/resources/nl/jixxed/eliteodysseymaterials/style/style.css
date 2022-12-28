@@ -2532,3 +2532,15 @@
     -fx-underline: true;
 
 }
+.leveling {
+    -fx-background-color: #0f0f0f;
+    -fx-max-width: 35.15em;
+    -fx-min-width: 35.15em;
+}
+
+.leveling-name {
+    -fx-text-fill: white !important;
+    -fx-label-padding: 5;
+    -fx-wrap-text: true;
+    -fx-font-weight: bold;
+}
