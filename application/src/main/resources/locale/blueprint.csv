@@ -20,9 +20,9 @@ blueprint.engineer.pinnable.tooltip,Double-click to pin blueprint to this engine
 blueprint.add.to.wishlist.all.grade,Add all grades to {0},Add all grades to {0},Fügen Sie alle Noten zu {0} hinzu,Agregue todos los grados a {0},Ajouter toutes les notes à {0},Adicione todas as notas a {0},Добавьте все апгрейды в {0}
 blueprint.add.to.wishlist.single.grade,Add this grade to {0},Add this grade to {0},Fügen Sie diese Note zu {0} hinzu,Agregue esta calificación a {0},Ajoutez cette note à {0},Adicione esta nota a {0},Добавьте этот апгрейд в {0}
 blueprint.is.live,LIVE-only blueprint,LIVE-only blueprint,Nur LIVE-Blaupause,Blueprint solo en LIVE,Blueprint en LIVE,Blueprint somente ao LIVE,Чертеж для LIVE-версии
-blueprint.label.leveling,Reputation gain,Reputation gain,,,,,
-blueprint.label.leveling.crafting,Craft module upgrades,,,,,,
-blueprint.label.leveling.sellcommodities,Sell commodities at the station,,,,,,
-blueprint.label.leveling.sellexploration,Sell exploration data at the station,,,,,,
-blueprint.label.leveling.sellbounties,Hand in bounty vouchers at the station,,,,,,
-blueprint.label.leveling.sellbonds,Hand in combat bonds at the station,,,,,,
+blueprint.label.leveling,Reputation gain,Reputation gain,,,,,Получение репутации
+blueprint.label.leveling.crafting,Craft module upgrades,,,,,,Создавать улучшения модуля
+blueprint.label.leveling.sellcommodities,Sell commodities at the station,,,,,,Продавать товары на станции
+blueprint.label.leveling.sellexploration,Sell exploration data at the station,,,,,,Сдавать исследовательские данные на станции
+blueprint.label.leveling.sellbounties,Hand in bounty vouchers at the station,,,,,,Сдавать ваучеры на награду на станции
+blueprint.label.leveling.sellbonds,Hand in combat bonds at the station,,,,,,Сдавать боевые облигации на станции
