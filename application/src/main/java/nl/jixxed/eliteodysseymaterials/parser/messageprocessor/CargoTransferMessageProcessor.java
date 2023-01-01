@@ -12,27 +12,17 @@ public class CargoTransferMessageProcessor implements MessageProcessor<CargoTran
     @SuppressWarnings("java:S1192")
     public void process(final CargoTransfer event) {
         event.getTransfers().forEach(transfer -> {
-            if ("tocarrier".equals(transfer.getDirection())) {
-                final Commodity commodity = Commodity.forName(transfer.getType());
-                if (commodity.isUnknown()) {
-                    ReportService.reportMaterial(event);
-                } else {
+            final Commodity commodity = Commodity.forName(transfer.getType());
+            if (commodity.isUnknown() || commodity.alwaysReport()) {
+                ReportService.reportMaterial(event);
+            } else {
+                if ("tocarrier".equals(transfer.getDirection())) {
                     StorageService.removeCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
                     StorageService.addCommodity(commodity, StoragePool.FLEETCARRIER, transfer.getCount().intValue());
-                }
-            } else if ("tosrv".equals(transfer.getDirection())) {
-                final Commodity commodity = Commodity.forName(transfer.getType());
-                if (commodity.isUnknown()) {
-                    ReportService.reportMaterial(event);
-                } else {
+                } else if ("tosrv".equals(transfer.getDirection())) {
                     StorageService.removeCommodity(commodity, StoragePool.SHIP, transfer.getCount().intValue());
                     StorageService.addCommodity(commodity, StoragePool.SRV, transfer.getCount().intValue());
-                }
-            } else if ("toship".equals(transfer.getDirection())) {
-                final Commodity commodity = Commodity.forName(transfer.getType());
-                if (commodity.isUnknown()) {
-                    ReportService.reportMaterial(event);
-                } else {
+                } else if ("toship".equals(transfer.getDirection())) {
                     if (ApplicationState.getInstance().playerInSrv()) {
                         StorageService.removeCommodity(commodity, StoragePool.SRV, transfer.getCount().intValue());
                     } else {
@@ -43,6 +33,7 @@ public class CargoTransferMessageProcessor implements MessageProcessor<CargoTran
             }
         });
     }
+
     @Override
     public Class<CargoTransfer> getMessageClass() {
         return CargoTransfer.class;
