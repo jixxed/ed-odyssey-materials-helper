@@ -380,42 +380,41 @@ material.commodity.unocuppiedescapepod,Unoccupied Escape Pod,Unoccupied Escape P
 material.commodity.thargoidtissuesampletype5,Thargoid Orthrus Tissue Sample,Thargoid Orthrus Tissue Sample,ThargoidenOrthrus-Gewebeprobe,Muestra de tejido de Orthrus Thargoide,Échantillon de tissu d''un Orthrus thargoid,Amostra de tecido da Thargoid Orthrus,Образец ткани таргоидского корабля «Орф»
 material.commodity.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnue,Desconhecido,Неизвестный
 material.commodity.ancientrelictg,Unclassified Relic,Unclassified Relic,Nicht klassifiziertes Relikt,Reliquia no clasificada,Relique non classée,Relíquia não classificada,Неопознанная реликвия
-material.commodity.alliancelegaslativecontracts,Alliance Legislative Contracts,,,,,,
-material.commodity.alliancelegaslativerecords,Alliance Legislative Records,,,,,,
-material.commodity.alliancetradeagreements,Alliance Trade Agreements,,,,,,
-material.commodity.aislingmediamaterials,Aisling Media Materials,,,,,,
-material.commodity.aislingsealedcontracts,Aisling Sealed Contracts,,,,,,
-material.commodity.aislingpromotionalmaterials,Aisling Programme Materials,,,,,,
-material.commodity.lavignygarisonsupplies,Lavigny Garrison Supplies,,,,,,
-material.commodity.lavignyfieldsupplies,Lavigny Field Supplies,,,,,,
-material.commodity.lavignycorruptiondossiers,Lavigny Corruption Reports,,,,,,
-material.commodity.patreusfieldsupplies,Patreus Field Supplies,,,,,,
-material.commodity.patreusgarisonsupplies,Patreus Garrison Supplies,,,,,,
-material.commodity.patreusmarkedmilitaryarms,Marked Military Arms,,,,,,
-material.commodity.torvaltradeagreements,Torval Trade Agreements,,,,,,
-material.commodity.torvaldeeds,Torval Deeds,,,,,,
-material.commodity.torvalpoliticalprisoners,Torval Political Prisoners,,,,,,
-material.commodity.liberalpropaganda,Liberal Propaganda,,,,,,
-material.commodity.liberalfederalaid,Liberal Federal Aid,,,,,,
-material.commodity.liberalfederalpackages,Liberal Federal Packages,,,,,,
-material.commodity.siriuscommercialcontracts,Sirius Corporate Contracts,,,,,,
-material.commodity.siriusindustrialequipment,Sirius Industrial Equipment,,,,,,
-material.commodity.siriusfranchisepackage,Sirius Franchise Package,,,,,,
-material.commodity.republicangarisonsupplies,Hudson Garrison Supplies,,,,,,
-material.commodity.republicanfieldsupplies,Hudson''s Field Supplies,,,,,,
-material.commodity.restrictedintel,Hudson''s Restricted Intel,,,,,,
-material.commodity.illicitconsignment,Kumo Contraband Package,,,,,,
-material.commodity.onionheadderivatives,Grom Onionhead Derivatives,,,,,,
-material.commodity.onionheadsamples,Grom Onionhead Samples,,,,,,
-material.commodity.markedslaves,Marked Slaves,,,,,,
-material.commodity.utopianpublicity,Utopian Publicity,,,,,,
-material.commodity.utopiansupplies,Utopian Supplies,,,,,,
-material.commodity.utopiandissident,Utopian Dissident,,,,,,
-material.commodity.gromcounterintelligence,Grom Counter Intelligence,,,,,,
-material.commodity.undergroundsupport,Grom Underground Support,,,,,,
-material.commodity.grommilitarysupplies,Yuri Grom''s Military Supplies,,,,,,
-material.commodity.imperialprisoner,Imperial Prisoner,,,,,,
-material.commodity.unmarkedmilitarysupplies,Unmarked Military supplies,,,,,,
-material.commodity.revolutionarysupplies,Revolutionary Supplies,,,,,,
-material.commodity.corerestrictedpackage,Core Restricted Package,,,,,,
-material.commodity.outofdategoods,Out Of Date Goods,,,,,,
+material.commodity.aislingmediamaterials,Aisling Media Materials,Aisling Media Materials,Aislings Medienmaterialien,Materiales mediáticos de Aisling,Dossiers de presse d'Aisling,Material midiático da Aisling,Агитационные материалы Айслинг
+material.commodity.aislingmediaresources,Aisling Sealed Contracts,Aisling Sealed Contracts,Aislings abgeschlossene Verträge,Contratos sellados de Aisling,Contrats sous scellés d'Aisling,Contratos selados da Aisling,Запечатанные контракты Айслинг
+material.commodity.aislingpromotionalmaterials,Aisling Programme Materials,Aisling Programme Materials,Aislings Programmmaterialien,Materiales de programa de Aisling,Programmes d'Aisling,Materiais do programa da Aisling,Политическая программа Айслинг
+material.commodity.alliancetradeagreements,Alliance Trade Agreements,Alliance Trade Agreements,Handelsabkommen der Allianz,Acuerdos comerciales de la Alianza,Accords commerciaux de l'Alliance,Acordos comerciais da Aliança,Торговые соглашения Альянса
+material.commodity.alliancelegaslativecontracts,Alliance Legislative Contracts,Alliance Legislative Contracts,Gesetzesverträge der Allianz,Contratos legislativos de la Alianza,Accords législatifs de l'Alliance,Contratos legais da Aliança,Законодательные договоры Альянса
+material.commodity.alliancelegaslativerecords,Alliance Legislative Records,Alliance Legislative Records,Gesetzeslisten der Allianz,Registros legislativos de la Alianza,Dossiers législatifs de l'Alliance,Registros legais da Aliança,Законодательные отчеты Альянса
+material.commodity.lavignycorruptiondossiers,Lavigny Corruption Reports,Lavigny Corruption Reports,Lavignys Korruptionsberichte,Informes de corrupción de Lavigny,Rapports de corruption d'Arissa,Relatórios de corrupção da Lavigny,Отчеты Лавиньи о коррупции
+material.commodity.lavignyfieldsupplies,Lavigny Field Supplies,Lavigny Field Supplies,Lavignys Feldversorgung,Suministros de campaña de Lavigny,Ravitaillement militaire d'Arissa,Mantimentos de campo da Lavigny,Полевые припасы Лавиньи
+material.commodity.lavignygarisonsupplies,Lavigny Garrison Supplies,Lavigny Garrison Supplies,Lavignys Garnisonsversorgung,Suministros de guarnición de Lavigny,Ravitaillement de garnison d'Arissa,Mantimentos de tropas da Lavigny,Гарнизонные припасы Лавиньи
+material.commodity.restrictedpackage,Core Restricted Package,Core Restricted Package,Vertrauliches Paket der Core Holding,Paquete restringido de Core,Colis scellés Core Holding,Pacote restrito da Core,Секретный груз Core
+material.commodity.liberalcampaignmaterials,Liberal Propaganda,Liberal Propaganda,Liberale Propaganda,Propaganda liberal,Programmes libéraux,Propaganda liberal,Либеральная пропаганда
+material.commodity.federalaid,Liberal Federal Aid,Liberal Federal Aid,Liberale Föderiertenhilfe,Ayuda federal liberal,Cargaisons d'aide humanitaire libérales,Auxílio federal liberal,Либеральные субсидии Федерации
+material.commodity.federaltradecontracts,Liberal Federal Packages,Liberal Federal Packages,Liberales Föderiertenpaket,Paquetes federales liberales,Colis fédéraux libéraux,Pacotes federais liberais,Либеральный груз Федерации
+material.commodity.loanedarms,Marked Military Arms,Marked Military Arms,Markierte Militärwaffen,Armamento militar marcado,Armes militaires marquées,Armas militares marcadas,Помеченное оружие
+material.commodity.patreusfieldsupplies,Patreus Field Supplies,Patreus Field Supplies,Patreus' Feldversorgung,Suministros de campaña de Patreus,Ravitaillement militaire de Patreus,Mantimentos de campo do Patreus,Полевые припасы Патреуса
+material.commodity.patreusgarisonsupplies,Patreus Garrison Supplies,Patreus Garrison Supplies,Patreus' Garnisonsversorgung,Suministros de guarnición de Patreus,Ravitaillement de garnison de Patreus,Mantimentos de tropas do Patreus,Гарнизонные припасы Патреуса
+material.commodity.restrictedintel,Hudson's Restricted Intel,Hudson's Restricted Intel,Hudsons Geheiminformationen,Inteligencia restringida de Hudson,Renseignements confidentiels de Hudson,Inteligência restrita do Hudson,Секретные разведданные Хадсона
+material.commodity.republicanfieldsupplies,Hudson's Field Supplies,Hudson's Field Supplies,Hudsons Feldversorgung,Suministros de campaña de Hudson,Ravitaillement militaire de Hudson,Mantimentos de campo do Hudson,Полевые припасы Хадсона
+material.commodity.republicangarisonsupplies,Hudson Garrison Supplies,Hudson Garrison Supplies,Hudsons Garnisonsversorgung,Suministros de guarnición de Hudson,Hudsons Garnisonsversorgung,Mantimentos de tropas do Hudson,Гарнизонные припасы Хадсона
+material.commodity.siriusfranchisepackage,Sirius Franchise Package,Sirius Franchise Package,Sirius Franchise-Paket,Paquete de franquicia de Sirius,Dossiers marketing de Sirius,Pacote de franquia do Sirius,Посылка с товаром Sirius
+material.commodity.siriuscommercialcontracts,Sirius Corporate Contracts,Sirius Corporate Contracts,Sirius Unternehmensverträge,Contratos corporativos de Sirius,Contrats de Sirius,Contratos corporativos do Sirius,Корпоративные контракты Sirius
+material.commodity.siriusindustrialequipment,Sirius Industrial Equipment,Sirius Industrial Equipment,Sirius Industrieausrüstung,Equipo industrial de Sirius,Équipements industriels de Sirius,Equipamento industrial do Sirius,Промышленное оборудование Sirius
+material.commodity.torvalcommercialcontracts,Torval Trade Agreements,Torval Trade Agreements,Torvals Handelsabkommen,Acuerdos comerciales de Torval,Accords commerciaux de Torval,Acordos comerciais da Torval,Торговые соглашения Торвал
+material.commodity.imperialprisoner,Torval Political Prisoners,Torval Political Prisoners,Torvals politische Gefangene,Prisioneros políticos de Torval,Prisonniers politiques de Torval,Prisioneiros políticos da Torval,Политические заключенные Торвал
+material.commodity.utopianpublicity,Utopian Publicity,Utopian Publicity,Utopia-PR-Dokumente,Publicidad de Utopian,Pamphlets d'Utopia,Publicidade da Utopia,Публикации Утопии
+material.commodity.utopianfieldsupplies,Utopian Supplies,Utopian Supplies,Utopia-Versorgungsmaterialien,Suministros de Utopian,Marchandises d'Utopia,Mantimentos da Utopia,Припасы Утопии
+material.commodity.utopiandissident,Utopian Dissident,Utopian Dissident,Utopia-Dissidenten,Disidentes de Utopian,Dissidents utopiens,Dissidente da Utopia,Диссиденты Утопии
+material.commodity.illicitconsignment,Kumo Contraband Package,Kumo Contraband Package,Kumo-Schmuggelwarenpaket,Paquete de contrabando de Kumo Crew,Marchandises de contrebande de Kumo,Pacote de contrabando do Kumo,Контрабанда Kumo
+material.commodity.unmarkedweapons,Unmarked Military supplies,Unmarked Military supplies,Unmarkierte Militärmaterialien,Suministros militares sin marcar,Surplus militaire banalisé,Mantimentos militares sem marca,Военные припасы без меток
+material.commodity.onionheadsamples,Onionhead Samples,Onionhead Samples,Onionhead-Proben,Muestras de Cebollazo,Échantillons de tête d'oignon,Amostras de Onionhead,Образцы луковых головок
+material.commodity.counterculturesupport,Revolutionary supplies,Revolutionary supplies,Revolutionsmaterialien,Suministros revolucionarios,Matériel révolutionnaire,Mantimentos revolucionários,Припасы революционеров
+material.commodity.markedslaves,Marked Slaves,Marked Slaves,Markierte Sklaven,Esclavos marcados,Esclaves marqués,Escravos marcados,Помеченные рабы
+material.commodity.torvaldeeds,Torval Deeds,Torval Deeds,Torvals Urkunden,Escrituras de Torval,Actes juridiques de Torval,Títulos da Torval,Договора Торвал
+material.commodity.onionheadderivatives,Onionhead Derivatives,Onionhead Derivatives,Onionhead-Derivantien,Derivados de Cebollazo,Produits dérivés à base de tête d'oignon,Derivados de Onionhead,Компоненты луковых головок
+material.commodity.outofdategoods,Out Of Date Goods,Out Of Date Goods,Abgelaufene Waren,Bienes caducados,Marchandises périmées,Mercadorias fora de validade,Устаревшие товары
+material.commodity.undergroundsupport,Grom Underground Support,Grom Underground Support,Untergrund-Support für Grom,Apoyo encubierto de Grom,Ravitaillement clandestin de Grom,Suporte Secreto de Grom,Подпольная поддержка Грома
+material.commodity.gromcounterintelligence,Grom Counter Intelligence,Grom Counter Intelligence,Grom-Spionageabwehr,Contrainteligencia de Grom,Renseignements militaires de Grom,Contra-inteligência de Grom,Разведданные Грома
+material.commodity.gromwartrophies,Yuri Grom's Military Supplies,Yuri Grom's Military Supplies,Yuri Groms Militärausrüstung,Suministros militares de Yuri Grom,Fournitures militaires de Yuri Grom,Suprimentos Militares de Yuri Grom,Военные припасы Юрия Грома
