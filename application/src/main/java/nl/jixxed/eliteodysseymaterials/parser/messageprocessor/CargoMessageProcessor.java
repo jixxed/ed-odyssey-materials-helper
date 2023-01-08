@@ -33,7 +33,7 @@ public class CargoMessageProcessor implements MessageProcessor<Cargo> {
         storageResetRunnable.run();
         event.getInventory().ifPresent(inventory -> inventory.forEach(inventoryItem -> {
             final Commodity commodity = Commodity.forName(inventoryItem.getName());
-            if (commodity.isUnknown() || commodity.alwaysReport()) {
+            if (commodity.isUnknown()) {
                 ReportService.reportMaterial(inventoryItem);
             } else {
                 StorageService.addCommodity(commodity, storagePool, inventoryItem.getCount().intValue());

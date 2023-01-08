@@ -482,8 +482,4 @@ public enum Commodity implements HorizonsMaterial {
                 .filter(commodity -> commodity.getCommodityType().equals(commodityType))
                 .toList().toArray(Commodity[]::new);
     }
-
-    public boolean alwaysReport() {
-        return CommodityType.POWERPLAY.equals(this.commodityType);
-    }
 }

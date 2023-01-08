@@ -13,7 +13,7 @@ public class CargoTransferMessageProcessor implements MessageProcessor<CargoTran
     public void process(final CargoTransfer event) {
         event.getTransfers().forEach(transfer -> {
             final Commodity commodity = Commodity.forName(transfer.getType());
-            if (commodity.isUnknown() || commodity.alwaysReport()) {
+            if (commodity.isUnknown()) {
                 ReportService.reportMaterial(event);
             } else {
                 if ("tocarrier".equals(transfer.getDirection())) {
