@@ -33,7 +33,6 @@ public class EDDNOutfittingMapper extends EDDNMapper {
     public static Message mapToEDDN(final Outfitting outfitting, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(outfitting.getTimestamp())
-                .withEvent(outfitting.getEvent())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withMarketId(outfitting.getMarketID())
