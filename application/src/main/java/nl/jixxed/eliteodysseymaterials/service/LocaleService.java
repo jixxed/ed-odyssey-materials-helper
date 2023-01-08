@@ -35,6 +35,7 @@ public class LocaleService {
             "blueprint/odyssey/modifier",
             "blueprint/odyssey/names",
             "blueprint/odyssey/tips",
+            "broker/broker",
             "engineer/names",
             "engineer/specialisation",
             "loadout/equipment",

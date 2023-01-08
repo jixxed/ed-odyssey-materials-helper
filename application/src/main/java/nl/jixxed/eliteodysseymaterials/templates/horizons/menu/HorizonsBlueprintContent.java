@@ -100,8 +100,19 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
             initEngineers();
         }
         initModifiers();
+        if(this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint){
+            initClosestTrader(blueprint.getHorizonsBrokerTypes());
+        }
 
+    }
 
+    private void initClosestTrader(final List<HorizonsBrokerType> horizonsBrokerTypes) {
+
+        final Label title = LabelBuilder.builder()
+                .withStyleClass(RECIPE_TITLE_LABEL_STYLE_CLASS)
+                .withText(LocaleService.getStringBinding("blueprint.label.nearest"))
+                .build();
+        this.getChildren().addAll(title, new HorizonsNearestBroker(horizonsBrokerTypes));
     }
 
     private void loadIngredients() {

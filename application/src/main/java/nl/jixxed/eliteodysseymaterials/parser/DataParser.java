@@ -3,11 +3,10 @@ package nl.jixxed.eliteodysseymaterials.parser;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.mapping.MaterialMapping;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class DataParser implements Parser<MaterialMapping> {
             final int amount = dataVal.getCount().intValue();
             if (data.isUnknown()) {
                 log.warn("Unknown Data detected: " + dataVal);
-                NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", name + "\nPlease report!");
+                ReportService.reportMaterial(dataVal);
             } else {
                 final Storage storage = knownMap.get(data);
                 //stack values as items occur multiple times in the json

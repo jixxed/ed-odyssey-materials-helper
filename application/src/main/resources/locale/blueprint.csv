@@ -10,6 +10,7 @@ blueprint.label.completed.referrals,Completed Referrals,Completed Referrals,Abge
 blueprint.label.description,Description,Description,Beschreibung,Descripción,Description,Descrição,Описание
 blueprint.label.engineers,Engineers crafting this blueprint:,Engineers crafting this blueprint:,"Ingenieure, die diese Blaupause erstellen:",Ingenieros que elaboran este plano:,Ingénieurs créant ce plan:,Engenheiros elaborando este blueprint:,"Инженеры, создающие этот чертеж:"
 blueprint.label.modifiers,Modifiers,Modifiers,Modifikatoren,Modificadores,Modificateurs,Modificadores,Модификаторы
+blueprint.label.nearest,Closest Technology Broker,,,,,,
 blueprint.on.wishlist,{0} on wishlist,{0} on wishlist,{0} auf Wunschliste,{0} en la lista de deseos,{0} sur la liste de souhaits,{0} na lista de desejos,{0} в списке желаний
 blueprint.category.name.blueprints,Blueprints,Blueprints,Bauplan,Planos,Plans,Blueprints,Чертежи
 blueprint.synthesis.grade1,BASIC,BASIC,BASIC,BÁSICO,BASIQUE,Básico,БАЗОВЫЙ

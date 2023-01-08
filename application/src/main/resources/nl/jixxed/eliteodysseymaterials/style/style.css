@@ -2544,3 +2544,42 @@
     -fx-wrap-text: true;
     -fx-font-weight: bold;
 }
+
+
+.nearest-broker {
+    -fx-font-weight: normal;
+    -fx-background-color: #0f0f0f;
+}
+
+.nearest-broker-title {
+    -fx-text-fill: white;
+    -fx-label-padding: 5px;
+    -fx-font-size: 1.2em;
+}
+
+.nearest-broker-location {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 5px;
+}
+
+.nearest-broker-location-line {
+    -fx-min-width: 34.8em;
+    -fx-pref-width: 34.8em;
+    -fx-max-width: 34.8em;
+}
+
+.nearest-broker-location-line:hover {
+    -fx-cursor: hand;
+}
+
+.nearest-broker-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.nearest-broker-distance {
+    -fx-text-fill: #777;
+    -fx-label-padding: 5px;
+}
