@@ -65,12 +65,18 @@ public class HorizonsNearestBroker extends VBox implements Template {
     }
 
     private void update() {
-        final Location currentLocation = LocationService.getCurrentLocation();
-        final TechnologyBroker closest = TechnologyBrokerService.findClosest(currentLocation.getStarSystem(), this.horizonsBrokerTypes);
-        this.title.textProperty().bind(LocaleService.getStringBinding(closest.getType().getLocalizationKey()));
-        this.location.setText(closest.getName() + " | " + closest.getStarSystem().getName());
-        this.distance.setText("(" + NUMBER_FORMAT.format(TechnologyBrokerService.getDistance(closest.getStarSystem(), currentLocation.getStarSystem())) + "Ly)");
-        this.system = closest.getStarSystem().getName();
+        try{
+            final Location currentLocation = LocationService.getCurrentLocation();
+            final TechnologyBroker closest = TechnologyBrokerService.findClosest(currentLocation.getStarSystem(), this.horizonsBrokerTypes);
+            this.title.textProperty().bind(LocaleService.getStringBinding(closest.getType().getLocalizationKey()));
+            this.location.setText(closest.getName() + " | " + closest.getStarSystem().getName());
+            this.distance.setText("(" + NUMBER_FORMAT.format(TechnologyBrokerService.getDistance(closest.getStarSystem(), currentLocation.getStarSystem())) + "Ly)");
+            this.system = closest.getStarSystem().getName();
+            this.getStyleClass().remove("nearest-broker-hidden");
+
+        }catch (final IllegalArgumentException ex) {
+            this.getStyleClass().add("nearest-broker-hidden");
+        }
     }
 
     private FlowPane getTraderLocation() {

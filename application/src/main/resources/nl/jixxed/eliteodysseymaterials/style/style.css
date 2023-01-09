@@ -2583,3 +2583,9 @@
     -fx-text-fill: #777;
     -fx-label-padding: 5px;
 }
+.nearest-broker-hidden{
+    -fx-opacity: 0;
+}
+.nearest-trader-hidden{
+    -fx-opacity: 0;
+}
