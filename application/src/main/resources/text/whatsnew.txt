@@ -1,3 +1,7 @@
+Version 2.12
+-------------
+Update to EDDN outfitting module disallowlist
+
 Version 2.11
 -------------
 Add closest techbrokers to techbroker blueprints, classified as Human, Guardian, Salvation, Torval Mining, Sirius
