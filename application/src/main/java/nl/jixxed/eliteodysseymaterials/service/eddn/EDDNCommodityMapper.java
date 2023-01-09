@@ -14,10 +14,12 @@ public class EDDNCommodityMapper extends EDDNMapper {
                 .withTimestamp(market.getTimestamp())
                 .withSystemName(market.getStarSystem())
                 .withStationName(market.getStationName())
+                .withEconomies(null)//capi only field
+                .withProhibited(null)//capi only field
                 .withCommodities(mapToNullIfEmptyList(market.getItems())
                         .map(items -> items.stream()
                                 .map(item -> new Item.ItemBuilder()
-                                        .withName(item.getName())
+                                        .withName(cleanName(item.getName()))
                                         .withBuyPrice(item.getBuyPrice())
                                         .withDemand(item.getDemand())
                                         .withDemandBracket(item.getDemandBracket())
@@ -33,6 +35,13 @@ public class EDDNCommodityMapper extends EDDNMapper {
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withMarketId(market.getMarketID())
                 .build();
+    }
+
+    static String cleanName(final String name) {
+        if(name.startsWith("$") && name.endsWith("_name;")){
+            return name.substring(1,name.length() - 6);
+        }
+        return name;
     }
 
     private static Set<String> getStatusFlags(final nl.jixxed.eliteodysseymaterials.schemas.journal.Market.Item item) {

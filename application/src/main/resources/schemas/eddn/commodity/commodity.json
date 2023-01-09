@@ -14,11 +14,8 @@
         "message": {
             "type"                  : "object",
             "additionalProperties"  : false,
-            "required"              : [ "systemName", "stationName", "marketId", "timestamp", "commodities", "event" ],
+            "required"              : [ "systemName", "stationName", "marketId", "timestamp", "commodities" ],
             "properties"            : {
-                "event" : {
-                    "type"          : "string"
-                },
                 "systemName": {
                     "type"      : "string",
                     "minLength" : 1
