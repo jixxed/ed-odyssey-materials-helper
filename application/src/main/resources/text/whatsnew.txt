@@ -1,3 +1,7 @@
+Version 2.13
+-------------
+Fix for missing/bad values in EDDN Commodity messages
+
 Version 2.12
 -------------
 Update to EDDN outfitting module disallowlist
