@@ -11,6 +11,10 @@ public class EDDNOutfittingMapper extends EDDNMapper {
     private static final Set<String> EXCLUDED_MODULES = Set.of(
             //horizons
             "int_planetapproachsuite",
+            "int_planetapproachsuite_advanced",
+            "int_stellarbodydiscoveryscanner_advanced",
+            "int_stellarbodydiscoveryscanner_intermediate",
+            "int_stellarbodydiscoveryscanner_standard",
             //powerplay
             "int_shieldgenerator_size1_class5_strong",
             "int_shieldgenerator_size2_class5_strong",
@@ -117,8 +121,7 @@ public class EDDNOutfittingMapper extends EDDNMapper {
             "hpt_plasmashockcannon_gimbal_large",
             "hpt_plasmashockcannon_turret_small",
             "hpt_plasmashockcannon_turret_medium",
-            "hpt_plasmashockcannon_turret_large",
-            "hpt_atmulticannon_gimbal_medium"
+            "hpt_plasmashockcannon_turret_large"
     );
 
     public static Message mapToEDDN(final Outfitting outfitting, final Expansion expansion) {
