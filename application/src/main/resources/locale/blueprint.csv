@@ -1,7 +1,7 @@
 messageKey,,en,de,es,fr,pt,ru
 blueprint.add.to.wishlist,Add to wishlist,Add to wishlist,Zur Wunschliste hinzufügen,Agregar a la lista de deseos,Ajouter à la liste de souhaits,Adicionar à lista de desejos,Добавить в список желаемого
 blueprint.header.available,Available,Available,Verfügbar,Disponible,Disponible,Disponível,Доступно
-blueprint.header.give,Give,Give,Geben,Dar,Donner,Dê,Дайте
+blueprint.header.give,Give,Give,Geben,Dar,Donner,Dê,Дать
 blueprint.header.material,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
 blueprint.header.objective,Objectives,Objectives,Ziele,Objetivos,Objectifs,Objetivos,Цели
 blueprint.header.receive,Receive,Receive,Empfangen,Recibir,Recevoir,Receber,Получить
@@ -10,7 +10,7 @@ blueprint.label.completed.referrals,Completed Referrals,Completed Referrals,Abge
 blueprint.label.description,Description,Description,Beschreibung,Descripción,Description,Descrição,Описание
 blueprint.label.engineers,Engineers crafting this blueprint:,Engineers crafting this blueprint:,"Ingenieure, die diese Blaupause erstellen:",Ingenieros que elaboran este plano:,Ingénieurs créant ce plan:,Engenheiros elaborando este blueprint:,"Инженеры, создающие этот чертеж:"
 blueprint.label.modifiers,Modifiers,Modifiers,Modifikatoren,Modificadores,Modificateurs,Modificadores,Модификаторы
-blueprint.label.nearest,Closest Technology Broker,,,,,,
+blueprint.label.nearest,Closest Technology Broker,,,,,,Ближайший техноброкер
 blueprint.on.wishlist,{0} on wishlist,{0} on wishlist,{0} auf Wunschliste,{0} en la lista de deseos,{0} sur la liste de souhaits,{0} na lista de desejos,{0} в списке желаний
 blueprint.category.name.blueprints,Blueprints,Blueprints,Bauplan,Planos,Plans,Blueprints,Чертежи
 blueprint.synthesis.grade1,BASIC,BASIC,BASIC,BÁSICO,BASIQUE,Básico,БАЗОВЫЙ
