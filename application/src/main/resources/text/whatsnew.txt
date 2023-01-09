@@ -1,6 +1,7 @@
 Version 2.13
 -------------
 Fix for missing/bad values in EDDN Commodity messages
+updated RU localizations
 
 Version 2.12
 -------------
