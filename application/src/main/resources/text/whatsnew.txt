@@ -1,3 +1,12 @@
+Version 2.11
+-------------
+Add closest techbrokers to techbroker blueprints, classified as Human, Guardian, Salvation, Torval Mining, Sirius
+Add missing powerplay commodities
+Remove Bright Sentinel from descriptions since it was destroyed
+Move Pride of Bitterwood from EGM 559 to LTT 198 in blueprint description
+Add automated reporting of unknown odyssey materials
+Fix not sending EDDN messages for outfitting, market and shipyard
+
 Version 2.10
 -------------
 Updated dataport spawnchances for Odyssey Data Materials
