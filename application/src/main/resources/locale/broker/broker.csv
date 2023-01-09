@@ -1,7 +1,7 @@
 messageKey,,en,de,es,fr,pt,ru
-horizons.technology.broker.type.guardian,Guardian,,,,,,
-horizons.technology.broker.type.human,Human,,,,,,
-horizons.technology.broker.type.sirius,Sirius,,,,,,
-horizons.technology.broker.type.torval,Torval Mining,,,,,,
-horizons.technology.broker.type.salvation,Salvation,,,,,,
-horizons.technology.broker.type.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестно
+horizons.technology.broker.type.guardian,Guardian,,,,,,Технологии Стражей
+horizons.technology.broker.type.human,Human,,,,,,Технологии Людей
+horizons.technology.broker.type.sirius,Sirius,,,,,,Технологии Sirius
+horizons.technology.broker.type.torval,Torval Mining,,,,,,Технологии Torval Mining
+horizons.technology.broker.type.salvation,Salvation,,,,,,Технологии Salvation(Спасение)
+horizons.technology.broker.type.unknown,Unknown,Unknown,Unbekannt,Desconocido,Inconnu,Desconhecido,Неизвестные технологии
