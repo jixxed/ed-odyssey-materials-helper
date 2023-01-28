@@ -14,7 +14,6 @@ import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
 import nl.jixxed.eliteodysseymaterials.domain.Terminal;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.message.DataTrackingItem;
 import nl.jixxed.eliteodysseymaterials.service.message.DataTrackingMessage;
@@ -35,7 +34,10 @@ import java.nio.file.Files;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -153,8 +155,8 @@ public class MaterialTrackingService {
     private static synchronized void publish() {
         if (!BACKPACK_CHANGE_EVENTS.isEmpty()) {
             log.debug("Publish to material tracking server");
-            publishMaterialTracking(new ArrayList<>(BACKPACK_CHANGE_EVENTS));
-            publishDataTracking(new HashMap<>(TERMINAL_DATAS));
+            //publishMaterialTracking(new ArrayList<>(BACKPACK_CHANGE_EVENTS));
+            //publishDataTracking(new HashMap<>(TERMINAL_DATAS));
             BACKPACK_CHANGE_EVENTS.clear();
             TERMINAL_DATAS.clear();
         }
