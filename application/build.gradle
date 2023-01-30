@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:2.24.1"
+        classpath "org.beryx:badass-jlink-plugin:2.26.0"
         classpath "io.freefair.gradle:lombok-plugin:5.3.3.3"
         classpath "de.jjohannes.gradle:extra-java-module-info:0.12"
         classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.1.2'
@@ -23,8 +23,8 @@ apply plugin: 'jsonschema2pojo'
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-        vendor = JvmVendorSpec.ADOPTOPENJDK
+        languageVersion = JavaLanguageVersion.of(19)
+        vendor = JvmVendorSpec.ADOPTIUM
     }
     modularity.inferModulePath = true
 }
@@ -113,8 +113,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.0'
-    testImplementation 'org.assertj:assertj-core:3.22.0'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.1.0'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
     implementation 'org.leadpony.justify:justify:3.1.0'
     implementation 'org.glassfish:jakarta.json:2.0.1:module'
 //    implementation 'org.glassfish:jakarta.json-api:2.0.1'
@@ -129,8 +129,8 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation 'commons-io:commons-io:2.11.0'
 //    implementation 'org.slf4j:slf4j-simple:1.7.36'
-    implementation 'ch.qos.logback:logback-core:1.2.11'
-    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation 'ch.qos.logback:logback-core:1.4.5'
+    implementation 'ch.qos.logback:logback-classic:1.4.5'
     implementation('javax.servlet:javax.servlet-api:4.0.1')
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
     implementation 'io.github.pustike:commons-csv:1.7.0'
@@ -221,8 +221,8 @@ extraJavaModuleInfo {
     automaticModule('jboss-vfs-3.2.16.Final.jar', 'org.jboss')
     automaticModule('commons-logging-1.2.jar', 'org.apache.commons.logging')
     automaticModule('jboss-logging-3.1.4.GA.jar', 'org.jboss.logging')
-    automaticModule('logback-classic-1.2.11.jar', 'ch.qos.logback.classic')
-    automaticModule('logback-core-1.2.11.jar', 'ch.qos.logback.core')
+    automaticModule('logback-classic-1.4.5.jar', 'ch.qos.logback.classic')
+    automaticModule('logback-core-1.4.5.jar', 'ch.qos.logback.core')
     automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
     automaticModule('poi-5.2.3.jar', 'org.apache.poi.poi')
 //    automaticModule('poi-ooxml-5.2.3.jar', 'org.apache.poi.poi-ooxml')

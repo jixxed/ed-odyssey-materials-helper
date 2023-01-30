@@ -5,7 +5,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:2.24.0"
+        classpath "org.beryx:badass-jlink-plugin:2.26.0"
     }
 }
 
@@ -15,8 +15,8 @@ apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-        vendor = JvmVendorSpec.ADOPTOPENJDK
+        languageVersion = JavaLanguageVersion.of(19)
+        vendor = JvmVendorSpec.ADOPTIUM
     }
 }
 

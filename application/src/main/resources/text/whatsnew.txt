@@ -1,3 +1,7 @@
+Version 2.15
+-------------
+Update to java 19. Fixes linux users not able to open links from the app.
+
 Version 2.14
 -------------
 Disabled material and data tracking due to bad actors
