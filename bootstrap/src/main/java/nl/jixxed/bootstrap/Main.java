@@ -128,8 +128,9 @@ public class Main extends Application {
                         try {
                             unzipFile(updateFile, this.appFolder);
                             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
-                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
-                                file.setExecutable(true);
+                                Runtime.getRuntime().exec(new String[] { "chmod", "-R", "777", this.appFolder.getCanonicalPath() });
+//                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
+//                                file.setExecutable(true);
                             }
                         } catch (final IOException ex) {
                             error(label, animation, "Failed to install the update.", false);
