@@ -900,14 +900,14 @@ public class ARService {
         if (mmr.maxVal > getMatchingThreshold()) {
             if (!previousDataportMatch) {
                 previousDataportMatch = true;
-                log.debug("dataport downloadmenu detected. Confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+                log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
             }
             return true;
         }
         if (previousDataportMatch) {
 
             previousDataportMatch = false;
-            log.debug("dataport downloadmenu detected. Confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
+            log.debug("dataport downloadmenu detection confidence(" + getMatchingThreshold() + "): " + mmr.maxVal);
             arrowCapture = getArrowCapture();
             return isDownloadMenu(arrowCapture);
         }

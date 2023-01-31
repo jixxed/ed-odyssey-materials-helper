@@ -37,6 +37,7 @@ tasks.register("createRelease") {
     dependsOn subprojects.jpackage
     finalizedBy makePortable, copyInstaller
 }
+
 tasks.register("createPortableRelease") {
     dependsOn(":application:jpackage")
     finalizedBy makePortable

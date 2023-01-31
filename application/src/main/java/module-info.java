@@ -31,6 +31,8 @@ module nl.jixxed.eliteodysseymaterials {
     requires java.desktop;
     requires org.leadpony.justify;
     requires org.glassfish.jakarta.json;
+    requires ch.qos.logback.classic;
+    requires ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;

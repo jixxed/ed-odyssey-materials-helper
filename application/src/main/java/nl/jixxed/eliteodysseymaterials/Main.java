@@ -27,7 +27,7 @@ public class Main {
         if (APPLICATION_STATE.isLocked()) {
             System.exit(0);
         }
-
+log.info("launching app with java version: " + getVersion());
         FXApplication.launchFx(args);
     }
 
@@ -42,5 +42,14 @@ public class Main {
         } catch (final IOException e) {
             log.error("Error moving deeplink tmp file", e);
         }
+    }
+    private static int getVersion() {
+        String version = System.getProperty("java.version");
+        if(version.startsWith("1.")) {
+            version = version.substring(2, 3);
+        } else {
+            final int dot = version.indexOf(".");
+            if(dot != -1) { version = version.substring(0, dot); }
+        } return Integer.parseInt(version);
     }
 }

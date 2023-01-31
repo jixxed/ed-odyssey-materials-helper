@@ -1,3 +1,8 @@
+Version 2.16
+-------------
+Fix log being disabled due to missing log framework
+Fix AR/OCR not working due to broken logging
+
 Version 2.15
 -------------
 Update to java 19. Fixes linux users not able to open links from the app.

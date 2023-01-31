@@ -126,11 +126,11 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.14.1'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.14.1'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.5'
-    implementation 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'org.slf4j:slf4j-api:2.0.6'
+    implementation 'commons-io:commons-io:2.11'
 //    implementation 'org.slf4j:slf4j-simple:1.7.36'
-    implementation 'ch.qos.logback:logback-core:1.4.5'
-    implementation 'ch.qos.logback:logback-classic:1.4.5'
+    implementation 'ch.qos.logback:logback-core:1.3.5'
+    implementation 'ch.qos.logback:logback-classic:1.3.5'
     implementation('javax.servlet:javax.servlet-api:4.0.1')
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
     implementation 'io.github.pustike:commons-csv:1.7.0'
@@ -143,15 +143,15 @@ dependencies {
     implementation('org.jfxtras:jmetro:11.6.15') {
         exclude group: 'org.openjfx'
     }
-    implementation("org.openjfx:javafx-base:18+:${platform}")
-    implementation("org.openjfx:javafx-controls:18+:${platform}")
-    implementation("org.openjfx:javafx-fxml:18+:${platform}")
-    implementation("org.openjfx:javafx-graphics:18+:${platform}")
-    implementation("org.openjfx:javafx-media:18+:${platform}")
-    implementation("org.openjfx:javafx-swing:18+:${platform}")
+    implementation("org.openjfx:javafx-base:19+:${platform}")
+    implementation("org.openjfx:javafx-controls:19+:${platform}")
+    implementation("org.openjfx:javafx-fxml:19+:${platform}")
+    implementation("org.openjfx:javafx-graphics:19+:${platform}")
+    implementation("org.openjfx:javafx-media:19+:${platform}")
+    implementation("org.openjfx:javafx-swing:19+:${platform}")
     implementation('org.controlsfx:controlsfx:11+')
     testImplementation 'de.saxsys:mvvmfx-testing-utils:1.8.0'
-    testImplementation("org.openjfx:javafx-swing:18+:${platform}")
+    testImplementation("org.openjfx:javafx-swing:19+:${platform}")
     implementation 'com.github.scribejava:scribejava-core:8.3.1'
     implementation 'net.java.dev.jna:jna:5.11.0'
     implementation 'net.java.dev.jna:jna-platform:5.11.0'
@@ -215,7 +215,14 @@ extraJavaModuleInfo {
     module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
     automaticModule('opencv-4.5.3-0.jar', 'org.openpnp')
     automaticModule('jna-5.11.0.jar', 'net.java.dev.jna')
-    automaticModule('tess4j-5.2.9.jar', 'nl.jixxed.tess4j')
+//    automaticModule('tess4j-5.2.9.jar', 'nl.jixxed.tess4j')
+    module('tess4j-5.2.9.jar', 'nl.jixxed.tess4j'){
+        exports("nl.jixxed.tess4j")
+        exports("nl.jixxed.tess4j.util")
+        requires("org.slf4j")
+        requires("net.java.dev.jna")
+        requires("java.desktop")
+    }
     automaticModule('lept4j-1.16.6.jar', 'nl.jixxed.lept4j')
     automaticModule('jai-imageio-core-1.4.0.jar', 'com.github.jaiimageio')
     automaticModule('jboss-vfs-3.2.16.Final.jar', 'org.jboss')
