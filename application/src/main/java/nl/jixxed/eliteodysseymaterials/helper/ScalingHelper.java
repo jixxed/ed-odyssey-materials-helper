@@ -18,4 +18,7 @@ public class ScalingHelper {
     public static DoubleBinding getPixelDoubleBindingFromEm(final Double em) {
         return fontSize.multiply(em);
     }
+    public static Double getPixelDoubleFromEm(final Double em) {
+        return fontSize.multiply(em).doubleValue();
+    }
 }

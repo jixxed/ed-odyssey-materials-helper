@@ -2589,3 +2589,46 @@
 .nearest-trader-hidden{
     -fx-opacity: 0;
 }
+
+.shipbuilder-slots-hbox{
+    /*-fx-spacing: 0.2em;*/
+}
+.shipbuilder-slots-vbox{
+    /*-fx-spacing: 0.2em;*/
+}
+
+.shipbuilder-slots-slotbox{
+    -fx-background-color: #0f0f0f;
+    -fx-min-width: 27em;
+    -fx-min-height: 5em;
+    -fx-border-color: white;
+    -fx-border-width: 0.1em;
+    -fx-padding: 0.1em;
+    -fx-border-insets: 0.1em;
+    -fx-background-insets: 0.1em;
+}
+
+.shipbuilder-slots-slotbox:hover{
+    -fx-border-color: #89D07F;
+}
+
+.shipbuilder-slots-stackpane{
+    -fx-min-width: 81em;
+    -fx-max-width: 81em;
+    -fx-spacing: 0;
+    -fx-padding: 0;
+}
+
+.shipbuilder-ship-image{
+    -fx-min-width: 81em;
+    -fx-max-width: 81em;
+}
+.shipbuilder-overlay{
+    -fx-min-width: 81em;
+    -fx-max-width: 81em;
+    -fx-min-height: 40em;
+    -fx-max-height: 40em;
+}
+/*.shipbuilder-stackpane{*/
+/*    -fx-alignment: top-left;*/
+/*}*/

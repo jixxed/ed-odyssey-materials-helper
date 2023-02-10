@@ -65,6 +65,7 @@ public class LocaleService {
             "tab.overview",
             "tab.settings",
             "tab.trade",
+            "tab.ships",
             "tab.wishlist",
             "tooltip"
     };
