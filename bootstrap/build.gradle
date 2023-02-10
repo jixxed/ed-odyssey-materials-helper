@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 buildscript {
     repositories {
         maven {
@@ -15,12 +17,12 @@ apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(19)
+        languageVersion = JavaLanguageVersion.of(18)
         vendor = JvmVendorSpec.ADOPTIUM
     }
 }
 
-OperatingSystem os = org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.currentOperatingSystem;
+OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
 
 jar {
     manifest {
@@ -46,7 +48,7 @@ if (os.isWindows()) {
 }
 jlink {
     addExtraDependencies("javafx")
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    addOptions('--strip-debug', '--compress', '0', '--no-header-files', '--no-man-pages')
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper Launcher'
         jvmArgs = [
@@ -71,7 +73,7 @@ jlink {
                     '--win-upgrade-uuid', '60AAECE0-2E3A-4A25-A662-CABCD8D1CCCE',
                     '--win-per-user-install', '--win-dir-chooser',
                     '--win-menu', '--win-shortcut', '--win-menu-group', 'Odyssey Material Helper'
-            ]
+            ] as List<String>
         }
         if (installerType == 'deb') {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
@@ -83,7 +85,7 @@ jlink {
                     '--app-version', project.version,
                     '--linux-menu-group', 'Other',
                     '--linux-shortcut'
-            ]
+            ] as List<String>
         }
     }
 }
@@ -94,8 +96,8 @@ if (os.isWindows()) {
 }
 
 dependencies {
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.1'
     implementation group: 'commons-io', name: 'commons-io', version: '2.9.0'
 
     implementation("org.openjfx:javafx-base:18+:${platform}")
