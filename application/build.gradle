@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:2.26.0"
+        classpath "org.beryx:badass-jlink-plugin:2.24.1"
         classpath "io.freefair.gradle:lombok-plugin:5.3.3.3"
         classpath "de.jjohannes.gradle:extra-java-module-info:0.12"
         classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.1.2'
@@ -23,12 +23,12 @@ apply plugin: 'jsonschema2pojo'
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(19)
+        languageVersion = JavaLanguageVersion.of(18)
         vendor = JvmVendorSpec.ADOPTIUM
     }
     modularity.inferModulePath = true
 }
-OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
+OperatingSystem os = DefaultNativePlatform.currentOperatingSystem
 jar {
     manifest {
         attributes 'Name': 'nl/jixxed/eliteodysseymaterials',
@@ -60,9 +60,10 @@ if (os.isWindows()) {
 } else {
     ext { packageType = "deb" }
 }
+
 jlink {
     addExtraDependencies("javafx")
-    options = ['--strip-debug', '--compress', '0', '--no-header-files', '--no-man-pages']
+    addOptions('--strip-debug', '--compress', '0', '--no-header-files', '--no-man-pages')
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
@@ -87,7 +88,7 @@ jlink {
                 '--copyright', 'Copyright 2021 CMDR Jixxed',
                 '--name', 'Elite Dangerous Odyssey Materials Helper',
                 '--app-version', project.version
-        ]
+        ] as List<String>
         if (installerType == 'msi') {
             imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
         }
@@ -104,7 +105,7 @@ if (os.isWindows()) {
     platform = 'mac'
 }
 if (arch == "aarch64") {
-    platform += "-aarch64";
+    platform += "-aarch64"
 }
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
@@ -117,18 +118,12 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.24.2'
     implementation 'org.leadpony.justify:justify:3.1.0'
     implementation 'org.glassfish:jakarta.json:2.0.1:module'
-//    implementation 'org.glassfish:jakarta.json-api:2.0.1'
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.14.1'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.14.1'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.5'
     implementation 'org.slf4j:slf4j-api:2.0.6'
-    implementation 'commons-io:commons-io:2.11'
-//    implementation 'org.slf4j:slf4j-simple:1.7.36'
+    implementation 'commons-io:commons-io:2.11.0'
     implementation 'ch.qos.logback:logback-core:1.3.5'
     implementation 'ch.qos.logback:logback-classic:1.3.5'
     implementation('javax.servlet:javax.servlet-api:4.0.1')
@@ -157,15 +152,8 @@ dependencies {
     implementation 'net.java.dev.jna:jna-platform:5.11.0'
     implementation group: 'nl.jixxed.tess4j', name: 'tess4j', version: '5.2.9'
     implementation group: 'nl.jixxed.lept4j', name: 'lept4j', version: '1.16.6'
-//    implementation group: 'net.sourceforge.tess4j', name: 'tess4j', version: '5.2.1'
-//    implementation group: 'net.sourceforge.lept4j', name: 'lept4j', version: '1.16.1'
     implementation 'com.github.jai-imageio:jai-imageio-core:1.4.0'
 
-//        exclude group: 'org.jboss'
-//    exclude group: 'com.github.jaiimageio'
-//    exclude group: 'org.apache.pdfbox'
-//    exclude group: 'org.apache.commons.logging'
-//}
 
 
 }
@@ -175,23 +163,10 @@ jpackage {
     }
 }
 extraJavaModuleInfo {
-    // This does not have to be a complete description (e.g. here 'org.apache.commons.collections' does not export anything here).
-    // It only needs to be good enough to work in the context of this application we are building.
-//    module('commons-beanutils-1.9.4.jar', 'org.apache.commons.beanutils', '1.9.4') {
-//        exports('org.apache.commons.beanutils')
-//
-//        requires('org.apache.commons.logging')
-//        requires('java.sql')
-//        requires('java.desktop')
-//    }
-//    module('commons-cli-1.4.jar', 'org.apache.commons.cli', '3.2.2') {
-//        exports('org.apache.commons.cli')
-//    }
     module('scribejava-java8-8.3.1.jar', 'scribejava.java8', '8.3.1') {
         exports("com.github.scribejava.java8.base64")
     }
     module('scribejava-core-8.3.1.jar', 'scribejava.core', '8.3.1') {
-//        exports("com.github.scribejava.core")
         exports("com.github.scribejava.core.builder")
         exports("com.github.scribejava.core.builder.api")
         exports("com.github.scribejava.core.oauth")
@@ -202,10 +177,6 @@ extraJavaModuleInfo {
         requires("com.fasterxml.jackson.core")
         requires("com.fasterxml.jackson.databind")
     }
-//
-//    module('javafx-graphics-18.0.1-win.jar', 'javafx.graphics', '18.0.1') {
-//        exports("com.sun.javafx.tk")
-//    }
     module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
     module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
     module('j2objc-annotations-1.3.jar', 'com.google.j2objc.j2objc-annotations', '1.3')
@@ -215,7 +186,6 @@ extraJavaModuleInfo {
     module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
     automaticModule('opencv-4.5.3-0.jar', 'org.openpnp')
     automaticModule('jna-5.11.0.jar', 'net.java.dev.jna')
-//    automaticModule('tess4j-5.2.9.jar', 'nl.jixxed.tess4j')
     module('tess4j-5.2.9.jar', 'nl.jixxed.tess4j'){
         exports("nl.jixxed.tess4j")
         exports("nl.jixxed.tess4j.util")
@@ -232,8 +202,6 @@ extraJavaModuleInfo {
     automaticModule('logback-core-1.4.5.jar', 'ch.qos.logback.core')
     automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
     automaticModule('poi-5.2.3.jar', 'org.apache.poi.poi')
-//    automaticModule('poi-ooxml-5.2.3.jar', 'org.apache.poi.poi-ooxml')
-//    automaticModule('poi-ooxml-lite-5.2.3.jar', 'org.apache.poi.poi-ooxml-lite')
     module('poi-ooxml-5.2.3.jar', 'org.apache.poi.ooxml', '5.2.3') {
         exports("org.apache.poi.xssf.usermodel")
         requires("commons.math3")
@@ -272,7 +240,7 @@ jsonSchema2Pojo {
 
     // Target directory for generated Java source files. The plugin will add this directory to the
     // java source set so the compiler will find and compile the newly generated source files.
-    targetDirectory = file("${project.buildDir}/generated-sources/js2p")
+    targetDirectory = file("${project.buildDir}/generated/sources/js2p")
 
     // Package name used for generated Java classes (for types where a fully qualified name has not
     // been supplied in the schema using the 'javaType' property).

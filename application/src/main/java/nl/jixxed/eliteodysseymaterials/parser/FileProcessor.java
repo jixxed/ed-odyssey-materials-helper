@@ -106,8 +106,19 @@ public class FileProcessor {
                                 return false;
                             });
                             messages.put(journalEventType, line);
-                        } else if (JournalEventType.ENGINEERPROGRESS.equals(journalEventType) && messages.containsKey(JournalEventType.ENGINEERPROGRESS)) {
-                            alwaysProcessMessages.add(line);//add additional engineerprogress messages to alwaysProcessMessages instead
+                        } else if (JournalEventType.ENGINEERPROGRESS.equals(journalEventType)) {
+                            if (messages.containsKey(JournalEventType.ENGINEERPROGRESS) && jsonNode.has("Engineer")) {
+                                alwaysProcessMessages.add(line);//add additional engineerprogress messages to alwaysProcessMessages instead
+                            } else if (jsonNode.has("Engineers")) {
+                                alwaysProcessMessages.removeIf(line2 -> { //clear any additional engineerprogress messages if we get a full message (again)
+                                    try {
+                                        return JournalEventType.ENGINEERPROGRESS.equals(OBJECT_MAPPER.readTree(line2).get(EVENT));
+                                    } catch (final JsonProcessingException e) {
+                                        return false;
+                                    }
+                                });
+                                messages.put(journalEventType, line);//set the full message (again)
+                            }
                         } else {
                             messages.put(journalEventType, line);
                         }
