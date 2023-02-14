@@ -7,9 +7,11 @@ import javafx.geometry.Side;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyContentArea;
@@ -69,6 +71,10 @@ public class ApplicationLayout extends AnchorPane {
         this.tabsMain.tabMinWidthProperty().bind(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
         this.odyssey.setContent(this.odysseyContentArea);
         this.horizons.setContent(this.horizonsContentArea);
+        this.tabsMain.getSelectionModel().select(Math.min(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 0), this.tabsMain.getTabs().size()-1));
+        this.tabsMain.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_MAIN, this.tabsMain.getTabs().indexOf(newValue));
+        });
         this.getChildren().addAll(this.tabsMain, this.bottomBar);
     }
 }

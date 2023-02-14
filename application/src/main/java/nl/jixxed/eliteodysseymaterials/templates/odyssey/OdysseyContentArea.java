@@ -88,6 +88,10 @@ class OdysseyContentArea extends AnchorPane {
         AnchorPaneHelper.setAnchor(this.tabs, 0.0, 0.0, 0.0, null);
 
         this.getChildren().addAll(this.odysseyBlueprintBar, this.body);
+        this.tabs.getSelectionModel().select(Math.min(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_ODYSSEY, 0), this.tabs.getTabs().size()-1));
+        this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_ODYSSEY, this.tabs.getTabs().indexOf(newValue));
+        });
     }
 
     private void initEventHandling() {
