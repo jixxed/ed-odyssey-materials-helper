@@ -1,9 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-public class UtilityModule extends ShipModule {
-    public static final UtilityModule XENO_SCANNER_0_E = new UtilityModule();
+class UtilityModule extends ShipModule {
+    static final UtilityModule XENO_SCANNER_0_E = new UtilityModule("XENO_SCANNER_0_E");
 
-    private UtilityModule() {
-        super();
+    private UtilityModule(final String name) {
+        super(name);
+    }
+    UtilityModule(final UtilityModule utilityModule) {
+        super(utilityModule.getName());
     }
 }

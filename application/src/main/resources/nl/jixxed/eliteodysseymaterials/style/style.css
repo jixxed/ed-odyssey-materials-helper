@@ -1570,6 +1570,7 @@
     -fx-padding: 4px;
     -fx-wrap-text: true;
 }
+
 .version-dialog-text {
     -fx-font-size: 1.2em;
     -fx-padding: 4px;
@@ -1900,14 +1901,17 @@
 .horizons-materialcard-thargoid {
     -fx-background-color: #3b1b00;
 }
+
 .horizons-materialcard-thargoid-live {
     -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #3b1b00 0%, #5b2d00 25%, #3b1b00 50%, #5b2d00 75%);
     /*-fx-border-color: #0f0f0f;*/
     /*-fx-border-width: 1;*/
 }
+
 .horizons-materialcard-guardian {
     -fx-background-color: #270136;
 }
+
 .horizons-materialcard-guardian-live {
     -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #270136 0%, #450362 25%, #270136 50%, #450362 75%);
     /*-fx-border-color: #0f0f0f;*/
@@ -2525,13 +2529,15 @@
     -fx-max-height: 2em;
     -fx-focus-traversable: false;
 }
-.recipe-live{
+
+.recipe-live {
     -fx-font-weight: normal;
     -fx-label-padding: 0 0 1em 1em;
     -fx-max-width: 35.5em;
     -fx-underline: true;
 
 }
+
 .leveling {
     -fx-background-color: #0f0f0f;
     -fx-max-width: 35.15em;
@@ -2583,21 +2589,24 @@
     -fx-text-fill: #777;
     -fx-label-padding: 5px;
 }
-.nearest-broker-hidden{
-    -fx-opacity: 0;
-}
-.nearest-trader-hidden{
+
+.nearest-broker-hidden {
     -fx-opacity: 0;
 }
 
-.shipbuilder-slots-hbox{
-    /*-fx-spacing: 0.2em;*/
+.nearest-trader-hidden {
+    -fx-opacity: 0;
 }
-.shipbuilder-slots-vbox{
+
+.shipbuilder-slots-hbox {
     /*-fx-spacing: 0.2em;*/
 }
 
-.shipbuilder-slots-slotbox{
+.shipbuilder-slots-vbox {
+    /*-fx-spacing: 0.2em;*/
+}
+
+.shipbuilder-slots-slotbox {
     -fx-background-color: #0f0f0f;
     -fx-min-width: 27em;
     -fx-min-height: 5em;
@@ -2608,27 +2617,60 @@
     -fx-background-insets: 0.1em;
 }
 
-.shipbuilder-slots-slotbox:hover{
+.shipbuilder-slots-slotbox:hover {
     -fx-border-color: #89D07F;
 }
 
-.shipbuilder-slots-stackpane{
+.shipbuilder-slots-slotbox-hover-good{
+    -fx-border-color: #89D07F;
+}
+
+.shipbuilder-slots-slotbox-hover-bad{
+    -fx-border-color: #ff7c7c;
+}
+
+.shipbuilder-slots-stackpane {
     -fx-min-width: 81em;
     -fx-max-width: 81em;
     -fx-spacing: 0;
     -fx-padding: 0;
 }
 
-.shipbuilder-ship-image{
+.shipbuilder-ship-image {
     -fx-min-width: 81em;
     -fx-max-width: 81em;
 }
-.shipbuilder-overlay{
+
+.shipbuilder-overlay {
     -fx-min-width: 81em;
     -fx-max-width: 81em;
     -fx-min-height: 40em;
     -fx-max-height: 40em;
 }
-/*.shipbuilder-stackpane{*/
-/*    -fx-alignment: top-left;*/
-/*}*/
+
+.shipbuilder-slots-slotbox-size-label {
+    -fx-label-padding: 0.2em;
+    -fx-min-width: 1.3em;
+    -fx-max-width: 1.3em;
+    -fx-min-height: 4.8em;
+    -fx-max-height: 4.8em;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.shipbuilder-slots-slotbox-texts {
+    -fx-padding: 0.2em;
+}
+
+.shipbuilder-slots-slotbox-popover{
+    -fx-stroke-width: 0;
+}
+
+.shipbuilder-slots-slotbox-popover-content{
+    -fx-min-width: 27em;
+    -fx-min-height: 25em;
+    -fx-max-width: 27em;
+    -fx-max-height: 25em;
+    -fx-background-color: #0f0f0f;
+
+}

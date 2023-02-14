@@ -21,7 +21,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
 public class HorizonsShipBuilderTab extends HorizonsTab {
 
-    private final Ship testShip = new Ship(8, 5, 6, 8);
+    private final Ship testShip = new Ship(Ship.ADDER);
     private ScrollPane scrollPane;
     private VBox hardpointsVbox;
     private VBox coreVbox;

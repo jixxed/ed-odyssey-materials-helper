@@ -1,8 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-public class OptionalModule extends ShipModule  {
-    public static final OptionalModule CARGO_RACK_2_E = new OptionalModule();
-    private OptionalModule() {
-        super();
+class OptionalModule extends ShipModule  {
+    static final OptionalModule CARGO_RACK_2_E = new OptionalModule("CARGO_RACK_2_E");
+    OptionalModule(final String name) {
+        super(name);
+    }
+    OptionalModule(final OptionalModule optionalModule) {
+        super(optionalModule.getName());
     }
 }

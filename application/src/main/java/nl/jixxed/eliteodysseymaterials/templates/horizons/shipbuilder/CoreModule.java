@@ -1,9 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-public class CoreModule extends ShipModule {
-    public static final CoreModule POWER_PLANT_4_A = new CoreModule();
+class CoreModule extends ShipModule {
+    static final CoreModule POWER_PLANT_4_A = new CoreModule("POWER_PLANT_4_A");
 
-    private CoreModule() {
-        super();
+    private CoreModule(final String name) {
+        super(name);
+    }
+    CoreModule(final CoreModule coreModule) {
+        super(coreModule.getName());
     }
 }
