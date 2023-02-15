@@ -26,3 +26,5 @@ material.tooltip.spawnlocations,Where to find:,Where to find:,Wo findet man:,Don
 material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn chance(Avg. 3-4 chances per dataport):,Spawn Chance (Avg. 3-4 Chancen pro Datenaport):,Chance de desagüe (avg. 3-4 posibilidades por papel de datos):,Spawn Chance (avg. 3-4 chances par données):,Chance de Spawn (Avg. 3-4 chances por Dataport):,Spawn Chance (Avg. 3-4 шансов на DataPort):
 material.tooltip.is.live,LIVE-only material,LIVE-only material,Nur LIVE-Material,Material solo en LIVE,Matériel en LIVE uniquement,Material somente ao LIVE,Материал для LIVE-версии
 material.tooltip.is.live.commodity,LIVE-only commodity,LIVE-only commodity,Nur LIVE-Ware,Productos básicos solo en LIVE,Marchandise en LIVE,Mercadoria apenas ao LIVE,Товар для LIVE-версии
+material.tooltip.downtrade,Downtrade:,Downtrade:,Downtrade:,Abatido:,Descente:,Baixa:,Нисходящий:
+material.tooltip.downtrade.entry,{0} from {1},{0} from {1},{0} von {1},{0} de {1},{0} de {1},{0} de {1},{0} из {1}

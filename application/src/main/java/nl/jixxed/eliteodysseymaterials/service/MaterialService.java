@@ -37,6 +37,8 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import static nl.jixxed.eliteodysseymaterials.enums.Rarity.UNKNOWN;
+
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MaterialService {
@@ -73,9 +75,26 @@ public class MaterialService {
                 vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.type.manufactured")).build());
             }
             addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);
+            addHorizonsTradeToTooltip(horizonsMaterial, vBox);
             addHorizonsBlueprintsToTooltip(HorizonsBlueprintConstants.findRecipesContaining(horizonsMaterial), vBox);
         }
         return vBox;
+
+
+    }
+
+    private static void addHorizonsTradeToTooltip(final HorizonsMaterial horizonsMaterial, final VBox vBox) {
+        if (horizonsMaterial.getRarity() != UNKNOWN && horizonsMaterial.getMaterialType().isTradable() && !(horizonsMaterial instanceof Commodity)) {
+            vBox.getChildren().add(LabelBuilder.builder().build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.downtrade")).build());
+            final List<HorizonsMaterial> otherMaterialsInCategory = HorizonsMaterial.getAllMaterials().stream().filter(material -> material.getMaterialType() == horizonsMaterial.getMaterialType() && material != horizonsMaterial && material.getRarity().getLevel() > horizonsMaterial.getRarity().getLevel()).sorted(Comparator.comparing(HorizonsMaterial::getRarity)).toList();
+            otherMaterialsInCategory.forEach(material -> {
+                final int materialCount = StorageService.getMaterialCount(material);
+                final int factor = material.getRarity().getLevel() - horizonsMaterial.getRarity().getLevel();
+                final int potentialFromTrade = materialCount * (int) Math.pow(3, factor);
+                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.downtrade.entry", potentialFromTrade, LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()))).build());
+            });
+        }
 
 
     }
@@ -302,7 +321,7 @@ public class MaterialService {
 
 
             final List<BlueprintListing> blueprintListings = groupedBlueprints.entrySet().stream().
-                    mapMulti((Map.Entry<Pair<HorizonsBlueprintName, HorizonsBlueprintType>, List<Pair<HorizonsBlueprintGrade, Integer>>> entry, Consumer<BlueprintListing> consumer) -> {
+                    mapMulti((final Map.Entry<Pair<HorizonsBlueprintName, HorizonsBlueprintType>, List<Pair<HorizonsBlueprintGrade, Integer>>> entry, final Consumer<BlueprintListing> consumer) -> {
                         final Map<Integer, List<Pair<HorizonsBlueprintGrade, Integer>>> gradeGroups = entry.getValue().stream().collect(Collectors.groupingBy(Pair::getValue));
                         gradeGroups.forEach((materialAmount, pairs) ->
                                 consumer.accept(
