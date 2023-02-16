@@ -86,6 +86,10 @@ class HorizonsContentArea extends AnchorPane {
         AnchorPaneHelper.setAnchor(this.tabs, 0.0, 0.0, 0.0, null);
 
         this.getChildren().addAll(this.recipeBar, this.body);
+        this.tabs.getSelectionModel().select(Math.min(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_HORIZONS, 0), this.tabs.getTabs().size()-1));
+        this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_HORIZONS, this.tabs.getTabs().indexOf(newValue));
+        });
     }
 
     private boolean isRecipeBarVisible() {

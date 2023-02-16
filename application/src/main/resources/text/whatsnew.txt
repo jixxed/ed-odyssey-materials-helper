@@ -2,6 +2,8 @@ Version 2.18
 -------------
 Downgrade to java 18. java 19 compilation was unstable.
 Add fix for journals with a lot of relogs causing Out Of Memory issues.
+Add downtrade to horizons material tooltips - see what you can get from higher grade materials through trading
+Add remember last opened tabs functionality. automatically opened on launch
 
 Version 2.17
 -------------
