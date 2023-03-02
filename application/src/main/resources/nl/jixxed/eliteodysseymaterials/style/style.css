@@ -2616,7 +2616,15 @@
     -fx-border-insets: 0.1em;
     -fx-background-insets: 0.1em;
 }
+.shipbuilder-slots-slotbox-label-normal{
+    -fx-font-size: 1em;
+    -fx-text-fill: white;
 
+}
+.shipbuilder-slots-slotbox-label-empty{
+    -fx-font-size: 3.5em;
+    -fx-text-fill: #4f4f4f;
+}
 .shipbuilder-slots-slotbox:hover {
     -fx-border-color: #89D07F;
 }

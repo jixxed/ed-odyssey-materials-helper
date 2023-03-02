@@ -1,0 +1,57 @@
+package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military;
+
+import nl.jixxed.eliteodysseymaterials.domain.ships.MilitaryOptionalModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+
+import java.util.List;
+import java.util.Map;
+
+public class GuardianHullReinforcementPackage extends MilitaryOptionalModule {
+//            4150 : { mtype:'ihrp', cost:     5000, name:'Hull Reinforcement Package', class:1, rating:'E', mass: 2.00,                            hullrnf: 80, thmres:0.5, expres:0.5, kinres: 0.5, fdid:128668537, fdname:'Int_HullReinforcement_Size1_Class1', eddbid:1373 },
+//            4140 : { mtype:'ihrp', cost:    15000, name:'Hull Reinforcement Package', class:1, rating:'D', mass: 1.00,                            hullrnf:110, thmres:0.5, expres:0.5, kinres: 0.5, fdid:128668538, fdname:'Int_HullReinforcement_Size1_Class2', eddbid:1374 },
+//            4250 : { mtype:'ihrp', cost:    12000, name:'Hull Reinforcement Package', class:2, rating:'E', mass: 4.00,                            hullrnf:150, thmres:1.0, expres:1.0, kinres: 1.0, fdid:128668539, fdname:'Int_HullReinforcement_Size2_Class1', eddbid:1375 },
+//            4240 : { mtype:'ihrp', cost:    36000, name:'Hull Reinforcement Package', class:2, rating:'D', mass: 2.00,                            hullrnf:190, thmres:1.0, expres:1.0, kinres: 1.0, fdid:128668540, fdname:'Int_HullReinforcement_Size2_Class2', eddbid:1376 },
+//            4350 : { mtype:'ihrp', cost:    28000, name:'Hull Reinforcement Package', class:3, rating:'E', mass: 8.00,                            hullrnf:230, thmres:1.5, expres:1.5, kinres: 1.5, fdid:128668541, fdname:'Int_HullReinforcement_Size3_Class1', eddbid:1377 },
+//            4340 : { mtype:'ihrp', cost:    84000, name:'Hull Reinforcement Package', class:3, rating:'D', mass: 4.00,                            hullrnf:260, thmres:1.5, expres:1.5, kinres: 1.5, fdid:128668542, fdname:'Int_HullReinforcement_Size3_Class2', eddbid:1378 },
+//            4450 : { mtype:'ihrp', cost:    65000, name:'Hull Reinforcement Package', class:4, rating:'E', mass:16.00,                            hullrnf:300, thmres:2.0, expres:2.0, kinres: 2.0, fdid:128668543, fdname:'Int_HullReinforcement_Size4_Class1', eddbid:1379 },
+//            4440 : { mtype:'ihrp', cost:   195000, name:'Hull Reinforcement Package', class:4, rating:'D', mass: 8.00,                            hullrnf:330, thmres:2.0, expres:2.0, kinres: 2.0, fdid:128668544, fdname:'Int_HullReinforcement_Size4_Class2', eddbid:1380 },
+//            4550 : { mtype:'ihrp', cost:   150000, name:'Hull Reinforcement Package', class:5, rating:'E', mass:32.00,                            hullrnf:360, thmres:2.5, expres:2.5, kinres: 2.5, fdid:128668545, fdname:'Int_HullReinforcement_Size5_Class1', eddbid:1381 },
+//            4540 : { mtype:'ihrp', cost:   450000, name:'Hull Reinforcement Package', class:5, rating:'D', mass:16.00,                            hullrnf:390, thmres:2.5, expres:2.5, kinres: 2.5, fdid:128668546, fdname:'Int_HullReinforcement_Size5_Class2', eddbid:1382 },
+//            4151 : { mtype:'ihrp', cost:    10000, name:'Guardian Hull Reinforcemen', class:1, rating:'E', mass: 2.00, pwrdraw:0.45, powerlock:1, hullrnf:100, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833945, fdname:'Int_GuardianHullReinforcement_Size1_Class1', eddbid:1700 }, // verify *res // guardian tech broker
+//            4141 : { mtype:'ihrp', cost:    30000, name:'Guardian Hull Reinforcemen', class:1, rating:'D', mass: 1.00, pwrdraw:0.56, powerlock:1, hullrnf:138, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833946, fdname:'Int_GuardianHullReinforcement_Size1_Class2', eddbid:1701 }, // verify *res // guardian tech broker
+//            4251 : { mtype:'ihrp', cost:    24000, name:'Guardian Hull Reinforcemen', class:2, rating:'E', mass: 4.00, pwrdraw:0.68, powerlock:1, hullrnf:188, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833947, fdname:'Int_GuardianHullReinforcement_Size2_Class1', eddbid:1702 }, // verify *res // guardian tech broker
+//            4241 : { mtype:'ihrp', cost:    72000, name:'Guardian Hull Reinforcemen', class:2, rating:'D', mass: 2.00, pwrdraw:0.79, powerlock:1, hullrnf:238, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833948, fdname:'Int_GuardianHullReinforcement_Size2_Class2', eddbid:1703 }, // verify *res // guardian tech broker
+//            4351 : { mtype:'ihrp', cost:    57600, name:'Guardian Hull Reinforcemen', class:3, rating:'E', mass: 8.00, pwrdraw:0.90, powerlock:1, hullrnf:288, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833949, fdname:'Int_GuardianHullReinforcement_Size3_Class1', eddbid:1704 }, // verify *res // guardian tech broker
+//            4341 : { mtype:'ihrp', cost:   172800, name:'Guardian Hull Reinforcemen', class:3, rating:'D', mass: 4.00, pwrdraw:1.01, powerlock:1, hullrnf:325, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833950, fdname:'Int_GuardianHullReinforcement_Size3_Class2', eddbid:1705 }, // verify *res // guardian tech broker
+//            4451 : { mtype:'ihrp', cost:   138240, name:'Guardian Hull Reinforcemen', class:4, rating:'E', mass:16.00, pwrdraw:1.13, powerlock:1, hullrnf:375, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833951, fdname:'Int_GuardianHullReinforcement_Size4_Class1', eddbid:1706 }, // verify *res // guardian tech broker
+//            4441 : { mtype:'ihrp', cost:   414720, name:'Guardian Hull Reinforcemen', class:4, rating:'D', mass: 8.00, pwrdraw:1.24, powerlock:1, hullrnf:413, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833952, fdname:'Int_GuardianHullReinforcement_Size4_Class2', eddbid:1707 }, // verify *res // guardian tech broker
+//            4551 : { mtype:'ihrp', cost:   331780, name:'Guardian Hull Reinforcemen', class:5, rating:'E', mass:32.00, pwrdraw:1.35, powerlock:1, hullrnf:450, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833953, fdname:'Int_GuardianHullReinforcement_Size5_Class1', eddbid:1708 }, // verify *res // guardian tech broker
+//            4541 : { mtype:'ihrp', cost:   995330, name:'Guardian Hull Reinforcemen', class:5, rating:'D', mass:16.00, pwrdraw:1.46, powerlock:1, hullrnf:488, thmres:2.0, caures:5.0, noblueprints:{'*':1}, fdid:128833954, fdname:'Int_GuardianHullReinforcement_Size5_Class2', eddbid:1709 }, // verify *res // guardian tech broker
+
+    public GuardianHullReinforcementPackage(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        super(name,moduleSize,moduleClass, basePrice,internalName, attributes);
+    }
+    public GuardianHullReinforcementPackage(final GuardianHullReinforcementPackage hullReinforcementPackage) {
+        super(hullReinforcementPackage  );
+    }
+
+    @Override
+    public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        return null;
+    }
+
+    @Override
+    public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        return null;
+    }
+
+    @Override
+    public ShipModule Clone() {
+        return null;
+    }
+}

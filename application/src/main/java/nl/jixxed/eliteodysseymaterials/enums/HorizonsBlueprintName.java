@@ -111,7 +111,9 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     HUMAN_WEAPONS(BlueprintCategory.TECHBROKER),
     HUMAN_MODULES(BlueprintCategory.TECHBROKER),
     HUMAN_LIVERY(BlueprintCategory.TECHBROKER),
-    NONE(BlueprintCategory.TECHBROKER);
+    NONE(BlueprintCategory.TECHBROKER),
+    CARGO_RACK(BlueprintCategory.OPTIONAL_INTERNAL),
+    FUEL_TANK(BlueprintCategory.OPTIONAL_INTERNAL);
     private final BlueprintCategory blueprintCategory;
 
     public static HorizonsBlueprintName forName(final String name) {
@@ -234,6 +236,10 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return SHIELD_CELL_BANK;
         } else if (nameLowerCase.startsWith("int_shieldgenerator")) {
             return SHIELD_GENERATOR;
+        } else if (nameLowerCase.startsWith("int_cargorack")) {
+            return CARGO_RACK;
+        } else if (nameLowerCase.startsWith("int_fueltank")) {
+            return FUEL_TANK;
         }
         throw new IllegalArgumentException("Unknown module name: " + internalModuleName);
     }

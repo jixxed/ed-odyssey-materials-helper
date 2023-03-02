@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
+package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ public class Slot {
     private ShipModule shipModule;
 
 
-    String getSlotSizeName() {
+    public String getSlotSizeName() {
         if (this.slotType == SlotType.HARDPOINT || this.slotType == SlotType.UTILITY) {
             return slotMapping.get(this.slotSize);
         }
@@ -35,13 +35,7 @@ public class Slot {
         this.index = slot.index;
         this.slotSize = slot.slotSize;
         if (slot.shipModule != null) {
-            this.shipModule = switch (this.slotType) {
-                case CORE -> new CoreModule((CoreModule) slot.shipModule);
-                case UTILITY -> new UtilityModule((UtilityModule) slot.shipModule);
-                case HARDPOINT -> new HardpointModule((HardpointModule) slot.shipModule);
-                case MILITARY -> new MilitaryOptionalModule((MilitaryOptionalModule) slot.shipModule);
-                case OPTIONAL -> new OptionalModule((OptionalModule) slot.shipModule);
-            };
+            this.shipModule = slot.shipModule.Clone();
         }
 
     }
