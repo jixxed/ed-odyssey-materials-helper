@@ -170,7 +170,8 @@ public enum HorizonsBlueprintType {
     CORROSION_RESISTANT_CARGO_RACK(false),
     BOBBLEHEAD(false),
     E2_SIRIUS_CORPORATION_AX_MISSILE_RACK(false),
-    C3_SIRIUS_CORPORATION_AX_MISSILE_RACK(false);
+    C3_SIRIUS_CORPORATION_AX_MISSILE_RACK(false),
+    CAUSTIC_SINK_LAUNCHER(false);
     @Getter
     private final boolean experimental;
 

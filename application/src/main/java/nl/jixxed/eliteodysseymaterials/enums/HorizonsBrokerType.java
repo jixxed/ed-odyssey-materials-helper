@@ -6,6 +6,7 @@ public enum HorizonsBrokerType {
     TORVAL,
     SALVATION,
     SIRIUS,
+    AEGIS,
     UNKNOWN;
 
     public static HorizonsBrokerType forName(final String name) {
