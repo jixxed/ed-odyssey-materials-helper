@@ -541,6 +541,20 @@ public class TechbrokerBlueprints {
                     List.of(),
                     List.of(HorizonsBrokerType.SIRIUS)
             ),
+            HorizonsBlueprintType.CAUSTIC_SINK_LAUNCHER,
+            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.CAUSTIC_SINK_LAUNCHER,
+                    Map.of(
+                            Manufactured.CHEMICALSTORAGEUNITS, 15,
+                            Manufactured.GALVANISINGALLOYS, 10,
+                            Manufactured.TG_CAUSTICSHARD, 20,
+                            Manufactured.TG_CAUSTICGENERATORPARTS, 10,
+                            Commodity.THARGOIDGENERATORTISSUESAMPLE, 5
+                    ),
+                    Map.of(),
+                    List.of(),
+                    List.of(HorizonsBrokerType.AEGIS),
+                    GameVersion.LIVE
+            ),
             HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
                     Map.of(
                             Commodity.METAALLOYS, 16,
@@ -550,7 +564,7 @@ public class TechbrokerBlueprints {
                             Commodity.REINFORCEDMOUNTINGPLATE, 12),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
+                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.AEGIS)
             ),
             HorizonsBlueprintType.CORROSION_RESISTANT_CARGO_RACK, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.CORROSION_RESISTANT_CARGO_RACK,
                     Map.of(
@@ -561,7 +575,7 @@ public class TechbrokerBlueprints {
                             Commodity.RADIATIONBAFFLE, 22),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
+                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.AEGIS)
             ));
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> HUMAN_LIVERY = Map.of(
             HorizonsBlueprintType.BOBBLEHEAD, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_LIVERY, HorizonsBlueprintType.BOBBLEHEAD,

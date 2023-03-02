@@ -1,3 +1,9 @@
+Version 2.19
+-------------
+Added new Aegis techbrokers
+Added Caustic Sink Launcher blueprint
+Updated some localizations
+
 Version 2.18
 -------------
 Downgrade to java 18. java 19 compilation was unstable.
