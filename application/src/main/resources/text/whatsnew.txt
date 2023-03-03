@@ -1,7 +1,14 @@
+Version 2.20
+-------------
+Add new Caustic Sink Launcher engineering blueprints
+Add progressbar to wishlist items
+Update official guide link to playlist
+Fix Heat Sink Launcher lightweight blueprint modifier
+
 Version 2.19
 -------------
-Added new Aegis techbrokers
-Added Caustic Sink Launcher blueprint
+Add new Aegis techbrokers
+Add Caustic Sink Launcher blueprint
 Updated some localizations
 
 Version 2.18
