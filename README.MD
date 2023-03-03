@@ -15,4 +15,4 @@ usage
 and hidden features.
 
 A special thanks to CMDR Logan Terrick for creating this video!
-[![Video](https://img.youtube.com/vi/8EXOeB074Zw/maxresdefault.jpg)](https://youtu.be/8EXOeB074Zw)
+[![Video](https://img.youtube.com/vi/8EXOeB074Zw/maxresdefault.jpg)](https://www.youtube.com/playlist?list=PLg3S2KmbzGpPvHqMJrP2yFKEyUr8Axn0T)
