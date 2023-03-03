@@ -282,6 +282,7 @@ public abstract class HorizonsBlueprintConstants {
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_CELL_BANK, ShieldCellBankBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_GENERATOR, ShieldGeneratorBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, DetailedSurfaceScannerBlueprints.BLUEPRINTS);
+        UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER, CausticSinkLauncherBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.CHAFF_LAUNCHER, ChaffLauncherBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.ELECTRONIC_COUNTERMEASURE, ElectronicCounterMeasureBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, FrameShiftWakeScannerBlueprints.BLUEPRINTS);
