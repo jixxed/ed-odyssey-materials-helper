@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
+import javafx.geometry.Orientation;
+import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
@@ -7,7 +9,13 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
+import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
+import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsMaterialIngredient;
+import org.controlsfx.control.SegmentedBar;
+
+import java.util.Map;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
@@ -15,6 +23,9 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
     private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
+    private SegmentedBar<TypeSegment> segmentedBar;
+    private TypeSegment present;
+    private TypeSegment notPresent;
 
     HorizonsWishlistIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, horizonsMaterial, amountRequired, amountAvailable);
@@ -36,6 +47,20 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
                 this.getRightAmountLabel().setText(this.getRightAmount().toString());
             }
         });
+
+        this.segmentedBar = new SegmentedBar<>();
+        this.segmentedBar.getStyleClass().add("ingredient-progressbar");
+        this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
+        this.segmentedBar.setInfoNodeFactory(segment -> null);
+        this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
+                SegmentType.PRESENT, Color.rgb(255, 255, 255),
+                SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
+        ), false));
+        final Integer progress = Math.min(this.getLeftAmount(), this.getRightAmount());
+        this.present = new TypeSegment(progress, SegmentType.PRESENT);
+        this.notPresent = new TypeSegment(Math.max(this.getLeftAmount() - progress, 0), SegmentType.NOT_PRESENT);
+        this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
+        this.getChildren().add(this.segmentedBar);
     }
 
     @Override
@@ -59,6 +84,22 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
             this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
         } else {
             this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
+        }
+        if(this.present != null){
+            final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
+            this.present.setValue(progress);
+            this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
+            if(Math.max(this.getLeftAmount() - progress, 0) > 0){
+                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
+                        SegmentType.PRESENT, Color.web("#ff7c7c"),
+                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
+                ), false));
+            }else{
+                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
+                        SegmentType.PRESENT, Color.web("#89d07f"),
+                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
+                ), false));
+            }
         }
     }
 

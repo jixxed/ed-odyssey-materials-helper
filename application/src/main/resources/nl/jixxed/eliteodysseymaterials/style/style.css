@@ -2589,3 +2589,8 @@
 .nearest-trader-hidden{
     -fx-opacity: 0;
 }
+.ingredient-progressbar{
+    -fx-min-height: 0.25em;
+    -fx-pref-height: 0.25em;
+    -fx-max-height: 0.25em;
+}
