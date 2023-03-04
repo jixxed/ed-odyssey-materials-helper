@@ -50,6 +50,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     ELECTRONIC_COUNTERMEASURE(BlueprintCategory.UTILITY_MOUNT),
     FRAME_SHIFT_WAKE_SCANNER(BlueprintCategory.UTILITY_MOUNT),
     HEAT_SINK_LAUNCHER(BlueprintCategory.UTILITY_MOUNT),
+    CAUSTIC_SINK_LAUNCHER(BlueprintCategory.UTILITY_MOUNT),
     KILL_WARRANT_SCANNER(BlueprintCategory.UTILITY_MOUNT),
     MANIFEST_SCANNER(BlueprintCategory.UTILITY_MOUNT),
     POINT_DEFENCE(BlueprintCategory.UTILITY_MOUNT),
