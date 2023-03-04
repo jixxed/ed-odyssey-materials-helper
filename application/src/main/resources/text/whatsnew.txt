@@ -1,3 +1,7 @@
+Version 2.21
+-------------
+Fix for Frontier API issues
+
 Version 2.20
 -------------
 Add new Caustic Sink Launcher engineering blueprints

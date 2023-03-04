@@ -62,7 +62,7 @@ public class CAPIService {
     private CAPIService(final Application application) {
         this.application = application;
         this.service = new ServiceBuilder(CapiOAuth20Service.CLIENT_ID)
-                .defaultScope("capi")
+                .defaultScope("auth capi")
                 .callback("edomh://capi/")
 //                .debug()
                 .build(FrontierApi.instance());
