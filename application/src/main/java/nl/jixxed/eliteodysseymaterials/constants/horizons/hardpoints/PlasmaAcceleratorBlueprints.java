@@ -373,7 +373,7 @@ public class PlasmaAcceleratorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsModifierValue("-4%", false),
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("-56%", true),
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("-55%", true),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-25%", true),
                                     HorizonsModifier.JITTER, new HorizonsModifierValue("0,5", false),
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+35%", true)

@@ -32,7 +32,7 @@ public class ElectronicCounterMeasureBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-20%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-56%", true)
+                                    HorizonsModifier.MASS, new HorizonsModifierValue("-55%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.ELECTRONIC_COUNTERMEASURE, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,

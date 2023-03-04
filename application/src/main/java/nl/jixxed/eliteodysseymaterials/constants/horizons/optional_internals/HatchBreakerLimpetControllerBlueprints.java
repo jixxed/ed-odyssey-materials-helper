@@ -32,7 +32,7 @@ public class HatchBreakerLimpetControllerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-20%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-56%", true)
+                                    HorizonsModifier.MASS, new HorizonsModifierValue("-55%", true)
                             ),
                             List.of(Engineer.MARSHA_HICKS, Engineer.TIANA_FORTUNE, Engineer.THE_SARGE, Engineer.RAM_TAH)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.HATCH_BREAKER_LIMPET_CONTROLLER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,

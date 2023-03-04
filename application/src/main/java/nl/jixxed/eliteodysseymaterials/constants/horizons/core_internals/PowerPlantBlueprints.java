@@ -120,7 +120,7 @@ public class PowerPlantBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+16%", false),
-                                    HorizonsModifier.HEAT_EFFICIENCY, new HorizonsModifierValue("-56%", true),
+                                    HorizonsModifier.HEAT_EFFICIENCY, new HorizonsModifierValue("-55%", true),
                                     HorizonsModifier.POWER_GENERATION, new HorizonsModifierValue("-12%", false)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.MARCO_QWENT, Engineer.HERA_TANI)),

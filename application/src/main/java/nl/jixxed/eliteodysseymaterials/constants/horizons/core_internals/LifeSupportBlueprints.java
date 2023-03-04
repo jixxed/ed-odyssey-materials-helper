@@ -34,7 +34,7 @@ public class LifeSupportBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-20%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-56%", true)
+                                    HorizonsModifier.MASS, new HorizonsModifierValue("-55%", true)
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.LIFE_SUPPORT, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,

@@ -35,7 +35,7 @@ public class KillWarrantScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.1, 0.2)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-56%", true, percentageNegative(0.45, 0.56))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-55%", true, percentageNegative(0.45, 0.55))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.KILL_WARRANT_SCANNER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
@@ -46,7 +46,7 @@ public class KillWarrantScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.2, 0.3)),
-                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-65%", true, percentageNegative(0.56, 0.65))
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-65%", true, percentageNegative(0.55, 0.65))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.KILL_WARRANT_SCANNER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_4,

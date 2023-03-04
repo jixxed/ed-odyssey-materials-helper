@@ -249,7 +249,7 @@ public class ArmourBlueprints {
                             Map.of(
                                     HorizonsModifier.ALL_RESISTANCES, new HorizonsModifierValue("+15%", true),
                                     HorizonsModifier.HULL_BOOST, new HorizonsModifierValue("-5%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-56%", true)
+                                    HorizonsModifier.MASS, new HorizonsModifierValue("-55%", true)
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN))
             ),

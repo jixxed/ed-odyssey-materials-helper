@@ -32,7 +32,7 @@ public class ProspectorLimpetControllerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-20%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-56%", true)
+                                    HorizonsModifier.MASS, new HorizonsModifierValue("-55%", true)
                             ),
                             List.of(Engineer.TIANA_FORTUNE, Engineer.MARSHA_HICKS, Engineer.THE_SARGE, Engineer.RAM_TAH)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.PROSPECTOR_LIMPET_CONTROLLER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
