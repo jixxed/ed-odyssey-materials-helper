@@ -1,3 +1,8 @@
+Version 2.22
+-------------
+Fix material location for Jameson Crash Site(was listed as Jameson Memorial)
+Fix bugs with blueprint pinning with less than 5 grades
+
 Version 2.21
 -------------
 Fix for Frontier API issues
