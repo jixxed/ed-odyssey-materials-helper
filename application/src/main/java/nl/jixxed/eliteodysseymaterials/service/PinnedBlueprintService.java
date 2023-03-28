@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
@@ -45,12 +46,12 @@ public class PinnedBlueprintService {
 //                log.info("pinned blueprints loaded");
 //            });
 //        });
-//        eventListeners.add(EventService.addStaticListener(0, EngineerEvent.class, event -> {
-//            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
-//                load(commander);
-//                log.info("pinned blueprints loaded");
-//            });
-//        });
+        EVENT_LISTENERS.add(EventService.addStaticListener(0, EngineerEvent.class, event -> {
+            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+                load(commander);
+                log.info("pinned blueprints loaded");
+            });
+        }));
 
     }
 
@@ -103,10 +104,13 @@ public class PinnedBlueprintService {
                 final HashMap<Engineer, HorizonsBlueprintJson> pinnedBlueprintsMap = OBJECT_MAPPER.readValue(Files.readString(pinnedBlueprintsFile.toPath()), typeRef);
                 pinnedBlueprintsMap.forEach((engineer, horizonsBlueprintJson) -> {
                     final Integer engineerRank = ApplicationState.getInstance().getEngineerRank(engineer);
+                    final HorizonsBlueprintName name = HorizonsBlueprintName.forName(horizonsBlueprintJson.getName());
+                    final HorizonsBlueprintType horizonsBlueprintType = HorizonsBlueprintType.forName(horizonsBlueprintJson.getType());
+                    final int maxBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(name, horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElse(HorizonsBlueprintGrade.GRADE_1).getGrade();
                     pinnedBlueprints.put(engineer, (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(
-                            HorizonsBlueprintName.forName(horizonsBlueprintJson.getName()),
-                            HorizonsBlueprintType.forName(horizonsBlueprintJson.getType()),
-                            HorizonsBlueprintGrade.forDigit(Math.max(engineerRank, 1))
+                            name,
+                            horizonsBlueprintType,
+                            HorizonsBlueprintGrade.forDigit(Math.max(Math.min(engineerRank, maxBlueprintGrade), 1))
                     ));
                 });
             }
