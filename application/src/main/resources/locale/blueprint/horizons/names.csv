@@ -1,19 +1,19 @@
 messageKey,,en,de,es,fr,pt,ru
-blueprint.horizons.name.afm_refill,AFM Refill,AFM Refill,AFM Nachfüll,Recarga de AFM,Recharge AFM,AFM RECILL,Снабжение АПР
+blueprint.horizons.name.afm_refill,AFM Refill,AFM Refill,AFW-Auffrischung,Recarga de AFM,Recharge AFM,AFM RECILL,Снабжение АПР
 blueprint.horizons.name.armour,Armour,Armour,Rüstung,Armadura,Armure,Armaduras,Переборки
-blueprint.horizons.name.auto_field_maintenance_unit,Auto Field Maintenance Unit,Auto Field Maintenance Unit,Autofeldwartungseinheit,Unidad de mantenimiento de campo automático,Unité de maintenance des champs automobiles,Unidade de manutenção de campo automático,Блок автоматического полевого ремонта
+blueprint.horizons.name.auto_field_maintenance_unit,Auto Field Maintenance Unit,Auto Field Maintenance Unit,Automatische Feldwartungs-Einheit,Unidad de mantenimiento de campo automático,Unité de maintenance des champs automobiles,Unidade de manutenção de campo automático,Блок автоматического полевого ремонта
 blueprint.horizons.name.ax_explosive_munitions,AX Explosive Munitions,AX Explosive Munitions,Axt explosive Munition,Municiones explosivas de hacha,Munitions explosives à hache,Munições explosivas do machado,Взрывчатые боеприпасы АИ
-blueprint.horizons.name.ax_remote_flak_munitions,AX Remote Flak Munitions,AX Remote Flak Munitions,Axt Fernflak -Munition,Municiones de flak remotas de hacha,Munitions de flak à distance ax,Munições remotas de Ax Remote,Зенитные снаряды с дистанционным подрывом АИ
-blueprint.horizons.name.ax_small_calibre_munitions,AX Small Calibre Munitions,AX Small Calibre Munitions,Axt Munition mit kleinen Kaliber,Municiones de calibre pequeño hacha,Axe Munitions de petit calibre,Munições de pequeno calibre de machado,Мелкокалиберные боеприпасы АИ
-blueprint.horizons.name.beam_laser,Beam Laser,Beam Laser,Strahllaser,Láser de haz,Laser à faisceau,Laser de feixe,Пучковый лазер
-blueprint.horizons.name.burst_laser,Burst Laser,Burst Laser,Laser ausgebrochen,Láser,Laser éclaté,BURST LASER,Пульсирующий лазер
+blueprint.horizons.name.ax_remote_flak_munitions,AX Remote Flak Munitions,AX Remote Flak Munitions,AX Munition für ferngezündete Flak,Municiones de flak remotas de hacha,Munitions de flak à distance ax,Munições remotas de Ax Remote,Зенитные снаряды с дистанционным подрывом АИ
+blueprint.horizons.name.ax_small_calibre_munitions,AX Small Calibre Munitions,AX Small Calibre Munitions,AX Kleinkalibrige Munition,Municiones de calibre pequeño hacha,Axe Munitions de petit calibre,Munições de pequeno calibre de machado,Мелкокалиберные боеприпасы АИ
+blueprint.horizons.name.beam_laser,Beam Laser,Beam Laser,Strahlenlaser,Láser de haz,Laser à faisceau,Laser de feixe,Пучковый лазер
+blueprint.horizons.name.burst_laser,Burst Laser,Burst Laser,Salvenlaser,Láser,Laser éclaté,BURST LASER,Пульсирующий лазер
 blueprint.horizons.name.cannon,Cannon,Cannon,Kanone,Cañón,Canon,Canhão,Орудие
-blueprint.horizons.name.chaff,Chaff,Chaff,Spreu,Paja,Balle,Palha,Дип. отражатель
-blueprint.horizons.name.chaff_launcher,Chaff Launcher,Chaff Launcher,Spreu nach dem Launcher,Lanzador de chaff,Lanceur de paillettes,Chaff Launcher,Разбрасыватели дипольных отражателей
-blueprint.horizons.name.collector_limpet_controller,Collector Limpet Controller,Collector Limpet Controller,Sammler -Limpet -Controller,Controlador de la conector del colector,Contrôleur de collecteur LimPe,Controlador de Limpet de colecionador,Контроллер дрона-сборщика
-blueprint.horizons.name.configurable_explosive_munitions,Configurable Explosive Munitions,Configurable Explosive Munitions,Konfigurierbare explosive Munition,Municiones explosivas configurables,Munitions explosives configurables,Munições explosivas configuráveis,Настраиваемые взрывчатые боеприпасы
-blueprint.horizons.name.configurable_small_calibre_munitions,Configurable Small Calibre Munitions,Configurable Small Calibre Munitions,Konfigurierbare Munition kleiner Kaliber,Municiones de calibre pequeñas configurables,Munitions configurables de petit calibre,Munições de pequeno calibre configuráveis,Настраиваемые мелкокалиберные боеприпасы
-blueprint.horizons.name.detailed_surface_scanner,Detailed Surface Scanner,Detailed Surface Scanner,Detaillierter Oberflächenscanner,Escáner de superficie detallado,Scanner de surface détaillé,Scanner de superfície detalhado,Подробный сканер поверхности
+blueprint.horizons.name.chaff,Chaff,Chaff,Düppel,Paja,Balle,Palha,Дип. отражатель
+blueprint.horizons.name.chaff_launcher,Chaff Launcher,Chaff Launcher,Düppel-Werfer,Lanzador de chaff,Lanceur de paillettes,Chaff Launcher,Разбрасыватели дипольных отражателей
+blueprint.horizons.name.collector_limpet_controller,Collector Limpet Controller,Collector Limpet Controller,Sammeldrohnensteuerung,Controlador de la conector del colector,Contrôleur de collecteur LimPe,Controlador de Limpet de colecionador,Контроллер дрона-сборщика
+blueprint.horizons.name.configurable_explosive_munitions,Configurable Explosive Munitions,Configurable Explosive Munitions,Konfigurierbare Explosivmunition,Municiones explosivas configurables,Munitions explosives configurables,Munições explosivas configuráveis,Настраиваемые взрывчатые боеприпасы
+blueprint.horizons.name.configurable_small_calibre_munitions,Configurable Small Calibre Munitions,Configurable Small Calibre Munitions,Konfigurierbare kleinkalibrige Munition,Municiones de calibre pequeñas configurables,Munitions configurables de petit calibre,Munições de pequeno calibre configuráveis,Настраиваемые мелкокалиберные боеприпасы
+blueprint.horizons.name.detailed_surface_scanner,Detailed Surface Scanner,Detailed Surface Scanner,Detail-Oberflächenscanner,Escáner de superficie detallado,Scanner de surface détaillé,Scanner de superfície detalhado,Подробный сканер поверхности
 blueprint.horizons.name.electronic_countermeasure,Electronic Countermeasure,Electronic Countermeasure,Elektronische Gegenmaßnahme,Contramedida electrónica,Contre-mesure électronique,Contramedida eletrônica,Электронное подавление
 blueprint.horizons.name.engineer_a1,A1. Mel Brandon ©,A1. Mel Brandon ©,A1. Mel Brandon ©,A1. Mel Brandon ©,A1. Mel Brandon ©,A1. Mel Brandon ©,A1. Мэл Брендон ©
 blueprint.horizons.name.engineer_a2,A2. Zacariah Nemo,A2. Zacariah Nemo,A2. Zacariah Nemo,A2. Zacariah nemo,A2. Zacariah Nemo,A2. Zacariah Nemo,A2. Закария Немо
@@ -40,62 +40,62 @@ blueprint.horizons.name.engineer_e2,E2. Hera Tani,E2. Hera Tani,E2. Hera Tani,E2
 blueprint.horizons.name.engineer_e2a,E2A. Broo Tarquin,E2A. Broo Tarquin,E2A. Broo Tarquin,E2A. Broo,E2A. Broo Tarquin,E2a. Broo Tarquin,E2A. Бру Таркуин
 blueprint.horizons.name.engineer_e2b,E2B. Tiana Fortune,E2B. Tiana Fortune,E2B. Tiana -Vermögen,E2B. Tiana Fortune,E2B. Fortune de Tiana,E2b. Fortune de Tiana,E2B. Тиана Форчун
 blueprint.horizons.name.engineer_e,E. Liz Ryder,E. Liz Ryder,E. Liz Ryder,E. Liz Ryder,E. Liz Ryder,E. Liz Ryder,E. Лиз Райдер
-blueprint.horizons.name.enzyme_missile_launcher_munitions,Enzyme Missile Launcher Munitions,Enzyme Missile Launcher Munitions,Enzym -Raketenwerfer Munition,Municiones de lanzadores de misiles enzimáticos,Enzyme Missile Launcher Munitions,Munições de lançador de mísseis enzimáticos,Боеприпасы для энзимных ракетных установок
-blueprint.horizons.name.explosive_munitions,Explosive Munitions,Explosive Munitions,Explosive Munition,Municiones explosivas,Munitions explosives,Munições explosivas,Взрывчатые боеприпасы
-blueprint.horizons.name.flechette_launcher_munitions,Flechette Launcher Munitions,Flechette Launcher Munitions,Flechette Launcher Munition,Municiones de Flechette Launcher,Flechette Launcher Munitions,Munições de Flechette Launcher,Стреловидные боеприпасы
+blueprint.horizons.name.enzyme_missile_launcher_munitions,Enzyme Missile Launcher Munitions,Enzyme Missile Launcher Munitions,Enzymraketenwerfermunition,Municiones de lanzadores de misiles enzimáticos,Enzyme Missile Launcher Munitions,Munições de lançador de mísseis enzimáticos,Боеприпасы для энзимных ракетных установок
+blueprint.horizons.name.explosive_munitions,Explosive Munitions,Explosive Munitions,Explosivmunition,Municiones explosivas,Munitions explosives,Munições explosivas,Взрывчатые боеприпасы
+blueprint.horizons.name.flechette_launcher_munitions,Flechette Launcher Munitions,Flechette Launcher Munitions,Flechettewerfermunition,Municiones de Flechette Launcher,Flechette Launcher Munitions,Munições de Flechette Launcher,Стреловидные боеприпасы
 blueprint.horizons.name.fragment_cannon,Fragment Cannon,Fragment Cannon,Fragmentkanone,Cañón de fragmento,Canon de fragment,Canhão de fragmento,Залповое орудие
-blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Rahmenverschiebungsantrieb,Unidad de cambio de marco,Lecteur de décalage du cadre,Unidade de mudança de quadro,Рамочно-сместительный двигатель
-blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Rahmenverschiebungsantriebsbetrieb,Interdictor de unidad de cambio de cuadro,Interdictor de lecteur de décalage de cadre,Interditor de transmissão de mudança de quadro,Перехватчик FSD
-blueprint.horizons.name.frame_shift_wake_scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Escáner de estela de cambio de cuadro,Scanner de shift de cadre,Scanner de despertar em mudança de quadro,Сканер следа FSD
-blueprint.horizons.name.fuel_scoop,Fuel Scoop,Fuel Scoop,Kraftstoffschaufel,Cucharada de combustible,Scoop de carburant,Colher de combustível,Топливозаборник
-blueprint.horizons.name.fuel_transfer_limpet_controller,Fuel Transfer Limpet Controller,Fuel Transfer Limpet Controller,Kraftstoffübertragungs -Limpet -Controller,Controlador de lapa de transferencia de combustible,Contrôleur de paquet de transfert de carburant,Controlador de transferência de combustível,Контроллер дрона-заправщика
-blueprint.horizons.name.guardian_fighters,Guardian Fighters,Guardian Fighters,Wächterkämpfer,Combatientes guardianes,Fighters gardiens,Fighters Guardian,Истребители Стражей
-blueprint.horizons.name.guardian_gauss_cannon_munitions,Guardian Gauss Cannon Munitions,Guardian Gauss Cannon Munitions,Wächter Gauß Cannon Munitions,Municiones de cañón de Guardian Gauss,Guardian Gauss Cannon Munitions,Munições de canhões do Guardian Gauss,Боеприпасы для пушек Гаусса Стражей
-blueprint.horizons.name.guardian_modules,Guardian Modules,Guardian Modules,Wächtermodule,Módulos de guardia,Modules gardiens,Módulos Guardian,Модули Стражей
-blueprint.horizons.name.guardian_plasma_charger_munitions,Guardian Plasma Charger Munitions,Guardian Plasma Charger Munitions,Guardian Plasma Charger Munitions,Municiones de cargador de plasma de guardia,Munitions du chargeur de plasma Guardian,Munições de carregador de plasma guardiões,Боеприпасы для плазменных пушек Стражей
-blueprint.horizons.name.guardian_shard_cannon_munitions,Guardian Shard Cannon Munitions,Guardian Shard Cannon Munitions,Guardian Shard Cannon Munitions,Municiones de cañón de thard fragmentos,Guardian Shard Cannon Munitions,Munições de canhão do Shard Guardian,Боеприпасы для осколочных орудий Стражей
-blueprint.horizons.name.guardian_weapons,Guardian Weapons,Guardian Weapons,Wächterwaffen,Armas guardianas,Armes gardiennes,Armas guardiões,Оружие Стражей
-blueprint.horizons.name.hatch_breaker_limpet_controller,Hatch Breaker Limpet Controller,Hatch Breaker Limpet Controller,Brecher -Limpet -Controller,Controlador de lapa del interruptor de escotilla,Contrôleur de pacon de brise-trappe,Controlador de Limpet de Breaker Hatch,Контроллер дронов-взломщиков трюмов
-blueprint.horizons.name.heat_sink_launcher,Heat Sink Launcher,Heat Sink Launcher,Kühlkörper -Launcher,Lanzador de disipador de calor,Lance-tampons,Lançador de dissipador de calor,Теплоотводная катапульта
-blueprint.horizons.name.heatsinks,Heatsinks,Heatsinks,Temperatur fällt,Disipadores de calor,Dissipateurs de chaleur,Dissipadores de calor,Теплоотводы
+blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Frameshiftantrieb,Unidad de cambio de marco,Lecteur de décalage du cadre,Unidade de mudança de quadro,Рамочно-сместительный двигатель
+blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Frameshiftantriebunterbrecher,Interdictor de unidad de cambio de cuadro,Interdictor de lecteur de décalage de cadre,Interditor de transmissão de mudança de quadro,Перехватчик FSD
+blueprint.horizons.name.frame_shift_wake_scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Sogwolkenscanner,Escáner de estela de cambio de cuadro,Scanner de shift de cadre,Scanner de despertar em mudança de quadro,Сканер следа FSD
+blueprint.horizons.name.fuel_scoop,Fuel Scoop,Fuel Scoop,Treibstoffsammler,Cucharada de combustible,Scoop de carburant,Colher de combustível,Топливозаборник
+blueprint.horizons.name.fuel_transfer_limpet_controller,Fuel Transfer Limpet Controller,Fuel Transfer Limpet Controller,Treibstofftransferdrohnensteuerung,Controlador de lapa de transferencia de combustible,Contrôleur de paquet de transfert de carburant,Controlador de transferência de combustível,Контроллер дрона-заправщика
+blueprint.horizons.name.guardian_fighters,Guardian Fighters,Guardian Fighters,Guardian Fighter,Combatientes guardianes,Fighters gardiens,Fighters Guardian,Истребители Стражей
+blueprint.horizons.name.guardian_gauss_cannon_munitions,Guardian Gauss Cannon Munitions,Guardian Gauss Cannon Munitions,Guardian-Gausskanonenmunition,Municiones de cañón de Guardian Gauss,Guardian Gauss Cannon Munitions,Munições de canhões do Guardian Gauss,Боеприпасы для пушек Гаусса Стражей
+blueprint.horizons.name.guardian_modules,Guardian Modules,Guardian Modules,Guardianmodule,Módulos de guardia,Modules gardiens,Módulos Guardian,Модули Стражей
+blueprint.horizons.name.guardian_plasma_charger_munitions,Guardian Plasma Charger Munitions,Guardian Plasma Charger Munitions,Guardian-Plasmawerfermunition,Municiones de cargador de plasma de guardia,Munitions du chargeur de plasma Guardian,Munições de carregador de plasma guardiões,Боеприпасы для плазменных пушек Стражей
+blueprint.horizons.name.guardian_shard_cannon_munitions,Guardian Shard Cannon Munitions,Guardian Shard Cannon Munitions,Guardian-Fragmentkanonenmunition,Municiones de cañón de thard fragmentos,Guardian Shard Cannon Munitions,Munições de canhão do Shard Guardian,Боеприпасы для осколочных орудий Стражей
+blueprint.horizons.name.guardian_weapons,Guardian Weapons,Guardian Weapons,Guardian Waffen,Armas guardianas,Armes gardiennes,Armas guardiões,Оружие Стражей
+blueprint.horizons.name.hatch_breaker_limpet_controller,Hatch Breaker Limpet Controller,Hatch Breaker Limpet Controller,Steuerung Ladelukenöffner-Drohne,Controlador de lapa del interruptor de escotilla,Contrôleur de pacon de brise-trappe,Controlador de Limpet de Breaker Hatch,Контроллер дронов-взломщиков трюмов
+blueprint.horizons.name.heat_sink_launcher,Heat Sink Launcher,Heat Sink Launcher,Kühlkörperwerfer,Lanzador de disipador de calor,Lance-tampons,Lançador de dissipador de calor,Теплоотводная катапульта
+blueprint.horizons.name.heatsinks,Heatsinks,Heatsinks,Kühlkörper,Disipadores de calor,Dissipateurs de chaleur,Dissipadores de calor,Теплоотводы
 blueprint.horizons.name.high_velocity_munitions,High Velocity Munitions,High Velocity Munitions,Hochgeschwindigkeitsmunition,Municiones de alta velocidad,Munitions à grande vitesse,Munições de alta velocidade,Высокоскоростные боеприпасы
-blueprint.horizons.name.hull_reinforcement_package,Hull Reinforcement Package,Hull Reinforcement Package,Rumpfbewehrungspaket,Paquete de refuerzo de casco,Forfait de renforcement de la coque,Pacote de reforço de casco,Набор для усиления корпуса
+blueprint.horizons.name.hull_reinforcement_package,Hull Reinforcement Package,Hull Reinforcement Package,Rumpfhüllenverstärkungspaket,Paquete de refuerzo de casco,Forfait de renforcement de la coque,Pacote de reforço de casco,Набор для усиления корпуса
 blueprint.horizons.name.human_livery,Human Livery,Human Livery,Menschliche Lackierung,Librea humana,Livrée humaine,Viária humana,Украшения кокпита
 blueprint.horizons.name.human_modules,Human Modules,Human Modules,Menschliche Module,Módulos humanos,Modules humains,Módulos humanos,Модули людей
 blueprint.horizons.name.human_weapons,Human Weapons,Human Weapons,Menschliche Waffen,Armas humanas,Armes humaines,Armas humanas,Оружие людей
-blueprint.horizons.name.kill_warrant_scanner,Kill Warrant Scanner,Kill Warrant Scanner,Töten Sie den Haftbefehlscanner,Mata el escáner de orden judicial,Tuer un scanner de mandat,Matar o scanner de mandado,Сканер преступников
-blueprint.horizons.name.large_calibre_munitions,Large Calibre Munitions,Large Calibre Munitions,Großkaliber Munition,Municiones de gran calibre,Munitions de grand calibre,Munições de grande calibre,Крупнокалиберные боеприпасы
+blueprint.horizons.name.kill_warrant_scanner,Kill Warrant Scanner,Kill Warrant Scanner,Tötungsbefehlscanner,Mata el escáner de orden judicial,Tuer un scanner de mandat,Matar o scanner de mandado,Сканер преступников
+blueprint.horizons.name.large_calibre_munitions,Large Calibre Munitions,Large Calibre Munitions,Großkalibrige munition,Municiones de gran calibre,Munitions de grand calibre,Munições de grande calibre,Крупнокалиберные боеприпасы
 blueprint.horizons.name.life_support,Life Support,Life Support,Lebenserhaltung,Soporte vital,Soutien de la vie,Suporte de vida,Система жизнеобеспечения
 blueprint.horizons.name.life_support_synthesis,Life Support Synthesis,Life Support Synthesis,Lebensunterstützungssynthese,Síntesis de soporte vital,Synthèse de soutien à la vie,Síntese de suporte à vida,Синтез кислорода
-blueprint.horizons.name.limpets,Limpets,Limpets,Limpets,Lente de mano,Limpets,Limpets,Дроны
-blueprint.horizons.name.manifest_scanner,Manifest Scanner,Manifest Scanner,Manifest Scanner,Escáner manifiesto,Scanner manifeste,Scanner manifesto,Сканер содержимого
-blueprint.horizons.name.mine_launcher,Mine Launcher,Mine Launcher,Mine Launcher,Lanzador de mina,Lance-mines,Lançador de minas,Установщик мин
-blueprint.horizons.name.missile_rack,Missile Rack,Missile Rack,Raketenregal,Estante de misiles,Rack de missiles,Rack de mísseis,Блок ракет
-blueprint.horizons.name.multi_cannon,Multi Cannon,Multi Cannon,Multi -Kanone,Múltiples cañón,Multin canon,Multi Cannon,Многоствольное орудие
+blueprint.horizons.name.limpets,Limpets,Limpets,Drohnen,Lente de mano,Limpets,Limpets,Дроны
+blueprint.horizons.name.manifest_scanner,Manifest Scanner,Manifest Scanner,Verzeichnisscanner,Escáner manifiesto,Scanner manifeste,Scanner manifesto,Сканер содержимого
+blueprint.horizons.name.mine_launcher,Mine Launcher,Mine Launcher,Minenwerfer,Lanzador de mina,Lance-mines,Lançador de minas,Установщик мин
+blueprint.horizons.name.missile_rack,Missile Rack,Missile Rack,Raketenrampe,Estante de misiles,Rack de missiles,Rack de mísseis,Блок ракет
+blueprint.horizons.name.multi_cannon,Multi Cannon,Multi Cannon,Mehrfachgeschütz,Múltiples cañón,Multin canon,Multi Cannon,Многоствольное орудие
 blueprint.horizons.name.none,None,None,Keiner,Ninguna,Rien,Nenhum,Пусто
 blueprint.horizons.name.plasma_accelerator,Plasma Accelerator,Plasma Accelerator,Plasmabeschleuniger,Acelerador de plasma,Accélérateur de plasma,Acelerador de plasma,Ускоритель плазмы
-blueprint.horizons.name.plasma_munitions,Plasma Munitions,Plasma Munitions,Plasma -Munition,Municiones de plasma,Munitions plasmatiques,Munições de plasma,Плазменные боеприпасы
+blueprint.horizons.name.plasma_munitions,Plasma Munitions,Plasma Munitions,Plasmamunition,Municiones de plasma,Munitions plasmatiques,Munições de plasma,Плазменные боеприпасы
 blueprint.horizons.name.point_defence,Point Defence,Point Defence,Punktverteidigung,Defensa de puntos,Défense des points,Defesa de ponto,Турель точечной обороны
-blueprint.horizons.name.power_distributor,Power Distributor,Power Distributor,Power -Distributor,Distribuidor de energía,Distributeur de puissance,Distribuidor de energia,Распределитель питания
+blueprint.horizons.name.power_distributor,Power Distributor,Power Distributor,Energieverteiler,Distribuidor de energía,Distributeur de puissance,Distribuidor de energia,Распределитель питания
 blueprint.horizons.name.power_plant,Power Plant,Power Plant,Kraftwerk,Planta de energía,Centrale électrique,Usina elétrica,Силовая установка
-blueprint.horizons.name.prospector_limpet_controller,Prospector Limpet Controller,Prospector Limpet Controller,Prospektor Limpet Controller,Controlador de Limplet de prospector,Contrôleur de moquette du prospecteur,Controlador Prospector Limpet,Контроллер дрона-геологоразведчика
+blueprint.horizons.name.prospector_limpet_controller,Prospector Limpet Controller,Prospector Limpet Controller,Steuerung Erzsuche-Drohne,Controlador de Limplet de prospector,Contrôleur de moquette du prospecteur,Controlador Prospector Limpet,Контроллер дрона-геологоразведчика
 blueprint.horizons.name.pulse_laser,Pulse Laser,Pulse Laser,Pulslaser,Láser de pulso,Laser à impulsion,Laser de pulso,Импульсный лазер
-blueprint.horizons.name.rail_gun,Rail Gun,Rail Gun,Eisenbahnpistole,Pistola de riel,Pistolet ferroviaire,Pistola ferroviária,Рельсотрон
+blueprint.horizons.name.rail_gun,Rail Gun,Rail Gun,Schienenkanone,Pistola de riel,Pistolet ferroviaire,Pistola ferroviária,Рельсотрон
 blueprint.horizons.name.refinery,Refinery,Refinery,Raffinerie,Refinería,Raffinerie,Refinaria,Очиститель
-blueprint.horizons.name.seeker_missile_rack,Seeker Missile Rack,Seeker Missile Rack,Suchraketenregal,Estante para misiles buscadores,Support de missile Seeker,Seeker Missile Rack,Искатель ракетная стойка
-blueprint.horizons.name.seismic_charge_munitions,Seismic Charge Munitions,Seismic Charge Munitions,Seismische Anklage Munition,Municiones de carga sísmica,Munitions de charge sismique,Munições de acusação sísmica,Сейсмические боеприпасы
+blueprint.horizons.name.seeker_missile_rack,Seeker Missile Rack,Seeker Missile Rack,Suchraketenrampe,Estante para misiles buscadores,Support de missile Seeker,Seeker Missile Rack,Искатель ракетная стойка
+blueprint.horizons.name.seismic_charge_munitions,Seismic Charge Munitions,Seismic Charge Munitions,Seismischer-Lader-Munition,Municiones de carga sísmica,Munitions de charge sismique,Munições de acusação sísmica,Сейсмические боеприпасы
 blueprint.horizons.name.sensors,Sensors,Sensors,Sensoren,Sensores,Capteurs,Sensores,Сенсоры
 blueprint.horizons.name.shield_booster,Shield Booster,Shield Booster,Schild Booster,Refuerzo de escudo,Bouclier de bouclier,SHIELD Booster,Усилитель щита
 blueprint.horizons.name.shield_cell_bank,Shield Cell Bank,Shield Cell Bank,Schildzellenbank,Banco de celdas de escudo,Banque cellulaire de bouclier,Banco de células de escudo,Щитонакопитель
 blueprint.horizons.name.shield_generator,Shield Generator,Shield Generator,Schildgenerator,Generador de escudo,Bouclier,Gerador de escudo,Щитогенератор
 blueprint.horizons.name.shock_cannon_munitions,Shock Cannon Munitions,Shock Cannon Munitions,Schockkanonenmunition,Municiones de cañón de choque,Choc des munitions de canon,Munições de canhão de choque,Шоковые боеприпасы
-blueprint.horizons.name.small_calibre_munitions,Small Calibre Munitions,Small Calibre Munitions,Kleine Kaliber Munition,Municiones de calibre pequeño,Munitions de petit calibre,Pequenas munições de calibre,Мелкокалиберные боеприпасы
-blueprint.horizons.name.srv_ammo_restock,SRV Ammo Restock,SRV Ammo Restock,SRV Munition Restock,Reabastecimiento de munición SRV,Répondment des munitions SRV,SRV Munção Restoque,Боеприпасы для ТРП
-blueprint.horizons.name.srv_refuel,SRV Refuel,SRV Refuel,SRV -Tank,Srv reabastecimiento de combustible,SRV Refuel,SRV Reabelado,Заправка ТРП
-blueprint.horizons.name.srv_repair,SRV Repair,SRV Repair,SRV -Reparatur,Reparación de SRV,Réparation SRV,Reparo SRV,Ремонт ТРП
-blueprint.horizons.name.sub_surface_displacement_munitions,Sub-surface Displacement Munitions,Sub Surface Displacement Munitions,Munition der Unterfläche Verschiebung,Municiones de desplazamiento de la superficie subterránea,Munitions de déplacement sous surface,Munições de deslocamento de superfície,Вытесняющие боеприпасы для добычи глубинных залежей
+blueprint.horizons.name.small_calibre_munitions,Small Calibre Munitions,Small Calibre Munitions,Kleinkalibrige Munition,Municiones de calibre pequeño,Munitions de petit calibre,Pequenas munições de calibre,Мелкокалиберные боеприпасы
+blueprint.horizons.name.srv_ammo_restock,SRV Ammo Restock,SRV Ammo Restock,SRV-Munitionsnachladung,Reabastecimiento de munición SRV,Répondment des munitions SRV,SRV Munção Restoque,Боеприпасы для ТРП
+blueprint.horizons.name.srv_refuel,SRV Refuel,SRV Refuel,SRV -Auftankung,Srv reabastecimiento de combustible,SRV Refuel,SRV Reabelado,Заправка ТРП
+blueprint.horizons.name.srv_repair,SRV Repair,SRV Repair,SRV -Reparaturen,Reparación de SRV,Réparation SRV,Reparo SRV,Ремонт ТРП
+blueprint.horizons.name.sub_surface_displacement_munitions,Sub-surface Displacement Munitions,Sub Surface Displacement Munitions,Untergrund-Verdrängungsmunition,Municiones de desplazamiento de la superficie subterránea,Munitions de déplacement sous surface,Munições de deslocamento de superfície,Вытесняющие боеприпасы для добычи глубинных залежей
 blueprint.horizons.name.thrusters,Thrusters,Thrusters,Triebwerke,Propulsores,Propulseurs,Propulsores,Маневровые двигатели
 blueprint.horizons.name.torpedo_pylon,Torpedo Pylon,Torpedo Pylon,Torpedo Pylon,Pilón de torpedo,Pylône de torpille,Pilão de torpedo,Торпедная установка
 blueprint.horizons.name.caustic_sinks,Caustic Sinks,Caustic Sinks,,,,,Антикоррозийные отводы
-blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSD Injektion,Inyección de FSD,Injection de FSD,Injeção de FSD,FSD инъекция
+blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSA Einspeisung,Inyección de FSD,Injection de FSD,Injeção de FSD,FSD инъекция
 blueprint.horizons.name.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,,,,,
