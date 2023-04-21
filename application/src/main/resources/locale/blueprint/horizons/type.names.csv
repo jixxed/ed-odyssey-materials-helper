@@ -69,7 +69,7 @@ blueprint.horizons.type.heavy_duty,Heavy Duty,Heavy Duty,Schwerlast,Tarea pesada
 blueprint.horizons.type.heavy_duty_hull_reinforcement,Heavy Duty Hull Reinforcement,Heavy Duty Hull Reinforcement,Schwere Rumpfhüllenverstärkung,Refuerzo de casco de servicio pesado,Renforcement de la coque lourde,Reforço do casco pesado,Надёжное усиление корпуса
 blueprint.horizons.type.hi_cap,Hi Cap,Hi Cap,Hallo Cap,Hola gorra,HI CAP,Oi cap,Высокая ёмкость
 blueprint.horizons.type.high_capacity_magazine,High Capacity Magazine,High Capacity Magazine,Hochleistungsmagazin,Revista de alta capacidad,Magazine de grande capacité,Revista de alta capacidade,Вместительный магазин
-blueprint.horizons.type.high_charge_capacity,High Charge Capacity,High Charge Capacity,Hohe Ladungskapazität,Alta capacidad de carga,Capacité de charge élevée,Alta capacidade de carga,Высокоёмкий распределитель питания
+blueprint.horizons.type.high_charge_capacity,High Charge Capacity,High Charge Capacity,Hochkondesatoren,Alta capacidad de carga,Capacité de charge élevée,Alta capacidade de carga,Высокоёмкий распределитель питания
 blueprint.horizons.type.high_yield_shell,High Yield Shell,High Yield Shell,Hohe Ertragshülle,Cáscara de alto rendimiento,Coquille à haut rendement,Concha de alto rendimento,Снаряд большой мощности
 blueprint.horizons.type.incendiary_rounds,Incendiary Rounds,Incendiary Rounds,Brandgranaten,Rondas incendiarias,Rondes incendiaires,Rodadas incendiárias,Зажигательные припасы
 blueprint.horizons.type.increased_fsd_range,Increased FSD Range,Increased FSD Range,Erhöhte FSA-Reichweite,Aumento del rango de FSD,Augmentation de la plage FSD,Aumento da faixa de FSD,Увеличенная дальность FSD
@@ -100,7 +100,7 @@ blueprint.horizons.type.modified_shard_cannon_fixed_medium,Modified Shard Cannon
 blueprint.horizons.type.modified_shard_cannon_fixed_small,Modified Shard Cannon Fixed Small,Modified Shard Cannon Fixed Small,Modifizierte Shard -Kanone klein repariert,Cañón de fragmentos modificado fijo pequeño,Canon d''éclats modifié fixé petit,Canhão de shard modificado consertado,Модифицированное осколочное орудие Стражей (1 класс мал. фикс.)
 blueprint.horizons.type.monstered,Monstered,Monstered,Monstert,Monstruo,Monté,Monstro,Монстрация
 blueprint.horizons.type.multi_servos,Multi Servos,Multi Servos,Multi-Servos,Servos Multi,Multi-servos,Multi servos,Сервосистема
-blueprint.horizons.type.multi_weave,Multi Weave,Multi Weave,Multi -Gewebe,Múltiple,Tissage multiples,Teave múltiplo,Мультипрошивка
+blueprint.horizons.type.multi_weave,Multi Weave,Multi Weave,Multigewebe,Múltiple,Tissage multiples,Teave múltiplo,Мультипрошивка
 blueprint.horizons.type.overcharged,Overcharged,Overcharged,Überladen,Sobrecargado,Surchargé,Sobrecarregado,Усиленная силовая установка
 blueprint.horizons.type.overcharged_weapon,Overcharged Weapon,Overcharged Weapon,Überladungswaffe,Arma sobrecargada,Arme surfacturée,Arma em excesso,Усиленное орудие
 blueprint.horizons.type.overload_munitions,Overload Munitions,Overload Munitions,Überlastung Munition,Municiones de sobrecarga,Munitions de surcharge,Munições de sobrecarga,Вызывающие перезагрузку боеприпасы
