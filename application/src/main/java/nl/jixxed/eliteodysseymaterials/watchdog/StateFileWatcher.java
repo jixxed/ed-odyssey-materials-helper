@@ -3,8 +3,6 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -16,7 +14,7 @@ public class StateFileWatcher {
     public StateFileWatcher(final File folder, final Consumer<File> fileProcessor, final String filename) {
         findFile(folder, filename);
         this.watchedFile.ifPresent(fileProcessor);
-        this.fileWatcher = new FileWatcher(filename + " Watcher Thread", true).withListener(new FileListener() {
+        this.fileWatcher = new FileWatcher(true).withListener(new FileListener() {
             @Override
             public void onCreated(final FileEvent event) {
                 handleFile(event, fileProcessor);
@@ -45,7 +43,7 @@ public class StateFileWatcher {
 
     private void findFile(final File folder, final String filename) {
         try {
-            this.watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+            this.watchedFile =  FileService.listFiles(folder, true).stream()
                     .filter(file -> file.getName().equals(filename))
                     .findFirst();
             log.info("Registered watched file: " + this.watchedFile.map(File::getName).orElse(filename + " not found"));

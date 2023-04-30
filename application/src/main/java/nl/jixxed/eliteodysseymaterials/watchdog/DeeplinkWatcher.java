@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -30,7 +28,7 @@ public class DeeplinkWatcher {
             }
         });
         this.watchedFile.ifPresent(File::delete);
-        this.fileWatcher = new FileWatcher("Deeplink Watcher Thread").withListener(new FileAdapter() {
+        this.fileWatcher = new FileWatcher().withListener(new FileAdapter() {
             @Override
             public void onCreated(final FileEvent event) {
                 if (filename.equals(event.getFile().getName())) {
@@ -84,7 +82,7 @@ public class DeeplinkWatcher {
 
     private void findLatestFile(final File folder, final String filename) {
         try {
-            this.watchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+            this.watchedFile =  FileService.listFiles(folder, false).stream()
                     .filter(file -> file.getName().equals(filename))
                     .findFirst();
             log.info("Registered watched file: " + this.watchedFile.map(File::getName).orElse(filename + " not found"));

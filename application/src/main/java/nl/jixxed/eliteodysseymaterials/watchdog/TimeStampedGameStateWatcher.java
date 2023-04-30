@@ -23,90 +23,90 @@ public class TimeStampedGameStateWatcher {
     private final JournalEventType[] eventType;
     private final Consumer<File> fileProcessor;
     private File file = null;
-    private final Map<JournalEventType,Consumer<? extends Event>> eventConsumers = new HashMap<>();
+    private final Map<JournalEventType, Consumer<? extends Event>> eventConsumers = new HashMap<>();
 
-    public TimeStampedGameStateWatcher(final File folder, final Consumer<File> fileProcessor, final String filename, final JournalEventType... eventType) {
+    public TimeStampedGameStateWatcher(final File folder, final Consumer<File> fileProcessor, final String filename, final boolean allowPolling, final JournalEventType... eventType) {
         this.eventType = eventType;
         this.fileProcessor = fileProcessor;
-        this.gameStateWatcher.watch(folder, this::process, filename, eventType);
+        this.gameStateWatcher.watch(folder, this::process, filename, allowPolling, eventType);
         if (Arrays.asList(eventType).contains(JournalEventType.SHIPLOCKER)) {
-            final Consumer<ShipLockerEvent> consumer = (ShipLockerEvent shipLockerEvent) -> {
+            final Consumer<ShipLockerEvent> consumer = (final ShipLockerEvent shipLockerEvent) -> {
                 this.timeStamp.set(shipLockerEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.SHIPLOCKER,consumer);
+            this.eventConsumers.put(JournalEventType.SHIPLOCKER, consumer);
             this.eventListeners.add(EventService.addListener(this, ShipLockerEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.BACKPACK)) {
-            final Consumer<BackpackEvent> consumer = (BackpackEvent backpackEvent) -> {
+            final Consumer<BackpackEvent> consumer = (final BackpackEvent backpackEvent) -> {
                 this.timeStamp.set(backpackEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.BACKPACK,consumer);
+            this.eventConsumers.put(JournalEventType.BACKPACK, consumer);
             this.eventListeners.add(EventService.addListener(this, BackpackEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.CARGO)) {
-            final Consumer<CargoEvent> consumer = (CargoEvent cargoEvent) -> {
+            final Consumer<CargoEvent> consumer = (final CargoEvent cargoEvent) -> {
                 this.timeStamp.set(cargoEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.CARGO,consumer);
+            this.eventConsumers.put(JournalEventType.CARGO, consumer);
             this.eventListeners.add(EventService.addListener(this, CargoEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.MARKET)) {
-            final Consumer<MarketEvent> consumer = (MarketEvent marketEvent) -> {
+            final Consumer<MarketEvent> consumer = (final MarketEvent marketEvent) -> {
                 this.timeStamp.set(marketEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.MARKET,consumer);
+            this.eventConsumers.put(JournalEventType.MARKET, consumer);
             this.eventListeners.add(EventService.addListener(this, MarketEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.NAVROUTE)) {
-            final Consumer<NavRouteEvent> consumer = (NavRouteEvent navRouteEvent) -> {
+            final Consumer<NavRouteEvent> consumer = (final NavRouteEvent navRouteEvent) -> {
                 this.timeStamp.set(navRouteEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.NAVROUTE,consumer);
+            this.eventConsumers.put(JournalEventType.NAVROUTE, consumer);
             this.eventListeners.add(EventService.addListener(this, NavRouteEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.NAVROUTECLEAR)) {
-            final Consumer<NavRouteClearEvent> consumer = (NavRouteClearEvent navRouteClearEvent) -> {
+            final Consumer<NavRouteClearEvent> consumer = (final NavRouteClearEvent navRouteClearEvent) -> {
                 this.timeStamp.set(navRouteClearEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.NAVROUTECLEAR,consumer);
+            this.eventConsumers.put(JournalEventType.NAVROUTECLEAR, consumer);
             this.eventListeners.add(EventService.addListener(this, NavRouteClearEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.OUTFITTING)) {
-            final Consumer<OutfittingEvent> consumer = (OutfittingEvent outfittingEvent) -> {
+            final Consumer<OutfittingEvent> consumer = (final OutfittingEvent outfittingEvent) -> {
                 this.timeStamp.set(outfittingEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.OUTFITTING,consumer);
+            this.eventConsumers.put(JournalEventType.OUTFITTING, consumer);
             this.eventListeners.add(EventService.addListener(this, OutfittingEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.SHIPYARD)) {
-            final Consumer<ShipyardEvent> consumer = (ShipyardEvent shipyardEvent) -> {
+            final Consumer<ShipyardEvent> consumer = (final ShipyardEvent shipyardEvent) -> {
                 this.timeStamp.set(shipyardEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.SHIPYARD,consumer);
+            this.eventConsumers.put(JournalEventType.SHIPYARD, consumer);
             this.eventListeners.add(EventService.addListener(this, ShipyardEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.MODULEINFO)) {
-            final Consumer<ModuleInfoEvent> consumer = (ModuleInfoEvent moduleInfoEvent) -> {
+            final Consumer<ModuleInfoEvent> consumer = (final ModuleInfoEvent moduleInfoEvent) -> {
                 this.timeStamp.set(moduleInfoEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.MODULEINFO,consumer);
+            this.eventConsumers.put(JournalEventType.MODULEINFO, consumer);
             this.eventListeners.add(EventService.addListener(this, ModuleInfoEvent.class, consumer));
         }
         if (Arrays.asList(eventType).contains(JournalEventType.FCMATERIALS)) {
-            final Consumer<FCMaterialsEvent> consumer = (FCMaterialsEvent fcMaterialsEvent) -> {
+            final Consumer<FCMaterialsEvent> consumer = (final FCMaterialsEvent fcMaterialsEvent) -> {
                 this.timeStamp.set(fcMaterialsEvent.getTimestamp());
                 this.process(this.file);
             };
-            this.eventConsumers.put(JournalEventType.FCMATERIALS,consumer);
+            this.eventConsumers.put(JournalEventType.FCMATERIALS, consumer);
             this.eventListeners.add(EventService.addListener(this, FCMaterialsEvent.class, consumer));
         }
     }
