@@ -96,6 +96,6 @@ blueprint.horizons.name.srv_repair,SRV Repair,SRV Repair,SRV-Reparaturen,Reparac
 blueprint.horizons.name.sub_surface_displacement_munitions,Sub-surface Displacement Munitions,Sub Surface Displacement Munitions,Untergrund-Verdrängungsmunition,Municiones de desplazamiento de la superficie subterránea,Munitions de déplacement sous surface,Munições de deslocamento de superfície,Вытесняющие боеприпасы для добычи глубинных залежей
 blueprint.horizons.name.thrusters,Thrusters,Thrusters,Triebwerke,Propulsores,Propulseurs,Propulsores,Маневровые двигатели
 blueprint.horizons.name.torpedo_pylon,Torpedo Pylon,Torpedo Pylon,Torpedo Pylon,Pilón de torpedo,Pylône de torpille,Pilão de torpedo,Торпедная установка
-blueprint.horizons.name.caustic_sinks,Caustic Sinks,Caustic Sinks,,,,,Антикоррозийные отводы
+blueprint.horizons.name.caustic_sinks,Caustic Sinks,Caustic Sinks,Ätzbehälter,,,,Антикоррозийные отводы
 blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSA-Einspeisung,Inyección de FSD,Injection de FSD,Injeção de FSD,FSD инъекция
-blueprint.horizons.name.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,,,,,
+blueprint.horizons.name.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,Ätzbehälterwerfer,,,,
