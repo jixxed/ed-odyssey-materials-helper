@@ -2,6 +2,7 @@ Version 2.23
 -------------
 Rework for file monitoring, significant improvements for network polling on Windows
 Update for several German localizations
+Added buttons to bartender to step per 10 items
 
 Version 2.22
 -------------
