@@ -37,8 +37,10 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
     private DestroyableLabel sellValueLabel;
     private DestroyableLabel nameLabel;
     private DestroyableLabel decreaseLabel;
+    private DestroyableLabel decreaseTenLabel;
     private DestroyableLabel amountLabel;
     private DestroyableLabel increaseLabel;
+    private DestroyableLabel increaseTenLabel;
     private DestroyableResizableImageView fleetCarrierImage;
     private DestroyableResizableImageView wishlistImage;
     private DestroyableResizableImageView backpackImage;
@@ -92,12 +94,32 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
                 updateStyle();
             }
         }).build();
+        // decrease 10
+        this.decreaseTenLabel = LabelBuilder.builder().withStyleClass("bartender-material-button").withNonLocalizedText("--").withOnMouseClicked(event -> {
+            if (this.amountSelected > 0) {
+                this.amountSelected -= (this.amountSelected >= 10) ? 10 : this.amountSelected;
+                EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
+                this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
+                this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
+                updateStyle();
+            }
+        }).build();
         // amount
         this.amountLabel = LabelBuilder.builder().withStyleClass("bartender-material-amount").withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue())).build();
         // increase
         this.increaseLabel = LabelBuilder.builder().withStyleClass("bartender-material-button").withNonLocalizedText("+").withOnMouseClicked(event -> {
             if (this.amountSelected < StorageService.getMaterialStorage(this.asset).getTotalValue()) {
                 this.amountSelected++;
+                EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
+                this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
+                this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
+                updateStyle();
+            }
+        }).build();
+        // increase 10
+        this.increaseTenLabel = LabelBuilder.builder().withStyleClass("bartender-material-button").withNonLocalizedText("++").withOnMouseClicked(event -> {
+            if (this.amountSelected < StorageService.getMaterialStorage(this.asset).getTotalValue()) {
+                this.amountSelected += (this.amountSelected <= StorageService.getMaterialStorage(this.asset).getTotalValue() - 10) ? 10 : StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected;
                 EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
                 this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
                 this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
@@ -120,7 +142,7 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
                 BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(this.fleetCarrierImage, this.fleetCarrierLabel, this.wishlistImage, this.wishlistLabel).buildHBox()
         ).buildVBox();
         final VBox right = BoxBuilder.builder().withNodes(
-                BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(this.decreaseLabel, this.amountLabel, this.increaseLabel).buildHBox(),
+                BoxBuilder.builder().withStyleClasses("bartender-material-line").withNodes(this.decreaseTenLabel,this.decreaseLabel, this.amountLabel,this.increaseLabel,this.increaseTenLabel).buildHBox(),
                 BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(this.amountSelectedLabel, new GrowingRegion(), this.amountSelectedValueLabel).buildHBox()
         ).buildVBox();
         this.getChildren().addAll(left, left2, new GrowingRegion(), middle, right);
@@ -163,6 +185,8 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
             case SELECTED -> {
                 this.decreaseLabel.setVisible(false);
                 this.increaseLabel.setVisible(false);
+                this.decreaseTenLabel.setVisible(false);
+                this.increaseTenLabel.setVisible(false);
                 this.amountSelectedValueLabel.setVisible(false);
                 this.getStyleClass().remove("bartender-material-hover");
                 this.onMouseClickedProperty().setValue(null);
@@ -171,6 +195,8 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
 //                this.buyValueLabel.setText(String.valueOf(this.asset.getSellValue()));
                 this.decreaseLabel.setVisible(true);
                 this.increaseLabel.setVisible(true);
+                this.decreaseTenLabel.setVisible(true);
+                this.increaseTenLabel.setVisible(true);
                 this.amountSelectedValueLabel.setVisible(true);
                 this.getStyleClass().remove("bartender-material-hover");
                 this.onMouseClickedProperty().setValue(null);
@@ -182,6 +208,8 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
 //                this.buyValueLabel.setText(String.valueOf(this.asset.getBuyValue()));
                 this.decreaseLabel.setVisible(false);
                 this.increaseLabel.setVisible(false);
+                this.decreaseTenLabel.setVisible(false);
+                this.increaseTenLabel.setVisible(false);
                 this.amountSelectedValueLabel.setVisible(false);
                 if (!this.getStyleClass().contains("bartender-material-hover")) {
                     this.getStyleClass().add("bartender-material-hover");
