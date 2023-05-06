@@ -400,6 +400,67 @@
         "required" : [ "WarType", "Status", "Faction1", "Faction2" ]
       }
     },
+    "ThargoidWar": {
+      "title": "ThargoidWar",
+      "type": "object",
+      "description": "Thargoid war information",
+      "properties": {
+        "CurrentState": {
+          "title": "CurrentState",
+          "type": "string",
+          "examples": [
+            "Alert", "Invaded", "Maelstrom", "Lost", "Recovery"
+          ]
+        },
+        "NextStateSuccess": {
+          "title": "NextStateSuccess",
+          "type": "string",
+          "examples": [
+            "Recovery"
+          ]
+        },
+        "NextStateFailure": {
+          "title": "NextStateFailure",
+          "type": "string",
+          "examples": [
+            "Alert", "Invaded", "Lost"
+          ]
+        },
+        "SuccessStateReached": {
+          "title": "SuccessStateReached",
+          "type": "boolean",
+          "examples": [
+            true, false
+          ]
+        },
+        "WarProgress": {
+          "title": "WarProgress",
+          "type": "number",
+          "examples": [
+            0.15
+          ]
+        },
+        "RemainingPorts": {
+          "title": "RemainingPorts",
+          "type": "integer",
+          "examples": [
+            1
+          ]
+        },
+        "EstimatedRemainingTime": {
+          "title": "EstimatedRemainingTime",
+          "type": "integer",
+          "examples": [
+            123
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "CurrentState",
+        "SuccessStateReached"
+      ]
+    },
     "Powers" : {
       "title" : "Powers",
       "type" : "array",

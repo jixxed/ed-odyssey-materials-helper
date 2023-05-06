@@ -37,6 +37,16 @@
             "type" : "string",
             "examples" : [ "Fonticulua Campestris", "Bacterium Cerbrus", "Stratum Paleas" ]
           },
+          "Variant" : {
+            "title" : "Variant",
+            "type" : "string",
+            "examples" : [ "$Codex_Ent_Tubus_01_A_Name;" ]
+          },
+          "Variant_Localised" : {
+            "title" : "Variant_Localised",
+            "type" : "string",
+            "examples" : [ "Tubus Conifer - Indigo" ]
+          },
           "Value" : {
             "title" : "Value",
             "type" : "integer",
