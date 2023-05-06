@@ -12,9 +12,11 @@ import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -86,10 +88,11 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.nameLabel = LabelBuilder.builder().withStyleClass("ingredient-name").withText(LocaleService.getStringBinding(this.horizonsMaterial.getLocalizationKey())).build();
         initImage();
 
+        final Boolean showRemaining = PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
         this.leftAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-required").build();
         this.rightAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-available").build();
         this.leftDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.required")).build();
-        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.available")).build();
+        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(Boolean.TRUE.equals(showRemaining)?LocaleService.getStringBinding("blueprint.header.remaining"):LocaleService.getStringBinding("blueprint.header.available")).build();
 
         this.leftHBox = BoxBuilder.builder().withNodes(this.leftDescriptionLabel, this.leftAmountLabel).withStyleClass("ingredient-quantity-section").buildHBox();
         this.rightHBox = BoxBuilder.builder().withNodes(this.rightAmountLabel, this.rightDescriptionLabel).withStyleClass("ingredient-quantity-section").buildHBox();

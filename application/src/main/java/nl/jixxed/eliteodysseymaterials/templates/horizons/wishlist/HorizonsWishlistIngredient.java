@@ -3,18 +3,22 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
-import nl.jixxed.eliteodysseymaterials.enums.Commodity;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
-import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsMaterialIngredient;
 import org.controlsfx.control.SegmentedBar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
@@ -26,26 +30,19 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
     private SegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment present;
     private TypeSegment notPresent;
+    protected List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsWishlistIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, horizonsMaterial, amountRequired, amountAvailable);
         initComponents();
+        initEventHandling();
     }
 
     @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            if (Boolean.TRUE.equals(newValue) && getHorizonsMaterial() instanceof Commodity commodity && (this.getLeftAmount() - (StorageService.getCommodityCount(commodity, StoragePool.SHIP))) > 0) {
-                this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - StorageService.getCommodityCount(commodity, StoragePool.SHIP))));
-                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
-            } else if (Boolean.TRUE.equals(newValue) && !(getHorizonsMaterial() instanceof Commodity) && (this.getLeftAmount() - (StorageService.getMaterialCount(getHorizonsMaterial()))) > 0) {
-                this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - StorageService.getMaterialCount(getHorizonsMaterial()))));
-                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
-            } else {
-                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
-                this.getRightAmountLabel().setText(this.getRightAmount().toString());
-            }
+            showAsHovered(newValue);
         });
 
         this.segmentedBar = new SegmentedBar<>();
@@ -63,6 +60,29 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
         this.getChildren().add(this.segmentedBar);
     }
 
+    private void showAsHovered(final Boolean newValue) {
+        final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
+        if (showRemaining.equals(newValue) && getHorizonsMaterial() instanceof Commodity commodity && (this.getLeftAmount() - (StorageService.getCommodityCount(commodity, StoragePool.SHIP))) > 0) {
+            this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - StorageService.getCommodityCount(commodity, StoragePool.SHIP))));
+            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
+        } else if (showRemaining.equals(newValue) && !(getHorizonsMaterial() instanceof Commodity) && (this.getLeftAmount() - (StorageService.getMaterialCount(getHorizonsMaterial()))) > 0) {
+            this.getRightAmountLabel().setText(String.valueOf((this.getLeftAmount() - StorageService.getMaterialCount(getHorizonsMaterial()))));
+            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
+        } else {
+            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
+            this.getRightAmountLabel().setText(this.getRightAmount().toString());
+        }
+    }
+
+    @SuppressWarnings("java:S2177")
+    private void initEventHandling() {
+        this.eventListeners.add(EventService.addListener(this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
+            if(Expansion.HORIZONS.equals(flipRemainingAvailableEvent.getExpansion())){
+                showAsHovered(this.hoverProperty().getValue());
+            }
+        }));
+    }
+
     @Override
     protected void update() {
 
@@ -75,8 +95,10 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
             materialCountBoth = StorageService.getMaterialCount(getHorizonsMaterial());
             materialCountShip = materialCountBoth;
         }
+        final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
+
         this.setRightAmount(materialCountBoth);
-        this.getRightAmountLabel().setText(materialCountBoth.toString());
+        showAsHovered(this.hoverProperty().getValue());
         this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
         if (materialCountBoth >= Integer.parseInt(this.getLeftAmountLabel().getText()) && materialCountShip < Integer.parseInt(this.getLeftAmountLabel().getText())) {
             this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);

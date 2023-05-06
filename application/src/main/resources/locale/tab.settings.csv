@@ -33,7 +33,6 @@ tab.settings.title.general,General,General,Allgemein,General,Général,Em geral,
 tab.settings.title.notification,Notification,Notification,Benachrichtigung,Notificación,Notification,Notificação,Уведомления
 tab.settings.title.tracking,Tracking,Tracking,Verfolgung,Seguimiento,Suivi,Rastreamento,Отслеживание
 tab.settings.wishlist.grade.rolls,Number of of rolls per grade,Number of of rolls per grade,Anzahl der Brötchen pro Klasse,Número de rollos por grado,Nombre de rouleaux par grade,Número de rolos por série,Количество попыток на одну гайку
-tab.settings.title.wishlist,Horizons Wishlist,Horizons Wishlist,Horizons Wunschliste,Lista de deseos de horizontes,Liste de souhaits Horizons,Lista de desejos Horizons,Horizons список желаемого
 tab.settings.title.capi,Frontier API Integration,Frontier API Integration,Frontier API Integration,Integración de API Frontier,Intégration de l'API Frontier,Integração da API da Frontier,Интеграция с API Frontier
 tab.settings.capi.link.account,Link Frontier account,Link Frontier account,Link Frontier Konto,Cuenta de fronteras de enlace,Compte Frontier Link,Link Frontier Conta,Соединить с аккаунтом Frontier
 tab.settings.capi.connect,Connect,Connect,Verbinden,Conectar,Relier,Conectar,Соединить
@@ -70,3 +69,9 @@ ar.overlay.blueprint,Engineer/Blueprint,Engineer/Blueprint,Ingenieur/Blaupause,I
 tab.settings.eddn.toggle,Share galaxy data with EDDN,Share galaxy data with EDDN,Teilen Sie Galaxy-Daten mit EDDN,Compartir datos de Galaxy con EDDN,Partagez les données de la galaxie avec EDDN,Compartilhe dados de galáxias com EDDN,Поделиться данными Galaxy с EDDN
 tab.settings.eddn.explain,EDDN requests you to only use one app at a time to share data to reduce server load,EDDN requests you to only use one app at a time to share data to reduce server load,"EDDN fordert Sie auf, nur eine App gleichzeitig zu verwenden, um Daten zu teilen, um die Serverlast zu reduzieren",EDDN le solicita que use solo una aplicación a la vez para compartir datos para reducir la carga del servidor,EDDN vous demande d''utiliser une seule application à la fois pour partager des données pour réduire la charge du serveur,Eddn solicita que você use apenas um aplicativo por vez para compartilhar dados para reduzir a carga do servidor,"EDDN запрашивает вас использовать только одно приложение за раз для обмена данными, чтобы уменьшить загрузку сервера"
 tab.settings.broker.max.range,Technology Broker max. distance(Ls) from star,Technology Broker max. distance(Ls) from star,,,,,Техноброкер макс. расстояние(св.с.) от звезды
+tab.settings.title.wishlist.horizons,Horizons Wishlist,Horizons Wishlist,Horizons Wunschliste,Lista de deseos de horizontes,Liste de souhaits Horizons,Lista de desejos Horizons,Horizons список желаемого
+tab.settings.title.wishlist.odyssey,Odyssey Wishlist,Odyssey Wishlist,,,,,
+tab.settings.flip.remaining.available.horizons,Show remaining,Show remaining,,,,,
+tab.settings.flip.remaining.available.horizons.explain,Enabling this will show remaining values instead of available values for the required materials,Enabling this will show remaining values instead of available values for the required materials,,,,,
+tab.settings.flip.remaining.available.odyssey,Show remaining,Show remaining,,,,,
+tab.settings.flip.remaining.available.odyssey.explain,Enabling this will show remaining values instead of available values for the required materials,Enabling this will show remaining values instead of available values for the required materials,,,,,
