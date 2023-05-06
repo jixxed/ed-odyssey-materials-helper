@@ -20,13 +20,13 @@
       "description": "Whether player or npc",
       "type" : "boolean",
       "examples" : [ false ]
-    }
+    },
     "IsThargoid" : {
       "title" : "IsThargoid",
       "description": "Whether thargoid",
       "type" : "boolean",
       "examples" : [ true, false ]
-    },
+    }
   },
   "additionalProperties" : false,
   "required" : [ "Interdictor", "IsPlayer" ]
