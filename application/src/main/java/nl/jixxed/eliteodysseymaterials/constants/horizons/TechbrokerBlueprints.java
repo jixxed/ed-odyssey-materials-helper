@@ -555,6 +555,19 @@ public class TechbrokerBlueprints {
                     List.of(HorizonsBrokerType.AEGIS),
                     GameVersion.LIVE
             ),
+            HorizonsBlueprintType.THARGOID_PULSE_NEUTRALISER,
+            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.THARGOID_PULSE_NEUTRALISER,
+                    Map.of(
+                            Encoded.TG_SHUTDOWNDATA, 5,
+                            Manufactured.UNKNOWNENERGYSOURCE, 5,
+                            Manufactured.TG_PROPULSIONELEMENT, 5,
+                            Commodity.ANCIENTRELICTG, 1
+                    ),
+                    Map.of(),
+                    List.of(),
+                    List.of(HorizonsBrokerType.AEGIS),
+                    GameVersion.LIVE
+            ),
             HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
                     Map.of(
                             Commodity.METAALLOYS, 16,

@@ -586,21 +586,21 @@
           "title": "CurrentState",
           "type": "string",
           "examples": [
-            "Alert", "Invaded", "Maelstrom", "Lost", "Recovery"
+            "Thargoid_Probing", "Thargoid_Harvest", "Thargoid_Controlled", "Thargoid_Stronghold", "Thargoid_Recovery"
           ]
         },
         "NextStateSuccess": {
           "title": "NextStateSuccess",
           "type": "string",
           "examples": [
-            "Recovery"
+            "Thargoid_Probing", "Thargoid_Harvest", "Thargoid_Controlled", "Thargoid_Stronghold", "Thargoid_Recovery"
           ]
         },
         "NextStateFailure": {
           "title": "NextStateFailure",
           "type": "string",
           "examples": [
-            "Alert", "Invaded", "Lost"
+            "Thargoid_Probing", "Thargoid_Harvest", "Thargoid_Controlled", "Thargoid_Stronghold", "Thargoid_Recovery"
           ]
         },
         "SuccessStateReached": {
@@ -626,9 +626,9 @@
         },
         "EstimatedRemainingTime": {
           "title": "EstimatedRemainingTime",
-          "type": "integer",
+          "type": "string",
           "examples": [
-            123
+            "1 Days"
           ]
         }
       },
