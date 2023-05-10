@@ -1,3 +1,7 @@
+Version 2.25
+-------------
+Added new Thargoid materials
+
 Version 2.24
 -------------
 Added setting to flip remaining/available value shown by default/on hover for wishlist materials
