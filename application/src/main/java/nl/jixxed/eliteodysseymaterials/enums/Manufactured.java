@@ -74,7 +74,7 @@ public enum Manufactured implements HorizonsMaterial {
     THERMICALLOYS(Rarity.RARE, HorizonsMaterialType.THERMIC),
     TG_WEAPONPARTS(Rarity.RARE, HorizonsMaterialType.THARGOID),//tg_weaponparts
 
-    TG_ABRASION01(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
+    TG_ABRASION01(Rarity.VERY_RARE, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
 
     TG_ABRASION02(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
     TG_ABRASION03(Rarity.VERY_COMMON, HorizonsMaterialType.THARGOID, GameVersion.LIVE),

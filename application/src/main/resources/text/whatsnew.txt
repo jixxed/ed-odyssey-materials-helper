@@ -1,3 +1,7 @@
+Version 2.26
+-------------
+Set Heat Exposure Specimen material to G5
+
 Version 2.25
 -------------
 Added new Thargoid materials
