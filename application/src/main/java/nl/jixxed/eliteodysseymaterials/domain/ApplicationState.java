@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +82,8 @@ public class ApplicationState {
     private int flags = 0;
     private int flags2 = 0;
 
+    @Getter
+    private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);
     private ApplicationState() {
 
         this.eventListeners.add(EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken()))));

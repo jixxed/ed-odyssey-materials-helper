@@ -143,6 +143,10 @@
                     "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
                     "type" : "string",
                     "examples" : [ "Contested", "Exploited", "Controlled" ]
+                },
+                "ThargoidWar": {
+                    "title": "ThargoidWar",
+                    "$ref": "../definitions.json#/definitions/ThargoidWar"
                 }
             }
         }

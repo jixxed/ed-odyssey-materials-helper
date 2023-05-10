@@ -1,6 +1,10 @@
 Version 2.25
 -------------
 Added new Thargoid materials
+Fix blueprints showing materials as remaining instead of available
+Hide fleetcarrier icon when data not available
+When cached fleetcarrier data is available, but API is not connected, show icon and warning data might be stale
+Add Thargoid war information to EDDN messages
 
 Version 2.24
 -------------

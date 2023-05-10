@@ -86,6 +86,17 @@ public class EDDNFSDJumpMapper extends EDDNMapper {
                                         .build())
                                 .toList())
                         .orElse(null))
+                .withThargoidWar(fsdjump.getThargoidWar()
+                        .map(thargoidWar -> new ThargoidWar.ThargoidWarBuilder()
+                                .withCurrentState(thargoidWar.getCurrentState())
+                                .withSuccessStateReached(thargoidWar.getSuccessStateReached())
+                                .withEstimatedRemainingTime(thargoidWar.getEstimatedRemainingTime().orElse(null))
+                                .withWarProgress(thargoidWar.getWarProgress().orElse(null))
+                                .withRemainingPorts(thargoidWar.getRemainingPorts().orElse(null))
+                                .withNextStateFailure(thargoidWar.getNextStateFailure().orElse(null))
+                                .withNextStateSuccess(thargoidWar.getNextStateSuccess().orElse(null))
+                                .build())
+                        .orElse(null))
                 .build();
     }
 }

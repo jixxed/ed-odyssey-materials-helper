@@ -215,6 +215,10 @@
                     "title" : "StationAllegiance",
                     "type" : "string",
                     "examples" : [ "Federation", "PilotsFederation", "Alliance" ]
+                },
+                "ThargoidWar": {
+                    "title": "ThargoidWar",
+                    "$ref": "../definitions.json#/definitions/ThargoidWar"
                 }
             }
         }
