@@ -11,8 +11,8 @@ public enum Manufactured implements HorizonsMaterial {
     BASICCONDUCTORS(Rarity.VERY_COMMON, HorizonsMaterialType.CONDUCTIVE),
     TG_BIOMECHANICALCONDUITS(Rarity.STANDARD, HorizonsMaterialType.THARGOID),//tg_biomechanicalconduits
     BIOTECHCONDUCTORS(Rarity.VERY_RARE, HorizonsMaterialType.CONDUCTIVE),
-    TG_CAUSTICCRYSTAL(Rarity.RARE, HorizonsMaterialType.THARGOID,GameVersion.LIVE),//
-    TG_CAUSTICSHARD(Rarity.COMMON, HorizonsMaterialType.THARGOID,GameVersion.LIVE),//
+    TG_CAUSTICCRYSTAL(Rarity.RARE, HorizonsMaterialType.THARGOID, GameVersion.LIVE),//
+    TG_CAUSTICSHARD(Rarity.COMMON, HorizonsMaterialType.THARGOID, GameVersion.LIVE),//
     CHEMICALDISTILLERY(Rarity.STANDARD, HorizonsMaterialType.CHEMICAL),
     CHEMICALMANIPULATORS(Rarity.RARE, HorizonsMaterialType.CHEMICAL),
     CHEMICALPROCESSORS(Rarity.COMMON, HorizonsMaterialType.CHEMICAL),
@@ -23,7 +23,7 @@ public enum Manufactured implements HorizonsMaterial {
     CONDUCTIVECOMPONENTS(Rarity.COMMON, HorizonsMaterialType.CONDUCTIVE),
     CONDUCTIVEPOLYMERS(Rarity.RARE, HorizonsMaterialType.CONDUCTIVE),
     CONFIGURABLECOMPONENTS(Rarity.RARE, HorizonsMaterialType.MECHANICAL_COMPONENTS),
-    TG_CAUSTICGENERATORPARTS(Rarity.STANDARD, HorizonsMaterialType.THARGOID,GameVersion.LIVE),//
+    TG_CAUSTICGENERATORPARTS(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LIVE),//
     FEDCORECOMPOSITES(Rarity.VERY_RARE, HorizonsMaterialType.COMPOSITE),//fedcorecomposites
     CRYSTALSHARDS(Rarity.VERY_COMMON, HorizonsMaterialType.CRYSTALS),
     ELECTROCHEMICALARRAYS(Rarity.STANDARD, HorizonsMaterialType.CAPACITORS),
@@ -73,6 +73,11 @@ public enum Manufactured implements HorizonsMaterial {
     UNKNOWNTECHNOLOGYCOMPONENTS(Rarity.RARE, HorizonsMaterialType.THARGOID),
     THERMICALLOYS(Rarity.RARE, HorizonsMaterialType.THERMIC),
     TG_WEAPONPARTS(Rarity.RARE, HorizonsMaterialType.THARGOID),//tg_weaponparts
+
+    TG_ABRASION01(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
+
+    TG_ABRASION02(Rarity.STANDARD, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
+    TG_ABRASION03(Rarity.VERY_COMMON, HorizonsMaterialType.THARGOID, GameVersion.LIVE),
     WORNSHIELDEMITTERS(Rarity.VERY_COMMON, HorizonsMaterialType.SHIELDING),
     TG_WRECKAGECOMPONENTS(Rarity.STANDARD, HorizonsMaterialType.THARGOID),//tg_wreckagecomponents
     UNKNOWN(Rarity.UNKNOWN, HorizonsMaterialType.UNKNOWN);
@@ -85,6 +90,7 @@ public enum Manufactured implements HorizonsMaterial {
         this.materialType = materialType;
         this.gameVersion = GameVersion.LEGACY;
     }
+
     @Override
     public String getLocalizationKey() {
         return "material.manufactured." + this.name().toLowerCase();
@@ -117,8 +123,8 @@ public enum Manufactured implements HorizonsMaterial {
 
     @Override
     public int getMaxAmount() {
-        if (this == TG_CAUSTICCRYSTAL || this == TG_CAUSTICSHARD) {
-            return 200;
+        if (this == TG_ABRASION01 || this == TG_ABRASION02 || this == TG_ABRASION03) {
+            return 100;
         }
         return this.getRarity().getMaxAmount();
     }
