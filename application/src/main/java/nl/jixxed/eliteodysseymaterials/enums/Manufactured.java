@@ -120,12 +120,4 @@ public enum Manufactured implements HorizonsMaterial {
         return HorizonsStorageType.MANUFACTURED;
     }
 
-
-    @Override
-    public int getMaxAmount() {
-        if (this == TG_ABRASION01 || this == TG_ABRASION02 || this == TG_ABRASION03) {
-            return 100;
-        }
-        return this.getRarity().getMaxAmount();
-    }
 }
