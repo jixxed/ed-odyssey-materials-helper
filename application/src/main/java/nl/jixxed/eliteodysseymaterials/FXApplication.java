@@ -404,7 +404,7 @@ public class FXApplication extends Application {
                 log.error("Error retrieving latest version", e);
             }
 
-            if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion)) {
+            if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion) && !latestVersion.isBlank()) {
                 final Stage versionStage = new Stage();
 
                 final Scene versionScene = new Scene(new VersionDialog(versionStage, this), 640, 175);
