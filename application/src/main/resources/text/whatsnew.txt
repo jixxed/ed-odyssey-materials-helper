@@ -1,6 +1,13 @@
 Version 2.26
 -------------
 Set Heat Exposure Specimen material to G5
+Add new Tactical Core Chip material
+Add material trading suggestions on wishlist to tooltips (up to 4 suggestions)
+Color and icon based on suggestion type
+- green: tradedown
+- yellow: cross tradedown
+- red: uptrade / cross uptrade
+Suggestions are ordered by color, then grade and for equal grade crosstrades, materials are listed in order of the lowest percentage used
 
 Version 2.25
 -------------
