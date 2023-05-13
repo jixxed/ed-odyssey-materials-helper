@@ -94,4 +94,4 @@ version.dialog.text,A new version is available!,A new version is available!,Eine
 version.dialog.text2,Did you know that there is an auto updater available for this app?,Did you know that there is an auto updater available for this app?,"Wussten Sie, dass für diese App ein Auto-Updater verfügbar ist?",¿Sabía que hay un actualizador automático disponible para esta aplicación?,Saviez-vous qu''il y a une mise à jour automatique disponible pour cette application?,Você sabia que existe um atualizador de automóveis disponível para este aplicativo?,"Знаете ли вы, что для этого приложения доступен автоматический обновленный обновление?"
 version.dialog.ok,Ok,Ok,OK,De acuerdo,D''accord,OK,Хорошо
 version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,Baixar,Скачать
-statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,,,,
+statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
