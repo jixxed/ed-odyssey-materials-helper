@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
@@ -47,7 +48,8 @@ public class ReceiveTextMessageProcessor implements MessageProcessor<ReceiveText
                             text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Engineer/Blueprint - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
                             NotificationService.showInformation(NotificationType.RELEVANT_POINT, "Material information", text);
                         } else {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Irrelevant";
+                            final Integer barterSellPrice = BarterConstants.getBarterSellPrice(odysseyMaterial);
+                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Irrelevant (" + LocaleService.getStringBinding("material.tooltip.barter.sell.price", barterSellPrice == -1 ? "?" : NUMBER_FORMAT.format(barterSellPrice))).build() + ")";
                             NotificationService.showInformation(NotificationType.IRRELEVANT_POINT, "Material information", text);
                         }
                     } catch (final IllegalArgumentException ex) {
