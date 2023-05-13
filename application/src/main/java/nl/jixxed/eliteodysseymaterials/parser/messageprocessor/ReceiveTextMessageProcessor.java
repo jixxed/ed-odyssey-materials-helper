@@ -48,7 +48,8 @@ public class ReceiveTextMessageProcessor implements MessageProcessor<ReceiveText
                             text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Engineer/Blueprint - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
                             NotificationService.showInformation(NotificationType.RELEVANT_POINT, "Material information", text);
                         } else {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Irrelevant (Sell Value: " + BarterConstants.getBarterSellPrice(odysseyMaterial) + ")";
+                            final Integer barterSellPrice = BarterConstants.getBarterSellPrice(odysseyMaterial);
+                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Irrelevant (Sell Value: " + LocaleService.getStringBinding("material.tooltip.barter.sell.price", barterSellPrice == -1 ? "?" : NUMBER_FORMAT.format(barterSellPrice))).build() + ")";
                             NotificationService.showInformation(NotificationType.IRRELEVANT_POINT, "Material information", text);
                         }
                     } catch (final IllegalArgumentException ex) {
