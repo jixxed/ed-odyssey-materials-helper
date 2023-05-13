@@ -2627,3 +2627,19 @@
     -fx-pref-height: 0.25em;
     -fx-max-height: 0.25em;
 }
+.horizons-tradetype1{
+    -fx-text-fill: #89d07f !important;
+}
+.horizons-tradetype2{
+    -fx-text-fill: #dcc030 !important;
+}
+.horizons-tradetype3, .horizons-tradetype4, .horizons-tradetype5{
+    -fx-text-fill: #ff7c7c !important;
+}
+
+.trade-suggestion-bullet {
+    -fx-label-padding: 0 0 0 0.3em;
+    -fx-text-alignment: center;
+    -fx-min-width: 1.3em;
+    -fx-max-width: 1.3em;
+}

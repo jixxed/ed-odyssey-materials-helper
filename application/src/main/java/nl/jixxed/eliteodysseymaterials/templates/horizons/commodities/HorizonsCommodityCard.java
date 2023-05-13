@@ -84,7 +84,7 @@ public class HorizonsCommodityCard extends VBox implements Template {
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
 
-        MaterialService.addMaterialInfoPopOver(this, this.commodity);
+        MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
 
     }
 

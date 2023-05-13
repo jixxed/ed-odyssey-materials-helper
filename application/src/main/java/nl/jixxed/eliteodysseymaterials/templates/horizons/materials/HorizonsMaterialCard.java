@@ -87,7 +87,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
         VBox.setVgrow(region, Priority.ALWAYS);
         this.getChildren().add(region);
         this.getChildren().add(this.segmentedBar);
-        MaterialService.addMaterialInfoPopOver(this, this.material);
+        MaterialService.addMaterialInfoPopOver(this, this.material, false);
     }
 
     @Override

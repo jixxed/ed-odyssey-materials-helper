@@ -61,4 +61,23 @@ public interface HorizonsMaterial extends Material {
     default int getMaxAmount() {
         return this.getRarity().getMaxAmount();
     }
+
+    //1 downtrade, 2 crosstrade high, 3 uptrade, 4 cross uptrade, 5 impossible
+    default int getTradeType(final HorizonsMaterial otherMaterial) {
+        if (getMaterialType() == otherMaterial.getMaterialType()) {
+            if (otherMaterial.getRarity().getLevel() >= getRarity().getLevel()) {
+                return 1;
+            } else {
+                return 3;
+            }
+        }
+        if (getClass() == otherMaterial.getClass() && otherMaterial.getMaterialType() != HorizonsMaterialType.THARGOID && otherMaterial.getMaterialType() != HorizonsMaterialType.GUARDIAN) {
+            if (otherMaterial.getRarity().getLevel() >= getRarity().getLevel()) {
+                return 2;
+            } else {
+                return 4;
+            }
+        }
+        return 5;
+    }
 }

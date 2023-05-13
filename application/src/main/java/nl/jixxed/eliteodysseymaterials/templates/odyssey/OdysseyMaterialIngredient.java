@@ -92,7 +92,7 @@ public class OdysseyMaterialIngredient extends Ingredient {
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
-        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial);
+        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
         this.getStyleClass().add("ingredient");
 
         update();

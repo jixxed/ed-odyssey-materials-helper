@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -59,7 +60,10 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
         this.getChildren().add(this.segmentedBar);
     }
-
+    @Override
+    protected void installPopOver() {
+        MaterialService.addMaterialInfoPopOver(this, this.getHorizonsMaterial(), true);
+    }
     private void showAsHovered(final Boolean newValue) {
         final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
         if (showRemaining.equals(newValue) && getHorizonsMaterial() instanceof Commodity commodity && (this.getLeftAmount() - (StorageService.getCommodityCount(commodity, StoragePool.SHIP))) > 0) {

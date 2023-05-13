@@ -28,3 +28,7 @@ material.tooltip.is.live,LIVE-only material,LIVE-only material,Nur LIVE-Material
 material.tooltip.is.live.commodity,LIVE-only commodity,LIVE-only commodity,Nur LIVE-Ware,Productos básicos solo en LIVE,Marchandise en LIVE,Mercadoria apenas ao LIVE,Товар для LIVE-версии
 material.tooltip.downtrade,Downtrade:,Downtrade:,Eintauschen:,Abatido:,Descente:,Baixa:,Нисходящий:
 material.tooltip.downtrade.entry,{0} from {1},{0} from {1},{0} von {1},{0} de {1},{0} de {1},{0} de {1},{0} из {1}
+material.tooltip.downtrade.none,No downtrades possible,No downtrades possible,,,,,
+material.tooltip.tradesuggestions,"Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)","Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)",,,,,
+material.tooltip.tradesuggestions.none,No complete trades can be made,No complete trades can be made,,,,,
+material.tooltip.trade,Trade suggestions:,Trade suggestions:,,,,,

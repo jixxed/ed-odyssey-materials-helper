@@ -101,7 +101,7 @@ class OdysseyMaterialCard extends VBox implements Template {
 
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
-        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial);
+        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
 
         this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
         this.setOnMouseClicked(event -> setFavourite(this.odysseyMaterial, FavouriteService.toggleFavourite(this.odysseyMaterial)));
