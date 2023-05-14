@@ -1,3 +1,8 @@
+Version 2.27
+-------------
+Horizons blueprints can now be opened from material popups
+Horizons wishlist blueprint will now open matching lowest grade
+
 Version 2.26
 -------------
 Set Heat Exposure Specimen material to G5
