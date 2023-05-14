@@ -29,6 +29,8 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import org.controlsfx.control.PopOver;
 
@@ -102,10 +104,10 @@ public class MaterialService {
 
                             BoxBuilder.builder()
                                     .withNodes(LabelBuilder.builder()
-                                                    .withStyleClasses("trade-suggestion-bullet", "horizons-tradetype" + tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom()))
-                                                    .withNonLocalizedText(getArrow(tradeSuggestion.getHorizonsMaterialFrom().getTradeType(tradeSuggestion.getHorizonsMaterialTo())))
+                                                    .withStyleClasses("trade-suggestion-bullet", "horizons-tradetype" + tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom()).getPreference())
+                                                    .withNonLocalizedText(getArrow(tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom())))
                                                     .build(),
-                                            LabelBuilder.builder().withStyleClass("horizons-tradetype" + tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom())).withText(LocaleService.getStringBinding("material.tooltip.tradesuggestions",
+                                            LabelBuilder.builder().withStyleClass("horizons-tradetype" + tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom()).getPreference()).withText(LocaleService.getStringBinding("material.tooltip.tradesuggestions",
                                                     tradeSuggestion.receivedOnTrade(),
                                                     (int) tradeSuggestion.amountRequiredToTrade(),
                                                     LocaleService.getLocalizedStringForCurrentLocale(tradeSuggestion.getHorizonsMaterialFrom().getLocalizationKey()),
@@ -113,7 +115,7 @@ public class MaterialService {
                                                     tradeSuggestion.getReserved(),
                                                     percentFormat.format(tradeSuggestion.getPercentageUsedOnTrade())
                                             )).build()).buildHBox()
-                            );
+                    );
                 });
             } else {
                 vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.tradesuggestions.none")).build());
@@ -123,15 +125,12 @@ public class MaterialService {
 
     }
 
-    private static String getArrow(final int tradeSuggestionType) {
-        if (tradeSuggestionType == 1) {
-            return "\u2191";
-        } else if (tradeSuggestionType == 3) {
-
-            return "\u2193";
-        } else {
-            return "\u292E";
-        }
+    private static String getArrow(final MaterialTradeType tradeSuggestionType) {
+        return switch (tradeSuggestionType) {
+            case DOWNTRADE -> "\u2193";
+            case UPTRADE -> "\u2191";
+            case CROSS_DOWNTRADE, CROSS_UPTRADE, IMPOSSIBLE -> "\u292E";
+        };
     }
 
     private static void addHorizonsTradeToTooltipClassic(final HorizonsMaterial horizonsMaterial, final VBox vBox) {
@@ -398,12 +397,20 @@ public class MaterialService {
                     titledPane.setExpanded(false);
                     vBox.getChildren().add(titledPane);
                     final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
-                    final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
+                    final DestroyableLabel build = LabelBuilder.builder()
+                            .withStyleClasses(classes)
+                            .withText(blueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(blueprintListing.name(),blueprintListing.type(),blueprintListing.gradeGroups().get(0).getKey()))))
+                            .build();
                     catBox.getChildren().add(build);
                 } else {
                     //append
                     final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
-                    final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
+                    final DestroyableLabel build = LabelBuilder.builder()
+                            .withStyleClasses(classes)
+                            .withText(blueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(blueprintListing.name(),blueprintListing.type(),blueprintListing.gradeGroups().get(0).getKey()))))
+                            .build();
                     catBox.getChildren().add(build);
                     catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 }

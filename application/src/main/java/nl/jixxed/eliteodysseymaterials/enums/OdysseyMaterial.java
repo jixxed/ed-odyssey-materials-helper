@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public interface OdysseyMaterial extends Material {
+public sealed interface OdysseyMaterial extends Material permits Asset, Consumable, Data, Good, TradeOdysseyMaterial {
 
     default OdysseyStorageType getStorageType() {
         return OdysseyStorageType.OTHER;

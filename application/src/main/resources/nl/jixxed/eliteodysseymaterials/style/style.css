@@ -2264,7 +2264,7 @@
     -fx-border-color: #000000;
     -fx-border-width: 1px;
     -fx-label-padding: 0.2em;
-
+    -fx-cursor: hand;
 }
 
 .blueprint-listing-label-experimental {

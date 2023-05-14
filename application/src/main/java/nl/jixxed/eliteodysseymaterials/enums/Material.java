@@ -1,4 +1,4 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public interface Material {
+public sealed interface Material permits HorizonsMaterial, OdysseyMaterial {
 }

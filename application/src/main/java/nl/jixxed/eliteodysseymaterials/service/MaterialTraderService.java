@@ -65,8 +65,8 @@ public class MaterialTraderService {
 
     private static Comparator<HorizonsMaterial> getMaterialSorter(final HorizonsMaterial horizonsMaterial) {
         return (mat1, mat2) -> {
-            final int mat1Type = horizonsMaterial.getTradeType(mat1);
-            final int mat2Type = horizonsMaterial.getTradeType(mat2);
+            final int mat1Type = horizonsMaterial.getTradeType(mat1).getPreference();
+            final int mat2Type = horizonsMaterial.getTradeType(mat2).getPreference();
             return Integer.compare(mat1Type, mat2Type);
         };
     }
@@ -76,8 +76,8 @@ public class MaterialTraderService {
         return (sug1, sug2) -> {
             final var mat1 = sug1.getHorizonsMaterialFrom();
             final var mat2 = sug2.getHorizonsMaterialFrom();
-            final int mat1Type = horizonsMaterial.getTradeType(mat1);
-            final int mat2Type = horizonsMaterial.getTradeType(mat2);
+            final int mat1Type = horizonsMaterial.getTradeType(mat1).getPreference();
+            final int mat2Type = horizonsMaterial.getTradeType(mat2).getPreference();
             return Integer.compare(mat1Type, mat2Type);
         };
     }
