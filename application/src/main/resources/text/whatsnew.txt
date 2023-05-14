@@ -2,6 +2,7 @@ Version 2.27
 -------------
 Horizons blueprints can now be opened from material popups
 Horizons wishlist blueprint will now open matching lowest grade
+Add dynamic scrolling speed based on window contents
 
 Version 2.26
 -------------

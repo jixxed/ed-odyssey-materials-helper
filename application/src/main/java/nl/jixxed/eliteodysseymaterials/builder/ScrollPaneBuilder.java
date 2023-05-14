@@ -11,7 +11,7 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ScrollPaneBuilder {
-    private static final double SCROLL_SPEED = 0.005;
+    private static final double SCROLL_SPEED = 0.01;
     private final List<String> styleClasses = new ArrayList<>();
     private Node content;
 
@@ -45,7 +45,8 @@ public class ScrollPaneBuilder {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         if (scrollPane.getContent() != null) {
             scrollPane.getContent().setOnScroll(scrollEvent -> {
-                final double deltaY = scrollEvent.getDeltaY() * SCROLL_SPEED;
+                final double speed = scrollPane.getHeight() / scrollPane.getContent().getLayoutBounds().getHeight();
+                final double deltaY = scrollEvent.getDeltaY() * speed * SCROLL_SPEED;
                 scrollPane.setVvalue(scrollPane.getVvalue() - deltaY);
             });
         }
