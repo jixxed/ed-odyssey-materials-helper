@@ -14,7 +14,12 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Scanner;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +40,7 @@ public class JournalWatcher {
             listCommanders(folder);
             findLatestFile(folder);
             this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
-            this.fileWatcher = new FileWatcher("Journal Watcher Thread", true).withListener(new FileAdapter() {
+            this.fileWatcher = new FileWatcher(true).withListener(new FileAdapter() {
                 @Override
                 public void onModified(final FileEvent event) {
                     final File file = event.getFile();
@@ -55,7 +60,7 @@ public class JournalWatcher {
                 }
 
                 private boolean isValidOdysseyJournal(final File file) {
-                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX) && isNewerThan2020(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX) && isNewerThanTwoYears(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
                 }
             }).watch(folder);
         });
@@ -71,10 +76,10 @@ public class JournalWatcher {
 
     private void listCommanders(final File folder) {
         try {
-            Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+            FileService.listFiles(folder, true).stream()
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(file -> file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX))
-                    .filter(this::isNewerThan2020)
+                    .filter(this::isNewerThanTwoYears)
                     .filter(this::hasFileHeader)
                     .filter(this::hasCommanderHeader)
                     .forEach(this::listCommander);
@@ -114,10 +119,10 @@ public class JournalWatcher {
 
     private void findLatestFile(final File folder) {
         try {
-            this.currentlyWatchedFile = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+            this.currentlyWatchedFile =  FileService.listFiles(folder, true).stream()
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(file -> file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX))
-                    .filter(this::isNewerThan2020)
+                    .filter(this::isNewerThanTwoYears)
                     .filter(this::hasFileHeader)
                     .filter(this::isSelectedCommander)
                     .max(Comparator.comparingLong(this::getFileTimestamp));
@@ -178,14 +183,15 @@ public class JournalWatcher {
         }).orElse(true);
     }
 
-    synchronized boolean isNewerThan2020(final File file) {
+    synchronized boolean isNewerThanTwoYears(final File file) {
+        final int twoYearsAgo = Integer.parseInt(Year.now().format(DateTimeFormatter.ofPattern("uu"))) - 2;
         final Matcher matcher = this.journalPatternTimestamp.matcher(file.getName());
         if (matcher.matches()) {
-            return Integer.parseInt(matcher.group(1).substring(0, 2)) > 20;
+            return Integer.parseInt(matcher.group(1).substring(0, 2)) > twoYearsAgo;
         }
         final Matcher matcher2 = this.journalPatternDate.matcher(file.getName());
         if (matcher2.matches()) {
-            return Integer.parseInt(matcher2.group(1).substring(2, 4)) > 20;
+            return Integer.parseInt(matcher2.group(1).substring(2, 4)) > twoYearsAgo;
         }
         return true;
 

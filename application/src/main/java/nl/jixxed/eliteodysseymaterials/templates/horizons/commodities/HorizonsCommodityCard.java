@@ -9,6 +9,7 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -75,14 +76,15 @@ public class HorizonsCommodityCard extends VBox implements Template {
         HBox.setHgrow(this.region, Priority.ALWAYS);
         this.region2 = new Region();
         VBox.setVgrow(this.region2, Priority.ALWAYS);
-
+        this.leftAmountLabel.visibleProperty().bind(ApplicationState.getInstance().getFcMaterials());
+        this.leftImage.visibleProperty().bind(ApplicationState.getInstance().getFcMaterials());
         this.firstLine = BoxBuilder.builder().withStyleClass("horizons-commoditycard-firstline").withNodes(this.typeImage, this.nameLabel).buildHBox();
         this.firstLine.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.5));
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
 
-        MaterialService.addMaterialInfoPopOver(this, this.commodity);
+        MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
 
     }
 

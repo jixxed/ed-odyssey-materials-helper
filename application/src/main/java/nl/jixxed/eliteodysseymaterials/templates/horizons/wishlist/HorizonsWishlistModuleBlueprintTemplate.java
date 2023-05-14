@@ -90,7 +90,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                         LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
                         LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
                         this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))))
-                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1))))
+                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.NONE)))))
                 .withHoverProperty((observable, oldValue, newValue) -> {
                     this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, (this.blueprints.stream().map(bp -> ((HorizonsBlueprint) bp).getRequiredAmount(wishlistIngredient.getHorizonsMaterial())).reduce(0, Integer::sum))));
                     this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));

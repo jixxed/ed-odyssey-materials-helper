@@ -29,6 +29,8 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import org.controlsfx.control.PopOver;
 
@@ -53,7 +55,7 @@ public class MaterialService {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
     }
 
-    private static VBox getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial) {
+    private static VBox getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist) {
         final VBox vBox = BoxBuilder.builder().buildVBox();
         LabelBuilder.builder().withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey())).build();
         if (horizonsMaterial.isUnknown()) {
@@ -75,7 +77,13 @@ public class MaterialService {
                 vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.type.manufactured")).build());
             }
             addHorizonsSpawnLocationsToTooltip(SpawnConstants.HORIZONSMATERIAL_LOCATION.get(horizonsMaterial), vBox);
-            addHorizonsTradeToTooltip(horizonsMaterial, vBox);
+            if (!(horizonsMaterial instanceof Commodity)) {
+                if (wishlist && WishlistService.getCurrentWishlistCount(horizonsMaterial) - StorageService.getMaterialCount(horizonsMaterial) > 0) {
+                    addHorizonsTradeToTooltip(horizonsMaterial, vBox);
+                } else {
+                    addHorizonsTradeToTooltipClassic(horizonsMaterial, vBox);
+                }
+            }
             addHorizonsBlueprintsToTooltip(HorizonsBlueprintConstants.findRecipesContaining(horizonsMaterial), vBox);
         }
         return vBox;
@@ -86,14 +94,60 @@ public class MaterialService {
     private static void addHorizonsTradeToTooltip(final HorizonsMaterial horizonsMaterial, final VBox vBox) {
         if (horizonsMaterial.getRarity() != UNKNOWN && horizonsMaterial.getMaterialType().isTradable() && !(horizonsMaterial instanceof Commodity)) {
             vBox.getChildren().add(LabelBuilder.builder().build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.trade")).build());
+            final List<HorizonsTradeSuggestion> tradeSuggestions = MaterialTraderService.getTradeSuggestions(horizonsMaterial);
+            if (!tradeSuggestions.isEmpty()) {
+                tradeSuggestions.forEach(tradeSuggestion -> {
+                    final NumberFormat percentFormat = NumberFormat.getPercentInstance();
+                    percentFormat.setMaximumFractionDigits(1);
+                    vBox.getChildren().add(
+
+                            BoxBuilder.builder()
+                                    .withNodes(LabelBuilder.builder()
+                                                    .withStyleClasses("trade-suggestion-bullet", "horizons-tradetype" + tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom()).getPreference())
+                                                    .withNonLocalizedText(getArrow(tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom())))
+                                                    .build(),
+                                            LabelBuilder.builder().withStyleClass("horizons-tradetype" + tradeSuggestion.getHorizonsMaterialTo().getTradeType(tradeSuggestion.getHorizonsMaterialFrom()).getPreference()).withText(LocaleService.getStringBinding("material.tooltip.tradesuggestions",
+                                                    tradeSuggestion.receivedOnTrade(),
+                                                    (int) tradeSuggestion.amountRequiredToTrade(),
+                                                    LocaleService.getLocalizedStringForCurrentLocale(tradeSuggestion.getHorizonsMaterialFrom().getLocalizationKey()),
+                                                    tradeSuggestion.getOwned(),
+                                                    tradeSuggestion.getReserved(),
+                                                    percentFormat.format(tradeSuggestion.getPercentageUsedOnTrade())
+                                            )).build()).buildHBox()
+                    );
+                });
+            } else {
+                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.tradesuggestions.none")).build());
+            }
+        }
+
+
+    }
+
+    private static String getArrow(final MaterialTradeType tradeSuggestionType) {
+        return switch (tradeSuggestionType) {
+            case DOWNTRADE -> "\u2193";
+            case UPTRADE -> "\u2191";
+            case CROSS_DOWNTRADE, CROSS_UPTRADE, IMPOSSIBLE -> "\u292E";
+        };
+    }
+
+    private static void addHorizonsTradeToTooltipClassic(final HorizonsMaterial horizonsMaterial, final VBox vBox) {
+        if (horizonsMaterial.getRarity() != UNKNOWN && horizonsMaterial.getMaterialType().isTradable() && !(horizonsMaterial instanceof Commodity)) {
+            vBox.getChildren().add(LabelBuilder.builder().build());
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.downtrade")).build());
             final List<HorizonsMaterial> otherMaterialsInCategory = HorizonsMaterial.getAllMaterials().stream().filter(material -> material.getMaterialType() == horizonsMaterial.getMaterialType() && material != horizonsMaterial && material.getRarity().getLevel() > horizonsMaterial.getRarity().getLevel()).sorted(Comparator.comparing(HorizonsMaterial::getRarity)).toList();
-            otherMaterialsInCategory.forEach(material -> {
-                final int materialCount = StorageService.getMaterialCount(material);
-                final int factor = material.getRarity().getLevel() - horizonsMaterial.getRarity().getLevel();
-                final int potentialFromTrade = materialCount * (int) Math.pow(3, factor);
-                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.downtrade.entry", potentialFromTrade, LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()))).build());
-            });
+            if (!otherMaterialsInCategory.isEmpty()) {
+                otherMaterialsInCategory.forEach(material -> {
+                    final int materialCount = StorageService.getMaterialCount(material);
+                    final int factor = material.getRarity().getLevel() - horizonsMaterial.getRarity().getLevel();
+                    final int potentialFromTrade = materialCount * (int) Math.pow(3, factor);
+                    vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.downtrade.entry", potentialFromTrade, LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()))).build());
+                });
+            } else {
+                vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.downtrade.none")).build());
+            }
         }
 
 
@@ -149,9 +203,9 @@ public class MaterialService {
     }
 
 
-    public static void addMaterialInfoPopOver(final Node hoverableNode, final Material material) {
+    public static void addMaterialInfoPopOver(final Node hoverableNode, final Material material, final boolean wishlist) {
         hoverableNode.setOnMouseEntered(mouseEvent -> {
-            final Node contentNode = (material instanceof HorizonsMaterial) ? getMaterialPopOverContent((HorizonsMaterial) material) : getMaterialPopOverContent((OdysseyMaterial) material);
+            final Node contentNode = (material instanceof HorizonsMaterial) ? getMaterialPopOverContent((HorizonsMaterial) material, wishlist) : getMaterialPopOverContent((OdysseyMaterial) material);
             contentNode.getStyleClass().add("material-popover");
             final PopOver popOver = new PopOver(contentNode);
             popOver.setDetachable(false);
@@ -343,12 +397,20 @@ public class MaterialService {
                     titledPane.setExpanded(false);
                     vBox.getChildren().add(titledPane);
                     final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
-                    final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
+                    final DestroyableLabel build = LabelBuilder.builder()
+                            .withStyleClasses(classes)
+                            .withText(blueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(blueprintListing.name(),blueprintListing.type(),blueprintListing.gradeGroups().get(0).getKey()))))
+                            .build();
                     catBox.getChildren().add(build);
                 } else {
                     //append
                     final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
-                    final DestroyableLabel build = LabelBuilder.builder().withStyleClasses(classes).withText(blueprintListing.toStringBinding()).build();
+                    final DestroyableLabel build = LabelBuilder.builder()
+                            .withStyleClasses(classes)
+                            .withText(blueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(blueprintListing.name(),blueprintListing.type(),blueprintListing.gradeGroups().get(0).getKey()))))
+                            .build();
                     catBox.getChildren().add(build);
                     catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
                 }

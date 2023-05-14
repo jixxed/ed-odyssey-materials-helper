@@ -171,7 +171,8 @@ public enum HorizonsBlueprintType {
     BOBBLEHEAD(false),
     E2_SIRIUS_CORPORATION_AX_MISSILE_RACK(false),
     C3_SIRIUS_CORPORATION_AX_MISSILE_RACK(false),
-    CAUSTIC_SINK_LAUNCHER(false);
+    CAUSTIC_SINK_LAUNCHER(false),
+    THARGOID_PULSE_NEUTRALISER(false);
     @Getter
     private final boolean experimental;
 

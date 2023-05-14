@@ -206,17 +206,17 @@ public class FXApplication extends Application {
 
     private void setupStorageWatchers(final File watchedFolder) {
 
-        this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, JournalEventType.CARGO);
-        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, JournalEventType.SHIPLOCKER);
-        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, JournalEventType.BACKPACK);
+        this.timeStampedCargoWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.CARGO), AppConstants.CARGO_FILE, true, JournalEventType.CARGO);
+        this.timeStampedShipLockerWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.SHIPLOCKER), AppConstants.SHIPLOCKER_FILE, true, JournalEventType.SHIPLOCKER);
+        this.timeStampedBackPackWatcher = new TimeStampedGameStateWatcher(watchedFolder, file -> FileProcessor.processCargoStateFile(file, JournalEventType.BACKPACK), AppConstants.BACKPACK_FILE, true, JournalEventType.BACKPACK);
         this.journalWatcher.watch(watchedFolder, FileProcessor::processJournal, FileProcessor::resetAndProcessJournal);
         this.statusWatcher = new StateFileWatcher(watchedFolder, FileProcessor::processStatusFile, AppConstants.STATUS_FILE);
-        this.shipyardWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.SHIPYARD_FILE, JournalEventType.SHIPYARD);
-        this.outfittingWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.OUTFITTING_FILE, JournalEventType.OUTFITTING);
-        this.marketWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MARKET_FILE, JournalEventType.MARKET);
-        this.navrouteWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.NAVROUTE_FILE, JournalEventType.NAVROUTE);
-        this.modulesinfoWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MODULESINFO_FILE, JournalEventType.MODULEINFO);
-        this.fcMaterialsWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.FCMATERIALS_FILE, JournalEventType.FCMATERIALS);
+        this.shipyardWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.SHIPYARD_FILE, true, JournalEventType.SHIPYARD);
+        this.outfittingWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.OUTFITTING_FILE, true, JournalEventType.OUTFITTING);
+        this.marketWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MARKET_FILE, true, JournalEventType.MARKET);
+        this.navrouteWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.NAVROUTE_FILE, true, JournalEventType.NAVROUTE);
+        this.modulesinfoWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.MODULESINFO_FILE, true, JournalEventType.MODULEINFO);
+        this.fcMaterialsWatcher = new TimeStampedGameStateWatcher(watchedFolder, FileProcessor::processOtherStateFile, AppConstants.FCMATERIALS_FILE, true, JournalEventType.FCMATERIALS);
 
 
     }
@@ -230,7 +230,8 @@ public class FXApplication extends Application {
                 watchedFolderFleetCarrier.mkdirs();
             }
             this.fleetCarrierWatcher = new GameStateWatcher();
-            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPI_FLEETCARRIER), AppConstants.FLEETCARRIER_FILE, JournalEventType.CAPI_FLEETCARRIER);
+            ApplicationState.getInstance().getFcMaterials().set(false);
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPI_FLEETCARRIER), AppConstants.FLEETCARRIER_FILE,false, JournalEventType.CAPI_FLEETCARRIER);
         }
 
     }
@@ -403,7 +404,7 @@ public class FXApplication extends Application {
                 log.error("Error retrieving latest version", e);
             }
 
-            if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion)) {
+            if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion) && !latestVersion.isBlank()) {
                 final Stage versionStage = new Stage();
 
                 final Scene versionScene = new Scene(new VersionDialog(versionStage, this), 640, 175);
@@ -413,6 +414,7 @@ public class FXApplication extends Application {
                 versionScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
                 versionStage.setScene(versionScene);
                 versionStage.titleProperty().set("New version");
+                versionStage.setAlwaysOnTop(true);
                 versionStage.showAndWait();
             }
         }
@@ -430,6 +432,7 @@ public class FXApplication extends Application {
             policyScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
             policyStage.setScene(policyScene);
             policyStage.titleProperty().set("What's new & privacy policy");
+            policyStage.setAlwaysOnTop(true);
             policyStage.showAndWait();
             if (!PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
                 System.exit(0);

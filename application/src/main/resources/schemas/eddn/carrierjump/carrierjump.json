@@ -186,6 +186,10 @@
                     "title" : "PowerplayState",
                     "type" : "string",
                     "examples" : [ "Exploited", "Controlled", "Contested" ]
+                },
+                "ThargoidWar": {
+                    "title": "ThargoidWar",
+                    "$ref": "../definitions.json#/definitions/ThargoidWar"
                 }
             }
         }

@@ -1,12 +1,15 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.materials;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -52,6 +55,8 @@ class OdysseyMaterialCard extends VBox implements Template {
 //    private DestroyableResizableImageView totalImage;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
+    @Getter
+    private final BooleanProperty showFC = new SimpleBooleanProperty(false);
     OdysseyMaterialCard(final OdysseyMaterial odysseyMaterial) {
         this.odysseyMaterial = odysseyMaterial;
         this.amounts = StorageService.getMaterialStorage(odysseyMaterial);
@@ -67,7 +72,7 @@ class OdysseyMaterialCard extends VBox implements Template {
                 .withText(LocaleService.getStringBinding(this.odysseyMaterial))
                 .build();
         this.fleetCarrierAmount = LabelBuilder.builder()
-                .withStyleClass("materialcard-amount")
+                .withStyleClass("materialcard-fcamount")
                 .withNodeOrientation(NodeOrientation.LEFT_TO_RIGHT)
                 .withNonLocalizedText(String.valueOf(this.amounts.getFleetCarrierValue()))
                 .build();
@@ -96,16 +101,18 @@ class OdysseyMaterialCard extends VBox implements Template {
 
         final Region region = new Region();
         HBox.setHgrow(region, Priority.ALWAYS);
-        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial);
+        MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
 
         this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
         this.setOnMouseClicked(event -> setFavourite(this.odysseyMaterial, FavouriteService.toggleFavourite(this.odysseyMaterial)));
 
-        this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/fleetcarrier.png").build();
+        this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-fcamount-image").withImage("/images/material/fleetcarrier.png").build();
         this.wishlistImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/wishlist.png").build();
         this.backpackImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/backpack.png").build();
         this.shipImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/ship.png").build();
 
+        this.fleetCarrierImage.visibleProperty().bind(ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())));
+        this.fleetCarrierAmount.visibleProperty().bind(ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())));
         final HBox nameLine = BoxBuilder.builder().withStyleClass("material-name-line").withNodes(this.image, this.name, region, this.wishlistImage, this.wishlistAmount, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.totalAmount).buildHBox();
         this.getChildren().addAll(nameLine);
         updateStyle();
@@ -153,13 +160,15 @@ class OdysseyMaterialCard extends VBox implements Template {
         updateMaterialCardStyle();
         this.backpackImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
         this.backpackAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
-        this.fleetCarrierImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
-        this.fleetCarrierAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
+        this.fleetCarrierImage.getStyleClass().removeAll("materialcard-fcamount-image-nonzero");
+        this.fleetCarrierAmount.getStyleClass().removeAll("materialcard-fcamount-nonzero");
+        this.showFC.set(false);
         this.wishlistImage.getStyleClass().removeAll("materialcard-amount-image-nonzero");
         this.wishlistAmount.getStyleClass().removeAll("materialcard-amount-nonzero");
         if (OdysseyMaterialShow.FLEETCARRIER.equals(this.materialShow)) {
-            this.fleetCarrierImage.getStyleClass().add("materialcard-amount-image-nonzero");
-            this.fleetCarrierAmount.getStyleClass().add("materialcard-amount-nonzero");
+            this.showFC.set(true);
+            this.fleetCarrierImage.getStyleClass().add("materialcard-fcamount-image-nonzero");
+            this.fleetCarrierAmount.getStyleClass().add("materialcard-fcamount-nonzero");
         }
         if (OdysseyMaterialShow.NOT_ON_WISHLIST.equals(this.materialShow)) {
             this.wishlistImage.getStyleClass().add("materialcard-amount-image-nonzero");

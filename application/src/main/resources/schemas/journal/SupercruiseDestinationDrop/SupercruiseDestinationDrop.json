@@ -1,0 +1,26 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When dropping out of supercruise at a targeted destination",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "Type" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "Azeban City" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3705689344, 3701165824, 3222025216 ]
+    },
+    "Threat" : {
+      "title" : "Threat",
+      "type" : "integer",
+      "examples" : [ 0 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Type", "Threat" ]
+}

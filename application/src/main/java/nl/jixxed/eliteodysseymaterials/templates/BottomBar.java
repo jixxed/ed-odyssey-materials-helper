@@ -87,8 +87,8 @@ class BottomBar extends HBox {
         final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
         this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath())).build();
         this.apiLabelSeparator = new Separator(Orientation.VERTICAL);
-        this.apiLabelSeparator.visibleProperty().bind(CAPIService.getInstance().getActive());
-        this.apiLabel.visibleProperty().bind(CAPIService.getInstance().getActive());
+        this.apiLabelSeparator.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
+        this.apiLabel.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
     }
 
@@ -164,8 +164,14 @@ class BottomBar extends HBox {
             fleetCarrierFileDir.mkdirs();
             final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
             if (fleetCarrierFile.exists()) {
-                final ZonedDateTime lastModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
-                this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                if(CAPIService.getInstance().getActive().getValue().equals(false)){
+                    this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.stale"));
+
+                }else{
+                    final ZonedDateTime lastModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
+                    this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
+
+                }
             }
         });
     }

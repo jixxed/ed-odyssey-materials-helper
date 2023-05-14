@@ -4,7 +4,7 @@ public enum HorizonsMaterialSpawnLocation implements SpawnLocation {
     HOT_JUPITER,
     DAVS_HOPE,
     BRAIN_TREES,
-    JAMESON_MEMORIAL,
+    JAMESON_CRASH_SITE,
     MISSION_REWARD,
     SCAN_MISSIONS,
     HGE_FEDERATION_NONE,

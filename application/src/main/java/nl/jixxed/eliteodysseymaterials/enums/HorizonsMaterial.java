@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public interface HorizonsMaterial extends Material {
+public sealed interface HorizonsMaterial extends Material permits Manufactured, Encoded, Raw, Commodity {
 
     default HorizonsStorageType getStorageType() {
         return HorizonsStorageType.OTHER;
@@ -60,5 +60,23 @@ public interface HorizonsMaterial extends Material {
 
     default int getMaxAmount() {
         return this.getRarity().getMaxAmount();
+    }
+
+    default MaterialTradeType getTradeType(final HorizonsMaterial otherMaterial) {
+        if (getMaterialType() == otherMaterial.getMaterialType()) {
+            if (otherMaterial.getRarity().getLevel() >= getRarity().getLevel()) {
+                return MaterialTradeType.DOWNTRADE;
+            } else {
+                return MaterialTradeType.UPTRADE;
+            }
+        }
+        if (getClass() == otherMaterial.getClass() && otherMaterial.getMaterialType() != HorizonsMaterialType.THARGOID && otherMaterial.getMaterialType() != HorizonsMaterialType.GUARDIAN) {
+            if (otherMaterial.getRarity().getLevel() >= getRarity().getLevel()) {
+                return MaterialTradeType.CROSS_DOWNTRADE;
+            } else {
+                return MaterialTradeType.CROSS_UPTRADE;
+            }
+        }
+        return MaterialTradeType.IMPOSSIBLE;
     }
 }

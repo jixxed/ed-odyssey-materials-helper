@@ -12,9 +12,11 @@ import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -23,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistIngredient;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,10 +89,11 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.nameLabel = LabelBuilder.builder().withStyleClass("ingredient-name").withText(LocaleService.getStringBinding(this.horizonsMaterial.getLocalizationKey())).build();
         initImage();
 
+        final Boolean showRemaining = PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE);
         this.leftAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-required").build();
         this.rightAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-available").build();
         this.leftDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.required")).build();
-        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.available")).build();
+        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(Boolean.TRUE.equals(showRemaining && this instanceof HorizonsWishlistIngredient)?LocaleService.getStringBinding("blueprint.header.remaining"):LocaleService.getStringBinding("blueprint.header.available")).build();
 
         this.leftHBox = BoxBuilder.builder().withNodes(this.leftDescriptionLabel, this.leftAmountLabel).withStyleClass("ingredient-quantity-section").buildHBox();
         this.rightHBox = BoxBuilder.builder().withNodes(this.rightAmountLabel, this.rightDescriptionLabel).withStyleClass("ingredient-quantity-section").buildHBox();
@@ -106,10 +110,14 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
 
-        MaterialService.addMaterialInfoPopOver(this, this.horizonsMaterial);
+        installPopOver();
         this.getStyleClass().add("ingredient");
 
         update();
+    }
+
+    protected void installPopOver() {
+        MaterialService.addMaterialInfoPopOver(this, this.horizonsMaterial, false);
     }
 
     @SuppressWarnings("java:S6205")

@@ -3,11 +3,16 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
+import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
@@ -30,19 +35,14 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     OdysseyWishlistIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer amountRequired, final Integer amountAvailable) {
         super(storageType, odysseyMaterial, amountRequired, amountAvailable);
         initComponents();
+        initEventHandling();
     }
 
     @SuppressWarnings("java:S2177")
     private void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            if (Boolean.TRUE.equals(newValue) && (this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()) > 0) {
-                this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()));
-                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
-            } else {
-                setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
-                this.getRightAmountLabel().setText(this.getRightAmount().toString());
-            }
+            showAsHovered(newValue);
         });
         this.segmentedBar = new SegmentedBar<>();
         this.segmentedBar.getStyleClass().add("ingredient-progressbar");
@@ -59,6 +59,26 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
         this.getChildren().add(this.segmentedBar);
     }
 
+    private void showAsHovered(final Boolean newValue) {
+        final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY, Boolean.FALSE);
+        if (showRemaining.equals(newValue) && (this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()) > 0) {
+            this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()));
+            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
+        } else {
+            setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
+            this.getRightAmountLabel().setText(this.getRightAmount().toString());
+        }
+    }
+
+    @SuppressWarnings("java:S2177")
+    private void initEventHandling() {
+        this.eventListeners.add(EventService.addListener(this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
+            if(Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())){
+                showAsHovered(this.hoverProperty().getValue());
+            }
+        }));
+    }
+
     @Override
     protected void update() {
 
@@ -66,15 +86,14 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
         final int leftAmount = Integer.parseInt(this.getLeftAmountLabel().getText());
         this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
         if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() + storage.getBackPackValue() < leftAmount) {
-            this.getRightAmountLabel().setText(this.getRightAmount().toString());
+
             this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
         } else if (storage.getTotalValue() >= leftAmount) {
-            this.getRightAmountLabel().setText(this.getRightAmount().toString());
             this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
         } else {
-            this.getRightAmountLabel().setText(this.getRightAmount().toString());
             this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
         }
+        showAsHovered(this.hoverProperty().getValue());
         if(this.present != null){
             final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
             this.present.setValue(progress);

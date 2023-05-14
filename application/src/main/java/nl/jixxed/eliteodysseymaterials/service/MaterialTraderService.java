@@ -5,10 +5,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsTradeSuggestion;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialTrader;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialTraderJson;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,5 +49,36 @@ public class MaterialTraderService {
 
     public static Double getDistance(final StarSystem location1, final StarSystem location2) {
         return Math.sqrt(Math.pow(location1.getX() - location2.getX(), 2) + Math.pow(location1.getY() - location2.getY(), 2) + Math.pow(location1.getZ() - location2.getZ(), 2));
+    }
+
+    public static List<HorizonsTradeSuggestion> getTradeSuggestions(final HorizonsMaterial horizonsMaterial) {
+        return HorizonsMaterial.getAllMaterials().stream()
+                .filter(mat -> mat.getClass().equals(horizonsMaterial.getClass()))//only same class materials can be traded
+                .filter(mat -> mat.getMaterialType() != HorizonsMaterialType.GUARDIAN && mat.getMaterialType() != HorizonsMaterialType.THARGOID)//only human materials can be traded
+                .sorted(getMaterialSorter(horizonsMaterial).thenComparing(Comparator.comparing(HorizonsMaterial::getRarity).reversed()))
+                .map(material -> new HorizonsTradeSuggestion(material, horizonsMaterial, StorageService.getMaterialCount(material), WishlistService.getCurrentWishlistCount(material), WishlistService.getCurrentWishlistCount(horizonsMaterial) - StorageService.getMaterialCount(horizonsMaterial)))
+                .filter(HorizonsTradeSuggestion::canCompleteTrade)
+                .sorted(getSuggestionSorter(horizonsMaterial).thenComparing(Comparator.comparing((HorizonsTradeSuggestion o) -> o.getHorizonsMaterialFrom().getRarity()).reversed()).thenComparing(Comparator.comparing(HorizonsTradeSuggestion::getPercentageUsedOnTrade)))
+                .limit(4)
+                .toList();
+    }
+
+    private static Comparator<HorizonsMaterial> getMaterialSorter(final HorizonsMaterial horizonsMaterial) {
+        return (mat1, mat2) -> {
+            final int mat1Type = horizonsMaterial.getTradeType(mat1).getPreference();
+            final int mat2Type = horizonsMaterial.getTradeType(mat2).getPreference();
+            return Integer.compare(mat1Type, mat2Type);
+        };
+    }
+
+
+    private static Comparator<HorizonsTradeSuggestion> getSuggestionSorter(final HorizonsMaterial horizonsMaterial) {
+        return (sug1, sug2) -> {
+            final var mat1 = sug1.getHorizonsMaterialFrom();
+            final var mat2 = sug2.getHorizonsMaterialFrom();
+            final int mat1Type = horizonsMaterial.getTradeType(mat1).getPreference();
+            final int mat2Type = horizonsMaterial.getTradeType(mat2).getPreference();
+            return Integer.compare(mat1Type, mat2Type);
+        };
     }
 }

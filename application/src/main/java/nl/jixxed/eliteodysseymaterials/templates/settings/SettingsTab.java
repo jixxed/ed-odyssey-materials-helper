@@ -122,6 +122,13 @@ public class SettingsTab extends OdysseyTab {
     private DestroyableToggleSwitch eddnButton;
 
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private DestroyableLabel flipHorizonsRemainingAvailableLabel;
+    private DestroyableLabel flipHorizonsRemainingAvailableExplainLabel;
+    private CheckBox flipHorizonsRemainingAvailableCheckBox;
+    private DestroyableLabel flipOdysseyRemainingAvailableLabel;
+    private DestroyableLabel flipOdysseyRemainingAvailableExplainLabel;
+    private CheckBox flipOdysseyRemainingAvailableCheckBox;
+
     public SettingsTab(final Application application) {
         this.application = application;
         initComponents();
@@ -196,14 +203,23 @@ public class SettingsTab extends OdysseyTab {
         final HBox maxRangeBroker = createTechnologyBrokerMaxRangeSetting();
         final VBox horizonsOverview = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(overviewHorizonsLabel, maxRangeTrader, maxRangeBroker).buildVBox();
         settings.getChildren().add(horizonsOverview);
+        //odyssey wishlist
+        final Label wishlistOdysseyLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText(LocaleService.getStringBinding("tab.settings.title.wishlist.odyssey"))
+                .build();
+        final HBox odysseyRemainingAvailableSetting = createOdysseyRemainingAvailableSetting();
+        final VBox wishlistOdyssey = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(wishlistOdysseyLabel, odysseyRemainingAvailableSetting).buildVBox();
+        settings.getChildren().add(wishlistOdyssey);
         //horizons wishlist
         final Label wishlistLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.wishlist"))
+                .withText(LocaleService.getStringBinding("tab.settings.title.wishlist.horizons"))
                 .build();
+        final HBox horizonsRemainingAvailableSetting = createHorizonsRemainingAvailableSetting();
         final HBox wishlistHorizonsGradeRollsSetting = createWishlistHorizonsGradeRollsSetting();
-        final VBox wishlist = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(wishlistLabel, wishlistHorizonsGradeRollsSetting).buildVBox();
-        settings.getChildren().add(wishlist);
+        final VBox wishlistHorizons = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(wishlistLabel, horizonsRemainingAvailableSetting,wishlistHorizonsGradeRollsSetting).buildVBox();
+        settings.getChildren().add(wishlistHorizons);
         //notification
         final Label notificationLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
@@ -666,7 +682,36 @@ public class SettingsTab extends OdysseyTab {
                 .withNodes(this.pollLabel, this.pollCheckBox, this.pollExplainLabel)
                 .buildHBox();
     }
-
+    private HBox createHorizonsRemainingAvailableSetting() {
+        this.flipHorizonsRemainingAvailableLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.flip.remaining.available.horizons")).build();
+        this.flipHorizonsRemainingAvailableExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.flip.remaining.available.horizons.explain")).build();
+        this.flipHorizonsRemainingAvailableCheckBox  = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE))//available is default(false)
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, newValue);
+                    EventService.publish(new FlipRemainingAvailableEvent(Expansion.HORIZONS, newValue));
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.flipHorizonsRemainingAvailableLabel, this.flipHorizonsRemainingAvailableCheckBox, this.flipHorizonsRemainingAvailableExplainLabel)
+                .buildHBox();
+    }
+    private HBox createOdysseyRemainingAvailableSetting() {
+        this.flipOdysseyRemainingAvailableLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.flip.remaining.available.odyssey")).build();
+        this.flipOdysseyRemainingAvailableExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.flip.remaining.available.odyssey.explain")).build();
+        this.flipOdysseyRemainingAvailableCheckBox  = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY, Boolean.FALSE))//available is default(false)
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY, newValue);
+                    EventService.publish(new FlipRemainingAvailableEvent(Expansion.ODYSSEY, newValue));
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.flipOdysseyRemainingAvailableLabel, this.flipOdysseyRemainingAvailableCheckBox, this.flipOdysseyRemainingAvailableExplainLabel)
+                .buildHBox();
+    }
     private HBox createWIPSetting() {
         this.wipLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip")).build();
         this.wipExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip.explain")).build();

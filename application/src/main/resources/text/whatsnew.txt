@@ -1,3 +1,45 @@
+Version 2.27
+-------------
+Horizons blueprints can now be opened from material popups
+Horizons wishlist blueprint will now open matching lowest grade
+
+Version 2.26
+-------------
+Set Heat Exposure Specimen material to G5
+Add new Tactical Core Chip material
+Add material trading suggestions on wishlist to tooltips (up to 4 suggestions)
+Color and icon based on suggestion type
+- green: tradedown
+- yellow: cross tradedown
+- red: uptrade / cross uptrade
+Suggestions are ordered by color, then grade and for equal grade crosstrades, materials are listed in order of the lowest percentage used
+
+Version 2.25
+-------------
+Added new Thargoid materials
+Fix blueprints showing materials as remaining instead of available
+Hide fleetcarrier icon when data not available
+When cached fleetcarrier data is available, but API is not connected, show icon and warning data might be stale
+Add Thargoid war information to EDDN messages
+
+Version 2.24
+-------------
+Added setting to flip remaining/available value shown by default/on hover for wishlist materials
+Updated Journal schemas to support v37(Update 15)
+Added Thargoid Pulse Neutraliser module
+Added new Thargoid tissue sample commodities
+
+Version 2.23
+-------------
+Rework for file monitoring, significant improvements for network polling on Windows
+Update for several German localizations
+Added buttons to bartender to step per 10 items
+
+Version 2.22
+-------------
+Fix material location for Jameson Crash Site(was listed as Jameson Memorial)
+Fix bugs with blueprint pinning with less than 5 grades
+
 Version 2.21
 -------------
 Fix for Frontier API issues

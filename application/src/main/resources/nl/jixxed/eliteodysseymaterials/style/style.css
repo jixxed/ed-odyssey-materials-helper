@@ -188,6 +188,20 @@
     -fx-fit-to-width: true;
 }
 
+.materialcard-fcamount {
+    -fx-padding: 0;
+    -fx-text-alignment: left;
+    /*-fx-min-width 3em;*/
+    -fx-min-width: 0em;
+    -fx-max-width: 0em;
+
+}
+
+.materialcard-fcamount-nonzero {
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-padding: 5;
+}
 .materialcard-amount {
     visibility: hidden;
     -fx-padding: 0;
@@ -217,6 +231,25 @@
     -fx-max-width: 2em;
 }
 
+.materialcard-fcamount-image {
+    -fx-min-width: 0em;
+    -fx-max-width: 0em;
+}
+
+.materialcard-fcamount-image-nonzero {
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+}
+
+.material:hover .materialcard-fcamount-image {
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+}
+.material:hover .materialcard-fcamount {
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-padding: 5;
+}
 .material:hover .materialcard-amount-image {
     visibility: visible;
     -fx-min-width: 2em;
@@ -2235,7 +2268,7 @@
     -fx-border-color: #000000;
     -fx-border-width: 1px;
     -fx-label-padding: 0.2em;
-
+    -fx-cursor: hand;
 }
 
 .blueprint-listing-label-experimental {
@@ -2601,6 +2634,22 @@
     -fx-min-height: 0.25em;
     -fx-pref-height: 0.25em;
     -fx-max-height: 0.25em;
+}
+.horizons-tradetype1{
+    -fx-text-fill: #89d07f !important;
+}
+.horizons-tradetype2{
+    -fx-text-fill: #dcc030 !important;
+}
+.horizons-tradetype3, .horizons-tradetype4, .horizons-tradetype5{
+    -fx-text-fill: #ff7c7c !important;
+}
+
+.trade-suggestion-bullet {
+    -fx-label-padding: 0 0 0 0.3em;
+    -fx-text-alignment: center;
+    -fx-min-width: 1.3em;
+    -fx-max-width: 1.3em;
 }
 
 .shipbuilder-slots-hbox {

@@ -1,16 +1,21 @@
 package nl.jixxed.eliteodysseymaterials.watchdog;
 
+import lombok.Getter;
+
 import java.io.File;
-import java.util.EventObject;
+import java.nio.file.WatchEvent;
 
 
-public class FileEvent extends EventObject {
+public class FileEvent {
+    @Getter
+    private WatchEvent.Kind<?> kind;
 
-    public FileEvent(final File file) {
-        super(file);
-    }
+    @Getter
+    private File file;
 
-    public File getFile() {
-        return (File) getSource();
+
+    public FileEvent(final File file, final WatchEvent.Kind<?> kind) {
+        this.kind = kind;
+        this.file = file;
     }
 }

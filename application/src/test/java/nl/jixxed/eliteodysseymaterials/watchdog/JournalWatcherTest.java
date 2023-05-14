@@ -44,7 +44,7 @@ class JournalWatcherTest {
     @ParameterizedTest
     @MethodSource("provideFilesForIsNewerThan2020")
     void isNewerThan2020(final File file, final boolean expected) {
-        final boolean newerThan2020 = this.journalWatcher.isNewerThan2020(file);
+        final boolean newerThan2020 = this.journalWatcher.isNewerThanTwoYears(file);
         Assertions.assertEquals(expected, newerThan2020);
     }
 }

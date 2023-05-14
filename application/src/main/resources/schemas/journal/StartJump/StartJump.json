@@ -5,6 +5,11 @@
   "extends" : { "$ref": "../_Event.json"},
   "allOf": [{ "$ref": "../_Event.json"}],
   "properties" : {
+    "Taxi" : {
+      "title" : "Taxi",
+      "type" : "boolean",
+      "examples" : [ false, true ]
+    },
     "JumpType" : {
       "title" : "JumpType",
       "type" : "string",
