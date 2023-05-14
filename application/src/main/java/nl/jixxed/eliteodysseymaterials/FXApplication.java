@@ -414,6 +414,7 @@ public class FXApplication extends Application {
                 versionScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
                 versionStage.setScene(versionScene);
                 versionStage.titleProperty().set("New version");
+                versionStage.setAlwaysOnTop(true);
                 versionStage.showAndWait();
             }
         }
@@ -431,6 +432,7 @@ public class FXApplication extends Application {
             policyScene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
             policyStage.setScene(policyScene);
             policyStage.titleProperty().set("What's new & privacy policy");
+            policyStage.setAlwaysOnTop(true);
             policyStage.showAndWait();
             if (!PreferencesService.getPreference(PreferenceConstants.POLICY_ACCEPT_VERSION, "").equals(StartDialog.POLICY_LEVEL_REQUIRED)) {
                 System.exit(0);
