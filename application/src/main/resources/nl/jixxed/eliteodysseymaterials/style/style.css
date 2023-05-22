@@ -2331,9 +2331,9 @@
     /*-fx-alignment: center-right;*/
     /*-fx-text-alignment: right;*/
     -fx-label-padding: 0 0 0 1em;
-    -fx-pref-width: 7em;
-    -fx-min-width: 7em;
-    -fx-max-width: 7em;
+    -fx-pref-width: 13em;
+    -fx-min-width: 13em;
+    -fx-max-width: 13em;
     -fx-font-style: italic;
 }
 
