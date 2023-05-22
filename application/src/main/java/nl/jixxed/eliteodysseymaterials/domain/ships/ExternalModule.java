@@ -5,7 +5,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.util.Map;
 
-abstract class ExternalModule extends ShipModule {
+public abstract class ExternalModule extends ShipModule {
     private final Mounting mounting;
     ExternalModule(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Mounting mounting, final boolean multiCrew, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
@@ -25,5 +25,9 @@ abstract class ExternalModule extends ShipModule {
     ExternalModule(final ExternalModule externalModule) {
         super(externalModule);
         this.mounting = externalModule.mounting;
+    }
+
+    public String getMountingClarifier(){
+        return " (" + this.mounting.getShortName() + ")";
     }
 }

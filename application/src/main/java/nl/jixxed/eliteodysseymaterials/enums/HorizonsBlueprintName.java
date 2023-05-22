@@ -42,6 +42,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     MULTI_CANNON(BlueprintCategory.HARDPOINT),
     PLASMA_ACCELERATOR(BlueprintCategory.HARDPOINT),
     PULSE_LASER(BlueprintCategory.HARDPOINT),
+    PULSE_DISRUPTOR_LASER(BlueprintCategory.HARDPOINT),
     RAIL_GUN(BlueprintCategory.HARDPOINT),
     SEEKER_MISSILE_RACK(BlueprintCategory.HARDPOINT),
     TORPEDO_PYLON(BlueprintCategory.HARDPOINT),

@@ -1,17 +1,16 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
-import nl.jixxed.eliteodysseymaterials.domain.ships.HardpointModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Mounting;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class PulseLaser  extends HardpointModule {
+public class PulseLaser extends HardpointModule {
 //            62160 : { mtype:'hpl', cost:    2200, name:'Pulse Laser',                 mount:'F',              class:1, rating:'F', mass: 2.00, integ:40, pwrdraw:0.39, boottime:0, dps: 7.885, damage: 2.050, distdraw:0.300, thmload:0.33, pierce: 20, maximumrng:3000, Rate of Fire:3.846, Burst Interval:0.260, Breach Damage: 1.7, Min Breach Chance:40, Max Breach Chance:80, Thermal Damage:100, Damage Falloff Start:500, fdid:128049381, fdname:'Hpt_PulseLaser_Fixed_Small', eddbid:823 },
 //            62171 : { mtype:'hpl', cost:    6600, name:'Pulse Laser',                 mount:'G',              class:1, rating:'G', mass: 2.00, integ:40, pwrdraw:0.39, boottime:0, dps: 6.240, damage: 1.560, distdraw:0.310, thmload:0.31, pierce: 20, maximumrng:3000, Rate of Fire:4.000, Burst Interval:0.250, Breach Damage: 1.3, Min Breach Chance:40, Max Breach Chance:80, Thermal Damage:100, Damage Falloff Start:500, fdid:128049385, fdname:'Hpt_PulseLaser_Gimbal_Small', eddbid:826 },
 //            62172 : { mtype:'hpl', cost:   26000, name:'Pulse Laser',                 mount:'T',              class:1, rating:'G', mass: 2.00, integ:40, pwrdraw:0.38, boottime:0, dps: 3.967, damage: 1.190, distdraw:0.190, thmload:0.19, pierce: 20, maximumrng:3000, Rate of Fire:3.333, Burst Interval:0.300, Breach Damage: 1.0, Min Breach Chance:40, Max Breach Chance:80, Thermal Damage:100, Damage Falloff Start:500, fdid:128049388, fdname:'Hpt_PulseLaser_Turret_Small', eddbid:829 },
@@ -26,17 +25,18 @@ public class PulseLaser  extends HardpointModule {
 
 //            62254 : { mtype:'hpl', cost:   26400, name:'Pulse Disruptor Laser',       mount:'F', tag:'P',     class:2, rating:'E', mass: 4.00, integ:51, pwrdraw:0.70, boottime:0, dps: 4.667, damage: 2.800, distdraw:0.900, thmload:1.00, pierce: 35, maximumrng:3000, rof:1.667, bstint:0.600, brcdmg: 2.4, minbrc:40, maxbrc:80, thmwgt:100, dmgfall:500, fdid:128671342, fdname:'Hpt_PulseLaser_Fixed_Medium_Disruptor', eddbid:1808 }, // powerplay // verify
 
-    public static final PulseLaser PULSE_LASER_1_F_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_1, ModuleClass.F,    false, Mounting.FIXED     ,    2200, "Hpt_PulseLaser_Fixed_Small"  , Map.ofEntries(Map.entry(HorizonsModifier.MASS,    2.00)));
-    public static final PulseLaser PULSE_LASER_1_G_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_1, ModuleClass.G,    false, Mounting.GIMBALLED ,    6600, "Hpt_PulseLaser_Gimbal_Small" , Map.ofEntries(Map.entry(HorizonsModifier.MASS,    2.00)));
-    public static final PulseLaser PULSE_LASER_1_G_T = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_1, ModuleClass.G,    false, Mounting.TURRETED  ,   26000, "Hpt_PulseLaser_Turret_Small" , Map.ofEntries(Map.entry(HorizonsModifier.MASS,    2.00)));
-    public static final PulseLaser PULSE_LASER_2_E_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_2, ModuleClass.E,    false, Mounting.FIXED     ,   17600, "Hpt_PulseLaser_Fixed_Medium" , Map.ofEntries(Map.entry(HorizonsModifier.MASS,    4.00)));
-    public static final PulseLaser PULSE_LASER_2_F_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_2, ModuleClass.F,    false, Mounting.GIMBALLED ,   35400, "Hpt_PulseLaser_Gimbal_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS,    4.00)));
-    public static final PulseLaser PULSE_LASER_2_F_T = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_2, ModuleClass.F,    false, Mounting.TURRETED  ,  132800, "Hpt_PulseLaser_Turret_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS,    4.00)));
-    public static final PulseLaser PULSE_LASER_3_D_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_3, ModuleClass.D,    false, Mounting.FIXED     ,   70400, "Hpt_PulseLaser_Fixed_Large"  , Map.ofEntries(Map.entry(HorizonsModifier.MASS,    8.00)));
-    public static final PulseLaser PULSE_LASER_3_E_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_3, ModuleClass.E,    false, Mounting.GIMBALLED ,  140600, "Hpt_PulseLaser_Gimbal_Large" , Map.ofEntries(Map.entry(HorizonsModifier.MASS,    8.00)));
-    public static final PulseLaser PULSE_LASER_3_F_T = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_3, ModuleClass.F,    false, Mounting.TURRETED  ,  400400, "Hpt_PulseLaser_Turret_Large" , Map.ofEntries(Map.entry(HorizonsModifier.MASS,    8.00)));
-    public static final PulseLaser PULSE_LASER_4_A_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_4, ModuleClass.A,    false, Mounting.FIXED     ,  177600, "Hpt_PulseLaser_Fixed_Huge"   , Map.ofEntries(Map.entry(HorizonsModifier.MASS,   16.00)));
-    public static final PulseLaser PULSE_LASER_4_A_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_4, ModuleClass.A,    false, Mounting.GIMBALLED ,  877600, "Hpt_PulseLaser_Gimbal_Huge"  , Map.ofEntries(Map.entry(HorizonsModifier.MASS,   16.00)));
+    public static final PulseLaser PULSE_LASER_1_F_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_1, ModuleClass.F, false, Mounting.FIXED, 2200, "Hpt_PulseLaser_Fixed_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00)));
+    public static final PulseLaser PULSE_LASER_1_G_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_1, ModuleClass.G, false, Mounting.GIMBALLED, 6600, "Hpt_PulseLaser_Gimbal_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00)));
+    public static final PulseLaser PULSE_LASER_1_G_T = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_1, ModuleClass.G, false, Mounting.TURRETED, 26000, "Hpt_PulseLaser_Turret_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00)));
+    public static final PulseLaser PULSE_LASER_2_E_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_2, ModuleClass.E, false, Mounting.FIXED, 17600, "Hpt_PulseLaser_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00)));
+    public static final PulseLaser PULSE_LASER_2_F_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_2, ModuleClass.F, false, Mounting.GIMBALLED, 35400, "Hpt_PulseLaser_Gimbal_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00)));
+    public static final PulseLaser PULSE_LASER_2_F_T = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_2, ModuleClass.F, false, Mounting.TURRETED, 132800, "Hpt_PulseLaser_Turret_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00)));
+    public static final PulseLaser PULSE_LASER_3_D_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_3, ModuleClass.D, false, Mounting.FIXED, 70400, "Hpt_PulseLaser_Fixed_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00)));
+    public static final PulseLaser PULSE_LASER_3_E_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_3, ModuleClass.E, false, Mounting.GIMBALLED, 140600, "Hpt_PulseLaser_Gimbal_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00)));
+    public static final PulseLaser PULSE_LASER_3_F_T = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_3, ModuleClass.F, false, Mounting.TURRETED, 400400, "Hpt_PulseLaser_Turret_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00)));
+    public static final PulseLaser PULSE_LASER_4_A_F = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_4, ModuleClass.A, false, Mounting.FIXED, 177600, "Hpt_PulseLaser_Fixed_Huge", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 16.00)));
+    public static final PulseLaser PULSE_LASER_4_A_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_4, ModuleClass.A, false, Mounting.GIMBALLED, 877600, "Hpt_PulseLaser_Gimbal_Huge", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 16.00)));
+    public static final PulseLaser PULSE_DISRUPTOR_LASER_2_E = new PulseLaser(HorizonsBlueprintName.PULSE_DISRUPTOR_LASER, ModuleSize.SIZE_2, ModuleClass.E, Origin.POWERPLAY, false, Mounting.FIXED, 877600, "Hpt_PulseLaser_Fixed_Medium_Disruptor", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00)));
 
     public static final List<PulseLaser> PULSE_LASERS = List.of(
             PULSE_LASER_1_F_F,
@@ -49,27 +49,40 @@ public class PulseLaser  extends HardpointModule {
             PULSE_LASER_3_E_G,
             PULSE_LASER_3_F_T,
             PULSE_LASER_4_A_F,
-            PULSE_LASER_4_A_G
+            PULSE_LASER_4_A_G,
+            PULSE_DISRUPTOR_LASER_2_E
     );
+
     private PulseLaser(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final Mounting mounting, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        super(name,moduleSize,moduleClass,multiCrew, mounting,basePrice,internalName, attributes);
+        super(name, moduleSize, moduleClass, multiCrew, mounting, basePrice, internalName, attributes);
     }
+
+    private PulseLaser(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final Mounting mounting, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        super(name, moduleSize, moduleClass, origin, multiCrew, mounting, basePrice, internalName, attributes);
+    }
+
     private PulseLaser(final PulseLaser pulseLaser) {
         super(pulseLaser);
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public PulseLaser Clone() {
         return new PulseLaser(this);
+    }
+
+    @Override
+    public String getClarifier() {
+        final String clarifier = (this == PULSE_DISRUPTOR_LASER_2_E ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.pulse_disruptor_laser") : "");
+        return clarifier;
     }
 }

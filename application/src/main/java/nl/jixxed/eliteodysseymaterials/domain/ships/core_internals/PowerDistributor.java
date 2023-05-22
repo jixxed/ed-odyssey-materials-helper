@@ -7,7 +7,9 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -177,16 +179,20 @@ public class PowerDistributor extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public PowerDistributor Clone() {
         return new PowerDistributor(this);
+    }
+    @Override
+    public String getClarifier() {
+        return this.getOrigin() == Origin.GUARDIAN ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.guardian_power_distributor") : "";
     }
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
 import java.util.List;
 
@@ -22,6 +23,19 @@ public class Slot {
     @Setter
     private ShipModule shipModule;
 
+    @Getter
+    @Setter
+    private HorizonsBlueprintType engineering;
+    @Getter
+    @Setter
+    private HorizonsBlueprintType experimentalEffect;
+
+    public HorizonsBlueprintType getEffectiveExperimentalEffect() {
+        if (this.engineering != null) {
+            return this.experimentalEffect;
+        }
+        return null;
+    }
 
     public String getSlotSizeName() {
         if (this.slotType == SlotType.HARDPOINT || this.slotType == SlotType.UTILITY) {

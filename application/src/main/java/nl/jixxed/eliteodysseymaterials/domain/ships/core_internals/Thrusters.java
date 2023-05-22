@@ -6,7 +6,9 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -134,12 +136,12 @@ public static final List<Thrusters> THRUSTERS = List.of(
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        return null;
+        return Collections.emptyList();
     }
 
     public Thrusters(final Thrusters thrusters) {
@@ -148,5 +150,10 @@ public static final List<Thrusters> THRUSTERS = List.of(
     @Override
     public Thrusters Clone(){
         return new Thrusters(this);
+    }
+
+    @Override
+    public String getClarifier() {
+        return this== ENHANCED_THRUSTERS_2_A || this== ENHANCED_THRUSTERS_3_A ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.enhanced_thrusters") : "";
     }
 }

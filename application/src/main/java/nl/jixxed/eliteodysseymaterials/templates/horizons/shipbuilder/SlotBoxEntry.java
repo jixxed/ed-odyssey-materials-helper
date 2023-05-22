@@ -2,44 +2,158 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ToggleButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ExternalModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 public class SlotBoxEntry extends VBox {
     Label name;
     List<HBox> options;
 
     public SlotBoxEntry(final SlotBox slotBox, final List<ShipModule> shipModulesList) {
+        this.getStyleClass().add("ships-modules");
+        //add engineering
+        addEngineering(slotBox);
+        addExperimentalEffects(slotBox);
+        //add ship modules
         final ShipModule firstModule = shipModulesList.get(0);
         final List<ShipModule> shipModules = (firstModule instanceof Armour)
                 ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(slotBox.getTab().getShip().getShipType())).toList()
                 : shipModulesList;
-        this.name = LabelBuilder.builder().withNonLocalizedText(firstModule.getName().lcName()).build();
+        this.name = LabelBuilder.builder().withStyleClass("ships-modules-title").withNonLocalizedText(firstModule.getName().lcName()).build();
+        HBox.setHgrow(this.name, Priority.ALWAYS);
         final Stream<List<ShipModule>> stream = shipModules.stream().allMatch(shipModule -> shipModule.getModuleClass().equals(firstModule.getModuleClass()))
                 ? Stream.of(shipModules)
-                : shipModules.stream().collect(Collectors.groupingBy(ShipModule::getModuleSize)).values().stream();
+                : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize() + shipModule.getClarifier())).values().stream();
 
         this.options =
-                stream.sorted(Comparator.comparing(shipModuleSubList -> shipModuleSubList.get(0).getModuleSize())).map(shipModuleSubList ->
-                        shipModuleSubList.stream().map(shipModule ->
-                                ButtonBuilder.builder().withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass()).withOnAction(event -> {
-                                    slotBox.getSlot().setShipModule(shipModule.Clone());
-                                    slotBox.refresh();
-                                    slotBox.close();
-                                }).build()
-                        ).toArray(Button[]::new)
-                ).map(buttons -> BoxBuilder.builder().withNodes(buttons).buildHBox()).toList();
-        this.getChildren().add(this.name);
-        this.getChildren().addAll(this.options);
+                stream.sorted(Comparator.comparing(shipModuleSubList -> shipModuleSubList.get(0).getModuleSize() + shipModuleSubList.get(0).getClarifier())).map(shipModuleSubList ->
+                                shipModuleSubList.stream().map(shipModule -> {
+                                            final Button button = ButtonBuilder.builder().withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + ((shipModule instanceof ExternalModule externalModule) ? externalModule.getMountingClarifier() : "")).withOnAction(event -> {
+                                                slotBox.getSlot().setShipModule(shipModule.Clone());
+                                                slotBox.refresh();
+                                                slotBox.close();
+                                            }).build();
+//                                    HBox.setHgrow(button, Priority.ALWAYS);
+                                            button.setFocusTraversable(false);
+                                            return button;
+                                        }
+                                ).toArray(Button[]::new)
+                ).map(buttons -> {
+                    final HBox hBox = BoxBuilder.builder().withStyleClass("ships-modules-buttons").withNodes(buttons).buildHBox();
+                    Arrays.stream(buttons).forEach(button -> button.prefWidthProperty().bind(this.widthProperty().subtract((buttons.length - 1) * hBox.getSpacing()).divide(buttons.length)));
+                    return hBox;
+                }).toList();
+        final VBox vBox = BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), this.name, new GrowingRegion()).buildHBox()).buildVBox();
+        vBox.getChildren().addAll(this.options);
+        this.getChildren().add(vBox);
+
+    }
+
+    //    private void addEngineering(final SlotBox slotBox) {
+//        final ShipModule shipModule = slotBox.getSlot().getShipModule();
+//        if(shipModule != null && !shipModule.getAllowedBlueprints().isEmpty()){
+//            final ToggleGroup toggleGroup = new ToggleGroup();
+//            final List<ToggleButton> toggleButtons = shipModule.getAllowedBlueprints().stream().sorted(Comparator.comparing(horizonsBlueprintType -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey()))).map(horizonsBlueprintType -> {
+//
+//                        final ToggleButton button = ToggleButtonBuilder.builder().withStyleClass("toggle-button-blueprints").withText(LocaleService.getStringBinding(horizonsBlueprintType.getLocalizationKey())).withOnAction(event -> {
+//                            slotBox.getSlot().setEngineering(((ToggleButton)event.getTarget()).isSelected() ? horizonsBlueprintType : null);
+//                            slotBox.refresh();
+//                        }).build();
+//                        button.selectedProperty().set(horizonsBlueprintType.equals(slotBox.getSlot().getEngineering()));
+//                        button.selectedProperty().addListener((observable, oldValue, newValue) ->
+//                        {
+//                            if(Boolean.TRUE.equals(oldValue)){
+//                                slotBox.getSlot().setEngineering(null);
+//                                slotBox.refresh();
+//                            }
+//                            if (Boolean.TRUE.equals(newValue)) {
+//                                slotBox.getSlot().setEngineering(horizonsBlueprintType);
+//                                slotBox.refresh();
+//                            }
+//                        });
+//                        button.setFocusTraversable(false);
+//                        button.setToggleGroup(toggleGroup);
+//                        return button;
+//                    }
+//
+//            ).toList();
+//
+//            this.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("tabs.ships.blueprints")).build());
+//            this.getChildren().addAll(toggleButtons);
+//        }
+//
+//    }
+    private void addEngineering(final SlotBox slotBox) {
+        final ShipModule shipModule = slotBox.getSlot().getShipModule();
+        if (shipModule != null && !shipModule.getAllowedBlueprints().isEmpty()) {
+            addBlueprintSection(slotBox, shipModule.getAllowedBlueprints(), "tabs.ships.blueprints");
+        }
+
+    }
+
+    private void addExperimentalEffects(final SlotBox slotBox) {
+        final ShipModule shipModule = slotBox.getSlot().getShipModule();
+
+        if (shipModule != null && !shipModule.getAllowedExperimentalEffects().isEmpty()) {
+            addBlueprintSection(slotBox, shipModule.getAllowedExperimentalEffects(), "tabs.ships.experimental.effects");
+        }
+
+    }
+
+    private void addBlueprintSection(final SlotBox slotBox, final List<HorizonsBlueprintType> allowedBlueprints, final String sectionLabelKey) {
+        final ShipModule shipModule = slotBox.getSlot().getShipModule();
+        if (shipModule != null && !allowedBlueprints.isEmpty()) {
+            final ToggleGroup toggleGroup = new ToggleGroup();
+            final List<ToggleButton> toggleButtons = allowedBlueprints.stream().sorted(Comparator.comparing(horizonsBlueprintType -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey()))).map(horizonsBlueprintType -> {
+
+                        final ToggleButton button = ToggleButtonBuilder.builder().withStyleClass("toggle-button-blueprints").withText(LocaleService.getStringBinding(horizonsBlueprintType.getLocalizationKey())).withOnAction(event -> {
+                            slotBox.getSlot().setEngineering(((ToggleButton) event.getTarget()).isSelected() ? horizonsBlueprintType : null);
+                            slotBox.refresh();
+                        }).build();
+                        button.selectedProperty().set(horizonsBlueprintType.equals(slotBox.getSlot().getEngineering()));
+                        button.selectedProperty().addListener((observable, oldValue, newValue) ->
+                        {
+                            if (Boolean.TRUE.equals(oldValue)) {
+                                slotBox.getSlot().setEngineering(null);
+                                slotBox.refresh();
+                            }
+                            if (Boolean.TRUE.equals(newValue)) {
+                                slotBox.getSlot().setEngineering(horizonsBlueprintType);
+                                slotBox.refresh();
+                            }
+                        });
+                        button.setFocusTraversable(false);
+                        button.setToggleGroup(toggleGroup);
+                        return button;
+                    }
+
+            ).toList();
+
+            final VBox vBox = BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), LabelBuilder.builder().withStyleClass("ships-modules-title").withText(LocaleService.getStringBinding(sectionLabelKey)).build(), new GrowingRegion()).buildHBox()).buildVBox();
+            vBox.getChildren().addAll(toggleButtons);
+            this.getChildren().add(vBox);
+        }
+
     }
 }

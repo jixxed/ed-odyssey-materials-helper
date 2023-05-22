@@ -224,7 +224,7 @@ class SlotBox extends HBox {
     }
 
     private PopOver getPopOver() {
-        final VBox content = BoxBuilder.builder().withNode(LabelBuilder.builder().withNonLocalizedText("test").build()).withStyleClass("shipbuilder-slots-slotbox-popover-vbox").buildVBox();
+        final VBox content = BoxBuilder.builder()/*.withNode(LabelBuilder.builder().withNonLocalizedText("test").build())*/.withStyleClass("shipbuilder-slots-slotbox-popover-vbox").buildVBox();
         content.getChildren().addAll(
                 ShipModule.getModules(this.slot.getSlotType()).stream().collect(Collectors.groupingBy(ShipModule::getClass)).values().stream().map(list -> new SlotBoxEntry(this, list)).toList()
         );

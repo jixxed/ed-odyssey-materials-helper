@@ -101,3 +101,7 @@ blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSA-Einspeisun
 blueprint.horizons.name.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,Ätzbehälterwerfer,,,,
 blueprint.horizons.name.cargo_rack,Cargo Rack,Cargo Rack,,,,,
 blueprint.horizons.name.fuel_tank,Fuel Tank,Fuel Tank,,,,,
+blueprint.horizons.name.pulse_disruptor_laser,Pulse Disruptor Laser,,,,,,
+blueprint.horizons.name.guardian_power_plant,Guardian Power Plant,,,,,,
+blueprint.horizons.name.guardian_power_distributor,Guardian Power Distributor,,,,,,
+blueprint.horizons.name.enhanced_thrusters,Enhanced Thrusters,,,,,,

@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -146,12 +147,12 @@ public class Sensors extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

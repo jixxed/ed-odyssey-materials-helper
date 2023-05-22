@@ -2736,3 +2736,39 @@
     -fx-background-color: #0f0f0f;
 
 }
+.ships-modules-buttons{
+    /*-fx-pref-width: 100%;*/
+    /*-fx-fit-to-width: true;*/
+    -fx-pref-width: 25.5em;
+    -fx-max-width: 25.5em;
+    -fx-font-size: 1em;
+    /*-fx-spacing: 0.1em;*/
+    -fx-spacing: 0.1em;
+}
+.ships-modules-buttons .button{
+    /*-fx-pref-width: 100%;*/
+    /*-fx-fit-to-width: true;*/
+    /*-fx-border-color: black;*/
+    /*-fx-border-width: 0.1em;*/
+}
+.ships-modules-title {
+    -fx-pref-width: 25.5em;
+    -fx-max-width: 25.5em;
+    -fx-text-alignment: center;
+    -fx-font-size: 1.2em;
+    -fx-label-padding: 0.2em;
+}
+.ships-modules{
+    -fx-spacing: 0.5em;
+    -fx-pref-width: 25.5em;
+    -fx-max-width: 25.5em;
+}
+.ships-modules-item{
+    -fx-padding: 0.2em;
+    -fx-spacing: 0.1em;
+    -fx-background-color: #0f0f0f;
+}
+.toggle-button-blueprints{
+    -fx-pref-width: 25.5em;
+    -fx-max-width: 25.5em;
+}

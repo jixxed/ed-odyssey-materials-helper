@@ -135,4 +135,8 @@ public abstract class ShipModule implements Serializable {
     public String getLocalizationKey() {
         return "ships.module.name." + this.internalName.toLowerCase();
     }
+
+    public String getClarifier() {
+        return "";
+    }
 }
