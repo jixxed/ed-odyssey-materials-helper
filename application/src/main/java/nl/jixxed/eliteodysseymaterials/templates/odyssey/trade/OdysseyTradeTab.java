@@ -26,10 +26,11 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public class OdysseyTradeTab extends OdysseyTab {
-    private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
+    private final Optional<MarketPlaceClient> marketPlaceClient = MarketPlaceClient.getInstance();
     private ScrollPane scrollPane;
     private Label status;
     private Button connectButton;
@@ -75,7 +76,7 @@ public class OdysseyTradeTab extends OdysseyTab {
                 .withText(LocaleService.getStringBinding("tab.trade.button.disconnect"))
                 .withOnAction(event -> {
                     this.reconnect = false;
-                    this.marketPlaceClient.close();
+                    this.marketPlaceClient.ifPresent(MarketPlaceClient::close);
                 })
                 .build();
         this.tradeRequestsPagination = new OdysseyTradePagination(0, 0, TradeType.REQUEST);
@@ -131,9 +132,10 @@ public class OdysseyTradeTab extends OdysseyTab {
                 }
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.close()));
+        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.ifPresent(MarketPlaceClient::close)));
 
         this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+            this.marketPlaceClient.ifPresent(MarketPlaceClient::close);
             this.stop();
         }));
     }
@@ -142,9 +144,11 @@ public class OdysseyTradeTab extends OdysseyTab {
         this.connectButton.setDisable(true);
         this.status.textProperty().bind(LocaleService.getStringBinding("tab.trade.status.connecting"));
         final Runnable r = () -> {
-            this.marketPlaceClient.connect();
-            this.marketPlaceClient.enlist();
-            this.marketPlaceClient.getOffers();
+            this.marketPlaceClient.ifPresent(c-> {
+                c.connect();
+                c.enlist();
+                c.getOffers();
+            });
             Platform.runLater(() -> this.connectButton.setDisable(false));
         };
         this.thread = new Thread(r);

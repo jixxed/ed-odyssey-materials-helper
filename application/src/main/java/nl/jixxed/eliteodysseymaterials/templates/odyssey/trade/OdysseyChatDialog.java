@@ -18,11 +18,12 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import nl.jixxed.eliteodysseymaterials.trade.message.common.XMessage;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 class OdysseyChatDialog extends VBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
+    private final Optional<MarketPlaceClient> marketPlaceClient = MarketPlaceClient.getInstance();
     private final String offerId;
     @Getter
     private TextArea chat;
@@ -85,7 +86,7 @@ class OdysseyChatDialog extends VBox {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final String text = this.input.getText().trim();
             this.messageRef = UUID.randomUUID().toString();
-            this.marketPlaceClient.message(this.offerId, this.messageRef, tokenHash, text);
+            this.marketPlaceClient.ifPresent(c->c.message(this.offerId, this.messageRef, tokenHash, text));
             this.input.setText("");
             this.send.setDisable(true);
             this.input.setDisable(true);

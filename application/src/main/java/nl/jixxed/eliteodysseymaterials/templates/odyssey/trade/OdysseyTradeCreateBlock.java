@@ -25,14 +25,11 @@ import nl.jixxed.eliteodysseymaterials.service.event.trade.ConnectionWebSocketEv
 import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 class OdysseyTradeCreateBlock extends VBox {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
+    private final Optional<MarketPlaceClient> marketPlaceClient = MarketPlaceClient.getInstance();
     private Button createTradeButton;
     private HBox newTradeReceive;
     private HBox newTradeOffer;
@@ -119,7 +116,7 @@ class OdysseyTradeCreateBlock extends VBox {
                 final int offerAmountValue = TradeOdysseyMaterial.NOTHING.equals(offerOdysseyMaterial) ? 0 : this.offerAmountInput.getValue();
                 final OdysseyMaterial receiveOdysseyMaterial = OdysseyMaterial.forLocalizedName(this.receiveItems.getValue());
                 final int receiveAmountValue = TradeOdysseyMaterial.NOTHING.equals(receiveOdysseyMaterial) ? 0 : this.receiveAmountInput.getValue();
-                this.marketPlaceClient.publishOffer(offerOdysseyMaterial, offerAmountValue, receiveOdysseyMaterial, receiveAmountValue);
+                this.marketPlaceClient.ifPresent(c->c.publishOffer(offerOdysseyMaterial, offerAmountValue, receiveOdysseyMaterial, receiveAmountValue));
                 clearCreateTrade();
             }
         }).withText(LocaleService.getStringBinding("create.trade.offer.button")).build();
