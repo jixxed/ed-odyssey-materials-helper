@@ -13,9 +13,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record BlueprintListing(BlueprintCategory category, HorizonsBlueprintName name, HorizonsBlueprintType type,
-                               List<Pair<HorizonsBlueprintGrade, Integer>> gradeGroups,
-                               Integer amount) implements Comparable<BlueprintListing> {
+public record HorizonsBlueprintListing(BlueprintCategory category, HorizonsBlueprintName name, HorizonsBlueprintType type,
+                                       List<Pair<HorizonsBlueprintGrade, Integer>> gradeGroups,
+                                       Integer amount) implements Comparable<HorizonsBlueprintListing> {
 
     public StringBinding toStringBinding() {
         return ObservableResourceFactory.getStringBinding(() ->
@@ -34,7 +34,7 @@ public record BlueprintListing(BlueprintCategory category, HorizonsBlueprintName
     }
 
     @Override
-    public int compareTo(final BlueprintListing other) {
+    public int compareTo(final HorizonsBlueprintListing other) {
         final int categoryCompareTo = this.category.compareTo(other.category);
         if (categoryCompareTo != 0) {
             return categoryCompareTo;
