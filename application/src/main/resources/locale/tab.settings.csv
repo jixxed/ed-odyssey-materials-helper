@@ -32,7 +32,7 @@ tab.settings.title.overview,Overview,Overview,Überblick,Visión de conjunto,Ape
 tab.settings.title.general,General,General,Allgemein,General,Général,Em geral,Общие
 tab.settings.title.notification,Notification,Notification,Benachrichtigung,Notificación,Notification,Notificação,Уведомления
 tab.settings.title.tracking,Tracking,Tracking,Verfolgung,Seguimiento,Suivi,Rastreamento,Отслеживание
-tab.settings.wishlist.grade.rolls,Number of of rolls per grade,Number of of rolls per grade,Anzahl der Brötchen pro Klasse,Número de rollos por grado,Nombre de rouleaux par grade,Número de rolos por série,Количество попыток на одну гайку
+tab.settings.wishlist.grade.rolls,Number of of rolls per grade,Number of of rolls per grade,Anzahl der Brötchen pro Klasse,Número de rollos por grado,Nombre de modofication par grade,Número de rolos por série,Количество попыток на одну гайку
 tab.settings.title.capi,Frontier API Integration,Frontier API Integration,Frontier API Integration,Integración de API Frontier,Intégration de l'API Frontier,Integração da API da Frontier,Интеграция с API Frontier
 tab.settings.capi.link.account,Link Frontier account,Link Frontier account,Link Frontier Konto,Cuenta de fronteras de enlace,Compte Frontier Link,Link Frontier Conta,Соединить с аккаунтом Frontier
 tab.settings.capi.connect,Connect,Connect,Verbinden,Conectar,Relier,Conectar,Соединить
@@ -58,9 +58,9 @@ blueprint.header.remaining,Remaining,Remaining,Verblieben,Restante,Restant,Reman
 tab.settings.materials.max.range,Material trader max. distance(Ls) from star,Material trader max. distance(Ls) from star,Material Trader Max. Entfernung (LS) vom Stern,Material Trader Máx. distancia (ls) de la estrella,Trader de matériau Max. Distance (LS) de l''étoile,Trader de materiais máx. distância (ls) da estrela,Материальный трейдер Макс. Расстояние (Св.с.) от звезды
 tab.settings.title.horizons.materials,Horizons Materials,Horizons Materials,Horizons Materialien,Horizons Materiales,Horizons Matériaux,Horizons Materiais,Материалы Horizon
 tab.settings.url.scheme.checking,Checking...,Checking...,Überprüfung...,Comprobación...,Vérification...,Verificando...,Проверка...
-tab.settings.ar.bartender.toggle,Bartender overlay,Bartender overlay,Barkeeper Overlay,Superposición de barman,Superposition du barman,Sobreposição de barman,Оверлей для Бармена
+tab.settings.ar.bartender.toggle,Bartender overlay,Bartender overlay,Barkeeper Overlay,Superposición de barman,Overlay en jeux du barman,Sobreposição de barman,Оверлей для Бармена
 tab.settings.ar.color.bartender,Bartender color,Bartender color,Barkeeper Farbe,Color de camarero,Couleur barman,Cor do barman,Цвет оверлея Бармена
-tab.settings.ar.bartender.toggle,Bartender overlay,Bartender overlay,Barkeeper Overlay,Superposición de barman,Superposition du barman,Sobreposição de barman,Бартендентный наложение
+tab.settings.ar.bartender.toggle,Bartender overlay,Bartender overlay,Barkeeper Overlay,Superposición de barman,Overlay en jeux du barman,Sobreposição de barman,Бартендентный наложение
 tab.settings.ar.color.bartender,Bartender color,Bartender color,Barkeeper Farbe,Color de camarero,Couleur barman,Cor do barman,Бармен Цвет
 tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval,Ruft API Daten wie FleetCarrier Aktien und Bestellungen in einem Intervall von 5 Minuten ab,Recupera datos de API como stock de flotante y pedidos en un intervalo de 5 minutos,Récupère les données de l''API comme le stock et les commandes de FleetCarrier sur un intervalle de 5 minutes,Recupera dados da API como estoque de FleetCarrier e pedidos em um intervalo de 5 minutos,"Получает данные API, такие как запасы FleetCarrier и заказы в 5 -минутном интервале"
 ar.overlay.wishlist,Wishlist,Wishlist,Wunschzettel,Lista de deseos,Liste de souhaits,Lista de Desejos,Список желаемого

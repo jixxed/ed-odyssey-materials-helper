@@ -8,7 +8,7 @@ menu.about.version.new,Version: {0} ({1} available!),Version: {0} ({1} available
 menu.about.version,Version: {0},Version: {0},Version: {0},Versión: {0},Version: {0},Versão: {0},Версия: {0}
 menu.about,About,About,Über,Acerca de,À propos,Sobre,О приложении
 menu.legend.asset.chemical,Chemical component,Chemical component,Chemische Komponente,Componente químico,Composant chimique,Componente químico,Химикаты
-menu.legend.asset.circuit,Circuit component,Circuit component,Schaltungskomponente,Componente del circuito,Composant du circuit,Componente do circuito,Схемы
+menu.legend.asset.circuit,Circuit component,Circuit component,Schaltungskomponente,Componente del circuito,Composant de circuit,Componente do circuito,Схемы
 menu.legend.asset.tech,Tech component,Tech component,Tech-Komponente,Componente tecnológico,Composant technique,Componente técnico,Техника
 menu.legend.data.blueprint.and.engineer,Data used in blueprints and for unlocking engineers,Data used in blueprints and for unlocking engineers,"Daten, die in Blaupausen und zum Freischalten von Ingenieuren verwendet werden",Datos utilizados en planos y para desbloquear ingenieros,Données utilisées dans les plans et pour déverrouiller les ingénieurs,Dados usados ??em projetos e para desbloquear engenheiros,"Данные, используемые в чертежах и для разблокировки инженеров"
 menu.legend.data.blueprint,Data used in blueprints,Data used in blueprints,In Blaupausen verwendete Daten,Datos usados ??en planos,Données utilisées dans les plans,Dados usados ??em projetos,"Данные, используемые в чертежах"
