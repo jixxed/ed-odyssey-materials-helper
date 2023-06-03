@@ -128,6 +128,9 @@ public class SettingsTab extends OdysseyTab {
     private DestroyableLabel flipOdysseyRemainingAvailableLabel;
     private DestroyableLabel flipOdysseyRemainingAvailableExplainLabel;
     private CheckBox flipOdysseyRemainingAvailableCheckBox;
+    private DestroyableLabel blueprintExpandedLabel;
+    private DestroyableLabel blueprintExpandedExplainLabel;
+    private CheckBox blueprintExpandedCheckBox;
 
     public SettingsTab(final Application application) {
         this.application = application;
@@ -179,8 +182,9 @@ public class SettingsTab extends OdysseyTab {
         final HBox pollSetting = createPollSetting();
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final HBox exportInventory = createExportInventorySetting();
-//        final HBox wipSetting = createWIPSetting();
-        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory).buildVBox();
+        final HBox blueprintExpandedSetting = createBlueprintExpandedSetting();
+        final HBox wipSetting = createWIPSetting();
+        final VBox general = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting).buildVBox();
         settings.getChildren().add(general);
         //overview
         final Label overviewLabel = LabelBuilder.builder()
@@ -710,6 +714,21 @@ public class SettingsTab extends OdysseyTab {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.flipOdysseyRemainingAvailableLabel, this.flipOdysseyRemainingAvailableCheckBox, this.flipOdysseyRemainingAvailableExplainLabel)
+                .buildHBox();
+    }
+    private HBox createBlueprintExpandedSetting() {
+        this.blueprintExpandedLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.blueprint.expanded")).build();
+        this.blueprintExpandedExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.blueprint.expanded.explain")).build();
+        this.blueprintExpandedCheckBox = CheckBoxBuilder.builder()
+                .withValue(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE))
+                .withChangeListener((observable, oldValue, newValue) -> {
+                    PreferencesService.setPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, newValue);
+                    EventService.publish(new TooltipBlueprintsExpandEvent(newValue));
+                })
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(this.blueprintExpandedLabel, this.blueprintExpandedCheckBox, this.blueprintExpandedExplainLabel)
                 .buildHBox();
     }
     private HBox createWIPSetting() {

@@ -21,10 +21,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
+import nl.jixxed.eliteodysseymaterials.constants.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
@@ -370,7 +367,7 @@ public class MaterialService {
                     final TitledPane titledPane = new TitledPane();
                     titledPane.textProperty().bind(LocaleService.getStringBinding(odysseyBlueprintListing.category().getLocalizationKey()));
                     titledPane.setContent(catBox);
-                    titledPane.setExpanded(false);
+                    titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
                     vBox.getChildren().add(titledPane);
                     final String[] classes = new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder()
@@ -428,7 +425,7 @@ public class MaterialService {
                     final TitledPane titledPane = new TitledPane();
                     titledPane.textProperty().bind(LocaleService.getStringBinding(horizonsBlueprintListing.category().getLocalizationKey()));
                     titledPane.setContent(catBox);
-                    titledPane.setExpanded(false);
+                    titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
                     vBox.getChildren().add(titledPane);
                     final String[] classes = (horizonsBlueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder()
