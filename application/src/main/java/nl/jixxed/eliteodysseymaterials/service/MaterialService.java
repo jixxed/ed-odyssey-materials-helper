@@ -54,7 +54,7 @@ public class MaterialService {
     }
 
     private static VBox getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist) {
-        final VBox vBox = BoxBuilder.builder().buildVBox();
+        final VBox vBox = BoxBuilder.builder().withStyleClass("material-popover-content").buildVBox();
         LabelBuilder.builder().withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey())).build();
         if (horizonsMaterial.isUnknown()) {
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
@@ -162,7 +162,7 @@ public class MaterialService {
     }
 
     private static VBox getMaterialPopOverContent(final OdysseyMaterial odysseyMaterial) {
-        final VBox vBox = BoxBuilder.builder().buildVBox();
+        final VBox vBox = BoxBuilder.builder().withStyleClass("material-popover-content").buildVBox();
         if (odysseyMaterial.isUnknown()) {
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
         } else {
@@ -208,6 +208,9 @@ public class MaterialService {
             final PopOver popOver = new PopOver(contentNode);
             popOver.setDetachable(false);
             popOver.setHeaderAlwaysVisible(false);
+            popOver.arrowSizeProperty().set(0);
+            popOver.arrowIndentProperty().set(0);
+            popOver.cornerRadiusProperty().set(0);
             final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).get(0).getBounds();
             final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
             final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();

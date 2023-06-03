@@ -1782,20 +1782,17 @@
 
 .loadout-modification-popover {
     -fx-background-color: #fff;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #fff;
 }
 
 .loadout-modification-popover > .border {
     -fx-stroke: #fff !important;
-    -fx-stroke-width: 0.5 !important;
-    -fx-fill: #fff !important;
+    -fx-stroke-width: 0.1em !important;
 }
 
 .loadout-modification-grid {
-    -fx-border-color: #fff;
     -fx-background-color: #0f0f0f;
-    -fx-border-radius: 5px;
-    -fx-border-width: 3px;
-    -fx-border-style: solid;
     -fx-padding: 0.3em;
 }
 
@@ -1808,13 +1805,23 @@
 }
 
 .material-popover {
-    -fx-background-color: #0f0f0f;
-    -fx-padding: 5px;
+    -fx-background-color: #fff;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #fff;
 }
 
 .material-popover .label {
     -fx-font-weight: normal;
     -fx-text-fill: white;
+}
+
+.material-popover > .border {
+    -fx-stroke: #fff !important;
+    -fx-stroke-width: 0.1em !important;
+}
+.material-popover-content{
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 0.3em;
 }
 
 .material-tooltip-location-line {
