@@ -23,6 +23,8 @@ import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
 import nl.jixxed.eliteodysseymaterials.export.TextExporter;
@@ -158,6 +160,10 @@ public class SettingsTab extends OdysseyTab {
         }));
         this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             executorService.shutdownNow();
+        }));
+        this.eventListeners.add(EventService.addStaticListener(CommanderSelectedEvent.class,event ->{
+            this.capiConnectButton.textProperty().bind(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
+            this.capiDisconnectButton.textProperty().bind(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
         }));
     }
 
@@ -523,11 +529,12 @@ public class SettingsTab extends OdysseyTab {
     private HBox createCapiConnectSetting() {
         this.capiConnectLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.capi.link.account")).build();
         this.capiConnectButton = ButtonBuilder.builder()
-                .withText(LocaleService.getStringBinding("tab.settings.capi.connect"))
+                .withText(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))))
                 .withOnAction(event -> CAPIService.getInstance().authenticate())
                 .build();
         this.capiDisconnectButton = ButtonBuilder.builder()
-                .withText(LocaleService.getStringBinding("tab.settings.capi.disconnect"))
+                .withText(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))))
+//                .withText(LocaleService.getStringBinding("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse("")))
                 .withOnAction(event -> CAPIService.getInstance().deauthenticate())
                 .build();
         this.capiConnectButton.disableProperty().bind(CAPIService.getInstance().getActive().or(this.registered.not()));
