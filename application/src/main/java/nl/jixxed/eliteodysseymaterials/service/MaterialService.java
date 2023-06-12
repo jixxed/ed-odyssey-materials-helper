@@ -21,14 +21,12 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.constants.BarterConstants;
-import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.SpawnConstants;
+import nl.jixxed.eliteodysseymaterials.constants.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
@@ -56,7 +54,7 @@ public class MaterialService {
     }
 
     private static VBox getMaterialPopOverContent(final HorizonsMaterial horizonsMaterial, final boolean wishlist) {
-        final VBox vBox = BoxBuilder.builder().buildVBox();
+        final VBox vBox = BoxBuilder.builder().withStyleClass("material-popover-content").buildVBox();
         LabelBuilder.builder().withText(LocaleService.getStringBinding(horizonsMaterial.getLocalizationKey())).build();
         if (horizonsMaterial.isUnknown()) {
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
@@ -164,7 +162,7 @@ public class MaterialService {
     }
 
     private static VBox getMaterialPopOverContent(final OdysseyMaterial odysseyMaterial) {
-        final VBox vBox = BoxBuilder.builder().buildVBox();
+        final VBox vBox = BoxBuilder.builder().withStyleClass("material-popover-content").buildVBox();
         if (odysseyMaterial.isUnknown()) {
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_TITLE).withText(LocaleService.getStringBinding("material.tooltip.unknown")).build());
         } else {
@@ -210,6 +208,9 @@ public class MaterialService {
             final PopOver popOver = new PopOver(contentNode);
             popOver.setDetachable(false);
             popOver.setHeaderAlwaysVisible(false);
+            popOver.arrowSizeProperty().set(0);
+            popOver.arrowIndentProperty().set(0);
+            popOver.cornerRadiusProperty().set(0);
             final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).get(0).getBounds();
             final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
             final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
@@ -356,9 +357,42 @@ public class MaterialService {
         if (!recipesContainingMaterial.isEmpty()) {
             vBox.getChildren().add(LabelBuilder.builder().build());
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes")).build());
-            recipesContainingMaterial.entrySet().stream()
-                    .sorted(Comparator.comparing(entry -> ObservableResourceFactory.getResources().getString(entry.getKey().getLocalizationKey())))
-                    .forEach(entry -> vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()) + " (" + entry.getValue() + ")")).build()));
+            final List<OdysseyBlueprintListing> odysseyBlueprintListings = recipesContainingMaterial.entrySet().stream().
+            map(entry -> new OdysseyBlueprintListing(OdysseyBlueprintConstants.getRecipeCategory(entry.getKey()),entry.getKey(),entry.getValue()))
+                    .sorted()
+                    .collect(Collectors.toList());
+            FlowPane catBox = null;
+            BlueprintCategory prevCat = null;
+            for (final OdysseyBlueprintListing odysseyBlueprintListing : odysseyBlueprintListings) {
+                if (!odysseyBlueprintListing.category().equals(prevCat)) {
+                    prevCat = odysseyBlueprintListing.category();
+                    catBox = FlowPaneBuilder.builder().withStyleClass("blueprint-listing-flowpane").build();
+                    final TitledPane titledPane = new TitledPane();
+                    titledPane.textProperty().bind(LocaleService.getStringBinding(odysseyBlueprintListing.category().getLocalizationKey()));
+                    titledPane.setContent(catBox);
+                    titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
+                    vBox.getChildren().add(titledPane);
+                    final String[] classes = new String[]{"blueprint-listing-label"};
+                    final DestroyableLabel build = LabelBuilder.builder()
+                            .withStyleClasses(classes)
+                            .withText(odysseyBlueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(odysseyBlueprintListing.name())))
+                            .build();
+                    catBox.getChildren().add(build);
+                } else {
+                    //append
+                    final String[] classes =  new String[]{"blueprint-listing-label"};
+                    final DestroyableLabel build = LabelBuilder.builder()
+                            .withStyleClasses(classes)
+                            .withText(odysseyBlueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(odysseyBlueprintListing.name())))
+                            .build();
+                    catBox.getChildren().add(build);
+                    catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));
+                }
+            }
+
+
         }
     }
 
@@ -374,12 +408,12 @@ public class MaterialService {
             });
 
 
-            final List<BlueprintListing> blueprintListings = groupedBlueprints.entrySet().stream().
-                    mapMulti((final Map.Entry<Pair<HorizonsBlueprintName, HorizonsBlueprintType>, List<Pair<HorizonsBlueprintGrade, Integer>>> entry, final Consumer<BlueprintListing> consumer) -> {
+            final List<HorizonsBlueprintListing> horizonsBlueprintListings = groupedBlueprints.entrySet().stream().
+                    mapMulti((final Map.Entry<Pair<HorizonsBlueprintName, HorizonsBlueprintType>, List<Pair<HorizonsBlueprintGrade, Integer>>> entry, final Consumer<HorizonsBlueprintListing> consumer) -> {
                         final Map<Integer, List<Pair<HorizonsBlueprintGrade, Integer>>> gradeGroups = entry.getValue().stream().collect(Collectors.groupingBy(Pair::getValue));
                         gradeGroups.forEach((materialAmount, pairs) ->
                                 consumer.accept(
-                                        new BlueprintListing(entry.getKey().getKey().getBlueprintCategory(), entry.getKey().getKey(), entry.getKey().getValue(), pairs, materialAmount)
+                                        new HorizonsBlueprintListing(entry.getKey().getKey().getBlueprintCategory(), entry.getKey().getKey(), entry.getKey().getValue(), pairs, materialAmount)
                                 )
                         );
                     })
@@ -387,29 +421,29 @@ public class MaterialService {
                     .collect(Collectors.toList());
             FlowPane catBox = null;
             BlueprintCategory prevCat = null;
-            for (final BlueprintListing blueprintListing : blueprintListings) {
-                if (!blueprintListing.category().equals(prevCat)) {
-                    prevCat = blueprintListing.category();
+            for (final HorizonsBlueprintListing horizonsBlueprintListing : horizonsBlueprintListings) {
+                if (!horizonsBlueprintListing.category().equals(prevCat)) {
+                    prevCat = horizonsBlueprintListing.category();
                     catBox = FlowPaneBuilder.builder().withStyleClass("blueprint-listing-flowpane").build();
                     final TitledPane titledPane = new TitledPane();
-                    titledPane.textProperty().bind(LocaleService.getStringBinding(blueprintListing.category().getLocalizationKey()));
+                    titledPane.textProperty().bind(LocaleService.getStringBinding(horizonsBlueprintListing.category().getLocalizationKey()));
                     titledPane.setContent(catBox);
-                    titledPane.setExpanded(false);
+                    titledPane.setExpanded(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE));
                     vBox.getChildren().add(titledPane);
-                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
+                    final String[] classes = (horizonsBlueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder()
                             .withStyleClasses(classes)
-                            .withText(blueprintListing.toStringBinding())
-                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(blueprintListing.name(),blueprintListing.type(),blueprintListing.gradeGroups().get(0).getKey()))))
+                            .withText(horizonsBlueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(horizonsBlueprintListing.name(), horizonsBlueprintListing.type(), horizonsBlueprintListing.gradeGroups().get(0).getKey()))))
                             .build();
                     catBox.getChildren().add(build);
                 } else {
                     //append
-                    final String[] classes = (blueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
+                    final String[] classes = (horizonsBlueprintListing.type().isExperimental()) ? new String[]{"blueprint-listing-label", "blueprint-listing-label-experimental"} : new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder()
                             .withStyleClasses(classes)
-                            .withText(blueprintListing.toStringBinding())
-                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(blueprintListing.name(),blueprintListing.type(),blueprintListing.gradeGroups().get(0).getKey()))))
+                            .withText(horizonsBlueprintListing.toStringBinding())
+                            .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(horizonsBlueprintListing.name(), horizonsBlueprintListing.type(), horizonsBlueprintListing.gradeGroups().get(0).getKey()))))
                             .build();
                     catBox.getChildren().add(build);
                     catBox.prefWrapLengthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(23.33 * 2));

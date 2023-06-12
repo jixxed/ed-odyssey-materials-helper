@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 @ToString
 @Slf4j
 public class TradeSpec {
-    private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
+    private final Optional<MarketPlaceClient> marketPlaceClient = MarketPlaceClient.getInstance();
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     public static final String SHA_KEY = "xt23s778RHY";
     public static final String NOTIFICATION_TRADE_TITLE_LOCALIZATION_KEY = "notification.trade.title";
@@ -133,7 +133,7 @@ public class TradeSpec {
                         @Override
                         public void run() {
                             if (TradeStatus.PUSHED.equals(TradeSpec.this.tradeStatus)) {
-                                TradeSpec.this.marketPlaceClient.bidAccept(getOfferId(), getBid(), false);
+                                TradeSpec.this.marketPlaceClient.ifPresent(c->c.bidAccept(getOfferId(), getBid(), false));
                             }
                         }
                     };

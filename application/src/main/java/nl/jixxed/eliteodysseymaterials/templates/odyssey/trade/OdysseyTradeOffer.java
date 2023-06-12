@@ -17,12 +17,13 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Slf4j
 @EqualsAndHashCode(callSuper = false)
 class OdysseyTradeOffer extends OdysseyTrade {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
+    private final Optional<MarketPlaceClient> marketPlaceClient = MarketPlaceClient.getInstance();
     private Button removeOfferButton;
     private Button acceptOfferButton;
     private Button rejectOfferButton;
@@ -73,19 +74,17 @@ class OdysseyTradeOffer extends OdysseyTrade {
 
         this.removeOfferButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.offer.button.remove"))
-                .withOnAction(event -> this.marketPlaceClient.dropOffers(Collections.singletonList(getOfferId())))
+
+                .withOnAction(event -> this.marketPlaceClient.ifPresent(c -> c.dropOffers(Collections.singletonList(getOfferId()))))
                 .build();
         this.acceptOfferButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.buttons.accept"))
-                .withOnAction(event ->
-                        this.marketPlaceClient.bidAccept(this.getOfferId(), getTradeSpec().getBid(), true)
+                .withOnAction(event -> this.marketPlaceClient.ifPresent(c -> c.bidAccept(this.getOfferId(), getTradeSpec().getBid(), true))
                 )
                 .build();
         this.rejectOfferButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.buttons.reject"))
-                .withOnAction(event ->
-                        this.marketPlaceClient.bidAccept(this.getOfferId(), getTradeSpec().getBid(), false)
-                )
+                .withOnAction(event -> this.marketPlaceClient.ifPresent(c -> c.bidAccept(this.getOfferId(), getTradeSpec().getBid(), false)))
                 .build();
         this.statusLabel = LabelBuilder.builder()
                 .withStyleClass("trade-offer-status-label")

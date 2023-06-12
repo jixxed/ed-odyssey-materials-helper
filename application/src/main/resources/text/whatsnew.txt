@@ -1,8 +1,19 @@
+Version 2.28
+-------------
+Added setting to expand blueprints in tooltips by default
+Removed white arrow from tooltips and made border more pronounced
+Align style of loadout tooltip with material tooltip
+Add clarifications to Frontier API settings
+
 Version 2.27
 -------------
 Horizons blueprints can now be opened from material popups
 Horizons wishlist blueprint will now open matching lowest grade
 Add dynamic scrolling speed based on window contents
+Add resilience for connection issues with the marketplace(odyssey trade)
+Add caustic sink launcher support to EDSY import
+Put Odyssey blueprints listed in material tooltip in collapsible panels (same as Horizons materials)
+Make Odyssey blueprints in tooltip clickable
 
 Version 2.26
 -------------

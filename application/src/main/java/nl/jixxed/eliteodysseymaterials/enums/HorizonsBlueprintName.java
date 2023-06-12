@@ -200,6 +200,8 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
             return POINT_DEFENCE;
         } else if (nameLowerCase.startsWith("hpt_shieldbooster")) {
             return SHIELD_BOOSTER;
+        } else if (nameLowerCase.startsWith("hpt_causticsinklauncher")) {
+            return CAUSTIC_SINK_LAUNCHER;
         } else if (nameLowerCase.contains("armour")) {
             return ARMOUR;
         } else if (nameLowerCase.startsWith("int_hyperdrive")) {

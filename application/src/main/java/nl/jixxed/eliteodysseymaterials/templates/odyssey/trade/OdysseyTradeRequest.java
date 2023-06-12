@@ -24,13 +24,14 @@ import nl.jixxed.eliteodysseymaterials.trade.MarketPlaceClient;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @EqualsAndHashCode(callSuper = false)
 class OdysseyTradeRequest extends OdysseyTrade {
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
-    private final MarketPlaceClient marketPlaceClient = MarketPlaceClient.getInstance();
+    private final Optional<MarketPlaceClient> marketPlaceClient = MarketPlaceClient.getInstance();
     private Label distanceLabel;
     private Button requestTradeButton;
     private Button cancelTradeButton;
@@ -125,13 +126,12 @@ class OdysseyTradeRequest extends OdysseyTrade {
                 .build();
         this.requestTradeButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.request.button.request.trade"))
-                .withOnAction(event -> this.marketPlaceClient.bidPush(getOfferId()))
+                .withOnAction(event -> this.marketPlaceClient.ifPresent(c->c.bidPush(getOfferId())))
                 .build();
         this.requestTradeButton.visibleProperty().bind(this.offerIngredient.canTradeProperty());
         this.cancelTradeButton = ButtonBuilder.builder()
                 .withText(LocaleService.getStringBinding("trade.request.button.request.cancel"))
-                .withOnAction(event ->
-                        this.marketPlaceClient.bidPull(getOfferId()))
+                .withOnAction(event -> this.marketPlaceClient.ifPresent(c->c.bidPull(getOfferId())))
                 .build();
         this.statusLabel = LabelBuilder.builder()
                 .withStyleClass("trade-request-status-label")

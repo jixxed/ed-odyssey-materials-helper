@@ -134,6 +134,9 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
                             this.popOver.getStyleClass().add("loadout-modification-popover");
                             this.popOver.setContentNode(createModificationOptionsGrid());
                             this.popOver.setDetachable(false);
+                            this.popOver.arrowSizeProperty().set(0);
+                            this.popOver.arrowIndentProperty().set(0);
+                            this.popOver.cornerRadiusProperty().set(0);
                             this.popOver.show(this, event.getScreenX(), event.getScreenY());
                         })
                 , 300, TimeUnit.MILLISECONDS);

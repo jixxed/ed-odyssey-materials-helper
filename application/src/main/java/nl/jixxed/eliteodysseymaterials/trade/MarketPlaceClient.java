@@ -43,7 +43,7 @@ public class MarketPlaceClient {
     private static MarketPlaceClient marketPlaceClient;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
-    public static MarketPlaceClient getInstance() {
+    public static Optional<MarketPlaceClient> getInstance() {
         try {
             if (marketPlaceClient == null) {
                 final String dns = PreferencesService.getPreference("marketplace.url".toUpperCase(), "");
@@ -58,7 +58,7 @@ public class MarketPlaceClient {
         } catch (final URISyntaxException | NamingException | IllegalArgumentException e) {
             log.error("failed to connect Websocket", e);
         }
-        return marketPlaceClient;
+        return Optional.ofNullable(marketPlaceClient);
     }
 
     private MarketPlaceClient(final URI serverURI) {
