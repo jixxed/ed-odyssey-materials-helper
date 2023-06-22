@@ -1,0 +1,5 @@
+Added setting to expand blueprints in tooltips by default
+Removed white arrow from tooltips and made border more pronounced
+Align style of loadout tooltip with material tooltip
+Add clarifications to Frontier API settings
+Add automated build and release to github
