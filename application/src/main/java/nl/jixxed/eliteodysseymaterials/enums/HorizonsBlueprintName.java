@@ -115,7 +115,8 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     HUMAN_LIVERY(BlueprintCategory.TECHBROKER),
     NONE(BlueprintCategory.TECHBROKER),
     CARGO_RACK(BlueprintCategory.OPTIONAL_INTERNAL),
-    FUEL_TANK(BlueprintCategory.OPTIONAL_INTERNAL);
+    FUEL_TANK(BlueprintCategory.OPTIONAL_INTERNAL),
+    FRAME_SHIFT_DRIVE_BOOSTER(BlueprintCategory.OPTIONAL_INTERNAL);
     private final BlueprintCategory blueprintCategory;
 
     public static HorizonsBlueprintName forName(final String name) {

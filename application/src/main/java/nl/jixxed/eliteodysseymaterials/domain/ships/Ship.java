@@ -1,10 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 import lombok.Getter;
+import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.PulseLaser;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.CargoRack;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,16 @@ public class Ship {
     @Getter
     private final List<Slot> optionalSlots;
 
+    @Getter
+    @Setter
+    private double currentFuel = this.getCoreSlots().stream()
+            .filter(slot -> slot.getSlotType() == SlotType.CORE_FUEL_TANK)
+            .findFirst().map(slot -> (double) slot.getShipModule().getAttributes().get(HorizonsModifier.FUEL_CAPACITY))
+            .orElse(0D);
+    @Getter
+    @Setter
+    private double currentCargo = 0D;
+
     private Ship(final ShipType shipType, final List<Slot> hardpointSlots, final List<Slot> utilitySlots, final List<Slot> coreSlots, final List<Slot> optionalSlots) {
         this.shipType = shipType;
         this.hardpointSlots = new ArrayList<>(hardpointSlots);
@@ -58,11 +70,39 @@ public class Ship {
         this.coreSlots = new ArrayList<>(coreSlots);
         this.optionalSlots = new ArrayList<>(optionalSlots);
     }
+
     public Ship(final Ship ship) {
         this.shipType = ship.shipType;
         this.hardpointSlots = new ArrayList<>(ship.hardpointSlots.stream().map(Slot::new).toList());
         this.utilitySlots = new ArrayList<>(ship.utilitySlots.stream().map(Slot::new).toList());
         this.coreSlots = new ArrayList<>(ship.coreSlots.stream().map(Slot::new).toList());
         this.optionalSlots = new ArrayList<>(ship.optionalSlots.stream().map(Slot::new).toList());
+    }
+
+    public double getMaxFuel() {
+        final Double coreFuel = this.getCoreSlots().stream()
+                .filter(slot -> slot.getSlotType() == SlotType.CORE_FUEL_TANK)
+                .findFirst().map(slot -> (double) slot.getShipModule().getAttributes().get(HorizonsModifier.FUEL_CAPACITY))
+                .orElse(0D);
+        final Double optionalFuel = this.getOptionalSlots().stream()
+                .filter(slot -> slot.getShipModule() instanceof FuelTank)
+                .map(slot -> (double) slot.getShipModule().getAttributes().get(HorizonsModifier.FUEL_CAPACITY))
+                .mapToDouble(Double::doubleValue)
+                .sum();
+        return coreFuel + optionalFuel;
+    }
+    public double getMaxCargo() {
+        return this.getOptionalSlots().stream()
+                .filter(slot -> slot.getShipModule() instanceof CargoRack)
+                .map(slot -> (double) slot.getShipModule().getAttributes().get(HorizonsModifier.CARGO_CAPACITY))
+                .mapToDouble(Double::doubleValue)
+                .sum();
+    }
+    public double getMass() {
+        return this.getOptionalSlots().stream()
+                .filter(slot -> slot.getShipModule() instanceof CargoRack)
+                .map(slot -> (double) slot.getShipModule().getAttributes().get(HorizonsModifier.CARGO_CAPACITY))
+                .mapToDouble(Double::doubleValue)
+                .sum();
     }
 }
