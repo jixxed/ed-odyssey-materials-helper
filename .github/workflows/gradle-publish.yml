@@ -76,3 +76,15 @@ jobs:
         bodyFile: ".github/releasenotes.txt"
         artifacts: "output/*.*"
         name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
+
+  publish-release:
+    runs-on: ubuntu-latest
+    needs: build-windows, build-ubuntu
+     - name: Publish Release
+     uses: ncipollo/release-action@v1.12.0
+     with:
+       allowUpdates: true
+       draft: false
+       omitBodyDuringUpdate: true
+       omitNameDuringUpdate: true
+       makeLatest: true
