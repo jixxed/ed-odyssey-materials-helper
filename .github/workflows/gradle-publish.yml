@@ -14,6 +14,7 @@ on:
 
 jobs:
   build-ubuntu:
+    name: build-ubuntu
 
     runs-on: ubuntu-latest
     permissions:
@@ -46,6 +47,7 @@ jobs:
         name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
         
   build-windows:
+    name: build-windows
 
     runs-on: windows-latest
     permissions:
