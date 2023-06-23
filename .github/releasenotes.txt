@@ -1,5 +1,9 @@
-Added setting to expand blueprints in tooltips by default
-Removed white arrow from tooltips and made border more pronounced
-Align style of loadout tooltip with material tooltip
-Add clarifications to Frontier API settings
-Add automated build and release to github
+What file should you download?
+If you are on Windows, you can install the auto updater msi file
+If you are on Linux, you can install the auto updater deb file
+
+The auto updaters will check for a new version on launch.
+The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
+
+Release notes for this version:
+Fix engineer name to blueprint links for Colonia engineers

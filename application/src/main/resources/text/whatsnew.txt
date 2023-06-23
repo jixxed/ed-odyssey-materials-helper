@@ -1,3 +1,7 @@
+Version 2.29
+-------------
+Fix engineer name to blueprint links for Colonia engineers
+
 Version 2.28
 -------------
 Added setting to expand blueprints in tooltips by default
