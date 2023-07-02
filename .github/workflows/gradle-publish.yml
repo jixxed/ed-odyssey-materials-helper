@@ -40,7 +40,7 @@ jobs:
       with:
         allowUpdates: true
         draft: true
-        body: "test"
+        bodyFile: ".github/releasenotes.txt"
         artifacts: "output/*.*"
         name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
         

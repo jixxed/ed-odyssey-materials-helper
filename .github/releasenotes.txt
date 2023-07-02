@@ -7,3 +7,5 @@ The portable zip versions are used as update packages. You can run them standalo
 
 Release notes for this version:
 Fix engineer name to blueprint links for Colonia engineers
+Correct quantity in onfoot pickup notifications
+Limit Tactical Core Chip to 100
