@@ -1,6 +1,8 @@
 Version 2.29
 -------------
 Fix engineer name to blueprint links for Colonia engineers
+Correct quantity in onfoot pickup notifications
+Limit Tactical Core Chip to 100
 
 Version 2.28
 -------------
