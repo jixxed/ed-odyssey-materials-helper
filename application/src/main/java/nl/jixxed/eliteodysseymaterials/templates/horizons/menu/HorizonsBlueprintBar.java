@@ -412,7 +412,7 @@ class HorizonsBlueprintBar extends Accordion {
 
         final ComboBox<HorizonsBlueprintName> blueprints = ComboBoxBuilder.builder(HorizonsBlueprintName.class)
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
-                .withItemsProperty(LocaleService.getListBinding(recipesEngineers.keySet().stream().sorted(Comparator.comparing(recipeName -> LocaleService.getLocalizedStringForCurrentLocale(recipeName.getLocalizationKey()))).toArray(HorizonsBlueprintName[]::new)))
+                .withItemsProperty(LocaleService.getListBinding(recipesEngineers.keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintName::getLocalizationKey)).toArray(HorizonsBlueprintName[]::new)))
                 .asLocalized()
                 .build();
         blueprints.setVisibleRowCount(blueprints.getItems().size());
