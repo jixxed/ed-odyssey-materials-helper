@@ -1,3 +1,8 @@
+Version 2.30
+-------------
+Indent engineer names for Horizons engineer unlocks to better show unlock order
+Add new Azimuth CG AX Multi-cannons to techbroker blueprints
+
 Version 2.29
 -------------
 Fix engineer name to blueprint links for Colonia engineers

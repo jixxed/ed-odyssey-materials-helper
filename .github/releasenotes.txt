@@ -1,11 +1,10 @@
-What file should you download?
+**What file should you download?**
 If you are on Windows, you can install the auto updater msi file
 If you are on Linux, you can install the auto updater deb file
 
 The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
-Release notes for this version:
-Fix engineer name to blueprint links for Colonia engineers
-Correct quantity in onfoot pickup notifications
-Limit Tactical Core Chip to 100
+**Release notes for this version:**
+Indent engineer names for Horizons engineer unlocks to better show unlock order
+Add new Azimuth CG AX Multi-cannons to techbroker blueprints

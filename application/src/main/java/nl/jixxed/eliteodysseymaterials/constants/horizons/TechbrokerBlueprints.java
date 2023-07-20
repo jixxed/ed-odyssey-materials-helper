@@ -505,6 +505,31 @@ public class TechbrokerBlueprints {
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.SIRIUS)
+            )),
+            Map.entry(HorizonsBlueprintType.E2_AZIMUTH_ENHANCED_AX_MULTICANNON, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.E2_AZIMUTH_ENHANCED_AX_MULTICANNON,
+                    Map.of(
+                            Raw.IRON, 9,
+                            Raw.ZIRCONIUM, 11,
+                            Manufactured.TG_BIOMECHANICALCONDUITS, 6,
+                            Manufactured.TG_WRECKAGECOMPONENTS, 7,
+                            Manufactured.TG_WEAPONPARTS, 14
+                    ),
+                    Map.of(),
+                    List.of(),
+                    List.of(HorizonsBrokerType.AEGIS, HorizonsBrokerType.SALVATION)
+            )),
+            Map.entry(HorizonsBlueprintType.C3_AZIMUTH_ENHANCED_AX_MULTICANNON, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.C3_AZIMUTH_ENHANCED_AX_MULTICANNON,
+                    Map.of(
+                            Raw.IRON, 11,
+                            Raw.ZIRCONIUM, 16,
+                            Encoded.TG_SHIPSYSTEMSDATA, 6,
+                            Manufactured.TG_BIOMECHANICALCONDUITS, 9,
+                            Manufactured.TG_WRECKAGECOMPONENTS, 12,
+                            Manufactured.TG_WEAPONPARTS, 17
+                    ),
+                    Map.of(),
+                    List.of(),
+                    List.of(HorizonsBrokerType.AEGIS, HorizonsBrokerType.SALVATION)
             )));
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> HUMAN_MODULES = Map.of(
             HorizonsBlueprintType.ENGINEERED_DETAILED_SURFACE_SCANNER_V1,
