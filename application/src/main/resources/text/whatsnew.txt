@@ -1,3 +1,7 @@
+Version 2.31
+-------------
+Make Used in recipes panel scroll along in bartender tab
+
 Version 2.30
 -------------
 Indent engineer names for Horizons engineer unlocks to better show unlock order
