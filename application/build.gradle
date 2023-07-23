@@ -135,7 +135,7 @@ dependencies {
     implementation group: 'com.zaxxer', name: 'SparseBitSet', version: '1.2'
 
 
-    implementation('org.jfxtras:jmetro:11.6.15') {
+    implementation('org.jfxtras:jmetro:11.6.16') {
         exclude group: 'org.openjfx'
     }
     implementation("org.openjfx:javafx-base:19+:${platform}")
