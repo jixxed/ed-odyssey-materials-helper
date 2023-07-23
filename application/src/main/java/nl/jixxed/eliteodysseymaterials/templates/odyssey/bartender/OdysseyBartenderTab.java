@@ -87,10 +87,17 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
 
         this.scrollPane.skinProperty().addListener((observable, oldValue, newValue) ->
                 ((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().valueProperty().addListener((observable2, oldValue2, newValue2) -> {
-                    this.filler.setMinHeight(Math.round((double) newValue2 * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight())));
-                    this.filler.setMaxHeight(Math.round((double) newValue2 * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight())));
+                    setFillerHeight((double) newValue2);
                 }));
+        this.scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->{
+            setFillerHeight(((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().getValue());
+        });
         this.setContent(this.scrollPane);
+    }
+
+    private void setFillerHeight(final double scrollbarPos) {
+        this.filler.setMinHeight(Math.round(scrollbarPos * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight())));
+        this.filler.setMaxHeight(Math.round(scrollbarPos * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight())));
     }
 
     private void addAllAssets() {
