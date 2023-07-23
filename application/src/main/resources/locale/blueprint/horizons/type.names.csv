@@ -165,5 +165,5 @@ blueprint.horizons.type.e2_sirius_corporation_ax_missile_rack,E2 Sirius Corporat
 blueprint.horizons.type.c3_sirius_corporation_ax_missile_rack,C3 Sirius Corporation AX Missile Rack,,C3 Sirius Corporation AX-Raketengestell,,,,С3 Блок ракет АИ Корпорации Сириус
 blueprint.horizons.type.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,Ätzbehälterwerfer,,,,Антикоррозийная катапульта
 blueprint.horizons.type.thargoid_pulse_neutraliser,TG Pulse Neutraliser,TG Pulse Neutraliser,,,,,Нейтрализатор таргоидских импульсов
-blueprint.horizons.type.e2_azimuth_enhanced_ax_multicannon,E2 Azimuth Enhanced AX Multi-cannon,E2 Azimuth Enhanced AX Multi-cannon,,,,,
-blueprint.horizons.type.c3_azimuth_enhanced_ax_multicannon,C3 Azimuth Enhanced AX Multi-cannon,C3 Azimuth Enhanced AX Multi-cannon,,,,,
+blueprint.horizons.type.e2_azimuth_enhanced_ax_multicannon,E2 Azimuth Enhanced AX Multi-cannon,E2 Azimuth Enhanced AX Multi-cannon,,,,,E2 Улучшенное многоствольное АИ-орудие Azimuth
+blueprint.horizons.type.c3_azimuth_enhanced_ax_multicannon,C3 Azimuth Enhanced AX Multi-cannon,C3 Azimuth Enhanced AX Multi-cannon,,,,,C3 Улучшенное многоствольное АИ-орудие Azimuth
