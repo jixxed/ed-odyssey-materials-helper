@@ -117,6 +117,14 @@ public enum Manufactured implements HorizonsMaterial {
     }
 
     @Override
+	public int getMaxAmount() {
+        if (this == UNKNOWNCORECHIP) {
+            return 100;
+        }
+        return this.getRarity().getMaxAmount();
+	}
+
+    @Override
     public HorizonsStorageType getStorageType() {
         return HorizonsStorageType.MANUFACTURED;
     }

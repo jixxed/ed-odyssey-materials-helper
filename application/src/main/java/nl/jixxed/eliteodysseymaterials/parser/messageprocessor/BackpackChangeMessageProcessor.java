@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
+import javafx.util.Pair;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
@@ -56,23 +57,24 @@ public class BackpackChangeMessageProcessor implements MessageProcessor<Backpack
                         .filter(changeEntry -> changeEntry.getMissionID().isEmpty())
                         .map(changeEntry -> {
                             try {
-                                return OdysseyMaterial.subtypeForName(changeEntry.getName());
+                                final OdysseyMaterial odysseyMaterial = OdysseyMaterial.subtypeForName(changeEntry.getName());
+                                return new Pair<OdysseyMaterial,Long>(odysseyMaterial,changeEntry.getCount());
                             } catch (final IllegalArgumentException e) {
                                 return null;
                             }
                         })
                         .filter(Objects::nonNull)
-                        .filter(material -> !(material instanceof Consumable))
-                        .forEach(material -> {
-                            if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(material))
-                                    || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material))) {
-                                NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()));
-                            } else if (WishlistService.isMaterialOnWishlist(material)) {
+                        .filter(pair -> !(pair.getKey() instanceof Consumable))
+                        .forEach(pair -> {
+                            if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(pair.getKey()))
+                                    || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(pair.getKey()))) {
+                                NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(pair.getKey().getLocalizationKey()));
+                            } else if (WishlistService.isMaterialOnWishlist(pair.getKey())) {
                                 NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"),
                                         LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification",
-                                                LocaleService.LocalizationKey.of(material.getLocalizationKey()),
-                                                StorageService.getMaterialStorage(material).getTotalValue(),
-                                                WishlistService.getAllWishlistsCount(material))
+                                                LocaleService.LocalizationKey.of(pair.getKey().getLocalizationKey()),
+                                                StorageService.getMaterialStorage(pair.getKey()).getTotalValue() + pair.getValue(),
+                                                WishlistService.getAllWishlistsCount(pair.getKey()))
                                 );
                             }
                         });

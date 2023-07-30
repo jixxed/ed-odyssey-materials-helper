@@ -5,8 +5,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.skin.ScrollPaneSkin;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
@@ -41,6 +43,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
     private VBox top;
     private DestroyableLabel title;
     private VBox right;
+    private Region filler;
     private final BooleanProperty detailView = new SimpleBooleanProperty(false);
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
@@ -75,13 +78,26 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
         final VBox left = BoxBuilder.builder().withStyleClass("bartender-left").withNodes(this.top, this.bottom).buildVBox();
         this.odysseyBartenderResult = new OdysseyBartenderResult();
         this.odysseyBartenderRecipes = new OdysseyBartenderRecipes();
-        this.right = BoxBuilder.builder().withStyleClass("settings-spacing-10").withNodes(this.odysseyBartenderRecipes).buildVBox();
+        this.filler = new Region();
+        this.right = BoxBuilder.builder().withStyleClass("settings-spacing-10").withNodes(this.filler, this.odysseyBartenderRecipes).buildVBox();
         final HBox layout = BoxBuilder.builder().withStyleClasses("bartender-layout").withNodes(left, this.right).buildHBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(layout)
                 .build();
-        this.setContent(this.scrollPane);
 
+        this.scrollPane.skinProperty().addListener((observable, oldValue, newValue) ->
+                ((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().valueProperty().addListener((observable2, oldValue2, newValue2) -> {
+                    setFillerHeight((double) newValue2);
+                }));
+        this.scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->{
+            setFillerHeight(((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().getValue());
+        });
+        this.setContent(this.scrollPane);
+    }
+
+    private void setFillerHeight(final double scrollbarPos) {
+        this.filler.setMinHeight(Math.round(scrollbarPos * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight())));
+        this.filler.setMaxHeight(Math.round(scrollbarPos * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight())));
     }
 
     private void addAllAssets() {
@@ -130,7 +146,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
                 }
             });
             if (!this.right.getChildren().contains(this.odysseyBartenderResult)) {
-                this.right.getChildren().add(0, this.odysseyBartenderResult);
+                this.right.getChildren().add(1, this.odysseyBartenderResult);
             }
 
         }));

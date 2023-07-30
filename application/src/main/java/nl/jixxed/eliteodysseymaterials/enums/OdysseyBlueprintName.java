@@ -115,10 +115,10 @@ public enum OdysseyBlueprintName implements BlueprintName<OdysseyBlueprintName> 
             case UMA_LASZLO -> ENGINEER_B5;
             case WELLINGTON_BECK -> ENGINEER_B3;
             case YARDEN_BOND -> ENGINEER_A5;
-            case BALTANOS -> null;
-            case ELEANOR_BRESA -> null;
-            case ROSA_DAYETTE -> null;
-            case YI_SHEN -> null;
+            case BALTANOS -> ENGINEER_D1_1;
+            case ELEANOR_BRESA -> ENGINEER_D1_3;
+            case ROSA_DAYETTE -> ENGINEER_D1_2;
+            case YI_SHEN -> ENGINEER_D3;
             case UNKNOWN -> throw new IllegalArgumentException("unknown engineer");
             default -> null;
         };
