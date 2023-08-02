@@ -9,11 +9,41 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Ship {
     public static final Ship ADDER = new Ship(
             ShipType.ADDER,
+            Map.ofEntries(
+//                    Map.entry(HorizonsModifier.TOPSPD,220),
+//                    Map.entry(HorizonsModifier.BSTSPD,320),
+//                    Map.entry(HorizonsModifier.MNV,4),
+//                    Map.entry(HorizonsModifier.SHIELDS,60),
+//                    Map.entry(HorizonsModifier.ARMOUR,90),
+//                    Map.entry(HorizonsModifier.MASS,35),
+//                    Map.entry(HorizonsModifier.FWDACC,39.41),
+//                    Map.entry(HorizonsModifier.REVACC,27.73),
+//                    Map.entry(HorizonsModifier.LATACC,27.86),
+//                    Map.entry(HorizonsModifier.MINTHRUST,45.454),
+//                    Map.entry(HorizonsModifier.BOOSTCOST,8),
+//                    Map.entry(HorizonsModifier.PITCH,38),
+//                    Map.entry(HorizonsModifier.YAW,14),
+//                    Map.entry(HorizonsModifier.ROLL,100),
+//                    Map.entry(HorizonsModifier.PITCHACC,200),
+//                    Map.entry(HorizonsModifier.YAWACC,100),
+//                    Map.entry(HorizonsModifier.ROLLACC,220),
+//                    Map.entry(HorizonsModifier.MINPITCH,30),
+//                    Map.entry(HorizonsModifier.HEATCAP,170),
+//                    Map.entry(HorizonsModifier.HEATDISMIN,1.45),
+//                    Map.entry(HorizonsModifier.HEATDISMAX,22.60),
+//                    Map.entry(HorizonsModifier.FUELCOST,50),
+//                    Map.entry(HorizonsModifier.FUELRESERVE,0.36),
+//                    Map.entry(HorizonsModifier.HARDNESS,35),
+//                    Map.entry(HorizonsModifier.MASSLOCK,7),
+//                    Map.entry(HorizonsModifier.CREW,2)
+            ),
             List.of(
                     Slot.builder().slotType(SlotType.HARDPOINT).index(0).slotSize(2).build(),
                     Slot.builder().slotType(SlotType.HARDPOINT).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
@@ -54,21 +84,26 @@ public class Ship {
     private final List<Slot> optionalSlots;
 
     @Getter
+    private final Map<HorizonsModifier, Object> attributes = new HashMap<>();
+    @Getter
     @Setter
-    private double currentFuel = this.getCoreSlots().stream()
-            .filter(slot -> slot.getSlotType() == SlotType.CORE_FUEL_TANK)
-            .findFirst().map(slot -> (double) slot.getShipModule().getAttributes().get(HorizonsModifier.FUEL_CAPACITY))
-            .orElse(0D);
+    private double currentFuel;
     @Getter
     @Setter
     private double currentCargo = 0D;
 
-    private Ship(final ShipType shipType, final List<Slot> hardpointSlots, final List<Slot> utilitySlots, final List<Slot> coreSlots, final List<Slot> optionalSlots) {
+    private Ship(final ShipType shipType, final Map<HorizonsModifier, Object> attributes, final List<Slot> hardpointSlots, final List<Slot> utilitySlots, final List<Slot> coreSlots, final List<Slot> optionalSlots) {
         this.shipType = shipType;
+        this.attributes.putAll(attributes);
         this.hardpointSlots = new ArrayList<>(hardpointSlots);
         this.utilitySlots = new ArrayList<>(utilitySlots);
         this.coreSlots = new ArrayList<>(coreSlots);
         this.optionalSlots = new ArrayList<>(optionalSlots);
+
+        this.currentFuel = this.getCoreSlots().stream()
+                .filter(slot -> slot.getSlotType() == SlotType.CORE_FUEL_TANK)
+                .findFirst().map(slot -> (double) slot.getShipModule().getAttributes().get(HorizonsModifier.FUEL_CAPACITY))
+                .orElse(0D);
     }
 
     public Ship(final Ship ship) {

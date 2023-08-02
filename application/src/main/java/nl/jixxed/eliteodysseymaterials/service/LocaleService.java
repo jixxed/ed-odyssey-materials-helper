@@ -58,6 +58,7 @@ public class LocaleService {
             "material/trade",
             "ships/ships",
             "ships/modules",
+            "ships/interface",
             "application",
             "blueprint",
             "menu",
