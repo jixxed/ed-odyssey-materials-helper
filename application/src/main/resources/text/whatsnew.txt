@@ -1,3 +1,7 @@
+Version 2.32
+-------------
+Added new commodities from Update 16
+
 Version 2.31
 -------------
 Make Used in recipes panel scroll along in bartender tab

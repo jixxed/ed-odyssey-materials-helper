@@ -418,10 +418,14 @@ material.commodity.outofdategoods,Out Of Date Goods,Out Of Date Goods,Abgelaufen
 material.commodity.undergroundsupport,Grom Underground Support,Grom Underground Support,Untergrund-Support für Grom,Apoyo encubierto de Grom,Ravitaillement clandestin de Grom,Suporte Secreto de Grom,Подпольная поддержка Грома
 material.commodity.gromcounterintelligence,Grom Counter Intelligence,Grom Counter Intelligence,Grom-Spionageabwehr,Contrainteligencia de Grom,Renseignements militaires de Grom,Contra-inteligência de Grom,Разведданные Грома
 material.commodity.gromwartrophies,Yuri Grom's Military Supplies,Yuri Grom's Military Supplies,Yuri Groms Militärausrüstung,Suministros militares de Yuri Grom,Fournitures militaires de Yuri Grom,Suprimentos Militares de Yuri Grom,Военные припасы Юрия Грома
-material.commodity.thargoidtissuesampletype6,Thargoid Glaive Tissue Sample,Thargoid Glaive Tissue Sample,,,,,Образец ткани таргоидского корабля «Глефа»
+material.commodity.thargoidtissuesampletype6,Thargoid Glaive Tissue Sample,Thargoid Glaive Tissue Sample,,Muestra de tejido de Glaive Thargoide,,,Образец ткани таргоидского корабля «Глефа»
 material.commodity.thargoidtissuesampletype9a,Titan Deep Tissue Sample,Titan Deep Tissue Sample,,,,,Образец глубокой ткани Титана
 material.commodity.thargoidtissuesampletype9b,Titan Tissue Sample,Titan Tissue Sample,,,,,Образец ткани Титана
 material.commodity.thargoidtissuesampletype9c,Titan Partial Tissue Sample,Titan Partial Tissue Sample,,,,,Неполный образец ткани Титана
 material.commodity.thargoidtissuesampletype10a,Titan Maw Deep Tissue Sample,Titan Maw Deep Tissue Sample,,,,,Образец глубокой ткани пасти Титана
 material.commodity.thargoidtissuesampletype10b,Titan Maw Tissue Sample,Titan Maw Tissue Sample,,,,,Образец ткани пасти Титана
 material.commodity.thargoidtissuesampletype10c,Titan Maw Partial Tissue Sample,Titan Maw Partial Tissue Sample,,,,,Неполный образец ткани пасти Титана
+material.commodity.thargoidtissuesampletype7,Thargoid Scythe Tissue Sample,Thargoid Scythe Tissue Sample,,Muestra de tejido de Scythe Thargoide,,,
+material.commodity.unknownsack,Protective Membrane Scrap,Protective Membrane Scrap,Unbrauchbare Schutzmembran,Fragmento de membrana protectora,,,Остатки защитной мембраны
+material.commodity.thargoidpod,Xenobiological Prison Pod,Xenobiological Prison Pod,,,,,
+material.commodity.coralsap,Coral Sap,Coral Sap,,,,,
