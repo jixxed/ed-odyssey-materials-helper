@@ -8,8 +8,8 @@ buildscript {
     }
     dependencies {
         classpath "org.beryx:badass-jlink-plugin:2.26.0"
-        classpath "io.freefair.gradle:lombok-plugin:5.3.3.3"
-        classpath "de.jjohannes.gradle:extra-java-module-info:0.16"
+        classpath "io.freefair.gradle:lombok-plugin:8.1.0"
+        classpath "org.gradlex:extra-java-module-info:1.4.1"
         classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.1.2'
     }
 }
@@ -18,7 +18,7 @@ apply plugin: 'idea' // optional (to generate IntelliJ IDEA project files)
 apply plugin: "java"
 apply plugin: "application"
 apply plugin: "org.beryx.jlink"
-apply plugin: "de.jjohannes.extra-java-module-info"
+apply plugin: "org.gradlex.extra-java-module-info"
 apply plugin: 'jsonschema2pojo'
 group 'nl.jixxed'
 java {
@@ -163,10 +163,10 @@ jpackage {
     }
 }
 extraJavaModuleInfo {
-    module('scribejava-java8-8.3.1.jar', 'scribejava.java8', '8.3.1') {
+    module('scribejava-java8-8.3.3.jar', 'scribejava.java8', '8.3.3') {
         exports("com.github.scribejava.java8.base64")
     }
-    module('scribejava-core-8.3.1.jar', 'scribejava.core', '8.3.1') {
+    module('scribejava-core-8.3.3.jar', 'scribejava.core', '8.3.3') {
         exports("com.github.scribejava.core.builder")
         exports("com.github.scribejava.core.builder.api")
         exports("com.github.scribejava.core.oauth")
@@ -179,7 +179,7 @@ extraJavaModuleInfo {
     }
     module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
     module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
-    module('j2objc-annotations-1.3.jar', 'com.google.j2objc.j2objc-annotations', '1.3')
+    module('j2objc-annotations-1.3.jar', 'com.google.j2objc.j2objc.annotations', '1.3')
     module('listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar', 'com.google.guava.listenablefuture', '9999.0-empty-to-avoid-conflict-with-guava')
 
     module('doc-annotations-0.2.jar', 'eu.lestard', '0.2')
