@@ -7,3 +7,4 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Added missing Scanner blueprints to Juri Ishmaak
+Added optimization for shortest path removing potentially unneeded visits

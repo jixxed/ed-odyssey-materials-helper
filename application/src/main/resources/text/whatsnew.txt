@@ -1,6 +1,7 @@
 Version 2.33
 -------------
 Added missing Scanner blueprints to Juri Ishmaak
+Added optimization for shortest path removing potentially unneeded visits
 
 Version 2.32
 -------------
