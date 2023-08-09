@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @ToString
 public class PathItem<E extends BlueprintName<E>> {
     private final List<Engineer> engineers;
-    private final List<? extends WishlistBlueprintTemplate<E>> blueprints;
+    private final List<WishlistBlueprintTemplate<E>> blueprints;
     private Map<Blueprint<E>, Integer> recipes;
     private Engineer engineer;
     private List<Engineer> alternateEngineers = new ArrayList<>();
@@ -27,13 +27,19 @@ public class PathItem<E extends BlueprintName<E>> {
 
     public PathItem(final List<Engineer> engineers, final List<? extends WishlistBlueprintTemplate<E>> blueprints) {
         this.engineers = engineers;
-        this.blueprints = blueprints;
+        this.blueprints = (List<WishlistBlueprintTemplate<E>>) blueprints;
         this.recipes = blueprints.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).collect(Collectors.groupingBy(
                 recipe -> recipe,
                 Collectors.summingInt(value -> 1))
         );
     }
-
+    public void addBlueprint(final WishlistBlueprintTemplate<E> blueprint){
+        this.blueprints.add(blueprint);
+        this.recipes = this.blueprints.stream().map(WishlistBlueprintTemplate::getPrimaryRecipe).collect(Collectors.groupingBy(
+                recipe -> recipe,
+                Collectors.summingInt(value -> 1))
+        );
+    }
     public String getRecipesString() {
         return this.recipes.entrySet().stream().map(recipe -> {
             if (recipe.getKey() instanceof ModuleBlueprint moduleBlueprint) {

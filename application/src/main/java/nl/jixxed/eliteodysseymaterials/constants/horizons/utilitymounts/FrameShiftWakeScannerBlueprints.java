@@ -24,7 +24,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-10%", false),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
@@ -34,7 +34,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-20%", false),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-55%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
@@ -45,7 +45,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-30%", false),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("-65%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
@@ -78,7 +78,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+60%", true),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+30%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
@@ -88,7 +88,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+120%", true),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
@@ -99,7 +99,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+180%", true),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+90%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
@@ -132,7 +132,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+20%", false),
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+60%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
@@ -142,7 +142,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+40%", false),
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+120%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
@@ -153,7 +153,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+60%", false),
                                     HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+180%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
@@ -187,7 +187,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_RANGE, new HorizonsModifierValue("+24%", true),
                                     HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+10%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.IRON, 1, Manufactured.HYBRIDCAPACITORS, 1
@@ -197,7 +197,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_RANGE, new HorizonsModifierValue("+48%", true),
                                     HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+20%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.IRON, 1, Manufactured.HYBRIDCAPACITORS, 1, Encoded.EMISSIONDATA, 1
@@ -207,7 +207,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_RANGE, new HorizonsModifierValue("+72%", true),
                                     HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+30%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.LONG_RANGE_SCANNER, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.GERMANIUM, 1, Manufactured.ELECTROCHEMICALARRAYS, 1, Encoded.DECODEDEMISSIONDATA, 1
@@ -239,7 +239,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_TIME, new HorizonsModifierValue("+10%", false),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1, Raw.GERMANIUM, 1
@@ -249,7 +249,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_TIME, new HorizonsModifierValue("+20%", false),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Manufactured.MECHANICALSCRAP, 1, Raw.GERMANIUM, 1, Encoded.SCANDATABANKS, 1
@@ -259,7 +259,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_TIME, new HorizonsModifierValue("+30%", false),
                                     HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Manufactured.MECHANICALEQUIPMENT, 1, Raw.NIOBIUM, 1, Encoded.ENCODEDSCANDATA, 1
@@ -291,7 +291,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_RANGE, new HorizonsModifierValue("-5%", false),
                                     HorizonsModifier.SCAN_TIME, new HorizonsModifierValue("-20%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.FAST_SCANNER, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.PHOSPHORUS, 1, Manufactured.UNCUTFOCUSCRYSTALS, 1
@@ -301,7 +301,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_RANGE, new HorizonsModifierValue("-10%", false),
                                     HorizonsModifier.SCAN_TIME, new HorizonsModifierValue("-35%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.FAST_SCANNER, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.PHOSPHORUS, 1, Manufactured.UNCUTFOCUSCRYSTALS, 1, Encoded.SYMMETRICKEYS, 1
@@ -311,7 +311,7 @@ public class FrameShiftWakeScannerBlueprints {
                                     HorizonsModifier.SCAN_RANGE, new HorizonsModifierValue("-15%", false),
                                     HorizonsModifier.SCAN_TIME, new HorizonsModifierValue("-50%", true)
                             ),
-                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON)),
+                            List.of(Engineer.ETIENNE_DORN, Engineer.TIANA_FORTUNE, Engineer.BILL_TURNER, Engineer.LORI_JAMESON, Engineer.JURI_ISHMAAK)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, HorizonsBlueprintType.FAST_SCANNER, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MANGANESE, 1, Manufactured.FOCUSCRYSTALS, 1, Encoded.ENCRYPTIONARCHIVES, 1

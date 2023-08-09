@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlis
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -83,7 +84,7 @@ public class PathService {
 
         distinctRecipes.stream()
                 .filter(recipe -> recipe.getEngineers().stream().anyMatch(engineerPreference::containsKey))
-                .forEach(recipe -> {
+                .forEachOrdered(recipe -> {
                     if (pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(recipe))) {
                         final List<Engineer> engineers = mostPreferredEngineers(engineerPreference, recipe, allowedEngineers);
                         //prefer a previously selected engineer, otherwise first in the list
@@ -107,7 +108,7 @@ public class PathService {
                 });
 
 
-        final int systemsToVisit = pathItems.size();
+         final int systemsToVisit = pathItems.size();
         for (int i = 0; i < systemsToVisit; i++) {
             final StarSystem finalCurrentStarSystem = currentStarSystem;
             if (pathItems.size() > 1) {
@@ -123,6 +124,7 @@ public class PathService {
                 sortedPathItems.add(closest);
             }
         }
+        optimizePathItems(sortedPathItems);
         tryOptimizePath(sortedPathItems);
         final List<? extends WishlistBlueprintTemplate<T>> unCraftable = wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
@@ -136,6 +138,75 @@ public class PathService {
             sortedPathItems.add(pathItem);
         }
         return sortedPathItems;
+    }
+
+    private static <T extends BlueprintName<T>> void optimizePathItems(final List<PathItem<T>> pathItems) {
+        for (int index = 0; index < pathItems.size(); index++) {
+            final PathItem<T> toMove = pathItems.get(index);
+            final List<? extends WishlistBlueprintTemplate<T>> blueprints = toMove.getBlueprints();
+            final int finalIndex = index;
+            final AtomicInteger count = new AtomicInteger(0);
+            for (final WishlistBlueprintTemplate<T> blueprint : blueprints) {
+                for (int index2 = 0; index2 < pathItems.size(); index2++) {
+                    //skip self
+                    if (finalIndex == index2) {
+                        continue;
+                    }
+                    final PathItem<T> toMoveTo = pathItems.get(index2);
+//                blueprints.values().stream()
+//                        .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
+//                        .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
+//                        .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(this.engineer))
+                    if (blueprint.getPrimaryRecipe() instanceof ModuleBlueprint mbp) {
+                        if (mbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
+                            count.incrementAndGet();
+                            break;
+                        }
+                    }
+                    if (blueprint.getPrimaryRecipe() instanceof HorizonsBlueprint hbp) {
+                        if (hbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
+                            count.incrementAndGet();
+                            break;
+                        }
+                    }
+                    if (blueprint.getPrimaryRecipe() instanceof HorizonsExperimentalEffectBlueprint hbp) {
+                        if (hbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
+                            count.incrementAndGet();
+                            break;
+                        }
+                    }
+
+                }
+
+            }
+            if (count.get() == blueprints.size()) {//all bp's can be moved
+                for (int i = 0; i < blueprints.size(); i++) {
+                    final WishlistBlueprintTemplate<T> bp = blueprints.get(i);
+                    for (int index2 = 0; index2 < pathItems.size(); index2++) {
+                        //skip self
+                        if (finalIndex == index2) {
+                            continue;
+                        }
+                        final PathItem<T> toMoveTo = pathItems.get(index2);
+                        if (bp.getPrimaryRecipe() instanceof ModuleBlueprint mbp) {
+                            if (mbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
+                                toMoveTo.addBlueprint(bp);
+                                break;
+                            }
+                        }
+                        if (bp.getPrimaryRecipe() instanceof HorizonsBlueprint hbp) {
+                            if (hbp.getEngineers().stream().anyMatch(eng -> toMoveTo.getEngineer().equals(eng))) {
+                                toMoveTo.addBlueprint(bp);
+                                break;
+                            }
+                        }
+
+                    }
+
+                }
+                pathItems.remove(toMove);
+            }
+        }
     }
 
     private static <T extends BlueprintName<T>> void tryOptimizePath(final List<PathItem<T>> sortedPathItems) {
@@ -220,7 +291,7 @@ public class PathService {
                                 )
                         )
                 )
-                .toList();
+                .collect(Collectors.toList());
 
     }
 
