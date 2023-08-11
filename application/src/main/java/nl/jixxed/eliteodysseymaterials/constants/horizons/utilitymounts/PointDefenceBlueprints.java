@@ -3,12 +3,15 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
 import java.util.Map;
+
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -18,16 +21,21 @@ public class PointDefenceBlueprints {
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.AMMO_CAPACITY, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
-                                    Manufactured.MECHANICALSCRAP, 1,
                                     Raw.NIOBIUM, 1,
-                                    Raw.VANADIUM, 1
+                                    Raw.VANADIUM, 1,
+                                    Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("+50%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+100%", false),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsModifierValue("+50%", true)
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.0, 1.0)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.0, 0.5)),
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.0, 0.5))
                             ),
-                            List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA))),
+                            List.of(
+                                    Engineer.RAM_TAH,
+                                    Engineer.PETRA_OLMANOVA
+                            )
+                    )
+            ),
             HorizonsBlueprintType.LIGHTWEIGHT,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_1,
@@ -35,42 +43,58 @@ public class PointDefenceBlueprints {
                                     Raw.PHOSPHORUS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-10%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.0, 0.45))
                             ),
-                            List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA)),
+                            List.of(
+                                    Engineer.RAM_TAH,
+                                    Engineer.PETRA_OLMANOVA
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-20%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-55%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.1, 0.2)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-55%", true, percentageNegative(0.45, 0.55))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
-                                    Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
+                                    Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-30%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-65%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.2, 0.3)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-65%", true, percentageNegative(0.55, 0.65))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
+                                    Manufactured.PROTOLIGHTALLOYS, 1,
                                     Manufactured.CONDUCTIVECOMPONENTS, 1,
-                                    Manufactured.PHASEALLOYS, 1,
-                                    Manufactured.PROTOLIGHTALLOYS, 1
+                                    Manufactured.PHASEALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-40%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-75%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-40%", false, percentageNegative(0.3, 0.4)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-75%", true, percentageNegative(0.65, 0.75))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.LIGHTWEIGHT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.CONDUCTIVECERAMICS, 1,
@@ -78,10 +102,15 @@ public class PointDefenceBlueprints {
                                     Manufactured.PROTORADIOLICALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-50%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-85%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-50%", false, percentageNegative(0.4, 0.5)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-85%", true, percentageNegative(0.75, 0.85))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH))),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    )
+            ),
             HorizonsBlueprintType.REINFORCED,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_1,
@@ -89,53 +118,74 @@ public class PointDefenceBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+60%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+30%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.0, 0.6)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.0, 0.3))
                             ),
-                            List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA)),
+                            List.of(
+                                    Engineer.RAM_TAH,
+                                    Engineer.PETRA_OLMANOVA
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+120%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.6, 1.2)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.3, 0.6))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
-                                    Manufactured.SHIELDEMITTERS, 1,
-                                    Raw.TUNGSTEN, 1
+                                    Raw.TUNGSTEN, 1,
+                                    Manufactured.SHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+180%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+90%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+180%", true, percentagePositive(1.2, 1.8)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+90%", false, percentagePositive(0.6, 0.9))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
                                     Raw.MOLYBDENUM, 1,
-                                    Raw.TUNGSTEN, 1,
-                                    Raw.ZINC, 1
+                                    Raw.ZINC, 1,
+                                    Raw.TUNGSTEN, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+240%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+120%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+240%", true, percentagePositive(1.8, 2.4)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+120%", false, percentagePositive(0.9, 1.2))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.REINFORCED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
-                                    Manufactured.HIGHDENSITYCOMPOSITES, 1,
+                                    Raw.TECHNETIUM, 1,
                                     Raw.MOLYBDENUM, 1,
-                                    Raw.TECHNETIUM, 1
+                                    Manufactured.HIGHDENSITYCOMPOSITES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+300%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+150%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+300%", true, percentagePositive(2.4, 3.0)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+150%", false, percentagePositive(1.2, 1.5))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH))),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    )
+            ),
             HorizonsBlueprintType.SHIELDED,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_1,
@@ -143,51 +193,74 @@ public class PointDefenceBlueprints {
                                     Manufactured.WORNSHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+20%", false),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+60%", true)
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.0, 0.6))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.SHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+40%", false),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+120%", true)
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.2, 0.4)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.6, 1.2))
                             ),
-                            List.of(Engineer.RAM_TAH, Engineer.PETRA_OLMANOVA)),
+                            List.of(
+                                    Engineer.RAM_TAH,
+                                    Engineer.PETRA_OLMANOVA
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
-                                    Manufactured.HIGHDENSITYCOMPOSITES, 1,
-                                    Manufactured.SHIELDEMITTERS, 1
+                                    Manufactured.SHIELDEMITTERS, 1,
+                                    Manufactured.HIGHDENSITYCOMPOSITES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+60%", false),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+180%", true)
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.4, 0.6)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+180%", true, percentagePositive(1.2, 1.8))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
-                                    Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
+                                    Raw.VANADIUM, 1,
                                     Manufactured.SHIELDINGSENSORS, 1,
-                                    Raw.VANADIUM, 1
+                                    Manufactured.FEDPROPRIETARYCOMPOSITES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+80%", false),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+240%", true)
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+80%", false, percentagePositive(0.6, 0.8)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+240%", true, percentagePositive(1.8, 2.4))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH)),
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.POINT_DEFENCE, HorizonsBlueprintType.SHIELDED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
-                                    Manufactured.COMPOUNDSHIELDING, 1,
+                                    Raw.TUNGSTEN, 1,
                                     Manufactured.FEDCORECOMPOSITES, 1,
-                                    Raw.TUNGSTEN, 1
+                                    Manufactured.COMPOUNDSHIELDING, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+100%", false),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+300%", true)
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.8, 1.0)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+300%", true, percentagePositive(2.4, 3.0))
                             ),
-                            List.of(Engineer.PETRA_OLMANOVA, Engineer.RAM_TAH))));
+                            List.of(
+                                    Engineer.PETRA_OLMANOVA,
+                                    Engineer.RAM_TAH
+                            )
+                    )
+            )
+    );
+
 }
