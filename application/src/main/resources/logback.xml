@@ -3,7 +3,6 @@
         <target>System.out</target>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
-            <outputPatternAsHeader>true</outputPatternAsHeader>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
@@ -13,7 +12,6 @@
         <append>false</append>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
-            <outputPatternAsHeader>true</outputPatternAsHeader>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n
             </pattern>
         </encoder>
