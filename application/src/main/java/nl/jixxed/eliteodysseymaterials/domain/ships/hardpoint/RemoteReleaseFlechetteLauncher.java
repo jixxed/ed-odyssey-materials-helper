@@ -1,4 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
 public class RemoteReleaseFlechetteLauncher {
+    //            87223 : { mtype:'hex', cost:  353760, name:'Remote Release Flechette Launcher',mount:'F',         class:2, rating:'B', mass: 4.00, integ:51, pwrdraw:1.20, boottime:0, dps: 6.5  , damage:13.0  , distdraw:0.240, thmload:3.60, pierce: 80,                  shotspd: 550, rof:0.500, bstint:2.000,                      ammoclip: 1, ammomax:  72,            rldtime:2.0, brcdmg: 6.5,minbrc:100,maxbrc:100,             kinwgt:10/.13, expwgt:3/.13, ammocost: 56,              noblueprints:{'*':1},                         fdid:128833996, fdname:'Hpt_FlechetteLauncher_Fixed_Medium', eddbid:1751 }, // human tech broker // TODO: get frag damage
+//            87222 : { mtype:'hex', cost: 1279200, name:'Remote Release Flechette Launcher',mount:'T',         class:2, rating:'B', mass: 4.00, integ:51, pwrdraw:1.20, boottime:0, dps: 6.5  , damage:13.0  , distdraw:0.240, thmload:3.60, pierce: 70,                  shotspd: 550, rof:0.500, bstint:2.000,                      ammoclip: 1, ammomax:  72,            rldtime:2.0, brcdmg: 6.5,minbrc:100,maxbrc:100,             kinwgt:10/.13, expwgt:3/.13, ammocost: 56,              noblueprints:{'*':1},                         fdid:128833997, fdname:'Hpt_FlechetteLauncher_Turret_Medium', eddbid:1752 }, // human tech broker // verify cost // TODO: get frag damage
+
 }

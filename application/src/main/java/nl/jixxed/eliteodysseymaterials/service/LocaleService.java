@@ -56,6 +56,7 @@ public class LocaleService {
             "material/odyssey/good",
             "material/odyssey/spawn",
             "material/trade",
+            "ships/blueprint.groups",
             "ships/ships",
             "ships/modules",
             "ships/interface",

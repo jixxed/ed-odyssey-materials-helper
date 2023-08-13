@@ -1,67 +1,90 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import javafx.geometry.Orientation;
+import javafx.scene.control.Separator;
+import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShiftDriveBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
+@Slf4j
 public class JumpStats extends Stats implements Template {
-    private final Ship ship;
+    private DestroyableLabel minJumpRange;
+    private DestroyableLabel maxJumpRange;
+    private DestroyableLabel maxFueledJumpRange;
+    private DestroyableLabel currentJumpRange;
 
     public JumpStats(final Ship ship) {
-        super();
-        this.ship = ship;
+        super(ship);
         initComponents();
         initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.jumprange")).build());
-        this.getChildren().add(LabelBuilder.builder().withNonLocalizedText(String.format("%.2f", calculateJumpRange())).build());
-    }
-//    { attr:'jumpbst',    fdattr:'FSDJumpRangeBoost',      abbr:'JBst'
+        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.jumprange"), new GrowingRegion()).buildHBox());
+        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        this.minJumpRange = createValueLabel(String.format("%.2f", calculateJumpRangeMin()));
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.jumprange.min"), new GrowingRegion(),
+                this.minJumpRange).buildHBox());
+        this.currentJumpRange = createValueLabel(String.format("%.2f", calculateJumpRangeCurrent()));
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.jumprange.current"), new GrowingRegion(), this.currentJumpRange).buildHBox());
 
-//    { attr:'fsdoptmass', fdattr:'FSDOptimalMass',         abbr:'OMas', name:'Optimised Mass'
+        this.maxFueledJumpRange = createValueLabel(String.format("%.2f", calculateJumpRangeMaxFueled()));
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.jumprange.maxfueled"), new GrowingRegion(), this.maxFueledJumpRange).buildHBox());
 
-    // derived FSD stats
-//    var slot = this.getSlot('component', CORE_ABBR_SLOT.FD);
-//    var optmass = slot.getEffectiveAttrValue('fsdoptmass');
-//    var maxfuel = slot.getEffectiveAttrValue('maxfuel');
-//    var fuelmul = slot.getEffectiveAttrValue('fuelmul');
-//    var fuelpower = slot.getEffectiveAttrValue('fuelpower');
-//    stats._jump_laden    = getJumpDistance(            stats.mass + stats.fuelcap + stats.cargocap, min(stats.fuelcap, maxfuel), optmass, fuelmul, fuelpower, stats.jumpbst);
-//    stats._jump_unladen  = getJumpDistance(            stats.mass + stats.fuelcap                 , min(stats.fuelcap, maxfuel), optmass, fuelmul, fuelpower, stats.jumpbst);
-//    stats._jump_max      = getJumpDistance(            stats.mass + min(stats.fuelcap, maxfuel)   , min(stats.fuelcap, maxfuel), optmass, fuelmul, fuelpower, stats.jumpbst);
-//    stats._range_laden   = getJumpRange(stats.fuelcap, stats.mass + stats.fuelcap + stats.cargocap, min(stats.fuelcap, maxfuel), optmass, fuelmul, fuelpower, stats.jumpbst);
-//    stats._range_unladen = getJumpRange(stats.fuelcap, stats.mass + stats.fuelcap                 , min(stats.fuelcap, maxfuel), optmass, fuelmul, fuelpower, stats.jumpbst);
-    private double calculateJumpRange() {
-        // https://forums.frontier.co.uk/threads/mass-effect-on-hyperspace-range.32734/#post-643461
-        final double fuelcap = this.ship.getMaxFuel();
-        final double mass = this.ship.getCoreSlots().stream().map(slot -> (double)slot.getShipModule().getAttributes().getOrDefault(HorizonsModifier.MASS, 0.0)).reduce(0.0, Double::sum) + this.ship.getCurrentCargo() + this.ship.getCurrentFuel();
-        final double fuel = this.ship.getCurrentFuel();
-        final double fsdOpt = this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double)slot.getShipModule().getAttributes().get(HorizonsModifier.OPTIMISED_MASS)).orElse(1D);
-        final double fsdMul = this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double)slot.getShipModule().getAttributes().get(HorizonsModifier.FUEL_MULTIPLIER)).orElse(1D);
-        final double fsdExp =  this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double)slot.getShipModule().getAttributes().get(HorizonsModifier.FUEL_POWER)).orElse(1D);
-        final double jmpBst = this.ship.getOptionalSlots().stream().filter(slot -> slot.getShipModule() instanceof FrameShiftDriveBooster).findFirst().map(slot -> (double)slot.getShipModule().getAttributes().get(HorizonsModifier.JUMP_RANGE_INCREASE)).orElse(0D);
-        final var range = 0;
-//        while (fuelcap < fuel) {
-//            range += calculateJumpDistance(mass, fuel, fsdOpt, fsdMul, fsdExp, jmpBst);
-//            fuelcap -= fuel;
-//            mass -= fuel;
-//        }
-        return range + calculateJumpDistance(mass, fuelcap, fsdOpt, fsdMul, fsdExp, jmpBst);
+        this.maxJumpRange = createValueLabel(String.format("%.2f", calculateJumpRangeMax()));
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.jumprange.max"), new GrowingRegion(), this.maxJumpRange).buildHBox());
     }
 
-    private double calculateJumpDistance(final double mass, final double fuel, final double fsdOpt, final double fsdMul, final double fsdExp, final double jmpBst) {
-        return Math.pow(fuel / fsdMul, 1 / fsdExp) * fsdOpt / mass + jmpBst;
+
+    public double calculateJumpRangeMin() {
+        return calculateJumpRange(this.ship.getEmptyMass() + this.ship.getMaxCargo() + this.ship.getMaxFuel(), this.ship.getMaxFuel());
+    }
+
+    public double calculateJumpRangeCurrent() {
+        return calculateJumpRange(this.ship.getEmptyMass() + this.ship.getCurrentCargo() + this.ship.getCurrentFuel() + this.ship.getFuelReserve(), this.ship.getCurrentFuel());
+    }
+
+    public double calculateJumpRangeMax() {
+        final double fuel = this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP,1D)).orElse(1D);
+        return calculateJumpRange(this.ship.getEmptyMass() + fuel, fuel);
+    }
+
+    public double calculateJumpRangeMaxFueled() {
+        return calculateJumpRange(this.ship.getEmptyMass() + this.ship.getMaxFuel(), this.ship.getMaxFuel());
+    }
+
+    public double calculateJumpRange(final double mass, final double fuel) {
+        final double maxFuelPerJump = this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.MAX_FUEL_PER_JUMP,1D)).orElse(1D);
+        final double optimisedMass = this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.OPTIMISED_MASS,1D)).orElse(1D);
+        final double fuelMultiplier = this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.FUEL_MULTIPLIER,1D)).orElse(1D);
+        final double fuelPower = this.ship.getCoreSlots().stream().filter(slot -> slot.getSlotType() == SlotType.CORE_FRAME_SHIFT_DRIVE).findFirst().map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.FUEL_POWER,1D)).orElse(1D);
+        final double jumpRangeIncrease = this.ship.getOptionalSlots().stream().filter(slot -> slot.getShipModule() instanceof FrameShiftDriveBooster).findFirst().map(slot -> (double) slot.getShipModule().getAttributeValueOrDefault(HorizonsModifier.JUMP_RANGE_INCREASE,1D)).orElse(0D);
+        return calculateJumpDistance(mass, Math.min(fuel, maxFuelPerJump), optimisedMass, fuelMultiplier, fuelPower, jumpRangeIncrease);
+    }
+
+    private double calculateJumpDistance(final double mass, final double fuel, final double optimisedMass, final double fuelMultiplier, final double fuelPower, final double jumpRangeIncrease) {
+        return Math.pow(fuel / fuelMultiplier, 1 / fuelPower) * optimisedMass / mass + jumpRangeIncrease;
     }
 
     @Override
     public void initEventHandling() {
+        this.eventListeners.add(EventService.addListener(this, ShipBuilderEvent.class, event -> update()));
+    }
 
+    private void update() {
+        log.debug("update ranges");
+        this.minJumpRange.setText(String.format("%.2f", calculateJumpRangeMin()));
+        this.currentJumpRange.setText(String.format("%.2f", calculateJumpRangeCurrent()));
+        this.maxFueledJumpRange.setText(String.format("%.2f", calculateJumpRangeMaxFueled()));
+        this.maxJumpRange.setText(String.format("%.2f", calculateJumpRangeMax()));
     }
 }

@@ -1,0 +1,8 @@
+package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
+
+public class TorpedoPylon {
+//    		85193 : { mtype:'htp', cost:   11200, name:'Torpedo Pylon',               mount:'F', missile:'S', class:1, rating:'I', mass: 2.00, integ:40, pwrdraw:0.40, boottime:0,dps:120.000,damage:120.000,                thmload:45.00, pierce:1e4,              shotspd: 250, rof:1.000, bstint:1.000,                      ammoclip: 1,                          rldtime:5.0, brcdmg:60.0, minbrc:100,maxbrc:100,            expwgt:100, ammocost:15000, fdid:128049509, fdname:'Hpt_AdvancedTorpPylon_Fixed_Small', eddbid:882 },
+//            85293 : { mtype:'htp', cost:   44800, name:'Torpedo Pylon',               mount:'F', missile:'S', class:2, rating:'I', mass: 4.00, integ:51, pwrdraw:0.40, boottime:0,dps:120.000,damage:120.000,                thmload:50.00, pierce:1e4,              shotspd: 250, rof:1.000, bstint:1.000,                      ammoclip: 2,                          rldtime:5.0, brcdmg:60.0, minbrc:100,maxbrc:100,            expwgt:100, ammocost:15000, fdid:128049510, fdname:'Hpt_AdvancedTorpPylon_Fixed_Medium', eddbid:883 },
+//            85393 : { mtype:'htp', cost:  157960, name:'Torpedo Pylon',               mount:'F', missile:'S', class:3, rating:'I', mass: 8.00, integ:64, pwrdraw:0.60, boottime:0,dps:120.000,damage:120.000,                thmload:55.00, pierce:1e4,              shotspd: 250, rof:1.000, bstint:1.000,                      ammoclip: 4,                          rldtime:5.0, brcdmg:60.0, minbrc:100,maxbrc:100,            expwgt:100, ammocost:15000, fdid:128049511, fdname:'Hpt_AdvancedTorpPylon_Fixed_Large', eddbid:1655 },
+
+}

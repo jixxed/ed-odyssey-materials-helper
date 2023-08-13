@@ -50,6 +50,7 @@ class PathServiceTest {
 
     @Test
     @TestInJfxThread
+    @SuppressWarnings("unchecked")
     void calculateShortestPath() {
         LocaleService.setCurrentLocale(Locale.ENGLISH);
         final List<OdysseyWishlistBlueprintTemplate> wishlistBlueprints = List.of(

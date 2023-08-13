@@ -20,11 +20,11 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
-import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.JumpStats;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.*;
 
 public class HorizonsShipBuilderTab extends HorizonsTab {
     @Getter
-    private final Ship ship = new Ship(Ship.ADDER);
+    private final Ship ship = new Ship(Ship.CUTTER);
     private ScrollPane scrollPane;
     private VBox hardpointsVbox;
     private VBox coreVbox;
@@ -63,7 +63,14 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         this.stackPane = new StackPane(image,image2);
         this.stackPane.getStyleClass().add("shipbuilder-stackpane");
         final HBox stats = BoxBuilder.builder().buildHBox();
-        stats.getChildren().add(new JumpStats(this.ship));
+        stats.getChildren().addAll(
+                new JumpStats(this.ship),
+                new EngineStats(this.ship),
+                new HandlingStats(this.ship),
+                new HullStats(this.ship),
+                new ShieldStats(this.ship),
+                new WeaponStats(this.ship)
+        );
         final VBox content = BoxBuilder.builder().withNodes(stats, this.items).buildVBox();
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(content)

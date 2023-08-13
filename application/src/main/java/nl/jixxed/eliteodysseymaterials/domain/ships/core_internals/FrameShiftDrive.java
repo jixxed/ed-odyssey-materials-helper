@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.core_internals;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.FSDBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.ships.CoreModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
@@ -7,7 +9,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -117,12 +118,12 @@ public class FrameShiftDrive extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return Collections.emptyList();
+        return FSDBlueprints.BLUEPRINTS.keySet().stream().toList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        return Collections.emptyList();
+        return ExperimentalEffectBlueprints.FRAME_SHIFT_DRIVE.keySet().stream().toList();
     }
 
     @Override

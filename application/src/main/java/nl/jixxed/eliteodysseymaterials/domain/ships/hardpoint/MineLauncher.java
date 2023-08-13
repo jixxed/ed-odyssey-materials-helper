@@ -1,0 +1,8 @@
+package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
+
+public class MineLauncher {
+//    	80190 : { mtype:'hm',  cost:   24260, name:'Mine Launcher',               mount:'F',              class:1, rating:'I', mass: 2.00, integ:40, pwrdraw:0.40, boottime:0, dps:44.000, damage:44.000,                 thmload:5.00, pierce: 60,                            rof:1.000, bstint:1.000,                      ammoclip: 1, ammomax:  36,            rldtime:2.0,              minbrc: 0, maxbrc: 0,             expwgt:26/.44, thmwgt:18/.44, ammocost:209, fdid:128049500, fdname:'Hpt_MineLauncher_Fixed_Small', eddbid:880 },
+//            80191 : { mtype:'hm',  cost:   36390, name:'Shock Mine Launcher',         mount:'F',              class:1, rating:'I', mass: 2.00, integ:40, pwrdraw:0.40, boottime:0, dps:32.000, damage:32.000,                 thmload:5.00, pierce: 60,                            rof:1.000, bstint:1.000,                      ammoclip: 1, ammomax:  36,            rldtime:2.0, brcdmg: 9.6, minbrc: 0, maxbrc: 0,             expwgt:20/.32, thmwgt:12/.32, ammocost:209, fdid:128671448, fdname:'Hpt_MineLauncher_Fixed_Small_Impulse', eddbid:1523 },
+//            80290 : { mtype:'hm',  cost:  294080, name:'Mine Launcher',               mount:'F',              class:2, rating:'I', mass: 4.00, integ:51, pwrdraw:0.40, boottime:0, dps:44.000, damage:44.000,                 thmload:7.50, pierce: 60,                            rof:1.000, bstint:1.000,                      ammoclip: 3, ammomax:  72,            rldtime:6.6, brcdmg:13.2, minbrc: 0, maxbrc: 0,             expwgt:26/.44, thmwgt:18/.44, ammocost:209, fdid:128049501, fdname:'Hpt_MineLauncher_Fixed_Medium', eddbid:881 },
+
+}

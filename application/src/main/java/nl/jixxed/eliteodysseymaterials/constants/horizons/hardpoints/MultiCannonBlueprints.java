@@ -464,7 +464,7 @@ public class MultiCannonBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, constant(0.5)),
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.0, 0.25)),
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
@@ -485,7 +485,7 @@ public class MultiCannonBlueprints {
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-5%", true, percentageNegative(0.0, 0.05)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.01, 0.02)),
-                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, constant(0.5))
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -504,7 +504,7 @@ public class MultiCannonBlueprints {
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.05, 0.15)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.02, 0.03)),
-                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, constant(0.5))
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -523,7 +523,7 @@ public class MultiCannonBlueprints {
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-55%", true, percentageNegative(0.45, 0.55)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.03, 0.04)),
-                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, constant(0.5))
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,
@@ -541,7 +541,7 @@ public class MultiCannonBlueprints {
                                     HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-65%", true, percentageNegative(0.55, 0.65)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.04, 0.05)),
-                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, constant(0.5))
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5))
                             ),
                             List.of(
                                     Engineer.MARSHA_HICKS,

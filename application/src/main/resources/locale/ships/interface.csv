@@ -1,2 +1,11 @@
 messageKey,,en,de,es,fr,pt,ru
 ship.stats.jumprange,Jump range,,,,,,
+ship.stats.jumprange.min,Minimum range,,,,,,
+ship.stats.jumprange.current,Current range,,,,,,
+ship.stats.jumprange.maxfueled,Maximum range (full fuel),,,,,,
+ship.stats.jumprange.max,Maximum range (minimal fuel),,,,,,
+ship.stats.engine,Engine,,,,,,
+ship.stats.handling,Handling,,,,,,
+ship.stats.hull,Hull,,,,,,
+ship.stats.shield,Shield,,,,,,
+ship.stats.weapon,Weapon,,,,,,

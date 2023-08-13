@@ -11,10 +11,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -22,7 +19,6 @@ public abstract class ShipModule implements Serializable {
     private static final List<ShipModule> SHIP_MODULES = new ArrayList<>();
     @Getter
     private final HorizonsBlueprintName name;
-    @Getter
     private final Map<HorizonsModifier, Object> attributes = new HashMap<>();
     @Getter
     private final ModuleClass moduleClass;
@@ -83,20 +79,29 @@ public abstract class ShipModule implements Serializable {
     }
 
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final Double modificationCompleteness) {
-        if (!validModification(modification, false)) {
+        if (validModification(modification, false)) {
             final Modification mod = new Modification(modification, modificationCompleteness, grade);
             if(!this.modifications.contains(mod)){
+                this.modifications.clear();
                 this.modifications.add(mod);
             }
         }
     }
 
     public void applyExperimentalEffect(final HorizonsBlueprintType experimentalEffect) {
-        if (!validModification(experimentalEffect, true) && !this.experimentalEffects.contains(experimentalEffect)) {
+        if (validModification(experimentalEffect, true) && !this.experimentalEffects.contains(experimentalEffect)) {
+            this.experimentalEffects.clear();
             this.experimentalEffects.add(experimentalEffect);
         }
     }
 
+    public void removeModification(final HorizonsBlueprintType modification) {
+        this.modifications.removeIf(modification1 -> Objects.equals(modification1.getModification(), modification));
+    }
+
+    public void removeExperimentalEffect(final HorizonsBlueprintType experimentalEffect) {
+        this.experimentalEffects.removeIf(experimentalEffect1 -> Objects.equals(experimentalEffect1, experimentalEffect));
+    }
     private boolean validModification(final HorizonsBlueprintType modification, final boolean experimental) {
         if (experimental) {
             return getAllowedExperimentalEffects().contains(modification);
@@ -104,27 +109,46 @@ public abstract class ShipModule implements Serializable {
         return getAllowedBlueprints().contains(modification);
     }
 
+    public Object getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, final Object defaultValue) {
+       try{
+           return getAttributeValue(moduleAttribute);
+       }catch (final IllegalArgumentException e){
+           return defaultValue;
+       }
+    }
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
-        final AtomicReference<Object> value = new AtomicReference<>(this.attributes.get(moduleAttribute));
+        final Object baseAttributeValue = this.attributes.get(moduleAttribute);
+        if(baseAttributeValue instanceof Double){
+            Double toReturn = Double.valueOf((double)baseAttributeValue);
+            return applyModsToAttributeValue(moduleAttribute, toReturn);
+        }else if(baseAttributeValue instanceof Boolean){
+            Boolean toReturn = Boolean.valueOf((boolean)baseAttributeValue);
+            return applyModsToAttributeValue(moduleAttribute, toReturn);
+        }
+        return baseAttributeValue;
+
+    }
+
+    private Object applyModsToAttributeValue(HorizonsModifier moduleAttribute, Object attributeValue) {
+        final AtomicReference<Object> value = new AtomicReference<>(attributeValue);
         this.modifications.forEach(modification -> {
-                final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name, modification.getModification(), modification.getGrade());
-                final HorizonsModifierValue moduleModifier = moduleBlueprint.getModifiers().get(moduleAttribute);
-                if(moduleModifier != null) {
-                    value.set(moduleModifier.getModifiedValue(value.get(), modification.getModificationCompleteness()));
-                }
+            final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name, modification.getModification(), modification.getGrade());
+            final HorizonsModifierValue moduleModifier = moduleBlueprint.getModifiers().get(moduleAttribute);
+            if(moduleModifier != null) {
+                value.set(moduleModifier.getModifiedValue(value.get(), modification.getModificationCompleteness()));
+            }
         });
         this.experimentalEffects.forEach(modification -> {
-                final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name).get(modification);
-                final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(moduleAttribute);
-                if(experimentalEffectModifier != null) {
-                    value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
-                }
+            final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name).get(modification);
+            final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(moduleAttribute);
+            if(experimentalEffectModifier != null) {
+                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
+            }
         });
         return value.get();
-
     }
 
     public abstract List<HorizonsBlueprintType> getAllowedBlueprints();
@@ -138,5 +162,12 @@ public abstract class ShipModule implements Serializable {
 
     public String getClarifier() {
         return "";
+    }
+    public String getNonSortingClarifier() {
+        return "";
+    }
+
+    public boolean isAllowed(ShipType shipType) {
+        return true;
     }
 }

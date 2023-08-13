@@ -2779,3 +2779,21 @@
     -fx-pref-width: 25.5em;
     -fx-max-width: 25.5em;
 }
+.shipbuilder-stats{
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 0.2em;
+    -fx-border-color: white;
+    -fx-border-width: 0.1em;
+    -fx-border-insets: 0.1em;
+    -fx-background-insets: 0.1em;
+}
+.shipbuilder-stats-title{
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+}
+.shipbuilder-stats-label{
+    -fx-label-padding: 0 1em 0 0;
+}
+.shipbuilder-stats-value{
+    -fx-font-weight: bold;
+}

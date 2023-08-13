@@ -15,6 +15,8 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import org.controlsfx.control.PopOver;
 
@@ -63,13 +65,13 @@ class SlotBox extends HBox {
             });
             this.onMouseExitedProperty().set(event -> tab.toggleUtilityImage(false));
         }
-        ShipModule.getModules(slot.getSlotType());
+//        ShipModule.getModules(slot.getSlotType());
 
         this.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (this.popOver == null) {
-                    this.popOver = getPopOver();
-                }
+
+                this.popOver = getPopOver();
+
                 final Bounds boundsInLocal = this.getBoundsInLocal();
                 final Bounds bounds = this.localToScreen(boundsInLocal);
                 this.popOver.show(this, bounds.getMinX(),
@@ -77,6 +79,7 @@ class SlotBox extends HBox {
             } else if (event.getButton().equals(MouseButton.SECONDARY)) {
                 if (!slot.getSlotType().isCore()) {
                     this.slot.setShipModule(null);
+                    notifyChanged();
                     this.refresh();
                 }
             }
@@ -85,6 +88,7 @@ class SlotBox extends HBox {
         this.setOnDragDetected(event -> {
             if (this.popOver != null && this.popOver.isShowing()) {
                 this.popOver.hide();
+                this.popOver = null;
             }
             log.debug("setOnDragDetected " + this.slot.getIndex());
             final Dragboard db = this.startDragAndDrop(TransferMode.ANY);
@@ -119,14 +123,27 @@ class SlotBox extends HBox {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             //refreshStyle(false);
+            if(((SlotBox) event.getGestureSource()) != null && ((SlotBox) event.getGestureSource()).getSlot().getShipModule() != null){
+
+                log.debug("source:" + ((SlotBox) event.getGestureSource()).getSlot().getShipModule().getInternalName());
+            }
+            if(((SlotBox) event.getGestureTarget()) != null && ((SlotBox) event.getGestureTarget()).getSlot().getShipModule() != null){
+
+                log.debug("target:" +((SlotBox) event.getGestureTarget()).getSlot().getShipModule().getInternalName());
+            }
+            if(this.slot.getShipModule() != null){
+
+                log.debug("this.slot:" + this.slot.getShipModule().getInternalName());
+            }
             if (event.getTransferMode() == TransferMode.COPY) {
 //                ((SlotBox)event.getGestureSource()).module.setText(((SlotBox)event.getGestureSource()).slot.getShipModule().getName());
-                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(((SlotBox) event.getGestureSource()).slot.getShipModule().getName().getLocalizationKey()));
+                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(((SlotBox) event.getGestureSource()).slot.getShipModule().getName().getLocalizationKey()).concat(" " + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleSize()+ ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleClass()));
                 ((SlotBox) event.getGestureSource()).showContents();
-            } else if (event.getTransferMode() == TransferMode.MOVE && this.slot.getShipModule() != null) {
-                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(this.slot.getShipModule().getName().getLocalizationKey()));
+            } else if (event.getTransferMode() == TransferMode.MOVE && this.slot.getShipModule() != null){// && (((SlotBox) event.getGestureSource()) == null || this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass()))) {
+
+                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(this.slot.getShipModule().getName().getLocalizationKey()).concat(" " + this.slot.getShipModule().getModuleSize()+ this.slot.getShipModule().getModuleClass()));
                 ((SlotBox) event.getGestureSource()).showContents();
-            } else if (event.getTransferMode() == TransferMode.MOVE && event.getGestureSource() != this) {
+            } else if (event.getTransferMode() == TransferMode.MOVE && event.getGestureSource() != this){// && (this.slot.getShipModule() == null || ( this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass())))) {
                 ((SlotBox) event.getGestureSource()).hideContents();
             }
             event.consume();
@@ -137,7 +154,7 @@ class SlotBox extends HBox {
             /* show to the user that it is an actual gesture target */
             if (event.getGestureSource() != this &&
                     event.getDragboard().hasContent(customFormat) && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())) {
-                this.module.textProperty().bind(LocaleService.getStringBinding(((ShipModule) event.getDragboard().getContent(customFormat)).getName().getLocalizationKey()));
+                this.module.textProperty().bind(LocaleService.getStringBinding(((ShipModule) event.getDragboard().getContent(customFormat)).getName().getLocalizationKey()).concat(" " + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleSize()+ ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleClass()));
                 this.getStyleClass().add("shipbuilder-slots-slotbox-hover-good");
             } else {
                 this.getStyleClass().add("shipbuilder-slots-slotbox-hover-bad");
@@ -176,6 +193,7 @@ class SlotBox extends HBox {
                 contentOld.put(customFormat, this.slot.getShipModule() != null ? this.slot.getShipModule() : "null");
                 event.getDragboard().setContent(contentOld);
                 this.slot.setShipModule(((ShipModule) content));
+                notifyChanged();
                 this.refresh();
                 success = true;
             }
@@ -190,18 +208,21 @@ class SlotBox extends HBox {
             log.debug("setOnDragDone " + this.slot.getIndex());
             /* the drag and drop gesture ended */
             /* if the data was successfully moved, clear it */
-            if (event.getTransferMode() == TransferMode.MOVE) {
+            if (event.getTransferMode() == TransferMode.MOVE ) {
                 final Object content = event.getDragboard().getContent(customFormat);
                 if (!(content instanceof String) && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())) {
                     this.slot.setShipModule(((ShipModule) content));
+                    notifyChanged();
                 } else {
                     this.slot.setShipModule(null);
                 }
-                this.refresh();
             }
+            this.refresh();
             this.dragging = false;
 //            this.refreshStyle(false);
             event.consume();
+            this.getTab().getShip().getOptionalSlots().forEach(slot1 -> System.out.println(slot1.getShipModule() != null ? slot1.getShipModule().getInternalName() :"EMPTY"));
+            notifyChanged();
         });
         this.refresh();
     }
@@ -226,7 +247,10 @@ class SlotBox extends HBox {
     private PopOver getPopOver() {
         final VBox content = BoxBuilder.builder()/*.withNode(LabelBuilder.builder().withNonLocalizedText("test").build())*/.withStyleClass("shipbuilder-slots-slotbox-popover-vbox").buildVBox();
         content.getChildren().addAll(
-                ShipModule.getModules(this.slot.getSlotType()).stream().collect(Collectors.groupingBy(ShipModule::getClass)).values().stream().map(list -> new SlotBoxEntry(this, list)).toList()
+                ShipModule.getModules(this.slot.getSlotType()).stream()
+                        .filter(module -> module.isAllowed(tab.getShip().getShipType()))
+                        .collect(Collectors.groupingBy(ShipModule::getClass))
+                        .values().stream().map(list -> new SlotBoxEntry(tab,this, list)).toList()
         );
         final ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.getStyleClass().add("shipbuilder-slots-slotbox-popover-content");
@@ -265,6 +289,7 @@ class SlotBox extends HBox {
     public void close() {
         if (this.popOver != null && this.popOver.isShowing()) {
             this.popOver.hide();
+            this.popOver = null;
         }
     }
 
@@ -303,4 +328,7 @@ class SlotBox extends HBox {
 //            this.label.setText(this.slot.getSlotType().name() + this.slot.getIndex());
 //        }
 //    }
+    private void notifyChanged() {
+    EventService.publish(new ShipBuilderEvent());
+}
 }
