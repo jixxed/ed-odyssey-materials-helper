@@ -121,7 +121,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.14.1'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.14.1'
-    implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.5'
+    implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.6'
     implementation 'org.slf4j:slf4j-api:2.0.6'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'ch.qos.logback:logback-core:1.4.8'
