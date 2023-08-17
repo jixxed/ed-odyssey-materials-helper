@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
@@ -15,14 +16,18 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class ShipModule implements Serializable {
     private static final List<ShipModule> SHIP_MODULES = new ArrayList<>();
     @Getter
+    @EqualsAndHashCode.Include
     private final HorizonsBlueprintName name;
     private final Map<HorizonsModifier, Object> attributes = new HashMap<>();
     @Getter
+    @EqualsAndHashCode.Include
     private final ModuleClass moduleClass;
     @Getter
+    @EqualsAndHashCode.Include
     private final ModuleSize moduleSize;
     @Getter
     private final int basePrice;
@@ -32,7 +37,9 @@ public abstract class ShipModule implements Serializable {
     private final boolean multiCrew;
     @Getter
     private final String internalName;
+    @Getter
     private final List<Modification> modifications = new ArrayList<>();
+    @Getter
     private final List<HorizonsBlueprintType> experimentalEffects = new ArrayList<>();
 
     ShipModule(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
@@ -67,6 +74,8 @@ public abstract class ShipModule implements Serializable {
         this.multiCrew = shipModule.multiCrew;
         this.basePrice = shipModule.basePrice;
         this.internalName = shipModule.internalName;
+        this.modifications.addAll(shipModule.modifications.stream().map(modification -> new Modification(modification.getModification(), modification.getModificationCompleteness(), modification.getGrade())).toList());
+        this.experimentalEffects.addAll(shipModule.experimentalEffects);
         this.attributes.putAll(shipModule.attributes);
     }
 
@@ -123,13 +132,23 @@ public abstract class ShipModule implements Serializable {
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
         if(baseAttributeValue instanceof Double){
             Double toReturn = Double.valueOf((double)baseAttributeValue);
-            return applyModsToAttributeValue(moduleAttribute, toReturn);
+            toReturn = preAdaptAttributeValue(moduleAttribute, toReturn);
+            toReturn = (Double)applyModsToAttributeValue(moduleAttribute, toReturn);
+            toReturn = postAdaptAttributeValue(moduleAttribute, toReturn);
+            return toReturn;
         }else if(baseAttributeValue instanceof Boolean){
             Boolean toReturn = Boolean.valueOf((boolean)baseAttributeValue);
             return applyModsToAttributeValue(moduleAttribute, toReturn);
         }
         return baseAttributeValue;
+    }
 
+    public Double preAdaptAttributeValue(final HorizonsModifier moduleAttribute, final Double toReturn) {
+        return toReturn;
+    }
+
+    public Double postAdaptAttributeValue(final HorizonsModifier moduleAttribute, final Double toReturn) {
+        return toReturn;
     }
 
     private Object applyModsToAttributeValue(HorizonsModifier moduleAttribute, Object attributeValue) {
@@ -138,7 +157,8 @@ public abstract class ShipModule implements Serializable {
             final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name, modification.getModification(), modification.getGrade());
             final HorizonsModifierValue moduleModifier = moduleBlueprint.getModifiers().get(moduleAttribute);
             if(moduleModifier != null) {
-                value.set(moduleModifier.getModifiedValue(value.get(), modification.getModificationCompleteness()));
+                //if negative effect, apply fully
+                value.set(moduleModifier.getModifiedValue(value.get(), moduleModifier.isPositive() ? modification.getModificationCompleteness() : 1D));
             }
         });
         this.experimentalEffects.forEach(modification -> {
@@ -169,5 +189,8 @@ public abstract class ShipModule implements Serializable {
 
     public boolean isAllowed(ShipType shipType) {
         return true;
+    }
+    public boolean isPreEngineered() {
+        return false;
     }
 }

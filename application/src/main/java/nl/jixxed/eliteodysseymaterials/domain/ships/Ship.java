@@ -37,7 +37,8 @@ public class Ship {
             FrameShiftDriveBooster.FRAME_SHIFT_DRIVE_BOOSTERS,
             Computer.COMPUTERS,
             ShieldGenerator.SHIELD_GENERATORS,
-            PassengerCabin.PASSENGER_CABINS
+            PassengerCabin.PASSENGER_CABINS,
+            DetailedSurfaceScanner.DETAILED_SURFACE_SCANNERS
             //utility
 
     );

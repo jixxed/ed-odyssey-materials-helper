@@ -3,8 +3,10 @@ package nl.jixxed.eliteodysseymaterials.domain.ships.core_internals;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.FSDBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.ships.CoreModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -74,8 +76,18 @@ public class FrameShiftDrive extends CoreModule {
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_7_C = new FrameShiftDrive(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, ModuleSize.SIZE_7, ModuleClass.C, 5698790, "Int_Hyperdrive_Size7_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.00), Map.entry(HorizonsModifier.INTEGRITY, 131.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.60), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.OPTIMISED_MASS, 1800.0), Map.entry(HorizonsModifier.THERMAL_LOAD, 43.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 8.50), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.75)));
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_7_B = new FrameShiftDrive(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, ModuleSize.SIZE_7, ModuleClass.B, 17096370, "Int_Hyperdrive_Size7_Class4", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 128.00), Map.entry(HorizonsModifier.INTEGRITY, 197.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.75), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.OPTIMISED_MASS, 2250.0), Map.entry(HorizonsModifier.THERMAL_LOAD, 43.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 10.60), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.010), Map.entry(HorizonsModifier.FUEL_POWER, 2.75)));
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_7_A = new FrameShiftDrive(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, ModuleSize.SIZE_7, ModuleClass.A, 51289110, "Int_Hyperdrive_Size7_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.00), Map.entry(HorizonsModifier.INTEGRITY, 164.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.90), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.OPTIMISED_MASS, 2700.0), Map.entry(HorizonsModifier.THERMAL_LOAD, 43.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 12.80), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.012), Map.entry(HorizonsModifier.FUEL_POWER, 2.75)));
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_5_A_V1_PRE = new FrameShiftDrive(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_V1_PRE, ModuleSize.SIZE_5, ModuleClass.A, 5103950, "Int_Hyperdrive_Size5_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.00), Map.entry(HorizonsModifier.INTEGRITY, 120.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.60), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.OPTIMISED_MASS, 1050.0), Map.entry(HorizonsModifier.THERMAL_LOAD, 27.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 5.00), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.012), Map.entry(HorizonsModifier.FUEL_POWER, 2.45)));
 
-    public static final  List<FrameShiftDrive> FRAME_SHIFT_DRIVES = List.of(
+    static {
+        FRAME_SHIFT_DRIVE_5_A_V1_PRE.getModifications().addAll(
+                List.of(
+                        new Modification(HorizonsBlueprintType.FASTER_FSD_BOOT_SEQUENCE, 1.0, HorizonsBlueprintGrade.GRADE_5),
+                        new Modification(HorizonsBlueprintType.INCREASED_FSD_RANGE, 1.0, HorizonsBlueprintGrade.GRADE_5)
+                )
+        );
+    }
+
+    public static final List<FrameShiftDrive> FRAME_SHIFT_DRIVES = List.of(
             FRAME_SHIFT_DRIVE_2_E,
             FRAME_SHIFT_DRIVE_2_D,
             FRAME_SHIFT_DRIVE_2_C,
@@ -105,7 +117,8 @@ public class FrameShiftDrive extends CoreModule {
             FRAME_SHIFT_DRIVE_7_D,
             FRAME_SHIFT_DRIVE_7_C,
             FRAME_SHIFT_DRIVE_7_B,
-            FRAME_SHIFT_DRIVE_7_A
+            FRAME_SHIFT_DRIVE_7_A,
+            FRAME_SHIFT_DRIVE_5_A_V1_PRE
     );
 
     private FrameShiftDrive(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
@@ -127,7 +140,19 @@ public class FrameShiftDrive extends CoreModule {
     }
 
     @Override
-    public FrameShiftDrive Clone(){
+    public FrameShiftDrive Clone() {
         return new FrameShiftDrive(this);
+    }
+
+    @Override
+    public String getClarifier() {
+        if(FRAME_SHIFT_DRIVE_5_A_V1_PRE.equals(this)){
+            return " " + "Pre-engineered V1";
+        }
+        return super.getClarifier();
+    }
+
+    public boolean isPreEngineered() {
+        return FRAME_SHIFT_DRIVE_5_A_V1_PRE.equals(this);
     }
 }

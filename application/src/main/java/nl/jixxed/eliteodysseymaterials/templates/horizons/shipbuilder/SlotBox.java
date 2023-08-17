@@ -1,9 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
+import javafx.beans.binding.StringBinding;
 import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -11,15 +14,21 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ToggleButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import org.controlsfx.control.PopOver;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -123,27 +132,27 @@ class SlotBox extends HBox {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             //refreshStyle(false);
-            if(((SlotBox) event.getGestureSource()) != null && ((SlotBox) event.getGestureSource()).getSlot().getShipModule() != null){
+            if (((SlotBox) event.getGestureSource()) != null && ((SlotBox) event.getGestureSource()).getSlot().getShipModule() != null) {
 
                 log.debug("source:" + ((SlotBox) event.getGestureSource()).getSlot().getShipModule().getInternalName());
             }
-            if(((SlotBox) event.getGestureTarget()) != null && ((SlotBox) event.getGestureTarget()).getSlot().getShipModule() != null){
+            if (((SlotBox) event.getGestureTarget()) != null && ((SlotBox) event.getGestureTarget()).getSlot().getShipModule() != null) {
 
-                log.debug("target:" +((SlotBox) event.getGestureTarget()).getSlot().getShipModule().getInternalName());
+                log.debug("target:" + ((SlotBox) event.getGestureTarget()).getSlot().getShipModule().getInternalName());
             }
-            if(this.slot.getShipModule() != null){
+            if (this.slot.getShipModule() != null) {
 
                 log.debug("this.slot:" + this.slot.getShipModule().getInternalName());
             }
             if (event.getTransferMode() == TransferMode.COPY) {
 //                ((SlotBox)event.getGestureSource()).module.setText(((SlotBox)event.getGestureSource()).slot.getShipModule().getName());
-                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(((SlotBox) event.getGestureSource()).slot.getShipModule().getName().getLocalizationKey()).concat(" " + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleSize()+ ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleClass()));
+                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(((SlotBox) event.getGestureSource()).slot.getShipModule().getName().getLocalizationKey()).concat(" " + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleSize() + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleClass()));
                 ((SlotBox) event.getGestureSource()).showContents();
-            } else if (event.getTransferMode() == TransferMode.MOVE && this.slot.getShipModule() != null){// && (((SlotBox) event.getGestureSource()) == null || this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass()))) {
+            } else if (event.getTransferMode() == TransferMode.MOVE && this.slot.getShipModule() != null) {// && (((SlotBox) event.getGestureSource()) == null || this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass()))) {
 
-                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(this.slot.getShipModule().getName().getLocalizationKey()).concat(" " + this.slot.getShipModule().getModuleSize()+ this.slot.getShipModule().getModuleClass()));
+                ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(this.slot.getShipModule().getName().getLocalizationKey()).concat(" " + this.slot.getShipModule().getModuleSize() + this.slot.getShipModule().getModuleClass()));
                 ((SlotBox) event.getGestureSource()).showContents();
-            } else if (event.getTransferMode() == TransferMode.MOVE && event.getGestureSource() != this){// && (this.slot.getShipModule() == null || ( this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass())))) {
+            } else if (event.getTransferMode() == TransferMode.MOVE && event.getGestureSource() != this) {// && (this.slot.getShipModule() == null || ( this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass())))) {
                 ((SlotBox) event.getGestureSource()).hideContents();
             }
             event.consume();
@@ -154,7 +163,7 @@ class SlotBox extends HBox {
             /* show to the user that it is an actual gesture target */
             if (event.getGestureSource() != this &&
                     event.getDragboard().hasContent(customFormat) && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())) {
-                this.module.textProperty().bind(LocaleService.getStringBinding(((ShipModule) event.getDragboard().getContent(customFormat)).getName().getLocalizationKey()).concat(" " + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleSize()+ ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleClass()));
+                this.module.textProperty().bind(LocaleService.getStringBinding(((ShipModule) event.getDragboard().getContent(customFormat)).getName().getLocalizationKey()).concat(" " + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleSize() + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleClass()));
                 this.getStyleClass().add("shipbuilder-slots-slotbox-hover-good");
             } else {
                 this.getStyleClass().add("shipbuilder-slots-slotbox-hover-bad");
@@ -208,7 +217,7 @@ class SlotBox extends HBox {
             log.debug("setOnDragDone " + this.slot.getIndex());
             /* the drag and drop gesture ended */
             /* if the data was successfully moved, clear it */
-            if (event.getTransferMode() == TransferMode.MOVE ) {
+            if (event.getTransferMode() == TransferMode.MOVE) {
                 final Object content = event.getDragboard().getContent(customFormat);
                 if (!(content instanceof String) && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())) {
                     this.slot.setShipModule(((ShipModule) content));
@@ -221,7 +230,7 @@ class SlotBox extends HBox {
             this.dragging = false;
 //            this.refreshStyle(false);
             event.consume();
-            this.getTab().getShip().getOptionalSlots().forEach(slot1 -> System.out.println(slot1.getShipModule() != null ? slot1.getShipModule().getInternalName() :"EMPTY"));
+            this.getTab().getShip().getOptionalSlots().forEach(slot1 -> System.out.println(slot1.getShipModule() != null ? slot1.getShipModule().getInternalName() : "EMPTY"));
             notifyChanged();
         });
         this.refresh();
@@ -246,11 +255,14 @@ class SlotBox extends HBox {
 
     private PopOver getPopOver() {
         final VBox content = BoxBuilder.builder()/*.withNode(LabelBuilder.builder().withNonLocalizedText("test").build())*/.withStyleClass("shipbuilder-slots-slotbox-popover-vbox").buildVBox();
+        //add engineering
+        addEngineering(content);
+        addExperimentalEffects(content);
         content.getChildren().addAll(
                 ShipModule.getModules(this.slot.getSlotType()).stream()
                         .filter(module -> module.isAllowed(tab.getShip().getShipType()))
                         .collect(Collectors.groupingBy(ShipModule::getClass))
-                        .values().stream().map(list -> new SlotBoxEntry(tab,this, list)).toList()
+                        .values().stream().map(list -> new SlotBoxEntry(tab, this, list)).toList()
         );
         final ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.getStyleClass().add("shipbuilder-slots-slotbox-popover-content");
@@ -266,9 +278,112 @@ class SlotBox extends HBox {
         return popOver;
     }
 
+    private void addEngineering(final VBox content) {
+        final ShipModule shipModule = getSlot().getShipModule();
+        if (shipModule != null && !shipModule.getAllowedBlueprints().isEmpty()) {
+            addBlueprintSection(content, "tabs.ships.blueprints", false);
+        }
+
+    }
+
+    private void addExperimentalEffects(final VBox content) {
+        final ShipModule shipModule = getSlot().getShipModule();
+
+        if (shipModule != null && !shipModule.getAllowedExperimentalEffects().isEmpty()) {
+            addBlueprintSection(content, "tabs.ships.experimental.effects", true);
+        }
+
+    }
+
+    private void addBlueprintSection(final VBox content, final String sectionLabelKey, final boolean experimental) {
+        final ShipModule shipModule = getSlot().getShipModule();
+        final List<HorizonsBlueprintType> allowedBlueprints = experimental ? shipModule.getAllowedExperimentalEffects() : shipModule.getAllowedBlueprints();
+        if (shipModule != null && !allowedBlueprints.isEmpty()) {
+            final ToggleGroup toggleGroup = new ToggleGroup();
+            final List<ToggleButton> toggleButtons = allowedBlueprints.stream().sorted(Comparator.comparing(horizonsBlueprintType -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey()))).map(horizonsBlueprintType -> {
+                        final int multiplier = (experimental ? shipModule.getExperimentalEffects().stream().filter(horizonsBlueprintType::equals).toList().size() : shipModule.getModifications().stream().filter(modification -> modification.getModification().equals(horizonsBlueprintType)).toList().size());
+                        final StringBinding blueprintStringBinding;
+                        if (multiplier > 1) {
+                            blueprintStringBinding = LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey()).concat(" x" + multiplier));
+                        } else {
+                            blueprintStringBinding = LocaleService.getStringBinding(horizonsBlueprintType.getLocalizationKey());
+                        }
+                        final ToggleButton button = ToggleButtonBuilder.builder().withStyleClass("toggle-button-blueprints").withText(blueprintStringBinding).withOnAction(event -> {
+                            if (experimental) {
+//                                getSlot().setExperimentalEffect(((ToggleButton) event.getTarget()).isSelected() ? horizonsBlueprintType : null);
+                                if (((ToggleButton) event.getTarget()).isSelected()) {
+                                    getSlot().getShipModule().applyExperimentalEffect(horizonsBlueprintType);
+                                } else {
+                                    getSlot().getShipModule().removeExperimentalEffect(horizonsBlueprintType);
+                                }
+                            } else {
+//                                getSlot().setEngineering(((ToggleButton) event.getTarget()).isSelected() ? horizonsBlueprintType : null);
+                                if (((ToggleButton) event.getTarget()).isSelected()) {
+                                    getSlot().getShipModule().applyModification(horizonsBlueprintType, HorizonsBlueprintGrade.GRADE_5, 1D);
+                                } else {
+                                    getSlot().getShipModule().removeExperimentalEffect(horizonsBlueprintType);
+                                }
+                                //TODO configurable completeness and grades
+                            }
+                            notifyChanged();
+                            refresh();
+                        }).build();
+                        button.selectedProperty().set((experimental ? shipModule.getExperimentalEffects().contains(horizonsBlueprintType) : shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(horizonsBlueprintType))));
+                        button.selectedProperty().addListener((observable, oldValue, newValue) ->
+                        {
+                            if (Boolean.TRUE.equals(oldValue)) {
+                                if (experimental) {
+                                    getSlot().getShipModule().removeExperimentalEffect(horizonsBlueprintType);
+//                                    getSlot().setExperimentalEffect(null);
+                                } else {
+                                    getSlot().getShipModule().removeModification(horizonsBlueprintType);
+//                                    getSlot().setEngineering(null);
+                                }
+                                notifyChanged();
+                                refresh();
+                            }
+                            if (Boolean.TRUE.equals(newValue)) {
+                                if (experimental) {
+//                                    getSlot().setExperimentalEffect(horizonsBlueprintType);
+                                    getSlot().getShipModule().applyExperimentalEffect(horizonsBlueprintType);
+                                } else {
+//                                    getSlot().setEngineering(horizonsBlueprintType);
+                                    getSlot().getShipModule().applyModification(horizonsBlueprintType, HorizonsBlueprintGrade.GRADE_5, 1D);
+                                    //TODO configurable completeness and grades
+                                }
+                                notifyChanged();
+                                refresh();
+                            }
+//                            else{
+//                                if (experimental) {
+//                                    slotBox.getSlot().getShipModule().removeExperimentalEffect(horizonsBlueprintType);
+//                                } else {
+//                                    slotBox.getSlot().getShipModule().removeModification(horizonsBlueprintType);
+//                                }
+//                                notifyChanged();
+//                            }
+                        });
+                        button.setFocusTraversable(false);
+                        if ((experimental && shipModule.getExperimentalEffects().size() <= 1) || (!experimental && shipModule.getModifications().size() <= 1)) {
+                            button.setToggleGroup(toggleGroup);
+                        } else {
+                            button.setDisable(true);
+                        }
+                        return button;
+                    }
+
+            ).toList();
+
+            final VBox vBox = BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), LabelBuilder.builder().withStyleClass("ships-modules-title").withText(LocaleService.getStringBinding(sectionLabelKey)).build(), new GrowingRegion()).buildHBox()).buildVBox();
+            vBox.getChildren().addAll(toggleButtons);
+            content.getChildren().add(vBox);
+        }
+
+    }
+
     public void refresh() {
         final Optional<ShipModule> shipModule = Optional.ofNullable(this.slot.getShipModule());
-        this.module.textProperty().bind(shipModule.map(mod -> LocaleService.getStringBinding(mod.getName().getLocalizationKey()).concat(" " + this.slot.getShipModule().getModuleSize()+ this.slot.getShipModule().getModuleClass() )).orElse(LocaleService.getStringBinding("blank")));
+        this.module.textProperty().bind(shipModule.map(mod -> LocaleService.getStringBinding(mod.getName().getLocalizationKey()).concat(" " + this.slot.getShipModule().getModuleSize() + this.slot.getShipModule().getModuleClass())).orElse(LocaleService.getStringBinding("blank")));
 //        this.module.setText(shipModule.map(ShipModule::getName).orElse(""));
         if (shipModule.isEmpty()) {
             this.label.getStyleClass().remove(0);
@@ -293,7 +408,7 @@ class SlotBox extends HBox {
         }
     }
 
-//    private void refreshStyle(final boolean hover) {
+    //    private void refreshStyle(final boolean hover) {
 //        final Optional<ShipModule> shipModule = Optional.ofNullable(this.slot.getShipModule());
 //        if (this.dragging && !this.isControlDown) {
 //            this.label.getStyleClass().remove(0);
@@ -329,6 +444,6 @@ class SlotBox extends HBox {
 //        }
 //    }
     private void notifyChanged() {
-    EventService.publish(new ShipBuilderEvent());
-}
+        EventService.publish(new ShipBuilderEvent());
+    }
 }

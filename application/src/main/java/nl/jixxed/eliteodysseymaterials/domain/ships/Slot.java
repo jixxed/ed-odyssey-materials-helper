@@ -23,16 +23,16 @@ public class Slot {
     @Setter
     private ShipModule shipModule;
 
-    @Getter
-    @Setter
-    private HorizonsBlueprintType engineering;
-    @Getter
-    @Setter
-    private HorizonsBlueprintType experimentalEffect;
+//    @Getter
+//    @Setter
+//    private HorizonsBlueprintType engineering;
+//    @Getter
+//    @Setter
+//    private HorizonsBlueprintType experimentalEffect;
 
-    public HorizonsBlueprintType getEffectiveExperimentalEffect() {
-        if (this.engineering != null) {
-            return this.experimentalEffect;
+    public List<HorizonsBlueprintType> getEffectiveExperimentalEffects() {
+        if (!this.shipModule.getModifications().isEmpty()) {
+            return this.shipModule.getExperimentalEffects();
         }
         return null;
     }

@@ -2797,3 +2797,9 @@
 .shipbuilder-stats-value{
     -fx-font-weight: bold;
 }
+
+.shipbuilder-slots-slotbox-popover-vbox{
+    -fx-spacing: 0.5em;
+    -fx-pref-width: 25.5em;
+    -fx-max-width: 25.5em;
+}

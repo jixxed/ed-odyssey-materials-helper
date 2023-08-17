@@ -116,3 +116,5 @@ blueprint.horizons.name.economy_class_passenger_cabin,Economy Class Passenger Ca
 blueprint.horizons.name.business_class_passenger_cabin,Business Class Passenger Cabin,,,,,,
 blueprint.horizons.name.first_class_passenger_cabin,First Class Passenger Cabin,,,,,,
 blueprint.horizons.name.luxury_class_passenger_cabin,Luxury Class Passenger Cabin,,,,,,
+blueprint.horizons.name.frame_shift_drive_v1_pre,Frame Shift Drive V1,,,,,,
+blueprint.horizons.name.detailed_surface_scanner_v1_pre,Detailed Surface Scanner V1,,,,,,

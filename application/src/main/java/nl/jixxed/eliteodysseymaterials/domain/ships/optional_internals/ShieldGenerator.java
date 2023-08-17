@@ -6,7 +6,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -192,15 +191,41 @@ public class ShieldGenerator extends OptionalModule {
     public ShieldGenerator(OptionalModule optionalModule) {
         super(optionalModule);
     }
-
+//    Enhanced low power
+//    Kinetic resistant
+//    Reinforced
+//    Thermal resistant
+//    Experimental Effects
+//    Fast Charge
+//    Multi-Weave
+//    Hi-Cap
+//    Lo-Draw
+//    Thermo Block
+//    Force Block
+//    Double Braced
+//    Stripped Down
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return Collections.emptyList();
+        return List.of(
+                HorizonsBlueprintType.ENHANCED_LOW_POWER_SHIELDS,
+                HorizonsBlueprintType.KINETIC_RESISTANT_SHIELDS,
+                HorizonsBlueprintType.REINFORCED_SHIELDS,
+                HorizonsBlueprintType.THERMAL_RESISTANT_SHIELDS
+        );
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        return Collections.emptyList();
+        return List.of(
+                HorizonsBlueprintType.FAST_CHARGE,
+                HorizonsBlueprintType.MULTI_WEAVE,
+                HorizonsBlueprintType.HI_CAP,
+                HorizonsBlueprintType.LO_DRAW,
+                HorizonsBlueprintType.THERMO_BLOCK,
+                HorizonsBlueprintType.FORCE_BLOCK,
+                HorizonsBlueprintType.DOUBLE_BRACED,
+                HorizonsBlueprintType.STRIPPED_DOWN
+        );
     }
 
     @Override

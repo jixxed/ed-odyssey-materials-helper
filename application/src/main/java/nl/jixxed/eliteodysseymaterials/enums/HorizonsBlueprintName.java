@@ -58,6 +58,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     SHIELD_BOOSTER(BlueprintGroup.SHIELD_BOOSTERS, BlueprintCategory.UTILITY_MOUNT), //core
     ARMOUR(BlueprintGroup.ARMOURS, BlueprintCategory.CORE_INTERNAL),
     FRAME_SHIFT_DRIVE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL),
+    FRAME_SHIFT_DRIVE_V1_PRE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL),
     LIFE_SUPPORT(BlueprintGroup.LIFE_SUPPORTS, BlueprintCategory.CORE_INTERNAL),
     POWER_DISTRIBUTOR(BlueprintGroup.POWER_DISTRIBUTORS, BlueprintCategory.CORE_INTERNAL),
     POWER_PLANT(BlueprintGroup.POWER_PLANTS, BlueprintCategory.CORE_INTERNAL),
@@ -66,6 +67,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     AUTO_FIELD_MAINTENANCE_UNIT(BlueprintGroup.AUTO_FIELD_MAINTENANCE_UNITS, BlueprintCategory.OPTIONAL_INTERNAL),
     COLLECTOR_LIMPET_CONTROLLER(BlueprintGroup.COLLECTOR_LIMPET_CONTROLLERS, BlueprintCategory.OPTIONAL_INTERNAL),
     DETAILED_SURFACE_SCANNER(BlueprintGroup.DETAILED_SURFACE_SCANNERS, BlueprintCategory.OPTIONAL_INTERNAL),
+    DETAILED_SURFACE_SCANNER_V1_PRE(BlueprintGroup.DETAILED_SURFACE_SCANNERS, BlueprintCategory.OPTIONAL_INTERNAL),
     FRAME_SHIFT_DRIVE_INTERDICTOR(BlueprintGroup.FRAME_SHIFT_DRIVE_INTERDICTORS, BlueprintCategory.OPTIONAL_INTERNAL),
     FUEL_SCOOP(BlueprintGroup.FUEL_SCOOPS, BlueprintCategory.OPTIONAL_INTERNAL),
     FUEL_TRANSFER_LIMPET_CONTROLLER(BlueprintGroup.FUEL_TRANSFER_LIMPET_CONTROLLERS, BlueprintCategory.OPTIONAL_INTERNAL),
