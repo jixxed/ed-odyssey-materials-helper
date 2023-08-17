@@ -54,4 +54,7 @@ public interface User32 extends StdCallLibrary {
     void PhysicalToLogicalPointForPerMonitorDPI(int hwnd, WinDef.POINT getPos);
 
     void LogicalToPhysicalPointForPerMonitorDPI(int hwnd, WinDef.POINT getPos);
+
+    void SetWindowLongA(int hwnd, int nIndex, long dwNewLong);
+
 }
