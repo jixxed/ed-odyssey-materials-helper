@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import com.sun.jna.NativeLibrary;
+import com.sun.jna.platform.win32.WinUser;
 import javafx.animation.AnimationTimer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -190,7 +191,6 @@ public class ARService {
             }
         }
     }
-
     private static void setupTimerDisplay() {
         final TimerTask timerDisplayTask = new TimerTask() {
             @Override
@@ -556,7 +556,10 @@ public class ARService {
                     positionWindow();
                     arStage.setAlwaysOnTop(true);
                     arStage.show();
-
+                    final int handle = WindowInfoUtil.findWindow(windowTitle -> windowTitle.contains(arStage.getTitle()));
+                    long wl = User32.INSTANCE.GetWindowLongA(handle, WinUser.GWL_EXSTYLE);
+                    wl = wl | WinUser.WS_EX_LAYERED | WinUser.WS_EX_TRANSPARENT;
+                    User32.INSTANCE.SetWindowLongA(handle, WinUser.GWL_EXSTYLE, wl);
                     if (targetWindowInfo.hwnd != 0) {
                         User32.INSTANCE.SetForegroundWindow(targetWindowInfo.hwnd);
                     }
