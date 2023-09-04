@@ -1,5 +1,5 @@
 wrapper {
-    gradleVersion "7.5.1"
+    gradleVersion "8.3"
 }
 
 
@@ -21,16 +21,16 @@ task makePortable(type: Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveName 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.zip'
-    destinationDir(file('/output/'))
+    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.zip'
+    destinationDirectory = file('/output/')
 }
 
 task makeLinuxPortable(type: Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveName 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.linux.zip'
-    destinationDir(file('./output/'))
+    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.linux.zip'
+    destinationDirectory  = file('./output/')
 }
 
 tasks.register("createRelease") {

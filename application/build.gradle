@@ -11,6 +11,7 @@ buildscript {
         classpath "io.freefair.gradle:lombok-plugin:8.3"
         classpath "org.gradlex:extra-java-module-info:1.4.1"
         classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.1.2'
+        classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
     }
 }
 apply plugin: "io.freefair.lombok"
@@ -20,6 +21,8 @@ apply plugin: "application"
 apply plugin: "org.beryx.jlink"
 apply plugin: "org.gradlex.extra-java-module-info"
 apply plugin: 'jsonschema2pojo'
+apply plugin: "build-time-tracker"
+
 group 'nl.jixxed'
 java {
     toolchain {
@@ -491,6 +494,15 @@ jsonSchema2Pojo {
     // Whether to use annotations from jakarta.validation package instead of javax.validation package
     // when adding JSR-303 annotations to generated Java types
     useJakartaValidation = false
+}
+buildtimetracker {
+    reporters {
+        summary {
+            ordered false
+            threshold 50
+            barstyle 'unicode'
+        }
+    }
 }
 
 mainClassName = 'nl.jixxed.eliteodysseymaterials.Main'
