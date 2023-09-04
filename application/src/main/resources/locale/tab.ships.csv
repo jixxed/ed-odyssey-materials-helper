@@ -2,3 +2,18 @@ messageKey,,en,de,es,fr,pt,ru
 tabs.ships,Ships,,,,,,
 tabs.ships.blueprints,Blueprints,,,,,,
 tabs.ships.experimental.effects,Experimental effects,,,,,,
+tab.ships.create,Create ship,,,,,,
+tab.ships.options,Options,Options,Optionen,Opción,Options,Opções,Опции
+tab.ships.rename,Rename ship,,,,,,
+tab.ships.delete,Delete ship,,,,,,
+tab.ships.reset,Reset ship,,,,,,
+tab.ships.rename.prompt,New name (max. 50 characters),New name (max. 50 characters),Neuer Name (max. 50 Zeichen),Nuevo nombre (máx.50 caracteres),Nouveau nom (max. 50 caractères),Novo nome (máx. 50 caracteres),Новое имя (макс.50 знаков)
+tab.ships.delete.confirm.content,Do you wish to continue?,Do you wish to continue?,Möchten Sie fortfahren?,¿Desea continuar?,Souhaitez-vous continuer?,Você deseja continuar?,Вы хотите продолжить?
+tab.ships.delete.confirm.header,You are about to delete your ship,,,,,,
+tab.ships.delete.confirm.title,Confirm deletion,Confirm deletion,Löschen bestätigen,Confirmar la eliminación,Confirmer la suppression,Confirme a exclusão,Подтвердить удаление
+tab.ships.reset.confirm.content,All changes will be lost. Do you wish to continue?,,,,,,
+tab.ships.reset.confirm.header,You are about to reset your ship,,,,,,
+tab.ships.reset.confirm.title,Confirm reset,,,,,,
+tab.ships.copy,Copy ship to clipboard,,,,,,
+ship.view.header.ship.name,Ship name,,,,,,
+ship.view.header.price,Price,,,,,,

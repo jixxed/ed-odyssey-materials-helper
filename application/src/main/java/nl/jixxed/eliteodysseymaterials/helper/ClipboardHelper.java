@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
+import nl.jixxed.eliteodysseymaterials.service.ShipService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 
 import java.nio.charset.StandardCharsets;
@@ -84,4 +85,18 @@ public class ClipboardHelper {
         return Base64.getUrlEncoder().encodeToString(wishListBytes);
     }
 
+    public static String createClipboardShipConfiguration() {
+        return APPLICATION_STATE.getPreferredCommander().map(commander ->
+                ShipService.getShipConfigurations(commander).getSelectedShipConfiguration().map(configuration -> {
+                    try {
+                        final String shipJson = OBJECT_MAPPER.writeValueAsString(new ClipboardShip("ship", 1, configuration));
+                        final String wishlist64 = convertJsonToBase64Compressed(shipJson);
+                        return "edomh://ship/?" + wishlist64;
+                    } catch (final JsonProcessingException e) {
+                        log.error("failed to process ship", e);
+                    }
+                    return "";
+                }).orElse("")
+        ).orElse("");
+    }
 }

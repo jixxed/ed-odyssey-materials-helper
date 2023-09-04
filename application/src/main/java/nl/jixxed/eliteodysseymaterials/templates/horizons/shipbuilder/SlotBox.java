@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ToggleButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
@@ -230,7 +231,7 @@ class SlotBox extends HBox {
             this.dragging = false;
 //            this.refreshStyle(false);
             event.consume();
-            this.getTab().getShip().getOptionalSlots().forEach(slot1 -> System.out.println(slot1.getShipModule() != null ? slot1.getShipModule().getInternalName() : "EMPTY"));
+            ApplicationState.getInstance().getShip().getOptionalSlots().forEach(slot1 -> System.out.println(slot1.getShipModule() != null ? slot1.getShipModule().getInternalName() : "EMPTY"));
             notifyChanged();
         });
         this.refresh();
@@ -260,7 +261,7 @@ class SlotBox extends HBox {
         addExperimentalEffects(content);
         content.getChildren().addAll(
                 ShipModule.getModules(this.slot.getSlotType()).stream()
-                        .filter(module -> module.isAllowed(tab.getShip().getShipType()))
+                        .filter(module -> module.isAllowed(ApplicationState.getInstance().getShip().getShipType()))
                         .collect(Collectors.groupingBy(ShipModule::getClass))
                         .values().stream().map(list -> new SlotBoxEntry(tab, this, list)).toList()
         );

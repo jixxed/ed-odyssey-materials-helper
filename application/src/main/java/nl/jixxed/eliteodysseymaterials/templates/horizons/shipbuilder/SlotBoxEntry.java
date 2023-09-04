@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ExternalModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
@@ -34,7 +35,7 @@ public class SlotBoxEntry extends VBox {
         //add ship modules
         final ShipModule firstModule = shipModulesList.get(0);
         final List<ShipModule> shipModules = (firstModule instanceof Armour)
-                ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(slotBox.getTab().getShip().getShipType())).toList()
+                ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).toList()
                 : shipModulesList;
         this.name = LabelBuilder.builder().withStyleClass("ships-modules-title").withText(LocaleService.getStringBinding(firstModule.getName().getBlueprintGroup().getLocalizationKey())).build();
         HBox.setHgrow(this.name, Priority.ALWAYS);

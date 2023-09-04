@@ -3,13 +3,12 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
 public class WeaponStats extends Stats implements Template {
-    public WeaponStats(final Ship ship) {
-        super(ship);
+    public WeaponStats() {
+        super();
         initComponents();
         initEventHandling();
     }
@@ -24,5 +23,8 @@ public class WeaponStats extends Stats implements Template {
     @Override
     public void initEventHandling() {
 
+    }
+    @Override
+    protected void update() {
     }
 }

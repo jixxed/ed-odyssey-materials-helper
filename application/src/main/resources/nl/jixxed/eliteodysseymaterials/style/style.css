@@ -2803,3 +2803,41 @@
     -fx-pref-width: 25.5em;
     -fx-max-width: 25.5em;
 }
+
+.shipbuilder-ship-header{
+    -fx-background-color: #1f1f1f;
+    -fx-padding: 0.2em;
+}
+.shipbuilder-ship-row{
+    -fx-background-color: #1f1f1f;
+    -fx-padding: 0.2em;
+}
+.shipbuilder-ship-row:hover{
+    -fx-background-color: #000000;
+    -fx-cursor: hand;
+}
+.shipbuilder-ship-row-name{
+    -fx-min-width: 11em;
+    -fx-text-alignment: right;
+}
+.shipbuilder-ship-row-price{
+    -fx-min-width: 6em;
+    -fx-text-alignment: right;
+    -fx-alignment: center-right;
+}
+.ship-select{
+    -fx-min-width: 10em;
+    -fx-pref-width: 35em;
+    -fx-max-width: 35em;
+}
+.ships-content{
+    -fx-spacing: 10;
+    -fx-padding: 5;
+}
+.ships-newname{
+    -fx-min-width: 20em;
+    -fx-background-insets: 1;
+    -fx-background-radius: 0, 0;
+    -fx-border-width: 1;
+    -fx-border-color: #2e2e2e;
+}

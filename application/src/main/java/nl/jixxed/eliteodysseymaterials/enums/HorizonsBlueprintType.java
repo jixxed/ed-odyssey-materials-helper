@@ -14,6 +14,7 @@ public enum HorizonsBlueprintType {
     DOUBLE_SHOT(false),
     ENGINE_FOCUSED(false),
     EXPANDED_PROBE_SCANNING_RADIUS(false),
+    EXPANDED_PROBE_SCANNING_RADIUS_X2(false),
     HEAVY_DUTY(false),
     HIGH_CHARGE_CAPACITY(false),
     KINETIC_RESISTANT(false),

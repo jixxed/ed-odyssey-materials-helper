@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Fileheader.Fileheader;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -81,6 +82,10 @@ public class ApplicationState {
     private static GameVersion gameVersion = GameVersion.UNKNOWN;
     private int flags = 0;
     private int flags2 = 0;
+
+    @Setter
+    @Getter
+    private Ship ship;
 
     @Getter
     private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);

@@ -1,34 +1,29 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 public class Slot {
     private static final List<String> slotMapping = List.of("U", "S", "M", "L", "H");
     @Getter
-    private final SlotType slotType;
+    private  SlotType slotType;
     @Getter
-    private final int index;
+    private  int index;
     @Getter
-    private final int slotSize;
+    private  int slotSize;
 
     @Getter
     @Setter
     private ShipModule shipModule;
-
-//    @Getter
-//    @Setter
-//    private HorizonsBlueprintType engineering;
-//    @Getter
-//    @Setter
-//    private HorizonsBlueprintType experimentalEffect;
 
     public List<HorizonsBlueprintType> getEffectiveExperimentalEffects() {
         if (!this.shipModule.getModifications().isEmpty()) {
