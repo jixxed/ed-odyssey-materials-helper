@@ -274,7 +274,6 @@ public class CAPIService {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             try {
                 final String tokenJson = OBJECT_MAPPER.writeValueAsString(accessToken);
-                log.debug(tokenJson);
                 final String pathname = commander.getLiveCommanderFolder();
                 final File capiTokenDir = new File(pathname);
                 capiTokenDir.mkdirs();
