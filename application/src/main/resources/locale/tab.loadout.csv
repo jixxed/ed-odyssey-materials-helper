@@ -8,7 +8,7 @@ loadout.equipment.stats.header.target,Target,Target,Target,Objetivo,Cible,Destin
 loadout.equipment.stats.toggle.all,All,All,All,Todo,Tous,Todos,Все
 loadout.equipment.stats.toggle.changed,Changed,Changed,Geändert,Cambiado,Modifié,Alterado,Отличающиеся
 loadout.equipment.stats,Stats:,Stats:,Statistik:,Estadísticas:,Statistiques:,Estatísticas:,Статистика:
-loadout.equipment.warning,Target grade does not have enough modification slots,Target grade does not have enough modification slots,Zielklasse hat nicht genügend Modifikationsplätze,El grado objetivo no tiene suficientes espacios de modificación,Le grade cible n''a pas assez d''emplacements de modification,A nota alvo não tem slots de modificação suficientes,У желаемого уровня недостаточно слотов для модификации
+loadout.equipment.warning,Target grade does not have enough modification slots,Target grade does not have enough modification slots,Zielklasse hat nicht genügend Modifikationsplätze,El grado objetivo no tiene suficientes espacios de modificación,Le grade cible n’a pas assez d’emplacements de modification,A nota alvo não tem slots de modificação suficientes,У желаемого уровня недостаточно слотов для модификации
 loadout.modification.clear,Clear,Clear,Löschen,Borrar,Effacer,Clear,Убрать
 tab.loadout.add.suit,Add suit,Add suit,Anzug hinzufügen,Agregar traje,Ajouter une combinaison,Adicionar terno,Добавить костюм
 tab.loadout.add.weapon,Add weapon,Add weapon,Waffe hinzufügen,Agregar arma,Ajouter une arme,Adicionar arma,Добавить оружие

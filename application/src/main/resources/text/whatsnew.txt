@@ -1,3 +1,9 @@
+Version 2.34
+-------------
+Improved overlay transparency compatibility
+Removed CAPI token from logging
+Updated French and Russian translations
+
 Version 2.33
 -------------
 Added missing Scanner blueprints to Juri Ishmaak
