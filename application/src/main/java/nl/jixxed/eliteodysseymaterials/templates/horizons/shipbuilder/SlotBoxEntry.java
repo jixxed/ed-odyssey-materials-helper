@@ -9,15 +9,20 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ExternalModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Mounting;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -41,12 +46,12 @@ public class SlotBoxEntry extends VBox {
         HBox.setHgrow(this.name, Priority.ALWAYS);
         final Stream<List<ShipModule>> stream = shipModules.stream().allMatch(shipModule -> shipModule.getModuleClass().equals(firstModule.getModuleClass()) && shipModule.getClarifier().isEmpty())
                 ? Stream.of(shipModules)
-                : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize() + shipModule.getClarifier())).values().stream();
+                : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize().toString() + (shipModule.groupOnName() ? shipModule.getName().toString() : "") + shipModule.getClarifier())).values().stream();
 //        final Stream<List<ShipModule>> stream =shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize() + shipModule.getClarifier())).values().stream();
         this.options =
-                stream.sorted(Comparator.comparing(shipModuleSubList -> shipModuleSubList.get(0).getModuleSize() + shipModuleSubList.get(0).getClarifier())).map(shipModuleSubList ->
+                stream.sorted(Comparator.comparing(shipModuleSubList -> shipModuleSubList.get(0).getModuleSize().toString() + (shipModuleSubList.get(0).groupOnName() ? shipModuleSubList.get(0).getName().toString() : "") + shipModuleSubList.get(0).getClarifier())).map(shipModuleSubList ->
                                 shipModuleSubList.stream().map(shipModule -> {
-                                            final Button button = ButtonBuilder.builder().withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + shipModule.getNonSortingClarifier() + ((shipModule instanceof ExternalModule externalModule) ? externalModule.getMountingClarifier() : "")).withOnAction(event -> {
+                                            final Button button = ButtonBuilder.builder().withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + shipModule.getNonSortingClarifier() /*+ ((shipModule instanceof ExternalModule externalModule) ? externalModule.getMountingClarifier() : "")*/).withOnAction(event -> {
                                                 final ShipModule clone = shipModule.Clone();
                                                 if(slotBox.getSlot().getShipModule() != null) {
                                                     if (slotBox.getSlot().getShipModule().isPreEngineered() || !slotBox.getSlot().getShipModule().getName().equals(clone.getName()) || !slotBox.getSlot().getShipModule().getModifications().stream().allMatch(modification ->clone.getAllowedBlueprints().stream().anyMatch(horizonsBlueprintType ->  modification.getModification().equals(horizonsBlueprintType)))) {
@@ -68,6 +73,21 @@ public class SlotBoxEntry extends VBox {
                                                 slotBox.refresh();
                                                 slotBox.close();
                                             }).build();
+                                            List<DestroyableResizableImageView> images = new ArrayList<>();
+                                            if(shipModule instanceof ExternalModule externalModule && !externalModule.getMounting().equals(Mounting.NA)) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/" + externalModule.getMounting().name().toLowerCase() + ".png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(shipModule.getOrigin().equals(Origin.GUARDIAN)) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/" + shipModule.getOrigin().name().toLowerCase() + ".png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(shipModule.isPreEngineered()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/engineered.png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(!images.isEmpty()){
+                                                HBox imagesBox = BoxBuilder.builder().withStyleClass("ships-button-image-box").withNodes(images.toArray(DestroyableResizableImageView[]::new)).buildHBox();
+                                                button.setGraphic(imagesBox);
+
+                                            }
 //                                    HBox.setHgrow(button, Priority.ALWAYS);
                                             button.setFocusTraversable(false);
                                             return button;

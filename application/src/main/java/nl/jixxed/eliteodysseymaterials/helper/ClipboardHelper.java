@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
-import nl.jixxed.eliteodysseymaterials.service.ShipService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
+import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

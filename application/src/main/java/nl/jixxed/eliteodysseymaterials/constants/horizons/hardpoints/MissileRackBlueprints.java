@@ -24,8 +24,8 @@ public class MissileRackBlueprints {
                             Map.of(
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2)),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04))
                             ),
                             List.of(
@@ -42,8 +42,8 @@ public class MissileRackBlueprints {
                             Map.of(
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.02, 0.04)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3)),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.04, 0.08))
                             ),
                             List.of(
@@ -61,8 +61,8 @@ public class MissileRackBlueprints {
                             Map.of(
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.04, 0.06)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4)),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.08, 0.12))
                             ),
                             List.of(
@@ -80,8 +80,8 @@ public class MissileRackBlueprints {
                             Map.of(
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.06, 0.08)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5)),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+16%", false, percentagePositive(0.12, 0.16))
                             ),
                             List.of(
@@ -98,8 +98,8 @@ public class MissileRackBlueprints {
                             Map.of(
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.08, 0.1)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.5, 0.6)),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.16, 0.2))
                             ),
                             List.of(

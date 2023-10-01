@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.service;
+package nl.jixxed.eliteodysseymaterials.service.ships;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

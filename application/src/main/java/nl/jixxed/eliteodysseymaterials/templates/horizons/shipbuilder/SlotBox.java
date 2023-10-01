@@ -263,7 +263,9 @@ class SlotBox extends HBox {
                 ShipModule.getModules(this.slot.getSlotType()).stream()
                         .filter(module -> module.isAllowed(ApplicationState.getInstance().getShip().getShipType()))
                         .collect(Collectors.groupingBy(ShipModule::getClass))
-                        .values().stream().map(list -> new SlotBoxEntry(tab, this, list)).toList()
+                        .values().stream().map(list -> new SlotBoxEntry(tab, this, list))
+                        .sorted(Comparator.comparing(slotBoxEntry -> slotBoxEntry.name.getText()))
+                        .toList()
         );
         final ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.getStyleClass().add("shipbuilder-slots-slotbox-popover-content");

@@ -26,7 +26,7 @@ public class ManifestScannerBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.2)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05))
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -44,7 +44,7 @@ public class ManifestScannerBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.2, 0.35)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.1, 0.2)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.05, 0.1))
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.05, 0.1))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -63,7 +63,7 @@ public class ManifestScannerBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.35, 0.5)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.2, 0.3)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15))
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -82,7 +82,7 @@ public class ManifestScannerBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("-65%", true, percentageNegative(0.5, 0.65)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-40%", false, percentageNegative(0.3, 0.4)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2))
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -98,7 +98,7 @@ public class ManifestScannerBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("-80%", true, percentageNegative(0.65, 0.8)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-50%", false, percentageNegative(0.4, 0.5)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25))
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -197,8 +197,8 @@ public class ManifestScannerBlueprints {
                                     Raw.IRON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.0, 0.24)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.0, 0.24)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1))
                             ),
                             List.of(
@@ -215,8 +215,8 @@ public class ManifestScannerBlueprints {
                                     Manufactured.HYBRIDCAPACITORS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("+48%", true, percentagePositive(0.24, 0.48)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15)),
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("+48%", true, percentagePositive(0.24, 0.48)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.2))
                             ),
                             List.of(
@@ -234,8 +234,8 @@ public class ManifestScannerBlueprints {
                                     Manufactured.HYBRIDCAPACITORS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("+72%", true, percentagePositive(0.48, 0.72)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2)),
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("+72%", true, percentagePositive(0.48, 0.72)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3))
                             ),
                             List.of(
@@ -253,8 +253,8 @@ public class ManifestScannerBlueprints {
                                     Manufactured.ELECTROCHEMICALARRAYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("+96%", true, percentagePositive(0.72, 0.96)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25)),
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("+96%", true, percentagePositive(0.72, 0.96)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4))
                             ),
                             List.of(
@@ -269,8 +269,8 @@ public class ManifestScannerBlueprints {
                                     Manufactured.POLYMERCAPACITORS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.25, 0.3)),
-                                    HorizonsModifier.SCAN_RANGE, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.96, 1.2)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.25, 0.3)),
+                                    HorizonsModifier.SCANNER_RANGE, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.96, 1.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5))
                             ),
                             List.of(
@@ -455,7 +455,7 @@ public class ManifestScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2)),
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.4)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.4)),
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1))
                             ),
                             List.of(
@@ -473,7 +473,7 @@ public class ManifestScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.2, 0.4)),
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.4, 0.8)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.4, 0.8)),
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.2))
                             ),
                             List.of(
@@ -492,7 +492,7 @@ public class ManifestScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.4, 0.6)),
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.8, 1.2)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.8, 1.2)),
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3))
                             ),
                             List.of(
@@ -511,7 +511,7 @@ public class ManifestScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+80%", false, percentagePositive(0.6, 0.8)),
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+160%", true, percentagePositive(1.2, 1.6)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("+160%", true, percentagePositive(1.2, 1.6)),
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4))
                             ),
                             List.of(
@@ -527,7 +527,7 @@ public class ManifestScannerBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.8, 1.0)),
-                                    HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+200%", true, percentagePositive(1.6, 2.0)),
+                                    HorizonsModifier.MAX_ANGLE, new HorizonsNumberModifierValue("+200%", true, percentagePositive(1.6, 2.0)),
                                     HorizonsModifier.SCAN_TIME, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5))
                             ),
                             List.of(

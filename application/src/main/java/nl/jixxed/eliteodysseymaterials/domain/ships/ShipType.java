@@ -2,6 +2,8 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @RequiredArgsConstructor
 public enum ShipType {
     SIDE_WINDER(128049249,"SideWinder"),
@@ -49,5 +51,12 @@ public enum ShipType {
 
     public String getLocalizationKey() {
         return "ships.name." + this.name().toLowerCase();
+    }
+
+    public static ShipType forInternalName(String internalName){
+        return Arrays.stream(ShipType.values())
+                .filter(shipType->shipType.internalName.equalsIgnoreCase(internalName))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

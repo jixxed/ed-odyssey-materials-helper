@@ -20,9 +20,9 @@ public class ThrusterBlueprints {
                                     Raw.SULPHUR, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.20)),
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.20)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -34,9 +34,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+13%", true, percentagePositive(0.08, 0.13)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.20, 0.30))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.20, 0.30))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -49,9 +49,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.04, 0.08)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.04, 0.08)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.13, 0.18)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.30, 0.40))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.30, 0.40))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -64,9 +64,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.08, 0.12)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-12%", false, percentageNegative(0.08, 0.12)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+23%", true, percentagePositive(0.18, 0.23)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.40, 0.50))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.40, 0.50))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -79,9 +79,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+16%", false, percentagePositive(0.12, 0.16)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-16%", false, percentageNegative(0.12, 0.16)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.10)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.10)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+28%", true, percentagePositive(0.23, 0.28)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.50, 0.60))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.50, 0.60))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI))
             ),
@@ -94,9 +94,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.0, 0.12)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.20))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.20))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -108,9 +108,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.04, 0.06)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.03, 0.06)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.03, 0.05)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.03, 0.05)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.20, 0.30))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.20, 0.30))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.ELVIRA_MARTUUK, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -123,9 +123,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.06, 0.08)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-9%", false, percentageNegative(0.06, 0.09)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.05, 0.08)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.05, 0.08)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.30, 0.40))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.30, 0.40))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.FELICITY_FARSEER, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -138,9 +138,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.08, 0.10)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-12%", false, percentageNegative(0.09, 0.12)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.10)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.10)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.40, 0.50))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.40, 0.50))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI)),
 
@@ -153,9 +153,9 @@ public class ThrusterBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.10, 0.12)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.12, 0.15)),
-                                    HorizonsModifier.OPTIMAL_MASS, new HorizonsNumberModifierValue("-13%", false, percentageNegative(0.10, 0.13)),
+                                    HorizonsModifier.ENGINE_OPTIMAL_MASS, new HorizonsNumberModifierValue("-13%", false, percentageNegative(0.10, 0.13)),
                                     HorizonsModifier.OPTIMAL_MULTIPLIER, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.40)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.50, 0.60))
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.50, 0.60))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.PROFESSOR_PALIN, Engineer.CHLOE_SEDESI))
             ),
@@ -166,7 +166,7 @@ public class ThrusterBlueprints {
                                     Raw.CARBON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.10)),
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.10)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.30)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05))
                             ),
@@ -178,7 +178,7 @@ public class ThrusterBlueprints {
                                     Raw.VANADIUM, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.10, 0.20)),
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.10, 0.20)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.30, 0.50)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.10))
                             ),
@@ -191,7 +191,7 @@ public class ThrusterBlueprints {
                                     Raw.VANADIUM, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.20, 0.30)),
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.20, 0.30)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+70%", true, percentagePositive(0.50, 0.70)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.10, 0.15))
                             ),
@@ -204,7 +204,7 @@ public class ThrusterBlueprints {
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.30, 0.40)),
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.30, 0.40)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+90%", true, percentagePositive(0.70, 0.90)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.20))
                             ),
@@ -217,7 +217,7 @@ public class ThrusterBlueprints {
                                     Manufactured.FEDPROPRIETARYCOMPOSITES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.40, 0.50)),
+                                    HorizonsModifier.ENGINE_THERMAL_LOAD, new HorizonsNumberModifierValue("-50%", true, percentageNegative(0.40, 0.50)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+110%", true, percentagePositive(0.90, 1.10)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.20, 0.25))
                             ),

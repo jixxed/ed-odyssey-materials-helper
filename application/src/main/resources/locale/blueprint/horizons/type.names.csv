@@ -168,3 +168,6 @@ blueprint.horizons.type.thargoid_pulse_neutraliser,TG Pulse Neutraliser,TG Pulse
 blueprint.horizons.type.e2_azimuth_enhanced_ax_multicannon,E2 Azimuth Enhanced AX Multi-cannon,E2 Azimuth Enhanced AX Multi-cannon,,,,,E2 Улучшенное многоствольное АИ-орудие Azimuth
 blueprint.horizons.type.c3_azimuth_enhanced_ax_multicannon,C3 Azimuth Enhanced AX Multi-cannon,C3 Azimuth Enhanced AX Multi-cannon,,,,,C3 Улучшенное многоствольное АИ-орудие Azimuth
 blueprint.horizons.type.expanded_probe_scanning_radius_x2,Expanded Probe Scanning Radius x2,Expanded Probe Scanning Radius x2,Erweiterter Sonden-Scanradius x2,Radio de escaneo de sonda expandida x2,Rayon de balayage de sonde élargi x2,Raio de varredura de sonda expandido x2,Увеличение радиуса сканирования зондов x2
+blueprint.horizons.type.decorative_red,Decorative Red,Decorative Red,,,,,
+blueprint.horizons.type.decorative_green,Decorative Green,Decorative Green,,,,,
+blueprint.horizons.type.decorative_yellow,Decorative Yellow,Decorative Yellow,,,,,

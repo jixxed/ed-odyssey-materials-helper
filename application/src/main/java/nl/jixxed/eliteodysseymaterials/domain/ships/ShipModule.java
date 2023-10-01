@@ -1,9 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBiFunction;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -13,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -21,8 +24,12 @@ public abstract class ShipModule implements Serializable {
     private static final List<ShipModule> SHIP_MODULES = new ArrayList<>();
     @Getter
     @EqualsAndHashCode.Include
+    private final String id;
+    @Getter
+    @EqualsAndHashCode.Include
     private final HorizonsBlueprintName name;
     private final Map<HorizonsModifier, Object> attributes = new HashMap<>();
+    private final Map<HorizonsModifier, Object> legacyModifications = new HashMap<>();
     @Getter
     @EqualsAndHashCode.Include
     private final ModuleClass moduleClass;
@@ -36,25 +43,28 @@ public abstract class ShipModule implements Serializable {
     @Getter
     private final boolean multiCrew;
     @Getter
+    private boolean legacy;
+    @Getter
     private final String internalName;
     @Getter
     private final List<Modification> modifications = new ArrayList<>();
     @Getter
     private final List<HorizonsBlueprintType> experimentalEffects = new ArrayList<>();
 
-    ShipModule(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        this(name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
     }
 
-    ShipModule(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        this(name, moduleSize, moduleClass, origin, false, basePrice, internalName, attributes);
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        this(id, name, moduleSize, moduleClass, origin, false, basePrice, internalName, attributes);
     }
 
-    ShipModule(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        this(name, moduleSize, moduleClass, Origin.HUMAN, multiCrew, basePrice, internalName, attributes);
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        this(id, name, moduleSize, moduleClass, Origin.HUMAN, multiCrew, basePrice, internalName, attributes);
     }
 
-    ShipModule(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+        this.id = id;
         this.name = name;
         this.moduleSize = moduleSize;
         this.moduleClass = moduleClass;
@@ -63,10 +73,15 @@ public abstract class ShipModule implements Serializable {
         this.basePrice = basePrice;
         this.internalName = internalName;
         this.attributes.putAll(attributes);
+        if(!this.attributes.containsKey(HorizonsModifier.POWER_DRAW))
+        {
+            this.attributes.put(HorizonsModifier.POWER_DRAW,0.0);
+        }
         SHIP_MODULES.add(this);
     }
 
     ShipModule(final ShipModule shipModule) {
+        this.id = shipModule.id;
         this.name = shipModule.name;
         this.moduleSize = shipModule.moduleSize;
         this.moduleClass = shipModule.moduleClass;
@@ -112,6 +127,9 @@ public abstract class ShipModule implements Serializable {
         this.experimentalEffects.removeIf(experimentalEffect1 -> Objects.equals(experimentalEffect1, experimentalEffect));
     }
     private boolean validModification(final HorizonsBlueprintType modification, final boolean experimental) {
+        if(modification == null) {
+            return false;
+        }
         if (experimental) {
             return getAllowedExperimentalEffects().contains(modification);
         }
@@ -128,6 +146,9 @@ public abstract class ShipModule implements Serializable {
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
+        }
+        if(isLegacy()){
+            return legacyModifications.containsKey(moduleAttribute) ? legacyModifications.get(moduleAttribute) : attributes.get(moduleAttribute);
         }
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
         if(baseAttributeValue instanceof Double){
@@ -153,19 +174,41 @@ public abstract class ShipModule implements Serializable {
 
     private Object applyModsToAttributeValue(HorizonsModifier moduleAttribute, Object attributeValue) {
         final AtomicReference<Object> value = new AtomicReference<>(attributeValue);
+        final AtomicReference<HorizonsBiFunction> moduleModifier = new AtomicReference<>();
+        final AtomicDouble modificationCompleteness = new AtomicDouble();
+        final AtomicBoolean positive = new AtomicBoolean();
         this.modifications.forEach(modification -> {
             final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name, modification.getModification(), modification.getGrade());
-            final HorizonsModifierValue moduleModifier = moduleBlueprint.getModifiers().get(moduleAttribute);
-            if(moduleModifier != null) {
-                //if negative effect, apply fully
-                value.set(moduleModifier.getModifiedValue(value.get(), moduleModifier.isPositive() ? modification.getModificationCompleteness() : 1D));
+            final HorizonsModifierValue horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
+            if(horizonsModifierValue != null) {
+                final HorizonsBiFunction current = moduleModifier.get();
+                if(current == null) {
+                    positive.set(horizonsModifierValue.isPositive());
+                    modificationCompleteness.set(modification.getModificationCompleteness());
+                    moduleModifier.set(horizonsModifierValue.getModifier());
+                }else{
+                    moduleModifier.set(current.stack(horizonsModifierValue.getModifier()));
+                }
             }
         });
+        if(moduleModifier.get() != null) {
+            //if negative effect, apply fully
+            try {
+                value.set(moduleModifier.get().getFunction().apply(value.get(), positive.get() ? modificationCompleteness.get() : 1D));
+            } catch (final Throwable t) {
+                log.error("Error modifying value", t);
+            }
+        }
         this.experimentalEffects.forEach(modification -> {
             final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name).get(modification);
             final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(moduleAttribute);
             if(experimentalEffectModifier != null) {
-                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
+//                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
+                try {
+                    value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
+                } catch (final Throwable t) {
+                    log.error("Error modifying value", t);
+                }
             }
         });
         return value.get();
@@ -181,6 +224,9 @@ public abstract class ShipModule implements Serializable {
     }
 
     public String getClarifier() {
+        if(this.isPreEngineered()) {
+            return " PRE";
+        }
         return "";
     }
     public String getNonSortingClarifier() {
@@ -191,6 +237,21 @@ public abstract class ShipModule implements Serializable {
         return true;
     }
     public boolean isPreEngineered() {
+        return false;
+    }
+
+    public void setLegacy(boolean legacy) {
+        this.legacy = legacy;
+    }
+    public Set<HorizonsModifier> getAttibutes(){
+        return attributes.keySet();
+    }
+
+    public void addLegacyModification(HorizonsModifier horizonsModifier, Double value) {
+        legacyModifications.put(horizonsModifier, value);
+    }
+
+    public boolean groupOnName() {
         return false;
     }
 }

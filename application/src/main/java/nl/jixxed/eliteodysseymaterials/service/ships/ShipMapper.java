@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.service;
+package nl.jixxed.eliteodysseymaterials.service.ships;
 
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationExperimentalEffect;

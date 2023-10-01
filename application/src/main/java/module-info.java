@@ -630,4 +630,5 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scan to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scanbarycentre to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.shipyard to com.fasterxml.jackson.databind;
+    exports nl.jixxed.eliteodysseymaterials.service.ships;
 }

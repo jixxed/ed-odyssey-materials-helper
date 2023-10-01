@@ -14,12 +14,13 @@ import java.util.Map;
 
 public class DetailedSurfaceScanner extends OptionalModule {
     //    11130 : { mtype:'iss', cost: 250000, name:'Detailed Surface Scanner',       class:1, rating:'I', integ:20, ammoclip:3, proberad:20, limit:'iss', fdid:128666634, fdname:'Int_DetailedSurfaceScanner_Tiny', eddbid:1245 },
-    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I = new DetailedSurfaceScanner(HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 4.9)));
-    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I_V1_PRE = new DetailedSurfaceScanner(HorizonsBlueprintName.DETAILED_SURFACE_SCANNER_V1_PRE, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 4.9)));
+    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 20.0)));
+    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I_V1_PRE = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I_V1_PRE", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 20.0)));
     static {
         DETAILED_SURFACE_SCANNER_1_I_V1_PRE.getModifications().addAll(
                 List.of(
-                        new Modification(HorizonsBlueprintType.EXPANDED_PROBE_SCANNING_RADIUS_X2, 1.0, HorizonsBlueprintGrade.GRADE_5)
+                    new Modification(HorizonsBlueprintType.EXPANDED_PROBE_SCANNING_RADIUS, 1.0, HorizonsBlueprintGrade.GRADE_5),
+                    new Modification(HorizonsBlueprintType.EXPANDED_PROBE_SCANNING_RADIUS, 1.0, HorizonsBlueprintGrade.GRADE_5)
                 )
         );
     }
@@ -27,16 +28,16 @@ public class DetailedSurfaceScanner extends OptionalModule {
             DETAILED_SURFACE_SCANNER_1_I,
             DETAILED_SURFACE_SCANNER_1_I_V1_PRE
     );
-    public DetailedSurfaceScanner(HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
-        super(name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
+    public DetailedSurfaceScanner(final String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
     }
 
-    public DetailedSurfaceScanner(HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
-        super(name, moduleSize, moduleClass, origin, multiCrew, basePrice, internalName, attributes);
+    public DetailedSurfaceScanner(final String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, origin, multiCrew, basePrice, internalName, attributes);
     }
 
-    public DetailedSurfaceScanner(OptionalModule optionalModule) {
-        super(optionalModule);
+    public DetailedSurfaceScanner(DetailedSurfaceScanner detailedSurfaceScanner) {
+        super(detailedSurfaceScanner);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Map;
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FSDInterdictorBlueprints {
+public class FrameShiftDriveInterdictorBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.EXPANDED_FSD_INTERDICTOR_CAPTURE_ARC,
             Map.of(
@@ -22,9 +22,9 @@ public class FSDInterdictorBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.4)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.4)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -39,9 +39,9 @@ public class FSDInterdictorBlueprints {
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.2)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -56,9 +56,9 @@ public class FSDInterdictorBlueprints {
                                     Manufactured.MECHANICALCOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -73,9 +73,9 @@ public class FSDInterdictorBlueprints {
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -89,9 +89,9 @@ public class FSDInterdictorBlueprints {
                                     Manufactured.MECHANICALCOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("+120%", true, percentagePositive(1.0, 1.2)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("+120%", true, percentagePositive(1.0, 1.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.25, 0.3))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.25, 0.3))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON
@@ -106,9 +106,9 @@ public class FSDInterdictorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -124,9 +124,9 @@ public class FSDInterdictorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.1, 0.15)),
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.1, 0.15)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.1, 0.2)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.3))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.3))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -142,9 +142,9 @@ public class FSDInterdictorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.2)),
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.3, 0.4))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.3, 0.4))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -160,9 +160,9 @@ public class FSDInterdictorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.2, 0.25)),
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.2, 0.25)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.4, 0.5))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.4, 0.5))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -177,9 +177,9 @@ public class FSDInterdictorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.3)),
-                                    HorizonsModifier.FACING_LIMIT, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.25, 0.3)),
+                                    HorizonsModifier.FSD_INTERDICTOR_FACING_LIMIT, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.25, 0.3)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.5, 0.6))
+                                    HorizonsModifier.FSD_INTERDICTOR_RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.5, 0.6))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON

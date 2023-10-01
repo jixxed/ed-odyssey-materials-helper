@@ -3,8 +3,9 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
@@ -130,7 +131,7 @@ class GeneratecodeBlueprintsTest {
                 blueprint.getModifiers().forEach((horizonsModifier, horizonsModifierValue) -> {
                     String method = determineMethod(horizonsModifierValue.modification());
                     double start = (double) ((grade == HorizonsBlueprintGrade.GRADE_1) ? 0 : Double.parseDouble(gradeMap.get(HorizonsBlueprintGrade.forDigit(grade.getGrade() - 1)).getModifiers()
-                            .getOrDefault(horizonsModifier, new HorizonsModifierValue("0", true))
+                            .getOrDefault(horizonsModifier, new HorizonsNumberModifierValue("0", true, ModifierFunctionHelper.percentagePositive(0D,0D)))
                             .modification()
                             .replace("+", "")
                             .replace("-", "")

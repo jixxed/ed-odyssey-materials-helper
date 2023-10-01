@@ -18,7 +18,7 @@ public class SpecialBlueprints {
                             Map.of(
                             ),
                             Map.of(
-                                    HorizonsModifier.PROBE_RADIUS, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))
+                                    HorizonsModifier.DSS_PATCH_RADIUS, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0))
                             ),
                             List.of(
                                     Engineer.LEI_CHEUNG

@@ -175,7 +175,10 @@ public enum HorizonsBlueprintType {
     E2_AZIMUTH_ENHANCED_AX_MULTICANNON(false),
     C3_AZIMUTH_ENHANCED_AX_MULTICANNON(false),
     CAUSTIC_SINK_LAUNCHER(false),
-    THARGOID_PULSE_NEUTRALISER(false);
+    THARGOID_PULSE_NEUTRALISER(false),
+    DECORATIVE_GREEN(false),
+    DECORATIVE_RED(false),
+    DECORATIVE_YELLOW(false);
     @Getter
     private final boolean experimental;
 

@@ -20,15 +20,15 @@ public class CargoRack extends OptionalModule {
 //            650 : { mtype:'icr', cost: 362590, name:'Cargo Rack (Cap: 64)',  class:6, rating:'E', cargocap: 64, fdid:128064343, fdname:'Int_CargoRack_Size6_Class1', eddbid:1196 },
 //            750 : { mtype:'icr', cost:1178420, name:'Cargo Rack (Cap: 128)', class:7, rating:'E', cargocap:128, fdid:128064344, fdname:'Int_CargoRack_Size7_Class1', eddbid:1197 },
 //            850 : { mtype:'icr', cost:3829870, name:'Cargo Rack (Cap: 256)', class:8, rating:'E', cargocap:256, fdid:128064345, fdname:'Int_CargoRack_Size8_Class1', eddbid:1198 },
+    public static final CargoRack CARGO_RACK_1_E = new CargoRack("CARGO_RACK_1_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_1, ModuleClass.E, false, 1000, "Int_CargoRack_Size1_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  2.0)));
+    public static final CargoRack CARGO_RACK_2_E = new CargoRack("CARGO_RACK_2_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_2, ModuleClass.E, false, 3250, "Int_CargoRack_Size2_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  4.0)));
+    public static final CargoRack CARGO_RACK_3_E = new CargoRack("CARGO_RACK_3_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_3, ModuleClass.E, false, 10560, "Int_CargoRack_Size3_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  8.0)));
+    public static final CargoRack CARGO_RACK_4_E = new CargoRack("CARGO_RACK_4_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_4, ModuleClass.E, false, 34330, "Int_CargoRack_Size4_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  16.0)));
+    public static final CargoRack CARGO_RACK_5_E = new CargoRack("CARGO_RACK_5_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_5, ModuleClass.E, false, 111570, "Int_CargoRack_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  32.0)));
+    public static final CargoRack CARGO_RACK_6_E = new CargoRack("CARGO_RACK_6_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_6, ModuleClass.E, false, 362590, "Int_CargoRack_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  64.0)));
+    public static final CargoRack CARGO_RACK_7_E = new CargoRack("CARGO_RACK_7_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_7, ModuleClass.E, false, 1178420, "Int_CargoRack_Size7_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  128.0)));
+    public static final CargoRack CARGO_RACK_8_E = new CargoRack("CARGO_RACK_8_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.E, false, 3829870, "Int_CargoRack_Size8_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  256.0)));
 
-    public static final CargoRack CARGO_RACK_1_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_1, ModuleClass.E,    1000, "Int_CargoRack_Size1_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,   2.00)));
-    public static final CargoRack CARGO_RACK_2_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_2, ModuleClass.E,    3250, "Int_CargoRack_Size2_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,   4.00)));
-    public static final CargoRack CARGO_RACK_3_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_3, ModuleClass.E,   10560, "Int_CargoRack_Size3_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,   8.00)));
-    public static final CargoRack CARGO_RACK_4_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_4, ModuleClass.E,   34330, "Int_CargoRack_Size4_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  16.00)));
-    public static final CargoRack CARGO_RACK_5_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_5, ModuleClass.E,  111570, "Int_CargoRack_Size5_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  32.00)));
-    public static final CargoRack CARGO_RACK_6_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_6, ModuleClass.E,  362590, "Int_CargoRack_Size6_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  64.00)));
-    public static final CargoRack CARGO_RACK_7_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_7, ModuleClass.E, 1178420, "Int_CargoRack_Size7_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 128.00)));
-    public static final CargoRack CARGO_RACK_8_E = new CargoRack(HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_8, ModuleClass.E, 3829870, "Int_CargoRack_Size8_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY, 256.00)));
     public static final List<CargoRack> CARGO_RACKS = List.of(
              CARGO_RACK_1_E,
              CARGO_RACK_2_E,
@@ -39,9 +39,11 @@ public class CargoRack extends OptionalModule {
              CARGO_RACK_7_E,
              CARGO_RACK_8_E
     );
-    private CargoRack(final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
-        super(name,moduleSize,moduleClass, false, basePrice, internalName, attributes);
+
+    public CargoRack(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+        super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
     }
+
     private CargoRack(final CargoRack cargoRack) {
         super(cargoRack);
     }

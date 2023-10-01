@@ -24,7 +24,7 @@ public class SensorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.10)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)),
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.20))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
@@ -34,7 +34,7 @@ public class SensorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.10, 0.15)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.15, 0.30)),
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.15, 0.30)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.20, 0.40))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
@@ -44,7 +44,7 @@ public class SensorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.15, 0.20)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+45%", true, percentagePositive(0.30, 0.45)),
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("+45%", true, percentagePositive(0.30, 0.45)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.40, 0.60))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.LEI_CHEUNG, Engineer.FELICITY_FARSEER)),
@@ -54,7 +54,7 @@ public class SensorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-25%", false, percentageNegative(0.20, 0.25)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.45, 0.60)),
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.45, 0.60)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+80%", false, percentagePositive(0.60, 0.80))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG)),
@@ -64,7 +64,7 @@ public class SensorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.25, 0.30)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("+75%", true, percentagePositive(0.60, 0.75)),
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("+75%", true, percentagePositive(0.60, 0.75)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.80, 1.00))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG))
@@ -78,7 +78,7 @@ public class SensorBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.40)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04))
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_2,
@@ -88,7 +88,7 @@ public class SensorBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.40, 0.80)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.10, 0.20)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.04, 0.08))
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.04, 0.08))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.LEI_CHEUNG, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.FELICITY_FARSEER)),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_3,
@@ -98,7 +98,7 @@ public class SensorBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+120%", true, percentagePositive(0.80, 1.20)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.20, 0.30)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-12%", false, percentageNegative(0.08, 0.12))
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("-12%", false, percentageNegative(0.08, 0.12))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.HERA_TANI, Engineer.LEI_CHEUNG, Engineer.FELICITY_FARSEER)),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_4,
@@ -108,7 +108,7 @@ public class SensorBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+160%", true, percentagePositive(1.20, 1.60)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.30, 0.40)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-16%", false, percentageNegative(0.12, 0.16))
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("-16%", false, percentageNegative(0.12, 0.16))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG)),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.SENSORS, HorizonsBlueprintType.WIDE_ANGLE_SCANNER, HorizonsBlueprintGrade.GRADE_5,
@@ -118,7 +118,7 @@ public class SensorBlueprints {
                             Map.of(
                                     HorizonsModifier.SCAN_ANGLE, new HorizonsNumberModifierValue("+200%", true, percentagePositive(1.60, 2.00)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.40, 0.50)),
-                                    HorizonsModifier.RANGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.16, 0.20))
+                                    HorizonsModifier.MAX_RANGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.16, 0.20))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.LORI_JAMESON, Engineer.BILL_TURNER, Engineer.JURI_ISHMAAK, Engineer.TIANA_FORTUNE, Engineer.LEI_CHEUNG))
             ),

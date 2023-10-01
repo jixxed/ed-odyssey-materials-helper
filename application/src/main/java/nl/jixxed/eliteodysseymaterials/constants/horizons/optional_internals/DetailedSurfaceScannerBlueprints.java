@@ -21,7 +21,7 @@ public class DetailedSurfaceScannerBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.PROBE_RADIUS, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.1))
+                                    HorizonsModifier.DSS_PATCH_RADIUS, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.1))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -40,7 +40,7 @@ public class DetailedSurfaceScannerBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.PROBE_RADIUS, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.1, 0.2))
+                                    HorizonsModifier.DSS_PATCH_RADIUS, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.1, 0.2))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -60,7 +60,7 @@ public class DetailedSurfaceScannerBlueprints {
                                     Manufactured.PHASEALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.PROBE_RADIUS, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.3))
+                                    HorizonsModifier.DSS_PATCH_RADIUS, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.3))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -80,7 +80,7 @@ public class DetailedSurfaceScannerBlueprints {
                                     Manufactured.PROTOLIGHTALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.PROBE_RADIUS, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.3, 0.4))
+                                    HorizonsModifier.DSS_PATCH_RADIUS, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.3, 0.4))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,
@@ -98,7 +98,7 @@ public class DetailedSurfaceScannerBlueprints {
                                     Manufactured.PROTORADIOLICALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.PROBE_RADIUS, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.4, 0.5))
+                                    HorizonsModifier.DSS_PATCH_RADIUS, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.4, 0.5))
                             ),
                             List.of(
                                     Engineer.ETIENNE_DORN,

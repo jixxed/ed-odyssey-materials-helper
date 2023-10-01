@@ -259,11 +259,16 @@ public abstract class HorizonsBlueprintConstants {
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_PLANT, PowerPlantBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SENSORS, SensorBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.THRUSTERS, ThrusterBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.AX_MISSILE_RACK, MiningLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.BEAM_LASER, BeamLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.BURST_LASER, BurstLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.CANNON, CannonBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, FragmentCannonBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON, MiningLaserBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER, MiningLaserBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, MiningLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINE_LAUNCHER, MineLauncherBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINING_LASER, MiningLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MISSILE_RACK, MissileRackBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MULTI_CANNON, MultiCannonBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.PLASMA_ACCELERATOR, PlasmaAcceleratorBlueprints.BLUEPRINTS);
@@ -272,7 +277,7 @@ public abstract class HorizonsBlueprintConstants {
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.TORPEDO_PYLON, TorpedoPylonBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, AutoFieldMaintenanceUnitBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.COLLECTOR_LIMPET_CONTROLLER, CollectorLimpetControllerBlueprints.BLUEPRINTS);
-        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, FSDInterdictorBlueprints.BLUEPRINTS);
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, FrameShiftDriveInterdictorBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FUEL_SCOOP, FuelScoopBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FUEL_TRANSFER_LIMPET_CONTROLLER, FuelTransferLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.HATCH_BREAKER_LIMPET_CONTROLLER, HatchBreakerLimpetControllerBlueprints.BLUEPRINTS);
@@ -297,8 +302,10 @@ public abstract class HorizonsBlueprintConstants {
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MULTI_CANNON, ExperimentalEffectBlueprints.MULTI_CANNON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.CANNON, ExperimentalEffectBlueprints.CANNON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, ExperimentalEffectBlueprints.FRAGMENT_CANNON);
+        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, ExperimentalEffectBlueprints.GUARDIAN_SHARD_CANNON);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MISSILE_RACK, ExperimentalEffectBlueprints.MISSILE_RACK);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.TORPEDO_PYLON, ExperimentalEffectBlueprints.TORPEDO_PYLON);
+        EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MINING_LASER, ExperimentalEffectBlueprints.MINING_LASER);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.MINE_LAUNCHER, ExperimentalEffectBlueprints.MINE_LAUNCHER);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.PLASMA_ACCELERATOR, ExperimentalEffectBlueprints.PLASMA_ACCELERATOR);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.RAIL_GUN, ExperimentalEffectBlueprints.RAIL_GUN);

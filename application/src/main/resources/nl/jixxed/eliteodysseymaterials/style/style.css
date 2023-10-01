@@ -2762,7 +2762,7 @@
     -fx-pref-width: 25.5em;
     -fx-max-width: 25.5em;
     -fx-text-alignment: center;
-    -fx-font-size: 1.2em;
+    -fx-font-size: 1.05em;
     -fx-label-padding: 0.2em;
 }
 .ships-modules{
@@ -2840,4 +2840,8 @@
     -fx-background-radius: 0, 0;
     -fx-border-width: 1;
     -fx-border-color: #2e2e2e;
+}
+.ships-button-image{
+    -fx-max-width: 1.5em;
+    -fx-max-height: 1.5em;
 }

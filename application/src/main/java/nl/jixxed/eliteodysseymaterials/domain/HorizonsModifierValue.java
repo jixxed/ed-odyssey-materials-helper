@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import java.util.Objects;
 
-public class HorizonsModifierValue<T> {
+public abstract class HorizonsModifierValue<T> {
     private final String modification;
     private final boolean isPositive;
 
@@ -45,7 +45,5 @@ public class HorizonsModifierValue<T> {
     }
 
     //    public abstract  T getModifiedValue(final T baseValue, final Double percentComplete);
-    public Object getModifiedValue(final T baseValue, final Double percentComplete) {
-        return baseValue;
-    }
+    public abstract HorizonsBiFunction getModifier();
 }
