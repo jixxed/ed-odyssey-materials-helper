@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.service.CAPIService;
+import nl.jixxed.eliteodysseymaterials.service.EDDNService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -33,6 +34,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 class BottomBar extends HBox {
 
@@ -46,6 +51,7 @@ class BottomBar extends HBox {
     private Label gameModeLabel;
     private Label apiLabel;
     private Label watchedFileLabel;
+    private Label eddnQueueLabel;
     private Label login;
     private Label commanderLabel;
     private Label locationLabel;
@@ -54,8 +60,11 @@ class BottomBar extends HBox {
     private Double latitude;
     private Double longitude;
     private Separator apiLabelSeparator;
+    private AtomicBoolean eddnTransmitting = new AtomicBoolean(false);
+    private ScheduledExecutorService executorService;
 
     BottomBar() {
+        executorService = new ScheduledThreadPoolExecutor(1);
         initComponents();
         initEventHandling();
     }
@@ -67,6 +76,7 @@ class BottomBar extends HBox {
         HBox.setHgrow(this.region, Priority.ALWAYS);
         this.locationLabel = LabelBuilder.builder().build();
         this.apiLabel = LabelBuilder.builder().build();
+        this.eddnQueueLabel = LabelBuilder.builder().build();
         this.gameModeLabel = LabelBuilder.builder().build();
         this.commanderLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.commander")).build();
         this.login = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.login")).build();
@@ -89,7 +99,13 @@ class BottomBar extends HBox {
         this.apiLabelSeparator = new Separator(Orientation.VERTICAL);
         this.apiLabelSeparator.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.apiLabel.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
-        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+
+        executorService.scheduleAtFixedRate(() -> {
+            if(eddnTransmitting.get()){
+                updateEDDNLabel();
+            }
+        },0,25, TimeUnit.MILLISECONDS);
     }
 
     private void initEventHandling() {
@@ -104,13 +120,27 @@ class BottomBar extends HBox {
         this.eventListeners.add(EventService.addListener(this, LoadGameEvent.class, this::handleLoadGame));
         this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> updateApiLabel()));
         this.eventListeners.add(EventService.addListener(this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
+        this.eventListeners.add(EventService.addListener(this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
+        this.eventListeners.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+    }
+
+    private void updateEDDNLabel() {
+        Platform.runLater(()-> {
+            final int queueSize = EDDNService.queueSize();
+            if (queueSize > 0) {
+                this.eddnQueueLabel.setText("EDDN Transmission queue: " + queueSize);
+            } else {
+                this.eddnQueueLabel.setText("");
+                eddnTransmitting.set(false);
+            }
+        });
     }
 
     private void afterAllCommandersListed() {
         if (!this.commanderSelect.getItems().isEmpty() && this.commanderSelect.getSelectionModel().getSelectedIndex() == -1) {
             final Commander commander = this.commanderSelect.getItems().get(0);
             this.commanderSelect.getSelectionModel().select(commander);
-            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" +commander.getFid() + ":" + commander.getGameVersion().name());
+            PreferencesService.setPreference(PreferenceConstants.COMMANDER, commander.getName() + ":" + commander.getFid() + ":" + commander.getGameVersion().name());
             EventService.publish(new CommanderSelectedEvent(commander));
         }
     }
@@ -164,10 +194,10 @@ class BottomBar extends HBox {
             fleetCarrierFileDir.mkdirs();
             final File fleetCarrierFile = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE);
             if (fleetCarrierFile.exists()) {
-                if(CAPIService.getInstance().getActive().getValue().equals(false)){
+                if (CAPIService.getInstance().getActive().getValue().equals(false)) {
                     this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.stale"));
 
-                }else{
+                } else {
                     final ZonedDateTime lastModified = ZonedDateTime.ofInstant(Instant.ofEpochMilli(fleetCarrierFile.lastModified()), ZoneId.systemDefault());
                     this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
 

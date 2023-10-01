@@ -50,9 +50,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Scan.Scan;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanBaryCentre.ScanBaryCentre;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard.Shipyard;
 import nl.jixxed.eliteodysseymaterials.service.eddn.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import org.apache.commons.io.input.CharSequenceInputStream;
 import org.apache.poi.ss.formula.eval.NotImplementedException;
 import org.leadpony.justify.api.JsonSchema;
@@ -70,6 +68,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.*;
 import java.util.stream.Stream;
 import java.util.zip.Deflater;
 
@@ -81,7 +80,9 @@ public class EDDNService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final LocalDateTime MIN_DATETIME = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-
+    private static final ThreadPoolExecutor EXECUTOR_SERVICE = new ThreadPoolExecutor(1, 1,
+                    0L, TimeUnit.MILLISECONDS,
+                    new LinkedBlockingQueue<Runnable>());
 
     public static void init() {
         OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
@@ -93,6 +94,9 @@ public class EDDNService {
                 final LocalDateTime lastTimestamp = UserPreferencesService.getPreference(PreferenceConstants.USER_LATEST_EVENT, MIN_DATETIME);
                 UserPreferencesService.setPreference(PreferenceConstants.USER_LATEST_EVENT, lastTimestamp.plusSeconds(1));
             }
+        }));
+        EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, terminateApplicationEvent -> {
+            EXECUTOR_SERVICE.shutdown();
         }));
     }
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -387,7 +391,12 @@ public class EDDNService {
                     log.error("publish to EDDN error", e);
                 }
             };
-            new Thread(run).start();
+            try{
+                EXECUTOR_SERVICE.submit(run);
+                EventService.publish(new EDDNQueueEvent());
+            }catch (RejectedExecutionException | NullPointerException ex){
+                log.debug("Failed to send data to EDDN", ex);
+            }
         }
     }
 
@@ -434,5 +443,9 @@ public class EDDNService {
 
     private static boolean isTestMode(){
         return "dev".equals(getBuildVersion());
+    }
+
+    public static int queueSize() {
+        return (int) EXECUTOR_SERVICE.getQueue().stream().filter(t -> !((FutureTask) t).isDone()).count();
     }
 }
