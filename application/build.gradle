@@ -128,7 +128,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.6'
     implementation 'commons-io:commons-io:2.13.0'
     implementation 'ch.qos.logback:logback-core:1.4.11'
-    implementation 'ch.qos.logback:logback-classic:1.3.5'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
     implementation('javax.servlet:javax.servlet-api:4.0.1')
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
     implementation 'io.github.pustike:commons-csv:1.7.0'
