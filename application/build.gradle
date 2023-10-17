@@ -152,7 +152,7 @@ dependencies {
     testImplementation("org.openjfx:javafx-swing:19+:${platform}")
     implementation 'com.github.scribejava:scribejava-core:8.3.3'
     implementation 'net.java.dev.jna:jna:5.11.0'
-    implementation 'net.java.dev.jna:jna-platform:5.11.0'
+    implementation 'net.java.dev.jna:jna-platform:5.13.0'
     implementation group: 'nl.jixxed.tess4j', name: 'tess4j', version: '5.2.9'
     implementation group: 'nl.jixxed.lept4j', name: 'lept4j', version: '1.16.6'
     implementation 'com.github.jai-imageio:jai-imageio-core:1.4.0'
