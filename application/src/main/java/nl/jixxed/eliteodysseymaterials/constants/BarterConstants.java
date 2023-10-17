@@ -48,6 +48,7 @@ public class BarterConstants {
 
             Map.entry(Good.AGRICULTURALPROCESSSAMPLE, 50_000),
             Map.entry(Good.BIOCHEMICALAGENT, 125_000),
+            Map.entry(Good.BIOMECHANICALCOMPONENT, 200_000),
             Map.entry(Good.GENETICSAMPLE, 35_000),
             Map.entry(Good.BUILDINGSCHEMATIC, 25_000),
             Map.entry(Good.CALIFORNIUM, 100_000),

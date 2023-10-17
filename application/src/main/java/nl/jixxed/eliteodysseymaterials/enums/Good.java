@@ -5,6 +5,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 public enum Good implements OdysseyMaterial {
     AGRICULTURALPROCESSSAMPLE(false),
     BIOCHEMICALAGENT(true),
+    BIOMECHANICALCOMPONENT(false),
     BUILDINGSCHEMATIC(false),
     CALIFORNIUM(false),
     CASTFOSSIL(false),
