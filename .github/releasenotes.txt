@@ -6,5 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix opening too many connections to EDDN in a short period of time.
-Add EDDN queue indicator in statusbar. Shows how many updates are left to send. Only visible if queue > 0.
+Fix automatic reporting of unknown goods
+Rename Xenobiological Prison Pod to Thargoid Bio-storage Capsule
+Add new U17 materials

@@ -1,3 +1,9 @@
+Version 2.36
+-------------
+Fix automatic reporting of unknown goods
+Rename Xenobiological Prison Pod to Thargoid Bio-storage Capsule
+Add new U17 materials
+
 Version 2.35
 -------------
 Fix opening too many connections to EDDN in a short period of time.
