@@ -280,7 +280,9 @@ public class ShieldBoosterBlueprints {
                                     Raw.PHOSPHORUS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04))
                             ),
@@ -297,7 +299,9 @@ public class ShieldBoosterBlueprints {
                                     Manufactured.CONDUCTIVECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.1)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06))
                             ),
@@ -314,7 +318,9 @@ public class ShieldBoosterBlueprints {
                                     Manufactured.FOCUSCRYSTALS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.1, 0.15)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08))
                             ),
@@ -331,7 +337,9 @@ public class ShieldBoosterBlueprints {
                                     Manufactured.REFINEDFOCUSCRYSTALS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.11, 0.15)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.11, 0.15)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.11, 0.15)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.11, 0.15)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.2)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1))
                             ),
@@ -347,7 +355,9 @@ public class ShieldBoosterBlueprints {
                                     Manufactured.REFINEDFOCUSCRYSTALS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.15, 0.17)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.15, 0.17)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.15, 0.17)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.15, 0.17)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.2, 0.25)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-12%", false, percentageNegative(0.1, 0.12))
                             ),

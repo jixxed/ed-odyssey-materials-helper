@@ -1,0 +1,58 @@
+{
+  "Slot": "LargeHardpoint1",
+  "Item": "hpt_mining_abrblstr_fixed_small",
+  "On": true,
+  "Priority": 0,
+  "Engineering": {
+    "Engineer": "Selene Jean",
+    "EngineerID": 300210,
+    "BlueprintID": 128673614,
+    "BlueprintName": "Weapon_LongRange",
+    "Level": 5,
+    "Quality": 0.0,
+    "Modifiers": [
+      {
+        "Label": "Integrity",
+        "Value": 20.0,
+        "OriginalValue": 40.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 0.17,
+        "OriginalValue": 0.34,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DistributorDraw",
+        "Value": 1.0,
+        "OriginalValue": 2.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 1.0,
+        "OriginalValue": 2.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "MaximumRange",
+        "Value": 5000.0,
+        "OriginalValue": 1000.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ShotSpeed",
+        "Value": 3333.333252,
+        "OriginalValue": 666.666687,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "DamageFalloffRange",
+        "Value": 5000.0,
+        "OriginalValue": 1000.0,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

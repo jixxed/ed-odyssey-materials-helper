@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,13 @@ public class ShipConfiguration {
     private String uuid = UUID.randomUUID().toString();
     private String name;
     private ShipType shipType;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<ShipConfigurationSlot> hardpointSlots = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<ShipConfigurationSlot> utilitySlots = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<ShipConfigurationSlot> coreSlots = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<ShipConfigurationSlot> optionalSlots = new ArrayList<>();
 
 

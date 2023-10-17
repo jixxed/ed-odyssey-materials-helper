@@ -7,4 +7,11 @@ import lombok.NoArgsConstructor;
 public class UTF8Constants {
     public static final String CHECK_TRUE = "\u2714";
     public static final String CHECK_FALSE = "\u2718";
+
+    public static String forBool(boolean value) {
+        if(value) {
+            return CHECK_TRUE;
+        }
+        return CHECK_FALSE;
+    }
 }

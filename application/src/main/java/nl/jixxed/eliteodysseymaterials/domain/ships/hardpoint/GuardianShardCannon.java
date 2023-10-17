@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
-import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
-import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.GuardianShardCannonBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
@@ -25,26 +23,14 @@ public class GuardianShardCannon extends HardpointModule {
     public static final GuardianShardCannon GUARDIAN_SHARD_CANNON_2_A_T = new GuardianShardCannon("GUARDIAN_SHARD_CANNON_2_A_T", HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, ModuleSize.SIZE_2, ModuleClass.A, Origin.GUARDIAN, true, Mounting.TURRETED, 1767000, "Hpt_Guardian_ShardCannon_Turret_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  4.0), Map.entry(HorizonsModifier.INTEGRITY,  42.0), Map.entry(HorizonsModifier.POWER_DRAW,  1.16), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  86.8), Map.entry(HorizonsModifier.DAMAGE,  4.34), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.57), Map.entry(HorizonsModifier.THERMAL_LOAD,  1.09), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  45.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  1700.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1133.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  1.667), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.6), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  5.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT,  12.0), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  3.5), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  60.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  80.0), Map.entry(HorizonsModifier.JITTER,  5.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  1700.0)));
     public static final GuardianShardCannon GUARDIAN_SHARD_CANNON_3_C_F = new GuardianShardCannon("GUARDIAN_SHARD_CANNON_3_C_F", HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, ModuleSize.SIZE_3, ModuleClass.C, Origin.GUARDIAN, false, Mounting.FIXED, 1461350, "Hpt_Guardian_ShardCannon_Fixed_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  8.0), Map.entry(HorizonsModifier.INTEGRITY,  51.0), Map.entry(HorizonsModifier.POWER_DRAW,  1.68), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  190.0), Map.entry(HorizonsModifier.DAMAGE,  9.5), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  1.4), Map.entry(HorizonsModifier.THERMAL_LOAD,  2.2), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  60.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  1700.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1133.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  1.667), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.6), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  5.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT,  12.0), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  7.6), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  60.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  80.0), Map.entry(HorizonsModifier.JITTER,  5.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  1700.0)));
     public static final GuardianShardCannon GUARDIAN_SHARD_CANNON_3_D_T = new GuardianShardCannon("GUARDIAN_SHARD_CANNON_3_D_T", HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, ModuleSize.SIZE_3, ModuleClass.D, Origin.GUARDIAN, true, Mounting.TURRETED, 5865030, "Hpt_Guardian_ShardCannon_Turret_Large", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  8.0), Map.entry(HorizonsModifier.INTEGRITY,  51.0), Map.entry(HorizonsModifier.POWER_DRAW,  1.39), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  124.0), Map.entry(HorizonsModifier.DAMAGE,  6.2), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  1.2), Map.entry(HorizonsModifier.THERMAL_LOAD,  1.98), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  60.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  1700.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1133.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  1.667), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.6), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  5.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT,  12.0), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  5.0), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  60.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  80.0), Map.entry(HorizonsModifier.JITTER,  5.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  1700.0)));
-    public static final GuardianShardCannon GUARDIAN_SHARD_CANNON_1_D_F_PRE = new GuardianShardCannon("GUARDIAN_SHARD_CANNON_1_D_F_PRE", HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, ModuleSize.SIZE_1, ModuleClass.D, Origin.GUARDIAN, false, Mounting.FIXED, 151650, "Hpt_Guardian_ShardCannon_Fixed_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  2.0), Map.entry(HorizonsModifier.INTEGRITY,  34.0), Map.entry(HorizonsModifier.POWER_DRAW,  0.87), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  72.8), Map.entry(HorizonsModifier.DAMAGE,  3.64), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.42), Map.entry(HorizonsModifier.THERMAL_LOAD,  0.69), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  30.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  1700.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1133.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  1.667), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.6), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  5.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT,  12.0), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  2.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  60.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  80.0), Map.entry(HorizonsModifier.JITTER,  5.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  1700.0)));
-    public static final GuardianShardCannon GUARDIAN_SHARD_CANNON_2_A_F_PRE = new GuardianShardCannon("GUARDIAN_SHARD_CANNON_2_A_F_PRE", HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, ModuleSize.SIZE_2, ModuleClass.A, Origin.GUARDIAN, false, Mounting.FIXED, 507760, "Hpt_Guardian_ShardCannon_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  4.0), Map.entry(HorizonsModifier.INTEGRITY,  42.0), Map.entry(HorizonsModifier.POWER_DRAW,  1.21), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  135.4), Map.entry(HorizonsModifier.DAMAGE,  6.77), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.65), Map.entry(HorizonsModifier.THERMAL_LOAD,  1.2), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  45.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  1700.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1133.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  1.667), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.6), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  5.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT,  12.0), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  5.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  60.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  80.0), Map.entry(HorizonsModifier.JITTER,  5.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  1700.0)));
+    public static final GuardianShardCannon GUARDIAN_SHARD_CANNON_1_D_F_PRE = new GuardianShardCannon("GUARDIAN_SHARD_CANNON_1_D_F_PRE", HorizonsBlueprintName.GUARDIAN_SHARD_CANNON_PRE, ModuleSize.SIZE_1, ModuleClass.D, Origin.GUARDIAN, false, Mounting.FIXED, 151650, "Hpt_Guardian_ShardCannon_Fixed_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  2.0), Map.entry(HorizonsModifier.INTEGRITY,  34.0), Map.entry(HorizonsModifier.POWER_DRAW,  0.87), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  72.8), Map.entry(HorizonsModifier.DAMAGE,  3.64), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.42), Map.entry(HorizonsModifier.THERMAL_LOAD,  0.69), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  30.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  1700.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1133.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  1.667), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.6), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  5.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT,  12.0), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  2.9), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  60.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  80.0), Map.entry(HorizonsModifier.JITTER,  5.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  1700.0)));
+    public static final GuardianShardCannon GUARDIAN_SHARD_CANNON_2_A_F_PRE = new GuardianShardCannon("GUARDIAN_SHARD_CANNON_2_A_F_PRE", HorizonsBlueprintName.GUARDIAN_SHARD_CANNON_PRE, ModuleSize.SIZE_2, ModuleClass.A, Origin.GUARDIAN, false, Mounting.FIXED, 507760, "Hpt_Guardian_ShardCannon_Fixed_Medium", Map.ofEntries(Map.entry(HorizonsModifier.MASS,  4.0), Map.entry(HorizonsModifier.INTEGRITY,  42.0), Map.entry(HorizonsModifier.POWER_DRAW,  1.21), Map.entry(HorizonsModifier.BOOT_TIME,  0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,  135.4), Map.entry(HorizonsModifier.DAMAGE,  6.77), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,  0.65), Map.entry(HorizonsModifier.THERMAL_LOAD,  1.2), Map.entry(HorizonsModifier.ARMOUR_PIERCING,  45.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,  1700.0), Map.entry(HorizonsModifier.SHOT_SPEED,  1133.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,  1.667), Map.entry(HorizonsModifier.BURST_INTERVAL,  0.6), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,  5.0), Map.entry(HorizonsModifier.AMMO_MAXIMUM,  180.0), Map.entry(HorizonsModifier.ROUNDS_PER_SHOT,  12.0), Map.entry(HorizonsModifier.RELOAD_TIME,  5.0), Map.entry(HorizonsModifier.BREACH_DAMAGE,  5.4), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,  60.0), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,  80.0), Map.entry(HorizonsModifier.JITTER,  5.0), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO, 0.5), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,  1700.0)));
     static {
-        GUARDIAN_SHARD_CANNON_1_D_F_PRE.getModifications().addAll(
-            List.of(
-                new Modification(HorizonsBlueprintType.LONG_RANGE_WEAPON, 1.0, HorizonsBlueprintGrade.GRADE_5),
-                new Modification(HorizonsBlueprintType.FOCUSED_WEAPON, 1.0, HorizonsBlueprintGrade.GRADE_5)
-            )
+        GUARDIAN_SHARD_CANNON_1_D_F_PRE.getModifications().add(
+                new Modification(HorizonsBlueprintType.LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
-        GUARDIAN_SHARD_CANNON_2_A_F_PRE.getModifications().addAll(
-            List.of(
-                new Modification(HorizonsBlueprintType.LONG_RANGE_WEAPON, 1.0, HorizonsBlueprintGrade.GRADE_5),
-                new Modification(HorizonsBlueprintType.FOCUSED_WEAPON, 1.0, HorizonsBlueprintGrade.GRADE_5)
-            )
-        );
-        GUARDIAN_SHARD_CANNON_1_D_F_PRE.getExperimentalEffects().add(
-            HorizonsBlueprintType.PENETRATOR_MUNITIONS
-        );
-        GUARDIAN_SHARD_CANNON_2_A_F_PRE.getExperimentalEffects().add(
-            HorizonsBlueprintType.PENETRATOR_MUNITIONS
+        GUARDIAN_SHARD_CANNON_2_A_F_PRE.getModifications().add(
+                new Modification(HorizonsBlueprintType.LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
     }
     public static final List<GuardianShardCannon> GUARDIAN_SHARD_CANNONS = List.of(
@@ -53,7 +39,9 @@ public class GuardianShardCannon extends HardpointModule {
         GUARDIAN_SHARD_CANNON_2_A_F,
         GUARDIAN_SHARD_CANNON_2_A_T,
         GUARDIAN_SHARD_CANNON_3_C_F,
-        GUARDIAN_SHARD_CANNON_3_D_T
+        GUARDIAN_SHARD_CANNON_3_D_T,
+        GUARDIAN_SHARD_CANNON_1_D_F_PRE,
+        GUARDIAN_SHARD_CANNON_2_A_F_PRE
     );
     public GuardianShardCannon(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, mounting, basePrice, internalName, attributes);
@@ -70,17 +58,11 @@ public class GuardianShardCannon extends HardpointModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        if(isPreEngineered()){
-            return GuardianShardCannonBlueprints.BLUEPRINTS.keySet().stream().toList();
-        }
         return Collections.emptyList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
-        if(isPreEngineered()){
-            return ExperimentalEffectBlueprints.GUARDIAN_SHARD_CANNON.keySet().stream().toList();
-        }
         return Collections.emptyList();
     }
 
@@ -91,6 +73,6 @@ public class GuardianShardCannon extends HardpointModule {
 
     @Override
     public boolean isPreEngineered() {
-        return GUARDIAN_SHARD_CANNON_1_D_F_PRE.equals(this) || GUARDIAN_SHARD_CANNON_2_A_F_PRE.equals(this) ;
+        return HorizonsBlueprintName.GUARDIAN_SHARD_CANNON_PRE.equals(this.getName());
     }
 }

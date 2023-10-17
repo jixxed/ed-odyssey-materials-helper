@@ -27,6 +27,7 @@ public class LocaleService {
             "blueprint/horizons/category",
             "blueprint/horizons/description",
             "blueprint/horizons/modifier",
+            "blueprint/horizons/modifier.unit",
             "blueprint/horizons/names",
             "blueprint/horizons/type.description",
             "blueprint/horizons/type.names",

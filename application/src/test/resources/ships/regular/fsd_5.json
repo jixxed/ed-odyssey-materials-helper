@@ -1,0 +1,42 @@
+{
+  "Slot": "FrameShiftDrive",
+  "Item": "int_hyperdrive_size5_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 0.9775,
+  "Value": 5103953,
+  "Engineering": {
+    "Engineer": "Felicity Farseer",
+    "EngineerID": 300100,
+    "BlueprintID": 128673694,
+    "BlueprintName": "FSD_LongRange",
+    "Level": 5,
+    "Quality": 0.261,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 26.0,
+        "OriginalValue": 20.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 102.0,
+        "OriginalValue": 120.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 0.69,
+        "OriginalValue": 0.6,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "FSDOptimalMass",
+        "Value": 1549.904907,
+        "OriginalValue": 1050.0,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -32,6 +33,17 @@ public class AXMultiCannon extends HardpointModule {
     public static final AXMultiCannon  ENHANCED_AX_MULTI_CANNON_3_B_F = new AXMultiCannon("ENHANCED_AX_MULTI_CANNON_3_B_F", HorizonsBlueprintName.ENHANCED_AX_MULTI_CANNON, ModuleSize.SIZE_3, ModuleClass.B, false, Mounting.FIXED    , 1360320, "Hpt_ATMultiCannon_Fixed_Large_V2"     , Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY,64.0), Map.entry(HorizonsModifier.POWER_DRAW,0.69), Map.entry(HorizonsModifier.BOOT_TIME,0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,42.9  ), Map.entry(HorizonsModifier.DAMAGE, 7.3  ), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,0.18 ), Map.entry(HorizonsModifier.THERMAL_LOAD,0.3 ), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 33.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,4000.0), Map.entry(HorizonsModifier.SHOT_SPEED,4000.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,5.9  ), Map.entry(HorizonsModifier.BURST_INTERVAL,0.17 ), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,100.0   ), Map.entry(HorizonsModifier.AMMO_MAXIMUM,2100.0), Map.entry(HorizonsModifier.RELOAD_TIME,4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 6.2), Map.entry(HorizonsModifier.BREACH_CHANCE_MIN,50.0), Map.entry(HorizonsModifier.BREACH_CHANCE_MAX,80.0), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO,0.51  /0.073  ), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,0.22 /0.073  ), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,2000.0), Map.entry(HorizonsModifier.AMMO_COST,  1.0)));
     public static final AXMultiCannon  ENHANCED_AX_MULTI_CANNON_3_C_G = new AXMultiCannon("ENHANCED_AX_MULTI_CANNON_3_C_G", HorizonsBlueprintName.ENHANCED_AX_MULTI_CANNON, ModuleSize.SIZE_3, ModuleClass.C, false, Mounting.GIMBALLED, 2390460, "Hpt_ATMultiCannon_Gimbal_Large"       , Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY,64.0), Map.entry(HorizonsModifier.POWER_DRAW,0.64), Map.entry(HorizonsModifier.BOOT_TIME,0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,41.8  ), Map.entry(HorizonsModifier.DAMAGE, 6.3  ), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,0.18 ), Map.entry(HorizonsModifier.THERMAL_LOAD,0.3 ), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 33.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,4000.0), Map.entry(HorizonsModifier.SHOT_SPEED,4000.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,5.9  ), Map.entry(HorizonsModifier.BURST_INTERVAL,0.17 ), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,100.0   ), Map.entry(HorizonsModifier.AMMO_MAXIMUM,2100.0), Map.entry(HorizonsModifier.RELOAD_TIME,4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 5.2), Map.entry(HorizonsModifier.BREACH_CHANCE_MIN,50.0), Map.entry(HorizonsModifier.BREACH_CHANCE_MAX,80.0), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO,0.41  /0.063  ), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,0.22 /0.063  ), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,2000.0), Map.entry(HorizonsModifier.AMMO_COST,  1.0)));
     public static final AXMultiCannon  ENHANCED_AX_MULTI_CANNON_3_D_T = new AXMultiCannon("ENHANCED_AX_MULTI_CANNON_3_D_T", HorizonsBlueprintName.ENHANCED_AX_MULTI_CANNON, ModuleSize.SIZE_3, ModuleClass.D, true , Mounting.TURRETED , 4588710, "Hpt_ATMultiCannon_Turret_Large_V2"    , Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY,64.0), Map.entry(HorizonsModifier.POWER_DRAW,0.69), Map.entry(HorizonsModifier.BOOT_TIME,0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,24.4  ), Map.entry(HorizonsModifier.DAMAGE, 3.9  ), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,0.06 ), Map.entry(HorizonsModifier.THERMAL_LOAD,0.1 ), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 33.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,4000.0), Map.entry(HorizonsModifier.SHOT_SPEED,4000.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,6.2  ), Map.entry(HorizonsModifier.BURST_INTERVAL,0.16 ), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,90.0    ), Map.entry(HorizonsModifier.AMMO_MAXIMUM,2100.0), Map.entry(HorizonsModifier.RELOAD_TIME,4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 1.0), Map.entry(HorizonsModifier.BREACH_CHANCE_MIN,50.0), Map.entry(HorizonsModifier.BREACH_CHANCE_MAX,50.0), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO,0.28  /0.039  ), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,0.11 /0.039  ), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,2000.0), Map.entry(HorizonsModifier.AMMO_COST,  1.0)));
+    public static final AXMultiCannon  AX_MULTI_CANNON_2_E_F_PRE          = new AXMultiCannon("AX_MULTI_CANNON_2_E_F_PRE" , HorizonsBlueprintName.AX_MULTI_CANNON_PRE, ModuleSize.SIZE_2, ModuleClass.E, false, Mounting.FIXED    ,  379000, "Hpt_ATMultiCannon_Fixed_Medium"       , Map.ofEntries(Map.entry(HorizonsModifier.MASS, 4.00), Map.entry(HorizonsModifier.INTEGRITY,51.0), Map.entry(HorizonsModifier.POWER_DRAW,0.46), Map.entry(HorizonsModifier.BOOT_TIME,0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,23.643), Map.entry(HorizonsModifier.DAMAGE, 3.310), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,0.110), Map.entry(HorizonsModifier.THERMAL_LOAD,0.18), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 17.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,4000.0), Map.entry(HorizonsModifier.SHOT_SPEED,1600.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,7.143), Map.entry(HorizonsModifier.BURST_INTERVAL,0.140), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,100.0   ), Map.entry(HorizonsModifier.AMMO_MAXIMUM,2100.0), Map.entry(HorizonsModifier.RELOAD_TIME,4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 2.8), Map.entry(HorizonsModifier.BREACH_CHANCE_MIN,50.0), Map.entry(HorizonsModifier.BREACH_CHANCE_MAX,80.0), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO,0.2190/0.03310), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,0.112/0.03310), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,2000.0), Map.entry(HorizonsModifier.AMMO_COST,  1.0)));
+    public static final AXMultiCannon  AX_MULTI_CANNON_3_C_F_PRE          = new AXMultiCannon("AX_MULTI_CANNON_3_C_F_PRE" , HorizonsBlueprintName.AX_MULTI_CANNON_PRE, ModuleSize.SIZE_3, ModuleClass.C, false, Mounting.FIXED    , 1181500, "Hpt_ATMultiCannon_Fixed_Large"        , Map.ofEntries(Map.entry(HorizonsModifier.MASS, 8.00), Map.entry(HorizonsModifier.INTEGRITY,64.0), Map.entry(HorizonsModifier.POWER_DRAW,0.64), Map.entry(HorizonsModifier.BOOT_TIME,0.0), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND,35.971), Map.entry(HorizonsModifier.DAMAGE, 6.115), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW,0.180), Map.entry(HorizonsModifier.THERMAL_LOAD,0.28), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 33.0), Map.entry(HorizonsModifier.MAXIMUM_RANGE,4000.0), Map.entry(HorizonsModifier.SHOT_SPEED,1600.0), Map.entry(HorizonsModifier.RATE_OF_FIRE,5.882), Map.entry(HorizonsModifier.BURST_INTERVAL,0.170), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE,100.0   ), Map.entry(HorizonsModifier.AMMO_MAXIMUM,2100.0), Map.entry(HorizonsModifier.RELOAD_TIME,4.0), Map.entry(HorizonsModifier.BREACH_DAMAGE, 5.2), Map.entry(HorizonsModifier.BREACH_CHANCE_MIN,50.0), Map.entry(HorizonsModifier.BREACH_CHANCE_MAX,80.0), Map.entry(HorizonsModifier.ANTI_XENO_DAMAGE_RATIO,0.3925/0.06115), Map.entry(HorizonsModifier.KINETIC_DAMAGE_RATIO,0.219/0.06115), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START,2000.0), Map.entry(HorizonsModifier.AMMO_COST,  1.0)));
+
+    static {
+        AX_MULTI_CANNON_2_E_F_PRE.getModifications().add(
+            new Modification(HorizonsBlueprintType.OVERCHARGED_WEAPON_AUTO_LOADER, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        AX_MULTI_CANNON_3_C_F_PRE.getModifications().add(
+            new Modification(HorizonsBlueprintType.OVERCHARGED_WEAPON_AUTO_LOADER, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+    }
     public static final List<AXMultiCannon> AX_MULTI_CANNONS = List.of(
             AX_MULTI_CANNON_2_E_F,
             AX_MULTI_CANNON_2_F_T,
@@ -42,7 +54,9 @@ public class AXMultiCannon extends HardpointModule {
             ENHANCED_AX_MULTI_CANNON_2_E_T,
             ENHANCED_AX_MULTI_CANNON_3_B_F,
             ENHANCED_AX_MULTI_CANNON_3_C_G,
-            ENHANCED_AX_MULTI_CANNON_3_D_T
+            ENHANCED_AX_MULTI_CANNON_3_D_T,
+            AX_MULTI_CANNON_2_E_F_PRE,
+            AX_MULTI_CANNON_3_C_F_PRE
     );
     public AXMultiCannon(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, mounting, basePrice, internalName, attributes);
@@ -72,6 +86,10 @@ public class AXMultiCannon extends HardpointModule {
     }
 
     @Override
+    public boolean isPreEngineered() {
+        return AX_MULTI_CANNON_2_E_F_PRE.equals(this) || AX_MULTI_CANNON_3_C_F_PRE.equals(this);
+    }
+    @Override
     public String getNonSortingClarifier() {
         if(this.getName().equals(HorizonsBlueprintName.ENHANCED_AX_MULTI_CANNON)){
             return " ENH";
@@ -81,4 +99,5 @@ public class AXMultiCannon extends HardpointModule {
     public boolean groupOnName() {
         return true;
     }
+
 }

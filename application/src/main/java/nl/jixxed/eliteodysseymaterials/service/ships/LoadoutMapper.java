@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class LoadoutMapper {
@@ -29,37 +29,55 @@ public class LoadoutMapper {
         loadout.getModules().forEach(module -> {
             final String slotName = module.getSlot();
             Slot slot = getShipSlot(ship, slotName);
-            final List<ShipModule> potentialShipModules = getPotentialShipModules(module.getItem(), slot);
-            AtomicReference<ShipModule> shipModuleRef = new AtomicReference<>();
-            module.getEngineering().ifPresent(engineering -> {
-                if (potentialShipModules.size() > 1) {
-                    if (isPreEngineered(potentialShipModules, engineering)) {
-                        shipModuleRef.set(potentialShipModules.stream().filter(ShipModule::isPreEngineered).findFirst().orElseThrow(IllegalArgumentException::new));
-                    } else {
-                        shipModuleRef.set(potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new));
+            if (slot != null) {
+
+                final List<ShipModule> potentialShipModules = getPotentialShipModules(module.getItem(), slot.getSlotType());
+//            AtomicReference<ShipModule> shipModuleRef = new AtomicReference<>();
+                final ShipModule matchingModule = module.getEngineering().map(engineering -> {
+                    if (!potentialShipModules.isEmpty()) {
+                        if (isPreEngineered(potentialShipModules, engineering)) {
+                            return potentialShipModules.stream().filter(ShipModule::isPreEngineered).findFirst().orElseThrow(IllegalArgumentException::new);
+                        } else {
+                            return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+                        }
                     }
-                }
-            });
-            final ShipModule shipModule = shipModuleRef.get().Clone();
-            module.getEngineering().ifPresent(engineering -> {
-                boolean isLegacy = isLegacy(shipModule, engineering);
-                HorizonsBlueprintType blueprint = determineBlueprint(engineering);
-                HorizonsBlueprintGrade grade = determineGrade(engineering);
-                Double progression = determineGradeProgress(engineering);
-                if (isLegacy) {
-                    shipModule.setLegacy(true);
-                    final Set<HorizonsModifier> shipModuleAttibutes = shipModule.getAttibutes();
-                    engineering.getModifiers().forEach(modifier -> {
-                        modifier.getValue().ifPresent(value -> {
-                            shipModule.addLegacyModification(HorizonsModifier.forInternalName(modifier.getLabel()), value);
+
+                log.debug("Slot: " +  module.getSlot());
+                log.debug("Item: " +  module.getItem());
+                log.debug("Potential modules:" + potentialShipModules.stream().map(shipModule -> shipModule.getName().toString()).collect(Collectors.joining(",")));
+                    throw new IllegalArgumentException("No potential modules found");
+                }).orElseGet(() -> {
+                    try{
+                        return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+                    }catch (IllegalArgumentException ex){
+                        log.debug(module.getItem());
+                        log.debug(slot.getSlotType().toString());
+                        throw ex;
+                    }
+                });
+
+                final ShipModule shipModule = matchingModule.Clone();
+                module.getEngineering().ifPresent(engineering -> {
+                    boolean isLegacy = isLegacy(shipModule, engineering);
+                    HorizonsBlueprintType blueprint = determineBlueprint(engineering);
+                    HorizonsBlueprintGrade grade = determineGrade(engineering);
+                    Double progression = determineGradeProgress(engineering);
+                    if (isLegacy) {
+                        shipModule.setLegacy(true);
+                        final Set<HorizonsModifier> shipModuleAttibutes = shipModule.getAttibutes();
+                        engineering.getModifiers().forEach(modifier -> {
+                            modifier.getValue().ifPresent(value -> {
+                                shipModule.addLegacyModification(HorizonsModifier.forInternalName(modifier.getLabel()), value);
+                            });
                         });
-                    });
-                }
-                HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
-                shipModule.applyModification(blueprint, grade, progression);
-                shipModule.applyExperimentalEffect(experimentalEffect);
-            });
-            slot.setShipModule(shipModule);
+                    }
+                    HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
+                    shipModule.applyModification(blueprint, grade, progression);
+                    shipModule.applyExperimentalEffect(experimentalEffect);
+                });
+                slot.setShipModule(shipModule);
+
+            }
         });
         return ship;
     }
@@ -101,8 +119,14 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
+                            log.debug(moduleAttribute.name() + ": " + BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_EVEN) + " =? "  + BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
                             return BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
                         }
+                        if (attributeValue instanceof Boolean) {
+                            log.debug("bool true");
+                            return true;
+                        }
+                        log.debug("false");
                         return false;
                     }).orElse(true));
         }).findFirst().map(ShipModule::isPreEngineered).orElse(false);
@@ -110,11 +134,12 @@ public class LoadoutMapper {
 
     private static boolean isLegacy(ShipModule shipModule, Engineering engineering) {
         //todo something
+
         return !shipModule.isPreEngineered() && engineering.getQuality().equals(0.0D);
     }
 
-    private static List<ShipModule> getPotentialShipModules(String module, Slot slot) {
-        return ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getInternalName().equals(module)).toList();
+    static List<ShipModule> getPotentialShipModules(String module, SlotType slotType) {
+        return ShipModule.getModules(slotType).stream().filter(shipModule -> shipModule.getInternalName().equalsIgnoreCase(module)).toList();
     }
 
 
@@ -136,7 +161,8 @@ public class LoadoutMapper {
             final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
             return getMilitarySlot(militarySlots, slotName);
         }
-        throw new IllegalArgumentException(String.format("Could not determine slot for ship: %s and slotname: %s", ship.getShipType(), slotName));
+        log.warn(String.format("Could not determine slot for ship: %s and slotname: %s", ship.getShipType(), slotName));
+        return null;
     }
 
     private static Slot getHardpointSlot(List<ImageSlot> hardpointSlots, String slotName) {
@@ -169,7 +195,17 @@ public class LoadoutMapper {
 
     private static Slot getOptionalSlot(List<Slot> optionalSlots, String slotName) {
         final int slotNumber = Integer.parseInt(slotName.substring(4, 6));
-        return optionalSlots.get(slotNumber - 1);
+        try {
+            return optionalSlots.stream()
+                    .filter(slot -> slot.getNamedIndex() == slotNumber)
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new);
+        }catch (IllegalArgumentException ex){
+            optionalSlots.stream().map(slot -> slot.toString()).forEach(log::debug);
+            log.debug(slotName);
+            log.debug(slotNumber + "not in size:"+optionalSlots.size());
+            throw ex;
+        }
     }
 
     private static Slot getMilitarySlot(List<Slot> militarySlots, String slotName) {

@@ -2,15 +2,14 @@ package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.ShieldGeneratorBlueprints;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
-import nl.jixxed.eliteodysseymaterials.domain.ships.OptionalModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -128,6 +127,14 @@ public class ShieldGenerator extends OptionalModule {
     public static final ShieldGenerator PRISMATIC_SHIELD_GENERATOR_7_A = new ShieldGenerator("PRISMATIC_SHIELD_GENERATOR_7_A", HorizonsBlueprintName.PRISMATIC_SHIELD_GENERATOR, ModuleSize.SIZE_7, ModuleClass.A, Origin.POWERPLAY, false, 76933670, "Int_ShieldGenerator_Size7_Class5_Strong", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 160.00), Map.entry(HorizonsModifier.INTEGRITY, 157.0), Map.entry(HorizonsModifier.POWER_DRAW, 7.35), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.SHIELDGEN_MINIMUM_MASS, 530.0), Map.entry(HorizonsModifier.SHIELDGEN_OPTIMAL_MASS, 1060.0), Map.entry(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, 2650.0), Map.entry(HorizonsModifier.SHIELDGEN_MINIMUM_STRENGTH, 100.0), Map.entry(HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, 150.0), Map.entry(HorizonsModifier.SHIELDGEN_MAXIMUM_STRENGTH, 200.0), Map.entry(HorizonsModifier.REGEN_RATE, 1.1), Map.entry(HorizonsModifier.BROKEN_REGEN_RATE, 4.25),/*thmload,1.2,*/ Map.entry(HorizonsModifier.ENERGY_PER_REGEN, 0.6), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, 40.0), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, -20.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, 50.0), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 95.0)));
     public static final ShieldGenerator PRISMATIC_SHIELD_GENERATOR_8_A = new ShieldGenerator("PRISMATIC_SHIELD_GENERATOR_8_A", HorizonsBlueprintName.PRISMATIC_SHIELD_GENERATOR, ModuleSize.SIZE_8, ModuleClass.A, Origin.POWERPLAY, false, 243879730, "Int_ShieldGenerator_Size8_Class5_Strong", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 320.00), Map.entry(HorizonsModifier.INTEGRITY, 180.0), Map.entry(HorizonsModifier.POWER_DRAW, 8.40), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.SHIELDGEN_MINIMUM_MASS, 900.0), Map.entry(HorizonsModifier.SHIELDGEN_OPTIMAL_MASS, 1800.0), Map.entry(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, 4500.0), Map.entry(HorizonsModifier.SHIELDGEN_MINIMUM_STRENGTH, 100.0), Map.entry(HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, 150.0), Map.entry(HorizonsModifier.SHIELDGEN_MAXIMUM_STRENGTH, 200.0), Map.entry(HorizonsModifier.REGEN_RATE, 1.4), Map.entry(HorizonsModifier.BROKEN_REGEN_RATE, 5.40),/*thmload,1.2,*/ Map.entry(HorizonsModifier.ENERGY_PER_REGEN, 0.6), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, 40.0), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, -20.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, 50.0), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 95.0)));
 
+    public static final ShieldGenerator SHIELD_GENERATOR_3_A_PRE = new ShieldGenerator("SHIELD_GENERATOR_3_A_PRE", HorizonsBlueprintName.SHIELD_GENERATOR_PRE, ModuleSize.SIZE_3, ModuleClass.A, false, 507910, "Int_ShieldGenerator_Size3_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.INTEGRITY, 77.0), Map.entry(HorizonsModifier.POWER_DRAW, 2.52), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.SHIELDGEN_MINIMUM_MASS, 83.0), Map.entry(HorizonsModifier.SHIELDGEN_OPTIMAL_MASS, 165.0), Map.entry(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS, 413.0), Map.entry(HorizonsModifier.SHIELDGEN_MINIMUM_STRENGTH, 70.0), Map.entry(HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, 120.0), Map.entry(HorizonsModifier.SHIELDGEN_MAXIMUM_STRENGTH, 170.0), Map.entry(HorizonsModifier.REGEN_RATE, 1.0), Map.entry(HorizonsModifier.BROKEN_REGEN_RATE, 1.87), /*thmload,1.2,*/ Map.entry(HorizonsModifier.ENERGY_PER_REGEN, 0.6), Map.entry(HorizonsModifier.KINETIC_RESISTANCE, 40.0), Map.entry(HorizonsModifier.THERMAL_RESISTANCE, -20.0), Map.entry(HorizonsModifier.EXPLOSIVE_RESISTANCE, 50.0), Map.entry(HorizonsModifier.CAUSTIC_RESISTANCE, 95.0)));
+    static {
+        SHIELD_GENERATOR_3_A_PRE.getModifications().addAll(
+                List.of(
+                        new Modification(HorizonsBlueprintType.THERMAL_RESISTANT_SHIELDS_KINETIC_RESISTANT_SHIELDS, 1.0, HorizonsBlueprintGrade.GRADE_5)
+                )
+        );
+    }
     public static final List<ShieldGenerator> SHIELD_GENERATORS = List.of(
             SHIELD_GENERATOR_1_E,
             SHIELD_GENERATOR_1_D,
@@ -183,7 +190,8 @@ public class ShieldGenerator extends OptionalModule {
             PRISMATIC_SHIELD_GENERATOR_5_A,
             PRISMATIC_SHIELD_GENERATOR_6_A,
             PRISMATIC_SHIELD_GENERATOR_7_A,
-            PRISMATIC_SHIELD_GENERATOR_8_A
+            PRISMATIC_SHIELD_GENERATOR_8_A,
+            SHIELD_GENERATOR_3_A_PRE
     );
     public ShieldGenerator(final String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
@@ -211,11 +219,17 @@ public class ShieldGenerator extends OptionalModule {
 //    Stripped Down
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if(isPreEngineered()){
+            return Collections.emptyList();
+        }
         return ShieldGeneratorBlueprints.BLUEPRINTS.keySet().stream().toList();
     }
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if(isPreEngineered()){
+            return Collections.emptyList();
+        }
         return ExperimentalEffectBlueprints.SHIELD_GENERATOR.keySet().stream().toList();
     }
 
@@ -226,10 +240,18 @@ public class ShieldGenerator extends OptionalModule {
 
     @Override
     public String getClarifier() {
-        if (HorizonsBlueprintName.BI_WEAVE_SHIELD_GENERATOR.equals(getName()) || HorizonsBlueprintName.PRISMATIC_SHIELD_GENERATOR.equals(getName())) {
+        if (isPreEngineered() || HorizonsBlueprintName.BI_WEAVE_SHIELD_GENERATOR.equals(getName()) || HorizonsBlueprintName.PRISMATIC_SHIELD_GENERATOR.equals(getName())) {
             return " " + LocaleService.getLocalizedStringForCurrentLocale(this.getName().getLocalizationKey());
         }
         return "";
 
+    }
+    @Override
+    public boolean isPreEngineered() {
+        return SHIELD_GENERATOR_3_A_PRE.equals(this);
+    }
+    @Override
+    public boolean isCGExclusive() {
+        return isPreEngineered();
     }
 }

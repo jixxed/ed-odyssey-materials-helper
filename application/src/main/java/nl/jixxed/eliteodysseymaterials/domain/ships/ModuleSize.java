@@ -1,8 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 public enum ModuleSize {
-    SIZE_1("1"),
     SIZE_0("0"),
+    SIZE_1("1"),
     SIZE_2("2"),
     SIZE_3("3"),
     SIZE_4("4"),
@@ -20,5 +20,12 @@ public enum ModuleSize {
     @Override
     public String toString() {
         return this.displayName;
+    }
+
+    public boolean isHigher(ModuleSize moduleSize) {
+        return this.ordinal() > moduleSize.ordinal();
+    }
+    public boolean isLower(ModuleSize moduleSize) {
+        return this.ordinal() < moduleSize.ordinal();
     }
 }

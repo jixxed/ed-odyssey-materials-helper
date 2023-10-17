@@ -1,7 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -12,9 +14,12 @@ public class ShipConfigurationSlot {
     @Getter
     private Integer index;
     @Getter
-    private String internalName;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String id;
     @Getter
-    private List<ShipConfigurationModification> modification;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<ShipConfigurationModification> modification = new ArrayList<>();
     @Getter
-    private List<ShipConfigurationExperimentalEffect> experimentalEffect;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<ShipConfigurationExperimentalEffect> experimentalEffect = new ArrayList<>();
 }

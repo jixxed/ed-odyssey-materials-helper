@@ -84,7 +84,9 @@ public class ArmourBlueprints {
                                     Raw.CARBON, 1
                             ),
                             Map.of(
-                                    ALL_RESISTANCES, new HorizonsNumberModifierValue("+1%", true, percentageNegative(0.0, 0.01)),
+                                    THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, percentageNegative(0.0, 0.01)),
+                                    KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, percentageNegative(0.0, 0.01)),
+                                    EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, percentageNegative(0.0, 0.01)),
                                     HULL_BOOST, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.0, 0.12)),
                                     MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10))
                             ),
@@ -95,7 +97,9 @@ public class ArmourBlueprints {
                                     Manufactured.SHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    ALL_RESISTANCES, new HorizonsNumberModifierValue("+2%", true, percentageNegative(0.01, 0.02)),
+                                    THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentageNegative(0.01, 0.02)),
+                                    KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentageNegative(0.01, 0.02)),
+                                    EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentageNegative(0.01, 0.02)),
                                     HULL_BOOST, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.12, 0.17)),
                                     MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.10, 0.15))
                             ),
@@ -107,7 +111,9 @@ public class ArmourBlueprints {
                                     Manufactured.SHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    ALL_RESISTANCES, new HorizonsNumberModifierValue("+3%", true, percentageNegative(0.02, 0.03)),
+                                    THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentageNegative(0.02, 0.03)),
+                                    KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentageNegative(0.02, 0.03)),
+                                    EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentageNegative(0.02, 0.03)),
                                     HULL_BOOST, new HorizonsNumberModifierValue("+22%", true, percentagePositive(0.17, 0.22)),
                                     MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.20))
                             ),
@@ -119,7 +125,9 @@ public class ArmourBlueprints {
                                     Raw.VANADIUM, 1
                             ),
                             Map.of(
-                                    ALL_RESISTANCES, new HorizonsNumberModifierValue("+4%", true, percentageNegative(0.03, 0.04)),
+                                    THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+4%", true, percentageNegative(0.03, 0.04)),
+                                    KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+4%", true, percentageNegative(0.03, 0.04)),
+                                    EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+4%", true, percentageNegative(0.03, 0.04)),
                                     HULL_BOOST, new HorizonsNumberModifierValue("+27%", true, percentagePositive(0.22, 0.27)),
                                     MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.20, 0.25))
                             ),
@@ -131,7 +139,9 @@ public class ArmourBlueprints {
                                     Raw.TUNGSTEN, 1
                             ),
                             Map.of(
-                                    ALL_RESISTANCES, new HorizonsNumberModifierValue("+5%", true, percentageNegative(0.04, 0.05)),
+                                    THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentageNegative(0.04, 0.05)),
+                                    KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentageNegative(0.04, 0.05)),
+                                    EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentageNegative(0.04, 0.05)),
                                     HULL_BOOST, new HorizonsNumberModifierValue("+32%", true, percentagePositive(0.27, 0.32)),
                                     MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.30))
                             ),

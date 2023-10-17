@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -54,16 +55,18 @@ public class SlotBoxEntry extends VBox {
                                             final Button button = ButtonBuilder.builder().withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + shipModule.getNonSortingClarifier() /*+ ((shipModule instanceof ExternalModule externalModule) ? externalModule.getMountingClarifier() : "")*/).withOnAction(event -> {
                                                 final ShipModule clone = shipModule.Clone();
                                                 if(slotBox.getSlot().getShipModule() != null) {
-                                                    if (slotBox.getSlot().getShipModule().isPreEngineered() || !slotBox.getSlot().getShipModule().getName().equals(clone.getName()) || !slotBox.getSlot().getShipModule().getModifications().stream().allMatch(modification ->clone.getAllowedBlueprints().stream().anyMatch(horizonsBlueprintType ->  modification.getModification().equals(horizonsBlueprintType)))) {
-//                                                    slotBox.getSlot().setEngineering(null);
-                                                        slotBox.getSlot().getShipModule().getModifications().clear();
-                                                    }
-                                                    if (slotBox.getSlot().getShipModule().isPreEngineered() || !slotBox.getSlot().getShipModule().getName().equals(clone.getName()) || !slotBox.getSlot().getShipModule().getExperimentalEffects().stream().allMatch(horizonsBlueprintType -> clone.getAllowedExperimentalEffects().contains(horizonsBlueprintType))) {
-//                                                    slotBox.getSlot().setExperimentalEffect(null);
-                                                        slotBox.getSlot().getShipModule().getExperimentalEffects().clear();
-                                                    }
-                                                    if(!clone.isPreEngineered() ) {
-                                                        clone.getModifications().addAll(slotBox.getSlot().getShipModule().getModifications());
+//                                                    if (slotBox.getSlot().getShipModule().isPreEngineered() || !slotBox.getSlot().getShipModule().getName().equals(clone.getName()) || !slotBox.getSlot().getShipModule().getModifications().stream().allMatch(modification ->clone.getAllowedBlueprints().stream().anyMatch(horizonsBlueprintType ->  modification.getModification().equals(horizonsBlueprintType)))) {
+////                                                    slotBox.getSlot().setEngineering(null);
+//                                                        slotBox.getSlot().getShipModule().getModifications().clear();
+//                                                    }
+//                                                    if (slotBox.getSlot().getShipModule().isPreEngineered() || !slotBox.getSlot().getShipModule().getName().equals(clone.getName()) || !slotBox.getSlot().getShipModule().getExperimentalEffects().stream().allMatch(horizonsBlueprintType -> clone.getAllowedExperimentalEffects().contains(horizonsBlueprintType))) {
+////                                                    slotBox.getSlot().setExperimentalEffect(null);
+//                                                        slotBox.getSlot().getShipModule().getExperimentalEffects().clear();
+//                                                    }
+                                                    if(isSimilar(slotBox.getSlot().getShipModule(), clone) ) {
+                                                        if(!clone.isPreEngineered()){//already pre-applied
+                                                            clone.getModifications().addAll(slotBox.getSlot().getShipModule().getModifications());
+                                                        }
                                                         clone.getExperimentalEffects().addAll(slotBox.getSlot().getShipModule().getExperimentalEffects());
                                                     }
                                                 }
@@ -73,15 +76,22 @@ public class SlotBoxEntry extends VBox {
                                                 slotBox.refresh();
                                                 slotBox.close();
                                             }).build();
+
+                                            button.setOnMouseEntered(event -> {
+                                                    EventService.publish(new ModuleHighlightEvent(shipModule));
+                                            });
                                             List<DestroyableResizableImageView> images = new ArrayList<>();
                                             if(shipModule instanceof ExternalModule externalModule && !externalModule.getMounting().equals(Mounting.NA)) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/" + externalModule.getMounting().name().toLowerCase() + ".png").withStyleClass("ships-button-image").build());
                                             }
-                                            if(shipModule.getOrigin().equals(Origin.GUARDIAN)) {
+                                            if(Origin.GUARDIAN.equals(shipModule.getOrigin()) || Origin.POWERPLAY.equals(shipModule.getOrigin())) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/" + shipModule.getOrigin().name().toLowerCase() + ".png").withStyleClass("ships-button-image").build());
                                             }
                                             if(shipModule.isPreEngineered()) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/engineered.png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(shipModule.isCGExclusive()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/cg.png").withStyleClass("ships-button-image").build());
                                             }
                                             if(!images.isEmpty()){
                                                 HBox imagesBox = BoxBuilder.builder().withStyleClass("ships-button-image-box").withNodes(images.toArray(DestroyableResizableImageView[]::new)).buildHBox();
@@ -102,6 +112,16 @@ public class SlotBoxEntry extends VBox {
         vBox.getChildren().addAll(this.options);
         this.getChildren().add(vBox);
 
+    }
+
+    private boolean isSimilar(ShipModule shipModule, ShipModule clone) {
+        final boolean b = shipModule.getName().getBlueprintGroup().equals(clone.getName().getBlueprintGroup()) &&
+                shipModule.getAllowedBlueprints().size() == clone.getAllowedBlueprints().size() &&
+                shipModule.getAllowedExperimentalEffects().size() == clone.getAllowedExperimentalEffects().size() &&
+                shipModule.getAllowedBlueprints().containsAll(clone.getAllowedBlueprints()) &&
+                shipModule.getAllowedExperimentalEffects().containsAll(clone.getAllowedExperimentalEffects());
+        log.debug("similar:" + b);
+        return b;
     }
 
     //    private void addEngineering(final SlotBox slotBox) {

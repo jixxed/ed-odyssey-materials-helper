@@ -1,0 +1,60 @@
+{
+  "Slot": "TinyHardpoint1",
+  "Item": "hpt_shieldbooster_size0_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.0,
+  "Value": 240414,
+  "Engineering": {
+    "Engineer": "Didi Vatermann",
+    "EngineerID": 300000,
+    "BlueprintID": 128673784,
+    "BlueprintName": "ShieldBooster_HeavyDuty",
+    "Level": 5,
+    "Quality": 0.0,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 14.0381,
+        "OriginalValue": 3.5,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 57.398148,
+        "OriginalValue": 48.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 1.494867,
+        "OriginalValue": 1.2,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DefenceModifierShieldMultiplier",
+        "Value": 56.000008,
+        "OriginalValue": 20.000004,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "KineticResistance",
+        "Value": 0.721639,
+        "OriginalValue": 0.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ThermicResistance",
+        "Value": 0.721639,
+        "OriginalValue": 0.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ExplosiveResistance",
+        "Value": 0.721639,
+        "OriginalValue": 0.0,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

@@ -5,13 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.ScrollPaneSkin;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -72,6 +70,10 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     private VBox contentChild;
     private VBox shipView;
     private VBox shipSelectView;
+    private ModuleDetails moduleDetails;
+    private Region filler;
+    private VBox right;
+
 
     @Override
     public HorizonsTabs getTabType() {
@@ -91,9 +93,27 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSize);
         this.shipSelect.styleProperty().set(fontStyle);
     }
+    private void setFillerHeight(final double scrollbarPos) {
+        final long height = Math.round(scrollbarPos * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight()));
 
+        right.setPrefHeight(0);
+        right.setMaxHeight(0);
+        right.setMaxHeight(this.scrollPane.getHeight()+height);
+        this.filler.setMaxHeight(height);
+        this.filler.setMinHeight(height);
+        right.setPrefHeight(this.scrollPane.getHeight()+height);
+
+//        this.filler.minHeightProperty().bind(this.scrollPane.boundsInParentProperty().map(Bounds::getHeight).map(val-> Math.round(scrollbarPos * (val - this.scrollPane.getViewportBounds().getHeight()))));
+//        this.filler.maxHeightProperty().bind(this.scrollPane.boundsInParentProperty().map(Bounds::getHeight).map(val-> Math.round(scrollbarPos * (val - this.scrollPane.getViewportBounds().getHeight()))));
+    }
     private void initComponents() {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.ships"));
+        this.moduleDetails = new ModuleDetails();
+        filler = new Region();
+        filler.getStyleClass().add("stats-filler");
+        right = BoxBuilder.builder().withStyleClass("stats-column").withNodes(this.filler, this.moduleDetails, new GrowingRegion()).buildVBox();
+
+        this.setContent(this.scrollPane);
 
         final Set<ShipConfiguration> items = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> ShipService.getShipConfigurations(commander).getAllShipConfigurations())
@@ -217,15 +237,34 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 .withContent(content)
                 .build();
         this.setContent(this.scrollPane);
-
         initShipSelectView();
         initShipLayout();
         this.noShip = LabelBuilder.builder().withNonLocalizedText("NOSHIP").build();
         this.contentChild = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null ? this.shipSelectView : this.shipView).buildVBox();
         this.content = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(hBoxShips, this.shipSelect.getItems().isEmpty() ? this.noShip : this.contentChild).buildVBox();
+//        this.scrollPane = ScrollPaneBuilder.builder()
+//                .withContent(this.content)
+//                .build();
+
+        final HBox layout = BoxBuilder.builder().withNodes(this.content, new GrowingRegion(), this.right).buildHBox();
+
         this.scrollPane = ScrollPaneBuilder.builder()
-                .withContent(this.content)
+                .withContent(layout)
                 .build();
+        this.content.minHeightProperty().bind(this.right.prefHeightProperty());
+//        this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight()
+//        layout.prefHeightProperty().bind(this.scrollPane.prefViewportHeightProperty());
+//        layout.minHeightProperty().bind(this.scrollPane.getContent().boundsInParentProperty().map(bounds -> bounds.getHeight()));
+        this.scrollPane.skinProperty().addListener((observable, oldValue, newValue) ->
+                ((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().valueProperty().addListener((observable2, oldValue2, newValue2) -> {
+                    setFillerHeight((double) newValue2);
+                }));
+        this.scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->{
+            setFillerHeight(((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().getValue());
+        });
+        this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) ->{
+            setFillerHeight(((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().getValue());
+        });
         this.setContent(this.scrollPane);
     }
 
@@ -447,8 +486,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getHardpointSlots().get(index).getImageIndex() + ".png"));
         final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getX();
         final double y = this.shipImage.getHeight() / 1080D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getY();
-        final double slotHeight = 5.2D;
-        final double spacing = 0.2D;
+        final double slotHeight = 5.0D;
+        final double spacing = 0.0D;
         //Setting the properties of the circle
         this.circleStart.setCenterX(0);
         this.circleStart.setCenterY(ScalingHelper.getPixelDoubleFromEm(slotHeight / 2) + ScalingHelper.getPixelDoubleFromEm(slotHeight + spacing) * index);
@@ -486,11 +525,11 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getUtilitySlots().get(index).getImageIndex() + ".png"));
         final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getUtilitySlots().get(index).getX();
         final double y = this.shipImage.getHeight() / 1080D * APPLICATION_STATE.getShip().getUtilitySlots().get(index).getY();
-        final double slotHeight = 5.2D;
-        final double spacing = 0.2D;
+        final double slotHeight = 5.0D;
+        final double spacing = 0.0D;
         final double imageWidth = 81D;
         //Setting the properties of the circle
-        this.circleStart.setCenterX(ScalingHelper.getPixelDoubleFromEm(imageWidth) - ScalingHelper.getPixelDoubleFromEm(0.2D) * 1.5);
+        this.circleStart.setCenterX(this.shipImage.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2D) * 1.5);
         this.circleStart.setCenterY(ScalingHelper.getPixelDoubleFromEm(slotHeight / 2) + ScalingHelper.getPixelDoubleFromEm(slotHeight + spacing) * index);
         this.circleStart.setRadius(ScalingHelper.getPixelDoubleFromEm(0.2D));
         this.circleStart.setStroke(Color.valueOf("#89D07F"));

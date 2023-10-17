@@ -216,7 +216,13 @@ class HorizonsBlueprintBar extends Accordion {
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .asLocalized()
                 .build();
-        final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.getValue().keySet(), recipesEntry.getValue().entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+        final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(
+                types,
+                recipesEntry.getValue().entrySet().stream().filter(entry -> entry.getValue().values().stream().anyMatch(map -> map.values().stream().anyMatch(bp -> !bp.isPreEngineered()))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).keySet(),
+                recipesEntry.getValue().entrySet().stream()
+                        .map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().entrySet().stream().filter(entry -> entry.getValue().entrySet().stream().anyMatch(horizonsBlueprintGradeHorizonsBlueprintEntry ->!horizonsBlueprintGradeHorizonsBlueprintEntry.getValue().isPreEngineered() )).map(horizonsBlueprintTypeMapEntry -> horizonsBlueprintTypeMapEntry.getKey()).collect(Collectors.toSet())))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+        );
 
         final TitledPane categoryTitledPane = createTitledPane(recipesEntry.getKey().getLocalizationKey());
         final List<ToggleButton> toggleButtons = getGradeToggleButtons(scroll, () -> types.getSelectionModel().getSelectedItem(), () -> blueprints.getSelectionModel().getSelectedItem(), recipesEntry.getValue());

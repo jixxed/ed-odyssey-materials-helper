@@ -1,5 +1,7 @@
-package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints;
+package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.preengineered;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
@@ -13,8 +15,10 @@ import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RemoteReleaseFlakLauncherBlueprints {
-    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
+    //halloween/x-mas? time based purchase
+    public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> PRE_ENGINEERED_BLUEPRINTS = Map.of(
             HorizonsBlueprintType.DECORATIVE_GREEN,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, HorizonsBlueprintType.DECORATIVE_GREEN, HorizonsBlueprintGrade.GRADE_5,
@@ -25,7 +29,8 @@ public class RemoteReleaseFlakLauncherBlueprints {
                                     HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
                             ),
                             List.of(
-                            )
+                            ),
+                            true
                     )
             ),
             HorizonsBlueprintType.DECORATIVE_RED,
@@ -38,7 +43,8 @@ public class RemoteReleaseFlakLauncherBlueprints {
                                     HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
                             ),
                             List.of(
-                            )
+                            ),
+                            true
                     )
             ),
             HorizonsBlueprintType.DECORATIVE_YELLOW,
@@ -51,7 +57,8 @@ public class RemoteReleaseFlakLauncherBlueprints {
                                     HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-99%", false, percentageNegative(0.0, 0.99))
                             ),
                             List.of(
-                            )
+                            ),
+                            true
                     )
             )
     );

@@ -20,24 +20,32 @@ public class ShipMapper {
         shipConfiguration.getHardpointSlots().clear();
         shipConfiguration.getUtilitySlots().clear();
         ship.getCoreSlots().forEach(slot -> {
-            shipConfiguration.getCoreSlots().add(new ShipConfigurationSlot());
-            final ShipConfigurationSlot shipConfigurationSlot = shipConfiguration.getCoreSlots().get(slot.getIndex());
-            mapShipConfigurationSlot(slot,shipConfigurationSlot);
+            if(slot.isOccupied()) {
+                final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
+                shipConfiguration.getCoreSlots().add(shipConfigurationSlot);
+                mapShipConfigurationSlot(slot, shipConfigurationSlot);
+            }
         });
         ship.getOptionalSlots().forEach(slot -> {
-            shipConfiguration.getOptionalSlots().add(new ShipConfigurationSlot());
-            final ShipConfigurationSlot shipConfigurationSlot = shipConfiguration.getOptionalSlots().get(slot.getIndex());
-            mapShipConfigurationSlot(slot,shipConfigurationSlot);
+            if(slot.isOccupied()) {
+                final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
+                shipConfiguration.getOptionalSlots().add(shipConfigurationSlot);
+                mapShipConfigurationSlot(slot,shipConfigurationSlot);
+            }
         });
         ship.getHardpointSlots().forEach(slot -> {
-            shipConfiguration.getHardpointSlots().add(new ShipConfigurationSlot());
-            final ShipConfigurationSlot shipConfigurationSlot = shipConfiguration.getHardpointSlots().get(slot.getIndex());
+            if(slot.isOccupied()) {
+                final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
+            shipConfiguration.getHardpointSlots().add(shipConfigurationSlot);
             mapShipConfigurationSlot(slot,shipConfigurationSlot);
+            }
         });
         ship.getUtilitySlots().forEach(slot -> {
-            shipConfiguration.getUtilitySlots().add(new ShipConfigurationSlot());
-            final ShipConfigurationSlot shipConfigurationSlot = shipConfiguration.getUtilitySlots().get(slot.getIndex());
+            if(slot.isOccupied()) {
+                final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
+            shipConfiguration.getUtilitySlots().add(shipConfigurationSlot);
             mapShipConfigurationSlot(slot,shipConfigurationSlot);
+            }
         });
         return shipConfiguration;
     }
@@ -67,11 +75,13 @@ public class ShipMapper {
     }
 
     private static void mapSlot(ShipConfigurationSlot shipConfigurationSlot, Slot slot) {
-        final Optional<ShipModule> shipModule1 = ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getInternalName().equals(shipConfigurationSlot.getInternalName())).findFirst();
+        final Optional<ShipModule> shipModule1 = ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(shipConfigurationSlot.getId())).findFirst();
         shipModule1.ifPresent(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
             shipConfigurationSlot.getModification().forEach(shipConfigurationModification -> {
-                shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
+                if(!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
+                    shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
+                }
             });
             shipConfigurationSlot.getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
                 shipModule.getExperimentalEffects().add(shipConfigurationExperimentalEffect.getType());
@@ -83,7 +93,7 @@ public class ShipMapper {
         final Optional<ShipModule> shipModule1 = Optional.ofNullable(slot.getShipModule());
         shipConfigurationSlot.setIndex(slot.getIndex());
         shipModule1.ifPresent(shipModule2 -> {
-            shipConfigurationSlot.setInternalName(shipModule2.getInternalName());
+            shipConfigurationSlot.setId(shipModule2.getId());
             shipConfigurationSlot.setModification(shipModule2.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(),modification.getGrade(),modification.getModificationCompleteness())).toList());
             shipConfigurationSlot.setExperimentalEffect(shipModule2.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList());
         });

@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
-import nl.jixxed.eliteodysseymaterials.constants.horizons.SpecialBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.DetailedSurfaceScannerBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -15,12 +14,11 @@ import java.util.Map;
 public class DetailedSurfaceScanner extends OptionalModule {
     //    11130 : { mtype:'iss', cost: 250000, name:'Detailed Surface Scanner',       class:1, rating:'I', integ:20, ammoclip:3, proberad:20, limit:'iss', fdid:128666634, fdname:'Int_DetailedSurfaceScanner_Tiny', eddbid:1245 },
     public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 20.0)));
-    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I_V1_PRE = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I_V1_PRE", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 20.0)));
+    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I_V1_PRE = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I_V1_PRE", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER_PRE, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 20.0)));
     static {
         DETAILED_SURFACE_SCANNER_1_I_V1_PRE.getModifications().addAll(
                 List.of(
-                    new Modification(HorizonsBlueprintType.EXPANDED_PROBE_SCANNING_RADIUS, 1.0, HorizonsBlueprintGrade.GRADE_5),
-                    new Modification(HorizonsBlueprintType.EXPANDED_PROBE_SCANNING_RADIUS, 1.0, HorizonsBlueprintGrade.GRADE_5)
+                    new Modification(HorizonsBlueprintType.EXPANDED_PROBE_SCANNING_RADIUS_X2, 1.0, HorizonsBlueprintGrade.GRADE_5)
                 )
         );
     }
@@ -43,7 +41,7 @@ public class DetailedSurfaceScanner extends OptionalModule {
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
         if(DETAILED_SURFACE_SCANNER_1_I_V1_PRE.equals(this)){
-            return SpecialBlueprints.DETAILED_SURFACE_SCANNER_1_I_V1_PRE.keySet().stream().toList();
+            return Collections.emptyList();
         }
         return DetailedSurfaceScannerBlueprints.BLUEPRINTS.keySet().stream().toList();
     }

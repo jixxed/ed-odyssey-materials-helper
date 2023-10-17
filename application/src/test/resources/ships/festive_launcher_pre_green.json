@@ -1,0 +1,30 @@
+{
+  "Slot": "MediumHardpoint1",
+  "Item": "hpt_flakmortar_turret_medium",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 1,
+  "AmmoInHopper": 32,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129008721,
+    "BlueprintName": "Decorative_Green",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "DamagePerSecond",
+        "Value": 0.170000,
+        "OriginalValue": 17.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 0.340000,
+        "OriginalValue": 34.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

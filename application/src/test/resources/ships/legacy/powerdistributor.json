@@ -1,0 +1,54 @@
+{
+  "Slot": "PowerDistributor",
+  "Item": "int_powerdistributor_size6_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.0,
+  "Value": 2808465,
+  "Engineering": {
+    "Engineer": "The Dweller",
+    "EngineerID": 300180,
+    "BlueprintID": 128673750,
+    "BlueprintName": "PowerDistributor_PriorityWeapons",
+    "Level": 1,
+    "Quality": 0.0,
+    "Modifiers": [
+      {
+        "Label": "WeaponsCapacity",
+        "Value": 54.295994,
+        "OriginalValue": 50.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "WeaponsRecharge",
+        "Value": 5.419541,
+        "OriginalValue": 5.2,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "EnginesCapacity",
+        "Value": 33.678928,
+        "OriginalValue": 35.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "EnginesRecharge",
+        "Value": 3.107647,
+        "OriginalValue": 3.2,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "SystemsCapacity",
+        "Value": 33.784325,
+        "OriginalValue": 35.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "SystemsRecharge",
+        "Value": 3.141101,
+        "OriginalValue": 3.2,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

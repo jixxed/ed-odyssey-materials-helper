@@ -1,0 +1,44 @@
+TODO list
+
+legacy:
+storing/loading legacy attributes to list
+show legacy indicator on module
+no modding of legacy modules
+storing/loading of legacy modules
+show legacy modules in module selector
+
+grade:
+grade selection and progression for modules
+default max grade selection(currently G5)
+
+attributes:
+design attributes overview
+filter internal attributes
+hide some attributes on specific modules(like power draw for cargo racks)
+fix percentages for some modules
+lock attributes somehow(keypress?)
+
+Power:
+add power group selection
+add powered toggle to module
+
+stats:
+implement all stats/calculations
+
+slots:
+line sometimes targeting 0,0. Platform.runLater?
+drag-drop ghost has old class/size config
+
+weapons:
+quick switch on Mounting instead of class
+Passenger cabins/computers/multi-limpet/xenos on type
+festive launcher buttons
+better button texts overall
+
+
+tests:
+good test with different module types
+cover all pre-engineered cases (acquire more cases later)
+
+wishlist:
+ability to mark what should go to wishlist

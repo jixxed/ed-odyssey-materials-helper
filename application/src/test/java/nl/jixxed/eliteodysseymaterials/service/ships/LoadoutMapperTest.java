@@ -1,18 +1,38 @@
 package nl.jixxed.eliteodysseymaterials.service.ships;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
+import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.FrameShiftDrive;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.MiningLaser;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.DetailedSurfaceScanner;
+import nl.jixxed.eliteodysseymaterials.domain.ships.utility.SinkLauncher;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+@Slf4j
 class LoadoutMapperTest {
     @Test
     public void getShipSlotIndexes() {
@@ -99,7 +119,44 @@ class LoadoutMapperTest {
                 () -> Assertions.assertEquals(1, LoadoutMapper.getShipSlot(ship, "Slot11_Size1").getSlotSize())
         );
     }
+    private static Stream<Arguments> preEngineeredModules() {
+        return Stream.of(
+                Arguments.of("festive_launcher_pre_green.json",SlotType.HARDPOINT),
+                Arguments.of("festive_launcher_pre_red.json",SlotType.HARDPOINT),
+                Arguments.of("festive_launcher_pre_yellow.json",SlotType.HARDPOINT),
+                Arguments.of("fsd_pre_3.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_3_exp.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_4.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_4_exp.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_4_exp_lw.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_5.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_5_exp.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_6.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("fsd_pre_6_exp.json",SlotType.CORE_FRAME_SHIFT_DRIVE),
+                Arguments.of("powerplant_pre_3.json",SlotType.CORE_POWER_PLANT),
+                Arguments.of("powerplant_pre_4.json",SlotType.CORE_POWER_PLANT),
+                Arguments.of("powerplant_pre_5.json",SlotType.CORE_POWER_PLANT),
+                Arguments.of("heatsink_pre.json",SlotType.UTILITY)
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("preEngineeredModules")
+    public void testIsPreEngineered(String filename, SlotType slotType){
+        String line = "";
+        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/" + filename)){
+                final Module module = objectMapper.readValue(resourceAsStream, Module.class);
+                Ship sa = Ship.ADDER;
+                final List<ShipModule> potentialShipModules = LoadoutMapper.getPotentialShipModules(module.getItem(), slotType);
+                log.debug(potentialShipModules.stream().map(s->s.getName().toString()).collect(Collectors.joining(", ")));
+                final boolean preEngineered = LoadoutMapper.isPreEngineered(potentialShipModules, module.getEngineering().get());
+                Assertions.assertTrue(preEngineered);
 
+        }catch (Exception e){
+            log.error("error",e);
+            log.info(line);
+            Assertions.assertFalse(true);
+        }
+    }
     @Test
     void testIsPreEngineeredWithEffect_FSD_V1() throws JsonProcessingException {
         Engineering engineering = new ObjectMapper().readValue("""
@@ -353,66 +410,28 @@ class LoadoutMapperTest {
     void testIsPreEngineeredHeatSinkLauncher() throws JsonProcessingException {
         Engineering engineering = new ObjectMapper().readValue("""
                 {
-                    "Engineer": "Selene Jean",
-                    "EngineerID": 300210,
-                    "BlueprintID": 128673614,
-                    "BlueprintName": "Weapon_LongRange",
-                    "Level": 5,
-                    "Quality": 1.0,
-                    "ExperimentalEffect": "special_incendiary_rounds",
-                    "ExperimentalEffect_Localised": "Incendiary Rounds",
-                    "Modifiers": [
-                        {
-                            "Label": "Integrity",
-                                "Value": 20.0,
-                                "OriginalValue": 40.0,
-                                "LessIsGood": 0
-                        },
-                        {
-                            "Label": "PowerDraw",
-                                "Value": 0.25,
-                                "OriginalValue": 0.5,
-                                "LessIsGood": 1
-                        },
-                        {
-                            "Label": "DamagePerSecond",
-                                "Value": 1.9,
-                                "OriginalValue": 2.0,
-                                "LessIsGood": 0
-                        },
-                        {
-                            "Label": "DistributorDraw",
-                                "Value": 0.75,
-                                "OriginalValue": 1.5,
-                                "LessIsGood": 1
-                        },
-                        {
-                            "Label": "ThermalLoad",
-                                "Value": 1.02,
-                                "OriginalValue": 2.0,
-                                "LessIsGood": 1
-                        },
-                        {
-                            "Label": "MaximumRange",
-                                "Value": 2500.0,
-                                "OriginalValue": 500.0,
-                                "LessIsGood": 0
-                        },
-                        {
-                            "Label": "DamageType",
-                                "ValueStr": "$Thermic;",
-                                "ValueStr_Localised": "Thermal"
-                        },
-                        {
-                            "Label": "DamageFalloffRange",
-                                "Value": 2500.0,
-                                "OriginalValue": 300.0,
-                                "LessIsGood": 0
-                        }
-                    ]
-                }
+                     "EngineerID": 399999,
+                     "BlueprintID": 129012673,
+                     "BlueprintName": "Misc_HeatSinkCapacity",
+                     "Level": 1,
+                     "Quality": 1.000000,
+                     "Modifiers": [
+                       {
+                         "Label": "AmmoMaximum",
+                         "Value": 4.000000,
+                         "OriginalValue": 2.000000,
+                         "LessIsGood": 0
+                       },
+                       {
+                         "Label": "ReloadTime",
+                         "Value": 17.500000,
+                         "OriginalValue": 10.000000,
+                         "LessIsGood": 1
+                       }
+                     ]
+                   }
                 """, Engineering.class);
-        final boolean preEngineered = LoadoutMapper.isPreEngineered(MiningLaser.MINING_LASERS, engineering);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(SinkLauncher.SINK_LAUNCHERS, engineering);
         Assertions.assertTrue(preEngineered);
     }
 
@@ -444,5 +463,52 @@ class LoadoutMapperTest {
                              """, Engineering.class);
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering);
         Assertions.assertFalse(preEngineered);
+    }
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    {
+        this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+    }
+    @Test
+    public void testLoadoutMapping(){
+//        final InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("ships/loadout.json");
+        String line = "";
+        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout.json")){
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+            while(reader.ready()) {
+                line = reader.readLine();
+                final Loadout loadout = objectMapper.readValue(line, Loadout.class);
+                LoadoutMapper.toShip(loadout);
+                Assertions.assertTrue(true);
+            }
+
+        }catch (Exception e){
+            log.error("error",e);
+            log.info(line);
+            Assertions.assertFalse(true);
+        }
+    }
+    @Test
+    public void listBlueprintIDs(){
+//        final InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("ships/loadout.json");
+        String line = "";
+        Set<String> modules = new HashSet<>();
+        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout.json")){
+            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+            while(reader.ready()) {
+                line = reader.readLine();
+                final Loadout loadout = objectMapper.readValue(line, Loadout.class);
+                loadout.getModules().stream().forEach(module -> module.getEngineering().ifPresent(engineering -> {
+                    modules.add(module.getItem() + " - " + engineering.getBlueprintID() + " - " + engineering.getBlueprintName() + " - " + engineering.getEngineer().orElse("?"));
+                }));
+
+            }
+            modules.stream().sorted().forEach(System.out::println);
+        }catch (Exception e){
+            log.error("error",e);
+            log.info(line);
+            Assertions.assertFalse(true);
+        }
     }
 }

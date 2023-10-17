@@ -40,7 +40,12 @@ public class HorizonsBiFunction<T> {
         toReturn.value = this.value;
         toReturn.bool = this.bool;
         if (this.calculationType != other.calculationType) {
-            throw new IllegalArgumentException("calculation types do not match!");
+            //todo not sure if this stacking is OK
+//            throw new IllegalArgumentException("calculation types do not match! " + calculationType +"/" +other.calculationType);
+            toReturn.start -= other.start;
+            toReturn.end -= other.end;
+            toReturn.value -= other.value;
+            toReturn.bool = toReturn.bool || other.bool;
         }
         toReturn.start += other.start;
         toReturn.end += other.end;

@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.io.Serializable;
 import java.util.*;
@@ -73,9 +74,8 @@ public abstract class ShipModule implements Serializable {
         this.basePrice = basePrice;
         this.internalName = internalName;
         this.attributes.putAll(attributes);
-        if(!this.attributes.containsKey(HorizonsModifier.POWER_DRAW))
-        {
-            this.attributes.put(HorizonsModifier.POWER_DRAW,0.0);
+        if (!this.attributes.containsKey(HorizonsModifier.POWER_DRAW)) {
+            this.attributes.put(HorizonsModifier.POWER_DRAW, 0.0);
         }
         SHIP_MODULES.add(this);
     }
@@ -105,7 +105,7 @@ public abstract class ShipModule implements Serializable {
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final Double modificationCompleteness) {
         if (validModification(modification, false)) {
             final Modification mod = new Modification(modification, modificationCompleteness, grade);
-            if(!this.modifications.contains(mod)){
+            if (!this.modifications.contains(mod)) {
                 this.modifications.clear();
                 this.modifications.add(mod);
             }
@@ -126,8 +126,9 @@ public abstract class ShipModule implements Serializable {
     public void removeExperimentalEffect(final HorizonsBlueprintType experimentalEffect) {
         this.experimentalEffects.removeIf(experimentalEffect1 -> Objects.equals(experimentalEffect1, experimentalEffect));
     }
+
     private boolean validModification(final HorizonsBlueprintType modification, final boolean experimental) {
-        if(modification == null) {
+        if (modification == null) {
             return false;
         }
         if (experimental) {
@@ -137,28 +138,34 @@ public abstract class ShipModule implements Serializable {
     }
 
     public Object getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, final Object defaultValue) {
-       try{
-           return getAttributeValue(moduleAttribute);
-       }catch (final IllegalArgumentException e){
-           return defaultValue;
-       }
+        try {
+            return getAttributeValue(moduleAttribute);
+        } catch (final IllegalArgumentException e) {
+            return defaultValue;
+        }
+    }
+    public Object getOriginalAttributeValue(final HorizonsModifier moduleAttribute) {
+        if (!this.attributes.containsKey(moduleAttribute)) {
+            throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
+        }
+        return this.attributes.get(moduleAttribute);
     }
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
-        if(isLegacy()){
+        if (isLegacy()) {
             return legacyModifications.containsKey(moduleAttribute) ? legacyModifications.get(moduleAttribute) : attributes.get(moduleAttribute);
         }
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
-        if(baseAttributeValue instanceof Double){
-            Double toReturn = Double.valueOf((double)baseAttributeValue);
+        if (baseAttributeValue instanceof Double) {
+            Double toReturn = Double.valueOf((double) baseAttributeValue);
             toReturn = preAdaptAttributeValue(moduleAttribute, toReturn);
-            toReturn = (Double)applyModsToAttributeValue(moduleAttribute, toReturn);
+            toReturn = (Double) applyModsToAttributeValue(moduleAttribute, toReturn);
             toReturn = postAdaptAttributeValue(moduleAttribute, toReturn);
             return toReturn;
-        }else if(baseAttributeValue instanceof Boolean){
-            Boolean toReturn = Boolean.valueOf((boolean)baseAttributeValue);
+        } else if (baseAttributeValue instanceof Boolean) {
+            Boolean toReturn = Boolean.valueOf((boolean) baseAttributeValue);
             return applyModsToAttributeValue(moduleAttribute, toReturn);
         }
         return baseAttributeValue;
@@ -178,20 +185,20 @@ public abstract class ShipModule implements Serializable {
         final AtomicDouble modificationCompleteness = new AtomicDouble();
         final AtomicBoolean positive = new AtomicBoolean();
         this.modifications.forEach(modification -> {
-            final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name, modification.getModification(), modification.getGrade());
+            final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modification.getModification(), modification.getGrade());
             final HorizonsModifierValue horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
-            if(horizonsModifierValue != null) {
+            if (horizonsModifierValue != null) {
                 final HorizonsBiFunction current = moduleModifier.get();
-                if(current == null) {
+                if (current == null) {
                     positive.set(horizonsModifierValue.isPositive());
                     modificationCompleteness.set(modification.getModificationCompleteness());
                     moduleModifier.set(horizonsModifierValue.getModifier());
-                }else{
+                } else {
                     moduleModifier.set(current.stack(horizonsModifierValue.getModifier()));
                 }
             }
         });
-        if(moduleModifier.get() != null) {
+        if (moduleModifier.get() != null) {
             //if negative effect, apply fully
             try {
                 value.set(moduleModifier.get().getFunction().apply(value.get(), positive.get() ? modificationCompleteness.get() : 1D));
@@ -200,9 +207,9 @@ public abstract class ShipModule implements Serializable {
             }
         }
         this.experimentalEffects.forEach(modification -> {
-            final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name).get(modification);
+            final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name.getPrimary()).get(modification);
             final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(moduleAttribute);
-            if(experimentalEffectModifier != null) {
+            if (experimentalEffectModifier != null) {
 //                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
                 try {
                     value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
@@ -219,16 +226,15 @@ public abstract class ShipModule implements Serializable {
     public abstract List<HorizonsBlueprintType> getAllowedExperimentalEffects();
 
     public abstract ShipModule Clone();
+
     public String getLocalizationKey() {
         return "ships.module.name." + this.internalName.toLowerCase();
     }
 
     public String getClarifier() {
-        if(this.isPreEngineered()) {
-            return " PRE";
-        }
-        return "";
+        return isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
     }
+
     public String getNonSortingClarifier() {
         return "";
     }
@@ -236,14 +242,19 @@ public abstract class ShipModule implements Serializable {
     public boolean isAllowed(ShipType shipType) {
         return true;
     }
+
     public boolean isPreEngineered() {
+        return false;
+    }
+    public boolean isCGExclusive() {
         return false;
     }
 
     public void setLegacy(boolean legacy) {
         this.legacy = legacy;
     }
-    public Set<HorizonsModifier> getAttibutes(){
+
+    public Set<HorizonsModifier> getAttibutes() {
         return attributes.keySet();
     }
 
@@ -254,4 +265,43 @@ public abstract class ShipModule implements Serializable {
     public boolean groupOnName() {
         return false;
     }
+
+    public Optional<ShipModule> findHigherSize() {
+        return SHIP_MODULES.stream()
+                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
+                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
+                        shipModule.getModuleSize().isHigher(this.getModuleSize())
+                )
+                .sorted(Comparator.comparing(ShipModule::getModuleSize))
+                .findFirst();
+    }
+    public Optional<ShipModule> findLowerSize() {
+        return SHIP_MODULES.stream()
+                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
+                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
+                        shipModule.getModuleSize().isLower(this.getModuleSize())
+                )
+                .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
+                .findFirst();
+    }
+
+    public Optional<ShipModule> findHigherClass() {
+        return SHIP_MODULES.stream()
+                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
+                        shipModule.getModuleSize().equals(this.getModuleSize()) &&
+                        shipModule.getModuleClass().isHigher(this.getModuleClass())
+                )
+                .sorted(Comparator.comparing(ShipModule::getModuleClass))
+                .findFirst();
+    }
+    public Optional<ShipModule> findLowerClass() {
+        return SHIP_MODULES.stream()
+                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
+                        shipModule.getModuleSize().equals(this.getModuleSize()) &&
+                        shipModule.getModuleClass().isLower(this.getModuleClass())
+                )
+                .sorted(Comparator.comparing(ShipModule::getModuleClass).reversed())
+                .findFirst();
+    }
+
 }

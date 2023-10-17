@@ -1,0 +1,48 @@
+{
+  "Slot": "MainEngines",
+  "Item": "int_engine_size3_class5_fast",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 300220,
+    "BlueprintID": 128673659,
+    "BlueprintName": "Engine_Dirty",
+    "Level": 5,
+    "Quality": 0.570000,
+    "ExperimentalEffect": "special_engine_overloaded",
+    "ExperimentalEffect_Localised": "Drag Drives",
+    "Modifiers": [
+      {
+        "Label": "Integrity",
+        "Value": 46.750000,
+        "OriginalValue": 55.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 5.600000,
+        "OriginalValue": 5.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "EngineOptimalMass",
+        "Value": 78.750000,
+        "OriginalValue": 90.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "EngineOptPerformance",
+        "Value": 163.840042,
+        "OriginalValue": 115.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "EngineHeatRate",
+        "Value": 2.288000,
+        "OriginalValue": 1.300000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

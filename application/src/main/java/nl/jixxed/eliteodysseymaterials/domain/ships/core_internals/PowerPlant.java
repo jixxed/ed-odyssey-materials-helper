@@ -2,10 +2,8 @@ package nl.jixxed.eliteodysseymaterials.domain.ships.core_internals;
 
 import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.PowerPlantBlueprints;
-import nl.jixxed.eliteodysseymaterials.domain.ships.CoreModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -52,13 +50,32 @@ public class PowerPlant extends CoreModule {
     public static final PowerPlant POWER_PLANT_8_C = new PowerPlant("POWER_PLANT_8_C", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_8, ModuleClass.C, 12971100, "Int_Powerplant_Size8_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.00), Map.entry(HorizonsModifier.INTEGRITY, 150.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 30.00), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.50)));
     public static final PowerPlant POWER_PLANT_8_B = new PowerPlant("POWER_PLANT_8_B", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_8, ModuleClass.B, 38913290, "Int_Powerplant_Size8_Class4", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 128.00), Map.entry(HorizonsModifier.INTEGRITY, 180.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 33.00), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.45)));
     public static final PowerPlant POWER_PLANT_8_A = new PowerPlant("POWER_PLANT_8_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_8, ModuleClass.A, 116739870, "Int_Powerplant_Size8_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.00), Map.entry(HorizonsModifier.INTEGRITY, 165.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 36.00), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.40)));
-    public static final PowerPlant GUARDIAN_POWER_PLANT_2_A = new PowerPlant("GUARDIAN_POWER_PLANT_2_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.A, Origin.GUARDIAN, 192170, "Int_GuardianPowerplant_Size2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.50), Map.entry(HorizonsModifier.INTEGRITY, 56.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 12.70), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
-    public static final PowerPlant GUARDIAN_POWER_PLANT_3_A = new PowerPlant("GUARDIAN_POWER_PLANT_3_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_3, ModuleClass.A, Origin.GUARDIAN, 576490, "Int_GuardianPowerplant_Size3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.90), Map.entry(HorizonsModifier.INTEGRITY, 70.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 15.80), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
-    public static final PowerPlant GUARDIAN_POWER_PLANT_4_A = new PowerPlant("GUARDIAN_POWER_PLANT_4_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_4, ModuleClass.A, Origin.GUARDIAN, 1729480, "Int_GuardianPowerplant_Size4", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.90), Map.entry(HorizonsModifier.INTEGRITY, 88.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 20.60), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
-    public static final PowerPlant GUARDIAN_POWER_PLANT_5_A = new PowerPlant("GUARDIAN_POWER_PLANT_5_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_5, ModuleClass.A, Origin.GUARDIAN, 5188440, "Int_GuardianPowerplant_Size5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 11.70), Map.entry(HorizonsModifier.INTEGRITY, 106.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 26.90), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
-    public static final PowerPlant GUARDIAN_POWER_PLANT_6_A = new PowerPlant("GUARDIAN_POWER_PLANT_6_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_6, ModuleClass.A, Origin.GUARDIAN, 15565320, "Int_GuardianPowerplant_Size6", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 23.40), Map.entry(HorizonsModifier.INTEGRITY, 124.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 33.30), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
-    public static final PowerPlant GUARDIAN_POWER_PLANT_7_A = new PowerPlant("GUARDIAN_POWER_PLANT_7_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_7, ModuleClass.A, Origin.GUARDIAN, 46695950, "Int_GuardianPowerplant_Size7", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 46.80), Map.entry(HorizonsModifier.INTEGRITY, 144.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 39.60), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
-    public static final PowerPlant GUARDIAN_POWER_PLANT_8_A = new PowerPlant("GUARDIAN_POWER_PLANT_8_A", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_8, ModuleClass.A, Origin.GUARDIAN, 140087850, "Int_GuardianPowerplant_Size8", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 93.60), Map.entry(HorizonsModifier.INTEGRITY, 165.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 47.50), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant GUARDIAN_POWER_PLANT_2_A = new PowerPlant("GUARDIAN_POWER_PLANT_2_A", HorizonsBlueprintName.GUARDIAN_POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.A, Origin.GUARDIAN, 192170, "Int_GuardianPowerplant_Size2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.50), Map.entry(HorizonsModifier.INTEGRITY, 56.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 12.70), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant GUARDIAN_POWER_PLANT_3_A = new PowerPlant("GUARDIAN_POWER_PLANT_3_A", HorizonsBlueprintName.GUARDIAN_POWER_PLANT, ModuleSize.SIZE_3, ModuleClass.A, Origin.GUARDIAN, 576490, "Int_GuardianPowerplant_Size3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.90), Map.entry(HorizonsModifier.INTEGRITY, 70.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 15.80), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant GUARDIAN_POWER_PLANT_4_A = new PowerPlant("GUARDIAN_POWER_PLANT_4_A", HorizonsBlueprintName.GUARDIAN_POWER_PLANT, ModuleSize.SIZE_4, ModuleClass.A, Origin.GUARDIAN, 1729480, "Int_GuardianPowerplant_Size4", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.90), Map.entry(HorizonsModifier.INTEGRITY, 88.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 20.60), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant GUARDIAN_POWER_PLANT_5_A = new PowerPlant("GUARDIAN_POWER_PLANT_5_A", HorizonsBlueprintName.GUARDIAN_POWER_PLANT, ModuleSize.SIZE_5, ModuleClass.A, Origin.GUARDIAN, 5188440, "Int_GuardianPowerplant_Size5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 11.70), Map.entry(HorizonsModifier.INTEGRITY, 106.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 26.90), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant GUARDIAN_POWER_PLANT_6_A = new PowerPlant("GUARDIAN_POWER_PLANT_6_A", HorizonsBlueprintName.GUARDIAN_POWER_PLANT, ModuleSize.SIZE_6, ModuleClass.A, Origin.GUARDIAN, 15565320, "Int_GuardianPowerplant_Size6", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 23.40), Map.entry(HorizonsModifier.INTEGRITY, 124.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 33.30), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant GUARDIAN_POWER_PLANT_7_A = new PowerPlant("GUARDIAN_POWER_PLANT_7_A", HorizonsBlueprintName.GUARDIAN_POWER_PLANT, ModuleSize.SIZE_7, ModuleClass.A, Origin.GUARDIAN, 46695950, "Int_GuardianPowerplant_Size7", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 46.80), Map.entry(HorizonsModifier.INTEGRITY, 144.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 39.60), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant GUARDIAN_POWER_PLANT_8_A = new PowerPlant("GUARDIAN_POWER_PLANT_8_A", HorizonsBlueprintName.GUARDIAN_POWER_PLANT, ModuleSize.SIZE_8, ModuleClass.A, Origin.GUARDIAN, 140087850, "Int_GuardianPowerplant_Size8", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 93.60), Map.entry(HorizonsModifier.INTEGRITY, 165.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 47.50), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.5)));
+    public static final PowerPlant POWER_PLANT_3_A_ARMOURED_OVERCHARGED = new PowerPlant("POWER_PLANT_3_A_ARMOURED_OVERCHARGED", HorizonsBlueprintName.POWER_PLANT_ARMOURED_OVERCHARGED, ModuleSize.SIZE_3, ModuleClass.A, 480410, "Int_Powerplant_Size3_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 70.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 12.00), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.40)));
+    public static final PowerPlant POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED = new PowerPlant("POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED", HorizonsBlueprintName.POWER_PLANT_OVERCHARGED_OVERCHARGED, ModuleSize.SIZE_3, ModuleClass.A, 480410, "Int_Powerplant_Size3_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 70.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 12.00), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.40)));
+    public static final PowerPlant POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED = new PowerPlant("POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED", HorizonsBlueprintName.POWER_PLANT_OVERCHARGED_OVERCHARGED, ModuleSize.SIZE_4, ModuleClass.A, 1441230, "Int_Powerplant_Size4_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.INTEGRITY, 88.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 15.60), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.40)));
+    public static final PowerPlant POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED = new PowerPlant("POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED", HorizonsBlueprintName.POWER_PLANT_OVERCHARGED_OVERCHARGED, ModuleSize.SIZE_5, ModuleClass.A, 4323700, "Int_Powerplant_Size5_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 10.00), Map.entry(HorizonsModifier.INTEGRITY, 106.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 20.40), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.40)));
+
+    static {
+        POWER_PLANT_3_A_ARMOURED_OVERCHARGED.getModifications().add(
+                new Modification(HorizonsBlueprintType.ARMOURED_OVERCHARGED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED.getModifications().add(
+                new Modification(HorizonsBlueprintType.OVERCHARGED_OVERCHARGED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED.getModifications().add(
+                new Modification(HorizonsBlueprintType.OVERCHARGED_OVERCHARGED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+        POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED.getModifications().add(
+                new Modification(HorizonsBlueprintType.OVERCHARGED_OVERCHARGED, 1.0, HorizonsBlueprintGrade.GRADE_5)
+        );
+    }
 
     public static final List<PowerPlant> POWER_PLANTS = List.of(
             POWER_PLANT_2_E,
@@ -102,7 +119,11 @@ public class PowerPlant extends CoreModule {
             GUARDIAN_POWER_PLANT_5_A,
             GUARDIAN_POWER_PLANT_6_A,
             GUARDIAN_POWER_PLANT_7_A,
-            GUARDIAN_POWER_PLANT_8_A
+            GUARDIAN_POWER_PLANT_8_A,
+            POWER_PLANT_3_A_ARMOURED_OVERCHARGED,
+            POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED,
+            POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED,
+            POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED
     );
 
     private PowerPlant(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
@@ -120,6 +141,9 @@ public class PowerPlant extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
+        if (isPreEngineered()) {
+            return Collections.emptyList();
+        }
         if (this.getOrigin() == Origin.GUARDIAN) {
             return Collections.emptyList();
         }
@@ -128,6 +152,9 @@ public class PowerPlant extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if (isPreEngineered()) {
+            return Collections.emptyList();
+        }
         if (this.getOrigin() == Origin.GUARDIAN) {
             return Collections.emptyList();
         }
@@ -141,7 +168,17 @@ public class PowerPlant extends CoreModule {
 
 
     @Override
+    public boolean isPreEngineered() {
+        return HorizonsBlueprintName.POWER_PLANT_ARMOURED_OVERCHARGED.equals(this.getName()) || HorizonsBlueprintName.POWER_PLANT_OVERCHARGED_OVERCHARGED.equals(this.getName());
+    }
+
+    @Override
     public String getClarifier() {
-        return this.getOrigin() == Origin.GUARDIAN ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.guardian_power_plant") : "";
+        return this.getOrigin() == Origin.GUARDIAN || isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
+    }
+
+    @Override
+    public boolean isCGExclusive() {
+        return isPreEngineered();
     }
 }

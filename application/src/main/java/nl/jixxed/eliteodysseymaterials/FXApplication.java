@@ -22,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -74,6 +75,7 @@ public class FXApplication extends Application {
     public void start(final Stage primaryStage) {
         NotificationService.init();
         PinnedBlueprintService.init();
+        ScalingHelper.init();
         EDDNService.init();
         try {
             try {

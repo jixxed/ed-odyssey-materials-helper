@@ -204,10 +204,12 @@ public class ShieldGeneratorBlueprints {
                                     Raw.PHOSPHORUS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05)),
                                     HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("+14%", true, percentagePositive(0.0, 0.14)),
                                     HorizonsModifier.BROKEN_REGEN_RATE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04))
+                                    HorizonsModifier.ENERGY_PER_REGEN, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -222,10 +224,12 @@ public class ShieldGeneratorBlueprints {
                                     Manufactured.CONDUCTIVECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.05, 0.08)),
                                     HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.14, 0.2)),
                                     HorizonsModifier.BROKEN_REGEN_RATE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.1, 0.1)),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.04, 0.06))
+                                    HorizonsModifier.ENERGY_PER_REGEN, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.04, 0.06))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -242,10 +246,11 @@ public class ShieldGeneratorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.BROKEN_REGEN_RATE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.1, 0.1)),
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+11%", true, percentagePositive(0.08, 0.11)),
                                     HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.2, 0.26)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04)),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.06, 0.08))
+                                    HorizonsModifier.ENERGY_PER_REGEN, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.06, 0.08))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -262,10 +267,11 @@ public class ShieldGeneratorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.BROKEN_REGEN_RATE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.1, 0.1)),
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+14%", true, percentagePositive(0.11, 0.14)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+14%", true, percentagePositive(0.11, 0.14)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+14%", true, percentagePositive(0.11, 0.14)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+14%", true, percentagePositive(0.11, 0.14)),
                                     HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("+32%", true, percentagePositive(0.26, 0.32)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-7%", false, percentageNegative(0.04, 0.07)),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.08, 0.1))
+                                    HorizonsModifier.ENERGY_PER_REGEN, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.08, 0.1))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -280,10 +286,11 @@ public class ShieldGeneratorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.BROKEN_REGEN_RATE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.1, 0.1)),
-                                    HorizonsModifier.ALL_RESISTANCES, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.14, 0.17)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.14, 0.17)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.14, 0.17)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.14, 0.17)),
                                     HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("+38%", true, percentagePositive(0.32, 0.38)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-9%", false, percentageNegative(0.07, 0.09)),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.1, 0.12))
+                                    HorizonsModifier.ENERGY_PER_REGEN, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.1, 0.12))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,

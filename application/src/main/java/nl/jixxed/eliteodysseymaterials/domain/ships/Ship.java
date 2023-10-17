@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 
 public class Ship {
+    @Getter
     private static final List<List<? extends ShipModule>> ALL_MODULES = List.of(
             //hardpoint
             AbrasionBlaster.ABRASION_BLASTERS,
@@ -215,10 +216,10 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(2).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(1).namedIndex(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).namedIndex(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).namedIndex(5).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship HAULER = new Ship(
@@ -400,10 +401,10 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(2).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(1).namedIndex(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).namedIndex(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).namedIndex(5).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship VIPER_MK_III = new Ship(//viper MK III
@@ -464,10 +465,10 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(2).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).namedIndex(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).namedIndex(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).namedIndex(5).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship COBRA_MK_III = new Ship(
@@ -594,11 +595,11 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_3_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(3).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(2).namedIndex(4).shipModule(CargoRack.CARGO_RACK_1_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(2).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).namedIndex(7).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).namedIndex(8).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship DIAMOND_BACK = new Ship(//scout
@@ -1181,12 +1182,12 @@ public class Ship {
             List.of(
                     Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(1).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).namedIndex(2).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).namedIndex(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(1).namedIndex(7).shipModule(Computer.ADVANCED_DOCKING_COMPUTER).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).namedIndex(8).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship ASP = new Ship(//asp explorer
@@ -1322,10 +1323,10 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(5).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).namedIndex(9).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).namedIndex(10).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship TYPE_7 = new Ship(
@@ -1462,9 +1463,9 @@ public class Ship {
                     Slot.builder().slotType(SlotType.MILITARY).index(3).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(5).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).namedIndex(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship FEDERATION_DROPSHIP_MK_II = new Ship(//Federal Assault Ship
@@ -1529,10 +1530,10 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(3).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).namedIndex(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).namedIndex(7).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship EMPIRE_TRADER = new Ship(//imperial clipper
@@ -1667,11 +1668,11 @@ public class Ship {
                     Slot.builder().slotType(SlotType.MILITARY).index(2).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(3).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).namedIndex(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).namedIndex(4).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).namedIndex(7).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship TYPE_X_3 = new Ship(//challenger
@@ -1812,9 +1813,9 @@ public class Ship {
                     Slot.builder().slotType(SlotType.MILITARY).index(3).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(5).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).namedIndex(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).namedIndex(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).namedIndex(6).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship KRAIT_LIGHT = new Ship(
@@ -2285,17 +2286,17 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(8).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(7).shipModule(CargoRack.CARGO_RACK_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(8).namedIndex(0).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(8).namedIndex(1).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(7).namedIndex(2).shipModule(CargoRack.CARGO_RACK_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(6).namedIndex(3).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).namedIndex(4).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).namedIndex(5).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).namedIndex(7).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(3).namedIndex(8).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(2).namedIndex(11).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(1).namedIndex(12).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship BELUGA_LINER = new Ship(
@@ -2444,12 +2445,12 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(5).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(3).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).namedIndex(5).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(4).namedIndex(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(3).namedIndex(7).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(3).namedIndex(8).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(2).namedIndex(11).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(12).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship ANACONDA = new Ship(
@@ -2525,11 +2526,11 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(7).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(2).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(4).namedIndex(8).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).namedIndex(9).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(4).namedIndex(10).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(2).namedIndex(13).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).namedIndex(14).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship FEDERATION_CORVETTE = new Ship(
@@ -2605,10 +2606,10 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(7).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(8).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).namedIndex(8).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(4).namedIndex(9).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(3).namedIndex(10).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(12).slotSize(1).namedIndex(11).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship CUTTER = new Ship(
@@ -2684,9 +2685,9 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(7).slotSize(5).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(8).slotSize(5).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(4).namedIndex(8).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(10).slotSize(3).namedIndex(9).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(10).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
 
