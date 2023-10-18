@@ -2,7 +2,7 @@ Version 2.37
 -------------
 Gracefully handle missing material statistics
 Add Contaminated Spire Refinery Compound (good)
-Add new EDDN fields
+Add new Journal and EDDN fields for FSSSignalDiscovered and ApproachSettlement
 
 Version 2.36
 -------------
