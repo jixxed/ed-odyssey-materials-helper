@@ -45,12 +45,14 @@
                         "type": "object",
                         "required": ["timestamp", "SignalName"],
                         "description": "Single FSSSignalDiscovered event",
+                        "additionalProperties"  : false,
                         "properties": {
                             "timestamp": {
                                 "type"          : "string",
                                 "format"        : "date-time"
                             },
                             "SignalName": { "type":  "string" },
+                            "SignalType": { "type":  "string" },
                             "IsStation": { "type": "boolean" },
                             "USSType": {
                               "type": "string",

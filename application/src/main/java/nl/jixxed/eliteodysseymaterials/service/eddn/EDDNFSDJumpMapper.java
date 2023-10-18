@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service.eddn;
 
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
+import nl.jixxed.eliteodysseymaterials.schemas.eddn.approachsettlement.SystemFaction;
 import nl.jixxed.eliteodysseymaterials.schemas.eddn.carrierjump.*;
 import nl.jixxed.eliteodysseymaterials.schemas.eddn.fsdjump.Message;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.FSDJump;

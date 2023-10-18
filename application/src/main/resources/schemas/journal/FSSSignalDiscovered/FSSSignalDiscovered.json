@@ -15,6 +15,11 @@
       "type" : "string",
       "examples" : [ "$MULTIPLAYER_SCENARIO42_TITLE;", "$ListeningPost:#index=1;", "BLUE TYPHOON Q1M-83F" ]
     },
+    "SignalType" : {
+      "title" : "SignalType",
+      "type" : "string",
+      "examples" : [ "USS", "TouristBeacon" ]
+    },
     "SignalName_Localised" : {
       "title" : "SignalName_Localised",
       "type" : "string",

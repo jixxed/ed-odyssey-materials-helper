@@ -44,6 +44,34 @@
                     "maxItems"      : 3,
                     "description"   : "Must be added by the sender"
                 },
+                "StationFaction" : {
+                    "$ref": "../definitions.json#/definitions/SystemFaction"
+                },
+                "StationGovernment" : {
+                    "title" : "StationGovernment",
+                    "type" : "string",
+                    "examples" : [ "$government_Carrier;" ]
+                },
+                "StationServices" : {
+                    "title" : "StationServices",
+                    "type" : "array",
+                    "items" : {
+                        "type" : "string",
+                        "examples" : [ "dock", "autodock", "commodities" ]
+                    }
+                },
+                "StationEconomy" : {
+                    "title" : "StationEconomy",
+                    "type" : "string",
+                    "examples" : [ "$economy_Carrier;" ]
+                },
+                "StationEconomies" : {
+                    "title" : "StationEconomies",
+                    "type" : "array",
+                    "items" : {
+                        "$ref": "../definitions.json#/definitions/StationEconomy"
+                    }
+                },
                 "SystemAddress": {
                     "type"          : "integer"
                 },
