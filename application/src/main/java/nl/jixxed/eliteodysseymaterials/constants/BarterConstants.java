@@ -81,6 +81,7 @@ public class BarterConstants {
             Map.entry(Good.PUSH, 25_000),
             Map.entry(Good.PYROLYTICCATALYST, 35_000),
             Map.entry(Good.REFINEMENTPROCESSSAMPLE, 50_000),
+            Map.entry(Good.SABOTAGEDCOMPONENT, 210_000),
             Map.entry(Good.SHIPSCHEMATIC, 25_000),
             Map.entry(Good.SUITSCHEMATIC, 50_000),
             Map.entry(Good.SURVEILLANCEEQUIPMENT, 10_000),

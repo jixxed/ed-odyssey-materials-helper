@@ -38,6 +38,7 @@ public enum Good implements OdysseyMaterial {
     PUSH(true),
     PYROLYTICCATALYST(true),
     REFINEMENTPROCESSSAMPLE(false),
+    SABOTAGEDCOMPONENT(false),
     SHIPSCHEMATIC(false),
     SUITSCHEMATIC(false),
     SURVEILLANCEEQUIPMENT(false),

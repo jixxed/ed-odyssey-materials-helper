@@ -90,7 +90,9 @@ public class MaterialTrackingService {
                 final JsonNode jsonNode = OBJECT_MAPPER.readTree(Files.readString(statisticsFile.toPath()));
                 for (final OdysseyMaterial odysseyMaterial : MATERIAL_STATISTICS.keySet()) {
                     final JsonNode materialStat = jsonNode.get(odysseyMaterial.name());
-                    MATERIAL_STATISTICS.put(odysseyMaterial, OBJECT_MAPPER.readValue(materialStat.toString(), MaterialStatistic.class));
+                    if(materialStat != null) {
+                        MATERIAL_STATISTICS.put(odysseyMaterial, OBJECT_MAPPER.readValue(materialStat.toString(), MaterialStatistic.class));
+                    }
                 }
                 log.info("Load material statistics finished");
             } catch (final IOException ex) {
