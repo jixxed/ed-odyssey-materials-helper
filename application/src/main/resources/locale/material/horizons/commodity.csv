@@ -427,7 +427,7 @@ material.commodity.thargoidtissuesampletype10b,Titan Maw Tissue Sample,Titan Maw
 material.commodity.thargoidtissuesampletype10c,Titan Maw Partial Tissue Sample,Titan Maw Partial Tissue Sample,,,,,Неполный образец ткани пасти Титана
 material.commodity.thargoidtissuesampletype7,Thargoid Scythe Tissue Sample,Thargoid Scythe Tissue Sample,,Muestra de tejido de Scythe Thargoide,,Amostra de tecido de Scythe Thargoid,Образец ткани таргоидского корабля «Коса»
 material.commodity.unknownsack,Protective Membrane Scrap,Protective Membrane Scrap,Unbrauchbare Schutzmembran,Fragmento de membrana protectora,,,Остатки защитной мембраны
-material.commodity.thargoidpod,Thargoid Bio-storage Capsule,Thargoid Bio-storage Capsule,,,,,
+material.commodity.thargoidpod,Thargoid Bio-storage Capsule,Thargoid Bio-storage Capsule,,,,,Таргоидская капсула для биоматериалов
 material.commodity.coralsap,Coral Sap,Coral Sap,,,,,Коралловая смола
-material.commodity.unknownmineral,Impure Spire Mineral,,,,,,
-material.commodity.unknownrefinedmineral,Semi-Refined Spire Mineral,,,,,,
+material.commodity.unknownmineral,Impure Spire Mineral,,,,,,Неочищенный минерал со шпилей
+material.commodity.unknownrefinedmineral,Semi-Refined Spire Mineral,,,,,,Полуочищенный минерал со шпилей
