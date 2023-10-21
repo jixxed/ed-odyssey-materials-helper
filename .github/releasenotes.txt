@@ -6,4 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added even more missing fields from the journal
+Added Localised Name mapping to Scan journal event
+Fix Interdicted Power journal field to string type
