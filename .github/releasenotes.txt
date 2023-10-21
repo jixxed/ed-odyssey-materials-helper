@@ -6,6 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added automatic reporting of unrecognized entries/fields in the journal, since FDev no longer provides up-to-date journal docs.
-Added StationAllegiance for ApproachSettlement event to send to EDDN
-Some updated Russian translations for new materials
+Added several missing fields from the journal

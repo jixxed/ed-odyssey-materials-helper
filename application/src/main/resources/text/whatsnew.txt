@@ -1,3 +1,7 @@
+Version 2.39
+-------------
+Added several missing fields from the journal
+
 Version 2.38
 -------------
 Added automatic reporting of unrecognized entries/fields in the journal, since FDev no longer provides up-to-date journal docs.
