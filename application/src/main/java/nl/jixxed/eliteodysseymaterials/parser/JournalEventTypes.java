@@ -258,7 +258,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave.WingLeave;
 import java.util.Map;
 
 public class JournalEventTypes {
-    static final Map<String, Class<? extends Event>> EVENT_TYPES = Map.ofEntries(
+    public static final Map<String, Class<? extends Event>> EVENT_TYPES = Map.ofEntries(
             Map.entry("AfmuRepairs", AfmuRepairs.class),
             Map.entry("AppliedToSquadron", AppliedToSquadron.class),
             Map.entry("ApproachBody", ApproachBody.class),

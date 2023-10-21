@@ -369,11 +369,6 @@
                                 "type" : "string",
                                 "examples" : [ "iron", "nickel", "sulphur" ]
                             },
-                            "Name_Localised" : {
-                                "title" : "Name",
-                                "type" : "string",
-                                "examples" : [ "iron", "nickel", "sulphur" ]
-                            },
                             "Percent" : {
                                 "title" : "Percent",
                                 "type" : "number",
