@@ -15,6 +15,11 @@
       "type" : "string",
       "examples" : [ "Mission_OnFoot_Hack_Download_Covert_MB", "Mission_OnFoot_Hack_Download_MB", "Mission_OnFoot_Hack_Download_Offline_MB" ]
     },
+    "LocalisedName" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Turn on power at Walter Drilling Platform" ]
+    },
     "NewDestinationStation" : {
       "title" : "NewDestinationStation",
       "type" : "string",

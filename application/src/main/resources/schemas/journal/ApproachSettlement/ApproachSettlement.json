@@ -57,6 +57,11 @@
           "title" : "Name",
           "type" : "string",
           "examples" : [ "FleetCarrier" ]
+        },
+        "FactionState" : {
+          "title" : "FactionState",
+          "type" : "string",
+          "examples" : [ "Investment", "War", "Election" ]
         }
       },
       "additionalProperties" : false,
