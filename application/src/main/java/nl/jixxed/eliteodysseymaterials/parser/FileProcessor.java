@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Status.Status;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 
@@ -35,10 +37,12 @@ import java.util.stream.Stream;
 public class FileProcessor {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER2 = new ObjectMapper();
 
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER2.registerModule(new JavaTimeModule());
     }
 
     private static final String EVENT = "event";
@@ -92,6 +96,7 @@ public class FileProcessor {
                         JournalEventType.SCAN
                 );
                 if (jsonNode.get(EVENT) != null) {
+                    testAndReport(line,JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                     if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {
                         alwaysProcessMessages.add(line);
@@ -167,6 +172,14 @@ public class FileProcessor {
         }
     }
 
+    private static void testAndReport(String message, Class<? extends Event> messageClass) {
+        try{
+            OBJECT_MAPPER2.readValue(message, messageClass);
+        } catch (final JsonProcessingException e) {
+            //report
+            ReportService.reportJournal(message, e.getMessage());
+        }
+    }
     @SuppressWarnings("java:S2674")
     public static synchronized void processJournal(final File file) {
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {

@@ -28,10 +28,12 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class MessageHandler {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER2 = new ObjectMapper();
 
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER2.registerModule(new JavaTimeModule());
     }
 
     private static final Map<JournalEventType, MessageProcessor<? extends Event>> messageProcessors = Map.ofEntries(
@@ -108,7 +110,7 @@ class MessageHandler {
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
             if (jsonNode.get(EVENT) != null) {
                 final String eventName = jsonNode.get(EVENT).asText();
-                log.info("event: " + eventName + "("+jsonNode.get(TIMESTAMP).asText()+")");
+                log.info("event: " + eventName + "(" + jsonNode.get(TIMESTAMP).asText() + ")");
                 final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                 final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
                 if (messageProcessor != null) {
@@ -117,8 +119,8 @@ class MessageHandler {
                     messageProcessor.process(event);
                     EventService.publish(new JournalLineProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
                 }
-                    final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-                    EDDNService.anyEvent(journalEventType, timestamp);
+                final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+                EDDNService.anyEvent(journalEventType, timestamp);
 
             } else {
                 log.warn("EVENT NULL: " + jsonNode.toPrettyString());
