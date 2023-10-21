@@ -39,6 +39,7 @@ public class EDDNApproachSettlementMapper extends EDDNMapper {
                 .withStationEconomy(approachSettlement.getStationEconomy().orElse(null))
                 .withStationFaction(new SystemFaction.SystemFactionBuilder()
                         .withName(approachSettlement.getStationFaction().map(StationFaction::getName).orElse(null))
+                        .withFactionState(approachSettlement.getStationFaction().map(faction -> faction.getFactionState().orElse(null)).orElse(null))
                         .build())
                 .withStationGovernment(approachSettlement.getStationGovernment().orElse(null))
                 .withStationServices(mapToNullIfEmptyList(approachSettlement.getStationServices()).orElse(null))
