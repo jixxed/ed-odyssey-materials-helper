@@ -42,6 +42,7 @@ public class EDDNApproachSettlementMapper extends EDDNMapper {
                         .build())
                 .withStationGovernment(approachSettlement.getStationGovernment().orElse(null))
                 .withStationServices(mapToNullIfEmptyList(approachSettlement.getStationServices()).orElse(null))
+                .withStationAllegiance(approachSettlement.getStationAllegiance().orElse(null))
                 .build();
     }
 

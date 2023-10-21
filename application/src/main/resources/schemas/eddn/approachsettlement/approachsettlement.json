@@ -44,6 +44,11 @@
                     "maxItems"      : 3,
                     "description"   : "Must be added by the sender"
                 },
+                "StationAllegiance" : {
+                    "title" : "StationAllegiance",
+                    "type" : "string",
+                    "examples" : [ "Federation", "Alliance", "PilotsFederation" ]
+                },
                 "StationFaction" : {
                     "$ref": "../definitions.json#/definitions/SystemFaction"
                 },

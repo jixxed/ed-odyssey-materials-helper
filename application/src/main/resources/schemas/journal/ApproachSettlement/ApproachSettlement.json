@@ -72,6 +72,11 @@
       "type" : "string",
       "examples" : [ "Private Ownership" ]
     },
+    "StationAllegiance" : {
+      "title" : "StationAllegiance",
+      "type" : "string",
+      "examples" : [ "Federation", "Alliance", "PilotsFederation" ]
+    },
     "StationServices" : {
       "title" : "StationServices",
       "type" : "array",
