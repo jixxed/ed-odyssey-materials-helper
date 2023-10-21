@@ -58,7 +58,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor<Backpack
                         .map(changeEntry -> {
                             try {
                                 final OdysseyMaterial odysseyMaterial = OdysseyMaterial.subtypeForName(changeEntry.getName());
-                                return new Pair<OdysseyMaterial,Long>(odysseyMaterial,changeEntry.getCount());
+                                return new Pair<OdysseyMaterial,Long>(odysseyMaterial,changeEntry.getCount().longValue());
                             } catch (final IllegalArgumentException e) {
                                 return null;
                             }

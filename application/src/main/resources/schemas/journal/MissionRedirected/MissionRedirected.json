@@ -18,6 +18,11 @@
     "LocalisedName" : {
       "title" : "Name",
       "type" : "string",
+      "examples" : [ "Turn on power at Walter Drilling Platform", "$Mission_OnFoot_SalvageIllegal_MB_name:#startStationName=Vespucci Stop:#startSystemName=Apuris:#startStationSystemName=Apuris:#DestinationSystemName=Apuris:#CommodityName=$MemoryChip_Name;:#CommodityQuantity=1:#missionGiverFactionContact=Owen Bates:#missionGiverFactionContactTitle=$GovernmentRankContactConfederacy_3_Male;:#commanderName=BxG Stone;" ]
+    },
+    "LocalisedName_Localised" : {
+      "title" : "Name",
+      "type" : "string",
       "examples" : [ "Turn on power at Walter Drilling Platform" ]
     },
     "NewDestinationStation" : {

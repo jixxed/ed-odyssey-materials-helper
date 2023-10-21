@@ -10,6 +10,11 @@
       "type" : "boolean",
       "examples" : [ true ]
     },
+    "OnFoot" : {
+      "title" : "OnFoot",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
     "StationName" : {
       "title" : "StationName",
       "type" : "string",

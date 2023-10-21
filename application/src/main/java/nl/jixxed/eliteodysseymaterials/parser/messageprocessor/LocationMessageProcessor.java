@@ -36,9 +36,9 @@ public class LocationMessageProcessor implements MessageProcessor<Location> {
         final String security = event.getSystemSecurity();
         final String factionState = event.getSystemFaction().map(systemFaction -> systemFaction.getFactionState().orElse("")).orElse("None");
         if (!starSystem.isBlank()) {
-            final double x = event.getStarPos().get(0);
-            final double y = event.getStarPos().get(1);
-            final double z = event.getStarPos().get(2);
+            final double x = event.getStarPos().get(0).doubleValue();
+            final double y = event.getStarPos().get(1).doubleValue();
+            final double z = event.getStarPos().get(2).doubleValue();
             EventService.publish(new LocationJournalEvent(event, new StarSystem(starSystem, SystemEconomy.forKey(economy), SystemEconomy.forKey(secondEconomy), SystemGovernment.forKey(government), SystemSecurity.forKey(security), factionState, x, y, z), body, station, this.isFirstLocationEventInJournal));
             this.isFirstLocationEventInJournal = Boolean.FALSE;
         }

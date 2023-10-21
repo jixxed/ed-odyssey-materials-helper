@@ -34,6 +34,12 @@
       "type" : "string",
       "examples" : [ "$npc_name_decorate:#name=Oriana Miller;" ]
     },
+    "PilotName_Localised" : {
+      "title" : "PilotName_Localised",
+      "description": "Name of the Pilot",
+      "type" : "string",
+      "examples" : [ "Oriana Miller" ]
+    },
     "Target" : {
       "title" : "Target",
       "description": "type of ship",

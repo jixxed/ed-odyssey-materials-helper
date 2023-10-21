@@ -8,7 +8,12 @@
     "Type" : {
       "title" : "Type",
       "type" : "string",
-      "examples" : [ "Azeban City" ]
+      "examples" : [ "$USS_Type_MissionTarget;" ]
+    },
+    "Type_Localised" : {
+      "title" : "Type",
+      "type" : "string",
+      "examples" : [ "Target" ]
     },
     "MarketID" : {
       "title" : "MarketID",
