@@ -8,4 +8,4 @@ The portable zip versions are used as update packages. You can run them standalo
 **Release notes for this version:**
 Fix Coriolis-EDOMH error notification. this feature was never fully implemented and gave an EDSY error instead.
 - It will now say it Coriolis doesn't work and that you should use EDSY instead. (until it's fixed)
-Add CombatRank to Interdicted journl event
+Add CombatRank to Interdicted journal event
