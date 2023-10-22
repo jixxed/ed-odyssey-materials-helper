@@ -2,6 +2,7 @@ Version 2.42
 -------------
 Fix Coriolis-EDOMH error notification. this feature was never fully implemented and gave an EDSY error instead.
 - It will now say it Coriolis doesn't work and that you should use EDSY instead. (until it's fixed)
+Add CombatRank to Interdicted journl event
 
 Version 2.41
 -------------
