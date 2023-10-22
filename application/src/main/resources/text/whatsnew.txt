@@ -4,6 +4,7 @@ Fix Coriolis-EDOMH error notification. this feature was never fully implemented 
 - It will now say it Coriolis doesn't work and that you should use EDSY instead. (until it's fixed)
 Add CombatRank to Interdicted journal event
 Add System to ClearImpound journal event
+Fix Interdiction Power journal field to string type
 
 Version 2.41
 -------------
