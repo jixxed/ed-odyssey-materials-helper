@@ -157,7 +157,7 @@ public class ImportService {
 
         } catch (final RuntimeException | JsonProcessingException ex) {
             log.error("Failed to import Coriolis wishlist", ex);
-            throw new EdsyDeeplinkException("Failed to parse deeplink");
+            throw new CoriolisDeeplinkException("Failed to parse deeplink");
         }
 
     }
