@@ -1,3 +1,7 @@
+Version 2.43
+-------------
+Update rescue ship locations
+
 Version 2.42
 -------------
 Fix Coriolis-EDOMH error notification. this feature was never fully implemented and gave an EDSY error instead.
