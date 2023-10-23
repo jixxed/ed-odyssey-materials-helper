@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:2.26.0"
+        classpath "org.beryx:badass-jlink-plugin:3.0.0"
         classpath "io.freefair.gradle:lombok-plugin:8.3"
         classpath "org.gradlex:extra-java-module-info:1.4.1"
         classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.2.1'
