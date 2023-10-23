@@ -98,7 +98,7 @@ if (os.isWindows()) {
 dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.1'
-    implementation group: 'commons-io', name: 'commons-io', version: '2.13.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.14.0'
 
     implementation("org.openjfx:javafx-base:18+:${platform}")
     implementation("org.openjfx:javafx-controls:18+:${platform}")
