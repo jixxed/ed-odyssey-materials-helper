@@ -31,6 +31,11 @@
             "title" : "Direction",
             "type" : "string",
             "examples" : [ "toship", "tocarrier", "tosrv" ]
+          },
+          "MissionID" : {
+            "title" : "MissionID",
+            "type" : "integer",
+            "examples" : [ 895910576, 895910565, 897152407 ]
           }
         },
         "additionalProperties" : false,

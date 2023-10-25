@@ -1,3 +1,7 @@
+Version 2.44
+-------------
+Add MissionID to CargoTransfer journal event
+
 Version 2.43
 -------------
 Update rescue ship locations
