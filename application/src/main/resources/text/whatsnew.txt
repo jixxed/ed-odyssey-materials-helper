@@ -1,6 +1,7 @@
 Version 2.44
 -------------
 Add MissionID to CargoTransfer journal event
+Add Wanted to SupercruiseEntry journal event
 
 Version 2.43
 -------------

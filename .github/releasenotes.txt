@@ -7,3 +7,4 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Add MissionID to CargoTransfer journal event
+Add Wanted to SupercruiseEntry journal event
