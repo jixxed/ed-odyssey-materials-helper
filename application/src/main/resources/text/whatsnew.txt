@@ -2,6 +2,8 @@ Version 2.44
 -------------
 Add MissionID to CargoTransfer journal event
 Add Wanted to SupercruiseEntry journal event
+Add Wanted to Location journal event
+Add HappiestSystem to CarrierJump journal event
 
 Version 2.43
 -------------

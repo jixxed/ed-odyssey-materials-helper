@@ -238,6 +238,12 @@
             "type" : "string",
             "examples" : [ "Happy", "Elated", "Discontented" ]
           },
+          "HappiestSystem" : {
+            "title" : "HappiestSystem",
+            "description": "If player squadron faction, and this is happiest system",
+            "type" : "boolean",
+            "examples" : [ true ]
+          },
           "MyReputation" : {
             "title" : "MyReputation",
             "type" : "number",

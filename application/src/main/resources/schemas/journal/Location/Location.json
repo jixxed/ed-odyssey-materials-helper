@@ -29,6 +29,11 @@
       "type" : "boolean",
       "examples" : [ false, true ]
     },
+    "Wanted" : {
+      "title" : "Wanted",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
     "StarSystem" : {
       "title" : "StarSystem",
       "description": "Name of starsystem",
