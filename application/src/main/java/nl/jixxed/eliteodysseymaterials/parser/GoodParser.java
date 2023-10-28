@@ -22,7 +22,7 @@ public class GoodParser implements Parser<MaterialMapping> {
             final int amount = item.getCount().intValue();
             if (good.isUnknown()) {
                 log.warn("Unknown Good detected: " + item);
-                ReportService.reportMaterial(good);
+                ReportService.reportMaterial(item);
             } else {
                 final Storage storage = knownMap.get(good);
                 //stack values as items occur multiple times in the json

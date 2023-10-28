@@ -6,6 +6,7 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Improved overlay transparency compatibility
-Removed CAPI token from logging
-Updated French and Russian translations
+Add MissionID to CargoTransfer journal event
+Add Wanted to SupercruiseEntry journal event
+Add Wanted to Location journal event
+Add HappiestSystem to CarrierJump journal event

@@ -28,6 +28,11 @@
       "title" : "MarketID",
       "type" : "integer",
       "examples" : [ 3705689344, 3706338816 ]
+    },
+    "System" : {
+      "title" : "System",
+      "type" : "string",
+      "examples" : [ "Tascheter Sector AV-Y b5" ]
     }
   },
   "additionalProperties" : false,

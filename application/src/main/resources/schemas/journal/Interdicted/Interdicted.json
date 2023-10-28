@@ -27,6 +27,12 @@
       "type" : "boolean",
       "examples" : [ true, false ]
     },
+    "CombatRank" : {
+      "title" : "CombatRank",
+      "description": "If player",
+      "type" : "integer",
+      "examples" : [ 8 ]
+    },
     "Faction" : {
       "title" : "Faction",
       "description": "If npc",
@@ -36,8 +42,8 @@
     "Power" : {
       "title" : "Power",
       "description": "If npc is working for a power",
-      "type" : "boolean",
-      "examples" : [ false, true ]
+      "type" : "string",
+      "examples" : [ "Independent" ]
     },
     "Interdictor_Localised" : {
       "title" : "Interdictor_Localised",

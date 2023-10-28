@@ -12,6 +12,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 
 public class EDDNScanMapperTest {
@@ -28,7 +29,7 @@ public class EDDNScanMapperTest {
 
         final Message message = EDDNScanMapper.mapToEDDN(scan, Expansion.ODYSSEY);
         System.out.println(this.objectMapper.writeValueAsString(message));
-        Assertions.assertThat(message.getParents()).contains(List.of(new Parent.ParentBuilder().withPlanet(6L).build(),new Parent.ParentBuilder().withStar(0L).build()));
+        Assertions.assertThat(message.getParents()).contains(List.of(new Parent.ParentBuilder().withPlanet(BigInteger.valueOf(6L)).build(),new Parent.ParentBuilder().withStar(BigInteger.valueOf(0L)).build()));
 
     }
 

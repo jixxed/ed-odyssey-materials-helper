@@ -28,9 +28,21 @@
         "required" : [ "Faction", "Reward" ]
       }
     },
+    "PilotName" : {
+      "title" : "PilotName",
+      "description": "Name of the Pilot",
+      "type" : "string",
+      "examples" : [ "$npc_name_decorate:#name=Oriana Miller;" ]
+    },
+    "PilotName_Localised" : {
+      "title" : "PilotName_Localised",
+      "description": "Name of the Pilot",
+      "type" : "string",
+      "examples" : [ "Oriana Miller" ]
+    },
     "Target" : {
       "title" : "Target",
-	  "description": "type of ship",
+      "description": "type of ship",
       "type" : "string",
       "examples" : [ "citizensuitai_industrial", "citizensuitai_scientific", "assaultsuitai_class2" ]
     },

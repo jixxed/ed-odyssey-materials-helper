@@ -1083,6 +1083,21 @@
       "title" : "TG_ENCOUNTERS",
       "type" : "object",
       "properties" : {
+        "TG_ENCOUNTER_IMPRINT": {
+          "title": "TG_ENCOUNTER_IMPRINT",
+          "type": "integer",
+          "examples": [ 351 ]
+        },
+        "TG_ENCOUNTER_WAKES": {
+          "title": "TG_ENCOUNTER_WAKES",
+          "type": "integer",
+          "examples": [ 351 ]
+        },
+        "TG_ENCOUNTER_KILLED": {
+          "title": "TG_ENCOUNTER_KILLED",
+          "type": "integer",
+          "examples": [ 351 ]
+        },
         "TG_ENCOUNTER_TOTAL" : {
           "title" : "TG_ENCOUNTER_TOTAL",
           "type" : "integer",

@@ -261,6 +261,7 @@ public class SpawnConstants {
     private static final Map<Good, List<LockerType>> GOOD_LOCKERS = Map.ofEntries(
             Map.entry(Good.AGRICULTURALPROCESSSAMPLE, List.of(LockerType.AGR)),
             Map.entry(Good.BIOCHEMICALAGENT, List.of(LockerType.IND)),
+            Map.entry(Good.BIOMECHANICALCOMPONENT, List.of()),
             Map.entry(Good.BUILDINGSCHEMATIC, List.of(LockerType.AGR, LockerType.STO)),
             Map.entry(Good.CALIFORNIUM, List.of(LockerType.CMD, LockerType.PWR)),
             Map.entry(Good.CASTFOSSIL, List.of(LockerType.EXT, LockerType.STO)),

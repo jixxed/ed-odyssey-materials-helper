@@ -43,3 +43,5 @@ material.good.universaltranslator,Universal Translator,Universal Translator,Univ
 material.good.unknown,UNKNOWN,UNKNOWN,UNBEKANNT,DESCONOCIDO,INCONNU,DESCONHECIDO,НЕИЗВЕСТНЫЙ
 material.good.vehicleschematic,Vehicle Schematic,Vehicle Schematic,Fahrzeugplan,Esquema de vehículo,Plan de véhicule,Esquema de Veículo,Чертеж транспорта
 material.good.weaponschematic,Weapon Schematic,Weapon Schematic,Waffenplan,Esquema de arma,Plan d’arme,Esquema de Arma,Чертеж оружия
+material.good.biomechanicalcomponent,Spire Refinery Compound,,,,,,Очищающий компонент шпиля
+material.good.sabotagedcomponent,Contaminated Spire Refinery Compound,,,,,,Зараженный очищающий компонент шпиля

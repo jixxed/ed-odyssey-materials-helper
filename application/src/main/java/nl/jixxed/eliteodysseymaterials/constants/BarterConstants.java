@@ -48,6 +48,7 @@ public class BarterConstants {
 
             Map.entry(Good.AGRICULTURALPROCESSSAMPLE, 50_000),
             Map.entry(Good.BIOCHEMICALAGENT, 125_000),
+            Map.entry(Good.BIOMECHANICALCOMPONENT, 200_000),
             Map.entry(Good.GENETICSAMPLE, 35_000),
             Map.entry(Good.BUILDINGSCHEMATIC, 25_000),
             Map.entry(Good.CALIFORNIUM, 100_000),
@@ -80,6 +81,7 @@ public class BarterConstants {
             Map.entry(Good.PUSH, 25_000),
             Map.entry(Good.PYROLYTICCATALYST, 35_000),
             Map.entry(Good.REFINEMENTPROCESSSAMPLE, 50_000),
+            Map.entry(Good.SABOTAGEDCOMPONENT, 210_000),
             Map.entry(Good.SHIPSCHEMATIC, 25_000),
             Map.entry(Good.SUITSCHEMATIC, 50_000),
             Map.entry(Good.SURVEILLANCEEQUIPMENT, 10_000),

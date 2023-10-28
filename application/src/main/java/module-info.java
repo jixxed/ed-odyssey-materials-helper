@@ -570,6 +570,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.StoredModules to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.StoredShips to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.SuitLoadout to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.SupercruiseDestinationDrop to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.SupercruiseEntry to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.SupercruiseExit to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.SwitchSuitLoadout to com.fasterxml.jackson.databind;
@@ -630,5 +631,9 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scan to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scanbarycentre to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.shipyard to com.fasterxml.jackson.databind;
+    exports nl.jixxed.eliteodysseymaterials.parser;
+    exports nl.jixxed.eliteodysseymaterials.parser.mapping;
+    opens nl.jixxed.eliteodysseymaterials.parser to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.parser.mapping to com.fasterxml.jackson.databind;
     exports nl.jixxed.eliteodysseymaterials.service.ships;
 }

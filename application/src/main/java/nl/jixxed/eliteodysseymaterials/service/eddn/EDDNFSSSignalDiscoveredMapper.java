@@ -16,6 +16,7 @@ public class EDDNFSSSignalDiscoveredMapper extends EDDNMapper {
                         .withTimestamp(fssSignalDiscovered.getTimestamp())
                         .withIsStation(fssSignalDiscovered.getIsStation().orElse(null))
                         .withSignalName(fssSignalDiscovered.getSignalName())
+                        .withSignalType(fssSignalDiscovered.getSignalType().orElse(null))
                         .withSpawningFaction(fssSignalDiscovered.getSpawningFaction().orElse(null))
                         .withSpawningState(fssSignalDiscovered.getSpawningState().orElse(null))
                         .withThreatLevel(fssSignalDiscovered.getThreatLevel().orElse(null))

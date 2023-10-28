@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.codexentry.Message;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CodexEntry.CodexEntry;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
+import java.math.BigInteger;
 import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -23,7 +24,7 @@ public class EDDNCodexEntryMapper extends EDDNMapper {
                 .withSystem(codexEntry.getSystem())
                 .withSystemAddress(codexEntry.getSystemAddress())
                 .withStarPos(LocationService.getCurrentStarPos(codexEntry.getSystemAddress()))
-                .withBodyID(bodyID)
+                .withBodyID(BigInteger.valueOf(bodyID))
                 .withBodyName(bodyName)
                 .withCategory(codexEntry.getCategory())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))

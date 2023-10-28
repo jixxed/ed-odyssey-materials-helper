@@ -48,6 +48,85 @@
       "title" : "Name_Localised",
       "type" : "string",
       "examples" : [ "Ancient Ruins (1)", "Ancient Ruins (3)", "Ancient Ruins (2)" ]
+    },
+    "StationFaction" : {
+      "title" : "StationFaction",
+      "type" : "object",
+      "properties" : {
+        "Name" : {
+          "title" : "Name",
+          "type" : "string",
+          "examples" : [ "FleetCarrier" ]
+        },
+        "FactionState" : {
+          "title" : "FactionState",
+          "type" : "string",
+          "examples" : [ "Investment", "War", "Election" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "Name" ]
+    },
+    "StationGovernment" : {
+      "title" : "StationGovernment",
+      "type" : "string",
+      "examples" : [ "$government_Carrier;" ]
+    },
+    "StationGovernment_Localised" : {
+      "title" : "StationGovernment_Localised",
+      "type" : "string",
+      "examples" : [ "Private Ownership" ]
+    },
+    "StationAllegiance" : {
+      "title" : "StationAllegiance",
+      "type" : "string",
+      "examples" : [ "Federation", "Alliance", "PilotsFederation" ]
+    },
+    "StationServices" : {
+      "title" : "StationServices",
+      "type" : "array",
+      "default": null,
+      "items" : {
+        "type" : "string",
+        "examples" : [ "dock", "autodock", "commodities" ]
+      }
+    },
+    "StationEconomy" : {
+      "title" : "StationEconomy",
+      "type" : "string",
+      "examples" : [ "$economy_Carrier;" ]
+    },
+    "StationEconomy_Localised" : {
+      "title" : "StationEconomy_Localised",
+      "type" : "string",
+      "examples" : [ "Private Enterprise" ]
+    },
+    "StationEconomies" : {
+      "title" : "StationEconomies",
+      "type" : "array",
+      "default": null,
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Name" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "$economy_Carrier;" ]
+          },
+          "Name_Localised" : {
+            "title" : "Name_Localised",
+            "type" : "string",
+            "examples" : [ "Private Enterprise" ]
+          },
+          "Proportion" : {
+            "title" : "Proportion",
+            "type" : "number",
+            "examples" : [ 1.0 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Name", "Proportion" ]
+      }
     }
   },
   "additionalProperties" : false,

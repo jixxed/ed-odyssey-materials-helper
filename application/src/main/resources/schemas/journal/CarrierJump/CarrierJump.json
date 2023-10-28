@@ -10,6 +10,11 @@
       "type" : "boolean",
       "examples" : [ true ]
     },
+    "OnFoot" : {
+      "title" : "OnFoot",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
     "StationName" : {
       "title" : "StationName",
       "type" : "string",
@@ -232,6 +237,12 @@
             "title" : "Happiness_Localised",
             "type" : "string",
             "examples" : [ "Happy", "Elated", "Discontented" ]
+          },
+          "HappiestSystem" : {
+            "title" : "HappiestSystem",
+            "description": "If player squadron faction, and this is happiest system",
+            "type" : "boolean",
+            "examples" : [ true ]
           },
           "MyReputation" : {
             "title" : "MyReputation",

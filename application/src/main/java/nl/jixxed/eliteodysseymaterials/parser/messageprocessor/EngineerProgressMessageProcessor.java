@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.EngineerProgress.Engineer
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 
+import java.math.BigInteger;
 import java.util.Optional;
 
 @Slf4j
@@ -29,11 +30,11 @@ public class EngineerProgressMessageProcessor implements MessageProcessor<Engine
         return EngineerProgress.class;
     }
 
-    private static void processEngineerProgressItem(final Optional<String> engineer, final Optional<String> progress, final Optional<Long> rankProgress, final Optional<Long> engineerRank) {
+    private static void processEngineerProgressItem(final Optional<String> engineer, final Optional<String> progress, final Optional<BigInteger> rankProgress, final Optional<BigInteger> engineerRank) {
         if (engineer.isPresent() && progress.isPresent()) {
             final String engineerName = engineer.get();
             final EngineerState engineerState = EngineerState.forName(progress.get());
-            final Integer rank = engineerRank.map(Long::intValue).orElseGet(() -> {
+            final Integer rank = engineerRank.map(BigInteger::intValue).orElseGet(() -> {
                 if (EngineerState.INVITED.equals(engineerState)) {
                     return  -1;
                 } else if (EngineerState.KNOWN.equals(engineerState)) {
@@ -44,7 +45,7 @@ public class EngineerProgressMessageProcessor implements MessageProcessor<Engine
                     return 0;
                 }
             });
-            final Integer rankProgressValue = rankProgress.orElse(0L).intValue();
+            final Integer rankProgressValue = rankProgress.map(BigInteger::intValue).orElse(0);
             switch (engineerName) {
                 case "Domino Green" -> APPLICATION_STATE.setEngineerState(Engineer.DOMINO_GREEN, engineerState);
                 case "Hero Ferrari" -> APPLICATION_STATE.setEngineerState(Engineer.HERO_FERRARI, engineerState);

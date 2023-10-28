@@ -24,6 +24,11 @@
       "title" : "SystemAddress",
       "type" : "integer",
       "examples" : [ 3657265287866, 10477373803, 671222670713 ]
+    },
+    "Wanted" : {
+      "title" : "Wanted",
+      "type" : "boolean",
+      "examples" : [ false, true ]
     }
   },
   "additionalProperties" : false,

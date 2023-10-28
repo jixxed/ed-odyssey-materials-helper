@@ -41,8 +41,8 @@
     "Power" : {
       "title" : "Power",
       "description": "If npc is working for a power",
-      "type" : "boolean",
-      "examples" : [ false, true ]
+      "type" : "string",
+      "examples" : [ "Independent" ]
     }
   },
   "additionalProperties" : false,

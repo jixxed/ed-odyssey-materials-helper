@@ -1,3 +1,58 @@
+Version 2.44
+-------------
+Add MissionID to CargoTransfer journal event
+Add Wanted to SupercruiseEntry journal event
+Add Wanted to Location journal event
+Add HappiestSystem to CarrierJump journal event
+
+Version 2.43
+-------------
+Update rescue ship locations
+
+Version 2.42
+-------------
+Fix Coriolis-EDOMH error notification. this feature was never fully implemented and gave an EDSY error instead.
+- It will now say it Coriolis doesn't work and that you should use EDSY instead. (until it's fixed)
+Add CombatRank to Interdicted journal event
+Add System to ClearImpound journal event
+Fix Interdiction Power journal field to string type
+
+Version 2.41
+-------------
+Added Localised Name mapping to Scan journal event
+Fix Interdicted Power journal field to string type
+
+Version 2.40
+-------------
+Added even more missing fields from the journal
+
+Version 2.39
+-------------
+Added several missing fields from the journal
+
+Version 2.38
+-------------
+Added automatic reporting of unrecognized entries/fields in the journal, since FDev no longer provides up-to-date journal docs.
+Added StationAllegiance for ApproachSettlement event to send to EDDN
+Some updated Russian translations for new materials
+
+Version 2.37
+-------------
+Gracefully handle missing material statistics
+Add Contaminated Spire Refinery Compound (good)
+Add new Journal and EDDN fields for FSSSignalDiscovered and ApproachSettlement
+
+Version 2.36
+-------------
+Fix automatic reporting of unknown goods
+Rename Xenobiological Prison Pod to Thargoid Bio-storage Capsule
+Add new U17 materials
+
+Version 2.35
+-------------
+Fix opening too many connections to EDDN in a short period of time.
+Add EDDN queue indicator in statusbar. Shows how many updates are left to send. Only visible if queue > 0.
+
 Version 2.34
 -------------
 Improved overlay transparency compatibility

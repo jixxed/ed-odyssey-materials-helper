@@ -3,6 +3,8 @@ package nl.jixxed.eliteodysseymaterials.service.eddn;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
+import nl.jixxed.eliteodysseymaterials.schemas.eddn.approachsettlement.StationEconomy;
+import nl.jixxed.eliteodysseymaterials.schemas.eddn.approachsettlement.SystemFaction;
 import nl.jixxed.eliteodysseymaterials.schemas.eddn.carrierjump.*;
 import nl.jixxed.eliteodysseymaterials.schemas.eddn.location.Message;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Location;

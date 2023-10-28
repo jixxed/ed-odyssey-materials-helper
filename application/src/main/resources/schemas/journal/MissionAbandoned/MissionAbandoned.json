@@ -10,6 +10,11 @@
       "type" : "string",
       "examples" : [ "Mission_AltruismCredits_name", "Mission_HackMegaship_name", "Mission_OnFoot_SalvageIllegal_MB_name" ]
     },
+    "LocalisedName" : {
+      "title" : "Name",
+      "type" : "string",
+      "examples" : [ "Turn on power at Walter Drilling Platform" ]
+    },
     "MissionID" : {
       "title" : "MissionID",
       "type" : "integer",

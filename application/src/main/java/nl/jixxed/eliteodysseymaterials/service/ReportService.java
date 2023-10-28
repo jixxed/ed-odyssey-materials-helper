@@ -49,15 +49,31 @@ public class ReportService {
             };
             new Thread(run).start();
         }
-//        else {
-//            try {
-//                final String data = OBJECT_MAPPER.writeValueAsString(new Report("dev", ApplicationState.getInstance().getFileheader(), material));
-//                log.info("Not reporting because in DEV mode:");
-//                log.info(data);
-//            } catch (final Exception e) {
-//                log.error("publish material tracking error", e);
-//            }
-//        }
+    }
+
+    public static void reportJournal(String journalLine, String error) {
+        final String buildVersion = VersionService.getBuildVersion();
+        if (buildVersion != null) {
+            final Runnable run = () -> {
+                try {
+                    final String data = OBJECT_MAPPER.writeValueAsString(new ReportUnknownJournal(buildVersion, ApplicationState.getInstance().getFileheader(), journalLine, error));
+                    log.info(data);
+                    final HttpClient httpClient = HttpClient.newHttpClient();
+                    final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
+                    final HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("https://" + domainName + "/Prod/submit-unknown-journal"))
+                            .POST(HttpRequest.BodyPublishers.ofString(data))
+                            .build();
+                    final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                    log.info(send.body());
+                } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (final Exception e) {
+                    log.error("publish unknown journal error", e);
+                }
+            };
+            new Thread(run).start();
+        }
     }
 
     @Data
@@ -66,5 +82,13 @@ public class ReportService {
         String version;
         Fileheader fileheader;
         Object data;
+    }
+    @Data
+    @AllArgsConstructor
+    public static class ReportUnknownJournal {
+        String version;
+        Fileheader fileheader;
+        String message;
+        String error;
     }
 }
