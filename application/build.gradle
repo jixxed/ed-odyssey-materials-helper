@@ -126,7 +126,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.15.2'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.7'
     implementation 'org.slf4j:slf4j-api:2.0.6'
-    implementation 'commons-io:commons-io:2.13.0'
+    implementation 'commons-io:commons-io:2.15.0'
     implementation 'ch.qos.logback:logback-core:1.4.11'
     implementation 'ch.qos.logback:logback-classic:1.4.11'
     implementation('javax.servlet:javax.servlet-api:4.0.1')
