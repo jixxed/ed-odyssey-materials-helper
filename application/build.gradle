@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath "org.beryx:badass-jlink-plugin:3.0.1"
-        classpath "io.freefair.gradle:lombok-plugin:8.3"
+        classpath "io.freefair.gradle:lombok-plugin:8.4"
         classpath "org.gradlex:extra-java-module-info:1.4.1"
         classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.2.1'
         classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
