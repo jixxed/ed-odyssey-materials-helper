@@ -67,7 +67,7 @@ public class LoadoutMapper {
                         final Set<HorizonsModifier> shipModuleAttibutes = shipModule.getAttibutes();
                         engineering.getModifiers().forEach(modifier -> {
                             modifier.getValue().ifPresent(value -> {
-                                shipModule.addLegacyModification(HorizonsModifier.forInternalName(modifier.getLabel()), value);
+                                shipModule.addLegacyModification(HorizonsModifier.forInternalName(modifier.getLabel()), value.doubleValue());
                             });
                         });
                     }
@@ -91,7 +91,7 @@ public class LoadoutMapper {
     }
 
     private static Double determineGradeProgress(Engineering engineering) {
-        return engineering.getQuality();
+        return engineering.getQuality().doubleValue();
     }
 
     private static HorizonsBlueprintGrade determineGrade(Engineering engineering) {
@@ -119,8 +119,8 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-                            log.debug(moduleAttribute.name() + ": " + BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_EVEN) + " =? "  + BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
-                            return BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
+                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? "  + BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
+                            return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {
                             log.debug("bool true");
