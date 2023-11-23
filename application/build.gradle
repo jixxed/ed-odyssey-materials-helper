@@ -123,7 +123,7 @@ dependencies {
     implementation 'org.glassfish:jakarta.json:2.0.1:module'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.16.0'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.15.2'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.15.2'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.16.0'
     implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.8'
     implementation 'org.slf4j:slf4j-api:2.0.6'
     implementation 'commons-io:commons-io:2.15.0'
