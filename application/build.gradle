@@ -115,7 +115,7 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-suite-api:1.10.0'
     testImplementation group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.10.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
     testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.7.0'
     testImplementation 'org.assertj:assertj-core:3.24.2'
