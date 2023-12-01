@@ -45,8 +45,8 @@ public class OCRService {
         ));
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
                     try {
-                        NativeLibrary.getInstance(LoadLibs.getTesseractLibName()).dispose();
-                        NativeLibrary.getInstance(LoadLibs.getLeptonicaLibName()).dispose();
+                        NativeLibrary.getInstance(LoadLibs.getTesseractLibName()).close();
+                        NativeLibrary.getInstance(LoadLibs.getLeptonicaLibName()).close();
                     } catch (final Exception e) {
                         log.error("Failed to free resources", e);
                     }
