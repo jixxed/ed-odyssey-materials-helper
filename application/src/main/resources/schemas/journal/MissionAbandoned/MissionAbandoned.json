@@ -19,6 +19,11 @@
       "title" : "MissionID",
       "type" : "integer",
       "examples" : [ 895910576, 895910565, 897152407 ]
+    },
+    "Fine" : {
+      "title" : "Fine",
+      "type" : "integer",
+      "examples" : [ 10000 ]
     }
   },
   "additionalProperties" : false,
