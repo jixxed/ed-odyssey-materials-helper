@@ -67,7 +67,7 @@ tasks.register("createPortableRelease") {
 //run from WSL/Linux with clean command
 tasks.register("createReleaseLinux") {
     dependsOn subprojects.jpackage
-    finalizedBy makeLinuxPortable, copyDebe
+    finalizedBy makeLinuxPortable, copyDeb
 }
 
 
