@@ -1,3 +1,11 @@
+Version 2.45
+-------------
+Add Fine to MissionAbandoned journal event
+Add SystemName_Localised to MultiSellExplorationData journal event (bugged field)
+Update java + libraries
+Fix some Russian translations
+Prevent sending CodexEntry to EDDN if app is not fully initialized. (old entries were sent with bad locations)
+
 Version 2.44
 -------------
 Add MissionID to CargoTransfer journal event
