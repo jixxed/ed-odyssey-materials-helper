@@ -45,9 +45,9 @@ application {
 }
 
 if (os.isWindows()) {
-    ext { packageType = "msi" }
+    ext { packageType = ["msi"] }
 } else {
-    ext { packageType = "deb" }
+    ext { packageType = ["deb","rpm"] }
 }
 jlink {
     addExtraDependencies("javafx")
@@ -65,8 +65,8 @@ jlink {
         }
     }
     jpackage {
-        installerType = project.ext.packageType
-        if (installerType == 'msi') {
+        if (project.ext.packageType.contains('msi')) {
+            installerType = 'msi'
             imageOptions += ['--icon', 'src/main/resources/images/rocket.ico']
             installerOptions = [
                     '--description', 'Installer for ED Odyssey Materials Helper',
@@ -78,7 +78,21 @@ jlink {
                     '--win-menu', '--win-shortcut', '--win-menu-group', 'Odyssey Material Helper'
             ] as List<String>
         }
-        if (installerType == 'deb') {
+        if (project.ext.packageType.contains('deb')) {
+            installerType = 'deb'
+            imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
+            installerOptions = [
+                    '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
+                    '--description', 'Installer for ED Odyssey Materials Helper',
+                    '--copyright', 'Copyright 2021 CMDR Jixxed',
+                    '--name', 'Elite Dangerous Odyssey Materials Helper',
+                    '--app-version', project.version,
+                    '--linux-menu-group', 'Other',
+                    '--linux-shortcut'
+            ] as List<String>
+        }
+        if (project.ext.packageType.contains('rpm')) {
+            installerType = 'rpm'
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
