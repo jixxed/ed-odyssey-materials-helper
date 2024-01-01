@@ -125,7 +125,7 @@ allprojects {
 //            implementation "org.glassfish:jakarta.json:2.0.1:module"
             implementation "org.eclipse.parsson:jakarta.json:1.1.5"
             implementation "org.leadpony.justify:justify:3.1.0"
-            implementation "org.slf4j:slf4j-api:2.0.9"
+            implementation "org.slf4j:slf4j-api:2.0.10"
             implementation "org.openjfx:javafx-base:${version_javafx}:${platform}"
             implementation "org.openjfx:javafx-controls:${version_javafx}:${platform}"
             implementation "org.openjfx:javafx-fxml:${version_javafx}:${platform}"
