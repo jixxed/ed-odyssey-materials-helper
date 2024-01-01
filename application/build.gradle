@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath "org.beryx:badass-jlink-plugin:2.26.0"
-        classpath "io.freefair.gradle:lombok-plugin:8.3"
+        classpath "io.freefair.gradle:lombok-plugin:8.4"
         classpath "org.gradlex:extra-java-module-info:1.4.1"
         classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.2.1'
         classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
@@ -26,7 +26,7 @@ apply plugin: "build-time-tracker"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(18)
+        languageVersion = JavaLanguageVersion.of(21)
         vendor = JvmVendorSpec.ADOPTIUM
     }
     modularity.inferModulePath = true
@@ -136,6 +136,7 @@ dependencies {
     implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.3'
     implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
     implementation group: 'com.zaxxer', name: 'SparseBitSet', version: '1.2'
+    implementation group: 'com.google.j2objc', name: 'j2objc-annotations', version: '2.8'
 
 
     implementation('org.jfxtras:jmetro:11.6.16') {
@@ -190,6 +191,7 @@ extraJavaModuleInfo {
     automaticModule('path-matching-resource-pattern-resolver-0.1.jar', 'io.github.secretx33')
     automaticModule('opencv-4.5.3-0.jar', 'org.openpnp')
     automaticModule('jna-5.13.0.jar', 'net.java.dev.jna')
+    automaticModule('j2objc-annotations-2.8.jar', 'j2objc')
     module('tess4j-5.2.9.jar', 'nl.jixxed.tess4j'){
         exports("nl.jixxed.tess4j")
         exports("nl.jixxed.tess4j.util")
@@ -506,3 +508,12 @@ buildtimetracker {
 }
 
 mainClassName = 'nl.jixxed.eliteodysseymaterials.Main'
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+}
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec) {
+    jvmArgs += "--enable-preview"
+}

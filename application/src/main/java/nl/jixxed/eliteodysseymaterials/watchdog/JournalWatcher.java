@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -28,6 +29,7 @@ import java.util.regex.Pattern;
 public class JournalWatcher {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private Optional<File> currentlyWatchedFile = Optional.empty();
+    @Getter
     private File watchedFolder;
     private FileWatcher fileWatcher;
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -60,7 +62,13 @@ public class JournalWatcher {
                 }
 
                 private boolean isValidOdysseyJournal(final File file) {
-                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX) && isNewerThanTwoYears(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
+                    return file.isFile()
+                            && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX)
+                            && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX)
+                            && isNewerThanTwoYears(file)
+                            && hasFileHeader(file)
+                            && hasCommanderHeader(file)
+                            && isSelectedCommander(file);
                 }
             }).watch(folder);
         });
@@ -147,7 +155,9 @@ public class JournalWatcher {
         }
         final Matcher matcher2 = this.journalPatternDate.matcher(file.getName());
         if (matcher2.matches()) {
-            return Long.parseLong(matcher2.group(1).substring(2) + matcher2.group(2) + matcher2.group(3) + matcher2.group(4) + matcher2.group(5));//group 1 - year - only last 2 digits to match other pattern
+            //group 1 - year - only last 2 digits to match other pattern
+            final String date = matcher2.group(1).substring(2) + matcher2.group(2) + matcher2.group(3) + matcher2.group(4) + matcher2.group(5);
+            return Long.parseLong(date);
         }
         return 0L;
     }
@@ -173,7 +183,9 @@ public class JournalWatcher {
                     } else if (eventNode.asText().equals("Commander")) {
                         final JsonNode nameNode = journalMessage.get("Name");
                         final JsonNode fidNode = journalMessage.get("FID");
-                        return gameVersion.equals(commander.getGameVersion()) && nameNode.asText().equals(commander.getName()) && fidNode.asText().equals(commander.getFid());
+                        return gameVersion.equals(commander.getGameVersion())
+                                && nameNode.asText().equals(commander.getName())
+                                && fidNode.asText().equals(commander.getFid());
                     }
                 }
             } catch (final IOException e) {
@@ -231,7 +243,4 @@ public class JournalWatcher {
         }
     }
 
-    public File getWatchedFolder() {
-        return this.watchedFolder;
-    }
 }

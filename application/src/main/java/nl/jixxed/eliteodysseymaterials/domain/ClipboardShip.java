@@ -12,6 +12,6 @@ import lombok.Setter;
 public class ClipboardShip {
     private String event;
     private Integer version;
-//    @JsonIgnoreProperties({"wishlist.items.visible"})
+
     private ShipConfiguration shipConfiguration;
 }

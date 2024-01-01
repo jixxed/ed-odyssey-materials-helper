@@ -93,19 +93,21 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSize);
         this.shipSelect.styleProperty().set(fontStyle);
     }
+
     private void setFillerHeight(final double scrollbarPos) {
         final long height = Math.round(scrollbarPos * (this.scrollPane.getContent().getBoundsInParent().getHeight() - this.scrollPane.getViewportBounds().getHeight()));
 
         right.setPrefHeight(0);
         right.setMaxHeight(0);
-        right.setMaxHeight(this.scrollPane.getHeight()+height);
+        right.setMaxHeight(this.scrollPane.getHeight() + height);
         this.filler.setMaxHeight(height);
         this.filler.setMinHeight(height);
-        right.setPrefHeight(this.scrollPane.getHeight()+height);
+        right.setPrefHeight(this.scrollPane.getHeight() + height);
 
 //        this.filler.minHeightProperty().bind(this.scrollPane.boundsInParentProperty().map(Bounds::getHeight).map(val-> Math.round(scrollbarPos * (val - this.scrollPane.getViewportBounds().getHeight()))));
 //        this.filler.maxHeightProperty().bind(this.scrollPane.boundsInParentProperty().map(Bounds::getHeight).map(val-> Math.round(scrollbarPos * (val - this.scrollPane.getViewportBounds().getHeight()))));
     }
+
     private void initComponents() {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.ships"));
         this.moduleDetails = new ModuleDetails();
@@ -132,7 +134,17 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 })
                 .build();
         this.menuButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.ships.options")).withMenuItems(
-                Map.of("tab.ships.create", event -> {
+                Map.of("tab.ships.clone", event -> {
+                            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                                final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+                                final ShipConfiguration shipConfiguration = this.shipSelect.getSelectionModel().getSelectedItem().cloneShipConfiguration();
+                                shipConfigurations.addShipConfiguration(shipConfiguration);
+                                shipConfigurations.setSelectedShipConfigurationUUID(shipConfiguration.getUuid());
+                                ShipService.saveShipConfigurations(commander, shipConfigurations);
+                                refreshShipSelect();
+                            });
+                        },
+                        "tab.ships.create", event -> {
                             final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "ships-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.ships.rename.prompt")).build();
                             final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.ships.create")).build();
                             final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
@@ -240,8 +252,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         initShipSelectView();
         initShipLayout();
         this.noShip = LabelBuilder.builder().withNonLocalizedText("NOSHIP").build();
-        this.contentChild = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null ? this.shipSelectView : this.shipView).buildVBox();
-        this.content = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(hBoxShips, this.shipSelect.getItems().isEmpty() ? this.noShip : this.contentChild).buildVBox();
+        this.contentChild = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(this.shipSelect.getSelectionModel().getSelectedItem() == null || (this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null && this.shipSelect.getSelectionModel().getSelectedItem() != ShipConfiguration.CURRENT) ? this.shipSelectView : this.shipView).buildVBox();
+        this.content = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(hBoxShips, this.shipSelect.getItems().isEmpty() || this.shipSelect.getSelectionModel().getSelectedItem() == ShipConfiguration.CURRENT ? this.noShip : this.contentChild).buildVBox();
 //        this.scrollPane = ScrollPaneBuilder.builder()
 //                .withContent(this.content)
 //                .build();
@@ -259,10 +271,10 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 ((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().valueProperty().addListener((observable2, oldValue2, newValue2) -> {
                     setFillerHeight((double) newValue2);
                 }));
-        this.scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->{
+        this.scrollPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             setFillerHeight(((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().getValue());
         });
-        this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) ->{
+        this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
             setFillerHeight(((ScrollPaneSkin) this.scrollPane.getSkin()).getVerticalScrollBar().getValue());
         });
         this.setContent(this.scrollPane);
@@ -296,13 +308,16 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                         this.contentChild.getChildren().add(this.shipView);
                     }
                     initShipSlots();
+                } else if (configuration != ShipConfiguration.CURRENT) {
+                    this.contentChild.getChildren().remove(this.shipSelectView);
+                    this.contentChild.getChildren().remove(this.shipView);
                 } else {
                     if (!this.contentChild.getChildren().contains(this.shipSelectView)) {
                         this.contentChild.getChildren().remove(this.shipView);
                         this.contentChild.getChildren().add(this.shipSelectView);
                     }
                 }
-                if (!this.content.getChildren().contains(this.contentChild)) {
+                if (!this.content.getChildren().contains(this.contentChild) && (configuration != ShipConfiguration.CURRENT || configuration.getShipType() != null)) {
                     this.content.getChildren().remove(this.noShip);
                     this.content.getChildren().add(1, this.contentChild);
                 }
@@ -368,7 +383,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 new JumpStats(),
                 new EngineStats(),
                 new HandlingStats(),
-                new HullStats(),
+                new ArmourStats(),
                 new ShieldStats(),
                 new WeaponStats()
         );
@@ -450,6 +465,18 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 });
             });
         }));
+
+        this.eventListeners.add(EventService.addListener(this, 9, ShipLoadoutEvent.class, event -> {
+            refreshShipSelect();
+            refreshCurrentLoadout();
+            EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
+        }));
+    }
+
+    private void refreshCurrentLoadout() {
+        if (this.shipSelect.getSelectionModel().getSelectedItem().equals(ShipConfiguration.CURRENT)) {
+            refreshContent();
+        }
     }
 
     void toggleHardpointImage(final boolean imageVisible) {
@@ -484,78 +511,76 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
 
     void drawHardpointLine(final int index) {
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getHardpointSlots().get(index).getImageIndex() + ".png"));
-        final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getX();
-        final double y = this.shipImage.getHeight() / 1080D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getY();
-        final double slotHeight = 5.0D;
-        final double spacing = 0.0D;
-        //Setting the properties of the circle
-        this.circleStart.setCenterX(0);
-        this.circleStart.setCenterY(ScalingHelper.getPixelDoubleFromEm(slotHeight / 2) + ScalingHelper.getPixelDoubleFromEm(slotHeight + spacing) * index);
-        this.circleStart.setRadius(ScalingHelper.getPixelDoubleFromEm(0.2D));
-        this.circleStart.setStroke(Color.valueOf("#89D07F"));
-        this.circleStart.setFill(Color.valueOf("#89D07F"));
+        Platform.runLater(() -> {
+            final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getX();
+            final double y = this.shipImage.getHeight() / 1080D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getY();
+            final double slotHeight = 5.0D;
+            final double spacing = 0.0D;
+            //Setting the properties of the circle
+            this.circleStart.setCenterX(0);
+            this.circleStart.setCenterY(ScalingHelper.getPixelDoubleFromEm(slotHeight / 2) + ScalingHelper.getPixelDoubleFromEm(slotHeight + spacing) * index);
+            this.circleStart.setRadius(ScalingHelper.getPixelDoubleFromEm(0.2D));
+            this.circleStart.setStroke(Color.valueOf("#89D07F"));
+            this.circleStart.setFill(Color.valueOf("#89D07F"));
 
-        this.line.setStartX(this.circleStart.getCenterX());
-        this.line.setStartY(this.circleStart.getCenterY());
-        this.line.setEndX(this.circleStart.getCenterX() + ScalingHelper.getPixelDoubleFromEm(2D));
-        this.line.setEndY(this.circleStart.getCenterY());
-        this.line.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
-        this.line.setStroke(Color.valueOf("#89D07F"));
+            this.line.setStartX(this.circleStart.getCenterX());
+            this.line.setStartY(this.circleStart.getCenterY());
+            this.line.setEndX(this.circleStart.getCenterX() + ScalingHelper.getPixelDoubleFromEm(2D));
+            this.line.setEndY(this.circleStart.getCenterY());
+            this.line.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
+            this.line.setStroke(Color.valueOf("#89D07F"));
 
-//        this.circleEnd.setCenterX(ScalingHelper.getPixelDoubleFromEm(600D/14D));
-//        this.circleEnd.setCenterY(ScalingHelper.getPixelDoubleFromEm(200D/14D));
-        this.circleEnd.setCenterX(x);
-        this.circleEnd.setCenterY(y);
-        this.circleEnd.setRadius(ScalingHelper.getPixelDoubleFromEm(0.4D));
-        this.circleEnd.setStroke(Color.valueOf("#89D07F"));
-        this.circleEnd.setFill(Color.valueOf("#89D07F"));
+            //        this.circleEnd.setCenterX(ScalingHelper.getPixelDoubleFromEm(600D/14D));
+            //        this.circleEnd.setCenterY(ScalingHelper.getPixelDoubleFromEm(200D/14D));
+            this.circleEnd.setCenterX(x);
+            this.circleEnd.setCenterY(y);
+            this.circleEnd.setRadius(ScalingHelper.getPixelDoubleFromEm(0.4D));
+            this.circleEnd.setStroke(Color.valueOf("#89D07F"));
+            this.circleEnd.setFill(Color.valueOf("#89D07F"));
 
-        this.line2.setStartX(this.line.getEndX() + ScalingHelper.getPixelDoubleFromEm(0.1D));
-        this.line2.setStartY(this.line.getEndY());
-        this.line2.setEndX(this.circleEnd.getCenterX());
-        this.line2.setEndY(this.circleEnd.getCenterY());
-        this.line2.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
-        this.line2.setStroke(Color.valueOf("#89D07F"));
-
-
-        //Creating a Group object
+            this.line2.setStartX(this.line.getEndX() + ScalingHelper.getPixelDoubleFromEm(0.1D));
+            this.line2.setStartY(this.line.getEndY());
+            this.line2.setEndX(this.circleEnd.getCenterX());
+            this.line2.setEndY(this.circleEnd.getCenterY());
+            this.line2.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
+            this.line2.setStroke(Color.valueOf("#89D07F"));
+        });
     }
 
     void drawUtilityLine(final int index) {
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getUtilitySlots().get(index).getImageIndex() + ".png"));
-        final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getUtilitySlots().get(index).getX();
-        final double y = this.shipImage.getHeight() / 1080D * APPLICATION_STATE.getShip().getUtilitySlots().get(index).getY();
-        final double slotHeight = 5.0D;
-        final double spacing = 0.0D;
-        final double imageWidth = 81D;
-        //Setting the properties of the circle
-        this.circleStart.setCenterX(this.shipImage.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2D) * 1.5);
-        this.circleStart.setCenterY(ScalingHelper.getPixelDoubleFromEm(slotHeight / 2) + ScalingHelper.getPixelDoubleFromEm(slotHeight + spacing) * index);
-        this.circleStart.setRadius(ScalingHelper.getPixelDoubleFromEm(0.2D));
-        this.circleStart.setStroke(Color.valueOf("#89D07F"));
-        this.circleStart.setFill(Color.valueOf("#89D07F"));
+        Platform.runLater(() -> {
+            final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getUtilitySlots().get(index).getX();
+            final double y = this.shipImage.getHeight() / 1080D * APPLICATION_STATE.getShip().getUtilitySlots().get(index).getY();
+            final double slotHeight = 5.0D;
+            final double spacing = 0.0D;
+            final double imageWidth = 81D;
+            //Setting the properties of the circle
+            this.circleStart.setCenterX(this.shipImage.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2D) * 1.5);
+            this.circleStart.setCenterY(ScalingHelper.getPixelDoubleFromEm(slotHeight / 2) + ScalingHelper.getPixelDoubleFromEm(slotHeight + spacing) * index);
+            this.circleStart.setRadius(ScalingHelper.getPixelDoubleFromEm(0.2D));
+            this.circleStart.setStroke(Color.valueOf("#89D07F"));
+            this.circleStart.setFill(Color.valueOf("#89D07F"));
 
-        this.line.setStartX(this.circleStart.getCenterX());
-        this.line.setStartY(this.circleStart.getCenterY());
-        this.line.setEndX(this.circleStart.getCenterX() - ScalingHelper.getPixelDoubleFromEm(2D));
-        this.line.setEndY(this.circleStart.getCenterY());
-        this.line.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
-        this.line.setStroke(Color.valueOf("#89D07F"));
+            this.line.setStartX(this.circleStart.getCenterX());
+            this.line.setStartY(this.circleStart.getCenterY());
+            this.line.setEndX(this.circleStart.getCenterX() - ScalingHelper.getPixelDoubleFromEm(2D));
+            this.line.setEndY(this.circleStart.getCenterY());
+            this.line.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
+            this.line.setStroke(Color.valueOf("#89D07F"));
 
-        this.circleEnd.setCenterX(x);
-        this.circleEnd.setCenterY(y);
-        this.circleEnd.setRadius(ScalingHelper.getPixelDoubleFromEm(0.4D));
-        this.circleEnd.setStroke(Color.valueOf("#89D07F"));
-        this.circleEnd.setFill(Color.valueOf("#89D07F"));
+            this.circleEnd.setCenterX(x);
+            this.circleEnd.setCenterY(y);
+            this.circleEnd.setRadius(ScalingHelper.getPixelDoubleFromEm(0.4D));
+            this.circleEnd.setStroke(Color.valueOf("#89D07F"));
+            this.circleEnd.setFill(Color.valueOf("#89D07F"));
 
-        this.line2.setStartX(this.line.getEndX() - ScalingHelper.getPixelDoubleFromEm(0.1D));
-        this.line2.setStartY(this.line.getEndY());
-        this.line2.setEndX(this.circleEnd.getCenterX());
-        this.line2.setEndY(this.circleEnd.getCenterY());
-        this.line2.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
-        this.line2.setStroke(Color.valueOf("#89D07F"));
-
-
-        //Creating a Group object
+            this.line2.setStartX(this.line.getEndX() - ScalingHelper.getPixelDoubleFromEm(0.1D));
+            this.line2.setStartY(this.line.getEndY());
+            this.line2.setEndX(this.circleEnd.getCenterX());
+            this.line2.setEndY(this.circleEnd.getCenterY());
+            this.line2.setStrokeWidth(ScalingHelper.getPixelDoubleFromEm(0.1D));
+            this.line2.setStroke(Color.valueOf("#89D07F"));
+        });
     }
 }

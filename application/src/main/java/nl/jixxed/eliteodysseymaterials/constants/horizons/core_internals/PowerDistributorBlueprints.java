@@ -195,12 +195,12 @@ public class PowerDistributorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10)),
-                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10)),
-                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10)),
-                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))
+                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
+                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
+                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
+                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10)),
+                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10)),
+                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.10))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)
                     ),
@@ -212,12 +212,12 @@ public class PowerDistributorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.10, 0.15)),
-                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.02, 0.06)),
-                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.02, 0.06)),
-                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.02, 0.06)),
-                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.10, 0.18)),
-                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.10, 0.18)),
-                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.10, 0.18))
+                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.02, 0.06)),
+                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.02, 0.06)),
+                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.02, 0.06)),
+                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.10, 0.18)),
+                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.10, 0.18)),
+                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.10, 0.18))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)
                     ),
@@ -230,12 +230,12 @@ public class PowerDistributorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.15, 0.20)),
-                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.06, 0.10)),
-                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.06, 0.10)),
-                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.06, 0.10)),
-                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.18, 0.26)),
-                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.18, 0.26)),
-                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.18, 0.26))
+                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.06, 0.10)),
+                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.06, 0.10)),
+                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.06, 0.10)),
+                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.18, 0.26)),
+                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.18, 0.26)),
+                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.18, 0.26))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER, Engineer.MARCO_QWENT, Engineer.HERA_TANI)
                     ),
@@ -248,12 +248,12 @@ public class PowerDistributorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+25%", true, percentagePositive(0.20, 0.25)),
-                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.10, 0.15)),
-                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.10, 0.15)),
-                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.10, 0.15)),
-                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("+34%", true, percentagePositive(0.26, 0.34)),
-                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("+34%", true, percentagePositive(0.26, 0.34)),
-                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("+34%", true, percentagePositive(0.26, 0.34))
+                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.10, 0.15)),
+                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.10, 0.15)),
+                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-15%", false, percentageNegative(0.10, 0.15)),
+                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("+34%", true, percentagePositive(0.26, 0.34)),
+                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+34%", true, percentagePositive(0.26, 0.34)),
+                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("+34%", true, percentagePositive(0.26, 0.34))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)
                     ),
@@ -266,12 +266,12 @@ public class PowerDistributorBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.25, 0.30)),
-                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("-18%", false, percentageNegative(0.15, 0.18)),
-                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("-18%", false, percentageNegative(0.15, 0.18)),
-                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("-18%", false, percentageNegative(0.15, 0.18)),
-                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("+42%", true, percentagePositive(0.34, 0.42)),
-                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("+42%", true, percentagePositive(0.34, 0.42)),
-                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("+42%", true, percentagePositive(0.34, 0.42))
+                                    HorizonsModifier.ENGINES_RECHARGE, new HorizonsNumberModifierValue("-18%", false, percentageNegative(0.15, 0.18)),
+                                    HorizonsModifier.SYSTEMS_RECHARGE, new HorizonsNumberModifierValue("-18%", false, percentageNegative(0.15, 0.18)),
+                                    HorizonsModifier.WEAPONS_RECHARGE, new HorizonsNumberModifierValue("-18%", false, percentageNegative(0.15, 0.18)),
+                                    HorizonsModifier.ENGINES_CAPACITY, new HorizonsNumberModifierValue("+42%", true, percentagePositive(0.34, 0.42)),
+                                    HorizonsModifier.SYSTEMS_CAPACITY, new HorizonsNumberModifierValue("+42%", true, percentagePositive(0.34, 0.42)),
+                                    HorizonsModifier.WEAPONS_CAPACITY, new HorizonsNumberModifierValue("+42%", true, percentagePositive(0.34, 0.42))
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER)
                     )

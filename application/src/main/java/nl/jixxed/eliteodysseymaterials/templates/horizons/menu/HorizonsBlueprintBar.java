@@ -239,7 +239,7 @@ class HorizonsBlueprintBar extends Accordion {
             }
         });
         this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && recipesEntry.getKey().equals(blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && sameCategory(recipesEntry.getKey(),blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
                 blueprints.getSelectionModel().select(blueprintName);
                 if (blueprintClickEvent.getBlueprint() instanceof HorizonsModuleBlueprint) {
                     types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
@@ -271,6 +271,13 @@ class HorizonsBlueprintBar extends Accordion {
         categoryTitledPane.setContent(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
+    }
+
+    private boolean sameCategory(BlueprintCategory menuCategory, BlueprintCategory blueprintCategory) {
+        if(BlueprintCategory.OPTIONAL_INTERNAL.equals(menuCategory) && (BlueprintCategory.OPTIONAL_INTERNAL.equals(blueprintCategory)|| BlueprintCategory.OPTIONAL_MILITARY.equals(blueprintCategory))) {
+            return true;
+        }
+        return menuCategory.equals(blueprintCategory);
     }
 
     private SegmentedButton createGradeSegmentedButton(final List<ToggleButton> toggleButtons) {

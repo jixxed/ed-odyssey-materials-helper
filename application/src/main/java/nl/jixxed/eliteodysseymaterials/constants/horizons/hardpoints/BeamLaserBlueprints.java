@@ -10,8 +10,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -94,7 +93,7 @@ public class BeamLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.20)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.20)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+20%", true, falloffPercentagePositive(2500.0, 0.0, 0.20)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)
@@ -107,7 +106,7 @@ public class BeamLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.03, 0.06)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.20, 0.40)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.20, 0.40)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+40%", true, falloffPercentagePositive(2500.0, 0.20, 0.40)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.10, 0.15))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)
@@ -121,7 +120,7 @@ public class BeamLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+9%", false, percentagePositive(0.06, 0.09)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.40, 0.60)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.40, 0.60)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+60%", true, falloffPercentagePositive(2500.0, 0.40, 0.60)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.20))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)
@@ -135,7 +134,7 @@ public class BeamLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.09, 0.12)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.60, 0.80)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.60, 0.80)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+80%", true, falloffPercentagePositive(2500.0, 0.60, 0.80)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.20, 0.25))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)
@@ -149,7 +148,7 @@ public class BeamLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.12, 0.15)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.80, 1.0)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.80, 1.0)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, falloffPercentagePositive(2500.0, 0.80, 1.0)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.30))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)
@@ -298,7 +297,7 @@ public class BeamLaserBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-38%", true, percentageNegative(0.0, 0.38))
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-37.5%", true, percentageNegative(0.0, 0.375))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)
                     ),
@@ -311,7 +310,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.08, 0.12)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-12%", true, percentageNegative(0.0, 0.12)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.0, 0.15)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-43%", true, percentageNegative(0.38, 0.43))
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-42.5%", true, percentageNegative(0.375, 0.425))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)
                     ),
@@ -324,7 +323,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+16%", true, percentagePositive(0.12, 0.16)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-24%", true, percentageNegative(0.12, 0.24)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-48%", true, percentageNegative(0.43, 0.48))
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-47.5%", true, percentageNegative(0.425, 0.475))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.THE_DWELLER, Engineer.BROO_TARQUIN)
                     ),
@@ -337,7 +336,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.16, 0.20)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-36%", true, percentageNegative(0.24, 0.36)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-53%", true, percentageNegative(0.48, 0.53))
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-52.5%", true, percentageNegative(0.475, 0.525))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)
                     ),
@@ -350,7 +349,7 @@ public class BeamLaserBlueprints {
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.20, 0.24)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-48%", true, percentageNegative(0.36, 0.48)),
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.53, 0.60))
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.525, 0.60))
                             ),
                             List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)
                     )

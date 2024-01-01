@@ -282,7 +282,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.TARGET_MODULES_MALFUNCTIONS, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE)),
-                            HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))
+                            HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("-8.3%", false, percentageNegative(0.0, 0.0826589652825357))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -1923,7 +1923,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, resistanceNegative(0.0, 0.08))
                     ),
                     List.of(
                             Engineer.LIZ_RYDER,
@@ -1938,9 +1938,9 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.MECHANICALEQUIPMENT, 3
                     ),
                     Map.of(
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-3%", false, resistancePositive(0.0, 0.03)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-3%", false, resistancePositive(0.0, 0.03)),
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-3%", false, resistancePositive(0.0, 0.03)),
                             HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
                     ),
                     List.of(
@@ -1957,7 +1957,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, resistanceNegative(0.0, 0.08))
                     ),
                     List.of(
                             Engineer.LIZ_RYDER,
@@ -1973,7 +1973,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03)),
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, resistanceNegative(0.0, 0.08))
                     ),
                     List.of(
                             Engineer.LIZ_RYDER,
@@ -1992,7 +1992,7 @@ public class ExperimentalEffectBlueprints {
                     ),
                     Map.of(
                             HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02))
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistanceNegative(0.0, 0.02))
                     ),
                     List.of(
                             Engineer.LIZ_RYDER,
@@ -2007,10 +2007,10 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.COMPACTCOMPOSITES, 5
                     ),
                     Map.of(
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
                             HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.0, 0.1)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02))
                     ),
                     List.of(
                             Engineer.LIZ_RYDER,
@@ -2025,7 +2025,7 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.SHIELDINGSENSORS, 3
                     ),
                     Map.of(
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02)),
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.0, 0.02)),
                             HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05))
                     ),
                     List.of(
@@ -2042,7 +2042,7 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.PROTOLIGHTALLOYS, 1
                     ),
                     Map.of(
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.0, 0.02)),
                             HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.0, 0.05))
                     ),
                     List.of(
@@ -2140,8 +2140,8 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.HEATDISPERSIONPLATE, 3
                     ),
                     Map.of(
-                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("-1.28%", false, percentageNegative(0.0, 0.0128)),
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02))
+                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.0, 0.06)),
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.0, 0.02))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -2190,8 +2190,8 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.SHIELDINGSENSORS, 3
                     ),
                     Map.of(
-                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02))
+                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.0, 0.06)),
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.0, 0.02))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -2207,10 +2207,10 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.COMPACTCOMPOSITES, 5
                     ),
                     Map.of(
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+5%", true, percentagePositive(0.0, 0.05))
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
+                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -2226,8 +2226,8 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.HEATVANES, 3
                     ),
                     Map.of(
-                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02))
+                            HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.0, 0.06)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.0, 0.02))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -2261,10 +2261,10 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.UNCUTFOCUSCRYSTALS, 3
                     ),
                     Map.of(
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-1.5%", false, resistanceNegative(0.0, 0.015)),
                             HorizonsModifier.BROKEN_REGEN_RATE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15)),
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-1.5%", false, resistanceNegative(0.0, 0.015)),
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-1.5%", false, resistanceNegative(0.0, 0.015)),
                             HorizonsModifier.REGEN_RATE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.0, 0.15))
                     ),
                     List.of(
@@ -2281,7 +2281,7 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.UNCUTFOCUSCRYSTALS, 3
                     ),
                     Map.of(
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, resistancePositive(0.0, 0.08)),
                             HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03))
                     ),
                     List.of(
@@ -2316,12 +2316,12 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.CONDUCTIVEPOLYMERS, 1
                     ),
                     Map.of(
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, resistanceNegative(0.0, 0.01)),
                             HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
                             HorizonsModifier.ENERGY_PER_REGEN, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.2)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.2)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01))
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, resistanceNegative(0.0, 0.01)),
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-1%", false, resistanceNegative(0.0, 0.01))
                     ),
                     List.of(
                             Engineer.MEL_BRANDON,
@@ -2337,9 +2337,9 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.UNCUTFOCUSCRYSTALS, 3
                     ),
                     Map.of(
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
+                            HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
+                            HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
                             HorizonsModifier.ENERGY_PER_REGEN, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.0, 0.25)),
                             HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.1))
                     ),
@@ -2373,7 +2373,7 @@ public class ExperimentalEffectBlueprints {
                             Manufactured.UNCUTFOCUSCRYSTALS, 3
                     ),
                     Map.of(
-                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
+                            HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+8%", true, resistancePositive(0.0, 0.08)),
                             HorizonsModifier.SHIELDGEN_OPTIMAL_STRENGTH, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.0, 0.03))
                     ),
                     List.of(

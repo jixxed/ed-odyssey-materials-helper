@@ -87,8 +87,11 @@ public class SlotBoxEntry extends VBox {
                                             if(Origin.GUARDIAN.equals(shipModule.getOrigin()) || Origin.POWERPLAY.equals(shipModule.getOrigin())) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/" + shipModule.getOrigin().name().toLowerCase() + ".png").withStyleClass("ships-button-image").build());
                                             }
+                                            if(shipModule.isLegacy()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/legacy.png").withStyleClass("ships-button-image").build());
+                                            }
                                             if(shipModule.isPreEngineered()) {
-                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/engineered.png").withStyleClass("ships-button-image").build());
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/preengineered.png").withStyleClass("ships-button-image").build());
                                             }
                                             if(shipModule.isCGExclusive()) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/cg.png").withStyleClass("ships-button-image").build());

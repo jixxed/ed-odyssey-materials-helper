@@ -45,6 +45,9 @@ public abstract class Stats extends VBox {
         }));
     }
 
+    public void initEventHandling() {
+    }
+
     public Optional<Ship> getShip() {
         return Optional.ofNullable(ApplicationState.getInstance().getShip());
     }

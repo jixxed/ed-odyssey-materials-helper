@@ -46,11 +46,18 @@ public class ImportService {
             return importOdysseyWishlist(data);
         } else if ("loadout/".equals(type)) {
             return importLoadout(data);
+        } else if ("ship/".equals(type)) {
+            return importShip(data);
         } else if ("edsy/".equals(type)) {
             return importEdsy(data);
         } else if ("coriolis/".equals(type)) {
             return importCoriolis(data);
         }
+        return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
+    }
+
+    private static ImportResult importShip(final String data) {
+        //TODO
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
     }
 

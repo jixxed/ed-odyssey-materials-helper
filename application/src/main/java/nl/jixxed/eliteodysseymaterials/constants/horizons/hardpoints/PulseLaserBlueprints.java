@@ -18,13 +18,14 @@ public class PulseLaserBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.EFFICIENT_WEAPON,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-38%", true, percentageNegative(0.0, 0.38)),
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-37.5%", true, percentageNegative(0.0, 0.375))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -32,16 +33,16 @@ public class PulseLaserBlueprints {
                                     Engineer.BROO_TARQUIN
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_2,
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
-                                    Raw.SULPHUR, 1,
-                                    Manufactured.HEATDISPERSIONPLATE, 1
+                                    Manufactured.HEATDISPERSIONPLATE, 1, Raw.SULPHUR, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.0, 0.15)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.08, 0.12)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-12%", true, percentageNegative(0.0, 0.12)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-43%", true, percentageNegative(0.38, 0.43))
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.0, 0.15)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-42.5%", true, percentageNegative(0.375, 0.425))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -49,17 +50,16 @@ public class PulseLaserBlueprints {
                                     Engineer.BROO_TARQUIN
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_3,
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
-                                    Raw.CHROMIUM, 1,
-                                    Encoded.SCRAMBLEDEMISSIONDATA, 1,
-                                    Manufactured.HEATEXCHANGERS, 1
+                                    Raw.CHROMIUM, 1, Encoded.SCRAMBLEDEMISSIONDATA, 1, Manufactured.HEATEXCHANGERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
                                     HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+16%", true, percentagePositive(0.12, 0.16)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-24%", true, percentageNegative(0.12, 0.24)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-48%", true, percentageNegative(0.43, 0.48))
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-47.5%", true, percentageNegative(0.425, 0.475))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -67,17 +67,16 @@ public class PulseLaserBlueprints {
                                     Engineer.BROO_TARQUIN
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_4,
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
-                                    Raw.SELENIUM, 1,
-                                    Encoded.ARCHIVEDEMISSIONDATA, 1,
-                                    Manufactured.HEATVANES, 1
+                                    Manufactured.HEATVANES, 1, Encoded.ARCHIVEDEMISSIONDATA, 1, Raw.SELENIUM, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.16, 0.2)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.16, 0.20)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-36%", true, percentageNegative(0.24, 0.36)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-53%", true, percentageNegative(0.48, 0.53))
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-52.5%", true, percentageNegative(0.475, 0.525))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -85,17 +84,16 @@ public class PulseLaserBlueprints {
                                     Engineer.BROO_TARQUIN
                             )
                     ),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.PULSE_LASER, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
-                                    Raw.CADMIUM, 1,
-                                    Encoded.EMISSIONDATA, 1,
-                                    Manufactured.PROTOHEATRADIATORS, 1
+                                    Raw.CADMIUM, 1, Manufactured.PROTOHEATRADIATORS, 1, Encoded.EMISSIONDATA, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.2, 0.24)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.20, 0.24)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-48%", true, percentageNegative(0.36, 0.48)),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.53, 0.6))
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.525, 0.60))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,

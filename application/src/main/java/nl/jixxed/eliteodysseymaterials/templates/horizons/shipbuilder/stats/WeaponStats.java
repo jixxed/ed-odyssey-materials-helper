@@ -10,7 +10,6 @@ public class WeaponStats extends Stats implements Template {
     public WeaponStats() {
         super();
         initComponents();
-        initEventHandling();
     }
 
     @Override
@@ -20,10 +19,6 @@ public class WeaponStats extends Stats implements Template {
 
     }
 
-    @Override
-    public void initEventHandling() {
-
-    }
     @Override
     protected void update() {
     }

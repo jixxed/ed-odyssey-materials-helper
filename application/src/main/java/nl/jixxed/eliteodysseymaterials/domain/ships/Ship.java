@@ -2787,11 +2787,14 @@ public class Ship {
     public double getMaxFuel() {
         final Double coreFuel = this.getCoreSlots().stream()
                 .filter(slot -> slot.getSlotType() == SlotType.CORE_FUEL_TANK)
-                .findFirst().map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.FUEL_CAPACITY))
+                .findFirst()
+                .map(Slot::getShipModule)
+                .map(shipModule -> (double)shipModule.getAttributeValue(HorizonsModifier.FUEL_CAPACITY))
                 .orElse(0D);
         final Double optionalFuel = this.getOptionalSlots().stream()
                 .filter(slot -> slot.getShipModule() instanceof FuelTank)
-                .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.FUEL_CAPACITY))
+                .map(Slot::getShipModule)
+                .map(shipModule -> (double)shipModule.getAttributeValue(HorizonsModifier.FUEL_CAPACITY))
                 .mapToDouble(Double::doubleValue)
                 .sum();
         return coreFuel + optionalFuel;
@@ -2800,7 +2803,8 @@ public class Ship {
     public double getMaxCargo() {
         return this.getOptionalSlots().stream()
                 .filter(slot -> slot.getShipModule() instanceof CargoRack)
-                .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.CARGO_CAPACITY))
+                .map(Slot::getShipModule)
+                .map(shipModule -> (double)shipModule.getAttributeValue(HorizonsModifier.CARGO_CAPACITY))
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }

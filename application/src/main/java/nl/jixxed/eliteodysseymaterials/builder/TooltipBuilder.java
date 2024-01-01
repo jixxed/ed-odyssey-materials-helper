@@ -19,6 +19,7 @@ public class TooltipBuilder {
     private StringBinding stringBinding;
     private Duration showDelay;
     private Duration showDuration = Duration.seconds(30);
+    private String nonLocalizedText;
 
     public static TooltipBuilder builder() {
         return new TooltipBuilder();
@@ -54,6 +55,8 @@ public class TooltipBuilder {
         tooltip.getStyleClass().addAll(this.styleClasses);
         if (this.stringBinding != null) {
             tooltip.textProperty().bind(this.stringBinding);
+        }else if (this.nonLocalizedText != null) {
+            tooltip.setText(this.nonLocalizedText);
         }
         if (this.showDelay != null) {
             tooltip.setShowDelay(this.showDelay);
@@ -68,4 +71,8 @@ public class TooltipBuilder {
         return tooltip;
     }
 
+    public TooltipBuilder withNonLocalizedText(final String nonLocalizedText) {
+            this.nonLocalizedText = nonLocalizedText;
+            return this;
+    }
 }

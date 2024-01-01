@@ -12,7 +12,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import java.util.Optional;
 
 public class ShipMapper {
-    public static ShipConfiguration toShipConfiguration(Ship ship,ShipConfiguration shipConfiguration, String name) {
+    public static ShipConfiguration toShipConfiguration(Ship ship, ShipConfiguration shipConfiguration, String name) {
         shipConfiguration.setShipType(ship.getShipType());
         shipConfiguration.setName(name);
         shipConfiguration.getCoreSlots().clear();
@@ -86,16 +86,25 @@ public class ShipMapper {
             shipConfigurationSlot.getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
                 shipModule.getExperimentalEffects().add(shipConfigurationExperimentalEffect.getType());
             });
+            if(!shipConfigurationSlot.getModifiers().isEmpty()) {
+                shipModule.getModifiers().putAll(shipConfigurationSlot.getModifiers());
+            }
+            if(shipConfigurationSlot.isLegacy()){
+                shipModule.setLegacy(true);
+            }
             slot.setShipModule(shipModule);
         });
     }
     private static void mapShipConfigurationSlot(Slot slot, ShipConfigurationSlot shipConfigurationSlot) {
-        final Optional<ShipModule> shipModule1 = Optional.ofNullable(slot.getShipModule());
         shipConfigurationSlot.setIndex(slot.getIndex());
-        shipModule1.ifPresent(shipModule2 -> {
-            shipConfigurationSlot.setId(shipModule2.getId());
-            shipConfigurationSlot.setModification(shipModule2.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(),modification.getGrade(),modification.getModificationCompleteness())).toList());
-            shipConfigurationSlot.setExperimentalEffect(shipModule2.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList());
+        Optional.ofNullable(slot.getShipModule()).ifPresent(shipModule -> {
+            shipConfigurationSlot.setId(shipModule.getId());
+            shipConfigurationSlot.setModification(shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(),modification.getGrade(),modification.getModificationCompleteness())).toList());
+            shipConfigurationSlot.setExperimentalEffect(shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList());
+            if(shipModule.isLegacy()) {
+                shipConfigurationSlot.setLegacy(true);
+            }
+            shipConfigurationSlot.getModifiers().putAll(shipModule.getModifiers());
         });
     }
 }

@@ -13,8 +13,8 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import java.util.List;
 import java.util.Map;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ShieldGeneratorPreEngineeredBlueprints {
     //https://forums.frontier.co.uk/threads/medical-supplies-for-imperial-starport-bombing-survivors-trade.567324/page-6#post-9022938
@@ -27,8 +27,8 @@ public class ShieldGeneratorPreEngineeredBlueprints {
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.0, 0.4)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+18%", true, percentagePositive(0.0, 0.18)),//todo flat increase - doublecheck
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+42%", true, percentageNegative(0.0, 0.42))//todo flat increase - doublecheck
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+18%", true, resistancePositive(0.0, 0.18)),//todo flat increase - doublecheck
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+42%", true, resistanceNegative(0.0, 0.42))//todo flat increase - doublecheck
                             ),
                             List.of(
                             ),

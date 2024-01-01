@@ -10,8 +10,8 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HullReinforcementBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
@@ -22,10 +22,10 @@ public class HullReinforcementBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.0, 0.12)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.0, 0.12)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -39,10 +39,10 @@ public class HullReinforcementBlueprints {
                                     Raw.ZINC, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+19%", true, resistancePositive(0.12, 0.19)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, resistanceNegative(0.02, 0.04)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.03, 0.06)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, resistanceNegative(0.02, 0.04))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -56,10 +56,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.SALVAGEDALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+26%", true, resistancePositive(0.19, 0.26)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, resistanceNegative(0.04, 0.06)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+9%", true, percentagePositive(0.06, 0.09)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, resistanceNegative(0.04, 0.06))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -73,10 +73,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.GALVANISINGALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+33%", true, resistancePositive(0.26, 0.33)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, resistanceNegative(0.06, 0.08)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.09, 0.12)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, resistanceNegative(0.06, 0.08))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -90,10 +90,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.PHASEALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.4)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+40%", true, resistancePositive(0.33, 0.4)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, resistanceNegative(0.08, 0.1)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.12, 0.15)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, resistanceNegative(0.08, 0.1))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -110,9 +110,9 @@ public class HullReinforcementBlueprints {
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.0, 0.24)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.0, 0.08)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -128,9 +128,9 @@ public class HullReinforcementBlueprints {
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.24, 0.36)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+16%", false, percentagePositive(0.08, 0.16)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.03, 0.06)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.03, 0.06)),
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.03, 0.06))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, resistancePositive(0.03, 0.06)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, resistancePositive(0.03, 0.06)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, resistancePositive(0.03, 0.06))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -146,9 +146,9 @@ public class HullReinforcementBlueprints {
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+48%", true, percentagePositive(0.36, 0.48)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+24%", false, percentagePositive(0.16, 0.24)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, percentagePositive(0.06, 0.09)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, percentagePositive(0.06, 0.09)),
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, percentagePositive(0.06, 0.09))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, resistancePositive(0.06, 0.09)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, resistancePositive(0.06, 0.09)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, resistancePositive(0.06, 0.09))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -164,9 +164,9 @@ public class HullReinforcementBlueprints {
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.48, 0.6)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+32%", false, percentagePositive(0.24, 0.32)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.09, 0.12)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.09, 0.12)),
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.09, 0.12))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.09, 0.12)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.09, 0.12)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.09, 0.12))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -182,9 +182,9 @@ public class HullReinforcementBlueprints {
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+72%", true, percentagePositive(0.6, 0.72)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.32, 0.4)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.12, 0.15)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.12, 0.15)),
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.12, 0.15))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, resistancePositive(0.12, 0.15)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, resistancePositive(0.12, 0.15)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, resistancePositive(0.12, 0.15))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -199,10 +199,10 @@ public class HullReinforcementBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.0, 0.12)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.0, 0.12)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -216,10 +216,10 @@ public class HullReinforcementBlueprints {
                                     Raw.VANADIUM, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, resistanceNegative(0.02, 0.04)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+19%", true, resistancePositive(0.12, 0.19)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.03, 0.06)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, resistanceNegative(0.02, 0.04))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -233,10 +233,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.SALVAGEDALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, resistanceNegative(0.04, 0.06)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+26%", true, resistancePositive(0.19, 0.26)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+9%", true, percentagePositive(0.06, 0.09)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, resistanceNegative(0.04, 0.06))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -250,10 +250,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.GALVANISINGALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, resistanceNegative(0.06, 0.08)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+33%", true, resistancePositive(0.26, 0.33)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.09, 0.12)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, resistanceNegative(0.06, 0.08))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -267,10 +267,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.FEDCORECOMPOSITES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.4)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, resistanceNegative(0.08, 0.1)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+40%", true, resistancePositive(0.33, 0.4)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.12, 0.15)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, resistanceNegative(0.08, 0.1))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -366,10 +366,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.HEATCONDUCTIONWIRING, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-2%", false, resistanceNegative(0.0, 0.02)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.0, 0.12))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.0, 0.12))
                             ),
                             List.of(
                                     Engineer.LIZ_RYDER,
@@ -383,10 +383,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.HEATDISPERSIONPLATE, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, resistanceNegative(0.02, 0.04)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-4%", false, resistanceNegative(0.02, 0.04)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.03, 0.06)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+19%", true, percentagePositive(0.12, 0.19))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+19%", true, resistancePositive(0.12, 0.19))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -400,10 +400,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.SALVAGEDALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, resistanceNegative(0.04, 0.06)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-6%", false, resistanceNegative(0.04, 0.06)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+9%", true, percentagePositive(0.06, 0.09)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.19, 0.26))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+26%", true, resistancePositive(0.19, 0.26))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -417,10 +417,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.HEATVANES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, resistanceNegative(0.06, 0.08)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-8%", false, resistanceNegative(0.06, 0.08)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.09, 0.12)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+33%", true, percentagePositive(0.26, 0.33))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+33%", true, resistancePositive(0.26, 0.33))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,
@@ -434,10 +434,10 @@ public class HullReinforcementBlueprints {
                                     Manufactured.PROTOHEATRADIATORS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1)),
+                                    HorizonsModifier.EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, resistanceNegative(0.08, 0.1)),
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("-10%", false, resistanceNegative(0.08, 0.1)),
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.12, 0.15)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.33, 0.4))
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+40%", true, resistancePositive(0.33, 0.4))
                             ),
                             List.of(
                                     Engineer.PETRA_OLMANOVA,

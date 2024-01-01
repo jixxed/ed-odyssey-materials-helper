@@ -14,4 +14,10 @@ public enum Mounting {
             case NA -> "-";
         };
     }
+    public boolean isHigher(Mounting mounting) {
+        return this.ordinal() > mounting.ordinal();
+    }
+    public boolean isLower(Mounting mounting) {
+        return this.ordinal() < mounting.ordinal();
+    }
 }

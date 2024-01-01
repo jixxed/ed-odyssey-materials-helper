@@ -15,6 +15,7 @@ public enum JournalEventType {
     BACKPACKCHANGE("BackpackChange"),
     RESUPPLY("Resupply"),
     FSDJUMP("FSDJump"),
+    LOADOUT("Loadout"),
     LOCATION("Location"),
     DOCKED("Docked"),
     TOUCHDOWN("Touchdown"),

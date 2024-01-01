@@ -3,6 +3,7 @@ tabs.ships,Ships,,,,,,
 tabs.ships.blueprints,Blueprints,,,,,,
 tabs.ships.experimental.effects,Experimental effects,,,,,,
 tab.ships.create,Create ship,,,,,,
+tab.ships.clone,Clone ship,,,,,,
 tab.ships.options,Options,Options,Optionen,Opción,Options,Opções,Опции
 tab.ships.rename,Rename ship,,,,,,
 tab.ships.delete,Delete ship,,,,,,

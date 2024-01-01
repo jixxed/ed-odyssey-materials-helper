@@ -30,7 +30,8 @@ public abstract class ShipModule implements Serializable {
     @EqualsAndHashCode.Include
     private final HorizonsBlueprintName name;
     private final Map<HorizonsModifier, Object> attributes = new HashMap<>();
-    private final Map<HorizonsModifier, Object> legacyModifications = new HashMap<>();
+    @Getter
+    private final Map<HorizonsModifier, Object> modifiers = new HashMap<>();
     @Getter
     @EqualsAndHashCode.Include
     private final ModuleClass moduleClass;
@@ -108,6 +109,7 @@ public abstract class ShipModule implements Serializable {
             if (!this.modifications.contains(mod)) {
                 this.modifications.clear();
                 this.modifications.add(mod);
+                this.modifiers.clear();
             }
         }
     }
@@ -116,6 +118,7 @@ public abstract class ShipModule implements Serializable {
         if (validModification(experimentalEffect, true) && !this.experimentalEffects.contains(experimentalEffect)) {
             this.experimentalEffects.clear();
             this.experimentalEffects.add(experimentalEffect);
+            this.modifiers.clear();
         }
     }
 
@@ -144,42 +147,60 @@ public abstract class ShipModule implements Serializable {
             return defaultValue;
         }
     }
+
     public Object getOriginalAttributeValue(final HorizonsModifier moduleAttribute) {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
         return this.attributes.get(moduleAttribute);
     }
+
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
+        return getAttributeValue(moduleAttribute, null);
+    }
+
+    public double getAttributeCompleteness(final HorizonsModifier moduleAttribute) {
+        Double currentValue = (Double) this.modifiers.get(moduleAttribute);
+        if (currentValue != null) {
+            double minValue = (double) getAttributeValue(moduleAttribute, 0.0);
+            double maxValue = (double) getAttributeValue(moduleAttribute, 1.0);
+            if (maxValue == minValue) {
+                return 1D;
+            }
+            return (currentValue - minValue) / (maxValue - minValue);
+        } else {
+           return modifications.stream().findFirst().map(modification -> {
+                final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modifications.getFirst().getModification(), modifications.getFirst().getGrade());
+                final var horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
+                if (horizonsModifierValue != null && horizonsModifierValue.isPositive()) {
+                    return modifications.getFirst().getModificationCompleteness();
+                } else {
+                    return 1D;
+                }
+            }).orElse(0D);
+        }
+    }
+
+    public Object getAttributeValue(final HorizonsModifier moduleAttribute, Double completeness) {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
         if (isLegacy()) {
-            return legacyModifications.containsKey(moduleAttribute) ? legacyModifications.get(moduleAttribute) : attributes.get(moduleAttribute);
+            return modifiers.containsKey(moduleAttribute) ? modifiers.get(moduleAttribute) : attributes.get(moduleAttribute);
         }
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
         if (baseAttributeValue instanceof Double) {
             Double toReturn = Double.valueOf((double) baseAttributeValue);
-            toReturn = preAdaptAttributeValue(moduleAttribute, toReturn);
-            toReturn = (Double) applyModsToAttributeValue(moduleAttribute, toReturn);
-            toReturn = postAdaptAttributeValue(moduleAttribute, toReturn);
+            toReturn = (Double) applyModsToAttributeValue(moduleAttribute, toReturn, completeness);
             return toReturn;
         } else if (baseAttributeValue instanceof Boolean) {
             Boolean toReturn = Boolean.valueOf((boolean) baseAttributeValue);
-            return applyModsToAttributeValue(moduleAttribute, toReturn);
+            return applyModsToAttributeValue(moduleAttribute, toReturn, completeness);
         }
         return baseAttributeValue;
     }
 
-    public Double preAdaptAttributeValue(final HorizonsModifier moduleAttribute, final Double toReturn) {
-        return toReturn;
-    }
-
-    public Double postAdaptAttributeValue(final HorizonsModifier moduleAttribute, final Double toReturn) {
-        return toReturn;
-    }
-
-    private Object applyModsToAttributeValue(HorizonsModifier moduleAttribute, Object attributeValue) {
+    private Object applyModsToAttributeValue(HorizonsModifier moduleAttribute, Object attributeValue, Double completeness) {
         final AtomicReference<Object> value = new AtomicReference<>(attributeValue);
         final AtomicReference<HorizonsBiFunction> moduleModifier = new AtomicReference<>();
         final AtomicDouble modificationCompleteness = new AtomicDouble();
@@ -191,7 +212,7 @@ public abstract class ShipModule implements Serializable {
                 final HorizonsBiFunction current = moduleModifier.get();
                 if (current == null) {
                     positive.set(horizonsModifierValue.isPositive());
-                    modificationCompleteness.set(modification.getModificationCompleteness());
+                    modificationCompleteness.set(completeness != null ? completeness : modification.getModificationCompleteness());
                     moduleModifier.set(horizonsModifierValue.getModifier());
                 } else {
                     moduleModifier.set(current.stack(horizonsModifierValue.getModifier()));
@@ -246,6 +267,7 @@ public abstract class ShipModule implements Serializable {
     public boolean isPreEngineered() {
         return false;
     }
+
     public boolean isCGExclusive() {
         return false;
     }
@@ -258,8 +280,8 @@ public abstract class ShipModule implements Serializable {
         return attributes.keySet();
     }
 
-    public void addLegacyModification(HorizonsModifier horizonsModifier, Double value) {
-        legacyModifications.put(horizonsModifier, value);
+    public void addModifier(HorizonsModifier horizonsModifier, Double value) {
+        modifiers.put(horizonsModifier, value);
     }
 
     public boolean groupOnName() {
@@ -275,6 +297,7 @@ public abstract class ShipModule implements Serializable {
                 .sorted(Comparator.comparing(ShipModule::getModuleSize))
                 .findFirst();
     }
+
     public Optional<ShipModule> findLowerSize() {
         return SHIP_MODULES.stream()
                 .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
@@ -294,6 +317,7 @@ public abstract class ShipModule implements Serializable {
                 .sorted(Comparator.comparing(ShipModule::getModuleClass))
                 .findFirst();
     }
+
     public Optional<ShipModule> findLowerClass() {
         return SHIP_MODULES.stream()
                 .filter(shipModule -> shipModule.getName().equals(this.getName()) &&

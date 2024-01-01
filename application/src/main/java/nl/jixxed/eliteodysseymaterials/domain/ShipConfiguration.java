@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -31,10 +32,31 @@ public class ShipConfiguration {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<ShipConfigurationSlot> optionalSlots = new ArrayList<>();
 
+    @JsonIgnore
+    public static final ShipConfiguration CURRENT = new ShipConfiguration("0", "Current Ship (read only)");
+
+    public ShipConfiguration(String uuid, String name) {
+        this.uuid = uuid;
+        this.name = name;
+    }
 
     @Override
     public String toString() {
         return getName();
     }
 
+    public ShipConfiguration cloneShipConfiguration() {
+        final ShipConfiguration newShipConfiguration = new ShipConfiguration();
+        String newName = this.name;
+        if (this == CURRENT) {
+            newName = newName.replace(" (read only)", "");
+        }
+        newShipConfiguration.setName(newName + " (cloned)");
+        newShipConfiguration.setShipType(this.shipType);
+        newShipConfiguration.getCoreSlots().addAll(this.getCoreSlots().stream().map(ShipConfigurationSlot::cloneShipConfigurationSlot).toList());
+        newShipConfiguration.getHardpointSlots().addAll(this.getHardpointSlots().stream().map(ShipConfigurationSlot::cloneShipConfigurationSlot).toList());
+        newShipConfiguration.getOptionalSlots().addAll(this.getOptionalSlots().stream().map(ShipConfigurationSlot::cloneShipConfigurationSlot).toList());
+        newShipConfiguration.getUtilitySlots().addAll(this.getUtilitySlots().stream().map(ShipConfigurationSlot::cloneShipConfigurationSlot).toList());
+        return newShipConfiguration;
+    }
 }
