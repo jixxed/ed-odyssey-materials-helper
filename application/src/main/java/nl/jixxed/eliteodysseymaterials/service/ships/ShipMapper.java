@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.service.ships;
 
+import com.google.common.primitives.Ints;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationExperimentalEffect;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationModification;
@@ -20,38 +21,38 @@ public class ShipMapper {
         shipConfiguration.getHardpointSlots().clear();
         shipConfiguration.getUtilitySlots().clear();
         ship.getCoreSlots().forEach(slot -> {
-            if(slot.isOccupied()) {
+            if (slot.isOccupied()) {
                 final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
                 shipConfiguration.getCoreSlots().add(shipConfigurationSlot);
                 mapShipConfigurationSlot(slot, shipConfigurationSlot);
             }
         });
         ship.getOptionalSlots().forEach(slot -> {
-            if(slot.isOccupied()) {
+            if (slot.isOccupied()) {
                 final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
                 shipConfiguration.getOptionalSlots().add(shipConfigurationSlot);
-                mapShipConfigurationSlot(slot,shipConfigurationSlot);
+                mapShipConfigurationSlot(slot, shipConfigurationSlot);
             }
         });
         ship.getHardpointSlots().forEach(slot -> {
-            if(slot.isOccupied()) {
+            if (slot.isOccupied()) {
                 final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
-            shipConfiguration.getHardpointSlots().add(shipConfigurationSlot);
-            mapShipConfigurationSlot(slot,shipConfigurationSlot);
+                shipConfiguration.getHardpointSlots().add(shipConfigurationSlot);
+                mapShipConfigurationSlot(slot, shipConfigurationSlot);
             }
         });
         ship.getUtilitySlots().forEach(slot -> {
-            if(slot.isOccupied()) {
+            if (slot.isOccupied()) {
                 final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
-            shipConfiguration.getUtilitySlots().add(shipConfigurationSlot);
-            mapShipConfigurationSlot(slot,shipConfigurationSlot);
+                shipConfiguration.getUtilitySlots().add(shipConfigurationSlot);
+                mapShipConfigurationSlot(slot, shipConfigurationSlot);
             }
         });
         return shipConfiguration;
     }
 
     public static Ship toShip(ShipConfiguration shipConfiguration) {
-        if(shipConfiguration.getShipType() == null){
+        if (shipConfiguration.getShipType() == null) {
             return null;
         }
         Ship ship = ShipService.createBlankShip(shipConfiguration.getShipType());
@@ -79,30 +80,44 @@ public class ShipMapper {
         shipModule1.ifPresent(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
             shipConfigurationSlot.getModification().forEach(shipConfigurationModification -> {
-                if(!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
+                if (!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
                     shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
                 }
             });
             shipConfigurationSlot.getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
                 shipModule.getExperimentalEffects().add(shipConfigurationExperimentalEffect.getType());
             });
-            if(!shipConfigurationSlot.getModifiers().isEmpty()) {
+            if (!shipConfigurationSlot.getModifiers().isEmpty()) {
                 shipModule.getModifiers().putAll(shipConfigurationSlot.getModifiers());
             }
-            if(shipConfigurationSlot.isLegacy()){
+            if (shipConfigurationSlot.isLegacy()) {
                 shipModule.setLegacy(true);
+            }
+            if (shipConfigurationSlot.getPowered() != null && Boolean.FALSE.equals(shipConfigurationSlot.getPowered())) {
+                shipModule.togglePower();
+            }
+            if (shipConfigurationSlot.getPowerGroup() != null) {
+                    shipModule.setPowerGroup(Ints.constrainToRange(shipConfigurationSlot.getPowerGroup(),1,5));
+
             }
             slot.setShipModule(shipModule);
         });
     }
+
     private static void mapShipConfigurationSlot(Slot slot, ShipConfigurationSlot shipConfigurationSlot) {
         shipConfigurationSlot.setIndex(slot.getIndex());
         Optional.ofNullable(slot.getShipModule()).ifPresent(shipModule -> {
             shipConfigurationSlot.setId(shipModule.getId());
-            shipConfigurationSlot.setModification(shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(),modification.getGrade(),modification.getModificationCompleteness())).toList());
+            shipConfigurationSlot.setModification(shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness())).toList());
             shipConfigurationSlot.setExperimentalEffect(shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList());
-            if(shipModule.isLegacy()) {
+            if (shipModule.isLegacy()) {
                 shipConfigurationSlot.setLegacy(true);
+            }
+            if (!shipModule.isPowered()) {
+                shipConfigurationSlot.setPowered(false);
+            }
+            if (shipModule.getPowerGroup() > 1) {
+                shipConfigurationSlot.setPowerGroup(shipModule.getPowerGroup());
             }
             shipConfigurationSlot.getModifiers().putAll(shipModule.getModifiers());
         });

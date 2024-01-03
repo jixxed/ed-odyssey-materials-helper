@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 import com.google.common.util.concurrent.AtomicDouble;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBiFunction;
@@ -52,6 +53,13 @@ public abstract class ShipModule implements Serializable {
     private final List<Modification> modifications = new ArrayList<>();
     @Getter
     private final List<HorizonsBlueprintType> experimentalEffects = new ArrayList<>();
+    @Getter
+    private boolean powered = true;
+
+    private boolean powerToggle = true;
+    @Getter
+    @Setter
+    private int powerGroup = 1;
 
     ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
@@ -75,9 +83,10 @@ public abstract class ShipModule implements Serializable {
         this.basePrice = basePrice;
         this.internalName = internalName;
         this.attributes.putAll(attributes);
-        if (!this.attributes.containsKey(HorizonsModifier.POWER_DRAW)) {
-            this.attributes.put(HorizonsModifier.POWER_DRAW, 0.0);
-        }
+        this.attributes.computeIfAbsent(HorizonsModifier.POWER_DRAW, modifier -> {
+            this.powerToggle = false;
+            return  0.0;
+        });
         SHIP_MODULES.add(this);
     }
 
@@ -93,6 +102,9 @@ public abstract class ShipModule implements Serializable {
         this.modifications.addAll(shipModule.modifications.stream().map(modification -> new Modification(modification.getModification(), modification.getModificationCompleteness(), modification.getGrade())).toList());
         this.experimentalEffects.addAll(shipModule.experimentalEffects);
         this.attributes.putAll(shipModule.attributes);
+        this.powerGroup = shipModule.powerGroup;
+        this.powered = shipModule.powered;
+        this.powerToggle = shipModule.powerToggle;
     }
 
     public static List<ShipModule> getModules(final SlotType slotType) {
@@ -169,7 +181,7 @@ public abstract class ShipModule implements Serializable {
             }
             return (currentValue - minValue) / (maxValue - minValue);
         } else {
-           return modifications.stream().findFirst().map(modification -> {
+            return modifications.stream().findFirst().map(modification -> {
                 final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modifications.getFirst().getModification(), modifications.getFirst().getGrade());
                 final var horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
                 if (horizonsModifierValue != null && horizonsModifierValue.isPositive()) {
@@ -298,11 +310,30 @@ public abstract class ShipModule implements Serializable {
                 .findFirst();
     }
 
+    public Optional<ShipModule> findHighestSize(int maxSize) {
+        return SHIP_MODULES.stream()
+                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
+                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
+                        shipModule.getModuleSize().isLowerOrEqual(maxSize)
+                )
+                .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
+                .findFirst();
+    }
+
     public Optional<ShipModule> findLowerSize() {
         return SHIP_MODULES.stream()
                 .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
                         (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
                         shipModule.getModuleSize().isLower(this.getModuleSize())
+                )
+                .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
+                .findFirst();
+    }
+    public Optional<ShipModule> findLowerSize(int maxSize) {
+        return SHIP_MODULES.stream()
+                .filter(shipModule -> shipModule.getName().equals(this.getName()) &&
+                        (shipModule instanceof HardpointModule || shipModule.getModuleClass().equals(this.getModuleClass())) &&
+                        shipModule.getModuleSize().isLowerOrEqual(maxSize)
                 )
                 .sorted(Comparator.comparing(ShipModule::getModuleSize).reversed())
                 .findFirst();
@@ -328,4 +359,23 @@ public abstract class ShipModule implements Serializable {
                 .findFirst();
     }
 
+    public void togglePower() {
+        powered = !powered;
+    }
+
+    public void increasePowerGroup() {
+        if (powerGroup < 5) {
+            powerGroup++;
+        }
+    }
+
+    public void decreasePowerGroup() {
+        if (powerGroup > 1) {
+            powerGroup--;
+        }
+    }
+
+    public boolean hasPowerToggle() {
+        return powerToggle;
+    }
 }

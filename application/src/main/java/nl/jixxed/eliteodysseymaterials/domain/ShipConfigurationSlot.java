@@ -26,6 +26,12 @@ public class ShipConfigurationSlot {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean legacy;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Boolean powered;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer powerGroup;
+
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ShipConfigurationModification> modification = new ArrayList<>();
 
@@ -40,6 +46,8 @@ public class ShipConfigurationSlot {
         clone.index = this.index;
         clone.id = this.id;
         clone.legacy = this.legacy;
+        clone.powered = this.powered;
+        clone.powerGroup = this.powerGroup;
         clone.modification.addAll(modification.stream().map(mod -> new ShipConfigurationModification(mod.getType(),mod.getGrade(),mod.getPercentComplete())).toList());
         clone.experimentalEffect.addAll(experimentalEffect.stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList());
         modifiers.entrySet().stream().map(mod -> Map.entry(mod.getKey(), cloneMod(mod.getValue()))).forEach(entry-> clone.modifiers.put(entry.getKey(), entry.getValue()));

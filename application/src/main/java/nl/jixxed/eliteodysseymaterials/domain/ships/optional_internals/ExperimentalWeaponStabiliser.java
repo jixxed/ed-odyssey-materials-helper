@@ -49,4 +49,9 @@ public class ExperimentalWeaponStabiliser extends OptionalModule {
     public ExperimentalWeaponStabiliser Clone() {
         return new ExperimentalWeaponStabiliser(this);
     }
+
+    @Override
+    public boolean hasPowerToggle() {
+        return false;
+    }
 }

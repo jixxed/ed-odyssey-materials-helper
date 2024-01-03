@@ -28,4 +28,11 @@ public enum ModuleSize {
     public boolean isLower(ModuleSize moduleSize) {
         return this.ordinal() < moduleSize.ordinal();
     }
+    public boolean isLowerOrEqual(int size) {
+        return this.ordinal() <= size;
+    }
+
+    public int intValue() {
+        return ordinal();
+    }
 }

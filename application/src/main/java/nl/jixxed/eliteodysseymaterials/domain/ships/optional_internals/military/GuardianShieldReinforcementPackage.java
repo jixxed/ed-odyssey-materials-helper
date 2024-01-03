@@ -74,4 +74,9 @@ public class GuardianShieldReinforcementPackage extends MilitaryOptionalModule {
     public GuardianShieldReinforcementPackage Clone() {
         return new GuardianShieldReinforcementPackage(this);
     }
+
+    @Override
+    public boolean hasPowerToggle() {
+        return false;
+    }
 }

@@ -77,4 +77,9 @@ public class GuardianHullReinforcementPackage extends MilitaryOptionalModule {
         return new GuardianHullReinforcementPackage(this);
     }
 
+    @Override
+    public boolean hasPowerToggle() {
+        return false;
+    }
+
 }
