@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.gradlex:extra-java-module-info:1.6"
+        classpath "org.gradlex:extra-java-module-info:1.7"
     }
 }
 apply plugin: "org.gradlex.extra-java-module-info"
