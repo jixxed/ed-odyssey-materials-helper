@@ -17,6 +17,12 @@
             "type" : "string",
             "examples" : [ "HD 111990", "NGC 4755 BK 125", "HR 4876" ]
           },
+          "SystemName_Localised" : {
+            "title" : "SystemName_Localised",
+            "description": "This field sometime appears in this event containing random data (bug)",
+            "type" : "string",
+            "examples" : [ "Random stuff" ]
+          },
           "NumBodies" : {
             "title" : "NumBodies",
             "type" : "integer",

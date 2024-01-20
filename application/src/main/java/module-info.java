@@ -23,14 +23,14 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.apache.commons.csv;
     requires scribejava.core;
     requires org.openpnp;
-    requires net.java.dev.jna;
+    requires com.sun.jna;
     requires com.sun.jna.platform;
     requires nl.jixxed.tess4j;
     requires nl.jixxed.lept4j;
     requires org.apache.commons.io;
     requires java.desktop;
     requires org.leadpony.justify;
-    requires org.glassfish.jakarta.json;
+    requires jakarta.json;
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;

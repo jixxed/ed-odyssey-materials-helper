@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:2.26.0"
+        classpath "org.beryx:badass-jlink-plugin:3.0.1"
     }
 }
 
@@ -17,9 +17,12 @@ apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(18)
+        languageVersion = JavaLanguageVersion.of(21)
         vendor = JvmVendorSpec.ADOPTIUM
     }
+}
+tasks.register('wrapper', Wrapper) {
+    gradleVersion "8.5"
 }
 
 OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
@@ -96,14 +99,14 @@ if (os.isWindows()) {
 }
 
 dependencies {
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.1'
-    implementation group: 'commons-io', name: 'commons-io', version: '2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'commons-io:commons-io'
 
-    implementation("org.openjfx:javafx-base:18+:${platform}")
-    implementation("org.openjfx:javafx-controls:18+:${platform}")
-    implementation("org.openjfx:javafx-fxml:18+:${platform}")
-    implementation("org.openjfx:javafx-graphics:18+:${platform}")
+    implementation group: "org.openjfx", name: "javafx-base", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-controls", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-fxml", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-graphics", classifier:"${platform}"
 }
 
 

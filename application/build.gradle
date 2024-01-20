@@ -7,10 +7,10 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:2.26.0"
+        classpath "org.beryx:badass-jlink-plugin:3.0.1"
         classpath "io.freefair.gradle:lombok-plugin:8.4"
-        classpath "org.gradlex:extra-java-module-info:1.4.1"
-        classpath group: 'org.jsonschema2pojo', name: 'jsonschema2pojo-gradle-plugin', version: '1.2.1'
+        classpath "org.gradlex:extra-java-module-info:1.7"
+        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.2.1'
         classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
     }
 }
@@ -23,6 +23,9 @@ apply plugin: "org.gradlex.extra-java-module-info"
 apply plugin: 'jsonschema2pojo'
 apply plugin: "build-time-tracker"
 
+tasks.register('wrapper', Wrapper) {
+    gradleVersion "8.5"
+}
 group 'nl.jixxed'
 java {
     toolchain {
@@ -110,54 +113,60 @@ if (os.isWindows()) {
 if (arch == "aarch64") {
     platform += "-aarch64"
 }
+configurations.all {
+    //for leadpony
+    exclude group: "org.glassfish", module: "jakarta.json-api"
+}
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
-    testImplementation 'org.junit.platform:junit-platform-suite-api:1.10.0'
-    testImplementation group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.10.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
-    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.1.0'
-    testImplementation 'org.assertj:assertj-core:3.24.2'
-    implementation 'org.leadpony.justify:justify:3.1.0'
-    implementation 'org.glassfish:jakarta.json:2.0.1:module'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.15.2'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.15.2'
-    implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.1.7'
-    implementation 'org.slf4j:slf4j-api:2.0.6'
-    implementation 'commons-io:commons-io:2.13.0'
-    implementation 'ch.qos.logback:logback-core:1.4.11'
-    implementation 'ch.qos.logback:logback-classic:1.4.11'
-    implementation('javax.servlet:javax.servlet-api:4.0.1')
-    implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
-    implementation 'io.github.pustike:commons-csv:1.7.0'
-    implementation 'nl.jixxed:opencv:4.5.3-0'
-    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.3'
-    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
-    implementation group: 'com.zaxxer', name: 'SparseBitSet', version: '1.2'
-    implementation group: 'com.google.j2objc', name: 'j2objc-annotations', version: '2.8'
-
-
-    implementation('org.jfxtras:jmetro:11.6.16') {
-        exclude group: 'org.openjfx'
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.junit.platform:junit-platform-suite-api"
+    testImplementation "org.junit.platform:junit-platform-runner"
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.junit.jupiter:junit-jupiter-params"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testImplementation "org.mockito:mockito-junit-jupiter"
+    testImplementation "org.assertj:assertj-core"
+    implementation ("org.leadpony.justify:justify") {
+        exclude group: "jakarta.json", module: "jakarta.json-api"
     }
-    implementation("org.openjfx:javafx-base:19+:${platform}")
-    implementation("org.openjfx:javafx-controls:19+:${platform}")
-    implementation("org.openjfx:javafx-fxml:19+:${platform}")
-    implementation("org.openjfx:javafx-graphics:19+:${platform}")
-    implementation("org.openjfx:javafx-media:19+:${platform}")
-    implementation("org.openjfx:javafx-swing:19+:${platform}")
-    implementation('org.controlsfx:controlsfx:11+')
-    testImplementation 'de.saxsys:mvvmfx-testing-utils:1.8.0'
-    testImplementation("org.openjfx:javafx-swing:19+:${platform}")
-    implementation 'com.github.scribejava:scribejava-core:8.3.3'
-    implementation 'net.java.dev.jna:jna:5.13.0'
-    implementation 'net.java.dev.jna:jna-platform:5.13.0'
-    implementation group: 'nl.jixxed.tess4j', name: 'tess4j', version: '5.2.9'
-    implementation group: 'nl.jixxed.lept4j', name: 'lept4j', version: '1.16.6'
-    implementation 'com.github.jai-imageio:jai-imageio-core:1.4.0'
-    testImplementation 'io.github.secretx33:path-matching-resource-pattern-resolver:0.1'
+    implementation "org.eclipse.parsson:jakarta.json"
+
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
+    implementation "io.reactivex.rxjava3:rxjava"
+    implementation "org.slf4j:slf4j-api"
+    implementation "commons-io:commons-io"
+    implementation "ch.qos.logback:logback-core"
+    implementation "ch.qos.logback:logback-classic"
+    implementation "javax.servlet:javax.servlet-api"
+    implementation "com.google.guava:guava"
+    implementation "io.github.pustike:commons-csv"
+    implementation "nl.jixxed:opencv"
+    implementation "org.apache.poi:poi-ooxml"
+    implementation "org.apache.commons:commons-math3"
+    implementation "com.zaxxer:SparseBitSet"
+
+
+    implementation("org.jfxtras:jmetro") {
+        exclude group: "org.openjfx"
+    }
+    implementation group: "org.openjfx", name: "javafx-base", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-controls", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-fxml", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-graphics", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-media", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-swing", classifier:"${platform}"
+    implementation "org.controlsfx:controlsfx"
+    testImplementation "de.saxsys:mvvmfx-testing-utils"
+    testImplementation "org.openjfx:javafx-swing"
+    implementation "com.github.scribejava:scribejava-core"
+    implementation "net.java.dev.jna:jna"
+    implementation "net.java.dev.jna:jna-platform"
+    implementation "nl.jixxed.tess4j:tess4j"
+    implementation "nl.jixxed.lept4j:lept4j"
+    implementation "com.github.jai-imageio:jai-imageio-core"
+    testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
 
 
 }
@@ -166,11 +175,13 @@ jpackage {
         dependsOn test
     }
 }
+
+
 extraJavaModuleInfo {
-    module('scribejava-java8-8.3.3.jar', 'scribejava.java8', '8.3.3') {
+    module("scribejava-java8-${project.getProperties().version_scribejava}.jar", "scribejava.java8", "${project.getProperties().version_scribejava}") {
         exports("com.github.scribejava.java8.base64")
     }
-    module('scribejava-core-8.3.3.jar', 'scribejava.core', '8.3.3') {
+    module("scribejava-core-${project.getProperties().version_scribejava}.jar", "scribejava.core", "${project.getProperties().version_scribejava}") {
         exports("com.github.scribejava.core.builder")
         exports("com.github.scribejava.core.builder.api")
         exports("com.github.scribejava.core.oauth")
@@ -183,40 +194,143 @@ extraJavaModuleInfo {
     }
     module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
     module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
-    module('j2objc-annotations-1.3.jar', 'com.google.j2objc.j2objc.annotations', '1.3')
+    module('j2objc-annotations-2.8.jar', 'com.google.j2objc.j2objc.annotations', '2.8')
+    module("commons-math3-${project.getProperties().version_apache_commons_math3}.jar", 'org.apache.commons.math3'){
+        patchRealModule()
+        exportAllPackages()
+    }
+//    automaticModule("commons-math3-${project.getProperties().version_apache_commons_math3}.jar", "commons.math3")
     module('listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar', 'com.google.guava.listenablefuture', '9999.0-empty-to-avoid-conflict-with-guava')
 
     module('doc-annotations-0.2.jar', 'eu.lestard', '0.2')
     module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
     automaticModule('path-matching-resource-pattern-resolver-0.1.jar', 'io.github.secretx33')
-    automaticModule('opencv-4.5.3-0.jar', 'org.openpnp')
-    automaticModule('jna-5.13.0.jar', 'net.java.dev.jna')
-    automaticModule('j2objc-annotations-2.8.jar', 'j2objc')
-    module('tess4j-5.2.9.jar', 'nl.jixxed.tess4j'){
+    automaticModule("opencv-${project.getProperties().version_opencv}.jar", "org.openpnp")
+//    automaticModule("jna-${project.getProperties().version_jna}.jar")
+//    automaticModule("com.sun.jna:jna", "com.sun.jna")
+    module("tess4j-${project.getProperties().version_tess4j}.jar", "nl.jixxed.tess4j"){
         exports("nl.jixxed.tess4j")
         exports("nl.jixxed.tess4j.util")
         requires("org.slf4j")
-        requires("net.java.dev.jna")
+        requires("com.sun.jna")
         requires("java.desktop")
     }
-    automaticModule('lept4j-1.16.6.jar', 'nl.jixxed.lept4j')
-    automaticModule('jai-imageio-core-1.4.0.jar', 'com.github.jaiimageio')
+    automaticModule("lept4j-${project.getProperties().version_lept4j}.jar", "nl.jixxed.lept4j")
+    automaticModule("jai-imageio-core-${project.getProperties().version_jai_imageio}.jar", 'com.github.jaiimageio')
     automaticModule('jboss-vfs-3.2.16.Final.jar', 'org.jboss')
     automaticModule('commons-logging-1.2.jar', 'org.apache.commons.logging')
     automaticModule('jboss-logging-3.1.4.GA.jar', 'org.jboss.logging')
-    automaticModule('logback-classic-1.4.5.jar', 'ch.qos.logback.classic')
-    automaticModule('logback-core-1.4.5.jar', 'ch.qos.logback.core')
+//    automaticModule("logback-classic-${project.getProperties().version_logback}.jar", "ch.qos.logback.classic")
+//    automaticModule("logback-core-${project.getProperties().version_logback}.jar", "ch.qos.logback.core")
     automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
-    automaticModule('poi-5.2.3.jar', 'org.apache.poi.poi')
-    module('poi-ooxml-5.2.3.jar', 'org.apache.poi.ooxml', '5.2.3') {
-        exports("org.apache.poi.xssf.usermodel")
-        requires("commons.math3")
-        requires("SparseBitSet")
-    }
-    automaticModule('commons-math3-3.6.1.jar', 'commons.math3')
-    automaticModule('SparseBitSet-1.2.jar', 'SparseBitSet')
+//    module('jakarta.json-2.0.1.jar', 'jakarta.json'){
+//        patchRealModule()
+//        exportAllPackages()
+//        exports("org.glassfish.json")
+//        exports("org.glassfish.json.api")
+//    }
+    module("poi-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.poi", "${project.getProperties().version_apache_poi}"){
+        patchRealModule()
+        exportAllPackages()
+        requires("org.apache.commons.math3")
+        requires("com.zaxxer.sparsebitset")
 
+    }
+    module("poi-ooxml-lite-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml.schemas", "${project.getProperties().version_apache_poi}"){
+        patchRealModule()
+        requires("org.apache.poi.poi")
+        exportAllPackages()
+    }
+    module("poi-ooxml-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml", "${project.getProperties().version_apache_poi}"){
+        patchRealModule()
+        exportAllPackages()
+//        exports("org.apache.poi.xssf.usermodel")
+        requires("org.apache.commons.math3")
+        requires("org.apache.poi.poi")
+        requires("com.zaxxer.sparsebitset")
+    }
+//    module("poi-ooxml-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml", "${project.getProperties().version_apache_poi}") {
+//        exports("org.apache.poi.xssf.usermodel")
+//        requires("commons.math3")
+//        requires("com.zaxxer.sparsebitset")
+//    }
+//    automaticModule("SparseBitSet-${project.getProperties().version_sparsebitset}.jar", "SparseBitSet")
+//    Execution failed for task ':application:compileJava'.
+//    > Could not resolve all files for configuration ':application:compileClasspath'.
+//    > Failed to transform logback-classic-1.4.11.jar (ch.qos.logback:logback-classic:1.4.11) to match attributes {artifactType=jar, javaModule=true, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+//    > Execution failed for ExtraJavaModuleInfoTransform: C:\Users\jixxed\.gradle\caches\modules-2\files-2.1\ch.qos.logback\logback-classic\1.4.11\54450c0c783e896a1a6d88c043bd2f1daba1c382\logback-classic-1.4.11.jar.
+//    > Patching of real modules must be explicitly enabled with 'patchRealModule()' and can only be done with 'module()'
+//    > Failed to transform poi-ooxml-5.2.4.jar (org.apache.poi:poi-ooxml:5.2.4) to match attributes {artifactType=jar, javaModule=true, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+//    > Execution failed for ExtraJavaModuleInfoTransform: C:\Users\jixxed\.gradle\caches\modules-2\files-2.1\org.apache.poi\poi-ooxml\5.2.4\4d3318079f3c7a17f73999b7d13f77f3d64c3665\poi-ooxml-5.2.4.jar.
+//    > Patching of real modules must be explicitly enabled with 'patchRealModule()'
+//            > Failed to transform poi-5.2.4.jar (org.apache.poi:poi:5.2.4) to match attributes {artifactType=jar, javaModule=true, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+//    > Execution failed for ExtraJavaModuleInfoTransform: C:\Users\jixxed\.gradle\caches\modules-2\files-2.1\org.apache.poi\poi\5.2.4\6f68427791bf0c7ba1ec0aa48193211fd8955e2e\poi-5.2.4.jar.
+//    > Patching of real modules must be explicitly enabled with 'patchRealModule()' and can only be done with 'module()'
+//    > Failed to transform logback-core-1.4.11.jar (ch.qos.logback:logback-core:1.4.11) to match attributes {artifactType=jar, javaModule=true, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+//    > Execution failed for ExtraJavaModuleInfoTransform: C:\Users\jixxed\.gradle\caches\modules-2\files-2.1\ch.qos.logback\logback-core\1.4.11\2f9f280219a9922a74200eaf7138c4c17fb87c0f\logback-core-1.4.11.jar.
+//    > Patching of real modules must be explicitly enabled with 'patchRealModule()' and can only be done with 'module()'
+//    > Failed to transform SparseBitSet-1.3.jar (com.zaxxer:SparseBitSet:1.3) to match attributes {artifactType=jar, javaModule=true, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+//    > Execution failed for ExtraJavaModuleInfoTransform: C:\Users\jixxed\.gradle\caches\modules-2\files-2.1\com.zaxxer\SparseBitSet\1.3\533eac055afe3d5f614ea95e333afd6c2bde8f26\SparseBitSet-1.3.jar.
+//    > 'SparseBitSet' already has the Automatic-Module-Name 'com.zaxxer.sparsebitset'; explicitly allow override via 'overrideName()'
+//    > Failed to transform jna-5.13.0.jar (net.java.dev.jna:jna:5.13.0) to match attributes {artifactType=jar, javaModule=true, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+//    > Execution failed for ExtraJavaModuleInfoTransform: C:\Users\jixxed\.gradle\caches\modules-2\files-2.1\net.java.dev.jna\jna\5.13.0\1200e7ebeedbe0d10062093f32925a912020e747\jna-5.13.0.jar.
+//    > 'net.java.dev.jna' already has the Automatic-Module-Name 'com.sun.jna'; explicitly allow override via 'overrideName()'
+//    > Failed to transform j2objc-annotations-2.8.jar (com.google.j2objc:j2objc-annotations:2.8) to match attributes {artifactType=jar, javaModule=true, org.gradle.category=library, org.gradle.libraryelements=jar, org.gradle.status=release, org.gradle.usage=java-api}.
+//    > Execution failed for ExtraJavaModuleInfoTransform: C:\Users\jixxed\.gradle\caches\modules-2\files-2.1\com.google.j2objc\j2objc-annotations\2.8\c85270e307e7b822f1086b93689124b89768e273\j2objc-annotations-2.8.jar.
+//    > Not a module and no mapping defined: j2objc-annotations-2.8.jar
 }
+
+
+//extraJavaModuleInfo {
+//    module('scribejava-java8-8.3.3.jar', 'scribejava.java8', '8.3.3') {
+//        exports("com.github.scribejava.java8.base64")
+//    }
+//    module('scribejava-core-8.3.3.jar', 'scribejava.core', '8.3.3') {
+//        exports("com.github.scribejava.core.builder")
+//        exports("com.github.scribejava.core.builder.api")
+//        exports("com.github.scribejava.core.oauth")
+//        exports("com.github.scribejava.core.model")
+//        exports("com.github.scribejava.core.pkce")
+//        exports("com.github.scribejava.core.httpclient")
+//        requires("scribejava.java8")
+//        requires("com.fasterxml.jackson.core")
+//        requires("com.fasterxml.jackson.databind")
+//    }
+//    module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
+//    module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
+//    module('j2objc-annotations-1.3.jar', 'com.google.j2objc.j2objc.annotations', '1.3')
+//    module('listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar', 'com.google.guava.listenablefuture', '9999.0-empty-to-avoid-conflict-with-guava')
+//
+//    module('doc-annotations-0.2.jar', 'eu.lestard', '0.2')
+//    module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
+//    automaticModule('path-matching-resource-pattern-resolver-0.1.jar', 'io.github.secretx33')
+//    automaticModule('opencv-4.5.3-0.jar', 'org.openpnp')
+//    automaticModule('jna-5.13.0.jar', 'net.java.dev.jna')
+//    module('tess4j-5.2.9.jar', 'nl.jixxed.tess4j'){
+//        exports("nl.jixxed.tess4j")
+//        exports("nl.jixxed.tess4j.util")
+//        requires("org.slf4j")
+//        requires("net.java.dev.jna")
+//        requires("java.desktop")
+//    }
+//    automaticModule('lept4j-1.16.6.jar', 'nl.jixxed.lept4j')
+//    automaticModule('jai-imageio-core-1.4.0.jar', 'com.github.jaiimageio')
+//    automaticModule('jboss-vfs-3.2.16.Final.jar', 'org.jboss')
+//    automaticModule('commons-logging-1.2.jar', 'org.apache.commons.logging')
+//    automaticModule('jboss-logging-3.1.4.GA.jar', 'org.jboss.logging')
+//    automaticModule('logback-classic-1.4.5.jar', 'ch.qos.logback.classic')
+//    automaticModule('logback-core-1.4.5.jar', 'ch.qos.logback.core')
+//    automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
+//    automaticModule('poi-5.2.3.jar', 'org.apache.poi.poi')
+//    module('poi-ooxml-5.2.4.jar', 'org.apache.poi.ooxml', '5.2.4') {
+//        exports("org.apache.poi.xssf.usermodel")
+//        requires("commons.math3")
+//        requires("SparseBitSet")
+//    }
+//    automaticModule('commons-math3-3.6.1.jar', 'commons.math3')
+//    automaticModule('SparseBitSet-1.2.jar', 'SparseBitSet')
+//
+//}
 compileJava {
     doFirst {
         options.compilerArgs = [

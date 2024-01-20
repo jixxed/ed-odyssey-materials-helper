@@ -6,7 +6,8 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Add MissionID to CargoTransfer journal event
-Add Wanted to SupercruiseEntry journal event
-Add Wanted to Location journal event
-Add HappiestSystem to CarrierJump journal event
+Add Fine to MissionAbandoned journal event
+Add SystemName_Localised to MultiSellExplorationData journal event (bugged field)
+Update java + libraries
+Fix some Russian translations
+Prevent sending CodexEntry to EDDN if app is not fully initialized. (old entries were sent with bad locations)
