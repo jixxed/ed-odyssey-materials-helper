@@ -23,6 +23,7 @@ public class ShipConfiguration {
     private String uuid = UUID.randomUUID().toString();
     private String name;
     private ShipType shipType;
+    private ShipConfigurationSlot cargoHatch;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<ShipConfigurationSlot> hardpointSlots = new ArrayList<>();
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -31,6 +32,9 @@ public class ShipConfiguration {
     private final List<ShipConfigurationSlot> coreSlots = new ArrayList<>();
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<ShipConfigurationSlot> optionalSlots = new ArrayList<>();
+    private double currentFuelReserve;
+    private double currentFuel;
+    private double currentCargo;
 
     @JsonIgnore
     public static final ShipConfiguration CURRENT = new ShipConfiguration("0", "Current Ship (read only)");
@@ -57,6 +61,10 @@ public class ShipConfiguration {
         newShipConfiguration.getHardpointSlots().addAll(this.getHardpointSlots().stream().map(ShipConfigurationSlot::cloneShipConfigurationSlot).toList());
         newShipConfiguration.getOptionalSlots().addAll(this.getOptionalSlots().stream().map(ShipConfigurationSlot::cloneShipConfigurationSlot).toList());
         newShipConfiguration.getUtilitySlots().addAll(this.getUtilitySlots().stream().map(ShipConfigurationSlot::cloneShipConfigurationSlot).toList());
+        newShipConfiguration.setCurrentFuel(this.getCurrentFuel());
+        newShipConfiguration.setCurrentCargo(this.getCurrentCargo());
+        newShipConfiguration.setCurrentFuelReserve(this.getCurrentFuelReserve());
+        newShipConfiguration.setCargoHatch(this.getCargoHatch().cloneShipConfigurationSlot());
         return newShipConfiguration;
     }
 }

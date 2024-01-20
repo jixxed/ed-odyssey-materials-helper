@@ -43,4 +43,8 @@ public class ElectronicCountermeasure extends UtilityModule {
     public ElectronicCountermeasure Clone() {
         return new ElectronicCountermeasure(this);
     }
+    @Override
+    public boolean isPassivePower(){
+        return true;
+    }
 }

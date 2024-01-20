@@ -16,6 +16,9 @@ public class ShipMapper {
     public static ShipConfiguration toShipConfiguration(Ship ship, ShipConfiguration shipConfiguration, String name) {
         shipConfiguration.setShipType(ship.getShipType());
         shipConfiguration.setName(name);
+        shipConfiguration.setCurrentFuelReserve(ship.getCurrentFuelReserve());
+        shipConfiguration.setCurrentCargo(ship.getCurrentCargo());
+        shipConfiguration.setCurrentFuel(ship.getCurrentFuel());
         shipConfiguration.getCoreSlots().clear();
         shipConfiguration.getOptionalSlots().clear();
         shipConfiguration.getHardpointSlots().clear();
@@ -48,6 +51,9 @@ public class ShipMapper {
                 mapShipConfigurationSlot(slot, shipConfigurationSlot);
             }
         });
+        final ShipConfigurationSlot shipConfigurationSlot = new ShipConfigurationSlot();
+        mapShipConfigurationSlot(ship.getCargoHatch(), shipConfigurationSlot);
+        shipConfiguration.setCargoHatch(shipConfigurationSlot);
         return shipConfiguration;
     }
 
@@ -72,6 +78,10 @@ public class ShipMapper {
             final Slot slot = ship.getUtilitySlots().get(shipConfigurationSlot.getIndex());
             mapSlot(shipConfigurationSlot, slot);
         });
+        mapSlot(shipConfiguration.getCargoHatch(), ship.getCargoHatch());
+        ship.setCurrentFuelReserve(shipConfiguration.getCurrentFuelReserve());
+        ship.setCurrentCargo(shipConfiguration.getCurrentCargo());
+        ship.setCurrentFuel(shipConfiguration.getCurrentFuel());
         return ship;
     }
 

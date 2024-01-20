@@ -13,205 +13,216 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum HorizonsModifier {
 
-    ABSOLUTE_DAMAGE_RATIO(""),
-    AMMO_CLIP_SIZE("AmmoClipSize", 33),
-    AMMO_COST("", false),
-    AMMO_MAXIMUM("AmmoMaximum", 34),
-    ANTI_XENO_DAMAGE("",129),//bool val
-    ANTI_XENO_DAMAGE_RATIO(""),
-    AREA_FSDS_REBOOT("",129),//bool val
-    AREA_HEAT_INCREASED_SENSORS_DISRUPTED("",128),//bool val
-    ARMOUR(""),
-    ARMOUR_HARDNESS(""),
-    ARMOUR_PIERCING("ArmourPenetration", 25),
-    AUTO_RELOAD_WHILE_FIRING("",127),//bool val
-    BIN_COUNT("RefineryBins", 84),
-    BOOST_AUGMENTER_POWER_USE("BoostAugmenterPowerUse", false),
-    BOOST_COST("", false),
-    BOOST_SPEED(""),
-    BOOST_SPEED_MULTIPLIER("BoostSpeedMultiplier"),
-    BOOT_TIME("BootTime",4, false),
-    BREACH_DAMAGE("BreachDamage", 37),
-    BROKEN_REGEN_RATE("BrokenRegenRate", 74),
-    BURST_INTERVAL("", false),
-    BURST_RATE_OF_FIRE("BurstRateOfFire", 31),
-    BURST_SIZE("BurstSize", 32),
-    CABIN_CAPACITY("CabinCapacity", 65),
-    CABIN_CLASS("CabinClass", 66),
-    CARGO_CAPACITY("CargoCapacity", 65),
-    CAUSTIC_DAMAGE_RATIO(""),
-    CAUSTIC_RESISTANCE("CausticResistance", 48),
-    CHARGE_TIME("", 6, false),
-    CONSUMPTION("AFMRepairConsumption", 63, false),
-    CREW(""),
-    DAMAGE("Damage", 8),
-    DAMAGE_BOOST(""),//synth
-    DAMAGE_FALLOFF_START("DamageFalloffRange", 37),
-    DAMAGE_INCREASES_WITH_HEAT_LEVEL("",126),//bool val
-    DAMAGE_MULTIPLIER("", 7),
-    DAMAGE_PARTIALLY_EXPLOSIVE("",125),//bool val
-    DAMAGE_PARTIALLY_KINETIC("",124),//bool val
-    DAMAGE_PARTIALLY_THERMAL("",123),//bool val
-    DAMAGE_PER_SECOND("DamagePerSecond", 9),
-    DAMAGE_TYPE("DamageType", 36),
-    DISCOVERY_SCANNER_PASSIVE_RANGE("DiscoveryScannerPassiveRange", 39),//new
-    DISCOVERY_SCANNER_RANGE("DiscoveryScannerRange", 40),//rename
-    DISRUPTION_BARRIER_ACTIVE_POWER("DisruptionBarrierActivePower", 13, false),//xeno
-    DISRUPTION_BARRIER_CHARGE_DURATION("DisruptionBarrierChargeDuration", 6, false),//xeno
-    DISRUPTION_BARRIER_COOLDOWN("DisruptionBarrierCooldown", 24),//xeno
-    DISRUPTION_BARRIER_RANGE("DisruptionBarrierRange", 11),//xeno
-    DISTRIBUTOR_DRAW("DistributorDraw", 10, false),
-    DRONE_ACTIVE_RANGE("", 67),
-    DRONE_FUEL_CAPACITY("DroneFuelCapacity", 61),
-    DRONE_HACKING_TIME("DroneHackingTime", 75, false),
-    DRONE_LIFE_TIME("DroneLifeTime", 68),
-    DRONE_MIN_JETTISONED_CARGO("DroneMinJettisonedCargo", 76),
-    DRONE_MAX_JETTISONED_CARGO("DroneMaxJettisonedCargo", 77),
-    DRONE_MULTI_TARGET_SPEED("DroneMultiTargetSpeed", 70),
-    DRONE_REPAIR_CAPACITY("DroneRepairCapacity", 62),
-    DRONE_SPEED("DroneSpeed", 69),
-    DRONE_TARGET_RANGE("DroneTargetRange", 67),//new
-    DSS_PATCH_RADIUS("DSS_PatchRadius", 87),
-    ECM_ACTIVE_POWER_CONSUMPTION("ECMActivePowerConsumption", 13, false),//rename
-    ECM_COOLDOWN("ECMCooldown", 24, false),//new
-    ECM_HEAT("ECMHeat", 23),//new - thermal laod
-    ECM_RANGE("ECMRange", 11),
-    ECM_TIME_TO_CHARGE("ECMTimeToCharge", 12, false),
-    EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS("",122),//bool val
-    EMERGENCY_LIFE_SUPPORT("OxygenTimeCapacity", 52),
-    ENERGY_PER_REGEN("EnergyPerRegen", 60),//new
-    ENGINE_MINIMUM_MASS("EngineMinimumMass", 14),//rename
-    ENGINE_OPTIMAL_MASS("EngineOptimalMass", 16),
-    ENGINE_THERMAL_LOAD("EngineHeatRate", 23, false),
-    ENGINES_CAPACITY("EnginesCapacity", 55),
-    ENGINES_RECHARGE("EnginesRecharge", 56),
-    EXPLOSIVE_DAMAGE_RATIO(""),
-    EXPLOSIVE_RESISTANCE("ExplosiveResistance", 47),
-    FIGHTER_BOOST_SPEED("FighterBoostSpeed"),
-    FIGHTER_DPS("FighterDPS"),
-    FIGHTER_MAX_SPEED("FighterMaxSpeed"),
-    FIGHTER_PITCH_RATE("FighterPitchRate"),
-    FIGHTER_ROLL_RATE("FighterRollRate"),
-    FIGHTER_YAW_RATE("FighterYawRate"),
-    FSD_FUEL_USE_INCREASE("FSDFuelUseIncrease", 53, false),
-    FSD_HEAT_RATE("FSDHeatRate", 23, false),//new
-    FSD_INTERDICTOR_FACING_LIMIT("FSDInterdictorFacingLimit", 41),
-    FSD_INTERDICTOR_RANGE("FSDInterdictorRange", 11),
-    FSD_OPTIMISED_MASS("FSDOptimalMass", 15),//rename
-    FUEL_CAPACITY("FuelCapacity", 61),
-    FUEL_COST("", false),
-    FUEL_EFFICIENCY(""),//synth
-    FUEL_MULTIPLIER(""),
-    FUEL_POWER(""),
-    FUEL_RESERVE(""),//ship
-    HEAT_CAPACITY(""),
-    HEAT_DISSIPATION(""),//synth
-    HEAT_DISSIPATION_MAX(""),
-    HEAT_DISSIPATION_MIN(""),
-    HEAT_EFFICIENCY("HeatEfficiency", 50, false),
-    HEAT_REDUCED_WHEN_STRIKING_A_TARGET("",121),//bool val
-    HEATSINK_DURATION("HeatSinkDuration", 12, false),
-    HULL_BOOST("DefenceModifierHealthMultiplier", 43),
-    HULL_REINFORCEMENT("DefenceModifierHealthAddition", 79),
-    HULL_STRENGTH(""),//synth
-    INTEGRITY("Integrity", 1),
-    JAM_DURATION("ChaffJamDuration", 38),
-    JITTER("Jitter", 36, false),//degreem
-    JUMP_RANGE(""),//synth
-    JUMP_RANGE_INCREASE("FSDJumpRangeBoost", 52),
-    KINETIC_DAMAGE_RATIO(""),
-    KINETIC_RESISTANCE("KineticResistance", 45),
-    LIMPETS(""),//synth
     MASS("Mass", 0, false),
-    MASS_LOCK("", false),
-    MAX_ACTIVE_LIMPETS("MaxActiveDrones", 66),
-    MAX_ANGLE("MaxAngle", 41),
-    MAX_BREACH_CHANCE("MaxBreachChance", 39),
-    MAX_FUEL_PER_JUMP("MaxFuelPerJump", 51),//rename
-    MAX_RANGE("MaxRange", 40),
-    MAXIMUM_MASS("MaximumMass", 17),
-    MAXIMUM_MULIPLIER("EngineMaxPerformance", 22),
-    MAXIMUM_RANGE("MaximumRange", 26),
-    MIN_BREACH_CHANCE("MinBreachChance", 38),
-    MIN_PITCH_SPEED(""),
-    MINE_BONUS(""),
-    MINIMUM_MULTIPLIER("EngineMinPerformance", 20),
-    MODULE_DEFENCE_ABSORPTION("ModuleDefenceAbsorption", 72),//module reinf
-    NO_DAMAGE_TO_UNTARGETED_SHIPS("",120),//bool val
-    OPTIMAL_MULTIPLIER("EngineOptPerformance", 21),
-    PART_OF_DAMAGE_THROUGH_SHIELDS("",119),//bool val
-    PITCH_SPEED(""),
-    POWER_BOOST(""),//might be needed in some calculation, not official?
-    POWER_CAPACITY("PowerCapacity", 49),
-    POWER_DRAW("PowerDraw", 3, false),
-    RATE_OF_FIRE("RateOfFire", 30),
-    REFILL(""),//synth
-    REGEN_RATE("RegenRate", 73),
-    RELOAD_FROM_SHIP_FUEL("",118),//bool val
-    RELOAD_TIME("ReloadTime", 35, false),
-    REPAIR_CAPACITY("AFMRepairCapacity", 62),
-    REPAIR_RATING("AFMRepairPerAmmo", 64),
-    ROLL_SPEED(""),
-    ROUNDS_PER_SHOT("RoundsPerShot", 30),//new
-    SCAN_ANGLE("SensorTargetScanAngle", 59),
-    SCAN_TIME("ScannerTimeToScan", 42, false),
-    SCANNER_RANGE("ScannerRange", 40),
-    SCOOP_RATE("FuelScoopRate", 73),
-    SHIELD_BOOST("DefenceModifierShieldMultiplier", 44),
-    SHIELD_REINFORCEMENT("DefenceModifierShieldAddition", 78),
-    SHIELD_SACRIFICE_AMOUNT_GIVEN("ShieldSacrificeAmountGiven", 79),
-    SHIELD_SACRIFICE_AMOUNT_REMOVED("ShieldSacrificeAmountRemoved", 80),
-    SHIELDBANK_DURATION("ShieldBankDuration", 12),
-    SHIELDBANK_HEAT("ShieldBankHeat", 23, false),
-    SHIELDBANK_REINFORCEMENT("ShieldBankReinforcement", 78),
-    SHIELDBANK_SPIN_UP("ShieldBankSpinUp", 5, false),
-    SHIELDED_TARGET_HEAT_INCREASED("", 116),//bool val
-    SHIELDGEN_MAXIMUM_MASS("ShieldGenMaximumMass", 19),//new?
-    SHIELDGEN_MAXIMUM_STRENGTH("ShieldGenMaxStrength", 86),//rename
-    SHIELDGEN_MINIMUM_MASS("ShieldGenMinimumMass", 17),//new?
-    SHIELDGEN_MINIMUM_STRENGTH("ShieldGenMinStrength", 84),
-    SHIELDGEN_OPTIMAL_MASS("ShieldGenOptimalMass", 18),//new?
-    SHIELDGEN_OPTIMAL_STRENGTH("ShieldGenStrength", 85),
-    SHIELDS(""),
-    SHOT_SPEED("ShotSpeed", 29),
-    SYSTEMS_CAPACITY("SystemsCapacity", 57),
-    SYSTEMS_RECHARGE("SystemsRecharge", 58),
-    TARGET_ARMOR_HARDNESS_REDUCED("", 100),//bool val
-    TARGET_FSD_INHIBITED("", 101),//bool val
-    TARGET_FSD_REBOOTS("", 102),//bool val
-    TARGET_GIMBAL_TURRET_TRACKING_REDUCED("", 103),//bool val
-    TARGET_HEAT_INCREASED("", 104),//bool val
-    TARGET_LOSES_TARGET_LOCK("", 105),//bool val
-    TARGET_MODULE_DAMAGE("", 106),//bool val
-    TARGET_MODULES_MALFUNCTIONS("", 107),//bool val
-    TARGET_PUSHED_OFF_COURSE("", 108),//bool val
-    TARGET_SENSOR_ACUITY_REDUCED("", 109),//bool val
-    TARGET_SHIELD_CELL_DISRUPTED("", 110),//bool val
-    TARGET_SHIELD_GENERATOR_DAMAGED("", 111),//bool val
-    TARGET_SIGNATURE_INCREASED("", 112),//bool val
-    TARGET_SPEED_REDUCED("", 113),//bool val
-    TARGET_THRUSTERS_REBOOT("", 114),//bool val
-    TARGET_WING_SHIELDS_REGENERATED("", 115),//bool val
-    THERMAL_DAMAGE_RATIO(""),
-    THERMAL_DRAIN("ThermalDrain", 39),
-    THERMAL_LOAD("ThermalLoad", 23, false),
-    THERMAL_RESISTANCE("ThermicResistance", 46),
-    TOP_SPEED(""),
-    TYPICAL_EMISSION_RANGE("Range", 60),
-    VEHICLE_ARMOUR_HEALTH("VehicleArmourHealth"),
-    VEHICLE_CARGO_CAPACITY("VehicleCargoCapacity"),
-    VEHICLE_COUNT(""),
-    VEHICLE_FUEL_CAPACITY("VehicleFuelCapacity"),
-    VEHICLE_HULL_MASS("VehicleHullMass"),
-    VEHICLE_SHIELD_HEALTH("VehicleShieldHealth"),
-    VEHICLE_SLOTS("NumBuggySlots"),
-    WEAPONS_CAPACITY("WeaponsCapacity",53),
-    WEAPONS_RECHARGE("WeaponsRecharge", 54),
-    WING_DAMAGE_REDUCTION("WingDamageReduction", 92),
-    WING_MAX_DURATION("WingMaxDuration", 91),
-    WING_MIN_DURATION("WingMinDuration", 90),
-    WING_SHIELD_REGENERATION_INCREASED("",117),//bool val
-    YAW_SPEED(""),
+    INTEGRITY("Integrity", 1),
+    POWER_DRAW("PowerDraw", 2, false),
+    BOOT_TIME("BootTime", 3, false),
+    SHIELDBANK_SPIN_UP("ShieldBankSpinUp", 4, false),
+    CHARGE_TIME("", 5, false),
+    DISRUPTION_BARRIER_CHARGE_DURATION("DisruptionBarrierChargeDuration", 6, false),
+    DAMAGE_MULTIPLIER("", 7),
+    DAMAGE("Damage", 8),
+    DAMAGE_PER_SECOND("DamagePerSecond", 9),
+    DISTRIBUTOR_DRAW("DistributorDraw", 10, false),
+    DISRUPTION_BARRIER_RANGE("DisruptionBarrierRange", 11),
+    ECM_RANGE("ECMRange", 12),
+    FSD_INTERDICTOR_RANGE("FSDInterdictorRange", 13),
+    ECM_TIME_TO_CHARGE("ECMTimeToCharge", 14, false),
+    HEATSINK_DURATION("HeatSinkDuration", 15, false),
+    SHIELDBANK_DURATION("ShieldBankDuration", 16),
+    DISRUPTION_BARRIER_ACTIVE_POWER("DisruptionBarrierActivePower", 17, false),
+    ECM_ACTIVE_POWER_CONSUMPTION("ECMActivePowerConsumption", 18, false),
+    FSD_OPTIMISED_MASS("FSDOptimalMass", 19),
+    ENGINE_MINIMUM_MASS("EngineMinimumMass", 20),
+    ENGINE_OPTIMAL_MASS("EngineOptimalMass", 21),
+    MAXIMUM_MASS("MaximumMass", 22),
+    MINIMUM_MULTIPLIER("EngineMinPerformance", 23),
+    OPTIMAL_MULTIPLIER("EngineOptPerformance", 24),
+    MAXIMUM_MULIPLIER("EngineMaxPerformance", 25),
+    MINIMUM_MULTIPLIER_SPEED("", 26),
+    OPTIMAL_MULTIPLIER_SPEED("", 27),
+    MAXIMUM_MULTIPLIER_SPEED("", 28),
+    MINIMUM_MULTIPLIER_ACCELERATION("", 29),
+    OPTIMAL_MULTIPLIER_ACCELERATION("", 30),
+    MAXIMUM_MULTIPLIER_ACCELERATION("", 31),
+    MINIMUM_MULTIPLIER_ROTATION("", 32),
+    OPTIMAL_MULTIPLIER_ROTATION("", 33),
+    MAXIMUM_MULTIPLIER_ROTATION("", 34),
+    SHIELDGEN_MINIMUM_MASS("ShieldGenMinimumMass", 35),
+    SHIELDGEN_OPTIMAL_MASS("ShieldGenOptimalMass", 36),
+    SHIELDGEN_MAXIMUM_MASS("ShieldGenMaximumMass", 37),
+    ECM_HEAT("ECMHeat", 38),
+    ENGINE_THERMAL_LOAD("EngineHeatRate", 39, false),
+    FSD_HEAT_RATE("FSDHeatRate", 40, false),
+    SHIELDBANK_HEAT("ShieldBankHeat", 41, false),
+    THERMAL_LOAD("ThermalLoad", 42, false),
+    DISRUPTION_BARRIER_COOLDOWN("DisruptionBarrierCooldown", 43),
+    ECM_COOLDOWN("ECMCooldown", 44, false),
+    ARMOUR_PIERCING("ArmourPenetration", 45),
+    MAXIMUM_RANGE("MaximumRange", 46),
+    SHOT_SPEED("ShotSpeed", 47),
+    RATE_OF_FIRE("RateOfFire", 48),
+    ROUNDS_PER_SHOT("RoundsPerShot", 49),
+    BURST_RATE_OF_FIRE("BurstRateOfFire", 50),
+    BURST_SIZE("BurstSize", 51),
+    BURST_INTERVAL("", 52, false),
+    AMMO_CLIP_SIZE("AmmoClipSize", 53),
+    AMMO_MAXIMUM("AmmoMaximum", 54),
+    AMMO_COST("", 55, false),
+    RELOAD_TIME("ReloadTime", 56, false),
+    DAMAGE_TYPE("DamageType", 57),
+    JITTER("Jitter", 58, false),
+    DAMAGE_FALLOFF_START("DamageFalloffRange", 59),
+    JAM_DURATION("ChaffJamDuration", 60),
+    BREACH_DAMAGE("BreachDamage", 61),
+    MIN_BREACH_CHANCE("MinBreachChance", 62),
+    MAX_BREACH_CHANCE("MaxBreachChance", 63),
+    DISCOVERY_SCANNER_PASSIVE_RANGE("DiscoveryScannerPassiveRange", 64),
+    THERMAL_DRAIN("ThermalDrain", 65),
+    DISCOVERY_SCANNER_RANGE("DiscoveryScannerRange", 66),
+    MAX_RANGE("MaxRange", 67),
+    SCANNER_RANGE("ScannerRange", 68),
+    FSD_INTERDICTOR_FACING_LIMIT("FSDInterdictorFacingLimit", 69),
+    MAX_ANGLE("MaxAngle", 70),
+    SCAN_TIME("ScannerTimeToScan", 71, false),
+    HULL_BOOST("DefenceModifierHealthMultiplier", 72),
+    SHIELD_BOOST("DefenceModifierShieldMultiplier", 73),
+    KINETIC_RESISTANCE("KineticResistance", 74),
+    THERMAL_RESISTANCE("ThermicResistance", 75),
+    EXPLOSIVE_RESISTANCE("ExplosiveResistance", 76),
+    CAUSTIC_RESISTANCE("CausticResistance", 77),
+    POWER_CAPACITY("PowerCapacity", 78),
+    HEAT_EFFICIENCY("HeatEfficiency", 79, false),
+    MAX_FUEL_PER_JUMP("MaxFuelPerJump", 80),
+    EMERGENCY_LIFE_SUPPORT("OxygenTimeCapacity", 81),
+    FUEL_MULTIPLIER("", 82),
+    JUMP_RANGE_INCREASE("FSDJumpRangeBoost", 83),
+    FUEL_POWER("", 84),
+    FSD_FUEL_USE_INCREASE("FSDFuelUseIncrease", 85, false),
+    WEAPONS_CAPACITY("WeaponsCapacity", 86),
+    WEAPONS_RECHARGE("WeaponsRecharge", 87),
+    ENGINES_CAPACITY("EnginesCapacity", 88),
+    ENGINES_RECHARGE("EnginesRecharge", 89),
+    SYSTEMS_CAPACITY("SystemsCapacity", 90),
+    SYSTEMS_RECHARGE("SystemsRecharge", 91),
+    POWER_BOOST("", 92),
+    SCAN_ANGLE("SensorTargetScanAngle", 93),
+    ENERGY_PER_REGEN("EnergyPerRegen", 94),
+    TYPICAL_EMISSION_RANGE("Range", 95),
+    DRONE_FUEL_CAPACITY("DroneFuelCapacity", 96),
+    FUEL_CAPACITY("FuelCapacity", 97),
+    DRONE_REPAIR_CAPACITY("DroneRepairCapacity", 98),
+    REPAIR_CAPACITY("AFMRepairCapacity", 99),
+    CONSUMPTION("AFMRepairConsumption", 100, false),
+    REPAIR_RATING("AFMRepairPerAmmo", 101),
+    CABIN_CAPACITY("CabinCapacity", 102),
+    CARGO_CAPACITY("CargoCapacity", 103),
+    CABIN_CLASS("CabinClass", 104),
+    MAX_ACTIVE_LIMPETS("MaxActiveDrones", 105),
+    DRONE_ACTIVE_RANGE("", 106),
+    DRONE_TARGET_RANGE("DroneTargetRange", 107),
+    DRONE_LIFE_TIME("DroneLifeTime", 108),
+    DRONE_SPEED("DroneSpeed", 109),
+    DRONE_MULTI_TARGET_SPEED("DroneMultiTargetSpeed", 110),
+    MINE_BONUS("", 111),
+    MODULE_DEFENCE_ABSORPTION("ModuleDefenceAbsorption", 112),
+    REGEN_RATE("RegenRate", 113),
+    SCOOP_RATE("FuelScoopRate", 114),
+    BROKEN_REGEN_RATE("BrokenRegenRate", 115),
+    DRONE_HACKING_TIME("DroneHackingTime", 116, false),
+    DRONE_MIN_JETTISONED_CARGO("DroneMinJettisonedCargo", 117),
+    DRONE_MAX_JETTISONED_CARGO("DroneMaxJettisonedCargo", 118),
+    SHIELD_REINFORCEMENT("DefenceModifierShieldAddition", 119),
+    SHIELDBANK_REINFORCEMENT("ShieldBankReinforcement", 120),
+    HULL_REINFORCEMENT("DefenceModifierHealthAddition", 121),
+    SHIELD_SACRIFICE_AMOUNT_GIVEN("ShieldSacrificeAmountGiven", 122),
+    SHIELD_SACRIFICE_AMOUNT_REMOVED("ShieldSacrificeAmountRemoved", 123),
+    BIN_COUNT("RefineryBins", 124),
+    SHIELDGEN_MINIMUM_STRENGTH("ShieldGenMinStrength", 125),
+    SHIELDGEN_OPTIMAL_STRENGTH("ShieldGenStrength", 126),
+    SHIELDGEN_MAXIMUM_STRENGTH("ShieldGenMaxStrength", 127),
+    DSS_PATCH_RADIUS("DSS_PatchRadius", 128),
+    WING_MIN_DURATION("WingMinDuration", 129),
+    WING_MAX_DURATION("WingMaxDuration", 130),
+    WING_DAMAGE_REDUCTION("WingDamageReduction", 131),
+    ABSOLUTE_DAMAGE_RATIO("", 201),
+    THERMAL_DAMAGE_RATIO("", 202),
+    KINETIC_DAMAGE_RATIO("", 203),
+    EXPLOSIVE_DAMAGE_RATIO("", 204),
+    CAUSTIC_DAMAGE_RATIO("", 205),
+    ANTI_XENO_DAMAGE_RATIO("", 206),
+    TARGET_ARMOR_HARDNESS_REDUCED("", 700),
+    TARGET_FSD_INHIBITED("", 701),
+    TARGET_FSD_REBOOTS("", 702),
+    TARGET_GIMBAL_TURRET_TRACKING_REDUCED("", 703),
+    TARGET_HEAT_INCREASED("", 704),
+    TARGET_LOSES_TARGET_LOCK("", 705),
+    TARGET_MODULE_DAMAGE("", 706),
+    TARGET_MODULES_MALFUNCTIONS("", 707),
+    TARGET_PUSHED_OFF_COURSE("", 708),
+    TARGET_SENSOR_ACUITY_REDUCED("", 709),
+    TARGET_SHIELD_CELL_DISRUPTED("", 710),
+    TARGET_SHIELD_GENERATOR_DAMAGED("", 711),
+    TARGET_SIGNATURE_INCREASED("", 712),
+    TARGET_SPEED_REDUCED("", 713),
+    TARGET_THRUSTERS_REBOOT("", 714),
+    TARGET_WING_SHIELDS_REGENERATED("", 715),
+    SHIELDED_TARGET_HEAT_INCREASED("", 716),
+    WING_SHIELD_REGENERATION_INCREASED("", 717),
+    RELOAD_FROM_SHIP_FUEL("", 718),
+    PART_OF_DAMAGE_THROUGH_SHIELDS("", 719),
+    NO_DAMAGE_TO_UNTARGETED_SHIPS("", 720),
+    HEAT_REDUCED_WHEN_STRIKING_A_TARGET("", 721),
+    EFFECTIVENESS_INCREASE_AGAINST_MUNITIONS("", 722),
+    DAMAGE_PARTIALLY_THERMAL("", 723),
+    DAMAGE_PARTIALLY_KINETIC("", 724),
+    DAMAGE_PARTIALLY_EXPLOSIVE("", 725),
+    DAMAGE_INCREASES_WITH_HEAT_LEVEL("", 726),
+    AUTO_RELOAD_WHILE_FIRING("", 727),
+    AREA_HEAT_INCREASED_SENSORS_DISRUPTED("", 728),
+    ANTI_XENO_DAMAGE("", 729),
+    AREA_FSDS_REBOOT("", 729),
+    VEHICLE_ARMOUR_HEALTH("VehicleArmourHealth", 801),
+    VEHICLE_CARGO_CAPACITY("VehicleCargoCapacity", 802),
+    VEHICLE_COUNT("", 803),
+    VEHICLE_FUEL_CAPACITY("VehicleFuelCapacity", 804),
+    VEHICLE_HULL_MASS("VehicleHullMass", 805),
+    VEHICLE_SHIELD_HEALTH("VehicleShieldHealth", 806),
+    VEHICLE_SLOTS("NumBuggySlots", 807),
+    FIGHTER_BOOST_SPEED("FighterBoostSpeed", 808),
+    FIGHTER_DPS("FighterDPS", 809),
+    FIGHTER_MAX_SPEED("FighterMaxSpeed", 810),
+    FIGHTER_PITCH_RATE("FighterPitchRate", 811),
+    FIGHTER_ROLL_RATE("FighterRollRate", 812),
+    FIGHTER_YAW_RATE("FighterYawRate", 813),
+    CREW("", 1001),//ship
+    TOP_SPEED("", 1002),//ship
+    BOOST_SPEED("", 1003),//ship
+    MINIMUM_THRUST("", 1004),//ship
+    BOOST_COST("", 1005, false),//ship
+    MANOEUVRABILITY("", 1006),//ship
+    MIN_PITCH_SPEED("", 1007),//ship
+    PITCH_SPEED("", 1008),//ship
+    YAW_SPEED("", 1009),//ship
+    ROLL_SPEED("", 1010),//ship
+    SHIELDS("", 1011),//ship
+    ARMOUR("", 1012),//ship
+    ARMOUR_HARDNESS("", 1013),//ship
+    HEAT_CAPACITY("", 1014),//ship
+    HEAT_DISSIPATION_MIN("", 1015),//ship
+    HEAT_DISSIPATION_MAX("", 1016),//ship
+    MASS_LOCK("", 1017, false),//ship
+    FUEL_COST("", 1018, false),//ship
+    FUEL_RESERVE("", 1019),//ship
+    FUEL_EFFICIENCY("", 2000),//synthesis
+    HEAT_DISSIPATION("", 2001),//synthesis
+    HULL_STRENGTH("", 2002),//synthesis
+    JUMP_RANGE("", 2003),//synthesis
+    LIMPETS("", 2004),//synthesis
+    REFILL("", 2005),//synthesis
+    DAMAGE_BOOST("", 2006),//synthesis
+    BOOST_AUGMENTER_POWER_USE("BoostAugmenterPowerUse", 8000, false),//todo remove?
+    BOOST_SPEED_MULTIPLIER("BoostSpeedMultiplier", 8000),//todo remove?
     ;
     private final String internalName;
     private final int order;
@@ -226,17 +237,6 @@ public enum HorizonsModifier {
         NUMBER_FORMAT.setMaximumFractionDigits(0);
         NUMBER_FORMAT_1.setMaximumFractionDigits(1);
         NUMBER_FORMAT_2.setMaximumFractionDigits(2);
-    }
-
-    HorizonsModifier(String internalName) {
-        this.internalName = internalName;
-        this.order = 999;
-    }
-
-    HorizonsModifier(String internalName, boolean higherBetter) {
-        this.internalName = internalName;
-        this.higherBetter = higherBetter;
-        this.order = 999;
     }
 
     public static HorizonsModifier forName(final String name) {
@@ -307,7 +307,7 @@ public enum HorizonsModifier {
     }
 
     public int getOrder() {
-        if(order == 999)
+        if(order == 9999)
             return order + ordinal();
         return order;
     }

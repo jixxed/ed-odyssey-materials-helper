@@ -61,7 +61,7 @@ public abstract class ShipModule implements Serializable {
     @Setter
     private int powerGroup = 1;
 
-    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    public ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
     }
 
@@ -90,7 +90,7 @@ public abstract class ShipModule implements Serializable {
         SHIP_MODULES.add(this);
     }
 
-    ShipModule(final ShipModule shipModule) {
+    public ShipModule(final ShipModule shipModule) {
         this.id = shipModule.id;
         this.name = shipModule.name;
         this.moduleSize = shipModule.moduleSize;
@@ -197,8 +197,11 @@ public abstract class ShipModule implements Serializable {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
+        if (modifiers.containsKey(moduleAttribute)) {
+            return modifiers.get(moduleAttribute);
+        }
         if (isLegacy()) {
-            return modifiers.containsKey(moduleAttribute) ? modifiers.get(moduleAttribute) : attributes.get(moduleAttribute);
+            return attributes.get(moduleAttribute);
         }
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
         if (baseAttributeValue instanceof Double) {
@@ -377,5 +380,12 @@ public abstract class ShipModule implements Serializable {
 
     public boolean hasPowerToggle() {
         return powerToggle;
+    }
+
+    public boolean isHiddenStat(HorizonsModifier modifier){
+        return false;
+    }
+    public boolean isPassivePower(){
+        return false;
     }
 }

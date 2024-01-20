@@ -1,0 +1,207 @@
+package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
+
+import javafx.geometry.Orientation;
+import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
+import javafx.util.Duration;
+import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
+import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
+import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
+import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import org.controlsfx.control.ToggleSwitch;
+
+public class Config extends Stats implements Template {
+
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    private PipSelect systemPipSelect;
+    private PipSelect enginePipSelect;
+    private PipSelect weaponPipSelect;
+    private IntField cargo;
+    private IntField fuel;
+    private Slider fuelreserve;
+    private ToggleSwitch live;
+    private DestroyableResizableImageView power;
+    Button powerButton;
+    Button powerUp;
+    Button powerDown;
+    private HBox powerBox;
+
+    public Config() {
+        super();
+        initComponents();
+        initEventHandling();
+    }
+
+    @Override
+    public void initComponents() {
+        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.config"), new GrowingRegion()).buildHBox());
+        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        systemPipSelect = new PipSelect(8);
+        enginePipSelect = new PipSelect(8);
+        weaponPipSelect = new PipSelect(8);
+        Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
+        int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
+        int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
+        live = ToggleSwitchBuilder.builder()
+                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+                    ApplicationState.getInstance().setLiveStats(Boolean.TRUE.equals(newValue));
+                    EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
+                })
+                .withSelected(ApplicationState.getInstance().isLiveStats())
+                .build();
+        fuel = new IntField(0, maxFuel, maxFuel);
+        fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
+        cargo = new IntField(0, maxCargo, 0);
+        powerBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-power").buildHBox();
+        powerBox();
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.live"), new GrowingRegion(), live).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.fuelreserve"), new GrowingRegion(), fuelreserve).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.fuel"), new GrowingRegion(), fuel).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.cargo"), new GrowingRegion(), cargo).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.system"), new GrowingRegion(), systemPipSelect).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.engine"), new GrowingRegion(), enginePipSelect).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.weapon"), new GrowingRegion(), weaponPipSelect).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.cargo_hatch"), new GrowingRegion(), powerBox).buildHBox());
+        systemPipSelect.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ApplicationState.getInstance().setSystemPips(newValue.intValue());
+            EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.PIPS));
+        });
+        enginePipSelect.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ApplicationState.getInstance().setEnginePips(newValue.intValue());
+            EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.PIPS));
+        });
+        weaponPipSelect.valueProperty().addListener((observable, oldValue, newValue) -> {
+            ApplicationState.getInstance().setWeaponPips(newValue.intValue());
+            EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.PIPS));
+        });
+        fuel.valueProperty().addListener((observable, oldValue, newValue) -> {
+            this.getShip().ifPresent(ship -> ship.setCurrentFuel(newValue.doubleValue()));
+            EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
+        });
+        cargo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            this.getShip().ifPresent(ship -> ship.setCurrentCargo(newValue.doubleValue()));
+            EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
+        });
+        fuelreserve.valueProperty().addListener((observable, oldValue, newValue) -> {
+            this.getShip().ifPresent(ship -> ship.setCurrentCargo(newValue.doubleValue()));
+            EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
+        });
+    }
+    private void powerBox() {
+        this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/powered1.png", "Power group 1");
+        this.powerButton = ButtonBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-button").withOnAction(event -> {
+            this.getShip().ifPresent(ship -> {
+                ship.getCargoHatch().getShipModule().togglePower();
+                notifyChanged();
+                updatePower(ship.getCargoHatch().getShipModule());
+            });
+        }).withGraphic(this.power).build();
+        initPowerBox();
+    }
+
+    private void initPowerBox() {
+        this.powerBox.getChildren().clear();
+        if (!isCurrentShip()) {
+            powerUp = ButtonBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-button").withOnAction(event -> {
+                this.getShip().ifPresent(ship -> {
+                    ship.getCargoHatch().getShipModule().decreasePowerGroup();
+                    notifyChanged();
+                    updatePower(ship.getCargoHatch().getShipModule());
+                });
+            }).withGraphic(createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/arrow_left.png")).build();
+            powerDown = ButtonBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-button").withOnAction(event -> {
+                this.getShip().ifPresent(ship -> {
+                    ship.getCargoHatch().getShipModule().increasePowerGroup();
+                    notifyChanged();
+                    updatePower(ship.getCargoHatch().getShipModule());
+                });
+            }).withGraphic(createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/arrow_right.png")).build();
+            this.powerUp.setFocusTraversable(false);
+            this.powerDown.setFocusTraversable(false);
+            this.powerBox.getChildren().addAll(powerUp, powerButton, powerDown);
+        } else {
+            final GrowingRegion growingRegion = new GrowingRegion();
+//            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
+            this.powerBox.getChildren().addAll(growingRegion, powerButton, new GrowingRegion());
+        }
+    }
+
+    private void updatePower(ShipModule shipModule) {
+        if (shipModule != null) {
+            this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", "Power group " + shipModule.getPowerGroup());
+            this.powerButton.setGraphic(this.power);
+            if (!isCurrentShip()) {
+                final boolean hasPowerToggle = shipModule.hasPowerToggle();
+                final int powerGroup = shipModule.getPowerGroup();
+                this.powerUp.setVisible(hasPowerToggle && powerGroup > 1);
+                this.powerDown.setVisible(hasPowerToggle && powerGroup < 5);
+                this.powerButton.setVisible(hasPowerToggle);
+            }
+        }
+    }
+    private static DestroyableResizableImageView createIcon(String styleClass, String imageResource, String tooltip) {
+        final DestroyableResizableImageView icon = createIcon(styleClass, imageResource);
+        Tooltip.install(icon, TooltipBuilder.builder().withShowDelay(Duration.seconds(0.1)).withNonLocalizedText(tooltip).build());//todo localized
+        return icon;
+    }
+    private static DestroyableResizableImageView createIcon(String styleClass, String imageResource) {
+        return ResizableImageViewBuilder.builder().withStyleClass(styleClass).withImage(imageResource).build();
+    }
+    private void notifyChanged() {
+        EventService.publish(new ShipBuilderEvent());
+        update();
+    }
+
+    private static Boolean isCurrentShip() {
+        return APPLICATION_STATE.getPreferredCommander()
+                .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
+                .map(shipConfiguration -> ShipConfiguration.CURRENT == shipConfiguration)
+                .orElse(Boolean.FALSE);
+    }
+    @Override
+    public void initEventHandling() {
+        eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, event->{
+           fuelreserve.setMax(getShip().map(Ship::getMaxFuelReserve).orElse(0.0D));
+            Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
+            int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
+            int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
+            fuel.setMaxValue(maxFuel);
+            fuelreserve.setMax(maxFuelReserve);
+            cargo.setMaxValue(maxCargo);
+            fuel.setValue(getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
+            fuelreserve.setValue(getShip().map(Ship::getCurrentFuelReserve).orElse(0D));
+            cargo.setValue(getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
+            initPowerBox();
+            this.getShip().ifPresent(ship -> {
+                updatePower(ship.getCargoHatch().getShipModule());
+            });
+        }));
+    }
+
+    @Override
+    protected void update() {
+        int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
+        int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
+
+        if (fuel.getMaxValue() != maxFuel) {
+            fuel.setMaxValue(maxFuel);
+        }
+        if (cargo.getMaxValue() != maxCargo) {
+            cargo.setMaxValue(maxCargo);
+        }
+    }
+}

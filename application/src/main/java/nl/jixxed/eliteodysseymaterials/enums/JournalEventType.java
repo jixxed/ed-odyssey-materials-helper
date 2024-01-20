@@ -62,7 +62,8 @@ public enum JournalEventType {
     FSSALLBODIESFOUND("FSSAllBodiesFound"),
     FSSBODYSIGNALS("FSSBodySignals"),
     FSSDISCOVERYSCAN("FSSDiscoveryScan"),
-    NAVBEACONSCAN("NavBeaconScan");
+    NAVBEACONSCAN("NavBeaconScan"),
+    STATUS("Status");
     private final String name;
 
     public static JournalEventType forName(final String name) {

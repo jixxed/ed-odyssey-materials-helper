@@ -87,6 +87,22 @@ public class ApplicationState {
     @Getter
     private Ship ship;
 
+    @Setter
+    @Getter
+    private Optional<ShipConfig> shipConfig = Optional.empty();
+    @Getter
+    @Setter
+    private int systemPips = 8;
+    @Getter
+    @Setter
+    private int enginePips = 8;
+    @Getter
+    @Setter
+    private int weaponPips = 8;
+    @Getter
+    @Setter
+    private boolean liveStats = false;
+
     @Getter
     private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);
     private ApplicationState() {

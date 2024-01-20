@@ -26,6 +26,12 @@ public class ModifierFunctionHelper {
     public static HorizonsBiFunction<Double> percentagePositive(final Double start, final Double end) {
         return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.PERCENTAGE_POSITIVE);
     }
+    public static HorizonsBiFunction<Double> hullBoost(final Double start, final Double end) {
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.HULL_BOOST);
+    }
+    public static HorizonsBiFunction<Double> shieldBoost(final Double start, final Double end) {
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.HULL_BOOST);
+    }
     /**
      * Calculation based on a range. A percentage will be provided that determines the position between start and end.
      * The calculation will lower the result with the provided percentage(position).

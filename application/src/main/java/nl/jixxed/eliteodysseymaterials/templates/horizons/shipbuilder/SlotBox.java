@@ -37,10 +37,11 @@ import org.controlsfx.control.PopOver;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Slf4j
-class SlotBox extends HBox {
+class SlotBox extends StackPane {
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 
@@ -62,6 +63,8 @@ class SlotBox extends HBox {
     private final VBox classBox;
     private final VBox mountingBox;
     private final HBox iconBox;
+    private final HBox layer1;
+    private final StackPane layer2;
     private DestroyableResizableImageView power;
     private final VBox powerBox;
     IntegerProperty maxGrade = new SimpleIntegerProperty(0);
@@ -85,9 +88,14 @@ class SlotBox extends HBox {
 
     SlotBox(final HorizonsShipBuilderTab tab, final Slot slot) {
         this.setFocusTraversable(true);
-        this.getStyleClass().add("shipbuilder-slots-slotbox");
+        layer1 = BoxBuilder.builder().buildHBox();
+        layer2 = new StackPane(LabelBuilder.builder().withNonLocalizedText("MODULE RESIZED").withStyleClass("shipbuilder-slots-slotbox-module-resize-warning").build());
+        layer2.getStyleClass().add("shipbuilder-slots-slotbox-layer2");
+        layer2.setVisible(false);
+        this.getChildren().addAll(layer1, layer2);
+        layer1.getStyleClass().add("shipbuilder-slots-slotbox");
         if (SlotType.MILITARY.equals(slot.getSlotType())) {
-            this.getStyleClass().add("shipbuilder-slots-slotbox-military");
+            layer1.getStyleClass().add("shipbuilder-slots-slotbox-military");
         }
         this.sizeBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-size").buildVBox();
         this.classBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-class").buildVBox();
@@ -131,7 +139,7 @@ class SlotBox extends HBox {
         }
         this.texts.getChildren().addAll(stackPane1, this.module, this.blueprints);
 
-        this.getChildren().addAll(this.size, new Separator(Orientation.VERTICAL), sizeBox, (this.getSlot().getSlotType().equals(SlotType.HARDPOINT)) ? mountingBox : classBox, this.texts, powerBox);
+        layer1.getChildren().addAll(this.size, new Separator(Orientation.VERTICAL), sizeBox, (this.getSlot().getSlotType().equals(SlotType.HARDPOINT)) ? mountingBox : classBox, this.texts, powerBox);
 //        if (SlotType.MILITARY.equals(this.slot.getSlotType())) {
 //            final DestroyableLabel mil = LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-military-hint").withNonLocalizedText("MILITARY").build();
 ////            Rotate rotate = new Rotate(90, 0.5,-0.5);
@@ -157,7 +165,7 @@ class SlotBox extends HBox {
         if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
             this.onMouseEnteredProperty().set(event -> {
                 if (!event.isAltDown()) {
-//                    if (this.slot.getShipModule() != null) {
+//                    if (this.slot.isOccupied()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
 //                    }
                     tab.toggleHardpointImage(true);
@@ -172,7 +180,7 @@ class SlotBox extends HBox {
         } else if (slot.getSlotType().equals(SlotType.UTILITY)) {
             this.onMouseEnteredProperty().set(event -> {
                 if (!event.isAltDown()) {
-//                    if (this.slot.getShipModule() != null) {
+//                    if (this.slot.isOccupied()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
 //                    }
                     tab.toggleUtilityImage(true);
@@ -187,7 +195,7 @@ class SlotBox extends HBox {
         } else {
             this.onMouseEnteredProperty().set(event -> {
                 if (!event.isAltDown()) {
-//                    if (this.slot.getShipModule() != null) {
+//                    if (this.slot.isOccupied()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
 //                    }
                 }
@@ -219,7 +227,7 @@ class SlotBox extends HBox {
                 final Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 this.dragging = true;
                 /* Put a string on a dragboard */
-                if (this.slot.getShipModule() != null && !slot.getSlotType().isCore()) {
+                if (this.slot.isOccupied() && !slot.getSlotType().isCore()) {
                     final ClipboardContent content = new ClipboardContent();
                     content.put(customFormat, this.slot.getShipModule());
                     db.setContent(content);
@@ -228,6 +236,7 @@ class SlotBox extends HBox {
                     event.consume();
                 }
             });
+            AtomicReference<TransferMode> atomicBoolean = new AtomicReference<>();
             this.setOnDragOver(event -> {
                 log.debug("setOnDragOver " + this.slot.getIndex() + " " + event.getTransferMode());
 
@@ -239,45 +248,56 @@ class SlotBox extends HBox {
                     tab.toggleUtilityImage(true);
                     tab.drawUtilityLine(slot.getIndex());
                 }
-                /* data is dragged over the target */
-                /* accept it only if it is not dragged from the same node
-                 * and if it has a string data */
-                if (event.getGestureSource() != this
-                        && event.getDragboard().hasContent(customFormat)
-                        && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())
-                        && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
+                //drag from outside the application
+                if (((SlotBox) event.getGestureSource()) != null) {
+                    /* data is dragged over the target */
+                    /* accept it only if it is not dragged from the same node
+                     * and if it has a string data */
+                    if (event.getGestureSource() != this
+                            && event.getDragboard().hasContent(customFormat)
+                            && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())
+                            && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
+                            && (event.getTransferMode() == TransferMode.COPY || moduleCouldFit(((SlotBox) event.getGestureSource()).slot, this.slot.getShipModule()))
 
-                ) {
-                    /* allow for both copying and moving, whatever user chooses */
-                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                }
-                //refreshStyle(false);
-                if (((SlotBox) event.getGestureSource()) != null && ((SlotBox) event.getGestureSource()).getSlot().getShipModule() != null) {
+                    ) {
+                        /* allow for both copying and moving, whatever user chooses */
+                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                    }
+                    //refreshStyle(false);
+                    if (((SlotBox) event.getGestureSource()) != null && ((SlotBox) event.getGestureSource()).getSlot().getShipModule() != null) {
 
-                    log.debug("source:" + ((SlotBox) event.getGestureSource()).getSlot().getShipModule().getInternalName());
-                }
-                if (((SlotBox) event.getGestureTarget()) != null && ((SlotBox) event.getGestureTarget()).getSlot().getShipModule() != null) {
+                        log.debug("source:" + ((SlotBox) event.getGestureSource()).getSlot().getShipModule().getInternalName());
+                    }
+                    if (((SlotBox) event.getGestureTarget()) != null && ((SlotBox) event.getGestureTarget()).getSlot().getShipModule() != null) {
 
-                    log.debug("target:" + ((SlotBox) event.getGestureTarget()).getSlot().getShipModule().getInternalName());
-                }
-                if (this.slot.getShipModule() != null) {
+                        log.debug("target:" + ((SlotBox) event.getGestureTarget()).getSlot().getShipModule().getInternalName());
+                    }
+                    if (this.slot.isOccupied()) {
 
-                    log.debug("this.slot:" + this.slot.getShipModule().getInternalName());
-                }
-                if (event.getTransferMode() == TransferMode.COPY) {
-//                ((SlotBox)event.getGestureSource()).module.setText(((SlotBox)event.getGestureSource()).slot.getShipModule().getName());
-                    ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(((SlotBox) event.getGestureSource()).slot.getShipModule().getName().getLocalizationKey())/*.concat(" " + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleSize() + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleClass())*/);
-                    ((SlotBox) event.getGestureSource()).showContents(((SlotBox) event.getGestureSource()).slot.getShipModule());
-                } else if (event.getTransferMode() == TransferMode.MOVE && this.slot.getShipModule() != null
-                        && ((SlotBox) event.getGestureSource()).slot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())
-                        && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())
-                        && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
-                ) {// && (((SlotBox) event.getGestureSource()) == null || this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass()))) {
+                        log.debug("this.slot:" + this.slot.getShipModule().getInternalName());
+                    }
+                    if (event.getTransferMode() == TransferMode.COPY) {
+                        //                ((SlotBox)event.getGestureSource()).module.setText(((SlotBox)event.getGestureSource()).slot.getShipModule().getName());
+                        ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(((SlotBox) event.getGestureSource()).slot.getShipModule().getName().getLocalizationKey())/*.concat(" " + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleSize() + ((SlotBox) event.getGestureSource()).slot.getShipModule().getModuleClass())*/);
+                        ((SlotBox) event.getGestureSource()).showContents(((SlotBox) event.getGestureSource()).slot.getShipModule());
+                    } else if (event.getTransferMode() == TransferMode.MOVE && this.slot.isOccupied()
+                            && ((SlotBox) event.getGestureSource()).slot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())
+                            && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())
+                            && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
+                            && moduleCouldFit(((SlotBox) event.getGestureSource()).slot, this.slot.getShipModule())
+                    ) {// && (((SlotBox) event.getGestureSource()) == null || this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass()))) {
 
-                    ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(this.slot.getShipModule().getName().getLocalizationKey())/*.concat(" " + this.slot.getShipModule().getModuleSize() + this.slot.getShipModule().getModuleClass())*/);
-                    ((SlotBox) event.getGestureSource()).showContents(this.slot.getShipModule());
-                } else if (event.getTransferMode() == TransferMode.MOVE && event.getGestureSource() != this) {// && (this.slot.getShipModule() == null || ( this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass())))) {
-                    ((SlotBox) event.getGestureSource()).hideContents();
+                        ((SlotBox) event.getGestureSource()).module.textProperty().bind(LocaleService.getStringBinding(this.slot.getShipModule().getName().getLocalizationKey())/*.concat(" " + this.slot.getShipModule().getModuleSize() + this.slot.getShipModule().getModuleClass())*/);
+                        ((SlotBox) event.getGestureSource()).showContents(this.slot.getShipModule());
+                    } else if (event.getTransferMode() == TransferMode.MOVE && event.getGestureSource() != this) {// && (!this.slot.isOccupied() || ( this.slot.getShipModule().getModuleClass().getClass().isAssignableFrom(((SlotBox) event.getGestureSource()).getSlot().getSlotType().getModuleClass())))) {
+                        ((SlotBox) event.getGestureSource()).hideContents();
+                    }
+                    if (!event.getTransferMode().equals(atomicBoolean.get())) {
+                        log.debug("updateTransferMode " + this.slot.getIndex());
+                        atomicBoolean.set(event.getTransferMode());
+                        extracted(event);
+                    }
+
                 }
                 event.consume();
             });
@@ -285,24 +305,17 @@ class SlotBox extends HBox {
                 log.debug("setOnDragEntered " + this.slot.getIndex());
                 /* the drag-and-drop gesture entered the target */
                 /* show to the user that it is an actual gesture target */
-                if (event.getGestureSource() != this
-                        && event.getDragboard().hasContent(customFormat)
-                        && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())
-                        && (event.getTransferMode() == TransferMode.COPY || (this.slot.getShipModule() == null || ((SlotBox) event.getGestureSource()).slot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())))
-                        && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
-                ) {
-                    this.module.textProperty().bind(LocaleService.getStringBinding(((ShipModule) event.getDragboard().getContent(customFormat)).getName().getLocalizationKey())/*.concat(" " + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleSize() + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleClass())*/);
-                    this.getStyleClass().add("shipbuilder-slots-slotbox-hover-good");
-                    showContents(((SlotBox) event.getGestureSource()).slot.getShipModule());
-                } else {
-                    this.getStyleClass().add("shipbuilder-slots-slotbox-hover-bad");
-                }
+
+                if (((SlotBox) event.getGestureSource()) != null) {
+                    extracted(event);
+                    this.requestFocus();
 //            refreshStyle(false);
-                event.consume();
+                    event.consume();
+                }
             });
             this.setOnDragExited(event -> {
                 log.debug("setOnDragExited " + this.slot.getIndex());
-                this.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
+                layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
                     tab.toggleHardpointImage(false);
                 }
@@ -311,7 +324,7 @@ class SlotBox extends HBox {
                 }
                 /* mouse moved away, remove the graphical cues */
                 this.refresh();
-                if (this.slot.getShipModule() == null) {
+                if (!this.slot.isOccupied()) {
                     hideContents();
                 }
 //            refreshStyle(false);
@@ -319,34 +332,36 @@ class SlotBox extends HBox {
             });
             this.setOnDragDropped(event -> {
                 log.debug("setOnDragDropped " + this.slot.getIndex());
-                this.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
+                layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 /* data dropped */
                 /* if there is a string data on dragboard, read it and use it */
-                final Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasContent(customFormat)
-                        && db.getContent(customFormat) != null
-                        && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
-                        && (event.getTransferMode() == TransferMode.COPY || (this.slot.getShipModule() == null || ((SlotBox) event.getGestureSource()).slot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())))
-                ) {
-                    final Object content = event.getDragboard().getContent(customFormat);
-                    final ClipboardContent contentOld = new ClipboardContent();
-                    contentOld.put(customFormat, this.slot.getShipModule() != null ? this.slot.getShipModule() : "null");
-                    event.getDragboard().setContent(contentOld);
-                    this.slot.setShipModule(((ShipModule) content));
-                    if (((ShipModule) content).getModuleSize().intValue() > this.slot.getSlotSize()) {
-                        this.slot.getShipModule().findLowerSize(this.slot.getSlotSize()).ifPresent(this::replaceModule);
+                if (((SlotBox) event.getGestureSource()) != null) {
+                    final Dragboard db = event.getDragboard();
+                    boolean success = false;
+                    if (db.hasContent(customFormat)
+                            && db.getContent(customFormat) != null
+                            && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
+                            && (event.getTransferMode() == TransferMode.COPY || (!this.slot.isOccupied() || ((SlotBox) event.getGestureSource()).slot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())))
+                    ) {
+                        final Object content = event.getDragboard().getContent(customFormat);
+                        final ClipboardContent contentOld = new ClipboardContent();
+                        contentOld.put(customFormat, this.slot.isOccupied() ? this.slot.getShipModule() : "null");
+                        event.getDragboard().setContent(contentOld);
+                        this.slot.setShipModule(((ShipModule) content));
+                        if (((ShipModule) content).getModuleSize().intValue() > this.slot.getSlotSize()) {
+                            this.slot.getShipModule().findLowerSize(this.slot.getSlotSize()).ifPresent(this::replaceModule);
+                        }
+                        notifyChanged();
+                        this.refresh();
+                        success = true;
                     }
-                    notifyChanged();
-                    this.refresh();
-                    success = true;
-                }
 //            refreshStyle(false);
-                /* let the source know whether the string was successfully
-                 * transferred and used */
-                event.setDropCompleted(success);
+                    /* let the source know whether the string was successfully
+                     * transferred and used */
+                    event.setDropCompleted(success);
 
-                event.consume();
+                    event.consume();
+                }
             });
             this.setOnDragDone(event -> {
                 log.debug("setOnDragDone " + this.slot.getIndex());
@@ -377,7 +392,29 @@ class SlotBox extends HBox {
         }
     }
 
+    private void extracted(DragEvent event) {
+        layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-good", "shipbuilder-slots-slotbox-hover-bad");
+        if (event.getGestureSource() == this) {
+            layer1.getStyleClass().add("shipbuilder-slots-slotbox-hover-good");
+        } else if (/*event.getGestureSource() != this
+                &&*/ event.getDragboard().hasContent(customFormat)
+                && this.slot.getSlotType().getModuleClass().isAssignableFrom(((ShipModule) event.getDragboard().getContent(customFormat)).getClass())
+                && (event.getTransferMode() == TransferMode.COPY || (!this.slot.isOccupied() || ((SlotBox) event.getGestureSource()).slot.getSlotType().getModuleClass().isAssignableFrom(this.slot.getShipModule().getClass())))
+                && moduleCouldFit(this.slot, ((ShipModule) event.getDragboard().getContent(customFormat)))
+                && (event.getTransferMode() == TransferMode.COPY || moduleCouldFit(((SlotBox) event.getGestureSource()).slot, this.slot.getShipModule()))
+        ) {
+            this.module.textProperty().bind(LocaleService.getStringBinding(((ShipModule) event.getDragboard().getContent(customFormat)).getName().getLocalizationKey())/*.concat(" " + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleSize() + ((ShipModule) event.getDragboard().getContent(customFormat)).getModuleClass())*/);
+            layer1.getStyleClass().add("shipbuilder-slots-slotbox-hover-good");
+            showContents(((SlotBox) event.getGestureSource()).slot.getShipModule());
+        } else {
+            layer1.getStyleClass().add("shipbuilder-slots-slotbox-hover-bad");
+        }
+    }
+
     private boolean moduleCouldFit(Slot slot, ShipModule module) {
+        if (module == null) {
+            return true;
+        }
         log.debug("moduleCouldFit: " + slot.getSlotSize() + "<" + module.getModuleSize().intValue());
         if (slot.getSlotSize() < module.getModuleSize().intValue()) {
             return module.findLowerSize(slot.getSlotSize()).isPresent();
@@ -410,7 +447,7 @@ class SlotBox extends HBox {
             this.mountingBox.getChildren().addAll(mountingUp, mountingLabel, mountingDown);
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
-            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
+//            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
             this.mountingBox.getChildren().addAll(growingRegion, mountingLabel, new GrowingRegion());
         }
     }
@@ -438,7 +475,7 @@ class SlotBox extends HBox {
             this.powerBox.getChildren().addAll(powerUp, powerButton, powerDown);
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
-            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
+//            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
             this.powerBox.getChildren().addAll(growingRegion, powerButton, new GrowingRegion());
         }
     }
@@ -461,7 +498,7 @@ class SlotBox extends HBox {
             this.classBox.getChildren().addAll(classUp, classLabel, classDown);
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
-            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
+//            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
             this.classBox.getChildren().addAll(growingRegion, classLabel, new GrowingRegion());
         }
     }
@@ -484,7 +521,7 @@ class SlotBox extends HBox {
             this.sizeBox.getChildren().addAll(sizeUp, sizeLabel, sizeDown);
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
-            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
+//            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
             this.sizeBox.getChildren().addAll(growingRegion, sizeLabel, new GrowingRegion());
 
         }
@@ -543,14 +580,16 @@ class SlotBox extends HBox {
                 this.sizeUp.setVisible(shipModule.getModuleSize().intValue() < slot.getSlotSize() && shipModule.findHigherSize().map(biggerModule -> biggerModule.getModuleSize().intValue() <= slot.getSlotSize()).orElse(false));
                 this.sizeDown.setVisible(shipModule.findHighestSize(Math.min(this.slot.getSlotSize(), shipModule.getModuleSize().intValue())).flatMap(ShipModule::findLowerSize).isPresent());
             }
+            final int min = Math.min(
+                    shipModule.findHighestSize(this.slot.getSlotSize()).map(highestModule -> highestModule.getModuleSize().intValue()).orElse(0),
+                    shipModule.getModuleSize().intValue()
+            );
             this.sizeLabel.setText(
                     String.valueOf(
-                                    Math.min(
-                                            shipModule.findHighestSize(this.slot.getSlotSize()).map(highestModule->highestModule.getModuleSize().intValue()).orElse(0),
-                                            shipModule.getModuleSize().intValue()
-                                    )
+                            min
                     )
             );
+            layer2.setVisible(min != shipModule.getModuleSize().intValue());
         }
     }
 
@@ -647,29 +686,29 @@ class SlotBox extends HBox {
     }
 
     private void hideContents() {
-        this.getChildren().remove(this.sizeBox);
-        this.getChildren().remove(this.classBox);
-        this.getChildren().remove(this.mountingBox);
-        this.getChildren().remove(this.texts);
-        this.getChildren().remove(this.powerBox);
-        if (!this.getChildren().contains(this.emptyLabel)) {
-            this.getChildren().add(2, this.emptyLabel);
+        layer1.getChildren().remove(this.sizeBox);
+        layer1.getChildren().remove(this.classBox);
+        layer1.getChildren().remove(this.mountingBox);
+        layer1.getChildren().remove(this.texts);
+        layer1.getChildren().remove(this.powerBox);
+        if (!layer1.getChildren().contains(this.emptyLabel)) {
+            layer1.getChildren().add(2, this.emptyLabel);
         }
-
+        layer2.setVisible(false);
     }
 
     private void showContents(ShipModule shipModule) {
-        if(shipModule != null) {
-            this.getChildren().remove(this.emptyLabel);
-            if (!this.getChildren().contains(this.sizeBox)) {
-                this.getChildren().add(2, this.sizeBox);
+        if (shipModule != null) {
+            layer1.getChildren().remove(this.emptyLabel);
+            if (!layer1.getChildren().contains(this.sizeBox)) {
+                layer1.getChildren().add(2, this.sizeBox);
                 if (shipModule instanceof HardpointModule) {
-                    this.getChildren().add(3, this.mountingBox);
+                    layer1.getChildren().add(3, this.mountingBox);
                 } else {
-                    this.getChildren().add(3, this.classBox);
+                    layer1.getChildren().add(3, this.classBox);
                 }
-                this.getChildren().add(4, this.texts);
-                this.getChildren().add(5, this.powerBox);//todo condition?
+                layer1.getChildren().add(4, this.texts);
+                layer1.getChildren().add(5, this.powerBox);//todo condition?
             }
         }
         if (shipModule instanceof HardpointModule) {
@@ -686,7 +725,7 @@ class SlotBox extends HBox {
     private PopOver getPopOver() {
         final VBox content = BoxBuilder.builder()/*.withNode(LabelBuilder.builder().withNonLocalizedText("test").build())*/.withStyleClass("shipbuilder-slots-slotbox-popover-vbox").buildVBox();
         //add engineering
-        if (this.slot.getShipModule() != null && !this.slot.getShipModule().isLegacy()) {
+        if (this.slot.isOccupied() && !this.slot.getShipModule().isLegacy()) {
             addEngineering(content);
             addExperimentalEffects(content);
         }

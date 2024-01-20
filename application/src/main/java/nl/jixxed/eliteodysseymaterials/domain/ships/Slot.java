@@ -56,4 +56,5 @@ public class Slot {
     public boolean isOccupied() {
         return this.shipModule != null;
     }
+
 }

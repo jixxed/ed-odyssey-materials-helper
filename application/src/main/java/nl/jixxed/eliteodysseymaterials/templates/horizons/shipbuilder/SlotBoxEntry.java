@@ -103,6 +103,7 @@ public class SlotBoxEntry extends VBox {
                                             }
 //                                    HBox.setHgrow(button, Priority.ALWAYS);
                                             button.setFocusTraversable(false);
+                                            button.setDisable(slotBox.getSlot().getSlotSize() < shipModule.getModuleSize().intValue());
                                             return button;
                                         }
                                 ).toArray(Button[]::new)

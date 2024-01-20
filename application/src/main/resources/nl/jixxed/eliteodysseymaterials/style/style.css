@@ -2980,3 +2980,43 @@
     /*-fx-fit-to-width: true;*/
 /*-fx-alignment: center-right;*/
 }
+.shipbuilder-slots-slotbox-module-resize-warning{
+    -fx-background-color: #2e92df;
+    -fx-font-weight: bold;
+    -fx-padding: 0.4em;
+}
+.shipbuilder-slots-slotbox-layer2{
+    -fx-padding: 0.3em;
+    -fx-alignment: top-right;
+}
+.pipselect{
+    -fx-hgap: 0.2em;
+    -fx-spacing: 0.2em;
+    -fx-padding: 0.2em;
+}
+.pipselect-rectangle{
+    -fx-fill: #2b2b2b;
+    -fx-min-width: 1em;
+    -fx-max-width: 1em;
+    -fx-min-height: 1em;
+    -fx-max-height: 1em;
+    -fx-padding: 0.2em;
+    -fx-cursor: hand;
+}
+.pipselect-half{
+    -fx-fill: #2e92df;
+    -fx-opacity: 0.5;
+}
+.pipselect-full{
+    -fx-fill: #2e92df;
+    -fx-opacity: 1.0;
+}
+
+
+.slider {
+    -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderSkin";
+}
+
+.slider-popup {
+    -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderPopupSkin";
+}

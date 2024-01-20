@@ -73,4 +73,13 @@ public class ModuleReinforcementPackage extends MilitaryOptionalModule {
     public ModuleReinforcementPackage Clone() {
         return new ModuleReinforcementPackage(this);
     }
+
+
+    @Override
+    public boolean isHiddenStat(HorizonsModifier modifier) {
+        if(HorizonsModifier.POWER_DRAW.equals(modifier)){
+            return true;
+        }
+        return super.isHiddenStat(modifier);
+    }
 }

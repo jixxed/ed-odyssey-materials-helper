@@ -61,4 +61,12 @@ public class FuelTank extends OptionalModule {
     public FuelTank Clone() {
         return new FuelTank(this);
     }
+
+    @Override
+    public boolean isHiddenStat(HorizonsModifier modifier) {
+        if(HorizonsModifier.POWER_DRAW.equals(modifier)){
+            return true;
+        }
+        return super.isHiddenStat(modifier);
+    }
 }

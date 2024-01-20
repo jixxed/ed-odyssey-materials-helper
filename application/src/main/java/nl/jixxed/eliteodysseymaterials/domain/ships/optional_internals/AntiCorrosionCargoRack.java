@@ -69,5 +69,13 @@ public class AntiCorrosionCargoRack extends OptionalModule {
     public boolean isCGExclusive() {
         return ANTI_CORROSION_CARGO_RACK_5_E.equals(this) || ANTI_CORROSION_CARGO_RACK_6_E.equals(this);
     }
+
+    @Override
+    public boolean isHiddenStat(HorizonsModifier modifier) {
+        if(HorizonsModifier.POWER_DRAW.equals(modifier)){
+            return true;
+        }
+        return super.isHiddenStat(modifier);
+    }
 }
 

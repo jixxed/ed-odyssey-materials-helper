@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Status.Status;
@@ -18,11 +19,13 @@ import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.StatusEvent;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -231,6 +234,9 @@ public class FileProcessor {
                     if (status.getFlags2().isPresent()) {
                         ApplicationState.getInstance().updateWithFlags(status.getFlags().intValue(), status.getFlags2().get().intValue());
                     }
+                    final Optional<ShipConfig> shipCfg = status.getFuel().map(fuel -> new ShipConfig(fuel.getFuelReservoir(), fuel.getFuelMain(), status.getCargo().orElse(BigDecimal.ZERO)));
+                    shipCfg.ifPresent(shipConfig -> EventService.publish(new StatusEvent(shipConfig.getFuelReserve(), shipConfig.getFuelCapacity(), shipConfig.getCargoCapacity())));
+                    ApplicationState.getInstance().setShipConfig(shipCfg);
                     LocationService.setStatusBodyName(status.getBodyName());
                 });
             }

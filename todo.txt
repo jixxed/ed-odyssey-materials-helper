@@ -19,15 +19,15 @@ fix percentages for some modules x?
 lock attributes somehow(keypress?) x alt
 
 Power:
-add power group selection
-add powered toggle to module
+add power group selection x
+add powered toggle to module x
 
 stats:
 implement all stats/calculations
 
 slots:
 line sometimes targeting 0,0. Platform.runLater? x
-drag-drop ghost has old class/size config
+drag-drop ghost has old class/size config x
 
 weapons:
 quick switch on Mounting instead of class x

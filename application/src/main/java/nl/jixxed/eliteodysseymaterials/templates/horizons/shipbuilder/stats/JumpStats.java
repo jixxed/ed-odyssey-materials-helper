@@ -7,6 +7,8 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShiftDriveBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
@@ -21,6 +23,7 @@ public class JumpStats extends Stats implements Template {
     public JumpStats() {
         super();
         initComponents();
+        initEventHandling();
     }
 
     @Override
@@ -39,6 +42,10 @@ public class JumpStats extends Stats implements Template {
         this.maxJumpRange = createValueLabel(String.format("%.2f", calculateJumpRangeMax()));
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.jumprange.max"), new GrowingRegion(), this.maxJumpRange).buildHBox());
     }
+    @Override
+    public void initEventHandling() {
+        eventListeners.add(EventService.addListener(this, ShipConfigEvent.class, event -> update()));
+    }
 
 
     public double calculateJumpRangeMin() {
@@ -46,7 +53,7 @@ public class JumpStats extends Stats implements Template {
     }
 
     public double calculateJumpRangeCurrent() {
-        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass() + ship.getCurrentCargo() + ship.getCurrentFuel() + ship.getFuelReserve(), ship.getCurrentFuel())).orElse(0.0D);
+        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass() + ship.getCurrentCargo() + ship.getCurrentFuel() + ship.getCurrentFuelReserve(), ship.getCurrentFuel())).orElse(0.0D);
     }
 
     public double calculateJumpRangeMax() {

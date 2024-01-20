@@ -29,6 +29,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Slf4j
 public class ModuleDetails extends VBox implements Template {
@@ -62,7 +63,7 @@ public class ModuleDetails extends VBox implements Template {
             attributes.getChildren().clear();
             attributes.getChildren().add(new Separator(Orientation.HORIZONTAL));
             if (shipModule != null) {
-                shipModule.getAttibutes().stream().sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
+                shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
                     addAttribute(horizonsModifier, shipModule);
                 });
             }

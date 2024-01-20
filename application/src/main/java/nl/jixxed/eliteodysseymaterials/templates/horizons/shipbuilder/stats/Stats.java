@@ -53,4 +53,21 @@ public abstract class Stats extends VBox {
     }
 
     protected abstract void update();
+
+
+    protected double getMassCurveMultiplier(final double mass, final ModuleProfile moduleProfile) {
+        return (
+                moduleProfile.minimumMultiplier() + Math.pow(
+                        Math.min(
+                                1.0,
+                                (moduleProfile.maximumMass() - mass) / (moduleProfile.maximumMass() - moduleProfile.minimumMass())
+                        ),
+                        Math.log(
+                                (moduleProfile.optimalMultiplier() - moduleProfile.minimumMultiplier()) / (moduleProfile.maximumMultiplier() - moduleProfile.minimumMultiplier())
+                        ) / Math.log(
+                                (moduleProfile.maximumMass() - moduleProfile.optimalMass()) / (moduleProfile.maximumMass() - moduleProfile.minimumMass())
+                        )
+                ) * (moduleProfile.maximumMultiplier() - moduleProfile.minimumMultiplier())
+        );
+    }
 }

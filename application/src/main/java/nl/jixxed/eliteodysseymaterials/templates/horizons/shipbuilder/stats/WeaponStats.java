@@ -4,6 +4,8 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
@@ -25,6 +27,7 @@ public class WeaponStats extends Stats implements Template {
     public WeaponStats() {
         super();
         initComponents();
+        initEventHandling();
     }
 
     @Override
@@ -55,6 +58,10 @@ public class WeaponStats extends Stats implements Template {
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.weapon.currentsustaineddamagepercentage"), new GrowingRegion(), this.currentSustainedDamagePercentage).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.weapon.maxsustaineddamagepercentage"), new GrowingRegion(), this.maxSustainedDamagePercentage).buildHBox());
 
+    }
+    @Override
+    public void initEventHandling() {
+        eventListeners.add(EventService.addListener(this, ShipConfigEvent.class, event -> update()));
     }
 
     private double calculateRawDamage() {

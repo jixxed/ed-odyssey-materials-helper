@@ -3,10 +3,12 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
 
 @RequiredArgsConstructor
 public enum SlotType {
+    CARGO_HATCH(CargoHatch.class, false),
     HARDPOINT(HardpointModule.class, false),
     UTILITY(UtilityModule.class, false),
     CORE_ARMOUR(Armour.class, true),

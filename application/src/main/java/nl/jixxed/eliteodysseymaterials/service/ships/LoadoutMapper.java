@@ -73,6 +73,10 @@ public class LoadoutMapper {
                                     }
                             ));
                 });
+                shipModule.setPowerGroup(module.getPriority().intValue()+1);
+                if(Boolean.FALSE.equals(module.getOn())){
+                    shipModule.togglePower();
+                }
                 slot.setShipModule(shipModule);
 
             }
@@ -153,6 +157,9 @@ public class LoadoutMapper {
         if (MILITARY_SLOT_NAMES.stream().anyMatch(slotName::contains)) {
             final List<Slot> militarySlots = ship.getOptionalSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.MILITARY)).toList();
             return getMilitarySlot(militarySlots, slotName);
+        }
+        if ("CargoHatch".equals(slotName)) {
+            return ship.getCargoHatch();
         }
         log.warn(String.format("Could not determine slot for ship: %s and slotname: %s", ship.getShipType(), slotName));
         return null;

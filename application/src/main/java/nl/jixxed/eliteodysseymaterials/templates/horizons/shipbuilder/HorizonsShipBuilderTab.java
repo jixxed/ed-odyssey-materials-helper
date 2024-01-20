@@ -308,7 +308,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                         this.contentChild.getChildren().add(this.shipView);
                     }
                     initShipSlots();
-                } else if (configuration != ShipConfiguration.CURRENT) {
+                } else if (configuration == ShipConfiguration.CURRENT) {
                     this.contentChild.getChildren().remove(this.shipSelectView);
                     this.contentChild.getChildren().remove(this.shipView);
                 } else {
@@ -348,7 +348,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                                 ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), configuration, shipSelect.getSelectionModel().getSelectedItem().getName());
                                 ShipService.saveShipConfigurations(commander, shipConfigurations);
                                 refreshContent();
-
+                                EventService.publish(new HorizonsShipSelectedEvent(configuration.getUuid()));
                             });
                         }
                 );
@@ -380,6 +380,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         this.stackPane.getStyleClass().add("shipbuilder-stackpane");
         final HBox stats = BoxBuilder.builder().buildHBox();
         stats.getChildren().addAll(
+                new Config(),
+                new ThermalPowerStats(),
                 new JumpStats(),
                 new EngineStats(),
                 new HandlingStats(),

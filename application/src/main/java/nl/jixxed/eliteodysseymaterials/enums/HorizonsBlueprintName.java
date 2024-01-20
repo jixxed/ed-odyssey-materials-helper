@@ -111,6 +111,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     PULSE_WAVE_XENO_SCANNER(BlueprintGroup.XENOS, BlueprintCategory.UTILITY_MOUNT),
     //special
     FUEL_TANK(BlueprintGroup.FUEL_TANKS, BlueprintCategory.OPTIONAL_INTERNAL),
+    CARGO_HATCH(BlueprintGroup.CARGO_HATCHES, BlueprintCategory.CARGO_HATCH),
     //core
     ARMOUR(BlueprintGroup.ARMOURS, BlueprintCategory.CORE_INTERNAL),
     LIGHTWEIGHT_ALLOY_ARMOUR(BlueprintGroup.ARMOURS, BlueprintCategory.CORE_INTERNAL, false),

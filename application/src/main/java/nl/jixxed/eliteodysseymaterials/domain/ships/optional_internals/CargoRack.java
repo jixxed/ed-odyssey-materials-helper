@@ -62,4 +62,12 @@ public class CargoRack extends OptionalModule {
     public CargoRack Clone() {
         return new CargoRack(this);
     }
+
+    @Override
+    public boolean isHiddenStat(HorizonsModifier modifier) {
+        if(HorizonsModifier.POWER_DRAW.equals(modifier)){
+            return true;
+        }
+        return super.isHiddenStat(modifier);
+    }
 }
