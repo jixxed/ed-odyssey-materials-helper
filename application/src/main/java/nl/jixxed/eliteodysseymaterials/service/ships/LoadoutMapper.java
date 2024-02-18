@@ -58,7 +58,7 @@ public class LoadoutMapper {
                     boolean isLegacy = isLegacy(shipModule, engineering);
                     HorizonsBlueprintType blueprint = determineBlueprint(engineering);
                     HorizonsBlueprintGrade grade = determineGrade(engineering);
-                    Double progression = determineGradeProgress(engineering);
+                    BigDecimal progression = determineGradeProgress(engineering);
                     if (isLegacy) {
                         shipModule.setLegacy(true);
                     }
@@ -78,6 +78,7 @@ public class LoadoutMapper {
                     shipModule.togglePower();
                 }
                 slot.setShipModule(shipModule);
+                slot.setOldShipModule(shipModule.Clone());
 
             }
         });
@@ -92,8 +93,8 @@ public class LoadoutMapper {
         return HorizonsBlueprintType.forInternalName(engineering.getBlueprintName());
     }
 
-    private static Double determineGradeProgress(Engineering engineering) {
-        return engineering.getQuality().doubleValue();
+    private static BigDecimal determineGradeProgress(Engineering engineering) {
+        return engineering.getQuality();
     }
 
     private static HorizonsBlueprintGrade determineGrade(Engineering engineering) {
@@ -103,7 +104,7 @@ public class LoadoutMapper {
     static boolean isPreEngineered(List<? extends ShipModule> potentialShipModules, Engineering engineering) {
         HorizonsBlueprintType blueprint = determineBlueprint(engineering);
         HorizonsBlueprintGrade grade = determineGrade(engineering);
-        Double progression = determineGradeProgress(engineering);
+        BigDecimal progression = determineGradeProgress(engineering);
         HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
         return potentialShipModules.stream().map(ShipModule::Clone).filter(shipModule -> {
             if (shipModule.getModifications().isEmpty()) {

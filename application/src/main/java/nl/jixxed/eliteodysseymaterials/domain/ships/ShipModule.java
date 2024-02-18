@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -115,7 +116,7 @@ public abstract class ShipModule implements Serializable {
         }).toList();
     }
 
-    public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final Double modificationCompleteness) {
+    public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final BigDecimal modificationCompleteness) {
         if (validModification(modification, false)) {
             final Modification mod = new Modification(modification, modificationCompleteness, grade);
             if (!this.modifications.contains(mod)) {
@@ -171,15 +172,15 @@ public abstract class ShipModule implements Serializable {
         return getAttributeValue(moduleAttribute, null);
     }
 
-    public double getAttributeCompleteness(final HorizonsModifier moduleAttribute) {
+    public BigDecimal getAttributeCompleteness(final HorizonsModifier moduleAttribute) {
         Double currentValue = (Double) this.modifiers.get(moduleAttribute);
         if (currentValue != null) {
             double minValue = (double) getAttributeValue(moduleAttribute, 0.0);
             double maxValue = (double) getAttributeValue(moduleAttribute, 1.0);
             if (maxValue == minValue) {
-                return 1D;
+                return BigDecimal.ONE;
             }
-            return (currentValue - minValue) / (maxValue - minValue);
+            return BigDecimal.valueOf((currentValue - minValue) / (maxValue - minValue));
         } else {
             return modifications.stream().findFirst().map(modification -> {
                 final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modifications.getFirst().getModification(), modifications.getFirst().getGrade());
@@ -187,9 +188,9 @@ public abstract class ShipModule implements Serializable {
                 if (horizonsModifierValue != null && horizonsModifierValue.isPositive()) {
                     return modifications.getFirst().getModificationCompleteness();
                 } else {
-                    return 1D;
+                    return BigDecimal.ONE;
                 }
-            }).orElse(0D);
+            }).orElse(BigDecimal.ZERO);
         }
     }
 
@@ -197,7 +198,7 @@ public abstract class ShipModule implements Serializable {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
-        if (modifiers.containsKey(moduleAttribute)) {
+        if (modifiers.containsKey(moduleAttribute) && completeness == null) {
             return modifiers.get(moduleAttribute);
         }
         if (isLegacy()) {
@@ -227,7 +228,7 @@ public abstract class ShipModule implements Serializable {
                 final HorizonsBiFunction current = moduleModifier.get();
                 if (current == null) {
                     positive.set(horizonsModifierValue.isPositive());
-                    modificationCompleteness.set(completeness != null ? completeness : modification.getModificationCompleteness());
+                    modificationCompleteness.set(completeness != null ? completeness : modification.getModificationCompleteness().doubleValue());
                     moduleModifier.set(horizonsModifierValue.getModifier());
                 } else {
                     moduleModifier.set(current.stack(horizonsModifierValue.getModifier()));

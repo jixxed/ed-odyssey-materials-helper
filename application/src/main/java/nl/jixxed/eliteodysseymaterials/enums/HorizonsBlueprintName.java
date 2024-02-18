@@ -96,7 +96,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     FRAME_SHIFT_WAKE_SCANNER(BlueprintGroup.FRAME_SHIFT_WAKE_SCANNERS, BlueprintCategory.UTILITY_MOUNT),
     HEAT_SINK_LAUNCHER(BlueprintGroup.SINK_LAUNCHERS, BlueprintCategory.UTILITY_MOUNT),
     HEAT_SINK_LAUNCHER_PRE(BlueprintGroup.SINK_LAUNCHERS, BlueprintCategory.UTILITY_MOUNT, false),
-    CAUSTIC_SINK_LAUNCHER(BlueprintGroup.SINK_LAUNCHERS, BlueprintCategory.UTILITY_MOUNT, false),
+    CAUSTIC_SINK_LAUNCHER(BlueprintGroup.SINK_LAUNCHERS, BlueprintCategory.UTILITY_MOUNT),
     KILL_WARRANT_SCANNER(BlueprintGroup.KILL_WARRANT_SCANNERS, BlueprintCategory.UTILITY_MOUNT),
     KILL_WARRANT_SCANNER_PRE(BlueprintGroup.KILL_WARRANT_SCANNERS, BlueprintCategory.UTILITY_MOUNT, false),
     MANIFEST_SCANNER(BlueprintGroup.MANIFEST_SCANNERS, BlueprintCategory.UTILITY_MOUNT),

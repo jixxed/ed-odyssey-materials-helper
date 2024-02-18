@@ -135,6 +135,7 @@ public class FrameShiftDrive extends CoreModule {
             FRAME_SHIFT_DRIVE_6_A_V1_PRE
     );
 
+    public static final List<HorizonsModifier> HIDDEN_STATS = List.of(HorizonsModifier.FUEL_MULTIPLIER, HorizonsModifier.FUEL_POWER);
     private FrameShiftDrive(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
@@ -169,5 +170,14 @@ public class FrameShiftDrive extends CoreModule {
     @Override
     public boolean isPreEngineered() {
         return HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE.equals(this.getName());
+    }
+
+
+    @Override
+    public boolean isHiddenStat(HorizonsModifier modifier) {
+        if(HIDDEN_STATS.contains(modifier)){
+            return true;
+        }
+        return super.isHiddenStat(modifier);
     }
 }

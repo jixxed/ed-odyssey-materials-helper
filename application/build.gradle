@@ -146,6 +146,7 @@ dependencies {
     implementation "org.apache.poi:poi-ooxml"
     implementation "org.apache.commons:commons-math3"
     implementation "com.zaxxer:SparseBitSet"
+    implementation "com.google.j2objc:j2objc-annotations"
 
 
     implementation("org.jfxtras:jmetro") {
@@ -194,7 +195,8 @@ extraJavaModuleInfo {
     }
     module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
     module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
-    module('j2objc-annotations-2.8.jar', 'com.google.j2objc.j2objc.annotations', '2.8')
+//    module('j2objc-annotations-2.8.jar', 'com.google.j2objc.j2objc.annotations', '2.8')
+    automaticModule('j2objc-annotations-2.8.jar', 'j2objc')
     module("commons-math3-${project.getProperties().version_apache_commons_math3}.jar", 'org.apache.commons.math3'){
         patchRealModule()
         exportAllPackages()

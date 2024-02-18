@@ -1,15 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ShipModuleButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ExternalModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Mounting;
@@ -52,17 +51,9 @@ public class SlotBoxEntry extends VBox {
         this.options =
                 stream.sorted(Comparator.comparing(shipModuleSubList -> shipModuleSubList.get(0).getModuleSize().toString() + (shipModuleSubList.get(0).groupOnName() ? shipModuleSubList.get(0).getName().toString() : "") + shipModuleSubList.get(0).getClarifier())).map(shipModuleSubList ->
                                 shipModuleSubList.stream().map(shipModule -> {
-                                            final Button button = ButtonBuilder.builder().withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + shipModule.getNonSortingClarifier() /*+ ((shipModule instanceof ExternalModule externalModule) ? externalModule.getMountingClarifier() : "")*/).withOnAction(event -> {
+                                            final ShipModuleButton button = ShipModuleButtonBuilder.builder().withShipModule(shipModule).withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + shipModule.getNonSortingClarifier()).withOnAction(event -> {
                                                 final ShipModule clone = shipModule.Clone();
                                                 if(slotBox.getSlot().getShipModule() != null) {
-//                                                    if (slotBox.getSlot().getShipModule().isPreEngineered() || !slotBox.getSlot().getShipModule().getName().equals(clone.getName()) || !slotBox.getSlot().getShipModule().getModifications().stream().allMatch(modification ->clone.getAllowedBlueprints().stream().anyMatch(horizonsBlueprintType ->  modification.getModification().equals(horizonsBlueprintType)))) {
-////                                                    slotBox.getSlot().setEngineering(null);
-//                                                        slotBox.getSlot().getShipModule().getModifications().clear();
-//                                                    }
-//                                                    if (slotBox.getSlot().getShipModule().isPreEngineered() || !slotBox.getSlot().getShipModule().getName().equals(clone.getName()) || !slotBox.getSlot().getShipModule().getExperimentalEffects().stream().allMatch(horizonsBlueprintType -> clone.getAllowedExperimentalEffects().contains(horizonsBlueprintType))) {
-////                                                    slotBox.getSlot().setExperimentalEffect(null);
-//                                                        slotBox.getSlot().getShipModule().getExperimentalEffects().clear();
-//                                                    }
                                                     if(isSimilar(slotBox.getSlot().getShipModule(), clone) ) {
                                                         if(!clone.isPreEngineered()){//already pre-applied
                                                             clone.getModifications().addAll(slotBox.getSlot().getShipModule().getModifications());
@@ -70,7 +61,6 @@ public class SlotBoxEntry extends VBox {
                                                         clone.getExperimentalEffects().addAll(slotBox.getSlot().getShipModule().getExperimentalEffects());
                                                     }
                                                 }
-//                                              tab.getShip().replaceShipModule(slotBox.getSlot().getShipModule(), clone);
                                                 slotBox.getSlot().setShipModule(clone);
                                                 notifyChanged();
                                                 slotBox.refresh();
@@ -106,7 +96,7 @@ public class SlotBoxEntry extends VBox {
                                             button.setDisable(slotBox.getSlot().getSlotSize() < shipModule.getModuleSize().intValue());
                                             return button;
                                         }
-                                ).toArray(Button[]::new)
+                                ).toArray(ShipModuleButton[]::new)
                 ).map(buttons -> {
                     final HBox hBox = BoxBuilder.builder().withStyleClass("ships-modules-buttons").withNodes(buttons).buildHBox();
                     Arrays.stream(buttons).forEach(button -> button.prefWidthProperty().bind(this.widthProperty().subtract((buttons.length - 1) * hBox.getSpacing()).divide(buttons.length)));

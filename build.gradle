@@ -112,6 +112,7 @@ allprojects {
             implementation "com.github.scribejava:scribejava-core:${version_scribejava}"
             implementation "com.google.guava:guava:33.0.0-jre"
             implementation "com.zaxxer:SparseBitSet:${version_sparsebitset}"
+            implementation "com.google.j2objc:j2objc-annotations:2.8"
             implementation "commons-io:commons-io:2.15.1"
             implementation "io.github.pustike:commons-csv:1.7.0"
             implementation "io.reactivex.rxjava3:rxjava:3.1.8"

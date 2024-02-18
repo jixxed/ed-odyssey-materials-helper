@@ -97,7 +97,7 @@ public class Config extends Stats implements Template {
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
         });
         fuelreserve.valueProperty().addListener((observable, oldValue, newValue) -> {
-            this.getShip().ifPresent(ship -> ship.setCurrentCargo(newValue.doubleValue()));
+            this.getShip().ifPresent(ship -> ship.setCurrentFuelReserve(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
         });
     }
@@ -136,7 +136,7 @@ public class Config extends Stats implements Template {
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
 //            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
-            this.powerBox.getChildren().addAll(growingRegion, powerButton, new GrowingRegion());
+            this.powerBox.getChildren().addAll(growingRegion, this.power, new GrowingRegion());
         }
     }
 
@@ -144,12 +144,16 @@ public class Config extends Stats implements Template {
         if (shipModule != null) {
             this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", "Power group " + shipModule.getPowerGroup());
             this.powerButton.setGraphic(this.power);
+            final boolean hasPowerToggle = shipModule.hasPowerToggle();
+            this.power.setVisible(hasPowerToggle);
             if (!isCurrentShip()) {
-                final boolean hasPowerToggle = shipModule.hasPowerToggle();
                 final int powerGroup = shipModule.getPowerGroup();
                 this.powerUp.setVisible(hasPowerToggle && powerGroup > 1);
                 this.powerDown.setVisible(hasPowerToggle && powerGroup < 5);
                 this.powerButton.setVisible(hasPowerToggle);
+            }else{
+                this.powerBox.getChildren().clear();
+                this.powerBox.getChildren().addAll(new GrowingRegion(), this.power, new GrowingRegion());
             }
         }
     }

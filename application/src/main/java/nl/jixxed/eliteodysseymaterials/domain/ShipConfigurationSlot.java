@@ -21,7 +21,7 @@ public class ShipConfigurationSlot {
     private Integer index;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String id;
+    private String id;//module
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean legacy;
@@ -41,6 +41,8 @@ public class ShipConfigurationSlot {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final Map<HorizonsModifier, Object> modifiers = new HashMap<>();
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private ShipConfigurationOldModule oldModule;
     public ShipConfigurationSlot cloneShipConfigurationSlot() {
         ShipConfigurationSlot clone = new ShipConfigurationSlot();
         clone.index = this.index;
@@ -48,6 +50,13 @@ public class ShipConfigurationSlot {
         clone.legacy = this.legacy;
         clone.powered = this.powered;
         clone.powerGroup = this.powerGroup;
+        if(this.oldModule != null) {
+            clone.oldModule = new ShipConfigurationOldModule(
+                    this.oldModule.getId(),
+                    this.oldModule.getModification().stream().map(mod -> new ShipConfigurationModification(mod.getType(), mod.getGrade(), mod.getPercentComplete())).toList(),
+                    this.oldModule.getExperimentalEffect().stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList()
+            );
+        }
         clone.modification.addAll(modification.stream().map(mod -> new ShipConfigurationModification(mod.getType(),mod.getGrade(),mod.getPercentComplete())).toList());
         clone.experimentalEffect.addAll(experimentalEffect.stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList());
         modifiers.entrySet().stream().map(mod -> Map.entry(mod.getKey(), cloneMod(mod.getValue()))).forEach(entry-> clone.modifiers.put(entry.getKey(), entry.getValue()));
@@ -63,7 +72,13 @@ public class ShipConfigurationSlot {
             default -> throw new IllegalStateException("Unexpected legacy modification value type: " + value);
         };
     }
-
+//    public void trackChanges(){
+//        oldModule = new ShipConfigurationOldModule(
+//                getId(),
+//                getModification().stream().map(mod -> new ShipConfigurationModification(mod.getType(), mod.getGrade(), mod.getPercentComplete())).toList(),
+//                getExperimentalEffect().stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList()
+//        );
+//    }
     public boolean isLegacy() {
         return Boolean.TRUE.equals(legacy);
     }

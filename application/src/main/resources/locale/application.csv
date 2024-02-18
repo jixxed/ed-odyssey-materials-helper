@@ -96,3 +96,11 @@ version.dialog.text2,Did you know that there is an auto updater available for th
 version.dialog.ok,Ok,Ok,OK,De acuerdo,D’accord,OK,Хорошо
 version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,Baixar,Скачать
 statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
+segment.type.present,Present,,,,,,
+segment.type.not_present,Not present,,,,,,
+segment.type.power_group_1,1,,,,,,
+segment.type.power_group_2,2,,,,,,
+segment.type.power_group_3,3,,,,,,
+segment.type.power_group_4,4,,,,,,
+segment.type.power_group_5,5,,,,,,
+segment.type.power_group_none,Available,,,,,,

@@ -34,6 +34,8 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import org.controlsfx.control.PopOver;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -85,6 +87,9 @@ class SlotBox extends StackPane {
     private Button powerButton;
     private Button powerUp;
     private Button powerDown;
+    private Slider progressSlider;
+    private List<ToggleButton> toggleButtonsRank;
+    private ToggleGroup toggleGroupRank;
 
     SlotBox(final HorizonsShipBuilderTab tab, final Slot slot) {
         this.setFocusTraversable(true);
@@ -126,7 +131,7 @@ class SlotBox extends StackPane {
                     return mods + ((effects.isEmpty()) ? "" : ", " + effects);
                 }).orElse(""))
         ).build();
-        updateBlueprints(slot.getShipModule());
+        updateBlueprints(slot.getShipModule(), slot.getOldShipModule());
         final StackPane stackPane1 = new StackPane(this.iconBox);
         stackPane1.getStyleClass().add("shipbuilder-slots-slotbox-icons-stackpane");
         if (SlotType.MILITARY.equals(this.slot.getSlotType())) {
@@ -476,7 +481,7 @@ class SlotBox extends StackPane {
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
 //            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
-            this.powerBox.getChildren().addAll(growingRegion, powerButton, new GrowingRegion());
+            this.powerBox.getChildren().addAll(growingRegion, this.power, new GrowingRegion());
         }
     }
 
@@ -539,7 +544,7 @@ class SlotBox extends StackPane {
         this.refresh();
     }
 
-    private void updateBlueprints(ShipModule shipModule) {
+    private void updateBlueprints(ShipModule shipModule, ShipModule oldShipModule) {
 
         this.blueprints.textProperty().bind(
                 LocaleService.getStringBinding(() -> Optional.ofNullable(shipModule).map(mod -> {
@@ -552,6 +557,37 @@ class SlotBox extends StackPane {
                     return mods + ((effects.isEmpty()) ? "" : ", " + effects);
                 }).orElse(""))
         );
+        if (similarModules(shipModule, oldShipModule)) {
+            if(!this.blueprints.getStyleClass().contains("shipbuilder-slots-slotbox-blueprints-label-gold")) {
+                this.blueprints.getStyleClass().add("shipbuilder-slots-slotbox-blueprints-label-gold");
+            }
+        }else{
+            this.blueprints.getStyleClass().removeAll("shipbuilder-slots-slotbox-blueprints-label-gold");
+        }
+    }
+
+    private static boolean similarModules(ShipModule shipModule, ShipModule oldShipModule) {
+        return shipModule != null && oldShipModule != null && shipModule.getId().equals(oldShipModule.getId()) && matchingExperimentalEffects(shipModule, oldShipModule) && matchingBlueprints(shipModule, oldShipModule);
+    }
+
+    private static boolean matchingExperimentalEffects(ShipModule shipModule, ShipModule oldShipModule) {
+        return new HashSet<>(shipModule.getExperimentalEffects()).containsAll(oldShipModule.getExperimentalEffects());
+    }
+
+    private static boolean matchingBlueprints(ShipModule shipModule, ShipModule oldShipModule) {
+        boolean matching = shipModule.getModifications().size() == oldShipModule.getModifications().size();
+        if (matching) {
+            for (Modification modification : shipModule.getModifications()) {
+                final Optional<Modification> oldModification = oldShipModule.getModifications().stream()
+                        .filter(oldMod -> oldMod.equals(modification))
+                        .findFirst();
+                matching = oldModification
+                        .map(oldModification1 -> modification.getModificationCompleteness().equals(oldModification1.getModificationCompleteness()) && modification.getGrade().equals(oldModification1.getGrade()))
+                        .orElse(false);
+                if (!matching) break;
+            }
+        }
+        return matching;
     }
 
     private void updateMounting(ShipModule shipModule) {
@@ -597,12 +633,16 @@ class SlotBox extends StackPane {
         if (shipModule != null) {
             this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", "Power group " + shipModule.getPowerGroup());
             this.powerButton.setGraphic(this.power);
+            final boolean hasPowerToggle = shipModule.hasPowerToggle();
+            this.power.setVisible(hasPowerToggle);
             if (!isCurrentShip()) {
-                final boolean hasPowerToggle = shipModule.hasPowerToggle();
                 final int powerGroup = shipModule.getPowerGroup();
                 this.powerUp.setVisible(hasPowerToggle && powerGroup < 5);
                 this.powerDown.setVisible(hasPowerToggle && powerGroup > 1);
                 this.powerButton.setVisible(hasPowerToggle);
+            } else {
+                this.powerBox.getChildren().clear();
+                this.powerBox.getChildren().addAll(new GrowingRegion(), this.power, new GrowingRegion());
             }
         }
     }
@@ -663,7 +703,7 @@ class SlotBox extends StackPane {
             if (!shipModule.getModifications().isEmpty()) {
                 if (!shipModule.isLegacy()) {
                     this.iconBox.getChildren().add(
-                            LabelBuilder.builder().withNonLocalizedText(NUMBER_FORMAT.format(shipModule.getModifications().getFirst().getModificationCompleteness() * 100) + "%").build()
+                            LabelBuilder.builder().withNonLocalizedText(NUMBER_FORMAT.format(shipModule.getModifications().getFirst().getModificationCompleteness().multiply(BigDecimal.valueOf(100))) + "%").build()//TODO maybe doublevalue
                     );
                 }
                 this.iconBox.getChildren().addAll(
@@ -719,24 +759,26 @@ class SlotBox extends StackPane {
         updateSize(shipModule);
         updatePower(shipModule);
         updateSlotIcons(shipModule);
-        updateBlueprints(shipModule);
+        updateBlueprints(shipModule, this.slot.getOldShipModule());
     }
 
     private PopOver getPopOver() {
         final VBox content = BoxBuilder.builder()/*.withNode(LabelBuilder.builder().withNonLocalizedText("test").build())*/.withStyleClass("shipbuilder-slots-slotbox-popover-vbox").buildVBox();
+        final List<SlotBoxEntry> entries = ShipModule.getModules(this.slot.getSlotType()).stream()
+                .filter(module -> module.isAllowed(ApplicationState.getInstance().getShip().getShipType()))
+                .collect(Collectors.groupingBy(ShipModule::getClass))
+                .values().stream().map(list -> new SlotBoxEntry(tab, this, list))
+                .sorted(Comparator.comparing(slotBoxEntry -> slotBoxEntry.name.getText()))
+                .toList();
+        if (entries.size() > 1) {
+            addSearch(content, entries);
+        }
         //add engineering
         if (this.slot.isOccupied() && !this.slot.getShipModule().isLegacy()) {
             addEngineering(content);
             addExperimentalEffects(content);
         }
-        content.getChildren().addAll(
-                ShipModule.getModules(this.slot.getSlotType()).stream()
-                        .filter(module -> module.isAllowed(ApplicationState.getInstance().getShip().getShipType()))
-                        .collect(Collectors.groupingBy(ShipModule::getClass))
-                        .values().stream().map(list -> new SlotBoxEntry(tab, this, list))
-                        .sorted(Comparator.comparing(slotBoxEntry -> slotBoxEntry.name.getText()))
-                        .toList()
-        );
+        content.getChildren().addAll(entries);
         final ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.getStyleClass().add("shipbuilder-slots-slotbox-popover-content");
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
@@ -749,6 +791,37 @@ class SlotBox extends StackPane {
         popOver.arrowIndentProperty().set(0);
         popOver.cornerRadiusProperty().set(0);
         return popOver;
+    }
+
+    private void addSearch(VBox content, final List<SlotBoxEntry> entries) {
+        final TextField textField = TextFieldBuilder.builder().withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder")).build();
+
+        textField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            content.getChildren().remove(1, content.getChildren().size());
+            if (Objects.equals(newValue, "")) {
+                //add engineering
+                if (this.slot.isOccupied() && !this.slot.getShipModule().isLegacy()) {
+                    addEngineering(content);
+                    addExperimentalEffects(content);
+                }
+            }
+            boolean isCG = "community goal".contains(newValue) || "cg".contains(newValue);
+            boolean isPreEngineered = "pre engineered".contains(newValue) || "pre-engineered".contains(newValue);
+            boolean isLegacy = "legacy".contains(newValue);
+            boolean isPowerplay = "powerplay".contains(newValue);
+            content.getChildren().addAll(entries.stream().filter(entry ->
+                    entry.name.getText().toLowerCase().contains(newValue.toLowerCase())
+                            || entry.options.stream().anyMatch(box -> box.getChildren().stream().map(button -> ((ShipModuleButton) button).getShipModule()).anyMatch(shipModule ->
+                                    LocaleService.getLocalizedStringForCurrentLocale(shipModule.getName().getLocalizationKey()).toLowerCase().contains(newValue.toLowerCase())
+                                            || (isCG && shipModule.isCGExclusive())
+                                            || (isPreEngineered && shipModule.isPreEngineered())
+                                            || (isLegacy && shipModule.isLegacy())
+                                            || (isPowerplay && shipModule.getOrigin().equals(Origin.POWERPLAY))
+                            )
+                    )
+            ).toList());
+        });
+        content.getChildren().add(textField);
     }
 
     private void addEngineering(final VBox content) {
@@ -795,10 +868,15 @@ class SlotBox extends StackPane {
                                                 }
                                             } else {
                                                 if (((ToggleButton) event.getTarget()).isSelected()) {
-                                                    final HorizonsBlueprintGrade horizonsBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade).reversed()).findFirst().orElseThrow(IllegalArgumentException::new);
-                                                    log.debug(horizonsBlueprintGrade.toString());
-                                                    getSlot().getShipModule().applyModification(horizonsBlueprintType, horizonsBlueprintGrade, 1D);
-                                                    maxGrade.set(horizonsBlueprintGrade.getGrade());
+                                                    final HorizonsBlueprintGrade maxGradeForModification = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElseThrow(IllegalArgumentException::new);
+                                                    log.debug(maxGradeForModification.toString());
+//                                                    final HorizonsBlueprintGrade grade = shipModule.getModifications().stream().findFirst().map(Modification::getGrade).orElse(maxGradeForModification);
+                                                    final HorizonsBlueprintGrade grade = HorizonsBlueprintGrade.forDigit(((ToggleButton)toggleGroupRank.getSelectedToggle()).getText());
+                                                    final BigDecimal completeness = BigDecimal.valueOf(progressSlider.getValue()).divide(BigDecimal.valueOf(100));
+//                                                    final BigDecimal completeness = shipModule.getModifications().stream().findFirst().map(Modification::getModificationCompleteness).orElse(BigDecimal.ONE);
+                                                    getSlot().getShipModule().applyModification(horizonsBlueprintType,  grade.getGrade() <= maxGradeForModification.getGrade() ? grade : maxGradeForModification, completeness);
+//                                                    getSlot().getShipModule().applyModification(horizonsBlueprintType, grade, 1D);
+                                                    maxGrade.set(maxGradeForModification.getGrade());
                                                 } else {
                                                     getSlot().getShipModule().removeModification(horizonsBlueprintType);
                                                     maxGrade.set(0);
@@ -828,9 +906,10 @@ class SlotBox extends StackPane {
                                             getSlot().getShipModule().applyExperimentalEffect(horizonsBlueprintType);
                                         } else {
 //                                    getSlot().setEngineering(horizonsBlueprintType);
-                                            final HorizonsBlueprintGrade horizonsBlueprintGrade = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade).reversed()).findFirst().orElseThrow(IllegalArgumentException::new);
-                                            log.debug(horizonsBlueprintGrade.toString());
-                                            getSlot().getShipModule().applyModification(horizonsBlueprintType, horizonsBlueprintGrade, 1D);
+                                            final HorizonsBlueprintGrade maxGradeForModification = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElseThrow(IllegalArgumentException::new);
+                                            final HorizonsBlueprintGrade grade = HorizonsBlueprintGrade.forDigit(((ToggleButton)toggleGroupRank.getSelectedToggle()).getText());
+                                            final BigDecimal completeness = BigDecimal.valueOf(progressSlider.getValue()).divide(BigDecimal.valueOf(100), 6, RoundingMode.HALF_EVEN);
+                                            getSlot().getShipModule().applyModification(horizonsBlueprintType, grade.getGrade() <= maxGradeForModification.getGrade() ? grade : maxGradeForModification, completeness);
                                             //TODO configurable completeness and grades
                                         }
                                         notifyChanged();
@@ -867,8 +946,8 @@ class SlotBox extends StackPane {
     private void addGradeSelection(boolean experimental, ShipModule shipModule, ToggleGroup toggleGroup, VBox vBox) {
         if (!experimental) {
             final HBox progression = BoxBuilder.builder().buildHBox();
-            final ToggleGroup toggleGroupRank = new ToggleGroup();
-            final List<ToggleButton> toggleButtonsRank = new ArrayList<>();
+            toggleGroupRank = new ToggleGroup();
+            toggleButtonsRank = new ArrayList<>();
             Arrays.stream(HorizonsBlueprintGrade.values()).filter(grade -> !HorizonsBlueprintGrade.NONE.equals(grade)).forEach(horizonsBlueprintGrade -> {
                 final ToggleButton toggleButton = ToggleButtonBuilder.builder().withStyleClass("toggle-button-").withNonLocalizedText(String.valueOf(horizonsBlueprintGrade.getGrade())).withOnAction(event -> {
                     shipModule.getModifications().getFirst().setGrade(horizonsBlueprintGrade);
@@ -904,13 +983,13 @@ class SlotBox extends StackPane {
 
             });
             progression.getChildren().addAll(toggleButtonsRank);
-            final Slider slider = SliderBuilder.builder()
+            progressSlider = SliderBuilder.builder()
                     .withMin(0)
                     .withMax(100)
-                    .withValue(100 * shipModule.getModifications().stream()
+                    .withValue(shipModule.getModifications().stream()
                             .findFirst()
                             .map(Modification::getModificationCompleteness)
-                            .orElse(1D))
+                            .orElse(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).doubleValue())
 //                    .withChangeListener((observable, oldValue, newValue) -> {
 //                        shipModule.getModifications().getFirst().setModificationCompleteness(newValue.doubleValue() / 100D);
 //                        //debounce
@@ -919,8 +998,8 @@ class SlotBox extends StackPane {
 //                        //TODO save progression
 //                    })
                     .build();
-            Observable.create((ObservableEmitter<Number> emitter) -> slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        shipModule.getModifications().getFirst().setModificationCompleteness(newValue.doubleValue() / 100D);
+            Observable.create((ObservableEmitter<Number> emitter) -> progressSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        shipModule.getModifications().getFirst().setModificationCompleteness(BigDecimal.valueOf(newValue.doubleValue()).divide(BigDecimal.valueOf(100D)));
                         shipModule.getModifiers().clear();
                         emitter.onNext(newValue);
                     }))
@@ -933,13 +1012,13 @@ class SlotBox extends StackPane {
                                 }
                         );
                     });
-            slider.setStyle("-fx-fit-to-width: true;-fx-max-width: 40em;-fx-pref-width: 40em;");
-            slider.disableProperty().bind(toggleGroup.selectedToggleProperty().isNull());
+            progressSlider.setStyle("-fx-fit-to-width: true;-fx-max-width: 40em;-fx-pref-width: 40em;");
+            progressSlider.disableProperty().bind(toggleGroup.selectedToggleProperty().isNull());
             final TextField textvalue = TextFieldBuilder.builder().withFocusTraversable(false).build();
-            textvalue.textProperty().bind(slider.valueProperty().map(number -> NUMBER_FORMAT.format(number) + "%"));
+            textvalue.textProperty().bind(progressSlider.valueProperty().map(number -> NUMBER_FORMAT.format(number) + "%"));
             textvalue.setDisable(true);
             textvalue.setStyle("-fx-max-width: 4.5em;-fx-min-width: 4.5em;");
-            progression.getChildren().add(slider);
+            progression.getChildren().add(progressSlider);
             progression.getChildren().add(textvalue);
 
             vBox.getChildren().add(progression);

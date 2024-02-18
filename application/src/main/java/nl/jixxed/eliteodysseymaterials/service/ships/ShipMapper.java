@@ -1,10 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service.ships;
 
 import com.google.common.primitives.Ints;
-import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
-import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationExperimentalEffect;
-import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationModification;
-import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationSlot;
+import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
@@ -87,6 +84,7 @@ public class ShipMapper {
 
     private static void mapSlot(ShipConfigurationSlot shipConfigurationSlot, Slot slot) {
         final Optional<ShipModule> shipModule1 = ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(shipConfigurationSlot.getId())).findFirst();
+        final Optional<ShipModule> oldShipModule = Optional.ofNullable(shipConfigurationSlot.getOldModule()).map(mod->ShipModule.getModules(slot.getSlotType()).stream().filter(shipModule -> shipModule.getId().equals(mod.getId())).findFirst()).orElse(Optional.empty());
         shipModule1.ifPresent(shipModule2 -> {
             ShipModule shipModule = shipModule2.Clone();
             shipConfigurationSlot.getModification().forEach(shipConfigurationModification -> {
@@ -107,11 +105,23 @@ public class ShipMapper {
                 shipModule.togglePower();
             }
             if (shipConfigurationSlot.getPowerGroup() != null) {
-                    shipModule.setPowerGroup(Ints.constrainToRange(shipConfigurationSlot.getPowerGroup(),1,5));
+                shipModule.setPowerGroup(Ints.constrainToRange(shipConfigurationSlot.getPowerGroup(), 1, 5));
 
             }
             slot.setShipModule(shipModule);
         });
+        oldShipModule.ifPresentOrElse(shipModule2 -> {
+            ShipModule shipModule = shipModule2.Clone();
+            shipConfigurationSlot.getOldModule().getModification().forEach(shipConfigurationModification -> {
+                if (!shipConfigurationModification.getType().isPreEngineered()) {// no need to double apply pre-engineering
+                    shipModule.getModifications().add(new Modification(shipConfigurationModification.getType(), shipConfigurationModification.getPercentComplete(), shipConfigurationModification.getGrade()));
+                }
+            });
+            shipConfigurationSlot.getOldModule().getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
+                shipModule.getExperimentalEffects().add(shipConfigurationExperimentalEffect.getType());
+            });
+            slot.setOldShipModule(shipModule);
+        }, () -> slot.setOldShipModule(null));
     }
 
     private static void mapShipConfigurationSlot(Slot slot, ShipConfigurationSlot shipConfigurationSlot) {
@@ -131,5 +141,11 @@ public class ShipMapper {
             }
             shipConfigurationSlot.getModifiers().putAll(shipModule.getModifiers());
         });
+        Optional.ofNullable(slot.getOldShipModule()).ifPresentOrElse(shipModule -> {
+            var id = shipModule.getId();
+            var modifications = shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness())).toList();
+            var effects = shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList();
+            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, modifications, effects));
+        }, () -> shipConfigurationSlot.setOldModule(null));
     }
 }

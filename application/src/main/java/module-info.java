@@ -51,6 +51,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates.components.segmentbar to javafx.fxml, org.controlsfx.controls;
+    exports nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
     opens nl.jixxed.eliteodysseymaterials.templates.components.slider to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.service.ar;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons;

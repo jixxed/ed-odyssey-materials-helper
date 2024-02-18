@@ -13,45 +13,56 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.Optional;
 
 @Slf4j
 public class HandlingStats extends Stats implements Template {
-    private final DestroyableLabel currentPitch;
-    private final DestroyableLabel currentRoll;
-    private final DestroyableLabel currentYaw;
-    private final DestroyableLabel minimumPitch;
-    private final DestroyableLabel minimumRoll;
-    private final DestroyableLabel minimumYaw;
-    private final DestroyableLabel maximumPitch;
-    private final DestroyableLabel maximumRoll;
-    private final DestroyableLabel maximumYaw;
+//    private final DestroyableLabel currentPitch;
+//    private final DestroyableLabel currentRoll;
+//    private final DestroyableLabel currentYaw;
+//    private final DestroyableLabel minimumPitch;
+//    private final DestroyableLabel minimumRoll;
+//    private final DestroyableLabel minimumYaw;
+//    private final DestroyableLabel maximumPitch;
+//    private final DestroyableLabel maximumRoll;
+//    private final DestroyableLabel maximumYaw;
+    private RangeIndicator pitchIndicator;
+    private RangeIndicator rollIndicator;
+    private RangeIndicator yawIndicator;
 
     public HandlingStats() {
         super();
         initComponents();
         initEventHandling();
         final ModuleProfile moduleProfile = new ModuleProfile(0D, 0D, 0D, 0D, 0D, 0D);
-        this.currentPitch = createValueLabel(String.format("%.2f", 0.0f));
-        this.currentRoll = createValueLabel(String.format("%.2f", 0.0f));
-        this.currentYaw = createValueLabel(String.format("%.2f", 0.0f));
-        this.minimumPitch = createValueLabel(String.format("%.2f", 0.0f));
-        this.minimumRoll = createValueLabel(String.format("%.2f", 0.0f));
-        this.minimumYaw = createValueLabel(String.format("%.2f", 0.0f));
-        this.maximumPitch = createValueLabel(String.format("%.2f", 0.0f));
-        this.maximumRoll = createValueLabel(String.format("%.2f", 0.0f));
-        this.maximumYaw = createValueLabel(String.format("%.2f", 0.0f));
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentpitch"), new GrowingRegion(), this.currentPitch).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentroll"), new GrowingRegion(), this.currentRoll).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentyaw"), new GrowingRegion(), this.currentYaw).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumpitch"), new GrowingRegion(), this.minimumPitch).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumroll"), new GrowingRegion(), this.minimumRoll).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumyaw"), new GrowingRegion(), this.minimumYaw).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumpitch"), new GrowingRegion(), this.maximumPitch).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumroll"), new GrowingRegion(), this.maximumRoll).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumyaw"), new GrowingRegion(), this.maximumYaw).buildHBox());
+//        this.currentPitch = createValueLabel(String.format("%.2f", 0.0f));
+//        this.currentRoll = createValueLabel(String.format("%.2f", 0.0f));
+//        this.currentYaw = createValueLabel(String.format("%.2f", 0.0f));
+//        this.minimumPitch = createValueLabel(String.format("%.2f", 0.0f));
+//        this.minimumRoll = createValueLabel(String.format("%.2f", 0.0f));
+//        this.minimumYaw = createValueLabel(String.format("%.2f", 0.0f));
+//        this.maximumPitch = createValueLabel(String.format("%.2f", 0.0f));
+//        this.maximumRoll = createValueLabel(String.format("%.2f", 0.0f));
+//        this.maximumYaw = createValueLabel(String.format("%.2f", 0.0f));
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentpitch"), new GrowingRegion(), this.currentPitch).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentroll"), new GrowingRegion(), this.currentRoll).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentyaw"), new GrowingRegion(), this.currentYaw).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumpitch"), new GrowingRegion(), this.minimumPitch).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumroll"), new GrowingRegion(), this.minimumRoll).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumyaw"), new GrowingRegion(), this.minimumYaw).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumpitch"), new GrowingRegion(), this.maximumPitch).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumroll"), new GrowingRegion(), this.maximumRoll).buildHBox());
+//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumyaw"), new GrowingRegion(), this.maximumYaw).buildHBox());
+//
+
+
+        pitchIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.handling.pitch");
+        this.getChildren().add(pitchIndicator);
+        rollIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.handling.roll");
+        this.getChildren().add(rollIndicator);
+        yawIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.handling.yaw");
+        this.getChildren().add(yawIndicator);
     }
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
@@ -161,15 +172,21 @@ public class HandlingStats extends Stats implements Template {
             final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
             log.debug("update handling: " + this.getShip().isPresent());
             this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
-            this.currentPitch.setText(String.format("%.2f", calculatePitchCurrent(ship, (pitchSpeed * multiplier + minPitchSpeed * (1 - multiplier)), moduleProfile)));
-            this.currentRoll.setText(String.format("%.2f", calculateRollCurrent(ship, (rollSpeed * multiplier + minRollSpeed * (1 - multiplier)), moduleProfile) ));
-            this.currentYaw.setText(String.format("%.2f", calculateYawCurrent(ship, (yawSpeed * multiplier + minYawSpeed * (1 - multiplier)), moduleProfile)));
-            this.minimumPitch.setText(String.format("%.2f", calculatePitchMinimum(ship, (minPitchSpeed), moduleProfile)));
-            this.minimumRoll.setText(String.format("%.2f", calculateRollMinimum(ship, minRollSpeed, moduleProfile)));
-            this.minimumYaw.setText(String.format("%.2f", calculateYawMinimum(ship, minYawSpeed, moduleProfile)));
-            this.maximumPitch.setText(String.format("%.2f", calculatePitchMaximum(ship, pitchSpeed, moduleProfile)));
-            this.maximumRoll.setText(String.format("%.2f", calculateRollMaximum(ship, rollSpeed, moduleProfile)));
-            this.maximumYaw.setText(String.format("%.2f", calculateYawMaximum(ship, yawSpeed, moduleProfile)));
+            var currentPitch = calculatePitchCurrent(ship, (pitchSpeed * multiplier + minPitchSpeed * (1 - multiplier)), moduleProfile);
+            var currentRoll = calculateRollCurrent(ship, (rollSpeed * multiplier + minRollSpeed * (1 - multiplier)), moduleProfile) ;
+            var currentYaw = calculateYawCurrent(ship, (yawSpeed * multiplier + minYawSpeed * (1 - multiplier)), moduleProfile);
+            var minimumPitch = calculatePitchMinimum(ship, (minPitchSpeed), moduleProfile);
+            var minimumRoll = calculateRollMinimum(ship, minRollSpeed, moduleProfile);
+            var minimumYaw = calculateYawMinimum(ship, minYawSpeed, moduleProfile);
+            var maximumPitch = calculatePitchMaximum(ship, pitchSpeed, moduleProfile);
+            var maximumRoll = calculateRollMaximum(ship, rollSpeed, moduleProfile);
+            var maximumYaw = calculateYawMaximum(ship, yawSpeed, moduleProfile);
+
+
+            this.pitchIndicator.updateValues(minimumPitch, currentPitch, maximumPitch);
+            this.rollIndicator.updateValues(minimumRoll, currentRoll, maximumRoll);
+            this.yawIndicator.updateValues(minimumYaw, currentYaw, maximumYaw);
+
         });
     }
 

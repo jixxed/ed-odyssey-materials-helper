@@ -23,6 +23,8 @@ public class ThermalPowerStats extends Stats implements Template {
     private DestroyableLabel fsdThermals;
     private DestroyableLabel retractedPower;
     private DestroyableLabel deployedPower;
+    private PowerBar retractedPowerBar;
+    private PowerBar deployedPowerBar;
 
     public ThermalPowerStats() {
         super();
@@ -32,18 +34,24 @@ public class ThermalPowerStats extends Stats implements Template {
 
     @Override
     public void initComponents() {
-        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.thermalpower"), new GrowingRegion()).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.thermal"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         this.idleThermals = createValueLabel(String.format("%.2f", 0D));
         this.thrusterThermals = createValueLabel(String.format("%.2f", 0D));
         this.fsdThermals = createValueLabel(String.format("%.2f", 0D));
         this.retractedPower = createValueLabel(String.format("%.2f", 0D));
         this.deployedPower = createValueLabel(String.format("%.2f", 0D));
+        this.retractedPowerBar = new PowerBar();
+        this.deployedPowerBar = new PowerBar();
 
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.idleThermals"), new GrowingRegion(), this.idleThermals).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.thrusterThermals"), new GrowingRegion(), this.thrusterThermals).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.fsdThermals"), new GrowingRegion(), this.fsdThermals).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.power"), new GrowingRegion()).buildHBox());
+        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.retractedPower"), new GrowingRegion(), this.retractedPower).buildHBox());
+        this.getChildren().add(retractedPowerBar);
+        this.getChildren().add(deployedPowerBar);
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.deployedPower"), new GrowingRegion(), this.deployedPower).buildHBox());
 
     }
@@ -327,5 +335,7 @@ public class ThermalPowerStats extends Stats implements Template {
         this.fsdThermals.setText(String.format("%.2f", calculateFsdThermals()));
         this.retractedPower.setText(String.format("%.2f", calculateRetractedPower().values().stream().reduce(0D, Double::sum)));
         this.deployedPower.setText(String.format("%.2f", calculateDeployedPower().values().stream().reduce(0D, Double::sum)));
+        this.retractedPowerBar.update(true);
+        this.deployedPowerBar.update(false);
     }
 }

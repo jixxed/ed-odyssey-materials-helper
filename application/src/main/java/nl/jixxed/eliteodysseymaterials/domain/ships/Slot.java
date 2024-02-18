@@ -23,6 +23,9 @@ public class Slot {
     @Getter
     @Setter
     private ShipModule shipModule;
+    @Getter
+    @Setter
+    private ShipModule oldShipModule;
 
     public List<HorizonsBlueprintType> getEffectiveExperimentalEffects() {
         if (!this.shipModule.getModifications().isEmpty()) {

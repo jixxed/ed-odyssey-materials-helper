@@ -383,11 +383,11 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 new Config(),
                 new ThermalPowerStats(),
                 new JumpStats(),
-                new EngineStats(),
+//                new EngineStats(),
                 new HandlingStats(),
                 new ArmourStats(),
-                new ShieldStats(),
-                new WeaponStats()
+                new ShieldStats()
+//                new WeaponStats()
         );
         this.shipView = BoxBuilder.builder().withNodes(stats, this.slotColumns).buildVBox();
         //Drawing a Circle
