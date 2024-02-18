@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 public class PowerPlant extends CoreModule {
-
     public static final PowerPlant POWER_PLANT_2_E = new PowerPlant("POWER_PLANT_2_E", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.E, 1980, "Int_Powerplant_Size2_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 46.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 6.40), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 1.00)));
     public static final PowerPlant POWER_PLANT_2_D = new PowerPlant("POWER_PLANT_2_D", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.D, 5930, "Int_Powerplant_Size2_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.00), Map.entry(HorizonsModifier.INTEGRITY, 41.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 7.20), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.75)));
     public static final PowerPlant POWER_PLANT_2_C = new PowerPlant("POWER_PLANT_2_C", HorizonsBlueprintName.POWER_PLANT, ModuleSize.SIZE_2, ModuleClass.C, 17790, "Int_Powerplant_Size2_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_CAPACITY, 8.00), Map.entry(HorizonsModifier.HEAT_EFFICIENCY, 0.50)));

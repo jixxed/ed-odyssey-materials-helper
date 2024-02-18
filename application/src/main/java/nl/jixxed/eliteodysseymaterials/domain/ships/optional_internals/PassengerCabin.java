@@ -11,32 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class PassengerCabin extends OptionalModule {
-//    		 6250 : { mtype:'ipc', cost:   4320, name:'Economy Class Passenger Cabin',  class:2, rating:'E', mass: 2.50, cabincap: 2, cabincls:'E', fdid:128734690, fdname:'Int_PassengerCabin_Size2_Class1', eddbid:1563 },
-//            //	 6251 : { mtype:'ipc', cost:    NaN, name:'Prisoner Cells',                 class:2, rating:'E', mass: 2.50, cabincap: 2, cabincls:'P', fdid:null,      fdname:'Int_PassengerCabin_Size2_Class0', eddbid:null },
-//            6350 : { mtype:'ipc', cost:   8670, name:'Economy Class Passenger Cabin',  class:3, rating:'E', mass: 5.00, cabincap: 4, cabincls:'E', fdid:128734691, fdname:'Int_PassengerCabin_Size3_Class1', eddbid:1564 },
-//            //	 6351 : { mtype:'ipc', cost:    NaN, name:'Prisoner Cells',                 class:3, rating:'E', mass: 5.00, cabincap: 4, cabincls:'P', fdid:null,      fdname:'Int_PassengerCabin_Size3_Class0', eddbid:null },
-//            6340 : { mtype:'ipc', cost:  26720, name:'Business Class Passenger Cabin', class:3, rating:'D', mass: 5.00, cabincap: 3, cabincls:'B', fdid:128734692, fdname:'Int_PassengerCabin_Size3_Class2', eddbid:1568 },
-//            6450 : { mtype:'ipc', cost:  18960, name:'Economy Class Passenger Cabin',  class:4, rating:'E', mass:10.00, cabincap: 8, cabincls:'E', fdid:128727922, fdname:'Int_PassengerCabin_Size4_Class1', eddbid:1565 },
-//            //	 6451 : { mtype:'ipc', cost:    NaN, name:'Prisoner Cells',                 class:4, rating:'E', mass:10.00, cabincap: 8, cabincls:'P', fdid:null,      fdname:'Int_PassengerCabin_Size4_Class0', eddbid:null },
-//            6440 : { mtype:'ipc', cost:  56870, name:'Business Class Passenger Cabin', class:4, rating:'D', mass:10.00, cabincap: 6, cabincls:'B', fdid:128727923, fdname:'Int_PassengerCabin_Size4_Class2', eddbid:1569 },
-//            6430 : { mtype:'ipc', cost: 170600, name:'First Class Passenger Cabin',    class:4, rating:'C', mass:10.00, cabincap: 3, cabincls:'F', fdid:128727924, fdname:'Int_PassengerCabin_Size4_Class3', eddbid:1572 },
-//            6550 : { mtype:'ipc', cost:  34960, name:'Economy Class Passenger Cabin',  class:5, rating:'E', mass:20.00, cabincap:16, cabincls:'E', fdid:128734693, fdname:'Int_PassengerCabin_Size5_Class1', eddbid:1566 },
-//            //	 6551 : { mtype:'ipc', cost:    NaN, name:'Prisoner Cells',                 class:5, rating:'E', mass:20.00, cabincap:16, cabincls:'P', fdid:null,      fdname:'Int_PassengerCabin_Size5_Class0', eddbid:null },
-//            6540 : { mtype:'ipc', cost:  92370, name:'Business Class Passenger Cabin', class:5, rating:'D', mass:20.00, cabincap:10, cabincls:'B', fdid:128734694, fdname:'Int_PassengerCabin_Size5_Class2', eddbid:1570 },
-//            6530 : { mtype:'ipc', cost: 340540, name:'First Class Passenger Cabin',    class:5, rating:'C', mass:20.00, cabincap: 6, cabincls:'F', fdid:128734695, fdname:'Int_PassengerCabin_Size5_Class3', eddbid:1573 },
-//            6520 : { mtype:'ipc', cost:1658100, name:'Luxury Class Passenger Cabin',   class:5, rating:'B', mass:20.00, cabincap: 4, cabincls:'L', reserved:{51:1,52:1,53:1}, fdid:128727925, fdname:'Int_PassengerCabin_Size5_Class4', eddbid:1575 },
-//            6650 : { mtype:'ipc', cost:  61420, name:'Economy Class Passenger Cabin',  class:6, rating:'E', mass:40.00, cabincap:32, cabincls:'E', fdid:128727926, fdname:'Int_PassengerCabin_Size6_Class1', eddbid:1567 },
-//            //	 6651 : { mtype:'ipc', cost:    NaN, name:'Prisoner Cells',                 class:6, rating:'E', mass:40.00, cabincap:32, cabincls:'P', fdid:null,      fdname:'Int_PassengerCabin_Size6_Class0', eddbid:null },
-//            6640 : { mtype:'ipc', cost: 184240, name:'Business Class Passenger Cabin', class:6, rating:'D', mass:40.00, cabincap:16, cabincls:'B', fdid:128727927, fdname:'Int_PassengerCabin_Size6_Class2', eddbid:1571 },
-//            6630 : { mtype:'ipc', cost: 552700, name:'First Class Passenger Cabin',    class:6, rating:'C', mass:40.00, cabincap:12, cabincls:'F', fdid:128727928, fdname:'Int_PassengerCabin_Size6_Class3', eddbid:1574 },
-//            6620 : { mtype:'ipc', cost:4974300, name:'Luxury Class Passenger Cabin',   class:6, rating:'B', mass:40.00, cabincap: 8, cabincls:'L', reserved:{51:1,52:1,53:1}, fdid:128727929, fdname:'Int_PassengerCabin_Size6_Class4', eddbid:1576 },
-//        public static final PassengerCabin ECONOMY_CLASS_PASSENGER_CABIN_4_E = new PassengerCabin();
-//        public static final PassengerCabin ECONOMY_CLASS_PASSENGER_CABIN_5_E = new PassengerCabin();
-//        public static final PassengerCabin ECONOMY_CLASS_PASSENGER_CABIN_6_E = new PassengerCabin();
-//        public static final PassengerCabin BUSINESS_CLASS_PASSENGER_CABIN_4_D = new PassengerCabin();
-//        public static final PassengerCabin BUSINESS_CLASS_PASSENGER_CABIN_6_D = new PassengerCabin();
-//        public static final PulseLaser PULSE_LASER_4_A_G = new PulseLaser(HorizonsBlueprintName.PULSE_LASER, ModuleSize.SIZE_4, ModuleClass.A, false, Mounting.GIMBALLED, 877600, "Hpt_PulseLaser_Gimbal_Huge", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 16.00)));
-
     public static final PassengerCabin ECONOMY_CLASS_PASSENGER_CABIN_2_E = new PassengerCabin("ECONOMY_CLASS_PASSENGER_CABIN_2_E", HorizonsBlueprintName.ECONOMY_CLASS_PASSENGER_CABIN, ModuleSize.SIZE_2, ModuleClass.E, false, 4320, "Int_PassengerCabin_Size2_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.CABIN_CAPACITY, 2), Map.entry(HorizonsModifier.CABIN_CLASS, 'E')));
     public static final PassengerCabin ECONOMY_CLASS_PASSENGER_CABIN_3_E = new PassengerCabin("ECONOMY_CLASS_PASSENGER_CABIN_3_E", HorizonsBlueprintName.ECONOMY_CLASS_PASSENGER_CABIN, ModuleSize.SIZE_3, ModuleClass.E, false, 8670, "Int_PassengerCabin_Size3_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.CABIN_CAPACITY, 4), Map.entry(HorizonsModifier.CABIN_CLASS, 'E')));
     public static final PassengerCabin BUSINESS_CLASS_PASSENGER_CABIN_3_D = new PassengerCabin("BUSINESS_CLASS_PASSENGER_CABIN_3_D", HorizonsBlueprintName.BUSINESS_CLASS_PASSENGER_CABIN, ModuleSize.SIZE_3, ModuleClass.D, false, 26720, "Int_PassengerCabin_Size3_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.CABIN_CAPACITY, 3), Map.entry(HorizonsModifier.CABIN_CLASS, 'B')));

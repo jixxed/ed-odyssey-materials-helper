@@ -12,16 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public class FuelTank extends OptionalModule {
-
-
-//		      47130 : { mtype:'cft', cost:   1000, name:'Fuel Tank (Cap: 2)',   class:1, rating:'C', fuelcap:  2.0, fdid:128064346, fdname:'Int_FuelTank_Size1_Class3', eddbid:1199 },
-//            47230 : { mtype:'cft', cost:   3750, name:'Fuel Tank (Cap: 4)',   class:2, rating:'C', fuelcap:  4.0, fdid:128064347, fdname:'Int_FuelTank_Size2_Class3', eddbid:1200 },
-//            47330 : { mtype:'cft', cost:   7060, name:'Fuel Tank (Cap: 8)',   class:3, rating:'C', fuelcap:  8.0, fdid:128064348, fdname:'Int_FuelTank_Size3_Class3', eddbid:1201 },
-//            47430 : { mtype:'cft', cost:  24730, name:'Fuel Tank (Cap: 16)',  class:4, rating:'C', fuelcap: 16.0, fdid:128064349, fdname:'Int_FuelTank_Size4_Class3', eddbid:1202 },
-//            47530 : { mtype:'cft', cost:  97750, name:'Fuel Tank (Cap: 32)',  class:5, rating:'C', fuelcap: 32.0, fdid:128064350, fdname:'Int_FuelTank_Size5_Class3', eddbid:1203 },
-//            47630 : { mtype:'cft', cost: 341580, name:'Fuel Tank (Cap: 64)',  class:6, rating:'C', fuelcap: 64.0, fdid:128064351, fdname:'Int_FuelTank_Size6_Class3', eddbid:1204 },
-//            47730 : { mtype:'cft', cost:1780910, name:'Fuel Tank (Cap: 128)', class:7, rating:'C', fuelcap:128.0, fdid:128064352, fdname:'Int_FuelTank_Size7_Class3', eddbid:1205 },
-//            47830 : { mtype:'cft', cost:5428430, name:'Fuel Tank (Cap: 256)', class:8, rating:'C', fuelcap:256.0, fdid:128064353, fdname:'Int_FuelTank_Size8_Class3', eddbid:1206 },
     public static final FuelTank FUEL_TANK_1_C = new FuelTank("FUEL_TANK_1_C", HorizonsBlueprintName.FUEL_TANK, ModuleSize.SIZE_1, ModuleClass.C,    1000, "Int_FuelTank_Size1_Class3", Map.ofEntries(Map.entry(HorizonsModifier.FUEL_CAPACITY,   2.00)));
     public static final FuelTank FUEL_TANK_2_C = new FuelTank("FUEL_TANK_2_C", HorizonsBlueprintName.FUEL_TANK, ModuleSize.SIZE_2, ModuleClass.C,    3750, "Int_FuelTank_Size2_Class3", Map.ofEntries(Map.entry(HorizonsModifier.FUEL_CAPACITY,   4.00)));
     public static final FuelTank FUEL_TANK_3_C = new FuelTank("FUEL_TANK_3_C", HorizonsBlueprintName.FUEL_TANK, ModuleSize.SIZE_3, ModuleClass.C,    7060, "Int_FuelTank_Size3_Class3", Map.ofEntries(Map.entry(HorizonsModifier.FUEL_CAPACITY,   8.00)));
