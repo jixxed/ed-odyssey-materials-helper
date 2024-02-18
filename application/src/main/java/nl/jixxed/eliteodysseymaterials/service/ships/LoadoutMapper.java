@@ -10,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class LoadoutMapper {
                     throw new IllegalArgumentException("No potential modules found");
                 }).orElseGet(() -> {
                     try {
-                        return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+                        return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|"  + module));
                     } catch (IllegalArgumentException ex) {
                         log.debug(module.getItem());
                         log.debug(slot.getSlotType().toString());
@@ -119,8 +120,8 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
-                            return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).setScale(2, RoundingMode.HALF_EVEN));
+                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
+                            return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {
                             log.debug("bool true");
@@ -137,6 +138,9 @@ public class LoadoutMapper {
     }
 
     static List<ShipModule> getPotentialShipModules(String module, SlotType slotType) {
+        if(slotType.equals(SlotType.CARGO_HATCH)){
+            return new ArrayList<>(ShipModule.getModules(SlotType.CARGO_HATCH));
+        }
         return ShipModule.getModules(slotType).stream().filter(shipModule -> shipModule.getInternalName().equalsIgnoreCase(module)).toList();
     }
 

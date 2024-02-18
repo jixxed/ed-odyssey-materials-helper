@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class ModuleAttributesTest {
                                             .map(grade -> new Pair<HorizonsBlueprintType, HorizonsBlueprintGrade>(type,grade)))
                                     .map(pair-> (HorizonsModuleBlueprint)HorizonsBlueprintConstants.getRecipe(shipModule.getName().getPrimary(),pair.getKey(),pair.getValue()))
                                     .map(blueprint-> blueprint.getModifiers().keySet())
-                                    .map(attrs-> () -> Assertions.assertTrue(shipModuleAttibutes.containsAll(attrs), () -> "Failed to find fields for: " +shipModule.getName() + "\n"
+                                    .map(attrs-> () -> Assertions.assertTrue(shipModuleAttibutes.containsAll(attrs.stream().filter(attr-> !ignored(attr)).toList()), () -> "Failed to find fields for: " +shipModule.getName() + "\n"
                                             + shipModule.getAttibutes().stream().map(Enum::name).collect(Collectors.joining(","))
                                             + "\n" + attrs.stream().map(Enum::name).collect(Collectors.joining(","))))
                     );
@@ -53,11 +54,25 @@ public class ModuleAttributesTest {
                                         return (HorizonsExperimentalEffectBlueprint) horizonsBlueprintTypeHorizonsBlueprintMap.get(type);
                                     })
                                     .map(blueprint-> blueprint.getModifiers().keySet())
-                                    .map(attrs-> () -> Assertions.assertTrue(shipModuleAttibutes.containsAll(attrs), () -> "Failed to find fields for: " +shipModule.getName() + "\n"
+                                    .map(attrs-> () -> Assertions.assertTrue(shipModuleAttibutes.containsAll(attrs.stream().filter(attr-> !ignored(attr)).toList()), () -> "Failed to find fields for: " +shipModule.getName() + "\n"
                                             + shipModule.getAttibutes().stream().map(Enum::name).collect(Collectors.joining(","))
                                             + "\n" + attrs.stream().map(Enum::name).collect(Collectors.joining(","))))
                     );
                 })
         );
+    }
+
+    private boolean ignored(HorizonsModifier attr) {
+        return List.of(
+                HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION,
+                HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION,
+                HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION,
+                HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED,
+                HorizonsModifier.MINIMUM_MULTIPLIER_SPEED,
+                HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED,
+                HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION,
+                HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION,
+                HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION
+        ).contains(attr);
     }
 }

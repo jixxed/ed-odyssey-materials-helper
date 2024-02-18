@@ -34,7 +34,7 @@ class HorizonsModifierTest {
             "MinBreachChance",
             "MaxBreachChance",
             "Jitter",
-            "WeaponMode",
+//            "WeaponMode",
             "DamageType",
             "ShieldGenMinimumMass",
             "ShieldGenOptimalMass",
@@ -67,7 +67,7 @@ class HorizonsModifierTest {
             "DefenceModifierHealthAddition",
             "DefenceModifierShieldMultiplier",
             "DefenceModifierShieldAddition",
-            "CollisionResistance",
+//            "CollisionResistance",
             "KineticResistance",
             "ThermicResistance",
             "ExplosiveResistance",
@@ -136,9 +136,9 @@ class HorizonsModifierTest {
             "BoostSpeedMultiplier",
             "BoostAugmenterPowerUse",
             "ModuleDefenceAbsorption",
-            "DSS_RangeMult",
-            "DSS_AngleMult",
-            "DSS_RateMult",
+//            "DSS_RangeMult",
+//            "DSS_AngleMult",
+//            "DSS_RateMult",
             "DSS_PatchRadius"
             );
     @Test

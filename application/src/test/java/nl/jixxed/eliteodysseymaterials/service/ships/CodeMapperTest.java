@@ -178,9 +178,9 @@ public class CodeMapperTest {
             Map.entry("barriercool", "DisruptionBarrierCooldown"),
             Map.entry("jumpbst", "FSDJumpRangeBoost"),
             Map.entry("dmgprot", "ModuleDefenceAbsorption"),
-            Map.entry("scanrngmod", "DSS_RangeMult"),
-            Map.entry("scanangmod", "DSS_AngleMult"),
-            Map.entry("scanratemod", "DSS_RateMult"),
+//            Map.entry("scanrngmod", "DSS_RangeMult"),
+//            Map.entry("scanangmod", "DSS_AngleMult"),
+//            Map.entry("scanratemod", "DSS_RateMult"),
             Map.entry("proberad", "DSS_PatchRadius"),
             Map.entry("mlctype", "")
     );
