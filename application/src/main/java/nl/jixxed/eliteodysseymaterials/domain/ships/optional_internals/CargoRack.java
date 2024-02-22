@@ -62,4 +62,8 @@ public class CargoRack extends OptionalModule {
         }
         return super.isHiddenStat(modifier);
     }
+    @Override
+    public int getGrouping() {
+        return 1;
+    }
 }

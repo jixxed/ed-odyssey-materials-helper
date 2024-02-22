@@ -51,4 +51,8 @@ public class ExperimentalWeaponStabiliser extends OptionalModule {
     public boolean hasPowerToggle() {
         return false;
     }
+    @Override
+    public int getGrouping() {
+        return 1;
+    }
 }

@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Slot {
 
     public String getSlotSizeName() {
         if (this.slotType == SlotType.HARDPOINT || this.slotType == SlotType.UTILITY) {
-            return slotMapping.get(this.slotSize);
+            return LocaleService.getLocalizedStringForCurrentLocale("ships.slot.size." + slotMapping.get(this.slotSize).toLowerCase());
         }
         return String.valueOf(this.slotSize);
     }

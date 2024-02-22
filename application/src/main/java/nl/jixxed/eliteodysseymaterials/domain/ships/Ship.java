@@ -2814,6 +2814,14 @@ public class Ship {
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
+    public double getMaxPassenger() {
+        return this.getOptionalSlots().stream()
+                .filter(slot -> slot.getShipModule() instanceof PassengerCabin)
+                .map(Slot::getShipModule)
+                .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CABIN_CAPACITY))
+                .mapToDouble(Double::doubleValue)
+                .sum();
+    }
     public double getMaxFuelReserve() {
         return (double)this.attributes.getOrDefault(HorizonsModifier.FUEL_RESERVE, 0.0);
     }
@@ -2877,4 +2885,5 @@ public class Ship {
     public void setCurrentCargo(double currentCargo) {
         this.currentCargo = Math.min(currentCargo,getMaxCargo());
     }
+
 }

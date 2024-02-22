@@ -76,4 +76,8 @@ public class KillWarrantScanner extends UtilityModule {
     public boolean isCGExclusive() {
         return isPreEngineered();
     }
+    @Override
+    public int getGrouping() {
+        return isPreEngineered() ? 2 : 1;
+    }
 }

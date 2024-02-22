@@ -149,4 +149,8 @@ public class FrameShiftDrive extends CoreModule {
         }
         return super.isHiddenStat(modifier);
     }
+    @Override
+    public int getGrouping() {
+        return getModuleSize().intValue() * 10 + (isPreEngineered() ? 1 : 0);
+    }
 }

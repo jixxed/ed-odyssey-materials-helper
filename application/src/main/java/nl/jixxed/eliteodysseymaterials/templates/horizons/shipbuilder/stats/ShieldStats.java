@@ -61,8 +61,8 @@ public class ShieldStats extends Stats implements Template {
 //        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengththermal"), new GrowingRegion(), this.strengthThermal).buildHBox());
 //        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengthexplosive"), new GrowingRegion(), this.strengthExplosive).buildHBox());
 //        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengthcaustic"), new GrowingRegion(), this.strengthCaustic).buildHBox());
-        shieldResistance = new Shield("RES", "blue");
-        shieldIntegrity = new Shield("HP", "red");
+        shieldResistance = new Shield("RES","%", "blue");
+        shieldIntegrity = new Shield("HP","\u2795", "red");
         this.getChildren().addAll(shieldResistance, shieldIntegrity);
 
     }

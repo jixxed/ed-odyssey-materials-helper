@@ -47,4 +47,8 @@ public class FighterHangar extends OptionalModule {
     public FighterHangar Clone() {
         return new FighterHangar(this);
     }
+    @Override
+    public int getGrouping() {
+        return 1;
+    }
 }

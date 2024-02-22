@@ -28,29 +28,31 @@ public class Shield extends StackPane implements Template {
         NUMBER_FORMAT_2.setGroupingUsed(false);
     }
 
-    double raw;
-    double kinetic;
-    double thermal;
-    double caustic;
-    double explosive;
-    Label rawLabel;
-    Label kineticLabel;
-    Label thermalLabel;
-    Label causticLabel;
-    Label explosiveLabel;
-    Label rawTitleLabel;
-    Label kineticTitleLabel;
-    Label thermalTitleLabel;
-    Label causticTitleLabel;
-    Label explosiveTitleLabel;
-    String title;
-    String color;
+    private double raw;
+    private double kinetic;
+    private double thermal;
+    private double caustic;
+    private double explosive;
+    private Label rawLabel;
+    private Label kineticLabel;
+    private Label thermalLabel;
+    private Label causticLabel;
+    private Label explosiveLabel;
+    private Label rawTitleLabel;
+    private Label kineticTitleLabel;
+    private Label thermalTitleLabel;
+    private Label causticTitleLabel;
+    private Label explosiveTitleLabel;
+    private String title;
+    private String color;
+    private String symbol;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private DestroyableResizableImageView shield;
 
-    public Shield(String title, String color) {
+    public Shield(String title, String symbol, String color) {
         this.title = title;
         this.color = color;
+        this.symbol = symbol;
         initComponents();
         initEventHandling();
     }
@@ -61,8 +63,13 @@ public class Shield extends StackPane implements Template {
         shield = ResizableImageViewBuilder.builder().withStyleClass("shield-image").withImage(ImageService.getImage("/images/ships/icons/shield2_" + color + ".png")).build();
         final VBox shieldBox = BoxBuilder.builder().withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), shield, new GrowingRegion()).buildHBox(), new GrowingRegion()).buildVBox();
         this.getChildren().add(shieldBox);
-        final VBox titleBox = BoxBuilder.builder().withNodes(new GrowingRegion(), BoxBuilder.builder().withNodes(new GrowingRegion(), LabelBuilder.builder().withStyleClass("shield-label-" + color).withNonLocalizedText(title).build(), new GrowingRegion()).buildHBox(), new GrowingRegion()).buildVBox();
+        final VBox titleBox = BoxBuilder.builder().withNodes( BoxBuilder.builder().withNodes(new GrowingRegion(), LabelBuilder.builder().withStyleClasses("shield-label-" + color, "shield-label-symbol").withNonLocalizedText(symbol).build(), new GrowingRegion()).buildHBox(), BoxBuilder.builder().withNodes(new GrowingRegion(), LabelBuilder.builder().withStyleClasses("shield-label-" + color, "shield-label-title").withNonLocalizedText(title).build(), new GrowingRegion()).buildHBox(), new GrowingRegion()).buildVBox();
         this.getChildren().add(titleBox);
+//        final DestroyableLabel symbolLabel = LabelBuilder.builder().withStyleClasses("shield-label-" + color, "shield-label-symbol").withNonLocalizedText(symbol + "\n").build();
+//        final HBox symbolBox = BoxBuilder.builder().withNodes(new GrowingRegion(), symbolLabel, new GrowingRegion()).buildHBox();
+//        final Group e = new Group(symbolLabel);
+//        this.getChildren().add(e);
+//        StackPane.setAlignment(e, Pos.TOP_CENTER);
         rawTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withNonLocalizedText("Raw").build();
         kineticTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withNonLocalizedText("Kinetic").build();
         thermalTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withNonLocalizedText("Thermal").build();

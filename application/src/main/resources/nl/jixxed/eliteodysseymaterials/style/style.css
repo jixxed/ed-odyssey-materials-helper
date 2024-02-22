@@ -2669,8 +2669,8 @@
 
 .shipbuilder-slots-slotbox {
     -fx-background-color: #0f0f0f;
-    -fx-min-width: 27em;
-    -fx-max-width: 27em;
+    -fx-min-width: 26em;
+    -fx-max-width: 26em;
     -fx-min-height: 5em;
     -fx-max-height: 5em;
     -fx-border-color: white;
@@ -2713,24 +2713,24 @@
 }
 
 .shipbuilder-slots-stackpane {
-    -fx-min-width: 81em;
-    -fx-max-width: 81em;
+    -fx-min-width: 78em;
+    -fx-max-width: 78em;
     -fx-spacing: 0;
     -fx-padding: 0;
 }
 
 .shipbuilder-ship-image {
-    -fx-min-width: 81em;
-    -fx-max-width: 81em;
-    -fx-min-height: 45.5625em;
-    -fx-max-height: 45.5625em;
+    -fx-min-width: 78em;
+    -fx-max-width: 78em;
+    /*-fx-min-height: 44.26875em;*/
+    -fx-max-height: 44.26875em;
 }
 
 .shipbuilder-overlay {
-    -fx-min-width: 81em;
-    -fx-max-width: 81em;
-    -fx-min-height: 40em;
-    -fx-max-height: 40em;
+    -fx-min-width: 78em;
+    -fx-max-width: 78em;
+    /*-fx-min-height: 44.26875em;*/
+    -fx-max-height: 44.26875em;
 }
 
 .shipbuilder-slots-slotbox-size-label {
@@ -2744,7 +2744,7 @@
 }
 
 .shipbuilder-slots-slotbox-texts {
-    -fx-min-width: 20.3em;
+    -fx-min-width: 19.3em;
     -fx-padding: 0.2em 0em 0.2em 0.2em;
 }
 
@@ -2753,9 +2753,9 @@
 }
 
 .shipbuilder-slots-slotbox-popover-content{
-    -fx-min-width: 27em;
+    -fx-min-width: 26em;
     -fx-min-height: 25em;
-    -fx-max-width: 27em;
+    -fx-max-width: 26em;
     -fx-max-height: 25em;
     -fx-background-color: #0f0f0f;
 
@@ -2763,8 +2763,8 @@
 .ships-modules-buttons{
     /*-fx-pref-width: 100%;*/
     /*-fx-fit-to-width: true;*/
-    -fx-pref-width: 25.5em;
-    -fx-max-width: 25.5em;
+    -fx-pref-width: 24.5em;
+    -fx-max-width: 24.5em;
     -fx-font-size: 1em;
     /*-fx-spacing: 0.1em;*/
     -fx-spacing: 0.1em;
@@ -2776,16 +2776,16 @@
     /*-fx-border-width: 0.1em;*/
 }
 .ships-modules-title {
-    -fx-pref-width: 25.5em;
-    -fx-max-width: 25.5em;
+    -fx-pref-width: 24.5em;
+    -fx-max-width: 24.5em;
     -fx-text-alignment: center;
     -fx-font-size: 1.05em;
     -fx-label-padding: 0.2em;
 }
 .ships-modules{
     -fx-spacing: 0.5em;
-    -fx-pref-width: 25.5em;
-    -fx-max-width: 25.5em;
+    -fx-pref-width: 24.5em;
+    -fx-max-width: 24.5em;
 }
 .ships-modules-item{
     -fx-padding: 0.2em;
@@ -2793,8 +2793,8 @@
     -fx-background-color: #0f0f0f;
 }
 .toggle-button-blueprints{
-    -fx-pref-width: 25.5em;
-    -fx-max-width: 25.5em;
+    -fx-pref-width: 24.5em;
+    -fx-max-width: 24.5em;
 }
 .shipbuilder-stats{
     -fx-background-color: #0f0f0f;
@@ -2809,16 +2809,17 @@
     -fx-font-weight: bold;
 }
 .shipbuilder-stats-label{
-    -fx-label-padding: 0 1em 0 0;
+    -fx-label-padding: 0.5em 1em 0.5em 0;
 }
 .shipbuilder-stats-value{
     -fx-font-weight: bold;
+    -fx-label-padding: 0.5em 0em 0.5em 0;
 }
 
 .shipbuilder-slots-slotbox-popover-vbox{
     -fx-spacing: 0.5em;
-    -fx-pref-width: 25.5em;
-    -fx-max-width: 25.5em;
+    -fx-pref-width: 24.5em;
+    -fx-max-width: 24.5em;
 }
 
 .shipbuilder-ship-header{
@@ -2833,14 +2834,88 @@
     -fx-background-color: #000000;
     -fx-cursor: hand;
 }
-.shipbuilder-ship-row-name{
+.shipbuilder-ship-col-name{
     -fx-min-width: 11em;
     -fx-text-alignment: right;
 }
-.shipbuilder-ship-row-price{
-    -fx-min-width: 6em;
+.shipbuilder-ship-col{
     -fx-text-alignment: right;
     -fx-alignment: center-right;
+}
+.shipbuilder-ship-col-price{
+    -fx-min-width: 6em;
+}
+.shipbuilder-ship-col-size{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-crew{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-masslock{
+    -fx-min-width: 5em;
+}
+.shipbuilder-ship-col-mass{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-jumprange{
+    -fx-min-width: 6em;
+}
+.shipbuilder-ship-col-speed{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-boost{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-shield{
+    -fx-min-width: 4em;
+}
+.shipbuilder-ship-col-armor{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-hardness{
+    -fx-min-width: 5em;
+}
+.shipbuilder-ship-col-fuel{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-cargo{
+    -fx-min-width: 3em;
+}
+.shipbuilder-ship-col-passenger{
+    -fx-min-width: 5em;
+}
+.shipbuilder-ship-col-slothardpoints{
+    -fx-min-width: 8em;
+}
+.shipbuilder-ship-col-slotultility{
+    -fx-min-width: 4em;
+}
+.shipbuilder-ship-col-slotarmour{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotpowerplant{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotthrusters{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotframeshiftdrive{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotlifesupport{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotpowerdistribution{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotsensors{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotfueltank{
+    -fx-min-width: 2em;
+}
+.shipbuilder-ship-col-slotoptional{
+    -fx-min-width: 13em;
 }
 .ship-select{
     -fx-min-width: 10em;
@@ -2859,8 +2934,9 @@
     -fx-border-color: #2e2e2e;
 }
 .ships-button-image{
-    -fx-max-width: 1.5em;
+    /*-fx-max-width: 1.5em;*/
     -fx-max-height: 1.5em;
+    -fx-padding: 0em 0.2em 0em 0em;
 }
 .shipbuilder-slots-slotbox-military-hint{
     -fx-font-size: 0.9em;
@@ -2914,8 +2990,9 @@
 
 }
 .shipbuilder-slots-slotbox-icon{
-    -fx-max-width: 1.5em;
+    /*-fx-max-width: 1.5em;*/
     -fx-max-height: 1.5em;
+    -fx-padding: 0em 0.2em 0em 0em;
 }
 .shipbuilder-slots-slotbox-icons{
     -fx-min-height: 1.4em;
@@ -2924,6 +3001,11 @@
 }
 .shipbuilder-slots-slotbox-power{
 
+}
+.shipbuilder-slots-slotbox-power-config{
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-alignment: center-left;
 }
 
 .shipbuilder-slots-slotbox-icons-stackpane{
@@ -2998,14 +3080,14 @@
 .pipselect{
     -fx-hgap: 0.2em;
     -fx-spacing: 0.2em;
-    -fx-padding: 0.2em;
+    -fx-padding: 0.25em 0.2em 0.25em 0.2em;
 }
 .pipselect-rectangle{
     -fx-fill: #2b2b2b;
-    -fx-min-width: 1em;
-    -fx-max-width: 1em;
-    -fx-min-height: 1em;
-    -fx-max-height: 1em;
+    -fx-min-width: 1.5em;
+    -fx-max-width: 1.5em;
+    -fx-min-height: 1.5em;
+    -fx-max-height: 1.5em;
     -fx-padding: 0.2em;
     -fx-cursor: hand;
 }
@@ -3084,4 +3166,19 @@
 .shield-label-red{
     -fx-text-fill: #ff7c7c;
     -fx-font-weight: bold;
+}
+.shield-label-symbol{
+    -fx-label-padding: 0.2em 0em 0em 0em;
+    -fx-font-size: 2.5em;
+    -fx-font-weight: bolder;
+}
+.shield-label-title{
+    -fx-label-padding: 0em 0em 0.5em 0em;
+
+}
+.power-stats-overpower{
+    -fx-text-fill: #ff7c7c;
+}
+.config-intfield{
+    -fx-max-width: 6em;
 }

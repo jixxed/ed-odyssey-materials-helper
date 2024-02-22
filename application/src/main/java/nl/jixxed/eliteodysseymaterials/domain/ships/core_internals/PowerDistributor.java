@@ -159,4 +159,8 @@ public class PowerDistributor extends CoreModule {
     public String getClarifier() {
         return this.getOrigin() == Origin.GUARDIAN ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.guardian_power_distributor") : "";
     }
+    @Override
+    public int getGrouping() {
+        return getModuleSize().intValue() * 10 + (getOrigin().equals(Origin.GUARDIAN) ? 1 : 0);
+    }
 }

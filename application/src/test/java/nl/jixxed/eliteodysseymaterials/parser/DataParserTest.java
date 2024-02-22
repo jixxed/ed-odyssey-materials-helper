@@ -56,10 +56,6 @@ class DataParserTest {
                 Data.SLUSHFUNDLOGS, Storage.of(0, 1),
                 Data.NOCDATA, Storage.of(0, 3)
         ));
-//        Assertions.assertThat(unknownData).containsExactlyInAnyOrderEntriesOf(Map.of(
-//                "banana:Banana", Storage.of(0, 6),
-//                "apple:apple", Storage.of(0, 1)
-//        ));
     }
 
     @Test
@@ -98,9 +94,5 @@ class DataParserTest {
                 Data.SLUSHFUNDLOGS, Storage.of(1, 0),
                 Data.NOCDATA, Storage.of(3, 0)
         ));
-//        Assertions.assertThat(unknownData).containsExactlyInAnyOrderEntriesOf(Map.of(
-//                "banana:Banana", Storage.of(6, 0),
-//                "apple:apple", Storage.of(1, 0)
-//        ));
     }
 }

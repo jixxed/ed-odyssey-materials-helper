@@ -44,12 +44,12 @@ public class SlotBoxEntry extends VBox {
                 : shipModulesList;
         this.name = LabelBuilder.builder().withStyleClass("ships-modules-title").withText(LocaleService.getStringBinding(firstModule.getName().getBlueprintGroup().getLocalizationKey())).build();
         HBox.setHgrow(this.name, Priority.ALWAYS);
-        final Stream<List<ShipModule>> stream = shipModules.stream().allMatch(shipModule -> shipModule.getModuleClass().equals(firstModule.getModuleClass()) && shipModule.getClarifier().isEmpty())
-                ? Stream.of(shipModules)
-                : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize().toString() + (shipModule.groupOnName() ? shipModule.getName().toString() : "") + shipModule.getClarifier())).values().stream();
+        final Stream<List<ShipModule>> stream = shipModules.stream().allMatch(shipModule -> shipModule.hasGrouping())
+                ? shipModules.stream().collect(Collectors.groupingBy(shipModule -> String.valueOf(shipModule.getGrouping()))).values().stream()
+                : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize().toString() + shipModule.getGrouping() + shipModule.getOrigin().equals(Origin.POWERPLAY))).values().stream();
 //        final Stream<List<ShipModule>> stream =shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize() + shipModule.getClarifier())).values().stream();
         this.options =
-                stream.sorted(Comparator.comparing(shipModuleSubList -> shipModuleSubList.get(0).getModuleSize().toString() + (shipModuleSubList.get(0).groupOnName() ? shipModuleSubList.get(0).getName().toString() : "") + shipModuleSubList.get(0).getClarifier())).map(shipModuleSubList ->
+                stream.sorted(Comparator.comparing(shipModuleSubList -> (shipModuleSubList.get(0).hasGrouping()) ? String.valueOf(shipModuleSubList.get(0).getGrouping()) : shipModuleSubList.get(0).getModuleSize().toString() + shipModuleSubList.get(0).getOrigin().equals(Origin.POWERPLAY))).map(shipModuleSubList ->
                                 shipModuleSubList.stream().map(shipModule -> {
                                             final ShipModuleButton button = ShipModuleButtonBuilder.builder().withShipModule(shipModule).withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + shipModule.getNonSortingClarifier()).withOnAction(event -> {
                                                 final ShipModule clone = shipModule.Clone();
@@ -82,6 +82,18 @@ public class SlotBoxEntry extends VBox {
                                             }
                                             if(shipModule.isPreEngineered()) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/preengineered.png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(shipModule.isAdvanced()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/advanced2.png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(shipModule.isEnhanced()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/enhanced2.png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(shipModule.isDumbfire()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/dumb2.png").withStyleClass("ships-button-image").build());
+                                            }
+                                            if(shipModule.isSeeker()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/seeker2.png").withStyleClass("ships-button-image").build());
                                             }
                                             if(shipModule.isCGExclusive()) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/cg.png").withStyleClass("ships-button-image").build());

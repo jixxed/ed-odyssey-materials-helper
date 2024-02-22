@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class MineLauncher extends HardpointModule {
     @Override
     public String getClarifier() {
         if(SHOCK_MINE_LAUNCHER_1_I_F.equals(this)){
-            return " SHOCK";
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".short");
         }
         return super.getClarifier();
     }

@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Slf4j
 public class HandlingStats extends Stats implements Template {
-//    private final DestroyableLabel currentPitch;
+    //    private final DestroyableLabel currentPitch;
 //    private final DestroyableLabel currentRoll;
 //    private final DestroyableLabel currentYaw;
 //    private final DestroyableLabel minimumPitch;
@@ -57,24 +57,24 @@ public class HandlingStats extends Stats implements Template {
 //
 
 
-        pitchIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.handling.pitch");
+        pitchIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.pitch", "ship.stats.handling.pitch.value");
         this.getChildren().add(pitchIndicator);
-        rollIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.handling.roll");
+        rollIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.roll", "ship.stats.handling.roll.value");
         this.getChildren().add(rollIndicator);
-        yawIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.handling.yaw");
+        yawIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.yaw", "ship.stats.handling.yaw.value");
         this.getChildren().add(yawIndicator);
     }
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass()   + ship.getCurrentFuel(), moduleProfile) / 100;
+        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel(), moduleProfile) / 100;
     }
 
     private double calculateRollCurrent(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
-        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass()   + ship.getCurrentFuel(), moduleProfile) / 100;
+        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel(), moduleProfile) / 100;
     }
 
     private double calculateYawCurrent(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
-        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass()  + ship.getCurrentFuel(), moduleProfile) / 100;
+        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel(), moduleProfile) / 100;
     }
 
     private double calculatePitchMinimum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
@@ -173,7 +173,7 @@ public class HandlingStats extends Stats implements Template {
             log.debug("update handling: " + this.getShip().isPresent());
             this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
             var currentPitch = calculatePitchCurrent(ship, (pitchSpeed * multiplier + minPitchSpeed * (1 - multiplier)), moduleProfile);
-            var currentRoll = calculateRollCurrent(ship, (rollSpeed * multiplier + minRollSpeed * (1 - multiplier)), moduleProfile) ;
+            var currentRoll = calculateRollCurrent(ship, (rollSpeed * multiplier + minRollSpeed * (1 - multiplier)), moduleProfile);
             var currentYaw = calculateYawCurrent(ship, (yawSpeed * multiplier + minYawSpeed * (1 - multiplier)), moduleProfile);
             var minimumPitch = calculatePitchMinimum(ship, (minPitchSpeed), moduleProfile);
             var minimumRoll = calculateRollMinimum(ship, minRollSpeed, moduleProfile);

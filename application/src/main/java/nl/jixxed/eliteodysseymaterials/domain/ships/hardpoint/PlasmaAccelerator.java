@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.List;
 import java.util.Map;
@@ -50,12 +51,24 @@ public class PlasmaAccelerator extends HardpointModule {
     }
 
     @Override
-    public String getNonSortingClarifier() {
-        //TODO localize
-        if(ADVANCED_PLASMA_ACCELERATOR_3_B_F.equals(this)) {
-            return " Adv.";
-        }
+    public boolean isAdvanced() {
+        return ADVANCED_PLASMA_ACCELERATOR_3_B_F.equals(this);
+    }
 
-        return super.getNonSortingClarifier();
+    @Override
+    public String getClarifier() {
+        if(ADVANCED_PLASMA_ACCELERATOR_3_B_F.equals(this)){
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) ;
+        }
+        return super.getClarifier();
+    }
+
+    @Override
+    public int getGrouping() {
+        return switch (getId()) {
+            case "PLASMA_ACCELERATOR_2_C_F", "PLASMA_ACCELERATOR_3_B_F", "PLASMA_ACCELERATOR_4_A_F" -> 1;
+            case "ADVANCED_PLASMA_ACCELERATOR_3_B_F" -> 2;
+            default -> 0;
+        };
     }
 }

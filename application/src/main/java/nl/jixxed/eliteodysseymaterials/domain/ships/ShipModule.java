@@ -13,7 +13,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -269,9 +268,20 @@ public abstract class ShipModule implements Serializable {
     }
 
     public String getClarifier() {
-        return isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
+        return "";//isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
     }
 
+    /**
+     * returns the button row for the module. 0 means no grouping.
+     * if 1 module of a type has a grouping, all modules of that type should have a grouping.
+     * @return number of the group
+     */
+    public int getGrouping() {
+        return 0;
+    }
+    public boolean hasGrouping() {
+        return getGrouping() > 0;
+    }
     public String getNonSortingClarifier() {
         return "";
     }
@@ -281,6 +291,21 @@ public abstract class ShipModule implements Serializable {
     }
 
     public boolean isPreEngineered() {
+        return false;
+    }
+
+    public boolean isAdvanced() {
+        return false;
+    }
+    public boolean isEnhanced() {
+        return false;
+    }
+
+    public boolean isDumbfire() {
+        return false;
+    }
+
+    public boolean isSeeker() {
         return false;
     }
 
@@ -300,7 +325,7 @@ public abstract class ShipModule implements Serializable {
         modifiers.put(horizonsModifier, value);
     }
 
-    public boolean groupOnName() {
+    public boolean groupOnName() {//TODO replace with grouping
         return false;
     }
 

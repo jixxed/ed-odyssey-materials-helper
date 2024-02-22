@@ -7,22 +7,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
-import java.text.NumberFormat;
-
 public class RangeIndicator extends VBox {
-    private static NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
-
-    static {
-        NUMBER_FORMAT_2.setMaximumFractionDigits(2);
-    }
 
     private Pane lines;
     private HBox values;
-
     private Line bar;
     private Line start;
     private Line end;
@@ -34,10 +27,13 @@ public class RangeIndicator extends VBox {
     private double startValue;
     private double endValue;
     private double currentValue;
-    public RangeIndicator(double startValue, double endValue, double currentValue, String title) {
+
+    private  String currentValueLocalizationKey;
+    public RangeIndicator(double startValue, double endValue, double currentValue, String title,String currentValueLocalizationKey) {
         this.startValue = startValue;
         this.endValue = endValue;
         this.currentValue = currentValue;
+        this.currentValueLocalizationKey = currentValueLocalizationKey;
         this.startValueLabel = LabelBuilder.builder().build();
         this.endValueLabel = LabelBuilder.builder().build();
         this.currentValueLabel = LabelBuilder.builder().withStyleClass("range-indicator-current").build();
@@ -63,9 +59,9 @@ public class RangeIndicator extends VBox {
         update();
     }
     public void update(){
-        this.startValueLabel.setText(NUMBER_FORMAT_2.format(startValue));
-        this.endValueLabel.setText(NUMBER_FORMAT_2.format(endValue));
-        this.currentValueLabel.setText(NUMBER_FORMAT_2.format(currentValue));
+        this.startValueLabel.setText(Formatters.NUMBER_FORMAT_2.format(startValue));
+        this.endValueLabel.setText(Formatters.NUMBER_FORMAT_2.format(endValue));
+        this.currentValueLabel.textProperty().bind(LocaleService.getStringBinding(currentValueLocalizationKey, Formatters.NUMBER_FORMAT_2.format(currentValue)));
 
         double sliderWidth = ScalingHelper.getPixelDoubleFromEm(15D);
         double sliderHeight = ScalingHelper.getPixelDoubleFromEm(1D);

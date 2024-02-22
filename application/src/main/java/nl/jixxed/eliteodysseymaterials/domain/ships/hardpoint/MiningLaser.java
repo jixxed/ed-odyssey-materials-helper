@@ -70,4 +70,16 @@ public class MiningLaser extends HardpointModule {
         }
         return super.getClarifier();
     }
+    @Override
+    public int getGrouping() {
+        return switch (getId()) {
+            case "MINING_LASER_1_D_F" -> 1;
+            case "MINING_LASER_1_D_T" -> 1;
+            case "MINING_LASER_1_D_F_PRE" -> 1;
+            case "MINING_LANCE_BEAM_LASER_1_D_F" -> 2;
+            case "MINING_LASER_2_D_F" -> 4;
+            case "MINING_LASER_2_D_T" -> 4;
+            default -> 0;
+        };
+    }
 }

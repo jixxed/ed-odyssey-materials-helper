@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
@@ -21,6 +22,7 @@ import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
 import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import org.controlsfx.control.ToggleSwitch;
 
@@ -39,6 +41,8 @@ public class Config extends Stats implements Template {
     Button powerUp;
     Button powerDown;
     private HBox powerBox;
+    private DestroyableLabel cargoLabel;
+    private DestroyableLabel fuelLabel;
 
     public Config() {
         super();
@@ -66,12 +70,16 @@ public class Config extends Stats implements Template {
         fuel = new IntField(0, maxFuel, maxFuel);
         fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
         cargo = new IntField(0, maxCargo, 0);
-        powerBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-power").buildHBox();
+        fuel.getStyleClass().add("config-intfield");
+        cargo.getStyleClass().add("config-intfield");
+        powerBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-power-config").buildHBox();
         powerBox();
+        fuelLabel = createLabel("ship.stats.config.fuel", "0");
+        cargoLabel = createLabel("ship.stats.config.cargo", "0");
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.live"), new GrowingRegion(), live).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.fuelreserve"), new GrowingRegion(), fuelreserve).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.fuel"), new GrowingRegion(), fuel).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.cargo"), new GrowingRegion(), cargo).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(fuelLabel, new GrowingRegion(), fuel).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(cargoLabel, new GrowingRegion(), cargo).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.system"), new GrowingRegion(), systemPipSelect).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.engine"), new GrowingRegion(), enginePipSelect).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.weapon"), new GrowingRegion(), weaponPipSelect).buildHBox());
@@ -203,9 +211,11 @@ public class Config extends Stats implements Template {
 
         if (fuel.getMaxValue() != maxFuel) {
             fuel.setMaxValue(maxFuel);
+            fuelLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.fuel", maxFuel));
         }
         if (cargo.getMaxValue() != maxCargo) {
             cargo.setMaxValue(maxCargo);
+            cargoLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo));
         }
     }
 }

@@ -65,4 +65,16 @@ public class Xeno extends UtilityModule {
     public boolean isPassivePower() {
         return SHUTDOWN_FIELD_NEUTRALISER_0_F.equals(this) || THARGOID_PULSE_NEUTRALISER_0_E.equals(this);
     }
+
+    @Override
+    public int getGrouping() {
+        return switch (getId()) {
+            case "XENO_SCANNER_0_E" -> 1;
+            case "ENHANCED_XENO_SCANNER_0_C" -> 2;
+            case "PULSE_WAVE_XENO_SCANNER_0_C" -> 3;
+            case "SHUTDOWN_FIELD_NEUTRALISER_0_F" -> 4;
+            case "THARGOID_PULSE_NEUTRALISER_0_E" -> 5;
+            default -> 0;
+        };
+    }
 }

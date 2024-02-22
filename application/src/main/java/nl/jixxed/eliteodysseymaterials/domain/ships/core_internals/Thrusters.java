@@ -117,4 +117,8 @@ public static final List<Thrusters> THRUSTERS = List.of(
     public String getClarifier() {
         return this== ENHANCED_THRUSTERS_2_A || this== ENHANCED_THRUSTERS_3_A ? " " + LocaleService.getLocalizedStringForCurrentLocale("blueprint.horizons.name.enhanced_thrusters") : "";
     }
+    @Override
+    public int getGrouping() {
+        return getModuleSize().intValue() * 10 + (this.equals(ENHANCED_THRUSTERS_2_A) || this.equals(ENHANCED_THRUSTERS_3_A) ? 1 : 0);
+    }
 }

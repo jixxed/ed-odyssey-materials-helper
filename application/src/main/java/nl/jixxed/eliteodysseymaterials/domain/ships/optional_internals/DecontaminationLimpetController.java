@@ -51,4 +51,8 @@ public class DecontaminationLimpetController extends OptionalModule {
     public DecontaminationLimpetController Clone() {
         return new DecontaminationLimpetController(this);
     }
+    @Override
+    public int getGrouping() {
+        return 1;
+    }
 }

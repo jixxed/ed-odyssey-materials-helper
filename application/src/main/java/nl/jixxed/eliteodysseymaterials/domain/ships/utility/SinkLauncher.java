@@ -64,18 +64,15 @@ public class SinkLauncher extends UtilityModule {
 
     @Override
     public String getNonSortingClarifier() {
-        if(this.getName().equals(HorizonsBlueprintName.HEAT_SINK_LAUNCHER)){
-            return " Heat";
-        }
-        if(this.getName().equals(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER)){
-            return " Caustic";
-        }
-        return super.getNonSortingClarifier();
+        return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".short");
     }
-
     @Override
-    public String getClarifier() {
-        return isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
+    public int getGrouping() {
+        return switch (getId()) {
+            case "HEAT_SINK_LAUNCHER_0_I", "CAUSTIC_SINK_LAUNCHER_0_I" -> 1;
+            case "HEAT_SINK_LAUNCHER_0_I_PRE" -> 2;
+            default -> 0;
+        };
     }
     @Override
     public boolean isPassivePower(){

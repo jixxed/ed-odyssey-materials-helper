@@ -65,8 +65,8 @@ public class ArmourStats extends Stats implements Template {
 //        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.armour.integritythermal"), new GrowingRegion(), this.integrityThermal).buildHBox());
 //        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.armour.integrityexplosive"), new GrowingRegion(), this.integrityExplosive).buildHBox());
 //        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.armour.integritycaustic"), new GrowingRegion(), this.integrityCaustic).buildHBox());
-        armourResistance = new Shield("RES", "blue");
-        armourIntegrity = new Shield("HP", "red");
+        armourResistance = new Shield("RES","%", "blue");
+        armourIntegrity = new Shield("HP","\u2795", "red");
         this.getChildren().addAll(armourResistance, armourIntegrity);
     }
 

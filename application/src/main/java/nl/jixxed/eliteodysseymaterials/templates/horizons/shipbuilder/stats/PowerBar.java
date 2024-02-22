@@ -25,6 +25,7 @@ public class PowerBar extends VBox {
     static {
         NUMBER_FORMAT_2.setMaximumFractionDigits(2);
     }
+
     private SegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment group1;
     private TypeSegment group2;
@@ -32,6 +33,9 @@ public class PowerBar extends VBox {
     private TypeSegment group4;
     private TypeSegment group5;
     private TypeSegment groupAvailable;
+    private TypeSegment groupOverPower;
+    private double overPower = 0D;
+
 
     public PowerBar() {
 
@@ -39,14 +43,15 @@ public class PowerBar extends VBox {
         this.segmentedBar.getStyleClass().add("power-progressbar");
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> LabelBuilder.builder()
-                .withStyleClass("power-progressbar-label").withNonLocalizedText(segment.getText() + ": " + NUMBER_FORMAT_2.format(segment.getValue()) + "MW").build());
+                .withStyleClass("power-progressbar-label").withNonLocalizedText(segment.getText() + ": " + NUMBER_FORMAT_2.format(segment.getSegmentType() == SegmentType.POWER_OVERPOWER ? overPower : segment.getValue()) + "MW").build());
         this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                 SegmentType.POWER_GROUP_1, Color.web("#2e92df"),
                 SegmentType.POWER_GROUP_2, Color.web("#89D07F"),
                 SegmentType.POWER_GROUP_3, Color.web("#CE6C1E"),
                 SegmentType.POWER_GROUP_4, Color.web("#6D3DA8"),
                 SegmentType.POWER_GROUP_5, Color.web("#F8FF2E"),
-                SegmentType.POWER_GROUP_NONE, Color.rgb(128, 128, 128)
+                SegmentType.POWER_GROUP_NONE, Color.rgb(128, 128, 128),
+                SegmentType.POWER_OVERPOWER, Color.rgb(240, 20, 20)
         ), false));
         final Map<Integer, Double> power = calculateRetractedPower();
         this.group1 = new TypeSegment(power.get(1), SegmentType.POWER_GROUP_1);
@@ -54,8 +59,9 @@ public class PowerBar extends VBox {
         this.group3 = new TypeSegment(power.get(3), SegmentType.POWER_GROUP_3);
         this.group4 = new TypeSegment(power.get(4), SegmentType.POWER_GROUP_4);
         this.group5 = new TypeSegment(power.get(5), SegmentType.POWER_GROUP_5);
+        this.groupOverPower = new TypeSegment(0D, SegmentType.POWER_OVERPOWER);
         this.groupAvailable = new TypeSegment(power.get(0) - power.get(1) - power.get(2) - power.get(3) - power.get(4) - power.get(5), SegmentType.POWER_GROUP_NONE);
-        this.segmentedBar.getSegments().addAll(group1, group2, group3, group4, group5, groupAvailable);
+        this.segmentedBar.getSegments().addAll(group1, group2, group3, group4, group5, groupAvailable, groupOverPower);
         this.getChildren().add(this.segmentedBar);
     }
 
@@ -67,22 +73,13 @@ public class PowerBar extends VBox {
         group3.setValue(power.get(3));
         group4.setValue(power.get(4));
         group5.setValue(power.get(5));
-        groupAvailable.setValue(power.get(0) - power.get(1) - power.get(2) - power.get(3) - power.get(4) - power.get(5));
-//
-//            final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
-//            this.present.setValue(progress);
-//            this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
-//            if (Math.max(this.getLeftAmount() - progress, 0) > 0) {
-//                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-//                        SegmentType.PRESENT, Color.web("#ff7c7c"),
-//                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
-//                ), false));
-//            } else {
-//                this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-//                        SegmentType.PRESENT, Color.web("#89d07f"),
-//                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
-//                ), false));
-//            }
+        double usedPower = power.get(1) + power.get(2) + power.get(3) + power.get(4) + power.get(5);
+        final double available = power.get(0) - usedPower;
+        groupAvailable.setValue(Math.max(available, 0D));
+//        groupOverPower.setValue(Math.abs(Math.min(available, 0D)));
+        overPower = Math.abs(Math.min(available, 0D));
+        groupOverPower.setValue(overPower > 0D ? usedPower / 10D : 0D);
+
     }
 
 

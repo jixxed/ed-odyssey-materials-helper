@@ -494,6 +494,10 @@ public enum HorizonsBlueprintType {
         return "blueprint.horizons.type." + this.name().toLowerCase();
     }
 
+    public String getLocalizationKey(boolean shortFormat) {
+        return shortFormat && LocaleService.hasKey("blueprint.horizons.type.short." + this.name().toLowerCase()) ? "blueprint.horizons.type.short." + this.name().toLowerCase() : getLocalizationKey();
+    }
+
     public String getDescriptionLocalizationKey() {
         return "blueprint.horizons.type.description." + this.name().toLowerCase();
     }

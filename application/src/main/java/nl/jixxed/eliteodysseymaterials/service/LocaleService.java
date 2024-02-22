@@ -31,6 +31,7 @@ public class LocaleService {
             "blueprint/horizons/names",
             "blueprint/horizons/type.description",
             "blueprint/horizons/type.names",
+            "blueprint/horizons/type.names.short",
             "blueprint/odyssey/category",
             "blueprint/odyssey/description",
             "blueprint/odyssey/modifier",
@@ -61,6 +62,8 @@ public class LocaleService {
             "ships/ships",
             "ships/modules",
             "ships/interface",
+            "ships/size",
+            "ships/slot.size",
             "application",
             "blueprint",
             "menu",
@@ -85,9 +88,14 @@ public class LocaleService {
         return currentLocale;
     }
 
+
+    public static boolean hasKey(String key) {
+        return ObservableResourceFactory.getResources().containsKey(key);
+    }
+
     public static void setCurrentLocale(final Locale locale) {
         currentLocale = locale;
-        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle( currentLocale,RESOURCE_BUNDLE_NAMES));
+        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle(currentLocale, RESOURCE_BUNDLE_NAMES));
     }
 
     public static String getLocalizedStringForCurrentLocale(final String key, final Object... parameters) {
@@ -101,7 +109,7 @@ public class LocaleService {
 
     private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
         final Object[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(Object[]::new);
-        return MessageFormat.format(CSVResourceBundle.getResourceBundle(locale,RESOURCE_BUNDLE_NAMES).getString(key), localizedParams);
+        return MessageFormat.format(CSVResourceBundle.getResourceBundle(locale, RESOURCE_BUNDLE_NAMES).getString(key), localizedParams);
     }
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {

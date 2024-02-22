@@ -48,4 +48,12 @@ public class SubSurfaceDisplacementMissile extends HardpointModule {
     public SubSurfaceDisplacementMissile Clone() {
         return new SubSurfaceDisplacementMissile(this);
     }
+    @Override
+    public int getGrouping() {
+        return switch (getId()) {
+            case "SUB_SURFACE_DISPLACEMENT_MISSILE_1_B_F", "SUB_SURFACE_DISPLACEMENT_MISSILE_1_B_T" -> 1;
+            case "SUB_SURFACE_DISPLACEMENT_MISSILE_2_B_F", "SUB_SURFACE_DISPLACEMENT_MISSILE_2_B_T", "SUB_SURFACE_EXTRACTION_MISSILE_2_B_F" -> 2;
+            default -> 0;
+        };
+    }
 }

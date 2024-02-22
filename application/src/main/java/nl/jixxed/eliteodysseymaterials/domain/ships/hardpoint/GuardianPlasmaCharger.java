@@ -78,4 +78,15 @@ public class GuardianPlasmaCharger extends HardpointModule {
     public boolean isPreEngineered() {
         return GUARDIAN_PLASMA_CHARGER_1_D_F_PRE.equals(this) || GUARDIAN_PLASMA_CHARGER_2_B_F_PRE.equals(this);
     }
+    @Override
+    public int getGrouping() {
+        return switch (getId()) {
+            case "GUARDIAN_PLASMA_CHARGER_1_D_F", "GUARDIAN_PLASMA_CHARGER_1_F_T" -> 1;
+            case "GUARDIAN_PLASMA_CHARGER_1_D_F_PRE" -> 2;
+            case "GUARDIAN_PLASMA_CHARGER_2_B_F", "GUARDIAN_PLASMA_CHARGER_2_E_T" -> 3;
+            case "GUARDIAN_PLASMA_CHARGER_2_B_F_PRE" -> 4;
+            case "GUARDIAN_PLASMA_CHARGER_3_C_F", "GUARDIAN_PLASMA_CHARGER_3_D_T" -> 5;
+            default -> 0;
+        };
+    }
 }

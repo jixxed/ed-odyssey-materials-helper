@@ -74,16 +74,22 @@ public class AXMissileRack extends HardpointModule {
     public boolean isPreEngineered() {
         return AX_MISSILE_RACK_2_E_F_PRE.equals(this) || AX_MISSILE_RACK_3_C_F_PRE.equals(this);
     }
-
     @Override
-    public String getNonSortingClarifier() {
-        if(ENHANCED_AX_MISSILE_RACK_2_D_F.equals(this) || ENHANCED_AX_MISSILE_RACK_2_E_T.equals(this) || ENHANCED_AX_MISSILE_RACK_3_B_F.equals(this) || ENHANCED_AX_MISSILE_RACK_3_D_T.equals(this)){
-            return " ENH.";
-        }
-        return super.getNonSortingClarifier();
+    public boolean isEnhanced() {
+        return ENHANCED_AX_MISSILE_RACK_2_D_F.equals(this) || ENHANCED_AX_MISSILE_RACK_2_E_T.equals(this) || ENHANCED_AX_MISSILE_RACK_3_B_F.equals(this) || ENHANCED_AX_MISSILE_RACK_3_D_T.equals(this);
     }
+
     public boolean groupOnName() {
         return true;
     }
-
+    @Override
+    public int getGrouping() {
+        return switch (getId()) {
+            case "AX_MISSILE_RACK_2_E_F", "AX_MISSILE_RACK_2_F_T", "AX_MISSILE_RACK_2_E_F_PRE" -> 1;
+            case "ENHANCED_AX_MISSILE_RACK_2_D_F", "ENHANCED_AX_MISSILE_RACK_2_E_T" -> 2;
+            case "AX_MISSILE_RACK_3_C_F", "AX_MISSILE_RACK_3_E_T", "AX_MISSILE_RACK_3_C_F_PRE" -> 4;
+            case "ENHANCED_AX_MISSILE_RACK_3_B_F", "ENHANCED_AX_MISSILE_RACK_3_D_T" -> 5;
+            default -> 0;
+        };
+    }
 }

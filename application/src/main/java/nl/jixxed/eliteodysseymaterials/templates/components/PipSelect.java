@@ -20,10 +20,10 @@ public class PipSelect extends HBox {
         super();
         this.getStyleClass().add("pipselect");
         this.value = new SimpleIntegerProperty(clamp(value, MIN_VALUE, MAX_VALUE));
-        rectangle1 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.0), ScalingHelper.getPixelDoubleFromEm(1.0));
-        rectangle2 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.0), ScalingHelper.getPixelDoubleFromEm(1.0));
-        rectangle3 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.0), ScalingHelper.getPixelDoubleFromEm(1.0));
-        rectangle4 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.0), ScalingHelper.getPixelDoubleFromEm(1.0));
+        rectangle1 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
+        rectangle2 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
+        rectangle3 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
+        rectangle4 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
         rectangle1.getStyleClass().add("pipselect-rectangle");
         rectangle2.getStyleClass().add("pipselect-rectangle");
         rectangle3.getStyleClass().add("pipselect-rectangle");

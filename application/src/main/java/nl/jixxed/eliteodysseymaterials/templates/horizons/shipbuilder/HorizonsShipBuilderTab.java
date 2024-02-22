@@ -13,12 +13,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurations;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
@@ -34,7 +34,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.*;
@@ -61,6 +60,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     private Group overlayLine;
     private Pane pane;
     private DestroyableResizableImageView shipImage;
+    @Getter
     private ComboBox<ShipConfiguration> shipSelect;
     private MenuButton menuButton;
     private String activeShipUUID;
@@ -218,6 +218,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                                     final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
                                     shipConfigurations.resetShipConfiguration(this.activeShipUUID);
                                     ShipService.saveShipConfigurations(commander, shipConfigurations);
+                                    refreshContent();
                                 });
                             }
                         },
@@ -235,9 +236,9 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
 //                                ))
                 ),
                 Map.of(
-//                        "tab.ships.rename", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(HorizonsWishlist.ALL),
-//                        "tab.ships.copy", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(HorizonsWishlist.ALL),
-//                        "tab.ships.delete", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(HorizonsWishlist.ALL)
+                        "tab.ships.rename", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
+                        "tab.ships.copy", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
+                        "tab.ships.delete", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT)
                 )).build();
         this.menuButton.setFocusTraversable(false);
         final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
@@ -249,9 +250,10 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 .withContent(content)
                 .build();
         this.setContent(this.scrollPane);
-        initShipSelectView();
+//        initShipSelectView();
+        this.shipSelectView = new ShipSelectView(this);
         initShipLayout();
-        this.noShip = LabelBuilder.builder().withNonLocalizedText("NOSHIP").build();
+        this.noShip = LabelBuilder.builder().withNonLocalizedText("").build();
         this.contentChild = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(this.shipSelect.getSelectionModel().getSelectedItem() == null || (this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null && this.shipSelect.getSelectionModel().getSelectedItem() != ShipConfiguration.CURRENT) ? this.shipSelectView : this.shipView).buildVBox();
         this.content = BoxBuilder.builder().withStyleClass(SHIP_CONTENT_STYLE_CLASS).withNodes(hBoxShips, this.shipSelect.getItems().isEmpty() || this.shipSelect.getSelectionModel().getSelectedItem() == ShipConfiguration.CURRENT ? this.noShip : this.contentChild).buildVBox();
 //        this.scrollPane = ScrollPaneBuilder.builder()
@@ -306,6 +308,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                     if (!this.contentChild.getChildren().contains(this.shipView)) {
                         this.contentChild.getChildren().remove(this.shipSelectView);
                         this.contentChild.getChildren().add(this.shipView);
+                        this.right.setVisible(true);//TODO baaad
                     }
                     initShipSlots();
                 } else if (configuration == ShipConfiguration.CURRENT) {
@@ -315,6 +318,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                     if (!this.contentChild.getChildren().contains(this.shipSelectView)) {
                         this.contentChild.getChildren().remove(this.shipView);
                         this.contentChild.getChildren().add(this.shipSelectView);
+                        this.right.setVisible(false);//TODO baaad
                     }
                 }
                 if (!this.content.getChildren().contains(this.contentChild) && (configuration != ShipConfiguration.CURRENT || configuration.getShipType() != null)) {
@@ -336,32 +340,32 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         });
     }
 
-    private void initShipSelectView() {
-        final List<HBox> shipRows = Ship.ALL.stream().map(ship1 -> {
-            final DestroyableLabel shipName = LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-name").withText(LocaleService.getStringBinding(ship1.getShipType().getLocalizationKey())).build();
-            final DestroyableLabel price = LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-price").withNonLocalizedText(NUMBER_FORMAT.format(ship1.getRetailPrice())).build();
-            return BoxBuilder.builder().withStyleClass("shipbuilder-ship-row").withNodes(shipName, price).withOnMouseClicked(event -> {
-                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                            final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
-                            shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> {
-                                APPLICATION_STATE.setShip(new Ship(ship1));
-                                ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), configuration, shipSelect.getSelectionModel().getSelectedItem().getName());
-                                ShipService.saveShipConfigurations(commander, shipConfigurations);
-                                refreshContent();
-                                EventService.publish(new HorizonsShipSelectedEvent(configuration.getUuid()));
-                            });
-                        }
-                );
-            }).buildHBox();
-        }).toList();
-        HBox header = BoxBuilder.builder().withStyleClass("shipbuilder-ship-header").withNodes(
-                LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-name").withText(LocaleService.getStringBinding("ship.view.header.ship.name")).build(),
-                LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-price").withText(LocaleService.getStringBinding("ship.view.header.price")).build()
-        ).buildHBox();
-        this.shipSelectView = BoxBuilder.builder().withNodes(shipRows.toArray(HBox[]::new)).buildVBox();
-        this.shipSelectView.getChildren().add(0, header);
-
-    }
+//    private void initShipSelectView() {
+//        final List<HBox> shipRows = Ship.ALL.stream().map(ship1 -> {
+//            final DestroyableLabel shipName = LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-name").withText(LocaleService.getStringBinding(ship1.getShipType().getLocalizationKey())).build();
+//            final DestroyableLabel price = LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-price").withNonLocalizedText(NUMBER_FORMAT.format(ship1.getRetailPrice())).build();
+//            return BoxBuilder.builder().withStyleClass("shipbuilder-ship-row").withNodes(shipName, price).withOnMouseClicked(event -> {
+//                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+//                            final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+//                            shipConfigurations.getSelectedShipConfiguration().ifPresent(configuration -> {
+//                                APPLICATION_STATE.setShip(new Ship(ship1));
+//                                ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), configuration, shipSelect.getSelectionModel().getSelectedItem().getName());
+//                                ShipService.saveShipConfigurations(commander, shipConfigurations);
+//                                refreshContent();
+//                                EventService.publish(new HorizonsShipSelectedEvent(configuration.getUuid()));
+//                            });
+//                        }
+//                );
+//            }).buildHBox();
+//        }).toList();
+//        HBox header = BoxBuilder.builder().withStyleClass("shipbuilder-ship-header").withNodes(
+//                LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-name").withText(LocaleService.getStringBinding("ship.view.header.ship.name")).build(),
+//                LabelBuilder.builder().withStyleClass("shipbuilder-ship-row-price").withText(LocaleService.getStringBinding("ship.view.header.price")).build()
+//        ).buildHBox();
+//        this.shipSelectView = BoxBuilder.builder().withNodes(shipRows.toArray(HBox[]::new)).buildVBox();
+//        this.shipSelectView.getChildren().add(0, header);
+//
+//    }
 
     private void initShipLayout() {
         this.hardpointsVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").buildVBox();
@@ -381,8 +385,9 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         final HBox stats = BoxBuilder.builder().buildHBox();
         stats.getChildren().addAll(
                 new Config(),
-                new ThermalPowerStats(),
-                new JumpStats(),
+                BoxBuilder.builder().withNodes(new ThermalStats(), new PowerStats()).buildVBox(),
+                BoxBuilder.builder().withNodes(new JumpStats(), new EngineStats()).buildVBox(),
+//                new JumpStats(),
 //                new EngineStats(),
                 new HandlingStats(),
                 new ArmourStats(),

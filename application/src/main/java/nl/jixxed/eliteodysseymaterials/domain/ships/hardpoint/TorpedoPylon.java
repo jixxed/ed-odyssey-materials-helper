@@ -46,4 +46,9 @@ public class TorpedoPylon extends HardpointModule {
     public TorpedoPylon Clone() {
         return new TorpedoPylon(this);
     }
+
+    @Override
+    public int getGrouping() {
+        return 1;
+    }
 }

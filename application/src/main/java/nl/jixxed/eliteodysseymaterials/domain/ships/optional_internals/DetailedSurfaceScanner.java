@@ -54,15 +54,11 @@ public class DetailedSurfaceScanner extends OptionalModule {
     }
 
     @Override
-    public String getClarifier() {
-        if(DETAILED_SURFACE_SCANNER_1_I_V1_PRE.equals(this)){
-            return " " + "Pre-engineered V1";
-        }
-        return super.getClarifier();
-    }
-
-    @Override
     public boolean isPreEngineered() {
         return DETAILED_SURFACE_SCANNER_1_I_V1_PRE.equals(this);
+    }
+    @Override
+    public int getGrouping() {
+        return 1;
     }
 }

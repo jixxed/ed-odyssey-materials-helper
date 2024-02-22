@@ -69,4 +69,15 @@ public class GuardianShardCannon extends HardpointModule {
     public boolean isPreEngineered() {
         return HorizonsBlueprintName.GUARDIAN_SHARD_CANNON_PRE.equals(this.getName());
     }
+    @Override
+    public int getGrouping() {
+        return switch (getId()) {
+            case "GUARDIAN_SHARD_CANNON_1_D_F", "GUARDIAN_SHARD_CANNON_1_F_T" -> 1;
+            case "GUARDIAN_SHARD_CANNON_1_D_F_PRE" -> 2;
+            case "GUARDIAN_SHARD_CANNON_2_A_F", "GUARDIAN_SHARD_CANNON_2_A_T" -> 3;
+            case "GUARDIAN_SHARD_CANNON_2_A_F_PRE" -> 4;
+            case "GUARDIAN_SHARD_CANNON_3_C_F", "GUARDIAN_SHARD_CANNON_3_D_T" -> 5;
+            default -> 0;
+        };
+    }
 }

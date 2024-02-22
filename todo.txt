@@ -31,15 +31,15 @@ drag-drop ghost has old class/size config x
 
 weapons:
 quick switch on Mounting instead of class x
-Passenger cabins/computers/multi-limpet/xenos on type
-festive launcher buttons
-better button texts overall
-
+Passenger cabins/computers/multi-limpet/xenos on type x
+festive launcher buttons x
+better button texts overall x
 
 tests:
 good test with different module types
 cover all pre-engineered cases (acquire more cases later)
 
 wishlist:
-ability to mark what should go to wishlist
+ability to mark what should go to wishlist x partially
 show unavailable upgrades
+send to wishlist

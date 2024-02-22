@@ -13,7 +13,6 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.Optional;
 import java.util.Set;
@@ -21,15 +20,9 @@ import java.util.Set;
 @Slf4j
 public class EngineStats extends Stats implements Template {
     private static final double BOOST_MARGIN = 0.005;
-    private DestroyableLabel currentSpeed;
-    private DestroyableLabel currentBoost;
-    private DestroyableLabel currentRecharge;
-    private DestroyableLabel minSpeed;
-    private DestroyableLabel minBoost;
-    private DestroyableLabel minRecharge;
-    private DestroyableLabel maxSpeed;
-    private DestroyableLabel maxBoost;
-    private DestroyableLabel maxRecharge;
+    private RangeIndicator speedIndicator;
+    private RangeIndicator boostIndicator;
+    private RangeIndicator rechargeIndicator;
 
     public EngineStats() {
         super();
@@ -39,26 +32,15 @@ public class EngineStats extends Stats implements Template {
 
     @Override
     public void initComponents() {
+        speedIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.speed", "ship.stats.engine.speed.value");
+        boostIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.boost", "ship.stats.engine.boost.value");
+        rechargeIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.recharge", "ship.stats.engine.recharge.value");
+
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.engine"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.minSpeed = createValueLabel(String.format("%.2f", 0.0));
-        this.minBoost = createValueLabel(String.format("%.2f", 0.0));
-        this.minRecharge = createValueLabel(String.format("%.2f", 0.0));
-        this.currentSpeed = createValueLabel(String.format("%.2f", 0.0));
-        this.currentBoost = createValueLabel(String.format("%.2f", 0.0));
-        this.currentRecharge = createValueLabel(String.format("%.2f", 0.0));
-        this.maxSpeed = createValueLabel(String.format("%.2f", 0.0));
-        this.maxBoost = createValueLabel(String.format("%.2f", 0.0));
-        this.maxRecharge = createValueLabel(String.format("%.2f", 0.0));
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.minspeed"), new GrowingRegion(), this.minSpeed).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.minboost"), new GrowingRegion(), this.minBoost).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.minrecharge"), new GrowingRegion(), this.minRecharge).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.currentspeed"), new GrowingRegion(), this.currentSpeed).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.currentboost"), new GrowingRegion(), this.currentBoost).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.currentrecharge"), new GrowingRegion(), this.currentRecharge).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.maxspeed"), new GrowingRegion(), this.maxSpeed).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.maxboost"), new GrowingRegion(), this.maxBoost).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.engine.maxrecharge"), new GrowingRegion(), this.maxRecharge).buildHBox());
+        this.getChildren().add(speedIndicator);
+        this.getChildren().add(boostIndicator);
+        this.getChildren().add(rechargeIndicator);
     }
 
     @Override
@@ -66,8 +48,11 @@ public class EngineStats extends Stats implements Template {
         eventListeners.add(EventService.addListener(this, ShipConfigEvent.class, event -> update()));
     }
 
-    private double calculateMaxRecharge(double boostCost, double engineRecharge) {
+    private double calculateMinRecharge(double boostCost, double engineRecharge) {
         return boostCost / engineRecharge;
+    }
+    private double calculateMaxRecharge(double boostCost, double engineRecharge, double multiplier) {
+        return boostCost /  (engineRecharge * Math.pow(multiplier > 0 ? 1D/8D : 0D, 1.1));
     }
 
     private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
@@ -132,7 +117,6 @@ public class EngineStats extends Stats implements Template {
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER)).orElse(0D));
     }
 
-
     @Override
     protected void update() {
 
@@ -157,15 +141,21 @@ public class EngineStats extends Stats implements Template {
             final boolean engineCapacityEnough = engineCapacity > boostCost + BOOST_MARGIN;
 
             this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
-            this.currentSpeed.setText(String.format("%.2f", calculateCurrentSpeed(ship, topSpeed , moduleProfile, multiplier)));
-            this.currentBoost.setText(engineCapacityEnough ? String.format("%.2f", calculateCurrentSpeed(ship, boostSpeed, moduleProfile, multiplier)) : "ERROR");
-            this.currentRecharge.setText(engineCapacityEnough ? String.format("%.2f", calculateCurrentRecharge(boostCost, engineRecharge, multiplier)) : "ERROR");
-            this.minSpeed.setText(String.format("%.2f", calculateMinSpeed(ship, topSpeed, moduleProfile)));
-            this.minBoost.setText(engineCapacityEnough ? String.format("%.2f", calculateMinSpeed(ship, boostSpeed, moduleProfile)) : "ERROR");
-            this.minRecharge.setText(engineCapacityEnough ? String.format("%.2f", calculateMaxRecharge(boostCost, engineRecharge)) : "ERROR");
-            this.maxSpeed.setText(String.format("%.2f", calculateMaxSpeed(ship, topSpeed, moduleProfile)));
-            this.maxBoost.setText(engineCapacityEnough ? String.format("%.2f", calculateMaxSpeed(ship, boostSpeed, moduleProfile)) : "ERROR");
-            this.maxRecharge.setText(engineCapacityEnough ? String.format("%.2f", calculateMaxRecharge(boostCost, engineRecharge)) : "ERROR");
+            var currentSpeed = calculateCurrentSpeed(ship, topSpeed , moduleProfile, multiplier);
+            var currentBoost = engineCapacityEnough ? calculateCurrentSpeed(ship, boostSpeed, moduleProfile, multiplier) : Double.NaN;
+            var currentRecharge = engineCapacityEnough ? calculateCurrentRecharge(boostCost, engineRecharge, multiplier) :Double.NaN;
+            var minSpeed = calculateMinSpeed(ship, topSpeed, moduleProfile);
+            var minBoost = engineCapacityEnough ? calculateMinSpeed(ship, boostSpeed, moduleProfile) : Double.NaN;
+            var minRecharge = engineCapacityEnough ? calculateMinRecharge(boostCost, engineRecharge) : Double.NaN;
+            var maxSpeed = calculateMaxSpeed(ship, topSpeed, moduleProfile);
+            var maxBoost = engineCapacityEnough ?  calculateMaxSpeed(ship, boostSpeed, moduleProfile) : Double.NaN;
+            var maxRecharge = engineCapacityEnough ?  calculateMaxRecharge(boostCost, engineRecharge, multiplier) : Double.NaN;
+
+
+
+            this.speedIndicator.updateValues(minSpeed, currentSpeed, maxSpeed);
+            this.boostIndicator.updateValues(minBoost, currentBoost, maxBoost);
+            this.rechargeIndicator.updateValues(minRecharge, currentRecharge, maxRecharge);
         });
     }
 

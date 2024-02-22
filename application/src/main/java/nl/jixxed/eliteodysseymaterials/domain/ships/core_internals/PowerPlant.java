@@ -173,7 +173,11 @@ public class PowerPlant extends CoreModule {
 
     @Override
     public String getClarifier() {
-        return this.getOrigin() == Origin.GUARDIAN || isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
+        if (this.getOrigin() == Origin.GUARDIAN)
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey());
+        else if (isPreEngineered())
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey() + ".short");
+        return "";
     }
 
     @Override
@@ -184,9 +188,14 @@ public class PowerPlant extends CoreModule {
 
     @Override
     public boolean isHiddenStat(HorizonsModifier modifier) {
-        if(HorizonsModifier.POWER_DRAW.equals(modifier)){
+        if (HorizonsModifier.POWER_DRAW.equals(modifier)) {
             return true;
         }
         return super.isHiddenStat(modifier);
+    }
+
+    @Override
+    public int getGrouping() {
+        return getModuleSize().intValue() * 10 + (getOrigin().equals(Origin.GUARDIAN) ? 1 : 0) + (isPreEngineered() ? 2 : 0) + (this.equals(POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED) ? 1 : 0);
     }
 }

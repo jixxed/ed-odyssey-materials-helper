@@ -51,4 +51,13 @@ public class Computer extends OptionalModule {
     public String getClarifier() {
         return " " + LocaleService.getLocalizedStringForCurrentLocale(this.getName().getLocalizationKey());
     }
+    @Override
+    public int getGrouping() {
+        return switch (getName()) {
+            case STANDARD_DOCKING_COMPUTER -> 1;
+            case ADVANCED_DOCKING_COMPUTER -> 2;
+            case SUPERCRUISE_ASSIST -> 3;
+            default -> 0;
+        };
+    }
 }

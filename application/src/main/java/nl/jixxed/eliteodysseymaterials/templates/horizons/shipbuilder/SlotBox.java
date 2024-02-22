@@ -549,10 +549,10 @@ class SlotBox extends StackPane {
         this.blueprints.textProperty().bind(
                 LocaleService.getStringBinding(() -> Optional.ofNullable(shipModule).map(mod -> {
                     final String mods = mod.getModifications().stream()
-                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey()))
+                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey(true)))
                             .collect(Collectors.joining(", "));
                     final String effects = mod.getExperimentalEffects().stream()
-                            .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey()))
+                            .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey(true)))
                             .collect(Collectors.joining(", "));
                     return mods + ((effects.isEmpty()) ? "" : ", " + effects);
                 }).orElse(""))
@@ -667,7 +667,27 @@ class SlotBox extends StackPane {
             }
             if (shipModule.isPreEngineered()) {
                 this.iconBox.getChildren().add(
-                        createIcon("shipbuilder-slots-slotbox-icon", "/images/ships/icons/preengineered.png", "Pre-engineered")
+                        createIcon("shipbuilder-slots-slotbox-icon", "/images/ships/icons/preengineered.png", "Pre-engineered")//TODO localize
+                );
+            }
+            if(shipModule.isAdvanced()) {
+                this.iconBox.getChildren().add(
+                        createIcon("shipbuilder-slots-slotbox-icon", "/images/ships/icons/advanced2.png", "Advanced")
+                );
+            }
+            if(shipModule.isEnhanced()) {
+                this.iconBox.getChildren().add(
+                        createIcon("shipbuilder-slots-slotbox-icon", "/images/ships/icons/enhanced2.png", "Enhanced")
+                );
+            }
+            if(shipModule.isSeeker()) {
+                this.iconBox.getChildren().add(
+                        createIcon("shipbuilder-slots-slotbox-icon", "/images/ships/icons/seeker2.png", "Seeker")
+                );
+            }
+            if(shipModule.isDumbfire()) {
+                this.iconBox.getChildren().add(
+                        createIcon("shipbuilder-slots-slotbox-icon", "/images/ships/icons/dumb2.png", "Dumbfire")
                 );
             }
             if (shipModule.isLegacy()) {
@@ -847,14 +867,14 @@ class SlotBox extends StackPane {
         if (shipModule != null && !allowedBlueprints.isEmpty()) {
             final ToggleGroup toggleGroup = new ToggleGroup();
             final List<ToggleButton> toggleButtons = allowedBlueprints.stream()
-                    .sorted(Comparator.comparing(horizonsBlueprintType -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey())))
+                    .sorted(Comparator.comparing(horizonsBlueprintType -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey(true))))
                     .map(horizonsBlueprintType -> {
                                 final int multiplier = (experimental ? shipModule.getExperimentalEffects().stream().filter(horizonsBlueprintType::equals).toList().size() : shipModule.getModifications().stream().filter(modification -> modification.getModification().equals(horizonsBlueprintType)).toList().size());
                                 final StringBinding blueprintStringBinding;
                                 if (multiplier > 1) {
-                                    blueprintStringBinding = LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey()).concat(" x" + multiplier));
+                                    blueprintStringBinding = LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey(true)).concat(" x" + multiplier));
                                 } else {
-                                    blueprintStringBinding = LocaleService.getStringBinding(horizonsBlueprintType.getLocalizationKey());
+                                    blueprintStringBinding = LocaleService.getStringBinding(horizonsBlueprintType.getLocalizationKey(true));
                                 }
                                 final ToggleButton button = ToggleButtonBuilder.builder()
                                         .withStyleClass("toggle-button-blueprints")

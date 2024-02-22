@@ -202,4 +202,15 @@ public class ShieldGenerator extends OptionalModule {
         }
         return super.isHiddenStat(modifier);
     }
+    @Override
+    public int getGrouping() {
+        final int typeValue = switch (getName()) {
+            case SHIELD_GENERATOR -> 1;
+            case BI_WEAVE_SHIELD_GENERATOR -> 2;
+            case PRISMATIC_SHIELD_GENERATOR -> 3;
+            case SHIELD_GENERATOR_PRE -> 4;
+            default -> 0;
+        };
+        return getModuleSize().intValue() * 10 + typeValue;
+    }
 }

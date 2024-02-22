@@ -50,4 +50,8 @@ public class ReconLimpetController extends OptionalModule {
     public ReconLimpetController Clone() {
         return new ReconLimpetController(this);
     }
+    @Override
+    public int getGrouping() {
+        return 1;
+    }
 }

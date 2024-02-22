@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +28,12 @@ public abstract class Stats extends VBox {
         return LabelBuilder.builder().withStyleClass("shipbuilder-stats-title").withText(LocaleService.getStringBinding(localeKey)).build();
     }
 
-    protected static DestroyableLabel createLabel(final String localeKey) {
-        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-label").withText(LocaleService.getStringBinding(localeKey)).build();
+    protected static DestroyableLabel createLabel(final String localeKey, final String... values) {
+        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-label").withText(LocaleService.getStringBinding(localeKey, Arrays.stream(values).toArray())).build();
     }
 
-    protected DestroyableLabel createValueLabel(final String text) {
-        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-value").withNonLocalizedText(text).build();
+    protected DestroyableLabel createValueLabel(final String key, final String... values) {
+        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-value").withText(LocaleService.getStringBinding(key, Arrays.stream(values).toArray())).build();
     }
 
     public void initEventHandlingStats() {

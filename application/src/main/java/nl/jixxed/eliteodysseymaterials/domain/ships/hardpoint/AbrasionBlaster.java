@@ -5,21 +5,22 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class AbrasionBlaster extends HardpointModule {
-    public static final AbrasionBlaster ABRASION_BLASTER_1_D_F = new AbrasionBlaster("ABRASION_BLASTER_1_D_F", HorizonsBlueprintName.ABRASION_BLASTER, ModuleSize.SIZE_1, ModuleClass.D, false, Mounting.FIXED   ,  9700, "Hpt_Mining_AbrBlstr_Fixed_Small" , Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.34), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 20.00), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 2.00), Map.entry(HorizonsModifier.THERMAL_LOAD, 2.00), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 18.00), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 1000.00), Map.entry(HorizonsModifier.SHOT_SPEED, 667.00), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.00), Map.entry(HorizonsModifier.BURST_INTERVAL,0.200), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.6), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,10), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,0.20), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 1.00), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1000.00)));
-    public static final AbrasionBlaster ABRASION_BLASTER_1_D_T = new AbrasionBlaster("ABRASION_BLASTER_1_D_T", HorizonsBlueprintName.ABRASION_BLASTER, ModuleSize.SIZE_1, ModuleClass.D, false, Mounting.TURRETED, 27480, "Hpt_Mining_AbrBlstr_Turret_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.47), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 20.00), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 2.00), Map.entry(HorizonsModifier.THERMAL_LOAD, 1.80), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 18.00), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 1000.00), Map.entry(HorizonsModifier.SHOT_SPEED, 667.00), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.00), Map.entry(HorizonsModifier.BURST_INTERVAL,0.200), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.6), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,10), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,0.20), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 1.00), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1000.00)));
-    public static final AbrasionBlaster ABRASION_BLASTER_1_D_F_PRE = new AbrasionBlaster("ABRASION_BLASTER_1_D_F_PRE", HorizonsBlueprintName.ABRASION_BLASTER_PRE, ModuleSize.SIZE_1, ModuleClass.D, false, Mounting.FIXED   ,  9700, "Hpt_Mining_AbrBlstr_Fixed_Small" , Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.34), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 20.00), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 2.00), Map.entry(HorizonsModifier.THERMAL_LOAD, 2.00), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 18.00), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 1000.00), Map.entry(HorizonsModifier.SHOT_SPEED, 667.00), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.00), Map.entry(HorizonsModifier.BURST_INTERVAL,0.200), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.6), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE,10), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE,0.20), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 1.00), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1000.00)));
+    public static final AbrasionBlaster ABRASION_BLASTER_1_D_F = new AbrasionBlaster("ABRASION_BLASTER_1_D_F", HorizonsBlueprintName.ABRASION_BLASTER, ModuleSize.SIZE_1, ModuleClass.D, false, Mounting.FIXED, 9700, "Hpt_Mining_AbrBlstr_Fixed_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.34), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 20.00), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 2.00), Map.entry(HorizonsModifier.THERMAL_LOAD, 2.00), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 18.00), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 1000.00), Map.entry(HorizonsModifier.SHOT_SPEED, 667.00), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.00), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.200), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.6), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 10), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.20), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 1.00), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1000.00)));
+    public static final AbrasionBlaster ABRASION_BLASTER_1_D_T = new AbrasionBlaster("ABRASION_BLASTER_1_D_T", HorizonsBlueprintName.ABRASION_BLASTER, ModuleSize.SIZE_1, ModuleClass.D, false, Mounting.TURRETED, 27480, "Hpt_Mining_AbrBlstr_Turret_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.47), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 20.00), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 2.00), Map.entry(HorizonsModifier.THERMAL_LOAD, 1.80), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 18.00), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 1000.00), Map.entry(HorizonsModifier.SHOT_SPEED, 667.00), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.00), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.200), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.6), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 10), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.20), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 1.00), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1000.00)));
+    public static final AbrasionBlaster ABRASION_BLASTER_1_D_F_PRE = new AbrasionBlaster("ABRASION_BLASTER_1_D_F_PRE", HorizonsBlueprintName.ABRASION_BLASTER_PRE, ModuleSize.SIZE_1, ModuleClass.D, false, Mounting.FIXED, 9700, "Hpt_Mining_AbrBlstr_Fixed_Small", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.00), Map.entry(HorizonsModifier.INTEGRITY, 40.00), Map.entry(HorizonsModifier.POWER_DRAW, 0.34), Map.entry(HorizonsModifier.DAMAGE_PER_SECOND, 20.00), Map.entry(HorizonsModifier.DISTRIBUTOR_DRAW, 2.00), Map.entry(HorizonsModifier.THERMAL_LOAD, 2.00), Map.entry(HorizonsModifier.ARMOUR_PIERCING, 18.00), Map.entry(HorizonsModifier.MAXIMUM_RANGE, 1000.00), Map.entry(HorizonsModifier.SHOT_SPEED, 667.00), Map.entry(HorizonsModifier.RATE_OF_FIRE, 5.00), Map.entry(HorizonsModifier.BURST_INTERVAL, 0.200), Map.entry(HorizonsModifier.BREACH_DAMAGE, 0.6), Map.entry(HorizonsModifier.MIN_BREACH_CHANCE, 10), Map.entry(HorizonsModifier.MAX_BREACH_CHANCE, 0.20), Map.entry(HorizonsModifier.THERMAL_DAMAGE_RATIO, 1.00), Map.entry(HorizonsModifier.DAMAGE_FALLOFF_START, 1000.00)));
+
     static {
         ABRASION_BLASTER_1_D_F_PRE.getModifications().add(
                 new Modification(HorizonsBlueprintType.LONG_RANGE_WEAPON_INCENDIARY_ROUNDS, 1.0, HorizonsBlueprintGrade.GRADE_5)
         );
     }
+
     public static final List<AbrasionBlaster> ABRASION_BLASTERS = List.of(
             ABRASION_BLASTER_1_D_F,
             ABRASION_BLASTER_1_D_T,
@@ -39,12 +40,12 @@ public class AbrasionBlaster extends HardpointModule {
     }
 
     @Override
-    public List<HorizonsBlueprintType> getAllowedBlueprints()  {
+    public List<HorizonsBlueprintType> getAllowedBlueprints() {
         return Collections.emptyList();
     }
 
     @Override
-    public List<HorizonsBlueprintType> getAllowedExperimentalEffects()  {
+    public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
         return Collections.emptyList();
     }
 
@@ -59,12 +60,17 @@ public class AbrasionBlaster extends HardpointModule {
     }
 
     @Override
-    public String getClarifier() {
-        return isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
+    public boolean isCGExclusive() {
+        return isPreEngineered();
     }
 
     @Override
-    public boolean isCGExclusive() {
-        return isPreEngineered();
+    public int getGrouping() {
+        return switch (getId()) {
+            case "ABRASION_BLASTER_1_D_F" -> 1;
+            case "ABRASION_BLASTER_1_D_T" -> 1;
+            case "ABRASION_BLASTER_1_D_F_PRE" -> 2;
+            default -> 0;
+        };
     }
 }
