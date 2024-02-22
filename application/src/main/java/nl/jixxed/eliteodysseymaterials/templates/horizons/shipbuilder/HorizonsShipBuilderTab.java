@@ -219,6 +219,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                                     shipConfigurations.resetShipConfiguration(this.activeShipUUID);
                                     ShipService.saveShipConfigurations(commander, shipConfigurations);
                                     refreshContent();
+                                    refreshShipSelect();
                                 });
                             }
                         },
@@ -430,6 +431,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             initShipSlots();
             refreshContent();
+            refreshShipSelect();
             EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
         }));
 //        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistBlueprintAlteredEvent.class, wishlistChangedEvent -> {

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ShipConfiguration {
 
     @Override
     public String toString() {
-        return getName();
+        return getName() + ((shipType != null) ? " - " + LocaleService.getLocalizedStringForCurrentLocale(shipType.getLocalizationKey()):"");
     }
 
     public ShipConfiguration cloneShipConfiguration() {
