@@ -11,5 +11,8 @@ public class ShipConfig {
     private final BigDecimal fuelReserve;
     private final BigDecimal fuelCapacity;
     private final BigDecimal cargoCapacity;
+    private final Integer systemPips;
+    private final Integer enginePips;
+    private final Integer weaponPips;
 
 }

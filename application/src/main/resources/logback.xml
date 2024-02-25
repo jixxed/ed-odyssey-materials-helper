@@ -7,9 +7,13 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>log/edomh.log</file>
-        <append>false</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/edomh_%d{yyyyMMdd-HH}.log</fileNamePattern>
+            <maxHistory>14</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n
@@ -18,7 +22,6 @@
     </appender>
 
     <logger name="edomh" level="DEBUG"/>
-
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>

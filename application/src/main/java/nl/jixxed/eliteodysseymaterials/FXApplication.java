@@ -8,6 +8,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -28,6 +29,7 @@ import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.exception.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
+import nl.jixxed.eliteodysseymaterials.templates.LoadingScreen;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.EDDNDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.StartDialog;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.URLSchemeDialog;
@@ -66,6 +68,8 @@ public class FXApplication extends Application {
 
     private boolean initialized = false;
     private final AtomicReference<EventListener<CommanderAllListedEvent>> deeplinkReference = new AtomicReference<>();
+    private LoadingScreen loadingScreen;
+    private StackPane content;
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
@@ -93,6 +97,7 @@ public class FXApplication extends Application {
             versionPopup();
             MaterialTrackingService.initialize();
             CAPIService.getInstance(this);
+            this.loadingScreen = new LoadingScreen();
             this.applicationLayout = new ApplicationLayout(this);
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
@@ -146,6 +151,7 @@ public class FXApplication extends Application {
         this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
+                Platform.runLater(() -> this.content.getChildren().remove(this.loadingScreen));
             }
         }));
         this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
@@ -296,7 +302,8 @@ public class FXApplication extends Application {
 
 
     private Scene createApplicationScene() {
-        final Scene scene = new Scene(this.applicationLayout, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
+        content = new StackPane( this.applicationLayout, this.loadingScreen);
+        final Scene scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));
         scene.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_HEIGHT, Math.max((Double) newValue, 175.0D)));

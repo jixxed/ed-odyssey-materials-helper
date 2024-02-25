@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,8 +40,16 @@ public class JournalWatcher {
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
         Platform.runLater(() -> {
             this.watchedFolder = folder;
+            if(!folder.exists()){
+                EventService.publish(new JournalInitEvent(true));
+                return;
+            }
             listCommanders(folder);
             findLatestFile(folder);
+            if(this.currentlyWatchedFile.isEmpty()){
+                EventService.publish(new JournalInitEvent(true));
+                return;
+            }
             this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
             this.fileWatcher = new FileWatcher(true).withListener(new FileAdapter() {
                 @Override

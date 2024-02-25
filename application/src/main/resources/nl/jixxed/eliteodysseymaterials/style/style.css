@@ -2722,14 +2722,13 @@
 .shipbuilder-ship-image {
     -fx-min-width: 78em;
     -fx-max-width: 78em;
-    /*-fx-min-height: 44.26875em;*/
+    -fx-min-height: 44.26875em;
     -fx-max-height: 44.26875em;
 }
-
 .shipbuilder-overlay {
     -fx-min-width: 78em;
     -fx-max-width: 78em;
-    /*-fx-min-height: 44.26875em;*/
+    -fx-min-height: 44.26875em;
     -fx-max-height: 44.26875em;
 }
 
@@ -2822,100 +2821,229 @@
     -fx-max-width: 24.5em;
 }
 
-.shipbuilder-ship-header{
-    -fx-background-color: #1f1f1f;
-    -fx-padding: 0.2em;
-}
 .shipbuilder-ship-row{
     -fx-background-color: #1f1f1f;
-    -fx-padding: 0.2em;
+    /*-fx-background-insets: 0em 0.2em 0em 0.2em;*/
+    -fx-padding: 0em 0em 0em 0.2em;
 }
 .shipbuilder-ship-row:hover{
     -fx-background-color: #000000;
     -fx-cursor: hand;
 }
-.shipbuilder-ship-col-name{
-    -fx-min-width: 11em;
-    -fx-text-alignment: right;
-}
-.shipbuilder-ship-col{
+.shipbuilder-ship-cell{
     -fx-text-alignment: right;
     -fx-alignment: center-right;
+    -fx-border-color: #3f3f3f;
 }
-.shipbuilder-ship-col-price{
+.ship-view-header-ship-name{
+    -fx-min-width: 11em;
+    -fx-max-width: 11em;
+    -fx-pref-width: 11em;
+    -fx-alignment: center-left;
+    -fx-text-alignment: left;
+    -fx-border-width: 0em 0.1em 0em 0.1em;
+    -fx-border-insets: 0em;
+}
+
+.ship-view-header-price {
     -fx-min-width: 6em;
+    -fx-max-width: 6em;
+    -fx-pref-width: 6em;
 }
-.shipbuilder-ship-col-size{
+
+.ship-view-header-size {
     -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-pref-width: 3em;
 }
-.shipbuilder-ship-col-crew{
+
+.ship-view-header-crew {
     -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-pref-width: 3em;
 }
-.shipbuilder-ship-col-masslock{
-    -fx-min-width: 5em;
+
+.ship-view-header-masslock {
+    -fx-min-width: 5.5em;
+    -fx-max-width: 5.5em;
+    -fx-pref-width: 5.5em;
 }
-.shipbuilder-ship-col-mass{
+
+.ship-view-header-mass {
     -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-pref-width: 3em;
 }
-.shipbuilder-ship-col-jumprange{
+
+.ship-view-header-jumprange {
     -fx-min-width: 6em;
+    -fx-max-width: 6em;
+    -fx-pref-width: 6em;
 }
-.shipbuilder-ship-col-speed{
-    -fx-min-width: 3em;
-}
-.shipbuilder-ship-col-boost{
-    -fx-min-width: 3em;
-}
-.shipbuilder-ship-col-shield{
+
+.ship-view-header-speed {
     -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-pref-width: 4em;
 }
-.shipbuilder-ship-col-armor{
-    -fx-min-width: 3em;
-}
-.shipbuilder-ship-col-hardness{
-    -fx-min-width: 5em;
-}
-.shipbuilder-ship-col-fuel{
-    -fx-min-width: 3em;
-}
-.shipbuilder-ship-col-cargo{
-    -fx-min-width: 3em;
-}
-.shipbuilder-ship-col-passenger{
-    -fx-min-width: 5em;
-}
-.shipbuilder-ship-col-slothardpoints{
-    -fx-min-width: 8em;
-}
-.shipbuilder-ship-col-slotultility{
+
+.ship-view-header-boost {
     -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-pref-width: 4em;
 }
-.shipbuilder-ship-col-slotarmour{
-    -fx-min-width: 2em;
+
+.ship-view-header-shield {
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-pref-width: 4em;
 }
-.shipbuilder-ship-col-slotpowerplant{
-    -fx-min-width: 2em;
+
+.ship-view-header-armor {
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-pref-width: 4em;
 }
-.shipbuilder-ship-col-slotthrusters{
-    -fx-min-width: 2em;
+
+.ship-view-header-hardness {
+    -fx-min-width: 5em;
+    -fx-max-width: 5em;
+    -fx-pref-width: 5em;
 }
-.shipbuilder-ship-col-slotframeshiftdrive{
-    -fx-min-width: 2em;
+
+.ship-view-header-fuel {
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+    -fx-pref-width: 3em;
 }
-.shipbuilder-ship-col-slotlifesupport{
-    -fx-min-width: 2em;
+
+.ship-view-header-cargo {
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-pref-width: 4em;
 }
-.shipbuilder-ship-col-slotpowerdistribution{
-    -fx-min-width: 2em;
+
+.ship-view-header-passenger {
+    -fx-min-width: 6em;
+    -fx-max-width: 6em;
+    -fx-pref-width: 6em;
 }
-.shipbuilder-ship-col-slotsensors{
-    -fx-min-width: 2em;
+
+.ship-view-header-slot-hardpoints {
+    -fx-min-width: 9em;
+    -fx-max-width: 9em;
+    -fx-pref-width: 9em;
 }
-.shipbuilder-ship-col-slotfueltank{
-    -fx-min-width: 2em;
+
+.ship-view-header-slot-utility {
+    -fx-min-width: 5em;
+    -fx-max-width: 5em;
+    -fx-pref-width: 5em;
 }
-.shipbuilder-ship-col-slotoptional{
+
+.ship-view-header-slot-armour {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-powerplant {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-thrusters {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-frameshiftdrive {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-lifesupport {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-powerdistribution {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-sensors {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-fueltank {
+    -fx-min-width: 2.5em;
+    -fx-max-width: 2.5em;
+    -fx-pref-width: 2.5em;
+}
+
+.ship-view-header-slot-optional {
     -fx-min-width: 13em;
+    -fx-max-width: 13em;
+    -fx-pref-width: 13em;
+}
+/*.shipbuilder-ship-col-angled{*/
+/*    -fx-rotate: 90;*/
+/*    !*-fx-alignment: center-right;*!*/
+/*    !*-fx-text-alignment: right;*!*/
+/*    -fx-min-width: 11em;*/
+/*    -fx-max-width: 11em;*/
+/*    !*-fx-alignment: right;*!*/
+/*    -fx-background-color: #0A65BF;*/
+/*    !*-fx-padding: 0em 10em 0em 0em;*!*/
+/*    !*-fx-label-padding: 0em 5em 0em 0em;*!*/
+/*}*/
+
+/*.shipbuilder-ship-col-angled-label{*/
+/*    !*-fx-rotate: 90;*!*/
+/*    !*-fx-alignment: center-right;*!*/
+/*    -fx-text-alignment: right;*/
+/*    -fx-alignment: top-right;*/
+/*    -fx-min-width: 11em;*/
+/*    -fx-max-width: 11em;*/
+/*    -fx-min-height: 2em;*/
+/*    !*-fx-padding: 0em 2em 0em 0em;*!*/
+/*    !*-fx-label-padding: 0em 5em 0em 0em;*!*/
+/*    -fx-background-color: #064100;*/
+/*}*/
+
+.shipbuilder-ship-header {
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 0.5em 0.2em 0em 0.2em;
+    -fx-max-height: 8em;
+    -fx-alignment: bottom-left;
+}
+
+.shipbuilder-ship-value-cell{
+    -fx-border-width: 0em 0.1em 0em 0em;
+
+    -fx-min-height: 2em;
+    -fx-padding: 0em 0.2em 0em 0.2em;
+    -fx-background-insets: 0em 0em 0em 0em;
+
+}
+.shipbuilder-ship-header-cell {
+    -fx-border-color: #3f3f3f;
+    -fx-border-width: 0em 0.1em 0em 0em;
+    -fx-min-height: 2em;
+    -fx-padding: 0em 0.2em 0em 0.2em;
+    -fx-background-insets: 0em 0em 0em 0em;
+}
+.shipbuilder-ship-header-cell:hover {
+    -fx-background-color: #3f3f3f;
+    -fx-cursor: hand;
 }
 .ship-select{
     -fx-min-width: 10em;
@@ -3031,11 +3159,6 @@
 .stats-values{
     -fx-background-color: #0f0f0f;
 }
-.stats-column{
-    -fx-background-color: #0f0f0f;
-    -fx-min-width: 20em;
-    -fx-max-width: 20em;
-}
 .module-details-title{
     -fx-padding: 0.5em 0em 0.1em 0.2em;
     -fx-font-size: 1.2em;
@@ -3099,7 +3222,15 @@
     -fx-fill: #2e92df;
     -fx-opacity: 1.0;
 }
-
+.pipselect-rectangle:disabled{
+    -fx-opacity: 0.5;
+}
+.pipselect-half:disabled{
+    -fx-opacity: 0.25;
+}
+.pipselect-full:disabled{
+    -fx-opacity: 0.5;
+}
 
 .slider {
     -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderSkin";
@@ -3152,6 +3283,8 @@
 .shield-image{
     -fx-min-width: 5em;
     -fx-max-width: 5em;
+    -fx-min-height: 6.199em;
+    -fx-max-height: 6.199em;
 }
 .shield-component{
     -fx-min-width: 15em;
@@ -3181,4 +3314,104 @@
 }
 .config-intfield{
     -fx-max-width: 6em;
+}
+.shipbuilder-controls-layer {
+    /*-fx-background-color: #0f0f0f;*/
+
+}
+.shipbuilder-details-layer {
+    /*-fx-background-color: #0f0f0f;*/
+}
+
+.shipbuilder-modules-layer {
+}
+
+.shipbuilder-noship-layer {
+    /*-fx-padding: 2.5em 0em 0em 0em;*/
+
+}
+.shipbuilder-shipselection-layer {
+    /*-fx-padding: 2.5em 0em 0em 0em;*/
+
+}
+.shipbuilder-stats-layer {
+    /*-fx-background-color: #0f0f0f;*/
+}
+.shipbuilder-controls-box{
+    -fx-padding: 0.35em 0em 0.35em 0.35em;
+    -fx-background-insets: 0em 1.3em 0em 0em;
+    -fx-background-color: #0f0f0f;
+}
+.shipbuilder-modules-scrollpane{
+    /*-fx-padding: 2.6em 0em 0em 0.2em;*/
+}
+.shipbuilder-shipselection-scrollpane{
+    -fx-padding: 2.6em 0em 0em 0.2em;
+}
+.shipbuilder-details-scrollpane{
+    -fx-padding:  0em 1.5em 0em 0em;
+}
+/*.stats-values{*/
+/*    -fx-padding:  0em 1.5em 0em 0em;*/
+/*    -fx-min-width: 20em;*/
+/*    -fx-max-width: 20em;*/
+
+/*}*/
+.stats-values-pane{
+    -fx-background-color: #0f0f0f;
+    -fx-background-insets: 0em 1.3em 0em 0em;
+    -fx-padding: 0em 1.3em 0em 0em;
+    -fx-min-width: 20em;
+    -fx-max-width: 20em;
+    /*-fx-min-height: 100%;*/
+
+}
+.stats-column{
+    -fx-background-color: #0f0f0f;
+    -fx-min-width: 20em;
+    -fx-max-width: 20em;
+}
+.shipbuilder-stats-box{
+    /*-fx-min-height: 20em;*/
+    /*-fx-max-height: 20em;*/
+    -fx-background-color: #0f0f0f;
+    -fx-background-insets: 0em 1.3em 0em 0em;
+    -fx-padding: 0em 1.3em 0em 0em;
+
+}
+.shipbuilder-slots-hbox{
+    /*-fx-padding: 3.25em 0em 0em 0.25em;*/
+}
+.shipbuilder-stackpane-anchor{
+    -fx-padding: 0em 0em 0em 0em;
+    -fx-min-width: 104em;
+    -fx-max-width: 104em;
+}
+.shipbuilder-stackpane {
+    -fx-min-width: 78em;
+    -fx-max-width: 78em;
+    /*-fx-min-height: 44.26875em;*/
+    -fx-max-height: 44.26875em;
+    -fx-padding: 0em 0em 0em 0em;
+    /*-fx-background-color: #27013622;*/
+}
+.shipbuilder-slots-content{
+    -fx-padding: 3.25em 0em 0em 0.25em;
+}
+/*.shipbuilder-ship-table{*/
+/*    -fx-pref-height: 68em;*/
+
+/*}*/
+
+.loading-screen {
+    -fx-background-color: #0f0f0f;
+}
+.loading-screen-progressbar{
+    -fx-min-width: 25em;
+    -fx-max-width: 25em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+}
+.loading-screen-text{
+    -fx-font-size: 3em;
 }

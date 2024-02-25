@@ -33,9 +33,9 @@ import java.util.stream.Stream;
 public class SlotBoxEntry extends VBox {
     Label name;
     List<HBox> options;
-    private HorizonsShipBuilderTab tab;
-    public SlotBoxEntry(final HorizonsShipBuilderTab tab, final SlotBox slotBox, final List<ShipModule> shipModulesList) {
-        this.tab = tab;
+    private ModulesLayer modulesLayer;
+    public SlotBoxEntry(final ModulesLayer modulesLayer, final SlotBox slotBox, final List<ShipModule> shipModulesList) {
+        this.modulesLayer = modulesLayer;
         this.getStyleClass().add("ships-modules");
         //add ship modules
         final ShipModule firstModule = shipModulesList.get(0);

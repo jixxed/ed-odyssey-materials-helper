@@ -9,14 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -25,6 +23,8 @@ import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import org.controlsfx.control.ToggleSwitch;
+
+import java.util.Optional;
 
 public class Config extends Stats implements Template {
 
@@ -70,12 +70,20 @@ public class Config extends Stats implements Template {
         fuel = new IntField(0, maxFuel, maxFuel);
         fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
         cargo = new IntField(0, maxCargo, 0);
+
+        this.live.setDisable(!isCurrentShip());
         fuel.getStyleClass().add("config-intfield");
         cargo.getStyleClass().add("config-intfield");
         powerBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-power-config").buildHBox();
         powerBox();
         fuelLabel = createLabel("ship.stats.config.fuel", "0");
         cargoLabel = createLabel("ship.stats.config.cargo", "0");
+        fuelreserve.disableProperty().bind(live.selectedProperty());
+        fuel.disableProperty().bind(live.selectedProperty());
+        cargo.disableProperty().bind(live.selectedProperty());
+        systemPipSelect.disableProperty().bind(live.selectedProperty());
+        enginePipSelect.disableProperty().bind(live.selectedProperty());
+        weaponPipSelect.disableProperty().bind(live.selectedProperty());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.live"), new GrowingRegion(), live).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.fuelreserve"), new GrowingRegion(), fuelreserve).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(fuelLabel, new GrowingRegion(), fuel).buildHBox());
@@ -108,7 +116,21 @@ public class Config extends Stats implements Template {
             this.getShip().ifPresent(ship -> ship.setCurrentFuelReserve(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
         });
+        this.live.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                final Optional<ShipConfig> shipConfigOptional = ApplicationState.getInstance().getShipConfig();
+                shipConfigOptional.ifPresent(shipConfig -> {
+                    fuel.setValue(shipConfig.getFuelCapacity().intValue());
+                    fuelreserve.setValue(shipConfig.getFuelReserve().doubleValue());
+                    cargo.setValue(shipConfig.getCargoCapacity().intValue());
+                    systemPipSelect.setValue(shipConfig.getSystemPips());
+                    enginePipSelect.setValue(shipConfig.getEnginePips());
+                    weaponPipSelect.setValue(shipConfig.getWeaponPips());
+                });
+            }
+        });
     }
+
     private void powerBox() {
         this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/powered1.png", "Power group 1");
         this.powerButton = ButtonBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-button").withOnAction(event -> {
@@ -159,20 +181,23 @@ public class Config extends Stats implements Template {
                 this.powerUp.setVisible(hasPowerToggle && powerGroup > 1);
                 this.powerDown.setVisible(hasPowerToggle && powerGroup < 5);
                 this.powerButton.setVisible(hasPowerToggle);
-            }else{
+            } else {
                 this.powerBox.getChildren().clear();
                 this.powerBox.getChildren().addAll(new GrowingRegion(), this.power, new GrowingRegion());
             }
         }
     }
+
     private static DestroyableResizableImageView createIcon(String styleClass, String imageResource, String tooltip) {
         final DestroyableResizableImageView icon = createIcon(styleClass, imageResource);
         Tooltip.install(icon, TooltipBuilder.builder().withShowDelay(Duration.seconds(0.1)).withNonLocalizedText(tooltip).build());//todo localized
         return icon;
     }
+
     private static DestroyableResizableImageView createIcon(String styleClass, String imageResource) {
         return ResizableImageViewBuilder.builder().withStyleClass(styleClass).withImage(imageResource).build();
     }
+
     private void notifyChanged() {
         EventService.publish(new ShipBuilderEvent());
         update();
@@ -184,10 +209,11 @@ public class Config extends Stats implements Template {
                 .map(shipConfiguration -> ShipConfiguration.CURRENT == shipConfiguration)
                 .orElse(Boolean.FALSE);
     }
+
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, event->{
-           fuelreserve.setMax(getShip().map(Ship::getMaxFuelReserve).orElse(0.0D));
+        eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, event -> {
+            fuelreserve.setMax(getShip().map(Ship::getMaxFuelReserve).orElse(0.0D));
             Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
             int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
             int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
@@ -201,6 +227,16 @@ public class Config extends Stats implements Template {
             this.getShip().ifPresent(ship -> {
                 updatePower(ship.getCargoHatch().getShipModule());
             });
+            this.live.setSelected(this.live.isSelected() && isCurrentShip());
+            this.live.setDisable(!isCurrentShip());
+        }));
+        eventListeners.add(EventService.addListener(this, StatusEvent.class, event -> {
+            fuel.setValue(event.getFuelCapacity().intValue());
+            fuelreserve.setValue(event.getFuelReserve().doubleValue());
+            cargo.setValue(event.getCargoCapacity().intValue());
+            systemPipSelect.setValue(event.getSystemPips());
+            enginePipSelect.setValue(event.getEnginePips());
+            weaponPipSelect.setValue(event.getWeaponPips());
         }));
     }
 

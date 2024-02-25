@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Status.Status;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StatusEvent;
@@ -26,12 +27,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -99,7 +102,7 @@ public class FileProcessor {
                         JournalEventType.SCAN
                 );
                 if (jsonNode.get(EVENT) != null) {
-                    testAndReport(line,JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
+                    testAndReport(line, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                     if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {
                         alwaysProcessMessages.add(line);
@@ -148,6 +151,8 @@ public class FileProcessor {
                     .filter(entry -> (!entry.getKey().equals(JournalEventType.BACKPACKCHANGE) && !entry.getKey().equals(JournalEventType.BACKPACK)) || backpackAfterShiplocker(messages, entry))
                     .map(Map.Entry::getValue)
                     .collect(Collectors.toList());
+            AtomicInteger index = new AtomicInteger(1);
+            Integer total = singleMessages.size() + alwaysProcessMessages.size();
             Stream.concat(singleMessages.stream(), alwaysProcessMessages.stream())
                     .sorted(Comparator.comparing(event -> {
                         try {
@@ -157,7 +162,10 @@ public class FileProcessor {
                         }
                         return "";
                     }))
-                    .forEach(message -> Platform.runLater(() -> MessageHandler.handleMessage(message, file)));
+                    .forEach(message -> {
+                        Platform.runLater(() -> MessageHandler.handleMessage(message, file));
+                        Platform.runLater(() -> EventService.publish(new EventProcessedEvent(index.getAndIncrement(), total)));
+                    });
 
         } catch (final JsonProcessingException e) {
             log.error("Read error", e);
@@ -176,13 +184,14 @@ public class FileProcessor {
     }
 
     private static void testAndReport(String message, Class<? extends Event> messageClass) {
-        try{
+        try {
             OBJECT_MAPPER2.readValue(message, messageClass);
         } catch (final JsonProcessingException e) {
             //report
             ReportService.reportJournal(message, e.getMessage());
         }
     }
+
     @SuppressWarnings("java:S2674")
     public static synchronized void processJournal(final File file) {
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
@@ -218,7 +227,7 @@ public class FileProcessor {
     }
 
     public static synchronized void processCapiFile(final File file, final JournalEventType journalEventType) {
-        if(journalEventType.equals(JournalEventType.CAPI_FLEETCARRIER)) {
+        if (journalEventType.equals(JournalEventType.CAPI_FLEETCARRIER)) {
             ApplicationState.getInstance().getFcMaterials().set(true);
         }
         Platform.runLater(() -> MessageHandler.handleCapiMessage(file, journalEventType));
@@ -234,9 +243,33 @@ public class FileProcessor {
                     if (status.getFlags2().isPresent()) {
                         ApplicationState.getInstance().updateWithFlags(status.getFlags().intValue(), status.getFlags2().get().intValue());
                     }
-                    final Optional<ShipConfig> shipCfg = status.getFuel().map(fuel -> new ShipConfig(fuel.getFuelReservoir(), fuel.getFuelMain(), status.getCargo().orElse(BigDecimal.ZERO)));
-                    shipCfg.ifPresent(shipConfig -> EventService.publish(new StatusEvent(shipConfig.getFuelReserve(), shipConfig.getFuelCapacity(), shipConfig.getCargoCapacity())));
-                    ApplicationState.getInstance().setShipConfig(shipCfg);
+                    Optional<ShipConfig> shipConfiguration = status.getFuel().map(fuel -> {
+                        final BigDecimal fuelReservoir = fuel.getFuelReservoir();
+                        final BigDecimal fuelMain = fuel.getFuelMain();
+                        final BigDecimal cargo = status.getCargo().orElse(BigDecimal.ZERO);
+                        final List<BigInteger> pips = (List<BigInteger>) status.getPips().orElse(Collections.EMPTY_LIST);
+                        Integer systemPips = !pips.isEmpty() ? pips.get(0).intValue() : 8;
+                        Integer enginePips = !pips.isEmpty() ? pips.get(1).intValue() : 8;
+                        Integer weaponPips = !pips.isEmpty() ? pips.get(2).intValue() : 8;
+                        return new ShipConfig(
+                                fuelReservoir,
+                                fuelMain,
+                                cargo,
+                                systemPips,
+                                enginePips,
+                                weaponPips
+                        );
+                    });
+                    shipConfiguration.ifPresent(shipConfig -> EventService.publish(
+                            new StatusEvent(
+                                    shipConfig.getFuelReserve(),
+                                    shipConfig.getFuelCapacity(),
+                                    shipConfig.getCargoCapacity(),
+                                    shipConfig.getSystemPips(),
+                                    shipConfig.getEnginePips(),
+                                    shipConfig.getWeaponPips()
+                            )));
+                    ApplicationState.getInstance().setShipConfig(shipConfiguration);
                     LocationService.setStatusBodyName(status.getBodyName());
                 });
             }

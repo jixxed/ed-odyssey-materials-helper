@@ -55,7 +55,7 @@ class SlotBox extends StackPane {
     @Getter
     private final Slot slot;
     @Getter
-    private final HorizonsShipBuilderTab tab;
+    private final ModulesLayer modulesLayer;
     private final DestroyableLabel emptyLabel;
     private final DestroyableLabel module;
     private final DestroyableLabel blueprints;
@@ -91,7 +91,7 @@ class SlotBox extends StackPane {
     private List<ToggleButton> toggleButtonsRank;
     private ToggleGroup toggleGroupRank;
 
-    SlotBox(final HorizonsShipBuilderTab tab, final Slot slot) {
+    SlotBox(final ModulesLayer modulesLayer, final Slot slot) {
         this.setFocusTraversable(true);
         layer1 = BoxBuilder.builder().buildHBox();
         layer2 = new StackPane(LabelBuilder.builder().withNonLocalizedText("MODULE RESIZED").withStyleClass("shipbuilder-slots-slotbox-module-resize-warning").build());
@@ -109,7 +109,7 @@ class SlotBox extends StackPane {
         this.iconBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-icons").buildHBox();
         this.texts = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-texts").buildVBox();
         this.slot = slot;
-        this.tab = tab;
+        this.modulesLayer = modulesLayer;
         sizeBox();
         classBox();
         mountingBox();
@@ -162,24 +162,24 @@ class SlotBox extends StackPane {
                         .map(modification -> HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), modification.getModification()).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).orElse(0))
                         .orElse(0))
                 .orElse(0));
-        mouseBehaviour(tab, slot);
+        mouseBehaviour(modulesLayer, slot);
         this.refresh();
     }
 
-    private void mouseBehaviour(HorizonsShipBuilderTab tab, Slot slot) {
+    private void mouseBehaviour(ModulesLayer modulesLayer, Slot slot) {
         if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
             this.onMouseEnteredProperty().set(event -> {
                 if (!event.isAltDown()) {
 //                    if (this.slot.isOccupied()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
 //                    }
-                    tab.toggleHardpointImage(true);
-                    tab.drawHardpointLine(slot.getIndex());
+                    modulesLayer.toggleHardpointImage(true);
+                    modulesLayer.drawHardpointLine(slot.getIndex());
                 }
             });
             this.onMouseExitedProperty().set(event -> {
                 if (!event.isAltDown()) {
-                    tab.toggleHardpointImage(false);
+                    modulesLayer.toggleHardpointImage(false);
                 }
             });
         } else if (slot.getSlotType().equals(SlotType.UTILITY)) {
@@ -188,13 +188,13 @@ class SlotBox extends StackPane {
 //                    if (this.slot.isOccupied()) {
                     EventService.publish(new ModuleHighlightEvent(this.slot.getShipModule()));
 //                    }
-                    tab.toggleUtilityImage(true);
-                    tab.drawUtilityLine(slot.getIndex());
+                    modulesLayer.toggleUtilityImage(true);
+                    modulesLayer.drawUtilityLine(slot.getIndex());
                 }
             });
             this.onMouseExitedProperty().set(event -> {
                 if (!event.isAltDown()) {
-                    tab.toggleUtilityImage(false);
+                    modulesLayer.toggleUtilityImage(false);
                 }
             });
         } else {
@@ -246,12 +246,12 @@ class SlotBox extends StackPane {
                 log.debug("setOnDragOver " + this.slot.getIndex() + " " + event.getTransferMode());
 
                 if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
-                    tab.toggleHardpointImage(true);
-                    tab.drawHardpointLine(slot.getIndex());
+                    modulesLayer.toggleHardpointImage(true);
+                    modulesLayer.drawHardpointLine(slot.getIndex());
                 }
                 if (slot.getSlotType().equals(SlotType.UTILITY)) {
-                    tab.toggleUtilityImage(true);
-                    tab.drawUtilityLine(slot.getIndex());
+                    modulesLayer.toggleUtilityImage(true);
+                    modulesLayer.drawUtilityLine(slot.getIndex());
                 }
                 //drag from outside the application
                 if (((SlotBox) event.getGestureSource()) != null) {
@@ -322,10 +322,10 @@ class SlotBox extends StackPane {
                 log.debug("setOnDragExited " + this.slot.getIndex());
                 layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
-                    tab.toggleHardpointImage(false);
+                    modulesLayer.toggleHardpointImage(false);
                 }
                 if (slot.getSlotType().equals(SlotType.UTILITY)) {
-                    tab.toggleUtilityImage(false);
+                    modulesLayer.toggleUtilityImage(false);
                 }
                 /* mouse moved away, remove the graphical cues */
                 this.refresh();
@@ -787,7 +787,7 @@ class SlotBox extends StackPane {
         final List<SlotBoxEntry> entries = ShipModule.getModules(this.slot.getSlotType()).stream()
                 .filter(module -> module.isAllowed(ApplicationState.getInstance().getShip().getShipType()))
                 .collect(Collectors.groupingBy(ShipModule::getClass))
-                .values().stream().map(list -> new SlotBoxEntry(tab, this, list))
+                .values().stream().map(list -> new SlotBoxEntry(modulesLayer, this, list))
                 .sorted(Comparator.comparing(slotBoxEntry -> slotBoxEntry.name.getText()))
                 .toList();
         if (entries.size() > 1) {

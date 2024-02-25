@@ -41,6 +41,9 @@ public class PipSelect extends HBox {
     public int getValue() {
         return value.get();
     }
+    public void setValue(int value) {
+         this.value.set(value);
+    }
 
     public SimpleIntegerProperty valueProperty() {
         return value;
