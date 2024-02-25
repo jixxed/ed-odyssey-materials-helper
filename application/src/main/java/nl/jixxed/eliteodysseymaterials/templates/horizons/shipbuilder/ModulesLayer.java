@@ -118,9 +118,9 @@ public class ModulesLayer extends AnchorPane implements Template {
 //        StackPane.setAlignment(shipImage, Pos.TOP_LEFT);
 
         this.getChildren().add(this.scrollPane);
-        AnchorPane.setTopAnchor(this.scrollPane, 0D);
+        AnchorPane.setTopAnchor(this.scrollPane, -1D);
         AnchorPane.setRightAnchor(this.scrollPane, 0D);
-        AnchorPane.setBottomAnchor(this.scrollPane, 0D);
+        AnchorPane.setBottomAnchor(this.scrollPane, -1D);
         AnchorPane.setLeftAnchor(this.scrollPane, 0D);
     }
 

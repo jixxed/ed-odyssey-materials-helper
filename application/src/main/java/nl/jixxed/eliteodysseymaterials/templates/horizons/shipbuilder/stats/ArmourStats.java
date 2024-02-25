@@ -229,8 +229,6 @@ public class ArmourStats extends Stats implements Template {
 
     @Override
     protected void update() {
-        log.debug("update armour: " + this.getShip().isPresent());
-        this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
 //        this.resistanceRaw.setText(String.format("%.2f", calculateResistanceRaw()));
 //        this.resistanceKinetic.setText(String.format("%.2f", calculateResistanceKinetic()));
 //        this.resistanceThermal.setText(String.format("%.2f", calculateResistanceThermal()));

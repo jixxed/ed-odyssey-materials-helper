@@ -120,7 +120,6 @@ public class EngineStats extends Stats implements Template {
     @Override
     protected void update() {
 
-        log.debug("update engine: " + this.getShip().isPresent());
         getShip().ifPresent(ship -> {
             final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst();
             final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst();
@@ -140,7 +139,6 @@ public class EngineStats extends Stats implements Template {
             final double boostCost = (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D);
             final boolean engineCapacityEnough = engineCapacity > boostCost + BOOST_MARGIN;
 
-            this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
             var currentSpeed = calculateCurrentSpeed(ship, topSpeed , moduleProfile, multiplier);
             var currentBoost = engineCapacityEnough ? calculateCurrentSpeed(ship, boostSpeed, moduleProfile, multiplier) : Double.NaN;
             var currentRecharge = engineCapacityEnough ? calculateCurrentRecharge(boostCost, engineRecharge, multiplier) :Double.NaN;

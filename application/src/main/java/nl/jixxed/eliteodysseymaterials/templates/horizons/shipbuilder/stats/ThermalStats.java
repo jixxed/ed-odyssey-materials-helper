@@ -288,8 +288,6 @@ public class ThermalStats extends Stats implements Template {
 
     @Override
     protected void update() {
-        log.debug("update thermals: " + this.getShip().isPresent());
-        this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
         this.idleThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermalpower.idleThermals.value", Formatters.NUMBER_FORMAT_2.format(calculateIdleThermals())));
         this.thrusterThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermalpower.thrusterThermals.value", Formatters.NUMBER_FORMAT_2.format(calculateThrusterThermals())));
         this.fsdThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermalpower.fsdThermals.value", Formatters.NUMBER_FORMAT_2.format(calculateFsdThermals())));

@@ -170,8 +170,6 @@ public class HandlingStats extends Stats implements Template {
             final Double minRollSpeed = rollSpeed;//reported to be unaffected by pips
             final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
             final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
-            log.debug("update handling: " + this.getShip().isPresent());
-            this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
             var currentPitch = calculatePitchCurrent(ship, (pitchSpeed * multiplier + minPitchSpeed * (1 - multiplier)), moduleProfile);
             var currentRoll = calculateRollCurrent(ship, (rollSpeed * multiplier + minRollSpeed * (1 - multiplier)), moduleProfile);
             var currentYaw = calculateYawCurrent(ship, (yawSpeed * multiplier + minYawSpeed * (1 - multiplier)), moduleProfile);

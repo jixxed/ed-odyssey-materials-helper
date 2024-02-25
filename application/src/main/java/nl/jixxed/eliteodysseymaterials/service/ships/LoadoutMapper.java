@@ -13,7 +13,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class LoadoutMapper {
@@ -40,16 +39,16 @@ public class LoadoutMapper {
                             return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
                         }
                     }
-                    log.debug("Slot: " + module.getSlot());
-                    log.debug("Item: " + module.getItem());
-                    log.debug("Potential modules:" + potentialShipModules.stream().map(shipModule -> shipModule.getName().toString()).collect(Collectors.joining(",")));
+//                    log.debug("Slot: " + module.getSlot());
+//                    log.debug("Item: " + module.getItem());
+//                    log.debug("Potential modules:" + potentialShipModules.stream().map(shipModule -> shipModule.getName().toString()).collect(Collectors.joining(",")));
                     throw new IllegalArgumentException("No potential modules found");
                 }).orElseGet(() -> {
                     try {
                         return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|"  + module));
                     } catch (IllegalArgumentException ex) {
-                        log.debug(module.getItem());
-                        log.debug(slot.getSlotType().toString());
+//                        log.debug(module.getItem());
+//                        log.debug(slot.getSlotType().toString());
                         throw ex;
                     }
                 });
@@ -120,14 +119,14 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
+//                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                             return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {
-                            log.debug("bool true");
+//                            log.debug("bool true");
                             return true;
                         }
-                        log.debug("false");
+//                        log.debug("false");
                         return false;
                     }).orElse(true));
         }).findFirst().map(ShipModule::isPreEngineered).orElse(false);
@@ -207,8 +206,8 @@ public class LoadoutMapper {
                     .orElseThrow(IllegalArgumentException::new);
         } catch (IllegalArgumentException ex) {
             optionalSlots.stream().map(slot -> slot.toString()).forEach(log::debug);
-            log.debug(slotName);
-            log.debug(slotNumber + "not in size:" + optionalSlots.size());
+//            log.debug(slotName);
+//            log.debug(slotNumber + "not in size:" + optionalSlots.size());
             throw ex;
         }
     }

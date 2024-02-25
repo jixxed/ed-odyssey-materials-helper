@@ -187,8 +187,6 @@ public class ShieldStats extends Stats implements Template {
 
     @Override
     protected void update() {
-        log.debug("update armour: " + this.getShip().isPresent());
-        this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
 //        this.resistanceKinetic.setText(String.format("%.2f", calculateResistanceKinetic()));
 //        this.resistanceThermal.setText(String.format("%.2f", calculateResistanceThermal()));
 //        this.resistanceExplosive.setText(String.format("%.2f", calculateResistanceExplosive()));

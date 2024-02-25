@@ -110,8 +110,6 @@ public class PowerStats extends Stats implements Template {
 
     @Override
     protected void update() {
-        log.debug("update power: " + this.getShip().isPresent());
-        this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
         final Double retractedUsage = calculateRetractedPower().values().stream().skip(1).reduce(0D, Double::sum);
         final Double powerBudget = calculateRetractedPower().get(0);
         final Double deployedUsage = calculateDeployedPower().values().stream().skip(1).reduce(0D, Double::sum);

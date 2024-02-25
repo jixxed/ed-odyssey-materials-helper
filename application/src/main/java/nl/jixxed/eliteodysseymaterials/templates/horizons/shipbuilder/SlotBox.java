@@ -228,7 +228,7 @@ class SlotBox extends StackPane {
             });
             this.setOnDragDetected(event -> {
                 close();
-                log.debug("setOnDragDetected " + this.slot.getIndex());
+//                log.debug("setOnDragDetected " + this.slot.getIndex());
                 final Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 this.dragging = true;
                 /* Put a string on a dragboard */
@@ -243,7 +243,7 @@ class SlotBox extends StackPane {
             });
             AtomicReference<TransferMode> atomicBoolean = new AtomicReference<>();
             this.setOnDragOver(event -> {
-                log.debug("setOnDragOver " + this.slot.getIndex() + " " + event.getTransferMode());
+//                log.debug("setOnDragOver " + this.slot.getIndex() + " " + event.getTransferMode());
 
                 if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
                     modulesLayer.toggleHardpointImage(true);
@@ -271,15 +271,15 @@ class SlotBox extends StackPane {
                     //refreshStyle(false);
                     if (((SlotBox) event.getGestureSource()) != null && ((SlotBox) event.getGestureSource()).getSlot().getShipModule() != null) {
 
-                        log.debug("source:" + ((SlotBox) event.getGestureSource()).getSlot().getShipModule().getInternalName());
+//                        log.debug("source:" + ((SlotBox) event.getGestureSource()).getSlot().getShipModule().getInternalName());
                     }
                     if (((SlotBox) event.getGestureTarget()) != null && ((SlotBox) event.getGestureTarget()).getSlot().getShipModule() != null) {
 
-                        log.debug("target:" + ((SlotBox) event.getGestureTarget()).getSlot().getShipModule().getInternalName());
+//                        log.debug("target:" + ((SlotBox) event.getGestureTarget()).getSlot().getShipModule().getInternalName());
                     }
                     if (this.slot.isOccupied()) {
 
-                        log.debug("this.slot:" + this.slot.getShipModule().getInternalName());
+//                        log.debug("this.slot:" + this.slot.getShipModule().getInternalName());
                     }
                     if (event.getTransferMode() == TransferMode.COPY) {
                         //                ((SlotBox)event.getGestureSource()).module.setText(((SlotBox)event.getGestureSource()).slot.getShipModule().getName());
@@ -298,7 +298,7 @@ class SlotBox extends StackPane {
                         ((SlotBox) event.getGestureSource()).hideContents();
                     }
                     if (!event.getTransferMode().equals(atomicBoolean.get())) {
-                        log.debug("updateTransferMode " + this.slot.getIndex());
+//                        log.debug("updateTransferMode " + this.slot.getIndex());
                         atomicBoolean.set(event.getTransferMode());
                         extracted(event);
                     }
@@ -307,7 +307,7 @@ class SlotBox extends StackPane {
                 event.consume();
             });
             this.setOnDragEntered(event -> {
-                log.debug("setOnDragEntered " + this.slot.getIndex());
+//                log.debug("setOnDragEntered " + this.slot.getIndex());
                 /* the drag-and-drop gesture entered the target */
                 /* show to the user that it is an actual gesture target */
 
@@ -319,7 +319,7 @@ class SlotBox extends StackPane {
                 }
             });
             this.setOnDragExited(event -> {
-                log.debug("setOnDragExited " + this.slot.getIndex());
+//                log.debug("setOnDragExited " + this.slot.getIndex());
                 layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 if (slot.getSlotType().equals(SlotType.HARDPOINT)) {
                     modulesLayer.toggleHardpointImage(false);
@@ -336,7 +336,7 @@ class SlotBox extends StackPane {
                 event.consume();
             });
             this.setOnDragDropped(event -> {
-                log.debug("setOnDragDropped " + this.slot.getIndex());
+//                log.debug("setOnDragDropped " + this.slot.getIndex());
                 layer1.getStyleClass().removeAll("shipbuilder-slots-slotbox-hover-bad", "shipbuilder-slots-slotbox-hover-good");
                 /* data dropped */
                 /* if there is a string data on dragboard, read it and use it */
@@ -369,7 +369,7 @@ class SlotBox extends StackPane {
                 }
             });
             this.setOnDragDone(event -> {
-                log.debug("setOnDragDone " + this.slot.getIndex());
+//                log.debug("setOnDragDone " + this.slot.getIndex());
                 /* the drag and drop gesture ended */
                 /* if the data was successfully moved, clear it */
                 if (event.getTransferMode() == TransferMode.MOVE) {
@@ -391,7 +391,7 @@ class SlotBox extends StackPane {
                 this.dragging = false;
 //            this.refreshStyle(false);
                 event.consume();
-                ApplicationState.getInstance().getShip().getOptionalSlots().forEach(slot1 -> System.out.println(slot1.getShipModule() != null ? slot1.getShipModule().getInternalName() : "EMPTY"));
+//                ApplicationState.getInstance().getShip().getOptionalSlots().forEach(slot1 -> System.out.println(slot1.getShipModule() != null ? slot1.getShipModule().getInternalName() : "EMPTY"));
                 notifyChanged();
             });
         }
@@ -420,7 +420,7 @@ class SlotBox extends StackPane {
         if (module == null) {
             return true;
         }
-        log.debug("moduleCouldFit: " + slot.getSlotSize() + "<" + module.getModuleSize().intValue());
+//        log.debug("moduleCouldFit: " + slot.getSlotSize() + "<" + module.getModuleSize().intValue());
         if (slot.getSlotSize() < module.getModuleSize().intValue()) {
             return module.findLowerSize(slot.getSlotSize()).isPresent();
         }
@@ -533,7 +533,7 @@ class SlotBox extends StackPane {
     }
 
     private void replaceModule(ShipModule shipModule) {
-        log.debug("size " + shipModule.getModuleSize().toString());
+//        log.debug("size " + shipModule.getModuleSize().toString());
         final ShipModule clone = shipModule.Clone();
         if (!clone.isPreEngineered()) {//already pre-applied
             clone.getModifications().addAll(this.getSlot().getShipModule().getModifications());
@@ -768,7 +768,7 @@ class SlotBox extends StackPane {
                     layer1.getChildren().add(3, this.classBox);
                 }
                 layer1.getChildren().add(4, this.texts);
-                layer1.getChildren().add(5, this.powerBox);//todo condition?
+                layer1.getChildren().add(5, this.powerBox);
             }
         }
         if (shipModule instanceof HardpointModule) {
@@ -889,7 +889,7 @@ class SlotBox extends StackPane {
                                             } else {
                                                 if (((ToggleButton) event.getTarget()).isSelected()) {
                                                     final HorizonsBlueprintGrade maxGradeForModification = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElseThrow(IllegalArgumentException::new);
-                                                    log.debug(maxGradeForModification.toString());
+//                                                    log.debug(maxGradeForModification.toString());
 //                                                    final HorizonsBlueprintGrade grade = shipModule.getModifications().stream().findFirst().map(Modification::getGrade).orElse(maxGradeForModification);
                                                     final HorizonsBlueprintGrade grade = HorizonsBlueprintGrade.forDigit(((ToggleButton)toggleGroupRank.getSelectedToggle()).getText());
                                                     final BigDecimal completeness = BigDecimal.valueOf(progressSlider.getValue()).divide(BigDecimal.valueOf(100));
@@ -974,7 +974,6 @@ class SlotBox extends StackPane {
                     shipModule.getModifiers().clear();
                     notifyChanged();
                     refresh();
-                    //TODO save grade
                 }).build();
                 toggleButton.setToggleGroup(toggleGroupRank);
                 toggleButton.disableProperty().bind(toggleGroup.selectedToggleProperty().isNull().or(maxGrade.lessThan(horizonsBlueprintGrade.getGrade())));
@@ -1015,7 +1014,6 @@ class SlotBox extends StackPane {
 //                        //debounce
 //                        notifyChanged();
 //                        refresh();
-//                        //TODO save progression
 //                    })
                     .build();
             Observable.create((ObservableEmitter<Number> emitter) -> progressSlider.valueProperty().addListener((observable, oldValue, newValue) -> {

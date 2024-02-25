@@ -174,8 +174,6 @@ public class WeaponStats extends Stats implements Template {
 
     @Override
     protected void update() {
-        log.debug("update weapon: " + this.getShip().isPresent());
-        this.getShip().ifPresent(ship1 -> log.debug("type: " + ship1.getShipType()));
         this.rawDamage.setText(String.format("%.2f", calculateRawDamage()));
         this.absolutePercentage.setText(String.format("%.2f", calculateAbsolutePercentage()));
         this.kineticPercentage.setText(String.format("%.2f", calculateKineticPercentage()));

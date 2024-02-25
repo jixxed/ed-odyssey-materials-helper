@@ -136,7 +136,7 @@ public class JournalWatcher {
 
     private void findLatestFile(final File folder) {
         try {
-            this.currentlyWatchedFile =  FileService.listFiles(folder, true).stream()
+            this.currentlyWatchedFile = FileService.listFiles(folder, true).stream()
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(file -> file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX))
                     .filter(this::isNewerThanTwoYears)

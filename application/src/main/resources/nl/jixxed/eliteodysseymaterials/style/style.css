@@ -3051,8 +3051,10 @@
     -fx-max-width: 35em;
 }
 .ships-content{
-    -fx-spacing: 10;
-    -fx-padding: 5;
+    /*-fx-padding: 0;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-border-insets: 0;*/
+    /*-fx-background-color: #f6d342;*/
 }
 .ships-newname{
     -fx-min-width: 20em;
@@ -3316,26 +3318,41 @@
     -fx-max-width: 6em;
 }
 .shipbuilder-controls-layer {
-    /*-fx-background-color: #0f0f0f;*/
+    /*-fx-padding: 0;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-border-insets: 0;*/
 
 }
 .shipbuilder-details-layer {
-    /*-fx-background-color: #0f0f0f;*/
+    /*-fx-padding: 0;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-border-insets: 0;*/
 }
 
 .shipbuilder-modules-layer {
+    /*-fx-padding: 0em;*/
+    /*-fx-background-insets: 0em;*/
+    /*-fx-border-insets: 0em;*/
+    /*-fx-border-width: 0em;*/
+    /*-fx-background-color: #63f642;*/
 }
 
 .shipbuilder-noship-layer {
-    /*-fx-padding: 2.5em 0em 0em 0em;*/
+    /*-fx-padding: 0;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-border-insets: 0;*/
 
 }
 .shipbuilder-shipselection-layer {
-    /*-fx-padding: 2.5em 0em 0em 0em;*/
+    /*-fx-padding: 0;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-border-insets: 0;*/
 
 }
 .shipbuilder-stats-layer {
-    /*-fx-background-color: #0f0f0f;*/
+    /*-fx-padding: 0;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-border-insets: 0;*/
 }
 .shipbuilder-controls-box{
     -fx-padding: 0.35em 0em 0.35em 0.35em;
@@ -3343,7 +3360,11 @@
     -fx-background-color: #0f0f0f;
 }
 .shipbuilder-modules-scrollpane{
-    /*-fx-padding: 2.6em 0em 0em 0.2em;*/
+    -fx-padding: 0;
+    /*-fx-border-insets: 0;*/
+    /*-fx-background-insets:  0;*/
+    /*-fx-border-width: 0px;*/
+    /*-fx-background-color: #4260f6;*/
 }
 .shipbuilder-shipselection-scrollpane{
     -fx-padding: 2.6em 0em 0em 0.2em;
@@ -3361,8 +3382,8 @@
     -fx-background-color: #0f0f0f;
     -fx-background-insets: 0em 1.3em 0em 0em;
     -fx-padding: 0em 1.3em 0em 0em;
-    -fx-min-width: 20em;
-    -fx-max-width: 20em;
+    -fx-min-width: 22em;
+    -fx-max-width: 22em;
     /*-fx-min-height: 100%;*/
 
 }
@@ -3397,6 +3418,11 @@
 }
 .shipbuilder-slots-content{
     -fx-padding: 3.25em 0em 0em 0.25em;
+    /*-fx-border-insets: 0;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-border-width: 0;*/
+    /*-fx-start-margin: 0;*/
+    /*-fx-end-margin: 0;*/
 }
 /*.shipbuilder-ship-table{*/
 /*    -fx-pref-height: 68em;*/

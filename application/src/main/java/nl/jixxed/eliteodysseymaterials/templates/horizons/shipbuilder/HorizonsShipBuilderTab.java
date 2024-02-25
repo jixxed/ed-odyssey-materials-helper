@@ -73,6 +73,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         statsLayer.setPickOnBounds(false);
         detailsLayer.setPickOnBounds(false);
         final StackPane stackPane = new StackPane(noShipLayer, shipSelectionLayer, modulesLayer, controlsLayer, detailsLayer, statsLayer);
+        stackPane.getStyleClass().add(SHIP_CONTENT_STYLE_CLASS);
         this.setContent(stackPane);
 ////        initShipSelectView();
 //        initShipLayout();

@@ -181,8 +181,8 @@ public class ControlsLayer extends AnchorPane implements Template {
         this.getChildren().add(hBoxShips);
         hBoxShips.setPickOnBounds(false);
 //        AnchorPane.setTopAnchor(hBoxShips,0D);
-        AnchorPane.setLeftAnchor(hBoxShips,0D);
-        AnchorPane.setRightAnchor(hBoxShips,0D);
+        AnchorPane.setLeftAnchor(hBoxShips, 0D);
+        AnchorPane.setRightAnchor(hBoxShips, 0D);
     }
 
     @Override
