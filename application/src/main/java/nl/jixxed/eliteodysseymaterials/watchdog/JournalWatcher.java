@@ -187,11 +187,11 @@ public class JournalWatcher {
         final int twoYearsAgo = Integer.parseInt(Year.now().format(DateTimeFormatter.ofPattern("uu"))) - 2;
         final Matcher matcher = this.journalPatternTimestamp.matcher(file.getName());
         if (matcher.matches()) {
-            return Integer.parseInt(matcher.group(1).substring(0, 2)) > twoYearsAgo;
+            return Integer.parseInt(matcher.group(1).substring(0, 2)) >= twoYearsAgo;
         }
         final Matcher matcher2 = this.journalPatternDate.matcher(file.getName());
         if (matcher2.matches()) {
-            return Integer.parseInt(matcher2.group(1).substring(2, 4)) > twoYearsAgo;
+            return Integer.parseInt(matcher2.group(1).substring(2, 4)) >= twoYearsAgo;
         }
         return true;
 

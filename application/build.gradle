@@ -620,5 +620,7 @@ buildtimetracker {
         }
     }
 }
-
+tasks.jpackageImage.doFirst {
+    delete file('\\build\\jpackage\\').listFiles()
+}
 mainClassName = 'nl.jixxed.eliteodysseymaterials.Main'
