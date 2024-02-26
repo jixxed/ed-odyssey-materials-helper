@@ -45,14 +45,18 @@ public class LoadoutMapper {
                     throw new IllegalArgumentException("No potential modules found");
                 }).orElseGet(() -> {
                     try {
-                        return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|"  + module));
+                        return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|" + module));
                     } catch (IllegalArgumentException ex) {
 //                        log.debug(module.getItem());
 //                        log.debug(slot.getSlotType().toString());
-                        throw ex;
+                        //throw ex;
+                        //todo report? unknown module
+                        return null;
                     }
                 });
-
+                if (matchingModule == null) {
+                    return;
+                }
                 final ShipModule shipModule = matchingModule.Clone();
                 module.getEngineering().ifPresent(engineering -> {
                     boolean isLegacy = isLegacy(shipModule, engineering);
@@ -73,8 +77,8 @@ public class LoadoutMapper {
                                     }
                             ));
                 });
-                shipModule.setPowerGroup(module.getPriority().intValue()+1);
-                if(Boolean.FALSE.equals(module.getOn())){
+                shipModule.setPowerGroup(module.getPriority().intValue() + 1);
+                if (Boolean.FALSE.equals(module.getOn())) {
                     shipModule.togglePower();
                 }
                 slot.setShipModule(shipModule);
@@ -137,7 +141,7 @@ public class LoadoutMapper {
     }
 
     static List<ShipModule> getPotentialShipModules(String module, SlotType slotType) {
-        if(slotType.equals(SlotType.CARGO_HATCH)){
+        if (slotType.equals(SlotType.CARGO_HATCH)) {
             return new ArrayList<>(ShipModule.getModules(SlotType.CARGO_HATCH));
         }
         return ShipModule.getModules(slotType).stream().filter(shipModule -> shipModule.getInternalName().equalsIgnoreCase(module)).toList();

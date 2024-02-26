@@ -59,8 +59,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
 
         controlsLayer = new ControlsLayer();
         statsLayer = new StatsLayer();
-        modulesLayer = new ModulesLayer(this);
         detailsLayer = new DetailsLayer();
+        modulesLayer = new ModulesLayer(this);
         shipSelectionLayer = new ShipSelectionLayer(this);
         noShipLayer = new NoShipLayer();
         controlsLayer.setVisible(false);

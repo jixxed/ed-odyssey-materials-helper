@@ -78,7 +78,10 @@ public class ModulesLayer extends AnchorPane implements Template {
 //        this.optionalVBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").withNodes(this.ship.getOptionalSlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new)).buildVBox();
 //        this.utilityVbox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-vbox").withNodes(this.ship.getUtilitySlots().stream().map(slot -> new SlotBox(this, slot)).toArray(SlotBox[]::new)).buildVBox();
         initShipSlots();
-        this.slotColumns = BoxBuilder.builder().withNodes(this.hardpointsVbox, this.coreVbox, this.optionalVBox, this.utilityVbox).buildHBox();
+        final Region regionRight = new Region();
+        regionRight.minWidthProperty().bind(this.tab.getDetailsLayer().getModuleDetails().widthProperty());
+        regionRight.maxWidthProperty().bind(this.tab.getDetailsLayer().getModuleDetails().widthProperty());
+        this.slotColumns = BoxBuilder.builder().withNodes(this.hardpointsVbox, this.coreVbox, this.optionalVBox, this.utilityVbox, regionRight).buildHBox();
         gridImage = ResizableImageViewBuilder.builder().withStyleClass("shipbuilder-ship-image").withImage("/images/ships/ship/grid.png").build();
         shipImage = ResizableImageViewBuilder.builder().withStyleClass("shipbuilder-ship-image").withImage("/images/ships/ship/grid.png").build();
         this.imageLayer = new StackPane(gridImage, shipImage);

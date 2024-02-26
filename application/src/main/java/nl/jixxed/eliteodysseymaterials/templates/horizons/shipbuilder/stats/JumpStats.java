@@ -38,7 +38,7 @@ public class JumpStats extends Stats implements Template {
 
     public double calculateJumpRangeMin() {
         //added ship.getMaxFuelReserve() compared to ingame value
-        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass() + ship.getMaxFuelReserve() + ship.getMaxCargo() + ship.getMaxFuel(), ship.getMaxFuel())).orElse(0.0D);
+        return getShip().map(ship -> calculateJumpRange(ship.getEmptyMass() + ship.getMaxFuelReserve() + ship.getMaxCargo()+ ship.getMaxPassenger() + ship.getMaxFuel(), ship.getMaxFuel())).orElse(0.0D);
     }
 
     public double calculateJumpRangeCurrent() {

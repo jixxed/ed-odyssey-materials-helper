@@ -2883,7 +2883,7 @@ public class Ship {
     }
 
     public void setCurrentCargo(double currentCargo) {
-        this.currentCargo = Math.min(currentCargo,getMaxCargo());
+        this.currentCargo = Math.min(currentCargo,getMaxCargo() + getMaxPassenger());
     }
 
 }

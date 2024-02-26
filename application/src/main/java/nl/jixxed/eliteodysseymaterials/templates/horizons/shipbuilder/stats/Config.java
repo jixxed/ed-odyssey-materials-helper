@@ -1,13 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfig;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
@@ -22,7 +22,6 @@ import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
 import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import org.controlsfx.control.ToggleSwitch;
 
 import java.util.Optional;
 
@@ -35,7 +34,7 @@ public class Config extends Stats implements Template {
     private IntField cargo;
     private IntField fuel;
     private Slider fuelreserve;
-    private ToggleSwitch live;
+    private CheckBox live;
     private DestroyableResizableImageView power;
     Button powerButton;
     Button powerUp;
@@ -52,6 +51,7 @@ public class Config extends Stats implements Template {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("shipbuilder-stats-configuration");
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.config"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         systemPipSelect = new PipSelect(8);
@@ -60,15 +60,24 @@ public class Config extends Stats implements Template {
         Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
         int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
         int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
-        live = ToggleSwitchBuilder.builder()
-                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+        live = new CheckBox();
+        live.setSelected(ApplicationState.getInstance().isLiveStats());
+        live.selectedProperty().addListener((observable, oldValue, newValue) -> {
                     ApplicationState.getInstance().setLiveStats(Boolean.TRUE.equals(newValue));
                     EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
-                })
-                .withSelected(ApplicationState.getInstance().isLiveStats())
-                .build();
+                });
+
+//                ToggleSwitchBuilder.builder()
+//                .withStyleClass("config-toggle")
+//                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+//                    ApplicationState.getInstance().setLiveStats(Boolean.TRUE.equals(newValue));
+//                    EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
+//                })
+//                .withSelected(ApplicationState.getInstance().isLiveStats())
+//                .build();
         fuel = new IntField(0, maxFuel, maxFuel);
         fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
+        fuelreserve.getStyleClass().add("config-fuelreserve");
         cargo = new IntField(0, maxCargo, 0);
 
         this.live.setDisable(!isCurrentShip());
@@ -77,7 +86,7 @@ public class Config extends Stats implements Template {
         powerBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-power-config").buildHBox();
         powerBox();
         fuelLabel = createLabel("ship.stats.config.fuel", "0");
-        cargoLabel = createLabel("ship.stats.config.cargo", "0");
+        cargoLabel = createLabel("ship.stats.config.cargo", "0", "0");
         fuelreserve.disableProperty().bind(live.selectedProperty());
         fuel.disableProperty().bind(live.selectedProperty());
         cargo.disableProperty().bind(live.selectedProperty());
@@ -217,9 +226,10 @@ public class Config extends Stats implements Template {
             Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
             int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
             int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
+            int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
             fuel.setMaxValue(maxFuel);
             fuelreserve.setMax(maxFuelReserve);
-            cargo.setMaxValue(maxCargo);
+            cargo.setMaxValue(maxCargo + maxPassenger);
             fuel.setValue(getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
             fuelreserve.setValue(getShip().map(Ship::getCurrentFuelReserve).orElse(0D));
             cargo.setValue(getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
@@ -244,14 +254,15 @@ public class Config extends Stats implements Template {
     protected void update() {
         int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
         int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
+        int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
 
         if (fuel.getMaxValue() != maxFuel) {
             fuel.setMaxValue(maxFuel);
             fuelLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.fuel", maxFuel));
         }
-        if (cargo.getMaxValue() != maxCargo) {
-            cargo.setMaxValue(maxCargo);
-            cargoLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo));
+        if (cargo.getMaxValue() != maxCargo + maxPassenger) {
+            cargo.setMaxValue(maxCargo + maxPassenger);
+            cargoLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo, maxPassenger));
         }
     }
 }

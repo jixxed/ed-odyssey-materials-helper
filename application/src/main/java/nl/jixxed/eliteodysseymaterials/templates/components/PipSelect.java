@@ -20,14 +20,10 @@ public class PipSelect extends HBox {
         super();
         this.getStyleClass().add("pipselect");
         this.value = new SimpleIntegerProperty(clamp(value, MIN_VALUE, MAX_VALUE));
-        rectangle1 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
-        rectangle2 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
-        rectangle3 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
-        rectangle4 = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
-        rectangle1.getStyleClass().add("pipselect-rectangle");
-        rectangle2.getStyleClass().add("pipselect-rectangle");
-        rectangle3.getStyleClass().add("pipselect-rectangle");
-        rectangle4.getStyleClass().add("pipselect-rectangle");
+        rectangle1 = getRectangle();
+        rectangle2 = getRectangle();
+        rectangle3 = getRectangle();
+        rectangle4 = getRectangle();
         this.getChildren().addAll(
                 rectangle1,
                 rectangle2,
@@ -36,6 +32,14 @@ public class PipSelect extends HBox {
         );
         render();
         eventHandling();
+    }
+
+    private static Rectangle getRectangle() {
+        final Rectangle rectangle = new Rectangle(ScalingHelper.getPixelDoubleFromEm(1.5), ScalingHelper.getPixelDoubleFromEm(1.5));
+        rectangle.widthProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(1.5));
+        rectangle.heightProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(1.5));
+        rectangle.getStyleClass().add("pipselect-rectangle");
+        return rectangle;
     }
 
     public int getValue() {

@@ -59,7 +59,7 @@ public class Shield extends StackPane implements Template {
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("shield-component");
+        this.getStyleClass().add("shield-component-" + this.color);
         shield = ResizableImageViewBuilder.builder().withStyleClass("shield-image").withImage(ImageService.getImage("/images/ships/icons/shield2_" + color + ".png")).build();
         final VBox shieldBox = BoxBuilder.builder().withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), shield, new GrowingRegion()).buildHBox(), new GrowingRegion()).buildVBox();
         this.getChildren().add(shieldBox);
@@ -80,17 +80,29 @@ public class Shield extends StackPane implements Template {
         thermalLabel = LabelBuilder.builder().withNonLocalizedText("0").build();
         causticLabel = LabelBuilder.builder().withNonLocalizedText("0").build();
         explosiveLabel = LabelBuilder.builder().withNonLocalizedText("0").build();
-        final VBox valuesBox = BoxBuilder.builder().withStyleClass("shield-values").withNodes(
-                BoxBuilder.builder().withNodes(rawTitleLabel, new GrowingRegion(), kineticTitleLabel).buildHBox(),
-                BoxBuilder.builder().withNodes(rawLabel, new GrowingRegion(), kineticLabel).buildHBox(),
-                new GrowingRegion(),
-                BoxBuilder.builder().withNodes(thermalLabel, new GrowingRegion(), explosiveLabel).buildHBox(),
-                BoxBuilder.builder().withNodes(thermalTitleLabel, new GrowingRegion(), explosiveTitleLabel).buildHBox(),
-                new GrowingRegion(),
-                BoxBuilder.builder().withNodes(new GrowingRegion(), causticLabel, new GrowingRegion()).buildHBox(),
-                BoxBuilder.builder().withNodes(new GrowingRegion(), causticTitleLabel, new GrowingRegion()).buildHBox()
-        ).buildVBox();
-        this.getChildren().add(valuesBox);
+        if(this.color.equals("blue")) {
+            final VBox valuesBox = BoxBuilder.builder().withStyleClass("shield-values").withNodes(
+                    BoxBuilder.builder().withNodes(causticTitleLabel, new GrowingRegion(), kineticTitleLabel).buildHBox(),
+                    BoxBuilder.builder().withNodes(causticLabel, new GrowingRegion(), kineticLabel).buildHBox(),
+                    new GrowingRegion(),
+                    BoxBuilder.builder().withNodes(thermalLabel, new GrowingRegion(), explosiveLabel).buildHBox(),
+                    BoxBuilder.builder().withNodes(thermalTitleLabel, new GrowingRegion(), explosiveTitleLabel).buildHBox()
+            ).buildVBox();
+            this.getChildren().add(valuesBox);
+        }else{
+
+            final VBox valuesBox = BoxBuilder.builder().withStyleClass("shield-values").withNodes(
+                    BoxBuilder.builder().withNodes(causticTitleLabel, new GrowingRegion(), kineticTitleLabel).buildHBox(),
+                    BoxBuilder.builder().withNodes(causticLabel, new GrowingRegion(), kineticLabel).buildHBox(),
+                    new GrowingRegion(),
+                    BoxBuilder.builder().withNodes(thermalLabel, new GrowingRegion(), explosiveLabel).buildHBox(),
+                    BoxBuilder.builder().withNodes(thermalTitleLabel, new GrowingRegion(), explosiveTitleLabel).buildHBox(),
+                    new GrowingRegion(),
+                    BoxBuilder.builder().withNodes(new GrowingRegion(), rawLabel, new GrowingRegion()).buildHBox(),
+                    BoxBuilder.builder().withNodes(new GrowingRegion(), rawTitleLabel, new GrowingRegion()).buildHBox()
+            ).buildVBox();
+            this.getChildren().add(valuesBox);
+        }
     }
 
     @Override

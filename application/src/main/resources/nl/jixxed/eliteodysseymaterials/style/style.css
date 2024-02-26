@@ -3288,11 +3288,19 @@
     -fx-min-height: 6.199em;
     -fx-max-height: 6.199em;
 }
-.shield-component{
+.shield-component-red{
     -fx-min-width: 15em;
     -fx-max-width: 15em;
-    -fx-min-height: 9em;
-    -fx-max-height: 9em;
+    -fx-min-height: 9.6em;
+    -fx-max-height: 9.6em;
+    -fx-padding: 0.6em 0em 0em 0em;
+}
+.shield-component-blue{
+    -fx-min-width: 15em;
+    -fx-max-width: 15em;
+    -fx-min-height: 6.6em;
+    -fx-max-height: 6.6em;
+    -fx-padding: 0.6em 0em 0em 0em;
 }
 .shield-label-blue{
     -fx-text-fill: #2e92df;
@@ -3315,7 +3323,10 @@
     -fx-text-fill: #ff7c7c;
 }
 .config-intfield{
-    -fx-max-width: 6em;
+    -fx-max-width: 7em;
+}
+.config-fuelreserve{
+    -fx-max-width: 7em;
 }
 .shipbuilder-controls-layer {
     /*-fx-padding: 0;*/
@@ -3440,4 +3451,47 @@
 }
 .loading-screen-text{
     -fx-font-size: 3em;
+}
+.shipbuilder-stats-configuration{
+    -fx-min-width: 19em;
+    -fx-max-width: 19em;
+}
+.config-toggle .label{
+/*    -fx-max-width: 0;*/
+/*    -fx-padding: 0em;*/
+/*    -fx-background-insets: 0em;*/
+/*    -fx-border-insets: 0em;*/
+/*    !*-fx-background-insets: 0em;*!*/
+    -fx-pref-width: -20;
+    -fx-max-width: -20;
+    -fx-background-color: #a45109;
+}
+.config-toggle .stack-pane{
+    -fx-max-width: 0;
+    -fx-padding: 0em;
+    -fx-background-insets: 0em;
+    -fx-border-insets: 0em;
+    -fx-alignment: center-right;
+    /*-fx-background-insets: 0em;*/
+    -fx-background-color: #3b1b00;
+}
+.config-toggle {
+    /*-fx-background-insets: 0em;*/
+    /*-fx-border-insets: 0em;*/
+    -fx-alignment: center-right;
+    -fx-background-color: #2a003b;
+    /*-fx-border-insets: 0em 0em 0em -20 !important;*/
+    -fx-max-width: 1em;
+}
+.config-toggle .thumb{
+    /*-fx-background-insets: 0em;*/
+    /*-fx-padding: 0em;*/
+    /*-fx-border-insets: 0em;*/
+    -fx-background-color: #35790e;
+}
+.config-toggle .thumb-area{
+    /*-fx-background-insets: 0em !important;*/
+    -fx-padding: 0em !important;
+    /*-fx-border-insets: 0em 0em 0em -20 !important;*/
+    -fx-background-color: #2b4483;
 }

@@ -2,12 +2,14 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
 public class DetailsLayer extends AnchorPane implements Template {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+    @Getter
     private ModuleDetails moduleDetails;
 
     public DetailsLayer() {
