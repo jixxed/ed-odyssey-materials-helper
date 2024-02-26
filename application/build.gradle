@@ -621,6 +621,13 @@ buildtimetracker {
     }
 }
 tasks.jpackageImage.doFirst {
+    if (os.isWindows()) {
+        ant.attrib(readonly: false) {
+            fileset(dir: 'build\\jpackage')
+        }
+    } else {
+        ant.chmod(dir: 'build/jpackage', perm: 'ugo+w')
+    }
     delete file('\\build\\jpackage\\').listFiles()
 }
 mainClassName = 'nl.jixxed.eliteodysseymaterials.Main'
