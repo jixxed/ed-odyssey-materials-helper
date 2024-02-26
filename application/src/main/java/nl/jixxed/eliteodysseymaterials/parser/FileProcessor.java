@@ -186,8 +186,9 @@ public class FileProcessor {
     private static void testAndReport(String message, Class<? extends Event> messageClass) {
         try {
             OBJECT_MAPPER2.readValue(message, messageClass);
-        } catch (final JsonProcessingException e) {
+        } catch (final Exception e) {
             //report
+            log.error("unknown journal event", e);
             ReportService.reportJournal(message, e.getMessage());
         }
     }

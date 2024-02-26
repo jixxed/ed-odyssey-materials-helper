@@ -143,6 +143,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.MissionFailed.MissionFail
 import nl.jixxed.eliteodysseymaterials.schemas.journal.MissionRedirected.MissionRedirected;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Missions.Missions;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuy.ModuleBuy;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuyAndStore.ModuleBuyAndStore;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleInfo.ModuleInfo;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleRetrieve.ModuleRetrieve;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleSell.ModuleSell;
@@ -401,6 +402,7 @@ public class JournalEventTypes {
             Map.entry("MissionRedirected", MissionRedirected.class),
             Map.entry("Missions", Missions.class),
             Map.entry("ModuleBuy", ModuleBuy.class),
+            Map.entry("ModuleBuyAndStore", ModuleBuyAndStore.class),
             Map.entry("ModuleInfo", ModuleInfo.class),
             Map.entry("ModuleRetrieve", ModuleRetrieve.class),
             Map.entry("ModuleSell", ModuleSell.class),

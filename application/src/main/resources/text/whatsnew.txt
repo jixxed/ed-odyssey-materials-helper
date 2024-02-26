@@ -1,3 +1,8 @@
+Version 2.46
+-------------
+Add missing ModuleBuyAndStore event
+Add resilience for unknown events
+
 Version 2.45
 -------------
 Add Fine to MissionAbandoned journal event

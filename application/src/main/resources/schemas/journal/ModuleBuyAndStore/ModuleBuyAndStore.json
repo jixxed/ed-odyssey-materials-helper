@@ -1,0 +1,45 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When Written: when buying a module and directly storing it in outfitting",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "BuyItem" : {
+      "title" : "BuyItem",
+      "description": "The module being purchased and stored",
+      "type" : "string",
+      "examples" : [ "$int_dronecontrol_unkvesselresearch_name;", "$int_multidronecontrol_xeno_size3_class3_name;", "$int_multidronecontrol_mining_size3_class3_name;" ]
+    },
+    "BuyItem_Localised" : {
+      "title" : "BuyItem_Localised",
+      "type" : "string",
+      "examples" : [ "Research", "Xeno Multi-Limpet Controller", "Mining Multi-Limpet Controller" ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 128666762, 128679559, 128927917 ]
+    },
+    "BuyPrice" : {
+      "title" : "BuyPrice",
+      "description": "Price paid",
+      "type" : "integer",
+      "examples" : [ 1535274, 43875, 70200 ]
+    },
+    "Ship" : {
+      "title" : "Ship",
+      "description": "The player's ship",
+      "type" : "string",
+      "examples" : [ "asp", "cutter", "krait_mkii" ]
+    },
+    "ShipID" : {
+      "title" : "ShipID",
+      "description": "The player's ship ID",
+      "type" : "integer",
+      "examples" : [ 5, 25, 34 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Slot", "BuyItem", "MarketID", "BuyPrice", "Ship", "ShipID" ]
+}
