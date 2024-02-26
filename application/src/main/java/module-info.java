@@ -230,6 +230,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.MissionRedirected;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.Missions;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuy;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuyAndStore;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleInfo;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleRetrieve;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleSell;
@@ -482,6 +483,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.MissionRedirected to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.Missions to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuy to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleBuyAndStore to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleInfo to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleRetrieve to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.ModuleSell to com.fasterxml.jackson.databind;
