@@ -45,6 +45,15 @@ public class SynthesisBlueprints {
                     Map.of(
                             HorizonsModifier.DAMAGE_BOOST, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0,0.30))),
                     List.of()));
+    public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> GUARDIAN_NANITE_MUNITIONS = Map.of(
+            HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.GUARDIAN_NANITE_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
+                    Map.of(
+                            Manufactured.GUARDIAN_POWERCELL, 2,
+                            Manufactured.TG_ABRASION01, 5,
+                            Manufactured.TG_ABRASION02, 5),
+                    Map.of(),
+                    List.of(),
+                    GameVersion.LIVE));
     public static final Map<HorizonsBlueprintGrade, HorizonsBlueprint> GUARDIAN_GAUSS_CANNON_MUNITIONS = Map.of(
             HorizonsBlueprintGrade.GRADE_1, new HorizonsBlueprint(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON_MUNITIONS, HorizonsBlueprintType.SYNTHESIS, HorizonsBlueprintGrade.GRADE_1,
                     Map.of(

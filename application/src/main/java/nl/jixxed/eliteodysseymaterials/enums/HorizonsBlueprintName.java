@@ -192,6 +192,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     FLECHETTE_LAUNCHER_MUNITIONS(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
     FSD_INJECTION(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
     GUARDIAN_GAUSS_CANNON_MUNITIONS(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
+    GUARDIAN_NANITE_MUNITIONS(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
     GUARDIAN_PLASMA_CHARGER_MUNITIONS(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
     GUARDIAN_SHARD_CANNON_MUNITIONS(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
     HEATSINKS(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
