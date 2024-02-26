@@ -322,6 +322,7 @@ public abstract class HorizonsBlueprintConstants {
         SYNTHESIS.put(HorizonsBlueprintName.EXPLOSIVE_MUNITIONS, SynthesisBlueprints.EXPLOSIVE_MUNITIONS);
         SYNTHESIS.put(HorizonsBlueprintName.FLECHETTE_LAUNCHER_MUNITIONS, SynthesisBlueprints.FLECHETTE_LAUNCHER_MUNITIONS);
         SYNTHESIS.put(HorizonsBlueprintName.FSD_INJECTION, SynthesisBlueprints.FSD_INJECTION);
+        SYNTHESIS.put(HorizonsBlueprintName.GUARDIAN_NANITE_MUNITIONS, SynthesisBlueprints.GUARDIAN_NANITE_MUNITIONS);
         SYNTHESIS.put(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON_MUNITIONS, SynthesisBlueprints.GUARDIAN_GAUSS_CANNON_MUNITIONS);
         SYNTHESIS.put(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER_MUNITIONS, SynthesisBlueprints.GUARDIAN_PLASMA_CHARGER_MUNITIONS);
         SYNTHESIS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON_MUNITIONS, SynthesisBlueprints.GUARDIAN_SHARD_CANNON_MUNITIONS);
