@@ -596,6 +596,8 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.codexentry;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.commodity;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.docked;
+    exports nl.jixxed.eliteodysseymaterials.schemas.eddn.dockingGranted;
+    exports nl.jixxed.eliteodysseymaterials.schemas.eddn.dockingDenied;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.fcmaterialscapi;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.fcmaterialsjournal;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.fsdjump;
@@ -616,6 +618,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.codexentry to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.commodity to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.docked to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.eddn.dockingGranted to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.eddn.dockingDenied to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.fcmaterialscapi to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.fcmaterialsjournal to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.fsdjump to com.fasterxml.jackson.databind;

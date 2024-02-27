@@ -11,12 +11,14 @@ public enum JournalEventType {
     EMBARK("Embark"),
     SHIPLOCKER("ShipLocker"),
     BACKPACK("Backpack"),
-    CAPI_FLEETCARRIER("CapiFleetCarrier"),//CAPI Resource
+    CAPIFLEETCARRIER("CapiFleetCarrier"),//CAPI Resource
     BACKPACKCHANGE("BackpackChange"),
     RESUPPLY("Resupply"),
     FSDJUMP("FSDJump"),
     LOCATION("Location"),
     DOCKED("Docked"),
+    DOCKINGDENIED("DockingDenied"),
+    DOCKINGGRANTED("DockingGranted"),
     TOUCHDOWN("Touchdown"),
     UNDOCKED("Undocked"),
     LIFTOFF("Liftoff"),

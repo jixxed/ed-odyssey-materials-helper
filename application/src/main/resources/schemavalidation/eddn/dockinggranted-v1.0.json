@@ -1,6 +1,6 @@
 {
     "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/fcmaterials_journal/1",
+    "id"                    : "https://eddn.edcd.io/schemas/dockinggranted/1#",
     "type"                  : "object",
     "additionalProperties"  : false,
     "required": [ "$schemaRef", "header", "message" ],
@@ -41,65 +41,37 @@
             "type"                  : "object",
             "description"           : "Contains all properties from the listed events in the client's journal minus the Localised strings and the properties marked below as 'disallowed'",
             "additionalProperties"  : false,
-            "required"              : [ "timestamp", "event", "MarketID", "CarrierName", "CarrierID", "Items" ],
+            "required"              : [ "timestamp", "event", "MarketID", "StationName" ],
             "properties"            : {
                 "timestamp": {
                     "type"          : "string",
                     "format"        : "date-time"
                 },
                 "event" : {
-                    "enum"          : [ "FCMaterials" ]
+                    "enum"          : [ "DockingGranted" ]
                 },
                 "horizons": {
                     "type"          : "boolean",
-                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+                    "description"   : "Whether the sending Cmdr has a Horizons pass."
                 },
                 "odyssey": {
-                    "type"          : "boolean",
-                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
+                    "type"      : "boolean",
+                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
                 },
-
                 "MarketID": {
                     "type"          : "integer"
-                },
-
-                "CarrierName": {
+                },		
+                "StationName": {
                     "type"          : "string",
-                    "minLength"     : 1
+                    "description"   : "Name of station"
                 },
-
-                "CarrierID": {
+                "StationType": {
                     "type"          : "string",
-                    "minLength"     : 1
+                    "description"   : "Type of station"
                 },
-
-                "Items": {
-                    "type"          : "array",
-                    "items": {
-                        "type"          : "object",
-                        "required"      : [ "id", "Name", "Price", "Stock", "Demand" ],
-                        "properties"    : {
-                            "id" : {
-                                "type"  : "integer"
-                            },
-                            "Name": {
-                                "type"      : "string",
-                                "minLength" : 1
-                            },
-                            "Price": {
-                                "type"      : "integer"
-                            },
-                            "Stock": {
-                                "type"      : "integer"
-                            },
-                            "Demand": {
-                                "type"      : "integer"
-                            }
-                        },
-                        "patternProperties": {
-                            "_Localised$"       : { "$ref" : "#/definitions/disallowed" }
-                        }
-                    }
+                "LandingPad": {
+                    "type"          : "integer",
+                    "description"   : "Pad number Cmdr was granted landing to"
                 }
             }
         }

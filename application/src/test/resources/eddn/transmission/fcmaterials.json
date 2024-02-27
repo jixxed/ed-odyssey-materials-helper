@@ -1,0 +1,4 @@
+{ "timestamp":"2023-11-01T17:00:30Z", "event":"FCMaterials", "MarketID":3705689344, "CarrierName":"HEAD IN THE CLOUDS", "CarrierID":"V1B-WQB", "Items":[
+  { "id":128972366, "Name":"$slushfundlogs_name;", "Name_Localised":"Slush Fund Logs", "Price":27000, "Stock":0, "Demand":1 },
+  { "id":128972364, "Name":"$settlementdefenceplans_name;", "Name_Localised":"Settlement Defence Plans", "Price":1100, "Stock":0, "Demand":0 }
+] }

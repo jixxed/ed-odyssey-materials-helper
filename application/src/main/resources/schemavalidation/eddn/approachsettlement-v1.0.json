@@ -70,6 +70,49 @@
                     "maxItems"      : 3,
                     "description"   : "Must be added by the sender"
                 },
+                "StationGovernment": {
+                    "type"          : "string"
+                },
+                "StationAllegiance": {
+                    "type"          : "string"
+                },
+                "StationEconomies": {
+                    "type"          : "array",
+                    "items"         : {
+                       "type"      : "object",
+                        "additionalProperties"  : false,
+                        "properties": {
+                            "Name": {
+                                "type"          : "string"
+                            },
+                            "Proportion": {
+                                "type"          : "number"
+                            }
+                        },
+                       "patternProperties"     : {
+                           "_Localised$"       : { "$ref" : "#/definitions/disallowed" }
+                       }
+                    }
+                },
+                "StationFaction": {
+                   "type"      : "object",
+                   "additionalProperties"  : false,
+                   "properties": {
+                       "Name": {
+                           "type"          : "string"
+                       },
+                       "FactionState": {
+                           "type"          : "string"
+                       }
+                   }
+                },	
+                "StationServices": {
+                    "type"          : "array",
+                    "items"         : { "type": "string" }
+                },
+                "StationEconomy": {
+                    "type"          : "string"
+                },	
                 "SystemAddress": {
                     "type"          : "integer"
                 },

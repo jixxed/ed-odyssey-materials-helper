@@ -18,13 +18,22 @@
             "properties"            : {
                 "systemName": {
                     "type"      : "string",
+                    "renamed"   : "StarSystem",
                     "minLength" : 1
                 },
                 "stationName": {
                     "type"      : "string",
                     "renamed"   : "StarSystem",
                     "minLength" : 1
-                },                
+                },
+                "stationType": {
+                    "type"      : "string",
+                    "renamed"   : "StationType"
+                },
+                "carrierDockingAccess": {
+                    "type"      : "string",
+                    "renamed"   : "CarrierDockingAccess"
+                },
                 "marketId": {
                     "type"      : "integer",
                     "renamed"   : "MarketID"
@@ -62,7 +71,7 @@
                             },
                             "buyPrice": {
                                 "type"          : "integer",
-                                "renaamed"      : "BuyPrice",
+                                "renamed"      : "BuyPrice",
                                 "description"   : "Price to buy from the market"
                             },
                             "stock": {

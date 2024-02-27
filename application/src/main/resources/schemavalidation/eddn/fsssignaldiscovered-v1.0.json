@@ -69,6 +69,7 @@
                     "minItems": 1,
                     "items": {
                         "type": "object",
+                        "additionalProperties"  : false,
                         "required": ["timestamp", "SignalName"],
                         "description": "Single FSSSignalDiscovered event",
                         "properties": {
@@ -77,6 +78,7 @@
                                 "format"        : "date-time"
                             },
                             "SignalName": { "type":  "string" },
+                            "SignalType": { "type":  "string" },
                             "IsStation": { "type": "boolean" },
                             "USSType": {
                               "type": "string",

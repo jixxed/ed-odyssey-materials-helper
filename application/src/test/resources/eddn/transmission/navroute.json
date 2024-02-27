@@ -1,0 +1,6 @@
+{ "timestamp":"2024-02-27T20:33:00Z", "event":"NavRoute", "Route":[
+  { "StarSystem":"Imeut", "SystemAddress":5070074488193, "StarPos":[89.03125,-72.25000,-103.06250], "StarClass":"M" },
+  { "StarSystem":"HIP 25840", "SystemAddress":1316164192603, "StarPos":[73.93750,-54.12500,-112.78125], "StarClass":"F" },
+  { "StarSystem":"No Chang", "SystemAddress":2346956343643, "StarPos":[66.56250,-44.18750,-120.62500], "StarClass":"TTS" },
+  { "StarSystem":"Hyades Sector WP-C a14-2", "SystemAddress":40557912804072, "StarPos":[59.93750,-37.71875,-130.37500], "StarClass":"L" }
+] }
