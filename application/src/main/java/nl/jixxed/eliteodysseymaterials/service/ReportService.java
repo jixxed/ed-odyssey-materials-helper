@@ -53,10 +53,10 @@ public class ReportService {
 
     public static void reportJournal(String journalLine, String error) {
         final String buildVersion = VersionService.getBuildVersion();
-//        if (buildVersion != null) {
+        if (buildVersion != null) {
             final Runnable run = () -> {
                 try {
-                    final String data = OBJECT_MAPPER.writeValueAsString(new ReportUnknownJournal("2.48", ApplicationState.getInstance().getFileheader(), journalLine, error));
+                    final String data = OBJECT_MAPPER.writeValueAsString(new ReportUnknownJournal(buildVersion, ApplicationState.getInstance().getFileheader(), journalLine, error));
                     log.info(data);
                     final HttpClient httpClient = HttpClient.newHttpClient();
                     final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
@@ -73,7 +73,7 @@ public class ReportService {
                 }
             };
             new Thread(run).start();
-//        }
+        }
     }
 
     @Data
