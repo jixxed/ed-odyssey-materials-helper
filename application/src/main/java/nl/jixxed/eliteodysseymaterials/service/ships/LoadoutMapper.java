@@ -1,5 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.service.ships;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
@@ -7,6 +10,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,6 +20,11 @@ import java.util.Set;
 
 @Slf4j
 public class LoadoutMapper {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    static {
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+        OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+    }
     private static final Set<String> HARDPOINT_SLOT_NAMES = Set.of("SmallHardpoint", "MediumHardpoint", "LargeHardpoint", "HugeHardpoint");
     private static final Set<String> UTILITY_SLOT_NAMES = Set.of("TinyHardpoint");
     private static final Set<String> CORE_SLOT_NAMES = Set.of("Armour", "PowerPlant", "MainEngines", "FrameShiftDrive", "LifeSupport", "PowerDistributor", "Radar", "FuelTank");
@@ -47,10 +56,11 @@ public class LoadoutMapper {
                     try {
                         return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|" + module));
                     } catch (IllegalArgumentException ex) {
-//                        log.debug(module.getItem());
-//                        log.debug(slot.getSlotType().toString());
-                        //throw ex;
-                        //todo report? unknown module
+                        try {
+                            ReportService.reportJournal(OBJECT_MAPPER.writeValueAsString(module), "Can't map module: " + module.getItem());
+                        } catch (Exception e) {
+                            log.error("failed to send journal error", e);
+                        }
                         return null;
                     }
                 });

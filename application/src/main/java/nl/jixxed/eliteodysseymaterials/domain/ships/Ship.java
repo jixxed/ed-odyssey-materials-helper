@@ -32,6 +32,7 @@ public class Ship {
             EnzymeMissileRack.ENZYME_MISSILE_RACKS,
             FragmentCannon.FRAGMENT_CANNONS,
             GuardianGaussCannon.GUARDIAN_GAUSS_CANNONS,
+//            GuardianNaniteTorpedoPylon.GUARDIAN_NANITE_TORPEDO_PYLONS,
             GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGERS,
             GuardianShardCannon.GUARDIAN_SHARD_CANNONS,
             MineLauncher.MINE_LAUNCHERS,

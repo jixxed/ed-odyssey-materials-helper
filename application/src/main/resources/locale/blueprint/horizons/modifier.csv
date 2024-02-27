@@ -7,6 +7,7 @@ modifier.horizons.name.ammo_maximum,Ammo Maximum,Ammo Maximum,Munition maximal,M
 modifier.horizons.name.anti_xeno_damage,Anti Xeno Damage,Anti Xeno Damage,Anti-Xeno-Schaden,Daño anti xeno,Dommages anti xéno,Dano anti-xeno,АИ урон
 modifier.horizons.name.anti_xeno_damage_ratio,Anti Xeno Damage Ratio,Anti Xeno Damage Ratio,,,,,
 modifier.horizons.name.area_fsds_reboot,Area FSD’s Reboot,Area FSD’s Reboot,Neustart des Bereichs FSD,Reinicio del área FSD,Redémarrage de la zone FSD,Reinicialização da área FSD,Перезагрузка FSD в области действия
+modifier.horizons.name.anti_guardian_zone_resistance,Anti Guardian Zone Resistance,,,,,,
 modifier.horizons.name.area_heat_increased_sensors_disrupted,Area Heat Increased Sensors Disrupted,Area Heat Increased Sensors Disrupted,Die Flächenwärme erhöhte die Sensoren gestört,Área Calor aumentó los sensores,La chaleur de la zone a augmenté les capteurs perturbés,O calor da área aumentou os sensores interrompidos,"Нагревает, вызывает сбой в работе сенсоров в области действия"
 modifier.horizons.name.armour,Armour,Armour,,,,,
 modifier.horizons.name.armour_hardness,Armour Hardness,Armour Hardness,,,,,
