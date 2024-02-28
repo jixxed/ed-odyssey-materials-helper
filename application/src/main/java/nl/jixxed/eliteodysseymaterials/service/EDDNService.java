@@ -33,6 +33,8 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.ApproachSettlement.Approa
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.CarrierJump;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CodexEntry.CodexEntry;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Docked.Docked;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.DockingDenied.DockingDenied;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.DockingGranted.DockingGranted;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FCMaterials.FCMaterials;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.FSDJump;
@@ -167,14 +169,34 @@ public class EDDNService {
 
 
     public static void commodity(final Market market) {
-            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
-                final Expansion expansion = APPLICATION_STATE.getExpansion();
-                send(new Commodity.CommodityBuilder()
-                        .with$schemaRef("https://eddn.edcd.io/schemas/commodity/3" + (isTestMode() ? "/test" : ""))
-                        .withHeader(buildHeader(commander))
-                        .withMessage(EDDNCommodityMapper.mapToEDDN(market, expansion))
-                        .build(), market, "commodity-v3.0.json", 15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
-            });
+        ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+            final Expansion expansion = APPLICATION_STATE.getExpansion();
+            send(new Commodity.CommodityBuilder()
+                    .with$schemaRef("https://eddn.edcd.io/schemas/commodity/3" + (isTestMode() ? "/test" : ""))
+                    .withHeader(buildHeader(commander))
+                    .withMessage(EDDNCommodityMapper.mapToEDDN(market, expansion))
+                    .build(), market, "commodity-v3.0.json", 15);//allow events to be delayed up to 15 seconds because of delayed writes to secondary file
+        });
+    }
+    public static void dockingDenied(final DockingDenied dockingDenied) {
+        ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+            final Expansion expansion = APPLICATION_STATE.getExpansion();
+            send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.dockingDenied.DockingDenied.DockingDeniedBuilder()
+                    .with$schemaRef("https://eddn.edcd.io/schemas/dockingdenied/1" + (isTestMode() ? "/test" : ""))
+                    .withHeader(buildHeader(commander))
+                    .withMessage(EDDNDockingDeniedMapper.mapToEDDN(dockingDenied, expansion))
+                    .build(), dockingDenied, "dockingdenied-v1.0.json");
+        });
+    }
+    public static void dockingGranted(final DockingGranted dockingGranted) {
+        ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
+            final Expansion expansion = APPLICATION_STATE.getExpansion();
+            send(new nl.jixxed.eliteodysseymaterials.schemas.eddn.dockingGranted.DockingGranted.DockingGrantedBuilder()
+                    .with$schemaRef("https://eddn.edcd.io/schemas/dockinggranted/1" + (isTestMode() ? "/test" : ""))
+                    .withHeader(buildHeader(commander))
+                    .withMessage(EDDNDockingGrantedMapper.mapToEDDN(dockingGranted, expansion))
+                    .build(), dockingGranted, "dockinggranted-v1.0.json");
+        });
     }
 
     public static void fcmaterialscapi() {
@@ -382,7 +404,7 @@ public class EDDNService {
                 try {
                     final String data = OBJECT_MAPPER.writeValueAsString(message);
                     final JsonSchema schema = JSON_VALIDATION_SERVICE.readSchema(EDDNService.class.getResourceAsStream("/schemavalidation/eddn/" + schemaName));
-                    validateAndSend(data, schema);
+                    validateAndSend(data, schema, event.getEvent());
                 } catch (final InterruptedException e) {
                     Thread.currentThread().interrupt();
                 } catch (final JsonProcessingException e) {
@@ -400,7 +422,7 @@ public class EDDNService {
         }
     }
 
-    private static void validateAndSend(final String data, final JsonSchema schema) throws IOException, InterruptedException {
+    private static void validateAndSend(final String data, final JsonSchema schema, String event) throws IOException, InterruptedException {
         try (final JsonReader jsonReader = JSON_VALIDATION_SERVICE.createReader(new CharSequenceInputStream(data, StandardCharsets.UTF_8), schema, PROBLEM_HANDLER)) {
 //            log.info("Attempt to send: " + data);
             jsonReader.readValue();
@@ -412,7 +434,7 @@ public class EDDNService {
                     .POST(HttpRequest.BodyPublishers.ofByteArray(convertJsonToCompressed(data)))
                     .build();
             final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            log.info(send.body());
+            log.info(event+": "+send.body() + " -> " + data);
             // Do something useful here
         } catch (final JsonValidatingException ex) {
             log.error("Schema validation failed. Not sending Data to EDDN.", ex);

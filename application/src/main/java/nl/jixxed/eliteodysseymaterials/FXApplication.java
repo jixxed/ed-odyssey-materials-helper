@@ -239,7 +239,7 @@ public class FXApplication extends Application {
             }
             this.fleetCarrierWatcher = new GameStateWatcher();
             ApplicationState.getInstance().getFcMaterials().set(false);
-            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPI_FLEETCARRIER), AppConstants.FLEETCARRIER_FILE,false, JournalEventType.CAPI_FLEETCARRIER);
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPIFLEETCARRIER), AppConstants.FLEETCARRIER_FILE,false, JournalEventType.CAPIFLEETCARRIER);
         }
 
     }

@@ -1,0 +1,21 @@
+{ "timestamp":"2024-02-27T20:40:27Z", "event":"Shipyard", "MarketID":129021311, "StationName":"Imperial Sanctum", "StarSystem":"Hixkaramu", "Horizons":true, "AllowCobraMkIV":false, "PriceList":[
+  { "id":128049249, "ShipType":"sidewinder", "ShipPrice":31200 },
+  { "id":128049261, "ShipType":"hauler", "ShipPrice":51402 },
+  { "id":128049267, "ShipType":"adder", "ShipPrice":85613 },
+  { "id":128049273, "ShipType":"viper", "ShipType_Localised":"Viper Mk III", "ShipPrice":139358 },
+  { "id":128049279, "ShipType":"cobramkiii", "ShipType_Localised":"Cobra Mk III", "ShipPrice":340976 },
+  { "id":128672255, "ShipType":"viper_mkiv", "ShipType_Localised":"Viper Mk IV", "ShipPrice":426983 },
+  { "id":128671217, "ShipType":"diamondback", "ShipType_Localised":"Diamondback Scout", "ShipPrice":550221 },
+  { "id":128049285, "ShipType":"type6", "ShipType_Localised":"Type-6 Transporter", "ShipPrice":1019797 },
+  { "id":128049291, "ShipType":"dolphin", "ShipPrice":1303890 },
+  { "id":128671831, "ShipType":"diamondbackxl", "ShipType_Localised":"Diamondback Explorer", "ShipPrice":1847391 },
+  { "id":128672269, "ShipType":"independant_trader", "ShipType_Localised":"Keelback", "ShipPrice":3048001 },
+  { "id":128672276, "ShipType":"asp_scout", "ShipType_Localised":"Asp Scout", "ShipPrice":3862126 },
+  { "id":128049309, "ShipType":"vulture", "ShipPrice":4802475 },
+  { "id":128049303, "ShipType":"asp", "ShipType_Localised":"Asp Explorer", "ShipPrice":6494626 },
+  { "id":128839281, "ShipType":"krait_light", "ShipType_Localised":"Krait Phantom", "ShipPrice":36535446 },
+  { "id":128816567, "ShipType":"krait_mkii", "ShipType_Localised":"Krait Mk II", "ShipPrice":44668850 },
+  { "id":128049327, "ShipType":"orca", "ShipPrice":47326390 },
+  { "id":128049351, "ShipType":"ferdelance", "ShipType_Localised":"Fer-de-Lance", "ShipPrice":50277864 },
+  { "id":128049339, "ShipType":"python", "ShipPrice":55553725 }
+] }

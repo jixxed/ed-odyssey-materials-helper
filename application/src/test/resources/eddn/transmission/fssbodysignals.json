@@ -1,0 +1,1 @@
+{ "timestamp":"2023-05-26T15:43:00Z", "event":"FSSBodySignals", "BodyName":"Col 285 Sector BA-P c6-18 2 a", "BodyID":41, "SystemAddress":0, "Signals":[ { "Type":"$SAA_SignalType_Geological;", "Type_Localised":"Geological", "Count":2 } ] }

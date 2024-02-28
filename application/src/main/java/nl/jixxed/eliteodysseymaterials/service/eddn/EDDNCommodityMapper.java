@@ -14,6 +14,8 @@ public class EDDNCommodityMapper extends EDDNMapper {
                 .withTimestamp(market.getTimestamp())
                 .withSystemName(market.getStarSystem())
                 .withStationName(market.getStationName())
+                .withStationType(market.getStationType())
+                .withCarrierDockingAccess(market.getCarrierDockingAccess().orElse(null))
                 .withEconomies(null)//capi only field
                 .withProhibited(null)//capi only field
                 .withCommodities(mapToNullIfEmptyList(market.getItems())

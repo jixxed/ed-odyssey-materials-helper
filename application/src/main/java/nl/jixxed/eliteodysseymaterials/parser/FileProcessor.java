@@ -228,7 +228,7 @@ public class FileProcessor {
     }
 
     public static synchronized void processCapiFile(final File file, final JournalEventType journalEventType) {
-        if (journalEventType.equals(JournalEventType.CAPI_FLEETCARRIER)) {
+        if(journalEventType.equals(JournalEventType.CAPIFLEETCARRIER)) {
             ApplicationState.getInstance().getFcMaterials().set(true);
         }
         Platform.runLater(() -> MessageHandler.handleCapiMessage(file, journalEventType));

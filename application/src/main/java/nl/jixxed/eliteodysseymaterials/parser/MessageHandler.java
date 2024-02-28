@@ -75,6 +75,8 @@ class MessageHandler {
             Map.entry(JournalEventType.SUPERCRUISEENTRY, new SupercruiseEntryMessageProcessor()),
             Map.entry(JournalEventType.LEAVEBODY, new LeaveBodyMessageProcessor()),
             Map.entry(JournalEventType.DOCKED, new DockedMessageProcessor()),
+            Map.entry(JournalEventType.DOCKINGDENIED, new DockingDeniedMessageProcessor()),
+            Map.entry(JournalEventType.DOCKINGGRANTED, new DockingGrantedMessageProcessor()),
             Map.entry(JournalEventType.MATERIALS, new MaterialsMessageProcessor()),
             Map.entry(JournalEventType.CARGO, new CargoMessageProcessor()),
             Map.entry(JournalEventType.CARGOTRANSFER, new CargoTransferMessageProcessor()),
@@ -101,7 +103,7 @@ class MessageHandler {
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );
     private static final Map<JournalEventType, CapiMessageProcessor> capiMessageProcessors = Map.ofEntries(
-            Map.entry(JournalEventType.CAPI_FLEETCARRIER, new CapiFleetCarrierMessageProcessor())
+            Map.entry(JournalEventType.CAPIFLEETCARRIER, new CapiFleetCarrierMessageProcessor())
     );
     private static final String EVENT = "event";
     private static final String TIMESTAMP = "timestamp";
