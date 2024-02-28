@@ -160,6 +160,7 @@ public class FXApplication extends Application {
         }));
         this.primaryStage.setOnCloseRequest(event -> {
             try {
+                BackupService.createConfigBackup();
                 EventService.publish(new TerminateApplicationEvent());
                 EventService.shutdown();
 //                NativeLibrary.disposeAll();

@@ -33,6 +33,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires jakarta.json;
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
+    exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
