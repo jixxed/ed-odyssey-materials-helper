@@ -1,3 +1,8 @@
+Version 2.48
+-------------
+Add Nanite Torpedoes Munitions
+Add support for EDDN DockingDenied and DockingGranted messages
+
 Version 2.47
 -------------
 Bugfix for ModuleBuyAndStore event
