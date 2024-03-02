@@ -23,7 +23,7 @@ public class MiningLaserPreEngineeredBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> PRE_ENGINEERED_BLUEPRINTS = Map.of(
             HorizonsBlueprintType.LONG_RANGE_WEAPON_INCENDIARY_ROUNDS,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINING_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINING_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON_INCENDIARY_ROUNDS, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                             ),
                             Map.of(

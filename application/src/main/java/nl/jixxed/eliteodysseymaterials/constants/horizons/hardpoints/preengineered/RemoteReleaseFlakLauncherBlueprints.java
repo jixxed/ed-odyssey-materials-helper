@@ -35,7 +35,7 @@ public class RemoteReleaseFlakLauncherBlueprints {
             ),
             HorizonsBlueprintType.DECORATIVE_RED,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, HorizonsBlueprintType.DECORATIVE_GREEN, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, HorizonsBlueprintType.DECORATIVE_RED, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                             ),
                             Map.of(
@@ -49,7 +49,7 @@ public class RemoteReleaseFlakLauncherBlueprints {
             ),
             HorizonsBlueprintType.DECORATIVE_YELLOW,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, HorizonsBlueprintType.DECORATIVE_GREEN, HorizonsBlueprintGrade.GRADE_5,
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, HorizonsBlueprintType.DECORATIVE_YELLOW, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                             ),
                             Map.of(

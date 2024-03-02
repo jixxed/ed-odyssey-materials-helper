@@ -42,3 +42,6 @@ ship.view.header.slot.powerdistribution,PD,,,,,,
 ship.view.header.slot.sensors,SNR,,,,,,
 ship.view.header.slot.fueltank,FT,,,,,,
 ship.view.header.slot.optional,Optional,,,,,,
+ship.blueprint.add.all.to.wishlist,Add all to wishlist,Add all to wishlist,Fügen Sie alle zur Wunschliste hinzu,Agregar todo a la lista de deseos,Ajouter tout à WishList,Adicione tudo à lista de desejos,Добавьте все в список желаний
+ship.blueprint.add.changed.to.wishlist,Add changed to wishlist,,,,,,
+ship.create.new.wishlist,Create new,Create new,Erstelle neu,Crear nuevo,Créer un nouveau,Crie um novo,Создать новый

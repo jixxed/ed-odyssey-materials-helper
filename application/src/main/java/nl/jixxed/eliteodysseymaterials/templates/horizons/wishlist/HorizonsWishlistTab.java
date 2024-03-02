@@ -424,6 +424,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                             final WishlistBlueprintTemplate<HorizonsBlueprintName> wishlistBlueprint = createWishListBlueprintTemplate(wishlistRecipe, wishlistEvent.getWishlistUUID());
                             if (!wishlistEvent.getWishlistUUID().equals(this.activeWishlistUUID)) {
                                 Platform.runLater(() -> this.wishlistSelect.getSelectionModel().select(this.wishlistSelect.getItems().stream().filter(wishlist -> wishlist.getUuid().equals(wishlistEvent.getWishlistUUID())).findFirst().orElse(null)));
+                                //TODO sus logic. should we break the loop?
                             } else {
                                 this.wishlistBlueprints.add(wishlistBlueprint);
                                 addBluePrint(wishlistBlueprint);
@@ -476,6 +477,11 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.eventListeners.add(EventService.addListener(this, HorizonsWishlistSearchEvent.class, horizonsWishlistSearchEvent -> {
             this.currentSearch = horizonsWishlistSearchEvent.getSearch();
             Platform.runLater(this::refreshContent);
+        }));
+
+        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistCreatedEvent.class, event ->
+        {
+            refreshWishlistSelect();
         }));
     }
 

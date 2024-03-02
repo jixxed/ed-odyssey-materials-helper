@@ -3495,3 +3495,7 @@
     /*-fx-border-insets: 0em 0em 0em -20 !important;*/
     -fx-background-color: #2b4483;
 }
+
+.ships-wishlist-create-new {
+    -fx-font-style: italic;
+}

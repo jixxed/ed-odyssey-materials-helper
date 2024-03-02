@@ -115,6 +115,10 @@ public abstract class ShipModule implements Serializable {
         }).toList();
     }
 
+    public static ShipModule getModule(String id) {
+      return SHIP_MODULES.stream().filter(module->module.getId().equals(id)).findFirst().orElseThrow(IllegalAccessError::new);
+    }
+
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final BigDecimal modificationCompleteness) {
         if (validModification(modification, false)) {
             final Modification mod = new Modification(modification, modificationCompleteness, grade);

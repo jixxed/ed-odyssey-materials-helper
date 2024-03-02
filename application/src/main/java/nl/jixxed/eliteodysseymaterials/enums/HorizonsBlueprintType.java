@@ -15,7 +15,6 @@ public enum HorizonsBlueprintType {
     DOUBLE_SHOT(false),
     ENGINE_FOCUSED(false),
     EXPANDED_PROBE_SCANNING_RADIUS(false),
-    EXPANDED_PROBE_SCANNING_RADIUS_X2(false),
     HEAVY_DUTY(false),
     HIGH_CHARGE_CAPACITY(false),
     KINETIC_RESISTANT(false),
@@ -195,6 +194,7 @@ public enum HorizonsBlueprintType {
     OVERCHARGED_WEAPON_FOCUSED_WEAPON(false, true),
     LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS(false, true),
     HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE(false, true),
+    EXPANDED_PROBE_SCANNING_RADIUS_X2(false, true),
     INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true);
     @Getter
     private final boolean experimental;
