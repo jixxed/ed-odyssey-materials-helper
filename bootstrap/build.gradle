@@ -93,9 +93,15 @@ jlink {
     }
 }
 
+def arch = System.getProperty("os.arch")
 def platform = 'linux'
 if (os.isWindows()) {
     platform = 'win'
+} else if (os.isMacOsX()) {
+    platform = 'mac'
+}
+if (arch == "aarch64") {
+    platform += "-aarch64"
 }
 
 dependencies {
