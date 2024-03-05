@@ -1,5 +1,5 @@
 messageKey,,en,de,es,fr,pt,ru
-tabs.ships,Ships,,,,,,
+tabs.shipeditor,Ship Editor,,,,,,
 tabs.ships.blueprints,Blueprints,,,,,,
 tabs.ships.experimental.effects,Experimental effects,,,,,,
 tab.ships.create,Create ship,,,,,,
@@ -45,3 +45,7 @@ ship.view.header.slot.optional,Optional,,,,,,
 ship.blueprint.add.all.to.wishlist,Add all to wishlist,Add all to wishlist,Fügen Sie alle zur Wunschliste hinzu,Agregar todo a la lista de deseos,Ajouter tout à WishList,Adicione tudo à lista de desejos,Добавьте все в список желаний
 ship.blueprint.add.changed.to.wishlist,Add changed to wishlist,,,,,,
 ship.create.new.wishlist,Create new,Create new,Erstelle neu,Crear nuevo,Créer un nouveau,Crie um novo,Создать новый
+ship.module.buttons.label,Equipped module,,,,,,
+ship.module.restore,Restore,,,,,,
+ship.module.save,Save,,,,,,
+ship.module.clear,Clear,,,,,,

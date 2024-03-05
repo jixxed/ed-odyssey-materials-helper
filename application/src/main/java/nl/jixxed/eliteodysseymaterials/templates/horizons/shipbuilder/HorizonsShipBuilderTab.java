@@ -54,7 +54,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     }
 
     private void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.ships"));
+        this.textProperty().bind(LocaleService.getStringBinding("tabs.shipeditor"));
 
 
         controlsLayer = new ControlsLayer();

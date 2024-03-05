@@ -6,9 +6,6 @@ import javafx.scene.paint.Color;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
-import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
@@ -82,59 +79,26 @@ public class PowerBar extends VBox {
 
     }
 
-
     private Map<Integer, Double> calculateRetractedPower() {
-        Map<Integer, Double> powerValues = new HashMap<>(Map.of(
+        return getShip().map(Ship::getRetractedPower).orElseGet(() -> new HashMap<>(Map.of(
                 0, 0D,
                 1, 0D,
                 2, 0D,
                 3, 0D,
                 4, 0D,
                 5, 0D
-        ));
-
-        getShip().ifPresent(ship -> {
-            powerValues.put(0, (Double) ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
-            if (ship.getCargoHatch().isOccupied() && ship.getCargoHatch().getShipModule().isPowered()) {
-                powerValues.compute(ship.getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) ship.getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
-            }
-            ship.getUtilitySlots().stream()
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPassivePower())
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
-            ship.getOptionalSlots().stream()
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
-            ship.getCoreSlots().stream()
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
-        });
-        return powerValues;
+        )));
     }
 
     private Map<Integer, Double> calculateDeployedPower() {
-        Map<Integer, Double> powerValues = calculateRetractedPower();
-        getShip().ifPresent(ship -> {
-            ship.getHardpointSlots().stream()
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(
-                            slot.getShipModule().getPowerGroup(),
-                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
-                    ));
-            ship.getUtilitySlots().stream()
-                    .filter(Slot::isOccupied)
-                    .filter(slot -> !slot.getShipModule().isPassivePower())
-                    .forEach(slot -> powerValues.compute(
-                            slot.getShipModule().getPowerGroup(),
-                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
-                    ));
-        });
-
-        return powerValues;
+        return getShip().map(Ship::getDeployedPower).orElseGet(() -> new HashMap<>(Map.of(
+                0, 0D,
+                1, 0D,
+                2, 0D,
+                3, 0D,
+                4, 0D,
+                5, 0D
+        )));
     }
 
     public Optional<Ship> getShip() {

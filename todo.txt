@@ -40,6 +40,7 @@ good test with different module types
 cover all pre-engineered cases (acquire more cases later)
 
 wishlist:
-ability to mark what should go to wishlist x partially
+ability to mark what should go to wishlist x
+show erroring modules x
 show unavailable upgrades
-send to wishlist
+send to wishlist x

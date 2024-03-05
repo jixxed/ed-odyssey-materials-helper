@@ -286,7 +286,7 @@ public class HullReinforcementBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.0, 0.04)),
-                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
+                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+8%", true, hullBoostPositive(0.0, 0.08)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("-8%", true, percentageNegative(0.0, 0.08))
                             ),
                             List.of(
@@ -302,7 +302,7 @@ public class HullReinforcementBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.04, 0.08)),
-                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.08, 0.12)),
+                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+12%", true, hullBoostPositive(0.08, 0.12)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("-12%", true, percentageNegative(0.08, 0.12))
                             ),
                             List.of(
@@ -318,7 +318,7 @@ public class HullReinforcementBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-12%", false, percentageNegative(0.08, 0.12)),
-                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+16%", true, percentagePositive(0.12, 0.16)),
+                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+16%", true, hullBoostPositive(0.12, 0.16)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("-16%", true, percentageNegative(0.12, 0.16))
                             ),
                             List.of(
@@ -334,7 +334,7 @@ public class HullReinforcementBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-16%", false, percentageNegative(0.12, 0.16)),
-                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.16, 0.2)),
+                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+20%", true, hullBoostPositive(0.16, 0.2)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.16, 0.2))
                             ),
                             List.of(
@@ -350,7 +350,7 @@ public class HullReinforcementBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.HULL_REINFORCEMENT, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.16, 0.2)),
-                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.2, 0.24)),
+                                    HorizonsModifier.HULL_BOOST, new HorizonsNumberModifierValue("+24%", true, hullBoostPositive(0.2, 0.24)),
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("-24%", true, percentageNegative(0.2, 0.24))
                             ),
                             List.of(

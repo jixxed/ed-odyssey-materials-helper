@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -18,9 +19,13 @@ public class Modification implements Serializable {
     private BigDecimal modificationCompleteness;
     private HorizonsBlueprintGrade grade;
 
-    public Modification(HorizonsBlueprintType modification, double modificationCompleteness, HorizonsBlueprintGrade grade) {
+    public Modification(HorizonsBlueprintType modification, Double modificationCompleteness, HorizonsBlueprintGrade grade) {
         this.modification = modification;
-        this.modificationCompleteness = BigDecimal.valueOf(modificationCompleteness);
+        this.modificationCompleteness = modificationCompleteness != null ? BigDecimal.valueOf(modificationCompleteness) : null;
         this.grade = grade;
+    }
+
+    public Optional<BigDecimal> getModificationCompleteness() {
+        return Optional.ofNullable(modificationCompleteness);
     }
 }

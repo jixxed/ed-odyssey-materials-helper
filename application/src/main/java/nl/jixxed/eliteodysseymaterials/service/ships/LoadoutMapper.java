@@ -119,6 +119,9 @@ public class LoadoutMapper {
         HorizonsBlueprintType blueprint = determineBlueprint(engineering);
         HorizonsBlueprintGrade grade = determineGrade(engineering);
         BigDecimal progression = determineGradeProgress(engineering);
+        if(progression == null){
+            return false;
+        }
         HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
         return potentialShipModules.stream().map(ShipModule::Clone).filter(shipModule -> {
             if (shipModule.getModifications().isEmpty()) {

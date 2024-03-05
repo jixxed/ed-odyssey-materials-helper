@@ -254,7 +254,7 @@ public class ModuleDetails extends VBox implements Template {
 
     private static void addTooltip(HorizonsModifier horizonsModifier, ShipModule shipModule, Object minValue, Object maxValue, Object estimatedValue, String actualValueLine, VBox attribute) {
         final Tooltip tooltip = TooltipBuilder.builder().withShowDelay(Duration.ZERO).withNonLocalizedText("MIN: " + horizonsModifier.format(minValue) + "\n" +
-                "EST: " + horizonsModifier.format(estimatedValue) + " @ " + NUMBER_FORMAT_2.format(shipModule.getModifications().getFirst().getModificationCompleteness().multiply( BigDecimal.valueOf(100)) ) + "%\n" +
+                "EST: " + horizonsModifier.format(estimatedValue) + " @ " + NUMBER_FORMAT_2.format(shipModule.getModifications().getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO).multiply( BigDecimal.valueOf(100)) ) + "%\n" +
                 actualValueLine +
                 "MAX: " + horizonsModifier.format(maxValue)).build();
         Tooltip.install(attribute, tooltip);

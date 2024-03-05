@@ -105,6 +105,7 @@ public class ApplicationState {
 
     @Getter
     private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);
+
     private ApplicationState() {
 
         this.eventListeners.add(EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken()))));
@@ -231,6 +232,7 @@ public class ApplicationState {
                 PreferencesService.setPreference(PreferenceConstants.COMMANDER, name + ":" + fid + ":" + gameVersion.name());
             }
             EventService.publish(new CommanderAddedEvent(commander));
+//            Platform.runLater(() -> EventService.publish(new CommanderAddedEvent(commander)));
         }
     }
 
@@ -326,13 +328,15 @@ public class ApplicationState {
         this.flags2 = flags2;
     }
 
-    public boolean playerInShip(){
+    public boolean playerInShip() {
         return (this.flags & 16777216) > 0;
     }
-    public boolean playerInSrv(){
+
+    public boolean playerInSrv() {
         return (this.flags & 67108864) > 0;
     }
-    public boolean playerOnFoot(){
+
+    public boolean playerOnFoot() {
         return (this.flags2 & 1) > 0;
     }
 

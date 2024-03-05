@@ -3120,9 +3120,12 @@
 
 }
 .shipbuilder-slots-slotbox-icon{
-    /*-fx-max-width: 1.5em;*/
+    -fx-max-width: 1.5em;
     -fx-max-height: 1.5em;
     -fx-padding: 0em 0.2em 0em 0em;
+}
+.shipbuilder-slots-slotbox-icon-wide{
+    -fx-max-width: 1.875em;
 }
 .shipbuilder-slots-slotbox-icons{
     -fx-min-height: 1.4em;
@@ -3242,15 +3245,18 @@
     -fx-skin: "nl.jixxed.eliteodysseymaterials.templates.components.slider.SliderPopupSkin";
 }
 .range-indicator{
+    -fx-min-height: 3em;
     -fx-min-width: 15em;
     -fx-max-width: 15em;
 }
 .range-indicator-line{
+    -fx-min-height: 1em;
     -fx-max-width: 15em;
     -fx-stroke: white;
     -fx-stroke-width: 0.1em;
 }
 .range-indicator-line-current{
+    -fx-min-height: 1em;
     -fx-stroke: #2e92df;
     -fx-stroke-width: 0.2em;
 }
@@ -3498,4 +3504,15 @@
 
 .ships-wishlist-create-new {
     -fx-font-style: italic;
+}
+.module-button-overload{
+    -fx-border-color: #ff7c7c;
+}
+.equipped-module-box{
+    -fx-background-color: #0f0f0f;
+}
+.ships-modules-buttons-label{
+    -fx-alignment: center-left;
+    -fx-min-height: 2.2em;
+    -fx-max-height: 2.2em;
 }

@@ -99,9 +99,11 @@ public abstract class ShipModule implements Serializable {
         this.multiCrew = shipModule.multiCrew;
         this.basePrice = shipModule.basePrice;
         this.internalName = shipModule.internalName;
-        this.modifications.addAll(shipModule.modifications.stream().map(modification -> new Modification(modification.getModification(), modification.getModificationCompleteness(), modification.getGrade())).toList());
+        this.modifications.addAll(shipModule.modifications.stream().map(modification -> new Modification(modification.getModification(), modification.getModificationCompleteness().orElse(null), modification.getGrade())).toList());
         this.experimentalEffects.addAll(shipModule.experimentalEffects);
         this.attributes.putAll(shipModule.attributes);
+        this.modifiers.putAll(shipModule.modifiers);
+        this.legacy = shipModule.legacy;
         this.powerGroup = shipModule.powerGroup;
         this.powered = shipModule.powered;
         this.powerToggle = shipModule.powerToggle;
@@ -116,7 +118,7 @@ public abstract class ShipModule implements Serializable {
     }
 
     public static ShipModule getModule(String id) {
-      return SHIP_MODULES.stream().filter(module->module.getId().equals(id)).findFirst().orElseThrow(IllegalAccessError::new);
+      return SHIP_MODULES.stream().filter(module->module.getId().equals(id)).findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
     public void applyModification(final HorizonsBlueprintType modification, final HorizonsBlueprintGrade grade, final BigDecimal modificationCompleteness) {
@@ -189,7 +191,7 @@ public abstract class ShipModule implements Serializable {
                 final HorizonsBlueprint moduleBlueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(this.name.getPrimary(), modifications.getFirst().getModification(), modifications.getFirst().getGrade());
                 final var horizonsModifierValue = moduleBlueprint.getModifiers().get(moduleAttribute);
                 if (horizonsModifierValue != null && horizonsModifierValue.isPositive()) {
-                    return modifications.getFirst().getModificationCompleteness();
+                    return modifications.getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO);
                 } else {
                     return BigDecimal.ONE;
                 }
@@ -201,11 +203,8 @@ public abstract class ShipModule implements Serializable {
         if (!this.attributes.containsKey(moduleAttribute)) {
             throw new IllegalArgumentException("Unknown Module Attribute: " + moduleAttribute + " for module: " + this.name);
         }
-        if (modifiers.containsKey(moduleAttribute) && completeness == null) {
+        if (modifiers.containsKey(moduleAttribute) && (completeness == null || isLegacy())) {
             return modifiers.get(moduleAttribute);
-        }
-        if (isLegacy()) {
-            return attributes.get(moduleAttribute);
         }
         final Object baseAttributeValue = this.attributes.get(moduleAttribute);
         if (baseAttributeValue instanceof Double) {
@@ -231,7 +230,7 @@ public abstract class ShipModule implements Serializable {
                 final HorizonsBiFunction current = moduleModifier.get();
                 if (current == null) {
                     positive.set(horizonsModifierValue.isPositive());
-                    modificationCompleteness.set(completeness != null ? completeness : modification.getModificationCompleteness().doubleValue());
+                    modificationCompleteness.set(completeness != null ? completeness : modification.getModificationCompleteness().orElse(BigDecimal.ZERO).doubleValue());
                     moduleModifier.set(horizonsModifierValue.getModifier());
                 } else {
                     moduleModifier.set(current.stack(horizonsModifierValue.getModifier()));

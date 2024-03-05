@@ -36,8 +36,10 @@ public class HorizonsBiFunction<T> {
         return switch (calculationType) {
             case FALLOFF_PERCENTAGE_POSITIVE ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (base + value) * ((1D + start) + (Math.abs(end - start) * percent));
-            case HULL_BOOST -> //value = ((1 + (value / attribute.modmod)) * (1 + modifier) - 1) * attribute.modmod;
+            case HULL_BOOST_POSITIVE, SHIELD_BOOST_POSITIVE ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (1 + base) * ((1D + start) + (Math.abs(end - start) * percent)) - 1;
+            case HULL_BOOST_NEGATIVE, SHIELD_BOOST_NEGATIVE ->
+                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> (1 + base) * ((1D - start) - (Math.abs(end - start) * percent)) - 1;
             case RESISTANCE_NEGATIVE ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> 1 - ((1 - base) * ((1D + start) + (Math.abs(end - start) * percent)));
             case RESISTANCE_POSITIVE ->
@@ -74,6 +76,6 @@ public class HorizonsBiFunction<T> {
     }
 
     public enum CalculationType {
-        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, BOOL, FALLOFF_PERCENTAGE_POSITIVE, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST
+        PERCENTAGE_POSITIVE, PERCENTAGE_NEGATIVE, PLUS, MINUS, BOOL, FALLOFF_PERCENTAGE_POSITIVE, RESISTANCE_NEGATIVE, RESISTANCE_POSITIVE, HULL_BOOST_POSITIVE, HULL_BOOST_NEGATIVE, SHIELD_BOOST_POSITIVE, SHIELD_BOOST_NEGATIVE
     }
 }

@@ -59,10 +59,10 @@ public class ApplicationLayout extends AnchorPane {
         this.odysseyContentArea = new OdysseyContentArea(application);
         this.horizonsContentArea = new HorizonsContentArea(application);
         this.odyssey = new Tab();
-        this.odyssey.textProperty().bind(LocaleService.getStringBinding("tabs.odyssey"));
+        this.odyssey.textProperty().bind(LocaleService.getStringBinding("tabs.onfoot"));
         this.odyssey.setClosable(false);
         this.horizons = new Tab();
-        this.horizons.textProperty().bind(LocaleService.getStringBinding("tabs.horizons"));
+        this.horizons.textProperty().bind(LocaleService.getStringBinding("tabs.ships"));
         this.horizons.setClosable(false);
         this.tabsMain = new TabPane(this.odyssey, this.horizons, this.settingsTab);
         this.tabsMain.getStyleClass().add("tab-main");

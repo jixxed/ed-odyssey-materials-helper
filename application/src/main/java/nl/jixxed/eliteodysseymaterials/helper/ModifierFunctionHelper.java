@@ -26,11 +26,17 @@ public class ModifierFunctionHelper {
     public static HorizonsBiFunction<Double> percentagePositive(final Double start, final Double end) {
         return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.PERCENTAGE_POSITIVE);
     }
-    public static HorizonsBiFunction<Double> hullBoost(final Double start, final Double end) {
-        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.HULL_BOOST);
+    public static HorizonsBiFunction<Double> hullBoostPositive(final Double start, final Double end) {
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.HULL_BOOST_POSITIVE);
     }
-    public static HorizonsBiFunction<Double> shieldBoost(final Double start, final Double end) {
-        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.HULL_BOOST);
+    public static HorizonsBiFunction<Double> hullBoostNegative(final Double start, final Double end) {
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.HULL_BOOST_NEGATIVE);
+    }
+    public static HorizonsBiFunction<Double> shieldBoostPositive(final Double start, final Double end) {
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.SHIELD_BOOST_POSITIVE);
+    }
+    public static HorizonsBiFunction<Double> shieldBoostNegative(final Double start, final Double end) {
+        return new HorizonsBiFunction<>(start, end, HorizonsBiFunction.CalculationType.SHIELD_BOOST_NEGATIVE);
     }
     /**
      * Calculation based on a range. A percentage will be provided that determines the position between start and end.

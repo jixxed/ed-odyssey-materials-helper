@@ -177,13 +177,15 @@ public class ControlsLayer extends AnchorPane implements Template {
                 Map.of(
                         "tab.ships.rename", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
                         "tab.ships.copy", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
-                        "tab.ships.delete", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT)
+                        "tab.ships.delete", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
+                        "tab.ships.reset", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT)
                 )).build();
         this.menuButton.setFocusTraversable(false);
         final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
         applyFontSizingHack(fontSize);
         this.addAllToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.blueprint.add.all.to.wishlist")).build();
         this.addChangedToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.blueprint.add.changed.to.wishlist")).build();
+        this.addChangedToWishlist.disableProperty().bind(this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT));
         final HBox hBoxShips = BoxBuilder.builder().withStyleClass("shipbuilder-controls-box").withNodes(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist).buildHBox();
         hBoxShips.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.getChildren().add(hBoxShips);

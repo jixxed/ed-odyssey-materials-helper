@@ -86,7 +86,7 @@ public class ArmourBlueprints {
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, resistancePositive(0.0, 0.01)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, resistancePositive(0.0, 0.01)),
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+1%", true, resistancePositive(0.0, 0.01)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("+12%", true, hullBoost(0.0, 0.12)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("+12%", true, hullBoostPositive(0.0, 0.12)),
                                     MASS, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.0, 0.10))
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.SELENE_JEAN, Engineer.PETRA_OLMANOVA)),
@@ -99,7 +99,7 @@ public class ArmourBlueprints {
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.01, 0.02)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.01, 0.02)),
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+2%", true, resistancePositive(0.01, 0.02)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("+17%", true, hullBoost(0.12, 0.17)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("+17%", true, hullBoostPositive(0.12, 0.17)),
                                     MASS, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.10, 0.15))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
@@ -113,7 +113,7 @@ public class ArmourBlueprints {
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.02, 0.03)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.02, 0.03)),
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.02, 0.03)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("+22%", true, hullBoost(0.17, 0.22)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("+22%", true, hullBoostPositive(0.17, 0.22)),
                                     MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.20))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
@@ -127,7 +127,7 @@ public class ArmourBlueprints {
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+4%", true, resistancePositive(0.03, 0.04)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+4%", true, resistancePositive(0.03, 0.04)),
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+4%", true, resistancePositive(0.03, 0.04)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("+27%", true, hullBoost(0.22, 0.27)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("+27%", true, hullBoostPositive(0.22, 0.27)),
                                     MASS, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.20, 0.25))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
@@ -141,7 +141,7 @@ public class ArmourBlueprints {
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, resistancePositive(0.04, 0.05)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, resistancePositive(0.04, 0.05)),
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+5%", true, resistancePositive(0.04, 0.05)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("+32%", true, hullBoost(0.27, 0.32)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("+32%", true, hullBoostPositive(0.27, 0.32)),
                                     MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.30))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN))
@@ -216,7 +216,7 @@ public class ArmourBlueprints {
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+3%", true, resistancePositive(0.0, 0.03)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("-1%", false, hullBoostNegative(0.0, 0.01)),
                                     MASS, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.0, 0.15))
                             ),
                             List.of(Engineer.LIZ_RYDER, Engineer.SELENE_JEAN, Engineer.PETRA_OLMANOVA)),
@@ -229,7 +229,7 @@ public class ArmourBlueprints {
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, resistancePositive(0.03, 0.06)),
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, resistancePositive(0.03, 0.06)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+6%", true, resistancePositive(0.03, 0.06)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.01, 0.02)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("-2%", false, hullBoostNegative(0.01, 0.02)),
                                     MASS, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
@@ -243,7 +243,7 @@ public class ArmourBlueprints {
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, resistancePositive(0.06, 0.09)),
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, resistancePositive(0.06, 0.09)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+9%", true, resistancePositive(0.06, 0.09)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.02, 0.03)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("-3%", false, hullBoostNegative(0.02, 0.03)),
                                     MASS, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
@@ -257,7 +257,7 @@ public class ArmourBlueprints {
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.09, 0.12)),
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.09, 0.12)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+12%", true, resistancePositive(0.09, 0.12)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.03, 0.04)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("-4%", false, hullBoostNegative(0.03, 0.04)),
                                     MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN)),
@@ -271,7 +271,7 @@ public class ArmourBlueprints {
                                     EXPLOSIVE_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, resistancePositive(0.12, 0.15)),
                                     THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, resistancePositive(0.12, 0.15)),
                                     KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+15%", true, resistancePositive(0.12, 0.15)),
-                                    HULL_BOOST, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.04, 0.05)),
+                                    HULL_BOOST, new HorizonsNumberModifierValue("-5%", false, hullBoostNegative(0.04, 0.05)),
                                     MASS, new HorizonsNumberModifierValue("-55%", true, percentageNegative(0.45, 0.55))
                             ),
                             List.of(Engineer.PETRA_OLMANOVA, Engineer.SELENE_JEAN))

@@ -2886,5 +2886,61 @@ public class Ship {
     public void setCurrentCargo(double currentCargo) {
         this.currentCargo = Math.min(currentCargo,getMaxCargo() + getMaxPassenger());
     }
+    public Map<Integer, Double> getRetractedPower() {
+        Map<Integer, Double> powerValues = new HashMap<>(Map.of(
+                0, 0D,
+                1, 0D,
+                2, 0D,
+                3, 0D,
+                4, 0D,
+                5, 0D
+        ));
 
+
+            powerValues.put(0, (Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
+            if(getCargoHatch().isOccupied() && getCargoHatch().getShipModule().isPowered()){
+                powerValues.compute(getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+            }
+            getUtilitySlots().stream()
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPassivePower())
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+            getOptionalSlots().stream()
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+            getCoreSlots().stream()
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+
+        return powerValues;
+    }
+
+    public Map<Integer, Double> getDeployedPower() {
+        Map<Integer, Double> powerValues = getRetractedPower();
+
+            getHardpointSlots().stream()
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> slot.getShipModule().isPowered())
+                    .forEach(slot -> powerValues.compute(
+                            slot.getShipModule().getPowerGroup(),
+                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
+                    ));
+            getUtilitySlots().stream()
+                    .filter(Slot::isOccupied)
+                    .filter(slot -> !slot.getShipModule().isPassivePower())
+                    .forEach(slot -> powerValues.compute(
+                            slot.getShipModule().getPowerGroup(),
+                            (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
+                    ));
+
+
+        return powerValues;
+    }
+
+    public double getMaximumMass() {
+        return getEmptyMass() + getMaxCargo() + getMaxFuel();
+    }
 }

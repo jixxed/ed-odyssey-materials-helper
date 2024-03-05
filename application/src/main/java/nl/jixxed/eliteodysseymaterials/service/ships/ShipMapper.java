@@ -7,7 +7,10 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 
+import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ShipMapper {
     public static ShipConfiguration toShipConfiguration(Ship ship, ShipConfiguration shipConfiguration, String name) {
@@ -120,6 +123,17 @@ public class ShipMapper {
             shipConfigurationSlot.getOldModule().getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
                 shipModule.getExperimentalEffects().add(shipConfigurationExperimentalEffect.getType());
             });
+            shipConfigurationSlot.getOldModule().getModifiers().forEach((modifier, value) -> {
+                shipModule.getModifiers().put(modifier,value);
+            });
+            shipModule.setLegacy(Boolean.TRUE.equals(shipConfigurationSlot.getOldModule().getLegacy()));
+            final Integer powerGroup = shipConfigurationSlot.getOldModule().getPowerGroup();
+            if (powerGroup != null) {
+                shipModule.setPowerGroup(powerGroup);
+            }
+            if (Boolean.FALSE.equals(shipConfigurationSlot.getOldModule().getPowered())) {
+                shipModule.togglePower();
+            }
             slot.setOldShipModule(shipModule);
         }, () -> slot.setOldShipModule(null));
     }
@@ -128,7 +142,7 @@ public class ShipMapper {
         shipConfigurationSlot.setIndex(slot.getIndex());
         Optional.ofNullable(slot.getShipModule()).ifPresent(shipModule -> {
             shipConfigurationSlot.setId(shipModule.getId());
-            shipConfigurationSlot.setModification(shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness())).toList());
+            shipConfigurationSlot.setModification(shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO))).toList());
             shipConfigurationSlot.setExperimentalEffect(shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList());
             if (shipModule.isLegacy()) {
                 shipConfigurationSlot.setLegacy(true);
@@ -143,9 +157,13 @@ public class ShipMapper {
         });
         Optional.ofNullable(slot.getOldShipModule()).ifPresentOrElse(shipModule -> {
             var id = shipModule.getId();
-            var modifications = shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness())).toList();
+            var modifications = shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO))).toList();
             var effects = shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList();
-            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, modifications, effects));
+            var legacy = shipModule.isLegacy();
+            var powered = shipModule.isPowered();
+            var powerGroup = shipModule.getPowerGroup();
+            var modifiers = shipModule.getModifiers().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, legacy,powered,powerGroup, modifiers, modifications, effects));
         }, () -> shipConfigurationSlot.setOldModule(null));
     }
 }

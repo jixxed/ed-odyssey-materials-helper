@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -53,6 +54,10 @@ public class ShipConfigurationSlot {
         if(this.oldModule != null) {
             clone.oldModule = new ShipConfigurationOldModule(
                     this.oldModule.getId(),
+                    this.oldModule.getLegacy(),
+                    this.oldModule.getPowered(),
+                    this.oldModule.getPowerGroup(),
+                    this.oldModule.getModifiers().entrySet().stream().collect(Collectors.toMap(Map.Entry<HorizonsModifier,Object>::getKey, Map.Entry<HorizonsModifier,Object>::getValue)),
                     this.oldModule.getModification().stream().map(mod -> new ShipConfigurationModification(mod.getType(), mod.getGrade(), mod.getPercentComplete())).toList(),
                     this.oldModule.getExperimentalEffect().stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList()
             );

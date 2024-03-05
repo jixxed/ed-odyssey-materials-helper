@@ -107,7 +107,7 @@ public class ShieldBoosterBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.0, 1.0)),
-                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+10%", true, shieldBoost(0.0, 0.1)),
+                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+10%", true, shieldBoostPositive(0.0, 0.1)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.0, 0.05)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+3%", true, percentagePositive(0.0, 0.03))
                             ),
@@ -125,7 +125,7 @@ public class ShieldBoosterBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+150%", false, percentagePositive(1.0, 1.5)),
-                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+17%", true, shieldBoost(0.1, 0.17)),
+                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+17%", true, shieldBoostPositive(0.1, 0.17)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+10%", false, percentagePositive(0.05, 0.1)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.03, 0.06))
                             ),
@@ -143,7 +143,7 @@ public class ShieldBoosterBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+200%", false, percentagePositive(1.5, 2.0)),
-                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+24%", true, shieldBoost(0.17, 0.24)),
+                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+24%", true, shieldBoostPositive(0.17, 0.24)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.1, 0.15)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+9%", true, percentagePositive(0.06, 0.09))
                             ),
@@ -161,7 +161,7 @@ public class ShieldBoosterBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+250%", false, percentagePositive(2.0, 2.5)),
-                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+31%", true, shieldBoost(0.24, 0.31)),
+                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+31%", true, shieldBoostPositive(0.24, 0.31)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.2)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.09, 0.12))
                             ),
@@ -178,7 +178,7 @@ public class ShieldBoosterBlueprints {
                             ),
                             Map.of(
                                     HorizonsModifier.MASS, new HorizonsNumberModifierValue("+300%", false, percentagePositive(2.5, 3.0)),
-                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+38%", true, shieldBoost(0.31, 0.38)),
+                                    HorizonsModifier.SHIELD_BOOST, new HorizonsNumberModifierValue("+38%", true, shieldBoostPositive(0.31, 0.38)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.2, 0.25)),
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+15%", true, percentagePositive(0.12, 0.15))
                             ),

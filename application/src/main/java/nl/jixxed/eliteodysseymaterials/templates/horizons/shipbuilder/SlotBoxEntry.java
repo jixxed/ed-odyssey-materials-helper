@@ -15,6 +15,11 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.Mounting;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Armour;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerDistributor;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.Thrusters;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
@@ -22,15 +27,13 @@ import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
 public class SlotBoxEntry extends VBox {
+    private static final double BOOST_MARGIN = 0.005;
     Label name;
     List<HBox> options;
     private ModulesLayer modulesLayer;
@@ -106,6 +109,36 @@ public class SlotBoxEntry extends VBox {
 //                                    HBox.setHgrow(button, Priority.ALWAYS);
                                             button.setFocusTraversable(false);
                                             button.setDisable(slotBox.getSlot().getSlotSize() < shipModule.getModuleSize().intValue());
+                                            if(shipModule instanceof ShieldGenerator){
+                                                double maxMass = ApplicationState.getInstance().getShip().getMaximumMass();
+                                                final double maxMassForModule = (double)shipModule.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS);
+                                                if(maxMass > maxMassForModule) {
+                                                    button.getStyleClass().add("module-button-overload");
+                                                }
+                                            }
+                                            if(shipModule instanceof Thrusters) {
+                                                double maxMass = ApplicationState.getInstance().getShip().getMaximumMass();
+                                                final double maxMassForModule = (double)shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MASS);
+                                                if(maxMass > maxMassForModule) {
+                                                    button.getStyleClass().add("module-button-overload");
+                                                }
+                                            }
+                                            if(shipModule instanceof PowerPlant) {
+                                                final Map<Integer, Double> power = ApplicationState.getInstance().getShip().getRetractedPower();
+                                                double usedPower = power.get(1) + power.get(2) + power.get(3) + power.get(4) + power.get(5);
+                                                final double available = (double)shipModule.getAttributeValue(HorizonsModifier.POWER_CAPACITY) - usedPower;
+                                                if(available < 0D) {
+                                                    button.getStyleClass().add("module-button-overload");
+                                                }
+                                            }
+                                            if(shipModule instanceof PowerDistributor) {
+                                                final double engineCapacity = (double) shipModule.getAttributeValue(HorizonsModifier.ENGINES_CAPACITY);
+                                                final double boostCost = (double) ApplicationState.getInstance().getShip().getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D);
+                                                final boolean engineCapacityEnough = engineCapacity > boostCost + BOOST_MARGIN;
+                                                if(!engineCapacityEnough) {
+                                                    button.getStyleClass().add("module-button-overload");
+                                                }
+                                            }
                                             return button;
                                         }
                                 ).toArray(ShipModuleButton[]::new)
