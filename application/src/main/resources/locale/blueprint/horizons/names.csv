@@ -196,24 +196,24 @@ blueprint.horizons.name.shield_generator_pre,Shield Generator,Shield Generator,,
 blueprint.horizons.name.shock_cannon,Shock Cannon,Shock Cannon,,,,,
 blueprint.horizons.name.shock_cannon_munitions,Shock Cannon Munitions,Shock Cannon Munitions,Schockkanonenmunition,Municiones de cañón de choque,Choc des munitions de canon,Munições de canhão de choque,Шоковые боеприпасы
 blueprint.horizons.name.shock_mine_launcher,Shock Mine Launcher,Shock Mine Launcher,,,,,
-blueprint.horizons.name.shock_mine_launcher.short,Shock,,,,,
+blueprint.horizons.name.shock_mine_launcher.short,Shock,Shock,,,,,
 blueprint.horizons.name.shutdown_field_neutraliser,Shutdown Field Neutraliser,Shutdown Field Neutraliser,,,,,
 blueprint.horizons.name.small_calibre_munitions,Small Calibre Munitions,Small Calibre Munitions,Kleinkalibrige Munition,Municiones de calibre pequeño,Munitions de petit calibre,Pequenas munições de calibre,Мелкокалиберные боеприпасы
 blueprint.horizons.name.srv_ammo_restock,SRV Ammo Restock,SRV Ammo Restock,SRV Munitionsnachladung,Reabastecimiento de munición SRV,Répondment des munitions SRV,SRV Munção Restoque,Боеприпасы для ТРП
 blueprint.horizons.name.srv_refuel,SRV Refuel,SRV Refuel,SRV-Auftankung,Srv reabastecimiento de combustible,SRV Refuel,SRV Reabelado,Заправка ТРП
 blueprint.horizons.name.srv_repair,SRV Repair,SRV Repair,SRV-Reparaturen,Reparación de SRV,Réparation SRV,Reparo SRV,Ремонт ТРП
-blueprint.horizons.name.standard_docking_computer,Standard Docking Computer,,,,,,
+blueprint.horizons.name.standard_docking_computer,Standard Docking Computer,Standard Docking Computer,,,,,
 blueprint.horizons.name.sub_surface_displacement_missile,Sub Surface Displacement Missile,Sub Surface Displacement Missile,,,,,
 blueprint.horizons.name.sub_surface_displacement_munitions,Sub-surface Displacement Munitions,Sub Surface Displacement Munitions,Untergrund-Verdrängungsmunition,Municiones de desplazamiento de la superficie subterránea,Munitions de déplacement sous surface,Munições de deslocamento de superfície,Вытесняющие боеприпасы для добычи глубинных залежей
 blueprint.horizons.name.sub_surface_extraction_missile,Sub Surface Extraction Missile,Sub Surface Extraction Missile,,,,,
-blueprint.horizons.name.supercruise_assist,Supercruise Assist,,,,,,
+blueprint.horizons.name.supercruise_assist,Supercruise Assist,Supercruise Assist,,,,,
 blueprint.horizons.name.thargoid_pulse_neutraliser,Thargoid Pulse Neutraliser,Thargoid Pulse Neutraliser,,,,,
 blueprint.horizons.name.thrusters,Thrusters,Thrusters,Triebwerke,Propulsores,Propulseurs,Propulsores,Маневровые двигатели
 blueprint.horizons.name.torpedo_pylon,Torpedo Pylon,Torpedo Pylon,Torpedo Pylon,Pilón de torpedo,Pylône de torpille,Pilão de torpedo,Торпедная установка
 blueprint.horizons.name.universal_multi_limpet_controller,Universal Multi Limpet Controller,Universal Multi Limpet Controller,,,,,
-blueprint.horizons.name.universal_multi_limpet_controller.short,Universal,,,,,,
+blueprint.horizons.name.universal_multi_limpet_controller.short,Universal,Universal,,,,,
 blueprint.horizons.name.xeno_limpet_controller,Xeno Limpet Controller,Xeno Limpet Controller,,,,,
-blueprint.horizons.name.xeno_limpet_controller.short,Xeno,,,,,,
+blueprint.horizons.name.xeno_limpet_controller.short,Xeno,Xeno,,,,,
 blueprint.horizons.name.xeno_scanner,Xeno Scanner,Xeno Scanner,,,,,
 blueprint.horizons.name.cargo_hatch,Cargo Hatch,Cargo Hatch,,,,,
-blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,,,,,,
+blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,Guardian Nanite Munitions,,,,,
