@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -42,5 +43,10 @@ public abstract class HardpointModule extends ExternalModule {
                 )
                 .sorted(Comparator.comparing(ExternalModule::getMounting).reversed())
                 .findFirst();
+    }
+
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name() + "-" + getMounting().getShortName();
     }
 }

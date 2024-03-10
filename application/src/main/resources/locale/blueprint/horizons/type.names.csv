@@ -188,3 +188,4 @@ blueprint.horizons.type.overcharged_weapon_auto_loader,"Overcharged, Auto Loader
 blueprint.horizons.type.overcharged_weapon_focused_weapon,"Overcharged Weapon, Focused Weapon","Overcharged Weapon, Focused Weapon",,,,,
 blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,,,,
 blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"Thermal Resistant, Kinetic Resistant","Thermal Resistant, Kinetic Resistant",,,,,
+blueprint.horizons.type.none,None,None,,,,,

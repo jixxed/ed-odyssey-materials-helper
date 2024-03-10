@@ -2,13 +2,11 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Getter
-@ToString
 public enum HorizonsBlueprintGrade {
     GRADE_1(1, 2),
     GRADE_2(2, 4),
@@ -23,5 +21,10 @@ public enum HorizonsBlueprintGrade {
         return forDigit(Integer.parseInt(digit));
     } public static HorizonsBlueprintGrade forDigit(final int digit) {
         return Arrays.stream(HorizonsBlueprintGrade.values()).filter(grade -> grade.grade == digit).findFirst().orElse(null);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(grade);
     }
 }

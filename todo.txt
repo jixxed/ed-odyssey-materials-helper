@@ -4,8 +4,8 @@ legacy:
 storing/loading/persisting legacy attributes to list x
 show legacy indicator on module x
 no modding of legacy modules x
-storing/loading of legacy modules  v2
-show legacy modules in module selector  v2
+storing/loading of legacy modules  x
+show legacy modules in module selector  x
 
 grade:
 grade selection and progression for modules x

@@ -6,7 +6,7 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsExperimentalEffectBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
@@ -24,7 +24,7 @@ public class ModuleAttributesTest {
 
     @Test
     void testBlueprintsAttributePresence(){
-        Assertions.assertAll( Ship.getALL_MODULES().stream().flatMap(Collection::stream).map(shipModule -> () -> {
+        Assertions.assertAll( ShipModule.ALL_MODULES.stream().flatMap(Collection::stream).map(shipModule -> () -> {
                     final Set<HorizonsModifier> shipModuleAttibutes = shipModule.getAttibutes();
                     Assertions.assertAll(
                             shipModule.getAllowedBlueprints().stream()
@@ -41,7 +41,7 @@ public class ModuleAttributesTest {
     }
     @Test
     void testExperimentalEffectsAttributePresence(){
-        Assertions.assertAll( Ship.getALL_MODULES().stream().flatMap(Collection::stream).map(shipModule -> () -> {
+        Assertions.assertAll( ShipModule.ALL_MODULES.stream().flatMap(Collection::stream).map(shipModule -> () -> {
                     final Set<HorizonsModifier> shipModuleAttibutes = shipModule.getAttibutes();
                     Assertions.assertAll(
                             shipModule.getAllowedExperimentalEffects().stream()

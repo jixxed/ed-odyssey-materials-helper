@@ -8,6 +8,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
@@ -29,6 +30,7 @@ import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import org.controlsfx.control.PopOver;
 
 import java.math.BigDecimal;
@@ -46,6 +48,7 @@ public class ControlsLayer extends AnchorPane implements Template {
     private String activeShipUUID;
     private DestroyableMenuButton addAllToWishlist;
     private DestroyableMenuButton addChangedToWishlist;
+    private DestroyableResizableImageView shipsHelp;
 
     public ControlsLayer() {
         initComponents();
@@ -186,7 +189,38 @@ public class ControlsLayer extends AnchorPane implements Template {
         this.addAllToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.blueprint.add.all.to.wishlist")).build();
         this.addChangedToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.blueprint.add.changed.to.wishlist")).build();
         this.addChangedToWishlist.disableProperty().bind(this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT));
-        final HBox hBoxShips = BoxBuilder.builder().withStyleClass("shipbuilder-controls-box").withNodes(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist).buildHBox();
+
+        HBox dragDropHint = BoxBuilder.builder().withNodes(
+                LabelBuilder.builder().withStyleClasses("ship-hint-yellow", "ship-hint-box").withText(LocaleService.getStringBinding("tab.ships.dragdrop.hint")).build(),
+                LabelBuilder.builder().withStyleClasses("ship-hint-white", "ship-hint-explain").withText(LocaleService.getStringBinding("tab.ships.dragdrop.hint.explain")).build()
+        ).buildHBox();
+        HBox lockModeHint = BoxBuilder.builder().withNodes(
+                LabelBuilder.builder().withStyleClasses("ship-hint-yellow", "ship-hint-box").withText(LocaleService.getStringBinding("tab.ships.lockmode.hint")).build(),
+                LabelBuilder.builder().withStyleClasses("ship-hint-white", "ship-hint-explain").withText(LocaleService.getStringBinding("tab.ships.lockmode.hint.explain")).build()
+        ).buildHBox();
+        HBox legacyHint = BoxBuilder.builder().withNodes(
+                LabelBuilder.builder().withStyleClasses("ship-hint-yellow", "ship-hint-box").withText(LocaleService.getStringBinding("tab.ships.legacy.hint")).build(),
+                LabelBuilder.builder().withStyleClasses("ship-hint-white", "ship-hint-explain").withText(LocaleService.getStringBinding("tab.ships.legacy.hint.explain")).build()
+        ).buildHBox();
+        HBox liveModeHint = BoxBuilder.builder().withNodes(
+                LabelBuilder.builder().withStyleClasses("ship-hint-yellow", "ship-hint-box").withText(LocaleService.getStringBinding("tab.ships.livemode.hint")).build(),
+                LabelBuilder.builder().withStyleClasses("ship-hint-white", "ship-hint-explain").withText(LocaleService.getStringBinding("tab.ships.livemode.hint.explain")).build()
+        ).buildHBox();
+        HBox yellowBlueHint = BoxBuilder.builder().withNodes(
+                LabelBuilder.builder().withStyleClasses("ship-hint-yellow", "ship-hint-box").withText(LocaleService.getStringBinding("tab.ships.yellowblue.hint")).build(),
+                LabelBuilder.builder().withStyleClasses("ship-hint-white", "ship-hint-explain").withText(LocaleService.getStringBinding("tab.ships.yellowblue.hint.explain")).build()
+        ).buildHBox();
+        final PopOver popOver = new PopOver();
+        final VBox contentNode = BoxBuilder.builder().withNodes(dragDropHint, lockModeHint, legacyHint,liveModeHint,yellowBlueHint).buildVBox();
+        contentNode.getStyleClass().add("help-popover");
+        popOver.setArrowLocation(PopOver.ArrowLocation.TOP_RIGHT);
+        popOver.setContentNode(contentNode);
+        popOver.setDetachable(false);
+        this.shipsHelp = ResizableImageViewBuilder.builder().withOnMouseClicked(event -> {
+            popOver.show(this.shipsHelp, event.getScreenX(), event.getScreenY());
+        }).withStyleClasses("help-image", "ships-help-image").withImage("/images/other/help.png").build();
+
+        final HBox hBoxShips = BoxBuilder.builder().withStyleClass("shipbuilder-controls-box").withNodes(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, new GrowingRegion(), this.shipsHelp).buildHBox();
         hBoxShips.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.getChildren().add(hBoxShips);
         hBoxShips.setPickOnBounds(false);

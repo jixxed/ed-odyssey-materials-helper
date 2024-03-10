@@ -4,12 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.PulseLaser;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.CargoRack;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.Computer;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.PassengerCabin;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
-import nl.jixxed.eliteodysseymaterials.domain.ships.utility.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 
 import java.util.ArrayList;
@@ -20,89 +21,7 @@ import java.util.stream.Stream;
 
 
 public class Ship {
-    @Getter
-    private static final List<List<? extends ShipModule>> ALL_MODULES = List.of(
-            //hardpoint
-            AbrasionBlaster.ABRASION_BLASTERS,
-            AXMissileRack.AX_MISSILE_RACKS,
-            AXMultiCannon.AX_MULTI_CANNONS,
-            BeamLaser.BEAM_LASERS,
-            BurstLaser.BURST_LASERS,
-            Cannon.CANNONS,
-            EnzymeMissileRack.ENZYME_MISSILE_RACKS,
-            FragmentCannon.FRAGMENT_CANNONS,
-            GuardianGaussCannon.GUARDIAN_GAUSS_CANNONS,
-            GuardianNaniteTorpedoPylon.GUARDIAN_NANITE_TORPEDO_PYLONS,
-            GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGERS,
-            GuardianShardCannon.GUARDIAN_SHARD_CANNONS,
-            MineLauncher.MINE_LAUNCHERS,
-            MiningLaser.MINING_LASERS,
-            MissileRack.MISSILE_RACKS,
-            MultiCannon.MULTI_CANNONS,
-            PlasmaAccelerator.PLASMA_ACCELERATORS,
-            PulseLaser.PULSE_LASERS,
-            RailGun.RAIL_GUNS,
-            RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHERS,
-            RemoteReleaseFlechetteLauncher.REMOTE_RELEASE_FLECHETTE_LAUNCHERS,
-            SeismicChargeLauncher.SEISMIC_CHARGE_LAUNCHERS,
-            ShockCannon.SHOCK_CANNONS,
-            SubSurfaceDisplacementMissile.SUB_SURFACE_DISPLACEMENT_MISSILES,
-            TorpedoPylon.TORPEDO_PYLONS,
-            //core
-            Armour.ARMOURS,
-            FrameShiftDrive.FRAME_SHIFT_DRIVES,
-            LifeSupport.LIFE_SUPPORTS,
-            PowerDistributor.POWER_DISTRIBUTORS,
-            PowerPlant.POWER_PLANTS,
-            Sensors.SENSORS,
-            Thrusters.THRUSTERS,
-            FuelTank.FUEL_TANKS,
-            CargoHatch.CARGO_HATCHES,
-            //military
-            GuardianHullReinforcementPackage.GUARDIAN_HULL_REINFORCEMENT_PACKAGES,
-            GuardianModuleReinforcementPackage.GUARDIAN_MODULE_REINFORCEMENT_PACKAGES,
-            GuardianShieldReinforcementPackage.GUARDIAN_SHIELD_REINFORCEMENT_PACKAGES,
-            HullReinforcementPackage.HULL_REINFORCEMENT_PACKAGES,
-            ModuleReinforcementPackage.MODULE_REINFORCEMENT_PACKAGES,
-            ShieldCellBank.SHIELD_CELL_BANKS,
-            //optional
-            AntiCorrosionCargoRack.ANTI_CORROSION_CARGO_RACKS,
-            AutoFieldMaintenanceUnit.AUTO_FIELD_MAINTENANCE_UNITS,
-            CargoRack.CARGO_RACKS,
-            CollectorLimpetController.COLLECTOR_LIMPET_CONTROLLERS,
-            Computer.COMPUTERS,
-            DecontaminationLimpetController.DECONTAMINATION_LIMPET_CONTROLLERS,
-            DetailedSurfaceScanner.DETAILED_SURFACE_SCANNERS,
-            ExperimentalWeaponStabiliser.EXPERIMENTAL_WEAPON_STABILISERS,
-            FighterHangar.FIGHTER_HANGARS,
-            FrameShiftDriveBooster.FRAME_SHIFT_DRIVE_BOOSTERS,
-            FrameShiftDriveInterdictor.FRAME_SHIFT_DRIVE_INTERDICTORS,
-            FuelScoop.FUEL_SCOOPS,
-            FuelTransferLimpetController.FUEL_TRANSFER_LIMPET_CONTROLLERS,
-            HatchBreakerLimpetController.HATCH_BREAKER_LIMPET_CONTROLLERS,
-            MetaAlloyHullReinforcementPackage.META_ALLOY_HULL_REINFORCEMENT_PACKAGES,
-            MultiLimpetController.MULTI_LIMPET_CONTROLLERS,
-            PassengerCabin.PASSENGER_CABINS,
-            PlanetaryVehicleHangar.PLANETARY_VEHICLE_HANGARS,
-            ProspectorLimpetController.PROSPECTOR_LIMPET_CONTROLLERS,
-            ReconLimpetController.RECON_LIMPET_CONTROLLERS,
-            Refinery.REFINERIES,
-            RepairLimpetController.REPAIR_LIMPET_CONTROLLERS,
-            ResearchLimpetController.RESEARCH_LIMPET_CONTROLLERS,
-            ShieldGenerator.SHIELD_GENERATORS,
-            //utility
-            ChaffLauncher.CHAFF_LAUNCHERS,
-            ElectronicCountermeasure.ELECTRONIC_COUNTERMEASURES,
-            FrameShiftWakeScanner.FRAME_SHIFT_WAKE_SCANNERS,
-            KillWarrantScanner.KILL_WARRANT_SCANNERS,
-            ManifestScanner.MANIFEST_SCANNERS,
-            PointDefence.POINT_DEFENCES,
-            PulseWaveAnalyser.PULSE_WAVE_ANALYSERS,
-            ShieldBooster.SHIELD_BOOSTERS,
-            SinkLauncher.SINK_LAUNCHERS,
-            Xeno.XENOS
 
-    );
     public static final Ship SIDE_WINDER = new Ship(
             ShipType.SIDE_WINDER,
             5070,

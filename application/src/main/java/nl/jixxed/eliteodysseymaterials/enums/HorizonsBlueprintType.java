@@ -195,7 +195,8 @@ public enum HorizonsBlueprintType {
     LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS(false, true),
     HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE(false, true),
     EXPANDED_PROBE_SCANNING_RADIUS_X2(false, true),
-    INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true);
+    INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true),
+    NONE(false,false);
     @Getter
     private final boolean experimental;
     @Getter

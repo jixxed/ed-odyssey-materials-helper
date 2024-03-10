@@ -85,6 +85,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.generic to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.templates.settings;
     opens nl.jixxed.eliteodysseymaterials.templates.settings to javafx.fxml, org.controlsfx.controls;
+    exports nl.jixxed.eliteodysseymaterials.templates.settings.sections;
+    opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.templates.dialog;
     opens nl.jixxed.eliteodysseymaterials.templates.dialog to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal;

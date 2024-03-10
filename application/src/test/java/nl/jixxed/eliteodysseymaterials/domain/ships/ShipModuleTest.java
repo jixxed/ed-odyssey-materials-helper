@@ -3,7 +3,10 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import org.apache.commons.math3.util.Precision;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -66,7 +69,7 @@ class ShipModuleTest {
     @ParameterizedTest
     @MethodSource("testcases")
     void getAttributeValue( String moduleID, HorizonsModifier modifierToTest, HorizonsBlueprintType blueprint, HorizonsBlueprintType effect, double expectedValue) {
-        Ship.getALL_MODULES();
+
         ShipModule shipModule = ShipModule.getModule(moduleID).Clone();
         if (blueprint != null)
             shipModule.applyModification(blueprint, HorizonsBlueprintGrade.GRADE_5, BigDecimal.ONE);
@@ -75,4 +78,9 @@ class ShipModuleTest {
         assertEquals(expectedValue, Precision.round((Double) shipModule.getAttributeValue(modifierToTest),4), 0.00001);
     }
 
+    @Test
+    void getBasicModules() {
+        Assertions.assertAll(
+                ShipModule.getBasicModules().stream().map(shipModule -> () -> Assertions.assertDoesNotThrow(() -> LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()))));
+    }
 }

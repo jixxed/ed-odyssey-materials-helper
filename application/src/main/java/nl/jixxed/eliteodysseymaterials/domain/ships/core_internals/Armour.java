@@ -451,4 +451,9 @@ public class Armour extends CoreModule {
             case REACTIVE_SURFACE_COMPOSITE -> 5;
         };
     }
+
+    @Override
+    public String toString() {
+        return LocaleService.getLocalizedStringForCurrentLocale(shipType.getLocalizationKey()) + " " + LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name();
+    }
 }

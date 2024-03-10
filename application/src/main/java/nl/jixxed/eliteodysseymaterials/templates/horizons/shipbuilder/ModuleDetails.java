@@ -1,7 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.FlowPane;
@@ -10,23 +12,22 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.LegacyModuleSavedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
+import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -34,14 +35,10 @@ import java.util.function.Predicate;
 
 @Slf4j
 public class ModuleDetails extends VBox implements Template {
-    private static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
-
-    static {
-        NUMBER_FORMAT_2.setMaximumFractionDigits(2);
-    }
 
     private VBox attributes;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
+    private Button legacySaveButton;
 
     public ModuleDetails() {
         initComponents();
@@ -51,6 +48,14 @@ public class ModuleDetails extends VBox implements Template {
     @Override
     public void initComponents() {
         this.getStyleClass().add("stats-values");
+        legacySaveButton = ButtonBuilder.builder().withStyleClass("module-details-save-legacy").withText(LocaleService.getStringBinding("module.details.save.legacy")).build();
+        legacySaveButton.setMnemonicParsing(false);
+        legacySaveButton.setOnMouseClicked(mouseEvent -> {
+                    if (mouseEvent.isAltDown()) {
+                        legacySaveButton.getOnAction().handle(new ActionEvent());
+                    }
+                }
+        );
         this.getChildren().add(LabelBuilder.builder().withStyleClass("module-details-title").withNonLocalizedText("Module specs").build());
         attributes = BoxBuilder.builder().buildVBox();
         this.getChildren().add(attributes);
@@ -61,13 +66,22 @@ public class ModuleDetails extends VBox implements Template {
     public void initEventHandling() {
         EVENT_LISTENERS.add(EventService.addListener(this, ModuleHighlightEvent.class, (event) -> {
             ShipModule shipModule = event.getShipModule();
+            this.getChildren().remove(legacySaveButton);
             attributes.getChildren().clear();
             attributes.getChildren().add(new Separator(Orientation.HORIZONTAL));
             if (shipModule != null) {
                 shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
                     addAttribute(horizonsModifier, shipModule);
                 });
+                if(shipModule.isLegacy()){
+                    legacySaveButton.setOnAction(actionEvent -> {
+                        LegacyModuleService.saveLegacyModule(shipModule);
+                        EventService.publish(new LegacyModuleSavedEvent());
+                    });
+                    this.getChildren().addFirst(legacySaveButton);
+                }
             }
+
         }));
     }
 
@@ -88,7 +102,7 @@ public class ModuleDetails extends VBox implements Template {
                 if (shipModule.getModifiers().containsKey(horizonsModifier)) {
                     final Object currentValue = shipModule.getModifiers().get(horizonsModifier);
                     doubleLineWithActualValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue);
-                    actualValueLine = "ACT: " + horizonsModifier.format(currentValue) + " @ " + NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%\n";
+                    actualValueLine = "ACT: " + horizonsModifier.format(currentValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%\n";
                 } else {
                     doubleLIneWithEstimatedValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue, (Double) estimatedValue);
                 }
@@ -254,14 +268,14 @@ public class ModuleDetails extends VBox implements Template {
 
     private static void addTooltip(HorizonsModifier horizonsModifier, ShipModule shipModule, Object minValue, Object maxValue, Object estimatedValue, String actualValueLine, VBox attribute) {
         final Tooltip tooltip = TooltipBuilder.builder().withShowDelay(Duration.ZERO).withNonLocalizedText("MIN: " + horizonsModifier.format(minValue) + "\n" +
-                "EST: " + horizonsModifier.format(estimatedValue) + " @ " + NUMBER_FORMAT_2.format(shipModule.getModifications().getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO).multiply( BigDecimal.valueOf(100)) ) + "%\n" +
+                "EST: " + horizonsModifier.format(estimatedValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getModifications().getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO).multiply( BigDecimal.valueOf(100)) ) + "%\n" +
                 actualValueLine +
                 "MAX: " + horizonsModifier.format(maxValue)).build();
         Tooltip.install(attribute, tooltip);
     }
 
     private static void doubleLIneWithEstimatedValue(HorizonsModifier horizonsModifier, ShipModule shipModule, HBox valuesLine, double originalAttributeValue, double estimatedValue) {
-        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(estimatedValue) + " @ " + NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply( BigDecimal.valueOf(100))) + "%").build();
+        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(estimatedValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply( BigDecimal.valueOf(100))) + "%").build();
         if (estimatedValue > originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue < originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-green");
         } else if (estimatedValue < originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue > originalAttributeValue && !horizonsModifier.isHigherBetter()) {
@@ -275,8 +289,8 @@ public class ModuleDetails extends VBox implements Template {
     }
 
     private static void doubleLineWithActualValue(HorizonsModifier horizonsModifier, ShipModule shipModule, HBox valuesLine, double originalAttributeValue) {
-        final double currentValue = (double) shipModule.getModifiers().get(horizonsModifier);
-        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(currentValue) + " @ " + NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply( BigDecimal.valueOf(100))) + "%").build();
+        final double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
+        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(currentValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply( BigDecimal.valueOf(100))) + "%").build();
         if (currentValue > originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue < originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-green");
         } else if (currentValue < originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue > originalAttributeValue && !horizonsModifier.isHigherBetter()) {

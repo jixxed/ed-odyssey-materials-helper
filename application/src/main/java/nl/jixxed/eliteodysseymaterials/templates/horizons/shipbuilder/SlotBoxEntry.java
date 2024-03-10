@@ -10,6 +10,8 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ShipModuleButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ShipLegacyModule;
+import nl.jixxed.eliteodysseymaterials.domain.ShipLegacyModules;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ExternalModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Mounting;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
@@ -24,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
+import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
@@ -47,21 +50,27 @@ public class SlotBoxEntry extends VBox {
                 : shipModulesList;
         this.name = LabelBuilder.builder().withStyleClass("ships-modules-title").withText(LocaleService.getStringBinding(firstModule.getName().getBlueprintGroup().getLocalizationKey())).build();
         HBox.setHgrow(this.name, Priority.ALWAYS);
-        final Stream<List<ShipModule>> stream = shipModules.stream().allMatch(shipModule -> shipModule.hasGrouping())
+        Stream<List<ShipModule>> stream = shipModules.stream().allMatch(shipModule -> shipModule.hasGrouping())
                 ? shipModules.stream().collect(Collectors.groupingBy(shipModule -> String.valueOf(shipModule.getGrouping()))).values().stream()
                 : shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize().toString() + shipModule.getGrouping() + shipModule.getOrigin().equals(Origin.POWERPLAY))).values().stream();
-//        final Stream<List<ShipModule>> stream =shipModules.stream().collect(Collectors.groupingBy(shipModule -> shipModule.getModuleSize() + shipModule.getClarifier())).values().stream();
+        stream = Stream.concat(stream,ApplicationState.getInstance().getPreferredCommander().map(commander -> {
+            final ShipLegacyModules legacyModules = LegacyModuleService.loadModules(commander);
+            return legacyModules.getLegacyModules().stream().map(this::mapToShipModule).filter(shipModule -> shipModule.getClass().equals(firstModule.getClass())).map(Collections::singletonList);
+        }).orElseGet(Stream::empty));
         this.options =
                 stream.sorted(Comparator.comparing(shipModuleSubList -> (shipModuleSubList.get(0).hasGrouping()) ? String.valueOf(shipModuleSubList.get(0).getGrouping()) : shipModuleSubList.get(0).getModuleSize().toString() + shipModuleSubList.get(0).getOrigin().equals(Origin.POWERPLAY))).map(shipModuleSubList ->
                                 shipModuleSubList.stream().map(shipModule -> {
-                                            final ShipModuleButton button = ShipModuleButtonBuilder.builder().withShipModule(shipModule).withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + shipModule.getClarifier() + shipModule.getNonSortingClarifier()).withOnAction(event -> {
+                                            final ShipModuleButton button = ShipModuleButtonBuilder.builder().withShipModule(shipModule).withNonLocalizedText(shipModule.getModuleSize() + "" + shipModule.getModuleClass() + (shipModule.isLegacy() ? " " + shipModule.getCustomName() : shipModule.getClarifier() + shipModule.getNonSortingClarifier())).withOnAction(event -> {
                                                 final ShipModule clone = shipModule.Clone();
                                                 if(slotBox.getSlot().getShipModule() != null) {
                                                     if(isSimilar(slotBox.getSlot().getShipModule(), clone) ) {
-                                                        if(!clone.isPreEngineered()){//already pre-applied
+                                                        if(!clone.isPreEngineered() && !clone.isLegacy() && !slotBox.getSlot().getShipModule().isLegacy()){//already pre-applied
                                                             clone.getModifications().addAll(slotBox.getSlot().getShipModule().getModifications());
+                                                            clone.getExperimentalEffects().addAll(slotBox.getSlot().getShipModule().getExperimentalEffects());
                                                         }
-                                                        clone.getExperimentalEffects().addAll(slotBox.getSlot().getShipModule().getExperimentalEffects());
+                                                        if(!clone.isLegacy() && !slotBox.getSlot().getShipModule().isLegacy()){//pre engineered always uses modification, legacy has pre-applied
+                                                            clone.getExperimentalEffects().addAll(slotBox.getSlot().getShipModule().getExperimentalEffects());
+                                                        }
                                                     }
                                                 }
                                                 slotBox.getSlot().setShipModule(clone);
@@ -151,6 +160,23 @@ public class SlotBoxEntry extends VBox {
         vBox.getChildren().addAll(this.options);
         this.getChildren().add(vBox);
 
+    }
+
+    private ShipModule mapToShipModule(ShipLegacyModule shipLegacyModule) {
+        final ShipModule shipModule = ShipModule.getModule(shipLegacyModule.getId()).Clone();
+
+        shipLegacyModule.getModification().forEach(shipConfigurationModification -> {
+                    shipModule.applyModification(shipConfigurationModification.getType(), shipConfigurationModification.getGrade(), null);
+                }
+        );
+        shipLegacyModule.getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
+                    shipModule.applyExperimentalEffect(shipConfigurationExperimentalEffect.getType());
+                }
+        );
+        shipModule.getModifiers().putAll(shipLegacyModule.getModifiers());
+        shipModule.setLegacy(true);
+        shipModule.setCustomName(shipLegacyModule.getName());
+        return shipModule;
     }
 
     private boolean isSimilar(ShipModule shipModule, ShipModule clone) {
