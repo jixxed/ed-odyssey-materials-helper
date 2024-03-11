@@ -121,6 +121,9 @@ class LoadoutMapperTest {
     }
     private static Stream<Arguments> preEngineeredModules() {
         return Stream.of(
+                Arguments.of("gauss_pre_1.json",SlotType.HARDPOINT),
+                Arguments.of("gauss_pre_2.json",SlotType.HARDPOINT),
+                Arguments.of("abrasion_blaster_pre.json",SlotType.HARDPOINT),
                 Arguments.of("festive_launcher_pre_green.json",SlotType.HARDPOINT),
                 Arguments.of("festive_launcher_pre_red.json",SlotType.HARDPOINT),
                 Arguments.of("festive_launcher_pre_yellow.json",SlotType.HARDPOINT),
@@ -136,6 +139,7 @@ class LoadoutMapperTest {
                 Arguments.of("powerplant_pre_3.json",SlotType.CORE_POWER_PLANT),
                 Arguments.of("powerplant_pre_4.json",SlotType.CORE_POWER_PLANT),
                 Arguments.of("powerplant_pre_5.json",SlotType.CORE_POWER_PLANT),
+                Arguments.of("ax_missile_rack_3_pre.json",SlotType.HARDPOINT),
                 Arguments.of("heatsink_pre.json",SlotType.UTILITY)
         );
     }
@@ -144,8 +148,9 @@ class LoadoutMapperTest {
     public void testIsPreEngineered(String filename, SlotType slotType){
         String line = "";
         try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/" + filename)){
+            ShipModule.getBasicModules();
                 final Module module = objectMapper.readValue(resourceAsStream, Module.class);
-                Ship sa = Ship.ADDER;
+                Ship sa = Ship.KRAIT_MK_II;
                 final List<ShipModule> potentialShipModules = LoadoutMapper.getPotentialShipModules(module.getItem(), slotType);
                 log.debug(potentialShipModules.stream().map(s->s.getName().toString()).collect(Collectors.joining(", ")));
                 final boolean preEngineered = LoadoutMapper.isPreEngineered(potentialShipModules, module.getEngineering().get());
