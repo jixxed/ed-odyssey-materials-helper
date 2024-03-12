@@ -67,8 +67,7 @@ public class SlotBoxEntry extends VBox {
                                                         if(!clone.isPreEngineered() && !clone.isLegacy() && !slotBox.getSlot().getShipModule().isLegacy()){//already pre-applied
                                                             clone.getModifications().addAll(slotBox.getSlot().getShipModule().getModifications());
                                                             clone.getExperimentalEffects().addAll(slotBox.getSlot().getShipModule().getExperimentalEffects());
-                                                        }
-                                                        if(!clone.isLegacy() && !slotBox.getSlot().getShipModule().isLegacy()){//pre engineered always uses modification, legacy has pre-applied
+                                                        } else if(!clone.isLegacy() && !slotBox.getSlot().getShipModule().isLegacy()){//pre engineered always uses modification, legacy has pre-applied
                                                             clone.getExperimentalEffects().addAll(slotBox.getSlot().getShipModule().getExperimentalEffects());
                                                         }
                                                     }
