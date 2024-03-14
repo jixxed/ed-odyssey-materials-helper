@@ -84,7 +84,7 @@ if (arch == "aarch64") {
 }
 ext {
     version_logback = "1.5.2"
-    version_jackson = "2.16.1"
+    version_jackson = "2.16.2"
     version_jna = "5.14.0"
     version_junit_jupiter = "5.10.2"
     version_junit_platform = "1.10.2"
