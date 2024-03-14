@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
+import javafx.beans.binding.StringBinding;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -31,6 +32,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 @Slf4j
@@ -73,7 +75,7 @@ public class ModuleDetails extends VBox implements Template {
                 shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
                     addAttribute(horizonsModifier, shipModule);
                 });
-                if(shipModule.isLegacy()){
+                if (shipModule.isLegacy()) {
                     legacySaveButton.setOnAction(actionEvent -> {
                         LegacyModuleService.saveLegacyModule(shipModule);
                         EventService.publish(new LegacyModuleSavedEvent());
@@ -90,7 +92,6 @@ public class ModuleDetails extends VBox implements Template {
         final Object minValue = shipModule.getAttributeValue(horizonsModifier, 0.0);
         final Object maxValue = shipModule.getAttributeValue(horizonsModifier, 1.0);
         final Object estimatedValue = shipModule.getAttributeValue(horizonsModifier);
-        String actualValueLine = "";
         final HBox valuesLine = BoxBuilder.builder().withNodes().buildHBox();
         final VBox attribute = BoxBuilder.builder().withNodes().buildVBox();
 
@@ -100,9 +101,7 @@ public class ModuleDetails extends VBox implements Template {
             final DestroyableLabel title = LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding(horizonsModifier.getLocalizationKey())).build();
             if (isModifiedAttribute(originalAttributeValue, maxValue)) {
                 if (shipModule.getModifiers().containsKey(horizonsModifier)) {
-                    final Object currentValue = shipModule.getModifiers().get(horizonsModifier);
                     doubleLineWithActualValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue);
-                    actualValueLine = "ACT: " + horizonsModifier.format(currentValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%\n";
                 } else {
                     doubleLIneWithEstimatedValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue, (Double) estimatedValue);
                 }
@@ -179,7 +178,7 @@ public class ModuleDetails extends VBox implements Template {
                         flowPane
                 );
                 if (!shipModule.getModifications().isEmpty()) {
-                    addTooltip(horizonsModifier, shipModule, minValue, maxValue, estimatedValue, actualValueLine, attribute);
+                    addTooltip(horizonsModifier, shipModule, (Double) originalAttributeValue, (Double) minValue, (Double) maxValue, (Double) estimatedValue, attribute);
                 }
                 attributes.getChildren().add(attribute);
                 attributes.getChildren().add(new Separator(Orientation.HORIZONTAL));
@@ -266,16 +265,28 @@ public class ModuleDetails extends VBox implements Template {
         }
     }
 
-    private static void addTooltip(HorizonsModifier horizonsModifier, ShipModule shipModule, Object minValue, Object maxValue, Object estimatedValue, String actualValueLine, VBox attribute) {
-        final Tooltip tooltip = TooltipBuilder.builder().withShowDelay(Duration.ZERO).withNonLocalizedText("MIN: " + horizonsModifier.format(minValue) + "\n" +
-                "EST: " + horizonsModifier.format(estimatedValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getModifications().getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO).multiply( BigDecimal.valueOf(100)) ) + "%\n" +
-                actualValueLine +
-                "MAX: " + horizonsModifier.format(maxValue)).build();
+    private static void addTooltip(HorizonsModifier horizonsModifier, ShipModule shipModule, Double originalAttributeValue, Double minValue, Double maxValue, Double estimatedValue, VBox attribute) {
+        final BigDecimal estimated = !Objects.equals(minValue, maxValue) && (estimatedValue > originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue < originalAttributeValue && !horizonsModifier.isHigherBetter())
+                ? shipModule.getModifications().getFirst().getModificationCompleteness().orElse(BigDecimal.ZERO).multiply(BigDecimal.valueOf(100))
+                : BigDecimal.valueOf(100);
+
+        final boolean hasActualValue = shipModule.getModifiers().containsKey(horizonsModifier);
+
+        String minValueText = horizonsModifier.format(minValue);
+        String estValueText = horizonsModifier.format(estimatedValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2.format(estimated) + "%");
+        String actValueText = hasActualValue
+                ? horizonsModifier.format(shipModule.getModifiers().get(horizonsModifier)) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%")
+                : "";
+        String maxValueText = horizonsModifier.format(maxValue);
+        StringBinding text = hasActualValue
+                ? LocaleService.getStringBinding("tab.ships.details.tooltip.actual", minValueText, estValueText, actValueText, maxValueText)
+                : LocaleService.getStringBinding("tab.ships.details.tooltip.estimated", minValueText, estValueText, maxValueText);
+        final Tooltip tooltip = TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(text).build();
         Tooltip.install(attribute, tooltip);
     }
 
     private static void doubleLIneWithEstimatedValue(HorizonsModifier horizonsModifier, ShipModule shipModule, HBox valuesLine, double originalAttributeValue, double estimatedValue) {
-        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(estimatedValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply( BigDecimal.valueOf(100))) + "%").build();
+        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(estimatedValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%")).build();
         if (estimatedValue > originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue < originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-green");
         } else if (estimatedValue < originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue > originalAttributeValue && !horizonsModifier.isHigherBetter()) {
@@ -290,7 +301,7 @@ public class ModuleDetails extends VBox implements Template {
 
     private static void doubleLineWithActualValue(HorizonsModifier horizonsModifier, ShipModule shipModule, HBox valuesLine, double originalAttributeValue) {
         final double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
-        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(currentValue) + " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply( BigDecimal.valueOf(100))) + "%").build();
+        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(currentValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%")).build();
         if (currentValue > originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue < originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-green");
         } else if (currentValue < originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue > originalAttributeValue && !horizonsModifier.isHigherBetter()) {
