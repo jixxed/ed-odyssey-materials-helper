@@ -97,6 +97,7 @@ ext {
     version_lept4j = "1.16.6"
     version_tess4j = "5.2.9"
     version_jai_imageio = "1.4.0"
+    version_mockito_inline = "5.2.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
@@ -144,7 +145,7 @@ allprojects {
             testImplementation "org.junit.platform:junit-platform-runner:${version_junit_platform}"
             testImplementation "org.junit.platform:junit-platform-suite-api:${version_junit_platform}"
             testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
-            testImplementation 'org.mockito:mockito-inline:5.2.0'
+            testImplementation "org.mockito:mockito-inline:${version_mockito_inline}"
             testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
             testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
         }
