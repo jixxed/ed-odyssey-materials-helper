@@ -27,6 +27,7 @@ public class OsConstants {
         switch (OsCheck.getOperatingSystemType()) {
             case LINUX -> setLinux();
             case WINDOWS -> setWindows();
+            case MACOS -> setMacOS();
             default -> throw new IllegalArgumentException("OS not supported.");
         }
     }
@@ -50,6 +51,20 @@ public class OsConstants {
         USER_HOME = System.getProperty("user.home");
         CONFIG_DIRECTORY = USER_HOME + "/.config/odyssey-materials-helper";
         DEFAULT_WATCHED_FOLDER = USER_HOME + "/.steam/steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous";
+        PREFERENCES = CONFIG_DIRECTORY + "/pref.properties";
+        PREFERENCES_TEMP = CONFIG_DIRECTORY + "/pref.tmp";
+        TESS4J = CONFIG_DIRECTORY + "/tesseract";
+        DEEPLINK_FOLDER = CONFIG_DIRECTORY;
+        DEEPLINK = CONFIG_DIRECTORY + "/deeplink";
+        LOCK = CONFIG_DIRECTORY + "/lock";
+        STATISTICS = CONFIG_DIRECTORY + "/material-report.json";
+        CUSTOM_CSS = CONFIG_DIRECTORY + "/style.css";
+        OS_SLASH = "/";
+    }
+    private static void setMacOS() {
+        USER_HOME = System.getProperty("user.home");
+        CONFIG_DIRECTORY = USER_HOME + "/.config/odyssey-materials-helper";
+        DEFAULT_WATCHED_FOLDER = USER_HOME + "/configure/your/journal/folder";
         PREFERENCES = CONFIG_DIRECTORY + "/pref.properties";
         PREFERENCES_TEMP = CONFIG_DIRECTORY + "/pref.tmp";
         TESS4J = CONFIG_DIRECTORY + "/tesseract";

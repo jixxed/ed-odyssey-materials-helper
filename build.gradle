@@ -83,8 +83,8 @@ if (arch == "aarch64") {
     platform += "-aarch64"
 }
 ext {
-    version_logback = "1.5.0"
-    version_jackson = "2.16.1"
+    version_logback = "1.5.3"
+    version_jackson = "2.16.2"
     version_jna = "5.14.0"
     version_junit_jupiter = "5.10.2"
     version_junit_platform = "1.10.2"
@@ -97,6 +97,7 @@ ext {
     version_lept4j = "1.16.6"
     version_tess4j = "5.2.9"
     version_jai_imageio = "1.4.0"
+    version_mockito_inline = "5.2.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
@@ -144,8 +145,8 @@ allprojects {
             testImplementation "org.junit.jupiter:junit-jupiter:${version_junit_jupiter}"
             testImplementation "org.junit.platform:junit-platform-runner:${version_junit_platform}"
             testImplementation "org.junit.platform:junit-platform-suite-api:${version_junit_platform}"
-            testImplementation "org.mockito:mockito-junit-jupiter:5.10.0"
-            testImplementation 'org.mockito:mockito-inline:4.8.1'
+            testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
+            testImplementation "org.mockito:mockito-inline:${version_mockito_inline}"
             testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
             testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
         }

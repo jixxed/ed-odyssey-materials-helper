@@ -252,7 +252,7 @@ extraJavaModuleInfo {
         requires("org.apache.poi.poi")
         requires("com.zaxxer.sparsebitset")
     }
-    automaticModule('mockito-inline-4.8.1.jar', 'mockito.inline')
+    automaticModule("mockito-inline-${project.getProperties().version_mockito_inline}.jar", "mockito.inline")
 //    module("poi-ooxml-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml", "${project.getProperties().version_apache_poi}") {
 //        exports("org.apache.poi.xssf.usermodel")
 //        requires("commons.math3")
