@@ -17,6 +17,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.utility.SinkLauncher;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -510,6 +511,28 @@ class LoadoutMapperTest {
 
             }
             modules.stream().sorted().forEach(System.out::println);
+        }catch (Exception e){
+            log.error("error",e);
+            log.info(line);
+            Assertions.assertFalse(true);
+        }
+    }
+    @Test
+    @Ignore
+    public void rebuy(){
+//        "HullValue": 6136672,
+//        "ModulesValue": 38003650,
+//        "Rebuy": 2207018,
+        String line = "";
+        try(InputStream resourceAsStream = LoadoutMapperTest.class.getResourceAsStream("/ships/loadout/rebuy.json")){
+            ShipModule.getBasicModules();
+                final Loadout loadout = objectMapper.readValue(resourceAsStream, Loadout.class);
+                final Ship ship = LoadoutMapper.toShip(loadout);
+                Assertions.assertAll(
+                        () -> Assertions.assertEquals(2207018, ship.getRebuy()),
+                        () -> Assertions.assertEquals(38003650, ship.getModulesValue()),
+                        () -> Assertions.assertEquals(6136672, ship.getHullValue())
+);
         }catch (Exception e){
             log.error("error",e);
             log.info(line);

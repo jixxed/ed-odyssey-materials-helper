@@ -16,11 +16,11 @@ public class SeismicChargeLauncher extends HardpointModule {
             SEISMIC_CHARGE_LAUNCHER_2_B_F,
             SEISMIC_CHARGE_LAUNCHER_2_B_T
     );
-    public SeismicChargeLauncher(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public SeismicChargeLauncher(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, mounting, basePrice, internalName, attributes);
     }
 
-    public SeismicChargeLauncher(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, Mounting mounting, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public SeismicChargeLauncher(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, multiCrew, mounting, basePrice, internalName, attributes);
     }
 

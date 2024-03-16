@@ -3168,6 +3168,7 @@
     -fx-padding: 0.5em 0em 0.1em 0.2em;
     -fx-font-size: 1.2em;
     -fx-font-weight: bold;
+    -fx-wrap-text: true;
 }
 .module-details-label-title{
     /*-fx-padding: 0em 0em 0em 0.2em;*/
@@ -3610,4 +3611,36 @@
 .ships-help-image{
     -fx-pref-height: 2em;
     -fx-padding: 0.2em 24.5em 0em 0em;
+}
+.module-details-value{
+    -fx-padding: 0em 0em 0em 0.2em;
+    -fx-alignment: center-right;
+}
+.module-details-line{
+    -fx-padding: 0;
+    -fx-border-insets: 0;
+    -fx-background-insets: 0;
+}
+.shipbuilder-stats-label-small{
+    -fx-label-padding: 0.3em 1em 0.2em 0;
+}
+.shipbuilder-stats-value-small{
+    -fx-font-weight: bold;
+    -fx-label-padding: 0.3em 0em 0.2em 0;
+}
+.power-stats-legend-label{
+    -fx-alignment: center-left;
+    -fx-spacing: 0.5em;
+}
+.power-stats-legend-label-text{
+    /*-fx-padding: 0em 0em 0em 0.5em;*/
+    /*-fx-min-height: 1.5em;*/
+    /*-fx-font-size: 1.5em;*/
+}
+.ship-stats-shield-label{
+    -fx-font-weight: bold;
+}
+.shield-stats-stackpane{
+    -fx-pref-height: 18em;
+    -fx-fit-to-height: true;
 }

@@ -34,13 +34,13 @@ public class ThermalStats extends Stats implements Template {
     public void initComponents() {
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.thermal"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.idleThermals = createValueLabel("ship.stats.thermalpower.idleThermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
-        this.thrusterThermals = createValueLabel("ship.stats.thermalpower.thrusterThermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
-        this.fsdThermals = createValueLabel("ship.stats.thermalpower.fsdThermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
+        this.idleThermals = createValueSmallLabel("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
+        this.thrusterThermals = createValueSmallLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
+        this.fsdThermals = createValueSmallLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
 
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.idleThermals"), new GrowingRegion(), this.idleThermals).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.thrusterThermals"), new GrowingRegion(), this.thrusterThermals).buildHBox());
-        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.thermalpower.fsdThermals"), new GrowingRegion(), this.fsdThermals).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.idle.thermals"), new GrowingRegion(), this.idleThermals).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.thruster.thermals"), new GrowingRegion(), this.thrusterThermals).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.fsd.thermals"), new GrowingRegion(), this.fsdThermals).buildHBox());
 
     }
 
@@ -288,8 +288,8 @@ public class ThermalStats extends Stats implements Template {
 
     @Override
     protected void update() {
-        this.idleThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermalpower.idleThermals.value", Formatters.NUMBER_FORMAT_2.format(calculateIdleThermals())));
-        this.thrusterThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermalpower.thrusterThermals.value", Formatters.NUMBER_FORMAT_2.format(calculateThrusterThermals())));
-        this.fsdThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermalpower.fsdThermals.value", Formatters.NUMBER_FORMAT_2.format(calculateFsdThermals())));
+        this.idleThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2.format(calculateIdleThermals())));
+        this.thrusterThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2.format(calculateThrusterThermals())));
+        this.fsdThermals.textProperty().bind(LocaleService.getStringBinding("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2.format(calculateFsdThermals())));
     }
 }

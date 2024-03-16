@@ -38,11 +38,11 @@ public class MetaAlloyHullReinforcementPackage extends MilitaryOptionalModule {
     );
     public static final List<HorizonsModifier> HIDDEN_STATS = List.of(HorizonsModifier.POWER_DRAW, HorizonsModifier.KINETIC_RESISTANCE, HorizonsModifier.THERMAL_RESISTANCE, HorizonsModifier.EXPLOSIVE_RESISTANCE);
 
-    public MetaAlloyHullReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public MetaAlloyHullReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
 
-    public MetaAlloyHullReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public MetaAlloyHullReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, basePrice, internalName, attributes);
     }
 

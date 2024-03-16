@@ -37,11 +37,11 @@ public class GuardianShieldReinforcementPackage extends MilitaryOptionalModule {
             GUARDIAN_SHIELD_REINFORCEMENT_PACKAGE_5_D
     );
 
-    public GuardianShieldReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public GuardianShieldReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
 
-    public GuardianShieldReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public GuardianShieldReinforcementPackage(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, basePrice, internalName, attributes);
     }
 

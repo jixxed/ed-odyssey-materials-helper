@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.PowerStats.*;
+
 public class PowerBar extends VBox {
     private static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
 
@@ -42,11 +44,11 @@ public class PowerBar extends VBox {
         this.segmentedBar.setInfoNodeFactory(segment -> LabelBuilder.builder()
                 .withStyleClass("power-progressbar-label").withNonLocalizedText(segment.getText() + ": " + NUMBER_FORMAT_2.format(segment.getSegmentType() == SegmentType.POWER_OVERPOWER ? overPower : segment.getValue()) + "MW").build());
         this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
-                SegmentType.POWER_GROUP_1, Color.web("#2e92df"),
-                SegmentType.POWER_GROUP_2, Color.web("#89D07F"),
-                SegmentType.POWER_GROUP_3, Color.web("#CE6C1E"),
-                SegmentType.POWER_GROUP_4, Color.web("#6D3DA8"),
-                SegmentType.POWER_GROUP_5, Color.web("#F8FF2E"),
+                SegmentType.POWER_GROUP_1, POWER_GROUP_1_COLOR,
+                SegmentType.POWER_GROUP_2, POWER_GROUP_2_COLOR,
+                SegmentType.POWER_GROUP_3, POWER_GROUP_3_COLOR,
+                SegmentType.POWER_GROUP_4, POWER_GROUP_4_COLOR,
+                SegmentType.POWER_GROUP_5, POWER_GROUP_5_COLOR,
                 SegmentType.POWER_GROUP_NONE, Color.rgb(128, 128, 128),
                 SegmentType.POWER_OVERPOWER, Color.rgb(240, 20, 20)
         ), false));

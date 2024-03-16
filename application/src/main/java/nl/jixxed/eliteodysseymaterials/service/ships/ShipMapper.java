@@ -101,6 +101,10 @@ public class ShipMapper {
             if (!shipConfigurationSlot.getModifiers().isEmpty()) {
                 shipModule.getModifiers().putAll(shipConfigurationSlot.getModifiers());
             }
+            final Long buyPrice = shipConfigurationSlot.getBuyPrice();
+            if (buyPrice != null) {
+                shipModule.setBuyPrice(buyPrice);
+            }
             if (shipConfigurationSlot.isLegacy()) {
                 shipModule.setLegacy(true);
             }
@@ -127,6 +131,10 @@ public class ShipMapper {
                 shipModule.getModifiers().put(modifier,value);
             });
             shipModule.setLegacy(Boolean.TRUE.equals(shipConfigurationSlot.getOldModule().getLegacy()));
+            final Long buyPrice = shipConfigurationSlot.getOldModule().getBuyPrice();
+            if (buyPrice != null) {
+                shipModule.setBuyPrice(buyPrice);
+            }
             final Integer powerGroup = shipConfigurationSlot.getOldModule().getPowerGroup();
             if (powerGroup != null) {
                 shipModule.setPowerGroup(powerGroup);
@@ -144,6 +152,7 @@ public class ShipMapper {
             shipConfigurationSlot.setId(shipModule.getId());
             shipConfigurationSlot.setModification(shipModule.getModifications().stream().map(modification -> new ShipConfigurationModification(modification.getModification(), modification.getGrade(), modification.getModificationCompleteness().orElse(BigDecimal.ZERO))).toList());
             shipConfigurationSlot.setExperimentalEffect(shipModule.getExperimentalEffects().stream().map(ShipConfigurationExperimentalEffect::new).toList());
+            shipConfigurationSlot.setBuyPrice(shipModule.getBuyPrice());
             if (shipModule.isLegacy()) {
                 shipConfigurationSlot.setLegacy(true);
             }
@@ -162,8 +171,9 @@ public class ShipMapper {
             var legacy = shipModule.isLegacy();
             var powered = shipModule.isPowered();
             var powerGroup = shipModule.getPowerGroup();
+            var buyPrice = shipModule.getBuyPrice();
             var modifiers = shipModule.getModifiers().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, legacy,powered,powerGroup, modifiers, modifications, effects));
+            shipConfigurationSlot.setOldModule(new ShipConfigurationOldModule(id, legacy,powered,powerGroup,buyPrice, modifiers, modifications, effects));
         }, () -> shipConfigurationSlot.setOldModule(null));
     }
 }

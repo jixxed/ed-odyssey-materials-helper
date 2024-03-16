@@ -57,11 +57,11 @@ public class CollectorLimpetController extends OptionalModule {
             COLLECTOR_LIMPET_CONTROLLER_7_B,
             COLLECTOR_LIMPET_CONTROLLER_7_A
     );
-    public CollectorLimpetController(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public CollectorLimpetController(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
     }
 
-    public CollectorLimpetController(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public CollectorLimpetController(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, multiCrew, basePrice, internalName, attributes);
     }
 

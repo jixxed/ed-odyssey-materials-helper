@@ -30,7 +30,7 @@ public class FuelTank extends OptionalModule {
             FUEL_TANK_7_C,
             FUEL_TANK_8_C
     );
-    private FuelTank(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    private FuelTank(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, false, basePrice, internalName, attributes);
     }
     private FuelTank(final FuelTank fuelTank) {

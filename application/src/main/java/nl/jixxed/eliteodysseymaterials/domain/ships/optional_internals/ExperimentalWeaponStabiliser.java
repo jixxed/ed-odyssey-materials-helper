@@ -20,11 +20,11 @@ public class ExperimentalWeaponStabiliser extends OptionalModule {
             EXPERIMENTAL_WEAPON_STABILISER_3_F,
             EXPERIMENTAL_WEAPON_STABILISER_5_F
     );
-    public ExperimentalWeaponStabiliser(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public ExperimentalWeaponStabiliser(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
     }
 
-    public ExperimentalWeaponStabiliser(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public ExperimentalWeaponStabiliser(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, multiCrew, basePrice, internalName, attributes);
     }
 

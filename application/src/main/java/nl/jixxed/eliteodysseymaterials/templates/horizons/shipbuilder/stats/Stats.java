@@ -35,13 +35,16 @@ public abstract class Stats extends VBox {
     protected DestroyableLabel createValueLabel(final String key, final String... values) {
         return LabelBuilder.builder().withStyleClass("shipbuilder-stats-value").withText(LocaleService.getStringBinding(key, Arrays.stream(values).toArray())).build();
     }
+    protected static DestroyableLabel createSmallLabel(final String localeKey, final String... values) {
+        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-label-small").withText(LocaleService.getStringBinding(localeKey, Arrays.stream(values).toArray())).build();
+    }
+    protected DestroyableLabel createValueSmallLabel(final String key, final String... values) {
+        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-value-small").withText(LocaleService.getStringBinding(key, Arrays.stream(values).toArray())).build();
+    }
 
     public void initEventHandlingStats() {
         this.eventListeners.add(EventService.addListener(this, ShipBuilderEvent.class, event -> update()));
         this.eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
-//            ApplicationState.getInstance().getPreferredCommander()
-//                    .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
-//                    .ifPresent(configuration -> this.ship = Optional.ofNullable(ShipMapper.toShip(configuration)));
             update();
         }));
     }

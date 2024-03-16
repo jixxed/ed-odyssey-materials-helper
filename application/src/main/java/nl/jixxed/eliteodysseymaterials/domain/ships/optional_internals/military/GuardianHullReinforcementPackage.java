@@ -35,7 +35,7 @@ public class GuardianHullReinforcementPackage extends MilitaryOptionalModule {
     );
     public static final List<HorizonsModifier> HIDDEN_STATS = List.of(HorizonsModifier.KINETIC_RESISTANCE, HorizonsModifier.THERMAL_RESISTANCE);
 
-    public GuardianHullReinforcementPackage(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    public GuardianHullReinforcementPackage(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, basePrice, internalName, attributes);
     }
 

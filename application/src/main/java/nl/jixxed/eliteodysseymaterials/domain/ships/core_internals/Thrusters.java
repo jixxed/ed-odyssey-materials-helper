@@ -91,7 +91,7 @@ public static final List<Thrusters> THRUSTERS = List.of(
         ENHANCED_THRUSTERS_2_A,
         ENHANCED_THRUSTERS_3_A
 );
-    private Thrusters(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    private Thrusters(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
 

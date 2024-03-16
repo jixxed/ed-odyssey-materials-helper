@@ -33,6 +33,9 @@ public class ShipConfigurationSlot {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer powerGroup;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long buyPrice;
+
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ShipConfigurationModification> modification = new ArrayList<>();
 
@@ -51,12 +54,14 @@ public class ShipConfigurationSlot {
         clone.legacy = this.legacy;
         clone.powered = this.powered;
         clone.powerGroup = this.powerGroup;
+        clone.buyPrice = this.buyPrice;
         if(this.oldModule != null) {
             clone.oldModule = new ShipConfigurationOldModule(
                     this.oldModule.getId(),
                     this.oldModule.getLegacy(),
                     this.oldModule.getPowered(),
                     this.oldModule.getPowerGroup(),
+                    this.oldModule.getBuyPrice(),
                     this.oldModule.getModifiers().entrySet().stream().collect(Collectors.toMap(Map.Entry<HorizonsModifier,Object>::getKey, Map.Entry<HorizonsModifier,Object>::getValue)),
                     this.oldModule.getModification().stream().map(mod -> new ShipConfigurationModification(mod.getType(), mod.getGrade(), mod.getPercentComplete())).toList(),
                     this.oldModule.getExperimentalEffect().stream().map(mod -> new ShipConfigurationExperimentalEffect(mod.getType())).toList()

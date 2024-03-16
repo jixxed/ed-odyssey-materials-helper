@@ -18,15 +18,6 @@ import java.util.Optional;
 
 @Slf4j
 public class HandlingStats extends Stats implements Template {
-    //    private final DestroyableLabel currentPitch;
-//    private final DestroyableLabel currentRoll;
-//    private final DestroyableLabel currentYaw;
-//    private final DestroyableLabel minimumPitch;
-//    private final DestroyableLabel minimumRoll;
-//    private final DestroyableLabel minimumYaw;
-//    private final DestroyableLabel maximumPitch;
-//    private final DestroyableLabel maximumRoll;
-//    private final DestroyableLabel maximumYaw;
     private RangeIndicator pitchIndicator;
     private RangeIndicator rollIndicator;
     private RangeIndicator yawIndicator;
@@ -35,27 +26,6 @@ public class HandlingStats extends Stats implements Template {
         super();
         initComponents();
         initEventHandling();
-        final ModuleProfile moduleProfile = new ModuleProfile(0D, 0D, 0D, 0D, 0D, 0D);
-//        this.currentPitch = createValueLabel(String.format("%.2f", 0.0f));
-//        this.currentRoll = createValueLabel(String.format("%.2f", 0.0f));
-//        this.currentYaw = createValueLabel(String.format("%.2f", 0.0f));
-//        this.minimumPitch = createValueLabel(String.format("%.2f", 0.0f));
-//        this.minimumRoll = createValueLabel(String.format("%.2f", 0.0f));
-//        this.minimumYaw = createValueLabel(String.format("%.2f", 0.0f));
-//        this.maximumPitch = createValueLabel(String.format("%.2f", 0.0f));
-//        this.maximumRoll = createValueLabel(String.format("%.2f", 0.0f));
-//        this.maximumYaw = createValueLabel(String.format("%.2f", 0.0f));
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentpitch"), new GrowingRegion(), this.currentPitch).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentroll"), new GrowingRegion(), this.currentRoll).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.currentyaw"), new GrowingRegion(), this.currentYaw).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumpitch"), new GrowingRegion(), this.minimumPitch).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumroll"), new GrowingRegion(), this.minimumRoll).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.minimumyaw"), new GrowingRegion(), this.minimumYaw).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumpitch"), new GrowingRegion(), this.maximumPitch).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumroll"), new GrowingRegion(), this.maximumRoll).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.handling.maximumyaw"), new GrowingRegion(), this.maximumYaw).buildHBox());
-//
-
 
         pitchIndicator = new RangeIndicator(0D, 0D, 0D, "ship.stats.handling.pitch", "ship.stats.handling.pitch.value");
         this.getChildren().add(pitchIndicator);
@@ -151,9 +121,6 @@ public class HandlingStats extends Stats implements Template {
 
     @Override
     protected void update() {
-//        document.getElementById('outfitting_stats_cur_pitch'    ).innerHTML = (isNaN(curHndRotMul) ? htmlErrorTH : formatAttrHTML('pitch', curHndRotMul * (pitch * powerdistEngMul + minpitch * (1 - powerdistEngMul))));
-//        document.getElementById('outfitting_stats_cur_roll'     ).innerHTML = (isNaN(curHndRotMul) ? htmlErrorTH : formatAttrHTML('roll' , curHndRotMul * (roll  * powerdistEngMul + minroll  * (1 - powerdistEngMul))));
-//        document.getElementById('outfitting_stats_cur_yaw'      ).innerHTML = (isNaN(curHndRotMul) ? htmlErrorTH : formatAttrHTML('yaw'  , curHndRotMul * (yaw   * powerdistEngMul + minyaw   * (1 - powerdistEngMul))));
         getShip().ifPresent(ship -> {
             final Optional<Slot> thrusters = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_THRUSTERS)).findFirst();
             final Double minimumMass = (Double) thrusters.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINE_MINIMUM_MASS)).orElse(0D);

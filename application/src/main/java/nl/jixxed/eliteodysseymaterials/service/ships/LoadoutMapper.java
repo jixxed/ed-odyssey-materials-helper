@@ -87,6 +87,7 @@ public class LoadoutMapper {
                                     }
                             ));
                 });
+                module.getValue().ifPresent(value -> shipModule.setBuyPrice(value.longValue()));
                 shipModule.setPowerGroup(module.getPriority().intValue() + 1);
                 if (Boolean.FALSE.equals(module.getOn())) {
                     shipModule.togglePower();

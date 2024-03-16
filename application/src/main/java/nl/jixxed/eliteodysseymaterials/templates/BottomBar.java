@@ -92,6 +92,7 @@ class BottomBar extends HBox {
                     }
                 }))
                 .build();
+        this.commanderSelect.setFocusTraversable(false);
         this.commanderSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
 
         final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));

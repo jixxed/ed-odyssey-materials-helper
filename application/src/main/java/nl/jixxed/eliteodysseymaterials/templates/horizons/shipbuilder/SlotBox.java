@@ -482,6 +482,7 @@ class SlotBox extends StackPane {
             }).withGraphic(createIconWithoutTooltip("/images/ships/icons/arrow_down.png", "shipbuilder-slots-slotbox-button-icon")).build();
             this.powerUp.setFocusTraversable(false);
             this.powerDown.setFocusTraversable(false);
+            this.powerButton.setFocusTraversable(false);
             this.powerBox.getChildren().addAll(powerUp, powerButton, powerDown);
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
@@ -544,11 +545,22 @@ class SlotBox extends StackPane {
             clone.getModifications().addAll(this.getSlot().getShipModule().getModifications());
         }
         clone.getExperimentalEffects().addAll(this.getSlot().getShipModule().getExperimentalEffects());
+        if(this.getSlot().getOldShipModule() != null && isSimilar(clone, this.getSlot().getOldShipModule())){
+            clone.setBuyPrice(this.getSlot().getOldShipModule().getBuyPrice());
+        }
         this.getSlot().setShipModule(clone);
         notifyChanged();
         this.refresh();
     }
 
+    private boolean isSimilar(ShipModule shipModule, ShipModule oldModule) {
+        return shipModule.getName().getBlueprintGroup().equals(oldModule.getName().getBlueprintGroup()) &&
+                Objects.equals(shipModule.getId(), oldModule.getId()) &&
+                shipModule.getAllowedBlueprints().size() == oldModule.getAllowedBlueprints().size() &&
+                shipModule.getAllowedExperimentalEffects().size() == oldModule.getAllowedExperimentalEffects().size() &&
+                shipModule.getAllowedBlueprints().containsAll(oldModule.getAllowedBlueprints()) &&
+                shipModule.getAllowedExperimentalEffects().containsAll(oldModule.getAllowedExperimentalEffects());
+    }
     private void updateBlueprints(ShipModule shipModule, ShipModule oldShipModule) {
 
         this.blueprints.textProperty().bind(
@@ -824,6 +836,7 @@ class SlotBox extends StackPane {
         final Button restore = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.restore")).withOnAction(event -> {
             this.slot.setShipModule(this.slot.getOldShipModule().Clone());
             refresh();
+            notifyChanged();
             close();
         }).build();
         final Button save = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.save")).withOnAction(event -> {
@@ -939,6 +952,7 @@ class SlotBox extends StackPane {
                                             notifyChanged();
                                             refresh();
                                         }).build();
+                                button.setFocusTraversable(false);
                                 button.selectedProperty().set((experimental ? shipModule.getExperimentalEffects().contains(horizonsBlueprintType) : shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(horizonsBlueprintType))));
                                 button.selectedProperty().addListener((observable, oldValue, newValue) ->
                                 {
@@ -1008,6 +1022,7 @@ class SlotBox extends StackPane {
                     notifyChanged();
                     refresh();
                 }).build();
+                toggleButton.setFocusTraversable(false);
                 toggleButton.setToggleGroup(toggleGroupRank);
                 toggleButton.disableProperty().bind(toggleGroup.selectedToggleProperty().isNull().or(maxGrade.lessThan(horizonsBlueprintGrade.getGrade())));
                 toggleButton.disableProperty().addListener((observable, oldValue, newValue) -> {
@@ -1049,6 +1064,7 @@ class SlotBox extends StackPane {
 //                        refresh();
 //                    })
                     .build();
+            progressSlider.setFocusTraversable(false);
             Observable.create((ObservableEmitter<Number> emitter) -> progressSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
                         shipModule.getModifications().getFirst().setModificationCompleteness(BigDecimal.valueOf(newValue.doubleValue()).divide(BigDecimal.valueOf(100D)));
                         shipModule.getModifiers().clear();

@@ -134,7 +134,7 @@ public abstract class ShipModule implements Serializable {
     @EqualsAndHashCode.Include
     private final ModuleSize moduleSize;
     @Getter
-    private final int basePrice;
+    private final long basePrice;
     @Getter
     private final Origin origin;
     @Getter
@@ -148,6 +148,9 @@ public abstract class ShipModule implements Serializable {
     @Getter
     private final List<HorizonsBlueprintType> experimentalEffects = new ArrayList<>();
     @Getter
+    @Setter
+    private Long buyPrice;
+    @Getter
     private boolean powered = true;
     @Getter
     @Setter
@@ -158,19 +161,19 @@ public abstract class ShipModule implements Serializable {
     @Setter
     private int powerGroup = 1;
 
-    public ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    public ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
     }
 
-    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, origin, false, basePrice, internalName, attributes);
     }
 
-    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final boolean multiCrew, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, Origin.HUMAN, multiCrew, basePrice, internalName, attributes);
     }
 
-    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final boolean multiCrew, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this.id = id;
         this.name = name;
         this.moduleSize = moduleSize;
@@ -204,6 +207,7 @@ public abstract class ShipModule implements Serializable {
         this.powerGroup = shipModule.powerGroup;
         this.powered = shipModule.powered;
         this.powerToggle = shipModule.powerToggle;
+        this.buyPrice = shipModule.buyPrice;
     }
 
     public static List<ShipModule> getModules(final SlotType slotType) {

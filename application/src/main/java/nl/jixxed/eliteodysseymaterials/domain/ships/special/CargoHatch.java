@@ -19,7 +19,7 @@ public class CargoHatch extends ShipModule {
     public CargoHatch(CargoHatch cargoHatch) {
         super(cargoHatch);
     }
-    private CargoHatch(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    private CargoHatch(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
     @Override

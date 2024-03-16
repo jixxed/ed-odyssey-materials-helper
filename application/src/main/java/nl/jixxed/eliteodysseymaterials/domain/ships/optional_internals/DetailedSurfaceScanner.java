@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class DetailedSurfaceScanner extends OptionalModule {
     public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 0.20)));
-    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I_V1_PRE = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I_V1_PRE", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER_PRE, ModuleSize.SIZE_1, ModuleClass.I, false, 250000, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 0.20)));
+    public static final DetailedSurfaceScanner DETAILED_SURFACE_SCANNER_1_I_V1_PRE = new DetailedSurfaceScanner("DETAILED_SURFACE_SCANNER_1_I_V1_PRE", HorizonsBlueprintName.DETAILED_SURFACE_SCANNER_PRE, ModuleSize.SIZE_1, ModuleClass.I, false, 0, "Int_DetailedSurfaceScanner_Tiny", Map.ofEntries( Map.entry(HorizonsModifier.INTEGRITY, 20.0), Map.entry(HorizonsModifier.AMMO_CLIP_SIZE, 3.0), Map.entry(HorizonsModifier.DSS_PATCH_RADIUS, 0.20)));
     static {
         DETAILED_SURFACE_SCANNER_1_I_V1_PRE.getModifications().add(
                     new Modification(HorizonsBlueprintType.EXPANDED_PROBE_SCANNING_RADIUS_X2, 1.0, HorizonsBlueprintGrade.GRADE_5)
@@ -23,11 +23,11 @@ public class DetailedSurfaceScanner extends OptionalModule {
             DETAILED_SURFACE_SCANNER_1_I,
             DETAILED_SURFACE_SCANNER_1_I_V1_PRE
     );
-    public DetailedSurfaceScanner(final String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public DetailedSurfaceScanner(final String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, multiCrew, basePrice, internalName, attributes);
     }
 
-    public DetailedSurfaceScanner(final String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public DetailedSurfaceScanner(final String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, multiCrew, basePrice, internalName, attributes);
     }
 

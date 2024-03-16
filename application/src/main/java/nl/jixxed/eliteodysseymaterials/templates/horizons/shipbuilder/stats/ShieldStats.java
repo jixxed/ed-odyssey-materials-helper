@@ -2,35 +2,40 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
+import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
 
 @Slf4j
 public class ShieldStats extends Stats implements Template {
-    //    private DestroyableLabel resistanceKinetic;
-//    private DestroyableLabel resistanceThermal;
-//    private DestroyableLabel resistanceExplosive;
-//    private DestroyableLabel resistanceCaustic;
-//    private DestroyableLabel strengthRaw;
-//    private DestroyableLabel strengthKinetic;
-//    private DestroyableLabel strengthThermal;
-//    private DestroyableLabel strengthExplosive;
-//    private DestroyableLabel strengthCaustic;
     private Shield shieldResistance;
     private Shield shieldIntegrity;
+    private DestroyableLabel regenTime;
+    private DestroyableLabel rebuildTime;
 
     public ShieldStats() {
         super();
@@ -42,28 +47,31 @@ public class ShieldStats extends Stats implements Template {
     public void initComponents() {
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.shield"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        shieldResistance = new Shield("RES", "%", "blue");
+        shieldIntegrity = new Shield("STR", "\u2795", "red");
+        final VBox shields = BoxBuilder.builder().withNodes(shieldResistance, shieldIntegrity).buildVBox();
+        regenTime = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.shield.build.unit", 0)).build();
+        rebuildTime = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.shield.build.unit", 0)).build();
+        final DestroyableLabel regen = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.shield.regen")).build();
+        final DestroyableLabel rebuild = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.shield.rebuild")).build();
+        Tooltip.install(regen, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(LocaleService.getStringBinding("ship.stats.shield.regen.tooltip")).build());
+        Tooltip.install(rebuild, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(LocaleService.getStringBinding("ship.stats.shield.rebuild.tooltip")).build());
 
-//        this.resistanceKinetic = createValueLabel(String.format("%.2f", calculateResistanceKinetic()));
-//        this.resistanceThermal = createValueLabel(String.format("%.2f", calculateResistanceThermal()));
-//        this.resistanceExplosive = createValueLabel(String.format("%.2f", calculateResistanceExplosive()));
-//        this.resistanceCaustic = createValueLabel(String.format("%.2f", calculateResistanceCaustic()));
-//        this.strengthRaw = createValueLabel(String.format("%.2f", calculateStrengthRaw()));
-//        this.strengthKinetic = createValueLabel(String.format("%.2f", calculateStrengthKinetic()));
-//        this.strengthThermal = createValueLabel(String.format("%.2f", calculateStrengthThermal()));
-//        this.strengthExplosive = createValueLabel(String.format("%.2f", calculateStrengthExplosive()));
-//        this.strengthCaustic = createValueLabel(String.format("%.2f", calculateStrengthCaustic()));
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.resistancekinetic"), new GrowingRegion(), this.resistanceKinetic).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.resistancethermal"), new GrowingRegion(), this.resistanceThermal).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.resistanceexplosive"), new GrowingRegion(), this.resistanceExplosive).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.resistancecaustic"), new GrowingRegion(), this.resistanceCaustic).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengthraw"), new GrowingRegion(), this.strengthRaw).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengthkinetic"), new GrowingRegion(), this.strengthKinetic).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengththermal"), new GrowingRegion(), this.strengthThermal).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengthexplosive"), new GrowingRegion(), this.strengthExplosive).buildHBox());
-//        this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.shield.strengthcaustic"), new GrowingRegion(), this.strengthCaustic).buildHBox());
-        shieldResistance = new Shield("RES","%", "blue");
-        shieldIntegrity = new Shield("HP","\u2795", "red");
-        this.getChildren().addAll(shieldResistance, shieldIntegrity);
+        final VBox rebuildBox = BoxBuilder.builder().withNodes(new GrowingRegion(),
+                BoxBuilder.builder().withNodes(
+                                regenTime,
+                                new GrowingRegion(),
+                                rebuildTime)
+                        .buildHBox(),
+                BoxBuilder.builder().withNodes(
+                                regen,
+                                new GrowingRegion(),
+                                rebuild)
+                        .buildHBox()
+        ).buildVBox();
+        final StackPane stackPane = new StackPane(shields, rebuildBox);
+        stackPane.getStyleClass().add("shield-stats-stackpane");
+        this.getChildren().addAll(stackPane);
 
     }
 
@@ -187,17 +195,45 @@ public class ShieldStats extends Stats implements Template {
 
     @Override
     protected void update() {
-//        this.resistanceKinetic.setText(String.format("%.2f", calculateResistanceKinetic()));
-//        this.resistanceThermal.setText(String.format("%.2f", calculateResistanceThermal()));
-//        this.resistanceExplosive.setText(String.format("%.2f", calculateResistanceExplosive()));
-//        this.resistanceCaustic.setText(String.format("%.2f", calculateResistanceCaustic()));
-//        this.strengthRaw.setText(String.format("%.2f", calculateStrengthRaw()));
-//        this.strengthKinetic.setText(String.format("%.2f", calculateStrengthKinetic()));
-//        this.strengthThermal.setText(String.format("%.2f", calculateStrengthThermal()));
-//        this.strengthExplosive.setText(String.format("%.2f", calculateStrengthExplosive()));
-//        this.strengthCaustic.setText(String.format("%.2f", calculateStrengthCaustic()));
         shieldResistance.updateValues(0D, calculateResistanceKinetic(), calculateResistanceThermal(), calculateResistanceCaustic(), calculateResistanceExplosive());
         shieldIntegrity.updateValues(calculateStrengthRaw(), calculateStrengthKinetic(), calculateStrengthThermal(), calculateStrengthCaustic(), calculateStrengthExplosive());
+        regenTime.textProperty().bind(LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRegenTime())));
+        rebuildTime.textProperty().bind(LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRebuildTime())));
 
+    }
+
+    private Double calculateRegenTime() {
+        return getShip().map(ship -> ship.getOptionalSlots().stream()
+                .filter(optSlot -> optSlot.getShipModule() instanceof ShieldGenerator)
+                .findFirst()
+                .map(sgSlot -> {
+                    final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst();
+                    final double systemRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
+                    final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
+                    final Double regenRate = (Double)sgSlot.getShipModule().getAttributeValue(REGEN_RATE);
+                    final Double energyPerRegen = (Double)sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
+                    final double rawShieldStrength = rawShieldStrength();
+                    final Double fastTime = 0D;
+                    final Double slowTime = (rawShieldStrength / 2) / Math.min(regenRate, (systemRecharge * multiplier) / energyPerRegen);
+                    return fastTime + slowTime;
+                }).orElse(0D)).orElse(0D);
+    }
+
+    private Double calculateRebuildTime() {
+        return getShip().map(ship -> ship.getOptionalSlots().stream()
+                .filter(optSlot -> optSlot.getShipModule() instanceof ShieldGenerator)
+                .findFirst()
+                .map(sgSlot -> {
+                    final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst();
+                    final double systemCapacity = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_CAPACITY)).orElse(0D);
+                    final double systemRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
+                    final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
+                    final Double brokenRegenRate = (Double)sgSlot.getShipModule().getAttributeValue(BROKEN_REGEN_RATE);
+                    final Double energyPerRegen = (Double)sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
+                    final double rawShieldStrength = rawShieldStrength();
+                    final Double fastTime = Math.min((rawShieldStrength / 2) / brokenRegenRate, (systemCapacity / Math.max(0, brokenRegenRate * energyPerRegen - systemRecharge * multiplier)));
+                    final Double slowTime = ((rawShieldStrength / 2) - brokenRegenRate * fastTime) / Math.min(brokenRegenRate, (systemRecharge * multiplier) / energyPerRegen);
+                    return 16D + fastTime + slowTime;
+                }).orElse(0D)).orElse(0D);
     }
 }

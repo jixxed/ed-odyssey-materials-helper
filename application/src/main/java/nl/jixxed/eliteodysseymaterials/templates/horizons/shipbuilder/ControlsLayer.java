@@ -190,6 +190,9 @@ public class ControlsLayer extends AnchorPane implements Template {
         this.addChangedToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.blueprint.add.changed.to.wishlist")).build();
         this.addChangedToWishlist.disableProperty().bind(this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT));
 
+        this.addAllToWishlist.setFocusTraversable(false);
+        this.addChangedToWishlist.setFocusTraversable(false);
+        this.shipSelect.setFocusTraversable(false);
         HBox dragDropHint = BoxBuilder.builder().withNodes(
                 LabelBuilder.builder().withStyleClasses("ship-hint-yellow", "ship-hint-box").withText(LocaleService.getStringBinding("tab.ships.dragdrop.hint")).build(),
                 LabelBuilder.builder().withStyleClasses("ship-hint-white", "ship-hint-explain").withText(LocaleService.getStringBinding("tab.ships.dragdrop.hint.explain")).build()

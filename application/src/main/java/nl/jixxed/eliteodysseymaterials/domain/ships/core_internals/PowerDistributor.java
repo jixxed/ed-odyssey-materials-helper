@@ -124,10 +124,10 @@ public class PowerDistributor extends CoreModule {
             GUARDIAN_HYBRID_POWER_DISTRIBUTOR_7_A,
             GUARDIAN_HYBRID_POWER_DISTRIBUTOR_8_A
     );
-    private PowerDistributor(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    private PowerDistributor(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
-    private PowerDistributor(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    private PowerDistributor(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin,basePrice, internalName, attributes);
     }
 

@@ -401,7 +401,7 @@ public class Armour extends CoreModule {
     @Getter
     private final ArmourType armourType;
 
-    private Armour(final String id, final ShipType shipType, final ArmourType armourType, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    private Armour(final String id, final ShipType shipType, final ArmourType armourType, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
         this.shipType = shipType;
         this.armourType = armourType;

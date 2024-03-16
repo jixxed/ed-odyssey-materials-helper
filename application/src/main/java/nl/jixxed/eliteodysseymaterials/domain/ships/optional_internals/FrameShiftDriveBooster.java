@@ -27,7 +27,7 @@ public class FrameShiftDriveBooster extends OptionalModule {
         super(frameShiftDriveBooster);
     }
 
-    public FrameShiftDriveBooster(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final int basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
+    public FrameShiftDriveBooster(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final Origin origin, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, false, basePrice, internalName, attributes);
     }
 

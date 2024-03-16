@@ -30,6 +30,9 @@ public class ShipConfigurationOldModule {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer powerGroup;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long buyPrice;
+
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Map<HorizonsModifier, Object> modifiers = new HashMap<>();
 

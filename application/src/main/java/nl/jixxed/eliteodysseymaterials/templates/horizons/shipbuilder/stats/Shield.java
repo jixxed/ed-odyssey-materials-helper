@@ -65,11 +65,6 @@ public class Shield extends StackPane implements Template {
         this.getChildren().add(shieldBox);
         final VBox titleBox = BoxBuilder.builder().withNodes( BoxBuilder.builder().withNodes(new GrowingRegion(), LabelBuilder.builder().withStyleClasses("shield-label-" + color, "shield-label-symbol").withNonLocalizedText(symbol).build(), new GrowingRegion()).buildHBox(), BoxBuilder.builder().withNodes(new GrowingRegion(), LabelBuilder.builder().withStyleClasses("shield-label-" + color, "shield-label-title").withNonLocalizedText(title).build(), new GrowingRegion()).buildHBox(), new GrowingRegion()).buildVBox();
         this.getChildren().add(titleBox);
-//        final DestroyableLabel symbolLabel = LabelBuilder.builder().withStyleClasses("shield-label-" + color, "shield-label-symbol").withNonLocalizedText(symbol + "\n").build();
-//        final HBox symbolBox = BoxBuilder.builder().withNodes(new GrowingRegion(), symbolLabel, new GrowingRegion()).buildHBox();
-//        final Group e = new Group(symbolLabel);
-//        this.getChildren().add(e);
-//        StackPane.setAlignment(e, Pos.TOP_CENTER);
         rawTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withNonLocalizedText("Raw").build();
         kineticTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withNonLocalizedText("Kinetic").build();
         thermalTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withNonLocalizedText("Thermal").build();

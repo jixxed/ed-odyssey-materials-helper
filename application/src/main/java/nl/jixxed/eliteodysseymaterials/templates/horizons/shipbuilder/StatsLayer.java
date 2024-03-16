@@ -34,7 +34,8 @@ public class StatsLayer extends AnchorPane implements Template {
                 BoxBuilder.builder().withNodes(new JumpStats(), new GrowingRegion(), new EngineStats()).buildVBox(),
 //                new JumpStats(),
 //                new EngineStats(),
-                new HandlingStats(),
+                BoxBuilder.builder().withNodes(new HandlingStats(), new GrowingRegion(), new PriceStats()).buildVBox(),
+
                 new ArmourStats(),
                 new ShieldStats(),
 //                new WeaponStats()

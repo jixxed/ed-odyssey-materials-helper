@@ -16,11 +16,11 @@ public class ElectronicCountermeasure extends UtilityModule {
     public static final List<ElectronicCountermeasure> ELECTRONIC_COUNTERMEASURES = List.of(
             ELECTRONIC_COUNTERMEASURE_0_F
     );
-    public ElectronicCountermeasure(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public ElectronicCountermeasure(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
     super(id, name, moduleSize, moduleClass, multiCrew, mounting, basePrice, internalName, attributes);
 }
 
-    public ElectronicCountermeasure(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, Mounting mounting, int basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
+    public ElectronicCountermeasure(String id, HorizonsBlueprintName name, ModuleSize moduleSize, ModuleClass moduleClass, Origin origin, boolean multiCrew, Mounting mounting, long basePrice, String internalName, Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, origin, multiCrew, mounting, basePrice, internalName, attributes);
     }
 

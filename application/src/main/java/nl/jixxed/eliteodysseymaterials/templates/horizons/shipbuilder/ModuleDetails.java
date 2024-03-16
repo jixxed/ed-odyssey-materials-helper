@@ -1,19 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.beans.binding.StringBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.HardpointModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
@@ -34,13 +34,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 public class ModuleDetails extends VBox implements Template {
 
+    private VBox properties;
+
     private VBox attributes;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private Button legacySaveButton;
+    private DestroyableLabel modulePrice;
+    private DestroyableLabel moduleEngineering;
+    private DestroyableLabel moduleName;
+    private BooleanProperty hasModule = new SimpleBooleanProperty(false);
 
     public ModuleDetails() {
         initComponents();
@@ -58,20 +66,88 @@ public class ModuleDetails extends VBox implements Template {
                     }
                 }
         );
-        this.getChildren().add(LabelBuilder.builder().withStyleClass("module-details-title").withNonLocalizedText("Module specs").build());
+        moduleName = LabelBuilder.builder().withStyleClass("module-details-title").withNonLocalizedText("").build();
+        this.getChildren().add(moduleName);
+        moduleName.visibleProperty().bind(hasModule);
+        properties = BoxBuilder.builder().buildVBox();
+        properties.visibleProperty().bind(hasModule);
+        this.getChildren().add(properties);
+        final DestroyableLabel moduleSpecs = LabelBuilder.builder().withStyleClass("module-details-title").withText(LocaleService.getStringBinding("module.details.module.specs")).build();
+        moduleSpecs.visibleProperty().bind(hasModule);
+        this.getChildren().add(moduleSpecs);
         attributes = BoxBuilder.builder().buildVBox();
+        attributes.visibleProperty().bind(hasModule);
         this.getChildren().add(attributes);
         this.getChildren().add(new GrowingRegion());
+    }
+
+    private void addEngineering(String text) {
+        properties.getChildren().add(getSeparator());
+        moduleEngineering = LabelBuilder.builder().withStyleClass("module-details-value").withNonLocalizedText(text).build();
+        final FlowPane flowPane = getFlowPane(
+                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.engineering")).build(),
+                new HBox(moduleEngineering)
+        );
+        properties.getChildren().add(flowPane);
+    }
+
+    private void addPrice(String text) {
+        properties.getChildren().add(getSeparator());
+        modulePrice = LabelBuilder.builder().withStyleClass("module-details-value").withText(LocaleService.getStringBinding("module.details.price.value", text)).build();
+        final FlowPane flowPane = getFlowPane(
+                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.price")).build(),
+                new HBox(modulePrice)
+        );
+        properties.getChildren().add(flowPane);
+    }
+
+    private void addBuyPrice(String text) {
+        properties.getChildren().add(getSeparator());
+        modulePrice = LabelBuilder.builder().withStyleClass("module-details-value").withText(LocaleService.getStringBinding("module.details.buyprice.value", text)).build();
+        final FlowPane flowPane = getFlowPane(
+                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.buyprice")).build(),
+                new HBox(modulePrice)
+        );
+        properties.getChildren().add(flowPane);
+    }
+
+    private void addRebuyPrice(String text) {
+        properties.getChildren().add(getSeparator());
+        modulePrice = LabelBuilder.builder().withStyleClass("module-details-value").withText(LocaleService.getStringBinding("module.details.rebuyprice.value", text)).build();
+        final FlowPane flowPane = getFlowPane(
+                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.rebuyprice")).build(),
+                new HBox(modulePrice)
+        );
+        properties.getChildren().add(flowPane);
     }
 
     @Override
     public void initEventHandling() {
         EVENT_LISTENERS.add(EventService.addListener(this, ModuleHighlightEvent.class, (event) -> {
             ShipModule shipModule = event.getShipModule();
+
+            properties.getChildren().clear();
             this.getChildren().remove(legacySaveButton);
             attributes.getChildren().clear();
-            attributes.getChildren().add(new Separator(Orientation.HORIZONTAL));
-            if (shipModule != null) {
+            final boolean modulePresent = shipModule != null;
+            hasModule.set(modulePresent);
+            if (modulePresent) {
+                attributes.getChildren().add(getSeparator());
+                addPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBasePrice()));
+                if (shipModule.getBuyPrice() != null) {
+                    addBuyPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBuyPrice()));
+                }
+                addRebuyPrice(Formatters.NUMBER_FORMAT_0.format((shipModule.getBuyPrice() != null ? shipModule.getBuyPrice() : shipModule.getBasePrice()) * 0.05));
+                if (!shipModule.getModifications().isEmpty()) {
+                    addEngineering(Stream.concat(shipModule.getModifications().stream()
+                                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey())),
+                                    shipModule.getExperimentalEffects().stream()
+                                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getLocalizationKey())))
+                            .collect(Collectors.joining(", ")));
+                }
+                properties.getChildren().add(getSeparator());
+                moduleName.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize().intValue() + shipModule.getModuleClass() + ((shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting().getShortName() : "")));
+
                 shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
                     addAttribute(horizonsModifier, shipModule);
                 });
@@ -85,6 +161,12 @@ public class ModuleDetails extends VBox implements Template {
             }
 
         }));
+    }
+
+    private static Separator getSeparator() {
+        final Separator separator = new Separator(Orientation.HORIZONTAL);
+        separator.getStyleClass().add("module-details-line");
+        return separator;
     }
 
     private void addAttribute(HorizonsModifier horizonsModifier, ShipModule shipModule) {
@@ -105,75 +187,9 @@ public class ModuleDetails extends VBox implements Template {
                 } else {
                     doubleLIneWithEstimatedValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue, (Double) estimatedValue);
                 }
-                final FlowPane flowPane = FlowPaneBuilder.builder()
-                        .withStyleClass("fit-to-width")
-                        .withNodes(
-                                title,
-                                valuesLine
-                        )
-                        .withOrientation(Orientation.HORIZONTAL)
-                        .build();
+                final FlowPane flowPane = getFlowPane(title, valuesLine);
                 this.attributes.visibleProperty().bind(flowPane.needsLayoutProperty().not());
-//                flowPane.setVisible(false);
-                flowPane.maxHeightProperty().bind(title.heightProperty().add(valuesLine.heightProperty()));
-                flowPane.prefWidthProperty().bind(this.widthProperty());
-//                final double itemsWidth2 = flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum();
-//                final double parentWidth2 = this.getWidth();
-//                if(parentWidth2 < itemsWidth2 + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                    flowPane.setOrientation(Orientation.VERTICAL);
-//                    title.setPadding(new Insets(0,parentWidth2 - title.getWidth() ,0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                    valuesLine.setPadding(new Insets(0 , ScalingHelper.getPixelDoubleFromEm(0.2),0,parentWidth2 - valuesLine.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                }else{
-//                    flowPane.setHgap((parentWidth2 - itemsWidth2 - ScalingHelper.getPixelDoubleFromEm(0.4)));
-//                    title.setPadding(new Insets(0,0,0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                    valuesLine.setPadding(new Insets(0 , ScalingHelper.getPixelDoubleFromEm(0.2),0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                }
-                flowPane.needsLayoutProperty().addListener(((observable, oldValue, newValue) -> {
-                    final double itemsWidth = flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum();
-                    final double parentWidth = this.getWidth();
-                    if (parentWidth >= itemsWidth + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-                        flowPane.setHgap((parentWidth - itemsWidth - ScalingHelper.getPixelDoubleFromEm(0.4)));
-                        title.setPadding(new Insets(0, 0, 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-                        valuesLine.setPadding(new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-                    } else if (Orientation.HORIZONTAL.equals(flowPane.getOrientation())) {
-                        flowPane.setOrientation(Orientation.VERTICAL);
-                        title.setPadding(new Insets(0, parentWidth - title.getWidth(), 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-                        valuesLine.setPadding(new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, parentWidth - valuesLine.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2)));
-                    }
-                }));
-//                flowPane.orientationProperty().bind(flowPane.maxHeightProperty()
-//                        .map(parentWidth -> {
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return Orientation.HORIZONTAL;
-//                            }else{
-//                                return Orientation.VERTICAL;
-//                            }
-//                        }));
-//                flowPane.hgapProperty().bind(flowPane.orientationProperty()
-//                        .map(parentWidth -> {
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return this.getWidth() - flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() - ScalingHelper.getPixelDoubleFromEm(0.4);
-//                            }else{
-//                                return 0D;
-//                            }
-//                        }));
-//                title.paddingProperty().bind(flowPane.orientationProperty()
-//                        .map(parentWidth -> {
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return new Insets(0, 0, 0, ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }else{
-//                                return new Insets(0, this.widthProperty().doubleValue() - title.getWidth(), 0, ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }
-//                        }));
-//                valuesLine.paddingProperty().bind(flowPane.orientationProperty()
-//                        .map(parentWidth -> {
-////                            flowPane.setVisible(true);
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }else{
-//                                return new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, this.widthProperty().doubleValue() - valuesLine.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }
-//                        }));
+
                 attribute.getChildren().add(
                         flowPane
                 );
@@ -181,88 +197,47 @@ public class ModuleDetails extends VBox implements Template {
                     addTooltip(horizonsModifier, shipModule, (Double) originalAttributeValue, (Double) minValue, (Double) maxValue, (Double) estimatedValue, attribute);
                 }
                 attributes.getChildren().add(attribute);
-                attributes.getChildren().add(new Separator(Orientation.HORIZONTAL));
+                attributes.getChildren().add(getSeparator());
             } else {
-                valuesLine.getChildren().addAll(
-                        LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(originalAttributeValue)).build()
-                );
+                valuesLine.getChildren().add(LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(originalAttributeValue)).build());
 
-                final FlowPane flowPane = FlowPaneBuilder.builder()
-                        .withStyleClass("fit-to-width")
-                        .withNodes(
-                                title,
-                                valuesLine
-                        )
-                        .withOrientation(Orientation.HORIZONTAL)
-                        .build();
+                final FlowPane flowPane = getFlowPane(title, valuesLine);
                 this.attributes.visibleProperty().bind(flowPane.needsLayoutProperty().not());
-                flowPane.prefWidthProperty().bind(this.widthProperty());
-                flowPane.maxHeightProperty().bind(title.heightProperty().add(valuesLine.heightProperty()));
-//                final double itemsWidth2 = flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum();
-//                final double parentWidth2 = this.getWidth();
-//                if(parentWidth2 < itemsWidth2 + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                    flowPane.setOrientation(Orientation.VERTICAL);
-//                    title.setPadding(new Insets(0,parentWidth2 - title.getWidth() ,0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                    valuesLine.setPadding(new Insets(0 , ScalingHelper.getPixelDoubleFromEm(0.2),0,parentWidth2 - valuesLine.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                }else{
-//                    flowPane.setHgap((parentWidth2 - itemsWidth2 - ScalingHelper.getPixelDoubleFromEm(0.4)));
-//                    title.setPadding(new Insets(0,0,0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                    valuesLine.setPadding(new Insets(0 , ScalingHelper.getPixelDoubleFromEm(0.2),0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-//                }
-                flowPane.needsLayoutProperty().addListener(((observable, oldValue, newValue) -> {
-                    final double itemsWidth = flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum();
-                    final double parentWidth = this.getWidth();
-                    if (parentWidth >= itemsWidth + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-                        flowPane.setHgap((parentWidth - itemsWidth - ScalingHelper.getPixelDoubleFromEm(0.4)));
-                        title.setPadding(new Insets(0, 0, 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-                        valuesLine.setPadding(new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
 
-                    } else if (Orientation.HORIZONTAL.equals(flowPane.getOrientation())) {
-                        flowPane.setOrientation(Orientation.VERTICAL);
-                        title.setPadding(new Insets(0, parentWidth - title.getWidth(), 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
-                        valuesLine.setPadding(new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, parentWidth - valuesLine.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2)));
-                    }
-                }));
-//                flowPane.orientationProperty().bind(flowPane.maxHeightProperty()
-//                        .map(parentWidth -> {
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return Orientation.HORIZONTAL;
-//                            }else{
-//                                return Orientation.VERTICAL;
-//                            }
-//                        }));
-//                flowPane.hgapProperty().bind(flowPane.orientationProperty()
-//                        .map(parentWidth -> {
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return this.getWidth() - flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() - ScalingHelper.getPixelDoubleFromEm(0.4);
-//                            }else{
-//                                return 0D;
-//                            }
-//                        }));
-//                title.paddingProperty().bind(flowPane.orientationProperty()
-//                        .map(parentWidth -> {
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return new Insets(0, 0, 0, ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }else{
-//                                return new Insets(0, this.widthProperty().doubleValue() - title.getWidth(), 0, ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }
-//                        }));
-//                valuesLine.paddingProperty().bind(flowPane.orientationProperty()
-//                        .map(parentWidth -> {
-////                            flowPane.setVisible(true);
-//                            if(this.widthProperty().doubleValue() >= flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum() + ScalingHelper.getPixelDoubleFromEm(0.8)) {
-//                                return new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }else{
-//                                return new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, this.widthProperty().doubleValue() - valuesLine.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2));
-//                            }
-//                        }));
                 attribute.getChildren().add(
                         flowPane
                 );
                 attributes.getChildren().add(attribute);
-                attributes.getChildren().add(new Separator(Orientation.HORIZONTAL));
+                attributes.getChildren().add(getSeparator());
             }
         }
+    }
+
+    private FlowPane getFlowPane(DestroyableLabel title, Pane valuesLine) {
+        final FlowPane flowPane = FlowPaneBuilder.builder()
+                .withStyleClass("fit-to-width")
+                .withNodes(
+                        title,
+                        valuesLine
+                )
+                .withOrientation(Orientation.HORIZONTAL)
+                .build();
+        flowPane.maxHeightProperty().bind(title.heightProperty().add(valuesLine.heightProperty()));
+        flowPane.prefWidthProperty().bind(this.widthProperty());
+        flowPane.needsLayoutProperty().addListener(((observable, oldValue, newValue) -> {
+            final double itemsWidth = flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum();
+            final double parentWidth = this.getWidth();
+            if (parentWidth >= itemsWidth + ScalingHelper.getPixelDoubleFromEm(0.8)) {
+                flowPane.setHgap((parentWidth - itemsWidth - ScalingHelper.getPixelDoubleFromEm(0.4)));
+                title.setPadding(new Insets(0, 0, 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
+                valuesLine.setPadding(new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
+            } else if (Orientation.HORIZONTAL.equals(flowPane.getOrientation())) {
+                flowPane.setOrientation(Orientation.VERTICAL);
+                title.setPadding(new Insets(0, parentWidth - title.getWidth(), 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
+                valuesLine.setPadding(new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.2), 0, parentWidth - valuesLine.getWidth() - ScalingHelper.getPixelDoubleFromEm(0.2)));
+            }
+        }));
+        return flowPane;
     }
 
     private static void addTooltip(HorizonsModifier horizonsModifier, ShipModule shipModule, Double originalAttributeValue, Double minValue, Double maxValue, Double estimatedValue, VBox attribute) {
