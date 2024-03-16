@@ -17,8 +17,9 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.utility.SinkLauncher;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -35,6 +36,10 @@ import java.util.stream.Stream;
 
 @Slf4j
 class LoadoutMapperTest {
+    @BeforeEach
+    public void setUp() {
+        ShipModule.getBasicModules();
+    }
     @Test
     public void getShipSlotIndexes() {
         final Ship ship = ShipService.createBlankShip(ShipType.FEDERATION_CORVETTE);
@@ -518,7 +523,7 @@ class LoadoutMapperTest {
         }
     }
     @Test
-    @Ignore
+    @Disabled
     public void rebuy(){
 //        "HullValue": 6136672,
 //        "ModulesValue": 38003650,
