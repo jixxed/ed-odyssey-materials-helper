@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
@@ -181,7 +182,7 @@ public class ControlsLayer extends AnchorPane implements Template {
                         "tab.ships.rename", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
                         "tab.ships.copy", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
                         "tab.ships.delete", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
-                        "tab.ships.reset", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT)
+                        "tab.ships.reset", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT).or(Bindings.createBooleanBinding(() ->  this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null,this.shipSelect.getSelectionModel().selectedItemProperty()))
                 )).build();
         this.menuButton.setFocusTraversable(false);
         final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
@@ -190,6 +191,8 @@ public class ControlsLayer extends AnchorPane implements Template {
         this.addChangedToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.blueprint.add.changed.to.wishlist")).build();
         this.addChangedToWishlist.disableProperty().bind(this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT));
 
+        this.addAllToWishlist.visibleProperty().bind(this.shipSelect.getSelectionModel().selectedItemProperty().map(s->s.getShipType() != null));
+        this.addChangedToWishlist.visibleProperty().bind(this.shipSelect.getSelectionModel().selectedItemProperty().map(s->s.getShipType() != null));
         this.addAllToWishlist.setFocusTraversable(false);
         this.addChangedToWishlist.setFocusTraversable(false);
         this.shipSelect.setFocusTraversable(false);
@@ -214,7 +217,7 @@ public class ControlsLayer extends AnchorPane implements Template {
                 LabelBuilder.builder().withStyleClasses("ship-hint-white", "ship-hint-explain").withText(LocaleService.getStringBinding("tab.ships.yellowblue.hint.explain")).build()
         ).buildHBox();
         final PopOver popOver = new PopOver();
-        final VBox contentNode = BoxBuilder.builder().withNodes(dragDropHint, lockModeHint, legacyHint,liveModeHint,yellowBlueHint).buildVBox();
+        final VBox contentNode = BoxBuilder.builder().withNodes(dragDropHint, lockModeHint, legacyHint, liveModeHint, yellowBlueHint).buildVBox();
         contentNode.getStyleClass().add("help-popover");
         popOver.setArrowLocation(PopOver.ArrowLocation.TOP_RIGHT);
         popOver.setContentNode(contentNode);
@@ -222,6 +225,7 @@ public class ControlsLayer extends AnchorPane implements Template {
         this.shipsHelp = ResizableImageViewBuilder.builder().withOnMouseClicked(event -> {
             popOver.show(this.shipsHelp, event.getScreenX(), event.getScreenY());
         }).withStyleClasses("help-image", "ships-help-image").withImage("/images/other/help.png").build();
+        this.shipsHelp.visibleProperty().bind(this.shipSelect.getSelectionModel().selectedItemProperty().map(s->s.getShipType() != null));
 
         final HBox hBoxShips = BoxBuilder.builder().withStyleClass("shipbuilder-controls-box").withNodes(this.shipSelect, this.menuButton, this.addAllToWishlist, this.addChangedToWishlist, new GrowingRegion(), this.shipsHelp).buildHBox();
         hBoxShips.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));

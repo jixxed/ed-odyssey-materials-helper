@@ -128,7 +128,7 @@ class SlotBox extends StackPane {
                     final String effects = mod.getExperimentalEffects().stream()
                             .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey()))
                             .collect(Collectors.joining(", "));
-                    return mods + ((effects.isEmpty()) ? "" : ", " + effects);
+                    return mods + ((mods.isEmpty() || effects.isEmpty()) ? "" : ", " + effects);
                 }).orElse(""))
         ).build();
         updateBlueprints(slot.getShipModule(), slot.getOldShipModule());
@@ -571,7 +571,7 @@ class SlotBox extends StackPane {
                     final String effects = mod.getExperimentalEffects().stream()
                             .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey(true)))
                             .collect(Collectors.joining(", "));
-                    return mods + ((effects.isEmpty()) ? "" : ", " + effects);
+                    return mods + ((mods.isEmpty() || effects.isEmpty()) ? "" : ", " + effects);
                 }).orElse(""))
         );
         if (similarModules(shipModule, oldShipModule)) {

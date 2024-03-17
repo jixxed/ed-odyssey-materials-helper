@@ -352,18 +352,20 @@ public abstract class ShipModule implements Serializable {
                 log.error("Error modifying value", t);
             }
         }
-        this.experimentalEffects.forEach(modification -> {
-            final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name.getPrimary()).get(modification);
-            final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(moduleAttribute);
-            if (experimentalEffectModifier != null) {
+        if(!this.modifications.isEmpty()) {
+            this.experimentalEffects.forEach(modification -> {
+                final HorizonsBlueprint experimentalEffectBlueprint = HorizonsBlueprintConstants.getExperimentalEffects().get(this.name.getPrimary()).get(modification);
+                final HorizonsModifierValue experimentalEffectModifier = experimentalEffectBlueprint.getModifiers().get(moduleAttribute);
+                if (experimentalEffectModifier != null) {
 //                value.set(experimentalEffectModifier.getModifiedValue(value.get(), 1D));
-                try {
-                    value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
-                } catch (final Throwable t) {
-                    log.error("Error modifying value", t);
+                    try {
+                        value.set(experimentalEffectModifier.getModifier().getFunction().apply(value.get(), 1D));
+                    } catch (final Throwable t) {
+                        log.error("Error modifying value", t);
+                    }
                 }
-            }
-        });
+            });
+        }
         return value.get();
     }
 
