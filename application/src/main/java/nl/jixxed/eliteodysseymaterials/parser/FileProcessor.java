@@ -178,7 +178,10 @@ public class FileProcessor {
     }
 
     public static String removeBugs(JsonNode jsonNode) {
-        if ("MissionFailed".equals(jsonNode.get(EVENT).asText()) && jsonNode.get("") != null){
+        String event = jsonNode.get(EVENT).asText();
+        String[] buggedEvents = {"MissionFailed", "MissionAbandoned", "MissionRedirected"};
+
+        if (event != null && Arrays.asList(buggedEvents).contains(event) && jsonNode.get("") != null) {
             ObjectNode object = (ObjectNode) jsonNode;
             object.set("LocalisedName", jsonNode.get(""));
             object.remove("");
