@@ -76,10 +76,12 @@ public class IntField extends TextField {
                 IntField.this.value.setValue(0);
                 return;
             }
-
-            final int intValue = Integer.parseInt(newValue);
-
-            if (this.minValue > intValue || intValue > this.maxValue) {
+            try {
+                final int intValue = Integer.parseInt(newValue);
+                if (this.minValue > intValue || intValue > this.maxValue) {
+                    textProperty().setValue(oldValue);
+                }
+            }catch (NumberFormatException e) {
                 textProperty().setValue(oldValue);
             }
 

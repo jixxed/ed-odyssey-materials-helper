@@ -179,8 +179,9 @@ public class ControlsLayer extends AnchorPane implements Template {
 //                                ))
                 ),
                 Map.of(
+                        "tab.ships.clone", Bindings.createBooleanBinding(() ->  this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null,this.shipSelect.getSelectionModel().selectedItemProperty()),
                         "tab.ships.rename", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
-                        "tab.ships.copy", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
+                        "tab.ships.copy", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT).or(Bindings.createBooleanBinding(() ->  this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null,this.shipSelect.getSelectionModel().selectedItemProperty())),
                         "tab.ships.delete", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT),
                         "tab.ships.reset", this.shipSelect.getSelectionModel().selectedItemProperty().isEqualTo(ShipConfiguration.CURRENT).or(Bindings.createBooleanBinding(() ->  this.shipSelect.getSelectionModel().getSelectedItem() == null || this.shipSelect.getSelectionModel().getSelectedItem().getShipType() == null,this.shipSelect.getSelectionModel().selectedItemProperty()))
                 )).build();
@@ -276,6 +277,7 @@ public class ControlsLayer extends AnchorPane implements Template {
         this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)) {
                 refreshShipSelect();
+                EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
             }
         }));
 

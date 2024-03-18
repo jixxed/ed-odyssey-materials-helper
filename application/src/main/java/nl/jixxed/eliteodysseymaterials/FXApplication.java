@@ -8,6 +8,10 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -21,13 +25,15 @@ import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.FontSize;
+import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
+import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
+import nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.parser.FileProcessor;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.exception.*;
 import nl.jixxed.eliteodysseymaterials.templates.ApplicationLayout;
 import nl.jixxed.eliteodysseymaterials.templates.LoadingScreen;
 import nl.jixxed.eliteodysseymaterials.templates.dialog.EDDNDialog;
@@ -42,6 +48,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkConsumer;
 
 @Slf4j
 public class FXApplication extends Application {
@@ -71,12 +79,14 @@ public class FXApplication extends Application {
     private LoadingScreen loadingScreen;
     private StackPane content;
 
+
     public Stage getPrimaryStage() {
         return this.primaryStage;
     }
 
     @Override
     public void start(final Stage primaryStage) {
+        DeeplinkHelper.setFxApplication(this);
         NotificationService.init();
         PinnedBlueprintService.init();
         ScalingHelper.init();
@@ -107,6 +117,16 @@ public class FXApplication extends Application {
 
             initEventHandling();
             final Scene scene = createApplicationScene();
+            KeyCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
+            Runnable rn = () -> {
+                Platform.runLater(()->{
+                    final String clipboard = Clipboard.getSystemClipboard().getString();
+                    if (clipboard.startsWith("edomh://")) {
+                        deeplinkConsumer.accept(clipboard);
+                    }
+                });
+            };
+            scene.getAccelerators().put(kc, rn);
             setupStyling(scene);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -240,7 +260,7 @@ public class FXApplication extends Application {
             }
             this.fleetCarrierWatcher = new GameStateWatcher();
             ApplicationState.getInstance().getFcMaterials().set(false);
-            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPIFLEETCARRIER), AppConstants.FLEETCARRIER_FILE,false, JournalEventType.CAPIFLEETCARRIER);
+            this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPIFLEETCARRIER), AppConstants.FLEETCARRIER_FILE, false, JournalEventType.CAPIFLEETCARRIER);
         }
 
     }
@@ -250,60 +270,18 @@ public class FXApplication extends Application {
         this.deeplinkReference.set(EventService.addListener(this, CommanderAllListedEvent.class, event -> {
 
             final File deeplinkWatchedFolder = new File(OsConstants.DEEPLINK_FOLDER);
-            this.deeplinkWatcher.watch(deeplinkWatchedFolder, deeplink -> {
-                if (!deeplink.isEmpty()) {
-                    try {
-                        final ImportResult importResult = ImportService.importDeeplink(deeplink);
-                        EventService.publish(new ImportResultEvent(importResult));
-                        handleImportResult(importResult);
-                    } catch (final LoadoutDeeplinkException ex) {
-                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_LOADOUT)));
-                        NotificationService.showError(NotificationType.ERROR, "Failed to import loadout", ex.getMessage());
-                    } catch (final OdysseyWishlistDeeplinkException ex) {
-                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_ODYSSEY_WISHLIST)));
-                        NotificationService.showError(NotificationType.ERROR, "Failed to import Odyssey wishlist", ex.getMessage());
-                    } catch (final HorizonsWishlistDeeplinkException ex) {
-                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_HORIZONS_WISHLIST)));
-                        NotificationService.showError(NotificationType.ERROR, "Failed to import Horizons wishlist", ex.getMessage());
-                    } catch (final EdsyDeeplinkException ex) {
-                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_EDSY_WISHLIST)));
-                        NotificationService.showError(NotificationType.ERROR, "Failed to import EDSY wishlist", ex.getMessage());
-                    } catch (final CoriolisDeeplinkException ex) {
-                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_CORIOLIS_WISHLIST)));
-                        NotificationService.showError(NotificationType.ERROR, "Coriolis-EDOMH link doesn't work. Use EDSY.", ex.getMessage());
-//                        NotificationService.showError(NotificationType.ERROR, "Failed to import Coriolis wishlist", ex.getMessage());
-                    } catch (final RuntimeException ex) {
-                        NotificationService.showError(NotificationType.ERROR, "Failed to import", ex.getMessage());
-                        EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.OTHER_ERROR)));
-                    }
-                }
-            }, AppConstants.DEEPLINK_FILE);
+
+            this.deeplinkWatcher.watch(deeplinkWatchedFolder, deeplinkConsumer, AppConstants.DEEPLINK_FILE);
             EventService.removeListener(this.deeplinkReference.get());
 
         }));
 
     }
 
-    private void handleImportResult(final ImportResult importResult) {
-        if (ImportResult.ResultType.SUCCESS_LOADOUT.equals(importResult.getResultType())) {
-            NotificationService.showInformation(NotificationType.IMPORT, "Imported loadout", importResult.getMessage());
-            this.primaryStage.toFront();
-        } else if (ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST.equals(importResult.getResultType()) || ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST.equals(importResult.getResultType())) {
-            NotificationService.showInformation(NotificationType.IMPORT, "Imported wishlist", importResult.getMessage());
-            this.primaryStage.toFront();
-        } else if (ImportResult.ResultType.SUCCESS_EDSY_WISHLIST.equals(importResult.getResultType())) {
-            NotificationService.showInformation(NotificationType.IMPORT, "Imported EDSY wishlist", importResult.getMessage());
-            this.primaryStage.toFront();
-        } else if (ImportResult.ResultType.UNKNOWN_TYPE.equals(importResult.getResultType())) {
-            NotificationService.showError(NotificationType.ERROR, "Failed to import", "Unknown type");
-        } else if (ImportResult.ResultType.CAPI_OAUTH_TOKEN.equals(importResult.getResultType())) {
-            this.primaryStage.toFront();
-        }
-    }
 
 
     private Scene createApplicationScene() {
-        content = new StackPane( this.applicationLayout, this.loadingScreen);
+        content = new StackPane(this.applicationLayout, this.loadingScreen);
         final Scene scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));

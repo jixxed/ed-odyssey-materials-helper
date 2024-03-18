@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -34,6 +35,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkConsumer;
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
@@ -87,9 +89,10 @@ public class General extends VBox implements Template {
         final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
         final HBox exportInventory = createExportInventorySetting();
         final HBox blueprintExpandedSetting = createBlueprintExpandedSetting();
+        final HBox importFromClipboardSetting = createImportFromClipboardSetting();
         final HBox wipSetting = createWIPSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting);
+        this.getChildren().addAll(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting, importFromClipboardSetting);
     }
 
     @Override
@@ -299,6 +302,23 @@ public class General extends VBox implements Template {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(saveInventoryLabel, saveInventory)
+                .buildHBox();
+    }
+    private HBox createImportFromClipboardSetting() {
+        final DestroyableLabel importClipboardLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard")).build();
+        final DestroyableLabel importClipboardExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard.explain")).build();
+        final Button importClipboard = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.import.clipboard.import")).withOnAction(event -> {
+            Platform.runLater(()->{
+                final String clipboard = Clipboard.getSystemClipboard().getString();
+                if (clipboard.startsWith("edomh://")) {
+                    deeplinkConsumer.accept(clipboard);
+                }
+            });
+        }).build();
+
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(importClipboardLabel, importClipboard, importClipboardExplainLabel)
                 .buildHBox();
     }
 

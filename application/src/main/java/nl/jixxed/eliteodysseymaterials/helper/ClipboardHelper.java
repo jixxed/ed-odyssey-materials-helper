@@ -8,7 +8,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 
@@ -39,7 +41,11 @@ public class ClipboardHelper {
                 wishlist.getWishlist().optimizeUUIDs();
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(wishlist);
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
-                return "edomh://horizonswishlist/?" + wishlist64;
+                final String url = "edomh://horizonswishlist/?" + wishlist64;
+                if(url.length() > 2048){
+                    NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                }
+                return url;
             } catch (final JsonProcessingException e) {
                 log.error("failed to process wishlist", e);
             }
@@ -52,7 +58,11 @@ public class ClipboardHelper {
             try {
                 final String wishlistJson = OBJECT_MAPPER.writeValueAsString(new ClipboardWishlist("wishlist", 1, WishlistService.getWishlists(commander).getSelectedWishlist()));
                 final String wishlist64 = convertJsonToBase64Compressed(wishlistJson);
-                return "edomh://wishlist/?" + wishlist64;
+                final String url = "edomh://wishlist/?" + wishlist64;
+                if(url.length() > 2048){
+                    NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                }
+                return url;
             } catch (final JsonProcessingException e) {
                 log.error("failed to process wishlist", e);
             }
@@ -65,7 +75,11 @@ public class ClipboardHelper {
             try {
                 final String loadoutJson = OBJECT_MAPPER.writeValueAsString(new ClipboardLoadout("loadout", 1, LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet()));
                 final String loadout64 = convertJsonToBase64Compressed(loadoutJson);
-                return "edomh://loadout/?" + loadout64;
+                final String url = "edomh://loadout/?" + loadout64;
+                if(url.length() > 2048){
+                    NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                }
+                return url;
             } catch (final JsonProcessingException e) {
                 log.error("failed to process loadout", e);
             }
@@ -75,7 +89,6 @@ public class ClipboardHelper {
 
     static String convertJsonToBase64Compressed(final String wishlistJson) {
         final Deflater def = new Deflater(9);
-//        def.setStrategy(Deflater.FILTERED);
         def.setInput(wishlistJson.getBytes(StandardCharsets.UTF_8));
         def.finish();
         final byte[] compressedBuffer = new byte[wishlistJson.length() * 2];
@@ -90,8 +103,12 @@ public class ClipboardHelper {
                 ShipService.getShipConfigurations(commander).getSelectedShipConfiguration().map(configuration -> {
                     try {
                         final String shipJson = OBJECT_MAPPER.writeValueAsString(new ClipboardShip("ship", 1, configuration));
-                        final String wishlist64 = convertJsonToBase64Compressed(shipJson);
-                        return "edomh://ship/?" + wishlist64;
+                        final String ship64 = convertJsonToBase64Compressed(shipJson);
+                        final String url = "edomh://ship/?" + ship64;
+                        if(url.length() > 2048){
+                            NotificationService.showWarning(NotificationType.COPY, "Clipboard", "Due to the length, the URL might not work in browsers and must be directly imported inside the app.");
+                        }
+                        return url;
                     } catch (final JsonProcessingException e) {
                         log.error("failed to process ship", e);
                     }

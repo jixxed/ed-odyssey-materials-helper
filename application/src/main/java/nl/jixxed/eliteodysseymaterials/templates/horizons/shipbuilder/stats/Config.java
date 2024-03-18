@@ -241,12 +241,14 @@ public class Config extends Stats implements Template {
             this.live.setDisable(!isCurrentShip());
         }));
         eventListeners.add(EventService.addListener(this, StatusEvent.class, event -> {
-            fuel.setValue(event.getFuelCapacity().intValue());
-            fuelreserve.setValue(event.getFuelReserve().doubleValue());
-            cargo.setValue(event.getCargoCapacity().intValue());
-            systemPipSelect.setValue(event.getSystemPips());
-            enginePipSelect.setValue(event.getEnginePips());
-            weaponPipSelect.setValue(event.getWeaponPips());
+            if(ApplicationState.getInstance().isLiveStats()) {
+                fuel.setValue(event.getFuelCapacity().intValue());
+                fuelreserve.setValue(event.getFuelReserve().doubleValue());
+                cargo.setValue(event.getCargoCapacity().intValue());
+                systemPipSelect.setValue(event.getSystemPips());
+                enginePipSelect.setValue(event.getEnginePips());
+                weaponPipSelect.setValue(event.getWeaponPips());
+            }
         }));
     }
 
