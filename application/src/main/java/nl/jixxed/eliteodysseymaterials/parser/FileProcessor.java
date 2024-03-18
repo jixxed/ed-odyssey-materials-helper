@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.io.CountingInputStream;
 import javafx.application.Platform;
@@ -80,7 +81,7 @@ public class FileProcessor {
             String line;
             while ((line = lineReader.readLine()) != null) {
                 //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
-                final JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
+                JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
                 final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(
                         JournalEventType.MISSIONCOMPLETED,
                         JournalEventType.MATERIALCOLLECTED,
@@ -102,10 +103,11 @@ public class FileProcessor {
                         JournalEventType.SCAN
                 );
                 if (jsonNode.get(EVENT) != null) {
-                    testAndReport(line, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
+                    final String newLine = removeBugs(jsonNode);
+                    testAndReport(newLine, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                     if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {
-                        alwaysProcessMessages.add(line);
+                        alwaysProcessMessages.add(newLine);
                     } else if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
                         if (JournalEventType.MATERIALS.equals(journalEventType)) {
                             alwaysProcessMessages.removeIf(lineA -> {
@@ -116,10 +118,10 @@ public class FileProcessor {
                                 }
                                 return false;
                             });
-                            messages.put(journalEventType, line);
+                            messages.put(journalEventType, newLine);
                         } else if (JournalEventType.ENGINEERPROGRESS.equals(journalEventType)) {
                             if (messages.containsKey(JournalEventType.ENGINEERPROGRESS) && jsonNode.has("Engineer")) {
-                                alwaysProcessMessages.add(line);//add additional engineerprogress messages to alwaysProcessMessages instead
+                                alwaysProcessMessages.add(newLine);//add additional engineerprogress messages to alwaysProcessMessages instead
                             } else if (jsonNode.has("Engineers")) {
                                 alwaysProcessMessages.removeIf(line2 -> { //clear any additional engineerprogress messages if we get a full message (again)
                                     try {
@@ -128,10 +130,10 @@ public class FileProcessor {
                                         return false;
                                     }
                                 });
-                                messages.put(journalEventType, line);//set the full message (again)
+                                messages.put(journalEventType, newLine);//set the full message (again)
                             }
                         } else {
-                            messages.put(journalEventType, line);
+                            messages.put(journalEventType, newLine);
                         }
 
                     }
@@ -173,6 +175,15 @@ public class FileProcessor {
             log.error("Error processing journal", e);
         }
         Platform.runLater(() -> EventService.publish(new JournalInitEvent(true)));
+    }
+
+    public static String removeBugs(JsonNode jsonNode) {
+        if ("MissionFailed".equals(jsonNode.get(EVENT).asText()) && jsonNode.get("") != null){
+            ObjectNode object = (ObjectNode) jsonNode;
+            object.set("LocalisedName", jsonNode.get(""));
+            object.remove("");
+        }
+        return jsonNode.toString();
     }
 
     private static boolean backpackAfterShiplocker(final Map<JournalEventType, String> messages, final Map.Entry<JournalEventType, String> entry) {
