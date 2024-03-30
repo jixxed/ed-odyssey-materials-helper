@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
+import javafx.application.Platform;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -19,10 +20,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.LegacyModuleSavedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
@@ -33,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -120,9 +120,11 @@ public class ModuleDetails extends VBox implements Template {
         );
         properties.getChildren().add(flowPane);
     }
+    private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void initEventHandling() {
+        EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
         EVENT_LISTENERS.add(EventService.addListener(this, ModuleHighlightEvent.class, (event) -> {
             ShipModule shipModule = event.getShipModule();
 
@@ -130,7 +132,7 @@ public class ModuleDetails extends VBox implements Template {
             this.getChildren().remove(legacySaveButton);
             attributes.getChildren().clear();
             final boolean modulePresent = shipModule != null;
-            hasModule.set(modulePresent);
+            hasModule.set(false);
             if (modulePresent) {
                 attributes.getChildren().add(getSeparator());
                 addPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBasePrice()));
@@ -159,7 +161,7 @@ public class ModuleDetails extends VBox implements Template {
                     this.getChildren().addFirst(legacySaveButton);
                 }
             }
-
+            executorService.schedule(() -> Platform.runLater(() -> hasModule.set(modulePresent)), 50, java.util.concurrent.TimeUnit.MILLISECONDS);
         }));
     }
 

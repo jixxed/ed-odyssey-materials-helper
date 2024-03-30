@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.domain.ships;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
@@ -20,7 +21,8 @@ public class Slot {
     @Getter
     private  int slotSize;
     private  Integer namedIndex;
-
+    @Setter
+    private HardpointGroup hardpointGroup;
     @Getter
     @Setter
     private ShipModule shipModule;
@@ -61,4 +63,10 @@ public class Slot {
         return this.shipModule != null;
     }
 
+    public HardpointGroup getHardpointGroup() {
+        if(slotType != SlotType.HARDPOINT) {
+            return null;
+        }
+        return hardpointGroup;
+    }
 }

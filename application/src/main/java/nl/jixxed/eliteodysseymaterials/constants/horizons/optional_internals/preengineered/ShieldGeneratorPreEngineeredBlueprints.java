@@ -27,8 +27,8 @@ public class ShieldGeneratorPreEngineeredBlueprints {
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.0, 0.4)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+18%", true, resistancePositive(0.0, 0.18)),//todo flat increase - doublecheck
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+42%", true, resistanceNegative(0.0, 0.42))//todo flat increase - doublecheck
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+18%", true, resistancePositive(0.0, 0.18)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+42%", true, resistanceNegative(0.0, 0.42))
                             ),
                             List.of(
                             ),

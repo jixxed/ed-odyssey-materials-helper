@@ -15,6 +15,8 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.GuardianShieldReinforcementPackage;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.ShieldCellBank;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.ShieldBooster;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
@@ -36,6 +38,8 @@ public class ShieldStats extends Stats implements Template {
     private Shield shieldIntegrity;
     private DestroyableLabel regenTime;
     private DestroyableLabel rebuildTime;
+    private DestroyableLabel scbRestoration;
+    private DestroyableLabel scbRestorationLabel;
 
     public ShieldStats() {
         super();
@@ -56,8 +60,20 @@ public class ShieldStats extends Stats implements Template {
         final DestroyableLabel rebuild = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.shield.rebuild")).build();
         Tooltip.install(regen, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(LocaleService.getStringBinding("ship.stats.shield.regen.tooltip")).build());
         Tooltip.install(rebuild, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(LocaleService.getStringBinding("ship.stats.shield.rebuild.tooltip")).build());
+        scbRestoration = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.armour.scb.restoration.unit", 0, 0)).build();
+        scbRestoration.setVisible(false);
+        scbRestorationLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.armour.scb.restoration")).build();
+        scbRestorationLabel.setVisible(false);
 
         final VBox rebuildBox = BoxBuilder.builder().withNodes(new GrowingRegion(),
+                BoxBuilder.builder().withNodes(
+                                new GrowingRegion(),
+                                scbRestoration)
+                        .buildHBox(),
+                BoxBuilder.builder().withNodes(
+                                new GrowingRegion(),
+                                scbRestorationLabel)
+                        .buildHBox(),
                 BoxBuilder.builder().withNodes(
                                 regenTime,
                                 new GrowingRegion(),
@@ -150,13 +166,17 @@ public class ShieldStats extends Stats implements Template {
                             Double optimalStrength = (Double) module.getAttributeValue(SHIELDGEN_OPTIMAL_STRENGTH);
                             Double maximumStrength = (Double) module.getAttributeValue(SHIELDGEN_MAXIMUM_STRENGTH);
                             double shields = (double) ship.getAttributes().getOrDefault(SHIELDS, 0D);
+                            double shieldReinforcement = ship.getOptionalSlots().stream()
+                                    .filter(slot -> slot.getShipModule() instanceof GuardianShieldReinforcementPackage)
+                                    .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_REINFORCEMENT))
+                                    .sum();
                             double totalShieldBoost = ship.getUtilitySlots().stream()
                                     .filter(slot -> slot.getShipModule() instanceof ShieldBooster)
                                     .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST))
                                     .sum();
-                            return shields
+                            return  shieldReinforcement + (shields
                                     * getEffectiveShieldBoostMultiplier(totalShieldBoost)
-                                    * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength));
+                                    * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
                         }).orElse(0D))
                 .orElse(0D);
     }
@@ -199,7 +219,15 @@ public class ShieldStats extends Stats implements Template {
         shieldIntegrity.updateValues(calculateStrengthRaw(), calculateStrengthKinetic(), calculateStrengthThermal(), calculateStrengthCaustic(), calculateStrengthExplosive());
         regenTime.textProperty().bind(LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRegenTime())));
         rebuildTime.textProperty().bind(LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRebuildTime())));
-
+        final Scb scb = calculateSCB();
+        if (scb.amount > 0D) {
+            scbRestoration.setVisible(true);
+            scbRestorationLabel.setVisible(true);
+            scbRestoration.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.scb.restoration.unit", Formatters.NUMBER_FORMAT_1.format(scb.charges), Formatters.NUMBER_FORMAT_1.format(scb.amount)));
+        } else {
+            scbRestoration.setVisible(false);
+            scbRestorationLabel.setVisible(false);
+        }
     }
 
     private Double calculateRegenTime() {
@@ -236,4 +264,26 @@ public class ShieldStats extends Stats implements Template {
                     return 16D + fastTime + slowTime;
                 }).orElse(0D)).orElse(0D);
     }
+
+    private Scb calculateSCB() {
+        return getShip().map(ship -> {
+                    double charges = ship.getOptionalSlots().stream()
+                            .filter(slot -> slot.getShipModule() instanceof ShieldCellBank)
+                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_CLIP_SIZE) + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.AMMO_MAXIMUM))
+                            .mapToDouble(Double::doubleValue)
+                            .average()
+                            .orElse(0D);
+                    double amount = ship.getOptionalSlots().stream()
+                            .filter(slot -> slot.getShipModule() instanceof ShieldCellBank)
+                            .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_DURATION) * (double) slot.getShipModule().getAttributeValue(HorizonsModifier.SHIELDBANK_REINFORCEMENT))
+                            .mapToDouble(Double::doubleValue)
+                            .sum();
+                    return new Scb(charges, amount / rawShieldStrength() * 100D);
+                }
+        ).orElse(new Scb(0D, 0D));
+    }
+
+    record Scb(double charges, double amount) {
+    }
+
 }

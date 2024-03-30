@@ -2742,7 +2742,27 @@
     -fx-text-alignment: center;
     -fx-alignment: center;
 }
+.shipbuilder-slots-slotbox-size-hardpoint-label{
+    -fx-label-padding: 0.2em;
+    -fx-min-width: 1.4em;
+    -fx-max-width: 1.4em;
+    -fx-min-height: 1.5em;
+    -fx-max-height: 1.5em;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+.shipbuilder-slots-slotbox-hardpoint-group-label{
 
+    -fx-min-width: 1.4em;
+    -fx-max-width: 1.4em;
+    -fx-min-height: 1.5em;
+    -fx-max-height: 1.5em;
+    -fx-text-fill: #2e92df;
+    -fx-font-weight: bold;
+    /*-fx-background-color: #2e92df;*/
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
 .shipbuilder-slots-slotbox-texts {
     -fx-min-width: 19.3em;
     -fx-padding: 0.2em 0em 0.2em 0.2em;
@@ -3642,7 +3662,7 @@
     -fx-font-weight: bold;
 }
 .shield-stats-stackpane{
-    -fx-pref-height: 18em;
+    -fx-pref-height: 18.8em;
     -fx-fit-to-height: true;
 }
 .about-donate-button{
@@ -3664,4 +3684,17 @@
     -fx-max-width: 8.33em;
     -fx-text-alignment: center;
     -fx-alignment: baseline-center;
+}
+.toggle-button-stats-hardpoint{
+    -fx-min-width: 3.75em;
+    -fx-max-width: 3.75em;
+}
+.weapon-stats-legend-label{
+    -fx-alignment: baseline-center;
+    -fx-padding: 0em;
+}
+.weapon-stats-legend-box{
+    -fx-min-width: 15em;
+    -fx-max-width: 15em;
+
 }

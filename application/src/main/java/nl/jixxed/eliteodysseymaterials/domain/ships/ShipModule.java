@@ -262,9 +262,9 @@ public abstract class ShipModule implements Serializable {
         return getAllowedBlueprints().contains(modification);
     }
 
-    public Object getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, final Object defaultValue) {
+    public <T> T getAttributeValueOrDefault(final HorizonsModifier moduleAttribute, final T defaultValue) {
         try {
-            return getAttributeValue(moduleAttribute);
+            return (T) getAttributeValue(moduleAttribute);
         } catch (final IllegalArgumentException e) {
             return defaultValue;
         }
@@ -435,10 +435,6 @@ public abstract class ShipModule implements Serializable {
 
     public void addModifier(HorizonsModifier horizonsModifier, Double value) {
         modifiers.put(horizonsModifier, value);
-    }
-
-    public boolean groupOnName() {//TODO replace with grouping
-        return false;
     }
 
     public Optional<ShipModule> findHigherSize() {

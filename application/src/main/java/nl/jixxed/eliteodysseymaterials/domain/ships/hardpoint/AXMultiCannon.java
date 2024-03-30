@@ -86,11 +86,6 @@ public class AXMultiCannon extends HardpointModule {
         return ENHANCED_AX_MULTI_CANNON_2_D_F.equals(this) || ENHANCED_AX_MULTI_CANNON_2_E_G.equals(this) || ENHANCED_AX_MULTI_CANNON_2_E_T.equals(this) || ENHANCED_AX_MULTI_CANNON_3_B_F.equals(this) || ENHANCED_AX_MULTI_CANNON_3_C_G.equals(this) || ENHANCED_AX_MULTI_CANNON_3_D_T.equals(this);
     }
 
-
-    public boolean groupOnName() {
-        return true;
-    }
-
     @Override
     public int getGrouping() {
         return switch (getId()) {

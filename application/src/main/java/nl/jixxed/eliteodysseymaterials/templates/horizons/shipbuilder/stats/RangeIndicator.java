@@ -74,17 +74,32 @@ public class RangeIndicator extends VBox {
         end.setEndX(sliderWidth);
         end.setStartX(sliderWidth);
         end.setEndY(sliderHeight / 2);
-
-        double progress = (currentValue - startValue) / (endValue - startValue);
-        current.setStartX(sliderWidth * progress);
-        current.setEndX(sliderWidth * progress);
-        current.setEndY(sliderHeight);
-
-        if(Double.isInfinite(currentValue) && Double.isInfinite(endValue)){
+        if(Double.isFinite(currentValue) && Double.isFinite(endValue) && Double.isFinite(startValue) && !(currentValue <= startValue) && !(currentValue >= endValue)) {
+            double progress = (Double.isNaN(currentValue) || endValue == 0d) ? 0D : (currentValue - startValue) / (endValue - startValue);
+            current.setStartX(sliderWidth * progress);
+            current.setEndX(sliderWidth * progress);
+            current.setEndY(sliderHeight);
+        }else
+        if(Double.isInfinite(currentValue) && (Double.isInfinite(endValue) || (Double.isFinite(startValue) && Double.isFinite(endValue) && endValue >= startValue))){
             current.setStartX(end.getEndX());
             current.setEndX(end.getEndX());
             current.setEndY(sliderHeight);
 
+        }else
+        if(Double.isInfinite(currentValue) && (Double.isInfinite(startValue) || (Double.isFinite(startValue) && Double.isFinite(endValue) && startValue > endValue))){
+            current.setStartX(start.getEndX());
+            current.setEndX(start.getEndX());
+            current.setEndY(sliderHeight);
+        }else
+        if(currentValue <= startValue){
+            current.setStartX(start.getEndX());
+            current.setEndX(start.getEndX());
+            current.setEndY(sliderHeight);
+        }else
+        if(currentValue >= endValue){
+            current.setStartX(end.getEndX());
+            current.setEndX(end.getEndX());
+            current.setEndY(sliderHeight);
         }
     }
 }

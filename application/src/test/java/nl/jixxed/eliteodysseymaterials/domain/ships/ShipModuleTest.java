@@ -83,4 +83,10 @@ class ShipModuleTest {
         Assertions.assertAll(
                 ShipModule.getBasicModules().stream().map(shipModule -> () -> Assertions.assertDoesNotThrow(() -> LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()))));
     }
+    @Test
+    void validAttributes() {
+        Assertions.assertAll(
+                ShipModule.getBasicModules().stream().flatMap(shipModule ->
+                        shipModule.getAttibutes().stream().map(attribute -> () -> Assertions.assertTrue(shipModule.getOriginalAttributeValue(attribute) instanceof Double || shipModule.getOriginalAttributeValue(attribute) instanceof Boolean|| shipModule.getOriginalAttributeValue(attribute) instanceof String, shipModule.getId() + " - " + attribute + " is not of type Double or Boolean or String"))));
+    }
 }

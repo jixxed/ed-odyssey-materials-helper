@@ -152,6 +152,7 @@ blueprint.horizons.name.operations_limpet_controller,Operations Limpet Controlle
 blueprint.horizons.name.operations_limpet_controller.short,Operations,,,,,,
 blueprint.horizons.name.pacifier_fragment_cannon,Pacifier Fragment Cannon,Pacifier Fragment Cannon,,,,,
 blueprint.horizons.name.pack_hound_missile_rack,Pack Hound Missile Rack,Pack Hound Missile Rack,,,,,
+blueprint.horizons.name.pack_hound_missile_rack.short,Pack Hound,Pack Hound,,,,,
 blueprint.horizons.name.passenger_cabin,Passenger Cabin,Passenger Cabin,,,,,
 blueprint.horizons.name.planetary_vehicle_hangar,Planetary Vehicle Hangar,Planetary Vehicle Hangar,,,,,
 blueprint.horizons.name.plasma_accelerator,Plasma Accelerator,Plasma Accelerator,Plasmabeschleuniger,Acelerador de plasma,Accélérateur de plasma,Acelerador de plasma,Ускоритель плазмы
@@ -183,7 +184,8 @@ blueprint.horizons.name.rescue_limpet_controller,Rescue Limpet Controller,Rescue
 blueprint.horizons.name.rescue_limpet_controller.short,Rescue,,,,,,
 blueprint.horizons.name.research_limpet_controller,Research Limpet Controller,Research Limpet Controller,,,,,
 blueprint.horizons.name.retributor_beam_laser,Retributor Beam Laser,Retributor Beam Laser,,,,,
-blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack,Rocket Propelled Fsd Disrupter Missile Rack,Rocket Propelled Fsd Disrupter Missile Rack,,,,,
+blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack,Rocket Propelled Containment Missile,Rocket Propelled Containment Missile,,,,,
+blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack.short,Containment Missile,Containment Missile,,,,,
 blueprint.horizons.name.seeker_missile_rack,Seeker Missile Rack,Seeker Missile Rack,Suchraketengestell,Estante para misiles buscadores,Support de missile Seeker,Seeker Missile Rack,Искатель ракетная стойка
 blueprint.horizons.name.seeker_missile_rack_pre,Seeker Missile Rack,Seeker Missile Rack,,,,,
 blueprint.horizons.name.seismic_charge_launcher,Seismic Charge Launcher,Seismic Charge Launcher,,,,,

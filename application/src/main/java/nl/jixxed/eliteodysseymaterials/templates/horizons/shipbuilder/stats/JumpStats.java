@@ -68,6 +68,9 @@ public class JumpStats extends Stats implements Template {
     }
 
     private double calculateJumpDistance(final double mass, final double fuel, final double optimisedMass, final double fuelMultiplier, final double fuelPower, final double jumpRangeIncrease) {
+        if(fuel <= 0D) {
+            return 0D;
+        }
         return Math.pow(fuel / fuelMultiplier, 1 / fuelPower) * optimisedMass / mass + jumpRangeIncrease;
     }
 

@@ -279,7 +279,7 @@ public enum HorizonsModifier {
         final String formatString = getFormatString();
         if (value instanceof Double d) {
             if (formatString.endsWith("%")) {
-                return String.format(formatString, NUMBER_FORMAT_2.format(d * 100));//TODO format 1
+                return String.format(formatString, NUMBER_FORMAT_1.format(d * 100));
             }
             return String.format(formatString, NUMBER_FORMAT_2.format(d));
         }

@@ -71,11 +71,6 @@ public class MultiLimpetController extends OptionalModule {
     }
 
     @Override
-    public boolean groupOnName() {
-        return true;
-    }
-
-    @Override
     public int getGrouping() {
         return switch (getId()) {
             case "MINING_MULTI_LIMPET_CONTROLLER_3_E", "MINING_MULTI_LIMPET_CONTROLLER_3_C" -> 1;

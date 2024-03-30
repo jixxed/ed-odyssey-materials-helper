@@ -67,14 +67,6 @@ public class Config extends Stats implements Template {
                     EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
                 });
 
-//                ToggleSwitchBuilder.builder()
-//                .withStyleClass("config-toggle")
-//                .withSelectedChangeListener((observable, oldValue, newValue) -> {
-//                    ApplicationState.getInstance().setLiveStats(Boolean.TRUE.equals(newValue));
-//                    EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
-//                })
-//                .withSelected(ApplicationState.getInstance().isLiveStats())
-//                .build();
         fuel = new IntField(0, maxFuel, maxFuel);
         fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
         fuelreserve.getStyleClass().add("config-fuelreserve");
@@ -141,7 +133,7 @@ public class Config extends Stats implements Template {
     }
 
     private void powerBox() {
-        this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/powered1.png", "Power group 1");
+        this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/powered1.png", 1);
         this.powerButton = ButtonBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-button").withOnAction(event -> {
             this.getShip().ifPresent(ship -> {
                 ship.getCargoHatch().getShipModule().togglePower();
@@ -174,14 +166,13 @@ public class Config extends Stats implements Template {
             this.powerBox.getChildren().addAll(powerUp, powerButton, powerDown);
         } else {
             final GrowingRegion growingRegion = new GrowingRegion();
-//            growingRegion.getStyleClass().add("shipbuilder-slots-slotbox-button");
             this.powerBox.getChildren().addAll(growingRegion, this.power, new GrowingRegion());
         }
     }
 
     private void updatePower(ShipModule shipModule) {
         if (shipModule != null) {
-            this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", "Power group " + shipModule.getPowerGroup());
+            this.power = createIcon("shipbuilder-slots-slotbox-button-icon", "/images/ships/icons/" + (shipModule.isPowered() ? "powered" : "unpowered") + shipModule.getPowerGroup() + ".png", shipModule.getPowerGroup());
             this.powerButton.setGraphic(this.power);
             final boolean hasPowerToggle = shipModule.hasPowerToggle();
             this.power.setVisible(hasPowerToggle);
@@ -197,9 +188,9 @@ public class Config extends Stats implements Template {
         }
     }
 
-    private static DestroyableResizableImageView createIcon(String styleClass, String imageResource, String tooltip) {
+    private static DestroyableResizableImageView createIcon(String styleClass, String imageResource, Integer powerGroup) {
         final DestroyableResizableImageView icon = createIcon(styleClass, imageResource);
-        Tooltip.install(icon, TooltipBuilder.builder().withShowDelay(Duration.seconds(0.1)).withNonLocalizedText(tooltip).build());//todo localized
+        Tooltip.install(icon, TooltipBuilder.builder().withShowDelay(Duration.seconds(0.1)).withText(LocaleService.getStringBinding("ship.stats.config.power.group", powerGroup)).build());
         return icon;
     }
 

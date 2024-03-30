@@ -79,9 +79,6 @@ public class AXMissileRack extends HardpointModule {
         return ENHANCED_AX_MISSILE_RACK_2_D_F.equals(this) || ENHANCED_AX_MISSILE_RACK_2_E_T.equals(this) || ENHANCED_AX_MISSILE_RACK_3_B_F.equals(this) || ENHANCED_AX_MISSILE_RACK_3_D_T.equals(this);
     }
 
-    public boolean groupOnName() {
-        return true;
-    }
     @Override
     public int getGrouping() {
         return switch (getId()) {

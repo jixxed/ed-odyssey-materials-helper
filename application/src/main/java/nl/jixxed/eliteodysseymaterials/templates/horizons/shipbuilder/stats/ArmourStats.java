@@ -13,10 +13,7 @@ import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.GuardianHullReinforcementPackage;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.HullReinforcementPackage;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.MetaAlloyHullReinforcementPackage;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.ModuleReinforcementPackage;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -171,7 +168,7 @@ public class ArmourStats extends Stats implements Template {
     private double calculateMRPProtection() {
         double protection = getShip().map(ship ->
                 ship.getOptionalSlots().stream()
-                        .filter(slot -> slot.getShipModule() instanceof ModuleReinforcementPackage)
+                        .filter(slot -> slot.getShipModule() instanceof ModuleReinforcementPackage || slot.getShipModule() instanceof GuardianModuleReinforcementPackage)
                         .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.MODULE_DEFENCE_ABSORPTION))
                         .reduce(1D, (a, b) -> a *= 1 - b)
         ).orElse(1D);
@@ -184,17 +181,18 @@ public class ArmourStats extends Stats implements Template {
     private double calculateMRPIntegrity() {
         return getShip().map(ship ->
                 ship.getOptionalSlots().stream()
-                        .filter(slot -> slot.getShipModule() instanceof ModuleReinforcementPackage)
+                        .filter(slot -> slot.getShipModule() instanceof ModuleReinforcementPackage || slot.getShipModule() instanceof GuardianModuleReinforcementPackage)
                         .map(slot -> (double) slot.getShipModule().getAttributeValue(HorizonsModifier.INTEGRITY))
                         .reduce(0D, (a, b) -> a += b)
         ).orElse(0D);
     }
+
     @Override
     protected void update() {
         armourResistance.updateValues(calculateResistanceRaw(), calculateResistanceKinetic(), calculateResistanceThermal(), calculateResistanceCaustic(), calculateResistanceExplosive());
         armourIntegrity.updateValues(calculateIntegrityRaw(), calculateIntegrityKinetic(), calculateIntegrityThermal(), calculateIntegrityCaustic(), calculateIntegrityExplosive());
-         mrpIntegrity.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.mrp.integrity.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPIntegrity())));
-         mrpProtection.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.mrp.protection.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPProtection())));
+        mrpIntegrity.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.mrp.integrity.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPIntegrity())));
+        mrpProtection.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.mrp.protection.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPProtection())));
     }
 
 }

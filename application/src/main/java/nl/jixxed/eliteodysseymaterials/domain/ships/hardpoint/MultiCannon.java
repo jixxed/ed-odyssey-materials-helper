@@ -89,15 +89,10 @@ public class MultiCannon extends HardpointModule {
 
     @Override
     public String getClarifier() {
-        //TODO localize
         if (ENFORCER_CANNON_1_F_F.equals(this)) {
             return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey());
         }
         return super.getClarifier();
-    }
-
-    public boolean groupOnName() {
-        return true;
     }
 
     @Override

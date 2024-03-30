@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum Mounting {
     FIXED,
     GIMBALLED,
@@ -7,12 +9,10 @@ public enum Mounting {
     NA;
 
     public String getShortName(){
-        return switch (this){
-            case FIXED -> "F";
-            case GIMBALLED -> "G";
-            case TURRETED -> "T";
-            case NA -> "-";
-        };
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
+    }
+    public String getLocalizationKey() {
+        return "ships.mounting." + this.name().toLowerCase();
     }
     public boolean isHigher(Mounting mounting) {
         return this.ordinal() > mounting.ordinal();
