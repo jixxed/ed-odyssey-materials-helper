@@ -18,7 +18,7 @@ import java.io.IOException;
 @Slf4j
 public
 class About extends VBox {
-    private final String betaVersion = "2.23-beta2";
+    private final String betaVersion = "2.50-beta11";
     private Label versionLabel;
     private Hyperlink link;
     private Hyperlink linkTutorial;

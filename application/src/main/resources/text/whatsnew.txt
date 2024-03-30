@@ -1,3 +1,19 @@
+Version 2.50
+-------------
+Added a new shipbuilder tab with some cool features
+- Create a wishlist from your shipbuild
+- See your current ingame shipbuild
+- Live tracking of your ship configuration (cargo, pips, fuel), available for your current ingame ship only
+- See weapon and utility slot placement visually
+- Create weapon groups to see group statistics
+- Easy switching between module size and class while maintaining engineering
+- Easily save legacy modules for reuse or create Legacy modules under Settings
+- Automatic resizing of modules when moving between slots
+Added a loading screen at the start of the application
+Added option to import shared wishlist/ship/loadout through Settings or CTRL+V
+
+It has been over a year of hard work and several months of beta testing. The feature might not be perfect yet, but it's time to release it to the public. Please report any issues you find, so we can improve it further.
+
 Version 2.49
 -------------
 Add new Titan salvage commodities
