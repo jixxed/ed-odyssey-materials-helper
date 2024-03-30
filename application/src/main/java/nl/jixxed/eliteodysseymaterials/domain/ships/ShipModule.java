@@ -159,7 +159,7 @@ public abstract class ShipModule implements Serializable {
     private boolean powerToggle = true;
     @Getter
     @Setter
-    private int powerGroup = 1;
+    private int powerGroup = 3;
 
     public ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
@@ -185,7 +185,7 @@ public abstract class ShipModule implements Serializable {
         this.attributes.putAll(attributes);
         this.attributes.computeIfAbsent(HorizonsModifier.POWER_DRAW, modifier -> {
             this.powerToggle = false;
-            return  0.0;
+            return 0.0;
         });
         SHIP_MODULES.add(this);
     }

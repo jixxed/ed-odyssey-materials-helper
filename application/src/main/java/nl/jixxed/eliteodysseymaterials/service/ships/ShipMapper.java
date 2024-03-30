@@ -159,7 +159,7 @@ public class ShipMapper {
             if (!shipModule.isPowered()) {
                 shipConfigurationSlot.setPowered(false);
             }
-            if (shipModule.getPowerGroup() > 1) {
+            if (shipModule.getPowerGroup() != 3) {
                 shipConfigurationSlot.setPowerGroup(shipModule.getPowerGroup());
             }
             shipConfigurationSlot.getModifiers().putAll(shipModule.getModifiers());
