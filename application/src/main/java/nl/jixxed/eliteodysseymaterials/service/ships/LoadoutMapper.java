@@ -33,68 +33,72 @@ public class LoadoutMapper {
     private final static double EPSILON = 0.00001;
 
     public static Ship toShip(Loadout loadout) {
-        final ShipType shipType = ShipType.forInternalName(loadout.getShip());
+        final ShipType shipType = ShipType.forInternalName(loadout.getShip()); // TODO - unknown ship
         final Ship ship = ShipService.createBlankShip(shipType);
         loadout.getModules().forEach(module -> {
-            final String slotName = module.getSlot();
-            Slot slot = getShipSlot(ship, slotName);
-            if (slot != null) {
-                final List<ShipModule> potentialShipModules = getPotentialShipModules(module.getItem(), slot.getSlotType());
-                final ShipModule matchingModule = module.getEngineering().map(engineering -> {
-                    if (!potentialShipModules.isEmpty()) {
-                        if (isPreEngineered(potentialShipModules, engineering)) {
-                            return potentialShipModules.stream().filter(ShipModule::isPreEngineered).findFirst().orElseThrow(IllegalArgumentException::new);
-                        } else {
-                            return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+            try{
+                final String slotName = module.getSlot();
+                Slot slot = getShipSlot(ship, slotName);
+                if (slot != null) {
+                    final List<ShipModule> potentialShipModules = getPotentialShipModules(module.getItem(), slot.getSlotType());
+                    final ShipModule matchingModule = module.getEngineering().map(engineering -> {
+                        if (!potentialShipModules.isEmpty()) {
+                            if (isPreEngineered(potentialShipModules, engineering)) {
+                                return potentialShipModules.stream().filter(ShipModule::isPreEngineered).findFirst().orElseThrow(IllegalArgumentException::new);
+                            } else {
+                                return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+                            }
                         }
-                    }
 //                    log.debug("Slot: " + module.getSlot());
 //                    log.debug("Item: " + module.getItem());
 //                    log.debug("Potential modules:" + potentialShipModules.stream().map(shipModule -> shipModule.getName().toString()).collect(Collectors.joining(",")));
-                    throw new IllegalArgumentException("No potential modules found");
-                }).orElseGet(() -> {
-                    try {
-                        return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|" + module));
-                    } catch (IllegalArgumentException ex) {
+                        throw new IllegalArgumentException("No potential modules found");
+                    }).orElseGet(() -> {
                         try {
-                            ReportService.reportJournal(OBJECT_MAPPER.writeValueAsString(module), "Can't map module: " + module.getItem());
-                        } catch (Exception e) {
-                            log.error("failed to send journal error", e);
+                            return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|" + module));
+                        } catch (IllegalArgumentException ex) {
+                            try {
+                                ReportService.reportJournal(OBJECT_MAPPER.writeValueAsString(module), "Can't map module: " + module.getItem());
+                            } catch (Exception e) {
+                                log.error("failed to send journal error", e);
+                            }
+                            return null;
                         }
-                        return null;
+                    });
+                    if (matchingModule == null) {
+                        return;
                     }
-                });
-                if (matchingModule == null) {
-                    return;
-                }
-                final ShipModule shipModule = matchingModule.Clone();
-                module.getEngineering().ifPresent(engineering -> {
-                    boolean isLegacy = isLegacy(shipModule, engineering);
-                    HorizonsBlueprintType blueprint = determineBlueprint(engineering);
-                    HorizonsBlueprintGrade grade = determineGrade(engineering);
-                    BigDecimal progression = determineGradeProgress(engineering);
-                    if (isLegacy) {
-                        shipModule.setLegacy(true);
+                    final ShipModule shipModule = matchingModule.Clone();
+                    module.getEngineering().ifPresent(engineering -> {
+                        boolean isLegacy = isLegacy(shipModule, engineering);
+                        HorizonsBlueprintType blueprint = determineBlueprint(engineering);
+                        HorizonsBlueprintGrade grade = determineGrade(engineering);
+                        BigDecimal progression = determineGradeProgress(engineering);
+                        if (isLegacy) {
+                            shipModule.setLegacy(true);
+                        }
+                        HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
+                        shipModule.applyModification(blueprint, grade, progression);
+                        shipModule.applyExperimentalEffect(experimentalEffect);
+                        engineering.getModifiers().forEach(modifier ->
+                                modifier.getValue().ifPresent(value ->
+                                        {
+                                            final HorizonsModifier horizonsModifier = HorizonsModifier.forInternalName(modifier.getLabel());
+                                            shipModule.addModifier(horizonsModifier, horizonsModifier.scale(value.doubleValue()));
+                                        }
+                                ));
+                    });
+                    module.getValue().ifPresent(value -> shipModule.setBuyPrice(value.longValue()));
+                    shipModule.setPowerGroup(module.getPriority().intValue() + 1);
+                    if (Boolean.FALSE.equals(module.getOn())) {
+                        shipModule.togglePower();
                     }
-                    HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);
-                    shipModule.applyModification(blueprint, grade, progression);
-                    shipModule.applyExperimentalEffect(experimentalEffect);
-                    engineering.getModifiers().forEach(modifier ->
-                            modifier.getValue().ifPresent(value ->
-                                    {
-                                        final HorizonsModifier horizonsModifier = HorizonsModifier.forInternalName(modifier.getLabel());
-                                        shipModule.addModifier(horizonsModifier, horizonsModifier.scale(value.doubleValue()));
-                                    }
-                            ));
-                });
-                module.getValue().ifPresent(value -> shipModule.setBuyPrice(value.longValue()));
-                shipModule.setPowerGroup(module.getPriority().intValue() + 1);
-                if (Boolean.FALSE.equals(module.getOn())) {
-                    shipModule.togglePower();
-                }
-                slot.setShipModule(shipModule);
-                slot.setOldShipModule(shipModule.Clone());
+                    slot.setShipModule(shipModule);
+                    slot.setOldShipModule(shipModule.Clone());
 
+                }
+            }catch (IllegalArgumentException ex){
+                log.error("Failed to map module: " + module.getItem(), ex);
             }
         });
         return ship;

@@ -235,7 +235,7 @@ public class ShieldStats extends Stats implements Template {
                 .filter(optSlot -> optSlot.getShipModule() instanceof ShieldGenerator)
                 .findFirst()
                 .map(sgSlot -> {
-                    final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst();
+                    final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
                     final double systemRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
                     final Double regenRate = (Double)sgSlot.getShipModule().getAttributeValue(REGEN_RATE);
@@ -252,7 +252,7 @@ public class ShieldStats extends Stats implements Template {
                 .filter(optSlot -> optSlot.getShipModule() instanceof ShieldGenerator)
                 .findFirst()
                 .map(sgSlot -> {
-                    final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst();
+                    final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
                     final double systemCapacity = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_CAPACITY)).orElse(0D);
                     final double systemRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);

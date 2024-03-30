@@ -2818,7 +2818,7 @@ public class Ship {
         ));
 
 
-        powerValues.put(0, (Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
+        powerValues.put(0, (Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
         if (getCargoHatch().isOccupied() && getCargoHatch().getShipModule().isPowered()) {
             powerValues.compute(getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
         }

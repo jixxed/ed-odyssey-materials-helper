@@ -97,7 +97,7 @@ public class ArmourStats extends Stats implements Template {
 
     private double calculateResistance(HorizonsModifier horizonsModifier) {
         return getShip().map(ship -> {
-            final Optional<Slot> armourSlot = ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst();
+            final Optional<Slot> armourSlot = ship.getCoreSlots().stream().filter(slot -> SlotType.CORE_ARMOUR.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied);
             AtomicReference<Double> totalModuleMultiplier = new AtomicReference<>(1D);
             AtomicReference<Double> minimumMultiplier = new AtomicReference<>(1D);
             ship.getOptionalSlots().stream()

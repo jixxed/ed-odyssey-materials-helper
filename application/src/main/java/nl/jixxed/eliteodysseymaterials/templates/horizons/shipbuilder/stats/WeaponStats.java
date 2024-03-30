@@ -273,7 +273,7 @@ public class WeaponStats extends Stats implements Template {
                 .sum();
         AtomicReference<Double> eps_cur = new AtomicReference<>(totalEps);
 
-        final Optional<Slot> powerDistributor = getShip().flatMap(ship -> ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst());
+        final Optional<Slot> powerDistributor = getShip().flatMap(ship -> ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied));
 
         final double multiplier = Math.pow(pips / 8.0, 1.1);
         final double weaponCapacity = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINES_CAPACITY)).orElse(0D);

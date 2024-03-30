@@ -11,9 +11,13 @@ import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 public class LoadoutMessageProcessor implements MessageProcessor<Loadout> {
     @Override
     public void process(Loadout event) {
-        final Ship ship = LoadoutMapper.toShip(event);
-        ShipMapper.toShipConfiguration(ship,ShipConfiguration.CURRENT, ShipConfiguration.CURRENT.getName());
-        EventService.publish(new ShipLoadoutEvent());
+        try {
+            final Ship ship = LoadoutMapper.toShip(event);
+            ShipMapper.toShipConfiguration(ship, ShipConfiguration.CURRENT, ShipConfiguration.CURRENT.getName());
+            EventService.publish(new ShipLoadoutEvent());
+        } catch (IllegalArgumentException e) {
+            ShipConfiguration.resetCurrent();
+        }
     }
 
     @Override

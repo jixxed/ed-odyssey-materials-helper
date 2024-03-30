@@ -68,4 +68,16 @@ public class ShipConfiguration {
         newShipConfiguration.setCargoHatch(this.getCargoHatch().cloneShipConfigurationSlot());
         return newShipConfiguration;
     }
+    public static void resetCurrent(){
+        CURRENT.name = "Current Ship (read only)";
+        CURRENT.shipType = null;
+        CURRENT.coreSlots.clear();
+        CURRENT.hardpointSlots.clear();
+        CURRENT.optionalSlots.clear();
+        CURRENT.utilitySlots.clear();
+        CURRENT.currentFuel = 0;
+        CURRENT.currentCargo = 0;
+        CURRENT.currentFuelReserve = 0;
+        CURRENT.cargoHatch = null;
+    }
 }
