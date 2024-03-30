@@ -1,3 +1,24 @@
+Version 2.51
+-------------
+Ship defaults fixes:
+diamond scout shieldgenerator slot 3 -> slot 1
+type6 cargo rack size 4 -> size 3
+keelback cargo rack size 2 -> size 3
+type7 powerplant size 5 -> size 4
+type7 powerdist size 4 -> size 3
+type10 powerplant size 8 -> size 6
+type10 fsd size 7 -> size 6
+type10 powerdist size 7 -> size 6
+anaconda cargo rack size 2 -> size 1
+
+swap supercruise assist and advanced docking computer for all ships that have both
+eagle powerplant 2E -> 2D
+asp explorer pulse laser 1F -> supercruise assist (pulse laser was auto deleted due to being invalid)
+challenger optional -> military slots 3x (can cause auto detach of modules)
+krait mk2 slotsize 5 -> 6
+
+default power group -> 3
+
 Version 2.50
 -------------
 Added a new shipbuilder tab with some cool features

@@ -27,9 +27,9 @@ public class PowerStats extends Stats implements Template {
     private DestroyableLabel deployedPowerLabel;
     private PowerBar retractedPowerBar;
     private PowerBar deployedPowerBar;
-    public static final Color POWER_GROUP_1_COLOR = Color.web("#2e92df");
+    public static final Color POWER_GROUP_1_COLOR = Color.web("#CE6C1E");
     public static final Color POWER_GROUP_2_COLOR = Color.web("#89D07F");
-    public static final Color POWER_GROUP_3_COLOR = Color.web("#CE6C1E");
+    public static final Color POWER_GROUP_3_COLOR = Color.web("#2E92DF");
     public static final Color POWER_GROUP_4_COLOR = Color.web("#6D3DA8");
     public static final Color POWER_GROUP_5_COLOR = Color.web("#F8FF2E");
 
