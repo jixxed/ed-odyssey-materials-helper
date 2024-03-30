@@ -1,0 +1,457 @@
+{
+  "timestamp": "2021-08-08T10:31:31Z",
+  "event": "Loadout",
+  "Ship": "cutter",
+  "ShipID": 37,
+  "ShipName": "",
+  "ShipIdent": "SA-13C",
+  "HullValue": 161546791,
+  "ModulesValue": 213620448,
+  "HullHealth": 1.000000,
+  "UnladenMass": 1625.881958,
+  "CargoCapacity": 512,
+  "MaxJumpRange": 30.905106,
+  "FuelCapacity": {
+    "Main": 64.000000,
+    "Reserve": 1.160000
+  },
+  "Rebuy": 9363593,
+  "Modules": [
+    {
+      "Slot": "MediumHardpoint2",
+      "Item": "hpt_mininglaser_fixed_medium",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "MediumHardpoint1",
+      "Item": "hpt_mininglaser_fixed_medium",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "LargeHardpoint2",
+      "Item": "hpt_mininglaser_fixed_medium",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "LargeHardpoint1",
+      "Item": "hpt_mininglaser_fixed_medium",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "HugeHardpoint1",
+      "Item": "hpt_mining_abrblstr_fixed_small",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "PaintJob",
+      "Item": "paintjob_cutter_metallic_chrome",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Armour",
+      "Item": "cutter_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Engineering": {
+        "Engineer": "Selene Jean",
+        "EngineerID": 300210,
+        "BlueprintID": 128673630,
+        "BlueprintName": "Armour_Advanced",
+        "Level": 1,
+        "Quality": 0.000000,
+        "Modifiers": [
+          {
+            "Label": "DefenceModifierHealthMultiplier",
+            "Value": 79.798141,
+            "OriginalValue": 79.999992,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "KineticResistance",
+            "Value": -18.312788,
+            "OriginalValue": -20.000004,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "ThermicResistance",
+            "Value": 1.406014,
+            "OriginalValue": 0.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "ExplosiveResistance",
+            "Value": -35.438465,
+            "OriginalValue": -39.999996,
+            "LessIsGood": 0
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size5_class5",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 4366752
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size8_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 139102901,
+      "Engineering": {
+        "Engineer": "Professor Palin",
+        "EngineerID": 300220,
+        "BlueprintID": 128673659,
+        "BlueprintName": "Engine_Dirty",
+        "Level": 5,
+        "Quality": 0.000000,
+        "Modifiers": [
+          {
+            "Label": "Integrity",
+            "Value": 141.997437,
+            "OriginalValue": 165.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "PowerDraw",
+            "Value": 12.739325,
+            "OriginalValue": 10.800000,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "EngineOptimalMass",
+            "Value": 3217.342041,
+            "OriginalValue": 3360.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "EngineOptPerformance",
+            "Value": 126.730942,
+            "OriginalValue": 100.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "EngineHeatRate",
+            "Value": 1.925825,
+            "OriginalValue": 1.300000,
+            "LessIsGood": 1
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_size7_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 41443207,
+      "Engineering": {
+        "Engineer": "Felicity Farseer",
+        "EngineerID": 300100,
+        "BlueprintID": 128673694,
+        "BlueprintName": "FSD_LongRange",
+        "Level": 5,
+        "Quality": 0.000000,
+        "Modifiers": [
+          {
+            "Label": "Mass",
+            "Value": 109.466545,
+            "OriginalValue": 80.000000,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "Integrity",
+            "Value": 125.256088,
+            "OriginalValue": 164.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "PowerDraw",
+            "Value": 1.009075,
+            "OriginalValue": 0.900000,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "BootTime",
+            "Value": 11.856250,
+            "OriginalValue": 10.000000,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "FSDOptimalMass",
+            "Value": 4012.578369,
+            "OriginalValue": 2700.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "FSDHeatRate",
+            "Value": 41.282799,
+            "OriginalValue": 43.000000,
+            "LessIsGood": 1
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size7_class2",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 532882
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size7_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 8326271
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size7_class2",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 503278,
+      "Engineering": {
+        "Engineer": "Lori Jameson",
+        "EngineerID": 300230,
+        "BlueprintID": 128740673,
+        "BlueprintName": "Sensor_Sensor_LightWeight",
+        "Level": 5,
+        "Quality": 0.000000,
+        "Modifiers": [
+          {
+            "Label": "Mass",
+            "Value": 6.115380,
+            "OriginalValue": 32.000000,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "Integrity",
+            "Value": 30.282318,
+            "OriginalValue": 105.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "PowerDraw",
+            "Value": 0.498405,
+            "OriginalValue": 0.530000,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "SensorTargetScanAngle",
+            "Value": 21.183800,
+            "OriginalValue": 30.000000,
+            "LessIsGood": 0
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size6_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 276004
+    },
+    {
+      "Slot": "Slot01_Size8",
+      "Item": "int_cargorack_size8_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 3094653
+    },
+    {
+      "Slot": "Slot02_Size8",
+      "Item": "int_cargorack_size8_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000,
+      "Value": 3094653
+    },
+    {
+      "Slot": "Slot03_Size6",
+      "Item": "int_dronecontrol_collection_size5_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 292986
+    },
+    {
+      "Slot": "Slot04_Size6",
+      "Item": "int_dronecontrol_collection_size5_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 310220
+    },
+    {
+      "Slot": "Slot05_Size6",
+      "Item": "int_shieldgenerator_size6_class2",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 484207,
+      "Engineering": {
+        "Engineer": "Lei Cheung",
+        "EngineerID": 300120,
+        "BlueprintID": 128673835,
+        "BlueprintName": "ShieldGenerator_Reinforced",
+        "Level": 1,
+        "Quality": 0.000000,
+        "Modifiers": [
+          {
+            "Label": "ShieldGenStrength",
+            "Value": 93.565163,
+            "OriginalValue": 90.000000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "BrokenRegenRate",
+            "Value": 4.530500,
+            "OriginalValue": 5.330000,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "KineticResistance",
+            "Value": 41.505657,
+            "OriginalValue": 39.999996,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "ThermicResistance",
+            "Value": -16.988682,
+            "OriginalValue": -20.000004,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "ExplosiveResistance",
+            "Value": 51.254715,
+            "OriginalValue": 50.000000,
+            "LessIsGood": 0
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "Slot06_Size5",
+      "Item": "int_guardianfsdbooster_size5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 95453
+    },
+    {
+      "Slot": "Slot07_Size5",
+      "Item": "int_dronecontrol_collection_size5_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 95453
+    },
+    {
+      "Slot": "Slot08_Size4",
+      "Item": "int_refinery_size4_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 29371
+    },
+    {
+      "Slot": "Slot09_Size3",
+      "Item": "int_dronecontrol_prospector_size3_class5",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 11557
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "WeaponColour",
+      "Item": "weaponcustomisation_cyan",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_verity",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "Slot10_Size1",
+      "Item": "int_detailedsurfacescanner_tiny",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000,
+      "Value": 7804,
+      "Engineering": {
+        "Engineer": "Lei Cheung",
+        "EngineerID": 300120,
+        "BlueprintID": 128740151,
+        "BlueprintName": "Sensor_Expanded",
+        "Level": 5,
+        "Quality": 1.000000,
+        "Modifiers": [
+          {
+            "Label": "PowerDraw",
+            "Value": 0.000000,
+            "OriginalValue": 0.000000,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "DSS_PatchRadius",
+            "Value": 40.000000,
+            "OriginalValue": 20.000000,
+            "LessIsGood": 0
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "cutter_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.000000
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 0,
+      "Health": 1.000000
+    }
+  ]
+}

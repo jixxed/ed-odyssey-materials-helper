@@ -216,7 +216,13 @@ class HorizonsBlueprintBar extends Accordion {
                 .withStyleClass(BLUEPRINT_LIST_STYLE_CLASS)
                 .asLocalized()
                 .build();
-        final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(types, recipesEntry.getValue().keySet(), recipesEntry.getValue().entrySet().stream().map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().keySet())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+        final DestroyableComboBox<HorizonsBlueprintName> blueprints = createBlueprintsComboboxForTypes(
+                types,
+                recipesEntry.getValue().entrySet().stream().filter(entry -> entry.getValue().values().stream().anyMatch(map -> map.values().stream().anyMatch(bp -> !bp.isPreEngineered()))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).keySet(),
+                recipesEntry.getValue().entrySet().stream()
+                        .map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().entrySet().stream().filter(entry -> entry.getValue().entrySet().stream().anyMatch(horizonsBlueprintGradeHorizonsBlueprintEntry ->!horizonsBlueprintGradeHorizonsBlueprintEntry.getValue().isPreEngineered() )).map(horizonsBlueprintTypeMapEntry -> horizonsBlueprintTypeMapEntry.getKey()).collect(Collectors.toSet())))
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+        );
 
         final TitledPane categoryTitledPane = createTitledPane(recipesEntry.getKey().getLocalizationKey());
         final List<ToggleButton> toggleButtons = getGradeToggleButtons(scroll, () -> types.getSelectionModel().getSelectedItem(), () -> blueprints.getSelectionModel().getSelectedItem(), recipesEntry.getValue());
@@ -233,7 +239,7 @@ class HorizonsBlueprintBar extends Accordion {
             }
         });
         this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && recipesEntry.getKey().equals(blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && sameCategory(recipesEntry.getKey(),blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
                 blueprints.getSelectionModel().select(blueprintName);
                 if (blueprintClickEvent.getBlueprint() instanceof HorizonsModuleBlueprint) {
                     types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
@@ -265,6 +271,13 @@ class HorizonsBlueprintBar extends Accordion {
         categoryTitledPane.setContent(content);
         VBox.setVgrow(scroll, Priority.ALWAYS);
         return categoryTitledPane;
+    }
+
+    private boolean sameCategory(BlueprintCategory menuCategory, BlueprintCategory blueprintCategory) {
+        if(BlueprintCategory.OPTIONAL_INTERNAL.equals(menuCategory) && (BlueprintCategory.OPTIONAL_INTERNAL.equals(blueprintCategory)|| BlueprintCategory.OPTIONAL_MILITARY.equals(blueprintCategory))) {
+            return true;
+        }
+        return menuCategory.equals(blueprintCategory);
     }
 
     private SegmentedButton createGradeSegmentedButton(final List<ToggleButton> toggleButtons) {

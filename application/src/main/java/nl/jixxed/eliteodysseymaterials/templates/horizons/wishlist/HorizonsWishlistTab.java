@@ -477,6 +477,11 @@ public class HorizonsWishlistTab extends HorizonsTab {
             this.currentSearch = horizonsWishlistSearchEvent.getSearch();
             Platform.runLater(this::refreshContent);
         }));
+
+        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistCreatedEvent.class, event ->
+        {
+            refreshWishlistSelect();
+        }));
     }
 
     private List<WishlistBlueprintTemplate<HorizonsBlueprintName>> getPathWishlistBlueprints(final PathItem<HorizonsBlueprintName> pathItem) {

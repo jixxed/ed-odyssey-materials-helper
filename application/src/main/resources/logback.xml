@@ -1,26 +1,29 @@
 <configuration>
+    <timestamp key="startTimestamp" datePattern="HHmmssSSS"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
-            <outputPatternAsHeader>true</outputPatternAsHeader>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
-
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>log/edomh.log</file>
-        <append>false</append>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>log/edomh.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>14</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="nl.jixxed.eliteodysseymaterials.log.RollOncePerSessionTriggeringPolicy"/>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
-            <outputPatternAsHeader>true</outputPatternAsHeader>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n
             </pattern>
         </encoder>
     </appender>
-
     <logger name="edomh" level="DEBUG"/>
-
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>

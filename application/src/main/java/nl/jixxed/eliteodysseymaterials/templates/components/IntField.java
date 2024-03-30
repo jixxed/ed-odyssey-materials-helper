@@ -5,16 +5,27 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import lombok.Getter;
-import lombok.Setter;
 
 public class IntField extends TextField {
     private final IntegerProperty value;
-    @Setter
     @Getter
     private int minValue;
-    @Setter
     @Getter
     private int maxValue;
+
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+        if(this.value.getValue() < minValue) {
+            this.value.setValue(minValue);
+        }
+    }
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+        if(this.value.getValue() > maxValue) {
+            this.value.setValue(maxValue);
+        }
+    }
 
     // expose an integer value property for the text field.
     public int getValue() {
@@ -65,10 +76,12 @@ public class IntField extends TextField {
                 IntField.this.value.setValue(0);
                 return;
             }
-
-            final int intValue = Integer.parseInt(newValue);
-
-            if (this.minValue > intValue || intValue > this.maxValue) {
+            try {
+                final int intValue = Integer.parseInt(newValue);
+                if (this.minValue > intValue || intValue > this.maxValue) {
+                    textProperty().setValue(oldValue);
+                }
+            }catch (NumberFormatException e) {
                 textProperty().setValue(oldValue);
             }
 

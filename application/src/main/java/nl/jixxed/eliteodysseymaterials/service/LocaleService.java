@@ -27,9 +27,11 @@ public class LocaleService {
             "blueprint/horizons/category",
             "blueprint/horizons/description",
             "blueprint/horizons/modifier",
+            "blueprint/horizons/modifier.unit",
             "blueprint/horizons/names",
             "blueprint/horizons/type.description",
             "blueprint/horizons/type.names",
+            "blueprint/horizons/type.names.short",
             "blueprint/odyssey/category",
             "blueprint/odyssey/description",
             "blueprint/odyssey/modifier",
@@ -56,6 +58,14 @@ public class LocaleService {
             "material/odyssey/good",
             "material/odyssey/spawn",
             "material/trade",
+            "ships/blueprint.groups",
+            "ships/hardpoint.group",
+            "ships/ships",
+            "ships/modules",
+            "ships/interface",
+            "ships/size",
+            "ships/mounting",
+            "ships/slot.size",
             "application",
             "blueprint",
             "menu",
@@ -65,6 +75,7 @@ public class LocaleService {
             "tab.overview",
             "tab.settings",
             "tab.trade",
+            "tab.ships",
             "tab.wishlist",
             "tooltip"
     };
@@ -79,9 +90,14 @@ public class LocaleService {
         return currentLocale;
     }
 
+
+    public static boolean hasKey(String key) {
+        return ObservableResourceFactory.getResources().containsKey(key);
+    }
+
     public static void setCurrentLocale(final Locale locale) {
         currentLocale = locale;
-        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle( currentLocale,RESOURCE_BUNDLE_NAMES));
+        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle(currentLocale, RESOURCE_BUNDLE_NAMES));
     }
 
     public static String getLocalizedStringForCurrentLocale(final String key, final Object... parameters) {
@@ -95,21 +111,25 @@ public class LocaleService {
 
     private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
         final Object[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(Object[]::new);
-        return MessageFormat.format(CSVResourceBundle.getResourceBundle(locale,RESOURCE_BUNDLE_NAMES).getString(key), localizedParams);
+        return MessageFormat.format(applyReplacements(CSVResourceBundle.getResourceBundle(locale, RESOURCE_BUNDLE_NAMES).getString(key)), localizedParams);
     }
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {
         return ObservableResourceFactory.getStringBinding(() -> {
             final Object[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(Object[]::new);
-            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), localizedParams);
+            return MessageFormat.format(applyReplacements(ObservableResourceFactory.getResources().getString(key)), localizedParams);
         });
     }
 
     public static ObservableValue<String> getSupplierStringBinding(final String key, final Supplier<Object>... parameterSuppliers) {
         return ObservableResourceFactory.getStringBinding(() -> {
             final Object[] parameters = Arrays.stream(parameterSuppliers).map(Supplier::get).toArray(Object[]::new);
-            return MessageFormat.format(ObservableResourceFactory.getResources().getString(key), parameters);
+            return MessageFormat.format(applyReplacements(ObservableResourceFactory.getResources().getString(key)), parameters);
         });
+    }
+
+    private static String applyReplacements(String string) {
+        return string.replace("\\n","\n");
     }
 
     public static StringBinding getStringBinding(final OdysseyMaterial odysseyMaterial) {

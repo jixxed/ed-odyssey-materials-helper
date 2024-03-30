@@ -65,6 +65,7 @@ class MessageHandler {
             Map.entry(JournalEventType.BACKPACKCHANGE, new BackpackChangeMessageProcessor()),
             Map.entry(JournalEventType.RESUPPLY, new ResupplyMessageProcessor()),
             Map.entry(JournalEventType.FSDJUMP, new FSDJumpMessageProcessor()),
+            Map.entry(JournalEventType.LOADOUT, new LoadoutMessageProcessor()),
             Map.entry(JournalEventType.LOCATION, new LocationMessageProcessor()),
             Map.entry(JournalEventType.TOUCHDOWN, new TouchdownMessageProcessor()),
             Map.entry(JournalEventType.UNDOCKED, new UndockedMessageProcessor()),

@@ -17,6 +17,9 @@ public class VersionService {
     }
 
     public static String getLatestVersion() throws IOException {
+        if(getBuildVersion() == null){
+            return "dev";
+        }
         final URL url = new URL("https://api.github.com/repos/jixxed/ed-odyssey-materials-helper/releases/latest");
         final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("accept", "application/json");

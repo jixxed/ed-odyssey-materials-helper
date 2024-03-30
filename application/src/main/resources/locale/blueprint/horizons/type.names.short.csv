@@ -1,0 +1,22 @@
+messageKey,,en,de,es,fr,pt,ru
+blueprint.horizons.type.short.thermal_resistant_hull_reinforcement,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente,Résistant thermique,Resistente térmico,Термостойкий усилитель
+blueprint.horizons.type.short.blast_resistant_hull_reinforcement,Blast Resistant,Blast Resistant,Explosionsbeständig,Resistente a la explosión,Résistant aux explosions,Resistente à explosão,Взрывостойкий усилитель
+blueprint.horizons.type.short.heavy_duty_hull_reinforcement,Heavy Duty,Heavy Duty,Schwerlast,Tarea pesada,À toute épreuve,Trabalho pesado,Надёжный усилитель
+blueprint.horizons.type.short.lightweight_hull_reinforcement,Lightweight,Lightweight,Leichtgewicht,Ligero,Poids léger,Leve,Облегчённый
+blueprint.horizons.type.short.kinetic_resistant_hull_reinforcement,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a la cinética,Cinétique,Resistente a cinéticos,Противокинетический усилитель
+blueprint.horizons.type.short.enhanced_low_power_shields,Enhanced Low Power,Enhanced Low Power,,,,,
+blueprint.horizons.type.short.kinetic_resistant_shields,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a la cinética,Cinétique,Resistente a cinéticos,Противокинетический усилитель
+blueprint.horizons.type.short.reinforced_shields,Reinforced,Reinforced,Verstärkt,Reforzado,Renforcé,Reforçado,Усиленный
+blueprint.horizons.type.short.thermal_resistant_shields,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente,Résistant thermique,Resistente térmico,Термостойкий усилитель
+blueprint.horizons.type.short.efficient_weapon,Efficient,Efficient,,,,,
+blueprint.horizons.type.short.focused_weapon,Focused,Focused,,,,,
+blueprint.horizons.type.short.lightweight_mount,Lightweight,Lightweight,Leichtgewicht,Ligero,Poids léger,Leve,Облегчённый
+blueprint.horizons.type.short.long_range_weapon,Long Range,Long Range,,,,,
+blueprint.horizons.type.short.rapid_fire_modification,Rapid Fire,Rapid Fire,,,,,
+blueprint.horizons.type.short.overcharged_weapon,Overcharged,Overcharged,Überladen,Sobrecargado,Surchargé,Sobrecarregado,Усиленная силовая установка
+blueprint.horizons.type.short.short_range_blaster,Short Range,Short Range,,,,,
+blueprint.horizons.type.short.sturdy_mount,Sturdy Mount,Sturdy Mount,Stabiles Gestell,Montura resistente,Monture robuste,Montagem resistente,Прочное крепление
+blueprint.horizons.type.short.expanded_fsd_interdictor_capture_arc,Expanded Capture Arc,,,,,,
+blueprint.horizons.type.short.expanded_probe_scanning_radius,Expanded Scanning Radius,,,,,,
+blueprint.horizons.type.short.long_range_fsd_interdictor,Long Range,Long Range,,,,,
+blueprint.horizons.type.short.faster_fsd_boot_sequence,Faster Boot,Faster Boot,,,,,

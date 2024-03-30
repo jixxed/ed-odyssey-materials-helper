@@ -22,4 +22,9 @@ public enum HorizonsBlueprintGrade {
     } public static HorizonsBlueprintGrade forDigit(final int digit) {
         return Arrays.stream(HorizonsBlueprintGrade.values()).filter(grade -> grade.grade == digit).findFirst().orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(grade);
+    }
 }

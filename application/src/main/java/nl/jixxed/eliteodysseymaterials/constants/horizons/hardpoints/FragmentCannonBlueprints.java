@@ -3,12 +3,14 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.HorizonsModifierValue;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.List;
 import java.util.Map;
+
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -21,24 +23,34 @@ public class FragmentCannonBlueprints {
                                     Raw.CARBON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsModifierValue("+600%", true),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-2%", false),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsModifierValue("2", true),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("4", true)
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+600%", true, percentagePositive(0.0, 6.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.DOUBLE_SHOT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.CARBON, 1,
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsModifierValue("+800%", true),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-4%", false),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsModifierValue("2", true),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("4", true)
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+800%", true, percentagePositive(6.0, 8.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.DOUBLE_SHOT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.CARBON, 1,
@@ -46,100 +58,136 @@ public class FragmentCannonBlueprints {
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsModifierValue("+1000%", true),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-6%", false),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsModifierValue("2", true),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("4", true)
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+1000%", true, percentagePositive(8.0, 10.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.DOUBLE_SHOT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
-                                    Manufactured.MECHANICALCOMPONENTS, 1,
+                                    Raw.VANADIUM, 1,
                                     Encoded.SECURITYFIRMWARE, 1,
-                                    Raw.VANADIUM, 1
+                                    Manufactured.MECHANICALCOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsModifierValue("+1200%", true),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-8%", false),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsModifierValue("2", true),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("4", true)
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+1200%", true, percentagePositive(10.0, 12.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.DOUBLE_SHOT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
+                                    Encoded.EMBEDDEDFIRMWARE, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
-                                    Manufactured.CONFIGURABLECOMPONENTS, 1,
-                                    Encoded.EMBEDDEDFIRMWARE, 1
+                                    Manufactured.CONFIGURABLECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsModifierValue("+1400%", true),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsModifierValue("-10%", false),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsModifierValue("2", true),
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("6", true)
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("6", true, plus(6.0)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+1400%", true, percentagePositive(12.0, 14.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO))),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    )
+            ),
             HorizonsBlueprintType.EFFICIENT_WEAPON,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Raw.SULPHUR, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+8%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-38%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-37.5%", true, percentageNegative(0.0, 0.375))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
-                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_2,
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
+                    HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
-                                    Manufactured.HEATDISPERSIONPLATE, 1,
-                                    Raw.SULPHUR, 1
-                            ),
-                            Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+12%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-12%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-15%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-43%", true)
-                            ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
-                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_3,
-                            Map.of(
-                                    Raw.CHROMIUM, 1,
-                                    Encoded.SCRAMBLEDEMISSIONDATA, 1,
-                                    Manufactured.HEATEXCHANGERS, 1
+                                    Manufactured.HEATDISPERSIONPLATE, 1, Raw.SULPHUR, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+16%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-24%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-25%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-48%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+12%", true, percentagePositive(0.08, 0.12)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-12%", true, percentageNegative(0.0, 0.12)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.0, 0.15)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-42.5%", true, percentageNegative(0.375, 0.425))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
-                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_4,
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
+                    HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
-                                    Manufactured.HEATVANES, 1,
-                                    Encoded.ARCHIVEDEMISSIONDATA, 1,
-                                    Raw.SELENIUM, 1
-                            ),
-                            Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+20%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-36%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-35%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-53%", true)
-                            ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO)),
-                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_5,
-                            Map.of(
-                                    Raw.CADMIUM, 1,
-                                    Manufactured.PROTOHEATRADIATORS, 1,
-                                    Encoded.EMISSIONDATA, 1
+                                    Raw.CHROMIUM, 1, Encoded.SCRAMBLEDEMISSIONDATA, 1, Manufactured.HEATEXCHANGERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+24%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-48%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-45%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-60%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+16%", true, percentagePositive(0.12, 0.16)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-24%", true, percentageNegative(0.12, 0.24)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-47.5%", true, percentageNegative(0.425, 0.475))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO))),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
+                    HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_4,
+                            Map.of(
+                                    Manufactured.HEATVANES, 1, Encoded.ARCHIVEDEMISSIONDATA, 1, Raw.SELENIUM, 1
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.16, 0.20)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-36%", true, percentageNegative(0.24, 0.36)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-52.5%", true, percentageNegative(0.475, 0.525))
+                            ),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(
+                            HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.EFFICIENT_WEAPON, HorizonsBlueprintGrade.GRADE_5,
+                            Map.of(
+                                    Raw.CADMIUM, 1, Manufactured.PROTOHEATRADIATORS, 1, Encoded.EMISSIONDATA, 1
+                            ),
+                            Map.of(
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+24%", true, percentagePositive(0.20, 0.24)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-48%", true, percentageNegative(0.36, 0.48)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.525, 0.60))
+                            ),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    )
+            ),
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_1,
@@ -147,68 +195,92 @@ public class FragmentCannonBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("+36%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+4%", false),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsModifierValue("+36%", true),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+2%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+2%", true, percentagePositive(0.0, 0.02)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.0, 0.04)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
-                                    Manufactured.MECHANICALSCRAP, 1,
-                                    Raw.VANADIUM, 1
+                                    Raw.VANADIUM, 1,
+                                    Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("+52%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+8%", false),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsModifierValue("+52%", true),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+4%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+30%", false)
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.2, 0.3)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+4%", true, percentagePositive(0.02, 0.04)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+8%", false, percentagePositive(0.04, 0.08)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
-                                    Manufactured.MECHANICALSCRAP, 1,
+                                    Raw.VANADIUM, 1,
                                     Raw.NIOBIUM, 1,
-                                    Raw.VANADIUM, 1
+                                    Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("+68%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+12%", false),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsModifierValue("+68%", true),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+6%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.3, 0.4)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+6%", true, percentagePositive(0.04, 0.06)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.08, 0.12)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
+                                    Raw.TIN, 1,
                                     Manufactured.HIGHDENSITYCOMPOSITES, 1,
-                                    Manufactured.MECHANICALEQUIPMENT, 1,
-                                    Raw.TIN, 1
+                                    Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("+84%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+16%", false),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsModifierValue("+84%", true),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+8%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+50%", false)
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+50%", false, percentagePositive(0.4, 0.5)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.06, 0.08)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+16%", false, percentagePositive(0.12, 0.16)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
                                     Manufactured.MECHANICALCOMPONENTS, 1,
-                                    Manufactured.MILITARYSUPERCAPACITORS, 1,
-                                    Manufactured.FEDPROPRIETARYCOMPOSITES, 1
+                                    Manufactured.FEDPROPRIETARYCOMPOSITES, 1,
+                                    Manufactured.MILITARYSUPERCAPACITORS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.CLIP_SIZE, new HorizonsModifierValue("+100%", true),
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("+20%", false),
-                                    HorizonsModifier.AMMO_CAPACITY, new HorizonsModifierValue("+100%", true),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+10%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.5, 0.6)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+10%", true, percentagePositive(0.08, 0.1)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.16, 0.2)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO))),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    )
+            ),
             HorizonsBlueprintType.LIGHTWEIGHT_MOUNT,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_1,
@@ -216,61 +288,85 @@ public class FragmentCannonBlueprints {
                                     Raw.PHOSPHORUS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-20%", false),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-30%", true)
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.0, 0.3)),
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.2))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.MANGANESE, 1,
                                     Manufactured.SALVAGEDALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-10%", true),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-30%", false),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-20%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-45%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-30%", false, percentageNegative(0.2, 0.3)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.3, 0.45)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.0, 0.2)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
-                                    Manufactured.CONDUCTIVECERAMICS, 1,
                                     Raw.MANGANESE, 1,
-                                    Manufactured.SALVAGEDALLOYS, 1
+                                    Manufactured.SALVAGEDALLOYS, 1,
+                                    Manufactured.CONDUCTIVECERAMICS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-20%", true),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-40%", false),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-25%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-60%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-40%", false, percentageNegative(0.3, 0.4)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.45, 0.6)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.2, 0.25)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.1, 0.2))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
-                                    Manufactured.CONDUCTIVECOMPONENTS, 1,
                                     Manufactured.PHASEALLOYS, 1,
-                                    Manufactured.PROTOLIGHTALLOYS, 1
+                                    Manufactured.PROTOLIGHTALLOYS, 1,
+                                    Manufactured.CONDUCTIVECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-30%", true),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-50%", false),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-30%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-75%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-50%", false, percentageNegative(0.4, 0.5)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-75%", true, percentageNegative(0.6, 0.75)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.25, 0.3)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.2, 0.3))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.LIGHTWEIGHT_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
-                                    Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.PROTOLIGHTALLOYS, 1,
+                                    Manufactured.CONDUCTIVECERAMICS, 1,
                                     Manufactured.PROTORADIOLICALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.POWER_DRAW, new HorizonsModifierValue("-40%", true),
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("-60%", false),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-35%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("-90%", true)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("-60%", false, percentageNegative(0.5, 0.6)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("-90%", true, percentageNegative(0.75, 0.9)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.3, 0.35)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("-40%", true, percentageNegative(0.3, 0.4))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO))),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    )
+            ),
             HorizonsBlueprintType.OVERCHARGED_WEAPON,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_1,
@@ -278,58 +374,82 @@ public class FragmentCannonBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+30%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("+15%", false),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+3%", false)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.0, 0.3)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.0, 0.03)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.0, 0.15))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
-                                    Manufactured.CONDUCTIVECOMPONENTS, 1,
-                                    Raw.NICKEL, 1
+                                    Raw.NICKEL, 1,
+                                    Manufactured.CONDUCTIVECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+40%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("+20%", false),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+6%", false)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.3, 0.4)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+6%", false, percentagePositive(0.03, 0.06)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.15, 0.2))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
-                                    Manufactured.CONDUCTIVECOMPONENTS, 1,
+                                    Raw.NICKEL, 1,
                                     Manufactured.ELECTROCHEMICALARRAYS, 1,
-                                    Raw.NICKEL, 1
+                                    Manufactured.CONDUCTIVECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+50%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("+25%", false),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+9%", false)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.4, 0.5)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+9%", false, percentagePositive(0.06, 0.09)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+25%", false, percentagePositive(0.2, 0.25))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
-                                    Manufactured.CONDUCTIVECERAMICS, 1,
+                                    Raw.ZINC, 1,
                                     Manufactured.POLYMERCAPACITORS, 1,
-                                    Raw.ZINC, 1
+                                    Manufactured.CONDUCTIVECERAMICS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+60%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("+30%", false),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+12%", false)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.5, 0.6)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+12%", false, percentagePositive(0.09, 0.12)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+30%", false, percentagePositive(0.25, 0.3))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.OVERCHARGED_WEAPON, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
-                                    Manufactured.CONDUCTIVEPOLYMERS, 1,
+                                    Raw.ZIRCONIUM, 1,
                                     Encoded.EMBEDDEDFIRMWARE, 1,
-                                    Raw.ZIRCONIUM, 1
+                                    Manufactured.CONDUCTIVEPOLYMERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("+70%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("+35%", false),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("+15%", false)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("+70%", true, percentagePositive(0.6, 0.7)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.12, 0.15)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+35%", false, percentagePositive(0.3, 0.35))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO))),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    )
+            ),
             HorizonsBlueprintType.RAPID_FIRE_MODIFICATION,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_1,
@@ -337,67 +457,91 @@ public class FragmentCannonBlueprints {
                                     Manufactured.MECHANICALSCRAP, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("-1%", false),
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("-25%", true),
-                                    HorizonsModifier.JITTER, new HorizonsModifierValue("0,5", false),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+8%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-1%", false, percentageNegative(0.0, 0.01)),
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.0, 0.25)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+8%", true, percentagePositive(0.0, 0.08))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
-                                    Manufactured.HEATDISPERSIONPLATE, 1,
-                                    Manufactured.MECHANICALSCRAP, 1
+                                    Manufactured.MECHANICALSCRAP, 1,
+                                    Manufactured.HEATDISPERSIONPLATE, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("-2%", false),
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("-35%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-5%", true),
-                                    HorizonsModifier.JITTER, new HorizonsModifierValue("0,5", false),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+17%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.01, 0.02)),
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-5%", true, percentageNegative(0.0, 0.05)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+17%", true, percentagePositive(0.08, 0.17))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
-                                    Manufactured.MECHANICALEQUIPMENT, 1,
+                                    Encoded.LEGACYFIRMWARE, 1,
                                     Manufactured.PRECIPITATEDALLOYS, 1,
-                                    Encoded.LEGACYFIRMWARE, 1
+                                    Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("-3%", false),
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("-45%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-15%", true),
-                                    HorizonsModifier.JITTER, new HorizonsModifierValue("0,5", false),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+26%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-3%", false, percentageNegative(0.02, 0.03)),
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.05, 0.15)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+26%", true, percentagePositive(0.17, 0.26))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
-                                    Manufactured.MECHANICALCOMPONENTS, 1,
                                     Encoded.CONSUMERFIRMWARE, 1,
+                                    Manufactured.MECHANICALCOMPONENTS, 1,
                                     Manufactured.THERMICALLOYS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("-4%", false),
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("-56%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-25%", true),
-                                    HorizonsModifier.JITTER, new HorizonsModifierValue("0,5", false),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+35%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.03, 0.04)),
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-55%", true, percentageNegative(0.45, 0.55)),
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.15, 0.25)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+35%", true, percentagePositive(0.26, 0.35))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.RAPID_FIRE_MODIFICATION, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
-                                    Manufactured.CONFIGURABLECOMPONENTS, 1,
+                                    Raw.TECHNETIUM, 1,
                                     Manufactured.PRECIPITATEDALLOYS, 1,
-                                    Raw.TECHNETIUM, 1
+                                    Manufactured.CONFIGURABLECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE, new HorizonsModifierValue("-5%", false),
-                                    HorizonsModifier.RELOAD_TIME, new HorizonsModifierValue("-65%", true),
-                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsModifierValue("-35%", true),
-                                    HorizonsModifier.JITTER, new HorizonsModifierValue("0,5", false),
-                                    HorizonsModifier.RATE_OF_FIRE, new HorizonsModifierValue("+44%", true)
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.04, 0.05)),
+                                    HorizonsModifier.RELOAD_TIME, new HorizonsNumberModifierValue("-65%", true, percentageNegative(0.55, 0.65)),
+                                    HorizonsModifier.JITTER, new HorizonsNumberModifierValue("0,5", false, plus(0.5)),
+                                    HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-35%", true, percentageNegative(0.25, 0.35)),
+                                    HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+44%", true, percentagePositive(0.35, 0.44))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO))),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    )
+            ),
             HorizonsBlueprintType.STURDY_MOUNT,
             Map.of(
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_1,
@@ -405,61 +549,87 @@ public class FragmentCannonBlueprints {
                                     Raw.NICKEL, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+100%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-10%", true),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsModifierValue("+20%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+20%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.0, 1.0)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-10%", true, percentageNegative(0.0, 0.1)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.0, 0.2))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_2, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_2,
                             Map.of(
                                     Raw.NICKEL, 1,
                                     Manufactured.SHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+150%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-15%", true),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsModifierValue("+30%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+40%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+150%", true, percentagePositive(1.0, 1.5)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+30%", true, percentagePositive(0.2, 0.3)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-15%", true, percentageNegative(0.1, 0.15)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.2, 0.4))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_3, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_3,
                             Map.of(
                                     Raw.NICKEL, 1,
-                                    Manufactured.SHIELDEMITTERS, 1,
-                                    Raw.TUNGSTEN, 1
+                                    Raw.TUNGSTEN, 1,
+                                    Manufactured.SHIELDEMITTERS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+200%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-20%", true),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsModifierValue("+40%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+60%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+200%", true, percentagePositive(1.5, 2.0)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.3, 0.4)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-20%", true, percentageNegative(0.15, 0.2)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+60%", false, percentagePositive(0.4, 0.6))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.TOD_THE_BLASTER_MCQUINN, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_4, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_4,
                             Map.of(
-                                    Raw.MOLYBDENUM, 1,
+                                    Raw.ZINC, 1,
                                     Raw.TUNGSTEN, 1,
-                                    Raw.ZINC, 1
+                                    Raw.MOLYBDENUM, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+250%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-25%", true),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsModifierValue("+50%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+80%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+250%", true, percentagePositive(2.0, 2.5)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+50%", true, percentagePositive(0.4, 0.5)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-25%", true, percentageNegative(0.2, 0.25)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+80%", false, percentagePositive(0.6, 0.8))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO)),
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    ),
                     HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.FRAGMENT_CANNON, HorizonsBlueprintType.STURDY_MOUNT, HorizonsBlueprintGrade.GRADE_5,
                             Map.of(
-                                    Manufactured.HIGHDENSITYCOMPOSITES, 1,
+                                    Raw.TECHNETIUM, 1,
                                     Raw.MOLYBDENUM, 1,
-                                    Raw.TECHNETIUM, 1
+                                    Manufactured.HIGHDENSITYCOMPOSITES, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.INTEGRITY, new HorizonsModifierValue("+300%", true),
-                                    HorizonsModifier.THERMAL_LOAD, new HorizonsModifierValue("-30%", true),
-                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsModifierValue("+60%", true),
-                                    HorizonsModifier.MASS, new HorizonsModifierValue("+100%", false)
+                                    HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+300%", true, percentagePositive(2.5, 3.0)),
+                                    HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.5, 0.6)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-30%", true, percentageNegative(0.25, 0.3)),
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+100%", false, percentagePositive(0.8, 1.0))
                             ),
-                            List.of(Engineer.MARSHA_HICKS, Engineer.ZACARIAH_NEMO))));
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.ZACARIAH_NEMO
+                            )
+                    )
+            )
+    );
+
 }

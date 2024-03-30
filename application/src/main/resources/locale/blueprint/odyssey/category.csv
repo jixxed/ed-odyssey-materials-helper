@@ -12,3 +12,5 @@ blueprint.category.name.techbroker,Techbroker Blueprints,Techbroker Blueprints,T
 blueprint.category.name.utility_mount,Utility Mounts,Utility Mounts,Werkzeug Aufhängungen,Soporte de servicios públicos,Supports de services publics,Montagens de utilidade,Внешнее оборудование
 blueprint.category.name.weapon_grades,Weapon Grades,Weapon Grades,Waffenstufen,Grados de armas,Niveaux d’armes,Graus de armas,Уровни оружия
 blueprint.category.name.weapon_modules,Weapon Modules,Weapon Modules,Waffen Modifikationen,Módulos de armas,Modules d’armes,Módulos de arma,Модули для оружия
+blueprint.category.name.optional_military,Optional Military,,,,,,
+blueprint.category.name.cargo_hatch,Cargo Hatch,,,,,,

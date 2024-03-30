@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Fileheader.Fileheader;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
@@ -82,8 +83,29 @@ public class ApplicationState {
     private int flags = 0;
     private int flags2 = 0;
 
+    @Setter
+    @Getter
+    private Ship ship;
+
+    @Setter
+    @Getter
+    private Optional<ShipConfig> shipConfig = Optional.empty();
+    @Getter
+    @Setter
+    private int systemPips = 8;
+    @Getter
+    @Setter
+    private int enginePips = 8;
+    @Getter
+    @Setter
+    private int weaponPips = 8;
+    @Getter
+    @Setter
+    private boolean liveStats = false;
+
     @Getter
     private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);
+
     private ApplicationState() {
 
         this.eventListeners.add(EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken()))));
@@ -210,6 +232,7 @@ public class ApplicationState {
                 PreferencesService.setPreference(PreferenceConstants.COMMANDER, name + ":" + fid + ":" + gameVersion.name());
             }
             EventService.publish(new CommanderAddedEvent(commander));
+//            Platform.runLater(() -> EventService.publish(new CommanderAddedEvent(commander)));
         }
     }
 
@@ -305,13 +328,15 @@ public class ApplicationState {
         this.flags2 = flags2;
     }
 
-    public boolean playerInShip(){
+    public boolean playerInShip() {
         return (this.flags & 16777216) > 0;
     }
-    public boolean playerInSrv(){
+
+    public boolean playerInSrv() {
         return (this.flags & 67108864) > 0;
     }
-    public boolean playerOnFoot(){
+
+    public boolean playerOnFoot() {
         return (this.flags2 & 1) > 0;
     }
 

@@ -1,69 +1,173 @@
 messageKey,,en,de,es,fr,pt,ru
-modifier.horizons.name.all_resistances,All Resistances,All Resistances,Alle Widerstände,Todas las resistencias,Toutes les résistances,Todas as resistências,Все сопротивления
+modifier.horizons.name.absolute_damage_ratio,Absolute Damage Ratio,Absolute Damage Ratio,,,,,
 modifier.horizons.name.ammo_capacity,Ammo Capacity,Ammo Capacity,Munitionskapazität,Capacidad de munición,Capacité de munitions,Capacidade de munição,Макс. боекомплект
+modifier.horizons.name.ammo_clip_size,Clip Size,Clip Size,Filmgröße,Tamaño de clip,Taille du clip,Tamanho do clipe,Размер боекомплекта
+modifier.horizons.name.ammo_cost,Ammo Cost,Ammo Cost,,,,,
 modifier.horizons.name.ammo_maximum,Ammo Maximum,Ammo Maximum,Munition maximal,Munición máxima,Mamo maximum,Munição máxima,Макс. боекомплект
-modifier.horizons.name.anti_xeno_damage,Anti Xeno Damage,Anti Xeno Damage,Anti -Xeno -Schaden,Daño anti xeno,Dommages anti xéno,Dano anti -xeno,АИ урон
+modifier.horizons.name.anti_xeno_damage,Anti Xeno Damage,Anti Xeno Damage,Anti-Xeno-Schaden,Daño anti xeno,Dommages anti xéno,Dano anti-xeno,АИ урон
+modifier.horizons.name.anti_xeno_damage_ratio,Anti Xeno Damage Ratio,Anti Xeno Damage Ratio,,,,,
 modifier.horizons.name.area_fsds_reboot,Area FSD’s Reboot,Area FSD’s Reboot,Neustart des Bereichs FSD,Reinicio del área FSD,Redémarrage de la zone FSD,Reinicialização da área FSD,Перезагрузка FSD в области действия
+modifier.horizons.name.anti_guardian_zone_resistance,Anti Guardian Zone Resistance,,,,,,
 modifier.horizons.name.area_heat_increased_sensors_disrupted,Area Heat Increased Sensors Disrupted,Area Heat Increased Sensors Disrupted,Die Flächenwärme erhöhte die Sensoren gestört,Área Calor aumentó los sensores,La chaleur de la zone a augmenté les capteurs perturbés,O calor da área aumentou os sensores interrompidos,"Нагревает, вызывает сбой в работе сенсоров в области действия"
+modifier.horizons.name.armour,Armour,Armour,,,,,
+modifier.horizons.name.armour_hardness,Armour Hardness,Armour Hardness,,,,,
 modifier.horizons.name.armour_piercing,Armour Piercing,Armour Piercing,Panzerung durchdringen,Perforación de armadura,Perçage d’armure,Piercing de armadura,Бронебойность
 modifier.horizons.name.auto_reload_while_firing,Auto Reload While Firing,Auto Reload While Firing,Automatische Neulade beim Schießen neu laden,Recarga automática mientras se dispara,Rechargement automatique pendant le tir,Recarregar automaticamente durante o disparo,Перезарядка во время стрельбы
+modifier.horizons.name.bin_count,Bin Count,Bin Count,,,,,
+modifier.horizons.name.boost_augmenter_power_use,Boost Augmenter Power Use,Boost Augmenter Power Use,,,,,
+modifier.horizons.name.boost_cost,Boost Cost,Boost Cost,,,,,
+modifier.horizons.name.boost_speed,Boost Speed,Boost Speed,,,,,
+modifier.horizons.name.boost_speed_multiplier,Boost Speed Multiplier,Boost Speed Multiplier,,,,,
 modifier.horizons.name.boot_time,Boot Time,Boot Time,Bootzeit,Tiempo de arranque,Temps de démarrage,Tempo de inicialização,Время загрузки
+modifier.horizons.name.breach_damage,Breach Damage,Breach Damage,,,,,
 modifier.horizons.name.broken_regen_rate,Broken Regen Rate,Broken Regen Rate,Gebrochene Regenrate,Tasa de regeneración rota,Taux de régénie cassé,Taxa de regeneração quebrada,Скорость восстановления
+modifier.horizons.name.burst_interval,Burst Interval,Burst Interval,,,,,
 modifier.horizons.name.burst_rate_of_fire,Burst Rate Of Fire,Burst Rate Of Fire,Brennrate des Feuers,Ráfaga de fuego,Éclatement de feu,Taxa de incêndio,Скорострельность очереди
 modifier.horizons.name.burst_size,Burst Size,Burst Size,Burstgröße,Tamaño de ráfaga,Taille de l’éclatement,Tamanho da explosão,Длина очереди
-modifier.horizons.name.clip_size,Clip Size,Clip Size,Filmgröße,Tamaño de clip,Taille du clip,Tamanho do clipe,Размер боекомплекта
+modifier.horizons.name.cabin_capacity,Cabin Capacity,Cabin Capacity,,,,,
+modifier.horizons.name.cabin_class,Cabin Class,Cabin Class,,,,,
+modifier.horizons.name.cargo_capacity,Cargo Capacity,Cargo Capacity,,,,,
+modifier.horizons.name.caustic_damage_ratio,Caustic Damage Ratio,Caustic Damage Ratio,,,,,
+modifier.horizons.name.caustic_resistance,Caustic Resistance,Caustic Resistance,,,,,
+modifier.horizons.name.charge_time,Charge Time,Charge Time,,,,,
+modifier.horizons.name.collision_resistance,Collision Resistance,Collision Resistance,,,,,
+modifier.horizons.name.consumption,Consumption,Consumption,,,,,
+modifier.horizons.name.crew,Crew,Crew,,,,,
 modifier.horizons.name.damage,Damage,Damage,Schaden,Daño,Dégâts,Dano,Урон
 modifier.horizons.name.damage_boost,Damage Boost,Damage Boost,Schadensschub,Impulso de daño,Boost des dégâts,Aumento de danos,Бонусный урон
 modifier.horizons.name.damage_falloff_start,Damage Falloff Start,Damage Falloff Start,Schadenserscheinungsstart,Inicio de caída de daños,Début des dégâts,Danificar o início da queda,Радиус полного урона
 modifier.horizons.name.damage_increases_with_heat_level,Damage Increases With Heat Level,Damage Increases With Heat Level,Der Schaden nimmt mit dem Wärmespiegel zu,El daño aumenta con el nivel de calor,Les dommages augmentent avec le niveau de chaleur,Dano aumenta com o nível de calor,Увеличивает урон при высоком нагреве
+modifier.horizons.name.damage_multiplier,Damage Multiplier,Damage Multiplier,,,,,
 modifier.horizons.name.damage_partially_explosive,Damage Partially Explosive,Damage Partially Explosive,Teilweise explosiv Schaden,Daño parcialmente explosivo,Dommages partiellement explosifs,Dano parcialmente explosivo,Часть урона становится взрывным
 modifier.horizons.name.damage_partially_kinetic,Damage Partially Kinetic,Damage Partially Kinetic,Teilweise kinetisch schädigen,Daño parcialmente cinético,Dommages partiellement cinétiques,Danos parcialmente cinéticos,Часть урона становится кинетическим
 modifier.horizons.name.damage_partially_thermal,Damage Partially Thermal,Damage Partially Thermal,Teilweise thermisch schaden,Daño parcialmente térmico,Dommage partiellement thermique,Dano parcialmente térmico,Часть урона становится тепловым
+modifier.horizons.name.damage_per_second,Damage Per Second,Damage Per Second,,,,,
+modifier.horizons.name.damage_type,Damage Type,Damage Type,,,,,
+modifier.horizons.name.discovery_scanner_passive_range,Discovery Scanner Passive Range,Discovery Scanner Passive Range,,,,,
+modifier.horizons.name.discovery_scanner_range,Discovery Scanner Range,Discovery Scanner Range,,,,,
+modifier.horizons.name.disruption_barrier_active_power,Disruption Barrier Active Power,Disruption Barrier Active Power,,,,,
+modifier.horizons.name.disruption_barrier_charge_duration,Disruption Barrier Charge Duration,Disruption Barrier Charge Duration,,,,,
+modifier.horizons.name.disruption_barrier_cooldown,Disruption Barrier Cooldown,Disruption Barrier Cooldown,,,,,
+modifier.horizons.name.disruption_barrier_range,Disruption Barrier Range,Disruption Barrier Range,,,,,
 modifier.horizons.name.distributor_draw,Distributor Draw,Distributor Draw,Distributor Draw,Distribución de distribuidores,Trache du distributeur,Desenho do distribuidor,Тяга распределителя
-modifier.horizons.name.duration,Duration,Duration,Dauer,Duración,Durée,Duração,Продолжительность
+modifier.horizons.name.drone_active_range,Drone Active Range,Drone Active Range,,,,,
+modifier.horizons.name.drone_fuel_capacity,Drone Fuel Capacity,Drone Fuel Capacity,,,,,
+modifier.horizons.name.drone_hacking_time,Drone Hacking Time,Drone Hacking Time,,,,,
+modifier.horizons.name.drone_life_time,Drone Life Time,Drone Life Time,,,,,
+modifier.horizons.name.drone_max_jettisoned_cargo,Drone Max Jettisoned Cargo,Drone Max Jettisoned Cargo,,,,,
+modifier.horizons.name.drone_min_jettisoned_cargo,Drone Min Jettisoned Cargo,Drone Min Jettisoned Cargo,,,,,
+modifier.horizons.name.drone_multi_target_speed,Drone Multi Target Speed,Drone Multi Target Speed,,,,,
+modifier.horizons.name.drone_repair_capacity,Drone Repair Capacity,Drone Repair Capacity,,,,,
+modifier.horizons.name.drone_speed,Drone Speed,Drone Speed,,,,,
+modifier.horizons.name.drone_target_range,Drone Target Range,Drone Target Range,,,,,
+modifier.horizons.name.dss_patch_radius,Probe Radius,Probe Radius,Sondenradius,Radio de la sonda,Rayon de sonde,Raio da sonda,Радиус действия зонда
+modifier.horizons.name.duration,Duration,Duration,,,,,
+modifier.horizons.name.ecm_active_power_consumption,Ecm Active Power Consumption,Ecm Active Power Consumption,,,,,
+modifier.horizons.name.ecm_cooldown,Ecm Cooldown,Ecm Cooldown,,,,,
+modifier.horizons.name.ecm_heat,Ecm Heat,Ecm Heat,,,,,
+modifier.horizons.name.ecm_range,Ecm Range,Ecm Range,,,,,
+modifier.horizons.name.ecm_time_to_charge,Ecm Time To Charge,Ecm Time To Charge,,,,,
 modifier.horizons.name.effectiveness_increase_against_munitions,Effectiveness Increase Against Munitions,Effectiveness Increase Against Munitions,Effektivitätserhöhung gegen Munition,Aumento de la efectividad contra las municiones,Augmentation de l’efficacité contre les munitions,Aumento da eficácia contra munições,Повышение эффективности боеприпасов
+modifier.horizons.name.emergency_life_support,Emergency Life Support,Emergency Life Support,,,,,
+modifier.horizons.name.energy_per_regen,Energy Per Regen,Energy Per Regen,,,,,
+modifier.horizons.name.engine_minimum_mass,Engine Minimum Mass,Engine Minimum Mass,,,,,
+modifier.horizons.name.engine_optimal_mass,Engine Optimal Mass,Engine Optimal Mass,,,,,
+modifier.horizons.name.engine_thermal_load,Engine Thermal Load,Engine Thermal Load,,,,,
 modifier.horizons.name.engines_capacity,Engines Capacity,Engines Capacity,Motorenkapazität,Capacidad de motores,Capacités de moteurs,Capacidade de motores,Ресурс двигателей
 modifier.horizons.name.engines_recharge,Engines Recharge,Engines Recharge,Motoren laden,Recarga de motores,Moteurs recharge,Motores recarregam,Перезарядка двигателей
+modifier.horizons.name.explosive_damage_ratio,Explosive Damage Ratio,Explosive Damage Ratio,,,,,
 modifier.horizons.name.explosive_resistance,Explosive Resistance,Explosive Resistance,Sprengresistenz,Resistencia explosiva,Résistance explosive,Resistência explosiva,Сопр. взрывам
-modifier.horizons.name.facing_limit,Facing Limit,Facing Limit,Gesichtsbegrenzung,Límite de enfrentamiento,Limite,Limite de frente,Ограничение угла перехвата
+modifier.horizons.name.fighter_boost_speed,Fighter Boost Speed,Fighter Boost Speed,,,,,
+modifier.horizons.name.fighter_dps,Fighter Dps,Fighter Dps,,,,,
+modifier.horizons.name.fighter_max_speed,Fighter Max Speed,Fighter Max Speed,,,,,
+modifier.horizons.name.fighter_pitch_rate,Fighter Pitch Rate,Fighter Pitch Rate,,,,,
+modifier.horizons.name.fighter_roll_rate,Fighter Roll Rate,Fighter Roll Rate,,,,,
+modifier.horizons.name.fighter_yaw_rate,Fighter Yaw Rate,Fighter Yaw Rate,,,,,
+modifier.horizons.name.fsd_fuel_use_increase,Fsd Fuel Use Increase,Fsd Fuel Use Increase,,,,,
+modifier.horizons.name.fsd_heat_rate,Fsd Heat Rate,Fsd Heat Rate,,,,,
+modifier.horizons.name.fsd_interdictor_facing_limit,Facing Limit,Facing Limit,Gesichtsbegrenzung,Límite de enfrentamiento,Limite,Limite de frente,Ограничение угла перехвата
+modifier.horizons.name.fsd_interdictor_facing_limit,Fsd Interdictor Facing Limit,Fsd Interdictor Facing Limit,,,,,
+modifier.horizons.name.fsd_interdictor_range,Fsd Interdictor Range,Fsd Interdictor Range,,,,,
+modifier.horizons.name.fsd_optimised_mass,Fsd Optimised Mass,Fsd Optimised Mass,,,,,
+modifier.horizons.name.fuel_capacity,Fuel Capacity,Fuel Capacity,,,,,
+modifier.horizons.name.fuel_cost,Fuel Cost,Fuel Cost,,,,,
 modifier.horizons.name.fuel_efficiency,Fuel Efficiency,Fuel Efficiency,Kraftstoffeffizienz,Eficiencia de combustible,La consommation de carburant,Eficiência do combustível,Эффективность топлива
+modifier.horizons.name.fuel_multiplier,Fuel Multiplier,Fuel Multiplier,,,,,
+modifier.horizons.name.fuel_power,Fuel Power,Fuel Power,,,,,
+modifier.horizons.name.fuel_reserve,Fuel Reserve,Fuel Reserve,,,,,
+modifier.horizons.name.heat_capacity,Heat Capacity,Heat Capacity,,,,,
 modifier.horizons.name.heat_dissipation,Heat Dissipation,Heat Dissipation,Wärmeableitung,Disipación de calor,Dissipation de la chaleur,Dissipação de calor,Бонусное теплорассеяние
+modifier.horizons.name.heat_dissipation_max,Heat Dissipation Max,Heat Dissipation Max,,,,,
+modifier.horizons.name.heat_dissipation_min,Heat Dissipation Min,Heat Dissipation Min,,,,,
 modifier.horizons.name.heat_efficiency,Heat Efficiency,Heat Efficiency,Wärmeeffizienz,Eficiencia de calor,Efficacité thermique,Eficiência térmica,Теплоэффективность
 modifier.horizons.name.heat_reduced_when_striking_a_target,Heat Reduced When Striking A Target,Heat Reduced When Striking A Target,"Wärme reduziert, wenn ein Ziel getroffen wird",El calor se redujo cuando golpee un objetivo,La chaleur réduite lors de la frappe d’une cible,O calor reduziu ao atingir um alvo,Охлаждает корабль при попадании по цели
+modifier.horizons.name.heatsink_duration,Duration,Duration,Dauer,Duración,Durée,Duração,Продолжительность
 modifier.horizons.name.hull_boost,Hull Boost,Hull Boost,Rumpfschub,Impulso de casco,Boost de la coque,Boost de casco,Усиление корпуса
 modifier.horizons.name.hull_reinforcement,Hull Reinforcement,Hull Reinforcement,Rumpfverstärkung,Refuerzo de casco,Renforcement de la coque,Reforço do casco,Усилитель корпуса
 modifier.horizons.name.hull_strength,Hull Strength,Hull Strength,Rumpfstärke,Fuerza del casco,Force de coque,Força do casco,Прочность корпуса
 modifier.horizons.name.integrity,Integrity,Integrity,Integrität,Integridad,Intégrité,Integridade,Целостность
+modifier.horizons.name.jam_duration,Jam Duration,Jam Duration,,,,,
 modifier.horizons.name.jitter,Jitter,Jitter,Jitter,Estar nervioso,Giron,Jitter,Колебания
 modifier.horizons.name.jump_range,Jump Range,Jump Range,Sprungbereich,Rango de salto,Plage de saut,Alcance de salto,Расстояние прыжка
+modifier.horizons.name.jump_range_increase,Jump Range Increase,Jump Range Increase,,,,,
+modifier.horizons.name.kinetic_damage_ratio,Kinetic Damage Ratio,Kinetic Damage Ratio,,,,,
 modifier.horizons.name.kinetic_resistance,Kinetic Resistance,Kinetic Resistance,Kinetischer Widerstand,Resistencia cinética,Résistance cinétique,Resistência cinética,Сопр. кинетическому урону
 modifier.horizons.name.limpets,Limpets,Limpets,Limpets,Lente de mano,Limpets,Limpets,Дроны
 modifier.horizons.name.mass,Mass,Mass,Masse,Masa,Masse,Massa,Масса
-modifier.horizons.name.maximum_fuel_per_jump,Maximum Fuel Per Jump,Maximum Fuel Per Jump,Maximaler Kraftstoff pro Sprung,Combustible máximo por salto,Carburant maximum par saut,Combustível máximo por salto,Макс. топлива на прыжок
+modifier.horizons.name.mass_lock,Mass Lock,Mass Lock,,,,,
+modifier.horizons.name.max_active_limpets,Max Active Limpets,Max Active Limpets,,,,,
+modifier.horizons.name.max_angle,Max Angle,Max Angle,,,,,
+modifier.horizons.name.max_breach_chance,Max Breach Chance,Max Breach Chance,,,,,
+modifier.horizons.name.max_fuel_per_jump,Max Fuel Per Jump,Max Fuel Per Jump,,,,,
+modifier.horizons.name.max_range,Max Range,Max Range,,,,,
+modifier.horizons.name.maximum_mass,Maximum Mass,Maximum Mass,,,,,
+modifier.horizons.name.maximum_muliplier,Maximum Muliplier,Maximum Muliplier,,,,,
 modifier.horizons.name.maximum_range,Maximum Range,Maximum Range,Maximale Reichweite,Rango maximo,Plage maximale,Faixa máxima,Максимальная дальность
+modifier.horizons.name.min_breach_chance,Min Breach Chance,Min Breach Chance,,,,,
+modifier.horizons.name.min_pitch_speed,Min Pitch Speed,Min Pitch Speed,,,,,
+modifier.horizons.name.mine_bonus,Mine Bonus,Mine Bonus,,,,,
+modifier.horizons.name.minimum_multiplier,Minimum Multiplier,Minimum Multiplier,,,,,
+modifier.horizons.name.module_defence_absorption,Module Defence Absorption,Module Defence Absorption,,,,,
 modifier.horizons.name.no_damage_to_untargeted_ships,No Damage To Untargeted Ships,No Damage To Untargeted Ships,Kein Schaden an nicht gezielten Schiffen,No hay daño a los barcos no dirigidos,Aucun dommage aux navires non ciblés,Sem danos a navios não direcionados,"Не наносит урон кораблям, которые не выбраны в цель"
 modifier.horizons.name.optimal_mass,Optimal Mass,Optimal Mass,Optimale Masse,Masa óptima,Masse optimale,Massa ideal,Оптимальная масса
 modifier.horizons.name.optimal_multiplier,Optimal Multiplier,Optimal Multiplier,Optimaler Multiplikator,Multiplicador óptimo,Multiplicateur optimal,Multiplicador ideal,Оптимальный усилитель
-modifier.horizons.name.optimal_strength,Optimal Strength,Optimal Strength,Optimale Stärke,Fuerza óptima,Force optimale,Força ideal,Оптимальная прочность
 modifier.horizons.name.part_of_damage_through_shields,Part Of Damage Through Shields,Part Of Damage Through Shields,Teil des Schadens durch Schilde,Parte del daño a través de los escudos,Une partie des dégâts par des boucliers,Parte dos danos através de escudos,Часть урона проходит сквозь щиты
+modifier.horizons.name.pitch_speed,Pitch Speed,Pitch Speed,,,,,
+modifier.horizons.name.power_boost,Power Boost,Power Boost,,,,,
 modifier.horizons.name.power_capacity,Power Capacity,Power Capacity,Leistungskapazität,Capacidad de potencia,La capacité de puissance,Capacidade de energia,Общий ресурс
 modifier.horizons.name.power_draw,Power Draw,Power Draw,Krafte,Poder de dibujo,Tirage au sort,Consumo de energia,Потребление энергии
-modifier.horizons.name.power_generation,Power Generation,Power Generation,Stromerzeugung,Generación de energía,La production d’énergie,Geração de energia,Мощность
-modifier.horizons.name.power_recharge,Power Recharge,Power Recharge,Machtaufladung,Recarga de poder,Recharge de puissance,Recarga de energia,Общая перезарядка
-modifier.horizons.name.probe_radius,Probe Radius,Probe Radius,Sondenradius,Radio de la sonda,Rayon de sonde,Raio da sonda,Радиус действия зонда
 modifier.horizons.name.range,Range,Range,Bereich,Distancia,Varier,Alcance,Дальность
 modifier.horizons.name.rate_of_fire,Rate Of Fire,Rate Of Fire,Feuerrate,Cadencia de fuego,Taux de feu,Taxa de incêndio,Скорость стрельбы
 modifier.horizons.name.refill,Refill,Refill,Nachfüllung,Rellenar,Recharge,Reabastecer,Пополнение
 modifier.horizons.name.regen_rate,Regen Rate,Regen Rate,Regenrate,Tasa de regencia,Taux de régénération,Taxa de regeneração,Скорость восстановления при пробое
 modifier.horizons.name.reload_from_ship_fuel,Reload From Ship Fuel,Reload From Ship Fuel,Vom Schiffskraftstoff neu laden,Recargar del combustible del barco,Recharger le carburant du navire,Recarregue com combustível de navio,Пополняет боеприпасы из топлива
 modifier.horizons.name.reload_time,Reload Time,Reload Time,Nachladezeit,Tiempo de recarga,Temps de rechargement,Tempo de recarregamento,Время перезарядки
+modifier.horizons.name.repair_capacity,Repair Capacity,Repair Capacity,,,,,
+modifier.horizons.name.repair_rating,Repair Rating,Repair Rating,,,,,
 modifier.horizons.name.repair_speed,Repair Speed,Repair Speed,Reparaturgeschwindigkeit,Velocidad de reparación,Vitesse de réparation,Velocidade de reparo,Скорость ремонта
+modifier.horizons.name.roll_speed,Roll Speed,Roll Speed,,,,,
+modifier.horizons.name.rounds_per_shot,Rounds Per Shot,Rounds Per Shot,,,,,
 modifier.horizons.name.scan_angle,Scan Angle,Scan Angle,Scanwinkel,Ángulo de escaneo,Angle de balayage,Ângulo de varredura,Угол сканирования
-modifier.horizons.name.scan_range,Scan Range,Scan Range,Scanbereich,Rango de escaneo,Plage de balayage,Intervalo de varredura,Типовой диапазон
 modifier.horizons.name.scan_time,Scan Time,Scan Time,Scan Zeit,Tiempo de escaneo,Temps de balayage,Hora da varredura,Время сканирования
+modifier.horizons.name.scanner_range,Scan Range,Scan Range,Scanbereich,Rango de escaneo,Plage de balayage,Intervalo de varredura,Типовой диапазон
+modifier.horizons.name.scoop_rate,Scoop Rate,Scoop Rate,,,,,
 modifier.horizons.name.shield_boost,Shield Boost,Shield Boost,Schildschub,Impulso de escudo,Boost de bouclier,Boost de escudo,Усиление щитов
-modifier.horizons.name.shield_reinforcement,Shield Reinforcement,Shield Reinforcement,Schildverstärkung,Refuerzo de escudo,Armature du bouclier,Reforço de escudo,Усилитель щита
+modifier.horizons.name.shield_reinforcement,Shield Reinforcement,Shield Reinforcement,,,,,
+modifier.horizons.name.shield_sacrifice_amount_given,Shield Sacrifice Amount Given,Shield Sacrifice Amount Given,,,,,
+modifier.horizons.name.shield_sacrifice_amount_removed,Shield Sacrifice Amount Removed,Shield Sacrifice Amount Removed,,,,,
+modifier.horizons.name.shieldbank_duration,Shieldbank Duration,Shieldbank Duration,,,,,
+modifier.horizons.name.shieldbank_heat,Shieldbank Heat,Shieldbank Heat,,,,,
+modifier.horizons.name.shieldbank_reinforcement,Shield Reinforcement,Shield Reinforcement,Schildverstärkung,Refuerzo de escudo,Armature du bouclier,Reforço de escudo,Усилитель щита
+modifier.horizons.name.shieldbank_spin_up,Shieldbank Spin Up,Shieldbank Spin Up,,,,,
+modifier.horizons.name.shieldbank_spin_up,Spin Up Time,Spin Up Time,Zeit drehen,Tiempo de giro,Temps de rotation,Tempo de rotação,Время раскрутки
 modifier.horizons.name.shielded_target_heat_increased,Shielded Target Heat Increased,Shielded Target Heat Increased,Die abgeschirmte Zielwärme nahm zu,El calor objetivo protegido aumentó,La chaleur cible blindé a augmenté,O calor alvo blindado aumentou,Температура цели с щитом увеличилась
+modifier.horizons.name.shieldgen_maximum_mass,Maximum Mass,Maximum Mass,,,,,
+modifier.horizons.name.shieldgen_maximum_strength,Maximum Strength,Maximum Strength,,,,,
+modifier.horizons.name.shieldgen_minimum_mass,Minimum Mass,Minimum Mass,,,,,
+modifier.horizons.name.shieldgen_minimum_strength,Minimum Strength,Minimum Strength,,,,,
+modifier.horizons.name.shieldgen_optimal_mass,Optimal Mass,Optimal Mass,,,,,
+modifier.horizons.name.shieldgen_optimal_strength,Optimal Strength,Optimal Strength,Optimale Stärke,Fuerza óptima,Force optimale,Força ideal,Оптимальная прочность
+modifier.horizons.name.shields,Shields,Shields,,,,,
 modifier.horizons.name.shot_speed,Shot Speed,Shot Speed,Schussgeschwindigkeit,Velocidad de disparo,Vitesse de tir,Velocidade de tiro,Скорость выстрела
 modifier.horizons.name.spin_up_time,Spin Up Time,Spin Up Time,Zeit drehen,Tiempo de giro,Temps de rotation,Tempo de rotação,Время раскрутки
 modifier.horizons.name.systems_capacity,Systems Capacity,Systems Capacity,Systemkapazität,Capacidad de sistemas,Capacité des systèmes,Capacidade de sistemas,Ресурс систем
@@ -84,8 +188,34 @@ modifier.horizons.name.target_signature_increased,Target Signature Increased,Tar
 modifier.horizons.name.target_speed_reduced,Target Speed Reduced,Target Speed Reduced,Zielgeschwindigkeit reduziert,Velocidad objetivo reducida,La vitesse cible réduite,Velocidade alvo reduzida,Уменьшает скорость цели
 modifier.horizons.name.target_thrusters_reboot,Target Thrusters Reboot,Target Thrusters Reboot,Target Thrusters Neustart,Reiniciar los propulsores del objetivo,Redémarrage des propulseurs cibles,Reinicialização dos propulsores de destino,Перезапускает двигатели цели
 modifier.horizons.name.target_wing_shields_regenerated,Target Wing Shields Regenerated,Target Wing Shields Regenerated,Target Wing Shields regeneriert,Escudos de ala objetivo regenerados,Les boucliers d’aile cible régénérés,Escudos de asa alvo regenerados,Щиты цели в крыле регенерируют
+modifier.horizons.name.thermal_damage_ratio,Thermal Damage Ratio,Thermal Damage Ratio,,,,,
+modifier.horizons.name.thermal_drain,Thermal Drain,Thermal Drain,,,,,
 modifier.horizons.name.thermal_load,Thermal Load,Thermal Load,Wärmebelastung,Carga térmica,Charge thermique,Carga térmica,Тепловая нагрузка
 modifier.horizons.name.thermal_resistance,Thermal Resistance,Thermal Resistance,Wärmewiderstand,Resistencia termica,Résistance thermique,Resistência térmica,Сопр. термическому урону
+modifier.horizons.name.top_speed,Top Speed,Top Speed,,,,,
+modifier.horizons.name.typical_emission_range,Typical Emission Range,Typical Emission Range,,,,,
+modifier.horizons.name.vehicle_armour_health,Vehicle Armour Health,Vehicle Armour Health,,,,,
+modifier.horizons.name.vehicle_cargo_capacity,Vehicle Cargo Capacity,Vehicle Cargo Capacity,,,,,
+modifier.horizons.name.vehicle_count,Vehicle Count,Vehicle Count,,,,,
+modifier.horizons.name.vehicle_fuel_capacity,Vehicle Fuel Capacity,Vehicle Fuel Capacity,,,,,
+modifier.horizons.name.vehicle_hull_mass,Vehicle Hull Mass,Vehicle Hull Mass,,,,,
+modifier.horizons.name.vehicle_shield_health,Vehicle Shield Health,Vehicle Shield Health,,,,,
+modifier.horizons.name.vehicle_slots,Vehicle Slots,Vehicle Slots,,,,,
 modifier.horizons.name.weapons_capacity,Weapons Capacity,Weapons Capacity,Waffenkapazität,Capacidad de armas,Capacité d’armes,Capacidade de armas,Орудийный ресурс
 modifier.horizons.name.weapons_recharge,Weapons Recharge,Weapons Recharge,Waffenaufladung,Recarga de armas,Recharge des armes,Recarrega de armas,Перезарядка оружия
+modifier.horizons.name.wing_damage_reduction,Wing Damage Reduction,Wing Damage Reduction,,,,,
+modifier.horizons.name.wing_max_duration,Wing Max Duration,Wing Max Duration,,,,,
+modifier.horizons.name.wing_min_duration,Wing Min Duration,Wing Min Duration,,,,,
 modifier.horizons.name.wing_shield_regeneration_increased,Wing Shield Regeneration Increased,Wing Shield Regeneration Increased,Die Regeneration der Flügelschildsteigerung nahm zu,La regeneración del escudo del ala aumentó,La régénération du bouclier des ailes a augmenté,A regeneração do escudo da asa aumentou,Регенерация щита союзника в крыле увеличилась
+modifier.horizons.name.yaw_speed,Yaw Speed,Yaw Speed,,,,,
+modifier.horizons.name.minimum_multiplier_speed,Minimum Multiplier Speed,Minimum Multiplier Speed,,,,,
+modifier.horizons.name.optimal_multiplier_speed,Optimal Multiplier Speed,Optimal Multiplier Speed,,,,,
+modifier.horizons.name.maximum_multiplier_speed,Maximum Multiplier Speed,Maximum Multiplier Speed,,,,,
+modifier.horizons.name.minimum_multiplier_acceleration,Minimum Multiplier Acceleration,Minimum Multiplier Acceleration,,,,,
+modifier.horizons.name.optimal_multiplier_acceleration,Optimal Multiplier Acceleration,Optimal Multiplier Acceleration,,,,,
+modifier.horizons.name.maximum_multiplier_acceleration,Maximum Multiplier Acceleration,Maximum Multiplier Acceleration,,,,,
+modifier.horizons.name.minimum_multiplier_rotation,Minimum Multiplier Rotation,Minimum Multiplier Rotation,,,,,
+modifier.horizons.name.optimal_multiplier_rotation,Optimal Multiplier Rotation,Optimal Multiplier Rotation,,,,,
+modifier.horizons.name.maximum_multiplier_rotation,Maximum Multiplier Rotation,Maximum Multiplier Rotation,,,,,
+modifier.horizons.unit.manoeuvrability,Manoeuvrability,Manoeuvrability,,,,,
+modifier.horizons.unit.minimum_thrust,Minimum Thrust,Minimum Thrust,,,,,

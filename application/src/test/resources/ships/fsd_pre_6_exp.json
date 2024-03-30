@@ -1,0 +1,55 @@
+{
+  "Slot": "FrameShiftDrive",
+  "Item": "int_hyperdrive_size6_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.000000,
+  "Value": 14197539,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 128998592,
+    "BlueprintName": "FSD_LongRange",
+    "Level": 5,
+    "Quality": 1.000000,
+    "ExperimentalEffect": "special_fsd_heavy",
+    "ExperimentalEffect_Localised": "Mass Manager",
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 52.000000,
+        "OriginalValue": 40.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 90.804001,
+        "OriginalValue": 141.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 0.862500,
+        "OriginalValue": 0.750000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "BootTime",
+        "Value": 2.000000,
+        "OriginalValue": 10.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "FSDOptimalMass",
+        "Value": 3182.399902,
+        "OriginalValue": 1800.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "FSDHeatRate",
+        "Value": 44.400002,
+        "OriginalValue": 37.000000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

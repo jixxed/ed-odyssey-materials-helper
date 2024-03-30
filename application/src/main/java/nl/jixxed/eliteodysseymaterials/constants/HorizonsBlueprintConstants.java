@@ -7,9 +7,17 @@ import nl.jixxed.eliteodysseymaterials.constants.horizons.ExperimentalEffectBlue
 import nl.jixxed.eliteodysseymaterials.constants.horizons.SynthesisBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.TechbrokerBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.*;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengineered.FSDPreEngineeredBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals.preengineered.PowerPlantPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.*;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints.preengineered.*;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.*;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.DetailedSurfaceScannerPreEngineeredBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.preengineered.ShieldGeneratorPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.*;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.KillWarrantScannerPreEngineeredBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.PointDefencePreEngineeredBlueprints;
+import nl.jixxed.eliteodysseymaterials.constants.horizons.utilitymounts.preengineered.SinkLauncherPreEngineeredBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineerBlueprint;
@@ -18,6 +26,8 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -253,26 +263,35 @@ public abstract class HorizonsBlueprintConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(HorizonsBlueprintName.ENGINEER_E2A, EngineerBlueprints.ENGINEER_E2A);
         ENGINEER_UNLOCK_REQUIREMENTS.put(HorizonsBlueprintName.ENGINEER_E2B, EngineerBlueprints.ENGINEER_E2B);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.ARMOUR, ArmourBlueprints.BLUEPRINTS);
-        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, FSDBlueprints.BLUEPRINTS);
+        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, merge(FSDBlueprints.BLUEPRINTS, FSDPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.LIFE_SUPPORT, LifeSupportBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_DISTRIBUTOR, PowerDistributorBlueprints.BLUEPRINTS);
-        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_PLANT, PowerPlantBlueprints.BLUEPRINTS);
+        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_PLANT, merge(PowerPlantBlueprints.BLUEPRINTS, PowerPlantPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SENSORS, SensorBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.THRUSTERS, ThrusterBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.ABRASION_BLASTER, AbrasionBlasterPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.AX_MISSILE_RACK, AXMissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.AX_MULTI_CANNON, AXMultiCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.BEAM_LASER, BeamLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.BURST_LASER, BurstLaserBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.CANNON, CannonBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.ENZYME_MISSILE_RACK, EnzymeMissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, FragmentCannonBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON, GuardianGaussCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER, GuardianPlasmaChargerPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, GuardianShardCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINE_LAUNCHER, MineLauncherBlueprints.BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MISSILE_RACK, MissileRackBlueprints.BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MULTI_CANNON, MultiCannonBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINING_LASER, MiningLaserPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MISSILE_RACK, merge(MissileRackBlueprints.BLUEPRINTS,MissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MULTI_CANNON, merge(MultiCannonBlueprints.BLUEPRINTS,MultiCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.PLASMA_ACCELERATOR, PlasmaAcceleratorBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.PULSE_LASER, PulseLaserBlueprints.BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.RAIL_GUN, RailGunBlueprints.BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.RAIL_GUN, merge(RailGunBlueprints.BLUEPRINTS,RailGunPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, RemoteReleaseFlakLauncherBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.TORPEDO_PYLON, TorpedoPylonBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, AutoFieldMaintenanceUnitBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.COLLECTOR_LIMPET_CONTROLLER, CollectorLimpetControllerBlueprints.BLUEPRINTS);
-        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, FSDInterdictorBlueprints.BLUEPRINTS);
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_INTERDICTOR, FrameShiftDriveInterdictorBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FUEL_SCOOP, FuelScoopBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FUEL_TRANSFER_LIMPET_CONTROLLER, FuelTransferLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.HATCH_BREAKER_LIMPET_CONTROLLER, HatchBreakerLimpetControllerBlueprints.BLUEPRINTS);
@@ -280,16 +299,16 @@ public abstract class HorizonsBlueprintConstants {
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.PROSPECTOR_LIMPET_CONTROLLER, ProspectorLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.REFINERY, RefineryBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_CELL_BANK, ShieldCellBankBlueprints.BLUEPRINTS);
-        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_GENERATOR, ShieldGeneratorBlueprints.BLUEPRINTS);
-        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, DetailedSurfaceScannerBlueprints.BLUEPRINTS);
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_GENERATOR, merge(ShieldGeneratorBlueprints.BLUEPRINTS, ShieldGeneratorPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.DETAILED_SURFACE_SCANNER, merge(DetailedSurfaceScannerBlueprints.BLUEPRINTS, DetailedSurfaceScannerPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER, CausticSinkLauncherBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.CHAFF_LAUNCHER, ChaffLauncherBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.ELECTRONIC_COUNTERMEASURE, ElectronicCounterMeasureBlueprints.BLUEPRINTS);
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_WAKE_SCANNER, FrameShiftWakeScannerBlueprints.BLUEPRINTS);
-        UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, HeatSinkLauncherBlueprints.BLUEPRINTS);
-        UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.KILL_WARRANT_SCANNER, KillWarrantScannerBlueprints.BLUEPRINTS);
+        UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.HEAT_SINK_LAUNCHER, merge(HeatSinkLauncherBlueprints.BLUEPRINTS, SinkLauncherPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.KILL_WARRANT_SCANNER, merge(KillWarrantScannerBlueprints.BLUEPRINTS, KillWarrantScannerPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.MANIFEST_SCANNER, ManifestScannerBlueprints.BLUEPRINTS);
-        UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.POINT_DEFENCE, PointDefenceBlueprints.BLUEPRINTS);
+        UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.POINT_DEFENCE, merge(PointDefenceBlueprints.BLUEPRINTS, PointDefencePreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         UTILITY_MOUNT_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_BOOSTER, ShieldBoosterBlueprints.BLUEPRINTS);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.BEAM_LASER, ExperimentalEffectBlueprints.BEAM_LASER);
         EXPERIMENTAL_EFFECTS.put(HorizonsBlueprintName.BURST_LASER, ExperimentalEffectBlueprints.BURST_LASER);
@@ -346,6 +365,10 @@ public abstract class HorizonsBlueprintConstants {
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_MODULES, TechbrokerBlueprints.GUARDIAN_MODULES);
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_WEAPONS, TechbrokerBlueprints.GUARDIAN_WEAPONS);
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_FIGHTERS, TechbrokerBlueprints.GUARDIAN_FIGHTERS);
+    }
+
+    private static Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> merge(Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> blueprints, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> blueprints2) {
+        return Stream.concat(blueprints.entrySet().stream(), blueprints2.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static Map<HorizonsBlueprint, Integer> findRecipesContaining(final HorizonsMaterial horizonsMaterial) {

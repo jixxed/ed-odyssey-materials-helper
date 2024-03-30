@@ -1,0 +1,36 @@
+{
+  "Slot": "Radar",
+  "Item": "int_sensors_size4_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.000000,
+  "Value": 358224,
+  "Engineering": {
+    "Engineer": "Lori Jameson",
+    "EngineerID": 300230,
+    "BlueprintID": 128740673,
+    "BlueprintName": "Sensor_Sensor_LightWeight",
+    "Level": 5,
+    "Quality": 0.000000,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 2.503012,
+        "OriginalValue": 10.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 43.715668,
+        "OriginalValue": 88.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "SensorTargetScanAngle",
+        "Value": 22.500000,
+        "OriginalValue": 30.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

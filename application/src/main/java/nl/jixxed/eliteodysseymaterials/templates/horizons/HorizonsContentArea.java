@@ -20,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCo
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineersTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.menu.HorizonsBlueprintBar;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.HorizonsShipBuilderTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistTab;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ class HorizonsContentArea extends AnchorPane {
     private VBox body;
     private HorizonsEngineersTab horizonsEngineersTab;
     private HorizonsWishlistTab horizonsWishlistTab;
+    private HorizonsShipBuilderTab horizonsShipBuilderTab;
     private HorizonsCommoditiesOverviewTab horizonsCommoditiesOverview;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
@@ -55,9 +57,11 @@ class HorizonsContentArea extends AnchorPane {
         this.horizonsEngineersTab.setClosable(false);
         this.horizonsWishlistTab = new HorizonsWishlistTab(application);
         this.horizonsWishlistTab.setClosable(false);
+        this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
+        this.horizonsShipBuilderTab.setClosable(false);
 
         this.searchBar = new HorizonsSearchBar();
-        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsEngineersTab);
+        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, this.horizonsEngineersTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -114,6 +118,8 @@ class HorizonsContentArea extends AnchorPane {
         this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST)) {
                 this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
+            }else if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)) {
+                this.tabs.getSelectionModel().select(this.horizonsShipBuilderTab);
             }
         }));
     }

@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.event.CapiOAuthCallbackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.exception.*;
+import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,12 +47,44 @@ public class ImportService {
             return importOdysseyWishlist(data);
         } else if ("loadout/".equals(type)) {
             return importLoadout(data);
+        } else if ("ship/".equals(type)) {
+            return importShip(data);
         } else if ("edsy/".equals(type)) {
             return importEdsy(data);
         } else if ("coriolis/".equals(type)) {
             return importCoriolis(data);
         }
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
+    }
+
+    private static ImportResult importShip(final String data) {
+        final String decoded = convertBase64CompressedToJson(data);
+        log.info("Importing ship data: " + decoded);
+        if (decoded.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
+        }
+        try {
+
+            final ClipboardShip clipboardShip = OBJECT_MAPPER.readValue(decoded, ClipboardShip.class);
+            if (Objects.equals(clipboardShip.getVersion(), 1)) {
+                ShipConfiguration shipConfiguration = clipboardShip.getShipConfiguration();
+                shipConfiguration.setUuid(UUID.randomUUID().toString());
+                shipConfiguration.setName(shipConfiguration.getName() + " - Imported");
+                final Commander commander = APPLICATION_STATE.getPreferredCommander().orElseThrow(IllegalArgumentException::new);
+                final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+                shipConfigurations.addShipConfiguration(shipConfiguration);
+                shipConfigurations.setSelectedShipConfigurationUUID(shipConfiguration.getUuid());
+                ShipService.saveShipConfigurations(commander, shipConfigurations);
+                return new ImportResult(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP, shipConfiguration.getName());
+//                return new ImportResult(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST, name);
+            } else {
+                throw new ShipDeeplinkException("The ship could not be imported because the link was made with a newer version of the app.");
+            }
+
+        } catch (final RuntimeException | JsonProcessingException ex) {
+            log.error("Failed to import ship", ex);
+            throw new ShipDeeplinkException("Failed to parse deeplink");
+        }
     }
 
     private static ImportResult importEdsy(final String data) {

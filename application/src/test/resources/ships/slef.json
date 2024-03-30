@@ -1,0 +1,481 @@
+[
+  {
+    "header": {
+      "appName": "EDSY",
+      "appVersion": 308149914,
+      "appURL": "https://edsy.org/#/L=Hz00000H4C0S00,ElwG07L_W0KNIG05J_W0KsHG03I_W0Ez2G07O_W0FBGG0BN_W0H87G0BM_W0K38G03I_W0,CEg00mpWDxG00mpTDCY00,9p300ADw00AR_00Ag200Au600BCQ00BS200Bcg00,2I7002LF00,7WU000AA000Hq000Hq000Hq000Hq000Hq0005U000JO0003w000nG00"
+    },
+    "data": {
+      "event": "Loadout",
+      "Ship": "federation_corvette",
+      "ShipName": "",
+      "ShipIdent": "",
+      "HullValue": 183147460,
+      "ModulesValue": 21795020,
+      "UnladenMass": 1688.3,
+      "CargoCapacity": 76,
+      "MaxJumpRange": 6.100122,
+      "FuelCapacity": {
+        "Main": 32,
+        "Reserve": 1.13
+      },
+      "Rebuy": 10247124,
+      "Modules": [
+        {
+          "Slot": "CargoHatch",
+          "Item": "modularcargobaydoor",
+          "On": true,
+          "Priority": 0
+        },
+        {
+          "Slot": "HugeHardpoint1",
+          "Item": "hpt_beamlaser_fixed_huge",
+          "On": true,
+          "Priority": 0,
+          "Value": 2396160,
+          "Engineering": {
+            "BlueprintName": "Weapon_LongRange",
+            "Level": 5,
+            "Quality": 1,
+            "ExperimentalEffect": "special_regeneration_sequence",
+            "Modifiers": [
+              {
+                "Label": "Mass",
+                "Value": 20.8,
+                "OriginalValue": 16
+              },
+              {
+                "Label": "PowerDraw",
+                "Value": 3.0015,
+                "OriginalValue": 2.61
+              },
+              {
+                "Label": "DamagePerSecond",
+                "Value": 37.242,
+                "OriginalValue": 41.38
+              },
+              {
+                "Label": "MaximumRange",
+                "Value": 6000,
+                "OriginalValue": 3000
+              },
+              {
+                "Label": "FalloffRange",
+                "Value": 6000,
+                "OriginalValue": 600
+              }
+            ]
+          }
+        },
+        {
+          "Slot": "HugeHardpoint2",
+          "Item": "hpt_plasmaaccelerator_fixed_huge",
+          "On": true,
+          "Priority": 0,
+          "Value": 13793600,
+          "Engineering": {
+            "BlueprintName": "Weapon_Focused",
+            "Level": 5,
+            "Quality": 1,
+            "ExperimentalEffect": "special_weapon_toughened",
+            "Modifiers": [
+              {
+                "Label": "Integrity",
+                "Value": 92,
+                "OriginalValue": 80
+              },
+              {
+                "Label": "ThermalLoad",
+                "Value": 30.933,
+                "OriginalValue": 29.46
+              },
+              {
+                "Label": "ArmourPenetration",
+                "Value": 220,
+                "OriginalValue": 100
+              },
+              {
+                "Label": "MaximumRange",
+                "Value": 7000,
+                "OriginalValue": 3500
+              },
+              {
+                "Label": "FalloffRange",
+                "Value": 4000,
+                "OriginalValue": 2000
+              }
+            ]
+          }
+        },
+        {
+          "Slot": "LargeHardpoint1",
+          "Item": "hpt_advancedtorppylon_fixed_large",
+          "On": true,
+          "Priority": 0,
+          "Value": 157960,
+          "Engineering": {
+            "BlueprintName": "Weapon_LightWeight",
+            "Level": 5,
+            "Quality": 1,
+            "ExperimentalEffect": "special_weapon_efficient",
+            "Modifiers": [
+              {
+                "Label": "Mass",
+                "Value": 0.8,
+                "OriginalValue": 8
+              },
+              {
+                "Label": "Integrity",
+                "Value": 25.6,
+                "OriginalValue": 64
+              },
+              {
+                "Label": "PowerDraw",
+                "Value": 0.324,
+                "OriginalValue": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "Slot": "MediumHardpoint1",
+          "Item": "hpt_pulselaserburst_fixed_medium",
+          "On": true,
+          "Priority": 0,
+          "Value": 23000,
+          "Engineering": {
+            "BlueprintName": "Weapon_LightWeight",
+            "Level": 5,
+            "Quality": 1,
+            "ExperimentalEffect": "special_scramble_spectrum",
+            "Modifiers": [
+              {
+                "Label": "Mass",
+                "Value": 0.4,
+                "OriginalValue": 4
+              },
+              {
+                "Label": "Integrity",
+                "Value": 16,
+                "OriginalValue": 40
+              },
+              {
+                "Label": "PowerDraw",
+                "Value": 0.63,
+                "OriginalValue": 1.05
+              },
+              {
+                "Label": "DamagePerSecond",
+                "Value": 12.009278,
+                "OriginalValue": 13.044793
+              },
+              {
+                "Label": "DistributorDraw",
+                "Value": 0.325,
+                "OriginalValue": 0.5
+              },
+              {
+                "Label": "RateOfFire",
+                "Value": 3.402062,
+                "OriginalValue": 3.695409
+              }
+            ]
+          }
+        },
+        {
+          "Slot": "MediumHardpoint2",
+          "Item": "hpt_pulselaser_fixed_small",
+          "On": true,
+          "Priority": 0,
+          "Value": 2200,
+          "Engineering": {
+            "BlueprintName": "Weapon_Overcharged",
+            "Level": 5,
+            "Quality": 1,
+            "ExperimentalEffect": "special_phasing_sequence",
+            "Modifiers": [
+              {
+                "Label": "DamagePerSecond",
+                "Value": 12.063462,
+                "OriginalValue": 7.884615
+              },
+              {
+                "Label": "Damage",
+                "Value": 3.1365,
+                "OriginalValue": 2.05
+              },
+              {
+                "Label": "DistributorDraw",
+                "Value": 0.405,
+                "OriginalValue": 0.3
+              },
+              {
+                "Label": "ThermalLoad",
+                "Value": 0.3795,
+                "OriginalValue": 0.33
+              }
+            ]
+          }
+        },
+        {
+          "Slot": "SmallHardpoint1",
+          "Item": "hpt_cannon_gimbal_small",
+          "On": true,
+          "Priority": 0,
+          "Value": 42200,
+          "Engineering": {
+            "BlueprintName": "Weapon_Overcharged",
+            "Level": 5,
+            "Quality": 1,
+            "ExperimentalEffect": "special_high_yield_shell",
+            "Modifiers": [
+              {
+                "Label": "DamagePerSecond",
+                "Value": 8.246063,
+                "OriginalValue": 8.291667
+              },
+              {
+                "Label": "Damage",
+                "Value": 17.5916,
+                "OriginalValue": 15.92
+              },
+              {
+                "Label": "DistributorDraw",
+                "Value": 0.648,
+                "OriginalValue": 0.48
+              },
+              {
+                "Label": "ThermalLoad",
+                "Value": 1.4375,
+                "OriginalValue": 1.25
+              },
+              {
+                "Label": "RateOfFire",
+                "Value": 0.46875,
+                "OriginalValue": 0.520833
+              }
+            ]
+          }
+        },
+        {
+          "Slot": "SmallHardpoint2",
+          "Item": "hpt_dumbfiremissilerack_fixed_small",
+          "On": true,
+          "Priority": 0,
+          "Value": 32180,
+          "Engineering": {
+            "BlueprintName": "Weapon_HighCapacity",
+            "Level": 5,
+            "Quality": 1,
+            "ExperimentalEffect": "special_emissive_munitions",
+            "Modifiers": [
+              {
+                "Label": "Mass",
+                "Value": 3.2,
+                "OriginalValue": 2
+              },
+              {
+                "Label": "PowerDraw",
+                "Value": 0.48,
+                "OriginalValue": 0.4
+              },
+              {
+                "Label": "DamagePerSecond",
+                "Value": 27.777778,
+                "OriginalValue": 25
+              },
+              {
+                "Label": "ThermalLoad",
+                "Value": 7.2,
+                "OriginalValue": 3.6
+              },
+              {
+                "Label": "RateOfFire",
+                "Value": 0.555556,
+                "OriginalValue": 0.5
+              },
+              {
+                "Label": "AmmoClipSize",
+                "Value": 16,
+                "OriginalValue": 8
+              },
+              {
+                "Label": "AmmoMaximum",
+                "Value": 32,
+                "OriginalValue": 16
+              }
+            ]
+          }
+        },
+        {
+          "Slot": "TinyHardpoint1",
+          "Item": "hpt_chafflauncher_tiny",
+          "On": true,
+          "Priority": 0,
+          "Value": 8500
+        },
+        {
+          "Slot": "TinyHardpoint6",
+          "Item": "hpt_crimescanner_size0_class2",
+          "On": true,
+          "Priority": 0,
+          "Value": 40630
+        },
+        {
+          "Slot": "TinyHardpoint8",
+          "Item": "hpt_shieldbooster_size0_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 10000
+        },
+        {
+          "Slot": "Armour",
+          "Item": "federation_corvette_armour_grade1",
+          "On": true,
+          "Priority": 0,
+          "Value": 0
+        },
+        {
+          "Slot": "PowerPlant",
+          "Item": "int_powerplant_size8_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 1441230
+        },
+        {
+          "Slot": "MainEngines",
+          "Item": "int_engine_size7_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 633200
+        },
+        {
+          "Slot": "FrameShiftDrive",
+          "Item": "int_hyperdrive_size6_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 199750
+        },
+        {
+          "Slot": "LifeSupport",
+          "Item": "int_lifesupport_size5_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 31780
+        },
+        {
+          "Slot": "PowerDistributor",
+          "Item": "int_powerdistributor_size8_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 697580
+        },
+        {
+          "Slot": "Radar",
+          "Item": "int_sensors_size8_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 697580
+        },
+        {
+          "Slot": "FuelTank",
+          "Item": "int_fueltank_size5_class3",
+          "On": true,
+          "Priority": 0,
+          "Value": 97750
+        },
+        {
+          "Slot": "Slot01_Size7",
+          "Item": "int_shieldgenerator_size7_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 633200
+        },
+        {
+          "Slot": "Slot02_Size7",
+          "Item": "int_cargorack_size6_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 362590
+        },
+        {
+          "Slot": "Slot03_Size7",
+          "Item": "int_repairer_size1_class2",
+          "On": true,
+          "Priority": 0,
+          "Value": 30000
+        },
+        {
+          "Slot": "Slot04_Size6",
+          "Item": "int_repairer_size1_class2",
+          "On": true,
+          "Priority": 0,
+          "Value": 30000
+        },
+        {
+          "Slot": "Slot05_Size6",
+          "Item": "int_repairer_size1_class2",
+          "On": true,
+          "Priority": 0,
+          "Value": 30000
+        },
+        {
+          "Slot": "Slot06_Size5",
+          "Item": "int_repairer_size1_class2",
+          "On": true,
+          "Priority": 0,
+          "Value": 30000
+        },
+        {
+          "Slot": "Slot07_Size5",
+          "Item": "int_repairer_size1_class2",
+          "On": true,
+          "Priority": 0,
+          "Value": 30000
+        },
+        {
+          "Slot": "Slot08_Size4",
+          "Item": "int_cargorack_size3_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 10560
+        },
+        {
+          "Slot": "Slot09_Size4",
+          "Item": "int_repairer_size2_class2",
+          "On": true,
+          "Priority": 0,
+          "Value": 54000
+        },
+        {
+          "Slot": "Slot10_Size3",
+          "Item": "int_cargorack_size2_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 3250
+        },
+        {
+          "Slot": "Slot11_Size1",
+          "Item": "int_supercruiseassist",
+          "On": true,
+          "Priority": 0,
+          "Value": 9120
+        },
+        {
+          "Slot": "Military01",
+          "Item": "int_metaalloyhullreinforcement_size3_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 42000
+        },
+        {
+          "Slot": "Military02",
+          "Item": "int_metaalloyhullreinforcement_size5_class1",
+          "On": true,
+          "Priority": 0,
+          "Value": 225000
+        }
+      ]
+    }
+  }
+]

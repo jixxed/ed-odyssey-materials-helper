@@ -3,13 +3,17 @@ package nl.jixxed.eliteodysseymaterials.watchdog;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderAllListedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +32,7 @@ import java.util.regex.Pattern;
 public class JournalWatcher {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private Optional<File> currentlyWatchedFile = Optional.empty();
+    @Getter
     private File watchedFolder;
     private FileWatcher fileWatcher;
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -36,33 +41,53 @@ public class JournalWatcher {
 
     public void watch(final File folder, final Consumer<File> fileModifiedProcessor, final Consumer<File> fileSwitchedProcessor) {
         Platform.runLater(() -> {
-            this.watchedFolder = folder;
-            listCommanders(folder);
-            findLatestFile(folder);
-            this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
-            this.fileWatcher = new FileWatcher(true).withListener(new FileAdapter() {
-                @Override
-                public void onModified(final FileEvent event) {
-                    final File file = event.getFile();
-                    final String currentFilePath = getCurrentFilePath();
-                    final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
-                    if (isSameFile || isValidOdysseyJournal(file)) {
-                        if (isSameFile) {
-                            fileModifiedProcessor.accept(file);
-                        } else if (isNewerJournal(file)) {
-                            setCurrentlyWatchedFile(file);
-                            fileSwitchedProcessor.accept(file);
-                            log.info("Switched to journal: " + file.getAbsolutePath());
-                        } else {
-                            log.info("Rejected journal: " + file.getAbsolutePath());
+            try {
+                this.watchedFolder = folder;
+                if (!folder.exists()) {
+                    EventService.publish(new JournalInitEvent(true));
+                    return;
+                }
+                listCommanders(folder);
+                findLatestFile(folder);
+                if (this.currentlyWatchedFile.isEmpty()) {
+                    EventService.publish(new JournalInitEvent(true));
+                    return;
+                }
+                this.currentlyWatchedFile.ifPresent(fileSwitchedProcessor);
+                this.fileWatcher = new FileWatcher(true).withListener(new FileAdapter() {
+                    @Override
+                    public void onModified(final FileEvent event) {
+                        final File file = event.getFile();
+                        final String currentFilePath = getCurrentFilePath();
+                        final boolean isSameFile = currentFilePath.equals(file.getAbsolutePath());
+                        if (isSameFile || isValidOdysseyJournal(file)) {
+                            if (isSameFile) {
+                                fileModifiedProcessor.accept(file);
+                            } else if (isNewerJournal(file)) {
+                                setCurrentlyWatchedFile(file);
+                                fileSwitchedProcessor.accept(file);
+                                log.info("Switched to journal: " + file.getAbsolutePath());
+                            } else {
+                                log.info("Rejected journal: " + file.getAbsolutePath());
+                            }
                         }
                     }
-                }
 
-                private boolean isValidOdysseyJournal(final File file) {
-                    return file.isFile() && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX) && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX) && isNewerThanTwoYears(file) && hasFileHeader(file) && hasCommanderHeader(file) && isSelectedCommander(file);
-                }
-            }).watch(folder);
+                    private boolean isValidOdysseyJournal(final File file) {
+                        return file.isFile()
+                                && file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX)
+                                && file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX)
+                                && isNewerThanTwoYears(file)
+                                && hasFileHeader(file)
+                                && hasCommanderHeader(file)
+                                && isSelectedCommander(file);
+                    }
+                }).watch(folder);
+            } catch (Exception ex) {
+                log.error("failed to initialize journal", ex);
+                NotificationService.showError(NotificationType.ERROR,"Error initializing", "Check logs for errors and contact the developer for support");
+                EventService.publish(new JournalInitEvent(true));
+            }
         });
     }
 
@@ -84,6 +109,7 @@ public class JournalWatcher {
                     .filter(this::hasCommanderHeader)
                     .forEach(this::listCommander);
             EventService.publish(new CommanderAllListedEvent());
+//            Platform.runLater(() -> EventService.publish(new CommanderAllListedEvent()));
         } catch (final NullPointerException ex) {
             log.error("Failed to list commanders at " + folder.getAbsolutePath(), ex);
         }
@@ -119,7 +145,7 @@ public class JournalWatcher {
 
     private void findLatestFile(final File folder) {
         try {
-            this.currentlyWatchedFile =  FileService.listFiles(folder, true).stream()
+            this.currentlyWatchedFile = FileService.listFiles(folder, true).stream()
                     .filter(file -> file.getName().startsWith(AppConstants.JOURNAL_FILE_PREFIX))
                     .filter(file -> file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX))
                     .filter(this::isNewerThanTwoYears)
@@ -147,7 +173,9 @@ public class JournalWatcher {
         }
         final Matcher matcher2 = this.journalPatternDate.matcher(file.getName());
         if (matcher2.matches()) {
-            return Long.parseLong(matcher2.group(1).substring(2) + matcher2.group(2) + matcher2.group(3) + matcher2.group(4) + matcher2.group(5));//group 1 - year - only last 2 digits to match other pattern
+            //group 1 - year - only last 2 digits to match other pattern
+            final String date = matcher2.group(1).substring(2) + matcher2.group(2) + matcher2.group(3) + matcher2.group(4) + matcher2.group(5);
+            return Long.parseLong(date);
         }
         return 0L;
     }
@@ -173,7 +201,9 @@ public class JournalWatcher {
                     } else if (eventNode.asText().equals("Commander")) {
                         final JsonNode nameNode = journalMessage.get("Name");
                         final JsonNode fidNode = journalMessage.get("FID");
-                        return gameVersion.equals(commander.getGameVersion()) && nameNode.asText().equals(commander.getName()) && fidNode.asText().equals(commander.getFid());
+                        return gameVersion.equals(commander.getGameVersion())
+                                && nameNode.asText().equals(commander.getName())
+                                && fidNode.asText().equals(commander.getFid());
                     }
                 }
             } catch (final IOException e) {
@@ -231,7 +261,4 @@ public class JournalWatcher {
         }
     }
 
-    public File getWatchedFolder() {
-        return this.watchedFolder;
-    }
 }

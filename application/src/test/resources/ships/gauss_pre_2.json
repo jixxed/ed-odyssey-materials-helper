@@ -1,0 +1,78 @@
+{
+  "Slot": "LargeHardpoint2",
+  "Item": "hpt_guardian_gausscannon_fixed_medium",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 4,
+  "AmmoInHopper": 400,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 300001,
+    "BlueprintID": 128988383,
+    "BlueprintName": "Weapon_RapidFire",
+    "Level": 1,
+    "Quality": 0.000000,
+    "Modifiers": [
+      {
+        "Label": "DamagePerSecond",
+        "Value": 46.385887,
+        "OriginalValue": 46.385544,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 9.542736,
+        "OriginalValue": 38.500000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "DistributorDraw",
+        "Value": 1.800000,
+        "OriginalValue": 7.200000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 6.250000,
+        "OriginalValue": 25.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 4.860858,
+        "OriginalValue": 1.204819,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "BurstRateOfFire",
+        "Value": 10.000000,
+        "OriginalValue": -1.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "BurstSize",
+        "Value": 4.000000,
+        "OriginalValue": 1.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 4.000000,
+        "OriginalValue": 1.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 400.000000,
+        "OriginalValue": 80.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "DamageFalloffRange",
+        "Value": 1200.000000,
+        "OriginalValue": 1500.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

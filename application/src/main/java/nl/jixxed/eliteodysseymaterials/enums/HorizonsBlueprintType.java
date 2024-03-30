@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 @RequiredArgsConstructor
 public enum HorizonsBlueprintType {
     //inara
@@ -174,9 +175,37 @@ public enum HorizonsBlueprintType {
     E2_AZIMUTH_ENHANCED_AX_MULTICANNON(false),
     C3_AZIMUTH_ENHANCED_AX_MULTICANNON(false),
     CAUSTIC_SINK_LAUNCHER(false),
-    THARGOID_PULSE_NEUTRALISER(false);
+    THARGOID_PULSE_NEUTRALISER(false),
+    DECORATIVE_GREEN(false, true),
+    DECORATIVE_RED(false, true),
+    DECORATIVE_YELLOW(false, true),
+    HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION(false, true),
+    FAST_SCANNER_LONG_RANGE_SCANNER(false, true),
+    LONG_RANGE_WEAPON_INCENDIARY_ROUNDS(false, true),
+    THERMAL_RESISTANT_SHIELDS_KINETIC_RESISTANT_SHIELDS(false, true),
+    AMMO_CAPACITY_X2(false, true),
+    LIGHTWEIGHT_FOCUSED(false, true),
+    LONG_RANGE_WEAPON_HIGH_CAPACITY_MAGAZINE_FEEDBACK_CASCADE(false, true),
+    OVERCHARGED_WEAPON_AUTO_LOADER(false, true),
+    HIGH_CAPACITY_MAGAZINE_INCREASED_DAMAGE(false, true),
+    RAPID_FIRE_MODIFICATION_PHASING_SEQUENCE(false, true),
+    ARMOURED_OVERCHARGED(false, true),
+    OVERCHARGED_OVERCHARGED(false, true),
+    OVERCHARGED_WEAPON_FOCUSED_WEAPON(false, true),
+    LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS(false, true),
+    HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE(false, true),
+    EXPANDED_PROBE_SCANNING_RADIUS_X2(false, true),
+    INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true),
+    NONE(false,false);
     @Getter
     private final boolean experimental;
+    @Getter
+    private final boolean preEngineered;
+
+    HorizonsBlueprintType(boolean experimental) {
+        this.experimental = experimental;
+        this.preEngineered = false;
+    }
 
     public static HorizonsBlueprintType forName(final String name) {
         try {
@@ -185,14 +214,92 @@ public enum HorizonsBlueprintType {
             return null;
         }
     }
-
+//// blueprint mappings are per-mtype
+//			for (var mtypeid in eddb.mtype) {
+//        // current blueprint mappings
+//        fdevmap.mtypeBlueprint[mtypeid] = {};
+//        var mtype = eddb.mtype[mtypeid];
+//        for (var b = 0;  b < (mtype.blueprints || EMPTY_ARR).length;  b++) {
+//            var bpid = mtype.blueprints[b];
+//            if (eddb.blueprint[bpid]) {
+//                var fdname = (eddb.blueprint[bpid].fdname || '').trim().toUpperCase();
+//                fdevmap.mtypeBlueprint[mtypeid][fdname] = bpid;
+//            }
+//        }
+//
+//        // renamed blueprint mappings
+//        for (var bpname in { LIGHTWEIGHT:1, REINFORCED:1, SHIELDED:1 }) {
+//            if (fdevmap.mtypeBlueprint[mtypeid]['MISC_' + bpname]) {
+//                for (var modtype in { CHAFFLAUNCHER:1, ECM:1, HEATSINKLAUNCHER:1, KILLWARRANTSCANNER:1, CARGOSCANNER:1, POINTDEFENCE:1, WAKESCANNER:1, LIFESUPPORT:1, COLLECTIONLIMPET:1, FUELTRANSFERLIMPET:1, HATCHBREAKERLIMPET:1, PROSPECTINGLIMPET:1 }) {
+//                    fdevmap.mtypeBlueprint[mtypeid][modtype + '_' + bpname] = fdevmap.mtypeBlueprint[mtypeid]['MISC_' + bpname];
+//                }
+//            }
+//        }
+//        for (var bpname in { FASTSCAN:1, LONGRANGE:1, WIDEANGLE:1 }) {
+//            if (fdevmap.mtypeBlueprint[mtypeid]['SENSOR_' + bpname]) {
+//                for (var modtype in { SENSOR_KILLWARRANTSCANNER:1, KILLWARRANTSCANNER:1, SENSOR_CARGOSCANNER:1, SENSOR_WAKESCANNER:1, SENSOR_SENSOR:1, SENSOR_SURFACESCANNER:1 }) {
+//                    fdevmap.mtypeBlueprint[mtypeid][modtype + '_' + bpname] = fdevmap.mtypeBlueprint[mtypeid]['SENSOR_' + bpname];
+//                }
+//            }
+//        }
+//        fdevmap.mtypeBlueprint[mtypeid]['CHAFFLAUNCHER_CHAFFCAPACITY'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_CHAFFCAPACITY'];
+//        fdevmap.mtypeBlueprint[mtypeid]['HEATSINKLAUNCHER_HEATSINKCAPACITY'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_HEATSINKCAPACITY'];
+//        fdevmap.mtypeBlueprint[mtypeid]['POINTDEFENCE_POINTDEFENSECAPACITY'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_POINTDEFENSECAPACITY'];
+//        fdevmap.mtypeBlueprint[mtypeid]['SENSOR_SENSOR_LIGHTWEIGHT'] = fdevmap.mtypeBlueprint[mtypeid]['SENSOR_LIGHTWEIGHT'];
+//        if (fdevmap.mtypeBlueprint[mtypeid]['MISC_SHIELDED']) {
+//            for (var modtype in { AFM:1, FUELSCOOP:1, REFINERIES:1 }) {
+//                fdevmap.mtypeBlueprint[mtypeid][modtype + '_SHIELDED'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_SHIELDED'];
+//            }
+//        }
+//    }
 
     public static HorizonsBlueprintType forInternalName(final String internalName) {
         return switch (internalName.toLowerCase()) {
             //modules
-            case "misc_lightweight" -> LIGHTWEIGHT;
-            case "misc_reinforced" -> REINFORCED;
-            case "misc_shielded" -> SHIELDED;
+            case "misc_lightweight",
+                    "chafflauncher_lightweight",
+                    "ecm_lightweight",
+                    "heatsinklauncher_lightweight",
+                    "killwarrantscanner_lightweight",
+                    "cargoscanner_lightweight",
+                    "pointdefence_lightweight",
+                    "wakescanner_lightweight",
+                    "lifesupport_lightweight",
+                    "collectionlimpet_lightweight",
+                    "fueltransferlimpet_lightweight",
+                    "hatchbreakerlimpet_lightweight",
+                    "prospectinglimpet_lightweight" -> LIGHTWEIGHT;
+
+            case "misc_reinforced",
+                    "chafflauncher_reinforced",
+                    "ecm_reinforced",
+                    "heatsinklauncher_reinforced",
+                    "killwarrantscanner_reinforced",
+                    "cargoscanner_reinforced",
+                    "pointdefence_reinforced",
+                    "wakescanner_reinforced",
+                    "lifesupport_reinforced",
+                    "collectionlimpet_reinforced",
+                    "fueltransferlimpet_reinforced",
+                    "hatchbreakerlimpet_reinforced",
+                    "prospectinglimpet_reinforced" -> REINFORCED;
+
+            case "misc_shielded",
+                    "chafflauncher_shielded",
+                    "ecm_shielded",
+                    "heatsinklauncher_shielded",
+                    "killwarrantscanner_shielded",
+                    "cargoscanner_shielded",
+                    "pointdefence_shielded",
+                    "wakescanner_shielded",
+                    "lifesupport_shielded",
+                    "collectionlimpet_shielded",
+                    "fueltransferlimpet_shielded",
+                    "hatchbreakerlimpet_shielded",
+                    "prospectinglimpet_shielded",
+                    "afm_shielded",
+                    "fuelscoop_shielded",
+                    "refineries_shielded" -> SHIELDED;
 
             case "weapon_doubleshot" -> DOUBLE_SHOT;
             case "weapon_efficient" -> EFFICIENT_WEAPON;
@@ -205,16 +312,41 @@ public enum HorizonsBlueprintType {
             case "weapon_shortrange" -> SHORT_RANGE_BLASTER;
             case "weapon_sturdy" -> STURDY_MOUNT;
 
-            case "sensor_fastscan" -> FAST_SCANNER;
-            case "sensor_longrange" -> LONG_RANGE_SCANNER;
-            case "sensor_wideangle" -> WIDE_ANGLE_SCANNER;
+            case "sensor_fastscan",
+                    "sensor_killwarrantscanner_fastscan",
+                    "killwarrantscanner_fastscan",
+                    "sensor_cargoscanner_fastscan",
+                    "sensor_wakescanner_fastscan",
+                    "sensor_sensor_fastscan",
+                    "sensor_surfacescanner_fastscan" -> FAST_SCANNER;
 
-            case "sensor_lightweight" -> LIGHT_WEIGHT_SCANNER;
+            case "sensor_longrange",
+                    "sensor_killwarrantscanner_longrange",
+                    "killwarrantscanner_longrange",
+                    "sensor_cargoscanner_longrange",
+                    "sensor_wakescanner_longrange",
+                    "sensor_sensor_longrange",
+                    "sensor_surfacescanner_longrange" -> LONG_RANGE_SCANNER;
+
+            case "sensor_wideangle",
+                    "sensor_killwarrantscanner_wideangle",
+                    "killwarrantscanner_wideangle",
+                    "sensor_cargoscanner_wideangle",
+                    "sensor_wakescanner_wideangle",
+                    "sensor_sensor_wideangle",
+                    "sensor_surfacescanner_wideangle" -> WIDE_ANGLE_SCANNER;
+
+            case "sensor_lightweight",
+                    "sensor_sensor_lightweight" -> LIGHT_WEIGHT_SCANNER;
+
             case "sensor_expanded" -> EXPANDED_PROBE_SCANNING_RADIUS;
 
-            case "misc_chaffcapacity" -> AMMO_CAPACITY;
-            case "misc_heatsinkcapacity" -> AMMO_CAPACITY;
-            case "misc_pointdefensecapacity" -> AMMO_CAPACITY;
+            case "misc_chaffcapacity",
+                    "chafflauncher_chaffcapacity",
+                    "misc_heatsinkcapacity",
+                    "heatsinklauncher_heatsinkcapacity",
+                    "misc_pointdefensecapacity",
+                    "pointdefence_pointdefensecapacity" -> AMMO_CAPACITY;
 
             case "shieldbooster_explosive" -> BLAST_RESISTANT;
             case "shieldbooster_heavyduty" -> HEAVY_DUTY;
@@ -263,6 +395,9 @@ public enum HorizonsBlueprintType {
             case "shieldgenerator_kinetic" -> KINETIC_RESISTANT_SHIELDS;
             case "shieldgenerator_reinforced" -> REINFORCED_SHIELDS;
             case "shieldgenerator_thermic" -> THERMAL_RESISTANT_SHIELDS;
+            case "decorative_green" -> DECORATIVE_GREEN;
+            case "decorative_red" -> DECORATIVE_RED;
+            case "decorative_yellow" -> DECORATIVE_YELLOW;
             //experimental effects
             case "special_auto_loader" -> AUTO_LOADER;
             case "special_concordant_sequence" -> CONCORDANT_SEQUENCE;
@@ -358,6 +493,10 @@ public enum HorizonsBlueprintType {
 
     public String getLocalizationKey() {
         return "blueprint.horizons.type." + this.name().toLowerCase();
+    }
+
+    public String getLocalizationKey(boolean shortFormat) {
+        return shortFormat && LocaleService.hasKey("blueprint.horizons.type.short." + this.name().toLowerCase()) ? "blueprint.horizons.type.short." + this.name().toLowerCase() : getLocalizationKey();
     }
 
     public String getDescriptionLocalizationKey() {

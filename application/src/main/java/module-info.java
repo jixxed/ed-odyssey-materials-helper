@@ -33,22 +33,27 @@ module nl.jixxed.eliteodysseymaterials {
     requires jakarta.json;
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
+    exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.common to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.inbound to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.domain.ships to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml, org.controlsfx.controls;
     opens nl.jixxed.eliteodysseymaterials.templates.destroyables to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials;
     exports nl.jixxed.eliteodysseymaterials.enums;
+    exports nl.jixxed.eliteodysseymaterials.domain.ships;
     exports nl.jixxed.eliteodysseymaterials.domain;
     exports nl.jixxed.eliteodysseymaterials.templates;
     exports nl.jixxed.eliteodysseymaterials.service;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.enums to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates.components.segmentbar to javafx.fxml, org.controlsfx.controls;
+    exports nl.jixxed.eliteodysseymaterials.templates.components.segmentbar;
+    opens nl.jixxed.eliteodysseymaterials.templates.components.slider to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.service.ar;
     exports nl.jixxed.eliteodysseymaterials.templates.horizons;
     opens nl.jixxed.eliteodysseymaterials.templates.horizons to javafx.fxml, org.controlsfx.controls;
@@ -80,6 +85,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.templates.generic to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.templates.settings;
     opens nl.jixxed.eliteodysseymaterials.templates.settings to javafx.fxml, org.controlsfx.controls;
+    exports nl.jixxed.eliteodysseymaterials.templates.settings.sections;
+    opens nl.jixxed.eliteodysseymaterials.templates.settings.sections to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.templates.dialog;
     opens nl.jixxed.eliteodysseymaterials.templates.dialog to javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal;
@@ -639,4 +646,6 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.parser.mapping;
     opens nl.jixxed.eliteodysseymaterials.parser to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.parser.mapping to com.fasterxml.jackson.databind;
+    exports nl.jixxed.eliteodysseymaterials.service.ships;
+    exports nl.jixxed.eliteodysseymaterials.templates.components.slider;
 }
