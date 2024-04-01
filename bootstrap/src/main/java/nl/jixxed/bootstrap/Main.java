@@ -12,7 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -29,9 +31,11 @@ import java.util.stream.StreamSupport;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+@Slf4j
 public class Main extends Application {
     private JsonNode response;
     private File appFolder;
+    private String currentDir;
 
     public static void main(final String[] args) {
         launch(args);
@@ -41,11 +45,11 @@ public class Main extends Application {
     public void start(final Stage primaryStage) {
 
 
-        primaryStage.setTitle("Elite Dangerous Odyssey Materials Helper");
+        primaryStage.setTitle("Elite Dangerous Odyssey Materials Helper Launcher");
 
 
         final String binDir = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
-        final String currentDir = binDir.trim().replace("\"", "") + "\\";
+        currentDir = binDir.trim().replace("\"", "") + "\\";
         final StackPane root = new StackPane();
         root.setAlignment(Pos.CENTER);
         final Label label = new Label("Checking for updates...");
@@ -72,8 +76,9 @@ public class Main extends Application {
                 if ("ERROR".equals(latestVersion)) {
                     error(label, animation, "Unable to determine latest version. Trying to launch application...", true);
                 } else {
-                    if (!getCurrentVersion(this.appFolder).equals(latestVersion)) {
+                    if (getCurrentVersion(this.appFolder).compareTo(new ComparableVersion(latestVersion)) > 0) {
                         //update
+                        log.info("Downloading update");
                         Platform.runLater(() -> label.setText("Downloading update..."));
                         //download zip
                         final String latestUpdateUrl = getLatestUpdateUrl();
@@ -94,10 +99,13 @@ public class Main extends Application {
                         }
                         final long expectedSize = getLatestUpdateSize();
                         final long actualSize = updateFile.length();
+                        log.info("Check update size");
                         if (actualSize != expectedSize) {
                             error(label, animation, "Downloaded update integrity check failed. Please try again.(" + actualSize + ")", false);
                         }
+                        log.info("Size OK");
                         //remove old
+                        log.info("Cleaning old files");
                         Platform.runLater(() -> label.setText("Cleaning old files..."));
                         try {
                             //linux does not put files in use so always kill existing instances
@@ -113,22 +121,28 @@ public class Main extends Application {
                             FileUtils.deleteDirectory(this.appFolder);
 
                         } catch (final IOException ex) {
+                            log.info("Terminating running application");
                             Platform.runLater(() -> label.setText("Terminating running application..."));
                             runCommand(OsConstants.KILL_COMMAND);
                             Thread.sleep(3000);
+                            log.info("Cleaning old files");
                             Platform.runLater(() -> label.setText("Cleaning old files..."));
                             try {
+                                log.info("Delete directory:" + this.appFolder);
                                 FileUtils.deleteDirectory(this.appFolder);
                             } catch (final IOException exAgain) {
                                 error(label, animation, "Unable to clean old files. Files in use.", false);
                             }
                         }
                         //extract new
+                        log.info("Installing the update");
                         Platform.runLater(() -> label.setText("Installing the update..."));
                         try {
+                            log.info("unzip: " + updateFile);
                             unzipFile(updateFile, this.appFolder);
                             if (OsCheck.getOperatingSystemType().equals(OsCheck.OSType.Linux)) {
-                                Runtime.getRuntime().exec(new String[] { "chmod", "-R", "777", this.appFolder.getCanonicalPath() });
+                                log.info("chmod: " + this.appFolder.getCanonicalPath());
+                                Runtime.getRuntime().exec(new String[]{"chmod", "-R", "777", this.appFolder.getCanonicalPath()});
 //                                final File file = new File(this.appFolder + "/bin/Elite Dangerous Odyssey Materials Helper");
 //                                file.setExecutable(true);
                             }
@@ -138,6 +152,7 @@ public class Main extends Application {
                         //remove zip
                         Platform.runLater(() -> label.setText("Wiping the evidence..."));
 
+                        log.info("delete: " + updateFile);
                         if (!updateFile.delete()) {
                             error(label, animation, "Failed to get rid of the evidence. Trying to launch app...", true);
                         }
@@ -149,12 +164,12 @@ public class Main extends Application {
                     System.exit(0);
                 }
             } catch (final IOException | InterruptedException e) {
-                e.printStackTrace();
+                log.error("error lauching application", e);
                 Platform.runLater(() -> label.setText(e.getMessage()));
                 try {
                     Thread.sleep(5000);
                 } catch (final InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
+                    log.error("error lauching application", e);
                 }
                 System.exit(0);
             }
@@ -177,6 +192,7 @@ public class Main extends Application {
 
     private void error(final Label label, final ImageView animation, final String errorMessage, final boolean launch) throws InterruptedException, IOException {
         Platform.runLater(() -> {
+            log.error(errorMessage);
             label.setText(errorMessage);
             animation.setImage(new Image(getClass().getResourceAsStream("/images/ghost.png")));
         });
@@ -247,20 +263,20 @@ public class Main extends Application {
         return "ERROR";
     }
 
-    private String getCurrentVersion(final File appFolder) {
+    private ComparableVersion getCurrentVersion(final File appFolder) {
         try {
             final File config = new File(String.format(OsConstants.VERSION_FILE, appFolder.getAbsolutePath()));
             try (final Scanner scanner = new Scanner(config, StandardCharsets.UTF_8)) {
                 while (scanner.hasNext()) {
                     final String line = scanner.next();
                     if (line.contains("app.version=")) {
-                        return line.substring(line.lastIndexOf("=") + 1);
+                        return new ComparableVersion(line.substring(line.lastIndexOf("=") + 1));
                     }
                 }
-                return "0";
+                return new ComparableVersion("0.0");
             }
         } catch (final IOException ex) {
-            return "0";
+            return new ComparableVersion("0.0");
         }
     }
 

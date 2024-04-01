@@ -8,21 +8,24 @@ buildscript {
     }
     dependencies {
         classpath "org.beryx:badass-jlink-plugin:3.0.1"
+        classpath "io.freefair.gradle:lombok-plugin:8.6"
+        classpath "org.gradlex:extra-java-module-info:1.8"
     }
 }
-
+apply plugin: "io.freefair.lombok"
+apply plugin: "org.gradlex.extra-java-module-info"
 apply plugin: "java"
 apply plugin: "application"
 apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(22)
         vendor = JvmVendorSpec.ADOPTIUM
     }
 }
 tasks.register('wrapper', Wrapper) {
-    gradleVersion "8.5"
+    gradleVersion "8.7"
 }
 
 OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
@@ -56,13 +59,8 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper Launcher'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
-                os.isWindows() ? '-Djavafx.cachedir=javafx-cache' : ''
+                os.isWindows() ? '-Djavafx.cachedir=javafx-cache-launcher' : ''
         ]
-        if (os.isWindows()) {
-            jvmArgs += [
-                    '-Djavafx.cachedir=javafx-cache'
-            ]
-        }
     }
     jpackage {
         installerType = project.ext.packageType
@@ -109,15 +107,27 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core'
     implementation 'commons-io:commons-io'
 
+    implementation "ch.qos.logback:logback-core"
+    implementation "ch.qos.logback:logback-classic"
+
     implementation group: "org.openjfx", name: "javafx-base", classifier:"${platform}"
     implementation group: "org.openjfx", name: "javafx-controls", classifier:"${platform}"
     implementation group: "org.openjfx", name: "javafx-fxml", classifier:"${platform}"
     implementation group: "org.openjfx", name: "javafx-graphics", classifier:"${platform}"
+    implementation 'org.apache.maven:maven-artifact:3.9.6'
+    implementation "net.java.dev.jna:jna"
+    implementation "net.java.dev.jna:jna-platform"
 }
 
 
 test {
     useJUnitPlatform()
 }
+extraJavaModuleInfo {
+    automaticModule('maven-artifact-3.9.6.jar', 'maven.artifact')
+    automaticModule('plexus-utils-3.5.1.jar', 'plexus.utils')
 
-mainClassName = 'nl.jixxed.bootstrap.Main'
+}
+application {
+    mainClass = 'nl.jixxed.bootstrap.Main'
+}
