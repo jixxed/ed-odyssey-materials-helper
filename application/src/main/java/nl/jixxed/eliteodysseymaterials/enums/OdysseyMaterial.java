@@ -91,5 +91,5 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
 
     String name();
 
-
+    String getTypeNameLocalized();
 }

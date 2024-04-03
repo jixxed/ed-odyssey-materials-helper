@@ -161,6 +161,11 @@ public enum Data implements OdysseyMaterial {
         return this.illegal;
     }
 
+    @Override
+    public String getTypeNameLocalized() {
+        return LocaleService.getLocalizedStringForCurrentLocale("material.asset.type.data");
+    }
+
     public int getTransferTime() {
         return this.transferTime;
     }
@@ -173,4 +178,5 @@ public enum Data implements OdysseyMaterial {
     public String toString() {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
+
 }

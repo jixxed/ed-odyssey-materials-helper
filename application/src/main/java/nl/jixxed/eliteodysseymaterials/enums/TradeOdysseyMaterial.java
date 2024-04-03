@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum TradeOdysseyMaterial implements OdysseyMaterial {
     ANY_RELEVANT, NOTHING, UNKNOWN;
 
@@ -29,6 +31,11 @@ public enum TradeOdysseyMaterial implements OdysseyMaterial {
     @Override
     public boolean isIllegal() {
         return false;
+    }
+
+    @Override
+    public String getTypeNameLocalized() {
+        return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
 }

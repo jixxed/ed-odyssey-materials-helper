@@ -80,6 +80,11 @@ public enum Asset implements OdysseyMaterial {
     }
 
     @Override
+    public String getTypeNameLocalized() {
+        return LocaleService.getLocalizedStringForCurrentLocale(type.getLocalizationKey());
+    }
+
+    @Override
     public String toString() {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
@@ -90,4 +95,5 @@ public enum Asset implements OdysseyMaterial {
                 .findFirst()
                 .orElse(Asset.UNKNOWN);
     }
+
 }

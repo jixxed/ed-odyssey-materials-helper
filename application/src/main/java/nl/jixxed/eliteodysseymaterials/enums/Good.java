@@ -84,6 +84,11 @@ public enum Good implements OdysseyMaterial {
     }
 
     @Override
+    public String getTypeNameLocalized() {
+        return LocaleService.getLocalizedStringForCurrentLocale("material.asset.type.good");
+    }
+
+    @Override
     public String toString() {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }

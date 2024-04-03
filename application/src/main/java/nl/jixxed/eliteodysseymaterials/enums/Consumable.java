@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+
 public enum Consumable implements OdysseyMaterial {
     BYPASS(true),
     HEALTHPACK(false),
@@ -42,6 +44,11 @@ public enum Consumable implements OdysseyMaterial {
     @Override
     public boolean isIllegal() {
         return this.illegal;
+    }
+
+    @Override
+    public String getTypeNameLocalized() {
+        return LocaleService.getLocalizedStringForCurrentLocale("material.asset.type.consumable");
     }
 
 }

@@ -41,13 +41,13 @@ public class ReceiveTextMessageProcessor implements MessageProcessor<ReceiveText
                         final Integer backPackValue = StorageService.getMaterialStorage(odysseyMaterial).getBackPackValue();
                         final String backPackText = backPackValue > 0 ? "(" + backPackValue + ")" : "";
                         if (WishlistService.isMaterialOnWishlist(odysseyMaterial)) {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Wishlist - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getAllWishlistsCount(odysseyMaterial);
+                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + "(" + odysseyMaterial.getTypeNameLocalized() + ")" + " - Wishlist - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getAllWishlistsCount(odysseyMaterial);
                             NotificationService.showInformation(NotificationType.WISHLIST_POINT, "Material information", text);
                         } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Engineer/Blueprint - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
+                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + "(" + odysseyMaterial.getTypeNameLocalized() + ")" + " - Engineer/Blueprint - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
                             NotificationService.showInformation(NotificationType.RELEVANT_POINT, "Material information", text);
                         } else {
-                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + " - Irrelevant";
+                            text = LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()) + "(" + odysseyMaterial.getTypeNameLocalized() + ")" + " - Irrelevant";
                             NotificationService.showInformation(NotificationType.IRRELEVANT_POINT, "Material information", text);
                         }
                     } catch (final IllegalArgumentException ex) {
@@ -57,6 +57,7 @@ public class ReceiveTextMessageProcessor implements MessageProcessor<ReceiveText
             }
         });
     }
+
     @Override
     public Class<ReceiveText> getMessageClass() {
         return ReceiveText.class;
