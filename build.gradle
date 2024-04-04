@@ -114,7 +114,7 @@ allprojects {
             implementation "com.google.guava:guava:33.1.0-jre"
             implementation "com.zaxxer:SparseBitSet:${version_sparsebitset}"
             implementation "com.google.j2objc:j2objc-annotations:3.0.0"
-            implementation "commons-io:commons-io:2.15.1"
+            implementation "commons-io:commons-io:2.16.0"
             implementation "io.github.pustike:commons-csv:1.7.0"
             implementation "io.reactivex.rxjava3:rxjava:3.1.8"
             implementation "net.java.dev.jna:jna-platform:${version_jna}"
