@@ -135,7 +135,7 @@ allprojects {
             implementation "org.openjfx:javafx-media:${version_javafx}:${platform}"
             implementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
             implementation "javax.servlet:javax.servlet-api:4.0.1"
-            implementation "org.controlsfx:controlsfx:11.2.0"
+            implementation "org.controlsfx:controlsfx:11.2.1"
             implementation "org.jfxtras:jmetro:11.6.16"
             testImplementation "de.saxsys:mvvmfx-testing-utils:1.8.0"
             testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver:0.1"
