@@ -1,3 +1,10 @@
+Version 2.52
+-------------
+Add proper handling for unknown ships and modules
+Restore tracking settings
+Add Odyssey material type to point to emote notification
+Add filter to Horizons materials overview
+
 Version 2.51
 -------------
 Ship defaults fixes:
