@@ -41,7 +41,8 @@ public class Tracking extends VBox implements Template {
                 .build();
         final HBox eddnSetting = createEDDNSetting();
         final HBox trackingOptOutSetting = createTrackingOptOutSetting();
-        final VBox tracking = BoxBuilder.builder().withStyleClasses("settingsblock", SETTINGS_SPACING_10_CLASS).withNodes(trackingLabel, trackingOptOutSetting, eddnSetting).buildVBox();
+        this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
+        this.getChildren().addAll(trackingLabel, trackingOptOutSetting, eddnSetting);
 
     }
 
