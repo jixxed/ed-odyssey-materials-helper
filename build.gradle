@@ -111,7 +111,7 @@ allprojects {
             implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${version_jackson}"
             implementation "com.github.jai-imageio:jai-imageio-core:${version_jai_imageio}"
             implementation "com.github.scribejava:scribejava-core:${version_scribejava}"
-            implementation "com.google.guava:guava:33.0.0-jre"
+            implementation "com.google.guava:guava:33.1.0-jre"
             implementation "com.zaxxer:SparseBitSet:${version_sparsebitset}"
             implementation "com.google.j2objc:j2objc-annotations:3.0.0"
             implementation "commons-io:commons-io:2.15.1"
