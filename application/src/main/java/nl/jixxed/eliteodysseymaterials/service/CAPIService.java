@@ -235,10 +235,13 @@ public class CAPIService {
             Platform.runLater(() -> this.active.set(true));
         } catch (final InterruptedException e) {
             log.error("InterruptedException", e);
+            Platform.runLater(() -> this.active.set(false));
         } catch (final ExecutionException e) {
             log.error("ExecutionException", e);
+            Platform.runLater(() -> this.active.set(false));
         } catch (final IOException e) {
             log.error("IOException", e);
+            Platform.runLater(() -> this.active.set(false));
         }
     }
 
