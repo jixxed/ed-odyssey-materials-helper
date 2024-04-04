@@ -105,7 +105,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
         }));
 
         this.eventListeners.add(EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
-            update(horizonsMaterialSearchEvent.getSearch());
+            update(horizonsMaterialSearchEvent.getSearch().getQuery());
         }));
     }
 

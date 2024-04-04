@@ -47,6 +47,12 @@ search.filter.placeholder,Show materials,Show materials,Materialien anzeigen,Mos
 search.filter.prohibited,Prohibited,Prohibited,Verboten,Prohibido,Interdites,Proibida,Запрещенные
 search.filter.required_engineer,Only required engineer unlocking,Only required engineer unlocking,Nur erforderliches Entsperren durch Ingenieure,Solo se requiere desbloqueo del ingeniero,Seul le déverrouillage de l’ingénieur requis,Somente desbloqueio de engenheiro necessário,Требуется только разблокировка инженера
 search.filter.required_engineer_blueprint,Only required engineer unlocking + blueprint,Only required engineer unlocking + blueprint,Nur erforderliches Entsperren des Ingenieurs + Blaupause,Solo se requiere desbloqueo de ingeniero + plano,Seul le déverrouillage de l’ingénieur requis + le plan,Somente desbloqueio de engenheiro obrigatório + planta,Требуется только разблокировка инженера + чертеж
+search.filter.raw,Raw,Raw,,,,,
+search.filter.encoded,Encoded,Encoded,,,,,
+search.filter.manufactured,Manufactured,Manufactured,,,,,
+search.filter.guardian,Guardian,Guardian,,,,,
+search.filter.thargoid,Thargoid,Thargoid,,,,,
+search.filter.human,Human,Human,,,,,
 search.sort.alphabetical,Alphabetical (default),Alphabetical (default),Alphabetisch (Standard),Alfabético (predeterminado),Alphabétique (par défaut),Alfabético (padrão),По алфавиту (по умолчанию)
 search.sort.engineer_blueprint_irrelevant,"Engineer unlocking, blueprint, irrelevant","Engineer unlocking, blueprint, irrelevant","Entsperrung durch Ingenieur, Blaupause, irrelevant","Desbloqueo del ingeniero, plano, irrelevante","Déverrouillage de l’ingénieur, plan, non pertinent","Desbloqueio do engenheiro, planta, irrelevante","Разблокировка инженера, чертеж, нерелевантно"
 search.sort.placeholder,Sort materials,Sort materials,Materialien sortieren,Clasificar materiales,Trier les matériaux,Classificar materiais,Сортировать материалы
