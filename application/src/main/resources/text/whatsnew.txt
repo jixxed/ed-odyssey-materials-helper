@@ -1,3 +1,8 @@
+Version 2.53
+-------------
+Fix notification popup not showing
+Implement autodiscovery of localizations to prevent issues like the one above
+
 Version 2.52
 -------------
 Add proper handling for unknown ships and modules
@@ -8,23 +13,23 @@ Add filter to Horizons materials overview
 Version 2.51
 -------------
 Ship defaults fixes:
-diamond scout shieldgenerator slot 3 -> slot 1
-type6 cargo rack size 4 -> size 3
-keelback cargo rack size 2 -> size 3
-type7 powerplant size 5 -> size 4
-type7 powerdist size 4 -> size 3
-type10 powerplant size 8 -> size 6
-type10 fsd size 7 -> size 6
-type10 powerdist size 7 -> size 6
-anaconda cargo rack size 2 -> size 1
+Diamond scout shieldgenerator slot 3 -> slot 1
+Type6 cargo rack size 4 -> size 3
+Keelback cargo rack size 2 -> size 3
+Type7 powerplant size 5 -> size 4
+Type7 powerdist size 4 -> size 3
+Type10 powerplant size 8 -> size 6
+Type10 fsd size 7 -> size 6
+Type10 powerdist size 7 -> size 6
+Anaconda cargo rack size 2 -> size 1
 
-swap supercruise assist and advanced docking computer for all ships that have both
-eagle powerplant 2E -> 2D
-asp explorer pulse laser 1F -> supercruise assist (pulse laser was auto deleted due to being invalid)
-challenger optional -> military slots 3x (can cause auto detach of modules)
-krait mk2 slotsize 5 -> 6
+Swap supercruise assist and advanced docking computer for all ships that have both
+Eagle powerplant 2E -> 2D
+Asp explorer pulse laser 1F -> supercruise assist (pulse laser was auto deleted due to being invalid)
+Challenger optional -> military slots 3x (can cause auto detach of modules)
+Krait mk2 slotsize 5 -> 6
 
-default power group -> 3
+Default power group -> 3
 
 Version 2.50
 -------------

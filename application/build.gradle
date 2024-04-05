@@ -150,6 +150,7 @@ dependencies {
     implementation "com.zaxxer:SparseBitSet"
     implementation "com.google.j2objc:j2objc-annotations:${project.getProperties().version_j2objc_annotations}"
 
+    implementation 'io.github.classgraph:classgraph'
 
     implementation("org.jfxtras:jmetro") {
         exclude group: "org.openjfx"

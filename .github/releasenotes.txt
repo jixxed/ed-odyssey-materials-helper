@@ -6,8 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Add proper handling for unknown ships and modules
-Restore tracking settings
-Add Odyssey material type to point to emote notification
-Add filter to Horizons materials overview
-
+Fix notification popup not showing
+Implement autodiscovery of localizations to prevent issues like the one above

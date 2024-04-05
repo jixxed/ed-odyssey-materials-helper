@@ -16,9 +16,9 @@ public class CSVResourceBundle extends ResourceBundle {
     private static final Map<String, ResourceBundle> BUNDLES = new HashMap<>();
     private Properties properties = new Properties();
 
-    private CSVResourceBundle(final Locale locale, final String... baseNames) {
-        Arrays.stream(baseNames).forEach(baseName -> {
-            try (final CSVParser csvParser = CSVFormat.DEFAULT.parse(new InputStreamReader(Objects.requireNonNull(CSVResourceBundle.class.getResourceAsStream("/locale/" + baseName + ".csv")), StandardCharsets.UTF_8))) {
+    private CSVResourceBundle(final Locale locale, final String... resourceBundleNames) {
+        Arrays.stream(resourceBundleNames).forEach(resourceBundle -> {
+            try (final CSVParser csvParser = CSVFormat.DEFAULT.parse(new InputStreamReader(Objects.requireNonNull(CSVResourceBundle.class.getResourceAsStream("/" + resourceBundle)), StandardCharsets.UTF_8))) {
                 // find language column
                 final CSVRecord header = csvParser.iterator().next();
                 final int translationColumn = IntStream.range(2, header.size()).map(col -> {

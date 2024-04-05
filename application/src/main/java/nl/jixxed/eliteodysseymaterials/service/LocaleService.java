@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 import javafx.beans.binding.ListBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.value.ObservableValue;
@@ -23,62 +25,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class LocaleService {
-    private static final String[] RESOURCE_BUNDLE_NAMES = {
-            "blueprint/horizons/category",
-            "blueprint/horizons/description",
-            "blueprint/horizons/modifier",
-            "blueprint/horizons/modifier.unit",
-            "blueprint/horizons/names",
-            "blueprint/horizons/type.description",
-            "blueprint/horizons/type.names",
-            "blueprint/horizons/type.names.short",
-            "blueprint/odyssey/category",
-            "blueprint/odyssey/description",
-            "blueprint/odyssey/modifier",
-            "blueprint/odyssey/names",
-            "blueprint/odyssey/tips",
-            "broker/broker",
-            "engineer/names",
-            "engineer/specialisation",
-            "loadout/equipment",
-            "loadout/modification",
-            "loadout/stat.group",
-            "loadout/stat.name",
-            "loadout/stat.value",
-            "material/horizons/category",
-            "material/horizons/commodity",
-            "material/horizons/commodity.type",
-            "material/horizons/encoded",
-            "material/horizons/manufactured",
-            "material/horizons/raw",
-            "material/horizons/spawn",
-            "material/odyssey/asset",
-            "material/odyssey/consumable",
-            "material/odyssey/data",
-            "material/odyssey/good",
-            "material/odyssey/spawn",
-            "material/trade",
-            "ships/blueprint.groups",
-            "ships/hardpoint.group",
-            "ships/ships",
-            "ships/modules",
-            "ships/interface",
-            "ships/size",
-            "ships/mounting",
-            "ships/slot.size",
-            "application",
-            "blueprint",
-            "menu",
-            "tab.bartender",
-            "tab.engineer",
-            "tab.loadout",
-            "tab.overview",
-            "tab.settings",
-            "tab.trade",
-            "tab.ships",
-            "tab.wishlist",
-            "tooltip"
-    };
+    private static String[] resourceBundleNames;
     private static Locale currentLocale = Locale.ENGLISH;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
@@ -90,6 +37,14 @@ public class LocaleService {
         return currentLocale;
     }
 
+    public static String[] getResourceBundleNames() {
+        if (resourceBundleNames == null) {
+            try (ScanResult scanResult = new ClassGraph().acceptPaths("/locale/").scan()) {
+                resourceBundleNames = scanResult.getAllResources().getPaths().toArray(String[]::new);
+            }
+        }
+        return resourceBundleNames;
+    }
 
     public static boolean hasKey(String key) {
         return ObservableResourceFactory.getResources().containsKey(key);
@@ -97,7 +52,7 @@ public class LocaleService {
 
     public static void setCurrentLocale(final Locale locale) {
         currentLocale = locale;
-        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle(currentLocale, RESOURCE_BUNDLE_NAMES));
+        ObservableResourceFactory.setResources(CSVResourceBundle.getResourceBundle(currentLocale, getResourceBundleNames()));
     }
 
     public static String getLocalizedStringForCurrentLocale(final String key, final Object... parameters) {
@@ -111,7 +66,7 @@ public class LocaleService {
 
     private static String getLocalizedString(final Locale locale, final String key, final Object... parameters) {
         final Object[] localizedParams = Arrays.stream(parameters).map(LocaleService::localizeParameter).toArray(Object[]::new);
-        return MessageFormat.format(applyReplacements(CSVResourceBundle.getResourceBundle(locale, RESOURCE_BUNDLE_NAMES).getString(key)), localizedParams);
+        return MessageFormat.format(applyReplacements(CSVResourceBundle.getResourceBundle(locale, getResourceBundleNames()).getString(key)), localizedParams);
     }
 
     public static StringBinding getStringBinding(final String key, final Object... parameters) {
