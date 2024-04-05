@@ -1,20 +1,27 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.schemas.slef.Slef;
 import nl.jixxed.eliteodysseymaterials.service.event.CapiOAuthCallbackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.exception.*;
+import nl.jixxed.eliteodysseymaterials.service.ships.LoadoutMapper;
+import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 
 import java.io.ByteArrayOutputStream;
@@ -28,6 +35,12 @@ import java.util.zip.Inflater;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImportService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    static {
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OBJECT_MAPPER.registerModule(new JavaTimeModule());
+    }
+
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String ERROR_IMPORT_STRING_NOT_DECODED = "String could not be decoded";
 
@@ -37,28 +50,61 @@ public class ImportService {
         final String type = split[0];
         final String data = split[1];
         if ("horizonswishlist/".equals(type)) {
-            return importHorizonsWishlist(data);
+            final String decoded = convertBase64CompressedToJson(data);
+            return importHorizonsWishlist(decoded);
         } else if ("capi/".equals(type)) {
             final HashMap<String, String> params = convertToQueryStringToHashMap(data);
 
             EventService.publish(new CapiOAuthCallbackEvent(params.get("code"), params.get("state")));
             return new ImportResult(ImportResult.ResultType.CAPI_OAUTH_TOKEN);
         } else if ("wishlist/".equals(type)) {
-            return importOdysseyWishlist(data);
+            final String decoded = convertBase64CompressedToJson(data);
+            return importOdysseyWishlist(decoded);
         } else if ("loadout/".equals(type)) {
-            return importLoadout(data);
+            final String decoded = convertBase64CompressedToJson(data);
+            return importLoadout(decoded);
         } else if ("ship/".equals(type)) {
-            return importShip(data);
+            final String decoded = convertBase64CompressedToJson(data);
+            return importShip(decoded);
         } else if ("edsy/".equals(type)) {
-            return importEdsy(data);
+            final String decoded = convertBase64CompressedToJson(data);
+            return importEdsy(decoded);
         } else if ("coriolis/".equals(type)) {
-            return importCoriolis(data);
+            final String decoded = convertBase64CompressedToJson(data);
+            return importCoriolis(decoded);
         }
         return new ImportResult(ImportResult.ResultType.UNKNOWN_TYPE);
     }
 
-    private static ImportResult importShip(final String data) {
-        final String decoded = convertBase64CompressedToJson(data);
+    public static ImportResult[] importSlef(final String slefJson) {
+        List<ImportResult> results = new ArrayList<>();
+        try {
+            List<Slef> slefArray = OBJECT_MAPPER.readValue(slefJson, new TypeReference<List<Slef>>() {
+            });
+            slefArray.forEach(slef -> {
+                try {
+                    final Ship ship = LoadoutMapper.toShip(slef.getData());
+                    APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                        final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+                        final String name = LocaleService.getLocalizedStringForCurrentLocale(ship.getShipType().getLocalizationKey()) + "(SLEF)";
+                        final ShipConfiguration shipConfiguration = shipConfigurations.createShipConfiguration(name);
+                        ShipMapper.toShipConfiguration(ship,shipConfiguration, name);
+                        ShipService.saveShipConfigurations(commander, shipConfigurations);
+                        results.add(new ImportResult(ImportResult.ResultType.SUCCESS_SLEF, name));
+                    });
+                } catch (Exception e) {
+                    log.error("Failed to import slef", e);
+                    results.add(new ImportResult(ImportResult.ResultType.ERROR_SLEF, "Failed to import slef"));
+                }
+
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return results.toArray(ImportResult[]::new);
+    }
+
+    private static ImportResult importShip(final String decoded) {
         log.info("Importing ship data: " + decoded);
         if (decoded.isEmpty()) {
             throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
@@ -87,8 +133,7 @@ public class ImportService {
         }
     }
 
-    private static ImportResult importEdsy(final String data) {
-        final String decoded = convertBase64CompressedToJson(data);
+    private static ImportResult importEdsy(final String decoded) {
         log.info("Importing edsy data: " + decoded);
         if (decoded.isEmpty()) {
             throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
@@ -141,8 +186,7 @@ public class ImportService {
 
     }
 
-    private static ImportResult importCoriolis(final String data) {
-        final String decoded = convertBase64CompressedToJson(data);
+    private static ImportResult importCoriolis(final String decoded) {
         log.info("Importing coriolis data: " + decoded);
         if (decoded.isEmpty()) {
             throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
@@ -210,8 +254,7 @@ public class ImportService {
         return PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + horizonsBlueprintGrade.name(), horizonsBlueprintGrade.getDefaultNumberOfRolls());
     }
 
-    private static ImportResult importLoadout(final String data) {
-        final String decoded = convertBase64CompressedToJson(data);
+    private static ImportResult importLoadout(final String decoded) {
 
         if (decoded.isEmpty()) {
             throw new IllegalArgumentException(ERROR_IMPORT_STRING_NOT_DECODED);
@@ -238,8 +281,7 @@ public class ImportService {
         }
     }
 
-    private static ImportResult importOdysseyWishlist(final String data) {
-        final String decoded = convertBase64CompressedToJson(data);
+    private static ImportResult importOdysseyWishlist(final String decoded) {
 
         if (decoded.isEmpty()) {
             throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);
@@ -268,8 +310,7 @@ public class ImportService {
         }
     }
 
-    private static ImportResult importHorizonsWishlist(final String data) {
-        final String decoded = convertBase64CompressedToJson(data);
+    private static ImportResult importHorizonsWishlist(final String decoded) {
 
         if (decoded.isEmpty()) {
             throw new OdysseyWishlistDeeplinkException(ERROR_IMPORT_STRING_NOT_DECODED);

@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "This event is logged if the player cancels a booked taxi trip",
+  "properties" : {
+    "header" : {
+      "title" : "header",
+      "type" : "object",
+      "properties" : {
+        "appName" : {
+          "title" : "appName",
+          "type" : "string",
+          "examples" : [ "Inara" ]
+        },
+        "appVersion" : {
+          "title" : "appVersion",
+          "type" : "string",
+          "examples" : [ "1.0.0", "1.0.1" ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "appName", "appVersion" ]
+    },
+    "data" : {
+      "title" : "data",
+      "$ref": "../journal/Loadout/Loadout.json"
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "header", "data" ]
+}

@@ -149,7 +149,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
             refreshContent();
         }));
         this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
-            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)) {
+            if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshContent();
             }
         }));

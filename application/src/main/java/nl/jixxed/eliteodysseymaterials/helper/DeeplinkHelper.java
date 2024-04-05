@@ -46,6 +46,20 @@ public class DeeplinkHelper {
             }
         }
     };
+    public static Consumer<String> slefConsumer = deeplink -> {
+        if (!deeplink.isEmpty()) {
+            try {
+                final ImportResult[] importResult = ImportService.importSlef(deeplink);
+                for (ImportResult ir : importResult) {
+                    EventService.publish(new ImportResultEvent(ir));
+                    handleImportResult(ir);
+                }
+            } catch (final RuntimeException ex) {
+                NotificationService.showError(NotificationType.ERROR, "Failed to import", ex.getMessage());
+                EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.OTHER_ERROR)));
+            }
+        }
+    };
 
     private static void handleImportResult(final ImportResult importResult) {
         if (ImportResult.ResultType.SUCCESS_LOADOUT.equals(importResult.getResultType())) {
@@ -63,6 +77,12 @@ public class DeeplinkHelper {
         } else if (ImportResult.ResultType.UNKNOWN_TYPE.equals(importResult.getResultType())) {
             NotificationService.showError(NotificationType.ERROR, "Failed to import", "Unknown type");
         } else if (ImportResult.ResultType.CAPI_OAUTH_TOKEN.equals(importResult.getResultType())) {
+            fxApplication.getPrimaryStage().toFront();
+        }else if (ImportResult.ResultType.SUCCESS_SLEF.equals(importResult.getResultType())) {
+            NotificationService.showInformation(NotificationType.IMPORT, "Imported Ship (SLEF)", importResult.getMessage());
+            fxApplication.getPrimaryStage().toFront();
+        }else if (ImportResult.ResultType.ERROR_SLEF.equals(importResult.getResultType())) {
+            NotificationService.showError(NotificationType.ERROR, "Failed to import ship (SLEF)", importResult.getMessage());
             fxApplication.getPrimaryStage().toFront();
         }
     }

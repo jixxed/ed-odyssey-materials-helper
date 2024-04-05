@@ -36,6 +36,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.deeplinkConsumer;
+import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.slefConsumer;
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
@@ -315,10 +316,17 @@ public class General extends VBox implements Template {
                 }
             });
         }).build();
-
+        final Button importSlefClipboard = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.import.clipboard.import.slef")).withOnAction(event -> {
+            Platform.runLater(()->{
+                final String clipboard = Clipboard.getSystemClipboard().getString();
+                if (!clipboard.startsWith("edomh://")) {
+                    slefConsumer.accept(clipboard);
+                }
+            });
+        }).build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(importClipboardLabel, importClipboard, importClipboardExplainLabel)
+                .withNodes(importClipboardLabel, importClipboard, importSlefClipboard, importClipboardExplainLabel)
                 .buildHBox();
     }
 

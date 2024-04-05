@@ -600,6 +600,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingInvite to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingJoin to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.slef to com.fasterxml.jackson.databind;
+    exports nl.jixxed.eliteodysseymaterials.schemas.slef;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.approachsettlement;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.carrierjump;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.codexentry;
@@ -644,6 +646,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scan to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.scanbarycentre to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.eddn.shipyard to com.fasterxml.jackson.databind;
+
     exports nl.jixxed.eliteodysseymaterials.parser;
     exports nl.jixxed.eliteodysseymaterials.parser.mapping;
     opens nl.jixxed.eliteodysseymaterials.parser to com.fasterxml.jackson.databind;
