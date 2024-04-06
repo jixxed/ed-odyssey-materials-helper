@@ -1,3 +1,7 @@
+Version 2.54
+-------------
+Settings - General - Add support for importing SLEF format (experimental)
+
 Version 2.53
 -------------
 Fix notification popup not showing
