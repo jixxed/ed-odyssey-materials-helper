@@ -91,9 +91,10 @@ public class General extends VBox implements Template {
         final HBox exportInventory = createExportInventorySetting();
         final HBox blueprintExpandedSetting = createBlueprintExpandedSetting();
         final HBox importFromClipboardSetting = createImportFromClipboardSetting();
+        final HBox importSlefFromClipboardSetting = createImportSlefFromClipboardSetting();
         final HBox wipSetting = createWIPSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting, importFromClipboardSetting);
+        this.getChildren().addAll(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting, importFromClipboardSetting,importSlefFromClipboardSetting);
     }
 
     @Override
@@ -316,6 +317,14 @@ public class General extends VBox implements Template {
                 }
             });
         }).build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(importClipboardLabel, importClipboard, importClipboardExplainLabel)
+                .buildHBox();
+    }
+    private HBox createImportSlefFromClipboardSetting() {
+        final DestroyableLabel importSlefClipboardLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard.slef")).build();
+        final DestroyableLabel importSlefClipboardExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard.slef.explain")).build();
         final Button importSlefClipboard = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.import.clipboard.import.slef")).withOnAction(event -> {
             Platform.runLater(()->{
                 final String clipboard = Clipboard.getSystemClipboard().getString();
@@ -326,8 +335,7 @@ public class General extends VBox implements Template {
         }).build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(importClipboardLabel, importClipboard, importSlefClipboard, importClipboardExplainLabel)
+                .withNodes(importSlefClipboardLabel, importSlefClipboard, importSlefClipboardExplainLabel)
                 .buildHBox();
     }
-
 }
