@@ -48,7 +48,7 @@ class HorizonsMaterialSearchBar extends HBox {
         setDefaultOptions();
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
-        this.getChildren().addAll(this.textField,this.showMaterialsComboBox);
+        this.getChildren().addAll(this.textField, this.showMaterialsComboBox);
     }
 
     private void applyFontSizingHack() {
@@ -103,9 +103,10 @@ class HorizonsMaterialSearchBar extends HBox {
             this.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsTabSelectedEvent.class, event ->
-                this.textField.setDisable(!HorizonsTabs.MATERIALS.equals(event.getSelectedTab()))
-        ));
+        this.eventListeners.add(EventService.addListener(this, HorizonsTabSelectedEvent.class, event -> {
+            this.textField.setDisable(!HorizonsTabs.MATERIALS.equals(event.getSelectedTab()));
+            this.showMaterialsComboBox.setDisable(!HorizonsTabs.MATERIALS.equals(event.getSelectedTab()));
+        }));
     }
 
     private void setDefaultOptions() {

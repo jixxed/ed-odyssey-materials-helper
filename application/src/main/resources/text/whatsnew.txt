@@ -1,3 +1,7 @@
+Version 2.55
+-------------
+Disable main searchbar on ShipBuilder tab
+
 Version 2.54
 -------------
 Settings - General - Add support for importing SLEF format (experimental)
