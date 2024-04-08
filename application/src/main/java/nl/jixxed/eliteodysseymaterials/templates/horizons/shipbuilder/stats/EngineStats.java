@@ -15,7 +15,6 @@ import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 public class EngineStats extends Stats implements Template {
@@ -51,69 +50,47 @@ public class EngineStats extends Stats implements Template {
     private double calculateMinRecharge(double boostCost, double engineRecharge) {
         return boostCost / engineRecharge;
     }
-    private double calculateMaxRecharge(double boostCost, double engineRecharge, double multiplier) {
-        return boostCost /  (engineRecharge * Math.pow(multiplier > 0 ? 1D/8D : 0D, 1.1));
-    }
-
-    private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
-        return speed * getMassCurveMultiplier(ship.getEmptyMass(), moduleProfile) / 100D;
-    }
-
 
     private double calculateCurrentRecharge(double boostCost, double engineRecharge, double multiplier) {
         return boostCost / (engineRecharge * Math.pow(multiplier, 1.1));
     }
 
+    private double calculateMaxRecharge(double boostCost, double engineRecharge, double multiplier) {
+        return boostCost /  (engineRecharge * Math.pow(multiplier > 0 ? 1D/8D : 0D, 1.1));
+    }
+
+    private double calculateMinSpeed(Ship ship, Double speed, ModuleProfile moduleProfile) {
+        final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
+        return speed * (getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100D) * (minimumThrust / 100D);
+    }
 
     private double calculateCurrentSpeed(Ship ship, Double speed, ModuleProfile moduleProfile, double multiplier) {
         final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
         return speed * (getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D) * (multiplier + (minimumThrust / 100D) * (1D - multiplier));
     }
 
-    private double calculateMinSpeed(Ship ship, Double speed, ModuleProfile moduleProfile) {
-        final Double minimumThrust = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.MINIMUM_THRUST, 0.0D);
-        return speed * (getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100D) * (minimumThrust / 100D);
+    private double calculateMaxSpeed(final Ship ship, final double speed, final ModuleProfile moduleProfile) {
+        return speed * getMassCurveMultiplier(ship.getEmptyMass(), moduleProfile) / 100D;
     }
 
     private static Double getMaximumMultiplier(Optional<Slot> thrusters) {
-        return thrusters.map(Slot::getShipModule)
-                .flatMap(shipModule -> { //enhanced thrusters
-                    if (shipModule.getAttibutes().containsAll(Set.of(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION, HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION))) {
-                        final Double speed = (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED);
-                        final Double rotation = (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULTIPLIER_ROTATION);
-                        final Double acceleration = (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULTIPLIER_ACCELERATION);
-                        return Optional.of(speed + rotation + acceleration / 3.0);
-                    }
-                    return Optional.empty();
-                })
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MAXIMUM_MULTIPLIER_SPEED, null)))
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MAXIMUM_MULIPLIER)).orElse(0D));
     }
 
     private static Double getOptimalMultiplier(Optional<Slot> thrusters) {
-        return thrusters.map(Slot::getShipModule)
-                .flatMap(shipModule -> { //enhanced thrusters
-                    if (shipModule.getAttibutes().containsAll(Set.of(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION, HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION))) {
-                        final Double speed = (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED);
-                        final Double rotation = (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER_ROTATION);
-                        final Double acceleration = (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER_ACCELERATION);
-                        return Optional.of(speed + rotation + acceleration / 3.0);
-                    }
-                    return Optional.empty();
-                })
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.OPTIMAL_MULTIPLIER_SPEED, null)))
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.OPTIMAL_MULTIPLIER)).orElse(0D));
     }
 
     private static Double getMinimumMultiplier(Optional<Slot> thrusters) {
-        return thrusters.map(Slot::getShipModule)
-                .flatMap(shipModule -> { //enhanced thrusters
-                    if (shipModule.getAttibutes().containsAll(Set.of(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION, HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION))) {
-                        final Double speed = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED);
-                        final Double rotation = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER_ROTATION);
-                        final Double acceleration = (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER_ACCELERATION);
-                        return Optional.of(speed + rotation + acceleration / 3.0);
-                    }
-                    return Optional.empty();
-                })
+        return thrusters
+                .map(Slot::getShipModule)
+                .flatMap(shipModule -> Optional.ofNullable((Double) shipModule.getAttributeValueOrDefault(HorizonsModifier.MINIMUM_MULTIPLIER_SPEED, null)))
                 .orElseGet(() -> thrusters.map(Slot::getShipModule).map(shipModule -> (Double) shipModule.getAttributeValue(HorizonsModifier.MINIMUM_MULTIPLIER)).orElse(0D));
     }
 

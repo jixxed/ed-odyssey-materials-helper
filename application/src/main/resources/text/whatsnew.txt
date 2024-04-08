@@ -1,6 +1,7 @@
 Version 2.55
 -------------
 Disable main searchbar on ShipBuilder tab
+Fix engine and handling stats for Enhanced thrusters
 
 Version 2.54
 -------------

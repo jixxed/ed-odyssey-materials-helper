@@ -7,3 +7,4 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Disable main searchbar on ShipBuilder tab
+Fix engine and handling stats for Enhanced thrusters

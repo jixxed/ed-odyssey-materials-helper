@@ -36,27 +36,27 @@ public class HandlingStats extends Stats implements Template {
     }
 
     private double calculatePitchCurrent(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel(), moduleProfile) / 100;
+        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
     }
 
     private double calculateRollCurrent(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
-        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel(), moduleProfile) / 100;
+        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
     }
 
     private double calculateYawCurrent(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
-        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel(), moduleProfile) / 100;
+        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getCurrentFuel() + ship.getCurrentCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
     }
 
     private double calculatePitchMinimum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
-        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return pitchSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
     }
 
     private double calculateRollMinimum(Ship ship, double rollSpeed, ModuleProfile moduleProfile) {
-        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return rollSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
     }
 
     private double calculateYawMinimum(Ship ship, double yawSpeed, ModuleProfile moduleProfile) {
-        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getCurrentFuelReserve(), moduleProfile) / 100;
+        return yawSpeed * getMassCurveMultiplier(ship.getEmptyMass() + ship.getMaxFuel() + ship.getMaxCargo() + ship.getMaxFuelReserve(), moduleProfile) / 100;
     }
 
     private double calculatePitchMaximum(Ship ship, double pitchSpeed, ModuleProfile moduleProfile) {
