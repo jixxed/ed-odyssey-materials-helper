@@ -1,3 +1,7 @@
+Version 2.56
+-------------
+Add new SCO Frame Shift Drives
+
 Version 2.55
 -------------
 Disable main searchbar on ShipBuilder tab

@@ -51,7 +51,12 @@ public class FrameShiftDrive extends CoreModule {
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_4_A_V1_PRE = new FrameShiftDrive("FRAME_SHIFT_DRIVE_4_A_V1_PRE", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE, ModuleSize.SIZE_4, ModuleClass.A, 0, "Int_Hyperdrive_Size4_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 10.00), Map.entry(HorizonsModifier.INTEGRITY, 100.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.45), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 525.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 18.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 3.00), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.012), Map.entry(HorizonsModifier.FUEL_POWER, 2.30)));
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_5_A_V1_PRE = new FrameShiftDrive("FRAME_SHIFT_DRIVE_5_A_V1_PRE", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE, ModuleSize.SIZE_5, ModuleClass.A, 0, "Int_Hyperdrive_Size5_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.00), Map.entry(HorizonsModifier.INTEGRITY, 120.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.60), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 1050.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 27.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 5.00), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.012), Map.entry(HorizonsModifier.FUEL_POWER, 2.45)));
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_6_A_V1_PRE = new FrameShiftDrive("FRAME_SHIFT_DRIVE_6_A_V1_PRE", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_PRE, ModuleSize.SIZE_6, ModuleClass.A, 0, "Int_Hyperdrive_Size6_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.00), Map.entry(HorizonsModifier.INTEGRITY, 141.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.75), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 1800.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 37.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 8.00), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.012), Map.entry(HorizonsModifier.FUEL_POWER, 2.60)));
-
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_OVERCHARGE_2_C = new FrameShiftDrive("FRAME_SHIFT_DRIVE_OVERCHARGE_2_C", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE, ModuleSize.SIZE_2, ModuleClass.C, 21363, "Int_Hyperdrive_Overcharge_Size2_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.20), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 60.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 10.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 0.60), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.00), Map.entry(HorizonsModifier.SUPERCRUISE_OVERCHARGE, true), Map.entry(HorizonsModifier.OVERCHARGE_MAX_SPEED_INCREASE, 1.42), Map.entry(HorizonsModifier.OVERCHARGE_MAX_ACCELERATION_RATE, 0.090), Map.entry(HorizonsModifier.OVERCHARGE_HEAT_GENERATION_RATE, 0.41), Map.entry(HorizonsModifier.OVERCHARGE_CONTROL_INTERFERENCE, 0.24)));
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_OVERCHARGE_3_C = new FrameShiftDrive("FRAME_SHIFT_DRIVE_OVERCHARGE_3_C", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE, ModuleSize.SIZE_3, ModuleClass.C, 67722, "Int_Hyperdrive_Overcharge_Size3_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 5.00), Map.entry(HorizonsModifier.INTEGRITY, 64.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.30), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 100.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 14.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 1.20), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.15), Map.entry(HorizonsModifier.SUPERCRUISE_OVERCHARGE, true), Map.entry(HorizonsModifier.OVERCHARGE_MAX_SPEED_INCREASE, 1.20), Map.entry(HorizonsModifier.OVERCHARGE_MAX_ACCELERATION_RATE, 0.070), Map.entry(HorizonsModifier.OVERCHARGE_HEAT_GENERATION_RATE, 0.49), Map.entry(HorizonsModifier.OVERCHARGE_CONTROL_INTERFERENCE, 0.29)));
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_OVERCHARGE_4_C = new FrameShiftDrive("FRAME_SHIFT_DRIVE_OVERCHARGE_4_C", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE, ModuleSize.SIZE_4, ModuleClass.C, 214677, "Int_Hyperdrive_Overcharge_Size4_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 10.00), Map.entry(HorizonsModifier.INTEGRITY, 80.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.30), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 350.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 18.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 2.00), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.30), Map.entry(HorizonsModifier.SUPERCRUISE_OVERCHARGE, true), Map.entry(HorizonsModifier.OVERCHARGE_MAX_SPEED_INCREASE, 1.00), Map.entry(HorizonsModifier.OVERCHARGE_MAX_ACCELERATION_RATE, 0.060), Map.entry(HorizonsModifier.OVERCHARGE_HEAT_GENERATION_RATE, 1.23), Map.entry(HorizonsModifier.OVERCHARGE_CONTROL_INTERFERENCE, 0.35)));
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_OVERCHARGE_5_C = new FrameShiftDrive("FRAME_SHIFT_DRIVE_OVERCHARGE_5_C", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE, ModuleSize.SIZE_5, ModuleClass.C, 623816, "Int_Hyperdrive_Overcharge_Size5_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 20.00), Map.entry(HorizonsModifier.INTEGRITY, 96.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.40), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 700.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 27.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 3.30), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.45), Map.entry(HorizonsModifier.SUPERCRUISE_OVERCHARGE, true), Map.entry(HorizonsModifier.OVERCHARGE_MAX_SPEED_INCREASE, 0.80), Map.entry(HorizonsModifier.OVERCHARGE_MAX_ACCELERATION_RATE, 0.055), Map.entry(HorizonsModifier.OVERCHARGE_HEAT_GENERATION_RATE, 1.40), Map.entry(HorizonsModifier.OVERCHARGE_CONTROL_INTERFERENCE, 0.40)));
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_OVERCHARGE_6_C = new FrameShiftDrive("FRAME_SHIFT_DRIVE_OVERCHARGE_6_C", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE, ModuleSize.SIZE_6, ModuleClass.C, 2157271, "Int_Hyperdrive_Overcharge_Size6_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 40.00), Map.entry(HorizonsModifier.INTEGRITY, 113.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.50), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 1200.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 37.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 5.30), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.60), Map.entry(HorizonsModifier.SUPERCRUISE_OVERCHARGE, true), Map.entry(HorizonsModifier.OVERCHARGE_MAX_SPEED_INCREASE, 0.62), Map.entry(HorizonsModifier.OVERCHARGE_MAX_ACCELERATION_RATE, 0.045), Map.entry(HorizonsModifier.OVERCHARGE_HEAT_GENERATION_RATE, 1.80), Map.entry(HorizonsModifier.OVERCHARGE_CONTROL_INTERFERENCE, 0.64)));
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_OVERCHARGE_7_C = new FrameShiftDrive("FRAME_SHIFT_DRIVE_OVERCHARGE_7_C", HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE, ModuleSize.SIZE_7, ModuleClass.C, 6838548, "Int_Hyperdrive_Overcharge_Size7_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 80.00), Map.entry(HorizonsModifier.INTEGRITY, 131.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.60), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 1800.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 43.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 8.50), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.75), Map.entry(HorizonsModifier.SUPERCRUISE_OVERCHARGE, true), Map.entry(HorizonsModifier.OVERCHARGE_MAX_SPEED_INCREASE, 0.46), Map.entry(HorizonsModifier.OVERCHARGE_MAX_ACCELERATION_RATE, 0.040), Map.entry(HorizonsModifier.OVERCHARGE_HEAT_GENERATION_RATE, 2.00), Map.entry(HorizonsModifier.OVERCHARGE_CONTROL_INTERFERENCE, 0.67)));
     static {
         FRAME_SHIFT_DRIVE_3_A_V1_PRE.getModifications().add(
                 new Modification(HorizonsBlueprintType.INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE, 1.0, HorizonsBlueprintGrade.GRADE_5)
@@ -101,10 +106,17 @@ public class FrameShiftDrive extends CoreModule {
             FRAME_SHIFT_DRIVE_3_A_V1_PRE,
             FRAME_SHIFT_DRIVE_4_A_V1_PRE,
             FRAME_SHIFT_DRIVE_5_A_V1_PRE,
-            FRAME_SHIFT_DRIVE_6_A_V1_PRE
+            FRAME_SHIFT_DRIVE_6_A_V1_PRE,
+            FRAME_SHIFT_DRIVE_OVERCHARGE_2_C,
+            FRAME_SHIFT_DRIVE_OVERCHARGE_3_C,
+            FRAME_SHIFT_DRIVE_OVERCHARGE_4_C,
+            FRAME_SHIFT_DRIVE_OVERCHARGE_5_C,
+            FRAME_SHIFT_DRIVE_OVERCHARGE_6_C,
+            FRAME_SHIFT_DRIVE_OVERCHARGE_7_C
     );
 
     public static final List<HorizonsModifier> HIDDEN_STATS = List.of(HorizonsModifier.FUEL_MULTIPLIER, HorizonsModifier.FUEL_POWER);
+
     private FrameShiftDrive(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         super(id, name, moduleSize, moduleClass, basePrice, internalName, attributes);
     }
@@ -115,7 +127,7 @@ public class FrameShiftDrive extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        if (isPreEngineered()) {
+        if (isPreEngineered() || HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE.equals(this.getName())) {
             return Collections.emptyList();
         }
         return FSDBlueprints.BLUEPRINTS.keySet().stream().toList();
@@ -123,6 +135,9 @@ public class FrameShiftDrive extends CoreModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedExperimentalEffects() {
+        if (HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE.equals(this.getName())) {
+            return Collections.emptyList();
+        }
         return ExperimentalEffectBlueprints.FRAME_SHIFT_DRIVE.keySet().stream().toList();
     }
 
@@ -133,7 +148,13 @@ public class FrameShiftDrive extends CoreModule {
 
     @Override
     public String getClarifier() {
-        return isPreEngineered() ? " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey()) : "";
+        if (isPreEngineered()) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale(getName().getLocalizationKey());
+        } else if (HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE.equals(this.getName())) {
+            return " " + LocaleService.getLocalizedStringForCurrentLocale("ships.module.name." + getInternalName().toLowerCase());
+        }
+        return "";
+
     }
 
     @Override
@@ -144,13 +165,14 @@ public class FrameShiftDrive extends CoreModule {
 
     @Override
     public boolean isHiddenStat(HorizonsModifier modifier) {
-        if(HIDDEN_STATS.contains(modifier)){
+        if (HIDDEN_STATS.contains(modifier)) {
             return true;
         }
         return super.isHiddenStat(modifier);
     }
+
     @Override
     public int getGrouping() {
-        return getModuleSize().intValue() * 10 + (isPreEngineered() ? 1 : 0);
+        return getModuleSize().intValue() * 10 + (HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE.equals(this.getName()) ? 1 : 0)+ (isPreEngineered() ? 2 : 0);
     }
 }

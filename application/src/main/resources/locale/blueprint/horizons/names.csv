@@ -87,6 +87,7 @@ blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Fr
 blueprint.horizons.name.frame_shift_drive_booster,Frame Shift Drive Booster,,,,,,
 blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Frameshift-Unterbrecher,Interdictor de unidad de cambio de cuadro,Interdictor de lecteur de décalage de cadre,Interditor de transmissão de mudança de quadro,Перехватчик FSD
 blueprint.horizons.name.frame_shift_drive_pre,Frame Shift Drive,,,,,,
+blueprint.horizons.name.frame_shift_drive_overcharge,Frame Shift Drive (SCO),,,,,,
 blueprint.horizons.name.frame_shift_wake_scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Sogwolkenscanner,Escáner de estela de cambio de cuadro,Scanner de shift de cadre,Scanner de despertar em mudança de quadro,Сканер следа FSD
 blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSA-Einspeisung,Inyección de FSD,Injection de FSD,Injeção de FSD,FSD инъекция
 blueprint.horizons.name.fuel_scoop,Fuel Scoop,Fuel Scoop,Treibstoffsammler,Cucharada de combustible,Scoop de carburant,Colher de combustível,Топливозаборник

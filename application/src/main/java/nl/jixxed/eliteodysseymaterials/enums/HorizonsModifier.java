@@ -148,6 +148,10 @@ public enum HorizonsModifier {
     EXPLOSIVE_DAMAGE_RATIO(204, ""),
     CAUSTIC_DAMAGE_RATIO(205, ""),
     ANTI_XENO_DAMAGE_RATIO(206, ""),
+    OVERCHARGE_MAX_SPEED_INCREASE(207, ""),
+    OVERCHARGE_MAX_ACCELERATION_RATE(208, ""),
+    OVERCHARGE_HEAT_GENERATION_RATE(209, ""),
+    OVERCHARGE_CONTROL_INTERFERENCE(210, ""),
     TARGET_ARMOR_HARDNESS_REDUCED(700, ""),
     TARGET_FSD_INHIBITED(701, ""),
     TARGET_FSD_REBOOTS(702, ""),
@@ -180,6 +184,7 @@ public enum HorizonsModifier {
     ANTI_XENO_DAMAGE(729, ""),
     AREA_FSDS_REBOOT(729, ""),
     ANTI_GUARDIAN_ZONE_RESISTANCE(730, ""),
+    SUPERCRUISE_OVERCHARGE(731, ""),
     VEHICLE_ARMOUR_HEALTH(801, "VehicleArmourHealth"),
     VEHICLE_CARGO_CAPACITY(802, "VehicleCargoCapacity"),
     VEHICLE_COUNT(803, ""),
@@ -221,6 +226,7 @@ public enum HorizonsModifier {
     DAMAGE_BOOST(2006, ""),//synthesis
     BOOST_AUGMENTER_POWER_USE(8000, false, "BoostAugmenterPowerUse"),//todo remove?
     BOOST_SPEED_MULTIPLIER(8000, "BoostSpeedMultiplier"),//todo remove?
+
     ;
     private final String[] internalNames;
     private final int order;
