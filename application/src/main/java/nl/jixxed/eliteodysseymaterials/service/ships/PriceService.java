@@ -23,7 +23,7 @@ public class PriceService {
             StreamSupport.stream(csvParser.spliterator(), false).forEach(csvRecord -> {
                 final String key = csvRecord.get(0).trim().toLowerCase();
                 final Long price = Long.parseLong(csvRecord.get(1).trim());
-                log.debug("Adding price for {} with value {}", key, price);
+//                log.debug("Adding price for {} with value {}", key, price);
                 PRICES.put(key, price);
             });
         } catch (final IOException e) {
