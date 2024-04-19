@@ -6,5 +6,10 @@ public enum Origin {
     TORVAL,
     SALVATION,
     SIRIUS,
-    POWERPLAY
+    POWERPLAY,
+    TECHBROKER,
+    AZIMUTH,
+    EURYBIA_BLUE_MAFIA,
+    AEGIS,
+    ARQUE
 }

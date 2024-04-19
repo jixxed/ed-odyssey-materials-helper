@@ -21,6 +21,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.ships.PriceService;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -180,7 +181,7 @@ public abstract class ShipModule implements Serializable {
         this.moduleClass = moduleClass;
         this.origin = origin;
         this.multiCrew = multiCrew;
-        this.basePrice = basePrice;
+        this.basePrice = PriceService.getModulePriceOrDefault(internalName, basePrice);
         this.internalName = internalName;
         this.attributes.putAll(attributes);
         this.attributes.computeIfAbsent(HorizonsModifier.POWER_DRAW, modifier -> {
@@ -197,7 +198,7 @@ public abstract class ShipModule implements Serializable {
         this.moduleClass = shipModule.moduleClass;
         this.origin = shipModule.origin;
         this.multiCrew = shipModule.multiCrew;
-        this.basePrice = shipModule.basePrice;
+        this.basePrice = PriceService.getModulePriceOrDefault(shipModule.internalName, shipModule.basePrice);
         this.internalName = shipModule.internalName;
         this.modifications.addAll(shipModule.modifications.stream().map(modification -> new Modification(modification.getModification(), modification.getModificationCompleteness().orElse(null), modification.getGrade())).toList());
         this.experimentalEffects.addAll(shipModule.experimentalEffects);
