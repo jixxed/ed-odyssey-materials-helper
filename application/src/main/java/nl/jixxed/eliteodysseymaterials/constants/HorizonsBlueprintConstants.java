@@ -277,9 +277,9 @@ public abstract class HorizonsBlueprintConstants {
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.CANNON, CannonBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.ENZYME_MISSILE_RACK, EnzymeMissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.FRAGMENT_CANNON, FragmentCannonBlueprints.BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON, GuardianGaussCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER, GuardianPlasmaChargerPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, GuardianShardCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON, merge(GuardianGaussCannonBlueprints.BLUEPRINTS, GuardianGaussCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER, merge(GuardianPlasmaChargerBlueprints.BLUEPRINTS, GuardianPlasmaChargerPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, merge(GuardianShardCannonBlueprints.BLUEPRINTS, GuardianShardCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINE_LAUNCHER, MineLauncherBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINING_LASER, MiningLaserPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MISSILE_RACK, merge(MissileRackBlueprints.BLUEPRINTS,MissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));

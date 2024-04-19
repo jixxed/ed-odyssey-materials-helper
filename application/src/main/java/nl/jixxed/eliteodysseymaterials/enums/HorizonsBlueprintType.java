@@ -196,6 +196,7 @@ public enum HorizonsBlueprintType {
     HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE(false, true),
     EXPANDED_PROBE_SCANNING_RADIUS_X2(false, true),
     INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true),
+    ANTI_GUARDIAN_ZONE_RESISTANCE(false,false),
     NONE(false,false);
     @Getter
     private final boolean experimental;
@@ -398,6 +399,7 @@ public enum HorizonsBlueprintType {
             case "decorative_green" -> DECORATIVE_GREEN;
             case "decorative_red" -> DECORATIVE_RED;
             case "decorative_yellow" -> DECORATIVE_YELLOW;
+            case "guardianweapon_sturdy" -> ANTI_GUARDIAN_ZONE_RESISTANCE;
             //experimental effects
             case "special_auto_loader" -> AUTO_LOADER;
             case "special_concordant_sequence" -> CONCORDANT_SEQUENCE;

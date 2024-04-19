@@ -1,3 +1,9 @@
+Version 2.57
+-------------
+Add new Anti-Guardian Zone Resistance engineering blueprints
+Correct some module prices
+Corrected some Guardian weapon stats
+Added Anti-Guardian Zone Resistance stat to all guardian modules
 Version 2.56
 -------------
 Add new SCO Frame Shift Drives

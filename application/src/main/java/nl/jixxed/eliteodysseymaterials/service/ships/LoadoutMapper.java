@@ -155,7 +155,7 @@ public class LoadoutMapper {
     }
 
     private static boolean isLegacy(ShipModule shipModule, Engineering engineering) {
-        return !shipModule.isPreEngineered() && (engineering.getQuality() == null || engineering.getQuality().doubleValue() == 0.0);
+        return !shipModule.isPreEngineered() && (engineering.getQuality() == null || (engineering.getQuality().doubleValue() == 0.0 && !Origin.GUARDIAN.equals(shipModule.getOrigin())));
     }
 
     static List<ShipModule> getPotentialShipModules(String module, SlotType slotType) {

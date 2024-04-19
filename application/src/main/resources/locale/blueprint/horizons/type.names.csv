@@ -189,3 +189,4 @@ blueprint.horizons.type.overcharged_weapon_focused_weapon,"Overcharged Weapon, F
 blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,,,,
 blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"Thermal Resistant, Kinetic Resistant","Thermal Resistant, Kinetic Resistant",,,,,
 blueprint.horizons.type.none,None,None,,,,,
+blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,,,,

@@ -183,7 +183,7 @@ public enum HorizonsModifier {
     AREA_HEAT_INCREASED_SENSORS_DISRUPTED(728, ""),
     ANTI_XENO_DAMAGE(729, ""),
     AREA_FSDS_REBOOT(729, ""),
-    ANTI_GUARDIAN_ZONE_RESISTANCE(730, ""),
+    ANTI_GUARDIAN_ZONE_RESISTANCE(730, "GuardianModuleResistance"),
     SUPERCRUISE_OVERCHARGE(731, ""),
     VEHICLE_ARMOUR_HEALTH(801, "VehicleArmourHealth"),
     VEHICLE_CARGO_CAPACITY(802, "VehicleCargoCapacity"),

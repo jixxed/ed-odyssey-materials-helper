@@ -279,6 +279,9 @@ public abstract class ShipModule implements Serializable {
     }
 
     public Object getAttributeValue(final HorizonsModifier moduleAttribute) {
+        if(HorizonsModifier.DAMAGE_PER_SECOND.equals(moduleAttribute) && this.modifiers.containsKey(HorizonsModifier.DAMAGE) && !this.modifiers.containsKey(HorizonsModifier.DAMAGE_PER_SECOND)){
+            return (double)getAttributeValue(HorizonsModifier.DAMAGE, null) * (double)getAttributeValue(HorizonsModifier.RATE_OF_FIRE, null);
+        }
         return getAttributeValue(moduleAttribute, null);
     }
 
