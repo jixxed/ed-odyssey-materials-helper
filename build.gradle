@@ -14,8 +14,7 @@ apply plugin: "org.gradlex.extra-java-module-info"
 apply plugin: "java"
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-        vendor = JvmVendorSpec.ADOPTIUM
+        languageVersion = JavaLanguageVersion.of(22)
     }
     modularity.inferModulePath = true
 }

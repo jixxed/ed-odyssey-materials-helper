@@ -17,8 +17,7 @@ apply plugin: "org.beryx.jlink"
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-        vendor = JvmVendorSpec.ADOPTIUM
+        languageVersion = JavaLanguageVersion.of(22)
     }
 }
 tasks.register('wrapper', Wrapper) {
