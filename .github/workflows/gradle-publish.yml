@@ -32,6 +32,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
+          tag: "test-tag-virus-total"
           allowUpdates: true
           draft: true
           bodyFile: ".github/releasenotes.txt"
@@ -72,6 +73,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
+          tag: "test-tag-virus-total"
           allowUpdates: true
           draft: true
           bodyFile: ".github/releasenotes.txt"
@@ -87,17 +89,18 @@ jobs:
           files: |
             output/*.*
 
-  publish-release:
-    runs-on: ubuntu-latest
-    needs: [build-windows, build-ubuntu]
-    permissions:
-      contents: write
-    steps:
-      - name: Publish Release
-        uses: ncipollo/release-action@v1.14.0
-        with:
-          allowUpdates: true
-          draft: true
-          omitBodyDuringUpdate: true
-          omitNameDuringUpdate: true
-          makeLatest: false
+#  publish-release:
+#    runs-on: ubuntu-latest
+#    needs: [build-windows, build-ubuntu]
+#    permissions:
+#      contents: write
+#    steps:
+#      - name: Publish Release
+#        uses: ncipollo/release-action@v1.14.0
+#        with:
+#          tag: test
+#          allowUpdates: true
+#          draft: true
+#          omitBodyDuringUpdate: true
+#          omitNameDuringUpdate: true
+#          makeLatest: false
