@@ -60,12 +60,6 @@ application {
     version = project.version
 }
 
-if (os.isWindows()) {
-    ext { packageType = "msi" }
-} else {
-    ext { packageType = "deb" }
-}
-
 jlink {
     addExtraDependencies("javafx")
     forceMerge("j2objc")
@@ -86,21 +80,41 @@ jlink {
             ]
         }
     }
-    jpackage {
-        appVersion = project.version
-        installerType = project.ext.packageType
-        installerOptions = [
-                '--description', 'Installer for ED Odyssey Materials Helper',
-                '--copyright', 'Copyright 2021 CMDR Jixxed',
-                '--name', 'Elite Dangerous Odyssey Materials Helper',
-                '--app-version', project.version
-        ] as List<String>
-        if (installerType == 'msi') {
-            imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
-        }
-        if (installerType == 'deb') {
-            imageOptions += ['--icon', 'src/main/resources/images/application/rocket.png']
-        }
+}
+tasks.register("jpackageSigned") {
+    dependsOn jpackage
+    // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
+//    dependsOn jpackageImage
+//    finalizedBy signAppExe
+}
+tasks.register('createSignCert') {
+    String base64 = System.getProperty("base64_pfx") ?: ""
+
+    final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
+    ostr.withCloseable {
+        it << Base64.decoder.decode(base64.getBytes())
+    }
+
+    new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+        ostr.writeTo(stream)
+    }
+}
+tasks.register('signAppExe') {
+    dependsOn createSignCert
+    finalizedBy jpackage
+    doLast {
+        File target = new File("application/build/jpackage/Elite Dangerous Odyssey Materials Helper/Elite Dangerous Odyssey Materials Helper.exe")
+        target.setWritable(true)
+        println System.getProperty("pfx_password")
+        println System.getProperty("pfx_alias")
+        jsign(file: 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper/Elite Dangerous Odyssey Materials Helper.exe',
+                name: 'Elite Dangerous Odyssey Materials Helper',
+                url: 'https://github.com/jixxed/ed-odyssey-materials-helper',
+                keystore: 'edomh_codesigning.pfx',
+                alias: System.getProperty("pfx_alias") ?: "NO_ALIAS",
+                storepass: System.getProperty("pfx_password") ?: "NO_PASSWORD",
+                storetype: 'PKCS12',
+                tsaurl: 'http://timestamp.sectigo.com')
     }
 }
 def arch = System.getProperty("os.arch")

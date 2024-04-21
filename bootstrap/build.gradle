@@ -50,7 +50,7 @@ if (os.isWindows()) {
 }
 jlink {
     addExtraDependencies("javafx")
-    addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')
+    addOptions('--strip-debug', '--compress', 'zip-0', '--no-man-pages')
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper Launcher'
         jvmArgs = [
@@ -91,7 +91,57 @@ jlink {
         }
     }
 }
+tasks.register("jpackageSigned") {
+    dependsOn jpackageImage
+    // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
+    finalizedBy signInstallerMsi
+}
+tasks.register('createSignCert') {
+    doLast {
+        String base64 = System.getProperty("base64_pfx") ?: ""
 
+        final ByteArrayOutputStream ostr = new ByteArrayOutputStream()
+        ostr.withCloseable {
+            it << Base64.decoder.decode(base64.getBytes())
+        }
+
+        new File("./edomh_codesigning.pfx").withOutputStream { stream ->
+            ostr.writeTo(stream)
+        }
+    }
+}
+tasks.register('signInstallerExe') {
+    // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
+    dependsOn createSignCert
+    finalizedBy signInstallerMsi
+    doLast {
+        File target = new File("bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/Elite Dangerous Odyssey Materials Helper Launcher.exe")
+        target.setWritable(true)
+        jsign(file: 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/Elite Dangerous Odyssey Materials Helper Launcher.exe',
+                name: 'Elite Dangerous Odyssey Materials Helper',
+                url: 'https://github.com/jixxed/ed-odyssey-materials-helper',
+                keystore: 'edomh_codesigning.pfx',
+                alias: System.getProperty("pfx_alias") ?: "NO_ALIAS",
+                storepass: System.getProperty("pfx_password") ?: "NO_PASSWORD",
+                tsaurl: 'http://timestamp.sectigo.com')
+    }
+}
+tasks.register('signInstallerMsi') {
+    dependsOn createSignCert, jpackage
+
+    doLast {
+        File target = new File('bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
+        if(target.exists())
+            println "Signing file ${target}"
+        jsign(file: 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper-' + version + '.msi',
+                name: 'Elite Dangerous Odyssey Materials Helper Launcher',
+                url: 'https://github.com/jixxed/ed-odyssey-materials-helper',
+                keystore: 'edomh_codesigning.pfx',
+                alias: System.getProperty("pfx_alias") ?: "NO_ALIAS",
+                storepass: System.getProperty("pfx_password") ?: "NO_PASSWORD",
+                tsaurl: 'http://timestamp.sectigo.com')
+    }
+}
 def arch = System.getProperty("os.arch")
 def platform = 'linux'
 if (os.isWindows()) {

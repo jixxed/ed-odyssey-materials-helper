@@ -8,10 +8,12 @@ buildscript {
     }
     dependencies {
         classpath "org.gradlex:extra-java-module-info:1.8"
+        classpath("net.jsign:jsign-gradle-plugin:6.0")
     }
 }
 apply plugin: "org.gradlex.extra-java-module-info"
 apply plugin: "java"
+apply plugin: "net.jsign"
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(22)
@@ -23,14 +25,15 @@ wrapper {
 }
 
 
-task copyInstaller(type: Copy) {
+tasks.register('copyInstaller', Copy) {
+    dependsOn ":bootstrap:jpackage"
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
     rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper.Auto.Updater-' + version + '.msi')
 }
 
-task copyDeb(type: Copy) {
+tasks.register('copyDeb', Copy) {
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
@@ -58,12 +61,16 @@ tasks.register("createRelease") {
     finalizedBy makePortable, copyInstaller
 }
 
+tasks.register("createReleaseSigned") {
+    dependsOn subprojects.jpackageSigned
+    finalizedBy makePortable, copyInstaller
+}
+
 tasks.register("createPortableRelease") {
     dependsOn(":application:jpackage")
     finalizedBy makePortable
 }
 
-//run from WSL/Linux with clean command
 tasks.register("createReleaseLinux") {
     dependsOn subprojects.jpackage
     finalizedBy makeLinuxPortable, copyDeb
@@ -104,58 +111,58 @@ ext {
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
-    dependencies {
-        constraints {
-            implementation "ch.qos.logback:logback-classic:${version_logback}"
-            implementation "ch.qos.logback:logback-core:${version_logback}"
-            implementation "com.fasterxml.jackson.core:jackson-core:${version_jackson}"
-            implementation "com.fasterxml.jackson.core:jackson-databind:${version_jackson}"
-            implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${version_jackson}"
-            implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${version_jackson}"
-            implementation "com.github.jai-imageio:jai-imageio-core:${version_jai_imageio}"
-            implementation "com.github.scribejava:scribejava-core:${version_scribejava}"
-            implementation "com.google.guava:guava:${version_guava}"
-            implementation "com.zaxxer:SparseBitSet:${version_sparsebitset}"
-            implementation "com.google.j2objc:j2objc-annotations:${version_j2objc_annotations}"
-            implementation "commons-io:commons-io:${version_apache_commons_io}"
-            implementation "io.github.pustike:commons-csv:1.7.0"
-            implementation "io.reactivex.rxjava3:rxjava:3.1.8"
-            implementation "net.java.dev.jna:jna-platform:${version_jna}"
-            implementation "net.java.dev.jna:jna:${version_jna}"
-            implementation "nl.jixxed.lept4j:lept4j:${version_lept4j}"
-            implementation "nl.jixxed.tess4j:tess4j:${version_tess4j}"
-            implementation "nl.jixxed:opencv:${version_opencv}"
-            implementation "org.apache.commons:commons-math3:${version_apache_commons_math3}"
-            implementation "org.apache.poi:poi-ooxml:${version_apache_poi}"
-            implementation "org.eclipse.parsson:jakarta.json:1.1.5"
-            implementation "org.leadpony.justify:justify:3.1.0"
-            implementation "org.slf4j:slf4j-api:2.0.12"
-            implementation "org.openjfx:javafx-base:${version_javafx}:${platform}"
-            implementation "org.openjfx:javafx-controls:${version_javafx}:${platform}"
-            implementation "org.openjfx:javafx-fxml:${version_javafx}:${platform}"
-            implementation "org.openjfx:javafx-graphics:${version_javafx}:${platform}"
-            implementation "org.openjfx:javafx-media:${version_javafx}:${platform}"
-            implementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
-            implementation "javax.servlet:javax.servlet-api:4.0.1"
-            implementation "org.controlsfx:controlsfx:${version_controlsfx}"
-            implementation "org.jfxtras:jmetro:11.6.16"
-            implementation 'io.github.classgraph:classgraph:4.8.170'
+        dependencies {
+            constraints {
+                implementation "ch.qos.logback:logback-classic:${version_logback}"
+                implementation "ch.qos.logback:logback-core:${version_logback}"
+                implementation "com.fasterxml.jackson.core:jackson-core:${version_jackson}"
+                implementation "com.fasterxml.jackson.core:jackson-databind:${version_jackson}"
+                implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${version_jackson}"
+                implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${version_jackson}"
+                implementation "com.github.jai-imageio:jai-imageio-core:${version_jai_imageio}"
+                implementation "com.github.scribejava:scribejava-core:${version_scribejava}"
+                implementation "com.google.guava:guava:${version_guava}"
+                implementation "com.zaxxer:SparseBitSet:${version_sparsebitset}"
+                implementation "com.google.j2objc:j2objc-annotations:${version_j2objc_annotations}"
+                implementation "commons-io:commons-io:${version_apache_commons_io}"
+                implementation "io.github.pustike:commons-csv:1.7.0"
+                implementation "io.reactivex.rxjava3:rxjava:3.1.8"
+                implementation "net.java.dev.jna:jna-platform:${version_jna}"
+                implementation "net.java.dev.jna:jna:${version_jna}"
+                implementation "nl.jixxed.lept4j:lept4j:${version_lept4j}"
+                implementation "nl.jixxed.tess4j:tess4j:${version_tess4j}"
+                implementation "nl.jixxed:opencv:${version_opencv}"
+                implementation "org.apache.commons:commons-math3:${version_apache_commons_math3}"
+                implementation "org.apache.poi:poi-ooxml:${version_apache_poi}"
+                implementation "org.eclipse.parsson:jakarta.json:1.1.5"
+                implementation "org.leadpony.justify:justify:3.1.0"
+                implementation "org.slf4j:slf4j-api:2.0.12"
+                implementation "org.openjfx:javafx-base:${version_javafx}:${platform}"
+                implementation "org.openjfx:javafx-controls:${version_javafx}:${platform}"
+                implementation "org.openjfx:javafx-fxml:${version_javafx}:${platform}"
+                implementation "org.openjfx:javafx-graphics:${version_javafx}:${platform}"
+                implementation "org.openjfx:javafx-media:${version_javafx}:${platform}"
+                implementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
+                implementation "javax.servlet:javax.servlet-api:4.0.1"
+                implementation "org.controlsfx:controlsfx:${version_controlsfx}"
+                implementation "org.jfxtras:jmetro:11.6.16"
+                implementation 'io.github.classgraph:classgraph:4.8.170'
 
-            testImplementation "de.saxsys:mvvmfx-testing-utils:1.8.0"
-            testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver:0.1"
-            testImplementation "org.assertj:assertj-core:3.25.3"
-            testImplementation "org.junit.jupiter:junit-jupiter-api:${version_junit_jupiter}"
-            testImplementation "org.junit.jupiter:junit-jupiter-params:${version_junit_jupiter}"
-            testImplementation "org.junit.jupiter:junit-jupiter:${version_junit_jupiter}"
-            testImplementation "org.junit.platform:junit-platform-runner:${version_junit_platform}"
-            testImplementation "org.junit.platform:junit-platform-suite-api:${version_junit_platform}"
-            testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
-            testImplementation "org.mockito:mockito-inline:${version_mockito_inline}"
-            testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
-            testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
+                testImplementation "de.saxsys:mvvmfx-testing-utils:1.8.0"
+                testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver:0.1"
+                testImplementation "org.assertj:assertj-core:3.25.3"
+                testImplementation "org.junit.jupiter:junit-jupiter-api:${version_junit_jupiter}"
+                testImplementation "org.junit.jupiter:junit-jupiter-params:${version_junit_jupiter}"
+                testImplementation "org.junit.jupiter:junit-jupiter:${version_junit_jupiter}"
+                testImplementation "org.junit.platform:junit-platform-runner:${version_junit_platform}"
+                testImplementation "org.junit.platform:junit-platform-suite-api:${version_junit_platform}"
+                testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
+                testImplementation "org.mockito:mockito-inline:${version_mockito_inline}"
+                testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
+                testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
+            }
         }
-    }
-}}
+    }}
 tasks.withType(JavaCompile) {
     options.compilerArgs += "--enable-preview"
 }

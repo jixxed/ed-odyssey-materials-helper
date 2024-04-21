@@ -3,7 +3,7 @@ name: Gradle Package
 on:
   push:
     tags:
-    - '*'
+      - '*'
 
 jobs:
   build-ubuntu:
@@ -12,61 +12,79 @@ jobs:
       contents: write
 
     steps:
-    - uses: olegtarasov/get-tag@v2.1.3
-      id: tagName
-    - uses: actions/checkout@v4.1.1
-    - name: Set up JDKS
-      uses: actions/setup-java@v4.2.1
-      with:
-        java-version: |
-          '22.0.1'
-          '21.0.1'
-        distribution: 'temurin'
-        architecture: x64
+      - uses: olegtarasov/get-tag@v2.1.3
+        id: tagName
+      - uses: actions/checkout@v4.1.1
+      - name: Set up JDKS
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: |
+            '22.0.1'
+            '21.0.1'
+          distribution: 'temurin'
+          architecture: x64
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-    - name: Build with Gradle
-      run: ./gradlew createReleaseLinux
-    - name: Create Release
-      uses: ncipollo/release-action@v1.14.0
-      with:
-        allowUpdates: true
-        draft: true
-        bodyFile: ".github/releasenotes.txt"
-        artifacts: "output/*.*"
-        name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
-        
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build with Gradle
+        run: ./gradlew createReleaseLinux
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          allowUpdates: true
+          draft: true
+          bodyFile: ".github/releasenotes.txt"
+          artifacts: "output/*.*"
+          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
+      - name: VirusTotal Monitor Scan
+        uses: crazy-max/ghaction-virustotal@v4
+        with:
+          vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
+          vt_monitor: true
+          monitor_path: /ghaction-virustotal
+          update_release_body: true
+          files: |
+            output/*.*
+
   build-windows:
     runs-on: windows-latest
     permissions:
       contents: write
 
     steps:
-    - uses: olegtarasov/get-tag@v2.1.3
-      id: tagName
-    - uses: actions/checkout@v4.1.1
-    - name: Set up JDKS
-      uses: actions/setup-java@v4.2.1
-      with:
-        java-version: |
-          '22.0.1'
-          '21.0.1'
-        distribution: 'temurin'
-        architecture: x64
+      - uses: olegtarasov/get-tag@v2.1.3
+        id: tagName
+      - uses: actions/checkout@v4.1.1
+      - name: Set up JDKS
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: |
+            '22.0.1'
+            '21.0.1'
+          distribution: 'temurin'
+          architecture: x64
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-    - name: Build with Gradle
-      run: ./gradlew createRelease
-    - name: Create Release
-      uses: ncipollo/release-action@v1.14.0
-      with:
-        allowUpdates: true
-        draft: true
-        bodyFile: ".github/releasenotes.txt"
-        artifacts: "output/*.*"
-        name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build with Gradle
+        run: ./gradlew createReleaseSigned -Dpfx_alias="${{secrets.CODE_SIGN_CERT_ALIAS}}" -Dpfx_password='"${{secrets.CODE_SIGN_PASSWORD}}"' -Dbase64_pfx="${{secrets.CODE_SIGN_BASE64}}"
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          allowUpdates: true
+          draft: true
+          bodyFile: ".github/releasenotes.txt"
+          artifacts: "output/*.*"
+          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
+      - name: VirusTotal Monitor Scan
+        uses: crazy-max/ghaction-virustotal@v4
+        with:
+          vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
+          vt_monitor: true
+          monitor_path: /ghaction-virustotal
+          update_release_body: true
+          files: |
+            output/*.*
 
   publish-release:
     runs-on: ubuntu-latest
