@@ -1,9 +1,9 @@
 name: Gradle Package
 
-on:
-  push:
-    tags:
-      - '*'
+#on:
+#  push:
+#    tags:
+#    - '*'
 
 jobs:
   build-ubuntu:
@@ -12,8 +12,8 @@ jobs:
       contents: write
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.3
-        id: tagName
+      #    - uses: olegtarasov/get-tag@v2.1.3
+      #      id: tagName
       - uses: actions/checkout@v4.1.1
       - name: Set up JDKS
         uses: actions/setup-java@v4.2.1
@@ -35,7 +35,7 @@ jobs:
           draft: true
           bodyFile: ".github/releasenotes.txt"
           artifacts: "output/*.*"
-          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
+          name: "Elite Dangerous Odyssey Materials Helper test"
       - name: VirusTotal Monitor Scan
         uses: crazy-max/ghaction-virustotal@v4
         with:
@@ -52,8 +52,8 @@ jobs:
       contents: write
 
     steps:
-      - uses: olegtarasov/get-tag@v2.1.3
-        id: tagName
+      #    - uses: olegtarasov/get-tag@v2.1.3
+      #      id: tagName
       - uses: actions/checkout@v4.1.1
       - name: Set up JDKS
         uses: actions/setup-java@v4.2.1
@@ -75,7 +75,7 @@ jobs:
           draft: true
           bodyFile: ".github/releasenotes.txt"
           artifacts: "output/*.*"
-          name: "Elite Dangerous Odyssey Materials Helper ${{ steps.tagName.outputs.tag }}"
+          name: "Elite Dangerous Odyssey Materials Helper test"
       - name: VirusTotal Monitor Scan
         uses: crazy-max/ghaction-virustotal@v4
         with:
@@ -96,7 +96,7 @@ jobs:
         uses: ncipollo/release-action@v1.14.0
         with:
           allowUpdates: true
-          draft: false
+          draft: true
           omitBodyDuringUpdate: true
           omitNameDuringUpdate: true
-          makeLatest: true
+          makeLatest: false
