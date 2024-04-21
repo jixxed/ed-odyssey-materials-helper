@@ -1616,3 +1616,4 @@
 {"name":"Blua Eaec WW-E c14-1293","coords":{"x":-6989.375,"y":-180.71875,"z":14895.8125},"station":{"name":"Promium Relay","distanceToArrival":1796.033529,"primaryEconomy":"Refinery","id":129010791,"type":"Raw"}}
 {"name":"Disci","coords":{"x":16.03125,"y":97.59375,"z":-29.59375},"station":{"name":"Snodgrass Orbital","distanceToArrival":1135.660269,"primaryEconomy":"High Tech","id":3229329152,"type":"Encoded"}}
 {"name":"Akba Atacab","coords":{"x":-119.46875,"y":42.75,"z":80.34375},"station":{"name":"Jones City","distanceToArrival":31.600391,"primaryEconomy":"Refinery","id":3227322112,"type":"Raw"}}
+{"name":"Diaguandri","coords":{"x":-41.06,"y":-62.16,"z":-103.25},"station":{"name":"Ray Gateway","distanceToArrival":470.0,"primaryEconomy":"High Tech","id":3227322112,"type":"Encoded"}}
