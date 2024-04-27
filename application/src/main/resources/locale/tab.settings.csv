@@ -90,3 +90,5 @@ settings.button.import.clipboard.import,Import,Import,Importieren,Importar,Impor
 settings.button.import.clipboard.slef,,,,,,,
 settings.button.import.clipboard.slef.explain,Import SLEF from the clipboard.,Import SLEF from the clipboard.,Importieren Sie SLEF aus der Zwischenablage.,Importar SLEF desde el portapapeles.,Importer SLEF depuis le presse-papiers.,Importar SLEF da área de transferência.,Импортировать SLEF из буфера обмена.
 settings.button.import.clipboard.import.slef,Import SLEF,Import SLEF,Import SLEF,Importar SLEF,Importer SLEF,Importar SLEF,Импортировать SLEF
+tab.settings.notification.test,Test,Test,Test,Prueba,Test,Test,Тест
+tab.settings.notification.screen,Screen,Screen,Screen,Pantalla,Écran,Tela,Экран

@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -43,10 +44,21 @@ public class NotificationService {
                     .title(title)
                     .text(text)
                     .hideAfter(Duration.seconds(10))
+                    .owner(getScreen())
                     .showInformation();
             if (!silent) {
                 playSound(notificationType);
             }
+        }
+    }
+
+    private static Screen getScreen() {
+        String screenId = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SCREEN, "(" + Screen.getPrimary().hashCode() + ")");
+        try{
+            final int code = Integer.parseInt(screenId.substring(screenId.indexOf("(") + 1, screenId.indexOf(")")));
+            return Screen.getScreens().stream().filter(screen -> code == screen.hashCode()).findFirst().orElse(Screen.getPrimary());
+        }catch (NumberFormatException | IndexOutOfBoundsException ex){
+            return Screen.getPrimary();
         }
     }
 
@@ -62,6 +74,7 @@ public class NotificationService {
                     .darkStyle()
                     .title(title)
                     .text(text)
+                    .owner(getScreen())
                     .showWarning();
             if (!silent) {
                 playSound(notificationType);
@@ -81,6 +94,7 @@ public class NotificationService {
                     .darkStyle()
                     .title(title)
                     .text(text)
+                    .owner(getScreen())
                     .showError();
             if (!silent) {
                 playSound(notificationType);

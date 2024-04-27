@@ -27,6 +27,7 @@ public class PreferenceConstants {
     public static final String NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX = "settings.notification.sounds.file.";
     public static final String IRRELEVANT_OVERRIDE = "settings.material.irrelevant.override";
     public static final String NOTIFICATION_VOLUME = "settings.notification.sounds.volume";
+    public static final String NOTIFICATION_SCREEN = "settings.notification.screen.id";
     public static final String POLICY_ACCEPT_VERSION = "privacy.policy.version";
     public static final String WHATS_NEW_VERSION = "whats.new.version";
     public static final String URL_SCHEME = "url.scheme.asked";

@@ -1,15 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.application.Application;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
+import javafx.util.StringConverter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -31,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
+
 @Slf4j
 public class Notifications extends VBox implements Template {
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
@@ -40,35 +40,89 @@ public class Notifications extends VBox implements Template {
     private Slider notificationVolumeSlider;
     private Button playNotificationButton;
     private Application application;
+
     public Notifications(Application application) {
         this.application = application;
         this.initComponents();
         this.initEventHandling();
     }
+
     @Override
     public void initComponents() {
         final Label notificationLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tab.settings.title.notification"))
                 .build();
+        final HBox screenSetting = createScreenSetting();
         final HBox notificationSetting = createNotificationSetting();
         final HBox notificationSoundVolumeSetting = createNotificationVolumeSetting();
         final HBox notificationsListHeader = createNotificationListHeader();
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(notificationLabel, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader);
+        this.getChildren().addAll(notificationLabel, screenSetting, notificationSetting, notificationSoundVolumeSetting, notificationsListHeader);
         Arrays.stream(NotificationType.values()).forEach(notificationType -> this.getChildren().add(createCustomNotificationSoundSetting(notificationType)));
+    }
+
+    /**
+     * Returns a configuration option where a display can be selected from a dropdown to be used to display notifications
+     *
+     * @return
+     */
+    private HBox createScreenSetting() {
+        final Label screenLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.notification.screen"))
+                .build();
+        final ComboBox<Screen> screenComboBox = ComboBoxBuilder.builder(Screen.class)
+                .withStyleClass(SETTINGS_DROPDOWN_CLASS)
+                .withItemsProperty(Screen.getScreens())
+                .withValueChangeListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SCREEN, "(" + newValue.hashCode() + ")");
+                    }
+                })
+                .build();
+        screenComboBox.converterProperty().setValue(new StringConverter<>() {
+            @Override
+            public String toString(final Screen screen) {
+                if(screen == null)
+                    return null;
+                return (int)screen.getBounds().getWidth() + "x" + (int)screen.getBounds().getHeight() + " (" + screen.hashCode() + ")";
+            }
+
+            @Override
+            public Screen fromString(final String string) {
+                try {
+                    final int code = Integer.parseInt(string.substring(string.indexOf("(") + 1, string.indexOf(")")));
+                    return Screen.getScreens().stream().filter(screen -> code == screen.hashCode()).findFirst().orElse(Screen.getPrimary());
+                } catch (NumberFormatException | IndexOutOfBoundsException | NullPointerException ex) {
+                    return Screen.getPrimary();
+                }
+            }
+        });
+        screenComboBox.getSelectionModel().select(screenComboBox.converterProperty().get().fromString(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SCREEN, "(" + Screen.getPrimary().hashCode() + ")")));
+        //button to test notifications
+        final Button testNotificationButton = ButtonBuilder.builder()
+                .withText(LocaleService.getStringBinding("tab.settings.notification.test"))
+                .withOnAction(event -> NotificationService.showInformation(NotificationType.SUCCESS, "Test", "This is a test notification"))
+                .build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(screenLabel, screenComboBox, testNotificationButton)
+                .buildHBox();
     }
 
     @Override
     public void initEventHandling() {
 
     }
+
     private HBox createNotificationListHeader() {
         final DestroyableLabel headerNotification = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.header.notification")).build();
         final DestroyableLabel headerEnabled = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.notification.header.enabled")).build();
         return BoxBuilder.builder().withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS).withNodes(headerNotification, headerEnabled).buildHBox();
     }
+
     private HBox createNotificationVolumeSetting() {
         this.notificationVolumeLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification.volume")).build();
         this.notificationVolumeSlider = SliderBuilder.builder()
