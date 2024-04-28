@@ -1561,7 +1561,7 @@
 {"name":"Sivara","coords":{"x":97.0625,"y":-94.875,"z":95.90625},"station":{"name":"Suri Port","distanceToArrival":539.588144,"primaryEconomy":"Extraction","id":3225321984,"type":"Raw"}}
 {"name":"Addovik","coords":{"x":136.5625,"y":-60.875,"z":5.4375},"station":{"name":"Ziegler Dock","distanceToArrival":1457.566364,"primaryEconomy":"Industrial","id":3224915712,"type":"Manufactured"}}
 {"name":"Verovichili","coords":{"x":146.46875,"y":0.28125,"z":65.40625},"station":{"name":"Gibson Gateway","distanceToArrival":232.633648,"primaryEconomy":"Industrial","id":3230262016,"type":"Manufactured"}}
-{"name":"Pru Euq WO-D b53-8","coords":{"x":-256.34375,"y":-5.15625,"z":1363.125},"station":{"name":"Zerreiss Station","distanceToArrival":875.111742,"primaryEconomy":"Refinery","id":129009767,"type":"Raw"}}
+{"name":"Pru Euq WO-D b53-8","coords":{"x":-256.34375,"y":-5.15625,"z":1363.125},"station":{"name":"Zerreiss Station","distanceToArrival":875.111742,"primaryEconomy":"Refinery","id":129009767,"type":"Encoded"}}
 {"name":"Nyora","coords":{"x":-159.5,"y":-4.09375,"z":0.84375},"station":{"name":"Pasteur Port","distanceToArrival":13.424321,"primaryEconomy":"Industrial","id":3226895616,"type":"Manufactured"}}
 {"name":"Gamatcho","coords":{"x":-106.71875,"y":-6.5,"z":-83.125},"station":{"name":"Fabian Hub","distanceToArrival":126.330616,"primaryEconomy":"Industrial","id":3226499840,"type":"Manufactured"}}
 {"name":"Lulunguni","coords":{"x":-77.40625,"y":-49.65625,"z":96.71875},"station":{"name":"Lovelace Terminal","distanceToArrival":17.802814,"primaryEconomy":"Industrial","id":3221830400,"type":"Manufactured"}}
