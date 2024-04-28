@@ -1,3 +1,13 @@
+Version 2.58
+-------------
+Upgrade to java 22.0.1
+Added digital signing to MSI installer (hopefully to reduce AV false positives)
+Automatic uplaod to virustotal on release (hopefully to reduce AV false positives)
+
+Fixed shipbuilder UI getting stuck when equipping Guardian Plasma Charger (or any other weapon without precalculated DPS)
+Added Ray Gateway material trader
+Added configuration option to select the screen for displaying notifications
+
 Version 2.57
 -------------
 Added new Anti-Guardian Zone Resistance engineering blueprints
