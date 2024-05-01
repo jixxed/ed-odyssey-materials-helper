@@ -38,9 +38,9 @@ public class ThermalStats extends Stats implements Template {
     public void initComponents() {
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.thermal"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        this.idleThermals = createValueSmallLabel("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
-        this.thrusterThermals = createValueSmallLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
-        this.fsdThermals = createValueSmallLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2.format(0D));
+        this.idleThermals = createValueSmallLabel("ship.stats.thermal.idle.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.thrusterThermals = createValueSmallLabel("ship.stats.thermal.thruster.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.fsdThermals = createValueSmallLabel("ship.stats.thermal.fsd.thermals.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
 
         this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.idle.thermals"), new GrowingRegion(), this.idleThermals).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createSmallLabel("ship.stats.thermal.thruster.thermals"), new GrowingRegion(), this.thrusterThermals).buildHBox());
@@ -298,6 +298,7 @@ public class ThermalStats extends Stats implements Template {
 
     private Map<Integer, Double> calculateRetractedPower() {
         Map<Integer, Double> powerValues = new HashMap<>(Map.of(
+                -1, 0D,
                 1, 0D,
                 2, 0D,
                 3, 0D,
@@ -307,21 +308,21 @@ public class ThermalStats extends Stats implements Template {
 
         getShip().ifPresent(ship -> {
             if (ship.getCargoHatch().isOccupied() && ship.getCargoHatch().getShipModule().isPowered()) {
-                powerValues.compute(ship.getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) ship.getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+                powerValues.compute(ship.getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : ship.getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) ship.getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
             }
             ship.getUtilitySlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPassivePower())
                     .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
             ship.getOptionalSlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
             ship.getCoreSlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
-                    .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                    .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
         });
         return powerValues;
     }
@@ -333,14 +334,14 @@ public class ThermalStats extends Stats implements Template {
                     .filter(Slot::isOccupied)
                     .filter(slot -> slot.getShipModule().isPowered())
                     .forEach(slot -> powerValues.compute(
-                            slot.getShipModule().getPowerGroup(),
+                            slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
                             (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
                     ));
             ship.getUtilitySlots().stream()
                     .filter(Slot::isOccupied)
                     .filter(slot -> !slot.getShipModule().isPassivePower())
                     .forEach(slot -> powerValues.compute(
-                            slot.getShipModule().getPowerGroup(),
+                            slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
                             (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
                     ));
         });
@@ -370,7 +371,7 @@ public class ThermalStats extends Stats implements Template {
         StringBinding format() {
             switch (valueType) {
                 case PERCENTAGE:
-                    return LocaleService.getStringBinding("ship.stats.thermal.thermals.value.percentage", Formatters.NUMBER_FORMAT_2.format(value));
+                    return LocaleService.getStringBinding("ship.stats.thermal.thermals.value.percentage", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(value));
                 case SECONDS:
                     return LocaleService.getStringBinding("ship.stats.thermal.thermals.value.time", ConvertSecondToHHMMSSString((int) value));
                 case ERROR:

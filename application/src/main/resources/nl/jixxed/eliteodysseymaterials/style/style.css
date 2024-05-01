@@ -3698,3 +3698,9 @@
     -fx-max-width: 15em;
 
 }
+.power-progressbar-line{
+    -fx-min-height: 1em;
+    -fx-max-width: 15em;
+    -fx-stroke: white;
+    -fx-stroke-width: 0.1em;
+}

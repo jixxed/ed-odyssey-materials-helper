@@ -59,9 +59,9 @@ public class RangeIndicator extends VBox {
         update();
     }
     public void update(){
-        this.startValueLabel.setText(Formatters.NUMBER_FORMAT_2.format(startValue));
-        this.endValueLabel.setText(Formatters.NUMBER_FORMAT_2.format(endValue));
-        this.currentValueLabel.textProperty().bind(LocaleService.getStringBinding(currentValueLocalizationKey, Formatters.NUMBER_FORMAT_2.format(currentValue)));
+        this.startValueLabel.setText(Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(startValue));
+        this.endValueLabel.setText(Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(endValue));
+        this.currentValueLabel.textProperty().bind(LocaleService.getStringBinding(currentValueLocalizationKey, Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(currentValue)));
 
         double sliderWidth = ScalingHelper.getPixelDoubleFromEm(15D);
         double sliderHeight = ScalingHelper.getPixelDoubleFromEm(1D);

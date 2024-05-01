@@ -104,6 +104,7 @@ version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,
 statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
 segment.type.present,Present,,,,,,
 segment.type.not_present,Not present,,,,,,
+segment.type.power_group_p,P,,,,,,
 segment.type.power_group_1,1,,,,,,
 segment.type.power_group_2,2,,,,,,
 segment.type.power_group_3,3,,,,,,

@@ -224,3 +224,4 @@ modifier.horizons.name.overcharge_max_speed_increase,Overcharge Max Speed Increa
 modifier.horizons.name.overcharge_max_acceleration_rate,Overcharge Max Acceleration Rate,,,,,,
 modifier.horizons.name.overcharge_heat_generation_rate,Overcharge Heat Generation Rate,,,,,,
 modifier.horizons.name.overcharge_control_interference,Overcharge Control Interference,,,,,,
+modifier.horizons.name.listed_power_draw,Listed Power Draw,Listed Power Draw,,,,,

@@ -2877,6 +2877,7 @@ public class Ship {
 
     public Map<Integer, Double> getRetractedPower() {
         Map<Integer, Double> powerValues = new HashMap<>(Map.of(
+                -1, 0D,
                 0, 0D,
                 1, 0D,
                 2, 0D,
@@ -2888,21 +2889,21 @@ public class Ship {
 
         powerValues.put(0, (Double) getCoreSlots().stream().filter(slot -> SlotType.CORE_POWER_PLANT.equals(slot.getSlotType())).findFirst().filter(Slot::isOccupied).map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_CAPACITY)).orElse(0.0D));
         if (getCargoHatch().isOccupied() && getCargoHatch().getShipModule().isPowered()) {
-            powerValues.compute(getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
+            powerValues.compute(getCargoHatch().getShipModule().isPassivePowerWithoutToggle() ? -1 : getCargoHatch().getShipModule().getPowerGroup(), (key, value) -> value + (double) getCargoHatch().getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW));
         }
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPassivePower())
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
         getOptionalSlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
         getCoreSlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
-                .forEach(slot -> powerValues.compute(slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
+                .forEach(slot -> powerValues.compute(slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(), (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)));
 
         return powerValues;
     }
@@ -2914,14 +2915,14 @@ public class Ship {
                 .filter(Slot::isOccupied)
                 .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> powerValues.compute(
-                        slot.getShipModule().getPowerGroup(),
+                        slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
                         (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
                 ));
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> !slot.getShipModule().isPassivePower())
                 .forEach(slot -> powerValues.compute(
-                        slot.getShipModule().getPowerGroup(),
+                        slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
                         (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
                 ));
 

@@ -64,6 +64,11 @@ public class GuardianHullReinforcementPackage extends MilitaryOptionalModule {
     }
 
     @Override
+    public boolean isPassivePower() {
+        return true;
+    }
+
+    @Override
     public boolean isHiddenStat(HorizonsModifier modifier) {
         if(HIDDEN_STATS.contains(modifier)){
             return true;

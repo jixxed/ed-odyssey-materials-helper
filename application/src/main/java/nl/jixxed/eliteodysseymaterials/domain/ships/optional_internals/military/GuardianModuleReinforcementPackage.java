@@ -67,4 +67,9 @@ public class GuardianModuleReinforcementPackage extends MilitaryOptionalModule {
     public boolean hasPowerToggle() {
         return false;
     }
+
+    @Override
+    public boolean isPassivePower() {
+        return true;
+    }
 }

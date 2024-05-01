@@ -27,6 +27,7 @@ public class PowerStats extends Stats implements Template {
     private DestroyableLabel deployedPowerLabel;
     private PowerBar retractedPowerBar;
     private PowerBar deployedPowerBar;
+    public static final Color POWER_GROUP_P_COLOR = Color.web("#32A4A8");
     public static final Color POWER_GROUP_1_COLOR = Color.web("#CE6C1E");
     public static final Color POWER_GROUP_2_COLOR = Color.web("#89D07F");
     public static final Color POWER_GROUP_3_COLOR = Color.web("#2E92DF");
@@ -41,10 +42,10 @@ public class PowerStats extends Stats implements Template {
 
     @Override
     public void initComponents() {
-        this.retractedPowerLabel = createValueLabel("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2.format(0D), Formatters.NUMBER_FORMAT_2.format(0D));
-        this.deployedPowerLabel = createValueLabel("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2.format(0D), Formatters.NUMBER_FORMAT_2.format(0D));
-        this.retractedPowerBar = new PowerBar();
-        this.deployedPowerBar = new PowerBar();
+        this.retractedPowerLabel = createValueLabel("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.deployedPowerLabel = createValueLabel("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(0D));
+        this.retractedPowerBar = new PowerBar(true);
+        this.deployedPowerBar = new PowerBar(false);
 
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.power"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
@@ -54,6 +55,8 @@ public class PowerStats extends Stats implements Template {
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.power.deployed.power"), new GrowingRegion(), this.deployedPowerLabel).buildHBox());
         this.getChildren().add(new GrowingRegion());
         this.getChildren().add(BoxBuilder.builder().withNodes(
+                createLegend(POWER_GROUP_P_COLOR, "P"),
+                new GrowingRegion(),
                 createLegend(POWER_GROUP_1_COLOR, "1"),
                 new GrowingRegion(),
                 createLegend(POWER_GROUP_2_COLOR, "2"),
@@ -85,6 +88,7 @@ public class PowerStats extends Stats implements Template {
 
     private Map<Integer, Double> calculateRetractedPower() {
         return getShip().map(Ship::getRetractedPower).orElseGet(() -> new HashMap<>(Map.of(
+                -1, 0D,
                 0, 0D,
                 1, 0D,
                 2, 0D,
@@ -96,6 +100,7 @@ public class PowerStats extends Stats implements Template {
 
     private Map<Integer, Double> calculateDeployedPower() {
         return getShip().map(Ship::getDeployedPower).orElseGet(() -> new HashMap<>(Map.of(
+                -1, 0D,
                 0, 0D,
                 1, 0D,
                 2, 0D,
@@ -109,11 +114,11 @@ public class PowerStats extends Stats implements Template {
     @Override
     protected void update() {
         final Map<Integer, Double> retractedPower = calculateRetractedPower();
-        final Double retractedUsage = retractedPower.values().stream().skip(1).reduce(0D, Double::sum);
+        final Double retractedUsage = retractedPower.values().stream().skip(2).reduce(0D, Double::sum);
         final Double powerBudget = retractedPower.get(0);
-        final Double deployedUsage = calculateDeployedPower().values().stream().skip(1).reduce(0D, Double::sum);
-        this.retractedPowerLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2.format(retractedUsage), Formatters.NUMBER_FORMAT_2.format(powerBudget)));
-        this.deployedPowerLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2.format(deployedUsage), Formatters.NUMBER_FORMAT_2.format(powerBudget)));
+        final Double deployedUsage = calculateDeployedPower().values().stream().skip(2).reduce(0D, Double::sum);
+        this.retractedPowerLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.power.retracted.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(retractedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
+        this.deployedPowerLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.power.deployed.power.value", Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(deployedUsage), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(powerBudget)));
         if (retractedUsage > powerBudget) {
             if (!this.retractedPowerLabel.getStyleClass().contains("power-stats-overpower"))
                 this.retractedPowerLabel.getStyleClass().add("power-stats-overpower");
@@ -126,7 +131,7 @@ public class PowerStats extends Stats implements Template {
         } else {
             this.deployedPowerLabel.getStyleClass().removeAll("power-stats-overpower");
         }
-        this.retractedPowerBar.update(true);
-        this.deployedPowerBar.update(false);
+        this.retractedPowerBar.update();
+        this.deployedPowerBar.update();
     }
 }

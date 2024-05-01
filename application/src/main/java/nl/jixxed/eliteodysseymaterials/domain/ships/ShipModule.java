@@ -158,9 +158,12 @@ public abstract class ShipModule implements Serializable {
     private String customName = "";
 
     private boolean powerToggle = true;
-    @Getter
     @Setter
     private int powerGroup = 3;
+
+    public int getPowerGroup() {
+        return (!hasPowerToggle() && isPassivePower()) ? -1 : powerGroup;
+    }
 
     public ShipModule(final String id, final HorizonsBlueprintName name, final ModuleSize moduleSize, final ModuleClass moduleClass, final long basePrice, final String internalName, final Map<HorizonsModifier, Object> attributes) {
         this(id, name, moduleSize, moduleClass, Origin.HUMAN, false, basePrice, internalName, attributes);
@@ -515,15 +518,21 @@ public abstract class ShipModule implements Serializable {
             powerGroup--;
         }
     }
-
+    // whether the module has a power toggle
     public boolean hasPowerToggle() {
         return powerToggle;
     }
 
-    public boolean isHiddenStat(HorizonsModifier modifier){
+    // whether the module consumes power when not deployed
+    public boolean isPassivePower(){
         return false;
     }
-    public boolean isPassivePower(){
+    // whether the module consumes power when not deployed
+    public boolean isPassivePowerWithoutToggle(){
+        return isPassivePower() && !hasPowerToggle();
+    }
+
+    public boolean isHiddenStat(HorizonsModifier modifier){
         return false;
     }
 
