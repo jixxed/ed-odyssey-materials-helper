@@ -68,7 +68,7 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
-                '-Xmx1024M',
+                '-Xmx1280M',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
                 '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
                 '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
