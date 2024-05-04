@@ -1,0 +1,36 @@
+{
+  "Slot": "SmallHardpoint2",
+  "Item": "hpt_guardian_gausscannon_fixed_small",
+  "On": true,
+  "Priority": 2,
+  "AmmoInClip": 1,
+  "AmmoInHopper": 80,
+  "Health": 1.0,
+  "Engineering": {
+    "Engineer": "Ram Tah",
+    "EngineerID": 300110,
+    "BlueprintID": 129030458,
+    "BlueprintName": "GuardianWeapon_Sturdy",
+    "Level": 1,
+    "Quality": 0.0,
+    "Modifiers": [
+      {
+        "Label": "DamagePerSecond",
+        "Value": 21.204821,
+        "OriginalValue": 26.506025,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 17.6,
+        "OriginalValue": 22.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "GuardianModuleResistance",
+        "ValueStr": "$INT_PANEL_module_active;",
+        "ValueStr_Localised": "Active"
+      }
+    ]
+  }
+}

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ShipsPricesTest {
     @Test
-    public void test() throws IOException {
+    public void testsss() throws IOException {
         final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -45,7 +45,7 @@ public class ShipsPricesTest {
         addToPrices(prices, "/ships/prices/sunwen.json");
         addToPrices(prices, "/ships/prices/cherets.json");
       //Assertions.assertAll(
-        allModules.stream().filter(shipModule -> shipModule.getOrigin().equals(Origin.HUMAN)  &&!shipModule.isCGExclusive() && !shipModule.isPreEngineered() && !shipModule.isLegacy()).forEach(module -> {
+        allModules.stream().filter(shipModule -> !shipModule.isCGExclusive() && !shipModule.isPreEngineered() && !shipModule.isLegacy()).forEach(module -> {
             final BigInteger price = prices.get(module.getInternalName().toLowerCase());
 
             final Long moduleprice = module.getBasePrice();
@@ -57,15 +57,37 @@ public class ShipsPricesTest {
         // );
 
     }
-void addToPrices(Map<String, BigInteger> prices, String file)throws IOException{
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    objectMapper.registerModule(new JavaTimeModule());
-    objectMapper.registerModule(new Jdk8Module());
-    Outfitting outfitting = objectMapper.readValue(ShipsPricesTest.class.getResourceAsStream(file), Outfitting.class);
-    Map<String, BigInteger> pricesOutfitting = outfitting.getItems().map(list -> list.stream().collect(Collectors.toMap(Item::getName, Item::getBuyPrice))).orElse(Collections.emptyMap());
-    prices.putAll(pricesOutfitting);
-}
+    @Test
+    public void testJamesonBeta() throws IOException {
+        final List<? extends ShipModule> allModules = ShipModule.ALL_MODULES.stream().flatMap(List::stream).toList();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.registerModule(new Jdk8Module());
+        Map<String, BigInteger> prices = new HashMap<>();
+
+        addToPrices(prices, "/ships/prices/jameson_memorial_beta.json");
+        allModules.stream().filter(shipModule -> /*shipModule.getOrigin().equals(Origin.HUMAN)  && !shipModule.isCGExclusive() && !shipModule.isPreEngineered() &&*/ !shipModule.isLegacy()).forEach(module -> {
+            final BigInteger price = prices.get(module.getInternalName().toLowerCase());
+            final Long moduleprice = (long) Math.ceil(Math.ceil(module.getBasePrice() * 0.9) * 0.975);
+
+            if (price == null || moduleprice != price.longValue()) {
+                log.error(module.getId() + " - " + module.getInternalName() + " price mismatch: moduleprice=" + moduleprice + ", gameprice=" + price);
+            }
+
+        });
+
+    }
+
+    void addToPrices(Map<String, BigInteger> prices, String file)throws IOException{
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.registerModule(new Jdk8Module());
+        Outfitting outfitting = objectMapper.readValue(ShipsPricesTest.class.getResourceAsStream(file), Outfitting.class);
+        Map<String, BigInteger> pricesOutfitting = outfitting.getItems().map(list -> list.stream().collect(Collectors.toMap(Item::getName, Item::getBuyPrice))).orElse(Collections.emptyMap());
+        prices.putAll(pricesOutfitting);
+    }
     @Test
     public void testRounding() {
         for (int x = 0; x < 100000; x++) {

@@ -412,6 +412,9 @@ public abstract class ShipModule implements Serializable {
     public boolean isPreEngineered() {
         return false;
     }
+    public boolean isStoreExclusive() {
+        return false;
+    }
 
     public boolean isAdvanced() {
         return false;

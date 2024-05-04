@@ -24,7 +24,7 @@ public enum ShipType {
     ORCA(128049327,"Orca", ShipSize.L),
     TYPE_9(128049333,"Type9", ShipSize.L),
     PYTHON(128049339,"Python", ShipSize.M),
-    PYTHON_NX(190658840,"Python MkII", ShipSize.M),
+    PYTHON_NX(190658840,"Python_nx", ShipSize.M),
     BELUGA_LINER(128049345,"BelugaLiner", ShipSize.L),
     FER_DE_LANCE(128049351,"FerDeLance", ShipSize.M),
     ANACONDA(128049363,"Anaconda", ShipSize.L),

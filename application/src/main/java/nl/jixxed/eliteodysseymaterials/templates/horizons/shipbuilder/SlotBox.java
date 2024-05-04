@@ -667,6 +667,11 @@ class SlotBox extends StackPane {
                         createIconWithTooltip("/images/ships/icons/preengineered.png", "ship.module.icon.tooltip.pre.engineered", "shipbuilder-slots-slotbox-icon")
                 );
             }
+            if (shipModule.isStoreExclusive()) {
+                this.iconBox.getChildren().add(
+                        createIconWithTooltip("/images/ships/icons/arx.png", "ship.module.icon.tooltip.arx", "shipbuilder-slots-slotbox-icon")
+                );
+            }
             if (shipModule.isAdvanced()) {
                 this.iconBox.getChildren().add(
                         createIconWithTooltip("/images/ships/icons/advanced2.png", "ship.module.icon.tooltip.advanced", "shipbuilder-slots-slotbox-icon", "shipbuilder-slots-slotbox-icon-wide")

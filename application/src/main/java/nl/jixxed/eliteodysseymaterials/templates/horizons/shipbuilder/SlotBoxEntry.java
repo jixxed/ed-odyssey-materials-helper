@@ -94,6 +94,9 @@ public class SlotBoxEntry extends VBox {
                                             if(shipModule.isPreEngineered()) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/preengineered.png").withStyleClass("ships-button-image").build());
                                             }
+                                            if(shipModule.isStoreExclusive()) {
+                                                images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/arx.png").withStyleClass("ships-button-image").build());
+                                            }
                                             if(shipModule.isAdvanced()) {
                                                 images.add(ResizableImageViewBuilder.builder().withImage("/images/ships/icons/advanced2.png").withStyleClass("ships-button-image").build());
                                             }

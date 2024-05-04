@@ -39,6 +39,26 @@ public class MiningLaserPreEngineeredBlueprints {
                             ),
                             true
                     )
+            ),
+            HorizonsBlueprintType.LONG_RANGE_WEAPON_INCENDIARY_ROUNDS_ARX,
+            Map.of(
+                    HorizonsBlueprintGrade.GRADE_5, new HorizonsModuleBlueprint(HorizonsBlueprintName.MINING_LASER, HorizonsBlueprintType.LONG_RANGE_WEAPON_INCENDIARY_ROUNDS_ARX, HorizonsBlueprintGrade.GRADE_5,
+                            Map.of(
+                            ),
+                            Map.of(
+                                    HorizonsModifier.MASS, new HorizonsNumberModifierValue("+20%", false, percentagePositive(0.2, 0.2)),
+                                    HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+15%", false, percentagePositive(0.15, 0.15)),
+                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("-5%", false, percentageNegative(0.05, 0.05)),
+                                    HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+200%", false, percentagePositive(2.0, 2.0)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+400%", true, percentagePositive(4.0, 4.0)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+733.3%", true, percentagePositive(0.0, 2200.0 / 300.0))
+                            ),
+                            List.of(
+                            ),
+                            true
+                    )
             )
+
+
     );
 }

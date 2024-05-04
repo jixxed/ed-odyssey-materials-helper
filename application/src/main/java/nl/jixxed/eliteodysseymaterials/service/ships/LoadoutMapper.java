@@ -44,7 +44,7 @@ public class LoadoutMapper {
                     final ShipModule matchingModule = module.getEngineering().map(engineering -> {
                         if (!potentialShipModules.isEmpty()) {
                             if (isPreEngineered(potentialShipModules, engineering)) {
-                                return potentialShipModules.stream().filter(ShipModule::isPreEngineered).findFirst().orElseThrow(IllegalArgumentException::new);
+                                return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering)).findFirst().orElseThrow(IllegalArgumentException::new);
                             } else {
                                 return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
                             }
@@ -102,6 +102,10 @@ public class LoadoutMapper {
             }
         });
         return ship;
+    }
+
+    private static boolean matchingEngineering(ShipModule shipModule, Engineering engineering) {
+        return isPreEngineered(List.of(shipModule), engineering);
     }
 
     private static HorizonsBlueprintType determineExperimentalEffect(Engineering engineering) {

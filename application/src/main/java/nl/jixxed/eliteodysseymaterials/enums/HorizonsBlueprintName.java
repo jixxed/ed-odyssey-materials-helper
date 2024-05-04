@@ -43,6 +43,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     SUB_SURFACE_EXTRACTION_MISSILE(BlueprintGroup.SUB_SURFACE_DISPLACEMENT_MISSILES, BlueprintCategory.HARDPOINT, false),
     MINING_LASER(BlueprintGroup.MINING_LASERS, BlueprintCategory.HARDPOINT),
     MINING_LASER_PRE(BlueprintGroup.MINING_LASERS, BlueprintCategory.HARDPOINT, false),
+    MINING_LASER_PRE_ARX(BlueprintGroup.MINING_LASERS, BlueprintCategory.HARDPOINT, false),
     LANCE_BEAM_MINING_LASER(BlueprintGroup.MINING_LASERS, BlueprintCategory.HARDPOINT, false),
     SEISMIC_CHARGE_LAUNCHER(BlueprintGroup.SEISMIC_CHARGE_LAUNCHERS, BlueprintCategory.HARDPOINT),
     BEAM_LASER(BlueprintGroup.BEAM_LASERS, BlueprintCategory.HARDPOINT),

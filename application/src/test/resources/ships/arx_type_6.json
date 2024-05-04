@@ -1,0 +1,332 @@
+{
+  "timestamp": "2024-05-04T20:15:00Z",
+  "event": "Loadout",
+  "Ship": "type6",
+  "ShipID": 27,
+  "ShipName": "",
+  "ShipIdent": "ABC-01",
+  "HullHealth": 1.0,
+  "UnladenMass": 205.699997,
+  "CargoCapacity": 80,
+  "MaxJumpRange": 27.747223,
+  "FuelCapacity": {
+    "Main": 16.0,
+    "Reserve": 0.39
+  },
+  "Rebuy": 0,
+  "Modules": [
+    {
+      "Slot": "SmallHardpoint1",
+      "Item": "hpt_mininglaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0,
+      "Engineering": {
+        "Engineer": "Selene Jean",
+        "EngineerID": 300210,
+        "BlueprintID": 128673614,
+        "BlueprintName": "Weapon_LongRange",
+        "Level": 5,
+        "Quality": 0.0,
+        "ExperimentalEffect": "special_incendiary_rounds",
+        "ExperimentalEffect_Localised": "Incendiary Rounds",
+        "Modifiers": [
+          {
+            "Label": "Mass",
+            "Value": 2.4,
+            "OriginalValue": 2.0,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "PowerDraw",
+            "Value": 0.575,
+            "OriginalValue": 0.5,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "DamagePerSecond",
+            "Value": 1.9,
+            "OriginalValue": 2.0,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "ThermalLoad",
+            "Value": 6.0,
+            "OriginalValue": 2.0,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "MaximumRange",
+            "Value": 2500.0,
+            "OriginalValue": 500.0,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "DamageType",
+            "ValueStr": "$Thermic;",
+            "ValueStr_Localised": "Thermal"
+          },
+          {
+            "Label": "DamageFalloffRange",
+            "Value": 2500.0,
+            "OriginalValue": 300.0,
+            "LessIsGood": 0
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "SmallHardpoint2",
+      "Item": "hpt_mininglaser_fixed_small",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0,
+      "Engineering": {
+        "Engineer": "Selene Jean",
+        "EngineerID": 300210,
+        "BlueprintID": 128673614,
+        "BlueprintName": "Weapon_LongRange",
+        "Level": 5,
+        "Quality": 0.0,
+        "ExperimentalEffect": "special_incendiary_rounds",
+        "ExperimentalEffect_Localised": "Incendiary Rounds",
+        "Modifiers": [
+          {
+            "Label": "Mass",
+            "Value": 2.4,
+            "OriginalValue": 2.0,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "PowerDraw",
+            "Value": 0.575,
+            "OriginalValue": 0.5,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "DamagePerSecond",
+            "Value": 1.9,
+            "OriginalValue": 2.0,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "ThermalLoad",
+            "Value": 6.0,
+            "OriginalValue": 2.0,
+            "LessIsGood": 1
+          },
+          {
+            "Label": "MaximumRange",
+            "Value": 2500.0,
+            "OriginalValue": 500.0,
+            "LessIsGood": 0
+          },
+          {
+            "Label": "DamageType",
+            "ValueStr": "$Thermic;",
+            "ValueStr_Localised": "Thermal"
+          },
+          {
+            "Label": "DamageFalloffRange",
+            "Value": 2500.0,
+            "OriginalValue": 300.0,
+            "LessIsGood": 0
+          }
+        ]
+      }
+    },
+    {
+      "Slot": "TinyHardpoint1",
+      "Item": "hpt_mrascanner_size0_class3",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "TinyHardpoint2",
+      "Item": "hpt_chafflauncher_tiny",
+      "On": true,
+      "Priority": 2,
+      "AmmoInClip": 1,
+      "AmmoInHopper": 10,
+      "Health": 1.0
+    },
+    {
+      "Slot": "TinyHardpoint3",
+      "Item": "hpt_plasmapointdefence_turret_tiny",
+      "On": true,
+      "Priority": 2,
+      "AmmoInClip": 12,
+      "AmmoInHopper": 10000,
+      "Health": 1.0
+    },
+    {
+      "Slot": "PaintJob",
+      "Item": "paintjob_type6_salvage_03",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Armour",
+      "Item": "type6_armour_grade1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "PowerPlant",
+      "Item": "int_powerplant_size3_class5",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "MainEngines",
+      "Item": "int_engine_size4_class3",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "FrameShiftDrive",
+      "Item": "int_hyperdrive_size4_class5",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "LifeSupport",
+      "Item": "int_lifesupport_size2_class2",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "PowerDistributor",
+      "Item": "int_powerdistributor_size3_class5",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Radar",
+      "Item": "int_sensors_size2_class2",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "FuelTank",
+      "Item": "int_fueltank_size4_class3",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot01_Size5",
+      "Item": "int_cargorack_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot02_Size5",
+      "Item": "int_cargorack_size5_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot03_Size4",
+      "Item": "int_cargorack_size4_class1",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot04_Size4",
+      "Item": "int_shieldgenerator_size4_class3_fast",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot05_Size3",
+      "Item": "int_refinery_size3_class5",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot06_Size2",
+      "Item": "int_detailedsurfacescanner_tiny",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot07_Size2",
+      "Item": "int_dronecontrol_collection_size1_class5",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "Slot08_Size1",
+      "Item": "int_dronecontrol_prospector_size1_class5",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    },
+    {
+      "Slot": "PlanetaryApproachSuite",
+      "Item": "int_planetapproachsuite_advanced",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "ShipKitSpoiler",
+      "Item": "type6_shipkit1_spoiler2",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "ShipKitWings",
+      "Item": "type6_shipkit1_wings2",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "ShipKitBumper",
+      "Item": "type6_shipkit1_bumper2",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "VesselVoice",
+      "Item": "voicepack_verity",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "ShipCockpit",
+      "Item": "type6_cockpit",
+      "On": true,
+      "Priority": 1,
+      "Health": 1.0
+    },
+    {
+      "Slot": "CargoHatch",
+      "Item": "modularcargobaydoor",
+      "On": true,
+      "Priority": 2,
+      "Health": 1.0
+    }
+  ]
+}

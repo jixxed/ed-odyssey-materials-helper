@@ -11,6 +11,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.FrameShiftDrive;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.GuardianGaussCannon;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.MiningLaser;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.DetailedSurfaceScanner;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.SinkLauncher;
@@ -146,6 +147,7 @@ class LoadoutMapperTest {
                 Arguments.of("powerplant_pre_4.json",SlotType.CORE_POWER_PLANT),
                 Arguments.of("powerplant_pre_5.json",SlotType.CORE_POWER_PLANT),
                 Arguments.of("ax_missile_rack_3_pre.json",SlotType.HARDPOINT),
+                Arguments.of("mining_laser.json",SlotType.HARDPOINT),
                 Arguments.of("heatsink_pre.json",SlotType.UTILITY)
         );
     }
@@ -473,6 +475,40 @@ class LoadoutMapperTest {
                 }
                              """, Engineering.class);
         final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I, DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE), engineering);
+        Assertions.assertFalse(preEngineered);
+    }
+
+    @Test
+    void testIsGaussZoneReistanceEngineered() throws JsonProcessingException {
+        Engineering engineering = new ObjectMapper().readValue("""
+                {
+                    "Engineer": "Ram Tah",
+                    "EngineerID": 300110,
+                    "BlueprintID": 129030458,
+                    "BlueprintName": "GuardianWeapon_Sturdy",
+                    "Level": 1,
+                    "Quality": 0.0,
+                    "Modifiers": [
+                        {
+                            "Label": "DamagePerSecond",
+                            "Value": 21.204821,
+                            "OriginalValue": 26.506025,
+                            "LessIsGood": 0
+                        },
+                        {
+                            "Label": "Damage",
+                            "Value": 17.6,
+                            "OriginalValue": 22.0,
+                            "LessIsGood": 0
+                        },
+                        {
+                            "Label": "GuardianModuleResistance",
+                            "ValueStr": "$INT_PANEL_module_active;",
+                            "ValueStr_Localised": "Active"
+                        }
+                    ]
+                }""", Engineering.class);
+        final boolean preEngineered = LoadoutMapper.isPreEngineered(List.of(GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F, GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE), engineering);
         Assertions.assertFalse(preEngineered);
     }
     private final ObjectMapper objectMapper = new ObjectMapper();
