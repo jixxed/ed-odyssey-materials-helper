@@ -7,9 +7,14 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Upgrade to java 22.0.1
-Added digital signing to MSI installer (hopefully to reduce AV false positives)
-Automatic uplaod to virustotal on release (hopefully to reduce AV false positives)
-
-Fixed shipbuilder UI getting stuck when equipping Guardian Plasma Charger (or any other weapon without precalculated DPS)
-Added Ray Gateway material trader
-Added configuration option to select the screen for displaying notifications
+Added store exclusive mining lasers
+Handle detection of pre-engineered modules when multiple exist
+Added Python Mk II placeholder ship (Still needs stats update and image)
+Added SCO FSD's (some internal fuel related stats assumed the same as regular for now)
+Fixed some module prices
+Added passive power group
+Added 20/40/50% power lines
+Shows Power total per group on hover over power bar
+Set experimental weapon stabiliser to 0MW power usage since that is what is actually used ingame
+Update Zerreiss Station trader from Raw to Encoded
+Increased max memory usage of the application  1GB -> 1.25GB

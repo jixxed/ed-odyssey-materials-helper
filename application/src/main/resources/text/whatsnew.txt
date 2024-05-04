@@ -1,3 +1,17 @@
+Version 2.59
+-------------
+Added store exclusive mining lasers
+Handle detection of pre-engineered modules when multiple exist
+Added Python Mk II placeholder ship (Still needs stats update and image)
+Added SCO FSD's (some internal fuel related stats assumed the same as regular for now)
+Fixed some module prices
+Added passive power group
+Added 20/40/50% power lines
+Shows Power total per group on hover over power bar
+Set experimental weapon stabiliser to 0MW power usage since that is what is actually used ingame
+Update Zerreiss Station trader from Raw to Encoded
+Increased max memory usage of the application  1GB -> 1.25GB
+
 Version 2.58
 -------------
 Upgrade to java 22.0.1
