@@ -1,3 +1,8 @@
+Version 2.60
+-------------
+Improved detection of unknown modules
+Fixes some AX weapon damage ratios
+
 Version 2.59
 -------------
 Added store exclusive mining lasers
