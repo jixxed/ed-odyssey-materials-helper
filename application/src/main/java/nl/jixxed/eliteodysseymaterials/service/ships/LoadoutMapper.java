@@ -15,6 +15,7 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.math.BigDecimal;
@@ -37,7 +38,7 @@ public class LoadoutMapper {
     private static final Set<String> CORE_SLOT_NAMES = Set.of("Armour", "PowerPlant", "MainEngines", "FrameShiftDrive", "LifeSupport", "PowerDistributor", "Radar", "FuelTank");
     private static final Set<String> MILITARY_SLOT_NAMES = Set.of("Military");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
-    private static final double EPSILON = 0.00001;
+    private static final double EPSILON = 0.0001;
 
 
     private static final List<ShipModule> WANTED_MODULES = List.of(
@@ -82,15 +83,7 @@ public class LoadoutMapper {
                             if (isPreEngineered(potentialShipModules, engineering)) {
                                 return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering)).findFirst().orElseThrow(IllegalArgumentException::new);
                             } else {
-                                final ShipModule shipModule = potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
-                                try {
-                                    if (!isLegacy(shipModule, engineering)) {
-                                        ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Can't map engineered module: " + module.getItem());
-                                    }
-                                } catch (Exception e) {
-                                    log.error("failed to send module error", e);
-                                }
-                                return shipModule;
+                                return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
                             }
                         }
                         try {
@@ -144,6 +137,7 @@ public class LoadoutMapper {
                                         }
                                 ));
                     });
+                    testModuleValues(shipModule, module);
                     module.getValue().ifPresent(value -> shipModule.setBuyPrice(value.longValue()));
                     shipModule.setPowerGroup(module.getPriority().intValue() + 1);
                     if (Boolean.FALSE.equals(module.getOn())) {
@@ -158,6 +152,34 @@ public class LoadoutMapper {
             }
         });
         return ship;
+    }
+
+    private static void testModuleValues(ShipModule shipModule, Module module) {
+        final ShipModule clone = shipModule.Clone();
+        clone.getModifiers().clear();
+        List<String> differences = new ArrayList<>();
+        boolean hasDifferences = shipModule.getAttibutes().stream().anyMatch((horizonsModifier) -> {
+            final Object cloneValue = clone.getAttributeValue(horizonsModifier);
+            final Object value = shipModule.getAttributeValue(horizonsModifier);
+            if (value instanceof Double) {
+                if (Math.abs((double) value - (double) cloneValue) > EPSILON) {
+                    log.warn("unexpected value");
+                    differences.add(horizonsModifier.name() + " value: " + value + " != expected:" + cloneValue);
+                    return true;
+                }
+            }
+            return false;
+        });
+        if(hasDifferences && module.getEngineering().map(engineering -> !isLegacy(shipModule, engineering)).orElse(false)){
+            try {
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Module with differences detected: " + module.getItem());
+                log.error("Sending: " + OBJECT_MAPPER.writeValueAsString(module));
+                differences.forEach(log::error);
+            } catch (Exception e) {
+                log.error("failed to send module error", e);
+            }
+        }
+
     }
 
     private static boolean matchingEngineering(ShipModule shipModule, Engineering engineering) {
