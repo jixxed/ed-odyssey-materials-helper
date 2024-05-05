@@ -5,6 +5,11 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
+import nl.jixxed.eliteodysseymaterials.domain.ships.utility.KillWarrantScanner;
+import nl.jixxed.eliteodysseymaterials.domain.ships.utility.PointDefence;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -21,22 +26,53 @@ import java.util.Set;
 @Slf4j
 public class LoadoutMapper {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     static {
         OBJECT_MAPPER.registerModule(new JavaTimeModule());
         OBJECT_MAPPER.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
     }
+
     private static final Set<String> HARDPOINT_SLOT_NAMES = Set.of("SmallHardpoint", "MediumHardpoint", "LargeHardpoint", "HugeHardpoint");
     private static final Set<String> UTILITY_SLOT_NAMES = Set.of("TinyHardpoint");
     private static final Set<String> CORE_SLOT_NAMES = Set.of("Armour", "PowerPlant", "MainEngines", "FrameShiftDrive", "LifeSupport", "PowerDistributor", "Radar", "FuelTank");
     private static final Set<String> MILITARY_SLOT_NAMES = Set.of("Military");
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
-    private final static double EPSILON = 0.00001;
+    private static final double EPSILON = 0.00001;
 
+
+    private static final List<ShipModule> WANTED_MODULES = List.of(
+            AXMissileRack.AX_MISSILE_RACK_2_E_F_PRE,
+            AXMultiCannon.AX_MULTI_CANNON_2_E_F_PRE,
+            AXMultiCannon.AX_MULTI_CANNON_3_C_F_PRE,
+            EnzymeMissileRack.ENZYME_MISSILE_RACK_2_B_F_PRE,
+            GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_1_D_F_PRE,
+            GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_2_B_F_PRE,
+            GuardianShardCannon.GUARDIAN_SHARD_CANNON_1_D_F_PRE,
+            GuardianShardCannon.GUARDIAN_SHARD_CANNON_2_A_F_PRE,
+            MiningLaser.MINING_LASER_1_D_F_PRE,
+            MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE,
+            MultiCannon.MULTI_CANNON_2_E_F_PRE,
+            RailGun.RAIL_GUN_2_B_F_PRE,
+            PowerPlant.POWER_PLANT_3_A_ARMOURED_OVERCHARGED,
+            ShieldGenerator.SHIELD_GENERATOR_3_A_PRE,
+            KillWarrantScanner.KILL_WARRANT_SCANNER_0_A_PRE,
+            PointDefence.POINT_DEFENCE_0_I_PRE
+    );
     public static Ship toShip(Loadout loadout) {
-        final ShipType shipType = ShipType.forInternalName(loadout.getShip()); // TODO - unknown ship
+        final ShipType shipType; // TODO - unknown ship
+        try {
+            shipType = ShipType.forInternalName(loadout.getShip());
+        } catch (IllegalArgumentException e) {
+            try {
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(loadout), "Can't map ship: " + loadout.getShip());
+            } catch (Exception ex) {
+                log.error("failed to send ship error", ex);
+            }
+            throw e;
+        }
         final Ship ship = ShipService.createBlankShip(shipType);
         loadout.getModules().forEach(module -> {
-            try{
+            try {
                 final String slotName = module.getSlot();
                 Slot slot = getShipSlot(ship, slotName);
                 if (slot != null) {
@@ -46,8 +82,21 @@ public class LoadoutMapper {
                             if (isPreEngineered(potentialShipModules, engineering)) {
                                 return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering)).findFirst().orElseThrow(IllegalArgumentException::new);
                             } else {
-                                return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+                                final ShipModule shipModule = potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(IllegalArgumentException::new);
+                                try {
+                                    if (!isLegacy(shipModule, engineering)) {
+                                        ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Can't map engineered module: " + module.getItem());
+                                    }
+                                } catch (Exception e) {
+                                    log.error("failed to send module error", e);
+                                }
+                                return shipModule;
                             }
+                        }
+                        try {
+                            ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "No potential modules found: " + module.getItem());
+                        } catch (Exception e) {
+                            log.error("failed to send module error", e);
                         }
 //                    log.debug("Slot: " + module.getSlot());
 //                    log.debug("Item: " + module.getItem());
@@ -58,15 +107,22 @@ public class LoadoutMapper {
                             return potentialShipModules.stream().filter(shipModule1 -> !shipModule1.isPreEngineered()).findFirst().orElseThrow(() -> new IllegalArgumentException(slotName + "|" + module));
                         } catch (IllegalArgumentException ex) {
                             try {
-                                ReportService.reportJournal(OBJECT_MAPPER.writeValueAsString(module), "Can't map module: " + module.getItem());
+                                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Can't map regular module: " + module.getItem());
                             } catch (Exception e) {
-                                log.error("failed to send journal error", e);
+                                log.error("failed to send module error", e);
                             }
                             return null;
                         }
                     });
                     if (matchingModule == null) {
                         return;
+                    }
+                    if(WANTED_MODULES.contains(matchingModule)){
+                        try {
+                            ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Wanted module: " + module.getItem());
+                        } catch (Exception e) {
+                            log.error("failed to send module error", e);
+                        }
                     }
                     final ShipModule shipModule = matchingModule.Clone();
                     module.getEngineering().ifPresent(engineering -> {
@@ -97,7 +153,7 @@ public class LoadoutMapper {
                     slot.setOldShipModule(shipModule.Clone());
 
                 }
-            }catch (IllegalArgumentException ex){
+            } catch (IllegalArgumentException ex) {
                 log.error("Failed to map module: " + module.getItem(), ex);
             }
         });
@@ -128,7 +184,7 @@ public class LoadoutMapper {
         HorizonsBlueprintType blueprint = determineBlueprint(engineering);
         HorizonsBlueprintGrade grade = determineGrade(engineering);
         BigDecimal progression = determineGradeProgress(engineering);
-        if(progression == null){
+        if (progression == null) {
             return false;
         }
         HorizonsBlueprintType experimentalEffect = determineExperimentalEffect(engineering);

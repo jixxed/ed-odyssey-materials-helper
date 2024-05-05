@@ -203,7 +203,7 @@ public class FileProcessor {
         } catch (final Exception e) {
             //report
             log.error("unknown journal event", e);
-            ReportService.reportJournal(message, e.getMessage());
+            ReportService.reportJournal("journal", message, e.getMessage());
         }
     }
 
