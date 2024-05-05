@@ -137,7 +137,7 @@ public class LoadoutMapper {
                                         }
                                 ));
                     });
-                    testModuleValues(shipModule, module);
+//                    testModuleValues(shipModule, module);
                     module.getValue().ifPresent(value -> shipModule.setBuyPrice(value.longValue()));
                     shipModule.setPowerGroup(module.getPriority().intValue() + 1);
                     if (Boolean.FALSE.equals(module.getOn())) {
@@ -172,7 +172,7 @@ public class LoadoutMapper {
         });
         if(hasDifferences && module.getEngineering().map(engineering -> !isLegacy(shipModule, engineering)).orElse(false)){
             try {
-                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Module with differences detected: " + module.getItem());
+                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Module with differences detected: " + module.getItem() + "\n" + String.join("\n", differences));
                 log.error("Sending: " + OBJECT_MAPPER.writeValueAsString(module));
                 differences.forEach(log::error);
             } catch (Exception e) {

@@ -1,3 +1,7 @@
+Version 2.62
+-------------
+Disable detection of unknown modules (not reliable)
+
 Version 2.61
 -------------
 Tweak detection of unknown modules
