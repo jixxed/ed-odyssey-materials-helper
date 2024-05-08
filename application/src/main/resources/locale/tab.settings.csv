@@ -77,13 +77,13 @@ tab.settings.blueprint.expanded.explain,Whether or not blueprints panels are exp
 tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval. Make sure you login with the same commander.,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval. Make sure you login with the same commander.,Ruft API Daten wie FleetCarrier Aktien und Bestellungen in einem Intervall von 5 Minuten ab. Make sure you login with the same commander.,Recupera datos de API como stock de flotante y pedidos en un intervalo de 5 minutos. Make sure you login with the same commander.,Récupère les données de l’API comme le stock et les commandes de FleetCarrier sur un intervalle de 5 minutes. Make sure you login with the same commander.,Recupera dados da API como estoque de FleetCarrier e pedidos em um intervalo de 5 minutos. Make sure you login with the same commander.,"Получает данные API, такие как запасы FleetCarrier и заказы в 5 -минутном интервале. Убедитесь, что вы логинитесь тем же коммандером."
 tab.settings.capi.connect,Connect CMDR {0},Connect CMDR {0},Verbinden CMDR {0},Conectar CMDR {0},Relier CMDR {0},Conectar CMDR {0},Соединить CMDR {0}
 tab.settings.capi.disconnect,Disconnect CMDR {0},Disconnect CMDR {0},Trennen CMDR {0},Desconectar CMDR {0},Débrancher CMDR {0},desconectar CMDR {0},Отсоединить CMDR {0}
-tab.settings.title.ships.horizons,Ships - Legacy modules,,,,,,
-tab.settings.ships.new.module,New module from,,,,,,
-tab.settings.ships.new.module.create,Create,,,,,,
-tab.settings.ships.legacy.modules,Legacy modules,,,,,,
-tab.settings.ships.legacy.modules.remove,Remove,,,,,,
-tab.settings.ships.legacy.modules.edit,Edit,,,,,,
-tab.settings.ships.legacy.modules.save,Save,,,,,,
+tab.settings.title.ships.horizons,Ships - Legacy modules,,,,,,Корабли - модули Legacy
+tab.settings.ships.new.module,New module from,,,,,,Новый модуль из
+tab.settings.ships.new.module.create,Create,,,,,,Создать
+tab.settings.ships.legacy.modules,Legacy modules,,,,,,Модули Legacy
+tab.settings.ships.legacy.modules.remove,Remove,,,,,,Удалить
+tab.settings.ships.legacy.modules.edit,Edit,,,,,,Редактировать
+tab.settings.ships.legacy.modules.save,Save,,,,,,Сохранить
 settings.button.import.clipboard,Import from clipboard,Import from clipboard,Importieren aus der Zwischenablage,Importar desde el portapapeles,Importer depuis le presse-papiers,Importar da área de transferência,Импортировать из буфера обмена
 settings.button.import.clipboard.explain,Import an edomh:// url from the clipboard. You can also use CTRL+V to paste the url.,Import an edomh:// url from the clipboard. You can also use CTRL+V to paste the url.,"Importieren Sie eine edomh:// URL aus der Zwischenablage. Sie können auch STRG+V verwenden, um die URL einzufügen.",Importe una URL edomh:// del portapapeles. También puede usar CTRL+V para pegar la URL.,Importez une URL edomh:// depuis le presse-papiers. Vous pouvez également utiliser CTRL+V pour coller l’URL.,Importe uma URL edomh:// da área de transferência. Você também pode usar CTRL+V para colar a URL.,"Импортируйте URL edomh:// из буфера обмена. Вы также можете использовать CTRL+V для вставки URL."
 settings.button.import.clipboard.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать
