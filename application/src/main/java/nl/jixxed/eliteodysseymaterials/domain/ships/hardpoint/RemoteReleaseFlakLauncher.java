@@ -1,10 +1,8 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint;
 
+import nl.jixxed.eliteodysseymaterials.domain.ships.Modification;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.Collections;
@@ -68,6 +66,10 @@ public class RemoteReleaseFlakLauncher extends HardpointModule {
     @Override
     public boolean isPreEngineered() {
         return HorizonsBlueprintName.FESTIVE_LAUNCHER.equals(this.getName());
+    }
+
+    public MatchType getPreEngineeredMatchType(){
+        return MatchType.BLUEPRINT;
     }
 
     @Override

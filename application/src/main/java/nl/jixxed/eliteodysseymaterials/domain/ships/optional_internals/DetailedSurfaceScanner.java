@@ -57,6 +57,7 @@ public class DetailedSurfaceScanner extends OptionalModule {
     public boolean isPreEngineered() {
         return DETAILED_SURFACE_SCANNER_1_I_V1_PRE.equals(this);
     }
+
     @Override
     public int getGrouping() {
         return 1;

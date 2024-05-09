@@ -1,0 +1,78 @@
+{
+  "Slot": "MediumHardpoint2",
+  "Item": "hpt_atdumbfiremissile_fixed_medium",
+  "On": true,
+  "Priority": 2,
+  "AmmoInClip": 16,
+  "AmmoInHopper": 128,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129015432,
+    "BlueprintName": "Weapon_HighCapacity",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 6.800000,
+        "OriginalValue": 4.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 1.440000,
+        "OriginalValue": 1.200000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 21.686430,
+        "OriginalValue": 15.650000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 30.361000,
+        "OriginalValue": 31.299999,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "DistributorDraw",
+        "Value": 0.112000,
+        "OriginalValue": 0.140000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 0.714286,
+        "OriginalValue": 0.500000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 16.000000,
+        "OriginalValue": 8.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 128.000000,
+        "OriginalValue": 64.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ReloadTime",
+        "Value": 2.750000,
+        "OriginalValue": 5.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Jitter",
+        "Value": 0.500000,
+        "OriginalValue": 0.000000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

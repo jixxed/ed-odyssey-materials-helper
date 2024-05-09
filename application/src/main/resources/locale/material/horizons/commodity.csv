@@ -431,7 +431,7 @@ material.commodity.thargoidpod,Thargoid Bio-storage Capsule,Thargoid Bio-storage
 material.commodity.coralsap,Coral Sap,Coral Sap,,,,,Коралловая смола
 material.commodity.unknownmineral,Impure Spire Mineral,,,,,,Неочищенный минерал со шпилей
 material.commodity.unknownrefinedmineral,Semi-Refined Spire Mineral,,,,,,Полуочищенный минерал со шпилей
-material.commodity.thargoidbonefragments,Bone Fragments,,,,,,
-material.commodity.thargoidcystspecimen,Cyst Specimen,,,,,,
-material.commodity.thargoidorgansample,Organ Sample,,,,,,
-material.commodity.thargoidtitandrivecomponent,Titan Drive Component,,,,,,
+material.commodity.thargoidbonefragments,Bone Fragments,,,,,,Фрагменты кости
+material.commodity.thargoidcystspecimen,Cyst Specimen,,,,,,Образец кисты
+material.commodity.thargoidorgansample,Organ Sample,,,,,,Образец органа
+material.commodity.thargoidtitandrivecomponent,Titan Drive Component,,,,,,Компонент двигателя титана

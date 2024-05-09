@@ -74,6 +74,7 @@ public class AXMissileRack extends HardpointModule {
     public boolean isPreEngineered() {
         return AX_MISSILE_RACK_2_E_F_PRE.equals(this) || AX_MISSILE_RACK_3_C_F_PRE.equals(this);
     }
+
     @Override
     public boolean isEnhanced() {
         return ENHANCED_AX_MISSILE_RACK_2_D_F.equals(this) || ENHANCED_AX_MISSILE_RACK_2_E_T.equals(this) || ENHANCED_AX_MISSILE_RACK_3_B_F.equals(this) || ENHANCED_AX_MISSILE_RACK_3_D_T.equals(this);

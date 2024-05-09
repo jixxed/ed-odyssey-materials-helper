@@ -25,12 +25,12 @@ public class MultiCannonPreEngineeredBlueprints {
                             Map.of(
                             ),
                             Map.of(
-                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+278%", true, percentagePositive(0.0, 2.75)),
-                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-20%", false, percentageNegative(0.0, 0.2)),
+                                    HorizonsModifier.DAMAGE_PER_SECOND, new HorizonsNumberModifierValue("+278%", true, percentagePositive(0.0, 2.7799)),
+                                    HorizonsModifier.DAMAGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-50%", false, percentageNegative(0.0, 0.5)),
                                     HorizonsModifier.RATE_OF_FIRE, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.4)),
                                     HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("+300%", true, percentagePositive(0.0, 3.0)),
-                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+204.8%", true, percentagePositive(0.0, 2.048)),
+                                    HorizonsModifier.AMMO_MAXIMUM, new HorizonsNumberModifierValue("+204.8%", true, percentagePositive(0.0, 6400.0 / 2100.0 - 1.0)),
                                     HorizonsModifier.ROUNDS_PER_SHOT, new HorizonsNumberModifierValue("+200%", true, percentagePositive(0.0, 2.0)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("3", false, plus(3.0)),
                                     HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.0, 0.1))

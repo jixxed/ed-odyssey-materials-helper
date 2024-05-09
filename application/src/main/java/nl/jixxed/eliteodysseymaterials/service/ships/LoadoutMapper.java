@@ -5,14 +5,10 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ships.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
-import nl.jixxed.eliteodysseymaterials.domain.ships.utility.KillWarrantScanner;
-import nl.jixxed.eliteodysseymaterials.domain.ships.utility.PointDefence;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.enums.MatchType;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
@@ -40,25 +36,6 @@ public class LoadoutMapper {
     private static final Set<String> OPTIONAL_SLOT_NAMES = Set.of("Slot");
     private static final double EPSILON = 0.0001;
 
-
-    private static final List<ShipModule> WANTED_MODULES = List.of(
-            AXMissileRack.AX_MISSILE_RACK_2_E_F_PRE,
-            AXMultiCannon.AX_MULTI_CANNON_2_E_F_PRE,
-            AXMultiCannon.AX_MULTI_CANNON_3_C_F_PRE,
-            EnzymeMissileRack.ENZYME_MISSILE_RACK_2_B_F_PRE,
-            GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_1_D_F_PRE,
-            GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_2_B_F_PRE,
-            GuardianShardCannon.GUARDIAN_SHARD_CANNON_1_D_F_PRE,
-            GuardianShardCannon.GUARDIAN_SHARD_CANNON_2_A_F_PRE,
-            MiningLaser.MINING_LASER_1_D_F_PRE,
-            MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE,
-            MultiCannon.MULTI_CANNON_2_E_F_PRE,
-            RailGun.RAIL_GUN_2_B_F_PRE,
-            PowerPlant.POWER_PLANT_3_A_ARMOURED_OVERCHARGED,
-            ShieldGenerator.SHIELD_GENERATOR_3_A_PRE,
-            KillWarrantScanner.KILL_WARRANT_SCANNER_0_A_PRE,
-            PointDefence.POINT_DEFENCE_0_I_PRE
-    );
     public static Ship toShip(Loadout loadout) {
         final ShipType shipType; // TODO - unknown ship
         try {
@@ -79,6 +56,7 @@ public class LoadoutMapper {
                 if (slot != null) {
                     final List<ShipModule> potentialShipModules = getPotentialShipModules(module.getItem(), slot.getSlotType());
                     final ShipModule matchingModule = module.getEngineering().map(engineering -> {
+                        reportIfDesired(module);
                         if (!potentialShipModules.isEmpty()) {
                             if (isPreEngineered(potentialShipModules, engineering)) {
                                 return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering)).findFirst().orElseThrow(IllegalArgumentException::new);
@@ -110,13 +88,6 @@ public class LoadoutMapper {
                     if (matchingModule == null) {
                         return;
                     }
-                    if(WANTED_MODULES.contains(matchingModule)){
-                        try {
-                            ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Wanted module: " + module.getItem());
-                        } catch (Exception e) {
-                            log.error("failed to send module error", e);
-                        }
-                    }
                     final ShipModule shipModule = matchingModule.Clone();
                     module.getEngineering().ifPresent(engineering -> {
                         boolean isLegacy = isLegacy(shipModule, engineering);
@@ -137,7 +108,7 @@ public class LoadoutMapper {
                                         }
                                 ));
                     });
-//                    testModuleValues(shipModule, module);
+
                     module.getValue().ifPresent(value -> shipModule.setBuyPrice(value.longValue()));
                     shipModule.setPowerGroup(module.getPriority().intValue() + 1);
                     if (Boolean.FALSE.equals(module.getOn())) {
@@ -152,6 +123,39 @@ public class LoadoutMapper {
             }
         });
         return ship;
+    }
+
+    private static void reportIfDesired(Module module) {
+        if (isKWS(module) || isRail(module) ||  isEnzyme(module)) {
+            report(module);
+        }
+    }
+
+
+    private static boolean isKWS(Module module) {
+        return module.getItem().equalsIgnoreCase("Hpt_CrimeScanner_Size0_Class5")
+                && module.getEngineering().isPresent()
+                && module.getEngineering().map(eng -> eng.getBlueprintName().equalsIgnoreCase("killwarrantscanner_fastscan")).orElse(false)
+                && module.getEngineering().map(eng -> eng.getModifiers().stream().anyMatch(mod -> mod.getLabel().equalsIgnoreCase("ScannerRange"))).orElse(false);
+    }
+    private static boolean isRail(Module module) {
+        return module.getItem().equalsIgnoreCase("Hpt_Railgun_Fixed_Medium")
+                && module.getEngineering().isPresent()
+                && module.getEngineering().map(eng -> eng.getBlueprintName().equalsIgnoreCase("weapon_highcapacity")).orElse(false)
+                && module.getEngineering().map(eng -> eng.getExperimentalEffect().orElse("").equalsIgnoreCase("special_feedback_cascade")).orElse(false)
+                && module.getEngineering().map(eng -> eng.getModifiers().stream().anyMatch(mod -> mod.getLabel().equalsIgnoreCase("DamageFalloffRange"))).orElse(false);
+    }
+    private static boolean isEnzyme(Module module) {
+        return module.getItem().equalsIgnoreCase("Hpt_CausticMissile_Fixed_Medium")
+                && module.getEngineering().isPresent();
+    }
+
+    private static void report(Module module) {
+        try {
+            ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), null);
+        } catch (Exception e) {
+            log.error("failed to send module error", e);
+        }
     }
 
     private static void testModuleValues(ShipModule shipModule, Module module) {
@@ -170,7 +174,7 @@ public class LoadoutMapper {
             }
             return false;
         });
-        if(hasDifferences && module.getEngineering().map(engineering -> !isLegacy(shipModule, engineering)).orElse(false)){
+        if (hasDifferences && module.getEngineering().map(engineering -> !isLegacy(shipModule, engineering)).orElse(false)) {
             try {
                 ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Module with differences detected: " + module.getItem() + "\n" + String.join("\n", differences));
                 log.error("Sending: " + OBJECT_MAPPER.writeValueAsString(module));
@@ -182,7 +186,11 @@ public class LoadoutMapper {
 
     }
 
-    private static boolean matchingEngineering(ShipModule shipModule, Engineering engineering) {
+    public static boolean matchingEngineering(ShipModule shipModule, Engineering engineering) {
+        if (shipModule.getPreEngineeredMatchType().equals(MatchType.BLUEPRINT)) {
+            return shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(HorizonsBlueprintType.forInternalName(engineering.getBlueprintName())))
+                    && engineering.getExperimentalEffect().map(experimentalEffect -> shipModule.getExperimentalEffects().stream().anyMatch(effect -> effect.equals(HorizonsBlueprintType.forInternalName(experimentalEffect)))).orElse(true);
+        }
         return isPreEngineered(List.of(shipModule), engineering);
     }
 
@@ -223,7 +231,7 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-//                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
+                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                             return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {

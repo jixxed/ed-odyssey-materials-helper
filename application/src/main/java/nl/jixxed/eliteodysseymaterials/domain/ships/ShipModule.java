@@ -16,10 +16,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military.
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.*;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.ships.PriceService;
 
@@ -537,6 +534,10 @@ public abstract class ShipModule implements Serializable {
 
     public boolean isHiddenStat(HorizonsModifier modifier){
         return false;
+    }
+
+    public MatchType getPreEngineeredMatchType(){
+        return MatchType.STATS;
     }
 
     @Override

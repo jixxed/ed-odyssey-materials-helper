@@ -1,0 +1,56 @@
+{
+  "Slot": "LargeHardpoint1",
+  "Item": "hpt_guardian_plasmalauncher_fixed_medium",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 20,
+  "AmmoInHopper": 200,
+  "Health": 1.000000,
+  "Value": 33345,
+  "Engineering": {
+    "Engineer": "Tod 'The Blaster' McQuinn",
+    "EngineerID": 300260,
+    "BlueprintID": 128990143,
+    "BlueprintName": "Weapon_Overcharged",
+    "Level": 1,
+    "Quality": 0.956900,
+    "Modifiers": [
+      {
+        "Label": "PowerDraw",
+        "Value": 2.819907,
+        "OriginalValue": 2.130000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Damage",
+        "Value": 4.565000,
+        "OriginalValue": 2.750000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 7.815000,
+        "OriginalValue": 5.210000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ArmourPenetration",
+        "Value": 110.000000,
+        "OriginalValue": 80.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ShotSpeed",
+        "Value": 6000.000488,
+        "OriginalValue": 1200.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 20.000000,
+        "OriginalValue": 15.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}
