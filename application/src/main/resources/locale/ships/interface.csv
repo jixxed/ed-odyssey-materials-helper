@@ -25,7 +25,7 @@ ship.stats.power.deployed.power,Deployed,,,,,,Выпущено
 ship.stats.power.retracted.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт
 ship.stats.power.deployed.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт
 ship.stats.jumprange,Jump range,,,,,,Дальность прыжка
-ship.stats.jumprange.value,{0} Ly,,,,,,{0} Св.Г.
+ship.stats.jumprange.value,{0} Ly,,,,,,{0} Св.л.
 ship.stats.jumprange.min,Minimum range,,,,,,Минимальна дальность
 ship.stats.jumprange.current,Current range,,,,,,Текущая дальность
 ship.stats.jumprange.maxfueled,Maximum range (full fuel),,,,,,Максимальная дальность (полный бак)
