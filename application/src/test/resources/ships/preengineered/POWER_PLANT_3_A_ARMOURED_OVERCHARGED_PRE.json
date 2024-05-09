@@ -1,0 +1,42 @@
+{
+  "Slot": "PowerPlant",
+  "Item": "int_powerplant_size3_class5",
+  "On": true,
+  "Priority": 1,
+  "Health": 1.0,
+  "Value": 421561,
+  "Engineering": {
+    "EngineerID": 300090,
+    "BlueprintID": 128673764,
+    "BlueprintName": "PowerPlant_Armoured",
+    "Level": 5,
+    "Quality": 1.0,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 3.0,
+        "OriginalValue": 2.5,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 136.5,
+        "OriginalValue": 70.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerCapacity",
+        "Value": 18.24,
+        "OriginalValue": 12.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "HeatEfficiency",
+        "Value": 0.452,
+        "OriginalValue": 0.4,
+        "LessIsGood": 1
+      }
+    ],
+    "Engineer": "Hera Tani"
+  }
+}

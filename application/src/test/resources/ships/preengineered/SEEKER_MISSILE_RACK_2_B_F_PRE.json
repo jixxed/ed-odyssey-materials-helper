@@ -1,0 +1,69 @@
+{
+  "Slot": "MediumHardpoint1",
+  "Item": "hpt_basicmissilerack_fixed_medium",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 12,
+  "AmmoInHopper": 36,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 300080,
+    "BlueprintID": 128673479,
+    "BlueprintName": "Weapon_HighCapacity",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 0.400000,
+        "OriginalValue": 4.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 20.400000,
+        "OriginalValue": 51.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 0.960000,
+        "OriginalValue": 1.200000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 14.814816,
+        "OriginalValue": 13.333334,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "DistributorDraw",
+        "Value": 0.144000,
+        "OriginalValue": 0.240000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 0.370370,
+        "OriginalValue": 0.333333,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 12.000000,
+        "OriginalValue": 6.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 36.000000,
+        "OriginalValue": 18.000000,
+        "LessIsGood": 0
+      }
+    ],
+    "Engineer": "Liz Ryder",
+    "ExperimentalEffect": "special_thermal_cascade",
+    "ExperimentalEffect_Localised": "Thermal Cascade"
+  }
+}

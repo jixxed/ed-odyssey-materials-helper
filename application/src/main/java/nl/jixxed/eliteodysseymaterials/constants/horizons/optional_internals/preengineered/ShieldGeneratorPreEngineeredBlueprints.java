@@ -13,7 +13,8 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import java.util.List;
 import java.util.Map;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.resistancePositive;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ShieldGeneratorPreEngineeredBlueprints {
@@ -27,8 +28,8 @@ public class ShieldGeneratorPreEngineeredBlueprints {
                             Map.of(
                                     HorizonsModifier.INTEGRITY, new HorizonsNumberModifierValue("+20%", true, percentagePositive(0.0, 0.2)),
                                     HorizonsModifier.POWER_DRAW, new HorizonsNumberModifierValue("+40%", false, percentagePositive(0.0, 0.4)),
-                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+18%", true, resistancePositive(0.0, 0.18)),
-                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+42%", true, resistanceNegative(0.0, 0.42))
+                                    HorizonsModifier.KINETIC_RESISTANCE, new HorizonsNumberModifierValue("+30%", true, resistancePositive(0.0, 0.30)),
+                                    HorizonsModifier.THERMAL_RESISTANCE, new HorizonsNumberModifierValue("+35%", true, resistancePositive(0.0, 0.35))
                             ),
                             List.of(
                             ),

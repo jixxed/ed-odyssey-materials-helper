@@ -54,6 +54,7 @@ public class EnzymeMissileRack extends HardpointModule {
     public boolean isPreEngineered() {
         return ENZYME_MISSILE_RACK_2_B_F_PRE.equals(this);
     }
+
     @Override
     public boolean isCGExclusive() {
         return isPreEngineered();

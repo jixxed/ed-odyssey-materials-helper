@@ -1,0 +1,72 @@
+{
+  "Slot": "SmallHardpoint1",
+  "Item": "hpt_guardian_shardcannon_fixed_small",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 5,
+  "AmmoInHopper": 180,
+  "Health": 1.0,
+  "Engineering": {
+    "EngineerID": 300001,
+    "BlueprintID": 128988382,
+    "BlueprintName": "weapon_longrange",
+    "Level": 1,
+    "Quality": 0.0,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 3.0,
+        "OriginalValue": 2.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 2.001,
+        "OriginalValue": 0.87,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DistributorDraw",
+        "Value": 2.216308,
+        "OriginalValue": 0.42,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 11.385,
+        "OriginalValue": 0.69,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ArmourPenetration",
+        "Value": 60.599998,
+        "OriginalValue": 30.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "MaximumRange",
+        "Value": 2999.998291,
+        "OriginalValue": 1700.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ShotSpeed",
+        "Value": 6299.208984,
+        "OriginalValue": 1133.333374,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Jitter",
+        "Value": 1.5,
+        "OriginalValue": 5.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamageFalloffRange",
+        "Value": 1499.999146,
+        "OriginalValue": 1700.0,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

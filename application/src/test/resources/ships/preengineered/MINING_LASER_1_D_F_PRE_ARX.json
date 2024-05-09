@@ -1,0 +1,60 @@
+{
+  "Slot": "SmallHardpoint1",
+  "Item": "hpt_mininglaser_fixed_small",
+  "On": true,
+  "Priority": 2,
+  "Health": 1.000000,
+  "Engineering": {
+    "Engineer": "Selene Jean",
+    "EngineerID": 300210,
+    "BlueprintID": 128673614,
+    "BlueprintName": "Weapon_LongRange",
+    "Level": 5,
+    "Quality": 0.000000,
+    "ExperimentalEffect": "special_incendiary_rounds",
+    "ExperimentalEffect_Localised": "Incendiary Rounds",
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 2.400000,
+        "OriginalValue": 2.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 0.575000,
+        "OriginalValue": 0.500000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 1.900000,
+        "OriginalValue": 2.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 6.000000,
+        "OriginalValue": 2.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "MaximumRange",
+        "Value": 2500.000000,
+        "OriginalValue": 500.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "DamageType",
+        "ValueStr": "$Thermic;",
+        "ValueStr_Localised": "Thermal"
+      },
+      {
+        "Label": "DamageFalloffRange",
+        "Value": 2500.000000,
+        "OriginalValue": 300.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

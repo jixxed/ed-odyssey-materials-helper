@@ -32,10 +32,10 @@ public class GuardianShardCannonPreEngineeredBlueprints {
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("+427.7%", false, percentagePositive(0.0, 4.277)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+1550%", false, percentagePositive(0.0, 15.50)),
                                     HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+102%", true, percentagePositive(0.0, 1.02)),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+76.5%", true, percentagePositive(0.0, 0.765)),
-                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+455.8%", true, percentagePositive(0.0, 4.558)),
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+76.5%", true, percentagePositive(0.0, 2999.998291 / 1700.0 - 1.0)),
+                                    HorizonsModifier.SHOT_SPEED, new HorizonsNumberModifierValue("+455.8%", true, percentagePositive(0.0, 6299.208984 / 1133.333374 - 1.0)),
                                     HorizonsModifier.JITTER, new HorizonsNumberModifierValue("-3.5°", true, minus(3.5)),
-                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("-11.8%", false, percentageNegative(0.0, 0.118))
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("-11.8%", false, percentageNegative(0.0, 1499.999146 / 1700.0 - 1.0))
                             ),
                             List.of(
                             ),

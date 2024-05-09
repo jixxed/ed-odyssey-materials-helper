@@ -2,6 +2,8 @@ package nl.jixxed.eliteodysseymaterials.domain;
 
 import io.reactivex.rxjava3.functions.BiFunction;
 
+import java.math.BigDecimal;
+
 public class HorizonsBiFunction<T> {
     private boolean bool;
     private double value;
@@ -45,7 +47,7 @@ public class HorizonsBiFunction<T> {
             case RESISTANCE_POSITIVE ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> 1 - ((1 - base) * ((1D - start) - (Math.abs(end - start) * percent)));
             case PERCENTAGE_POSITIVE ->
-                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> base * ((1D + start) + (Math.abs(end - start) * percent));
+                    (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> BigDecimal.valueOf(base).multiply(BigDecimal.valueOf(1D + start).add(BigDecimal.valueOf(Math.abs(end - start)).multiply(BigDecimal.valueOf(percent)))).doubleValue();
             case PERCENTAGE_NEGATIVE ->
                     (BiFunction<T, Double, T>) (BiFunction<Double, Double, Double>) (base, percent) -> base * ((1D - start) - (Math.abs(end - start) * percent));
             case PLUS ->

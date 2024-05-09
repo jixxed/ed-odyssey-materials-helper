@@ -1,0 +1,30 @@
+{
+  "Slot": "TinyHardpoint2",
+  "Item": "hpt_heatsinklauncher_turret_tiny",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 1,
+  "AmmoInHopper": 3,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129012673,
+    "BlueprintName": "Misc_HeatSinkCapacity",
+    "Level": 1,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "AmmoMaximum",
+        "Value": 4.000000,
+        "OriginalValue": 2.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ReloadTime",
+        "Value": 17.500000,
+        "OriginalValue": 10.000000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

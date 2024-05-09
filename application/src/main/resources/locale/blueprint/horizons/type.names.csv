@@ -168,25 +168,25 @@ blueprint.horizons.type.thargoid_pulse_neutraliser,TG Pulse Neutraliser,TG Pulse
 blueprint.horizons.type.e2_azimuth_enhanced_ax_multicannon,E2 Azimuth Enhanced AX Multi-cannon,E2 Azimuth Enhanced AX Multi-cannon,,,,,E2 Улучшенное многоствольное АИ-орудие Azimuth
 blueprint.horizons.type.c3_azimuth_enhanced_ax_multicannon,C3 Azimuth Enhanced AX Multi-cannon,C3 Azimuth Enhanced AX Multi-cannon,,,,,C3 Улучшенное многоствольное АИ-орудие Azimuth
 blueprint.horizons.type.expanded_probe_scanning_radius_x2,Expanded Probe Scanning Radius x2,Expanded Probe Scanning Radius x2,Erweiterter Sonden-Scanradius x2,Radio de escaneo de sonda expandida x2,Rayon de balayage de sonde élargi x2,Raio de varredura de sonda expandido x2,Увеличение радиуса сканирования зондов x2
-blueprint.horizons.type.ammo_capacity_x2,"Ammo Capacity X 2","Ammo Capacity X 2",,,,,
-blueprint.horizons.type.armoured_overcharged,"Armoured, Overcharged","Armoured, Overcharged",,,,,
-blueprint.horizons.type.decorative_green,"Decorative Green","Decorative Green",,,,,
-blueprint.horizons.type.decorative_red,"Decorative Red","Decorative Red",,,,,
-blueprint.horizons.type.decorative_yellow,"Decorative Yellow","Decorative Yellow",,,,,
-blueprint.horizons.type.fast_scanner_long_range_scanner,"Fast Scanner, Long Range Scanner","Fast Scanner, Long Range Scanner",,,,,
-blueprint.horizons.type.high_capacity_magazine_increased_damage,"High Capacity, Increased Damage","High Capacity, Increased Damage",,,,,
-blueprint.horizons.type.high_capacity_magazine_rapid_fire_modification,"High Capacity, Rapid Fire","High Capacity, Rapid Fire",,,,,
-blueprint.horizons.type.high_capacity_magazine_thermal_cascade,"High Capacity, Thermal Cascade","High Capacity, Thermal Cascade",,,,,
-blueprint.horizons.type.increased_fsd_range_faster_fsd_boot_sequence,"Increased Range, Faster Boot","Increased Range, Faster Boot",,,,,
-blueprint.horizons.type.lightweight_focused,"Lightweight, Focused","Lightweight, Focused",,,,,
-blueprint.horizons.type.long_range_weapon_focused_weapon_penetrator_munitions,"Long Range, Focused, Penetrator Munitions","Long Range, Focused, Penetrator Munitions",,,,,
-blueprint.horizons.type.long_range_weapon_high_capacity_magazine_feedback_cascade,"Long Range, High Capacity, Feedback Cascade","Long Range, High Capacity, Feedback Cascade",,,,,
-blueprint.horizons.type.long_range_weapon_incendiary_rounds,"Long Range, Incendiary Rounds","Long Range, Incendiary Rounds",,,,,
-blueprint.horizons.type.long_range_weapon_incendiary_rounds_arx,"Long Range, Incendiary Rounds","Long Range, Incendiary Rounds",,,,,
-blueprint.horizons.type.overcharged_overcharged,"Extra Overcharged","Extra Overcharged",,,,,
-blueprint.horizons.type.overcharged_weapon_auto_loader,"Overcharged, Auto Loader","Overcharged, Auto Loader",,,,,
-blueprint.horizons.type.overcharged_weapon_focused_weapon,"Overcharged Weapon, Focused Weapon","Overcharged Weapon, Focused Weapon",,,,,
-blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,,,,
-blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"Thermal Resistant, Kinetic Resistant","Thermal Resistant, Kinetic Resistant",,,,,
-blueprint.horizons.type.none,None,None,,,,,
-blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,,,,
+blueprint.horizons.type.ammo_capacity_x2,"Ammo Capacity X 2","Ammo Capacity X 2",,,,,Количество боезапаса
+blueprint.horizons.type.armoured_overcharged,"Armoured, Overcharged","Armoured, Overcharged",,,,,"Бронированная, Усиленная"
+blueprint.horizons.type.decorative_green,"Decorative Green","Decorative Green",,,,,"Декоративный зеленый"
+blueprint.horizons.type.decorative_red,"Decorative Red","Decorative Red",,,,,"Декоративный красный"
+blueprint.horizons.type.decorative_yellow,"Decorative Yellow","Decorative Yellow",,,,,"Декоративный желтый"
+blueprint.horizons.type.fast_scanner_long_range_scanner,"Fast Scanner, Long Range Scanner","Fast Scanner, Long Range Scanner",,,,,"Быстрый сканер, Сканер дальнего действия"
+blueprint.horizons.type.high_capacity_magazine_increased_damage,"High Capacity, Increased Damage","High Capacity, Increased Damage",,,,,"Вместительный магазин, Увеличенный урон"
+blueprint.horizons.type.high_capacity_magazine_rapid_fire_modification,"High Capacity, Rapid Fire","High Capacity, Rapid Fire",,,,,"Вместительный магазин, Увеличенная скорострельность"
+blueprint.horizons.type.high_capacity_magazine_thermal_cascade,"High Capacity, Thermal Cascade","High Capacity, Thermal Cascade",,,,,"Вместительный магазин, Термический залп"
+blueprint.horizons.type.increased_fsd_range_faster_fsd_boot_sequence,"Increased Range, Faster Boot","Increased Range, Faster Boot",,,,,"Увеличенная дальность, Быстрая загрузка"
+blueprint.horizons.type.lightweight_focused,"Lightweight, Focused","Lightweight, Focused",,,,,"Облегченное, Точное"
+blueprint.horizons.type.long_range_weapon_focused_weapon_penetrator_munitions,"Long Range, Focused, Penetrator Munitions","Long Range, Focused, Penetrator Munitions",,,,,"Дальнобойное, Точность, Бронебойные снаряды"
+blueprint.horizons.type.long_range_weapon_high_capacity_magazine_feedback_cascade,"Long Range, High Capacity, Feedback Cascade","Long Range, High Capacity, Feedback Cascade",,,,,"Дальнобойное, Вместительный магазин, Ответный залп"
+blueprint.horizons.type.long_range_weapon_incendiary_rounds,"Long Range, Incendiary Rounds","Long Range, Incendiary Rounds",,,,,"Дальнобойное, Зажигательные снаряды"
+blueprint.horizons.type.long_range_weapon_incendiary_rounds_arx,"Long Range, Incendiary Rounds","Long Range, Incendiary Rounds",,,,,"Дальнобойное, Зажигательные снаряды"
+blueprint.horizons.type.overcharged_overcharged,"Extra Overcharged","Extra Overcharged",,,,,"Сверх-Усиленная"
+blueprint.horizons.type.overcharged_weapon_auto_loader,"Overcharged, Auto Loader","Overcharged, Auto Loader",,,,,"Усиленное, Автоматическая перезарядка"
+blueprint.horizons.type.overcharged_weapon_focused_weapon,"Overcharged Weapon, Focused Weapon","Overcharged Weapon, Focused Weapon",,,,,"Усиленное, Точное"
+blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,,,,"Скорострельноеб Последовательность фазирования"
+blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"Thermal Resistant, Kinetic Resistant","Thermal Resistant, Kinetic Resistant",,,,,"Термическая защита, Кинетическая защита"
+blueprint.horizons.type.none,None,None,,,,,"Нет"
+blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,,,,"Сопротивление отключающему полю"
