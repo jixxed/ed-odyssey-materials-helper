@@ -6,4 +6,9 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Tweak detection of unknown modules
+Added testcases for most pre-engineered modules for proper detection
+Added corrected fuel multiplier for SCO drives
+Fixed prices for SCO drives
+Corrected some blueprints and modules stats
+Updated some Python Mk2 stats (thrusters + rotation, shields, armour), not finished yet
+Added lots of Russian translations

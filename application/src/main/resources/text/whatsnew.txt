@@ -1,3 +1,13 @@
+Version 2.63
+-------------
+Added testcases for most pre-engineered modules for proper detection
+Added corrected fuel multiplier for SCO drives
+Fixed prices for SCO drives
+Corrected some blueprints and modules stats
+Updated some Python Mk2 stats (thrusters + rotation, shields, armour), not finished yet
+Added lots of Russian translations
+
+
 Version 2.62
 -------------
 Disable detection of unknown modules (not reliable)
