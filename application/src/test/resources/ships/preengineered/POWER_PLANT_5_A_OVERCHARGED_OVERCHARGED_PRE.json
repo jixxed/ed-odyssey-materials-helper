@@ -1,0 +1,35 @@
+{
+  "Slot": "PowerPlant",
+  "Item": "int_powerplant_size5_class5",
+  "On": true,
+  "Priority": 1,
+  "Health": 1.000000,
+  "Value": 1377525,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129012368,
+    "BlueprintName": "PowerPlant_Boosted",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "Integrity",
+        "Value": 74.000000,
+        "OriginalValue": 106.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerCapacity",
+        "Value": 32.640001,
+        "OriginalValue": 20.400000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "HeatEfficiency",
+        "Value": 0.540000,
+        "OriginalValue": 0.400000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}

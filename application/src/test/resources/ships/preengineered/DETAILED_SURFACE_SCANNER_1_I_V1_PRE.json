@@ -1,0 +1,29 @@
+{
+  "Slot": "Slot08_Size1",
+  "Item": "int_detailedsurfacescanner_tiny",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.000000,
+  "Engineering": {
+    "Engineer": "Lei Cheung",
+    "EngineerID": 300120,
+    "BlueprintID": 128740151,
+    "BlueprintName": "Sensor_Expanded",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "PowerDraw",
+        "Value": 0.000000,
+        "OriginalValue": 0.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DSS_PatchRadius",
+        "Value": 40.000000,
+        "OriginalValue": 20.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

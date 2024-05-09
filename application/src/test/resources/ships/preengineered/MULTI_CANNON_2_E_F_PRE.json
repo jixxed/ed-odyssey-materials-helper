@@ -1,0 +1,76 @@
+{
+  "Slot": "LargeHardpoint1",
+  "Item": "hpt_multicannon_fixed_medium",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 400,
+  "AmmoInHopper": 6400,
+  "Health": 1.000000,
+  "Value": 33345,
+  "Engineering": {
+    "Engineer": "Tod 'The Blaster' McQuinn",
+    "EngineerID": 300260,
+    "BlueprintID": 128988384,
+    "BlueprintName": "Weapon_RapidFire",
+    "Level": 1,
+    "Quality": 0.956900,
+    "ExperimentalEffect": "special_phasing_sequence",
+    "ExperimentalEffect_Localised": "Phasing Sequence",
+    "Modifiers": [
+      {
+        "Label": "DamagePerSecond",
+        "Value": 59.128815,
+        "OriginalValue": 15.642858,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 1.971000,
+        "OriginalValue": 2.190000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "MaximumRange",
+        "Value": 2000.000000,
+        "OriginalValue": 4000.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 9.999800,
+        "OriginalValue": 7.142857,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 400.000000,
+        "OriginalValue": 100.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 6400.000000,
+        "OriginalValue": 2100.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "RoundsPerShot",
+        "Value": 3.000000,
+        "OriginalValue": 1.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Jitter",
+        "Value": 3.000000,
+        "OriginalValue": 0.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamageFalloffRange",
+        "Value": 1800.000000,
+        "OriginalValue": 2000.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "Slot": "LargeHardpoint1",
+  "Item": "hpt_atmulticannon_gimbal_large",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 100,
+  "AmmoInHopper": 2100,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 129028578,
+    "BlueprintName": "Weapon_Overcharged",
+    "Level": 5,
+    "Quality": 1.000000,
+    "ExperimentalEffect": "special_auto_loader",
+    "ExperimentalEffect_Localised": "Auto Loader",
+    "Modifiers": [
+      {
+        "Label": "PowerDraw",
+        "Value": 1.120000,
+        "OriginalValue": 0.640000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 16.710295,
+        "OriginalValue": 15.191176,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 2.840750,
+        "OriginalValue": 2.582500,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 1.120000,
+        "OriginalValue": 0.280000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}
