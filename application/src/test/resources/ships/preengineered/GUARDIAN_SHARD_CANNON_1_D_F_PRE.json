@@ -1,145 +1,72 @@
 {
-  "timestamp": "2024-05-07T17:00:55Z",
-  "event": "Loadout",
-  "Ship": "python_nx",
-  "ShipID": 65,
-  "ShipName": "",
-  "ShipIdent": "JI-07P",
-  "HullHealth": 1.000000,
-  "UnladenMass": 664.000000,
-  "CargoCapacity": 10,
-  "MaxJumpRange": 18.410461,
-  "FuelCapacity": {
-    "Main": 16.000000,
-    "Reserve": 0.830000
-  },
-  "Rebuy": 0,
-  "Modules": [
-    {
-      "Slot": "MediumHardpoint1",
-      "Item": "hpt_pulselaser_fixed_small",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "MediumHardpoint2",
-      "Item": "hpt_pulselaser_fixed_small",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Armour",
-      "Item": "python_nx_armour_grade1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "PowerPlant",
-      "Item": "int_powerplant_size6_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "MainEngines",
-      "Item": "int_engine_size6_class1",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "FrameShiftDrive",
-      "Item": "int_hyperdrive_overcharge_size5_class3",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "LifeSupport",
-      "Item": "int_lifesupport_size4_class1",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "PowerDistributor",
-      "Item": "int_powerdistributor_size6_class1",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Radar",
-      "Item": "int_sensors_size5_class1",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "FuelTank",
-      "Item": "int_fueltank_size4_class3",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Slot01_Size6",
-      "Item": "int_shieldgenerator_size6_class1",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Slot02_Size4",
-      "Item": "int_cargorack_size3_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Slot05_Size1",
-      "Item": "int_cargorack_size1_class1",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "Slot06_Size1",
-      "Item": "int_supercruiseassist",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "PlanetaryApproachSuite",
-      "Item": "int_planetapproachsuite_advanced",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "VesselVoice",
-      "Item": "voicepack_verity",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "ShipCockpit",
-      "Item": "python_nx_cockpit",
-      "On": true,
-      "Priority": 1,
-      "Health": 1.000000
-    },
-    {
-      "Slot": "CargoHatch",
-      "Item": "modularcargobaydoor",
-      "On": true,
-      "Priority": 2,
-      "Health": 1.000000
-    }
-  ]
+  "Slot": "SmallHardpoint1",
+  "Item": "hpt_guardian_shardcannon_fixed_small",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 5,
+  "AmmoInHopper": 180,
+  "Health": 1.0,
+  "Engineering": {
+    "EngineerID": 300001,
+    "BlueprintID": 128988382,
+    "BlueprintName": "weapon_longrange",
+    "Level": 1,
+    "Quality": 0.0,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 3.0,
+        "OriginalValue": 2.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 2.001,
+        "OriginalValue": 0.87,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DistributorDraw",
+        "Value": 2.216308,
+        "OriginalValue": 0.42,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 11.385,
+        "OriginalValue": 0.69,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ArmourPenetration",
+        "Value": 60.599998,
+        "OriginalValue": 30.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "MaximumRange",
+        "Value": 2999.998291,
+        "OriginalValue": 1700.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ShotSpeed",
+        "Value": 6299.208984,
+        "OriginalValue": 1133.333374,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Jitter",
+        "Value": 1.5,
+        "OriginalValue": 5.0,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamageFalloffRange",
+        "Value": 1499.999146,
+        "OriginalValue": 1700.0,
+        "LessIsGood": 0
+      }
+    ]
+  }
 }

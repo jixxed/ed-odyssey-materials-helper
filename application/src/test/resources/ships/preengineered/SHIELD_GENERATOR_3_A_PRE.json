@@ -1,0 +1,42 @@
+{
+  "Slot": "Slot06_Size3",
+  "Item": "int_shieldgenerator_size3_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.0,
+  "Value": 445693,
+  "Engineering": {
+    "EngineerID": 300120,
+    "BlueprintID": 128673824,
+    "BlueprintName": "ShieldGenerator_Kinetic",
+    "Level": 5,
+    "Quality": 1.0,
+    "Modifiers": [
+      {
+        "Label": "Integrity",
+        "Value": 92.400002,
+        "OriginalValue": 77.0,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 3.528,
+        "OriginalValue": 2.52,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "KineticResistance",
+        "Value": 58.0,
+        "OriginalValue": 39.999996,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ThermicResistance",
+        "Value": 21.999996,
+        "OriginalValue": -20.000004,
+        "LessIsGood": 0
+      }
+    ],
+    "Engineer": "Lei Cheung"
+  }
+}

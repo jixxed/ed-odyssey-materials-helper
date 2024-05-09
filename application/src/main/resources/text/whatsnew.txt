@@ -1,3 +1,11 @@
+Version 2.64
+-------------
+Corrected pre-engineered plasma charger 1D stats and detection
+Corrected pre-engineered shard cannon 1D stats and detection
+Corrected pre-engineered shard cannon 2A stats and detection
+Corrected pre-engineered point defence stats and detection
+Corrected pre-engineered shieldgen 3A stats and detection
+
 Version 2.63
 -------------
 Added testcases for most pre-engineered modules for proper detection
@@ -6,7 +14,6 @@ Fixed prices for SCO drives
 Corrected some blueprints and modules stats
 Updated some Python Mk2 stats (thrusters + rotation, shields, armour), not finished yet
 Added lots of Russian translations
-
 
 Version 2.62
 -------------

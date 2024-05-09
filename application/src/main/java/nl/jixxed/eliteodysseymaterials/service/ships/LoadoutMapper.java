@@ -126,26 +126,12 @@ public class LoadoutMapper {
     }
 
     private static void reportIfDesired(Module module) {
-        if (isKWS(module) || isRail(module) || isShield(module) || isPD(module) || isEnzyme(module) || isPlasma(module) || isShard2(module) || isShard1(module)) {
+        if (isKWS(module) || isRail(module) ||  isEnzyme(module)) {
             report(module);
         }
     }
 
-    private static boolean isPlasma(Module module) {
-        return module.getItem().equalsIgnoreCase("Hpt_Guardian_PlasmaLauncher_Fixed_Small")
-                && module.getEngineering().isPresent()
-                && module.getEngineering().map(eng -> !eng.getBlueprintName().equalsIgnoreCase("guardianweapon_sturdy")).orElse(false);
-    }
-    private static boolean isShard2(Module module) {
-        return module.getItem().equalsIgnoreCase("Hpt_Guardian_ShardCannon_Fixed_Medium")
-                && module.getEngineering().isPresent()
-                && module.getEngineering().map(eng -> !eng.getBlueprintName().equalsIgnoreCase("guardianweapon_sturdy")).orElse(false);
-    }
-    private static boolean isShard1(Module module) {
-        return module.getItem().equalsIgnoreCase("Hpt_Guardian_ShardCannon_Fixed_Small")
-                && module.getEngineering().isPresent()
-                && module.getEngineering().map(eng -> !eng.getBlueprintName().equalsIgnoreCase("guardianweapon_sturdy")).orElse(false);
-    }
+
     private static boolean isKWS(Module module) {
         return module.getItem().equalsIgnoreCase("Hpt_CrimeScanner_Size0_Class5")
                 && module.getEngineering().isPresent()
@@ -158,23 +144,6 @@ public class LoadoutMapper {
                 && module.getEngineering().map(eng -> eng.getBlueprintName().equalsIgnoreCase("weapon_highcapacity")).orElse(false)
                 && module.getEngineering().map(eng -> eng.getExperimentalEffect().orElse("").equalsIgnoreCase("special_feedback_cascade")).orElse(false)
                 && module.getEngineering().map(eng -> eng.getModifiers().stream().anyMatch(mod -> mod.getLabel().equalsIgnoreCase("DamageFalloffRange"))).orElse(false);
-    }
-    private static boolean isShield(Module module) {
-        final List<HorizonsModifier> modifiers = List.of(
-                HorizonsModifier.INTEGRITY,
-                HorizonsModifier.POWER_DRAW,
-                HorizonsModifier.KINETIC_RESISTANCE,
-                HorizonsModifier.THERMAL_RESISTANCE
-        );
-        return module.getItem().equalsIgnoreCase("Int_ShieldGenerator_Size3_Class5")
-                && module.getEngineering().isPresent()
-                && module.getEngineering().map(eng -> eng.getBlueprintName().equalsIgnoreCase("shieldgenerator_kinetic")).orElse(false)
-                && module.getEngineering().map(eng -> eng.getModifiers().stream().allMatch(modifier -> modifiers.contains(HorizonsModifier.forInternalName(modifier.getLabel())))).orElse(false);
-    }
-    private static boolean isPD(Module module) {
-        return module.getItem().equalsIgnoreCase("Hpt_PlasmaPointDefence_Turret_Tiny")
-                && module.getEngineering().isPresent()
-                && module.getEngineering().map(eng -> eng.getModifiers().size() >= 5).orElse(false);
     }
     private static boolean isEnzyme(Module module) {
         return module.getItem().equalsIgnoreCase("Hpt_CausticMissile_Fixed_Medium")
@@ -262,7 +231,7 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-//                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
+                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                             return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {

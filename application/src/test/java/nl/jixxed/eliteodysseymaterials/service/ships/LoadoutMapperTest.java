@@ -14,6 +14,8 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.FrameShiftDri
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.DetailedSurfaceScanner;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
+import nl.jixxed.eliteodysseymaterials.domain.ships.utility.PointDefence;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.SinkLauncher;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
@@ -161,10 +163,10 @@ class LoadoutMapperTest {
 //                Arguments.of("ENZYME_MISSILE_RACK_2_B_F_PRE.json", EnzymeMissileRack.ENZYME_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_GAUSS_CANNON_1_D_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_GAUSS_CANNON_2_B_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_2_B_F_PRE, SlotType.HARDPOINT),
-//                Arguments.of("GUARDIAN_PLASMA_CHARGER_1_D_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_1_D_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("GUARDIAN_PLASMA_CHARGER_1_D_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_1_D_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_PLASMA_CHARGER_2_B_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_2_B_F_PRE, SlotType.HARDPOINT),
-//                Arguments.of("GUARDIAN_SHARD_CANNON_1_D_F_PRE.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_1_D_F_PRE, SlotType.HARDPOINT),
-//                Arguments.of("GUARDIAN_SHARD_CANNON_2_A_F_PRE.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_2_A_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("GUARDIAN_SHARD_CANNON_1_D_F_PRE.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_1_D_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("GUARDIAN_SHARD_CANNON_2_A_F_PRE.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_2_A_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("MINING_LASER_1_D_F_PRE.json", MiningLaser.MINING_LASER_1_D_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("MINING_LASER_1_D_F_PRE_ARX.json", MiningLaser.MINING_LASER_1_D_F_PRE_ARX, SlotType.HARDPOINT),
                 Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
@@ -182,9 +184,9 @@ class LoadoutMapperTest {
                 Arguments.of("POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
                 Arguments.of("POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
                 Arguments.of("DETAILED_SURFACE_SCANNER_1_I_V1_PRE.json", DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE, SlotType.OPTIONAL),
-//                Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL),
+                Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL),
 //                Arguments.of("KILL_WARRANT_SCANNER_0_A_PRE.json", KillWarrantScanner.KILL_WARRANT_SCANNER_0_A_PRE, SlotType.UTILITY),
-//                Arguments.of("POINT_DEFENCE_0_I_PRE.json", PointDefence.POINT_DEFENCE_0_I_PRE, SlotType.UTILITY),
+                Arguments.of("POINT_DEFENCE_0_I_PRE.json", PointDefence.POINT_DEFENCE_0_I_PRE, SlotType.UTILITY),
                 Arguments.of("HEAT_SINK_LAUNCHER_0_I_PRE.json", SinkLauncher.HEAT_SINK_LAUNCHER_0_I_PRE, SlotType.UTILITY)//,
 
         );
@@ -193,7 +195,7 @@ class LoadoutMapperTest {
             List modules =  ShipModule.getBasicModules();
             return Stream.of(
 
-                    Arguments.of("GUARDIAN_PLASMA_CHARGER_2_B_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_2_B_F_PRE, SlotType.HARDPOINT)
+                    Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL)
 
             );
     }
