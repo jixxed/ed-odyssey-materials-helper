@@ -13,7 +13,7 @@ blueprint.horizons.name.ax_explosive_munitions,AX Explosive Munitions,AX Explosi
 blueprint.horizons.name.ax_missile_rack,Ax Missile Rack,Ax Missile Rack,,,,,Блок ракет АИ
 blueprint.horizons.name.ax_missile_rack_pre,Ax Missile Rack,Ax Missile Rack,,,,,Блок ракет АИ
 blueprint.horizons.name.ax_multi_cannon,Ax Multi Cannon,Ax Multi Cannon,,,,,Многоствольное орудие АИ
-blueprint.horizons.name.ax_multi_cannon_pre,Ax Multi Cannon,Ax Multi Cannon,,,,,Многоствольное орудие АИ
+blueprint.horizons.name.ax_multi_cannon_pre,Enhanced Ax Multi Cannon,Enhanced Ax Multi Cannon,,,,,Улучшенное многоствольное орудие АИ
 blueprint.horizons.name.ax_remote_flak_munitions,AX Remote Flak Munitions,AX Remote Flak Munitions,AX Munition für ferngezündete Flak,Municiones de flak remotas de hacha,Munitions de flak à distance ax,Munições remotas de Ax Remote,Зенитные снаряды с дистанционным подрывом АИ
 blueprint.horizons.name.ax_small_calibre_munitions,AX Small Calibre Munitions,AX Small Calibre Munitions,AX kleinkalibrige Munition,Municiones de calibre pequeño hacha,Axe Munitions de petit calibre,Munições de pequeno calibre de machado,Мелкокалиберные боеприпасы АИ
 blueprint.horizons.name.beam_laser,Beam Laser,Beam Laser,Strahlenlaser,Láser de haz,Laser à faisceau,Laser de feixe,Пучковый лазер
@@ -80,7 +80,7 @@ blueprint.horizons.name.festive_launcher.red,Festive Launcher Red,Festive Launch
 blueprint.horizons.name.festive_launcher.yellow,Festive Launcher Yellow,Festive Launcher Yellow,,,,,Праздничная зенитная установка (желтая)
 blueprint.horizons.name.fighter_hangar,Fighter Hangar,Fighter Hangar,,,,,Ангар для истребителя
 blueprint.horizons.name.first_class_passenger_cabin,First Class Passenger Cabin,,,,,,Пассажирские каюты первого класса
-blueprint.horizons.name.first_class_passenger_cabin.short,(ПРВ),,,,,,
+blueprint.horizons.name.first_class_passenger_cabin.short,(FIR),,,,,,(ПРВ)
 blueprint.horizons.name.flechette_launcher_munitions,Flechette Launcher Munitions,Flechette Launcher Munitions,Flechettewerfermunition,Municiones de Flechette Launcher,Flechette Launcher Munitions,Munições de Flechette Launcher,Стреловидные боеприпасы
 blueprint.horizons.name.fragment_cannon,Fragment Cannon,Fragment Cannon,Splitterkanone,Cañón de fragmento,Canon de fragment,Canhão de fragmento,Залповое орудие
 blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Frameshiftantrieb,Unidad de cambio de marco,Lecteur de décalage du cadre,Unidade de mudança de quadro,Рамочно-сместительный двигатель
