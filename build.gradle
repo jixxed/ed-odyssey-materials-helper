@@ -106,7 +106,7 @@ ext {
     version_tess4j = "5.2.9"
     version_jai_imageio = "1.4.0"
     version_mockito_inline = "5.2.0"
-    version_guava = "33.1.0-jre"
+    version_guava = "33.2.0-jre"
     version_j2objc_annotations = "3.0.0"
 }
 allprojects {
