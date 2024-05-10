@@ -2165,7 +2165,7 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.FWDACC,31.65),
 //                    Map.entry(HorizonsModifier.REVACC,25.94),
 //                    Map.entry(HorizonsModifier.LATACC,20.09),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 65.0),
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 85.9),
                         Map.entry(HorizonsModifier.BOOST_COST, 19.0),
                         Map.entry(HorizonsModifier.PITCH_SPEED, 37.0),
                         Map.entry(HorizonsModifier.YAW_SPEED, 12.5),
@@ -2174,14 +2174,14 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,120.0),
                         Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 32.0),
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 316.0),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.87),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 51.4),
+                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 400.0),
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 0.0),
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 57.0),
                         Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                         Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
                         Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK, 13.0),
-                        Map.entry(HorizonsModifier.CREW, 2.0)
+                        Map.entry(HorizonsModifier.MASS_LOCK, 17.0),
+                        Map.entry(HorizonsModifier.CREW, 1.0)
 
                 ),
                 List.of(
