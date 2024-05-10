@@ -20,12 +20,12 @@ ship.stats.thermal.fsd.thermals.value,{0}%,,,,,,
 ship.stats.thermal.thermals.value.percentage,{0}%,,,,,,
 ship.stats.thermal.thermals.value.time,{0},,,,,,
 ship.stats.thermal.thermals.value.error,N/A,,,,,,Н/Д
-ship.stats.power.retracted.power,Retracted,,,,,,
-ship.stats.power.deployed.power,Deployed,,,,,,
+ship.stats.power.retracted.power,Retracted,,,,,,Убрано
+ship.stats.power.deployed.power,Deployed,,,,,,Выпущено
 ship.stats.power.retracted.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт
 ship.stats.power.deployed.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт
 ship.stats.jumprange,Jump range,,,,,,Дальность прыжка
-ship.stats.jumprange.value,{0} Ly,,,,,,{0} Св.Г.
+ship.stats.jumprange.value,{0} Ly,,,,,,{0} Св.л.
 ship.stats.jumprange.min,Minimum range,,,,,,Минимальна дальность
 ship.stats.jumprange.current,Current range,,,,,,Текущая дальность
 ship.stats.jumprange.maxfueled,Maximum range (full fuel),,,,,,Максимальная дальность (полный бак)
