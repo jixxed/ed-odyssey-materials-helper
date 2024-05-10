@@ -1,44 +1,44 @@
 messageKey,,en,de,es,fr,pt,ru
-blueprint.horizons.name.abrasion_blaster,Abrasion Blaster,,,,,,
-blueprint.horizons.name.abrasion_blaster_pre,Abrasion Blaster,Abrasion Blaster,,,,,
-blueprint.horizons.name.advanced_docking_computer,Advanced Docking Computer,,,,,,
-blueprint.horizons.name.advanced_missile_rack,Advanced Missile Rack,Advanced Missile Rack,,,,,
-blueprint.horizons.name.advanced_multi_cannon,Advanced Multi Cannon,Advanced Multi Cannon,,,,,
-blueprint.horizons.name.advanced_plasma_accelerator,Advanced Plasma Accelerator,Advanced Plasma Accelerator,,,,,
+blueprint.horizons.name.abrasion_blaster,Abrasion Blaster,,,,,,Абразивный бластер
+blueprint.horizons.name.abrasion_blaster_pre,Abrasion Blaster,Abrasion Blaster,,,,,Абразивный бластер
+blueprint.horizons.name.advanced_docking_computer,Advanced Docking Computer,,,,,,Улчшенный стыковочный компьютер
+blueprint.horizons.name.advanced_missile_rack,Advanced Missile Rack,Advanced Missile Rack,,,,,Продвинутый ракетный лоток
+blueprint.horizons.name.advanced_multi_cannon,Advanced Multi Cannon,Advanced Multi Cannon,,,,,Продвинутое многоствольное орудие
+blueprint.horizons.name.advanced_plasma_accelerator,Advanced Plasma Accelerator,Advanced Plasma Accelerator,,,,,Улучшенный ускоритель плазмы
 blueprint.horizons.name.afm_refill,AFM Refill,AFM Refill,AFW-Auffrischung,Recarga de AFM,Recharge AFM,AFM RECILL,Снабжение АПР
-blueprint.horizons.name.anti_corrosion_cargo_rack,Anti Corrosion Cargo Rack,Anti Corrosion Cargo Rack,,,,,
+blueprint.horizons.name.anti_corrosion_cargo_rack,Anti Corrosion Cargo Rack,Anti Corrosion Cargo Rack,,,,,Антикоррозийный грузовой стеллаж
 blueprint.horizons.name.armour,Armour,Armour,Rüstung,Armadura,Armure,Armaduras,Переборки
 blueprint.horizons.name.auto_field_maintenance_unit,Auto Field Maintenance Unit,Auto Field Maintenance Unit,Automatische Feldwartungs-Einheit,Unidad de mantenimiento de campo automático,Unité de maintenance des champs automobiles,Unidade de manutenção de campo automático,Блок автоматического полевого ремонта
 blueprint.horizons.name.ax_explosive_munitions,AX Explosive Munitions,AX Explosive Munitions,AX Explosivmunition,Municiones explosivas de hacha,Munitions explosives à hache,Munições explosivas do machado,Взрывчатые боеприпасы АИ
-blueprint.horizons.name.ax_missile_rack,Ax Missile Rack,Ax Missile Rack,,,,,
-blueprint.horizons.name.ax_missile_rack_pre,Ax Missile Rack,Ax Missile Rack,,,,,
-blueprint.horizons.name.ax_multi_cannon,Ax Multi Cannon,Ax Multi Cannon,,,,,
-blueprint.horizons.name.ax_multi_cannon_pre,Enhanced Ax Multi Cannon,Enhanced Ax Multi Cannon,,,,,
+blueprint.horizons.name.ax_missile_rack,Ax Missile Rack,Ax Missile Rack,,,,,Блок ракет АИ
+blueprint.horizons.name.ax_missile_rack_pre,Ax Missile Rack,Ax Missile Rack,,,,,Блок ракет АИ
+blueprint.horizons.name.ax_multi_cannon,Ax Multi Cannon,Ax Multi Cannon,,,,,Многоствольное орудие АИ
+blueprint.horizons.name.ax_multi_cannon_pre,Enhanced Ax Multi Cannon,Enhanced Ax Multi Cannon,,,,,Улучшенное многоствольное орудие АИ
 blueprint.horizons.name.ax_remote_flak_munitions,AX Remote Flak Munitions,AX Remote Flak Munitions,AX Munition für ferngezündete Flak,Municiones de flak remotas de hacha,Munitions de flak à distance ax,Munições remotas de Ax Remote,Зенитные снаряды с дистанционным подрывом АИ
 blueprint.horizons.name.ax_small_calibre_munitions,AX Small Calibre Munitions,AX Small Calibre Munitions,AX kleinkalibrige Munition,Municiones de calibre pequeño hacha,Axe Munitions de petit calibre,Munições de pequeno calibre de machado,Мелкокалиберные боеприпасы АИ
 blueprint.horizons.name.beam_laser,Beam Laser,Beam Laser,Strahlenlaser,Láser de haz,Laser à faisceau,Laser de feixe,Пучковый лазер
-blueprint.horizons.name.bi_weave_shield_generator,Bi-Weave Shield Generator,,,,,,
+blueprint.horizons.name.bi_weave_shield_generator,Bi-Weave Shield Generator,,,,,,Двухпоточный генератор щита
 blueprint.horizons.name.burst_laser,Burst Laser,Burst Laser,Salvenlaser,Láser,Laser éclaté,BURST LASER,Пульсирующий лазер
-blueprint.horizons.name.business_class_passenger_cabin,Business Class Passenger Cabin,,,,,,
-blueprint.horizons.name.business_class_passenger_cabin.short,(BUS),,,,,,
+blueprint.horizons.name.business_class_passenger_cabin,Business Class Passenger Cabin,,,,,,Пассажирские каюты бизнес-класса
+blueprint.horizons.name.business_class_passenger_cabin.short,(BUS),,,,,,(БИЗ)
 blueprint.horizons.name.cannon,Cannon,Cannon,Kanone,Cañón,Canon,Canhão,Орудие
-blueprint.horizons.name.cargo_rack,Cargo Rack,Cargo Rack,,,,,
+blueprint.horizons.name.cargo_rack,Cargo Rack,Cargo Rack,,,,,Грузовой стеллаж
 blueprint.horizons.name.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,Ätzbehälterwerfer,,,,Антикоррозийная катапульта
-blueprint.horizons.name.caustic_sink_launcher.short,Caustic,,,,,,
+blueprint.horizons.name.caustic_sink_launcher.short,Caustic,,,,,,Антикоррозия
 blueprint.horizons.name.caustic_sinks,Caustic Sinks,Caustic Sinks,Ätzbehälter,,,,Антикоррозийные отводы
 blueprint.horizons.name.chaff,Chaff,Chaff,Düppel,Paja,Balle,Palha,Дип. отражатель
 blueprint.horizons.name.chaff_launcher,Chaff Launcher,Chaff Launcher,Düppelwerfer,Lanzador de chaff,Lanceur de paillettes,Chaff Launcher,Разбрасыватели дипольных отражателей
 blueprint.horizons.name.collector_limpet_controller,Collector Limpet Controller,Collector Limpet Controller,Sammler -Limpet -Controller,Controlador de la conector del colector,Contrôleur de collecteur LimPe,Controlador de Limpet de colecionador,Контроллер дрона-сборщика
 blueprint.horizons.name.configurable_explosive_munitions,Configurable Explosive Munitions,Configurable Explosive Munitions,Konfigurierbare explosive Munition,Municiones explosivas configurables,Munitions explosives configurables,Munições explosivas configuráveis,Настраиваемые взрывчатые боеприпасы
 blueprint.horizons.name.configurable_small_calibre_munitions,Configurable Small Calibre Munitions,Configurable Small Calibre Munitions,Konfigurierbare kleinkalibrige Munition,Municiones de calibre pequeñas configurables,Munitions configurables de petit calibre,Munições de pequeno calibre configuráveis,Настраиваемые мелкокалиберные боеприпасы
-blueprint.horizons.name.cytoscrambler_burst_laser,Cytoscrambler Burst Laser,Cytoscrambler Burst Laser,,,,,
-blueprint.horizons.name.decontamination_limpet_controller,Decontamination Limpet Controller,Decontamination Limpet Controller,,,,,
+blueprint.horizons.name.cytoscrambler_burst_laser,Cytoscrambler Burst Laser,Cytoscrambler Burst Laser,,,,,Дезинтегратор
+blueprint.horizons.name.decontamination_limpet_controller,Decontamination Limpet Controller,Decontamination Limpet Controller,,,,,Контроллер дронов-очистителей
 blueprint.horizons.name.detailed_surface_scanner,Detailed Surface Scanner,Detailed Surface Scanner,Detail-Oberflächenscanner,Escáner de superficie detallado,Scanner de surface détaillé,Scanner de superfície detalhado,Подробный сканер поверхности
-blueprint.horizons.name.detailed_surface_scanner_pre,Detailed Surface Scanner,,,,,,
-blueprint.horizons.name.economy_class_passenger_cabin,Economy Class Passenger Cabin,,,,,,
-blueprint.horizons.name.economy_class_passenger_cabin.short,(ECO),,,,,,
+blueprint.horizons.name.detailed_surface_scanner_pre,Detailed Surface Scanner,,,,,,Подробный сканер поверхности
+blueprint.horizons.name.economy_class_passenger_cabin,Economy Class Passenger Cabin,,,,,,Пассажирские каюты эконом-класса
+blueprint.horizons.name.economy_class_passenger_cabin.short,(ECO),,,,,,(ЭКО)
 blueprint.horizons.name.electronic_countermeasure,Electronic Countermeasure,Electronic Countermeasure,Elektronische Gegenmaßnahme,Contramedida electrónica,Contre-mesure électronique,Contramedida eletrônica,Электронное подавление
-blueprint.horizons.name.enforcer_multi_cannon,Enforcer Multi Cannon,Enforcer Multi Cannon,,,,,
+blueprint.horizons.name.enforcer_multi_cannon,Enforcer Multi Cannon,Enforcer Multi Cannon,,,,,Многоствольное орудие Убийца
 blueprint.horizons.name.engineer_a,"A. Elvira Martuuk",,,,,,"A. Эльвира Мартуук"
 blueprint.horizons.name.engineer_a3a,"    A3A. Professor Palin",,,,,,"    A3A. Профессор Палин"
 blueprint.horizons.name.engineer_a3b,"    A3B. Lori Jameson",,,,,,"    A3B. Лори Джеймсон"
@@ -64,160 +64,160 @@ blueprint.horizons.name.engineer_e2a,"    E2A. Broo Tarquin",,,,,,"    E2A. Бр
 blueprint.horizons.name.engineer_e2b,"    E2B. Tiana Fortune",,,,,,"    E2B. Тиана Форчун"
 blueprint.horizons.name.engineer_e1,"  E1. Etienne Dorn ©",,,,,,"  E1. Этьенн Дорн ©"
 blueprint.horizons.name.engineer_e2,"  E2. Hera Tani",,,,,,"  E2. Гера Тани"
-blueprint.horizons.name.enhanced_ax_missile_rack,Enhanced Ax Missile Rack,Enhanced Ax Missile Rack,,,,,
-blueprint.horizons.name.enhanced_ax_multi_cannon,Enhanced Ax Multi Cannon,Enhanced Ax Multi Cannon,,,,,
-blueprint.horizons.name.enhanced_thrusters,Enhanced Thrusters,Enhanced Thrusters,,,,,
-blueprint.horizons.name.enhanced_xeno_scanner,Enhanced Xeno Scanner,Enhanced Xeno Scanner,,,,,
+blueprint.horizons.name.enhanced_ax_missile_rack,Enhanced Ax Missile Rack,Enhanced Ax Missile Rack,,,,,Улучшенный блок АИ-ракет
+blueprint.horizons.name.enhanced_ax_multi_cannon,Enhanced Ax Multi Cannon,Enhanced Ax Multi Cannon,,,,,Улучшенное многоствольное орудие АИ
+blueprint.horizons.name.enhanced_thrusters,Enhanced Thrusters,Enhanced Thrusters,,,,,Усиленные маневровые двигатели
+blueprint.horizons.name.enhanced_xeno_scanner,Enhanced Xeno Scanner,Enhanced Xeno Scanner,,,,,Улучшенный ксеносканер
 blueprint.horizons.name.enzyme_missile_launcher_munitions,Enzyme Missile Launcher Munitions,Enzyme Missile Launcher Munitions,Enzym-Raketenwerfer Munition,Municiones de lanzadores de misiles enzimáticos,Enzyme Missile Launcher Munitions,Munições de lançador de mísseis enzimáticos,Боеприпасы для энзимных ракетных установок
-blueprint.horizons.name.enzyme_missile_rack,Enzyme Missile Rack,Enzyme Missile Rack,,,,,
-blueprint.horizons.name.enzyme_missile_rack_pre,Enzyme Missile Rack,,,,,,
-blueprint.horizons.name.expanded_probe_scanning_radius_x2,Expanded Probe Scanning Radius X 2,Expanded Probe Scanning Radius X 2,,,,,
-blueprint.horizons.name.experimental_weapon_stabiliser,Experimental Weapon Stabiliser,Experimental Weapon Stabiliser,,,,,
+blueprint.horizons.name.enzyme_missile_rack,Enzyme Missile Rack,Enzyme Missile Rack,,,,,Блок энзимных ракет
+blueprint.horizons.name.enzyme_missile_rack_pre,Enzyme Missile Rack,,,,,,Блок энзимных ракет
+blueprint.horizons.name.expanded_probe_scanning_radius_x2,Expanded Probe Scanning Radius X 2,Expanded Probe Scanning Radius X 2,,,,,Радиус сканирования Х 2 
+blueprint.horizons.name.experimental_weapon_stabiliser,Experimental Weapon Stabiliser,Experimental Weapon Stabiliser,,,,,Стабилизатор экспериментального оружия
 blueprint.horizons.name.explosive_munitions,Explosive Munitions,Explosive Munitions,Explosivmunition,Municiones explosivas,Munitions explosives,Munições explosivas,Взрывчатые боеприпасы
-blueprint.horizons.name.festive_launcher,Festive Launcher,Festive Launcher,,,,,
-blueprint.horizons.name.festive_launcher.green,Festive Launcher Green,Festive Launcher Green,,,,,
-blueprint.horizons.name.festive_launcher.red,Festive Launcher Red,Festive Launcher Red,,,,,
-blueprint.horizons.name.festive_launcher.yellow,Festive Launcher Yellow,Festive Launcher Yellow,,,,,
-blueprint.horizons.name.fighter_hangar,Fighter Hangar,Fighter Hangar,,,,,
-blueprint.horizons.name.first_class_passenger_cabin,First Class Passenger Cabin,,,,,,
-blueprint.horizons.name.first_class_passenger_cabin.short,(FIR),,,,,,
+blueprint.horizons.name.festive_launcher,Festive Launcher,Festive Launcher,,,,,Праздничная зенитная установка
+blueprint.horizons.name.festive_launcher.green,Festive Launcher Green,Festive Launcher Green,,,,,Праздничная зенитная установка (зеленая)
+blueprint.horizons.name.festive_launcher.red,Festive Launcher Red,Festive Launcher Red,,,,,Праздничная зенитная установка (красная)
+blueprint.horizons.name.festive_launcher.yellow,Festive Launcher Yellow,Festive Launcher Yellow,,,,,Праздничная зенитная установка (желтая)
+blueprint.horizons.name.fighter_hangar,Fighter Hangar,Fighter Hangar,,,,,Ангар для истребителя
+blueprint.horizons.name.first_class_passenger_cabin,First Class Passenger Cabin,,,,,,Пассажирские каюты первого класса
+blueprint.horizons.name.first_class_passenger_cabin.short,(FIR),,,,,,(ПРВ)
 blueprint.horizons.name.flechette_launcher_munitions,Flechette Launcher Munitions,Flechette Launcher Munitions,Flechettewerfermunition,Municiones de Flechette Launcher,Flechette Launcher Munitions,Munições de Flechette Launcher,Стреловидные боеприпасы
 blueprint.horizons.name.fragment_cannon,Fragment Cannon,Fragment Cannon,Splitterkanone,Cañón de fragmento,Canon de fragment,Canhão de fragmento,Залповое орудие
 blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Frameshiftantrieb,Unidad de cambio de marco,Lecteur de décalage du cadre,Unidade de mudança de quadro,Рамочно-сместительный двигатель
-blueprint.horizons.name.frame_shift_drive_booster,Frame Shift Drive Booster,,,,,,
+blueprint.horizons.name.frame_shift_drive_booster,Frame Shift Drive Booster,,,,,,Ускоритель FSD
 blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Frameshift-Unterbrecher,Interdictor de unidad de cambio de cuadro,Interdictor de lecteur de décalage de cadre,Interditor de transmissão de mudança de quadro,Перехватчик FSD
-blueprint.horizons.name.frame_shift_drive_pre,Frame Shift Drive,,,,,,
-blueprint.horizons.name.frame_shift_drive_overcharge,Frame Shift Drive (SCO),,,,,,
+blueprint.horizons.name.frame_shift_drive_pre,Frame Shift Drive,,,,,,FSD
+blueprint.horizons.name.frame_shift_drive_overcharge,Frame Shift Drive (SCO),,,,,,FSD (ПГР)
 blueprint.horizons.name.frame_shift_wake_scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Sogwolkenscanner,Escáner de estela de cambio de cuadro,Scanner de shift de cadre,Scanner de despertar em mudança de quadro,Сканер следа FSD
 blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSA-Einspeisung,Inyección de FSD,Injection de FSD,Injeção de FSD,FSD инъекция
 blueprint.horizons.name.fuel_scoop,Fuel Scoop,Fuel Scoop,Treibstoffsammler,Cucharada de combustible,Scoop de carburant,Colher de combustível,Топливозаборник
-blueprint.horizons.name.fuel_tank,Fuel Tank,Fuel Tank,,,,,
+blueprint.horizons.name.fuel_tank,Fuel Tank,Fuel Tank,,,,,Топливный бак
 blueprint.horizons.name.fuel_transfer_limpet_controller,Fuel Transfer Limpet Controller,Fuel Transfer Limpet Controller,Treibstofftransfer-Drohnensteuerung,Controlador de lapa de transferencia de combustible,Contrôleur de paquet de transfert de carburant,Controlador de transferência de combustível,Контроллер дрона-заправщика
 blueprint.horizons.name.guardian_fighters,Guardian Fighters,Guardian Fighters,Guardian Fighter,Combatientes guardianes,Fighters gardiens,Fighters Guardian,Истребители Стражей
 blueprint.horizons.name.guardian_gauss_cannon,Guardian Gauss Cannon,Guardian Gauss Cannon,,,,,
 blueprint.horizons.name.guardian_gauss_cannon_munitions,Guardian Gauss Cannon Munitions,Guardian Gauss Cannon Munitions,Guardian-Gasskanonenmunition,Municiones de cañón de Guardian Gauss,Guardian Gauss Cannon Munitions,Munições de canhões do Guardian Gauss,Боеприпасы для пушек Гаусса Стражей
-blueprint.horizons.name.guardian_gauss_cannon_pre,Guardian Gauss Cannon,Guardian Gauss Cannon,,,,,
-blueprint.horizons.name.guardian_hull_reinforcement_package,Guardian Hull Reinforcement Package,,,,,,
-blueprint.horizons.name.guardian_module_reinforcement_package,Guardian Module Reinforcement Package,Guardian Module Reinforcement Package,,,,,
+blueprint.horizons.name.guardian_gauss_cannon_pre,Guardian Gauss Cannon,Guardian Gauss Cannon,,,,,Пушка Гаусса Стражей
+blueprint.horizons.name.guardian_hull_reinforcement_package,Guardian Hull Reinforcement Package,,,,,,Набор для усиления корпуса Стражей
+blueprint.horizons.name.guardian_module_reinforcement_package,Guardian Module Reinforcement Package,Guardian Module Reinforcement Package,,,,,Набор для усиления модулей Стражей
 blueprint.horizons.name.guardian_modules,Guardian Modules,Guardian Modules,Guardianmodule,Módulos de guardia,Modules gardiens,Módulos Guardian,Модули Стражей
-blueprint.horizons.name.guardian_plasma_charger,Guardian Plasma Charger,Guardian Plasma Charger,,,,,
-blueprint.horizons.name.guardian_nanite_torpedo_pylon,Guardian Nanite Torpedo Pylon,Guardian Nanite Torpedo Pylon,,,,,
+blueprint.horizons.name.guardian_plasma_charger,Guardian Plasma Charger,Guardian Plasma Charger,,,,,Плазменная пушка Стражей
+blueprint.horizons.name.guardian_nanite_torpedo_pylon,Guardian Nanite Torpedo Pylon,Guardian Nanite Torpedo Pylon,,,,,Торпедная нанитная установка Стражей
 blueprint.horizons.name.guardian_plasma_charger_munitions,Guardian Plasma Charger Munitions,Guardian Plasma Charger Munitions,Guardian-Plasmawerfermunition,Municiones de cargador de plasma de guardia,Munitions du chargeur de plasma Guardian,Munições de carregador de plasma guardiões,Боеприпасы для плазменных пушек Стражей
-blueprint.horizons.name.guardian_plasma_charger_pre,Guardian Plasma Charger,Guardian Plasma Charger,,,,,
-blueprint.horizons.name.guardian_power_distributor,Guardian Power Distributor,Guardian Power Distributor,,,,,
-blueprint.horizons.name.guardian_power_plant,Guardian Power Plant,Guardian Power Plant,,,,,
-blueprint.horizons.name.guardian_shard_cannon,Guardian Shard Cannon,Guardian Shard Cannon,,,,,
+blueprint.horizons.name.guardian_plasma_charger_pre,Guardian Plasma Charger,Guardian Plasma Charger,,,,,Плазменная пушка Стражей
+blueprint.horizons.name.guardian_power_distributor,Guardian Power Distributor,Guardian Power Distributor,,,,,Гибридный распределитель питания Стражей
+blueprint.horizons.name.guardian_power_plant,Guardian Power Plant,Guardian Power Plant,,,,,Гибридная силовая установка Стражей
+blueprint.horizons.name.guardian_shard_cannon,Guardian Shard Cannon,Guardian Shard Cannon,,,,,Осколочное орудие Стражей
 blueprint.horizons.name.guardian_shard_cannon_munitions,Guardian Shard Cannon Munitions,Guardian Shard Cannon Munitions,Guardian-Fragmentkanonenmunition,Municiones de cañón de thard fragmentos,Guardian Shard Cannon Munitions,Munições de canhão do Shard Guardian,Боеприпасы для осколочных орудий Стражей
-blueprint.horizons.name.guardian_shard_cannon_pre,Guardian Shard Cannon,Guardian Shard Cannon,,,,,
-blueprint.horizons.name.guardian_shield_reinforcement_package,Guardian Shield Reinforcement Package,Guardian Shield Reinforcement Package,,,,,
+blueprint.horizons.name.guardian_shard_cannon_pre,Guardian Shard Cannon,Guardian Shard Cannon,,,,,Осколочное орудие Стражей
+blueprint.horizons.name.guardian_shield_reinforcement_package,Guardian Shield Reinforcement Package,Guardian Shield Reinforcement Package,,,,,Набор для усиления щита Стражей
 blueprint.horizons.name.guardian_weapons,Guardian Weapons,Guardian Weapons,Guardianwaffen,Armas guardianas,Armes gardiennes,Armas guardiões,Оружие Стражей
 blueprint.horizons.name.hatch_breaker_limpet_controller,Hatch Breaker Limpet Controller,Hatch Breaker Limpet Controller,Steuereinheit Ladelukenöffner-Drohne,Controlador de lapa del interruptor de escotilla,Contrôleur de pacon de brise-trappe,Controlador de Limpet de Breaker Hatch,Контроллер дронов-взломщиков трюмов
 blueprint.horizons.name.heat_sink_launcher,Heat Sink Launcher,Heat Sink Launcher,Kühlkörperwerfer,Lanzador de disipador de calor,Lance-tampons,Lançador de dissipador de calor,Теплоотводная катапульта
-blueprint.horizons.name.heat_sink_launcher.short,Heat,,,,,,
-blueprint.horizons.name.heat_sink_launcher_pre,Heat Sink Launcher,Heat Sink Launcher,,,,,
-blueprint.horizons.name.heat_sink_launcher_pre.short,Heat,,,,,,
+blueprint.horizons.name.heat_sink_launcher.short,Heat,,,,,,Теплоотвод
+blueprint.horizons.name.heat_sink_launcher_pre,Heat Sink Launcher,Heat Sink Launcher,,,,,Теплоотводная катапульта
+blueprint.horizons.name.heat_sink_launcher_pre.short,Heat,,,,,,Теплоотвод
 blueprint.horizons.name.heatsinks,Heatsinks,Heatsinks,Kühlkörper,Disipadores de calor,Dissipateurs de chaleur,Dissipadores de calor,Теплоотводы
 blueprint.horizons.name.high_velocity_munitions,High Velocity Munitions,High Velocity Munitions,Hochgeschwindigkeitsmunition,Municiones de alta velocidad,Munitions à grande vitesse,Munições de alta velocidade,Высокоскоростные боеприпасы
 blueprint.horizons.name.hull_reinforcement_package,Hull Reinforcement Package,Hull Reinforcement Package,Rumpfhüllenverstärkung,Paquete de refuerzo de casco,Forfait de renforcement de la coque,Pacote de reforço de casco,Набор для усиления корпуса
 blueprint.horizons.name.human_livery,Human Livery,Human Livery,Menschliche Lackierung,Librea humana,Livrée humaine,Viária humana,Украшения кокпита
 blueprint.horizons.name.human_modules,Human Modules,Human Modules,Menschliche Module,Módulos humanos,Modules humains,Módulos humanos,Модули людей
 blueprint.horizons.name.human_weapons,Human Weapons,Human Weapons,Menschliche Waffen,Armas humanas,Armes humaines,Armas humanas,Оружие людей
-blueprint.horizons.name.imperial_hammer_rail_gun,Imperial Hammer Rail Gun,Imperial Hammer Rail Gun,,,,,
+blueprint.horizons.name.imperial_hammer_rail_gun,Imperial Hammer Rail Gun,Imperial Hammer Rail Gun,,,,,Имперский молот
 blueprint.horizons.name.kill_warrant_scanner,Kill Warrant Scanner,Kill Warrant Scanner,Tötungsbefehlscanner,Mata el escáner de orden judicial,Tuer un scanner de mandat,Matar o scanner de mandado,Сканер преступников
-blueprint.horizons.name.kill_warrant_scanner_pre,Kill Warrant Scanner,Kill Warrant Scanner,,,,,
-blueprint.horizons.name.lance_beam_mining_laser,Lance Beam Mining Laser,Lance Beam Mining Laser,,,,,
+blueprint.horizons.name.kill_warrant_scanner_pre,Kill Warrant Scanner,Kill Warrant Scanner,,,,,Сканер преступников
+blueprint.horizons.name.lance_beam_mining_laser,Lance Beam Mining Laser,Lance Beam Mining Laser,,,,,Копье шахтера
 blueprint.horizons.name.large_calibre_munitions,Large Calibre Munitions,Large Calibre Munitions,Großkalibrige Munition,Municiones de gran calibre,Munitions de grand calibre,Munições de grande calibre,Крупнокалиберные боеприпасы
 blueprint.horizons.name.life_support,Life Support,Life Support,Lebenserhaltung,Soporte vital,Soutien de la vie,Suporte de vida,Система жизнеобеспечения
 blueprint.horizons.name.life_support_synthesis,Life Support Synthesis,Life Support Synthesis,Lebensunterstützungssynthese,Síntesis de soporte vital,Synthèse de soutien à la vie,Síntese de suporte à vida,Синтез кислорода
-blueprint.horizons.name.lightweight_alloy_armour,Lightweight Alloy Armour,Lightweight Alloy Armour,,,,,
-blueprint.horizons.name.lightweight_alloy_armour,Lightweight Alloy,Lightweight Alloy,,,,,
+blueprint.horizons.name.lightweight_alloy_armour,Lightweight Alloy Armour,Lightweight Alloy Armour,,,,,Легкосплавная броня
+blueprint.horizons.name.lightweight_alloy_armour,Lightweight Alloy,Lightweight Alloy,,,,,Легкая броня
 blueprint.horizons.name.limpets,Limpets,Limpets,Drohnen,Lente de mano,Limpets,Limpets,Дроны
-blueprint.horizons.name.luxury_class_passenger_cabin,Luxury Class Passenger Cabin,,,,,,
-blueprint.horizons.name.luxury_class_passenger_cabin.short,(LUX),,,,,,
+blueprint.horizons.name.luxury_class_passenger_cabin,Luxury Class Passenger Cabin,,,,,,Пассажирские каюты люкс-класса
+blueprint.horizons.name.luxury_class_passenger_cabin.short,(LUX),,,,,,(ЛЮКС)
 blueprint.horizons.name.manifest_scanner,Manifest Scanner,Manifest Scanner,Manifest Scanner,Escáner manifiesto,Scanner manifeste,Scanner manifesto,Сканер содержимого
-blueprint.horizons.name.meta_alloy_hull_reinforcement_package,Meta Alloy Hull Reinforcement Package,Meta Alloy Hull Reinforcement Package,,,,,
-blueprint.horizons.name.military_grade_composite_armour,Military Grade Composite Armour,Military Grade Composite Armour,,,,,
+blueprint.horizons.name.meta_alloy_hull_reinforcement_package,Meta Alloy Hull Reinforcement Package,Meta Alloy Hull Reinforcement Package,,,,,Метасплавное усиление корпуса
+blueprint.horizons.name.military_grade_composite_armour,Military Grade Composite Armour,Military Grade Composite Armour,,,,,Композит военного класса
 blueprint.horizons.name.mine_launcher,Mine Launcher,Mine Launcher,Minenwerfer,Lanzador de mina,Lance-mines,Lançador de minas,Установщик мин
-blueprint.horizons.name.mining_laser,Mining Laser,,,,,,
-blueprint.horizons.name.mining_laser_pre,Mining Laser,Mining Laser,,,,,
-blueprint.horizons.name.mining_laser_pre_arx,Mining Laser,Mining Laser,,,,,
-blueprint.horizons.name.mining_multi_limpet_controller,Mining Multi Limpet Controller,Mining Multi Limpet Controller,,,,,
-blueprint.horizons.name.mining_multi_limpet_controller.short,Mining,,,,,,
-blueprint.horizons.name.mirrored_surface_composite_armour,Mirrored Surface Composite Armour,Mirrored Surface Composite Armour,,,,,
+blueprint.horizons.name.mining_laser,Mining Laser,,,,,,Проходочный лазер
+blueprint.horizons.name.mining_laser_pre,Mining Laser,Mining Laser,,,,,Проходочный лазер
+blueprint.horizons.name.mining_laser_pre_arx,Mining Laser,Mining Laser,,,,,Проходочный лазер
+blueprint.horizons.name.mining_multi_limpet_controller,Mining Multi Limpet Controller,Mining Multi Limpet Controller,,,,,Мультиконтроллер дронов-добытчиков
+blueprint.horizons.name.mining_multi_limpet_controller.short,Mining,,,,,,Добытчики
+blueprint.horizons.name.mirrored_surface_composite_armour,Mirrored Surface Composite Armour,Mirrored Surface Composite Armour,,,,,Композит с зеркальной поверхностью
 blueprint.horizons.name.missile_rack,Missile Rack,Missile Rack,Raketengestell,Estante de misiles,Rack de missiles,Rack de mísseis,Блок ракет
-blueprint.horizons.name.module_reinforcement_package,Module Reinforcement Package,Module Reinforcement Package,,,,,
+blueprint.horizons.name.module_reinforcement_package,Module Reinforcement Package,Module Reinforcement Package,,,,,Набор для усиления модуля
 blueprint.horizons.name.multi_cannon,Multi Cannon,Multi Cannon,Mehrfachgeschütz,Múltiples cañón,Multin canon,Multi Cannon,Многоствольное орудие
-blueprint.horizons.name.multi_cannon_pre,Multi Cannon,Multi Cannon,,,,,
-blueprint.horizons.name.multi_limpet_controller,Multi Limpet Controller,Multi Limpet Controller,,,,,
+blueprint.horizons.name.multi_cannon_pre,Multi Cannon,Multi Cannon,,,,,Многоствольное орудие
+blueprint.horizons.name.multi_limpet_controller,Multi Limpet Controller,Multi Limpet Controller,,,,,Универсальный мультиконтроллер дронов
 blueprint.horizons.name.none,None,None,Keiner,Ninguna,Rien,Nenhum,Пусто
-blueprint.horizons.name.operations_limpet_controller,Operations Limpet Controller,Operations Limpet Controller,,,,,
-blueprint.horizons.name.operations_limpet_controller.short,Operations,,,,,,
-blueprint.horizons.name.pacifier_fragment_cannon,Pacifier Fragment Cannon,Pacifier Fragment Cannon,,,,,
-blueprint.horizons.name.pack_hound_missile_rack,Pack Hound Missile Rack,Pack Hound Missile Rack,,,,,
-blueprint.horizons.name.pack_hound_missile_rack.short,Pack Hound,Pack Hound,,,,,
-blueprint.horizons.name.passenger_cabin,Passenger Cabin,Passenger Cabin,,,,,
-blueprint.horizons.name.planetary_vehicle_hangar,Planetary Vehicle Hangar,Planetary Vehicle Hangar,,,,,
+blueprint.horizons.name.operations_limpet_controller,Operations Limpet Controller,Operations Limpet Controller,,,,,Контроллер операционных дронов
+blueprint.horizons.name.operations_limpet_controller.short,Operations,,,,,,Операции
+blueprint.horizons.name.pacifier_fragment_cannon,Pacifier Fragment Cannon,Pacifier Fragment Cannon,,,,,Миротворец
+blueprint.horizons.name.pack_hound_missile_rack,Pack Hound Missile Rack,Pack Hound Missile Rack,,,,,Блок ракет Гончие
+blueprint.horizons.name.pack_hound_missile_rack.short,Pack Hound,Pack Hound,,,,,Гончие
+blueprint.horizons.name.passenger_cabin,Passenger Cabin,Passenger Cabin,,,,,Пассажирские каюты
+blueprint.horizons.name.planetary_vehicle_hangar,Planetary Vehicle Hangar,Planetary Vehicle Hangar,,,,,Гараж для планетарного транспорта
 blueprint.horizons.name.plasma_accelerator,Plasma Accelerator,Plasma Accelerator,Plasmabeschleuniger,Acelerador de plasma,Accélérateur de plasma,Acelerador de plasma,Ускоритель плазмы
 blueprint.horizons.name.plasma_munitions,Plasma Munitions,Plasma Munitions,Plasmamunition,Municiones de plasma,Munitions plasmatiques,Munições de plasma,Плазменные боеприпасы
 blueprint.horizons.name.point_defence,Point Defence,Point Defence,Punktverteidigung,Defensa de puntos,Défense des points,Defesa de ponto,Турель точечной обороны
-blueprint.horizons.name.point_defence_pre,Point Defence,Point Defence,,,,,
+blueprint.horizons.name.point_defence_pre,Point Defence,Point Defence,,,,,Турель точечной обороны
 blueprint.horizons.name.power_distributor,Power Distributor,Power Distributor,Energieverteiler,Distribuidor de energía,Distributeur de puissance,Distribuidor de energia,Распределитель питания
 blueprint.horizons.name.power_plant,Power Plant,Power Plant,Kraftwerk,Planta de energía,Centrale électrique,Usina elétrica,Силовая установка
-blueprint.horizons.name.power_plant_armoured_overcharged,Power Plant,,,,,,
-blueprint.horizons.name.power_plant_armoured_overcharged.short,Armoured + Overcharged,,,,,,
-blueprint.horizons.name.power_plant_overcharged_overcharged,Power Plant,,,,,,
-blueprint.horizons.name.power_plant_overcharged_overcharged.short,Extra Overcharged,,,,,,
-blueprint.horizons.name.prismatic_shield_generator,Prismatic Shield Generator,,,,,,
+blueprint.horizons.name.power_plant_armoured_overcharged,Power Plant,,,,,,Силовая установка
+blueprint.horizons.name.power_plant_armoured_overcharged.short,Armoured + Overcharged,,,,,,Бронированная + Усиленная
+blueprint.horizons.name.power_plant_overcharged_overcharged,Power Plant,,,,,,Силовая установка
+blueprint.horizons.name.power_plant_overcharged_overcharged.short,Extra Overcharged,,,,,,Сверх-Усиленная
+blueprint.horizons.name.prismatic_shield_generator,Prismatic Shield Generator,,,,,,Призматический щитогенератор
 blueprint.horizons.name.prospector_limpet_controller,Prospector Limpet Controller,Prospector Limpet Controller,Drohnensteuerung Erzsucher,Controlador de Limplet de prospector,Contrôleur de moquette du prospecteur,Controlador Prospector Limpet,Контроллер дрона-геологоразведчика
-blueprint.horizons.name.pulse_disruptor_laser,Pulse Disruptor Laser,,,,,,
+blueprint.horizons.name.pulse_disruptor_laser,Pulse Disruptor Laser,,,,,,Диверсант
 blueprint.horizons.name.pulse_laser,Pulse Laser,Pulse Laser,Pulslaser,Láser de pulso,Laser à impulsion,Laser de pulso,Импульсный лазер
-blueprint.horizons.name.pulse_wave_analyser,Pulse Wave Analyser,Pulse Wave Analyser,,,,,
-blueprint.horizons.name.pulse_wave_xeno_scanner,Pulse Wave Xeno Scanner,Pulse Wave Xeno Scanner,,,,,
+blueprint.horizons.name.pulse_wave_analyser,Pulse Wave Analyser,Pulse Wave Analyser,,,,,Анализатор импульсных волн
+blueprint.horizons.name.pulse_wave_xeno_scanner,Pulse Wave Xeno Scanner,Pulse Wave Xeno Scanner,,,,,Ксено-сканер импульсных волн
 blueprint.horizons.name.rail_gun,Rail Gun,Rail Gun,Schienenkanone,Pistola de riel,Pistolet ferroviaire,Pistola ferroviária,Рельсотрон
-blueprint.horizons.name.rail_gun_pre,Rail Gun,Rail Gun,,,,,
-blueprint.horizons.name.reactive_surface_composite_armour,Reactive Surface Composite Armour,Reactive Surface Composite Armour,,,,,
-blueprint.horizons.name.recon_limpet_controller,Recon Limpet Controller,Recon Limpet Controller,,,,,
+blueprint.horizons.name.rail_gun_pre,Rail Gun,Rail Gun,,,,,Рельсотрон
+blueprint.horizons.name.reactive_surface_composite_armour,Reactive Surface Composite Armour,Reactive Surface Composite Armour,,,,,Композит с реактивной поверхностью
+blueprint.horizons.name.recon_limpet_controller,Recon Limpet Controller,Recon Limpet Controller,,,,,Контроллер дрона-разведчика
 blueprint.horizons.name.refinery,Refinery,Refinery,Raffinerie,Refinería,Raffinerie,Refinaria,Очиститель
-blueprint.horizons.name.reinforced_alloy_armour,Reinforced Alloy Armour,Reinforced Alloy Armour,,,,,
-blueprint.horizons.name.remote_release_flak_launcher,Remote Release Flak Launcher,Remote Release Flak Launcher,,,,,
-blueprint.horizons.name.remote_release_flechette_launcher,Remote Release Flechette Launcher,Remote Release Flechette Launcher,,,,,
-blueprint.horizons.name.repair_limpet_controller,Repair Limpet Controller,Repair Limpet Controller,,,,,
-blueprint.horizons.name.rescue_limpet_controller,Rescue Limpet Controller,Rescue Limpet Controller,,,,,
-blueprint.horizons.name.rescue_limpet_controller.short,Rescue,,,,,,
-blueprint.horizons.name.research_limpet_controller,Research Limpet Controller,Research Limpet Controller,,,,,
-blueprint.horizons.name.retributor_beam_laser,Retributor Beam Laser,Retributor Beam Laser,,,,,
-blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack,Rocket Propelled Containment Missile,Rocket Propelled Containment Missile,,,,,
-blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack.short,Containment Missile,Containment Missile,,,,,
-blueprint.horizons.name.seeker_missile_rack,Seeker Missile Rack,Seeker Missile Rack,Suchraketengestell,Estante para misiles buscadores,Support de missile Seeker,Seeker Missile Rack,Искатель ракетная стойка
-blueprint.horizons.name.seeker_missile_rack_pre,Seeker Missile Rack,Seeker Missile Rack,,,,,
-blueprint.horizons.name.seismic_charge_launcher,Seismic Charge Launcher,Seismic Charge Launcher,,,,,
+blueprint.horizons.name.reinforced_alloy_armour,Reinforced Alloy Armour,Reinforced Alloy Armour,,,,,Укреплённые сплавы
+blueprint.horizons.name.remote_release_flak_launcher,Remote Release Flak Launcher,Remote Release Flak Launcher,,,,,Зенитная установка (снаряды с дистанционным подрывом)
+blueprint.horizons.name.remote_release_flechette_launcher,Remote Release Flechette Launcher,Remote Release Flechette Launcher,,,,,Установка для стрельбы стреловидными снарядами с дистанционным подрывом
+blueprint.horizons.name.repair_limpet_controller,Repair Limpet Controller,Repair Limpet Controller,,,,,Контроллер дрона-ремонтника
+blueprint.horizons.name.rescue_limpet_controller,Rescue Limpet Controller,Rescue Limpet Controller,,,,,Контроллер дронов-спасателей
+blueprint.horizons.name.rescue_limpet_controller.short,Rescue,,,,,,Спасатели
+blueprint.horizons.name.research_limpet_controller,Research Limpet Controller,Research Limpet Controller,,,,,Контроллер дрона-исследователя
+blueprint.horizons.name.retributor_beam_laser,Retributor Beam Laser,Retributor Beam Laser,,,,,Пучковый лазер «Каратель»
+blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack,Rocket Propelled Containment Missile,Rocket Propelled Containment Missile,,,,,Ракетный FSD-разрушитель
+blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack.short,Containment Missile,Containment Missile,,,,,Ракетный FSD-разрушитель
+blueprint.horizons.name.seeker_missile_rack,Seeker Missile Rack,Seeker Missile Rack,Suchraketengestell,Estante para misiles buscadores,Support de missile Seeker,Seeker Missile Rack,Блок ракет с самонаведением
+blueprint.horizons.name.seeker_missile_rack_pre,Seeker Missile Rack,Seeker Missile Rack,,,,,Блок ракет с самонаведением
+blueprint.horizons.name.seismic_charge_launcher,Seismic Charge Launcher,Seismic Charge Launcher,,,,,Пусковая установка для сейсмических снарядов
 blueprint.horizons.name.seismic_charge_munitions,Seismic Charge Munitions,Seismic Charge Munitions,Seismischer-Lader-Munition,Municiones de carga sísmica,Munitions de charge sismique,Munições de acusação sísmica,Сейсмические боеприпасы
 blueprint.horizons.name.sensors,Sensors,Sensors,Sensoren,Sensores,Capteurs,Sensores,Сенсоры
 blueprint.horizons.name.shield_booster,Shield Booster,Shield Booster,Schildbooster,Refuerzo de escudo,Bouclier de bouclier,SHIELD Booster,Усилитель щита
 blueprint.horizons.name.shield_cell_bank,Shield Cell Bank,Shield Cell Bank,Schildzellenbank,Banco de celdas de escudo,Banque cellulaire de bouclier,Banco de células de escudo,Щитонакопитель
 blueprint.horizons.name.shield_generator,Shield Generator,Shield Generator,Schildgenerator,Generador de escudo,Bouclier,Gerador de escudo,Щитогенератор
-blueprint.horizons.name.shield_generator_pre,Shield Generator,Shield Generator,,,,,
-blueprint.horizons.name.shock_cannon,Shock Cannon,Shock Cannon,,,,,
+blueprint.horizons.name.shield_generator_pre,Shield Generator,Shield Generator,,,,,Щитогенератор
+blueprint.horizons.name.shock_cannon,Shock Cannon,Shock Cannon,,,,,Шоковое орудие
 blueprint.horizons.name.shock_cannon_munitions,Shock Cannon Munitions,Shock Cannon Munitions,Schockkanonenmunition,Municiones de cañón de choque,Choc des munitions de canon,Munições de canhão de choque,Шоковые боеприпасы
-blueprint.horizons.name.shock_mine_launcher,Shock Mine Launcher,Shock Mine Launcher,,,,,
-blueprint.horizons.name.shock_mine_launcher.short,Shock,Shock,,,,,
-blueprint.horizons.name.shutdown_field_neutraliser,Shutdown Field Neutraliser,Shutdown Field Neutraliser,,,,,
+blueprint.horizons.name.shock_mine_launcher,Shock Mine Launcher,Shock Mine Launcher,,,,,Установщик шоковых мин
+blueprint.horizons.name.shock_mine_launcher.short,Shock,Shock,,,,,Шок-мины
+blueprint.horizons.name.shutdown_field_neutraliser,Shutdown Field Neutraliser,Shutdown Field Neutraliser,,,,,Нейтрализатор отключающего поля
 blueprint.horizons.name.small_calibre_munitions,Small Calibre Munitions,Small Calibre Munitions,Kleinkalibrige Munition,Municiones de calibre pequeño,Munitions de petit calibre,Pequenas munições de calibre,Мелкокалиберные боеприпасы
 blueprint.horizons.name.srv_ammo_restock,SRV Ammo Restock,SRV Ammo Restock,SRV Munitionsnachladung,Reabastecimiento de munición SRV,Répondment des munitions SRV,SRV Munção Restoque,Боеприпасы для ТРП
 blueprint.horizons.name.srv_refuel,SRV Refuel,SRV Refuel,SRV-Auftankung,Srv reabastecimiento de combustible,SRV Refuel,SRV Reabelado,Заправка ТРП
 blueprint.horizons.name.srv_repair,SRV Repair,SRV Repair,SRV-Reparaturen,Reparación de SRV,Réparation SRV,Reparo SRV,Ремонт ТРП
-blueprint.horizons.name.standard_docking_computer,Standard Docking Computer,Standard Docking Computer,,,,,
-blueprint.horizons.name.sub_surface_displacement_missile,Sub Surface Displacement Missile,Sub Surface Displacement Missile,,,,,
+blueprint.horizons.name.standard_docking_computer,Standard Docking Computer,Standard Docking Computer,,,,,Стандартный стыковочный компьютер
+blueprint.horizons.name.sub_surface_displacement_missile,Sub Surface Displacement Missile,Sub Surface Displacement Missile,,,,,Вытесняющая ракета для добычи глубинных залежей
 blueprint.horizons.name.sub_surface_displacement_munitions,Sub-surface Displacement Munitions,Sub Surface Displacement Munitions,Untergrund-Verdrängungsmunition,Municiones de desplazamiento de la superficie subterránea,Munitions de déplacement sous surface,Munições de deslocamento de superfície,Вытесняющие боеприпасы для добычи глубинных залежей
-blueprint.horizons.name.sub_surface_extraction_missile,Sub Surface Extraction Missile,Sub Surface Extraction Missile,,,,,
-blueprint.horizons.name.supercruise_assist,Supercruise Assist,Supercruise Assist,,,,,
-blueprint.horizons.name.thargoid_pulse_neutraliser,Thargoid Pulse Neutraliser,Thargoid Pulse Neutraliser,,,,,
+blueprint.horizons.name.sub_surface_extraction_missile,Sub Surface Extraction Missile,Sub Surface Extraction Missile,,,,,Ракета для извлечения груза из-под корпуса
+blueprint.horizons.name.supercruise_assist,Supercruise Assist,Supercruise Assist,,,,,Помощь в гиперкрейсерском режиме
+blueprint.horizons.name.thargoid_pulse_neutraliser,Thargoid Pulse Neutraliser,Thargoid Pulse Neutraliser,,,,,Нейтрализатор таргоидских импульсов
 blueprint.horizons.name.thrusters,Thrusters,Thrusters,Triebwerke,Propulsores,Propulseurs,Propulsores,Маневровые двигатели
 blueprint.horizons.name.torpedo_pylon,Torpedo Pylon,Torpedo Pylon,Torpedo Pylon,Pilón de torpedo,Pylône de torpille,Pilão de torpedo,Торпедная установка
-blueprint.horizons.name.universal_multi_limpet_controller,Universal Multi Limpet Controller,Universal Multi Limpet Controller,,,,,
-blueprint.horizons.name.universal_multi_limpet_controller.short,Universal,Universal,,,,,
-blueprint.horizons.name.xeno_limpet_controller,Xeno Limpet Controller,Xeno Limpet Controller,,,,,
-blueprint.horizons.name.xeno_limpet_controller.short,Xeno,Xeno,,,,,
-blueprint.horizons.name.xeno_scanner,Xeno Scanner,Xeno Scanner,,,,,
-blueprint.horizons.name.cargo_hatch,Cargo Hatch,Cargo Hatch,,,,,
-blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,Guardian Nanite Munitions,,,,,
+blueprint.horizons.name.universal_multi_limpet_controller,Universal Multi Limpet Controller,Universal Multi Limpet Controller,,,,,Универсальный мультиконтроллер дронов
+blueprint.horizons.name.universal_multi_limpet_controller.short,Universal,Universal,,,,,Универсал
+blueprint.horizons.name.xeno_limpet_controller,Xeno Limpet Controller,Xeno Limpet Controller,,,,,Контроллер дронов иных
+blueprint.horizons.name.xeno_limpet_controller.short,Xeno,Xeno,,,,,Иные
+blueprint.horizons.name.xeno_scanner,Xeno Scanner,Xeno Scanner,,,,,Ксено-сканер
+blueprint.horizons.name.cargo_hatch,Cargo Hatch,Cargo Hatch,,,,,Грузовой люк
+blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,Guardian Nanite Munitions,,,,,Нанитные боеприпасы
