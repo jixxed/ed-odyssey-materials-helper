@@ -6,8 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Corrected pre-engineered plasma charger 1D stats and detection
-Corrected pre-engineered shard cannon 1D stats and detection
-Corrected pre-engineered shard cannon 2A stats and detection
-Corrected pre-engineered point defence stats and detection
-Corrected pre-engineered shieldgen 3A stats and detection
+Updated Python mk2 stats
+Added Python mk2 image
