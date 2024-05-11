@@ -5,10 +5,7 @@ import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.PulseLaser;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.CargoRack;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.Computer;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.PassengerCabin;
-import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
+import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.CargoHatch;
 import nl.jixxed.eliteodysseymaterials.domain.ships.special.FuelTank;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -2797,7 +2794,7 @@ public class Ship {
 
     public double getMaxCargo() {
         return this.getOptionalSlots().stream()
-                .filter(slot -> slot.getShipModule() instanceof CargoRack)
+                .filter(slot -> slot.getShipModule() instanceof CargoRack || slot.getShipModule() instanceof AntiCorrosionCargoRack)
                 .map(Slot::getShipModule)
                 .map(shipModule -> (double) shipModule.getAttributeValue(HorizonsModifier.CARGO_CAPACITY))
                 .mapToDouble(Double::doubleValue)
