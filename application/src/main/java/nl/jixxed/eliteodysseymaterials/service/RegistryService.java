@@ -76,7 +76,7 @@ public class RegistryService {
 
     private static void writeRegFile(final File file) {
         try (final OutputStream output = new FileOutputStream(file)) {
-            output.write(REG_KEY.getBytes(StandardCharsets.UTF_8));
+            output.write(REG_KEY.getBytes(StandardCharsets.UTF_16LE));
         } catch (final IOException e) {
             log.error("Error creating reg file", e);
         }
