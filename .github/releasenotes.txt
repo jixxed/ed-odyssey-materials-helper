@@ -6,5 +6,8 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Updated Python mk2 stats
-Added Python mk2 image
+Add pre-engineered enzyme missile, railgun and KWS tests (All pre-engineered modules should now be detected by the app)
+fix railgun stats
+fix railgun pre-enigneered blueprint stats
+Add ShipyardRedeem and ShipRedeemed events
+Potential fix for registering edomh urls handling with special characters in the path

@@ -1,3 +1,11 @@
+Version 2.66
+-------------
+Add pre-engineered enzyme missile, railgun and KWS tests (All pre-engineered modules should now be detected by the app)
+fix railgun stats
+fix railgun pre-enigneered blueprint stats
+Add ShipyardRedeem and ShipRedeemed events
+Potential fix for registering edomh urls handling with special characters in the path
+
 Version 2.65
 -------------
 Updated Python mk2 stats
