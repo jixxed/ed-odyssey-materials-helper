@@ -83,6 +83,11 @@ ship.stats.shield.strengthkinetic,Strength Kinetic,,,,,,Кинетическая
 ship.stats.shield.strengththermal,Strength Thermal,,,,,,Термальная мощность
 ship.stats.shield.strengthexplosive,Strength Explosive,,,,,,Взрывная мощность
 ship.stats.shield.strengthcaustic,Strength Caustic,,,,,,Едкая мощность
+ship.stats.shield.raw,Raw,,,,,,
+ship.stats.shield.kinetic,Kinetic,,,,,,
+ship.stats.shield.thermal,Thermal,,,,,,
+ship.stats.shield.explosive,Explosive,,,,,,
+ship.stats.shield.caustic,Caustic,,,,,,
 ship.stats.weapon,Weapon,,,,,,Оружие
 ship.stats.weapon.rawdamage,Raw Damage,,,,,,Чистый урон
 ship.stats.weapon.absolutepercentage,Absolute,,,,,,Абсолютный урон
