@@ -11,9 +11,9 @@ ship.stats.config.cargo_hatch,Cargo hatch,,,,,,Грузовой ковш
 ship.stats.thermalpower,Thermals & power,,,,,,Нагрев и Мощность
 ship.stats.thermal,Thermals,,,,,,Нагрев
 ship.stats.power,Power,,,,,,Мощность
-ship.stats.thermal.idle.thermals,Idle heat,,,,,,Нагрев в покое
-ship.stats.thermal.thruster.thermals,Full thrust heat,,,,,,Нагрев в движении
-ship.stats.thermal.fsd.thermals,FSD charging heat,,,,,,Нагрев при работе FSD
+ship.stats.thermal.idle.thermals,Idle heat,,,,,,В покое
+ship.stats.thermal.thruster.thermals,Full thrust heat,,,,,,В движении
+ship.stats.thermal.fsd.thermals,FSD charging heat,,,,,,При зарядке FSD
 ship.stats.thermal.idle.thermals.value,{0}%,,,,,,
 ship.stats.thermal.thruster.thermals.value,{0}%,,,,,,
 ship.stats.thermal.fsd.thermals.value,{0}%,,,,,,
@@ -25,7 +25,7 @@ ship.stats.power.deployed.power,Deployed,,,,,,Выпущено
 ship.stats.power.retracted.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт
 ship.stats.power.deployed.power.value,{0}/{1} MW,,,,,,{0}/{1} МВт
 ship.stats.jumprange,Jump range,,,,,,Дальность прыжка
-ship.stats.jumprange.value,{0} Ly,,,,,,{0} Св.л.
+ship.stats.jumprange.value,{0} Ly,,,,,,{0} с.л.
 ship.stats.jumprange.min,Minimum range,,,,,,Минимальна дальность
 ship.stats.jumprange.current,Current range,,,,,,Текущая дальность
 ship.stats.jumprange.maxfueled,Maximum range (full fuel),,,,,,Максимальная дальность (полный бак)
@@ -83,19 +83,19 @@ ship.stats.shield.strengthkinetic,Strength Kinetic,,,,,,Кинетическая
 ship.stats.shield.strengththermal,Strength Thermal,,,,,,Термальная мощность
 ship.stats.shield.strengthexplosive,Strength Explosive,,,,,,Взрывная мощность
 ship.stats.shield.strengthcaustic,Strength Caustic,,,,,,Едкая мощность
-ship.stats.shield.raw,Raw,,,,,,
-ship.stats.shield.kinetic,Kinetic,,,,,,
-ship.stats.shield.thermal,Thermal,,,,,,
-ship.stats.shield.explosive,Explosive,,,,,,
-ship.stats.shield.caustic,Caustic,,,,,,
+ship.stats.shield.raw,Raw,,,,,,Абсолют
+ship.stats.shield.kinetic,Kinetic,,,,,,Кинетика
+ship.stats.shield.thermal,Thermal,,,,,,Термал
+ship.stats.shield.explosive,Explosive,,,,,,Взрыв
+ship.stats.shield.caustic,Caustic,,,,,,Едкое
 ship.stats.weapon,Weapon,,,,,,Оружие
-ship.stats.weapon.rawdamage,Raw Damage,,,,,,Чистый урон
-ship.stats.weapon.absolutepercentage,Absolute,,,,,,Абсолютный урон
-ship.stats.weapon.kineticpercentage,Kinetic,,,,,,Кинетический урон
-ship.stats.weapon.thermalpercentage,Thermal,,,,,,Термальный урон
-ship.stats.weapon.explosivepercentage,Explosive,,,,,,Взрывной урон
-ship.stats.weapon.causticpercentage,Caustic,,,,,,Едкий урон
-ship.stats.weapon.antixenopercentage,Anti-Xeno,,,,,,АИ урон
+ship.stats.weapon.rawdamage,Raw Damage,,,,,,Общий урон
+ship.stats.weapon.absolutepercentage,Absolute,,,,,,Абсолют.
+ship.stats.weapon.kineticpercentage,Kinetic,,,,,,Кинетич.
+ship.stats.weapon.thermalpercentage,Thermal,,,,,,Термал.
+ship.stats.weapon.explosivepercentage,Explosive,,,,,,Взрыв.
+ship.stats.weapon.causticpercentage,Caustic,,,,,,Едкий
+ship.stats.weapon.antixenopercentage,Anti-Xeno,,,,,,АИ
 ship.stats.weapon.burstduration,Burst duration,,,,,,Время очереди
 ship.stats.weapon.ammoduration,Ammo duration,,,,,,Время магазина
 ship.stats.weapon.rawdamage.value,{0} dps,,,,,,{0} УвС
