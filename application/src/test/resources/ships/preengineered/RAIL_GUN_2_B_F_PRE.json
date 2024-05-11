@@ -1,0 +1,88 @@
+{
+  "Slot": "MediumHardpoint1",
+  "Item": "hpt_railgun_fixed_medium",
+  "On": true,
+  "Priority": 2,
+  "AmmoInClip": 2,
+  "AmmoInHopper": 160,
+  "Health": 1.000000,
+  "Value": 353177,
+  "Engineering": {
+    "Engineer": "Tod 'The Blaster' McQuinn",
+    "EngineerID": 300260,
+    "BlueprintID": 128673604,
+    "BlueprintName": "Weapon_HighCapacity",
+    "Level": 5,
+    "Quality": 1.000000,
+    "ExperimentalEffect": "special_feedback_cascade_cooled",
+    "ExperimentalEffect_Localised": "$special_feedback_cascade_name;",
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 7.600000,
+        "OriginalValue": 4.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 2.689500,
+        "OriginalValue": 1.630000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 53.371883,
+        "OriginalValue": 50.036144,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 33.223999,
+        "OriginalValue": 41.529999,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ThermalLoad",
+        "Value": 12.000000,
+        "OriginalValue": 20.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "MaximumRange",
+        "Value": 6000.000000,
+        "OriginalValue": 3000.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "RateOfFire",
+        "Value": 1.606426,
+        "OriginalValue": 1.204819,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 2.000000,
+        "OriginalValue": 1.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 160.000000,
+        "OriginalValue": 80.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ReloadTime",
+        "Value": 1.250000,
+        "OriginalValue": 1.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamageFalloffRange",
+        "Value": 6000.000000,
+        "OriginalValue": 1000.000000,
+        "LessIsGood": 0
+      }
+    ]
+  }
+}

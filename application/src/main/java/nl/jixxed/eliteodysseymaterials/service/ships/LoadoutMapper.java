@@ -11,7 +11,6 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.enums.MatchType;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
-import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Module;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.math.BigDecimal;
@@ -37,7 +36,7 @@ public class LoadoutMapper {
     private static final double EPSILON = 0.0001;
 
     public static Ship toShip(Loadout loadout) {
-        final ShipType shipType; // TODO - unknown ship
+        final ShipType shipType;
         try {
             shipType = ShipType.forInternalName(loadout.getShip());
         } catch (IllegalArgumentException e) {
@@ -56,7 +55,6 @@ public class LoadoutMapper {
                 if (slot != null) {
                     final List<ShipModule> potentialShipModules = getPotentialShipModules(module.getItem(), slot.getSlotType());
                     final ShipModule matchingModule = module.getEngineering().map(engineering -> {
-                        reportIfDesired(module);
                         if (!potentialShipModules.isEmpty()) {
                             if (isPreEngineered(potentialShipModules, engineering)) {
                                 return potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule -> matchingEngineering(shipModule, engineering)).findFirst().orElseThrow(IllegalArgumentException::new);
@@ -123,63 +121,6 @@ public class LoadoutMapper {
             }
         });
         return ship;
-    }
-
-    private static void reportIfDesired(Module module) {
-        if (isKWS(module) || isRail(module)) {
-            report(module);
-        }
-    }
-
-
-    private static boolean isKWS(Module module) {
-        return module.getItem().equalsIgnoreCase("Hpt_CrimeScanner_Size0_Class5")
-                && module.getEngineering().isPresent()
-                && module.getEngineering().map(eng -> eng.getBlueprintName().equalsIgnoreCase("killwarrantscanner_fastscan")).orElse(false)
-                && module.getEngineering().map(eng -> eng.getModifiers().stream().anyMatch(mod -> mod.getLabel().equalsIgnoreCase("ScannerRange"))).orElse(false);
-    }
-    private static boolean isRail(Module module) {
-        return module.getItem().equalsIgnoreCase("Hpt_Railgun_Fixed_Medium")
-                && module.getEngineering().isPresent()
-                && module.getEngineering().map(eng -> eng.getBlueprintName().equalsIgnoreCase("weapon_highcapacity")).orElse(false)
-                && module.getEngineering().map(eng -> eng.getExperimentalEffect().orElse("").equalsIgnoreCase("special_feedback_cascade")).orElse(false)
-                && module.getEngineering().map(eng -> eng.getModifiers().stream().anyMatch(mod -> mod.getLabel().equalsIgnoreCase("DamageFalloffRange"))).orElse(false);
-    }
-
-    private static void report(Module module) {
-        try {
-            ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), null);
-        } catch (Exception e) {
-            log.error("failed to send module error", e);
-        }
-    }
-
-    private static void testModuleValues(ShipModule shipModule, Module module) {
-        final ShipModule clone = shipModule.Clone();
-        clone.getModifiers().clear();
-        List<String> differences = new ArrayList<>();
-        boolean hasDifferences = shipModule.getAttibutes().stream().anyMatch((horizonsModifier) -> {
-            final Object cloneValue = clone.getAttributeValue(horizonsModifier);
-            final Object value = shipModule.getAttributeValue(horizonsModifier);
-            if (value instanceof Double) {
-                if (Math.abs((double) value - (double) cloneValue) > EPSILON) {
-                    log.warn("unexpected value");
-                    differences.add(horizonsModifier.name() + " value: " + value + " != expected:" + cloneValue);
-                    return true;
-                }
-            }
-            return false;
-        });
-        if (hasDifferences && module.getEngineering().map(engineering -> !isLegacy(shipModule, engineering)).orElse(false)) {
-            try {
-                ReportService.reportJournal("module", OBJECT_MAPPER.writeValueAsString(module), "Module with differences detected: " + module.getItem() + "\n" + String.join("\n", differences));
-                log.error("Sending: " + OBJECT_MAPPER.writeValueAsString(module));
-                differences.forEach(log::error);
-            } catch (Exception e) {
-                log.error("failed to send module error", e);
-            }
-        }
-
     }
 
     public static boolean matchingEngineering(ShipModule shipModule, Engineering engineering) {

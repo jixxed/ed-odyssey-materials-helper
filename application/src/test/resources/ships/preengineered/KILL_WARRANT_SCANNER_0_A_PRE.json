@@ -1,0 +1,48 @@
+{
+  "Slot": "TinyHardpoint4",
+  "Item": "hpt_crimescanner_size0_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.000000,
+  "Value": 962702,
+  "Engineering": {
+    "Engineer": "Tiana Fortune",
+    "EngineerID": 300270,
+    "BlueprintID": 128740131,
+    "BlueprintName": "Sensor_FastScan",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "Integrity",
+        "Value": 24.000000,
+        "OriginalValue": 48.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 4.800000,
+        "OriginalValue": 3.200000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "ScannerRange",
+        "Value": 6600.000000,
+        "OriginalValue": 4000.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "MaxAngle",
+        "Value": 10.500000,
+        "OriginalValue": 15.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "ScannerTimeToScan",
+        "Value": 2.000000,
+        "OriginalValue": 10.000000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}
