@@ -160,7 +160,7 @@ class LoadoutMapperTest {
                 Arguments.of("AX_MISSILE_RACK_3_C_F_PRE.json", AXMissileRack.AX_MISSILE_RACK_3_C_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("AX_MULTI_CANNON_2_E_F_PRE.json", AXMultiCannon.AX_MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("AX_MULTI_CANNON_3_C_F_PRE.json", AXMultiCannon.AX_MULTI_CANNON_3_C_F_PRE, SlotType.HARDPOINT),
-//                Arguments.of("ENZYME_MISSILE_RACK_2_B_F_PRE.json", EnzymeMissileRack.ENZYME_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
+                Arguments.of("ENZYME_MISSILE_RACK_2_B_F_PRE.json", EnzymeMissileRack.ENZYME_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_GAUSS_CANNON_1_D_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_GAUSS_CANNON_2_B_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_PLASMA_CHARGER_1_D_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_1_D_F_PRE, SlotType.HARDPOINT),

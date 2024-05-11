@@ -126,7 +126,7 @@ public class LoadoutMapper {
     }
 
     private static void reportIfDesired(Module module) {
-        if (isKWS(module) || isRail(module) ||  isEnzyme(module)) {
+        if (isKWS(module) || isRail(module)) {
             report(module);
         }
     }
@@ -144,10 +144,6 @@ public class LoadoutMapper {
                 && module.getEngineering().map(eng -> eng.getBlueprintName().equalsIgnoreCase("weapon_highcapacity")).orElse(false)
                 && module.getEngineering().map(eng -> eng.getExperimentalEffect().orElse("").equalsIgnoreCase("special_feedback_cascade")).orElse(false)
                 && module.getEngineering().map(eng -> eng.getModifiers().stream().anyMatch(mod -> mod.getLabel().equalsIgnoreCase("DamageFalloffRange"))).orElse(false);
-    }
-    private static boolean isEnzyme(Module module) {
-        return module.getItem().equalsIgnoreCase("Hpt_CausticMissile_Fixed_Medium")
-                && module.getEngineering().isPresent();
     }
 
     private static void report(Module module) {
@@ -231,7 +227,7 @@ public class LoadoutMapper {
                         final Object attributeValue = shipModule.getAttributeValue(moduleAttribute);
 
                         if (attributeValue instanceof Double value2) {
-                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
+//                            log.debug(moduleAttribute.name() + ": " + value.setScale(2, RoundingMode.HALF_EVEN) + " =? " + BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                             return value.setScale(2, RoundingMode.HALF_EVEN).equals(BigDecimal.valueOf(value2).multiply(moduleAttribute.getMultiplier()).setScale(2, RoundingMode.HALF_EVEN));
                         }
                         if (attributeValue instanceof Boolean) {

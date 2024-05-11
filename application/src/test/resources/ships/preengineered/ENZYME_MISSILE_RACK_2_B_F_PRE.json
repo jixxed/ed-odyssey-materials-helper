@@ -1,0 +1,56 @@
+{
+  "Slot": "MediumHardpoint1",
+  "Item": "hpt_causticmissile_fixed_medium",
+  "On": true,
+  "Priority": 0,
+  "AmmoInClip": 14,
+  "AmmoInHopper": 80,
+  "Health": 1.000000,
+  "Value": 456776,
+  "Engineering": {
+    "EngineerID": 300080,
+    "BlueprintID": 128673479,
+    "BlueprintName": "Weapon_HighCapacity",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 6.400000,
+        "OriginalValue": 4.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 1.440000,
+        "OriginalValue": 1.200000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "DamagePerSecond",
+        "Value": 3.750000,
+        "OriginalValue": 2.500000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "Damage",
+        "Value": 7.500000,
+        "OriginalValue": 5.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoClipSize",
+        "Value": 14.000000,
+        "OriginalValue": 8.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "AmmoMaximum",
+        "Value": 80.000000,
+        "OriginalValue": 64.000000,
+        "LessIsGood": 0
+      }
+    ],
+    "Engineer": "Liz Ryder"
+  }
+}
