@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: after a new ship has been unlocked in the Shipyard",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "ShipType" : {
+      "title" : "ShipType",
+      "type" : "string",
+      "examples" : [ "python_nx" ]
+    },
+    "ShipType_Localised" : {
+      "title" : "ShipType_Localised",
+      "type" : "string",
+      "examples" : [ "Python Mk II" ]
+    },
+    "BundleID" : {
+      "title" : "BundleID",
+      "type" : "integer",
+      "examples" : [ 129030519 ]
+    },
+    "MarketID" : {
+      "title" : "MarketID",
+      "type" : "integer",
+      "examples" : [ 3223490048 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "ShipType", "NewShipID" ]
+}
