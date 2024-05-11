@@ -11,9 +11,9 @@ ship.stats.config.cargo_hatch,Cargo hatch,,,,,,Грузовой ковш
 ship.stats.thermalpower,Thermals & power,,,,,,Нагрев и Мощность
 ship.stats.thermal,Thermals,,,,,,Нагрев
 ship.stats.power,Power,,,,,,Мощность
-ship.stats.thermal.idle.thermals,Idle heat,,,,,,Нагрев в покое
-ship.stats.thermal.thruster.thermals,Full thrust heat,,,,,,Нагрев в движении
-ship.stats.thermal.fsd.thermals,FSD charging heat,,,,,,Нагрев при зарядке FSD
+ship.stats.thermal.idle.thermals,Idle heat,,,,,,В покое
+ship.stats.thermal.thruster.thermals,Full thrust heat,,,,,,В движении
+ship.stats.thermal.fsd.thermals,FSD charging heat,,,,,,При зарядке FSD
 ship.stats.thermal.idle.thermals.value,{0}%,,,,,,
 ship.stats.thermal.thruster.thermals.value,{0}%,,,,,,
 ship.stats.thermal.fsd.thermals.value,{0}%,,,,,,
