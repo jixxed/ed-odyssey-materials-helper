@@ -40,6 +40,13 @@ tasks.register('copyDeb', Copy) {
     rename('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.deb')
 }
 
+task copyRpm(type: Copy) {
+    from 'bootstrap/build/jpackage/'
+    into 'output'
+    include('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm')
+    rename('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.rpm')
+}
+
 task makePortable(type: Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
@@ -73,7 +80,7 @@ tasks.register("createPortableRelease") {
 
 tasks.register("createReleaseLinux") {
     dependsOn subprojects.jpackage
-    finalizedBy makeLinuxPortable, copyDeb
+    finalizedBy makeLinuxPortable, copyDeb, copyRpm
 }
 
 
