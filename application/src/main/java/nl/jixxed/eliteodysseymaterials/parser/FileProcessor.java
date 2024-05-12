@@ -144,7 +144,12 @@ public class FileProcessor {
             final List<String> singleMessages = messages.entrySet().stream()
                     .sorted(Comparator.comparing(entry -> {
                         try {
-                            return OBJECT_MAPPER.readTree(entry.getValue()).get("timestamp").asText();
+                            final JsonNode jsonNode = OBJECT_MAPPER.readTree(entry.getValue());
+                            //force fileheader to be first because timestamp is local time vs server time and can be ahead
+                            if(jsonNode.get("event").asText().equals(JournalEventType.FILEHEADER.friendlyName())){
+                                return "0";
+                            }
+                            return jsonNode.get("timestamp").asText();
                         } catch (final JsonProcessingException e) {
                             log.error("Failed to read timestamp for event", e);
                         }
@@ -158,7 +163,12 @@ public class FileProcessor {
             Stream.concat(singleMessages.stream(), alwaysProcessMessages.stream())
                     .sorted(Comparator.comparing(event -> {
                         try {
-                            return OBJECT_MAPPER.readTree(event).get("timestamp").asText();
+                            final JsonNode jsonNode = OBJECT_MAPPER.readTree(event);
+                            //force fileheader to be first because timestamp is local time vs server time and can be ahead
+                            if(jsonNode.get("event").asText().equals(JournalEventType.FILEHEADER.friendlyName())){
+                                return "0";
+                            }
+                            return jsonNode.get("timestamp").asText();
                         } catch (final JsonProcessingException e) {
                             log.error("Failed to read timestamp for event", e);
                         }
