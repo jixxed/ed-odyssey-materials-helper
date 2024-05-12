@@ -3184,6 +3184,8 @@
 }
 .stats-values{
     -fx-background-color: #0f0f0f;
+    -fx-min-width: 20.6em;
+    -fx-max-width: 20.6em;
 }
 .module-details-title{
     -fx-padding: 0.5em 0em 0.1em 0.2em;
@@ -3634,7 +3636,9 @@
     -fx-padding: 0.2em 24.5em 0em 0em;
 }
 .module-details-value{
-    -fx-padding: 0em 0em 0em 0.2em;
+    -fx-wrap-text: true;
+    -fx-max-width: 20.6em;
+    -fx-padding: 0em 0em 0em 0.95em;
     -fx-alignment: center-right;
 }
 .module-details-line{
@@ -3703,4 +3707,9 @@
     -fx-max-width: 15em;
     -fx-stroke: white;
     -fx-stroke-width: 0.1em;
+}
+.module-details-engineering{
+    -fx-min-width: 20.6em;
+    -fx-max-width: 20.6em;
+    -fx-padding: 0 0 0 0.75em;
 }
