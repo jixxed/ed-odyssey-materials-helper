@@ -1,3 +1,7 @@
+Version 2.68
+-------------
+Bugfix for loading new of new events
+
 Version 2.67
 -------------
 Consider anti corrosion racks for max cargo

@@ -42,11 +42,10 @@ application {
     mainModule = "nl.jixxed.bootstrap"
     mainClass = "nl.jixxed.bootstrap.Main"
 }
-
 if (os.isWindows()) {
     ext { packageType = ["msi"] }
 } else {
-    ext { packageType = ["deb","rpm"] }
+    ext { packageType = ["deb"] }
 }
 jlink {
     addExtraDependencies("javafx")

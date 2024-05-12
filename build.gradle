@@ -24,7 +24,6 @@ wrapper {
     gradleVersion "8.7"
 }
 
-
 tasks.register('copyInstaller', Copy) {
     dependsOn ":bootstrap:jpackage"
     from 'bootstrap/build/jpackage/'
@@ -80,7 +79,7 @@ tasks.register("createPortableRelease") {
 
 tasks.register("createReleaseLinux") {
     dependsOn subprojects.jpackage
-    finalizedBy makeLinuxPortable, copyDeb, copyRpm
+    finalizedBy makeLinuxPortable, copyDeb
 }
 
 
