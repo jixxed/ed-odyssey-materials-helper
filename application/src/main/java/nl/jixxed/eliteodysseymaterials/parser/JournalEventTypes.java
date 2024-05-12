@@ -216,10 +216,12 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.SharedBookmarkToSquadron.
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShieldState.ShieldState;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipLocker.ShipLocker;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipLockerMaterials.ShipLockerMaterials;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipRedeemed.ShipRedeemed;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipTargeted.ShipTargeted;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Shipyard.Shipyard;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardBuy.ShipyardBuy;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardNew.ShipyardNew;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardRedeem.ShipyardRedeem;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardSell.ShipyardSell;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardSwap.ShipyardSwap;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ShipyardTransfer.ShipyardTransfer;
@@ -474,10 +476,12 @@ public class JournalEventTypes {
             Map.entry("ShieldState", ShieldState.class),
             Map.entry("ShipLocker", ShipLocker.class),
             Map.entry("ShipLockerMaterials", ShipLockerMaterials.class),
+            Map.entry("ShipRedeemed", ShipRedeemed.class),
             Map.entry("ShipTargeted", ShipTargeted.class),
             Map.entry("Shipyard", Shipyard.class),
             Map.entry("ShipyardBuy", ShipyardBuy.class),
             Map.entry("ShipyardNew", ShipyardNew.class),
+            Map.entry("ShipyardRedeem", ShipyardRedeem.class),
             Map.entry("ShipyardSell", ShipyardSell.class),
             Map.entry("ShipyardSwap", ShipyardSwap.class),
             Map.entry("ShipyardTransfer", ShipyardTransfer.class),
