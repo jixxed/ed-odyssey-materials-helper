@@ -1,3 +1,8 @@
+Version 2.67
+-------------
+Consider anti corrosion racks for max cargo
+fix width/newline on engineering in module details
+
 Version 2.66
 -------------
 Add pre-engineered enzyme missile, railgun and KWS tests (All pre-engineered modules should now be detected by the app)
