@@ -30,7 +30,7 @@ public class RegistryService {
             [HKEY_CLASSES_ROOT\\edomh\\shell\\open]
                         
             [HKEY_CLASSES_ROOT\\edomh\\shell\\open\\command]
-            @=\"\\\"""" + CURRENT_DIR_DOUBLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\\\" \\\"%1\\\"\"";
+            @=\"\\\"""" + CURRENT_DIR_DOUBLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\\\" \\\"%1\\\"\"\n\n";
     private static final String DESKTOPFILE = """
             [Desktop Entry]
             Name=Elite Dangerous Odyssey Materials Helper
@@ -75,8 +75,9 @@ public class RegistryService {
     }
 
     private static void writeRegFile(final File file) {
-        try (final OutputStream output = new FileOutputStream(file)) {
-            output.write(REG_KEY.getBytes(StandardCharsets.UTF_16LE));
+        try (final OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_16LE)) {
+            output.write('\ufeff');
+            output.write(REG_KEY.replaceAll("\r\n", "\n").replaceAll("\n", "\r\n"));
         } catch (final IOException e) {
             log.error("Error creating reg file", e);
         }
