@@ -96,7 +96,10 @@ public class MultiCannonBlueprints {
                                     HorizonsModifier.DISTRIBUTOR_DRAW, new HorizonsNumberModifierValue("-45%", true, percentageNegative(0.35, 0.45)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("-60%", true, percentageNegative(0.525, 0.60))
                             ),
-                            List.of(Engineer.MEL_BRANDON, Engineer.BROO_TARQUIN)
+                            List.of(
+                                    Engineer.MARSHA_HICKS,
+                                    Engineer.TOD_THE_BLASTER_MCQUINN
+                            )
                     )
             ),
             HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE,
