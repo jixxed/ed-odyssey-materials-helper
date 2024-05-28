@@ -41,11 +41,11 @@ public enum HorizonsMaterialType {
     }
 
     public static HorizonsMaterialType[] getEncodedTypes() {
-        return new HorizonsMaterialType[]{SHIELD_DATA, EMISSION_DATA, ENCODED_FIRMWARE, ENCRYPTION_FILES, DATA_ARCHIVES, WAKE_SCANS, GUARDIAN, THARGOID};
+        return new HorizonsMaterialType[]{EMISSION_DATA, WAKE_SCANS, SHIELD_DATA, ENCRYPTION_FILES, DATA_ARCHIVES, ENCODED_FIRMWARE, GUARDIAN, THARGOID};
     }
 
     public static HorizonsMaterialType[] getManufacturedTypes() {
-        return new HorizonsMaterialType[]{CONDUCTIVE, COMPOSITE, CHEMICAL, CRYSTALS, SHIELDING, MECHANICAL_COMPONENTS, HEAT, THERMIC, CAPACITORS, ALLOYS, GUARDIAN, THARGOID};
+        return new HorizonsMaterialType[]{CHEMICAL, THERMIC, HEAT, CONDUCTIVE, MECHANICAL_COMPONENTS, CAPACITORS, SHIELDING, COMPOSITE, CRYSTALS, ALLOYS, GUARDIAN, THARGOID};
     }
 
     public String getLocalizationKey() {
