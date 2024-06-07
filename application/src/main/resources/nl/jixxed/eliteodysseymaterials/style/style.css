@@ -2790,6 +2790,7 @@
     -fx-spacing: 0.1em;
 }
 .ships-modules-buttons .button{
+    -fx-pref-height: 2.1em;
     /*-fx-pref-width: 100%;*/
     /*-fx-fit-to-width: true;*/
     /*-fx-border-color: black;*/
