@@ -121,6 +121,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
     }
 
     private MenuButton menuButton;
+    private Button shipBuilderButton;
     private Button edsyButton;
     private Button coriolisButton;
 
@@ -263,6 +264,9 @@ public class HorizonsWishlistTab extends HorizonsTab {
                 )).build();
         this.menuButton.setFocusTraversable(false);
 
+        this.shipBuilderButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("horizons.wishlist.shipbuilder")).withOnAction(event -> {
+            EventService.publish(new HorizonsWishlistOpenShipBuilderEvent());
+        }).build();
         this.edsyButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("horizons.wishlist.edsy")).withOnAction(event -> {
             application.getHostServices().showDocument("https://edsy.org");
         }).build();
@@ -302,7 +306,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         HBox.setHgrow(this.techbrokerRecipes, Priority.ALWAYS);
         this.blueprints = BoxBuilder.builder().withStyleClass("wishlist-blueprints").buildVBox();
 
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton, this.edsyButton/*, this.coriolisButton*/).buildHBox();
+        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.wishlistSelect, this.menuButton, this.shipBuilderButton, this.edsyButton, this.coriolisButton).buildHBox();
         this.materialHintRed = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-red", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.red")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.red.explain")).build()).buildHBox();
         this.materialHintYellow = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-yellow", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.yellow")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.yellow.explain")).build()).buildHBox();
         this.materialHintGreen = BoxBuilder.builder().withNodes(LabelBuilder.builder().withStyleClasses("wishlist-hint-green", "wishlist-hint-box").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.green")).build(), LabelBuilder.builder().withStyleClass("wishlist-hint-white").withText(LocaleService.getStringBinding("tab.wishlist.material.hint.green.explain")).build()).buildHBox();

@@ -38,7 +38,7 @@ public class DeeplinkHelper {
                 NotificationService.showError(NotificationType.ERROR, "Failed to import ship", ex.getMessage());
             } catch (final CoriolisDeeplinkException ex) {
                 EventService.publish(new ImportResultEvent(new ImportResult(ImportResult.ResultType.ERROR_CORIOLIS_WISHLIST)));
-                NotificationService.showError(NotificationType.ERROR, "Coriolis-EDOMH link doesn't work. Use this app or EDSY for your ship builds.", ex.getMessage());
+                NotificationService.showError(NotificationType.ERROR, "Failed to import Coriolis wishlist", ex.getMessage());
 //                        NotificationService.showError(NotificationType.ERROR, "Failed to import Coriolis wishlist", ex.getMessage());
             } catch (final RuntimeException ex) {
                 NotificationService.showError(NotificationType.ERROR, "Failed to import", ex.getMessage());

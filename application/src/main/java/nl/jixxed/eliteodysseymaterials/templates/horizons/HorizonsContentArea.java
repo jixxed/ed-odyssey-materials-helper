@@ -102,6 +102,9 @@ class HorizonsContentArea extends AnchorPane {
                 this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
             }
         }));
+        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistOpenShipBuilderEvent.class, horizonsWishlistOpenShipBuilderEvent -> {
+                this.tabs.getSelectionModel().select(this.horizonsShipBuilderTab);
+        }));
         this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             this.recipeBar.setVisible(true);
             PreferencesService.setPreference(PreferenceConstants.HORIZONS_RECIPES_VISIBLE, true);
