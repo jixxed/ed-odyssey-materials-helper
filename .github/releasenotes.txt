@@ -6,4 +6,9 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix for being unable to register app to handle edomh:// urls
+Fix engineers for multicannon blueprint (efficient G5)
+Reorder ship materials to match ingame order
+Add coriolis and shipbuilder buttons to wishlist
+Fix module button height to be the same whether it has an icon or not
+Add some logging for the edomh url registration check
+Added some outdated modules to the app for proper detection

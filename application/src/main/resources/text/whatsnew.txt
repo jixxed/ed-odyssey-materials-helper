@@ -1,3 +1,12 @@
+Version 2.70
+-------------
+Fix engineers for multicannon blueprint (efficient G5)
+Reorder ship materials to match ingame order
+Add coriolis and shipbuilder buttons to wishlist
+Fix module button height to be the same whether it has an icon or not
+Add some logging for the edomh url registration check
+Added some outdated modules to the app for proper detection
+
 Version 2.69
 -------------
 Fix for being unable to register app to handle edomh:// urls
