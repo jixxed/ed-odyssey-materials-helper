@@ -101,7 +101,13 @@ public class RegistryService {
 
     public static boolean isRegistered() {
         if (!IS_JAVA && OsCheck.isWindows()) {
-            return getRegistryValue().equals("\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"");
+            final String registryValue = getRegistryValue();
+            final String expectedValue = "\"" + CURRENT_DIR_SINGLE_SLASHED + "Elite Dangerous Odyssey Materials Helper.exe\" \"%1\"";
+            log.info("Registry value: {}", registryValue);
+            log.info("Expected value: {}", expectedValue);
+            final boolean equals = registryValue.equals(expectedValue);
+            log.info("Registry equals expected: {}", equals);
+            return equals;
         } else if (!IS_JAVA && OsCheck.isLinux()) {
             final File file = new File(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH);
             return file.exists() && file.isFile();
@@ -123,7 +129,7 @@ public class RegistryService {
             final StringBuilder value = new StringBuilder();
 
             outputReader = new BufferedReader(new InputStreamReader(
-                    keyReader.getInputStream()));
+                    keyReader.getInputStream()/*, StandardCharsets.UTF_16LE*/));//this might be a fix
 
             while ((readLine = outputReader.readLine()) != null) {
                 value.append(readLine);
