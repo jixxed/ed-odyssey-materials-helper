@@ -221,3 +221,6 @@ blueprint.horizons.name.xeno_limpet_controller.short,Xeno,Xeno,,,,,Иные
 blueprint.horizons.name.xeno_scanner,Xeno Scanner,Xeno Scanner,,,,,Ксено-сканер
 blueprint.horizons.name.cargo_hatch,Cargo Hatch,Cargo Hatch,,,,,Грузовой люк
 blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,Guardian Nanite Munitions,,,,,Нанитные боеприпасы
+blueprint.horizons.name.basic_discovery_scanner,Basic Discovery Scanner,Basic Discovery Scanner,,,,,
+blueprint.horizons.name.intermediate_discovery_scanner,Intermediate Discovery Scanner,Intermediate Discovery Scanner,,,,,
+blueprint.horizons.name.advanced_discovery_scanner,Advanced Discovery Scanner,Advanced Discovery Scanner,,,,,

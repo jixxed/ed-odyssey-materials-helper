@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Sensors extends CoreModule {
+    public static final Sensors SENSORS_1_E_FREE = new Sensors("SENSORS_1_E_FREE", HorizonsBlueprintName.SENSORS, ModuleSize.SIZE_1, ModuleClass.E, 0, "Int_Sensors_Size1_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 36.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.16), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.MAX_RANGE, 8.0), Map.entry(HorizonsModifier.SCAN_ANGLE, 30.0), Map.entry(HorizonsModifier.TYPICAL_EMISSION_RANGE, 4000.0)));
     public static final Sensors SENSORS_1_E = new Sensors("SENSORS_1_E", HorizonsBlueprintName.SENSORS, ModuleSize.SIZE_1, ModuleClass.E, 520, "Int_Sensors_Size1_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 36.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.16), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.MAX_RANGE, 8.0), Map.entry(HorizonsModifier.SCAN_ANGLE, 30.0), Map.entry(HorizonsModifier.TYPICAL_EMISSION_RANGE, 4000.0)));
     public static final Sensors SENSORS_1_D = new Sensors("SENSORS_1_D", HorizonsBlueprintName.SENSORS, ModuleSize.SIZE_1, ModuleClass.D, 1290, "Int_Sensors_Size1_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 0.50), Map.entry(HorizonsModifier.INTEGRITY, 32.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.18), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.MAX_RANGE, 8.0), Map.entry(HorizonsModifier.SCAN_ANGLE, 30.0), Map.entry(HorizonsModifier.TYPICAL_EMISSION_RANGE, 4500.0)));
     public static final Sensors SENSORS_1_C = new Sensors("SENSORS_1_C", HorizonsBlueprintName.SENSORS, ModuleSize.SIZE_1, ModuleClass.C, 3230, "Int_Sensors_Size1_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.20), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.MAX_RANGE, 8.0), Map.entry(HorizonsModifier.SCAN_ANGLE, 30.0), Map.entry(HorizonsModifier.TYPICAL_EMISSION_RANGE, 5000.0)));
@@ -54,6 +55,7 @@ public class Sensors extends CoreModule {
     public static final Sensors SENSORS_8_B = new Sensors("SENSORS_8_B", HorizonsBlueprintName.SENSORS, ModuleSize.SIZE_8, ModuleClass.B, 10899760, "Int_Sensors_Size8_Class4", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 256.00), Map.entry(HorizonsModifier.INTEGRITY, 180.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.14), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.MAX_RANGE, 8.0), Map.entry(HorizonsModifier.SCAN_ANGLE, 30.0), Map.entry(HorizonsModifier.TYPICAL_EMISSION_RANGE, 7040.0)));
     public static final Sensors SENSORS_8_A = new Sensors("SENSORS_8_A", HorizonsBlueprintName.SENSORS, ModuleSize.SIZE_8, ModuleClass.A, 27249390, "Int_Sensors_Size8_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 160.00), Map.entry(HorizonsModifier.INTEGRITY, 165.0), Map.entry(HorizonsModifier.POWER_DRAW, 2.07), Map.entry(HorizonsModifier.BOOT_TIME, 5.0), Map.entry(HorizonsModifier.MAX_RANGE, 8.0), Map.entry(HorizonsModifier.SCAN_ANGLE, 30.0), Map.entry(HorizonsModifier.TYPICAL_EMISSION_RANGE, 7680.0)));
     public static final List<Sensors> SENSORS = List.of(
+            SENSORS_1_E_FREE,
             SENSORS_1_E,
             SENSORS_1_D,
             SENSORS_1_C,
@@ -117,5 +119,9 @@ public class Sensors extends CoreModule {
     @Override
     public Sensors Clone() {
         return new Sensors(this);
+    }
+
+    public boolean isSelectable() {
+        return !SENSORS_1_E_FREE.equals(this);
     }
 }

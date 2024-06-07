@@ -1,6 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
-import nl.jixxed.eliteodysseymaterials.domain.ships.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
+import nl.jixxed.eliteodysseymaterials.domain.ships.OptionalModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -42,7 +45,7 @@ public class FrameShiftDriveBooster extends OptionalModule {
     }
 
     @Override
-    public ShipModule Clone() {
+    public FrameShiftDriveBooster Clone() {
         return new FrameShiftDriveBooster(this);
     }
 }

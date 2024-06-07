@@ -46,8 +46,8 @@ public class SlotBoxEntry extends VBox {
         //add ship modules
         final ShipModule firstModule = shipModulesList.get(0);
         final List<ShipModule> shipModules = (firstModule instanceof Armour)
-                ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).toList()
-                : shipModulesList;
+                ? shipModulesList.stream().filter(shipModule -> ((Armour) shipModule).getShipType().equals(ApplicationState.getInstance().getShip().getShipType())).filter(ShipModule::isSelectable).toList()
+                : shipModulesList.stream().filter(ShipModule::isSelectable).toList();
         this.name = LabelBuilder.builder().withStyleClass("ships-modules-title").withText(LocaleService.getStringBinding(firstModule.getName().getBlueprintGroup().getLocalizationKey())).build();
         HBox.setHgrow(this.name, Priority.ALWAYS);
         Stream<List<ShipModule>> stream = shipModules.stream().allMatch(shipModule -> shipModule.hasGrouping())

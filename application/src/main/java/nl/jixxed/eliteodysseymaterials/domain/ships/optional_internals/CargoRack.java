@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class CargoRack extends OptionalModule {
     public static final CargoRack CARGO_RACK_1_E = new CargoRack("CARGO_RACK_1_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_1, ModuleClass.E, false, 1000, "Int_CargoRack_Size1_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  2.0)));
+    public static final CargoRack CARGO_RACK_2_E_FREE = new CargoRack("CARGO_RACK_2_E_FREE", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_2, ModuleClass.E, false, 0, "Int_CargoRack_Size2_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  4.0)));
     public static final CargoRack CARGO_RACK_2_E = new CargoRack("CARGO_RACK_2_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_2, ModuleClass.E, false, 3250, "Int_CargoRack_Size2_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  4.0)));
     public static final CargoRack CARGO_RACK_3_E = new CargoRack("CARGO_RACK_3_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_3, ModuleClass.E, false, 10560, "Int_CargoRack_Size3_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  8.0)));
     public static final CargoRack CARGO_RACK_4_E = new CargoRack("CARGO_RACK_4_E", HorizonsBlueprintName.CARGO_RACK, ModuleSize.SIZE_4, ModuleClass.E, false, 34330, "Int_CargoRack_Size4_Class1", Map.ofEntries(Map.entry(HorizonsModifier.CARGO_CAPACITY,  16.0)));
@@ -23,6 +24,7 @@ public class CargoRack extends OptionalModule {
 
     public static final List<CargoRack> CARGO_RACKS = List.of(
              CARGO_RACK_1_E,
+             CARGO_RACK_2_E_FREE,
              CARGO_RACK_2_E,
              CARGO_RACK_3_E,
              CARGO_RACK_4_E,
@@ -65,5 +67,9 @@ public class CargoRack extends OptionalModule {
     @Override
     public int getGrouping() {
         return 1;
+    }
+
+    public boolean isSelectable() {
+        return !CARGO_RACK_2_E_FREE.equals(this);
     }
 }

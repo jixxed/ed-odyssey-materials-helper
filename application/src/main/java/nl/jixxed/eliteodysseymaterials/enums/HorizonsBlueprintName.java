@@ -182,6 +182,9 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     HULL_REINFORCEMENT_PACKAGE(BlueprintGroup.HULL_REINFORCEMENT_PACKAGES, BlueprintCategory.OPTIONAL_MILITARY),
     MODULE_REINFORCEMENT_PACKAGE(BlueprintGroup.MODULE_REINFORCEMENT_PACKAGES, BlueprintCategory.OPTIONAL_MILITARY),
     SHIELD_CELL_BANK(BlueprintGroup.SHIELD_CELL_BANKS, BlueprintCategory.OPTIONAL_MILITARY),
+    BASIC_DISCOVERY_SCANNER(BlueprintGroup.DISCOVERY_SCANNERS, BlueprintCategory.OPTIONAL_INTERNAL),//removed from game
+    INTERMEDIATE_DISCOVERY_SCANNER(BlueprintGroup.DISCOVERY_SCANNERS, BlueprintCategory.OPTIONAL_INTERNAL),//removed from game
+    ADVANCED_DISCOVERY_SCANNER(BlueprintGroup.DISCOVERY_SCANNERS, BlueprintCategory.OPTIONAL_INTERNAL),//removed from game
     //Synthesis
     AFM_REFILL(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),
     AX_EXPLOSIVE_MUNITIONS(BlueprintGroup.SYNTHESIS, BlueprintCategory.SYNTHESIS),

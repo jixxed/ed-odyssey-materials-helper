@@ -33,7 +33,7 @@ public class CargoHatch extends ShipModule {
     }
 
     @Override
-    public ShipModule Clone() {
+    public CargoHatch Clone() {
         return new CargoHatch(this);
     }
 }

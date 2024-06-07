@@ -78,7 +78,8 @@ public enum BlueprintGroup {
     GUARDIAN_SHIELD_REINFORCEMENT_PACKAGES,
     MODULE_REINFORCEMENT_PACKAGES,
     XENOS,
-    PULSE_WAVE_ANALYSERS;
+    PULSE_WAVE_ANALYSERS,
+    DISCOVERY_SCANNERS;
 
     public String getLocalizationKey() {
         return "blueprint.group.name." + this.name().toLowerCase();

@@ -65,7 +65,7 @@ public class PassengerCabin extends OptionalModule {
     }
 
     @Override
-    public ShipModule Clone() {
+    public PassengerCabin Clone() {
         return new PassengerCabin(this);
     }
 

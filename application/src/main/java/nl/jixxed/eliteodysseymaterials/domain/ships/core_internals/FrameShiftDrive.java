@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FrameShiftDrive extends CoreModule {
+    public static final FrameShiftDrive FRAME_SHIFT_DRIVE_2_E_FREE = new FrameShiftDrive("FRAME_SHIFT_DRIVE_2_E_FREE", HorizonsBlueprintName.FRAME_SHIFT_DRIVE, ModuleSize.SIZE_2, ModuleClass.E, 0, "Int_Hyperdrive_Size2_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 46.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.16), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 48.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 10.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 0.60), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.011), Map.entry(HorizonsModifier.FUEL_POWER, 2.00)));
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_2_E = new FrameShiftDrive("FRAME_SHIFT_DRIVE_2_E", HorizonsBlueprintName.FRAME_SHIFT_DRIVE, ModuleSize.SIZE_2, ModuleClass.E, 1980, "Int_Hyperdrive_Size2_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 46.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.16), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 48.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 10.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 0.60), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.011), Map.entry(HorizonsModifier.FUEL_POWER, 2.00)));
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_2_D = new FrameShiftDrive("FRAME_SHIFT_DRIVE_2_D", HorizonsBlueprintName.FRAME_SHIFT_DRIVE, ModuleSize.SIZE_2, ModuleClass.D, 5930, "Int_Hyperdrive_Size2_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.00), Map.entry(HorizonsModifier.INTEGRITY, 41.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.18), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 54.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 10.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 0.60), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.010), Map.entry(HorizonsModifier.FUEL_POWER, 2.00)));
     public static final FrameShiftDrive FRAME_SHIFT_DRIVE_2_C = new FrameShiftDrive("FRAME_SHIFT_DRIVE_2_C", HorizonsBlueprintName.FRAME_SHIFT_DRIVE, ModuleSize.SIZE_2, ModuleClass.C, 17800, "Int_Hyperdrive_Size2_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 2.50), Map.entry(HorizonsModifier.INTEGRITY, 51.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.20), Map.entry(HorizonsModifier.BOOT_TIME, 10.0), Map.entry(HorizonsModifier.FSD_OPTIMISED_MASS, 60.0), Map.entry(HorizonsModifier.FSD_HEAT_RATE, 10.0), Map.entry(HorizonsModifier.MAX_FUEL_PER_JUMP, 0.60), Map.entry(HorizonsModifier.FUEL_MULTIPLIER, 0.008), Map.entry(HorizonsModifier.FUEL_POWER, 2.00)));
@@ -98,6 +99,7 @@ public class FrameShiftDrive extends CoreModule {
     }
 
     public static final List<FrameShiftDrive> FRAME_SHIFT_DRIVES = List.of(
+            FRAME_SHIFT_DRIVE_2_E_FREE,
             FRAME_SHIFT_DRIVE_2_E,
             FRAME_SHIFT_DRIVE_2_D,
             FRAME_SHIFT_DRIVE_2_C,
@@ -223,5 +225,9 @@ public class FrameShiftDrive extends CoreModule {
     @Override
     public int getGrouping() {
         return getModuleSize().intValue() * 10 + (HorizonsBlueprintName.FRAME_SHIFT_DRIVE_OVERCHARGE.equals(this.getName()) ? 1 : 0)+ (isPreEngineered() ? 2 : 0);
+    }
+
+    public boolean isSelectable() {
+        return !FRAME_SHIFT_DRIVE_2_E_FREE.equals(this);
     }
 }

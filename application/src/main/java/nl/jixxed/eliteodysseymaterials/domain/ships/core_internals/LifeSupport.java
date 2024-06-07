@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LifeSupport extends CoreModule {
+    public static final LifeSupport LIFE_SUPPORT_1_E_FREE = new LifeSupport("LIFE_SUPPORT_1_E_FREE", HorizonsBlueprintName.LIFE_SUPPORT, ModuleSize.SIZE_1, ModuleClass.E, 0, "Int_LifeSupport_Size1_Class1_free", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 32.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.32), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.EMERGENCY_LIFE_SUPPORT, 300.0)));
     public static final LifeSupport LIFE_SUPPORT_1_E = new LifeSupport("LIFE_SUPPORT_1_E", HorizonsBlueprintName.LIFE_SUPPORT, ModuleSize.SIZE_1, ModuleClass.E, 520, "Int_LifeSupport_Size1_Class1", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 32.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.32), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.EMERGENCY_LIFE_SUPPORT, 300.0)));
     public static final LifeSupport LIFE_SUPPORT_1_D = new LifeSupport("LIFE_SUPPORT_1_D", HorizonsBlueprintName.LIFE_SUPPORT, ModuleSize.SIZE_1, ModuleClass.D, 1290, "Int_LifeSupport_Size1_Class2", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 0.50), Map.entry(HorizonsModifier.INTEGRITY, 36.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.36), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.EMERGENCY_LIFE_SUPPORT, 450.0)));
     public static final LifeSupport LIFE_SUPPORT_1_C = new LifeSupport("LIFE_SUPPORT_1_C", HorizonsBlueprintName.LIFE_SUPPORT, ModuleSize.SIZE_1, ModuleClass.C, 3230, "Int_LifeSupport_Size1_Class3", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 1.30), Map.entry(HorizonsModifier.INTEGRITY, 40.0), Map.entry(HorizonsModifier.POWER_DRAW, 0.40), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.EMERGENCY_LIFE_SUPPORT, 600.0)));
@@ -54,6 +55,7 @@ public class LifeSupport extends CoreModule {
     public static final LifeSupport LIFE_SUPPORT_8_B = new LifeSupport("LIFE_SUPPORT_8_B", HorizonsBlueprintName.LIFE_SUPPORT, ModuleSize.SIZE_8, ModuleClass.B, 10899770, "Int_LifeSupport_Size8_Class4", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 256.00), Map.entry(HorizonsModifier.INTEGRITY, 165.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.10), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.EMERGENCY_LIFE_SUPPORT, 900.0)));
     public static final LifeSupport LIFE_SUPPORT_8_A = new LifeSupport("LIFE_SUPPORT_8_A", HorizonsBlueprintName.LIFE_SUPPORT, ModuleSize.SIZE_8, ModuleClass.A, 27249400, "Int_LifeSupport_Size8_Class5", Map.ofEntries(Map.entry(HorizonsModifier.MASS, 160.00), Map.entry(HorizonsModifier.INTEGRITY, 180.0), Map.entry(HorizonsModifier.POWER_DRAW, 1.20), Map.entry(HorizonsModifier.BOOT_TIME, 1.0), Map.entry(HorizonsModifier.EMERGENCY_LIFE_SUPPORT, 1500.0)));
     public static final List<LifeSupport> LIFE_SUPPORTS = List.of(
+            LIFE_SUPPORT_1_E_FREE,
             LIFE_SUPPORT_1_E,
             LIFE_SUPPORT_1_D,
             LIFE_SUPPORT_1_C,
@@ -118,5 +120,9 @@ public class LifeSupport extends CoreModule {
     @Override
     public LifeSupport Clone() {
         return new LifeSupport(this);
+    }
+
+    public boolean isSelectable() {
+        return !LIFE_SUPPORT_1_E_FREE.equals(this);
     }
 }

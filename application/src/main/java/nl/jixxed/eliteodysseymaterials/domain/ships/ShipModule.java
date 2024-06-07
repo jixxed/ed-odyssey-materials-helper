@@ -539,6 +539,9 @@ public abstract class ShipModule implements Serializable {
     public MatchType getPreEngineeredMatchType(){
         return MatchType.STATS;
     }
+    public boolean isSelectable() {
+        return true;
+    }
 
     @Override
     public String toString() {

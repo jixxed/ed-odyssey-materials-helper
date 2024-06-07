@@ -49,7 +49,7 @@ public class DetailedSurfaceScanner extends OptionalModule {
     }
 
     @Override
-    public ShipModule Clone() {
+    public DetailedSurfaceScanner Clone() {
         return new DetailedSurfaceScanner(this);
     }
 
