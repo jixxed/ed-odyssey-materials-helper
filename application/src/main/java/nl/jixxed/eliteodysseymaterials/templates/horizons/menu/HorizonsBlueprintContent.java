@@ -11,11 +11,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -263,7 +261,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         menuItem.setOnAction(event -> {
             final HorizonsWishlistBlueprint bp;
             if (this.blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
-                bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), new EnumMap<>(Map.of(horizonsModuleBlueprint.getHorizonsBlueprintGrade(), getGradeRolls(horizonsModuleBlueprint.getHorizonsBlueprintGrade()))));
+                bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), new EnumMap<>(Map.of(horizonsModuleBlueprint.getHorizonsBlueprintGrade(), getGradeRolls(this.blueprint.getHorizonsBlueprintType(), horizonsModuleBlueprint.getHorizonsBlueprintGrade()))));
             } else if (this.blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
                 bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
             } else if (BlueprintCategory.SYNTHESIS.equals((this.blueprint.getBlueprintName()).getBlueprintCategory())) {
@@ -286,7 +284,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
             final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades((this.blueprint.getBlueprintName()), this.blueprint.getHorizonsBlueprintType());
 
             final Map<HorizonsBlueprintGrade, Integer> gradeRolls = new EnumMap<>(HorizonsBlueprintGrade.class);
-            blueprintGrades.forEach(horizonsBlueprintGrade -> gradeRolls.put(horizonsBlueprintGrade, getGradeRolls(horizonsBlueprintGrade)));
+            blueprintGrades.forEach(horizonsBlueprintGrade -> gradeRolls.put(horizonsBlueprintGrade, getGradeRolls(this.blueprint.getHorizonsBlueprintType(), horizonsBlueprintGrade)));
             final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(this.blueprint.getHorizonsBlueprintType(), gradeRolls);
             bp.setRecipeName((this.blueprint.getBlueprintName()));
             bp.setVisible(true);
@@ -295,8 +293,8 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         return menuItem;
     }
 
-    private int getGradeRolls(final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + horizonsBlueprintGrade.name(), horizonsBlueprintGrade.getDefaultNumberOfRolls());
+    private static int getGradeRolls(HorizonsBlueprintType type, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        return type.getGradeRolls(horizonsBlueprintGrade);
     }
 
 

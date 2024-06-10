@@ -9,13 +9,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
-import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.schemas.slef.Slef;
 import nl.jixxed.eliteodysseymaterials.service.event.CapiOAuthCallbackEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
@@ -152,7 +148,7 @@ public class ImportService {
                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipeByInternalName(edsyWishlistItem.getItem(), edsyWishlistItem.getBlueprint(), horizonsBlueprintGrade);
                         final HorizonsWishlistBlueprint bp;
                         if (blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
-                            bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(edsyWishlistItem.getGrade(), edsyWishlistItem.getHighestGradePercentage()));
+                            bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(horizonsModuleBlueprint.getHorizonsBlueprintType(), edsyWishlistItem.getGrade(), edsyWishlistItem.getHighestGradePercentage()));
                         } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
                             bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
                         } else {
@@ -205,7 +201,7 @@ public class ImportService {
                         final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipeByInternalName(coriolisWishlistItem.getItem(), coriolisWishlistItem.getBlueprint(), horizonsBlueprintGrade);
                         final HorizonsWishlistBlueprint bp;
                         if (blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
-                            bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(coriolisWishlistItem.getGrade(), coriolisWishlistItem.getHighestGradePercentage()));
+                            bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), createGradeMap(horizonsModuleBlueprint.getHorizonsBlueprintType(), coriolisWishlistItem.getGrade(), coriolisWishlistItem.getHighestGradePercentage()));
                         } else if (blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
                             bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
                         } else {
@@ -239,19 +235,19 @@ public class ImportService {
 
     }
 
-    private static EnumMap<HorizonsBlueprintGrade, Integer> createGradeMap(Integer grade, final Double fraction) {
+    private static EnumMap<HorizonsBlueprintGrade, Integer> createGradeMap(HorizonsBlueprintType type, Integer grade, final Double fraction) {
         final HorizonsBlueprintGrade topGrade = HorizonsBlueprintGrade.valueOf("GRADE_" + grade--);
         final EnumMap<HorizonsBlueprintGrade, Integer> gradeRolls = new EnumMap<>(HorizonsBlueprintGrade.class);
-        gradeRolls.put(topGrade, (int) Math.ceil(getGradeRolls(topGrade) * fraction));
+        gradeRolls.put(topGrade, (int) Math.ceil(getGradeRolls(type, topGrade) * fraction));
         for (int i = grade; i > 0; i--) {
             final HorizonsBlueprintGrade horizonsBlueprintGrade = HorizonsBlueprintGrade.valueOf("GRADE_" + i);
-            gradeRolls.put(horizonsBlueprintGrade, getGradeRolls(horizonsBlueprintGrade));
+            gradeRolls.put(horizonsBlueprintGrade, getGradeRolls(type, horizonsBlueprintGrade));
         }
         return gradeRolls;
     }
 
-    private static int getGradeRolls(final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + horizonsBlueprintGrade.name(), horizonsBlueprintGrade.getDefaultNumberOfRolls());
+    private static int getGradeRolls(HorizonsBlueprintType type, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        return type.getGradeRolls(horizonsBlueprintGrade);
     }
 
     private static ImportResult importLoadout(final String decoded) {

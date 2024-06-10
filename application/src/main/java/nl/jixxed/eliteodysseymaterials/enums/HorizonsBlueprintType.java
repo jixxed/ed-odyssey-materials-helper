@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 
 @RequiredArgsConstructor
 public enum HorizonsBlueprintType {
@@ -216,44 +218,6 @@ public enum HorizonsBlueprintType {
             return null;
         }
     }
-//// blueprint mappings are per-mtype
-//			for (var mtypeid in eddb.mtype) {
-//        // current blueprint mappings
-//        fdevmap.mtypeBlueprint[mtypeid] = {};
-//        var mtype = eddb.mtype[mtypeid];
-//        for (var b = 0;  b < (mtype.blueprints || EMPTY_ARR).length;  b++) {
-//            var bpid = mtype.blueprints[b];
-//            if (eddb.blueprint[bpid]) {
-//                var fdname = (eddb.blueprint[bpid].fdname || '').trim().toUpperCase();
-//                fdevmap.mtypeBlueprint[mtypeid][fdname] = bpid;
-//            }
-//        }
-//
-//        // renamed blueprint mappings
-//        for (var bpname in { LIGHTWEIGHT:1, REINFORCED:1, SHIELDED:1 }) {
-//            if (fdevmap.mtypeBlueprint[mtypeid]['MISC_' + bpname]) {
-//                for (var modtype in { CHAFFLAUNCHER:1, ECM:1, HEATSINKLAUNCHER:1, KILLWARRANTSCANNER:1, CARGOSCANNER:1, POINTDEFENCE:1, WAKESCANNER:1, LIFESUPPORT:1, COLLECTIONLIMPET:1, FUELTRANSFERLIMPET:1, HATCHBREAKERLIMPET:1, PROSPECTINGLIMPET:1 }) {
-//                    fdevmap.mtypeBlueprint[mtypeid][modtype + '_' + bpname] = fdevmap.mtypeBlueprint[mtypeid]['MISC_' + bpname];
-//                }
-//            }
-//        }
-//        for (var bpname in { FASTSCAN:1, LONGRANGE:1, WIDEANGLE:1 }) {
-//            if (fdevmap.mtypeBlueprint[mtypeid]['SENSOR_' + bpname]) {
-//                for (var modtype in { SENSOR_KILLWARRANTSCANNER:1, KILLWARRANTSCANNER:1, SENSOR_CARGOSCANNER:1, SENSOR_WAKESCANNER:1, SENSOR_SENSOR:1, SENSOR_SURFACESCANNER:1 }) {
-//                    fdevmap.mtypeBlueprint[mtypeid][modtype + '_' + bpname] = fdevmap.mtypeBlueprint[mtypeid]['SENSOR_' + bpname];
-//                }
-//            }
-//        }
-//        fdevmap.mtypeBlueprint[mtypeid]['CHAFFLAUNCHER_CHAFFCAPACITY'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_CHAFFCAPACITY'];
-//        fdevmap.mtypeBlueprint[mtypeid]['HEATSINKLAUNCHER_HEATSINKCAPACITY'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_HEATSINKCAPACITY'];
-//        fdevmap.mtypeBlueprint[mtypeid]['POINTDEFENCE_POINTDEFENSECAPACITY'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_POINTDEFENSECAPACITY'];
-//        fdevmap.mtypeBlueprint[mtypeid]['SENSOR_SENSOR_LIGHTWEIGHT'] = fdevmap.mtypeBlueprint[mtypeid]['SENSOR_LIGHTWEIGHT'];
-//        if (fdevmap.mtypeBlueprint[mtypeid]['MISC_SHIELDED']) {
-//            for (var modtype in { AFM:1, FUELSCOOP:1, REFINERIES:1 }) {
-//                fdevmap.mtypeBlueprint[mtypeid][modtype + '_SHIELDED'] = fdevmap.mtypeBlueprint[mtypeid]['MISC_SHIELDED'];
-//            }
-//        }
-//    }
 
     public static HorizonsBlueprintType forInternalName(final String internalName) {
         return switch (internalName.toLowerCase()) {
@@ -511,4 +475,10 @@ public enum HorizonsBlueprintType {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
+    public int getGradeRolls(final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        if(ANTI_GUARDIAN_ZONE_RESISTANCE.equals(this)) {
+            return 1;
+        }
+        return PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + horizonsBlueprintGrade.name(), horizonsBlueprintGrade.getDefaultNumberOfRolls());
+    }
 }
