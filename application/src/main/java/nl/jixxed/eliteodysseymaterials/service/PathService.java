@@ -278,12 +278,12 @@ public class PathService {
                 .filter(bp -> engineer.equals(Engineer.REMOTE_WORKSHOP) || !((EngineeringBlueprint<T>) bp.getPrimaryRecipe()).getEngineers().contains(Engineer.REMOTE_WORKSHOP))
                 .filter(bp -> bp.getPrimaryRecipe() instanceof ModuleBlueprint || (bp.getPrimaryRecipe() instanceof HorizonsModuleBlueprint) ||
                         (bp.getPrimaryRecipe() instanceof HorizonsExperimentalEffectBlueprint &&
-                                (wishlistBlueprints.stream().noneMatch(
+                                (wishlistBlueprints.stream().filter(WishlistBlueprintTemplate::isVisibleBlueprint).noneMatch(
                                         wbp -> (wbp.getPrimaryRecipe() instanceof HorizonsModuleBlueprint)
                                                 && wbp.getPrimaryRecipe().getBlueprintName().equals(bp.getPrimaryRecipe().getBlueprintName())
                                                 && !wbp.getRecipe().stream().allMatch(bp1 -> ((HorizonsModuleBlueprint) bp1).getEngineers().contains(engineer)))
                                         ||
-                                        wishlistBlueprints.stream().anyMatch(wbp -> (wbp.getPrimaryRecipe() instanceof HorizonsModuleBlueprint hwbp)
+                                        wishlistBlueprints.stream().filter(WishlistBlueprintTemplate::isVisibleBlueprint).anyMatch(wbp -> (wbp.getPrimaryRecipe() instanceof HorizonsModuleBlueprint hwbp)
                                                 && hwbp.getBlueprintName().equals(bp.getPrimaryRecipe().getBlueprintName())
                                                 && (hwbp.getEngineers().stream().noneMatch(allowedEngineers::contains)
                                                 || hwbp.getEngineers().contains(Engineer.REMOTE_WORKSHOP))
