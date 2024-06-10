@@ -1017,8 +1017,8 @@ public class Ship {
             List.of(
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1232).y(700).index(0).slotSize(2).build(),
                     ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1166).y(772).index(1).slotSize(2).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1297).y(510).index(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1280).y(491).index(3).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1297).y(510).index(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1280).y(491).index(3).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
             ),
             List.of(
                     ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(713).y(430).index(0).slotSize(0).build(),
