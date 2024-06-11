@@ -1,3 +1,9 @@
+Version 2.71
+-------------
+Fix Guardian Zone Resistance blueprints to always be 1 roll when adding to wishlist
+Fixed several graphical UI issues for shipbuilder when scaling is used
+Tweaked Python Mk2 stats
+
 Version 2.70
 -------------
 Fix engineers for multicannon blueprint (efficient G5)
