@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service.ships;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
@@ -30,8 +31,17 @@ public class ShipService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-
-    public static ShipConfigurations getShipConfigurations(final Commander commander) {
+    private static ShipConfigurations cache;
+    private static String cacheFID;
+    public static ShipConfigurations getShipConfigurations(@NonNull final Commander commander) {
+        //reset cache if commander changed
+        if(commander.getFid() == null || !commander.getFid().equals(cacheFID)){
+            cache = null;
+        }
+        //load from cache if exists
+        if(cache != null){
+            return cache;
+        }
         try {
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);
@@ -42,18 +52,23 @@ public class ShipService {
                 shipConfigurationFileContents = Files.readString(shipConfigurationFile.toPath());
                 if (shipConfigurationFileContents.isEmpty()) {
                     createShipConfigurations(commander);
+                    shipConfigurationFileContents = Files.readString(shipConfigurationFile.toPath());
                 }
             } else {
                 createShipConfigurations(commander);
+                shipConfigurationFileContents = Files.readString(shipConfigurationFile.toPath());
             }
-            shipConfigurationFileContents = Files.readString(shipConfigurationFile.toPath());
             try {
-                return OBJECT_MAPPER.readValue(shipConfigurationFileContents, ShipConfigurations.class);
+                cache = OBJECT_MAPPER.readValue(shipConfigurationFileContents, ShipConfigurations.class);
+                cacheFID = commander.getFid();
+                return cache;
             } catch (final IOException e) {
                 log.warn("Unable to load ships from configuration. Try to create new one.", e);
                 createShipConfigurations(commander);
                 shipConfigurationFileContents = Files.readString(shipConfigurationFile.toPath());
-                return OBJECT_MAPPER.readValue(shipConfigurationFileContents, ShipConfigurations.class);
+                cache = OBJECT_MAPPER.readValue(shipConfigurationFileContents, ShipConfigurations.class);
+                cacheFID = commander.getFid();
+                return cache;
             }
         } catch (final IOException e) {
             log.error("Unable to load ships from configuration.", e);
@@ -63,6 +78,9 @@ public class ShipService {
 
     public static void saveShipConfigurations(final Commander commander, final ShipConfigurations shipConfigurations) {
         try {
+            //update cache on save
+            cache = shipConfigurations;
+            cacheFID = commander.getFid();
             final String shipConfigurationsJson = OBJECT_MAPPER.writeValueAsString(shipConfigurations);
             final String pathname = commander.getCommanderFolder();
             final File commanderFolder = new File(pathname);

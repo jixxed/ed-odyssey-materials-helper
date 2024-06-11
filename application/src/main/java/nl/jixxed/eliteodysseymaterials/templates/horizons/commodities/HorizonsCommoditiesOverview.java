@@ -1,5 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.commodities;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -22,6 +24,8 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 public class HorizonsCommoditiesOverview extends VBox implements Template {
@@ -44,7 +48,7 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
 
     private void update() {
         this.getChildren().clear();
-        Arrays.stream(CommodityType.values()).filter(Predicate.not(CommodityType::isUnknown)).forEach(commodityType -> {
+        final List<HBox> rows = Arrays.stream(CommodityType.values()).filter(Predicate.not(CommodityType::isUnknown)).map(commodityType -> {
             final HorizonsCommodityCard[] horizonsCommodityCardsForType = Arrays.stream(this.commodityCards)
                     .filter(card -> card.getCommodity().getCommodityType().equals(commodityType)).toList()
                     .toArray(HorizonsCommodityCard[]::new);
@@ -55,16 +59,19 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
                         .sorted(HorizonsCommoditiesSort.getSort(this.currentSearch))
                         .toList()
                         .toArray(HorizonsCommodityCard[]::new);
-                createCommodityCardRow(commodityType, array);
+                return createCommodityCardRow(commodityType, array);
             }
-        });
+            return null;
+        }).filter(Objects::nonNull).toList();
+
+        this.getChildren().addAll(rows);
     }
 
     private boolean hasCardsVisibleInGroup(final HorizonsCommodityCard[] horizonsCommodityCardsForType) {
         return Arrays.stream(horizonsCommodityCardsForType).anyMatch(card -> (this.currentSearch.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale())) || LocaleService.getLocalizedStringForCurrentLocale(card.getCommodity().getCommodityType().getLocalizationKey()).toLowerCase(LocaleService.getCurrentLocale()).contains(this.currentSearch.getQuery().toLowerCase(LocaleService.getCurrentLocale()))) && HorizonsCommoditiesShow.getFilter(this.currentSearch).test(card));
     }
 
-    private void createCommodityCardRow(final CommodityType type, final HorizonsCommodityCard[] array) {
+    private HBox createCommodityCardRow(final CommodityType type, final HorizonsCommodityCard[] array) {
         final DestroyableLabel category = LabelBuilder.builder().withStyleClass("horizons-material-overview-row-name").withText(LocaleService.getStringBinding(type.getLocalizationKey())).build();
         final FlowPane commodities = FlowPaneBuilder.builder().withNodes(array).build();
         commodities.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
@@ -72,17 +79,22 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
         HBox.setHgrow(commodities, Priority.ALWAYS);
         final HBox row = BoxBuilder.builder().withNodes(category, commodities).buildHBox();
         row.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        this.getChildren().add(row);
+        return row;
     }
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
-            if (StoragePool.SHIP.equals(storageEvent.getStoragePool()) || StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
-                Platform.runLater(this::update);
 
-            }
-        }));
+        Observable
+                .create(emitter -> this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
+                    if (StoragePool.SHIP.equals(storageEvent.getStoragePool()) || StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
+                        emitter.onNext(storageEvent);
+                    }
+                })))
+                .debounce(250, TimeUnit.MILLISECONDS)
+                .observeOn(Schedulers.io())
+                .subscribe(storageEvent -> Platform.runLater(this::update));
+
         this.eventListeners.add(EventService.addListener(this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
             Platform.runLater(this::update);
