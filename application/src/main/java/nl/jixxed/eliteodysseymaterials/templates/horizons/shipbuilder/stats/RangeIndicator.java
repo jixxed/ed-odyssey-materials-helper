@@ -10,9 +10,16 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RangeIndicator extends VBox {
+    protected final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private Pane lines;
     private HBox values;
@@ -51,7 +58,15 @@ public class RangeIndicator extends VBox {
         this.getStyleClass().add("range-indicator");
         update();
         this.getChildren().addAll(this.titleLabel, lines, values);
+        initEventHandling();
     }
+
+    public void initEventHandling() {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            update();
+        }));
+    }
+
     public void updateValues(double startValue, double currentValue, double endValue) {
         this.startValue = startValue;
         this.endValue = endValue;

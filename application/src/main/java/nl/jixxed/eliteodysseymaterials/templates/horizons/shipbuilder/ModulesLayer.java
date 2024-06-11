@@ -14,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
@@ -44,6 +45,7 @@ public class ModulesLayer extends AnchorPane implements Template {
     private StackPane imageLayer;
     private HorizonsShipBuilderTab tab;
     private DestroyableResizableImageView gridImage;
+    private int lastIndex;
 
     public ModulesLayer(HorizonsShipBuilderTab tab) {
         this.tab = tab;
@@ -65,6 +67,16 @@ public class ModulesLayer extends AnchorPane implements Template {
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             initShipSlots();
+        }));
+
+        this.eventListeners.add(EventService.addListener(this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            if(this.imageLayer.isVisible()){
+                if(this.hardpointsVbox.isVisible()){
+                    drawHardpointLine(lastIndex);
+                } else {
+                    drawUtilityLine(lastIndex);
+                }
+            }
         }));
     }
 
@@ -195,6 +207,7 @@ public class ModulesLayer extends AnchorPane implements Template {
     }
 
     void drawHardpointLine(final int index) {
+        lastIndex = index;
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getHardpointSlots().get(index).getImageIndex() + ".png"));
         Platform.runLater(() -> {
             final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getX();
@@ -233,6 +246,7 @@ public class ModulesLayer extends AnchorPane implements Template {
     }
 
     void drawUtilityLine(final int index) {
+        lastIndex = index;
         shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getUtilitySlots().get(index).getImageIndex() + ".png"));
         Platform.runLater(() -> {
             final double x = this.shipImage.getWidth() / 1920D * (double)APPLICATION_STATE.getShip().getUtilitySlots().get(index).getX();

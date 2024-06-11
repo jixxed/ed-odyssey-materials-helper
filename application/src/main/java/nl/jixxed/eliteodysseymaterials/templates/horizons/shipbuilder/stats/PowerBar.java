@@ -3,26 +3,28 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Orientation;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import org.controlsfx.control.SegmentedBar;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.PowerStats.*;
 
-public class PowerBar extends VBox {
+public class PowerBar extends HBox {
+    protected final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private SegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment groupP;
@@ -37,6 +39,7 @@ public class PowerBar extends VBox {
     private boolean retracted;
     private DoubleProperty overPowerFactor = new SimpleDoubleProperty(1D);
     private DoubleProperty availableFactor = new SimpleDoubleProperty(1D);
+
     public PowerBar(boolean retracted) {
         this.retracted = retracted;
         this.segmentedBar = new SegmentedBar<>();
@@ -100,7 +103,14 @@ public class PowerBar extends VBox {
         final Line lineDestroyed = createLine(0.5);
         final Pane stackPane = new Pane(this.segmentedBar, lineDestroyedAndMalfunction, lineMalfunction, lineDestroyed);
         this.getChildren().add(stackPane);
+        initEventHandling();
     }
+    public void initEventHandling() {
+        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            update();
+        }));
+    }
+
 
     private Line createLine(double percentage) {
         Line lineMalfunction = new Line();

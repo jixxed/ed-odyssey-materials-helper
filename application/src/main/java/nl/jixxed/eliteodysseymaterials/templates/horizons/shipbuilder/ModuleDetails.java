@@ -49,8 +49,10 @@ public class ModuleDetails extends VBox implements Template {
     private DestroyableLabel moduleEngineering;
     private DestroyableLabel moduleName;
     private BooleanProperty hasModule = new SimpleBooleanProperty(false);
-
-    public ModuleDetails() {
+    private ShipModule shipModule;
+    DetailsLayer layer;
+    public ModuleDetails(DetailsLayer layer) {
+        this.layer = layer;
         initComponents();
         initEventHandling();
     }
@@ -79,6 +81,7 @@ public class ModuleDetails extends VBox implements Template {
         attributes.visibleProperty().bind(hasModule);
         this.getChildren().add(attributes);
         this.getChildren().add(new GrowingRegion());
+        this.maxHeightProperty().bind(this.layer.heightProperty());
     }
 
     private void addEngineering(String text) {
@@ -124,45 +127,53 @@ public class ModuleDetails extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
+
+        EVENT_LISTENERS.add(EventService.addListener(this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+            update();
+        }));
         EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
         EVENT_LISTENERS.add(EventService.addListener(this, ModuleHighlightEvent.class, (event) -> {
-            ShipModule shipModule = event.getShipModule();
+            this.shipModule = event.getShipModule();
 
-            properties.getChildren().clear();
-            this.getChildren().remove(legacySaveButton);
-            attributes.getChildren().clear();
-            final boolean modulePresent = shipModule != null;
-            hasModule.set(false);
-            if (modulePresent) {
-                attributes.getChildren().add(getSeparator());
-                addPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBasePrice()));
-                if (shipModule.getBuyPrice() != null) {
-                    addBuyPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBuyPrice()));
-                }
-                addRebuyPrice(Formatters.NUMBER_FORMAT_0.format((shipModule.getBuyPrice() != null ? shipModule.getBuyPrice() : shipModule.getBasePrice()) * 0.05));
-                if (!shipModule.getModifications().isEmpty()) {
-                    addEngineering(Stream.concat(shipModule.getModifications().stream()
-                                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey())),
-                                    shipModule.getExperimentalEffects().stream()
-                                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getLocalizationKey())))
-                            .collect(Collectors.joining(", ")));
-                }
-                properties.getChildren().add(getSeparator());
-                moduleName.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize().intValue() + shipModule.getModuleClass() + ((shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting().getShortName() : "")));
-
-                shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
-                    addAttribute(horizonsModifier, shipModule);
-                });
-                if (shipModule.isLegacy()) {
-                    legacySaveButton.setOnAction(actionEvent -> {
-                        LegacyModuleService.saveLegacyModule(shipModule);
-                        EventService.publish(new LegacyModuleSavedEvent());
-                    });
-                    this.getChildren().addFirst(legacySaveButton);
-                }
-            }
-            executorService.schedule(() -> Platform.runLater(() -> hasModule.set(modulePresent)), 50, java.util.concurrent.TimeUnit.MILLISECONDS);
+            update();
         }));
+    }
+
+    private void update() {
+        properties.getChildren().clear();
+        this.getChildren().remove(legacySaveButton);
+        attributes.getChildren().clear();
+        final boolean modulePresent = shipModule != null;
+        hasModule.set(false);
+        if (modulePresent) {
+            attributes.getChildren().add(getSeparator());
+            addPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBasePrice()));
+            if (shipModule.getBuyPrice() != null) {
+                addBuyPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBuyPrice()));
+            }
+            addRebuyPrice(Formatters.NUMBER_FORMAT_0.format((shipModule.getBuyPrice() != null ? shipModule.getBuyPrice() : shipModule.getBasePrice()) * 0.05));
+            if (!shipModule.getModifications().isEmpty()) {
+                addEngineering(Stream.concat(shipModule.getModifications().stream()
+                                        .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey())),
+                                shipModule.getExperimentalEffects().stream()
+                                        .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getLocalizationKey())))
+                        .collect(Collectors.joining(", ")));
+            }
+            properties.getChildren().add(getSeparator());
+            moduleName.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize().intValue() + shipModule.getModuleClass() + ((shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting().getShortName() : "")));
+
+            shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
+                addAttribute(horizonsModifier, shipModule);
+            });
+            if (shipModule.isLegacy()) {
+                legacySaveButton.setOnAction(actionEvent -> {
+                    LegacyModuleService.saveLegacyModule(shipModule);
+                    EventService.publish(new LegacyModuleSavedEvent());
+                });
+                this.getChildren().addFirst(legacySaveButton);
+            }
+        }
+        executorService.schedule(() -> Platform.runLater(() -> hasModule.set(modulePresent)), 50, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
     private static Separator getSeparator() {

@@ -50,8 +50,7 @@ public class PowerStats extends Stats implements Template {
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.power"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.power.retracted.power"), new GrowingRegion(), this.retractedPowerLabel).buildHBox());
-        this.getChildren().add(retractedPowerBar);
-        this.getChildren().add(deployedPowerBar);
+        this.getChildren().add(BoxBuilder.builder().withStyleClass("power-stats-powerbars").withNodes(retractedPowerBar, deployedPowerBar).buildVBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.power.deployed.power"), new GrowingRegion(), this.deployedPowerLabel).buildHBox());
         this.getChildren().add(new GrowingRegion());
         this.getChildren().add(BoxBuilder.builder().withNodes(

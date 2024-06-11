@@ -6,6 +6,8 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.*;
@@ -51,5 +53,8 @@ public class StatsLayer extends AnchorPane implements Template {
     @Override
     public void initEventHandling() {
 
+        this.eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+            stats.requestLayout();
+        }));
     }
 }
