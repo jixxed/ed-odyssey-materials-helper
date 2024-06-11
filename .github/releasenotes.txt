@@ -7,5 +7,6 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Fix Guardian Zone Resistance blueprints to always be 1 roll when adding to wishlist
+Fix shortest path to be able to show path for experimental effects when blueprints are hidden
 Fixed several graphical UI issues for shipbuilder when scaling is used
 Tweaked Python Mk2 stats
