@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
@@ -16,7 +17,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PathService {
 
@@ -66,32 +69,58 @@ public class PathService {
         return calculateShortestPath(wishlistBlueprints, distinctRecipes, true);
     }
 
+    @SuppressWarnings("java:S1640")
     private static <T extends BlueprintName<T>> List<PathItem<T>> calculateShortestPath(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final LinkedHashSet<? extends EngineeringBlueprint<T>> distinctRecipes, final boolean isOdyssey) {
         final List<PathItem<T>> sortedPathItems = new ArrayList<>();
         final List<PathItem<T>> pathItems = new ArrayList<>();
-        final Map<Engineer, Integer> engineerPreference = new EnumMap<>(Engineer.class);
+        final Map<Engineer, Integer> engineerPreference = new HashMap<>();
         StarSystem currentStarSystem = LocationService.getCurrentStarSystem();
         final StarSystem finalCurrentStarSystem1 = currentStarSystem;
-        final List<Engineer> allowedEngineers = Arrays.stream(Engineer.values())
+        final Set<Engineer> allowedEngineers = Arrays.stream(Engineer.values())
                 .filter(engineer -> engineer.getDistance(finalCurrentStarSystem1) < MAX_ENGINEER_DISTANCE)
                 .filter(engineer -> (isOdyssey) ? APPLICATION_STATE.isEngineerUnlocked(engineer) : APPLICATION_STATE.isEngineerUnlockedExact(engineer))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         allowedEngineers.add(Engineer.REMOTE_WORKSHOP);
-        distinctRecipes.forEach(recipe -> recipe.getEngineers().stream()
-                .filter(allowedEngineers::contains)
-                .forEach(engineer -> engineerPreference.put(engineer, 1 + engineerPreference.getOrDefault(engineer, 0))));
-
-
-        distinctRecipes.stream()
-                .filter(recipe -> recipe.getEngineers().stream().anyMatch(engineerPreference::containsKey))
+        distinctRecipes.forEach(recipe -> {
+                    final Engineer closestEngineer = recipe.getEngineers().stream().min(Comparator.comparing(engineer -> engineer.getDistance(finalCurrentStarSystem1))).orElseThrow(IllegalArgumentException::new);
+                    recipe.getEngineers().stream()
+                            .filter(allowedEngineers::contains)
+                            .forEach(engineer -> {
+                                int value = 1;
+                                if (engineer.getDistance(finalCurrentStarSystem1).equals(0D)) {
+                                    value = 100;
+                                } else if (closestEngineer == engineer) {
+                                    value = 2;
+                                }
+                                engineerPreference.put(engineer, value + engineerPreference.getOrDefault(engineer, 0));
+                            });
+                }
+        );
+        distinctRecipes.forEach(recipe -> log.debug(recipe.toString()));
+        Stream<EngineeringBlueprint<?>> stream = (isOdyssey ?
+                distinctRecipes.stream()
+                        .map(ModuleBlueprint.class::cast)
+                        .sorted(Comparator
+                                .comparing(ModuleBlueprint::hasSingleEngineerPerRegion)
+                                .thenComparing(bp -> bp.getEngineers().stream().filter(allowedEngineers::contains).max(Comparator.comparingInt(engineerPreference::get)).map(engineerPreference::get).orElse(0))
+                                .thenComparing((ModuleBlueprint moduleBlueprint) -> (OdysseyBlueprintName) moduleBlueprint.getBlueprintName())) :
+                distinctRecipes.stream()
+                        .map(HorizonsEngineeringBlueprint.class::cast)
+                        .sorted(Comparator
+                                .comparing(HorizonsEngineeringBlueprint::hasSingleEngineerPerRegion)
+                                .thenComparing(bp -> bp.getEngineers().stream().filter(allowedEngineers::contains).max(Comparator.comparingInt(engineerPreference::get)).map(engineerPreference::get).orElse(0))
+                                .thenComparing(horizonsEngineeringBlueprint -> (HorizonsBlueprintName) horizonsEngineeringBlueprint.getBlueprintName())
+                                .thenComparing(horizonsEngineeringBlueprint -> horizonsEngineeringBlueprint.getHorizonsBlueprintGrade().getGrade()).reversed()))
+                .map(EngineeringBlueprint.class::cast);
+        stream.filter(recipe -> recipe.getEngineers().stream().anyMatch(engineerPreference::containsKey))
                 .forEachOrdered(recipe -> {
-                    if (pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(recipe))) {
+                    if (recipe.getEngineers().stream().anyMatch(engineer -> engineer.getDistance(finalCurrentStarSystem1).equals(0D)) || pathItems.stream().noneMatch(pathItem -> pathItem.getRecipes().containsKey(recipe))) {
                         final List<Engineer> engineers = mostPreferredEngineers(engineerPreference, recipe, allowedEngineers);
                         //prefer a previously selected engineer, otherwise first in the list
                         final Engineer selectedEngineer = engineers.stream()
-                                .filter(engineer -> pathItems.stream().anyMatch(pathItem -> pathItem.getEngineers().contains(engineer)))
-                                .findFirst()
-                                .orElse(engineers.get(0));
+                                .filter(engineer -> pathItems.stream().anyMatch(pathItem -> pathItem.getEngineers().contains(engineer)) || engineer.getDistance(finalCurrentStarSystem1).equals(0D))
+                                .min(Comparator.comparing(engineer -> engineer.getDistance(finalCurrentStarSystem1)))
+                                .orElse(engineers.getFirst());
                         recipe.getEngineers().stream()
                                 .filter(engineer -> engineer != selectedEngineer)
                                 .forEach(engineer -> {
@@ -108,7 +137,7 @@ public class PathService {
                 });
 
 
-         final int systemsToVisit = pathItems.size();
+        final int systemsToVisit = pathItems.size();
         for (int i = 0; i < systemsToVisit; i++) {
             final StarSystem finalCurrentStarSystem = currentStarSystem;
             if (pathItems.size() > 1) {
@@ -143,6 +172,9 @@ public class PathService {
     private static <T extends BlueprintName<T>> void optimizePathItems(final List<PathItem<T>> pathItems) {
         for (int index = 0; index < pathItems.size(); index++) {
             final PathItem<T> toMove = pathItems.get(index);
+            if (toMove.getEngineer().getDistance(LocationService.getCurrentStarSystem()).equals(0D)) {
+                continue;
+            }
             final List<? extends WishlistBlueprintTemplate<T>> blueprints = toMove.getBlueprints();
             final int finalIndex = index;
             final AtomicInteger count = new AtomicInteger(0);
@@ -269,7 +301,7 @@ public class PathService {
         return paths;
     }
 
-    private static <T extends BlueprintName<T>> List<? extends WishlistBlueprintTemplate<T>> getBlueprintsForEngineer(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer, final List<Engineer> allowedEngineers) {
+    private static <T extends BlueprintName<T>> List<? extends WishlistBlueprintTemplate<T>> getBlueprintsForEngineer(final List<? extends WishlistBlueprintTemplate<T>> wishlistBlueprints, final List<PathItem<T>> pathItems, final Engineer engineer, final Set<Engineer> allowedEngineers) {
         return wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
                 .filter(bp -> bp.getPrimaryRecipe() instanceof EngineeringBlueprint<T>)
@@ -295,7 +327,7 @@ public class PathService {
 
     }
 
-    private static <T extends BlueprintName<T>> List<Engineer> mostPreferredEngineers(final Map<Engineer, Integer> engineerPreference, final EngineeringBlueprint<T> recipe, final List<Engineer> allowedEngineers) {
+    private static <T extends BlueprintName<T>> List<Engineer> mostPreferredEngineers(final Map<Engineer, Integer> engineerPreference, final EngineeringBlueprint<T> recipe, final Set<Engineer> allowedEngineers) {
         if (recipe instanceof HorizonsEngineeringBlueprint bp && bp.getEngineers().contains(Engineer.REMOTE_WORKSHOP)) {
             return List.of(Engineer.REMOTE_WORKSHOP);
         }
