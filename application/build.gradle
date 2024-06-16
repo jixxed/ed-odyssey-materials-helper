@@ -24,7 +24,7 @@ apply plugin: 'jsonschema2pojo'
 apply plugin: "build-time-tracker"
 
 tasks.register('wrapper', Wrapper) {
-    gradleVersion "8.7"
+    gradleVersion "8.8"
 }
 group 'nl.jixxed'
 java {

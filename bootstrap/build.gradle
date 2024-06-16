@@ -21,7 +21,7 @@ java {
     }
 }
 tasks.register('wrapper', Wrapper) {
-    gradleVersion "8.7"
+    gradleVersion "8.8"
 }
 
 OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
