@@ -76,11 +76,11 @@ class PathServiceTest {
             assertEquals(3, pathItems.size());
             assertEquals(Engineer.ODEN_GEIGER, pathItems.get(0).getEngineer());
             assertThat(pathItems.get(0).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(SCOPE));
-            assertEquals(Engineer.KIT_FOWLER, pathItems.get(1).getEngineer());
+            assertEquals(Engineer.JUDE_NAVARRO, pathItems.get(1).getEngineer());
             assertThat(pathItems.get(1).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(MAGAZINE_SIZE));
             assertEquals(Engineer.DOMINO_GREEN, pathItems.get(2).getEngineer());
             assertThat(pathItems.get(2).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(GREATER_RANGE_PLASMA), (ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(STABILITY));
-            assertEquals(203.7865988002623, pathItems.get(0).getDistance() + pathItems.get(1).getDistance() + pathItems.get(2).getDistance());
+            assertEquals(277.56696149251826, pathItems.get(0).getDistance() + pathItems.get(1).getDistance() + pathItems.get(2).getDistance());
 //            System.out.println(pathItems.get(0).getDistance() + "/" + pathItems.get(1).getDistance() + "/" + pathItems.get(2).getDistance());
         });
     }
@@ -109,11 +109,11 @@ class PathServiceTest {
         assertAll(() -> {
             assertEquals(3, pathItems.size());
             assertEquals(Engineer.DOMINO_GREEN, pathItems.get(0).getEngineer());
-            assertThat(pathItems.get(0).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(STABILITY), (ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(GREATER_RANGE_PLASMA));
+            assertThat(pathItems.get(0).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(GREATER_RANGE_PLASMA));
             assertEquals(Engineer.KIT_FOWLER, pathItems.get(1).getEngineer());
             assertThat(pathItems.get(1).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(MAGAZINE_SIZE));
             assertEquals(Engineer.ODEN_GEIGER, pathItems.get(2).getEngineer());
-            assertThat(pathItems.get(2).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(SCOPE));
+            assertThat(pathItems.get(2).getRecipes().keySet()).containsExactlyInAnyOrder((ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(STABILITY), (ModuleBlueprint) OdysseyBlueprintConstants.getRecipe(SCOPE));
             assertEquals(203.7865988002623, pathItems.get(0).getDistance() + pathItems.get(1).getDistance() + pathItems.get(2).getDistance());
 //            System.out.println(pathItems.get(0).getDistance() + "/" + pathItems.get(1).getDistance() + "/" + pathItems.get(2).getDistance());
         });
