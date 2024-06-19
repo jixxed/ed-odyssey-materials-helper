@@ -2203,7 +2203,7 @@ public class Ship {
                         Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(6).shipModule(Thrusters.THRUSTERS_6_E).build(),
                         Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
                         Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(6).shipModule(PowerDistributor.POWER_DISTRIBUTOR_5_E).build(),
+                        Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(6).shipModule(PowerDistributor.POWER_DISTRIBUTOR_6_E).build(),
                         Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(5).shipModule(Sensors.SENSORS_5_E).build(),
                         Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(4).shipModule(FuelTank.FUEL_TANK_4_C).build()
 
