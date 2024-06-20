@@ -76,10 +76,14 @@ class BottomBar extends HBox {
         HBox.setHgrow(this.region, Priority.ALWAYS);
         this.locationLabel = LabelBuilder.builder().build();
         this.apiLabel = LabelBuilder.builder().build();
+        updateApiLabel();
         this.eddnQueueLabel = LabelBuilder.builder().build();
         this.gameModeLabel = LabelBuilder.builder().build();
         this.commanderLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.commander")).build();
         this.login = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.login")).build();
+        if(ApplicationState.getInstance().isEngineerProcessed()){
+            hideLoginRequest();
+        }
         this.commanderSelect = ComboBoxBuilder.builder(Commander.class)
                 .withStyleClass("bottombar-dropdown")
                 .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders()))
@@ -92,21 +96,26 @@ class BottomBar extends HBox {
                     }
                 }))
                 .build();
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.commanderSelect.getSelectionModel().select(commander));
         this.commanderSelect.setFocusTraversable(false);
         this.commanderSelect.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-
         final File watchedFolder = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
-        this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath())).build();
+        final String watchedFile = ApplicationState.getInstance().getWatchedFile();
+        if (!watchedFile.isBlank()) {
+            this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching", watchedFile)).build();
+        } else {
+            this.watchedFileLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("statusbar.watching.none", watchedFolder.getAbsolutePath())).build();
+        }
         this.apiLabelSeparator = new Separator(Orientation.VERTICAL);
         this.apiLabelSeparator.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.apiLabel.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
 
         executorService.scheduleAtFixedRate(() -> {
-            if(eddnTransmitting.get()){
+            if (eddnTransmitting.get()) {
                 updateEDDNLabel();
             }
-        },0,25, TimeUnit.MILLISECONDS);
+        }, 0, 25, TimeUnit.MILLISECONDS);
     }
 
     private void initEventHandling() {
@@ -126,7 +135,7 @@ class BottomBar extends HBox {
     }
 
     private void updateEDDNLabel() {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             final int queueSize = EDDNService.queueSize();
             if (queueSize > 0) {
                 this.eddnQueueLabel.setText("EDDN Transmission queue: " + queueSize);

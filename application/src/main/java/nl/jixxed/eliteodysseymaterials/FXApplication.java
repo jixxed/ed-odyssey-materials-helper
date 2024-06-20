@@ -78,6 +78,7 @@ public class FXApplication extends Application {
     private final AtomicReference<EventListener<CommanderAllListedEvent>> deeplinkReference = new AtomicReference<>();
     private LoadingScreen loadingScreen;
     private StackPane content;
+    private Scene scene;
 
 
     public Stage getPrimaryStage() {
@@ -106,9 +107,30 @@ public class FXApplication extends Application {
             eddnPopup();
             versionPopup();
             MaterialTrackingService.initialize();
+//            HighGradeEmissionService.initialize();
             CAPIService.getInstance(this);
             this.loadingScreen = new LoadingScreen();
-            this.applicationLayout = new ApplicationLayout(this);
+            eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
+
+                if (event.isInitialised() && this.applicationLayout == null) {
+                    log.debug("applicationLayout");
+
+                    Platform.runLater(() -> {
+                        this.applicationLayout = new ApplicationLayout(this);
+                        this.content.getChildren().add(this.applicationLayout);
+                        setupStyling(scene);
+                        this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+                        Platform.runLater(() -> {
+                            EventService.publish(new ApplicationLifeCycleEvent());
+                        });
+                    });
+                    log.debug("setupFleetCarrierWatcher");
+                    Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
+                    log.debug("loadingScreen");
+                    Platform.runLater(() -> this.content.getChildren().remove(this.loadingScreen));
+
+                }
+            }));
             this.primaryStage = primaryStage;
             primaryStage.setTitle(AppConstants.APP_TITLE);
             primaryStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
@@ -116,7 +138,7 @@ public class FXApplication extends Application {
             setupWatchers();
 
             initEventHandling();
-            final Scene scene = createApplicationScene();
+            createApplicationScene();
             KeyCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
             Runnable rn = () -> {
                 Platform.runLater(()->{
@@ -131,7 +153,6 @@ public class FXApplication extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            EventService.publish(new ApplicationLifeCycleEvent());
             if (PreferencesService.getPreference(PreferenceConstants.ENABLE_AR, false)) {
                 if (OsCheck.isWindows()) {
                     ARService.toggle();
@@ -169,13 +190,15 @@ public class FXApplication extends Application {
             this.initialized = true;
         }));
         this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
-            if (event.isInitialised()) {
-                Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
-                Platform.runLater(() -> this.content.getChildren().remove(this.loadingScreen));
-            }
+//            if (event.isInitialised()) {
+//                Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
+//                Platform.runLater(() -> this.content.getChildren().remove(this.loadingScreen));
+//            }
         }));
         this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
-            this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            if(applicationLayout != null) {
+                this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
+            }
             EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
         }));
         this.primaryStage.setOnCloseRequest(event -> {
@@ -281,8 +304,9 @@ public class FXApplication extends Application {
 
 
     private Scene createApplicationScene() {
-        content = new StackPane(this.applicationLayout, this.loadingScreen);
-        final Scene scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
+        content = new StackPane(/*this.applicationLayout, */this.loadingScreen);
+        content.getStyleClass().add("app");
+        scene = new Scene(content, PreferencesService.getPreference(PreferenceConstants.APP_WIDTH, 800D), PreferencesService.getPreference(PreferenceConstants.APP_HEIGHT, 600D));
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_WIDTH, Math.max((Double) newValue, 175.0D)));
         scene.heightProperty().addListener((observable, oldValue, newValue) -> setPreferenceIfNotMaximized(this.primaryStage, PreferenceConstants.APP_HEIGHT, Math.max((Double) newValue, 175.0D)));
@@ -334,13 +358,19 @@ public class FXApplication extends Application {
         return new BoundingBox(minX, minY, maxX - minX, maxY - minY);
     }
 
-    private void setupStyling(final Scene scene) throws IOException {
-        this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+    private void setupStyling(final Scene scene) {
+        if(applicationLayout != null) {
+            this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+        }
         final JMetro jMetro = new JMetro(Style.DARK);
         jMetro.setScene(scene);
         scene.getStylesheets().add(getClass().getResource(MAIN_STYLESHEET).toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/notificationpopup.css").toExternalForm());
-        addCustomCss(scene);
+        try {
+            addCustomCss(scene);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @SuppressWarnings("java:S899")

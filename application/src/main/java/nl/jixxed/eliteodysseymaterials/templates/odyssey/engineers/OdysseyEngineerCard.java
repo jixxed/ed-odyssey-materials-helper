@@ -36,6 +36,11 @@ class OdysseyEngineerCard extends EngineerCard {
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
     OdysseyEngineerCard(final Engineer engineer) {
         super(engineer);
+        if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {
+            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+        } else {
+            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+        }
         initComponents();
         initEventHandling(engineer);
     }

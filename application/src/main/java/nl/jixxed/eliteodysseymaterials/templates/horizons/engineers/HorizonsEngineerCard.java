@@ -58,6 +58,11 @@ class HorizonsEngineerCard extends EngineerCard {
 
     HorizonsEngineerCard(final Engineer engineer) {
         super(engineer);
+        if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
+            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+        } else {
+            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+        }
         initComponents();
         initEventHandling(engineer);
     }

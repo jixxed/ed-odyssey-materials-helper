@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
+import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
@@ -39,7 +40,7 @@ public class ApplicationLayout extends AnchorPane {
 
     private void initEventHandling() {
         this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.fontSize.set(fontSizeEvent.getFontSize())));
-        this.eventListeners.add(EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, this.bottomBar.getHeight(), 0.0, 0.0)));
+        this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, applicationLifeCycleEvent -> AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, ScalingHelper.getPixelDoubleFromEm(2D), 0.0, 0.0)));
         this.bottomBar.heightProperty().addListener(observable -> AnchorPaneHelper.setAnchor(this.odysseyContentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
         this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)) {
@@ -65,6 +66,7 @@ public class ApplicationLayout extends AnchorPane {
         this.horizons.textProperty().bind(LocaleService.getStringBinding("tabs.ships"));
         this.horizons.setClosable(false);
         this.tabsMain = new TabPane(this.odyssey, this.horizons, this.settingsTab);
+        AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, ScalingHelper.getPixelDoubleFromEm(2D), 0.0, 0.0);
         this.tabsMain.getStyleClass().add("tab-main");
         this.tabsMain.setSide(Side.LEFT);
         this.tabsMain.tabMaxWidthProperty().bind(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));

@@ -8,6 +8,6 @@ import lombok.Getter;
 public class ShipConfigEvent implements Event {
     private final Type type;
     public enum Type{
-        PIPS,WEIGHT,LIVE
+        NONE,PIPS,WEIGHT,LIVE
     }
 }

@@ -76,6 +76,12 @@ public class ApplicationState {
             Map.entry(Engineer.REMOTE_WORKSHOP, new EngineerStatus(EngineerState.UNLOCKED, 5, 0)),
             Map.entry(Engineer.UNKNOWN, new EngineerStatus(EngineerState.UNKNOWN, 0, 0))
     ));
+    @Getter
+    @Setter
+    private String watchedFolder = "";
+    @Getter
+    @Setter
+    private String watchedFile = "";
     private GameMode gameMode = GameMode.NONE;
     @Getter
     @Setter
@@ -102,6 +108,9 @@ public class ApplicationState {
     @Getter
     @Setter
     private boolean liveStats = false;
+    @Getter
+    @Setter
+    private boolean engineerProcessed = false;
 
     @Getter
     private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);
@@ -152,6 +161,7 @@ public class ApplicationState {
     }
 
     public void setEngineerStatus(final Engineer engineer, final EngineerState engineerState, final Integer rank, final Integer progress) {
+        engineerProcessed = true;// horizons engineers are always present
         final EngineerStatus engineerStatus = this.engineerStates.get(engineer);
         engineerStatus.setEngineerState(engineerState);
         engineerStatus.setRank(rank);
@@ -180,6 +190,7 @@ public class ApplicationState {
 
 
     public void resetEngineerStates() {
+        engineerProcessed = false;
         this.engineerStates.forEach((engineer, engineerState) -> {
             this.engineerStates.get(engineer).setEngineerState(EngineerState.UNKNOWN);
             this.engineerStates.get(engineer).setProgress(0);

@@ -153,6 +153,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
                     }
                 })
                 .build();
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSelect.getSelectionModel().select(WishlistService.getWishlists(commander).getSelectedWishlist()));
         this.totals = new OdysseyMaterialTotals();
         this.engineerRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.suitUpgradeRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();

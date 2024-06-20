@@ -75,6 +75,8 @@ public class ControlsLayer extends AnchorPane implements Template {
                     }
                 })
                 .build();
+
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration().ifPresent(shipConfiguration -> this.shipSelect.getSelectionModel().select(shipConfiguration)));
         this.menuButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.ships.options")).withMenuItems(
                 Map.of("tab.ships.clone", event -> {
                             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {

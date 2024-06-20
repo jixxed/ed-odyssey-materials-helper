@@ -166,6 +166,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                     }
                 })
                 .build();
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSelect.getSelectionModel().select(WishlistService.getHorizonsWishlists(commander).getSelectedWishlist()));
         this.engineerRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.hardpointRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();
         this.utilityMountRecipes = FlowPaneBuilder.builder().withStyleClass(WISHLIST_RECIPES_STYLE_CLASS).build();

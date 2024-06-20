@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.export.CsvExporter;
@@ -194,6 +195,8 @@ public class General extends VBox implements Template {
                     if (selectedDirectory != null) {
                         this.selectedFolderLabel.setText(selectedDirectory.getAbsolutePath());
                         PreferencesService.setPreference(PreferenceConstants.JOURNAL_FOLDER, selectedDirectory.getAbsolutePath());
+                        ApplicationState.getInstance().setWatchedFolder(selectedDirectory.getAbsolutePath());
+                        ApplicationState.getInstance().setWatchedFile("");
                         EventService.publish(new WatchedFolderChangedEvent(selectedDirectory.getAbsolutePath()));
                     }
                 })

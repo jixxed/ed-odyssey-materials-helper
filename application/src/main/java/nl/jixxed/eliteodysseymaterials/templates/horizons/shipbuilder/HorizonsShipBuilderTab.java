@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent.Type.NONE;
+
 public class HorizonsShipBuilderTab extends HorizonsTab {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String SHIP_CONTENT_STYLE_CLASS = "ships-content";
@@ -57,6 +59,9 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         this.textProperty().bind(LocaleService.getStringBinding("tabs.shipeditor"));
 
 
+        APPLICATION_STATE.getPreferredCommander()
+                .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
+                .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
         controlsLayer = new ControlsLayer();
         statsLayer = new StatsLayer();
         detailsLayer = new DetailsLayer();
@@ -75,6 +80,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         final StackPane stackPane = new StackPane(noShipLayer, shipSelectionLayer, modulesLayer, controlsLayer, detailsLayer, statsLayer);
         stackPane.getStyleClass().add(SHIP_CONTENT_STYLE_CLASS);
         this.setContent(stackPane);
+        refreshContent();
+        EventService.publish(new ShipConfigEvent(NONE));
 ////        initShipSelectView();
 //        initShipLayout();
 //        this.noShip = LabelBuilder.builder().withNonLocalizedText("").build();

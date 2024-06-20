@@ -113,6 +113,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                 .withContent(vBox)
                 .build();
         this.setContent(this.scrollPane);
+        refreshContent();
     }
 
     private Node initMenu() {
@@ -133,6 +134,8 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                     }
                 })
                 .build();
+
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.loadoutSetSelect.getSelectionModel().select(LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet()));
         final Map<String, EventHandler<ActionEvent>> suitMenuItems = Arrays.stream(Suit.values()).collect(Collectors.toMap(Suit::getLocalizationKey, suit -> event ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final LoadoutSetList loadoutSetList = LoadoutService.getLoadoutSetList(commander);

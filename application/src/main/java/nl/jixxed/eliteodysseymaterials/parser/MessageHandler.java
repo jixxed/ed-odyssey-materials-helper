@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.JournalEventType;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.*;
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCarrierMessageProcessor;
@@ -121,6 +122,7 @@ class MessageHandler {
                     final Event event = OBJECT_MAPPER.readValue(message, messageClass);
                     messageProcessor.process(event);
                     EventService.publish(new JournalLineProcessedEvent(jsonNode.get("timestamp").asText(), journalEventType, file));
+                    ApplicationState.getInstance().setWatchedFile(file.getName());
                 }
                 final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
                 EDDNService.anyEvent(journalEventType, timestamp);

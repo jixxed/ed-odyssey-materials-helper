@@ -88,25 +88,30 @@ public class HorizonsMaterialCard extends VBox implements Template {
         this.getChildren().add(region);
         this.getChildren().add(this.segmentedBar);
         MaterialService.addMaterialInfoPopOver(this, this.material, false);
+        update();
     }
 
     @Override
     public void initEventHandling() {
         this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
-                final Integer materialCount = StorageService.getMaterialCount(this.material);
-                final Integer maxAmount = this.material.getMaxAmount();
-                this.present.setValue(materialCount.equals(0) ? materialCount : Math.max(materialCount, this.material.getMaxAmount() / 7));
-                this.present.setText(materialCount.toString());
-                final Integer availableStorage = maxAmount - materialCount;
-                this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getMaxAmount() / 7));
-                this.notPresent.setText(String.valueOf(availableStorage));
+                update();
             }
         }));
 
         this.eventListeners.add(EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
             update(horizonsMaterialSearchEvent.getSearch().getQuery());
         }));
+    }
+
+    private void update() {
+        final Integer materialCount = StorageService.getMaterialCount(this.material);
+        final Integer maxAmount = this.material.getMaxAmount();
+        this.present.setValue(materialCount.equals(0) ? materialCount : Math.max(materialCount, this.material.getMaxAmount() / 7));
+        this.present.setText(materialCount.toString());
+        final Integer availableStorage = maxAmount - materialCount;
+        this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getMaxAmount() / 7));
+        this.notPresent.setText(String.valueOf(availableStorage));
     }
 
     private void update(final String search) {

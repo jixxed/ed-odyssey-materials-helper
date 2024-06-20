@@ -18,7 +18,9 @@ import java.util.stream.Stream;
 
 
 public class Ship {
-
+        static{
+                final List<List<? extends ShipModule>> modules = ShipModule.ALL_MODULES;
+        }
     public static final Ship SIDE_WINDER = new Ship(
             ShipType.SIDE_WINDER,
             5070,
