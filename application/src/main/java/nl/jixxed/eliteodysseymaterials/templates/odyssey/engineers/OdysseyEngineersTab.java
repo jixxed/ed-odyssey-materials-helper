@@ -73,10 +73,10 @@ public class OdysseyEngineersTab extends OdysseyTab {
     private boolean hasBlueprintLike(final Engineer engineer, final String search) {
         return OdysseyBlueprintConstants.getSuitModuleBlueprints().entrySet().stream()
                 .filter(entry -> entry.getValue().getEngineers().contains(engineer))
-                .anyMatch(entry -> entry.getKey().getLocalizationKey().toLowerCase().contains(search.toLowerCase()))
+                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
                 || OdysseyBlueprintConstants.getWeaponModuleBlueprints().entrySet().stream()
                 .filter(entry -> entry.getValue().getEngineers().contains(engineer))
-                .anyMatch(entry -> entry.getKey().getLocalizationKey().toLowerCase().contains(search.toLowerCase()));
+                .anyMatch(entry -> LocaleService.getLocalizedStringForCurrentLocale(entry.getKey().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()));
     }
 
     @Override

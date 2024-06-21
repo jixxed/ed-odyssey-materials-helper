@@ -71,22 +71,22 @@ public class HorizonsEngineersTab extends HorizonsTab {
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
                 .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
                 .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(engineer))
-                .anyMatch(horizonsBlueprint -> horizonsBlueprint.getBlueprintName().getLocalizationKey().toLowerCase().contains(search.toLowerCase()))
+                .anyMatch(horizonsBlueprint -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprint.getBlueprintName().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
                 || HorizonsBlueprintConstants.getUtilityMountBlueprints().values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
                 .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
                 .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(engineer))
-                .anyMatch(horizonsBlueprint -> horizonsBlueprint.getBlueprintName().getLocalizationKey().toLowerCase().contains(search.toLowerCase()))
+                .anyMatch(horizonsBlueprint -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprint.getBlueprintName().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
                 || HorizonsBlueprintConstants.getCoreInternalBlueprints().values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
                 .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
                 .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(engineer))
-                .anyMatch(horizonsBlueprint -> horizonsBlueprint.getBlueprintName().getLocalizationKey().toLowerCase().contains(search.toLowerCase()))
+                .anyMatch(horizonsBlueprint -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprint.getBlueprintName().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()))
                 || HorizonsBlueprintConstants.getOptionalInternalBlueprints().values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
                 .flatMap(horizonsBlueprintGradeHorizonsBlueprintMap -> horizonsBlueprintGradeHorizonsBlueprintMap.values().stream())
                 .filter(horizonsBlueprint -> horizonsBlueprint.getEngineers().contains(engineer))
-                .anyMatch(horizonsBlueprint -> horizonsBlueprint.getBlueprintName().getLocalizationKey().toLowerCase().contains(search.toLowerCase()));
+                .anyMatch(horizonsBlueprint -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprint.getBlueprintName().getLocalizationKey()).toLowerCase().contains(search.toLowerCase()));
     }
 
     @Override
