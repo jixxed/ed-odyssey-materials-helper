@@ -166,6 +166,9 @@ allprojects {
                 testImplementation "org.mockito:mockito-inline:${version_mockito_inline}"
                 testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
                 testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
+
+                implementation 'io.vertx:vertx-stomp:4.5.8'
+                implementation 'io.vertx:vertx-core:4.5.8'
             }
         }
     }}
