@@ -47,6 +47,8 @@ class MessageHandler {
             Map.entry(JournalEventType.MARKET, new MarketMessageProcessor()),
             Map.entry(JournalEventType.FSSALLBODIESFOUND, new FSSAllBodiesFoundMessageProcessor()),
             Map.entry(JournalEventType.FSSSIGNALDISCOVERED, new FSSSignalDiscoveredMessageProcessor()),
+            Map.entry(JournalEventType.USSDROP, new USSDropMessageProcessor()),
+
             Map.entry(JournalEventType.FSSBODYSIGNALS, new FSSBodySignalsMessageProcessor()),
             Map.entry(JournalEventType.FSSDISCOVERYSCAN, new FSSDiscoveryScanMessageProcessor()),
             Map.entry(JournalEventType.NAVBEACONSCAN, new NavBeaconScanMessageProcessor()),
@@ -100,6 +102,9 @@ class MessageHandler {
             Map.entry(JournalEventType.BUYMICRORESOURCES, new BuyMicroResourcesMessageProcessor()),
             Map.entry(JournalEventType.MARKETBUY, new MarketBuyMessageProcessor()),
             Map.entry(JournalEventType.MARKETSELL, new MarketSellMessageProcessor()),
+            Map.entry(JournalEventType.SHUTDOWN, new ShutdownMessageProcessor()),
+            Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),
+
 
             Map.entry(JournalEventType.LOADGAME, new LoadGameMessageProcessor())
     );

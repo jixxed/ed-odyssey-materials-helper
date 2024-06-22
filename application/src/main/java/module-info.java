@@ -1,5 +1,5 @@
 module nl.jixxed.eliteodysseymaterials {
-    requires jdk.crypto.ec;
+//    requires jdk.crypto.ec;
     requires javafx.fxml;
     requires transitive javafx.controls;
     requires transitive javafx.media;
@@ -35,6 +35,9 @@ module nl.jixxed.eliteodysseymaterials {
     requires ch.qos.logback.core;
     requires com.google.j2objc.annotations;
     requires io.github.classgraph;
+    requires io.vertx.core;
+    requires io.vertx.stomp;
+    requires io.netty.common;
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;

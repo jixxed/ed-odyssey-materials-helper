@@ -91,6 +91,7 @@ public class FXApplication extends Application {
         NotificationService.init();
         PinnedBlueprintService.init();
         ScalingHelper.init();
+        HighGradeEmissionService.initialize();
         EDDNService.init();
         try {
             try {

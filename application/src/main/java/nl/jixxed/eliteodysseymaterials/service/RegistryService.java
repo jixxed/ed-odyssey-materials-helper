@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 public class RegistryService {
     private static final String BIN_DIR = Paths.get(ProcessHandle.current().info().command().orElseThrow(IllegalArgumentException::new)).getParent().toString();
     private static final boolean IS_JAVA = ProcessHandle.current().info().command().map(s -> s.endsWith("java.exe") || s.endsWith("java")).orElse(false);
-    private static final String CURRENT_DIR_SINGLE_SLASHED = (BIN_DIR.trim().replace("\"", "") + (OsCheck.isWindows() ? "\\" : "/"));
+    public static final String CURRENT_DIR_SINGLE_SLASHED = (BIN_DIR.trim().replace("\"", "") + (OsCheck.isWindows() ? "\\" : "/"));
     private static final String CURRENT_DIR_DOUBLE_SLASHED = CURRENT_DIR_SINGLE_SLASHED.replace("\\", "\\\\");
     private static final String REG_KEY = """
             Windows Registry Editor Version 5.00
