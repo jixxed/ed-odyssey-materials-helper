@@ -1657,16 +1657,16 @@ public class Ship {
 
             ),
             List.of(
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).namedIndex(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).namedIndex(2).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(2).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(3).slotSize(4).build(),
                     Slot.builder().slotType(SlotType.MILITARY).index(4).slotSize(4).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).build(),
-                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).namedIndex(3).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).namedIndex(4).slotSize(3).shipModule(CargoRack.CARGO_RACK_2_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).namedIndex(5).slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).namedIndex(6).slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).namedIndex(7).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
     public static final Ship FEDERATION_GUNSHIP = new Ship(
