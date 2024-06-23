@@ -48,10 +48,23 @@ jar {
     }
 }
 repositories {
-    mavenCentral()
+    mavenCentral {
+    }
     maven {
         name 'nexus'
         url "https://nexus.jixxed.nl/nexus/content/repositories/releases"
+    }
+    exclusiveContent {
+        forRepository {
+            flatDir {
+                dirs("libs")
+            }
+        }
+        filter {
+            // this repository *only* contains artifacts listed below
+            includeModule("io.vertx", "vertx-core")
+            includeModule("io.vertx", "vertx-stomp")
+        }
     }
 }
 application {
@@ -61,7 +74,12 @@ application {
 }
 
 jlink {
-    addExtraDependencies("javafx")
+    mergedModule {
+        excludeProvides servicePattern: 'reactor.blockhound.*'
+//        excludeRequires 'org.apache.logging.log4j'
+//        excludeProvides servicePattern: 'org.apache.logging.*'
+    }
+    addExtraDependencies("javafx", "jackson", "log4j")
     forceMerge("j2objc")
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')
     launcher {
@@ -69,6 +87,7 @@ jlink {
         jvmArgs = [
                 '-Dapp.version=' + project.version,
                 '-Xmx1280M',
+                '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
                 '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
                 '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials',
@@ -141,7 +160,7 @@ dependencies {
     testImplementation "org.mockito:mockito-junit-jupiter"
     testImplementation 'org.mockito:mockito-inline'
     testImplementation "org.assertj:assertj-core"
-    implementation ("org.leadpony.justify:justify") {
+    implementation("org.leadpony.justify:justify") {
         exclude group: "jakarta.json", module: "jakarta.json-api"
     }
     implementation "org.eclipse.parsson:jakarta.json"
@@ -168,12 +187,12 @@ dependencies {
     implementation("org.jfxtras:jmetro") {
         exclude group: "org.openjfx"
     }
-    implementation group: "org.openjfx", name: "javafx-base", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-controls", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-fxml", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-graphics", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-media", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-swing", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-base", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-controls", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-fxml", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-graphics", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-media", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-swing", classifier: "${platform}"
     implementation "org.controlsfx:controlsfx"
     testImplementation "de.saxsys:mvvmfx-testing-utils"
     testImplementation "org.openjfx:javafx-swing"
@@ -184,8 +203,25 @@ dependencies {
     implementation "nl.jixxed.lept4j:lept4j"
     implementation "com.github.jai-imageio:jai-imageio-core"
     testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
+
     implementation 'io.vertx:vertx-stomp'
     implementation 'io.vertx:vertx-core'
+
+    implementation 'io.netty:netty-common'
+    implementation 'io.netty:netty-buffer'
+    implementation 'io.netty:netty-transport'
+    implementation 'io.netty:netty-handler'
+    implementation 'io.netty:netty-handler-proxy'
+    implementation 'io.netty:netty-codec-http'
+    implementation 'io.netty:netty-codec-http2'
+    implementation 'io.netty:netty-resolver'
+    implementation 'io.netty:netty-resolver-dns'
+    compileOnly 'io.netty:netty-codec-haproxy'
+    compileOnly 'io.netty:netty-transport-native-epoll'
+    compileOnly 'io.netty:netty-transport-native-kqueue'
+    compileOnly 'org.apache.logging.log4j:log4j-api'
+
+
 
 
 }
@@ -197,6 +233,8 @@ jpackage {
 
 
 extraJavaModuleInfo {
+
+    deriveAutomaticModuleNamesFromFileNames.set(true)
     module("scribejava-java8-${project.getProperties().version_scribejava}.jar", "scribejava.java8", "${project.getProperties().version_scribejava}") {
         exports("com.github.scribejava.java8.base64")
     }
@@ -214,7 +252,7 @@ extraJavaModuleInfo {
     module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
     module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
 //    automaticModule("j2objc-annotations-${project.getProperties().version_j2objc_annotations}.jar", 'j2objc')
-    module("commons-math3-${project.getProperties().version_apache_commons_math3}.jar", 'org.apache.commons.math3'){
+    module("commons-math3-${project.getProperties().version_apache_commons_math3}.jar", 'org.apache.commons.math3') {
         patchRealModule()
         exportAllPackages()
     }
@@ -224,7 +262,7 @@ extraJavaModuleInfo {
     module('hamcrest-core-1.3.jar', 'org.hamcrest', '1.3')
     automaticModule('path-matching-resource-pattern-resolver-0.1.jar', 'io.github.secretx33')
     automaticModule("opencv-${project.getProperties().version_opencv}.jar", "org.openpnp")
-    module("tess4j-${project.getProperties().version_tess4j}.jar", "nl.jixxed.tess4j"){
+    module("tess4j-${project.getProperties().version_tess4j}.jar", "nl.jixxed.tess4j") {
         exports("nl.jixxed.tess4j")
         exports("nl.jixxed.tess4j.util")
         requires("org.slf4j")
@@ -237,19 +275,19 @@ extraJavaModuleInfo {
     automaticModule('commons-logging-1.2.jar', 'org.apache.commons.logging')
     automaticModule('jboss-logging-3.1.4.GA.jar', 'org.jboss.logging')
     automaticModule('javax.servlet-api-4.0.1.jar', 'javax.servlet')
-    module("poi-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.poi", "${project.getProperties().version_apache_poi}"){
+    module("poi-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.poi", "${project.getProperties().version_apache_poi}") {
         patchRealModule()
         exportAllPackages()
         requires("org.apache.commons.math3")
         requires("com.zaxxer.sparsebitset")
 
     }
-    module("poi-ooxml-lite-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml.schemas", "${project.getProperties().version_apache_poi}"){
+    module("poi-ooxml-lite-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml.schemas", "${project.getProperties().version_apache_poi}") {
         patchRealModule()
         requires("org.apache.poi.poi")
         exportAllPackages()
     }
-    module("poi-ooxml-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml", "${project.getProperties().version_apache_poi}"){
+    module("poi-ooxml-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml", "${project.getProperties().version_apache_poi}") {
         patchRealModule()
         exportAllPackages()
 //        exports("org.apache.poi.xssf.usermodel")
@@ -258,6 +296,25 @@ extraJavaModuleInfo {
         requires("com.zaxxer.sparsebitset")
     }
     automaticModule("mockito-inline-${project.getProperties().version_mockito_inline}.jar", "mockito.inline")
+
+
+//    module("vertx-core-4.5.8.jar", "io.vertx.core"){
+//        patchRealModule()
+//        exportAllPackages()
+//        requires("org.apache.logging.log4j")
+//        requires("com.fasterxml.jackson.core")
+//        requires("com.fasterxml.jackson.databind")
+//        requires("io.netty.common")
+//        requires("io.netty.buffer")
+//        requires("io.netty.transport")
+//        requires("io.netty.handler")
+//        requires("io.netty.handler.proxy")
+//        requires("io.netty.codec.http")
+//        requires("io.netty.codec.http2")
+//        requires("io.netty.resolver")
+//        requires("io.netty.resolver.dns")
+//        requires("org.slf4j")
+//    }
 
 }
 
@@ -274,7 +331,7 @@ compileJava {
 }
 run {
 //    setArgs(['edomh://wishlist?eyJldmVudCI6Indpc2hsaXN0IiwidmVyc2lvbiI6IjEiLCJ3aXNobGlzdCI6eyJ1dWlkIjoiMGU4OGE4MzEtMGY1ZS00NjczLWEwODItMzk4YTRmMjA5NDU0IiwibmFtZSI6IkRlZmF1bHQgd2lzaGxpc3QiLCJpdGVtcyI6W3sicmVjaXBlTmFtZSI6IktBUk1BXzRfNSIsInZpc2libGUiOnRydWV9LHsicmVjaXBlTmFtZSI6Ik1BTlRJQ09SRV80XzUiLCJ2aXNpYmxlIjp0cnVlfSx7InJlY2lwZU5hbWUiOiJNQUdBWklORV9TSVpFIiwidmlzaWJsZSI6dHJ1ZX0seyJyZWNpcGVOYW1lIjoiS0FSTUFfMV8yIiwidmlzaWJsZSI6dHJ1ZX1dfX0='])
-    jvmArgs = ['--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials', '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials', '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls', '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming']
+    jvmArgs = ['--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module', '--add-exports=javafx.graphics/com.sun.glass.ui=nl.jixxed.eliteodysseymaterials', '--add-exports=javafx.graphics/com.sun.javafx.tk=nl.jixxed.eliteodysseymaterials', '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls', '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming']
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
 }
 test {
@@ -426,7 +483,7 @@ jsonSchema2Pojo {
     classNameSuffix = ""
 
     // An array of strings that should be considered as file extensions and therefore not included in class names.
-    fileExtensions = [".v1.0.json",".v2.0.json",".v3.0.json"] as String[]
+    fileExtensions = [".v1.0.json", ".v2.0.json", ".v3.0.json"] as String[]
 
     // Whether to generate constructors or not.
     includeConstructors = false
@@ -560,13 +617,12 @@ tasks.jpackageImage.doFirst {
     }
     delete file('\\build\\jpackage\\').listFiles()
 }
-mainClassName = 'nl.jixxed.eliteodysseymaterials.Main'
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.compilerArgs += "--enable-preview"
 }
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     jvmArgs += "--enable-preview"
 }
-tasks.withType(JavaExec) {
+tasks.withType(JavaExec).configureEach {
     jvmArgs += "--enable-preview"
 }

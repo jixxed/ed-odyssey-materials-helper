@@ -151,7 +151,11 @@ public class HighGradeEmissionService {
     }
 
     public static synchronized void initialize() {
-        vertx = Vertx.vertx();
+        try{
+            vertx = Vertx.vertx();
+        }catch (Throwable t){
+            log.error("Failed to create vertx", t);
+        }
         createClient();
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> processing = event.isInitialised()));
         EVENT_LISTENERS.add(EventService.addStaticListener(CommanderSelectedEvent.class, event -> reconnect()));

@@ -181,5 +181,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-mainClassName = 'nl.jixxed.bootstrap.Main'

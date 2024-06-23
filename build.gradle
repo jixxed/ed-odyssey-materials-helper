@@ -169,6 +169,22 @@ allprojects {
 
                 implementation 'io.vertx:vertx-stomp:4.5.8'
                 implementation 'io.vertx:vertx-core:4.5.8'
+
+                implementation 'io.netty:netty-bom:4.1.110.Final'
+                implementation 'io.netty:netty-common:4.1.110.Final'
+                implementation 'io.netty:netty-buffer:4.1.110.Final'
+                implementation 'io.netty:netty-transport:4.1.110.Final'
+                implementation 'io.netty:netty-handler:4.1.110.Final'
+                implementation 'io.netty:netty-handler-proxy:4.1.110.Final'
+                implementation 'io.netty:netty-codec-http:4.1.110.Final'
+                implementation 'io.netty:netty-codec-http2:4.1.110.Final'
+                implementation 'io.netty:netty-resolver:4.1.110.Final'
+                implementation 'io.netty:netty-resolver-dns:4.1.110.Final'
+                implementation 'io.netty:netty-codec-haproxy:4.1.110.Final'
+                implementation 'io.netty:netty-transport-native-epoll:4.1.110.Final'
+                implementation 'io.netty:netty-transport-native-kqueue:4.1.110.Final'
+
+                implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
             }
         }
     }}
