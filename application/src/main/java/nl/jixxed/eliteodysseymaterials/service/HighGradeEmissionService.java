@@ -188,15 +188,15 @@ public class HighGradeEmissionService {
     }
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.Faction faction) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.ActiveState::getState).toList()).orElse(null));
+        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.ActiveState::getState).toList()).orElse(List.of("None")));
     }
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.Faction faction) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.ActiveState::getState).toList()).orElse(null));
+        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.ActiveState::getState).toList()).orElse(List.of("None")));
     }
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Faction faction) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.ActiveState::getState).toList()).orElse(null));
+        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.ActiveState::getState).toList()).orElse(List.of("None")));
     }
 
     private static void registerFactions(List<Faction> factions) {
