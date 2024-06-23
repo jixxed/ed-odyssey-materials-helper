@@ -1,3 +1,18 @@
+Version 2.72
+-------------
+MASSIVE startup time improvement
+Fix search engineers on module names
+Fix Alliance Challenger optional module detection
+Fix button text wishlist Create in Ship Editor
+Improved shortest path algorithm by:
+- Selecting potential engineers on distance from the player
+- Highly prioritizing if the engineer is in the current system
+- Do note that calculating the actual shortest path are 2 NP-hard problems and this is a heuristic approach,
+  so it might not always be the actual shortest path
+Fix weapon stats in shipbuilder using engine pips instead of weapon pips
+Fix Python Mk2 to have a 6E Power Distributor instead of 5E
+Added Damage per Second to all Damage modifying blueprints
+
 Version 2.71
 -------------
 Fix Guardian Zone Resistance blueprints to always be 1 roll when adding to wishlist
