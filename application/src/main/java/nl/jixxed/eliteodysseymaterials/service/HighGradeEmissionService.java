@@ -61,7 +61,7 @@ public class HighGradeEmissionService {
         log.info("trustStorePath: " + trustStorePath);
         StompClientOptions options = new StompClientOptions()
                 .setHost("elite-hge.jixxed.nl")
-                .setPort(443).setSsl(true);
+                .setPort(6001).setSsl(true);
 //                .setHost("127.0.0.1")
 //                .setPort(8080).setSsl(false);
         options.setHostnameVerificationAlgorithm("HTTPS")
