@@ -6,15 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-MASSIVE startup time improvement
-Fix search engineers on module names
-Fix Alliance Challenger optional module detection
-Fix button text wishlist Create in Ship Editor
-Improved shortest path algorithm by:
-- Selecting potential engineers on distance from the player
-- Highly prioritizing if the engineer is in the current system
-- Do note that calculating the actual shortest path are 2 NP-hard problems and this is a heuristic approach,
-  so it might not always be the actual shortest path
-Fix weapon stats in shipbuilder using engine pips instead of weapon pips
-Fix Python Mk2 to have a 6E Power Distributor instead of 5E
-Added Damage per Second to all Damage modifying blueprints
+Small hotfix
