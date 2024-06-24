@@ -89,14 +89,14 @@ public class PowerBar extends HBox {
                 SegmentType.POWER_OVERPOWER, Color.rgb(240, 20, 20)
         ), false));
         final Map<Integer, Double> power = calculateRetractedPower();
-        this.groupP = new TypeSegment(power.get(-1), SegmentType.POWER_GROUP_P);
-        this.group1 = new TypeSegment(power.get(1), SegmentType.POWER_GROUP_1);
-        this.group2 = new TypeSegment(power.get(2), SegmentType.POWER_GROUP_2);
-        this.group3 = new TypeSegment(power.get(3), SegmentType.POWER_GROUP_3);
-        this.group4 = new TypeSegment(power.get(4), SegmentType.POWER_GROUP_4);
-        this.group5 = new TypeSegment(power.get(5), SegmentType.POWER_GROUP_5);
+        this.groupP = new TypeSegment(Math.max(power.get(-1), 0D), SegmentType.POWER_GROUP_P);
+        this.group1 = new TypeSegment(Math.max(power.get(1), 0D), SegmentType.POWER_GROUP_1);
+        this.group2 = new TypeSegment(Math.max(power.get(2), 0D), SegmentType.POWER_GROUP_2);
+        this.group3 = new TypeSegment(Math.max(power.get(3), 0D), SegmentType.POWER_GROUP_3);
+        this.group4 = new TypeSegment(Math.max(power.get(4), 0D), SegmentType.POWER_GROUP_4);
+        this.group5 = new TypeSegment(Math.max(power.get(5), 0D), SegmentType.POWER_GROUP_5);
         this.groupOverPower = new TypeSegment(0D, SegmentType.POWER_OVERPOWER);
-        this.groupAvailable = new TypeSegment(power.get(0) - power.get(-1) - power.get(1) - power.get(2) - power.get(3) - power.get(4) - power.get(5), SegmentType.POWER_GROUP_NONE);
+        this.groupAvailable = new TypeSegment(Math.max(power.get(0) - power.get(-1) - power.get(1) - power.get(2) - power.get(3) - power.get(4) - power.get(5), 0D), SegmentType.POWER_GROUP_NONE);
         this.segmentedBar.getSegments().addAll(groupP, group1, group2, group3, group4, group5, groupAvailable, groupOverPower);
         final Line lineDestroyedAndMalfunction = createLine(0.2);
         final Line lineMalfunction = createLine(0.4);
