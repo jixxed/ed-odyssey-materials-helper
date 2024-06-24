@@ -121,3 +121,13 @@ segment.type.power_group_none,Available,,,,,,Доступно
 segment.type.power_overpower,Power deficit,,,,,,Энергодефицит
 tabs.onfoot,On foot,,,,,,Пеший режим
 tabs.ships,Ships,,,,,,Корабельный режим
+notification.type.hge,High grade emission,,,,,,
+notification.hge.outbreak,Pharmaceutical Isolators(G5)\n,,,,,,
+notification.hge.civilwar,Military Grade Alloys(G5)\nMilitary Supercapacitors(G5)\n,,,,,,
+notification.hge.boom,Proto Heat Radiators(G5)\nProto Radiolic Alloys(G5) / Proto Light Alloys(G4)\n,,,,,,
+notification.hge.civilunrest,Improvised Components(G5)\n,,,,,,
+notification.hge.empire,Imperial Shielding(G5)\n,,,,,,
+notification.hge.federation,Core Dynamic Composites(G5)/ Proprietary Composites(G4)\n,,,,,,
+notification.hge.unknown,Unknown\n,,,,,,
+notification.hge.title,High Grade Emissions Scanned,,,,,,
+notification.hge.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,,,,

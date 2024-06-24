@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -29,8 +30,8 @@ import static java.nio.file.StandardWatchEventKinds.*;
 @Slf4j
 public class FileService {
 
-    private static final Map<WatchPath, List<FileListener>> WATCHPATH_LISTENERS = new HashMap<>();
-    private static final Map<WatchPath, FolderWatch> WATCHPATH_FOLDERWATCHERS = new HashMap<>();
+    private static final Map<WatchPath, List<FileListener>> WATCHPATH_LISTENERS = new ConcurrentHashMap<>();
+    private static final Map<WatchPath, FolderWatch> WATCHPATH_FOLDERWATCHERS = new ConcurrentHashMap<>();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
 
     static {

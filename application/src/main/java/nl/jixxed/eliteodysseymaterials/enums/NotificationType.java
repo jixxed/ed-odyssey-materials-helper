@@ -11,6 +11,7 @@ public enum NotificationType {
     RELEVANT_POINT(true),
     WISHLIST_POINT(true),
     IRRELEVANT_POINT(true),
+    HGE(true),
     TRADE(true),
     IMPORT(true),
     COPY(true),

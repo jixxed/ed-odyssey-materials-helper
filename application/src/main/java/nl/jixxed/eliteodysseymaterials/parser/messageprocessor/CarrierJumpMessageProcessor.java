@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.enums.SystemAllegiance;
 import nl.jixxed.eliteodysseymaterials.enums.SystemEconomy;
 import nl.jixxed.eliteodysseymaterials.enums.SystemGovernment;
 import nl.jixxed.eliteodysseymaterials.enums.SystemSecurity;
@@ -18,13 +19,14 @@ public class CarrierJumpMessageProcessor implements MessageProcessor<CarrierJump
         final String secondEconomy = event.getSystemSecondEconomy();
         final String government = event.getSystemGovernment();
         final String security = event.getSystemSecurity();
+        final String allegiance = event.getSystemAllegiance();
         final String factionState = event.getSystemFaction().map(systemFaction -> systemFaction.getFactionState().orElse("")).orElse("");
 
         if (!starSystem.isBlank()) {
             final double x = event.getStarPos().get(0).doubleValue();
             final double y = event.getStarPos().get(1).doubleValue();
             final double z = event.getStarPos().get(2).doubleValue();
-            EventService.publish(new CarrierJumpJournalEvent(event, new StarSystem(starSystem, SystemEconomy.forKey(economy), SystemEconomy.forKey(secondEconomy), SystemGovernment.forKey(government), SystemSecurity.forKey(security), factionState, x, y, z), body));
+            EventService.publish(new CarrierJumpJournalEvent(event, new StarSystem(starSystem, SystemEconomy.forKey(economy), SystemEconomy.forKey(secondEconomy), SystemGovernment.forKey(government), SystemSecurity.forKey(security), SystemAllegiance.forKey(allegiance), factionState, x, y, z), body));
         }
         EDDNService.carrierjump(event);
     }

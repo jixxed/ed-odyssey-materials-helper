@@ -1,11 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.KeyStoreOptions;
 import io.vertx.ext.stomp.StompClient;
 import io.vertx.ext.stomp.StompClientConnection;
@@ -17,6 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
+import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.enums.SystemAllegiance;
 import nl.jixxed.eliteodysseymaterials.enums.SystemEconomy;
 import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSSignalDiscovered.FSSSignalDiscovered;
@@ -25,6 +30,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.USSDrop.USSDrop;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -61,44 +67,77 @@ public class HighGradeEmissionService {
         log.info("trustStorePath: " + trustStorePath);
         StompClientOptions options = new StompClientOptions()
                 .setHost("elite-hge.jixxed.nl")
-                .setPort(6001).setSsl(true);
+                .setPort(6001).setSsl(true)
 //                .setHost("127.0.0.1")
-//                .setPort(8080).setSsl(false);
+//                .setPort(8080).setSsl(false)
+                .setHeartbeat(new JsonObject().put("x", 30000).put("y", 30000));
         options.setHostnameVerificationAlgorithm("HTTPS")
                 .setKeyCertOptions(new KeyStoreOptions().setType("JKS").setPath(trustStorePath).setPassword("changeit"))
                 .setReconnectAttempts(-1)
                 .setReconnectInterval(5000);
+        log.info("create client");
         client = StompClient.create(vertx, options);
+//        client.receivedFrameHandler(frame -> {
+//            log.info("Received frame: {}", frame);
+//        });
+        log.info("connect client");
         connect();
 
     }
 
-    private static void reconnect() {
-        connection.close();
-        connection = null;
-        if (!terminating) {
-            connect();
+    //    private static void reconnect() {
+//        if (connection != null) {
+//            try {
+//                connection.close();
+//            } catch (Exception e) {
+//                log.error("Failed to close connection", e);
+//            } finally {
+//                connection = null;
+//            }
+//        }
+//        if (!terminating) {
+//            connect();
+//        }
+//    }
+    private static String currentSubscription;
+
+    private static void resubscribe() {
+        if (currentSubscription != null) {
+            try {
+                HighGradeEmissionService.connection.unsubscribe(currentSubscription).result();
+            }catch (Exception e){
+                log.error("Failed to unsubscribe", e);
+            }
+        }
+        if (connection == null) {
+            connect().onSuccess(o -> subscribe());
+        } else {
+            subscribe();
         }
     }
 
     private static Future<StompClientConnection> connect() {
         return ApplicationState.getInstance().getPreferredCommander().map(commander ->
                         client.connect().onSuccess(connection -> {
-                            connection.errorHandler(throwable -> {
+                            connection.connectionDroppedHandler(con -> {
+                                // The connection has been lost
+                                // You can reconnect or switch to another server.
+                                vertx.setTimer(3000, id -> connect());
+                            }).errorHandler(throwable -> {
                                 log.error("error received: {}", throwable);
                             }).exceptionHandler(throwable -> {
                                 log.error("exception received:", throwable);
                             }).closeHandler(closeEvent -> {
-                                vertx.setTimer(1000, id -> reconnect());
+//                                vertx.setTimer(1000, id -> connect());
                                 log.info("connection closed: {}", closeEvent);
                             });
                             HighGradeEmissionService.connection = connection;
                             log.info("Connected to stomp server");
-//            subscribe();
                         }).onFailure(throwable -> {
                             log.error("Failed to connect to stomp server", throwable);
-                        })
-        ).orElse(Future.failedFuture("No commander selected"));
+                            vertx.setTimer(10000, id -> connect());
+                        }))
+                .orElse(Future.failedFuture("No commander selected"));
     }
 
     private static void message(Message message) {
@@ -115,7 +154,9 @@ public class HighGradeEmissionService {
         Map<String, String> headers = new HashMap<>();
         headers.put("id", getUniqueId(commander));
         try {
-            connection.send("/post/hge", headers, Buffer.buffer(MAPPER.writeValueAsString(message)),
+            final String text = MAPPER.writeValueAsString(message);
+            writeToFile(text);
+            connection.send("/post/hge", headers, Buffer.buffer(text),
                     ar -> {
                         if (ar.succeeded()) {
                             log.info("Completed sending message: {}", ar.result());
@@ -133,12 +174,20 @@ public class HighGradeEmissionService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             Map<String, String> headers = new HashMap<>();
             final String id = getUniqueId(commander);
-            headers.put("id", id);
-
-            connection.subscribe("/subscription/hge/" + id, frame -> {
+            headers.put("user_id", id);
+//            log.info("unsubscribe");
+//            connection.unsubscribe("/subscription/hge/" + id)
+//                    .onSuccess(frame -> log.info("Unsubscribed from /subscription/hge/" + id))
+//                    .onFailure(throwable -> log.error("Failed to unsubscribe from /subscription/hge/" + id, throwable));
+//            log.info("subscribe");
+            connection.subscribe("/subscription/hge/" + id, headers, frame -> {
                         log.info("Message to /subscription/hge/{}: {}", id, frame.getBodyAsString());
+                        writeToFile(frame.getBodyAsString());
                     })
-                    .onSuccess(frame -> log.info("Subscribed to /subscription/hge/" + id))
+                    .onSuccess(frame -> {
+                        log.info("Subscribed to /subscription/hge/" + id);
+                        currentSubscription = "/subscription/hge/" + id;
+                    })
                     .onFailure(throwable -> log.error("Failed to subscribe to /subscription/hge/" + id, throwable))
                     .onComplete(ar -> {
                         if (ar.succeeded()) {
@@ -150,15 +199,26 @@ public class HighGradeEmissionService {
         });
     }
 
+    private static void writeToFile(String text) {
+        try {
+            FileOutputStream fos = new FileOutputStream("hge.txt", true);
+            fos.write((text + "\r\n").getBytes());
+            fos.close();
+        } catch (Exception e) {
+            log.error("Failed to write to file", e);
+        }
+    }
+
     public static synchronized void initialize() {
-        try{
+        try {
             vertx = Vertx.vertx();
-        }catch (Throwable t){
+            createClient();
+        } catch (Throwable t) {
             log.error("Failed to create vertx", t);
         }
-        createClient();
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> processing = event.isInitialised()));
-        EVENT_LISTENERS.add(EventService.addStaticListener(CommanderSelectedEvent.class, event -> reconnect()));
+//        EVENT_LISTENERS.add(EventService.addStaticListener(CommanderAllListedEvent.class, event -> resubscribe()));
+//        EVENT_LISTENERS.add(EventService.addStaticListener(CommanderSelectedEvent.class, event -> resubscribe()));
         EVENT_LISTENERS.add(EventService.addStaticListener(FSDJumpJournalEvent.class, event -> registerFactions(event.getEvent().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
         EVENT_LISTENERS.add(EventService.addStaticListener(CarrierJumpJournalEvent.class, event -> registerFactions(event.getEvent().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
         EVENT_LISTENERS.add(EventService.addStaticListener(LocationJournalEvent.class, event -> registerFactions(event.getLocation().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
@@ -173,12 +233,14 @@ public class HighGradeEmissionService {
     @Data
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Message {
         private String timestamp;//always
         private String event;//always
         //location
         private String system;//always
         private Double[] starPos;//always
+        private String systemAllegiance;//always
         //faction
         private String faction;//fss
         private String state;//fss
@@ -233,24 +295,63 @@ public class HighGradeEmissionService {
                     .filter(f -> f.name().equals(event.getSpawningFaction().orElse(null)))
                     .findFirst()
                     .orElse(null);
-            final Set<String> economies = Stream.of(currentLocation.getStarSystem().getPrimaryEconomy(), currentLocation.getStarSystem().getSecondaryEconomy())
+            final StarSystem starSystem = currentLocation.getStarSystem();
+            final Set<String> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
                     .filter(Predicate.not(SystemEconomy.UNKNOWN::equals))
                     .map(SystemEconomy::name)
                     .collect(Collectors.toSet());
             Message message = new Message.MessageBuilder()
                     .timestamp(timestamp)
                     .event(event.getEvent())
-                    .system(currentLocation.getStarSystem().getName())
-                    .starPos(new Double[]{currentLocation.getStarSystem().getX(), currentLocation.getStarSystem().getY(), currentLocation.getStarSystem().getZ()})
+                    .system(starSystem.getName())
+                    .starPos(new Double[]{starSystem.getX(), starSystem.getY(), starSystem.getZ()})
+                    .systemAllegiance(starSystem.getAllegiance().name())
                     .faction(event.getSpawningFaction().orElse(null))
-                    .state(event.getSpawningState().orElse(null))
+                    .state(faction != null ? faction.factionState() : null)
                     .allegiance(faction != null ? faction.allegiance() : null)
                     .government(faction != null ? faction.government() : null)
                     .systemEconomies(economies)
                     .timeRemaining(event.getTimeRemaining().map(BigDecimal::doubleValue).orElse(null))
                     .build();
             message(message);
+            notifyExpectedMaterial(faction, starSystem);
         }
+    }
+
+    private static void notifyExpectedMaterial(Faction faction, final StarSystem starSystem) {
+        String material = "";
+//        log.info("FACTION: " + faction.toString());
+        if (faction.inState(List.of("Outbreak"))) {
+            //  Pharmaceutical Isolators
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.outbreak");
+        } else if (faction.inState(List.of("Civil War", "War"))) {
+            // Military Grade Alloys
+            // Military Supercapacitors
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilwar");
+        } else if (faction.inState(List.of("Boom"))) {
+            // Proto Heat Radiators
+            // Proto Radiolic Alloys / Proto Light Alloys
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.boom");
+        } else if (faction.inState(List.of("Civil Unrest"))) {
+            //Improvised Components
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilunrest");
+        }
+
+        if (SystemAllegiance.EMPIRE.equals(starSystem.getAllegiance())) {
+            //Imperial Shielding
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.empire");
+        } else if (SystemAllegiance.FEDERATION.equals(starSystem.getAllegiance())) {
+            //Core Dynamic Composites / Proprietary Composites
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.federation");
+        }
+
+        if (material.isEmpty()) {
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.unknown");
+        }
+
+        final String text = LocaleService.getLocalizedStringForCurrentLocale("notification.hge.text", starSystem.getAllegiance(), faction.factionState(), material);
+        //        log.debug(text);
+        NotificationService.showInformation(NotificationType.HGE, LocaleService.getLocalizedStringForCurrentLocale("notification.hge.title"), text);
     }
 
     // { "timestamp":"2024-06-09T09:46:20Z", "event":"USSDrop", "USSType":"$USS_Type_VeryValuableSalvage;", "USSType_Localised":"High grade emissions", "USSThreat":0 }
@@ -297,5 +398,12 @@ public class HighGradeEmissionService {
     }
 
     record Faction(String name, String factionState, String allegiance, String government, List<String> activeStates) {
+        boolean isAllied(List<String> allegiances) {
+            return allegiances.contains(allegiance);
+        }
+
+        boolean inState(List<String> states) {
+            return states.contains(factionState);
+        }
     }
 }
