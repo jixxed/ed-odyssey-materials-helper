@@ -1,3 +1,8 @@
+Version 2.74
+-------------
+High Grade Emission - updated tooltip texts
+High Grade Emission - Notification to tell you what materials to expect when doing a FSS scan
+
 Version 2.73
 -------------
 Small hotfix
