@@ -1,3 +1,7 @@
+Version 2.75
+-------------
+Fix current overpower ship from application properly loading
+
 Version 2.74
 -------------
 High Grade Emission - updated tooltip texts
