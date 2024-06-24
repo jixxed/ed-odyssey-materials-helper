@@ -162,7 +162,7 @@ allprojects {
                 testImplementation "org.junit.jupiter:junit-jupiter:${version_junit_jupiter}"
                 testImplementation "org.junit.platform:junit-platform-runner:${version_junit_platform}"
                 testImplementation "org.junit.platform:junit-platform-suite-api:${version_junit_platform}"
-                testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
+                testImplementation "org.mockito:mockito-junit-jupiter:5.12.0"
                 testImplementation "org.mockito:mockito-inline:${version_mockito_inline}"
                 testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
                 testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
