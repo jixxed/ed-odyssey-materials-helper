@@ -67,10 +67,10 @@ public class Config extends Stats implements Template {
                     EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
                 });
 
-        fuel = new IntField(0, maxFuel, maxFuel);
+        fuel = new IntField(0, maxFuel, getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
         fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
         fuelreserve.getStyleClass().add("config-fuelreserve");
-        cargo = new IntField(0, maxCargo, 0);
+        cargo = new IntField(0, maxCargo, getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
 
         this.live.setDisable(!isCurrentShip());
         fuel.getStyleClass().add("config-intfield");
