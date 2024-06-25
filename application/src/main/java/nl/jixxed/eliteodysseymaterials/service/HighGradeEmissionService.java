@@ -305,7 +305,7 @@ public class HighGradeEmissionService {
                     .event(event.getEvent())
                     .system(starSystem.getName())
                     .starPos(new Double[]{starSystem.getX(), starSystem.getY(), starSystem.getZ()})
-                    .systemAllegiance(starSystem.getAllegiance().name())
+                    .systemAllegiance(starSystem.getAllegiance().getKey())
                     .faction(event.getSpawningFaction().orElse(null))
                     .state(faction != null ? faction.factionState() : null)
                     .allegiance(faction != null ? faction.allegiance() : null)
@@ -389,6 +389,7 @@ public class HighGradeEmissionService {
                     .event("USSDrop")
                     .system(currentLocation.getStarSystem().getName())
                     .starPos(new Double[]{currentLocation.getStarSystem().getX(), currentLocation.getStarSystem().getY(), currentLocation.getStarSystem().getZ()})
+                    .systemAllegiance(currentLocation.getStarSystem().getAllegiance().getKey())
                     .systemEconomies(economies)
                     .materialsFound(trackingMaterials)
                     .build();
