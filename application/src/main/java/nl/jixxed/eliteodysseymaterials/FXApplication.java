@@ -117,13 +117,18 @@ public class FXApplication extends Application {
                     log.debug("applicationLayout");
 
                     Platform.runLater(() -> {
-                        this.applicationLayout = new ApplicationLayout(this);
-                        this.content.getChildren().add(this.applicationLayout);
-                        setupStyling(scene);
-                        this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
-                        Platform.runLater(() -> {
-                            EventService.publish(new ApplicationLifeCycleEvent());
-                        });
+                        try{
+                            this.applicationLayout = new ApplicationLayout(this);
+                            this.content.getChildren().add(this.applicationLayout);
+                            setupStyling(scene);
+                            this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
+                            Platform.runLater(() -> {
+                                EventService.publish(new ApplicationLifeCycleEvent());
+                            });
+                        }catch (Throwable t){
+                            log.error("Failed to initialize the UI", t);
+                            showAlert(t);
+                        }
                     });
                     log.debug("setupFleetCarrierWatcher");
                     Platform.runLater(() -> setupFleetCarrierWatcher(this.journalWatcher.getWatchedFolder(), APPLICATION_STATE.getPreferredCommander().orElse(null)));
@@ -165,7 +170,7 @@ public class FXApplication extends Application {
         }
     }
 
-    private void showAlert(final Exception ex) {
+    private void showAlert(final Throwable t) {
         final Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setResizable(true);
         alert.getDialogPane().setPrefSize(800, 800);
@@ -174,7 +179,7 @@ public class FXApplication extends Application {
         alert.setHeaderText("Please contact the developer with the following information");
         final StringWriter stringWriter = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(stringWriter);
-        ex.printStackTrace(printWriter);
+        t.printStackTrace(printWriter);
         alert.setContentText(stringWriter.toString());
         alert.showAndWait();
     }
