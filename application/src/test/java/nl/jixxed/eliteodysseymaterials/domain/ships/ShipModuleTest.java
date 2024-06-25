@@ -89,4 +89,12 @@ class ShipModuleTest {
                 ShipModule.getBasicModules().stream().flatMap(shipModule ->
                         shipModule.getAttibutes().stream().map(attribute -> () -> Assertions.assertTrue(shipModule.getOriginalAttributeValue(attribute) instanceof Double || shipModule.getOriginalAttributeValue(attribute) instanceof Boolean|| shipModule.getOriginalAttributeValue(attribute) instanceof String, shipModule.getId() + " - " + attribute + " is not of type Double or Boolean or String"))));
     }
+    @Test
+    void validDamage() {
+        Assertions.assertAll(
+                ShipModule.getBasicModules().stream()
+                        .filter(shipModule -> shipModule instanceof HardpointModule)
+                        .map(shipModule ->
+                                () -> Assertions.assertTrue(shipModule.getAttributeValue(HorizonsModifier.DAMAGE) !=null && shipModule.getAttributeValue(HorizonsModifier.DAMAGE_PER_SECOND) !=null, "Hardpoint module must have DAMAGE and DAMAGE_PER_SECOND: " + shipModule.getId())));
+    }
 }
