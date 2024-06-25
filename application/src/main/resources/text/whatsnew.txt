@@ -1,3 +1,8 @@
+Version 2.76
+-------------
+Fix abrasion blaster missing damage stat, causing n/a in weapon stats
+Fix initial loading of configured fuel and cargo values for ships
+
 Version 2.75
 -------------
 Fix current overpower ship from application properly loading
