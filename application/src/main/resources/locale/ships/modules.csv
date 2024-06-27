@@ -44,6 +44,11 @@ ships.module.name.type7_armour_grade2,Reinforced Alloy,,,,,,Укреплённы
 ships.module.name.type7_armour_grade3,Military Grade Composite,,,,,,Композит военного класса
 ships.module.name.type7_armour_mirrored,Mirrored Surface Composite,,,,,,Композит с зеркальной поверхностью
 ships.module.name.type7_armour_reactive,Reactive Surface Composite,,,,,,Композит с реактивной поверхностью
+ships.module.name.type8_armour_grade1,Lightweight Alloy,,,,,,Лёгкие сплавы
+ships.module.name.type8_armour_grade2,Reinforced Alloy,,,,,,Укреплённые сплавы
+ships.module.name.type8_armour_grade3,Military Grade Composite,,,,,,Композит военного класса
+ships.module.name.type8_armour_mirrored,Mirrored Surface Composite,,,,,,Композит с зеркальной поверхностью
+ships.module.name.type8_armour_reactive,Reactive Surface Composite,,,,,,Композит с реактивной поверхностью
 ships.module.name.asp_armour_grade1,Lightweight Alloy,,,,,,Лёгкие сплавы
 ships.module.name.asp_armour_grade2,Reinforced Alloy,,,,,,Укреплённые сплавы
 ships.module.name.asp_armour_grade3,Military Grade Composite,,,,,,Композит военного класса

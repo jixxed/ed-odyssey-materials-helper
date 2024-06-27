@@ -22,6 +22,7 @@ public enum ShipType {
     EMPIRE_TRADER(128049315,"Empire_Trader", ShipSize.L),
     FEDERATION_DROPSHIP(128049321,"Federation_Dropship", ShipSize.M),
     ORCA(128049327,"Orca", ShipSize.L),
+    TYPE_8(0,"Type8", ShipSize.M),
     TYPE_9(128049333,"Type9", ShipSize.L),
     PYTHON(128049339,"Python", ShipSize.M),
     PYTHON_NX(190658840,"Python_nx", ShipSize.M),
