@@ -1,3 +1,8 @@
+Version 2.78
+-------------
+Fix shortest path not starting with remote workshop
+Fix location/distances not being calculated on load
+
 Version 2.77
 -------------
 Added logging to catch some UI loading failures
