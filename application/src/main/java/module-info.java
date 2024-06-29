@@ -40,6 +40,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.service.hge to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.outbound.payload to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.trade.message.common to com.fasterxml.jackson.databind;
@@ -658,5 +659,6 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.parser to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.parser.mapping to com.fasterxml.jackson.databind;
     exports nl.jixxed.eliteodysseymaterials.service.ships;
+    exports nl.jixxed.eliteodysseymaterials.service.hge;
     exports nl.jixxed.eliteodysseymaterials.templates.components.slider;
 }

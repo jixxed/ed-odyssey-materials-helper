@@ -31,18 +31,68 @@ public class NotificationService {
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised()));
     }
 
+    /**
+     * @deprecated
+     * Use {@link NotificationService#showInformation(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString)} instead.
+     */
+    @Deprecated(since = "2.77")
     public static void showInformation(final NotificationType notificationType, final String title, final String text) {
+        showInformation(notificationType, LocaleService.LocaleString.ofText(title),  LocaleService.LocaleString.ofText(text), false);
+    }
+    /**
+     * @deprecated
+     * Use {@link NotificationService#showWarning(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString)} instead.
+     */
+    @Deprecated(since = "2.77")
+    public static void showWarning(final NotificationType notificationType, final String title, final String text) {
+        showWarning(notificationType, LocaleService.LocaleString.ofText(title),  LocaleService.LocaleString.ofText(text), false);
+    }
+    /**
+     * @deprecated
+     * Use {@link NotificationService#showError(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString)} instead.
+     */
+    @Deprecated(since = "2.77")
+    public static void showError(final NotificationType notificationType, final String title, final String text) {
+        showError(notificationType, LocaleService.LocaleString.ofText(title),  LocaleService.LocaleString.ofText(text), false);
+    }
+
+    /**
+     * @deprecated
+     * Use {@link NotificationService#showInformation(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString, boolean)} instead.
+     */
+    @Deprecated(since = "2.77")
+    public static void showInformation(final NotificationType notificationType, final String title, final String text, final boolean silent) {
+        showInformation(notificationType, LocaleService.LocaleString.ofText(title),  LocaleService.LocaleString.ofText(text), silent);
+    }
+    /**
+     * @deprecated
+     * Use {@link NotificationService#showWarning(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString, boolean)} instead.
+     */
+    @Deprecated(since = "2.77")
+    public static void showWarning(final NotificationType notificationType, final String title, final String text, final boolean silent) {
+        showWarning(notificationType, LocaleService.LocaleString.ofText(title),  LocaleService.LocaleString.ofText(text), silent);
+    }
+    /**
+     * @deprecated
+     * Use {@link NotificationService#showError(NotificationType, LocaleService.LocaleString, LocaleService.LocaleString, boolean)} instead.
+     */
+    @Deprecated(since = "2.77")
+    public static void showError(final NotificationType notificationType, final String title, final String text, final boolean silent) {
+        showError(notificationType, LocaleService.LocaleString.ofText(title),  LocaleService.LocaleString.ofText(text), silent);
+    }
+
+    public static void showInformation(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text) {
         showInformation(notificationType, title, text, false);
     }
 
-    public static void showInformation(final NotificationType notificationType, final String title, final String text, final boolean silent) {
+    public static void showInformation(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             log.info("NOTIFY: " + text);
             Notifications.create()
                     .darkStyle()
-                    .title(title)
-                    .text(text)
+                    .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
+                    .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
                     .hideAfter(Duration.seconds(10))
                     .owner(getScreen())
                     .showInformation();
@@ -62,18 +112,18 @@ public class NotificationService {
         }
     }
 
-    public static void showWarning(final NotificationType notificationType, final String title, final String text) {
+    public static void showWarning(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text) {
         showWarning(notificationType, title, text, false);
     }
 
-    static void showWarning(final NotificationType notificationType, final String title, final String text, final boolean silent) {
+    static void showWarning(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             log.warn("WARN: " + text);
             Notifications.create()
                     .darkStyle()
-                    .title(title)
-                    .text(text)
+                    .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
+                    .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
                     .owner(getScreen())
                     .showWarning();
             if (!silent) {
@@ -82,18 +132,18 @@ public class NotificationService {
         }
     }
 
-    public static void showError(final NotificationType notificationType, final String title, final String text) {
+    public static void showError(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text) {
         showError(notificationType, title, text, false);
     }
 
-    private static void showError(final NotificationType notificationType, final String title, final String text, final boolean silent) {
+    private static void showError(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
             log.error("NOTIFY: " + text);
             Notifications.create()
                     .darkStyle()
-                    .title(title)
-                    .text(text)
+                    .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
+                    .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
                     .owner(getScreen())
                     .showError();
             if (!silent) {

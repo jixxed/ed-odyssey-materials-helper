@@ -20,4 +20,9 @@ public enum SystemAllegiance {
     public static SystemAllegiance forKey(final String name) {
         return Arrays.stream(SystemAllegiance.values()).filter(systemAllegiance -> systemAllegiance.key.equalsIgnoreCase(name)).findFirst().orElse(SystemAllegiance.UNKNOWN);
     }
+
+
+    public String getLocalizationKey() {
+        return "allegiance." + this.name().toLowerCase();
+    }
 }

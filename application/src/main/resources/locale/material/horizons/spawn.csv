@@ -9,7 +9,7 @@ spawn.location.horizons.hge_federation,High grade emissions in high population F
 spawn.location.horizons.hge_empire,High grade emissions in high population Empire systems\nHigher chance with HGE faction state none/election,,,,,,
 spawn.location.horizons.hge_civil_unrest,High grade emissions in high population systems with a state of Civil unrest\nHigher chance in Alliance and Independent systems,,,,,,
 spawn.location.horizons.hge_war_civil_war,High grade emissions in high population systems with a state of (Civil) War\nHigher chance in Alliance and Independent systems,,,,,,
-spawn.location.horizons.hge_boom_expansion,High grade emissions in high population systems with a state of Boom\nHigher chance in Alliance and Independent systems,,,,,,
+spawn.location.horizons.hge_boom_expansion,High grade emissions in high population systems with a state of Boom or Expansion\nHigher chance in Alliance and Independent systems,,,,,,
 spawn.location.horizons.hge_outbreak,High grade emissions in high population systems with a state of Outbreak\nHigher chance in Alliance and Independent systems,,,,,,
 spawn.location.horizons.crystal_shards_polonium,Crystal Shards(HIP 36601 C1A),Crystal Shards(HIP 36601 C1A),Crystal Shards(HIP 36601 C1A),Crystal Shards(HIP 36601 C1A),Crystal Shards(HIP 36601 C1A),Crystal Shards(HIP 36601 C1A),Осколки кристаллов(HIP 36601, планета C1A)
 spawn.location.horizons.crystal_shards_ruthenium_a,Crystal Shards(HIP 36601 C1D),Crystal Shards(HIP 36601 C1D),Crystal Shards(HIP 36601 C1D),Crystal Shards(HIP 36601 C1D),Crystal Shards(HIP 36601 C1D),Crystal Shards(HIP 36601 C1D),Осколки кристаллов(HIP 36601, планета C1D)

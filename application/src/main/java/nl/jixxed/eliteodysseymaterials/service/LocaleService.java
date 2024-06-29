@@ -84,7 +84,7 @@ public class LocaleService {
     }
 
     private static String applyReplacements(String string) {
-        return string.replace("\\n","\n");
+        return string.replace("\\n", "\n");
     }
 
     public static StringBinding getStringBinding(final OdysseyMaterial odysseyMaterial) {
@@ -185,6 +185,25 @@ public class LocaleService {
         public static LocalizationKey of(final String key) {
             return new LocalizationKey(key);
         }
+    }
+
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Getter
+    public static class LocaleString {
+        private final String key;
+        private final Object[] parameters;
+        private static final String CONTENTS = "notification.value.text";
+        public static LocaleString of(final String key) {
+            return new LocaleString(key, new Object[0]);
+        }
+
+        public static LocaleString of(final String key, final Object... parameters) {
+            return new LocaleString(key, parameters);
+        }
+        public static LocaleString ofText(final String text) {
+            return LocaleString.of(CONTENTS, text);
+        }
+
     }
 
 }

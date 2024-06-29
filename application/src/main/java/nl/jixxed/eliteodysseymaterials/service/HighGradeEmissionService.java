@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.core.Future;
@@ -12,14 +10,14 @@ import io.vertx.core.net.KeyStoreOptions;
 import io.vertx.ext.stomp.StompClient;
 import io.vertx.ext.stomp.StompClientConnection;
 import io.vertx.ext.stomp.StompClientOptions;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.SystemAllegiance;
 import nl.jixxed.eliteodysseymaterials.enums.SystemEconomy;
@@ -29,6 +27,9 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialCollected.Materia
 import nl.jixxed.eliteodysseymaterials.schemas.journal.USSDrop.USSDrop;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.hge.ExpiringMessage;
+import nl.jixxed.eliteodysseymaterials.service.hge.FixedSizeCircularReference;
+import nl.jixxed.eliteodysseymaterials.service.hge.Message;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -57,6 +58,24 @@ public class HighGradeEmissionService {
     private static boolean processing = false;
     private static boolean trackingUSS = false;
     private static Set<String> trackingMaterials = new HashSet<>();
+    private static Map<HorizonsMaterialType, FixedSizeCircularReference<StarSystem>> lastFoundSystems = new HashMap<>();
+    static{
+        final HorizonsMaterialType[] horizonsMaterialTypes = {
+                HorizonsMaterialType.CHEMICAL,
+                HorizonsMaterialType.THERMIC,
+                HorizonsMaterialType.CAPACITORS,
+                HorizonsMaterialType.HEAT,
+                HorizonsMaterialType.ALLOYS,
+                HorizonsMaterialType.MECHANICAL_COMPONENTS,
+                HorizonsMaterialType.SHIELDING,
+                HorizonsMaterialType.COMPOSITE
+        };
+        for (HorizonsMaterialType materialType : horizonsMaterialTypes) {
+            lastFoundSystems.put(materialType, new FixedSizeCircularReference<>(3));
+        }
+    }
+    @Getter
+    private static Collection<ExpiringMessage> messages = Collections.synchronizedCollection(new ArrayList<>());
 
     private static String getUniqueId(Commander commander) {
         return CryptoHelper.sha256("afrev#$Fv123a", commander.getName() + commander.getFid());
@@ -71,41 +90,29 @@ public class HighGradeEmissionService {
 //                .setHost("127.0.0.1")
 //                .setPort(8080).setSsl(false)
                 .setHeartbeat(new JsonObject().put("x", 30000).put("y", 30000));
+        //actual heartbeat is lowest configuration between server and client
+        //x outgoing ping
+        //y incoming ping
         options.setHostnameVerificationAlgorithm("HTTPS")
                 .setKeyCertOptions(new KeyStoreOptions().setType("JKS").setPath(trustStorePath).setPassword("changeit"))
                 .setReconnectAttempts(-1)
                 .setReconnectInterval(5000);
         log.info("create client");
         client = StompClient.create(vertx, options);
-//        client.receivedFrameHandler(frame -> {
-//            log.info("Received frame: {}", frame);
-//        });
-        log.info("connect client");
-        connect();
+        client.receivedFrameHandler(frame -> {
+            log.info("Received frame: {}", frame);
+        });
+//        log.info("connect client");
+//        connect();
 
     }
-
-    //    private static void reconnect() {
-//        if (connection != null) {
-//            try {
-//                connection.close();
-//            } catch (Exception e) {
-//                log.error("Failed to close connection", e);
-//            } finally {
-//                connection = null;
-//            }
-//        }
-//        if (!terminating) {
-//            connect();
-//        }
-//    }
     private static String currentSubscription;
 
     private static void resubscribe() {
         if (currentSubscription != null) {
             try {
                 HighGradeEmissionService.connection.unsubscribe(currentSubscription).result();
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error("Failed to unsubscribe", e);
             }
         }
@@ -174,6 +181,7 @@ public class HighGradeEmissionService {
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             Map<String, String> headers = new HashMap<>();
             final String id = getUniqueId(commander);
+            headers.put("id", id);
             headers.put("user_id", id);
 //            log.info("unsubscribe");
 //            connection.unsubscribe("/subscription/hge/" + id)
@@ -183,6 +191,27 @@ public class HighGradeEmissionService {
             connection.subscribe("/subscription/hge/" + id, headers, frame -> {
                         log.info("Message to /subscription/hge/{}: {}", id, frame.getBodyAsString());
                         writeToFile(frame.getBodyAsString());
+                        try {
+                            final Message message = MAPPER.readValue(frame.getBodyAsString(), Message.class);
+                            if ("lastFound".equals(message.getEvent())) {
+                                final StarSystem entry = new StarSystem(message.getSystem(), message.getStarPos()[0], message.getStarPos()[1], message.getStarPos()[2]);
+                                entry.setAllegiance(SystemAllegiance.forKey(message.getSystemAllegiance()));
+                                lastFoundSystems.get(HorizonsMaterialType.valueOf(message.getCategory())).add(entry);
+                                EventService.publish(new HighGradeEmissionLastFoundEvent());
+                            } else {
+                                LocalDateTime expiration;
+                                if (message.getEvent().equalsIgnoreCase("FSSSignalDiscovered")) {
+                                    expiration = ZonedDateTime.parse(message.getTimestamp()).toLocalDateTime().plusSeconds((int) Math.ceil(message.getTimeRemaining()));
+                                } else {
+                                    expiration = LocalDateTime.now().plusMinutes(5);
+                                }
+                                final ExpiringMessage expiringMessage = ExpiringMessage.builder().message(message).expiration(expiration).build();
+                                messages.add(expiringMessage);
+                                EventService.publish(new HighGradeEmissionEvent(expiringMessage));
+                            }
+                        } catch (JsonProcessingException e) {
+                            log.error("Failed to parse message", e);
+                        }
                     })
                     .onSuccess(frame -> {
                         log.info("Subscribed to /subscription/hge/" + id);
@@ -213,12 +242,16 @@ public class HighGradeEmissionService {
         try {
             vertx = Vertx.vertx();
             createClient();
+            creaeteCleaner();
         } catch (Throwable t) {
             log.error("Failed to create vertx", t);
         }
-        EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> processing = event.isInitialised()));
-//        EVENT_LISTENERS.add(EventService.addStaticListener(CommanderAllListedEvent.class, event -> resubscribe()));
-//        EVENT_LISTENERS.add(EventService.addStaticListener(CommanderSelectedEvent.class, event -> resubscribe()));
+        EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> {
+            processing = event.isInitialised();
+            if (event.isInitialised()) {
+//                resubscribe();
+            }
+        }));
         EVENT_LISTENERS.add(EventService.addStaticListener(FSDJumpJournalEvent.class, event -> registerFactions(event.getEvent().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
         EVENT_LISTENERS.add(EventService.addStaticListener(CarrierJumpJournalEvent.class, event -> registerFactions(event.getEvent().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
         EVENT_LISTENERS.add(EventService.addStaticListener(LocationJournalEvent.class, event -> registerFactions(event.getLocation().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
@@ -229,40 +262,21 @@ public class HighGradeEmissionService {
         }));
     }
 
-
-    @Data
-    @Builder
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Message {
-        private String timestamp;//always
-        private String event;//always
-        //location
-        private String system;//always
-        private Double[] starPos;//always
-        private String systemAllegiance;//always
-        //faction
-        private String faction;//fss
-        private String state;//fss
-        private String allegiance;//fss
-        private String government;//fss
-        //system
-        private Set<String> systemEconomies;//always
-        //data
-        private Set<String> materialsFound; //ussdrop
-        private Double timeRemaining;//fss
+    private static void creaeteCleaner() {
+        vertx.setPeriodic(1000 * 10, (l) -> messages.removeIf(message -> LocalDateTime.now().isAfter(message.getExpiration())));
     }
 
+
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.Faction faction) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.ActiveState::getState).toList()).orElse(List.of("None")));
+        return new Faction(faction.getName(), faction.getFactionState(), faction.getInfluence().doubleValue(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.ActiveState::getState).toList()).orElse(List.of("None")));
     }
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.Faction faction) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.ActiveState::getState).toList()).orElse(List.of("None")));
+        return new Faction(faction.getName(), faction.getFactionState(), faction.getInfluence().doubleValue(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.ActiveState::getState).toList()).orElse(List.of("None")));
     }
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Faction faction) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.ActiveState::getState).toList()).orElse(List.of("None")));
+        return new Faction(faction.getName(), faction.getFactionState(), faction.getInfluence().doubleValue(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.ActiveState::getState).toList()).orElse(List.of("None")));
     }
 
     private static void registerFactions(List<Faction> factions) {
@@ -298,9 +312,9 @@ public class HighGradeEmissionService {
             final StarSystem starSystem = currentLocation.getStarSystem();
             final Set<String> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
                     .filter(Predicate.not(SystemEconomy.UNKNOWN::equals))
-                    .map(SystemEconomy::name)
+                    .map(SystemEconomy::getFriendlyName)
                     .collect(Collectors.toSet());
-            Message message = new Message.MessageBuilder()
+            Message message = Message.builder()
                     .timestamp(timestamp)
                     .event(event.getEvent())
                     .system(starSystem.getName())
@@ -308,6 +322,7 @@ public class HighGradeEmissionService {
                     .systemAllegiance(starSystem.getAllegiance().getKey())
                     .faction(event.getSpawningFaction().orElse(null))
                     .state(faction != null ? faction.factionState() : null)
+                    .influence(faction.influence())
                     .allegiance(faction != null ? faction.allegiance() : null)
                     .government(faction != null ? faction.government() : null)
                     .systemEconomies(economies)
@@ -349,9 +364,9 @@ public class HighGradeEmissionService {
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.unknown");
         }
 
-        final String text = LocaleService.getLocalizedStringForCurrentLocale("notification.hge.text", starSystem.getAllegiance(), faction.factionState(), material);
+        final LocaleService.LocaleString text = LocaleService.LocaleString.of("notification.hge.common.text", starSystem.getAllegiance().getKey(), faction.factionState(), material);
         //        log.debug(text);
-        NotificationService.showInformation(NotificationType.HGE, LocaleService.getLocalizedStringForCurrentLocale("notification.hge.title"), text);
+        NotificationService.showInformation(NotificationType.HGE, LocaleService.LocaleString.of("notification.hge.title"), text);
     }
 
     // { "timestamp":"2024-06-09T09:46:20Z", "event":"USSDrop", "USSType":"$USS_Type_VeryValuableSalvage;", "USSType_Localised":"High grade emissions", "USSThreat":0 }
@@ -380,16 +395,17 @@ public class HighGradeEmissionService {
                 && now.plusMinutes(3).isAfter(datetime)) {
             final Location currentLocation = LocationService.getCurrentLocation();
             final String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(datetime);
-            final Set<String> economies = Stream.of(currentLocation.getStarSystem().getPrimaryEconomy(), currentLocation.getStarSystem().getSecondaryEconomy())
+            final StarSystem starSystem = currentLocation.getStarSystem();
+            final Set<String> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
                     .filter(Predicate.not(SystemEconomy.UNKNOWN::equals))
-                    .map(SystemEconomy::name)
+                    .map(SystemEconomy::getFriendlyName)
                     .collect(Collectors.toSet());
-            Message message = new Message.MessageBuilder()
+            Message message = Message.builder()
                     .timestamp(timestamp)
                     .event("USSDrop")
-                    .system(currentLocation.getStarSystem().getName())
-                    .starPos(new Double[]{currentLocation.getStarSystem().getX(), currentLocation.getStarSystem().getY(), currentLocation.getStarSystem().getZ()})
-                    .systemAllegiance(currentLocation.getStarSystem().getAllegiance().getKey())
+                    .system(starSystem.getName())
+                    .starPos(new Double[]{starSystem.getX(), starSystem.getY(), starSystem.getZ()})
+                    .systemAllegiance(starSystem.getAllegiance().getKey())
                     .systemEconomies(economies)
                     .materialsFound(trackingMaterials)
                     .build();
@@ -398,7 +414,12 @@ public class HighGradeEmissionService {
         }
     }
 
-    record Faction(String name, String factionState, String allegiance, String government, List<String> activeStates) {
+    public static List<StarSystem> getLastFoundSystems(HorizonsMaterialType materialType) {
+        return lastFoundSystems.entrySet().stream().filter(entry -> materialType.equals(entry.getKey())).map(entry-> entry.getValue().asList()).findFirst().orElse(Collections.emptyList());
+    }
+
+    record Faction(String name, String factionState, Double influence, String allegiance, String government,
+                   List<String> activeStates) {
         boolean isAllied(List<String> allegiances) {
             return allegiances.contains(allegiance);
         }

@@ -90,7 +90,7 @@ public class ImportService {
                     });
                 } catch (Exception e) {
                     log.error("Failed to import slef", e);
-                    results.add(new ImportResult(ImportResult.ResultType.ERROR_SLEF, "Failed to import slef"));
+                    results.add(new ImportResult(ImportResult.ResultType.ERROR_SLEF, LocaleService.getLocalizedStringForCurrentLocale("notification.import.slef.error.text")));
                 }
 
             });

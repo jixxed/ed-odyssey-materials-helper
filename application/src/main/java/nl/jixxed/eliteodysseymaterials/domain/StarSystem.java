@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.enums.SystemAllegiance;
 import nl.jixxed.eliteodysseymaterials.enums.SystemEconomy;
 import nl.jixxed.eliteodysseymaterials.enums.SystemGovernment;
@@ -19,6 +20,7 @@ public class StarSystem {
     private SystemEconomy secondaryEconomy = SystemEconomy.UNKNOWN;
     private SystemGovernment government = SystemGovernment.UNKNOWN;
     private SystemSecurity security = SystemSecurity.UNKNOWN;
+    @Setter
     private SystemAllegiance allegiance = SystemAllegiance.UNKNOWN;
     private String state = "";
     private final double x;
