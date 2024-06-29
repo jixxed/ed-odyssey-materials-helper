@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -73,7 +74,14 @@ public class EngineerCard extends VBox {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> this.engineerDistance.setText("(" + NUMBER_FORMAT.format(engineer.getDistance(locationChangedEvent.getCurrentStarSystem().getX(), locationChangedEvent.getCurrentStarSystem().getY(), locationChangedEvent.getCurrentStarSystem().getZ())) + "Ly)")));
+        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent ->
+                this.engineerDistance.setText("(" + NUMBER_FORMAT.format(
+                        engineer.getDistance(
+                                locationChangedEvent.getCurrentStarSystem().getX(),
+                                locationChangedEvent.getCurrentStarSystem().getY(),
+                                locationChangedEvent.getCurrentStarSystem().getZ()
+                        )
+                ) + "Ly)")));
     }
 
     private void initComponents() {
@@ -115,10 +123,16 @@ public class EngineerCard extends VBox {
                 .withStyleClass("engineer-location")
                 .withNonLocalizedText(this.engineer.getSettlement().getSettlementName() + " | " + this.engineer.getStarSystem().getName())
                 .build();
-
+        String distance = "(" + NUMBER_FORMAT.format(
+                engineer.getDistance(
+                        LocationService.getCurrentStarSystem().getX(),
+                        LocationService.getCurrentStarSystem().getY(),
+                        LocationService.getCurrentStarSystem().getZ()
+                )
+        ) + "Ly)";
         this.engineerDistance = LabelBuilder.builder()
                 .withStyleClass("engineer-distance")
-                .withNonLocalizedText("(0Ly)")
+                .withNonLocalizedText(distance)
                 .build();
 
         this.copyIcon = ResizableImageViewBuilder.builder()

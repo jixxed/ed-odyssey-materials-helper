@@ -142,7 +142,7 @@ public class PathService {
             final StarSystem finalCurrentStarSystem = currentStarSystem;
             if (pathItems.size() > 1) {
                 final PathItem<T> closest = pathItems.stream()
-                        .min((pathItem1, pathItem2) -> (int) (pathItem1.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem) - pathItem2.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem)))
+                        .min(Comparator.comparingDouble(pathItem -> pathItem.getAndSetDistanceToClosestEngineer(finalCurrentStarSystem)))
                         .orElseThrow(IllegalArgumentException::new);
                 sortedPathItems.add(closest);
                 currentStarSystem = closest.getEngineer().getStarSystem();
@@ -243,7 +243,9 @@ public class PathService {
 
     private static <T extends BlueprintName<T>> void tryOptimizePath(final List<PathItem<T>> sortedPathItems) {
         if (sortedPathItems.size() > 1) {
-            final List<List<Engineer>> paths = getPossiblePathsForItem(sortedPathItems).stream().filter(engineers -> !engineers.contains(Engineer.REMOTE_WORKSHOP) || engineers.get(0).equals(Engineer.REMOTE_WORKSHOP)).collect(Collectors.toList());
+            final List<List<Engineer>> paths = getPossiblePathsForItem(sortedPathItems).stream()
+                    .filter(engineers -> !engineers.contains(Engineer.REMOTE_WORKSHOP) || engineers.getFirst().equals(Engineer.REMOTE_WORKSHOP))
+                    .collect(Collectors.toList());
             List<Engineer> shortestPath = new ArrayList<>();
             double shortestLength = Double.MAX_VALUE;
             for (final List<Engineer> engineers : paths) {

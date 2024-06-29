@@ -115,6 +115,10 @@ public class LocationService {
         }));
     }
 
+    public static void init() {
+        //empty method to trigger static block
+    }
+
     private static void notifyListeners() {
         EventService.publish(new LocationChangedEvent(currentStarSystem, body, station, latitude, longitude));
     }
@@ -141,8 +145,9 @@ public class LocationService {
                 getCurrentStarSystem().getZ()
         );
     }
+
     public static List<Double> getCurrentStarPos(final BigInteger address) {
-        if(currentSystemAddress.equals(address)) {
+        if (currentSystemAddress.equals(address)) {
             return List.of(getCurrentStarSystem().getX(),
                     getCurrentStarSystem().getY(),
                     getCurrentStarSystem().getZ()
@@ -150,8 +155,9 @@ public class LocationService {
         }
         return null;
     }
+
     public static String getCurrentStarSystemName(final BigInteger address) {
-        if(currentSystemAddress.equals(address)) {
+        if (currentSystemAddress.equals(address)) {
             return currentStarSystem.getName();
         }
         return null;

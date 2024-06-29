@@ -20,10 +20,7 @@ import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
-import nl.jixxed.eliteodysseymaterials.service.CAPIService;
-import nl.jixxed.eliteodysseymaterials.service.EDDNService;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
+import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.File;
@@ -116,6 +113,17 @@ class BottomBar extends HBox {
                 updateEDDNLabel();
             }
         }, 0, 25, TimeUnit.MILLISECONDS);
+        Platform.runLater(() -> {
+            this.system = LocationService.getCurrentStarSystemName();
+            this.body = LocationService.getCurrentLocation().getBody();
+            this.station = LocationService.getCurrentLocation().getStation();
+            this.latitude = LocationService.getCurrentLocation().getLatitude();
+            this.longitude = LocationService.getCurrentLocation().getLongitude();
+            this.locationLabel.setText(this.system +
+                    (this.body.isBlank() ? "" : " | " + this.body) +
+                    (this.station.isBlank() || this.station.equals(this.body) ? "" : " | " + POIHelper.map(this.station)) +
+                    (this.latitude != null && !this.latitude.equals(999.9) ? " (" + this.latitude + ", " + this.longitude + ")" : ""));
+        });
     }
 
     private void initEventHandling() {

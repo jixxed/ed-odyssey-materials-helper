@@ -79,4 +79,10 @@ public class PathItem<E extends BlueprintName<E>> {
         this.setEngineer(engineer);
         this.setDistance(this.getEngineer().getDistance(starSystem));
     }
+
+    public double getDistance() {
+        if(engineers.contains(Engineer.REMOTE_WORKSHOP))
+            return -0.000000001;
+        return distance;
+    }
 }

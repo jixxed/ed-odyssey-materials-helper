@@ -89,6 +89,7 @@ public class FXApplication extends Application {
     public void start(final Stage primaryStage) {
         DeeplinkHelper.setFxApplication(this);
         NotificationService.init();
+        LocationService.init();
         PinnedBlueprintService.init();
         ScalingHelper.init();
         HighGradeEmissionService.initialize();
