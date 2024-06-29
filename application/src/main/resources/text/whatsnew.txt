@@ -1,3 +1,8 @@
+Version 2.77
+-------------
+Added logging to catch some UI loading failures
+Added some pre-work for Type-8
+
 Version 2.76
 -------------
 Fix abrasion blaster missing damage stat, causing n/a in weapon stats
