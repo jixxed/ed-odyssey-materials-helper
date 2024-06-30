@@ -274,7 +274,7 @@ public class TechbrokerBlueprints {
             Map.entry(HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_MEDIUM, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.GUARDIAN_WEAPONS, HorizonsBlueprintType.MODIFIED_PLASMA_CHARGER_FIXED_MEDIUM,
                     Map.of(
                             Encoded.GUARDIAN_WEAPONBLUEPRINT, 1,
-                            Manufactured.GUARDIAN_POWERCELL, 5,
+                            Manufactured.GUARDIAN_POWERCONDUIT, 5,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 5,
                             Raw.ARSENIC, 4,
                             Commodity.POWERTRANSFERCONDUITS, 2),
