@@ -1,2 +1,12 @@
 messageKey,,en,de,es,fr,pt,ru
 hge.most.recently.found,Most recently found in:,,,,,,
+hge.card.system,System,,,,,,
+hge.card.faction,Faction,,,,,,
+hge.card.materials,Materials,,,,,,
+hge.card.state,State,,,,,,
+hge.card.allegiance,Allegiance,,,,,,
+hge.card.fss.timer,This HGE will despawn when the timer expires.,,,,,,
+hge.card.uss.timer,It is unknown when this HGE despawns.\nThis message is removed after a timer of 5 minutes.,,,,,,
+hge.explain,Receive more detailed and long lasting emissions by performing FSS scans of High Grade Emissions.,,,,,,
+hge.tracking.disabled,Material tracking is disabled. Disable the tracking opt-out under Settings > Tracking.,,,,,,
+hge.unknown,Unknown,,,,,,

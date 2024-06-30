@@ -43,22 +43,23 @@ public class CopyableSystemLabel extends FlowPane implements Template {
 
     @Override
     public void initComponents() {
+        this.getStyleClass().add("copyable-system" );
+        this.setPrefWrapLength(500);
         this.systemName = LabelBuilder.builder()
-                .withStyleClass("nearest-trader-location")
+                .withStyleClass("copyable-system-location")
                 .withNonLocalizedText("")
                 .build();
 
         this.distance = LabelBuilder.builder()
-                .withStyleClass("nearest-trader-distance")
+                .withStyleClass("copyable-system-distance")
                 .withNonLocalizedText("")
                 .build();
 
         this.copyIcon = ResizableImageViewBuilder.builder()
-                .withStyleClass("nearest-trader-copy-icon")
+                .withStyleClass("copyable-system-copy-icon")
                 .withImage("/images/other/copy.png")
                 .build();
 
-        this.getStyleClass().add("nearest-trader-location-line");
 
         this.setOnMouseClicked(event -> {
             copyLocationToClipboard();

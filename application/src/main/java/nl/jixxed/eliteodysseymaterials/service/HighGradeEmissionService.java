@@ -34,6 +34,7 @@ import nl.jixxed.eliteodysseymaterials.service.hge.Message;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -111,7 +112,10 @@ public class HighGradeEmissionService {
     private static void resubscribe() {
         if (currentSubscription != null) {
             try {
-                HighGradeEmissionService.connection.unsubscribe(currentSubscription).result();
+                log.info("unsubscribe from {}", currentSubscription);
+                Map<String, String> headers = new HashMap<>();
+                headers.put("id", currentSubscription.substring(currentSubscription.lastIndexOf("/") + 1));
+                HighGradeEmissionService.connection.unsubscribe(currentSubscription, headers).result();
             } catch (Exception e) {
                 log.error("Failed to unsubscribe", e);
             }
@@ -148,6 +152,14 @@ public class HighGradeEmissionService {
     }
 
     private static void message(Message message) {
+        LocalDateTime expiration;
+        if (message.getEvent().equalsIgnoreCase("FSSSignalDiscovered")) {
+            expiration = ZonedDateTime.parse(message.getTimestamp()).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().plusSeconds((int) Math.ceil(message.getTimeRemaining()));
+        } else {
+            expiration = LocalDateTime.now().plusMinutes(5);
+        }
+        final ExpiringMessage expiringMessage = ExpiringMessage.builder().message(message).expiration(expiration).owned(true).build();
+        EventService.publish(new HighGradeEmissionEvent(expiringMessage));
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             if (connection == null) {
                 connect().onSuccess(o -> send(message, commander));
@@ -162,7 +174,7 @@ public class HighGradeEmissionService {
         headers.put("id", getUniqueId(commander));
         try {
             final String text = MAPPER.writeValueAsString(message);
-            writeToFile(text);
+//            writeToFile(text);
             connection.send("/post/hge", headers, Buffer.buffer(text),
                     ar -> {
                         if (ar.succeeded()) {
@@ -190,7 +202,7 @@ public class HighGradeEmissionService {
 //            log.info("subscribe");
             connection.subscribe("/subscription/hge/" + id, headers, frame -> {
                         log.info("Message to /subscription/hge/{}: {}", id, frame.getBodyAsString());
-                        writeToFile(frame.getBodyAsString());
+//                        writeToFile(frame.getBodyAsString());
                         try {
                             final Message message = MAPPER.readValue(frame.getBodyAsString(), Message.class);
                             if ("lastFound".equals(message.getEvent())) {
@@ -201,11 +213,11 @@ public class HighGradeEmissionService {
                             } else {
                                 LocalDateTime expiration;
                                 if (message.getEvent().equalsIgnoreCase("FSSSignalDiscovered")) {
-                                    expiration = ZonedDateTime.parse(message.getTimestamp()).toLocalDateTime().plusSeconds((int) Math.ceil(message.getTimeRemaining()));
+                                    expiration = ZonedDateTime.parse(message.getTimestamp()).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().plusSeconds((int) Math.ceil(message.getTimeRemaining()));
                                 } else {
                                     expiration = LocalDateTime.now().plusMinutes(5);
                                 }
-                                final ExpiringMessage expiringMessage = ExpiringMessage.builder().message(message).expiration(expiration).build();
+                                final ExpiringMessage expiringMessage = ExpiringMessage.builder().message(message).expiration(expiration).owned(false).build();
                                 messages.add(expiringMessage);
                                 EventService.publish(new HighGradeEmissionEvent(expiringMessage));
                             }
@@ -242,14 +254,14 @@ public class HighGradeEmissionService {
         try {
             vertx = Vertx.vertx();
             createClient();
-            creaeteCleaner();
+            createCleaner();
         } catch (Throwable t) {
             log.error("Failed to create vertx", t);
         }
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, event -> {
             processing = event.isInitialised();
             if (event.isInitialised()) {
-//                resubscribe();
+                resubscribe();
             }
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(FSDJumpJournalEvent.class, event -> registerFactions(event.getEvent().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
@@ -257,12 +269,20 @@ public class HighGradeEmissionService {
         EVENT_LISTENERS.add(EventService.addStaticListener(LocationJournalEvent.class, event -> registerFactions(event.getLocation().getFactions().map(list -> list.stream().map(HighGradeEmissionService::mapFaction).toList()).orElse(Collections.emptyList()))));
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             terminating = true;
+            try {
+                log.info("unsubscribe from {}", currentSubscription);
+                Map<String, String> headers = new HashMap<>();
+                headers.put("id", currentSubscription.substring(currentSubscription.lastIndexOf("/") + 1));
+                HighGradeEmissionService.connection.unsubscribe(currentSubscription, headers).result();
+            }catch (Exception e){
+                log.error("Failed to unsubscribe", e);
+            }
             client.close();
             vertx.close();
         }));
     }
 
-    private static void creaeteCleaner() {
+    private static void createCleaner() {
         vertx.setPeriodic(1000 * 10, (l) -> messages.removeIf(message -> LocalDateTime.now().isAfter(message.getExpiration())));
     }
 
@@ -322,7 +342,7 @@ public class HighGradeEmissionService {
                     .systemAllegiance(starSystem.getAllegiance().getKey())
                     .faction(event.getSpawningFaction().orElse(null))
                     .state(faction != null ? faction.factionState() : null)
-                    .influence(faction.influence())
+                    .influence(faction != null ? faction.influence() : null)
                     .allegiance(faction != null ? faction.allegiance() : null)
                     .government(faction != null ? faction.government() : null)
                     .systemEconomies(economies)
@@ -334,37 +354,38 @@ public class HighGradeEmissionService {
     }
 
     private static void notifyExpectedMaterial(Faction faction, final StarSystem starSystem) {
+        final SystemAllegiance allegiance = !SystemAllegiance.UNKNOWN.equals(starSystem.getAllegiance()) ? starSystem.getAllegiance() : SystemAllegiance.forKey(faction.allegiance());
         String material = "";
 //        log.info("FACTION: " + faction.toString());
         if (faction.inState(List.of("Outbreak"))) {
             //  Pharmaceutical Isolators
-            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.outbreak");
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.outbreak.text");
         } else if (faction.inState(List.of("Civil War", "War"))) {
             // Military Grade Alloys
             // Military Supercapacitors
-            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilwar");
-        } else if (faction.inState(List.of("Boom"))) {
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilwar.text");
+        } else if (faction.inState(List.of("Boom", "Expansion"))) {
             // Proto Heat Radiators
             // Proto Radiolic Alloys / Proto Light Alloys
-            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.boom");
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.boom.text");
         } else if (faction.inState(List.of("Civil Unrest"))) {
             //Improvised Components
-            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilunrest");
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilunrest.text");
         }
 
-        if (SystemAllegiance.EMPIRE.equals(starSystem.getAllegiance())) {
+        if (SystemAllegiance.EMPIRE.equals(allegiance)) {
             //Imperial Shielding
-            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.empire");
-        } else if (SystemAllegiance.FEDERATION.equals(starSystem.getAllegiance())) {
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.empire.text");
+        } else if (SystemAllegiance.FEDERATION.equals(allegiance)) {
             //Core Dynamic Composites / Proprietary Composites
-            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.federation");
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.federation.text");
         }
 
         if (material.isEmpty()) {
-            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.unknown");
+            material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.unknown.text");
         }
 
-        final LocaleService.LocaleString text = LocaleService.LocaleString.of("notification.hge.common.text", starSystem.getAllegiance().getKey(), faction.factionState(), material);
+        final LocaleService.LocaleString text = LocaleService.LocaleString.of("notification.hge.common.text", LocaleService.LocalizationKey.of(allegiance.getLocalizationKey()), faction.factionState(), material);
         //        log.debug(text);
         NotificationService.showInformation(NotificationType.HGE, LocaleService.LocaleString.of("notification.hge.title"), text);
     }

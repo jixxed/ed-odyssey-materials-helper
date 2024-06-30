@@ -3,18 +3,24 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.hgefinder;
 import javafx.application.Platform;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
-import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
+import nl.jixxed.eliteodysseymaterials.enums.Manufactured;
+import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.service.HighGradeEmissionService;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HighGradeEmissionLastFoundEvent;
@@ -52,42 +58,52 @@ public class HgeCategoryCard extends VBox implements Template {
 
     @Override
     public void initComponents() {
-        this.getStyleClass().add("horizons-hge-groupcard");
-        this.gradeImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(this.material.getRarity().getImagePath()).build();
+        this.getStyleClass().add("hge-category-card");
+        this.gradeImage = ResizableImageViewBuilder.builder().withStyleClass("hge-category-card-image").withImage(this.material.getRarity().getImagePath()).build();
         this.groupLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-hge-groupcard-name")
+                .withStyleClass("hge-category-card-group")
                 .withText(LocaleService.getStringBinding(this.materialType.getLocalizationKey()))
                 .build();
         this.nameLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-hge-groupcard-name")
+                .withStyleClass("hge-category-card-material")
                 .withText(LocaleService.getStringBinding(this.material.getLocalizationKey()))
                 .build();
         this.systemsLabel = LabelBuilder.builder()
-                .withStyleClass("horizons-hge-groupcard-name")
+                .withStyleClass("hge-category-card-systems")
                 .withText(LocaleService.getStringBinding("hge.most.recently.found"))
                 .build();
         this.systemLabels = new ArrayList<>();
-        this.systemLabels.add(new CopyableSystemLabel());
-        this.systemLabels.add(new CopyableSystemLabel());
-        this.systemLabels.add(new CopyableSystemLabel());
+        final CopyableSystemLabel first = new CopyableSystemLabel();
+        final CopyableSystemLabel second = new CopyableSystemLabel();
+        final CopyableSystemLabel third = new CopyableSystemLabel();
+        this.systemLabels.add(first);
+        this.systemLabels.add(second);
+        this.systemLabels.add(third);
         updateLastFoundSystemLabels();
 
 
         final Integer materialCount = StorageService.getMaterialCount(this.material);
         final Integer maxAmount = this.material.getMaxAmount();
         this.segmentedBar = new SegmentedBar<>();
+        this.segmentedBar.getStyleClass().add("hge-category-card-progressbar");
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
         this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true));
         this.present = new TypeSegment(materialCount, SegmentType.PRESENT);
         this.notPresent = new TypeSegment(maxAmount - materialCount, SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
-        final HBox hBox = BoxBuilder.builder().withStyleClass("horizons-materialcard-textline").withNodes(this.gradeImage, this.nameLabel).buildHBox();
+        final HBox hBox = BoxBuilder.builder().withStyleClass("hge-category-card-textline").withNodes(this.gradeImage, this.nameLabel).buildHBox();
 
         this.getChildren().add(this.groupLabel);
         this.getChildren().add(hBox);
         this.getChildren().add(this.systemsLabel);
         this.getChildren().addAll(this.systemLabels);
+        this.getChildren().add(BoxBuilder.builder().withNodes(first).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(second).buildHBox());
+        this.getChildren().add(BoxBuilder.builder().withNodes(third).buildHBox());
+        HBox.setHgrow(first, Priority.NEVER);
+        HBox.setHgrow(second, Priority.NEVER);
+        HBox.setHgrow(third, Priority.NEVER);
         final Region region = new Region();
         VBox.setVgrow(region, Priority.ALWAYS);
         this.getChildren().add(region);
@@ -103,23 +119,6 @@ public class HgeCategoryCard extends VBox implements Template {
         }
     }
 
-    private FlowPane getMaterialLocation(Label system, Label distance, DestroyableResizableImageView icon) {
-        return FlowPaneBuilder.builder().withStyleClass("nearest-trader-location-line")
-                .withOnMouseClicked(event -> {
-                    copyLocationToClipboard("SYSTEM");
-                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
-                })
-                .withNodes(system, new StackPane(icon), distance)
-                .build();
-
-    }
-
-    private void copyLocationToClipboard(String systemName) {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent content = new ClipboardContent();
-        content.putString(systemName);
-        clipboard.setContent(content);
-    }
     @Override
     public void initEventHandling() {
         this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {

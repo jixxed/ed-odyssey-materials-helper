@@ -92,7 +92,9 @@ public class FXApplication extends Application {
         LocationService.init();
         PinnedBlueprintService.init();
         ScalingHelper.init();
-        HighGradeEmissionService.initialize();
+        if(Boolean.FALSE.equals(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, false))) {
+            HighGradeEmissionService.initialize();
+        }
         EDDNService.init();
         try {
             try {

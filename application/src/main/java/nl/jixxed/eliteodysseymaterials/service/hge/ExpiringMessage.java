@@ -11,5 +11,6 @@ import java.time.LocalDateTime;
 @Builder(access = AccessLevel.PUBLIC)
 public class ExpiringMessage {
     private Message message;
+    private boolean owned;
     private LocalDateTime expiration;
 }

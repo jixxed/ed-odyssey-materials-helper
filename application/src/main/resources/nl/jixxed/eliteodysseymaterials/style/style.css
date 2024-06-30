@@ -3730,3 +3730,176 @@
     -fx-max-width: 20.6em;
     -fx-padding: 0 0 0 0.75em;
 }
+.hge-disabled{
+    -fx-text-fill: white;
+    -fx-label-padding: 1em;
+    -fx-font-size: 2em;
+}
+.hge-flows{
+    -fx-spacing: 2em;
+    -fx-padding: 0.2em;
+
+}
+.hge-card{
+    -fx-min-width: 37.5em;
+    -fx-max-width: 37.5em;
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 0.2em;
+    -fx-spacing: 1em;
+    -fx-border-width: 0.1em;
+    -fx-border-color: #0f0f0f;
+}
+.hge-card-highlight{
+    -fx-border-color: #0A65BF;
+}
+.hge-card-timer{
+    -fx-label-padding: 0.3em;
+}
+.hge-card-timer-flow{
+    -fx-alignment: baseline-right;
+}
+.hge-card-allegiance-flow{
+    -fx-max-width: 8em;
+}
+.hge-card-allegiance-value{
+    -fx-label-padding: 0 0 0 0.3em;
+}
+.hge-card-allegiance-image{
+    -fx-pref-height: 1.2em;
+    -fx-min-height: 1.2em;
+    -fx-max-height: 1.2em;
+    -fx-pref-width: 1.2em;
+    -fx-min-width: 1.2em;
+    -fx-max-width: 1.2em;
+}
+.hge-card-timer-image{
+    -fx-pref-height: 1.2em;
+    -fx-min-height: 1.2em;
+    -fx-max-height: 1.2em;
+    -fx-pref-width: 1.2em;
+    -fx-min-width: 1.2em;
+    -fx-max-width: 1.2em;
+}
+.hge-card-top-labels{
+    -fx-min-width: 6em;
+    -fx-max-width: 6em;
+
+}
+.hge-card-faction-label{
+
+    -fx-padding: 0.4em;
+}
+.hge-card-top-label{
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
+    -fx-font-weight: bold;
+}
+.hge-card-top-values{
+    -fx-alignment: top-left;
+}
+.hge-card-allegiance-label{
+    -fx-font-weight: bold;
+    -fx-min-width: 8em;
+    -fx-max-width: 8em;
+
+}
+.hge-card-materials-label{
+    -fx-font-weight: bold;
+}
+.hge-card-state-label{
+    -fx-font-weight: bold;
+    -fx-min-width: 8em;
+    -fx-max-width: 8em;
+}
+.hge-card-top{
+-fx-spacing: 2em;
+}
+.hge-card-materials-vbox{
+
+}
+.hge-card-state-vbox{
+
+}
+.hge-card-allegiance-vbox{
+
+}
+.hge-card-bottom{
+    -fx-spacing: 1em;
+}
+.hge-category-card{
+    -fx-background-color: #0f0f0f;
+    -fx-max-width: 20em;
+}
+.hge-category-card-image{
+    -fx-pref-height: 2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-pref-width: 2em;
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+
+}
+.hge-category-card-group{
+    -fx-padding: 0.2em;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+}
+.hge-category-card-material{
+
+    -fx-label-padding: 0.2em;
+    -fx-wrap-text: true;
+    -fx-pref-width: 14em;
+    -fx-min-width: 14em;
+    -fx-max-width: 14em;
+
+}
+.hge-category-card-systems{
+
+-fx-padding: 0 0 0 0.2em;
+}
+.hge-category-card-progressbar{
+    -fx-min-height: 1em;
+    -fx-pref-height: 1em;
+    -fx-max-height: 1em;
+}
+.hge-category-card-textline {
+    -fx-pref-height: 3em;
+    -fx-min-height: 3em;
+    -fx-max-height: 3em;
+
+}
+.hge-category-flow{
+    -fx-spacing: 0.5em;
+    -fx-hgap: 0.5em;
+    -fx-vgap: 0.5em;
+}
+.hge-card-flow{
+    -fx-spacing: 0.5em;
+    -fx-hgap: 0.5em;
+    -fx-vgap: 0.5em;
+}
+.hge-box{
+    -fx-spacing: 1em;
+    -fx-vgap: 1em;
+}
+
+.copyable-system:hover{
+    -fx-background-color: #2c2c2c;
+    -fx-cursor: hand;
+}
+.copyable-system-location {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0.3em;
+}
+.copyable-system-distance{
+    -fx-text-fill: #777;
+    -fx-label-padding: 0.3em;
+
+}
+.copyable-system-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}

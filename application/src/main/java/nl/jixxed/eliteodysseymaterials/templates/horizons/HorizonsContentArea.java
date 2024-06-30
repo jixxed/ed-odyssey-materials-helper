@@ -61,11 +61,11 @@ class HorizonsContentArea extends AnchorPane {
         this.horizonsWishlistTab.setClosable(false);
         this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
         this.horizonsShipBuilderTab.setClosable(false);
-//        this.hgeFinderTab = new HgeFinderTab();
-//        this.hgeFinderTab.setClosable(false);
+        this.hgeFinderTab = new HgeFinderTab();
+        this.hgeFinderTab.setClosable(false);
 
         this.searchBar = new HorizonsSearchBar();
-        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, /*this.hgeFinderTab,*/ this.horizonsEngineersTab);
+        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab, this.hgeFinderTab, this.horizonsEngineersTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
