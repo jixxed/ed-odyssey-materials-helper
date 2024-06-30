@@ -100,9 +100,9 @@ public class HighGradeEmissionService {
                 .setReconnectInterval(5000);
         log.info("create client");
         client = StompClient.create(vertx, options);
-        client.receivedFrameHandler(frame -> {
-            log.info("Received frame: {}", frame);
-        });
+//        client.receivedFrameHandler(frame -> {
+//            log.info("Received frame: {}", frame);
+//        });
 //        log.info("connect client");
 //        connect();
 
@@ -178,7 +178,7 @@ public class HighGradeEmissionService {
             connection.send("/post/hge", headers, Buffer.buffer(text),
                     ar -> {
                         if (ar.succeeded()) {
-                            log.info("Completed sending message: {}", ar.result());
+//                            log.info("Completed sending message: {}", ar.result());
                         } else {
                             log.error("Failed to send message", ar.cause());
                         }
@@ -201,7 +201,7 @@ public class HighGradeEmissionService {
 //                    .onFailure(throwable -> log.error("Failed to unsubscribe from /subscription/hge/" + id, throwable));
 //            log.info("subscribe");
             connection.subscribe("/subscription/hge/" + id, headers, frame -> {
-                        log.info("Message to /subscription/hge/{}: {}", id, frame.getBodyAsString());
+//                        log.info("Message to /subscription/hge/{}: {}", id, frame.getBodyAsString());
 //                        writeToFile(frame.getBodyAsString());
                         try {
                             final Message message = MAPPER.readValue(frame.getBodyAsString(), Message.class);
@@ -226,7 +226,7 @@ public class HighGradeEmissionService {
                         }
                     })
                     .onSuccess(frame -> {
-                        log.info("Subscribed to /subscription/hge/" + id);
+//                        log.info("Subscribed to /subscription/hge/" + id);
                         currentSubscription = "/subscription/hge/" + id;
                     })
                     .onFailure(throwable -> log.error("Failed to subscribe to /subscription/hge/" + id, throwable))
