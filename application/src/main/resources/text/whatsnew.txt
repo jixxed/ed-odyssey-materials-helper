@@ -1,3 +1,8 @@
+Version 2.79
+-------------
+Fix Modified Medium Guardian Plasma Charger Blueprint requirements
+Added HGE Tracker (Work in progress)
+
 Version 2.78
 -------------
 Fix shortest path not starting with remote workshop
