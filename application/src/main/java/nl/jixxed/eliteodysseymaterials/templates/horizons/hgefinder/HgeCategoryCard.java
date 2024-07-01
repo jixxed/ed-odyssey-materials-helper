@@ -113,7 +113,6 @@ public class HgeCategoryCard extends VBox implements Template {
     }
 
     private void updateLastFoundSystemLabels() {
-        log.debug("udpating labels");
         final List<StarSystem> lastFoundSystems = HighGradeEmissionService.getLastFoundSystems(this.materialType);
         for (int i = 0; i < lastFoundSystems.size(); i++) {
             this.systemLabels.get(i).setStarSystem(lastFoundSystems.get(i));

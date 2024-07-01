@@ -213,8 +213,10 @@ public class HighGradeEmissionService {
                                 if(HORIZONS_MATERIAL_TYPES.contains(materialType)) {
                                     final StarSystem entry = new StarSystem(message.getSystem(), message.getStarPos()[0], message.getStarPos()[1], message.getStarPos()[2]);
                                     entry.setAllegiance(SystemAllegiance.forKey(message.getSystemAllegiance()));
-                                    log.debug("Adding to " + message.getCategory() + ": " + message.getSystem());
-                                    lastFoundSystems.get(materialType).add(entry);
+                                    final FixedSizeCircularReference<StarSystem> circularReference = lastFoundSystems.get(materialType);
+                                    if(circularReference.asList().stream().noneMatch(system -> system.getName().equals(entry.getName()))) {
+                                        circularReference.add(entry);
+                                    }
                                 }
                             }
                             if ("lastFound".equalsIgnoreCase(message.getEvent())) {
