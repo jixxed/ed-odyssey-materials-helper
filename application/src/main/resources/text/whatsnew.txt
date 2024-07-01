@@ -1,3 +1,10 @@
+Version 2.80
+-------------
+Updated styling in HGE Tracker (faction not being truncated)
+fixed HGE Tracker system rotation in category cards
+added allegiance image to systems in category cards
+added indicator for FSS scanned/Visited HGE's
+
 Version 2.79
 -------------
 Fix Modified Medium Guardian Plasma Charger Blueprint requirements
