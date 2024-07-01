@@ -22,7 +22,6 @@ import nl.jixxed.eliteodysseymaterials.service.hge.Message;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -82,13 +81,13 @@ public class HgeFinderTab extends HorizonsTab {
             this.timer = new Timer("updateHge", true);
             this.timer.scheduleAtFixedRate(this.task, 0, 1000L);
             //TODO testing cards
-            hgeCards.getChildren().add(new HgeCard(Engineer.BILL_TURNER.getStarSystem(),
-                    "FSS Faction",
-                    0.55,
-                    getMaterials("FSSSignalDiscovered", "Boom", SystemAllegiance.FEDERATION, null),
-                    "Boom",
-                    SystemAllegiance.FEDERATION,
-                    LocalDateTime.now().plusHours(1), true, true));
+//            hgeCards.getChildren().add(new HgeCard(Engineer.BILL_TURNER.getStarSystem(),
+//                    "FSS Faction",
+//                    0.55,
+//                    getMaterials("FSSSignalDiscovered", "Boom", SystemAllegiance.FEDERATION, null),
+//                    "Boom",
+//                    SystemAllegiance.FEDERATION,
+//                    LocalDateTime.now().plusHours(1), true, true));
 //            hgeCards.getChildren().add(new HgeCard(Engineer.BILL_TURNER.getStarSystem(),
 //                    null,
 //                    null,
