@@ -33,10 +33,9 @@ public class HgeCard extends VBox implements Template {
     //            | Pharmaceutical Isolators                               |
     //            |                                                        |
     //            ----------------------------------------------------------
-    private HBox systemFactionBox;
-    private VBox systemFactionLabelsBox;
-    private VBox systemFactionValuesBox;
 
+    private HBox systemTimerBox;
+    private HBox factionBox;
     private HBox materialsStateAllegianceBox;
     private VBox materialsBox;
     private VBox stateBox;
@@ -80,21 +79,32 @@ public class HgeCard extends VBox implements Template {
         if(owned) {
             this.getStyleClass().add("hge-card-highlight");
         }
-        this.systemFactionLabelsBox = BoxBuilder.builder().withStyleClass("hge-card-top-labels").withNodes(LabelBuilder.builder().withStyleClass("hge-card-top-label").withText(LocaleService.getStringBinding("hge.card.system")).build(), LabelBuilder.builder().withStyleClass("hge-card-top-label").withText(LocaleService.getStringBinding("hge.card.faction")).build()).buildVBox();
         final DestroyableLabel factionLabel = this.faction != null
                 ? LabelBuilder.builder().withStyleClass("hge-card-faction-label").withNonLocalizedText(this.faction + " ("+ Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(influence * 100) + "%)").build()
                 : LabelBuilder.builder().withStyleClass("hge-card-faction-label").withText(LocaleService.getStringBinding("hge.unknown")).build();
-
         Tooltip.install(factionLabel, TooltipBuilder.builder()
                 .withShowDelay(javafx.util.Duration.millis(100))
                 .withShowDuration(javafx.util.Duration.seconds(30))
                 .withNonLocalizedText(factionLabel.getText()).build());
-        this.systemFactionValuesBox = BoxBuilder.builder().withStyleClass("hge-card-top-values").withNodes(BoxBuilder.builder().withNodes(this.system).buildHBox(), factionLabel).buildVBox();
         final Duration duration = Duration.between(LocalDateTime.now(), expiration);
         timer = LabelBuilder.builder().withStyleClass("hge-card-timer").withNonLocalizedText(duration.toMinutesPart() + ":" + String.format("%02d", duration.toSecondsPart())).build();
         final DestroyableResizableImageView imageView = ResizableImageViewBuilder.builder().withStyleClass("hge-card-timer-image").withImage(ImageService.getImage("/images/other/timer.png")).build();
         FlowPane timerPane = FlowPaneBuilder.builder().withStyleClass("hge-card-timer-flow").withNodes(imageView, timer).build();
-        this.systemFactionBox = BoxBuilder.builder().withStyleClass("hge-card-top").withNodes(systemFactionLabelsBox, systemFactionValuesBox, new GrowingRegion(), timerPane).buildHBox();
+        final DestroyableLabel signalType = this.highGrade
+                ? LabelBuilder.builder().withStyleClasses("hge-card-source", "hge-card-source-fss").withText(LocaleService.getStringBinding("hge.fss")).build()
+                : LabelBuilder.builder().withStyleClasses("hge-card-source", "hge-card-source-uss").withText(LocaleService.getStringBinding("hge.uss")).build();
+        this.systemTimerBox = BoxBuilder.builder().withStyleClass("hge-card-top").withNodes(
+                LabelBuilder.builder().withStyleClass("hge-card-system-faction-label").withText(LocaleService.getStringBinding("hge.card.system")).build(),
+                this.system,
+                new GrowingRegion(),
+                timerPane
+        ).buildHBox();
+        this.factionBox = BoxBuilder.builder().withStyleClass("hge-card-top").withNodes(
+                LabelBuilder.builder().withStyleClass("hge-card-system-faction-label").withText(LocaleService.getStringBinding("hge.card.faction")).build(),
+                factionLabel,
+                new GrowingRegion(),
+                signalType
+        ).buildHBox();
 
         this.materialsBox = BoxBuilder.builder().withStyleClass("hge-card-materials-vbox").withNodes(LabelBuilder.builder().withStyleClass("hge-card-materials-label").withText(LocaleService.getStringBinding("hge.card.materials")).build()).buildVBox();
         this.materials.forEach(material -> materialsBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding(material.getLocalizationKey())).build()));
@@ -114,7 +124,7 @@ public class HgeCard extends VBox implements Template {
                 .withShowDuration(javafx.util.Duration.seconds(30))
                 .withText(LocaleService.getStringBinding(highGrade ? "hge.card.fss.timer" : "hge.card.uss.timer")).build());
 
-        this.getChildren().addAll(systemFactionBox, materialsStateAllegianceBox);
+        this.getChildren().addAll(this.systemTimerBox, this.factionBox, materialsStateAllegianceBox);
     }
 
     @Override

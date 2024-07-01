@@ -3,6 +3,8 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @RequiredArgsConstructor
 @Getter
 public enum HorizonsMaterialType {
@@ -52,4 +54,7 @@ public enum HorizonsMaterialType {
         return "material.category." + this.name().toLowerCase();
     }
 
+    public static HorizonsMaterialType forName(final String name) {
+        return Arrays.stream(HorizonsMaterialType.values()).filter(materialType -> materialType.name().equalsIgnoreCase(name)).findFirst().orElse(HorizonsMaterialType.UNKNOWN);
+    }
 }

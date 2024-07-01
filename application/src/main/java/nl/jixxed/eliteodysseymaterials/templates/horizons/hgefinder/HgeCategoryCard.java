@@ -9,6 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -22,9 +23,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HighGradeEmissionLastFoundEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
@@ -33,10 +32,11 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizab
 import org.controlsfx.control.SegmentedBar;
 
 import java.util.*;
-
+@Slf4j
 public class HgeCategoryCard extends VBox implements Template {
 
     private DestroyableResizableImageView gradeImage;
+    private DestroyableResizableImageView factionImage;
     private Label groupLabel;
     private Label nameLabel;
     private Label systemsLabel;
@@ -113,6 +113,7 @@ public class HgeCategoryCard extends VBox implements Template {
     }
 
     private void updateLastFoundSystemLabels() {
+        log.debug("udpating labels");
         final List<StarSystem> lastFoundSystems = HighGradeEmissionService.getLastFoundSystems(this.materialType);
         for (int i = 0; i < lastFoundSystems.size(); i++) {
             this.systemLabels.get(i).setStarSystem(lastFoundSystems.get(i));
@@ -131,9 +132,10 @@ public class HgeCategoryCard extends VBox implements Template {
             Platform.runLater(this::updateLastFoundSystemLabels);
         }));
 
-//        this.eventListeners.add(EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
-//            update(horizonsMaterialSearchEvent.getSearch().getQuery());
-//        }));
+
+        this.eventListeners.add(EventService.addStaticListener(HighGradeEmissionEvent.class, event -> {
+            Platform.runLater(this::updateLastFoundSystemLabels);
+        }));
     }
 
     private void update() {

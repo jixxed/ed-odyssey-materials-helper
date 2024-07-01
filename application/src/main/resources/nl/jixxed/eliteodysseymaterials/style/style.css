@@ -3745,12 +3745,21 @@
     -fx-max-width: 37.5em;
     -fx-background-color: #0f0f0f;
     -fx-padding: 0.2em;
-    -fx-spacing: 1em;
+    /*-fx-spacing: 1em;*/
     -fx-border-width: 0.1em;
     -fx-border-color: #0f0f0f;
 }
 .hge-card-highlight{
     -fx-border-color: #0A65BF;
+}
+.hge-card-source{
+    -fx-label-padding: 0.3em;
+}
+.hge-card-source-fss{
+    -fx-text-fill: #dcc030;
+}
+.hge-card-source-uss{
+    -fx-text-fill: #0A65BF;
 }
 .hge-card-timer{
     -fx-label-padding: 0.3em;
@@ -3785,9 +3794,16 @@
     -fx-max-width: 6em;
 
 }
+.hge-card-system-faction-label{
+    -fx-font-weight: bold;
+    -fx-min-width: 8em;
+    -fx-max-width: 8em;
+    /*-fx-padding: 0.4em;*/
+}
 .hge-card-faction-label{
-
-    -fx-padding: 0.4em;
+    -fx-min-width: 20em;
+    /*-fx-max-width: 20em;*/
+    -fx-padding: 0 0 0 0.4em;
 }
 .hge-card-top-label{
     -fx-min-height: 2em;
@@ -3813,7 +3829,10 @@
     -fx-max-width: 8em;
 }
 .hge-card-top{
--fx-spacing: 2em;
+    -fx-spacing: 0.2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-alignment: center-left;
 }
 .hge-card-materials-vbox{
 
@@ -3825,7 +3844,7 @@
 
 }
 .hge-card-bottom{
-    -fx-spacing: 1em;
+    /*-fx-spacing: 0.5em;*/
 }
 .hge-category-card{
     -fx-background-color: #0f0f0f;

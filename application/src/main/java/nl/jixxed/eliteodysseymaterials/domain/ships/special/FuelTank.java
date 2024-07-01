@@ -66,4 +66,9 @@ public class FuelTank extends OptionalModule {
     public int getGrouping() {
         return 1;
     }
+
+    @Override
+    public boolean isSelectable() {
+        return !FUEL_TANK_1_C_FREE.equals(this);
+    }
 }
