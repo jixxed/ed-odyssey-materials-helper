@@ -111,5 +111,5 @@ segment.type.power_group_none,Available,,,,,,Доступно
 segment.type.power_overpower,Power deficit,,,,,,Энергодефицит
 tabs.onfoot,On foot,,,,,,Пеший режим
 tabs.ships,Ships,,,,,,Корабельный режим
-notification.type.hge,High grade emission,,,,,,
-tabs.hge,HGE Tracker,,,,,,
+notification.type.hge,High grade emission,,,,,,Высокоуровневый сигнал
+tabs.hge,HGE Tracker,,,,,,Трекер ВУС
