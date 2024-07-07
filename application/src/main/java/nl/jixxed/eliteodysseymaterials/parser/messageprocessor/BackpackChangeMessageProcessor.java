@@ -107,7 +107,7 @@ public class BackpackChangeMessageProcessor implements MessageProcessor<Backpack
                 .secondaryEconomy(currentLocation.getStarSystem().getSecondaryEconomy().name())
                 .government(currentLocation.getStarSystem().getGovernment().name())
                 .security(currentLocation.getStarSystem().getSecurity().name())
-                .state(currentLocation.getStarSystem().getState())
+                .state(currentLocation.getStarSystem().getState().name())
                 .body(currentLocation.getBody())
                 .settlement(currentLocation.getStation())
                 .x(currentLocation.getStarSystem().getX())

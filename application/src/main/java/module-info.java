@@ -36,7 +36,9 @@ module nl.jixxed.eliteodysseymaterials {
     requires io.github.classgraph;
     requires io.vertx.core;
     requires io.vertx.stomp;
-    requires io.netty.common;//byte buffer
+    requires io.netty.common;
+    requires com.ibm.icu;
+    requires org.apache.xmlbeans;//byte buffer
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;

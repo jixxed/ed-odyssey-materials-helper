@@ -9,16 +9,17 @@ import java.util.Arrays;
 @AllArgsConstructor
 @Getter
 @Slf4j
-public enum SystemAllegiance {
+public enum Allegiance {
     FEDERATION("Federation"),
     EMPIRE("Empire"),
     ALLIANCE("Alliance"),
     INDEPENDENT("Independent"),
-    UNKNOWN("");
+    PILOTSFEDERATION("PilotsFederation"),
+    NONE("");
     private final String key;
 
-    public static SystemAllegiance forKey(final String name) {
-        return Arrays.stream(SystemAllegiance.values()).filter(systemAllegiance -> systemAllegiance.key.equalsIgnoreCase(name)).findFirst().orElse(SystemAllegiance.UNKNOWN);
+    public static Allegiance forKey(final String name) {
+        return Arrays.stream(Allegiance.values()).filter(allegiance -> allegiance.key.equalsIgnoreCase(name)).findFirst().orElse(Allegiance.NONE);
     }
 
 

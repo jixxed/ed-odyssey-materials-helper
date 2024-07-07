@@ -10,7 +10,6 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -35,7 +34,6 @@ public class CopyableSystemLabel extends FlowPane implements Template {
     private Label distance;
     private StarSystem starSystem;
     private DestroyableResizableImageView copyIcon;
-    private DestroyableResizableImageView factionImage;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public CopyableSystemLabel() {
@@ -46,7 +44,7 @@ public class CopyableSystemLabel extends FlowPane implements Template {
     @Override
     public void initComponents() {
         this.getStyleClass().add("copyable-system" );
-        this.setPrefWrapLength(500);
+//        this.setPrefWrapLength(500);
         this.systemName = LabelBuilder.builder()
                 .withStyleClass("copyable-system-location")
                 .withNonLocalizedText("")
@@ -62,16 +60,12 @@ public class CopyableSystemLabel extends FlowPane implements Template {
                 .withImage("/images/other/copy.png")
                 .build();
 
-        this.factionImage = ResizableImageViewBuilder.builder()
-                .withStyleClass("copyable-system-copy-icon")
-                .withImage("/images/allegiance/unknown.png")
-                .build();
 
         this.setOnMouseClicked(event -> {
             copyLocationToClipboard();
             NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
         });
-        this.getChildren().addAll(this.systemName, new StackPane(this.copyIcon), this.distance, this.factionImage);
+        this.getChildren().addAll(this.systemName, new StackPane(this.copyIcon), this.distance);
     }
 
     @Override
@@ -84,13 +78,6 @@ public class CopyableSystemLabel extends FlowPane implements Template {
     public void setStarSystem(StarSystem starSystem) {
         this.starSystem = starSystem;
         this.systemName.setText(starSystem.getName());
-        final String allegiance = starSystem.getAllegiance() != null ? starSystem.getAllegiance().name().toLowerCase() : "unknown";
-        if(allegiance.equalsIgnoreCase("unknown")){
-            this.factionImage.setVisible(false);
-        }else {
-            this.factionImage.setVisible(true);
-            this.factionImage.setImage(ImageService.getImage("/images/allegiance/" + allegiance + ".png"));
-        }
         update();
     }
 

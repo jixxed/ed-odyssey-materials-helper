@@ -4,10 +4,11 @@ hge.card.system,System,,,,,,Система
 hge.card.faction,Faction,,,,,,Фракция
 hge.card.materials,Materials,,,,,,Материалы
 hge.card.state,State,,,,,,Состояние
+hge.card.states,States,,,,,,
 hge.card.allegiance,Allegiance,,,,,,Принадлежность
 hge.card.fss.timer,This HGE will despawn when the timer expires.,,,,,,Этот сигнал исчезнет по истечению таймера
 hge.card.uss.timer,It is unknown when this HGE despawns.\nThis message is removed after a timer of 10 minutes.,,,,,,Время исчезновения сигнала неизвестно.\nЭто сообщение будет удалено через 10 минут.
-hge.explain,Receive more detailed and long lasting emissions by performing FSS scans of High Grade Emissions.,,,,,,Получите более детальные и долговременные сигналы с помощью FSS
+hge.explain,My scanned and visited High Grade Emissions,,,,,,
 hge.tracking.disabled,Material tracking is disabled. Disable the tracking opt-out under Settings > Tracking.,,,,,,Отслеживание материалов отключено. включить - Настройки > Отслеживание
 hge.unknown,Unknown,,,,,,Неизвестно
 hge.fss,FSS Scanned,,,,,,Сканировано через FSS

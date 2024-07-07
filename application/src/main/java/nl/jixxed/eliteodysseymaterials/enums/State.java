@@ -2,7 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import java.util.Arrays;
 
-public enum FactionState {
+public enum State {
     UNKNOWN,
     NONE,
     BOOM,
@@ -33,12 +33,12 @@ public enum FactionState {
     TRADEWAR;
 
 
-    public static FactionState forName(final String name) {
-        return Arrays.stream(FactionState.values()).filter(factionState -> factionState.name().equalsIgnoreCase(name)).findFirst().orElse(FactionState.UNKNOWN);
+    public static State forName(final String name) {
+        return Arrays.stream(State.values()).filter(factionState -> factionState.name().equalsIgnoreCase(name)).findFirst().orElse(State.UNKNOWN);
     }
 
 
     public String getLocalizationKey() {
-        return "faction.state." + this.name().toLowerCase();
+        return "state." + this.name().toLowerCase();
     }
 }

@@ -10,17 +10,10 @@ import io.vertx.core.net.KeyStoreOptions;
 import io.vertx.ext.stomp.StompClient;
 import io.vertx.ext.stomp.StompClientConnection;
 import io.vertx.ext.stomp.StompClientOptions;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.domain.Location;
-import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.enums.SystemAllegiance;
-import nl.jixxed.eliteodysseymaterials.enums.SystemEconomy;
+import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.CryptoHelper;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.SystemFaction;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSSignalDiscovered.FSSSignalDiscovered;
@@ -29,8 +22,9 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.USSDrop.USSDrop;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.hge.ExpiringMessage;
+import nl.jixxed.eliteodysseymaterials.service.hge.FactionV2;
 import nl.jixxed.eliteodysseymaterials.service.hge.FixedSizeCircularReference;
-import nl.jixxed.eliteodysseymaterials.service.hge.Message;
+import nl.jixxed.eliteodysseymaterials.service.hge.MessageV2;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -59,8 +53,8 @@ public class HighGradeEmissionService {
     private static boolean terminating = false;
     private static boolean processing = false;
     private static boolean trackingUSS = false;
-    private static Set<String> trackingMaterials = new HashSet<>();
-    private static Map<HorizonsMaterialType, FixedSizeCircularReference<StarSystem>> lastFoundSystems = new HashMap<>();
+    private static Set<HorizonsMaterial> trackingMaterials = new HashSet<>();
+    private static Map<HorizonsMaterialType, FixedSizeCircularReference<HgeStarSystem>> lastFoundSystems = new HashMap<>();
     private static final List<HorizonsMaterialType> HORIZONS_MATERIAL_TYPES = List.of(
             HorizonsMaterialType.CHEMICAL,
             HorizonsMaterialType.THERMIC,
@@ -71,14 +65,13 @@ public class HighGradeEmissionService {
             HorizonsMaterialType.SHIELDING,
             HorizonsMaterialType.COMPOSITE
     );
-    static{
+
+    static {
 
         for (HorizonsMaterialType materialType : HORIZONS_MATERIAL_TYPES) {
             lastFoundSystems.put(materialType, new FixedSizeCircularReference<>(3));
         }
     }
-    @Getter
-    private static Collection<ExpiringMessage> messages = Collections.synchronizedCollection(new ArrayList<>());
 
     private static String getUniqueId(Commander commander) {
         return CryptoHelper.sha256("afrev#$Fv123a", commander.getName() + commander.getFid());
@@ -109,6 +102,7 @@ public class HighGradeEmissionService {
 //        connect();
 
     }
+
     private static String currentSubscription;
 
     private static void resubscribe() {
@@ -153,15 +147,26 @@ public class HighGradeEmissionService {
                 .orElse(Future.failedFuture("No commander selected"));
     }
 
-    private static void message(Message message) {
+    private static void message(MessageV2 message, Double timeRemaining, Set<HorizonsMaterial> trackingMaterials){
         LocalDateTime expiration;
-        if (message.getEvent().equalsIgnoreCase("FSSSignalDiscovered")) {
-            expiration = ZonedDateTime.parse(message.getTimestamp()).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().plusSeconds((int) Math.ceil(message.getTimeRemaining()));
+        if (message.getEvent().equalsIgnoreCase("FSSSignalDiscovered") && timeRemaining != null) {
+            expiration = ZonedDateTime.parse(message.getTimestamp()).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().plusSeconds((int) Math.ceil(timeRemaining));
         } else {
-            expiration = LocalDateTime.now().plusMinutes(5);
+            expiration = LocalDateTime.now().plusHours(1);
         }
-        final ExpiringMessage expiringMessage = ExpiringMessage.builder().message(message).expiration(expiration).owned(true).build();
-        EventService.publish(new HighGradeEmissionEvent(expiringMessage));
+        final ExpiringMessage expiringMessage = ExpiringMessage.builder()
+                .timestamp(message.getTimestamp())
+                .event(message.getEvent())
+                .system(message.getSystem())
+                .starPos(message.getStarPos())
+                .systemAllegiance(message.getSystemAllegiance())
+                .population(message.getPopulation())
+                .faction(message.getFaction())
+                .systemEconomies(message.getSystemEconomies())
+                .factions(message.getFactions())
+                .category(message.getCategory())
+                .expiration(expiration).build();
+        EventService.publish(new HighGradeEmissionEvent(expiringMessage, trackingMaterials));
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             if (connection == null) {
                 connect().onSuccess(o -> send(message, commander));
@@ -171,13 +176,13 @@ public class HighGradeEmissionService {
         });
     }
 
-    private static void send(Message message, Commander commander) {
+    private static void send(MessageV2 message, Commander commander) {
         Map<String, String> headers = new HashMap<>();
         headers.put("id", getUniqueId(commander));
         try {
             final String text = MAPPER.writeValueAsString(message);
 //            writeToFile(text);
-            connection.send("/post/hge", headers, Buffer.buffer(text),
+            connection.send("/post/hge2", headers, Buffer.buffer(text),
                     ar -> {
                         if (ar.succeeded()) {
 //                            log.info("Completed sending message: {}", ar.result());
@@ -198,55 +203,47 @@ public class HighGradeEmissionService {
             headers.put("id", id);
             headers.put("user_id", id);
 //            log.info("unsubscribe");
-//            connection.unsubscribe("/subscription/hge/" + id)
-//                    .onSuccess(frame -> log.info("Unsubscribed from /subscription/hge/" + id))
-//                    .onFailure(throwable -> log.error("Failed to unsubscribe from /subscription/hge/" + id, throwable));
+//            connection.unsubscribe("/subscription/hge2/" + id)
+//                    .onSuccess(frame -> log.info("Unsubscribed from /subscription/hge2/" + id))
+//                    .onFailure(throwable -> log.error("Failed to unsubscribe from /subscription/hge2/" + id, throwable));
 //            log.info("subscribe");
-            connection.subscribe("/subscription/hge/" + id, headers, frame -> {
-//                        log.info("Message to /subscription/hge/{}: {}", id, frame.getBodyAsString());
+            connection.subscribe("/subscription/hge2/" + id, headers, frame -> {
+//                        log.info("Message to /subscription/hge2/{}: {}", id, frame.getBodyAsString());
 //                        writeToFile(frame.getBodyAsString());
                         try {
-                            final Message message = MAPPER.readValue(frame.getBodyAsString(), Message.class);
+                            final MessageV2 message = MAPPER.readValue(frame.getBodyAsString(), MessageV2.class);
                             log.debug(frame.getBodyAsString());
-                            if("USSDrop".equalsIgnoreCase(message.getEvent())){
-                                final HorizonsMaterialType materialType = HorizonsMaterialType.forName(message.getCategory());
-                                if(HORIZONS_MATERIAL_TYPES.contains(materialType)) {
+                            if ("USSDrop".equalsIgnoreCase(message.getEvent())) {
+                                final HorizonsMaterialType materialType = message.getCategory();
+                                if (HORIZONS_MATERIAL_TYPES.contains(materialType)) {
                                     final StarSystem entry = new StarSystem(message.getSystem(), message.getStarPos()[0], message.getStarPos()[1], message.getStarPos()[2]);
-                                    entry.setAllegiance(SystemAllegiance.forKey(message.getSystemAllegiance()));
-                                    final FixedSizeCircularReference<StarSystem> circularReference = lastFoundSystems.get(materialType);
-                                    if(circularReference.asList().stream().noneMatch(system -> system.getName().equals(entry.getName()))) {
-                                        circularReference.add(entry);
-                                    }
+                                    entry.setAllegiance(message.getSystemAllegiance());
+                                    final FixedSizeCircularReference<HgeStarSystem> circularReference = lastFoundSystems.get(materialType);
+                                        circularReference.add(new HgeStarSystem(entry, message.getFactions()));
                                 }
                             }
                             if ("lastFound".equalsIgnoreCase(message.getEvent())) {
                                 final StarSystem entry = new StarSystem(message.getSystem(), message.getStarPos()[0], message.getStarPos()[1], message.getStarPos()[2]);
-                                entry.setAllegiance(SystemAllegiance.forKey(message.getSystemAllegiance()));
-                                lastFoundSystems.get(HorizonsMaterialType.valueOf(message.getCategory())).add(entry);
+                                entry.setAllegiance(message.getSystemAllegiance());
+                                final HorizonsMaterialType materialType = message.getCategory();
+                                final FixedSizeCircularReference<HgeStarSystem> circularReference = lastFoundSystems.get(materialType);
+                                circularReference.add(new HgeStarSystem(entry, message.getFactions()));
                                 EventService.publish(new HighGradeEmissionLastFoundEvent());
                             } else {
-                                LocalDateTime expiration;
-                                if (message.getEvent().equalsIgnoreCase("FSSSignalDiscovered")) {
-                                    expiration = ZonedDateTime.parse(message.getTimestamp()).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().plusSeconds((int) Math.ceil(message.getTimeRemaining()));
-                                } else {
-                                    expiration = LocalDateTime.now().plusMinutes(10);
-                                }
-                                final ExpiringMessage expiringMessage = ExpiringMessage.builder().message(message).expiration(expiration).owned(false).build();
-                                messages.add(expiringMessage);
-                                EventService.publish(new HighGradeEmissionEvent(expiringMessage));
+                                EventService.publish(new HighGradeEmissionReceivedEvent(message));
                             }
                         } catch (JsonProcessingException e) {
                             log.error("Failed to parse message", e);
                         }
                     })
                     .onSuccess(frame -> {
-//                        log.info("Subscribed to /subscription/hge/" + id);
-                        currentSubscription = "/subscription/hge/" + id;
+//                        log.info("Subscribed to /subscription/hge2/" + id);
+                        currentSubscription = "/subscription/hge2/" + id;
                     })
-                    .onFailure(throwable -> log.error("Failed to subscribe to /subscription/hge/" + id, throwable))
+                    .onFailure(throwable -> log.error("Failed to subscribe to /subscription/hge2/" + id, throwable))
                     .onComplete(ar -> {
                         if (ar.succeeded()) {
-                            log.info("Completed subscription to /subscription/hge/{}: {}", id, ar.result());
+                            log.info("Completed subscription to /subscription/hge2/{}: {}", id, ar.result());
                         } else {
                             log.error("Failed to complete subscription", ar.cause());
                         }
@@ -268,7 +265,7 @@ public class HighGradeEmissionService {
         try {
             vertx = Vertx.vertx();
             createClient();
-            createCleaner();
+//            createCleaner();
         } catch (Throwable t) {
             log.error("Failed to create vertx", t);
         }
@@ -288,7 +285,7 @@ public class HighGradeEmissionService {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("id", currentSubscription.substring(currentSubscription.lastIndexOf("/") + 1));
                 HighGradeEmissionService.connection.unsubscribe(currentSubscription, headers).result();
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error("Failed to unsubscribe", e);
             }
             client.close();
@@ -296,21 +293,48 @@ public class HighGradeEmissionService {
         }));
     }
 
-    private static void createCleaner() {
-        vertx.setPeriodic(1000 * 10, (l) -> messages.removeIf(message -> LocalDateTime.now().isAfter(message.getExpiration())));
-    }
+//    private static void createCleaner() {
+//        vertx.setPeriodic(1000 * 10, (l) -> messages.removeIf(message -> LocalDateTime.now().isAfter(message.getExpiration())));
+//    }
 
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.Faction faction, boolean isLeading) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getInfluence().doubleValue(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.ActiveState::getState).toList()).orElse(List.of("None")), isLeading);
+        return new Faction(
+                faction.getName(),
+                State.forName(faction.getFactionState()),
+                faction.getInfluence().doubleValue(),
+                Allegiance.forKey(faction.getAllegiance()),
+                Government.forKey(faction.getGovernment()),
+                faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.ActiveState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                faction.getPendingStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.PendingState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                faction.getRecoveringStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.RecoveringState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                isLeading);
     }
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.Faction faction, boolean isLeading) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getInfluence().doubleValue(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.ActiveState::getState).toList()).orElse(List.of("None")), isLeading);
+        return new Faction(
+                faction.getName(),
+                State.forName(faction.getFactionState()),
+                faction.getInfluence().doubleValue(),
+                Allegiance.forKey(faction.getAllegiance()),
+                Government.forKey(faction.getGovernment()),
+                faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.ActiveState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                faction.getPendingStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.PendingState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                faction.getRecoveringStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.RecoveringState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                isLeading);
     }
 
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Faction faction, boolean isLeading) {
-        return new Faction(faction.getName(), faction.getFactionState(), faction.getInfluence().doubleValue(), faction.getAllegiance(), faction.getGovernment(), faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.ActiveState::getState).toList()).orElse(List.of("None")), isLeading);
+        return new Faction(
+                faction.getName(),
+                State.forName(faction.getFactionState()),
+                faction.getInfluence().doubleValue(),
+                Allegiance.forKey(faction.getAllegiance()),
+                Government.forKey(faction.getGovernment()),
+                faction.getActiveStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.ActiveState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                faction.getPendingStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.PendingState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                faction.getRecoveringStates().map(list -> list.stream().map(nl.jixxed.eliteodysseymaterials.schemas.journal.Location.RecoveringState::getState).map(State::forName).toList()).orElse(Collections.emptyList()),
+                isLeading);
     }
 
     private static void registerFactions(List<Faction> factions) {
@@ -331,6 +355,23 @@ public class HighGradeEmissionService {
 // "SpawningFaction":"LDS 413 Resistance",
 // "ThreatLevel":0,
 // "TimeRemaining":660.575867 }
+
+
+//    { "timestamp":"2024-07-02T19:00:46Z",
+//    "event":"FSSSignalDiscovered",
+//    "SystemAddress":7267755828649,
+//    "SignalName":"$USS_HighGradeEmissions;",
+//    "SignalName_Localised":"Unidentified signal source",
+//    "SignalType":"USS",
+//    "USSType":"$USS_Type_VeryValuableSalvage;",
+//    "USSType_Localised":"High grade emissions",
+//    "SpawningState":"$FactionState_None;",
+//    "SpawningState_Localised":"None",
+//    "SpawningFaction":"$faction_none;",
+//    "SpawningFaction_Localised":"None",
+//    "ThreatLevel":0,
+//    "TimeRemaining":2386.907471 }
+
     public static void fssSignalDiscovered(FSSSignalDiscovered event) {
         LocalDateTime now = ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime();
         if (processing
@@ -339,59 +380,64 @@ public class HighGradeEmissionService {
                 && now.plusMinutes(3).isAfter(event.getTimestamp())) {
             final Location currentLocation = LocationService.getCurrentLocation();
             final String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(event.getTimestamp());
-            final Faction faction = FACTIONS.stream()
+            final Optional<Faction> faction = FACTIONS.stream()
                     .filter(f -> f.name().equals(event.getSpawningFaction().orElse(null)))
-                    .findFirst()
-                    .orElse(null);
-            final String systemAllegiance = FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(SystemAllegiance.UNKNOWN.getKey());
+                    .findFirst();
+            final Allegiance systemAllegiance = FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(Allegiance.NONE);
             final StarSystem starSystem = currentLocation.getStarSystem();
-            final Set<String> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
-                    .filter(Predicate.not(SystemEconomy.UNKNOWN::equals))
-                    .map(SystemEconomy::getFriendlyName)
+            final Set<Economy> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
+                    .filter(Predicate.not(Economy.UNKNOWN::equals))
                     .collect(Collectors.toSet());
-            Message message = Message.builder()
+            MessageV2 message = MessageV2.builder()
                     .timestamp(timestamp)
                     .event(event.getEvent())
                     .system(starSystem.getName())
                     .starPos(new Double[]{starSystem.getX(), starSystem.getY(), starSystem.getZ()})
                     .systemAllegiance(systemAllegiance)
-                    .faction(event.getSpawningFaction().orElse(null))
-                    .state(faction != null ? faction.factionState() : null)
-                    .influence(faction != null ? faction.influence() : null)
-                    .allegiance(faction != null ? faction.allegiance() : null)
-                    .government(faction != null ? faction.government() : null)
+                    .faction(event.getSpawningFaction().orElse("None"))
+                    .population(starSystem.getPopulation().longValue())
+                    .factions(FACTIONS.stream().map(f -> FactionV2.builder()
+                            .name(f.name())
+                            .influence(f.influence())
+                            .state(f.state())
+                            .allegiance(f.allegiance())
+                            .government(f.government())
+                            .activeStates(new HashSet<>(f.activeStates()))
+                            .pendingStates(new HashSet<>(f.pendingStates()))
+                            .recoveringStates(new HashSet<>(f.recoveringStates()))
+                            .leading(f.leading())
+                            .build()).collect(Collectors.toSet()))
                     .systemEconomies(economies)
-                    .timeRemaining(event.getTimeRemaining().map(BigDecimal::doubleValue).orElse(null))
                     .build();
-            message(message);
+            message(message, event.getTimeRemaining().map(BigDecimal::doubleValue).orElse(null), Set.of());
             notifyExpectedMaterial(faction, starSystem);
         }
     }
 
-    private static void notifyExpectedMaterial(Faction faction, final StarSystem starSystem) {
-        final SystemAllegiance allegiance = !SystemAllegiance.UNKNOWN.equals(starSystem.getAllegiance()) ? starSystem.getAllegiance() : SystemAllegiance.forKey(faction.allegiance());
+    private static void notifyExpectedMaterial(Optional<Faction> faction, final StarSystem starSystem) {
+        final Allegiance allegiance = Allegiance.NONE.equals(starSystem.getAllegiance()) ? faction.map(Faction::allegiance).orElse(Allegiance.NONE) : starSystem.getAllegiance();
         String material = "";
 //        log.info("FACTION: " + faction.toString());
-        if (faction.inState(List.of("Outbreak"))) {
+        if (faction.map(f -> f.inState(List.of(State.OUTBREAK))).orElse(false)) {
             //  Pharmaceutical Isolators
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.outbreak.text");
-        } else if (faction.inState(List.of("Civil War", "War"))) {
+        } else if (faction.map(f -> f.inState(List.of(State.WAR,State.CIVILWAR))).orElse(false)) {
             // Military Grade Alloys
             // Military Supercapacitors
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilwar.text");
-        } else if (faction.inState(List.of("Boom", "Expansion"))) {
+        } else if (faction.map(f -> f.inState(List.of(State.BOOM,State.EXPANSION))).orElse(false)) {
             // Proto Heat Radiators
             // Proto Radiolic Alloys / Proto Light Alloys
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.boom.text");
-        } else if (faction.inState(List.of("Civil Unrest"))) {
+        } else  if (faction.map(f -> f.inState(List.of(State.CIVILUNREST))).orElse(false)) {
             //Improvised Components
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.civilunrest.text");
         }
 
-        if (SystemAllegiance.EMPIRE.equals(allegiance)) {
+        if (Allegiance.EMPIRE.equals(allegiance)) {
             //Imperial Shielding
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.empire.text");
-        } else if (SystemAllegiance.FEDERATION.equals(allegiance)) {
+        } else if (Allegiance.FEDERATION.equals(allegiance)) {
             //Core Dynamic Composites / Proprietary Composites
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.federation.text");
         }
@@ -400,7 +446,7 @@ public class HighGradeEmissionService {
             material += LocaleService.getLocalizedStringForCurrentLocale("notification.hge.unknown.text");
         }
 
-        final LocaleService.LocaleString text = LocaleService.LocaleString.of("notification.hge.common.text", LocaleService.LocalizationKey.of(allegiance.getLocalizationKey()), faction.factionState(), material);
+        final LocaleService.LocaleString text = LocaleService.LocaleString.of("notification.hge.common.text", LocaleService.LocalizationKey.of(allegiance.getLocalizationKey()), faction.map(f -> LocaleService.LocalizationKey.of(f.state().getLocalizationKey())).orElse(LocaleService.LocalizationKey.of("state.none")), material);
         //        log.debug(text);
         NotificationService.showInformation(NotificationType.HGE, LocaleService.LocaleString.of("notification.hge.title"), text);
     }
@@ -419,7 +465,7 @@ public class HighGradeEmissionService {
 
     public static void materialCollected(MaterialCollected event) {
         if (processing && trackingUSS) {
-            trackingMaterials.add(event.getName());
+            trackingMaterials.add(Manufactured.forName(event.getName()));
         }
     }
 
@@ -432,37 +478,90 @@ public class HighGradeEmissionService {
             final Location currentLocation = LocationService.getCurrentLocation();
             final String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(datetime);
             final StarSystem starSystem = currentLocation.getStarSystem();
-            final Set<String> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
-                    .filter(Predicate.not(SystemEconomy.UNKNOWN::equals))
-                    .map(SystemEconomy::getFriendlyName)
+            final Set<Economy> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
+                    .filter(Predicate.not(Economy.UNKNOWN::equals))
                     .collect(Collectors.toSet());
-            final String systemAllegiance = FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(SystemAllegiance.UNKNOWN.getKey());
-            Message message = Message.builder()
+            final Allegiance systemAllegiance = FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(Allegiance.NONE);
+            final Set<FactionV2> factions = FACTIONS.stream().map(f -> FactionV2.builder()
+                    .name(f.name())
+                    .influence(f.influence())
+                    .state(f.state())
+                    .allegiance(f.allegiance())
+                    .government(f.government())
+                    .activeStates(new HashSet<>(f.activeStates()))
+                    .pendingStates(new HashSet<>(f.pendingStates()))
+                    .recoveringStates(new HashSet<>(f.recoveringStates()))
+                    .leading(f.leading())
+                    .build()).collect(Collectors.toSet());
+            MessageV2 message = MessageV2.builder()
                     .timestamp(timestamp)
                     .event("USSDrop")
                     .system(starSystem.getName())
                     .starPos(new Double[]{starSystem.getX(), starSystem.getY(), starSystem.getZ()})
                     .systemAllegiance(systemAllegiance)
+                    .population(starSystem.getPopulation().longValue())
+                    .factions(factions)
                     .systemEconomies(economies)
-                    .materialsFound(trackingMaterials)
+                    .category(trackingMaterials.stream().findFirst().map(HorizonsMaterial::getMaterialType).orElse(HorizonsMaterialType.UNKNOWN))
                     .build();
-            message(message);
+            if(!HorizonsMaterialType.UNKNOWN.equals(message.getCategory())) {
+                lastFoundSystems.get(message.getCategory()).add(new HgeStarSystem(starSystem, factions));
+            }
+            message(message, null, trackingMaterials);
             trackingUSS = false;
         }
     }
 
-    public static List<StarSystem> getLastFoundSystems(HorizonsMaterialType materialType) {
-        return lastFoundSystems.entrySet().stream().filter(entry -> materialType.equals(entry.getKey())).map(entry-> entry.getValue().asList()).findFirst().orElse(Collections.emptyList());
+
+    public static List<HgeStarSystem> getLastFoundSystems(HorizonsMaterialType materialType) {
+        return lastFoundSystems.entrySet().stream().filter(entry -> materialType.equals(entry.getKey())).map(entry -> entry.getValue().asList()).findFirst().orElse(Collections.emptyList());
+        //TODO TEST
+//        return List.of(
+//                new HgeStarSystem(
+//                        new StarSystem("LDS 413", Economy.AGRI,Economy.COLONY, Government.COMMUNISM, Security.HIGH, Allegiance.INDEPENDENT, BigInteger.valueOf(10000000L), State.NONE, 1.0, 2.0, 3.0),
+//                        Set.of(
+//                                new FactionV2("LDS 413 Resistance 1", 0.5D, State.BOOM, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.BOOM), Set.of(), true),
+//                                new FactionV2("LDS 413 Resistance 2", 0.1D, State.ELECTION, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.ELECTION), Set.of(), true),
+//                                new FactionV2("LDS 413 Resistance 3", 0.1D, State.WAR, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.WAR), Set.of(), true),
+//                                new FactionV2("LDS 413 Resistance 4", 0.1D, State.WAR, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.WAR), Set.of(), true),
+//                                new FactionV2("LDS 413 Resistance 5", 0.1D, State.EXPANSION, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.EXPANSION), Set.of(), true),
+//                                new FactionV2("LDS 413 Resistance 6", 0.1D, State.CIVILUNREST, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.CIVILUNREST), Set.of(), true)
+//                        )
+//                ),
+//                new HgeStarSystem(
+//                        new StarSystem("SOL 413", Economy.AGRI,Economy.COLONY, Government.COMMUNISM, Security.HIGH, Allegiance.FEDERATION, BigInteger.valueOf(10000000L), State.NONE, 6.0, 5.0, 4.0),
+//                        Set.of(
+//                                new FactionV2("SOL 413 Resistance 1", 0.5D, State.BOOM, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.BOOM), Set.of(), true),
+//                                new FactionV2("SOL 413 Resistance 2", 0.1D, State.ELECTION, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.OUTBREAK), Set.of(), true),
+//                                new FactionV2("SOL 413 Resistance 3", 0.1D, State.WAR, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
+//                                new FactionV2("SOL 413 Resistance 4", 0.1D, State.WAR, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
+//                                new FactionV2("SOL 413 Resistance 5", 0.1D, State.EXPANSION, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.EXPANSION), Set.of(), true),
+//                                new FactionV2("SOL 413 Resistance 6", 0.1D, State.CIVILUNREST, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.CIVILUNREST), Set.of(), true)
+//                        )
+//                ),
+//                new HgeStarSystem(
+//                        new StarSystem("BAN 413", Economy.AGRI,Economy.COLONY, Government.COMMUNISM, Security.HIGH, Allegiance.EMPIRE, BigInteger.valueOf(10000000L), State.NONE, 7.0, 8.0, 9.0),
+//                        Set.of(
+//                                new FactionV2("BAN 413 Resistance 1", 0.5D, State.BOOM, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.BOOM), Set.of(), true),
+//                                new FactionV2("BAN 413 Resistance 2", 0.1D, State.OUTBREAK, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.OUTBREAK), Set.of(), true),
+//                                new FactionV2("BAN 413 Resistance 3", 0.1D, State.CIVILWAR, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
+//                                new FactionV2("BAN 413 Resistance 4", 0.1D, State.CIVILWAR, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
+//                                new FactionV2("BAN 413 Resistance 5", 0.1D, State.EXPANSION, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.EXPANSION), Set.of(), true),
+//                                new FactionV2("BAN 413 Resistance 6", 0.1D, State.CIVILUNREST, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.CIVILUNREST), Set.of(), true)
+//                        )
+//                )
+//        );
     }
 
-    record Faction(String name, String factionState, Double influence, String allegiance, String government,
-                   List<String> activeStates, boolean leading) {
-        boolean isAllied(List<String> allegiances) {
+    record Faction(String name, State state, Double influence, Allegiance allegiance, Government government,
+                   List<State> activeStates, List<State> pendingStates, List<State> recoveringStates, boolean leading) {
+
+        boolean isAllied(List<Allegiance> allegiances) {
             return allegiances.contains(allegiance);
         }
 
-        boolean inState(List<String> states) {
-            return states.contains(factionState);
+        boolean inState(List<State> states) {
+            return activeStates.stream().anyMatch(states::contains);
         }
     }
 }

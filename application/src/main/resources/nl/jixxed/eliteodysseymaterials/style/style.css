@@ -3908,11 +3908,11 @@
     -fx-cursor: hand;
 }
 .copyable-system-location {
-    -fx-text-fill: #0078d6;
+    -fx-text-fill: #0078d6 !important;
     -fx-label-padding: 0.3em;
 }
 .copyable-system-distance{
-    -fx-text-fill: #777;
+    -fx-text-fill: #777 !important;
     -fx-label-padding: 0.3em;
 
 }
@@ -3921,4 +3921,157 @@
     -fx-max-height: 1em;
     -fx-fit-to-height: true;
     -fx-fit-to-width: true;
+}
+
+
+
+.hge-tracker-card{
+    -fx-background-color: #0f0f0f;
+    -fx-min-width: 40em;
+    -fx-max-width: 40em;
+}
+.hge-tracker-card-rarity-image{
+    -fx-pref-height: 2em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-pref-width: 2em;
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+    -fx-padding: 0 0 0 0.2em;
+
+}
+.hge-tracker-card-group-image{
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-min-height: 4em;
+    -fx-max-height: 4em;
+}
+.hge-tracker-card-group{
+    -fx-padding: 0.2em;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-alignment: center-left;
+    -fx-min-height: 3.4em;
+    -fx-max-height: 3.4em;
+}
+.hge-tracker-card-material{
+
+    -fx-label-padding: 0.2em;
+    -fx-wrap-text: true;
+    -fx-pref-width: 14em;
+    -fx-min-width: 14em;
+    -fx-max-width: 14em;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-alignment: center-left;
+
+}
+.hge-tracker-card-materials{
+    -fx-spacing: 1em;
+    -fx-hgap: 1em;
+}
+.hge-tracker-card-system{
+}
+.hge-tracker-card-systems{
+    -fx-padding: 0 0 0 0.2em;
+}
+.hge-tracker-card-progressbar{
+    -fx-min-height: 1em;
+    -fx-pref-height: 1em;
+    -fx-max-height: 1em;
+    -fx-min-width: 20em;
+    -fx-max-width: 20em;
+}
+.hge-tracker-card-textline {
+    -fx-pref-height: 3em;
+    -fx-min-height: 3em;
+    -fx-max-height: 3em;
+    -fx-min-width: 20em;
+    -fx-max-width: 20em;
+}
+.hge-tracker-card-systems{
+    -fx-min-width: 20em;
+    -fx-max-width: 20em;
+}
+.copyable-system-popover-group-box{
+    -fx-min-width: 6em;
+    -fx-max-width: 6em;
+}
+.copyable-system-popover-label{
+    -fx-font-weight: bold !important;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-min-width: 8em;
+    -fx-max-width: 8em;
+    -fx-wrap-text: true;
+}
+.copyable-system-popover-system{
+    -fx-max-width: 20em;
+}
+.copyable-system-popover-value{
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-alignment: center-left;
+}
+.copyable-system-popover-allegiance-image{
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-min-height: 4em;
+    -fx-max-height: 4em;
+}
+.copyable-system-popover-group-image{
+    -fx-min-width: 4em;
+    -fx-max-width: 4em;
+    -fx-min-height: 4em;
+    -fx-max-height: 4em;
+    -fx-alignment: baseline-center;
+    -fx-padding: 0 1em 0 1em;
+}
+.copyable-system-popover-group-texts{
+    -fx-text-fill: white;
+    -fx-min-width: 6em;
+    -fx-max-width: 6em;
+    -fx-alignment: baseline-center;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+.copyable-system-popover-allegiance{
+    -fx-padding: 0 0 0 0.3em;
+}
+.copyable-system-popover-group-image-zero{
+    -fx-opacity: 0.5;
+}
+.copyable-system-popover-group-texts-zero{
+    -fx-opacity: 0.5;
+}
+.copyable-system-popover:hover{
+    -fx-background-color: #2c2c2c;
+    -fx-cursor: hand;
+}
+.copyable-system-popover-location {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0.3em;
+}
+.copyable-system-popover-location-max{
+    -fx-text-fill: #dcc030;
+}
+.copyable-system-popover-distance{
+    -fx-text-fill: #777;
+    -fx-label-padding: 0.3em;
+
+}
+.copyable-system-popover-percentage{
+    -fx-text-fill: #aaaaaa;
+    -fx-label-padding: 0.3em;
+}
+.copyable-system-popover-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+.hge-my-collected-title{
+    -fx-font-weight: bold;
+    -fx-font-size: 1.5em;
+    -fx-padding: 0.5em 0 0.5em 0;
 }

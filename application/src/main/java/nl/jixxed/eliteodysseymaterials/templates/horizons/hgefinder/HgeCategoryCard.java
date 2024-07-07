@@ -13,12 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
 import nl.jixxed.eliteodysseymaterials.enums.Manufactured;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.service.HighGradeEmissionService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -113,10 +111,10 @@ public class HgeCategoryCard extends VBox implements Template {
     }
 
     private void updateLastFoundSystemLabels() {
-        final List<StarSystem> lastFoundSystems = HighGradeEmissionService.getLastFoundSystems(this.materialType);
-        for (int i = 0; i < lastFoundSystems.size(); i++) {
-            this.systemLabels.get(i).setStarSystem(lastFoundSystems.get(i));
-        }
+//        final List<StarSystem> lastFoundSystems = HighGradeEmissionService.getLastFoundSystems(this.materialType);
+//        for (int i = 0; i < lastFoundSystems.size(); i++) {
+//            this.systemLabels.get(i).setStarSystem(lastFoundSystems.get(i));
+//        }
     }
 
     @Override
@@ -126,13 +124,12 @@ public class HgeCategoryCard extends VBox implements Template {
                 update();
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, HighGradeEmissionLastFoundEvent.class, storageEvent -> {
-
+        this.eventListeners.add(EventService.addListener(this, HighGradeEmissionLastFoundEvent.class, event -> {
             Platform.runLater(this::updateLastFoundSystemLabels);
         }));
 
 
-        this.eventListeners.add(EventService.addStaticListener(HighGradeEmissionEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(HighGradeEmissionReceivedEvent.class, event -> {
             Platform.runLater(this::updateLastFoundSystemLabels);
         }));
     }
