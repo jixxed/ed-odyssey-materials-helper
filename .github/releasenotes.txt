@@ -6,7 +6,8 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Updated styling in HGE Tracker (faction not being truncated)
-fixed HGE Tracker system rotation in category cards
-added allegiance image to systems in category cards
-added indicator for FSS scanned/Visited HGE's
+HGE Tracker version 2
+- Since timers are commander specific, the scanned and visited HGE's will now only show for the current commander to aid in personal tracking
+- Categories have been expanded and will now show 10 systems per category
+- Each system will show what materials can spawn in that system and what the relative spawn chance for that category is
+- Systems that will spawn only one category are shown in gold

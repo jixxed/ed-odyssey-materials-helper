@@ -1,3 +1,11 @@
+Version 2.81
+-------------
+HGE Tracker version 2
+- Since timers are commander specific, the scanned and visited HGE's will now only show for the current commander to aid in personal tracking
+- Categories have been expanded and will now show 10 systems per category
+- Each system will show what materials can spawn in that system and what the relative spawn chance for that category is
+- Systems that will spawn only one category are shown in gold
+
 Version 2.80
 -------------
 Updated styling in HGE Tracker (faction not being truncated)
