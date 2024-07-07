@@ -17,7 +17,7 @@ notification.hge.civilwar.text,Military Grade Alloys(G5)\nMilitary Supercapacito
 notification.hge.boom.text,Proto Heat Radiators(G5)\nProto Radiolic Alloys(G5) / Proto Light Alloys(G4)\n,,,,,,Прототипы теплоизлучателей(G5)\nСплавы для изготовления зондов(G5) / Опытные лёгкие сплавы(G4)\n
 notification.hge.civilunrest.text,Improvised Components(G5)\n,,,,,,Кустарные компоненты(G5)\n
 notification.hge.empire.text,Imperial Shielding(G5)\n,,,,,,Имперская защита(G5)\n
-notification.hge.federation.text,Core Dynamic Composites(G5)/ Proprietary Composites(G4)\n,,,,,,
+notification.hge.federation.text,Core Dynamic Composites(G5)/ Proprietary Composites(G4)\n,,,,,,Композиты Core Dynamics(G5)/ Патентованные композиты(G4)\n
 notification.hge.unknown.text,Unknown\n,,,,,,Неизвестно\n
 notification.hge.title,High Grade Emissions Scanned,,,,,,Высокоуровневый сигнал отсканирован
 notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,,,,Принадлежность системы: {0}\nсостояние фракции: {1}\nОжидаемые материалы:\n{2}
