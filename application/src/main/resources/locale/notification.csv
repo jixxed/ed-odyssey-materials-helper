@@ -12,13 +12,13 @@ notification.trade.you.received.a.bid.on.an.offer,You received a bid on an offer
 notification.trade.your.bid.has.been.accepted,Your bid has been accepted.,Your bid has been accepted.,Ihr Gebot wurde angenommen.,Su oferta ha sido aceptada.,Votre offre a été acceptée.,Seu lance foi aceito.,Ваша ставка принята.
 notification.trade.your.bid.has.been.rejected,Your bid has been rejected.,Your bid has been rejected.,Ihr Gebot wurde abgelehnt.,Su oferta ha sido rechazada.,Votre offre a été rejetée.,Seu lance foi rejeitado.,Ваша ставка отклонена.
 notification.trade.your.bid.was.pulled,Your bid was pulled.,Your bid was pulled.,Ihr Gebot wurde zurückgezogen.,Su oferta fue retirada.,Votre offre a été retirée.,Seu lance foi retirado.,Ваша ставка была снята.
-notification.hge.outbreak.text,Pharmaceutical Isolators(G5)\n,,,,,,
-notification.hge.civilwar.text,Military Grade Alloys(G5)\nMilitary Supercapacitors(G5)\n,,,,,,
-notification.hge.boom.text,Proto Heat Radiators(G5)\nProto Radiolic Alloys(G5) / Proto Light Alloys(G4)\n,,,,,,
-notification.hge.civilunrest.text,Improvised Components(G5)\n,,,,,,
-notification.hge.empire.text,Imperial Shielding(G5)\n,,,,,,
-notification.hge.federation.text,Core Dynamic Composites(G5)/ Proprietary Composites(G4)\n,,,,,,
-notification.hge.unknown.text,Unknown\n,,,,,,
-notification.hge.title,High Grade Emissions Scanned,,,,,,
-notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,,,,
-notification.imported.slef.error.text,Failed to import slef,,,,,,
+notification.hge.outbreak.text,Pharmaceutical Isolators(G5)\n,,,,,,Фармацевтические изоляционные материалы(G5)\n
+notification.hge.civilwar.text,Military Grade Alloys(G5)\nMilitary Supercapacitors(G5)\n,,,,,,Сплавы военного класса(G5)\nВоенные суперконденсаторы(G5)\n
+notification.hge.boom.text,Proto Heat Radiators(G5)\nProto Radiolic Alloys(G5) / Proto Light Alloys(G4)\n,,,,,,Прототипы теплоизлучателей(G5)\nСплавы для изготовления зондов(G5) / Опытные лёгкие сплавы(G4)\n
+notification.hge.civilunrest.text,Improvised Components(G5)\n,,,,,,Кустарные компоненты(G5)\n
+notification.hge.empire.text,Imperial Shielding(G5)\n,,,,,,Имперская защита(G5)\n
+notification.hge.federation.text,Core Dynamic Composites(G5)/ Proprietary Composites(G4)\n,,,,,,Композиты Core Dynamics(G5)/ Патентованные композиты(G4)\n
+notification.hge.unknown.text,Unknown\n,,,,,,Неизвестно\n
+notification.hge.title,High Grade Emissions Scanned,,,,,,Высокоуровневый сигнал отсканирован
+notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,,,,Принадлежность системы: {0}\nсостояние фракции: {1}\nОжидаемые материалы:\n{2}
+notification.imported.slef.error.text,Failed to import slef,,,,,,Не получается импортировать slef
