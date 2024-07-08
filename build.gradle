@@ -96,15 +96,15 @@ if (arch == "aarch64") {
 }
 ext {
     version_logback = "1.5.6"
-    version_jackson = "2.17.1"
+    version_jackson = "2.17.2"
     version_jna = "5.14.0"
-    version_junit_jupiter = "5.10.2"
-    version_junit_platform = "1.10.2"
+    version_junit_jupiter = "5.10.3"
+    version_junit_platform = "1.10.3"
     version_javafx = "21.0.1"
     version_controlsfx = "11.2.1"
     version_scribejava = "8.3.3"
     version_sparsebitset = "1.3"
-    version_apache_poi = "5.2.5"
+    version_apache_poi = "5.3.0"
     version_apache_commons_math3 = "3.6.1"
     version_apache_commons_io = "2.16.1"
     version_opencv = "4.5.3-0"
@@ -112,8 +112,11 @@ ext {
     version_tess4j = "5.2.9"
     version_jai_imageio = "1.4.0"
     version_mockito_inline = "5.2.0"
-    version_guava = "33.2.0-jre"
+    version_guava = "33.2.1-jre"
     version_j2objc_annotations = "3.0.0"
+    version_netty = "4.1.111.Final"
+    version_vertx = "4.5.8"
+    version_mockito = "5.12.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
@@ -152,37 +155,37 @@ allprojects {
                 implementation "javax.servlet:javax.servlet-api:4.0.1"
                 implementation "org.controlsfx:controlsfx:${version_controlsfx}"
                 implementation "org.jfxtras:jmetro:11.6.16"
-                implementation 'io.github.classgraph:classgraph:4.8.172'
+                implementation 'io.github.classgraph:classgraph:4.8.174'
 
                 testImplementation "de.saxsys:mvvmfx-testing-utils:1.8.0"
                 testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver:0.1"
-                testImplementation "org.assertj:assertj-core:3.25.3"
+                testImplementation "org.assertj:assertj-core:3.26.0"
                 testImplementation "org.junit.jupiter:junit-jupiter-api:${version_junit_jupiter}"
                 testImplementation "org.junit.jupiter:junit-jupiter-params:${version_junit_jupiter}"
                 testImplementation "org.junit.jupiter:junit-jupiter:${version_junit_jupiter}"
                 testImplementation "org.junit.platform:junit-platform-runner:${version_junit_platform}"
                 testImplementation "org.junit.platform:junit-platform-suite-api:${version_junit_platform}"
-                testImplementation "org.mockito:mockito-junit-jupiter:5.11.0"
+                testImplementation "org.mockito:mockito-junit-jupiter:${version_mockito}"
                 testImplementation "org.mockito:mockito-inline:${version_mockito_inline}"
                 testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
                 testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
 
-                implementation 'io.vertx:vertx-stomp:4.5.8'
-                implementation 'io.vertx:vertx-core:4.5.8'
+                implementation "io.vertx:vertx-stomp:${version_vertx}"
+                implementation "io.vertx:vertx-core:${version_vertx}"
 
-                implementation 'io.netty:netty-bom:4.1.110.Final'
-                implementation 'io.netty:netty-common:4.1.110.Final'
-                implementation 'io.netty:netty-buffer:4.1.110.Final'
-                implementation 'io.netty:netty-transport:4.1.110.Final'
-                implementation 'io.netty:netty-handler:4.1.110.Final'
-                implementation 'io.netty:netty-handler-proxy:4.1.110.Final'
-                implementation 'io.netty:netty-codec-http:4.1.110.Final'
-                implementation 'io.netty:netty-codec-http2:4.1.110.Final'
-                implementation 'io.netty:netty-resolver:4.1.110.Final'
-                implementation 'io.netty:netty-resolver-dns:4.1.110.Final'
-                implementation 'io.netty:netty-codec-haproxy:4.1.110.Final'
-                implementation 'io.netty:netty-transport-native-epoll:4.1.110.Final'
-                implementation 'io.netty:netty-transport-native-kqueue:4.1.110.Final'
+                implementation "io.netty:netty-bom:${version_netty}"
+                implementation "io.netty:netty-common:${version_netty}"
+                implementation "io.netty:netty-buffer:${version_netty}"
+                implementation "io.netty:netty-transport:${version_netty}"
+                implementation "io.netty:netty-handler:${version_netty}"
+                implementation "io.netty:netty-handler-proxy:${version_netty}"
+                implementation "io.netty:netty-codec-http:${version_netty}"
+                implementation "io.netty:netty-codec-http2:${version_netty}"
+                implementation "io.netty:netty-resolver:${version_netty}"
+                implementation "io.netty:netty-resolver-dns:${version_netty}"
+                implementation "io.netty:netty-codec-haproxy:${version_netty}"
+                implementation "io.netty:netty-transport-native-epoll:${version_netty}"
+                implementation "io.netty:netty-transport-native-kqueue:${version_netty}"
 
                 implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
             }
