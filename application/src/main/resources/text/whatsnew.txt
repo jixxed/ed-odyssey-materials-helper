@@ -1,3 +1,8 @@
+Version 2.84
+-------------
+Fix cards not refreshing
+Widen cards to fit systems
+
 Version 2.83
 -------------
 Fix some minor bugs

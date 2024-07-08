@@ -174,12 +174,12 @@ public class HighGradeEmissionCard extends VBox implements Template {
                 update();
             }
         }));
+
         this.eventListeners.add(EventService.addListener(this, HighGradeEmissionLastFoundEvent.class, event -> {
             Platform.runLater(this::updateLastFoundSystemLabels);
         }));
 
-
-        this.eventListeners.add(EventService.addStaticListener(HighGradeEmissionReceivedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(this, HighGradeEmissionReceivedEvent.class, event -> {
             Platform.runLater(this::updateLastFoundSystemLabels);
         }));
     }

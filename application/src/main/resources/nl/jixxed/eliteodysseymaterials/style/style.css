@@ -3927,8 +3927,8 @@
 
 .hge-tracker-card{
     -fx-background-color: #0f0f0f;
-    -fx-min-width: 40em;
-    -fx-max-width: 40em;
+    -fx-min-width: 60em;
+    -fx-max-width: 60em;
 }
 .hge-tracker-card-rarity-image{
     -fx-pref-height: 2em;
@@ -3958,9 +3958,9 @@
 
     -fx-label-padding: 0.2em;
     -fx-wrap-text: true;
-    -fx-pref-width: 14em;
-    -fx-min-width: 14em;
-    -fx-max-width: 14em;
+    -fx-pref-width: 19em;
+    -fx-min-width: 19em;
+    -fx-max-width: 19em;
     -fx-min-height: 2em;
     -fx-max-height: 2em;
     -fx-alignment: center-left;
@@ -3979,19 +3979,19 @@
     -fx-min-height: 1em;
     -fx-pref-height: 1em;
     -fx-max-height: 1em;
-    -fx-min-width: 20em;
-    -fx-max-width: 20em;
+    -fx-min-width: 30em;
+    -fx-max-width: 30em;
 }
 .hge-tracker-card-textline {
     -fx-pref-height: 3em;
     -fx-min-height: 3em;
     -fx-max-height: 3em;
-    -fx-min-width: 20em;
-    -fx-max-width: 20em;
+    -fx-min-width: 30em;
+    -fx-max-width: 30em;
 }
 .hge-tracker-card-systems{
-    -fx-min-width: 20em;
-    -fx-max-width: 20em;
+    -fx-min-width: 30em;
+    -fx-max-width: 30em;
 }
 .copyable-system-popover-group-box{
     -fx-min-width: 6em;
