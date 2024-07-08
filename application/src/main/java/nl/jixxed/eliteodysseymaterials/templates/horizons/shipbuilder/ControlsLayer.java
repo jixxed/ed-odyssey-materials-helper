@@ -237,6 +237,7 @@ public class ControlsLayer extends AnchorPane implements Template {
 //        AnchorPane.setTopAnchor(hBoxShips,0D);
         AnchorPane.setLeftAnchor(hBoxShips, 0D);
         AnchorPane.setRightAnchor(hBoxShips, 0D);
+        APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
     }
 
     @Override
@@ -381,7 +382,7 @@ public class ControlsLayer extends AnchorPane implements Template {
                         } else {
                             final ShipConfigurationModification oldModification = slot.getOldModule().getModification().stream().filter(oldMod -> oldMod.getType().equals(modification.getType())).findFirst().orElseThrow(IllegalArgumentException::new);
                             final HorizonsBlueprintGrade oldGrade = oldModification.getGrade();
-                            if (oldGrade.getGrade() > grade.getGrade() || (oldGrade.getGrade() == grade.getGrade() && oldModification.getPercentComplete().doubleValue() >= modification.getPercentComplete().doubleValue())) {
+                            if (oldGrade.getGrade() < grade.getGrade() || (oldGrade.getGrade() == grade.getGrade() && oldModification.getPercentComplete().doubleValue() <= modification.getPercentComplete().doubleValue())) {
                                 final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades(name, modification.getType())
                                         .stream()
                                         .filter(gradeToAdd -> gradeToAdd.getGrade() >= oldGrade.getGrade() && gradeToAdd.getGrade() <= grade.getGrade())
@@ -399,7 +400,9 @@ public class ControlsLayer extends AnchorPane implements Template {
                                     } else {
                                         rolls = getGradeRolls(modification.getType(), horizonsBlueprintGrade);
                                     }
-                                    gradeRolls.put(horizonsBlueprintGrade, rolls);
+                                    if(rolls > 0) {
+                                        gradeRolls.put(horizonsBlueprintGrade, rolls);
+                                    }
                                 });
 
                             } else {

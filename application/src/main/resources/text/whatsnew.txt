@@ -1,3 +1,8 @@
+Version 2.85
+-------------
+Fix add to wishlist buttons (loadout/ship)
+Fix adding only changed ship blueprint grades to wishlist
+
 Version 2.84
 -------------
 Fix cards not refreshing

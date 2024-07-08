@@ -114,6 +114,8 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
                 .build();
         this.setContent(this.scrollPane);
         refreshContent();
+
+        APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
     }
 
     private Node initMenu() {
