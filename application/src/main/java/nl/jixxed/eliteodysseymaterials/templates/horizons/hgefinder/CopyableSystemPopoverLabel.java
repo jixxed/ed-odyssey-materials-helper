@@ -103,7 +103,7 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
                 this.systemName.getStyleClass().add("copyable-system-popover-location-max");
             }
         } else {
-            this.systemName.getStyleClass().remove("copyable-system-popover-percentage-max");
+            this.systemName.getStyleClass().remove("copyable-system-popover-location-max");
         }
         this.percentage.setText(Formatters.NUMBER_FORMAT_0.format(dropChance) + "%");
         update();

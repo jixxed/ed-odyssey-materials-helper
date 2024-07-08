@@ -1,3 +1,7 @@
+Version 2.83
+-------------
+Fix some minor bugs
+
 Version 2.82
 -------------
 Fix some states will always spawn 2 material categories. these are now also shown in gold (max 50%)

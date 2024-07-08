@@ -78,7 +78,7 @@ public class HgeCard extends VBox implements Template {
         if(owned) {
             this.getStyleClass().add("hge-card-highlight");
         }
-        final DestroyableLabel factionLabel = this.faction != null
+        final DestroyableLabel factionLabel = !this.faction.isEmpty()
                 ? LabelBuilder.builder().withStyleClass("hge-card-faction-label").withNonLocalizedText(this.faction + " ("+ Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(influence * 100) + "%)").build()
                 : LabelBuilder.builder().withStyleClass("hge-card-faction-label").withText(LocaleService.getStringBinding("hge.unknown")).build();
         Tooltip.install(factionLabel, TooltipBuilder.builder()
@@ -110,7 +110,7 @@ public class HgeCard extends VBox implements Template {
                 :LabelBuilder.builder().withStyleClass("hge-card-materials-label").withText(LocaleService.getStringBinding("hge.card.materials.found")).build();
         this.materialsBox = BoxBuilder.builder().withStyleClass("hge-card-materials-vbox").withNodes(materialsHeader).buildVBox();
         this.materials.forEach(material -> materialsBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding(material.getLocalizationKey())).build()));
-        final List<DestroyableLabel> stateLabels = this.faction != null
+        final List<DestroyableLabel> stateLabels = !this.faction.isEmpty()
                 ? states.stream().map(state1-> LabelBuilder.builder().withText(LocaleService.getStringBinding(state1.getLocalizationKey())).build()).toList()
                 : List.of(LabelBuilder.builder().withText(LocaleService.getStringBinding("hge.unknown")).build());
         this.stateBox = BoxBuilder.builder().withStyleClass("hge-card-state-vbox").withNodes(LabelBuilder.builder().withStyleClass("hge-card-state-label").withText(LocaleService.getStringBinding("hge.card.state")).build()).buildVBox();
