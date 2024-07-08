@@ -28,6 +28,7 @@ import nl.jixxed.eliteodysseymaterials.service.hge.MessageV2;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -69,7 +70,7 @@ public class HighGradeEmissionService {
     static {
 
         for (HorizonsMaterialType materialType : HORIZONS_MATERIAL_TYPES) {
-            lastFoundSystems.put(materialType, new FixedSizeCircularReference<>(3));
+            lastFoundSystems.put(materialType, new FixedSizeCircularReference<>(10));
         }
     }
 
@@ -147,7 +148,7 @@ public class HighGradeEmissionService {
                 .orElse(Future.failedFuture("No commander selected"));
     }
 
-    private static void message(MessageV2 message, Double timeRemaining, Set<HorizonsMaterial> trackingMaterials){
+    private static void message(MessageV2 message, Double timeRemaining, Set<HorizonsMaterial> materials){
         LocalDateTime expiration;
         if (message.getEvent().equalsIgnoreCase("FSSSignalDiscovered") && timeRemaining != null) {
             expiration = ZonedDateTime.parse(message.getTimestamp()).withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime().plusSeconds((int) Math.ceil(timeRemaining));
@@ -166,7 +167,7 @@ public class HighGradeEmissionService {
                 .factions(message.getFactions())
                 .category(message.getCategory())
                 .expiration(expiration).build();
-        EventService.publish(new HighGradeEmissionEvent(expiringMessage, trackingMaterials));
+        EventService.publish(new HighGradeEmissionEvent(expiringMessage, materials));
         ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
             if (connection == null) {
                 connect().onSuccess(o -> send(message, commander));
@@ -218,13 +219,49 @@ public class HighGradeEmissionService {
                                 if (HORIZONS_MATERIAL_TYPES.contains(materialType)) {
                                     final StarSystem entry = new StarSystem(message.getSystem(), message.getStarPos()[0], message.getStarPos()[1], message.getStarPos()[2]);
                                     entry.setAllegiance(message.getSystemAllegiance());
+                                    if(message.getSystemEconomies() != null) {
+                                        int index = 0;
+                                        for (Economy systemEconomy : message.getSystemEconomies()) {
+                                            if (index == 0) {
+                                                index = 1;
+                                                entry.setPrimaryEconomy(systemEconomy);
+                                            } else {
+                                                entry.setSecondaryEconomy(systemEconomy);
+                                            }
+                                        }
+                                    }else{
+                                        entry.setPrimaryEconomy(message.getPrimaryEconomy() != null ? message.getPrimaryEconomy() : Economy.NONE);
+                                        entry.setSecondaryEconomy(message.getSecondaryEconomy() != null ? message.getSecondaryEconomy() : Economy.NONE);
+                                    }
+                                    if(message.getPopulation() != null) {
+                                        entry.setPopulation(BigInteger.valueOf(message.getPopulation()));
+                                    }
                                     final FixedSizeCircularReference<HgeStarSystem> circularReference = lastFoundSystems.get(materialType);
-                                        circularReference.add(new HgeStarSystem(entry, message.getFactions()));
+                                    circularReference.add(new HgeStarSystem(entry, message.getFactions()));
                                 }
                             }
                             if ("lastFound".equalsIgnoreCase(message.getEvent())) {
                                 final StarSystem entry = new StarSystem(message.getSystem(), message.getStarPos()[0], message.getStarPos()[1], message.getStarPos()[2]);
                                 entry.setAllegiance(message.getSystemAllegiance());
+                                if(message.getSystemEconomies() != null) {
+                                    int index = 0;
+                                    for (Economy systemEconomy : message.getSystemEconomies()) {
+                                        if (index == 0) {
+                                            index = 1;
+                                            entry.setPrimaryEconomy(systemEconomy);
+                                        } else {
+                                            entry.setSecondaryEconomy(systemEconomy);
+                                        }
+                                    }
+                                }else{
+                                    entry.setPrimaryEconomy(message.getPrimaryEconomy() != null ? message.getPrimaryEconomy() : Economy.NONE);
+                                    entry.setSecondaryEconomy(message.getSecondaryEconomy() != null ? message.getSecondaryEconomy() : Economy.NONE);
+                                }
+                                if(message.getPopulation() != null) {
+                                    entry.setPopulation(BigInteger.valueOf(message.getPopulation()));
+                                }
+
+
                                 final HorizonsMaterialType materialType = message.getCategory();
                                 final FixedSizeCircularReference<HgeStarSystem> circularReference = lastFoundSystems.get(materialType);
                                 circularReference.add(new HgeStarSystem(entry, message.getFactions()));
@@ -381,10 +418,13 @@ public class HighGradeEmissionService {
             final Location currentLocation = LocationService.getCurrentLocation();
             final String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").format(event.getTimestamp());
             final Optional<Faction> faction = FACTIONS.stream()
-                    .filter(f -> f.name().equals(event.getSpawningFaction().orElse(null)))
+                    .filter(f -> {
+                        final String spawningFaction = event.getSpawningFaction().orElse("");
+                        return spawningFaction.equalsIgnoreCase("$faction_none;") || f.name().equals(spawningFaction);
+                    })
                     .findFirst();
-            final Allegiance systemAllegiance = FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(Allegiance.NONE);
             final StarSystem starSystem = currentLocation.getStarSystem();
+            final Allegiance systemAllegiance = !Allegiance.NONE.equals(starSystem.getAllegiance()) ? starSystem.getAllegiance() : FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(Allegiance.NONE);
             final Set<Economy> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
                     .filter(Predicate.not(Economy.UNKNOWN::equals))
                     .collect(Collectors.toSet());
@@ -407,13 +447,39 @@ public class HighGradeEmissionService {
                             .recoveringStates(new HashSet<>(f.recoveringStates()))
                             .leading(f.leading())
                             .build()).collect(Collectors.toSet()))
-                    .systemEconomies(economies)
+                    .primaryEconomy(starSystem.getPrimaryEconomy())
+                    .secondaryEconomy(starSystem.getSecondaryEconomy())
                     .build();
-            message(message, event.getTimeRemaining().map(BigDecimal::doubleValue).orElse(null), Set.of());
+            message(message, event.getTimeRemaining().map(BigDecimal::doubleValue).orElse(null), getPotentialMaterials(systemAllegiance, faction.map(f-> f.activeStates().stream().collect(Collectors.toSet())).orElse(Collections.emptySet())));
             notifyExpectedMaterial(faction, starSystem);
         }
     }
-
+    private static Set<HorizonsMaterial> getPotentialMaterials(Allegiance allegiance, Set<State> states){
+        Set<HorizonsMaterial> materials = new HashSet<>();
+        if(states.stream().anyMatch(List.of(State.WAR,State.CIVILWAR)::contains)){
+            materials.add(Manufactured.MILITARYGRADEALLOYS);
+            materials.add(Manufactured.MILITARYSUPERCAPACITORS);
+        }
+        if(states.stream().anyMatch(List.of(State.BOOM,State.EXPANSION)::contains)){
+            materials.add(Manufactured.PROTOLIGHTALLOYS);
+            materials.add(Manufactured.PROTORADIOLICALLOYS);
+            materials.add(Manufactured.PROTOHEATRADIATORS);
+        }
+        if(states.stream().anyMatch(List.of(State.CIVILUNREST)::contains)){
+            materials.add(Manufactured.IMPROVISEDCOMPONENTS);
+        }
+        if(states.stream().anyMatch(List.of(State.OUTBREAK)::contains)){
+            materials.add(Manufactured.PHARMACEUTICALISOLATORS);
+        }
+        if(Allegiance.FEDERATION.equals(allegiance)){
+            materials.add(Manufactured.FEDCORECOMPOSITES);
+            materials.add(Manufactured.FEDPROPRIETARYCOMPOSITES);
+        }
+        if(Allegiance.EMPIRE.equals(allegiance)){
+            materials.add(Manufactured.IMPERIALSHIELDING);
+        }
+        return materials;
+    }
     private static void notifyExpectedMaterial(Optional<Faction> faction, final StarSystem starSystem) {
         final Allegiance allegiance = Allegiance.NONE.equals(starSystem.getAllegiance()) ? faction.map(Faction::allegiance).orElse(Allegiance.NONE) : starSystem.getAllegiance();
         String material = "";
@@ -501,7 +567,8 @@ public class HighGradeEmissionService {
                     .systemAllegiance(systemAllegiance)
                     .population(starSystem.getPopulation().longValue())
                     .factions(factions)
-                    .systemEconomies(economies)
+                    .primaryEconomy(starSystem.getPrimaryEconomy())
+                    .secondaryEconomy(starSystem.getSecondaryEconomy())
                     .category(trackingMaterials.stream().findFirst().map(HorizonsMaterial::getMaterialType).orElse(HorizonsMaterialType.UNKNOWN))
                     .build();
             if(!HorizonsMaterialType.UNKNOWN.equals(message.getCategory())) {

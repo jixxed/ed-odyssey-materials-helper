@@ -139,7 +139,7 @@ public class HgeFinderTab extends HorizonsTab {
         }
     }
 
-    private void createCard(ExpiringMessage message, Set<HorizonsMaterial> collectedMaterials) {
+    private void createCard(ExpiringMessage message, Set<HorizonsMaterial> collectedOrPotentialMaterials) {
         final List<HorizonsMaterialType> materialTypes = getMaterialTypes(message.getSystemAllegiance(), message.getFactions());
         final StarSystem starSystem = new StarSystem(message.getSystem(), message.getStarPos()[0], message.getStarPos()[1], message.getStarPos()[2]);
 //        log.debug(expiringMessage.getExpiration().toString());
@@ -156,7 +156,7 @@ public class HgeFinderTab extends HorizonsTab {
         FactionV2 faction = message.getFactions().stream().filter(f -> f.getName().equalsIgnoreCase(message.getFaction())).findFirst().orElse(null);
         hgeCards.getChildren().add(new HgeCard(starSystem,
                 faction,
-                collectedMaterials,
+                collectedOrPotentialMaterials,
                 message.getSystemAllegiance(),
                 message.getExpiration(),
                 message.getEvent().equalsIgnoreCase("FSSSignalDiscovered")));
@@ -193,7 +193,7 @@ public class HgeFinderTab extends HorizonsTab {
         }));
 
         this.eventListeners.add(EventService.addStaticListener(HighGradeEmissionEvent.class, event -> {
-            Platform.runLater(() -> createCard(event.getExpiringMessage(), event.getCollectedMaterials()));
+            Platform.runLater(() -> createCard(event.getExpiringMessage(), event.getCollectedOrPotentialMaterials()));
         }));
 
         this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {

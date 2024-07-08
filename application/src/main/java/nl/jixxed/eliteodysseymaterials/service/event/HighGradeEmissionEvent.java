@@ -11,5 +11,5 @@ import java.util.Set;
 @Getter
 public class HighGradeEmissionEvent implements Event {
     private final ExpiringMessage expiringMessage;
-    private final Set<HorizonsMaterial> collectedMaterials;
+    private final Set<HorizonsMaterial> collectedOrPotentialMaterials;
 }

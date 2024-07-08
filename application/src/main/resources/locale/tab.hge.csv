@@ -2,10 +2,13 @@ messageKey,,en,de,es,fr,pt,ru
 hge.most.recently.found,Most recently found in:,,,,,,Недавно найдено в:
 hge.card.system,System,,,,,,Система
 hge.card.faction,Faction,,,,,,Фракция
-hge.card.materials,Materials,,,,,,Материалы
+hge.card.materials.expected,Potential materials,,,,,,
+hge.card.materials.found,Collected materials,,,,,,
 hge.card.state,State,,,,,,Состояние
 hge.card.states,States,,,,,,
 hge.card.allegiance,Allegiance,,,,,,Принадлежность
+hge.card.population,Population,,,,,,
+hge.card.economy,Economies,,,,,,
 hge.card.fss.timer,This HGE will despawn when the timer expires.,,,,,,Этот сигнал исчезнет по истечению таймера
 hge.card.uss.timer,It is unknown when this HGE despawns.\nThis message is removed after a timer of 10 minutes.,,,,,,Время исчезновения сигнала неизвестно.\nЭто сообщение будет удалено через 10 минут.
 hge.explain,My scanned and visited High Grade Emissions,,,,,,
@@ -13,3 +16,6 @@ hge.tracking.disabled,Material tracking is disabled. Disable the tracking opt-ou
 hge.unknown,Unknown,,,,,,Неизвестно
 hge.fss,FSS Scanned,,,,,,Сканировано через FSS
 hge.uss,Visited,,,,,,Посещено
+population.million,{0} Million,,,,,,Миллион
+population.billion,{0} Billion,,,,,,Миллиард
+population.trillion,{0} Trillion,,,,,,Триллион

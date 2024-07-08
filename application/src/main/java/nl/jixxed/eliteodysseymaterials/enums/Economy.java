@@ -34,12 +34,12 @@ public enum Economy {
     private final String friendlyName;
 
 
-    public static Economy forName(final String key) {
-        return Arrays.stream(Economy.values()).filter(economy -> economy.friendlyName.equalsIgnoreCase(key)).findFirst().orElse(Economy.UNKNOWN);
+    public static Economy forName(final String search) {
+        return Arrays.stream(Economy.values()).filter(economy -> economy.friendlyName.equalsIgnoreCase(search)).findFirst().orElse(Economy.UNKNOWN);
     }
 
-    public static Economy forKey(final String id) {
-        return Arrays.stream(Economy.values()).filter(economy -> economy.key.equalsIgnoreCase(id)).findFirst().orElse(Economy.UNKNOWN);
+    public static Economy forKey(final String search) {
+        return Arrays.stream(Economy.values()).filter(economy -> economy.key.equalsIgnoreCase(search)).findFirst().orElse(Economy.UNKNOWN);
     }
 
     public String getLocalizationKey() {

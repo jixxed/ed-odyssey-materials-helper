@@ -19,10 +19,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.HgeStarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
-import nl.jixxed.eliteodysseymaterials.enums.Allegiance;
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialType;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
-import nl.jixxed.eliteodysseymaterials.enums.State;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
@@ -36,7 +33,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import org.controlsfx.control.PopOver;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,11 +41,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 public class CopyableSystemPopoverLabel extends FlowPane implements Template {
-    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
-
-    static {
-        NUMBER_FORMAT.setMaximumFractionDigits(2);
-    }
 
     private Label systemName;
     private Label distance;
@@ -107,15 +98,27 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
         this.starSystem = starSystem;
         this.systemName.setText(starSystem.starSystem().getName());
         final Double dropChance = calculatePercentage(materialType);
-        if(dropChance.equals(100D)){
-            if(!this.systemName.getStyleClass().contains("copyable-system-popover-location-max")){
+        if (dropChance.equals(maxPercentage(materialType))) {
+            if (!this.systemName.getStyleClass().contains("copyable-system-popover-location-max")) {
                 this.systemName.getStyleClass().add("copyable-system-popover-location-max");
             }
-        }else{
+        } else {
             this.systemName.getStyleClass().remove("copyable-system-popover-percentage-max");
         }
         this.percentage.setText(Formatters.NUMBER_FORMAT_0.format(dropChance) + "%");
         update();
+    }
+
+    private Double maxPercentage(HorizonsMaterialType materialType) {
+        if(
+                HorizonsMaterialType.THERMIC.equals(materialType)
+                || HorizonsMaterialType.HEAT.equals(materialType)
+                || HorizonsMaterialType.CAPACITORS.equals(materialType)
+                || HorizonsMaterialType.ALLOYS.equals(materialType)
+        ){
+            return 50D;
+        }
+        return 100D;
     }
 
     private Double calculatePercentage(HorizonsMaterialType materialType) {
@@ -175,7 +178,7 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
     private void update() {
         try {
             if (this.starSystem != null) {
-                this.distance.setText("(" + NUMBER_FORMAT.format(getDistance()) + "Ly)");
+                this.distance.setText("(" + Formatters.NUMBER_FORMAT_2.format(getDistance()) + "Ly)");
             }
         } catch (final IllegalArgumentException ex) {
             log.error("Error while updating distance", ex);
@@ -246,7 +249,15 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
     private Node createSystemPopOverContent() {
         Label systemLabel = LabelBuilder.builder().withStyleClasses("copyable-system-popover-label").withText(LocaleService.getStringBinding("hge.card.system")).build();
         Label allegianceLabel = LabelBuilder.builder().withStyleClasses("copyable-system-popover-label").withText(LocaleService.getStringBinding("hge.card.allegiance")).build();
+        Label populationLabel = LabelBuilder.builder().withStyleClasses("copyable-system-popover-label").withText(LocaleService.getStringBinding("hge.card.population")).build();
+        Label economyLabel = LabelBuilder.builder().withStyleClasses("copyable-system-popover-label").withText(LocaleService.getStringBinding("hge.card.economy")).build();
         Label statesLabel = LabelBuilder.builder().withStyleClasses("copyable-system-popover-label").withText(LocaleService.getStringBinding("hge.card.states")).build();
+        final DestroyableLabel populationLabel1 = LabelBuilder.builder().withStyleClasses("copyable-system-popover-value", "copyable-system-popover-allegiance").withNonLocalizedText(formatPopulation(starSystem.starSystem().getPopulation().doubleValue())).build();
+        final String primaryEconomy = LocaleService.getLocalizedStringForCurrentLocale(starSystem.starSystem().getPrimaryEconomy().getLocalizationKey());
+        final String secondaryEconomy = Economy.UNKNOWN.equals(starSystem.starSystem().getSecondaryEconomy()) || Economy.NONE.equals(starSystem.starSystem().getSecondaryEconomy()) ? null : LocaleService.getLocalizedStringForCurrentLocale(starSystem.starSystem().getSecondaryEconomy().getLocalizationKey());
+        final DestroyableLabel economyLabel1 = LabelBuilder.builder().withStyleClasses("copyable-system-popover-value", "copyable-system-popover-allegiance").withNonLocalizedText(primaryEconomy + (secondaryEconomy != null ? ", " + secondaryEconomy : "")).build();
+        HBox populationLine = BoxBuilder.builder().withNodes(populationLabel, populationLabel1).buildHBox();
+        HBox economyLine = BoxBuilder.builder().withNodes(economyLabel, economyLabel1).buildHBox();
         final DestroyableResizableImageView allegianceImage = ResizableImageViewBuilder.builder().withStyleClass("copyable-system-popover-allegiance-image").withImage("/images/allegiance/" + starSystem.starSystem().getAllegiance().name().toLowerCase() + ".png").build();
         CopyableSystemLabel systemLabel1 = new CopyableSystemLabel();
         systemLabel1.getStyleClass().add("copyable-system-popover-system");
@@ -259,7 +270,7 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
         HBox categoryLine2 = BoxBuilder.builder().buildHBox();
         VBox categories = BoxBuilder.builder().withNodes(categoryLine1, categoryLine2).buildVBox();
         HBox statesCategories = BoxBuilder.builder().withNodes(states, new GrowingRegion(), categories).buildHBox();
-        final VBox systemAllegiance = BoxBuilder.builder().withNodes(BoxBuilder.builder().withNodes(systemLine, allegianceLine).buildVBox()).buildVBox();
+        final VBox systemAllegiance = BoxBuilder.builder().withNodes(BoxBuilder.builder().withNodes(systemLine, allegianceLine, populationLine, economyLine).buildVBox()).buildVBox();
         final HBox systemAllegianceImage = BoxBuilder.builder().withNodes(systemAllegiance, new GrowingRegion(), allegianceImage).buildHBox();
         final VBox vBox = BoxBuilder.builder().withNodes(systemAllegianceImage, statesCategories).withStyleClass("material-popover-content").buildVBox();
 
@@ -293,13 +304,25 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
         final DestroyableResizableImageView categoryImage = ResizableImageViewBuilder.builder().withStyleClass("copyable-system-popover-group-image").withImage("/images/material/categories/" + materialType.name().toLowerCase() + ".png").build();
         Label materialTypeLabel = LabelBuilder.builder().withStyleClass("copyable-system-popover-group-texts").withNonLocalizedText(LocaleService.getLocalizedStringForCurrentLocale(materialType.getLocalizationKey())).build();
         Label percentageLabel = LabelBuilder.builder().withStyleClass("copyable-system-popover-group-texts").withNonLocalizedText(Formatters.NUMBER_FORMAT_0.format(percentage1) + "%").build();
-        if(percentage1.equals(0D)){
+        if (percentage1.equals(0D)) {
             categoryImage.getStyleClass().add("copyable-system-popover-group-image-zero");
             materialTypeLabel.getStyleClass().add("copyable-system-popover-group-texts-zero");
             percentageLabel.getStyleClass().add("copyable-system-popover-group-texts-zero");
         }
 
-        return BoxBuilder.builder().withStyleClass("copyable-system-popover-group-box").withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(),categoryImage, new GrowingRegion()).buildHBox(), materialTypeLabel, percentageLabel).buildVBox();
+        return BoxBuilder.builder().withStyleClass("copyable-system-popover-group-box").withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), categoryImage, new GrowingRegion()).buildHBox(), materialTypeLabel, percentageLabel).buildVBox();
 
+    }
+    static String formatPopulation(double size) {
+        if(size < 1_000_000){
+            return Formatters.NUMBER_FORMAT_0.format(size);
+        }
+        String finalQ = "";
+        for (String q: new String[] {"K", "population.million", "population.billion", "population.trillion"}) {
+            if (size < 1000) break;
+            finalQ = q;
+            size /= 1000;
+        }
+        return LocaleService.getLocalizedStringForCurrentLocale(finalQ, Formatters.NUMBER_FORMAT_1.format(size));
     }
 }

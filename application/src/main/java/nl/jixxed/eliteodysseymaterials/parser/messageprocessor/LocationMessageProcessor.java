@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Location.Location;
@@ -11,7 +12,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.LocationJournalEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 public class LocationMessageProcessor implements MessageProcessor<Location> {
     private Boolean isFirstLocationEventInJournal = Boolean.TRUE;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();

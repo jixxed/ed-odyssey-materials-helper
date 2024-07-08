@@ -30,6 +30,8 @@ public class MessageV2 {
     private String faction;//fss
     //system
     private Set<Economy> systemEconomies;//always
+    private Economy primaryEconomy;//always
+    private Economy secondaryEconomy;//always
     private Set<FactionV2> factions; //always
     //data
     private HorizonsMaterialType category; //lastFound

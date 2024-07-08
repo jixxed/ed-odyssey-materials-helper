@@ -96,7 +96,7 @@ public class PathService {
                             });
                 }
         );
-        distinctRecipes.forEach(recipe -> log.debug(recipe.toString()));
+//        distinctRecipes.forEach(recipe -> log.debug(recipe.toString()));
         Stream<EngineeringBlueprint<?>> stream = (isOdyssey ?
                 distinctRecipes.stream()
                         .map(ModuleBlueprint.class::cast)
