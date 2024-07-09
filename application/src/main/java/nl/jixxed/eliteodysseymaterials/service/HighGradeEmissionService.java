@@ -547,7 +547,7 @@ public class HighGradeEmissionService {
             final Set<Economy> economies = Stream.of(starSystem.getPrimaryEconomy(), starSystem.getSecondaryEconomy())
                     .filter(Predicate.not(Economy.UNKNOWN::equals))
                     .collect(Collectors.toSet());
-            final Allegiance systemAllegiance = FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(Allegiance.NONE);
+            final Allegiance systemAllegiance = !Allegiance.NONE.equals(starSystem.getAllegiance()) ? starSystem.getAllegiance() : FACTIONS.stream().filter(Faction::leading).findFirst().map(Faction::allegiance).orElse(Allegiance.NONE);
             final Set<FactionV2> factions = FACTIONS.stream().map(f -> FactionV2.builder()
                     .name(f.name())
                     .influence(f.influence())

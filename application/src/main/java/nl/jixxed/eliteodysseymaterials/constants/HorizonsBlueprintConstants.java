@@ -27,7 +27,6 @@ import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("java:S1192")
@@ -265,8 +264,8 @@ public abstract class HorizonsBlueprintConstants {
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.ARMOUR, ArmourBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE, merge(FSDBlueprints.BLUEPRINTS, FSDPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.LIFE_SUPPORT, LifeSupportBlueprints.BLUEPRINTS);
-        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_DISTRIBUTOR, PowerDistributorBlueprints.BLUEPRINTS);
-        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_PLANT, merge(PowerPlantBlueprints.BLUEPRINTS, PowerPlantPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_DISTRIBUTOR, merge(PowerDistributorBlueprints.GUARDIAN_BLUEPRINTS, PowerDistributorBlueprints.BLUEPRINTS));
+        CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.POWER_PLANT, merge(PowerPlantBlueprints.GUARDIAN_BLUEPRINTS, PowerPlantBlueprints.BLUEPRINTS, PowerPlantPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SENSORS, SensorBlueprints.BLUEPRINTS);
         CORE_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.THRUSTERS, ThrusterBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.ABRASION_BLASTER, AbrasionBlasterPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
@@ -296,6 +295,9 @@ public abstract class HorizonsBlueprintConstants {
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FUEL_TRANSFER_LIMPET_CONTROLLER, FuelTransferLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.HATCH_BREAKER_LIMPET_CONTROLLER, HatchBreakerLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HullReinforcementBlueprints.BLUEPRINTS);
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_HULL_REINFORCEMENT_PACKAGE, GuardianHullReinforcementPackageBlueprints.BLUEPRINTS);
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHIELD_REINFORCEMENT_PACKAGE, GuardianShieldReinforcementPackageBlueprints.BLUEPRINTS);
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_MODULE_REINFORCEMENT_PACKAGE, GuardianModuleReinforcementPackageBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.PROSPECTOR_LIMPET_CONTROLLER, ProspectorLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.REFINERY, RefineryBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.SHIELD_CELL_BANK, ShieldCellBankBlueprints.BLUEPRINTS);
@@ -367,8 +369,9 @@ public abstract class HorizonsBlueprintConstants {
         TECHBROKER_UNLOCKS.put(HorizonsBlueprintName.GUARDIAN_FIGHTERS, TechbrokerBlueprints.GUARDIAN_FIGHTERS);
     }
 
-    private static Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> merge(Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> blueprints, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> blueprints2) {
-        return Stream.concat(blueprints.entrySet().stream(), blueprints2.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    @SafeVarargs
+    private static Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> merge(Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>... blueprints) {
+        return Arrays.stream(blueprints).flatMap(map -> map.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static Map<HorizonsBlueprint, Integer> findRecipesContaining(final HorizonsMaterial horizonsMaterial) {

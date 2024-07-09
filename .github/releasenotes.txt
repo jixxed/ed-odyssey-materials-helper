@@ -6,5 +6,7 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix add to wishlist buttons (loadout/ship)
-Fix adding only changed ship blueprint grades to wishlist
+Add guardian zone resistance to other guardian modules
+Allow pinning multiple same type blueprints at the same engineer (sink launchers/guardian modules)
+Add highlight for cause for material type drop in HGE Tracker
+Fix HGE Tracker - no faction systems with allegiance showing as 0% instead of 100%
