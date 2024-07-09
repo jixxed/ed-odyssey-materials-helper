@@ -124,10 +124,38 @@ public class PinnedBlueprintService {
 
     public static boolean isPinned(final Engineer engineer, final HorizonsBlueprint blueprint) {
         final HorizonsBlueprint horizonsModuleBlueprint = pinnedBlueprints.get(engineer);
+        if(blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.CAUSTIC_SINK_LAUNCHER)
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.HEAT_SINK_LAUNCHER)
+                || (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.POWER_PLANT) && blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE))
+                || (blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.POWER_DISTRIBUTOR) && blueprint.getHorizonsBlueprintType().equals(HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE))
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_HULL_REINFORCEMENT_PACKAGE)
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_MODULE_REINFORCEMENT_PACKAGE)
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_SHIELD_REINFORCEMENT_PACKAGE)
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON)
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER)
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON)
+        ){
+            return typeMatch(blueprint, horizonsModuleBlueprint);
+        }
+        return exactMatch(blueprint, horizonsModuleBlueprint);
+    }
+
+    private static boolean typeMatch(HorizonsBlueprint blueprint, HorizonsBlueprint horizonsModuleBlueprint) {
+        return horizonsModuleBlueprint != null
+                && blueprint.getHorizonsBlueprintType().equals(horizonsModuleBlueprint.getHorizonsBlueprintType())
+                && blueprint.getHorizonsBlueprintGrade().getGrade() <= horizonsModuleBlueprint.getHorizonsBlueprintGrade().getGrade();
+    }
+
+    private static boolean exactMatch(HorizonsBlueprint blueprint, HorizonsBlueprint horizonsModuleBlueprint) {
         return horizonsModuleBlueprint != null
                 && blueprint.getHorizonsBlueprintName().equals(horizonsModuleBlueprint.getBlueprintName())
                 && blueprint.getHorizonsBlueprintType().equals(horizonsModuleBlueprint.getHorizonsBlueprintType())
                 && blueprint.getHorizonsBlueprintGrade().getGrade() <= horizonsModuleBlueprint.getHorizonsBlueprintGrade().getGrade();
+    }
+
+    private static HorizonsBlueprintName getBlueprintName(HorizonsBlueprint horizonsModuleBlueprint) {
+//        if(horizonsModuleBlueprint)
+        return horizonsModuleBlueprint.getBlueprintName();
     }
 
     public static boolean hasPinnedBlueprint(final Engineer engineer) {

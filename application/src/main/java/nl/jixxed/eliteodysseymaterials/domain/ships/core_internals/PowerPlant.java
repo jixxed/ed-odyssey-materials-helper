@@ -146,7 +146,7 @@ public class PowerPlant extends CoreModule {
             return Collections.emptyList();
         }
         if (this.getOrigin() == Origin.GUARDIAN) {
-            return Collections.emptyList();
+            return PowerPlantBlueprints.GUARDIAN_BLUEPRINTS.keySet().stream().toList();
         }
         return PowerPlantBlueprints.BLUEPRINTS.keySet().stream().toList();
     }

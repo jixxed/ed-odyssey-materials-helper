@@ -2,7 +2,9 @@ package nl.jixxed.eliteodysseymaterials.constants.horizons.core_internals;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsBooleanModifierValue;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsNumberModifierValue;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -10,8 +12,7 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import java.util.List;
 import java.util.Map;
 
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentageNegative;
-import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.percentagePositive;
+import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PowerDistributorBlueprints {
@@ -506,4 +507,23 @@ public class PowerDistributorBlueprints {
                             ),
                             List.of(Engineer.ETIENNE_DORN, Engineer.THE_DWELLER))
             ));
+            public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> GUARDIAN_BLUEPRINTS = Map.of(
+                    HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE,
+                    Map.of(
+                            HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_DISTRIBUTOR, HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE, HorizonsBlueprintGrade.GRADE_1,
+                                    Map.of(
+                                            Manufactured.TG_ABRASION03,2,
+                                            Manufactured.TG_CAUSTICCRYSTAL,1,
+                                            Manufactured.UNKNOWNCORECHIP,1
+                                    ),
+                                    Map.of(
+                                            HorizonsModifier.ANTI_GUARDIAN_ZONE_RESISTANCE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
+                                    ),
+                                    List.of(
+                                            Engineer.RAM_TAH
+                                    ),
+                                    GameVersion.LIVE
+                            )
+                    )
+            );
 }

@@ -1,7 +1,5 @@
-package nl.jixxed.eliteodysseymaterials.constants.horizons.hardpoints;
+package nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.UTF8Constants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBlueprint;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsBooleanModifierValue;
@@ -13,12 +11,11 @@ import java.util.Map;
 
 import static nl.jixxed.eliteodysseymaterials.helper.ModifierFunctionHelper.bool;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class GuardianPlasmaChargerBlueprints {
+public class GuardianShieldReinforcementPackageBlueprints {
     public static final Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>> BLUEPRINTS = Map.of(
             HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE,
             Map.of(
-                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER, HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE, HorizonsBlueprintGrade.GRADE_1,
+                    HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.GUARDIAN_SHIELD_REINFORCEMENT_PACKAGE, HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.TG_ABRASION03,2,
                                     Manufactured.TG_CAUSTICCRYSTAL,1,

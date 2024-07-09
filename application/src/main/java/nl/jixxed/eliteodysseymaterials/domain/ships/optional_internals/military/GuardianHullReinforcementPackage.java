@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.military;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.GuardianHullReinforcementPackageBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.ships.MilitaryOptionalModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
@@ -48,7 +49,7 @@ public class GuardianHullReinforcementPackage extends MilitaryOptionalModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return Collections.emptyList();
+        return GuardianHullReinforcementPackageBlueprints.BLUEPRINTS.keySet().stream().toList();
     }
 
     @Override
