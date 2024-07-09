@@ -4064,6 +4064,12 @@
     -fx-text-fill: #aaaaaa;
     -fx-label-padding: 0.3em;
 }
+.copyable-system-popover-state-highlight{
+    -fx-text-fill: #dcc030 !important;
+}
+.copyable-system-popover-allegiance-highlight{
+    -fx-text-fill: #dcc030 !important;
+}
 .copyable-system-popover-copy-icon {
     -fx-max-width: 1em;
     -fx-max-height: 1em;

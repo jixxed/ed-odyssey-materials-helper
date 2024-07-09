@@ -48,6 +48,7 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
     private HgeStarSystem starSystem;
     private DestroyableResizableImageView copyIcon;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private HorizonsMaterialType materialType;
 
     public CopyableSystemPopoverLabel() {
         initComponents();
@@ -96,6 +97,7 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
     public void setStarSystem(HgeStarSystem starSystem, HorizonsMaterialType materialType) {
         this.setVisible(true);
         this.starSystem = starSystem;
+        this.materialType = materialType;
         this.systemName.setText(starSystem.starSystem().getName());
         final Double dropChance = calculatePercentage(materialType);
         if (dropChance.equals(maxPercentage(materialType))) {
@@ -110,12 +112,12 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
     }
 
     private Double maxPercentage(HorizonsMaterialType materialType) {
-        if(
+        if (
                 HorizonsMaterialType.THERMIC.equals(materialType)
-                || HorizonsMaterialType.HEAT.equals(materialType)
-                || HorizonsMaterialType.CAPACITORS.equals(materialType)
-                || HorizonsMaterialType.ALLOYS.equals(materialType)
-        ){
+                        || HorizonsMaterialType.HEAT.equals(materialType)
+                        || HorizonsMaterialType.CAPACITORS.equals(materialType)
+                        || HorizonsMaterialType.ALLOYS.equals(materialType)
+        ) {
             return 50D;
         }
         return 100D;
@@ -264,6 +266,10 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
         systemLabel1.setStarSystem(starSystem.starSystem());
         HBox systemLine = BoxBuilder.builder().withNodes(systemLabel, systemLabel1).buildHBox();
         final DestroyableLabel allegianceLabel1 = LabelBuilder.builder().withStyleClasses("copyable-system-popover-value", "copyable-system-popover-allegiance").withText(LocaleService.getStringBinding(starSystem.starSystem().getAllegiance().getLocalizationKey())).build();
+        if ((Allegiance.FEDERATION.equals(starSystem.starSystem().getAllegiance()) && HorizonsMaterialType.COMPOSITE.equals(materialType))
+                || (Allegiance.EMPIRE.equals(starSystem.starSystem().getAllegiance()) && HorizonsMaterialType.SHIELDING.equals(materialType))) {
+            allegianceLabel1.getStyleClass().add("copyable-system-popover-allegiance-highlight");
+        }
         HBox allegianceLine = BoxBuilder.builder().withNodes(allegianceLabel, allegianceLabel1).buildHBox();
         VBox states = BoxBuilder.builder().withNodes(statesLabel).buildVBox();
         HBox categoryLine1 = BoxBuilder.builder().buildHBox();
@@ -283,7 +289,15 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
             });
         });
         stateCounts.forEach((state, count) -> {
-            states.getChildren().add(LabelBuilder.builder().withNonLocalizedText(LocaleService.getLocalizedStringForCurrentLocale(state.getLocalizationKey()) + ((count > 1) ? " " + count + "x" : "")).build());
+            final DestroyableLabel stateLabel = LabelBuilder.builder().withNonLocalizedText(LocaleService.getLocalizedStringForCurrentLocale(state.getLocalizationKey()) + ((count > 1) ? " " + count + "x" : "")).build();
+            if (state == State.OUTBREAK && materialType.equals(HorizonsMaterialType.CHEMICAL)
+                    || (state == State.WAR || state == State.CIVILWAR) && (materialType.equals(HorizonsMaterialType.CAPACITORS) || materialType.equals(HorizonsMaterialType.THERMIC))
+                    || (state == State.BOOM || state == State.EXPANSION) && (materialType.equals(HorizonsMaterialType.HEAT) || materialType.equals(HorizonsMaterialType.ALLOYS))
+                    || state == State.CIVILUNREST && materialType.equals(HorizonsMaterialType.MECHANICAL_COMPONENTS)) {
+                stateLabel.getStyleClass().add("copyable-system-popover-state-highlight");
+
+            }
+            states.getChildren().add(stateLabel);
         });
         List
                 .of(HorizonsMaterialType.CHEMICAL, HorizonsMaterialType.THERMIC, HorizonsMaterialType.HEAT, HorizonsMaterialType.MECHANICAL_COMPONENTS)
@@ -313,12 +327,13 @@ public class CopyableSystemPopoverLabel extends FlowPane implements Template {
         return BoxBuilder.builder().withStyleClass("copyable-system-popover-group-box").withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), categoryImage, new GrowingRegion()).buildHBox(), materialTypeLabel, percentageLabel).buildVBox();
 
     }
+
     static String formatPopulation(double size) {
-        if(size < 1_000_000){
+        if (size < 1_000_000) {
             return Formatters.NUMBER_FORMAT_0.format(size);
         }
         String finalQ = "";
-        for (String q: new String[] {"K", "population.million", "population.billion", "population.trillion"}) {
+        for (String q : new String[]{"K", "population.million", "population.billion", "population.trillion"}) {
             if (size < 1000) break;
             finalQ = q;
             size /= 1000;
