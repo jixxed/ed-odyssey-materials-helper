@@ -134,6 +134,7 @@ public class PinnedBlueprintService {
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER)
                 || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON)
+                || blueprint.getHorizonsBlueprintName().equals(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_BOOSTER)
         ){
             return typeMatch(blueprint, horizonsModuleBlueprint);
         }

@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
+import nl.jixxed.eliteodysseymaterials.constants.horizons.optional_internals.FrameShiftDriveBoosterBlueprints;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
 import nl.jixxed.eliteodysseymaterials.domain.ships.OptionalModule;
@@ -36,7 +37,7 @@ public class FrameShiftDriveBooster extends OptionalModule {
 
     @Override
     public List<HorizonsBlueprintType> getAllowedBlueprints() {
-        return Collections.emptyList();
+        return FrameShiftDriveBoosterBlueprints.BLUEPRINTS.keySet().stream().toList();
     }
 
     @Override
