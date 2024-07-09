@@ -1,3 +1,10 @@
+Version 2.86
+-------------
+Add guardian zone resistance to other guardian modules
+Allow pinning multiple same type blueprints at the same engineer (sink launchers/guardian modules)
+Add highlight for cause for material type drop in HGE Tracker
+Fix HGE Tracker - no faction systems with allegiance showing as 0% instead of 100%
+
 Version 2.85
 -------------
 Fix add to wishlist buttons (loadout/ship)
