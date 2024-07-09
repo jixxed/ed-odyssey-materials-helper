@@ -1,13 +1,13 @@
 messageKey,,en,de,es,fr,pt,ru
 modifier.horizons.name.absolute_damage_ratio,Absolute Damage Ratio,Absolute Damage Ratio,,,,,Абсолютный урон
 modifier.horizons.name.ammo_capacity,Ammo Capacity,Ammo Capacity,Munitionskapazität,Capacidad de munición,Capacité de munitions,Capacidade de munição,Макс. боекомплект
-modifier.horizons.name.ammo_clip_size,Clip Size,Clip Size,Filmgröße,Tamaño de clip,Taille du clip,Tamanho do clipe,Размер магазина
+modifier.horizons.name.ammo_clip_size,Clip Size,Clip Size,Filmgröße,Tamaño de cargador,Taille du clip,Tamanho do clipe,Размер магазина
 modifier.horizons.name.ammo_cost,Ammo Cost,Ammo Cost,,,,,Стоимость боеприпасов
 modifier.horizons.name.ammo_maximum,Ammo Maximum,Ammo Maximum,Munition maximal,Munición máxima,Mamo maximum,Munição máxima,Макс. боекомплект
 modifier.horizons.name.anti_xeno_damage,Anti Xeno Damage,Anti Xeno Damage,Anti-Xeno-Schaden,Daño anti xeno,Dommages anti xéno,Dano anti-xeno,АИ урон
 modifier.horizons.name.anti_xeno_damage_ratio,Anti Xeno Damage Ratio,Anti Xeno Damage Ratio,,,,,АИ урон
-modifier.horizons.name.area_fsds_reboot,Area FSD’s Reboot,Area FSD’s Reboot,Neustart des Bereichs FSD,Reinicio del área FSD,Redémarrage de la zone FSD,Reinicialização da área FSD,Перезагрузка FSD в области действия
-modifier.horizons.name.anti_guardian_zone_resistance,Anti Guardian Zone Resistance,,,,,,Защита от отключающего поля
+modifier.horizons.name.area_fsds_reboot,Area FSD’s Reboot,Area FSD’s Reboot,Neustart des Bereichs FSD,Reinicio del MDD,Redémarrage de la zone FSD,Reinicialização da área FSD,Перезагрузка FSD в области действия
+modifier.horizons.name.anti_guardian_zone_resistance,Anti Guardian Zone Resistance,,,Resistencia a Zona Anti-Guardián,,,Защита от отключающего поля
 modifier.horizons.name.area_heat_increased_sensors_disrupted,Area Heat Increased Sensors Disrupted,Area Heat Increased Sensors Disrupted,Die Flächenwärme erhöhte die Sensoren gestört,Área Calor aumentó los sensores,La chaleur de la zone a augmenté les capteurs perturbés,O calor da área aumentou os sensores interrompidos,"Нагревает, вызывает сбой в работе сенсоров в области действия"
 modifier.horizons.name.armour,Armour,Armour,,,,,Броня
 modifier.horizons.name.armour_hardness,Armour Hardness,Armour Hardness,,,,,Рейтинг брони
@@ -66,7 +66,7 @@ modifier.horizons.name.ecm_active_power_consumption,Ecm Active Power Consumption
 modifier.horizons.name.ecm_cooldown,Ecm Cooldown,Ecm Cooldown,,,,,Время остывания ЭПД/РЭБ
 modifier.horizons.name.ecm_heat,Ecm Heat,Ecm Heat,,,,,Нагрев ЭПД/РЭБ
 modifier.horizons.name.ecm_range,Ecm Range,Ecm Range,,,,,Дальность ЭПД/РЭБ
-modifier.horizons.name.ecm_time_to_charge,Ecm Time To Charge,Ecm Time To Charge,,,,, Время зарядки ЭПД/РЭБ
+modifier.horizons.name.ecm_time_to_charge,Ecm Time To Charge,Ecm Time To Charge,,,,," Время зарядки ЭПД/РЭБ"
 modifier.horizons.name.effectiveness_increase_against_munitions,Effectiveness Increase Against Munitions,Effectiveness Increase Against Munitions,Effektivitätserhöhung gegen Munition,Aumento de la efectividad contra las municiones,Augmentation de l’efficacité contre les munitions,Aumento da eficácia contra munições,Повышение эффективности боеприпасов
 modifier.horizons.name.emergency_life_support,Emergency Life Support,Emergency Life Support,,,,,Экстренная система жизнеобеспечения
 modifier.horizons.name.energy_per_regen,Energy Per Regen,Energy Per Regen,,,,,Энергии на регенерацию
@@ -133,14 +133,14 @@ modifier.horizons.name.optimal_mass,Optimal Mass,Optimal Mass,Optimale Masse,Mas
 modifier.horizons.name.optimal_multiplier,Optimal Multiplier,Optimal Multiplier,Optimaler Multiplikator,Multiplicador óptimo,Multiplicateur optimal,Multiplicador ideal,Оптимальный усилитель
 modifier.horizons.name.part_of_damage_through_shields,Part Of Damage Through Shields,Part Of Damage Through Shields,Teil des Schadens durch Schilde,Parte del daño a través de los escudos,Une partie des dégâts par des boucliers,Parte dos danos através de escudos,Часть урона проходит сквозь щиты
 modifier.horizons.name.pitch_speed,Pitch Speed,Pitch Speed,,,,,Скорость тангажа
-modifier.horizons.name.power_boost,Power Boost,Power Boost,,,,,Увеличение мощности 
+modifier.horizons.name.power_boost,Power Boost,Power Boost,,,,,"Увеличение мощности "
 modifier.horizons.name.power_capacity,Power Capacity,Power Capacity,Leistungskapazität,Capacidad de potencia,La capacité de puissance,Capacidade de energia,Общий ресурс
 modifier.horizons.name.power_draw,Power Draw,Power Draw,Krafte,Poder de dibujo,Tirage au sort,Consumo de energia,Потребление энергии
 modifier.horizons.name.range,Range,Range,Bereich,Distancia,Varier,Alcance,Дальность
 modifier.horizons.name.rate_of_fire,Rate Of Fire,Rate Of Fire,Feuerrate,Cadencia de fuego,Taux de feu,Taxa de incêndio,Скорость стрельбы
 modifier.horizons.name.refill,Refill,Refill,Nachfüllung,Rellenar,Recharge,Reabastecer,Пополнение
-modifier.horizons.name.regen_rate,Regen Rate,Regen Rate,Regenrate,Tasa de regencia,Taux de régénération,Taxa de regeneração,Скорость восстановления при пробое
-modifier.horizons.name.reload_from_ship_fuel,Reload From Ship Fuel,Reload From Ship Fuel,Vom Schiffskraftstoff neu laden,Recargar del combustible del barco,Recharger le carburant du navire,Recarregue com combustível de navio,Пополняет боеприпасы из топлива
+modifier.horizons.name.regen_rate,Regen Rate,Regen Rate,Regenrate,Tasa de regeneración,Taux de régénération,Taxa de regeneração,Скорость восстановления при пробое
+modifier.horizons.name.reload_from_ship_fuel,Reload From Ship Fuel,Reload From Ship Fuel,Vom Schiffskraftstoff neu laden,Recargar combustible de la nave,Recharger le carburant du navire,Recarregue com combustível de navio,Пополняет боеприпасы из топлива
 modifier.horizons.name.reload_time,Reload Time,Reload Time,Nachladezeit,Tiempo de recarga,Temps de rechargement,Tempo de recarregamento,Время перезарядки
 modifier.horizons.name.repair_capacity,Repair Capacity,Repair Capacity,,,,,Количество ремонта
 modifier.horizons.name.repair_rating,Repair Rating,Repair Rating,,,,,Рейтинг ремонта
@@ -193,7 +193,7 @@ modifier.horizons.name.thermal_drain,Thermal Drain,Thermal Drain,,,,,Вывод 
 modifier.horizons.name.thermal_load,Thermal Load,Thermal Load,Wärmebelastung,Carga térmica,Charge thermique,Carga térmica,Тепловая нагрузка
 modifier.horizons.name.thermal_resistance,Thermal Resistance,Thermal Resistance,Wärmewiderstand,Resistencia termica,Résistance thermique,Resistência térmica,Сопр. термическому урону
 modifier.horizons.name.top_speed,Top Speed,Top Speed,,,,,Максимальная скорость
-modifier.horizons.name.typical_emission_range,Typical Emission Range,Typical Emission Range,,,,,Типичная дальность сигнатуры 
+modifier.horizons.name.typical_emission_range,Typical Emission Range,Typical Emission Range,,,,,"Типичная дальность сигнатуры "
 modifier.horizons.name.vehicle_armour_health,Vehicle Armour Health,Vehicle Armour Health,,,,,Целостность брони ТРП
 modifier.horizons.name.vehicle_cargo_capacity,Vehicle Cargo Capacity,Vehicle Cargo Capacity,,,,,Емкость ангара ТРП
 modifier.horizons.name.vehicle_count,Vehicle Count,Vehicle Count,,,,,Количество ТРП

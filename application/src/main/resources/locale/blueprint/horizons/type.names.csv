@@ -5,19 +5,19 @@ blueprint.horizons.type.armoured,Armoured,Armoured,Gepanzert,Blindado,Blindé,Bl
 blueprint.horizons.type.auto_loader,Auto Loader,Auto Loader,Autolader,Cargador automático,Chargeur automatique,Carregador automático,Автоматическая система заряжения
 blueprint.horizons.type.blast_block,Blast Block,Blast Block,Blastblock,Bloque de explosión,Bloc d’explosion,Bloco de explosão,Блокировка взрыва
 blueprint.horizons.type.blast_resistant,Blast Resistant,Blast Resistant,Explosionsbeständig,Resistente a la explosión,Résistant aux explosions,Resistente à explosão,Взрывостойкий усилитель
-blueprint.horizons.type.blast_resistant_hull_reinforcement,Blast Resistant Hull Reinforcement,Blast Resistant Hull Reinforcement,Detonationsresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a la explosión,Renforcement de la coque résistante aux explosions,Reforço do casco resistente à explosão,Взрывостойкое усиление корпуса
-blueprint.horizons.type.bobblehead,Bobblehead,Bobblehead,Bobblehead,Cabezal,Bobble-tête,Bobblehead,Таргоидский перехватчик (Кивающая фигура)
+blueprint.horizons.type.blast_resistant_hull_reinforcement,Blast Resistant Hull Reinforcement,Blast Resistant Hull Reinforcement,Detonationsresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a explosiones,Renforcement de la coque résistante aux explosions,Reforço do casco resistente à explosão,Взрывостойкое усиление корпуса
+blueprint.horizons.type.bobblehead,Bobblehead,Bobblehead,Bobblehead,Cabezón,Bobble-tête,Bobblehead,Таргоидский перехватчик (Кивающая фигура)
 blueprint.horizons.type.boss_cells,Boss Cells,Boss Cells,Bosszellen,Celdas de jefe,Cellules de boss,Células chefes,Босс-ячейки
 blueprint.horizons.type.charge_enhanced,Charge Enhanced,Charge Enhanced,Ladungsoptimiert,Carga mejorada,Charge améliorée,Carga aumentada,Быстрозаряжающийся распределитель питания
-blueprint.horizons.type.clean_drive_tuning,Clean Drive Tuning,Clean Drive Tuning,Ausgewogenes Antriebstuning,Ajuste de la unidad limpia,Réglage de la conduite propre,Ajuste da unidade limpa,«Чистая» донастройка
+blueprint.horizons.type.clean_drive_tuning,Clean Drive Tuning,Clean Drive Tuning,Ausgewogenes Antriebstuning,Motor limpio,Réglage de la conduite propre,Ajuste da unidade limpa,«Чистая» донастройка
 blueprint.horizons.type.cluster_capacitor,Cluster Capacitor,Cluster Capacitor,Cluster-kondensatoren,Condensador de clúster,Condensateur en grappe,Capacitor de cluster,Кассетные конденсаторы
 blueprint.horizons.type.concordant_sequence,Concordant Sequence,Concordant Sequence,Konkordante Sequenz,Secuencia concordante,Séquence concordante,Sequência concordante,Последовательность координации
-blueprint.horizons.type.corrosion_resistant_cargo_rack,Corrosion Resistant Cargo Rack,Corrosion Resistant Cargo Rack,Korrosionsbeständiges Frachtgestell,Estante de carga resistente a la corrosión,Support de chargement résistant à la corrosion,Rack de carga resistente à corrosão,Антикоррозийный грузовой стеллаж
-blueprint.horizons.type.corrosive_shell,Corrosive Shell,Corrosive Shell,Korrosionsgranate,Cáscara corrosiva,Coquille corrosive,Concha corrosiva,Разъедающие снаряды
-blueprint.horizons.type.dazzle_shell,Dazzle Shell,Dazzle Shell,Blendgranate,Deslumbrar con cáscara,Coquille d’éblouissement,Dazzle Shell,Ослепляющие снаряды
+blueprint.horizons.type.corrosion_resistant_cargo_rack,Corrosion Resistant Cargo Rack,Corrosion Resistant Cargo Rack,Korrosionsbeständiges Frachtgestell,Bodega de carga anticorrosión,Support de chargement résistant à la corrosion,Rack de carga resistente à corrosão,Антикоррозийный грузовой стеллаж
+blueprint.horizons.type.corrosive_shell,Corrosive Shell,Corrosive Shell,Korrosionsgranate,Proyectil Corrosivo,Coquille corrosive,Concha corrosiva,Разъедающие снаряды
+blueprint.horizons.type.dazzle_shell,Dazzle Shell,Dazzle Shell,Blendgranate,Proyectil Deslumbrante,Coquille d’éblouissement,Dazzle Shell,Ослепляющие снаряды
 blueprint.horizons.type.deep_charge,Deep Charge,Deep Charge,Tiefenladung,Carga profunda,Charge profonde,Carga profunda,Заряд повышенной мощности
-blueprint.horizons.type.deep_plating,Deep Plating,Deep Plating,Tiefenüberzug,Recubrimiento profundo,Placage profond,Revestimento profundo,Утолщённая броня
-blueprint.horizons.type.dirty_drive_tuning,Dirty Drive Tuning,Dirty Drive Tuning,Aggressives Antriebstuning,Tingo de disco sucio,Digne de lecteur sale,Ajuste suja de acionamento,«Грязная» донастройка
+blueprint.horizons.type.deep_plating,Deep Plating,Deep Plating,Tiefenüberzug,Enchapado profundo,Placage profond,Revestimento profundo,Утолщённая броня
+blueprint.horizons.type.dirty_drive_tuning,Dirty Drive Tuning,Dirty Drive Tuning,Aggressives Antriebstuning,Motor sucio,Digne de lecteur sale,Ajuste suja de acionamento,«Грязная» донастройка
 blueprint.horizons.type.dispersal_field,Dispersal Field,Dispersal Field,Streuungsfeld,Campo de dispersión,Champ de dispersion,Campo de dispersão,Рассеивающее поле
 blueprint.horizons.type.double_braced,Double Braced,Double Braced,Doppelt versteift,Doble arranque,Doublé,Duplo apoiado,Двойная прочность
 blueprint.horizons.type.double_shot,Double Shot,Double Shot,Doppelschuss,Doble tiro,Coup double,Tiro duplo,Двойной выстрел
@@ -33,12 +33,12 @@ blueprint.horizons.type.engineered_detailed_surface_scanner_v1,Engineered Detail
 blueprint.horizons.type.engineered_fsd_v1,Engineered FSD V1,Engineered FSD V1,Entwickelter Frameshiftantrieb V1,FSD V1 diseñado,FSD V1 d’ingénierie,FSD de engenharia v1,Полностью оборудованный FSD V1
 blueprint.horizons.type.engineered_missile_rack_v1,Engineered Missile Rack V1,Engineered Missile Rack V1,Entwickeltes Raketengestell V1,Bastidor de misiles de ingeniería V1,Rack de missiles d’ingénierie V1,Rack de mísseis projetado v1,Блок ракет с самонаведением V1
 blueprint.horizons.type.enhanced_low_power_shields,Enhanced Low Power Shields,Enhanced Low Power Shields,Verbesserte Niedrigenergieschilde,Escudos de baja potencia mejorados,Boucliers de faible puissance améliorés,Escudos de baixa potência aprimorados,Усиленные энергосберегающие щиты
-blueprint.horizons.type.enzyme_missile_rack,Enzyme Missile Rack,Enzyme Missile Rack,Enzymraketengestell,Estante de misiles enzimáticos,Support de missile enzymatique,Rack de mísseis enzimáticos,Блок энзимных ракет
+blueprint.horizons.type.enzyme_missile_rack,Enzyme Missile Rack,Enzyme Missile Rack,Enzymraketengestell,Lanzamisiles de Enzimas,Support de missile enzymatique,Rack de mísseis enzimáticos,Блок энзимных ракет
 blueprint.horizons.type.expanded_fsd_interdictor_capture_arc,Expanded FSD Interdictor Capture Arc,Expanded FSD Interdictor Capture Arc,Erweiterter Erfassungsbereich des Frameshiftunterbrechers,Arc de captura interdictora FSD ampliada,Arc de capture interdictor FSD élargi,Arco de captura interditora de FSD expandido,Перехватчик FSD с расширенной дугой захвата
 blueprint.horizons.type.expanded_probe_scanning_radius,Expanded Probe Scanning Radius,Expanded Probe Scanning Radius,Erweiterter Sonden-Scanradius,Radio de escaneo de sonda expandida,Rayon de balayage de sonde élargi,Raio de varredura de sonda expandido,Увеличение радиуса сканирования зондов
 blueprint.horizons.type.fast_charge,Fast Charge,Fast Charge,Schnellladen,Carga rápida,Charge rapide,Carga rápida,Быстрый заряд
 blueprint.horizons.type.fast_scanner,Fast Scanner,Fast Scanner,Schnellscanner,Escáner,Scanner rapide,Scanner rápido,Быстрый сканер
-blueprint.horizons.type.faster_fsd_boot_sequence,Faster FSD Boot Sequence,Faster FSD Boot Sequence,Schnellere FSA -Bootsequenz,Secuencia de arranque FSD más rápida,Séquence de démarrage FSD plus rapide,Sequência de inicialização mais rápida do FSD,Последовательность быстрого запуска FSD
+blueprint.horizons.type.faster_fsd_boot_sequence,Faster FSD Boot Sequence,Faster FSD Boot Sequence,Schnellere FSA -Bootsequenz,Secuencia de inicio MDD rápida,Séquence de démarrage FSD plus rapide,Sequência de inicialização mais rápida do FSD,Последовательность быстрого запуска FSD
 blueprint.horizons.type.feedback_cascade,Feedback Cascade,Feedback Cascade,Rückkopplungskaskade,Cascada de comentarios,Cascade de rétroaction,Cascade de feedback,Ответный залп
 blueprint.horizons.type.flow_control,Flow Control,Flow Control,Flusssteuerung,Control de flujo,Contrôle de flux,Controle de fluxo,Контроль интенсивности
 blueprint.horizons.type.focused_weapon,Focused Weapon,Focused Weapon,Waffenfokussiert,Arma enfocada,Arme ciblée,Arma focada,Точное орудие
@@ -61,27 +61,27 @@ blueprint.horizons.type.guardian_power_distributor,Guardian Power Distributor,Gu
 blueprint.horizons.type.guardian_shard_cannon_fixed_large,Guardian Shard Cannon Fixed Large,Guardian Shard Cannon Fixed Large,Guardian Splitterkanone groß fest,Guardian Shard Cannon fijado,Guardian Shard Cannon Fixed Large,Cannon do Shard Guardian Fixado,Осколочное орудие Стражей (3 класс бол. фикс.)
 blueprint.horizons.type.guardian_shard_cannon_fixed_medium,Guardian Shard Cannon Fixed Medium,Guardian Shard Cannon Fixed Medium,Guardian Splitterkanone medium fest,Guardian Shard Cannon Medio fijo,Guardian Shard Cannon Fixed Medium,Médio fixo de canhão do Shard Guardian,Осколочное орудие Стражей (2 класс ср. фикс.)
 blueprint.horizons.type.guardian_shard_cannon_fixed_small,Guardian Shard Cannon Fixed Small,Guardian Shard Cannon Fixed Small,Guardian Splitterkanone klein fest,Cañón de fragmento de guardia fijo pequeño,Guardian Shard Cannon Fixed Small,CANNON DO SHARD CARCENTE,Осколочное орудие Стражей (1 класс мал. фикс.)
-blueprint.horizons.type.guardian_shard_cannon_turreted_large,Guardian Shard Cannon Turreted Large,Guardian Shard Cannon Turreted Large,Guardian Splitterkanone groß Turm,Torreta de cañón de thardia de torrente grande,Guardian Shard Cannon a été gros,Guardião shard canhão torregou grande,Осколочное орудие Стражей (3 класс бол. турель)
+blueprint.horizons.type.guardian_shard_cannon_turreted_large,Guardian Shard Cannon Turreted Large,Guardian Shard Cannon Turreted Large,Guardian Splitterkanone groß Turm,Torreta de cañón de thardia de torrente grande,Guardian Shard Cannon a été gros,Guardião shard canhão torrecu grande,Осколочное орудие Стражей (3 класс бол. турель)
 blueprint.horizons.type.guardian_shard_cannon_turreted_medium,Guardian Shard Cannon Turreted Medium,Guardian Shard Cannon Turreted Medium,Guardian Splitterkanone medium Turm,Guardian Shard Cannon Torreced Medium,Guardian Shard Cannon Turreted Medium,Médio de torregada de canhão do Shard Guardian,Осколочное орудие Стражей (2 класс ср. турель)
 blueprint.horizons.type.guardian_shard_cannon_turreted_small,Guardian Shard Cannon Turreted Small,Guardian Shard Cannon Turreted Small,Guardian Splitterkanone klein fest,Torreta de cañón de fragmento de guardia pequeño,Guardian Shard Cannon Turred Small,Guardião shard canhão torretado pequeno,Осколочное орудие Стражей (1 класс мал. турель)
 blueprint.horizons.type.guardian_shield_reinforcement,Guardian Shield Reinforcement,Guardian Shield Reinforcement,Guardian-Schildverstärkung,Refuerzo de escudo de guardia,Renforcement du bouclier gardien,Reforço do Escudo Guardian,Набор для усиления щита Стражей
-blueprint.horizons.type.heavy_duty,Heavy Duty,Heavy Duty,Schwerlast,Tarea pesada,À toute épreuve,Trabalho pesado,Надёжный усилитель
-blueprint.horizons.type.heavy_duty_hull_reinforcement,Heavy Duty Hull Reinforcement,Heavy Duty Hull Reinforcement,Schwere Rumpfhüllenverstärkung,Refuerzo de casco de servicio pesado,Renforcement de la coque lourde,Reforço do casco pesado,Надёжное усиление корпуса
-blueprint.horizons.type.hi_cap,Hi Cap,Hi Cap,Erhöhte Kapazität,Hola gorra,HI CAP,Oi cap,Высокая ёмкость
-blueprint.horizons.type.high_capacity_magazine,High Capacity Magazine,High Capacity Magazine,Hochleistungsmagazin,Revista de alta capacidad,Magazine de grande capacité,Revista de alta capacidade,Вместительный магазин
+blueprint.horizons.type.heavy_duty,Heavy Duty,Heavy Duty,Schwerlast,Alta Resistencia,À toute épreuve,Trabalho pesado,Надёжный усилитель
+blueprint.horizons.type.heavy_duty_hull_reinforcement,Heavy Duty Hull Reinforcement,Heavy Duty Hull Reinforcement,Schwere Rumpfhüllenverstärkung,Refuerzo de casco de Alta Resistencia,Renforcement de la coque lourde,Reforço do casco pesado,Надёжное усиление корпуса
+blueprint.horizons.type.hi_cap,Hi Cap,Hi Cap,Erhöhte Kapazität,Alta capacidad,HI CAP,Oi cap,Высокая ёмкость
+blueprint.horizons.type.high_capacity_magazine,High Capacity Magazine,High Capacity Magazine,Hochleistungsmagazin,Cargador de alta capacidad,Magazine de grande capacité,Revista de alta capacidade,Вместительный магазин
 blueprint.horizons.type.high_charge_capacity,High Charge Capacity,High Charge Capacity,Hochkondesatoren,Alta capacidad de carga,Capacité de charge élevée,Alta capacidade de carga,Высокоёмкий распределитель питания
 blueprint.horizons.type.high_yield_shell,High Yield Shell,High Yield Shell,Hochleistungssprengkopf,Cáscara de alto rendimiento,Coquille à haut rendement,Concha de alto rendimento,Снаряд большой мощности
 blueprint.horizons.type.incendiary_rounds,Incendiary Rounds,Incendiary Rounds,Brandgranaten,Rondas incendiarias,Rondes incendiaires,Rodadas incendiárias,Зажигательные припасы
-blueprint.horizons.type.increased_fsd_range,Increased FSD Range,Increased FSD Range,Erhöhte FSA-Reichweite,Aumento del rango de FSD,Augmentation de la plage FSD,Aumento da faixa de FSD,Увеличенная дальность FSD
+blueprint.horizons.type.increased_fsd_range,Increased FSD Range,Increased FSD Range,Erhöhte FSA-Reichweite,Aumento del rango de MDD,Augmentation de la plage FSD,Aumento da faixa de FSD,Увеличенная дальность FSD
 blueprint.horizons.type.inertial_impact,Inertial Impact,Inertial Impact,Trägheitsaufprall,Impacto inercial,Impact inertique,Impacto inercial,Инерционный удар
 blueprint.horizons.type.ion_disruptor,Ion Disruptor,Ion Disruptor,Ionen-Disruptor,Disruptor de iones,Perturbateur ionique,Disruptor de íons,Ионный дестабилизатор
-blueprint.horizons.type.javelin_fighter,XG8 Javelin Fighter,XG8 Javelin Fighter,XG8 Javelin Fighter,Luchador de jabalina XG8,Fighter Javelin XG8,XG8 Lutador de dardo,Истребитель XG8 Javelin
-blueprint.horizons.type.kinetic_resistant,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a la cinética,Cinétique,Resistente a cinéticos,Противокинетический усилитель
-blueprint.horizons.type.kinetic_resistant_hull_reinforcement,Kinetic Resistant Hull Reinforcement,Kinetic Resistant Hull Reinforcement,Kinetikresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a la cinética,Renforcement de la coque résistante cinétique,Reforço do casco resistente a cinéticos,Противокинетическое усиление корпуса
+blueprint.horizons.type.javelin_fighter,XG8 Javelin Fighter,XG8 Javelin Fighter,XG8 Javelin Fighter,Caza Javelin XG8,Fighter Javelin XG8,XG8 Lutador de dardo,Истребитель XG8 Javelin
+blueprint.horizons.type.kinetic_resistant,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a cinético,Cinétique,Resistente a cinéticos,Противокинетический усилитель
+blueprint.horizons.type.kinetic_resistant_hull_reinforcement,Kinetic Resistant Hull Reinforcement,Kinetic Resistant Hull Reinforcement,Kinetikresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a cinético,Renforcement de la coque résistante cinétique,Reforço do casco resistente a cinéticos,Противокинетическое усиление корпуса
 blueprint.horizons.type.kinetic_resistant_shields,Kinetic Resistant Shields,Kinetic Resistant Shields,Kinetisch resistente Schilde,Escudos de resistencia cinética,Boucliers résistants cinétiques,Escudos resistentes a cinéticos,Противокинетические щиты
-blueprint.horizons.type.lance_fighter,XG9 Lance Fighter,XG9 Lance Fighter,XG9 Lance Fighter,LANCE XG9 LANCE,Fighter Lance XG9,XG9 Lance Fighter,Истребитель XG9 Lance
+blueprint.horizons.type.lance_fighter,XG9 Lance Fighter,XG9 Lance Fighter,XG9 Lance Fighter,Caza LANCE XG9,Fighter Lance XG9,XG9 Lance Fighter,Истребитель XG9 Lance
 blueprint.horizons.type.layered_plating,Layered Plating,Layered Plating,Schichtüberzug,Enchapado en capas,Placage en couches,Revestimento em camadas,Многослойная броня
-blueprint.horizons.type.light_weight_scanner,Light Weight Scanner,Light Weight Scanner,Leichter Scanner,Escáner liviano,Scanner léger,Scanner leve,Облегченный сканер
+blueprint.horizons.type.light_weight_scanner,Light Weight Scanner,Light Weight Scanner,Leichter Scanner,Escáner ligero,Scanner léger,Scanner leve,Облегченный сканер
 blueprint.horizons.type.lightweight,Lightweight,Lightweight,Leichtgewicht,Ligero,Poids léger,Leve,Облегчённый
 blueprint.horizons.type.lightweight_hull_reinforcement,Lightweight Hull Reinforcement,Lightweight Hull Reinforcement,Leichtgewicht-Rumpfhüllenverstärkung,Refuerzo de casco liviano,Renforcement léger de la coque,Reforço leve do casco,Лёгкое усиление корпуса
 blueprint.horizons.type.lightweight_mount,Lightweight Mount,Lightweight Mount,Leichtgewichtsgeschütz,Soporte liviano,Support léger,Montagem leve,Легкое крепление
@@ -91,7 +91,7 @@ blueprint.horizons.type.long_range_scanner,Long Range Scanner,Long Range Scanner
 blueprint.horizons.type.long_range_weapon,Long Range Weapon,Long Range Weapon,Ferndistanzwaffe,Arma de largo alcance,Arme à longue portée,Arma de longo alcance,Дальнобойное орудие
 blueprint.horizons.type.low_emissions,Low Emissions,Low Emissions,Niedrige Emissionen,Bajas emisiones,Émissions faibles,Baixas emissões,Силовая установка с малым излучением
 blueprint.horizons.type.mass_lock_munition,Mass Lock Munition,Mass Lock Munition,Masseblockierende Munition,Munición de bloqueo de masas,Munition de masse,Munição em Mass Lock,Боеприпасы с гравитационным захватом
-blueprint.horizons.type.mass_manager,Mass Manager,Mass Manager,Massemanager,Gerente de masas,Directeur de masse,Gerente de massa,Распределитель гравитации
+blueprint.horizons.type.mass_manager,Mass Manager,Mass Manager,Massemanager,Gestión de masas,Directeur de masse,Gerente de massa,Распределитель гравитации
 blueprint.horizons.type.meta_alloy_hull_reinforcement,Meta Alloy Hull Reinforcement,Meta Alloy Hull Reinforcement,Schwere Rumpfhüllenverstärkung,Refuerzo de casco meta aleación,Renfort de coque en alliage de méta,Reforço do casco de meta -liga,Метасплавное усиление корпуса
 blueprint.horizons.type.modified_gauss_cannon_fixed_medium,Modified Gauss Cannon Fixed Medium,Modified Gauss Cannon Fixed Medium,Modifizierte Gausskanone fest Medium,Medio fijo de cañón Gauss modificado,Médium fixe à canon Gauss modifié,Médio fixo de canhão gauss modificado,Модифицированная пушка Гаусса Стражей (2 класс ср. фикс)
 blueprint.horizons.type.modified_gauss_cannon_fixed_small,Modified Gauss Cannon Fixed Small,Modified Gauss Cannon Fixed Small,Modifizierter Gauß Cannon fest klein,Cañón de gauss modificado fijo pequeño,Canon Gauss modifié fixe petit,Gauss Cannon modificado Fixed pequeno,Модифицированная пушка Гаусса Стражей (1 класс мал. фикс)
@@ -111,7 +111,7 @@ blueprint.horizons.type.phasing_sequence,Phasing Sequence,Phasing Sequence,Phase
 blueprint.horizons.type.plasma_slug,Plasma Slug,Plasma Slug,Plasmaprojektil,Babosa de plasma,Limace de plasma,Lesma de plasma,Плазменный рельсовый снаряд
 blueprint.horizons.type.radiant_canister,Radiant Canister,Radiant Canister,Strahlender Kanister,Bote radiante,Cartouche rayonnante,Cadeir -se radiante,Светящаяся кассета
 blueprint.horizons.type.rapid_charge,Rapid Charge,Rapid Charge,Schnelle Aufladung,Carga rápida,Charge rapide,Carga rápida,Щитонакопитель быстрой зарядки
-blueprint.horizons.type.rapid_fire_modification,Rapid Fire Modification,Rapid Fire Modification,Schnellfeuermodifikation,Modificación rápida de incendios,Modification rapide du feu,Modificação rápida de incêndio,Улучшение скорострельности
+blueprint.horizons.type.rapid_fire_modification,Rapid Fire Modification,Rapid Fire Modification,Schnellfeuermodifikation,Modificación de disparo rápido,Modification rapide du feu,Modificação rápida de incêndio,Улучшение скорострельности
 blueprint.horizons.type.recycling_cells,Recycling Cells,Recycling Cells,Recyclingzellen,Células de reciclaje,Recyclage des cellules,Células de reciclagem,Рециркуляционная ячейка
 blueprint.horizons.type.reflective_plating,Reflective Plating,Reflective Plating,Reflektorüberzug,Recubrimiento reflectante,Placage réfléchissant,Revestimento reflexivo,Отражающая броня
 blueprint.horizons.type.regeneration_sequence,Regeneration Sequence,Regeneration Sequence,Regenerationssequenz,Secuencia de regeneración,Séquence de régénération,Sequência de regeneração,Последовательность восстановления
@@ -124,13 +124,13 @@ blueprint.horizons.type.reverberating_cascade,Reverberating Cascade,Reverberatin
 blueprint.horizons.type.scramble_spectrum,Scramble Spectrum,Scramble Spectrum,Frequenzstörung,Scramble Spectrum,Spectre de brouillage,Espectro de Scramble,Отключающая сетка
 blueprint.horizons.type.screening_shell,Screening Shell,Screening Shell,Abschirmende Geschosse,Caparazón,Coquille de dépistage,Shell de triagem,Заслоняющие снаряды
 blueprint.horizons.type.shielded,Shielded,Shielded,Schildverstärkt,Protegido,Blindé,Blindado,Защищённый
-blueprint.horizons.type.shielded_fsd,Shielded FSD,Shielded FSD,schildverstärker Frameshiftantrieb,FSD blindado,FSD blindé,FSD blindado,Защищённый FSD
+blueprint.horizons.type.shielded_fsd,Shielded FSD,Shielded FSD,schildverstärker Frameshiftantrieb,MDD blindado,FSD blindé,FSD blindado,Защищённый FSD
 blueprint.horizons.type.shift_lock_canister,Shift Lock Canister,Shift Lock Canister,Schaltschließkanister,Bote de bloqueo de cambio,Cartouche de verrouillage de décalage,Troca de trava de trava,Рамоблокирующая кассета
 blueprint.horizons.type.shock_cannon_fixed_large,Shock Cannon Fixed Large,Shock Cannon Fixed Large,Schockkanone groß fest,Cañón de choque fijo grande,Canon d’amortisseur réparé,Canhão de choque fixo grande,Шоковое орудие (3 класс бол. фикс.)
 blueprint.horizons.type.shock_cannon_fixed_medium,Shock Cannon Fixed Medium,Shock Cannon Fixed Medium,Schockkanone Medium fest,Cañón de choque medio fijo,Choquer canon fixe médium,Médio fixo de canhão de choque,Шоковое орудие (2 класс ср. фикс.)
 blueprint.horizons.type.shock_cannon_fixed_small,Shock Cannon Fixed Small,Shock Cannon Fixed Small,Schockkanone klein fest,Cañón de choque fijo pequeño,Canon d’amortisseur fixé petit,Canhão de choque fixo pequeno,Шоковое орудие (1 класс мал. фикс.)
 blueprint.horizons.type.shock_cannon_gimballed_large,Shock Cannon Gimballed Large,Shock Cannon Gimballed Large,Schockkanone groß kardanisch,Cañón de choque gimballed grande,Choc Cannon Gimballed,Choque canhão gimball gimed,Шоковое орудие (3 класс бол. кард.)
-blueprint.horizons.type.shock_cannon_gimballed_medium,Shock Cannon Gimballed Medium,Shock Cannon Gimballed Medium,Schockkanone Medium kardanisch ,Medio de cañón de choque de choque,Choqu canon gimballed médium,Médio de choque de canhão de canhão,Шоковое орудие (2 класс ср. кард.)
+blueprint.horizons.type.shock_cannon_gimballed_medium,Shock Cannon Gimballed Medium,Shock Cannon Gimballed Medium,"Schockkanone Medium kardanisch ",Medio de cañón de choque de choque,Choqu canon gimballed médium,Médio de choque de canhão de canhão,Шоковое орудие (2 класс ср. кард.)
 blueprint.horizons.type.shock_cannon_gimballed_small,Shock Cannon Gimballed Small,Shock Cannon Gimballed Small,Schockkanone klein kardanisch,Cañón de choque gimballed pequeño,Canon de choc gimballé petit,Choque de canhão gimball pequeno,Шоковое орудие (1 класс мал. кард.)
 blueprint.horizons.type.shock_cannon_turreted_large,Shock Cannon Turreted Large,Shock Cannon Turreted Large,Schockkanone groß Turm,Torreta de cañón de choque grande,Canon d’amortisseur à tourelle,Choque de canhão com torre grande,Шоковое орудие (3 класс бол. турель)
 blueprint.horizons.type.shock_cannon_turreted_medium,Shock Cannon Turreted Medium,Shock Cannon Turreted Medium,Schockkanone medium Turm,Medio de torreta de cañón de choque,Choquer le canon à tourelle,Médio com torre de canhão de choque,Шоковое орудие (2 класс ср. турель)
@@ -155,24 +155,24 @@ blueprint.horizons.type.thermal_shock,Thermal Shock,Thermal Shock,Thermischer Sc
 blueprint.horizons.type.thermal_spread,Thermal Spread,Thermal Spread,Thermischer Verteiler,Extensión térmica,Propagation thermique,Propagação térmica,Рассеивание тепла
 blueprint.horizons.type.thermal_vent,Thermal Vent,Thermal Vent,Thermische Entlastung,Ventilación térmica,Évent thermique,Ventilação térmica,Теплоотдача
 blueprint.horizons.type.thermo_block,Thermo Block,Thermo Block,Thermo Block,Bloqueo de termo,Thermo,Thermo Block,Блокировка тепла
-blueprint.horizons.type.trident_fighter,XG7 Trident Fighter,XG7 Trident Fighter,XG7 Trident Fighter,Luchador tridente XG7,Fighter Trident XG7,XG7 Trident Fighter,Истребитель XG7 Trident
+blueprint.horizons.type.trident_fighter,XG7 Trident Fighter,XG7 Trident Fighter,XG7 Trident Fighter,Caza trident XG7,Fighter Trident XG7,XG7 Trident Fighter,Истребитель XG7 Trident
 blueprint.horizons.type.weapon_focused,Weapon Focused,Weapon Focused,Waffenfokus,Arma centrada,Axé sur l’arme,Arma focada,Распределитель питания на орудия
 blueprint.horizons.type.wide_angle_scanner,Wide Angle Scanner,Wide Angle Scanner,Weitwinkelscanner,Escáner de gran angular,Scanner grand angle,Scanner de grande angular,Широкоугольный сканер
 blueprint.horizons.type.modified_plasma_charger_fixed_medium,Modified Plasma Charger Fixed Medium,Modified Plasma Charger Fixed Medium,Modifiziertes Plasma -Ladegerät festgelegtes Medium,Cargador de plasma modificado medio fijo,Médium fixe du chargeur de plasma modifié,Médio fixo de carregador de plasma modificado,Модифицированная плазменная пушка стражей (2 класс фикс.)
 blueprint.horizons.type.modified_plasma_charger_fixed_small,Modified Plasma Charger Fixed Small,Modified Plasma Charger Fixed Small,Modifiziertes Plasma -Ladegerät klein festgelegt,Cargador de plasma modificado fijo pequeño,Chargeur de plasma modifié fixe petit,Carregador de plasma modificado fixo pequeno,Модифицированная плазменная пушка стражей (1 класс фикс.)
-blueprint.horizons.type.sirius_heat_sink_launcher,Sirius Heat Sink Launcher,Sirius Heat Sink Launcher,Sirius Kühlkörperwerfer,,,,Теплоотводная катапульта Корпорации Сириус
+blueprint.horizons.type.sirius_heat_sink_launcher,Sirius Heat Sink Launcher,Sirius Heat Sink Launcher,Sirius Kühlkörperwerfer,Eyector Térmico de Sirius,,,Теплоотводная катапульта Корпорации Сириус
 blueprint.horizons.type.e2_sirius_corporation_ax_missile_rack,E2 Sirius Corporation AX Missile Rack,,E2 Sirius Corporation AX-Raketengestell,,,,Е2 Блок ракет АИ Корпорации Сириус
 blueprint.horizons.type.c3_sirius_corporation_ax_missile_rack,C3 Sirius Corporation AX Missile Rack,,C3 Sirius Corporation AX-Raketengestell,,,,С3 Блок ракет АИ Корпорации Сириус
-blueprint.horizons.type.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,Ätzbehälterwerfer,,,,Антикоррозийная катапульта
+blueprint.horizons.type.caustic_sink_launcher,Caustic Sink Launcher,Caustic Sink Launcher,Ätzbehälterwerfer,Eyector Caústico,,,Антикоррозийная катапульта
 blueprint.horizons.type.thargoid_pulse_neutraliser,TG Pulse Neutraliser,TG Pulse Neutraliser,,,,,Нейтрализатор таргоидских импульсов
 blueprint.horizons.type.e2_azimuth_enhanced_ax_multicannon,E2 Azimuth Enhanced AX Multi-cannon,E2 Azimuth Enhanced AX Multi-cannon,,,,,E2 Улучшенное многоствольное АИ-орудие Azimuth
 blueprint.horizons.type.c3_azimuth_enhanced_ax_multicannon,C3 Azimuth Enhanced AX Multi-cannon,C3 Azimuth Enhanced AX Multi-cannon,,,,,C3 Улучшенное многоствольное АИ-орудие Azimuth
 blueprint.horizons.type.expanded_probe_scanning_radius_x2,Expanded Probe Scanning Radius x2,Expanded Probe Scanning Radius x2,Erweiterter Sonden-Scanradius x2,Radio de escaneo de sonda expandida x2,Rayon de balayage de sonde élargi x2,Raio de varredura de sonda expandido x2,Увеличение радиуса сканирования зондов x2
-blueprint.horizons.type.ammo_capacity_x2,"Ammo Capacity X 2","Ammo Capacity X 2",,,,,Количество боезапаса
+blueprint.horizons.type.ammo_capacity_x2,Ammo Capacity X 2,Ammo Capacity X 2,,,,,Количество боезапаса
 blueprint.horizons.type.armoured_overcharged,"Armoured, Overcharged","Armoured, Overcharged",,,,,"Бронированная, Усиленная"
-blueprint.horizons.type.decorative_green,"Decorative Green","Decorative Green",,,,,"Декоративный зеленый"
-blueprint.horizons.type.decorative_red,"Decorative Red","Decorative Red",,,,,"Декоративный красный"
-blueprint.horizons.type.decorative_yellow,"Decorative Yellow","Decorative Yellow",,,,,"Декоративный желтый"
+blueprint.horizons.type.decorative_green,Decorative Green,Decorative Green,,,,,Декоративный зеленый
+blueprint.horizons.type.decorative_red,Decorative Red,Decorative Red,,,,,Декоративный красный
+blueprint.horizons.type.decorative_yellow,Decorative Yellow,Decorative Yellow,,,,,Декоративный желтый
 blueprint.horizons.type.fast_scanner_long_range_scanner,"Fast Scanner, Long Range Scanner","Fast Scanner, Long Range Scanner",,,,,"Быстрый сканер, Сканер дальнего действия"
 blueprint.horizons.type.high_capacity_magazine_increased_damage,"High Capacity, Increased Damage","High Capacity, Increased Damage",,,,,"Вместительный магазин, Увеличенный урон"
 blueprint.horizons.type.high_capacity_magazine_rapid_fire_modification,"High Capacity, Rapid Fire","High Capacity, Rapid Fire",,,,,"Вместительный магазин, Увеличенная скорострельность"
@@ -183,10 +183,10 @@ blueprint.horizons.type.long_range_weapon_focused_weapon_penetrator_munitions,"L
 blueprint.horizons.type.long_range_weapon_high_capacity_magazine_feedback_cascade,"Long Range, High Capacity, Feedback Cascade","Long Range, High Capacity, Feedback Cascade",,,,,"Дальнобойное, Вместительный магазин, Ответный залп"
 blueprint.horizons.type.long_range_weapon_incendiary_rounds,"Long Range, Incendiary Rounds","Long Range, Incendiary Rounds",,,,,"Дальнобойное, Зажигательные снаряды"
 blueprint.horizons.type.long_range_weapon_incendiary_rounds_arx,"Long Range, Incendiary Rounds","Long Range, Incendiary Rounds",,,,,"Дальнобойное, Зажигательные снаряды"
-blueprint.horizons.type.overcharged_overcharged,"Extra Overcharged","Extra Overcharged",,,,,"Сверх-Усиленная"
+blueprint.horizons.type.overcharged_overcharged,Extra Overcharged,Extra Overcharged,,,,,Сверх-Усиленная
 blueprint.horizons.type.overcharged_weapon_auto_loader,"Overcharged, Auto Loader","Overcharged, Auto Loader",,,,,"Усиленное, Автоматическая перезарядка"
 blueprint.horizons.type.overcharged_weapon_focused_weapon,"Overcharged Weapon, Focused Weapon","Overcharged Weapon, Focused Weapon",,,,,"Усиленное, Точное"
-blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,,,,"Скорострельноеб Последовательность фазирования"
+blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,,,,Скорострельноеб Последовательность фазирования
 blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"Thermal Resistant, Kinetic Resistant","Thermal Resistant, Kinetic Resistant",,,,,"Термическая защита, Кинетическая защита"
-blueprint.horizons.type.none,None,None,,,,,"Нет"
-blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,,,,"Сопротивление отключающему полю"
+blueprint.horizons.type.none,None,None,,,,,Нет
+blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,Resistencia zona Anti-Guardián,,,Сопротивление отключающему полю

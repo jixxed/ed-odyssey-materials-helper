@@ -2,8 +2,8 @@ messageKey,,en,de,es,fr,pt,ru
 blueprint.category.name.core_internal,Core Internals,Core Internals,Intern (Basis),Internales núcleos,Noyau internes,Principais internos,Основное оборудование
 blueprint.category.name.engineer_unlocks,Engineer Unlocks,Engineer Unlocks,Ingenieur-Freischaltungen,Desbloqueo del ingeniero,"Ingénieurs, Déverrouillage",Desbloqueios do engenheiro,Разблокировка инженеров
 blueprint.category.name.experimental_effects,Experimental Effects,Experimental Effects,Experimentelle Effekte,Efectos experimentales,Effets expérimentaux,Efeitos experimentais,Экспериментальные эффекты
-blueprint.category.name.hardpoint,Hardpoints,Hardpoints,Waffenaufhängungen,Puntos duros,Points durs,Hardpoints,Гнёзда
-blueprint.category.name.optional_internal,Optional Internals,Optional Internals,Intern (Optional),Internales opcionales,Internes facultatifs,Internos opcionais,Доп. Оборудование
+blueprint.category.name.hardpoint,Hardpoints,Hardpoints,Waffenaufhängungen,Anclajes,Points durs,Hardpoints,Гнёзда
+blueprint.category.name.optional_internal,Optional Internals,Optional Internals,Intern (Optional),Internos opcionales,Internes facultatifs,Internos opcionais,Доп. Оборудование
 blueprint.category.name.synthesis,Synthesis,Synthesis,Synthese ,Síntesis,Synthèse,Síntese,Синтез
-blueprint.category.name.techbroker,Techbroker Blueprints,Techbroker Blueprints,Technologie Händler Bauplan,Planos de techbroker,Blueprints TechBroker,Blueprints do TechBroker,Чертежи техноброкеров
-blueprint.category.name.utility_mount,Utility Mounts,Utility Mounts,Werkzeug Aufhängungen,Soporte de servicios públicos,Supports de services publics,Montagens de utilidade,Внешнее оборудование
+blueprint.category.name.techbroker,Techbroker Blueprints,Techbroker Blueprints,Technologie Händler Bauplan,Planos de Bróker de Tecnlogía,Blueprints TechBroker,Blueprints do TechBroker,Чертежи техноброкеров
+blueprint.category.name.utility_mount,Utility Mounts,Utility Mounts,Werkzeug Aufhängungen,Anclajes de Utilidad,Supports de services publics,Montagens de utilidade,Внешнее оборудование
