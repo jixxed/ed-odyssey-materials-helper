@@ -199,8 +199,8 @@ public enum HorizonsBlueprintType {
     HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE(false, true),
     EXPANDED_PROBE_SCANNING_RADIUS_X2(false, true),
     INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true),
-    ANTI_GUARDIAN_ZONE_RESISTANCE(false,false),
-    NONE(false,false);
+    ANTI_GUARDIAN_ZONE_RESISTANCE(false, false),
+    NONE(false, false);
     @Getter
     private final boolean experimental;
     @Getter
@@ -223,49 +223,49 @@ public enum HorizonsBlueprintType {
         return switch (internalName.toLowerCase()) {
             //modules
             case "misc_lightweight",
-                    "chafflauncher_lightweight",
-                    "ecm_lightweight",
-                    "heatsinklauncher_lightweight",
-                    "killwarrantscanner_lightweight",
-                    "cargoscanner_lightweight",
-                    "pointdefence_lightweight",
-                    "wakescanner_lightweight",
-                    "lifesupport_lightweight",
-                    "collectionlimpet_lightweight",
-                    "fueltransferlimpet_lightweight",
-                    "hatchbreakerlimpet_lightweight",
-                    "prospectinglimpet_lightweight" -> LIGHTWEIGHT;
+                 "chafflauncher_lightweight",
+                 "ecm_lightweight",
+                 "heatsinklauncher_lightweight",
+                 "killwarrantscanner_lightweight",
+                 "cargoscanner_lightweight",
+                 "pointdefence_lightweight",
+                 "wakescanner_lightweight",
+                 "lifesupport_lightweight",
+                 "collectionlimpet_lightweight",
+                 "fueltransferlimpet_lightweight",
+                 "hatchbreakerlimpet_lightweight",
+                 "prospectinglimpet_lightweight" -> LIGHTWEIGHT;
 
             case "misc_reinforced",
-                    "chafflauncher_reinforced",
-                    "ecm_reinforced",
-                    "heatsinklauncher_reinforced",
-                    "killwarrantscanner_reinforced",
-                    "cargoscanner_reinforced",
-                    "pointdefence_reinforced",
-                    "wakescanner_reinforced",
-                    "lifesupport_reinforced",
-                    "collectionlimpet_reinforced",
-                    "fueltransferlimpet_reinforced",
-                    "hatchbreakerlimpet_reinforced",
-                    "prospectinglimpet_reinforced" -> REINFORCED;
+                 "chafflauncher_reinforced",
+                 "ecm_reinforced",
+                 "heatsinklauncher_reinforced",
+                 "killwarrantscanner_reinforced",
+                 "cargoscanner_reinforced",
+                 "pointdefence_reinforced",
+                 "wakescanner_reinforced",
+                 "lifesupport_reinforced",
+                 "collectionlimpet_reinforced",
+                 "fueltransferlimpet_reinforced",
+                 "hatchbreakerlimpet_reinforced",
+                 "prospectinglimpet_reinforced" -> REINFORCED;
 
             case "misc_shielded",
-                    "chafflauncher_shielded",
-                    "ecm_shielded",
-                    "heatsinklauncher_shielded",
-                    "killwarrantscanner_shielded",
-                    "cargoscanner_shielded",
-                    "pointdefence_shielded",
-                    "wakescanner_shielded",
-                    "lifesupport_shielded",
-                    "collectionlimpet_shielded",
-                    "fueltransferlimpet_shielded",
-                    "hatchbreakerlimpet_shielded",
-                    "prospectinglimpet_shielded",
-                    "afm_shielded",
-                    "fuelscoop_shielded",
-                    "refineries_shielded" -> SHIELDED;
+                 "chafflauncher_shielded",
+                 "ecm_shielded",
+                 "heatsinklauncher_shielded",
+                 "killwarrantscanner_shielded",
+                 "cargoscanner_shielded",
+                 "pointdefence_shielded",
+                 "wakescanner_shielded",
+                 "lifesupport_shielded",
+                 "collectionlimpet_shielded",
+                 "fueltransferlimpet_shielded",
+                 "hatchbreakerlimpet_shielded",
+                 "prospectinglimpet_shielded",
+                 "afm_shielded",
+                 "fuelscoop_shielded",
+                 "refineries_shielded" -> SHIELDED;
 
             case "weapon_doubleshot" -> DOUBLE_SHOT;
             case "weapon_efficient" -> EFFICIENT_WEAPON;
@@ -279,40 +279,40 @@ public enum HorizonsBlueprintType {
             case "weapon_sturdy" -> STURDY_MOUNT;
 
             case "sensor_fastscan",
-                    "sensor_killwarrantscanner_fastscan",
-                    "killwarrantscanner_fastscan",
-                    "sensor_cargoscanner_fastscan",
-                    "sensor_wakescanner_fastscan",
-                    "sensor_sensor_fastscan",
-                    "sensor_surfacescanner_fastscan" -> FAST_SCANNER;
+                 "sensor_killwarrantscanner_fastscan",
+                 "killwarrantscanner_fastscan",
+                 "sensor_cargoscanner_fastscan",
+                 "sensor_wakescanner_fastscan",
+                 "sensor_sensor_fastscan",
+                 "sensor_surfacescanner_fastscan" -> FAST_SCANNER;
 
             case "sensor_longrange",
-                    "sensor_killwarrantscanner_longrange",
-                    "killwarrantscanner_longrange",
-                    "sensor_cargoscanner_longrange",
-                    "sensor_wakescanner_longrange",
-                    "sensor_sensor_longrange",
-                    "sensor_surfacescanner_longrange" -> LONG_RANGE_SCANNER;
+                 "sensor_killwarrantscanner_longrange",
+                 "killwarrantscanner_longrange",
+                 "sensor_cargoscanner_longrange",
+                 "sensor_wakescanner_longrange",
+                 "sensor_sensor_longrange",
+                 "sensor_surfacescanner_longrange" -> LONG_RANGE_SCANNER;
 
             case "sensor_wideangle",
-                    "sensor_killwarrantscanner_wideangle",
-                    "killwarrantscanner_wideangle",
-                    "sensor_cargoscanner_wideangle",
-                    "sensor_wakescanner_wideangle",
-                    "sensor_sensor_wideangle",
-                    "sensor_surfacescanner_wideangle" -> WIDE_ANGLE_SCANNER;
+                 "sensor_killwarrantscanner_wideangle",
+                 "killwarrantscanner_wideangle",
+                 "sensor_cargoscanner_wideangle",
+                 "sensor_wakescanner_wideangle",
+                 "sensor_sensor_wideangle",
+                 "sensor_surfacescanner_wideangle" -> WIDE_ANGLE_SCANNER;
 
             case "sensor_lightweight",
-                    "sensor_sensor_lightweight" -> LIGHT_WEIGHT_SCANNER;
+                 "sensor_sensor_lightweight" -> LIGHT_WEIGHT_SCANNER;
 
             case "sensor_expanded" -> EXPANDED_PROBE_SCANNING_RADIUS;
 
             case "misc_chaffcapacity",
-                    "chafflauncher_chaffcapacity",
-                    "misc_heatsinkcapacity",
-                    "heatsinklauncher_heatsinkcapacity",
-                    "misc_pointdefensecapacity",
-                    "pointdefence_pointdefensecapacity" -> AMMO_CAPACITY;
+                 "chafflauncher_chaffcapacity",
+                 "misc_heatsinkcapacity",
+                 "heatsinklauncher_heatsinkcapacity",
+                 "misc_pointdefensecapacity",
+                 "pointdefence_pointdefensecapacity" -> AMMO_CAPACITY;
 
             case "shieldbooster_explosive" -> BLAST_RESISTANT;
             case "shieldbooster_heavyduty" -> HEAVY_DUTY;
@@ -470,13 +470,17 @@ public enum HorizonsBlueprintType {
         return "blueprint.horizons.type.description." + this.name().toLowerCase();
     }
 
+    public String getDescriptionLocalizationKey(String module) {
+        return LocaleService.hasKey("blueprint.horizons.type.description." + module + "." + this.name().toLowerCase()) ? "blueprint.horizons.type.description." + module + "." + this.name().toLowerCase() : getDescriptionLocalizationKey();
+    }
+
     @Override
     public String toString() {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
     public int getGradeRolls(final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        if(ANTI_GUARDIAN_ZONE_RESISTANCE.equals(this)) {
+        if (ANTI_GUARDIAN_ZONE_RESISTANCE.equals(this)) {
             return 1;
         }
         return PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + horizonsBlueprintGrade.name(), horizonsBlueprintGrade.getDefaultNumberOfRolls());
