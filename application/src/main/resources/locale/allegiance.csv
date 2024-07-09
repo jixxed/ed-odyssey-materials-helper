@@ -1,7 +1,7 @@
 messageKey,,en,de,es,fr,pt,ru
-allegiance.federation,Federation,,,,,,Федерация
-allegiance.empire,Empire,,,,,,Империя
-allegiance.alliance,Alliance,,,,,,Альянс
-allegiance.independent,Independent,,,,,,Независимые
-allegiance.pilotsfederation,Pilots Federation,,,,,,Федерация Пилотов
-allegiance.none,None,,,,,,Нет
+allegiance.federation,Federation,,,Federación,,,Федерация
+allegiance.empire,Empire,,,Imperio,,,Империя
+allegiance.alliance,Alliance,,,Alianza,,,Альянс
+allegiance.independent,Independent,,,Independiente,,,Независимые
+allegiance.pilotsfederation,Pilots Federation,,,Federación de Pilotos,,,Федерация Пилотов
+allegiance.none,None,,,Ninguna,,,Нет
