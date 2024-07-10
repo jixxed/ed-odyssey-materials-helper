@@ -295,6 +295,7 @@ public abstract class HorizonsBlueprintConstants {
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FUEL_TRANSFER_LIMPET_CONTROLLER, FuelTransferLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.HATCH_BREAKER_LIMPET_CONTROLLER, HatchBreakerLimpetControllerBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.HULL_REINFORCEMENT_PACKAGE, HullReinforcementBlueprints.BLUEPRINTS);
+        OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.FRAME_SHIFT_DRIVE_BOOSTER, FrameShiftDriveBoosterBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_HULL_REINFORCEMENT_PACKAGE, GuardianHullReinforcementPackageBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHIELD_REINFORCEMENT_PACKAGE, GuardianShieldReinforcementPackageBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_MODULE_REINFORCEMENT_PACKAGE, GuardianModuleReinforcementPackageBlueprints.BLUEPRINTS);

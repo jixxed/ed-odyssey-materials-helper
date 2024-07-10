@@ -167,7 +167,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         final Text description = TextBuilder.builder()
                 .withStyleClass("blueprint-description-text")
                 .withWrappingWidth(465D)
-                .withText(LocaleService.getStringBinding(HorizonsBlueprintType.SYNTHESIS.equals(this.blueprint.getHorizonsBlueprintType()) || HorizonsBlueprintType.ENGINEER.equals(this.blueprint.getHorizonsBlueprintType()) ? this.blueprint.getHorizonsBlueprintName().getDescriptionLocalizationKey() : this.blueprint.getHorizonsBlueprintType().getDescriptionLocalizationKey()))
+                .withText(LocaleService.getStringBinding(HorizonsBlueprintType.SYNTHESIS.equals(this.blueprint.getHorizonsBlueprintType()) || HorizonsBlueprintType.ENGINEER.equals(this.blueprint.getHorizonsBlueprintType()) ? this.blueprint.getHorizonsBlueprintName().getDescriptionLocalizationKey() : this.blueprint.getHorizonsBlueprintType().getDescriptionLocalizationKey(this.blueprint.getHorizonsBlueprintName().lcName())))
                 .build();
         final TextFlow textFlow = new TextFlow(description);
         textFlow.getStyleClass().add("blueprint-description");
