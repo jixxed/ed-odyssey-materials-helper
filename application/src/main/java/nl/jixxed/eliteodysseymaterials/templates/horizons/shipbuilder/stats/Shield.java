@@ -69,8 +69,8 @@ public class Shield extends StackPane implements Template {
         rawTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withText(LocaleService.getStringBinding("ship.stats.shield.raw")).build();
         kineticTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withText(LocaleService.getStringBinding("ship.stats.shield.kinetic")).build();
         thermalTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withText(LocaleService.getStringBinding("ship.stats.shield.thermal")).build();
-        causticTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withText(LocaleService.getStringBinding("ship.stats.shield.explosive")).build();
-        explosiveTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withText(LocaleService.getStringBinding("ship.stats.shield.caustic")).build();
+        causticTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withText(LocaleService.getStringBinding("ship.stats.shield.caustic")).build();
+        explosiveTitleLabel = LabelBuilder.builder().withStyleClass("shield-label-" + color).withText(LocaleService.getStringBinding("ship.stats.shield.explosive")).build();
         rawLabel = LabelBuilder.builder().withNonLocalizedText("0").build();
         kineticLabel = LabelBuilder.builder().withNonLocalizedText("0").build();
         thermalLabel = LabelBuilder.builder().withNonLocalizedText("0").build();
