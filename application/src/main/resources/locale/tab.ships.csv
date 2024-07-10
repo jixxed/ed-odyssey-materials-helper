@@ -1,94 +1,94 @@
 messageKey,,en,de,es,fr,pt,ru
-tabs.shipeditor,Ship Editor,,,,,,Редактор кораблей
-tabs.ships.blueprints,Blueprints,,,,,,Чертежи
-tabs.ships.experimental.effects,Experimental effects,,,,,,Экспериментальные эффекты
-tab.ships.create,Create ship,,,,,,Создать корабль
-tab.ships.clone,Clone ship,,,,,,Клонировать корабль
+tabs.shipeditor,Ship Editor,,,Editor de Naves,,,Редактор кораблей
+tabs.ships.blueprints,Blueprints,,,Plano,,,Чертежи
+tabs.ships.experimental.effects,Experimental effects,,,Efectos Experimentales,,,Экспериментальные эффекты
+tab.ships.create,Create ship,,,Crear nave,,,Создать корабль
+tab.ships.clone,Clone ship,,,Clonar nave,,,Клонировать корабль
 tab.ships.options,Options,Options,Optionen,Opción,Options,Opções,Опции
-tab.ships.rename,Rename ship,,,,,,Переименовать корабль
-tab.ships.delete,Delete ship,,,,,,Удалить корабль
-tab.ships.reset,Reset ship,,,,,,Сбросить корабль
+tab.ships.rename,Rename ship,,,Renombra nave,,,Переименовать корабль
+tab.ships.delete,Delete ship,,,Borrar nave,,,Удалить корабль
+tab.ships.reset,Reset ship,,,Reiniciar nave,,,Сбросить корабль
 tab.ships.rename.prompt,New name (max. 50 characters),New name (max. 50 characters),Neuer Name (max. 50 Zeichen),Nuevo nombre (máx.50 caracteres),Nouveau nom (max. 50 caractères),Novo nome (máx. 50 caracteres),Новое имя (макс.50 знаков)
 tab.ships.delete.confirm.content,Do you wish to continue?,Do you wish to continue?,Möchten Sie fortfahren?,¿Desea continuar?,Souhaitez-vous continuer?,Você deseja continuar?,Вы хотите продолжить?
-tab.ships.delete.confirm.header,You are about to delete your ship,,,,,,Вы собираетесь удалить свой корабль
+tab.ships.delete.confirm.header,You are about to delete your ship,,,Estás a punto de borrar tu nave,,,Вы собираетесь удалить свой корабль
 tab.ships.delete.confirm.title,Confirm deletion,Confirm deletion,Löschen bestätigen,Confirmar la eliminación,Confirmer la suppression,Confirme a exclusão,Подтвердить удаление
-tab.ships.reset.confirm.content,All changes will be lost. Do you wish to continue?,,,,,,Хотите продолжить?
-tab.ships.reset.confirm.header,You are about to reset your ship,,,,,,Вы собираетесь сбросить свой корабль
-tab.ships.reset.confirm.title,Confirm reset,,,,,,Подтвердить сброс
-tab.ships.copy,Copy ship to clipboard,,,,,,Копировать корабль в буфер обмена
-ship.view.header.ship.name,Ship name,,,,,,Имя корабля
-ship.view.header.price,Price,,,,,,Цена
-ship.view.header.size,Size,,,,,,Размер
-ship.view.header.crew,Crew,,,,,,Размер экипажа
-ship.view.header.masslock,Mass Lock,,,,,,Масс-фактор
-ship.view.header.mass,Mass,,,,,,Масса
-ship.view.header.jumprange,Jumprange,,,,,,Расстояние прыжка
-ship.view.header.speed,Speed,,,,,,Скорость
-ship.view.header.boost,Boost,,,,,,Форсаж
-ship.view.header.shield,Shield,,,,,,Щиты
-ship.view.header.armor,Armor,,,,,,Броня
-ship.view.header.hardness,Hardness,,,,,,Рейтинг брони
-ship.view.header.fuel,Fuel,,,,,,Топливный бак
-ship.view.header.cargo,Cargo,,,,,,Груз
-ship.view.header.passenger,Passenger,,,,,,Пассажиры
-ship.view.header.slot.hardpoints,Hardpoints,,,,,,Оружейные гнезда
-ship.view.header.slot.utility,Utility,,,,,,Внешнее оборудование
+tab.ships.reset.confirm.content,All changes will be lost. Do you wish to continue?,,,Todos los cambios se perderán ¿Quieres continuar?,,,Хотите продолжить?
+tab.ships.reset.confirm.header,You are about to reset your ship,,,Estas a punto de reiniciar tu nave,,,Вы собираетесь сбросить свой корабль
+tab.ships.reset.confirm.title,Confirm reset,,,Confirmar reinicio,,,Подтвердить сброс
+tab.ships.copy,Copy ship to clipboard,,,Copiar nave al portapapeles,,,Копировать корабль в буфер обмена
+ship.view.header.ship.name,Ship name,,,Nombre de la nave,,,Имя корабля
+ship.view.header.price,Price,,,Precio,,,Цена
+ship.view.header.size,Size,,,Tamaño,,,Размер
+ship.view.header.crew,Crew,,,Tripulación,,,Размер экипажа
+ship.view.header.masslock,Mass Lock,,,Bloqueo de massa,,,Масс-фактор
+ship.view.header.mass,Mass,,,Masa,,,Масса
+ship.view.header.jumprange,Jumprange,,,Rango de salto,,,Расстояние прыжка
+ship.view.header.speed,Speed,,,Velocidad,,,Скорость
+ship.view.header.boost,Boost,,,Posquemador,,,Форсаж
+ship.view.header.shield,Shield,,,Escudo,,,Щиты
+ship.view.header.armor,Armor,,,Blindaje,,,Броня
+ship.view.header.hardness,Hardness,,,Clase de Blindaje,,,Рейтинг брони
+ship.view.header.fuel,Fuel,,,Combustible,,,Топливный бак
+ship.view.header.cargo,Cargo,,,Capacidad de carga,,,Груз
+ship.view.header.passenger,Passenger,,,Pasajero,,,Пассажиры
+ship.view.header.slot.hardpoints,Hardpoints,,,Anclajes,,,Оружейные гнезда
+ship.view.header.slot.utility,Utility,,,Anclajes de Utilidad,,,Внешнее оборудование
 ship.view.header.slot.armour,ARM,,,,,,БРН
 ship.view.header.slot.powerplant,PP,,,,,,СУ
 ship.view.header.slot.thrusters,THR,,,,,,ДВГ
-ship.view.header.slot.frameshiftdrive,FSD,,,,,,ФСД
+ship.view.header.slot.frameshiftdrive,FSD,,,MDD,,,ФСД
 ship.view.header.slot.lifesupport,LS,,,,,,СЖО
 ship.view.header.slot.powerdistribution,PD,,,,,,РП
 ship.view.header.slot.sensors,SNR,,,,,,СНС
 ship.view.header.slot.fueltank,FT,,,,,,ТБ
-ship.view.header.slot.optional,Optional,,,,,,Внутр. модули
+ship.view.header.slot.optional,Optional,,,Opcional,,,Внутр. модули
 ship.blueprint.add.all.to.wishlist,Add all to wishlist,Add all to wishlist,Fügen Sie alle zur Wunschliste hinzu,Agregar todo a la lista de deseos,Ajouter tout à WishList,Adicione tudo à lista de desejos,Добавить все в список желаемого
-ship.blueprint.add.changed.to.wishlist,Add changed to wishlist,,,,,,Добавить измененное в список желаемого
+ship.blueprint.add.changed.to.wishlist,Add changed to wishlist,,,Agregar los cmabios a la lista de deseos,,,Добавить измененное в список желаемого
 ship.create.new.wishlist,Create new,Create new,Erstelle neu,Crear nuevo,Créer un nouveau,Crie um novo,Создать новый
-ship.module.buttons.label,Equipped module,,,,,,Снаряженный модуль
-ship.module.restore,Restore,,,,,,Восстановить
-ship.module.save,Save,,,,,,Сохранить
-ship.module.clear,Clear,,,,,,Очистить
-module.details.save.legacy,Save legacy,,,,,,Схранить Legacy
-tab.settings.ships.legacy.modules.name,Name,,,,,,Имя
-tab.settings.ships.legacy.modules.blueprint,Blueprint,,,,,,Чертеж
-tab.settings.ships.legacy.modules.effect,Experimental effect,,,,,,Экспериментальный эффект
-tab.settings.ships.legacy.modules.grade,Grade,,,,,,Уровень
-tab.settings.ships.legacy.modules.type,Type,,,,,,Тип
-tab.ships.dragdrop.hint,Drag & drop,,,,,,
-tab.ships.dragdrop.hint.explain,"You can drag modules into different slots. If you hold CTRL while dragging, the module will be copied instead of moved.",,,,,,"Вы можете перетаскивать модули в разные слоты. Зажав CTRL во время перетягивания, вы скопируете модуль."
-tab.ships.lockmode.hint,Lock mode,,,,,,Режим блокировки
-tab.ships.lockmode.hint.explain,"By pressing ALT you can freeze the UI, so you can move your mouse freely around.",,,,,,"Зажав ALT вы можете заморозить интерфейс и свободно двигать мышкой."
+ship.module.buttons.label,Equipped module,,,Módulo equipado,,,Снаряженный модуль
+ship.module.restore,Restore,,,Restablecer,,,Восстановить
+ship.module.save,Save,,,Guardar,,,Сохранить
+ship.module.clear,Clear,,,Limpiar,,,Очистить
+module.details.save.legacy,Save legacy,,,Guardar Legacy,,,Схранить Legacy
+tab.settings.ships.legacy.modules.name,Name,,,Nombre,,,Имя
+tab.settings.ships.legacy.modules.blueprint,Blueprint,,,Plano,,,Чертеж
+tab.settings.ships.legacy.modules.effect,Experimental effect,,,Efecto Experimental,,,Экспериментальный эффект
+tab.settings.ships.legacy.modules.grade,Grade,,,Grado,,,Уровень
+tab.settings.ships.legacy.modules.type,Type,,,Tipo,,,Тип
+tab.ships.dragdrop.hint,Drag & drop,,,Arrastrar y soltar,,,
+tab.ships.dragdrop.hint.explain,"You can drag modules into different slots. If you hold CTRL while dragging, the module will be copied instead of moved.",,,"Puedes arrastrar módulos en diferentes huecos. Si mantienes la tecla CTRL al arrastrar, el módulo sera copiado en vez de movido",,,"Вы можете перетаскивать модули в разные слоты. Зажав CTRL во время перетягивания, вы скопируете модуль."
+tab.ships.lockmode.hint,Lock mode,,,Modo bloqueado,,,Режим блокировки
+tab.ships.lockmode.hint.explain,"By pressing ALT you can freeze the UI, so you can move your mouse freely around.",,,Pulsando ALT puedes congelar la interfaz pudiendo mover el ratón libremente.,,,Зажав ALT вы можете заморозить интерфейс и свободно двигать мышкой.
 tab.ships.legacy.hint,Legacy,,,,,,
-tab.ships.legacy.hint.explain,"Legacy modules can be stored for later reuse with the button that will be visible above the module specs. Legacy modules can be managed under Settings.",,,,,,"Модули Legacy можно сохранить для последующего повторного использования с помощью кнопки, которая будет видна над спецификациями модуля. Модулями Legacy можно управлять в Настройках."
-tab.ships.livemode.hint,Live mode,,,,,,
-tab.ships.livemode.hint.explain,"Live mode will autoconfigure the settings to match the current state in-game. This only works for the current ship.",,,,,,"Live mode автоматически установит настройки, чтобы повторить нынешнее состояние в игре. Это работает только для активного корабля."
+tab.ships.legacy.hint.explain,Legacy modules can be stored for later reuse with the button that will be visible above the module specs. Legacy modules can be managed under Settings.,,,,,,"Модули Legacy можно сохранить для последующего повторного использования с помощью кнопки, которая будет видна над спецификациями модуля. Модулями Legacy можно управлять в Настройках."
+tab.ships.livemode.hint,Live mode,,,Modo LIVE,,,
+tab.ships.livemode.hint.explain,Live mode will autoconfigure the settings to match the current state in-game. This only works for the current ship.,,,,,,"Live mode автоматически установит настройки, чтобы повторить нынешнее состояние в игре. Это работает только для активного корабля."
 tab.ships.yellowblue.hint,Yellow & blue,,,,,,Желтое и синее
 tab.ships.yellowblue.hint.explain,"Module changes can be tracked. If a module is set as equipped, it will be colored in yellow. Any changes will turn the color to blue. These changes are considered when creating a wishlist.",,,,,,"Изменения модуля можно отслеживать. Если модуль установлен как оснащенный на корабле, он будет окрашен в желтый цвет. Любые изменения изменят цвет на синий. Эти изменения учитываются при создании списка желаемого."
 tab.ships.details.tooltip.actual,Minimum: {0}\nEstimated: {1}\nActual: {2}\nMaximum: {3}\n,,,,,,Минимум: {0}\nОжидаемо: {1}\nДействительный: {2}\nМаксимум: {3}\n
 tab.ships.details.tooltip.estimated,Minimum: {0}\nEstimated: {1}\nMaximum: {2}\n,,,,,,Минимум: {0}\nОжидаемо: {1}\nМаксимум: {2}\n
-module.details.engineering,Engineering,,,,,,Модификация
-module.details.price,Regular Price,,,,,,Стандартная цена
-module.details.buyprice,Price Purchased,,,,,,Цена покупки
-module.details.rebuyprice,Rebuy Price,,,,,,Цена выкупа
-module.details.price.value,{0} Cr,,,,,,{0} Кр
-module.details.buyprice.value,{0} Cr,,,,,,{0} Кр
-module.details.rebuyprice.value,{0} Cr,,,,,,{0} Кр
-module.details.module.specs,Module specs,,,,,,Характеристики модуля
-ship.module.hardpoint.group.label,Group,,,,,,Группа
-ship.module.slot.empty,EMPTY,,,,,,ПУСТО
-ship.module.icon.tooltip.gimballed,Gimballed,,,,,,Карданный
-ship.module.icon.tooltip.turreted,Turreted,,,,,,Турель
-ship.module.icon.tooltip.fixed,Fixed,,,,,,Фиксированный
-ship.module.icon.tooltip.pre.engineered,Pre-engineered,,,,,,Заводская комплектация
-ship.module.icon.tooltip.arx,Arx store exclusive,,,,,,Эксклюзив магазина ARX
-ship.module.icon.tooltip.advanced,Advanced,,,,,,Продвинутый
-ship.module.icon.tooltip.enhanced,Enhanced,,,,,,Улучшенный
-ship.module.icon.tooltip.seeker,Seeker,,,,,,Самонаводящийся
+module.details.engineering,Engineering,,,Ingeniería,,,Модификация
+module.details.price,Regular Price,,,Precio común,,,Стандартная цена
+module.details.buyprice,Price Purchased,,,Precio comprado,,,Цена покупки
+module.details.rebuyprice,Rebuy Price,,,Recompra,,,Цена выкупа
+module.details.price.value,{0} Cr,,,{0} Cr,,,{0} Кр
+module.details.buyprice.value,{0} Cr,,,{0} Cr,,,{0} Кр
+module.details.rebuyprice.value,{0} Cr,,,{0} Cr,,,{0} Кр
+module.details.module.specs,Module specs,,,Caracteristicas del Módulo,,,Характеристики модуля
+ship.module.hardpoint.group.label,Group,,,Grupo,,,Группа
+ship.module.slot.empty,EMPTY,,,VACIO,,,ПУСТО
+ship.module.icon.tooltip.gimballed,Gimballed,,,Asistido,,,Карданный
+ship.module.icon.tooltip.turreted,Turreted,,,Torreta,,,Турель
+ship.module.icon.tooltip.fixed,Fixed,,,Fijo,,,Фиксированный
+ship.module.icon.tooltip.pre.engineered,Pre-engineered,,,Pre-Diseñado,,,Заводская комплектация
+ship.module.icon.tooltip.arx,Arx store exclusive,,,Exclusivo de la tienda de ARX,,,Эксклюзив магазина ARX
+ship.module.icon.tooltip.advanced,Advanced,,,Avancado,,,Продвинутый
+ship.module.icon.tooltip.enhanced,Enhanced,,,Mejorado,,,Улучшенный
+ship.module.icon.tooltip.seeker,Seeker,,,Perseguidor,,,Самонаводящийся
 ship.module.icon.tooltip.dumbfire,Dumbfire,,,,,,Обычный
 ship.module.icon.tooltip.legacy,Legacy,,,,,,
 ship.module.icon.tooltip.powerplay,Powerplay,,,,,,
-ship.module.icon.tooltip.guardian,Guardian,,,,,,Стражи
-ship.module.icon.tooltip.multicrew,Multicrew,,,,,,
-ship.module.icon.tooltip.community.goal.module,Community Goal Module,,,,,,Модуль ЦС
-ship.module.icon.tooltip.engineered,Engineered,,,,,,Модифицированный
+ship.module.icon.tooltip.guardian,Guardian,,,Guardián,,,Стражи
+ship.module.icon.tooltip.multicrew,Multicrew,,,Multitripulación,,,
+ship.module.icon.tooltip.community.goal.module,Community Goal Module,,,Módulo de Logro de la Comunidad,,,Модуль ЦС
+ship.module.icon.tooltip.engineered,Engineered,,,Ingenierizado,,,Модифицированный
