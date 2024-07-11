@@ -1,5 +1,5 @@
 messageKey,,en,de,es,fr,pt,ru
-blank,,,,,,,,
+blank,,,,,,,
 application.font.size.extra_large,Extra large,Extra large,Extra groß,Extra grande,Très grand,Extra grande,Очень большой
 application.font.size.extra_small,Extra small,Extra small,Extra klein,Extra pequeño,Très petit,Extra pequeno,Очень маленький
 application.font.size.large,Large,Large,Groß,Grande,Grand,Grande,Большой
@@ -94,12 +94,12 @@ version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,
 statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,Los datos de su carguero pueden estar obsoletos. Vincula tu cuenta de Frontier.,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
 segment.type.present,Present,,,Presente,,,Присутствует
 segment.type.not_present,Not present,,,No presente,,,Не присутствует
-segment.type.power_group_p,P,,,,,,,
-segment.type.power_group_1,1,,,,,,,
-segment.type.power_group_2,2,,,,,,,
-segment.type.power_group_3,3,,,,,,,
-segment.type.power_group_4,4,,,,,,,
-segment.type.power_group_5,5,,,,,,,
+segment.type.power_group_p,P,,,,,,
+segment.type.power_group_1,1,,,,,,
+segment.type.power_group_2,2,,,,,,
+segment.type.power_group_3,3,,,,,,
+segment.type.power_group_4,4,,,,,,
+segment.type.power_group_5,5,,,,,,
 segment.type.hardpoint_none,None,,,Ninguno,,,Отсутствует
 segment.type.hardpoint_thermal,Thermal,,,Térmico,,,Термический
 segment.type.hardpoint_kinetic,Kinetic,,,Cinético,,,Кинетический
