@@ -1,115 +1,115 @@
-messageKey,,en,de,es,fr,pt,ru,,,,
-blank,,,,,,,,,,,
-application.font.size.extra_large,Extra large,Extra large,Extra groß,Extra grande,Très grand,Extra grande,Очень большой,,,,
-application.font.size.extra_small,Extra small,Extra small,Extra klein,Extra pequeño,Très petit,Extra pequeno,Очень маленький,,,,
-application.font.size.large,Large,Large,Groß,Grande,Grand,Grande,Большой,,,,
-application.font.size.normal,Normal,Normal,Normal,Normal,Normal,Normal,Нормальный,,,,
-application.font.size.small,Small,Small,Klein,Pequeño,Petit,Pequeno,Маленький,,,,
-application.language.english,English,English,English,English,English,English,English,,,,
-application.language.french,Français,Français,Français,Français,Français,Français,Français,,,,
-application.language.german,Deutsch,Deutsch,Deutsch,Deutsch,Deutsch,Deutsch,Deutsch,,,,
-application.language.portuguese,Português,Português,Português,Português,Português,Português,Português,,,,
-application.language.russian,Русский,Русский,Русский,Русский,Русский,Русский,Русский,,,,
-application.language.spanish,Español,Español,Español,Español,Español,Español,Español,,,,
-application.orientation.horizontal,Horizontal,Horizontal,Horizontal,Horizontal,Horizontal,Horizontal,По горизонтали,,,,
-application.orientation.vertical,Vertical,Vertical,Vertikal,Vertical,Vertical,Vertical,По вертикали,,,,
-game.expansion.horizons,Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Contenido de Odyssey no disponible),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),,,,
-game.expansion.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,,,,
-game.expansion.None,Base game,Base game,Base game,Juego Base,Base game,Base game,Base game,,,,
-tabs.engineers,Engineers,Engineers,Ingenieure,Ingenieros,Ingénieurs,Engenheiros,Инженеры,,,,
-tabs.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать,,,,
-tabs.imported.wishlist,Imported wishlist,Imported wishlist,Importierte Wunschliste,Lista de deseos importada,Liste de souhaits importée,Lista de desejos importada,Импортированный список желаемого,,,,
-tabs.loadout,Loadout Editor,Loadout Editor,Loadout-Editor,Editor de equipamiento,Éditeur de chargement,Editor de Carregamento,Редактор экипировки,,,,
-tabs.settings,Settings,Settings,Einstellungen,Configuración,Paramètres,Configurações,Настройки,,,,
-tabs.trade,Trade,Trade,Handel,Comercio,Commerce,Negociação,Торговля,,,,
-tabs.wishlist,Wishlist{0},Wishlist{0},Wunschliste{0},Lista de deseos{0},Liste de souhaits{0},Lista de desejos{0},Список желаемого{0},,,,
-tabs.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,,,,
-tabs.horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons,,,,
-tabs.odyssey.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы,,,,
-tabs.horizons.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы,,,,
-tabs.horizons.commodities,Commodities,Commodities,Waren,Mercancías,Marchandises,Mercadorias,Товары,,,,
-statusbar.last.message,Latest observed relevant message: {0} ({1}),Latest observed relevant message: {0} ({1}),Letzte beobachtete relevante Nachricht: {0} ({1}),Último mensaje relevante observado: {0} ({1}),Dernier message pertinent observé: {0} ({1}),Última mensagem relevante observada: {0} ({1}),Последнее наблюдаемое релевантное сообщение: {0} ({1}),,,,
-statusbar.login,Please login to the game,Please login to the game,Bitte logge dich in das Spiel ein,Inicia sesión en el juego.,Veuillez vous connecter au jeu,Por favor entre no jogo,"Пожалуйста, войдите в игру",,,,
-statusbar.watching.none,None - No Odyssey journals found at {0},None - No Odyssey journals found at {0},Keine - Keine Odyssey journal-Datei gefunden bei {0},None - No se encontraron revistas de Odyssey en {0},None - Aucun journal Odyssey trouvé à {0},Nenhum - Nenhum diário Odyssey encontrado em {0},None - журналов Odyssey в {0} не найдено.,,,,
-statusbar.watching,Watching: {0},Watching: {0},Beobachten: {0},Viendo: {0},Observation: {0},Assistindo: {0},Наблюдают: {0},,,,
-statusbar.api.last.update,Last API Update: {0},Last API Update: {0},Letzte API Aktualisierung: {0},Última actualización de API: {0},Dernière mise à jour de l’API: {0},Última atualização da API: {0},Последнее обновление API: {0},,,,
-url.scheme.registration.text,This app can handle url’s starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,This app can handle url’s starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,"Diese App kann mit edomh:// mit URLs handhaben. Diese Links können verwendet werden, um Daten zwischen Benutzern zu teilen. Sie können diese Links an den entsprechenden Stellen erstellen.",Esta aplicación puede manejar las URL que comienza con edomh://. Estos enlaces se pueden usar para compartir datos entre los usuarios. Puede crear estos enlaces en los lugares relevantes.,Cette application peut gérer les URL en commençant par edomh://. Ces liens peuvent être utilisés pour partager des données entre les utilisateurs. Vous pouvez créer ces liens dans les endroits pertinents.,Este aplicativo pode lidar com o URL começando com o edomh://. Esses links podem ser usados para compartilhar dados entre usuários. Você pode criar esses links nos lugares relevantes.,"Это приложение может обрабатывать URL, начинающееся с edomh://. Эти ссылки могут использоваться для обмена данными между пользователями. Вы можете создать эти ссылки в соответствующих местах.",,,,
-url.scheme.registration.text2,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,"Wenn Sie diese Funktionalität verwenden möchten, können Sie diese Anwendung registrieren. Sie erhalten eine UAC -Eingabeaufforderung, da dieser administrative Zugriff erfordert. Sie können diese Anwendung immer (UN) später unter Einstellungen registrieren.","Si desea utilizar esta funcionalidad, puede registrar esta aplicación. Recibirá un mensaje UAC ya que esto requiere acceso administrativo. Siempre puede (un) registrar esta aplicación en Configuración más adelante.","Si vous souhaitez utiliser cette fonctionnalité, vous pouvez enregistrer cette application. Vous recevrez une invite UAC car cela nécessite un accès administratif. Vous pouvez toujours (non) enregistrer cette application sous Paramètres ultérieurement.","Se você deseja usar essa funcionalidade, pode registrar este aplicativo. Você receberá um prompt da UAC, pois isso requer acesso administrativo. Você sempre pode (un) registrar este aplicativo em Configurações posteriormente.","Если вы хотите использовать эту функциональность, вы можете зарегистрировать это приложение. Вы получите подсказку UAC, так как это требует административного доступа. Вы всегда можете (не) зарегистрировать это приложение в условиях настройки позже.",,,,
-search.filter.all,All (default),All (default),Alle (Standard),Todo (predeterminado),Tous (par défaut),All (padrão),Все (по умолчанию),,,,
-search.filter.all_engineer,All engineer unlocking,All engineer unlocking,Alle Ingenieure werden freigeschaltet,Desbloqueo de todos los ingenieros,Déverrouillage de tous les ingénieurs,Desbloqueio de todos os engenheiros,Разблокировка всех инженеров,,,,
-search.filter.all_engineer_blueprint,All engineer unlocking + blueprint,All engineer unlocking + blueprint,Alle Ingenieure entsperren + Blaupause,Desbloqueo de todos los ingenieros + plano,Déverrouillage de tous les ingénieurs + plan,Desbloqueio de todos os engenheiros + planta,Разблокировка всех инженеров + чертеж,,,,
-search.filter.all_with_stock,All with stock,All with stock,Alle mit Aktien,Todos con stock,Tous en stock,Todos com estoque,Все в наличии,,,,
-search.filter.blueprint,Blueprint,Blueprint,Blaupause,Plano,Plans,Blueprint,Чертежи,,,,
-search.filter.favourites,Favourites,Favourites,Favoriten,Favoritos,Favoris,Favoritos,Избранные,,,,
-search.filter.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Non pertinents,Irrelevante,Нерелевантные,,,,
-search.filter.irrelevant_with_stock,Irrelevant with stock,Irrelevant with stock,Irrelevant mit Aktien,Irrelevante con stock,Non pertinents en stock,Irrelevante com estoque,Нерелевантные в наличии,,,,
-search.filter.placeholder,Show materials,Show materials,Materialien anzeigen,Mostrar materiales,Afficher les matériaux,Mostrar materiais,Показать материалы,,,,
-search.filter.prohibited,Prohibited,Prohibited,Verboten,Prohibido,Interdites,Proibida,Запрещенные,,,,
-search.filter.required_engineer,Only required engineer unlocking,Only required engineer unlocking,Nur erforderliches Entsperren durch Ingenieure,Solo se requiere desbloqueo del ingeniero,Seul le déverrouillage de l’ingénieur requis,Somente desbloqueio de engenheiro necessário,Требуется только разблокировка инженера,,,,
-search.filter.required_engineer_blueprint,Only required engineer unlocking + blueprint,Only required engineer unlocking + blueprint,Nur erforderliches Entsperren des Ingenieurs + Blaupause,Solo se requiere desbloqueo de ingeniero + plano,Seul le déverrouillage de l’ingénieur requis + le plan,Somente desbloqueio de engenheiro obrigatório + planta,Требуется только разблокировка инженера + чертеж,,,,
-search.filter.raw,Raw,Raw,,Materias Primas,,,Сырые материалы,,,,
-search.filter.encoded,Encoded,Encoded,,Codificados,,,Зашифрованные материалы,,,,
-search.filter.manufactured,Manufactured,Manufactured,,Manufacturados,,,Производственные материалы,,,,
-search.filter.guardian,Guardian,Guardian,,Guardián,,,Материалы Стражей,,,,
-search.filter.thargoid,Thargoid,Thargoid,,Targoide,,,Материалы Таргоидов,,,,
-search.filter.human,Human,Human,,Humano,,,Материалы Человеческие,,,,
-search.sort.alphabetical,Alphabetical (default),Alphabetical (default),Alphabetisch (Standard),Alfabético (predeterminado),Alphabétique (par défaut),Alfabético (padrão),По алфавиту (по умолчанию),,,,
-search.sort.engineer_blueprint_irrelevant,"Engineer unlocking, blueprint, irrelevant","Engineer unlocking, blueprint, irrelevant","Entsperrung durch Ingenieur, Blaupause, irrelevant","Desbloqueo del ingeniero, plano, irrelevante","Déverrouillage de l’ingénieur, plan, non pertinent","Desbloqueio do engenheiro, planta, irrelevante","Разблокировка инженера, чертеж, нерелевантно",,,,
-search.sort.placeholder,Sort materials,Sort materials,Materialien sortieren,Clasificar materiales,Trier les matériaux,Classificar materiais,Сортировать материалы,,,,
-search.sort.quantity,Quantity,Quantity,Menge,Cantidad,Quantité,Quantidade,Количество,,,,
-search.sort.relevant_irrelevant,"Relevant, irrelevant","Relevant, irrelevant","Relevant, irrelevant","Relevante, irrelevante","Pertinent, non pertinent","Relevante, irrelevante","Релевантные, нерелевантные",,,,
-search.text.placeholder,Search,Search,Suchen,Buscar,Rechercher,Pesquisa,Поиск,,,,
-search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Carguero,Transporteur de flotte,Transportadora de frota,Флотоносец,,,,
-search.filter.backpack,Backpack,Backpack,Rucksack,Mochila,Sac à dos,Mochila,Рюкзак,,,,
-search.sort.quantity_ship,Ship quantity,Ship quantity,Schiffsmenge,Cantidad de naves,Quantité de navire,Quantidade de navio,Количество на корабле,,,,
-search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,FleetCarrier Menge,Cantidad de cargueros,Quantité Fleetcarrier,Quantidade FleetCarrier,Количество на флотоносце,,,,
-search.sort.quantity_total,Total quantity,Total quantity,Gesamtmenge,Cantidad total,Quantité totale,Quantidade total,Общая численность,,,,
-search.filter.ship,Ship,Ship,Schiff,Nave,Bateau,Navio,Судно,,,,
-search.filter.not_on_wishlist,Not or more than on wishlist,Not or more than on wishlist,Nicht oder mehr als auf der Wunschliste,No o más que en la lista de deseos,Pas ou plus que sur la liste de souhaits,Não ou mais do que na lista de desejos,"Не или больше, чем в списке желаний",,,,
-search.grouping.category,Category (default),Category (default),Kategorie (Standard),Categoría (predeterminado),Catégorie (par défaut),Categoria (padrão),Категория (по умолчанию),,,,
-search.grouping.none,None,None,Keiner,Ninguna,Aucun,Nenhum,Никто,,,,
-search.grouping.placeholder,Group materials,Group materials,Gruppenmaterialien,Grupo de Materiales,Matériaux de groupe,Materiais de grupo,Групповые материалы,,,,
-search.sort.grade,Grade,Grade,Klasse,Calificación,Noter,Avaliar,Оценка,,,,
-search.sort.quantity_required,Quantity required,Quantity required,Erforderliche Menge,Cantidad requerida,Quantité Nécessaire,Quantidade Requerida,Требуемое количество,,,,
-notification.type.irrelevant_point,Point to irrelevant material,Point to irrelevant material,Auf irrelevantes Material hinweisen,Señalar material irrelevante,Pointer du matériau non pertinent,Apontar para material irrelevante,При указывании на ненужные материалы,,,,
-notification.type.wishlist_point,Point to wishlist material,Point to wishlist material,Zeigen Sie auf Wunschlistematerial,Señalar material de lista de deseos,Pointer à WishList Material,Apontar para o material da lista de desejos,При указывании на материалы из вишлиста,,,,
-notification.type.relevant_point,Point to relevant material,Point to relevant material,Auf relevantes Material hinweisen,Señalar material relevante,Pointer du matériel pertinent,Apontar para o material relevante,При указывании на используемые (полезные) материалы,,,,
-notification.type.irrelevant_pickup,Irrelevant Pickup,Irrelevant Pickup,Irrelevantes Pickup,Recolección de irrelevantes,Ramassage non pertinent,Pickup irrelevante,Поднял ненужное (на продажу,,,,
-notification.type.wishlist_pickup,Wishlist Pickup,Wishlist Pickup,Wunschliste Abholung,Recogida de la lista de deseos,Ramassage de la liste de souhaits,Pickup da lista de desejos,Подобрал из списка желаемого,,,,
-notification.type.trade,Trade,Trade,Handeln,Comercio,Échange,Troca,Торговля,,,,
-notification.type.import,Import,Import,Importieren,Importar,Importer,Importar,Импорт,,,,
-notification.type.copy,Copy,Copy,Kopieren,Copiar,Copie,cópia de,Копия,,,,
-notification.type.error,Error,Error,Fehler,Error,Erreur,Erro,Ошибка,,,,
-notification.type.success,Success,Success,Erfolg,Éxito,Succès,Sucesso,Успех,,,,
-notification.collected.wishlist.material.notification,{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},,,,
-notification.collected.wishlist.material.notification.horizons,{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},,,,
-eddn.registration.text,"This app can share galaxy data, like starsystems and market information, with other 3rd party apps like eddb.io, spansh.co.uk and inara.cz over the ED Data Network","This app can share galaxy data, like starsystems and market information, with other 3rd party apps like eddb.io, spansh.co.uk and inara.cz over the ED Data Network","Diese App kann Galaxy -Daten wie StarSystems und Marktinformationen mit anderen Apps von Drittanbietern wie Eddb.io, Spansh.co.uk und Inara.cz über das ED -Data -Netzwerk teilen","Esta aplicación puede compartir datos de Galaxy, como StarSystems e información de mercado, con otras aplicaciones de terceros como Eddb.io, spansh.co.uk e inara.cz a través de la red de datos ED de ED","Cette application peut partager des données Galaxy, comme StarSystems et des informations sur le marché, avec d’autres applications tierces comme Eddb.io, Spansh.co.uk et Inara.cz sur le réseau de données ED","Este aplicativo pode compartilhar dados de galáxias, como Starsystems e Informações de Mercado, com outros aplicativos de terceiros como Eddb.io, Spansh.co.uk e inara.cz sobre a ED Data Network",Это приложение может обмениваться данными Galaxy," ""такие как Starsystems и рыночная информация"," с другими сторонними приложениями"," такими как EDDB.IO"," SPANSH.CO.UK и INARA.CZ через сеть данных ED"""
-eddn.registration.text2,Would you like to help the community and allow this app to automatically send this data anonymously through EDDN? (You can always disable/enable this later under Settings),Would you like to help the community and allow this app to automatically send this data anonymously through EDDN? (You can always disable/enable this later under Settings),"Möchten Sie der Community helfen und diese App erlauben, diese Daten automatisch über EDDN zu senden? (Sie können dies immer später unter Einstellungen deaktivieren/aktivieren)",¿Le gustaría ayudar a la comunidad y permitir que esta aplicación envíe automáticamente estos datos de forma anónima a través de EDDN? (Siempre puede deshabilitar/habilitar esto más adelante en Configuración),Souhaitez-vous aider la communauté et permettre à cette application d’envoyer automatiquement ces données de manière anonyme via EDDN? (Vous pouvez toujours désactiver / activer cela plus tard dans les paramètres),Você gostaria de ajudar a comunidade e permitir que este aplicativo envie automaticamente esses dados anonimamente através do EDDN? (Você sempre pode desativar/ativar isso posteriormente em configurações),Хотели бы вы помочь сообществу и позволить этому приложению автоматически отправлять эти данные анонимно через EDDN? (Вы всегда можете отключить/включить это позже в соответствии с настройками),,,,
-eddn.registration.no,No,No,Nein,No,Non,Não,Нет,,,,
-eddn.registration.yes,Yes,Yes,Ja,Sí,Oui,Sim,Да,,,,
-version.dialog.text,A new version is available!,A new version is available!,Eine neue Version ist verfügbar!,¡Una nueva version esta disponible!,Une nouvelle version est disponible!,Uma nova versão está disponível!,Новая версия доступна!,,,,
-version.dialog.text2,Did you know that there is an auto updater available for this app?,Did you know that there is an auto updater available for this app?,"Wussten Sie, dass für diese App ein Auto-Updater verfügbar ist?",¿Sabía que hay un actualizador automático disponible para esta aplicación?,Saviez-vous qu’il y a une mise à jour automatique disponible pour cette application?,Você sabia que existe um atualizador de automóveis disponível para este aplicativo?,"Знаете ли вы, что для этого приложения доступен автоматический обновленный обновление?",,,,
-version.dialog.ok,Ok,Ok,OK,De acuerdo,D’accord,OK,Хорошо,,,,
-version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,Baixar,Скачать,,,,
-statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,Los datos de su carguero pueden estar obsoletos. Vincula tu cuenta de Frontier.,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.,,,,
-segment.type.present,Present,,,Presente,,,Присутствует,,,,
-segment.type.not_present,Not present,,,No presente,,,Не присутствует,,,,
-segment.type.power_group_p,P,,,,,,,,,,
-segment.type.power_group_1,1,,,,,,,,,,
-segment.type.power_group_2,2,,,,,,,,,,
-segment.type.power_group_3,3,,,,,,,,,,
-segment.type.power_group_4,4,,,,,,,,,,
-segment.type.power_group_5,5,,,,,,,,,,
-segment.type.hardpoint_none,None,,,Ninguno,,,Отсутствует,,,,
-segment.type.hardpoint_thermal,Thermal,,,Térmico,,,Термический,,,,
-segment.type.hardpoint_kinetic,Kinetic,,,Cinético,,,Кинетический,,,,
-segment.type.hardpoint_explosive,Explosive,,,Explosivo,,,Взрывной,,,,
-segment.type.hardpoint_absolute,Absolute,,,Absoluto,,,Абсолютный,,,,
-segment.type.hardpoint_caustic,Caustic,,,Caústico,,,Едкий,,,,
-segment.type.hardpoint_antixeno,Anti-xeno,,,Anti-Xeno,,,АИ,,,,
-segment.type.power_group_none,Available,,,Disponible,,,Доступно,,,,
-segment.type.power_overpower,Power deficit,,,Déficit de Energía,,,Энергодефицит,,,,
-tabs.onfoot,On foot,,,A pie,,,Пеший режим,,,,
-tabs.ships,Ships,,,Naves,,,Корабельный режим,,,,
-notification.type.hge,High grade emission,,,Señal de Alta Calidad,,,Высокоуровневый сигнал,,,,
-tabs.hge,HGE Tracker,,,Seguimiento de señales de Alta Calidad,,,Трекер ВУС,,,,
+messageKey,,en,de,es,fr,pt,ru
+blank,,,,,,,,
+application.font.size.extra_large,Extra large,Extra large,Extra groß,Extra grande,Très grand,Extra grande,Очень большой
+application.font.size.extra_small,Extra small,Extra small,Extra klein,Extra pequeño,Très petit,Extra pequeno,Очень маленький
+application.font.size.large,Large,Large,Groß,Grande,Grand,Grande,Большой
+application.font.size.normal,Normal,Normal,Normal,Normal,Normal,Normal,Нормальный
+application.font.size.small,Small,Small,Klein,Pequeño,Petit,Pequeno,Маленький
+application.language.english,English,English,English,English,English,English,English
+application.language.french,Français,Français,Français,Français,Français,Français,Français
+application.language.german,Deutsch,Deutsch,Deutsch,Deutsch,Deutsch,Deutsch,Deutsch
+application.language.portuguese,Português,Português,Português,Português,Português,Português,Português
+application.language.russian,Русский,Русский,Русский,Русский,Русский,Русский,Русский
+application.language.spanish,Español,Español,Español,Español,Español,Español,Español
+application.orientation.horizontal,Horizontal,Horizontal,Horizontal,Horizontal,Horizontal,Horizontal,По горизонтали
+application.orientation.vertical,Vertical,Vertical,Vertikal,Vertical,Vertical,Vertical,По вертикали
+game.expansion.horizons,Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Contenido de Odyssey no disponible),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available)
+game.expansion.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey
+game.expansion.None,Base game,Base game,Base game,Juego Base,Base game,Base game,Base game
+tabs.engineers,Engineers,Engineers,Ingenieure,Ingenieros,Ingénieurs,Engenheiros,Инженеры
+tabs.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать
+tabs.imported.wishlist,Imported wishlist,Imported wishlist,Importierte Wunschliste,Lista de deseos importada,Liste de souhaits importée,Lista de desejos importada,Импортированный список желаемого
+tabs.loadout,Loadout Editor,Loadout Editor,Loadout-Editor,Editor de equipamiento,Éditeur de chargement,Editor de Carregamento,Редактор экипировки
+tabs.settings,Settings,Settings,Einstellungen,Configuración,Paramètres,Configurações,Настройки
+tabs.trade,Trade,Trade,Handel,Comercio,Commerce,Negociação,Торговля
+tabs.wishlist,Wishlist{0},Wishlist{0},Wunschliste{0},Lista de deseos{0},Liste de souhaits{0},Lista de desejos{0},Список желаемого{0}
+tabs.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey
+tabs.horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons
+tabs.odyssey.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
+tabs.horizons.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
+tabs.horizons.commodities,Commodities,Commodities,Waren,Mercancías,Marchandises,Mercadorias,Товары
+statusbar.last.message,Latest observed relevant message: {0} ({1}),Latest observed relevant message: {0} ({1}),Letzte beobachtete relevante Nachricht: {0} ({1}),Último mensaje relevante observado: {0} ({1}),Dernier message pertinent observé: {0} ({1}),Última mensagem relevante observada: {0} ({1}),Последнее наблюдаемое релевантное сообщение: {0} ({1})
+statusbar.login,Please login to the game,Please login to the game,Bitte logge dich in das Spiel ein,Inicia sesión en el juego.,Veuillez vous connecter au jeu,Por favor entre no jogo,"Пожалуйста, войдите в игру"
+statusbar.watching.none,None - No Odyssey journals found at {0},None - No Odyssey journals found at {0},Keine - Keine Odyssey journal-Datei gefunden bei {0},None - No se encontraron revistas de Odyssey en {0},None - Aucun journal Odyssey trouvé à {0},Nenhum - Nenhum diário Odyssey encontrado em {0},None - журналов Odyssey в {0} не найдено.
+statusbar.watching,Watching: {0},Watching: {0},Beobachten: {0},Viendo: {0},Observation: {0},Assistindo: {0},Наблюдают: {0}
+statusbar.api.last.update,Last API Update: {0},Last API Update: {0},Letzte API Aktualisierung: {0},Última actualización de API: {0},Dernière mise à jour de l’API: {0},Última atualização da API: {0},Последнее обновление API: {0}
+url.scheme.registration.text,This app can handle url’s starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,This app can handle url’s starting with edomh://. These links can be used to share data between users. You can create these links in the relevant places.,"Diese App kann mit edomh:// mit URLs handhaben. Diese Links können verwendet werden, um Daten zwischen Benutzern zu teilen. Sie können diese Links an den entsprechenden Stellen erstellen.",Esta aplicación puede manejar las URL que comienza con edomh://. Estos enlaces se pueden usar para compartir datos entre los usuarios. Puede crear estos enlaces en los lugares relevantes.,Cette application peut gérer les URL en commençant par edomh://. Ces liens peuvent être utilisés pour partager des données entre les utilisateurs. Vous pouvez créer ces liens dans les endroits pertinents.,Este aplicativo pode lidar com o URL começando com o edomh://. Esses links podem ser usados para compartilhar dados entre usuários. Você pode criar esses links nos lugares relevantes.,"Это приложение может обрабатывать URL, начинающееся с edomh://. Эти ссылки могут использоваться для обмена данными между пользователями. Вы можете создать эти ссылки в соответствующих местах."
+url.scheme.registration.text2,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,If you would like to use this functionality you can register this application. You will receive a UAC prompt as this requires administrative access. You can always (un)register this application under Settings later.,"Wenn Sie diese Funktionalität verwenden möchten, können Sie diese Anwendung registrieren. Sie erhalten eine UAC -Eingabeaufforderung, da dieser administrative Zugriff erfordert. Sie können diese Anwendung immer (UN) später unter Einstellungen registrieren.","Si desea utilizar esta funcionalidad, puede registrar esta aplicación. Recibirá un mensaje UAC ya que esto requiere acceso administrativo. Siempre puede (un) registrar esta aplicación en Configuración más adelante.","Si vous souhaitez utiliser cette fonctionnalité, vous pouvez enregistrer cette application. Vous recevrez une invite UAC car cela nécessite un accès administratif. Vous pouvez toujours (non) enregistrer cette application sous Paramètres ultérieurement.","Se você deseja usar essa funcionalidade, pode registrar este aplicativo. Você receberá um prompt da UAC, pois isso requer acesso administrativo. Você sempre pode (un) registrar este aplicativo em Configurações posteriormente.","Если вы хотите использовать эту функциональность, вы можете зарегистрировать это приложение. Вы получите подсказку UAC, так как это требует административного доступа. Вы всегда можете (не) зарегистрировать это приложение в условиях настройки позже."
+search.filter.all,All (default),All (default),Alle (Standard),Todo (predeterminado),Tous (par défaut),All (padrão),Все (по умолчанию)
+search.filter.all_engineer,All engineer unlocking,All engineer unlocking,Alle Ingenieure werden freigeschaltet,Desbloqueo de todos los ingenieros,Déverrouillage de tous les ingénieurs,Desbloqueio de todos os engenheiros,Разблокировка всех инженеров
+search.filter.all_engineer_blueprint,All engineer unlocking + blueprint,All engineer unlocking + blueprint,Alle Ingenieure entsperren + Blaupause,Desbloqueo de todos los ingenieros + plano,Déverrouillage de tous les ingénieurs + plan,Desbloqueio de todos os engenheiros + planta,Разблокировка всех инженеров + чертеж
+search.filter.all_with_stock,All with stock,All with stock,Alle mit Aktien,Todos con stock,Tous en stock,Todos com estoque,Все в наличии
+search.filter.blueprint,Blueprint,Blueprint,Blaupause,Plano,Plans,Blueprint,Чертежи
+search.filter.favourites,Favourites,Favourites,Favoriten,Favoritos,Favoris,Favoritos,Избранные
+search.filter.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Non pertinents,Irrelevante,Нерелевантные
+search.filter.irrelevant_with_stock,Irrelevant with stock,Irrelevant with stock,Irrelevant mit Aktien,Irrelevante con stock,Non pertinents en stock,Irrelevante com estoque,Нерелевантные в наличии
+search.filter.placeholder,Show materials,Show materials,Materialien anzeigen,Mostrar materiales,Afficher les matériaux,Mostrar materiais,Показать материалы
+search.filter.prohibited,Prohibited,Prohibited,Verboten,Prohibido,Interdites,Proibida,Запрещенные
+search.filter.required_engineer,Only required engineer unlocking,Only required engineer unlocking,Nur erforderliches Entsperren durch Ingenieure,Solo se requiere desbloqueo del ingeniero,Seul le déverrouillage de l’ingénieur requis,Somente desbloqueio de engenheiro necessário,Требуется только разблокировка инженера
+search.filter.required_engineer_blueprint,Only required engineer unlocking + blueprint,Only required engineer unlocking + blueprint,Nur erforderliches Entsperren des Ingenieurs + Blaupause,Solo se requiere desbloqueo de ingeniero + plano,Seul le déverrouillage de l’ingénieur requis + le plan,Somente desbloqueio de engenheiro obrigatório + planta,Требуется только разблокировка инженера + чертеж
+search.filter.raw,Raw,Raw,,Materias Primas,,,Сырые материалы
+search.filter.encoded,Encoded,Encoded,,Codificados,,,Зашифрованные материалы
+search.filter.manufactured,Manufactured,Manufactured,,Manufacturados,,,Производственные материалы
+search.filter.guardian,Guardian,Guardian,,Guardián,,,Материалы Стражей
+search.filter.thargoid,Thargoid,Thargoid,,Targoide,,,Материалы Таргоидов
+search.filter.human,Human,Human,,Humano,,,Материалы Человеческие
+search.sort.alphabetical,Alphabetical (default),Alphabetical (default),Alphabetisch (Standard),Alfabético (predeterminado),Alphabétique (par défaut),Alfabético (padrão),По алфавиту (по умолчанию)
+search.sort.engineer_blueprint_irrelevant,"Engineer unlocking, blueprint, irrelevant","Engineer unlocking, blueprint, irrelevant","Entsperrung durch Ingenieur, Blaupause, irrelevant","Desbloqueo del ingeniero, plano, irrelevante","Déverrouillage de l’ingénieur, plan, non pertinent","Desbloqueio do engenheiro, planta, irrelevante","Разблокировка инженера, чертеж, нерелевантно"
+search.sort.placeholder,Sort materials,Sort materials,Materialien sortieren,Clasificar materiales,Trier les matériaux,Classificar materiais,Сортировать материалы
+search.sort.quantity,Quantity,Quantity,Menge,Cantidad,Quantité,Quantidade,Количество
+search.sort.relevant_irrelevant,"Relevant, irrelevant","Relevant, irrelevant","Relevant, irrelevant","Relevante, irrelevante","Pertinent, non pertinent","Relevante, irrelevante","Релевантные, нерелевантные"
+search.text.placeholder,Search,Search,Suchen,Buscar,Rechercher,Pesquisa,Поиск
+search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Carguero,Transporteur de flotte,Transportadora de frota,Флотоносец
+search.filter.backpack,Backpack,Backpack,Rucksack,Mochila,Sac à dos,Mochila,Рюкзак
+search.sort.quantity_ship,Ship quantity,Ship quantity,Schiffsmenge,Cantidad de naves,Quantité de navire,Quantidade de navio,Количество на корабле
+search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,FleetCarrier Menge,Cantidad de cargueros,Quantité Fleetcarrier,Quantidade FleetCarrier,Количество на флотоносце
+search.sort.quantity_total,Total quantity,Total quantity,Gesamtmenge,Cantidad total,Quantité totale,Quantidade total,Общая численность
+search.filter.ship,Ship,Ship,Schiff,Nave,Bateau,Navio,Судно
+search.filter.not_on_wishlist,Not or more than on wishlist,Not or more than on wishlist,Nicht oder mehr als auf der Wunschliste,No o más que en la lista de deseos,Pas ou plus que sur la liste de souhaits,Não ou mais do que na lista de desejos,"Не или больше, чем в списке желаний"
+search.grouping.category,Category (default),Category (default),Kategorie (Standard),Categoría (predeterminado),Catégorie (par défaut),Categoria (padrão),Категория (по умолчанию)
+search.grouping.none,None,None,Keiner,Ninguna,Aucun,Nenhum,Никто
+search.grouping.placeholder,Group materials,Group materials,Gruppenmaterialien,Grupo de Materiales,Matériaux de groupe,Materiais de grupo,Групповые материалы
+search.sort.grade,Grade,Grade,Klasse,Calificación,Noter,Avaliar,Оценка
+search.sort.quantity_required,Quantity required,Quantity required,Erforderliche Menge,Cantidad requerida,Quantité Nécessaire,Quantidade Requerida,Требуемое количество
+notification.type.irrelevant_point,Point to irrelevant material,Point to irrelevant material,Auf irrelevantes Material hinweisen,Señalar material irrelevante,Pointer du matériau non pertinent,Apontar para material irrelevante,При указывании на ненужные материалы
+notification.type.wishlist_point,Point to wishlist material,Point to wishlist material,Zeigen Sie auf Wunschlistematerial,Señalar material de lista de deseos,Pointer à WishList Material,Apontar para o material da lista de desejos,При указывании на материалы из вишлиста
+notification.type.relevant_point,Point to relevant material,Point to relevant material,Auf relevantes Material hinweisen,Señalar material relevante,Pointer du matériel pertinent,Apontar para o material relevante,При указывании на используемые (полезные) материалы
+notification.type.irrelevant_pickup,Irrelevant Pickup,Irrelevant Pickup,Irrelevantes Pickup,Recolección de irrelevantes,Ramassage non pertinent,Pickup irrelevante,Поднял ненужное (на продажу
+notification.type.wishlist_pickup,Wishlist Pickup,Wishlist Pickup,Wunschliste Abholung,Recogida de la lista de deseos,Ramassage de la liste de souhaits,Pickup da lista de desejos,Подобрал из списка желаемого
+notification.type.trade,Trade,Trade,Handeln,Comercio,Échange,Troca,Торговля
+notification.type.import,Import,Import,Importieren,Importar,Importer,Importar,Импорт
+notification.type.copy,Copy,Copy,Kopieren,Copiar,Copie,cópia de,Копия
+notification.type.error,Error,Error,Fehler,Error,Erreur,Erro,Ошибка
+notification.type.success,Success,Success,Erfolg,Éxito,Succès,Sucesso,Успех
+notification.collected.wishlist.material.notification,{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2}
+notification.collected.wishlist.material.notification.horizons,{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3},{0}(+{1}) {2}/{3}
+eddn.registration.text,"This app can share galaxy data, like starsystems and market information, with other 3rd party apps like eddb.io, spansh.co.uk and inara.cz over the ED Data Network","This app can share galaxy data, like starsystems and market information, with other 3rd party apps like eddb.io, spansh.co.uk and inara.cz over the ED Data Network","Diese App kann Galaxy -Daten wie StarSystems und Marktinformationen mit anderen Apps von Drittanbietern wie Eddb.io, Spansh.co.uk und Inara.cz über das ED -Data -Netzwerk teilen","Esta aplicación puede compartir datos de Galaxy, como StarSystems e información de mercado, con otras aplicaciones de terceros como Eddb.io, spansh.co.uk e inara.cz a través de la red de datos ED de ED","Cette application peut partager des données Galaxy, comme StarSystems et des informations sur le marché, avec d’autres applications tierces comme Eddb.io, Spansh.co.uk et Inara.cz sur le réseau de données ED","Este aplicativo pode compartilhar dados de galáxias, como Starsystems e Informações de Mercado, com outros aplicativos de terceiros como Eddb.io, Spansh.co.uk e inara.cz sobre a ED Data Network",Это приложение может обмениваться данными Galaxy
+eddn.registration.text2,Would you like to help the community and allow this app to automatically send this data anonymously through EDDN? (You can always disable/enable this later under Settings),Would you like to help the community and allow this app to automatically send this data anonymously through EDDN? (You can always disable/enable this later under Settings),"Möchten Sie der Community helfen und diese App erlauben, diese Daten automatisch über EDDN zu senden? (Sie können dies immer später unter Einstellungen deaktivieren/aktivieren)",¿Le gustaría ayudar a la comunidad y permitir que esta aplicación envíe automáticamente estos datos de forma anónima a través de EDDN? (Siempre puede deshabilitar/habilitar esto más adelante en Configuración),Souhaitez-vous aider la communauté et permettre à cette application d’envoyer automatiquement ces données de manière anonyme via EDDN? (Vous pouvez toujours désactiver / activer cela plus tard dans les paramètres),Você gostaria de ajudar a comunidade e permitir que este aplicativo envie automaticamente esses dados anonimamente através do EDDN? (Você sempre pode desativar/ativar isso posteriormente em configurações),Хотели бы вы помочь сообществу и позволить этому приложению автоматически отправлять эти данные анонимно через EDDN? (Вы всегда можете отключить/включить это позже в соответствии с настройками)
+eddn.registration.no,No,No,Nein,No,Non,Não,Нет
+eddn.registration.yes,Yes,Yes,Ja,Sí,Oui,Sim,Да
+version.dialog.text,A new version is available!,A new version is available!,Eine neue Version ist verfügbar!,¡Una nueva version esta disponible!,Une nouvelle version est disponible!,Uma nova versão está disponível!,Новая версия доступна!
+version.dialog.text2,Did you know that there is an auto updater available for this app?,Did you know that there is an auto updater available for this app?,"Wussten Sie, dass für diese App ein Auto-Updater verfügbar ist?",¿Sabía que hay un actualizador automático disponible para esta aplicación?,Saviez-vous qu’il y a une mise à jour automatique disponible pour cette application?,Você sabia que existe um atualizador de automóveis disponível para este aplicativo?,"Знаете ли вы, что для этого приложения доступен автоматический обновленный обновление?"
+version.dialog.ok,Ok,Ok,OK,De acuerdo,D’accord,OK,Хорошо
+version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,Baixar,Скачать
+statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,Los datos de su carguero pueden estar obsoletos. Vincula tu cuenta de Frontier.,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
+segment.type.present,Present,,,Presente,,,Присутствует
+segment.type.not_present,Not present,,,No presente,,,Не присутствует
+segment.type.power_group_p,P,,,,,,,
+segment.type.power_group_1,1,,,,,,,
+segment.type.power_group_2,2,,,,,,,
+segment.type.power_group_3,3,,,,,,,
+segment.type.power_group_4,4,,,,,,,
+segment.type.power_group_5,5,,,,,,,
+segment.type.hardpoint_none,None,,,Ninguno,,,Отсутствует
+segment.type.hardpoint_thermal,Thermal,,,Térmico,,,Термический
+segment.type.hardpoint_kinetic,Kinetic,,,Cinético,,,Кинетический
+segment.type.hardpoint_explosive,Explosive,,,Explosivo,,,Взрывной
+segment.type.hardpoint_absolute,Absolute,,,Absoluto,,,Абсолютный
+segment.type.hardpoint_caustic,Caustic,,,Caústico,,,Едкий
+segment.type.hardpoint_antixeno,Anti-xeno,,,Anti-Xeno,,,АИ
+segment.type.power_group_none,Available,,,Disponible,,,Доступно
+segment.type.power_overpower,Power deficit,,,Déficit de Energía,,,Энергодефицит
+tabs.onfoot,On foot,,,A pie,,,Пеший режим
+tabs.ships,Ships,,,Naves,,,Корабельный режим
+notification.type.hge,High grade emission,,,Señal de Alta Calidad,,,Высокоуровневый сигнал
+tabs.hge,HGE Tracker,,,Seguimiento de señales de Alta Calidad,,,Трекер ВУС
