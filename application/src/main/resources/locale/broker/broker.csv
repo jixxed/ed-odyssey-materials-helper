@@ -1,6 +1,6 @@
 messageKey,,en,de,es,fr,pt,ru
-horizons.technology.broker.type.guardian,Guardian,,,,,,Технологии Стражей
-horizons.technology.broker.type.human,Human,,,,,,Технологии Людей
+horizons.technology.broker.type.guardian,Guardian,,,Guardián,,,Технологии Стражей
+horizons.technology.broker.type.human,Human,,,Humano,,,Технологии Людей
 horizons.technology.broker.type.sirius,Sirius,,,,,,Технологии Sirius
 horizons.technology.broker.type.torval,Torval Mining,,,,,,Технологии Torval Mining
 horizons.technology.broker.type.salvation,Salvation,,,,,,Технологии Salvation(Спасение)
