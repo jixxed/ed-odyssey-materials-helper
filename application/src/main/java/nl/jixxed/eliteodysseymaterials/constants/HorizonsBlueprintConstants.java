@@ -90,48 +90,81 @@ public abstract class HorizonsBlueprintConstants {
 
     }
 
-    public static Blueprint<HorizonsBlueprintName> getRecipe(final HorizonsBlueprintName name, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+    public static Blueprint<HorizonsBlueprintName> getRecipe(HorizonsBlueprintName name, HorizonsBlueprintType horizonsBlueprintType, HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        HorizonsBlueprintGrade grade = remapGrade(name, horizonsBlueprintType, horizonsBlueprintGrade);
 
-        HorizonsBlueprint recipe = ENGINEER_UNLOCK_REQUIREMENTS.get(name);
-        if (recipe != null) {
-            return recipe;
+        HorizonsBlueprint recipe = getRecipeFromEngineerUnlockRequirements(name);
+        if (recipe != null) return recipe;
+
+        recipe = getRecipeFromExperimentalEffects(name, horizonsBlueprintType);
+        if (recipe != null) return recipe;
+
+        recipe = getRecipeFromTechBrokerUnlocks(name, horizonsBlueprintType);
+        if (recipe != null) return recipe;
+
+        recipe = getRecipeFromSynthesis(name, grade);
+        if (recipe != null) return recipe;
+
+        recipe = getRecipeFromBlueprintCollections(name, horizonsBlueprintType, grade);
+        if (recipe != null) return recipe;
+
+        throw new IllegalArgumentException(
+                String.format(
+                        "Could not find blueprint for name/type/grade: %s/%s/%s",
+                        name,
+                        horizonsBlueprintType != null ? horizonsBlueprintType.name() : "NULL",
+                        grade != null ? grade.name() : "NULL"
+                )
+        );
+    }
+
+    private static HorizonsBlueprint getRecipeFromEngineerUnlockRequirements(HorizonsBlueprintName name) {
+        return ENGINEER_UNLOCK_REQUIREMENTS.get(name);
+    }
+
+    private static HorizonsBlueprint getRecipeFromExperimentalEffects(HorizonsBlueprintName name, HorizonsBlueprintType type) {
+        if (type == null) return null;
+        return EXPERIMENTAL_EFFECTS.getOrDefault(name, Collections.emptyMap()).get(type);
+    }
+
+    private static HorizonsBlueprint getRecipeFromTechBrokerUnlocks(HorizonsBlueprintName name, HorizonsBlueprintType type) {
+        if (type == null) return null;
+        return TECHBROKER_UNLOCKS.getOrDefault(name, Collections.emptyMap()).get(type);
+    }
+
+    private static HorizonsBlueprint getRecipeFromSynthesis(HorizonsBlueprintName name, HorizonsBlueprintGrade grade) {
+        if (grade == null) return null;
+        return SYNTHESIS.getOrDefault(name, Collections.emptyMap()).get(grade);
+    }
+
+    private static HorizonsBlueprint getRecipeFromBlueprintCollections(HorizonsBlueprintName name, HorizonsBlueprintType type, HorizonsBlueprintGrade grade) {
+        if (type == null || grade == null) return null;
+
+        HorizonsBlueprint recipe;
+
+        recipe = HARDPOINT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(type, Collections.emptyMap()).get(grade);
+        if (recipe != null) return recipe;
+
+        recipe = UTILITY_MOUNT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(type, Collections.emptyMap()).get(grade);
+        if (recipe != null) return recipe;
+
+        recipe = CORE_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(type, Collections.emptyMap()).get(grade);
+        if (recipe != null) return recipe;
+
+        return OPTIONAL_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(type, Collections.emptyMap()).get(grade);
+    }
+
+    private static HorizonsBlueprintGrade remapGrade(HorizonsBlueprintName name, HorizonsBlueprintType type, HorizonsBlueprintGrade grade) {
+        if (HorizonsBlueprintName.GUARDIAN_GAUSS_CANNON.equals(name) && HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION.equals(type) && HorizonsBlueprintGrade.GRADE_5.equals(grade)) {
+            return HorizonsBlueprintGrade.GRADE_1;
         }
-        if (horizonsBlueprintType != null) {
-            recipe = EXPERIMENTAL_EFFECTS.getOrDefault(name, Collections.emptyMap()).get(horizonsBlueprintType);
-            if (recipe != null) {
-                return recipe;
-            }
-            recipe = TECHBROKER_UNLOCKS.getOrDefault(name, Collections.emptyMap()).get(horizonsBlueprintType);
-            if (recipe != null) {
-                return recipe;
-            }
+        if (HorizonsBlueprintName.GUARDIAN_SHARD_CANNON.equals(name) && HorizonsBlueprintType.LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS.equals(type) && HorizonsBlueprintGrade.GRADE_5.equals(grade)) {
+            return HorizonsBlueprintGrade.GRADE_1;
         }
-        if (horizonsBlueprintGrade != null) {
-            recipe = SYNTHESIS.getOrDefault(name, Collections.emptyMap()).get(horizonsBlueprintGrade);
-            if (recipe != null) {
-                return recipe;
-            }
+        if (HorizonsBlueprintName.GUARDIAN_PLASMA_CHARGER.equals(name) && HorizonsBlueprintType.OVERCHARGED_WEAPON_FOCUSED_WEAPON.equals(type) && HorizonsBlueprintGrade.GRADE_5.equals(grade)) {
+            return HorizonsBlueprintGrade.GRADE_1;
         }
-        if (horizonsBlueprintType != null && horizonsBlueprintGrade != null) {
-            recipe = HARDPOINT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
-            if (recipe != null) {
-                return recipe;
-            }
-            recipe = UTILITY_MOUNT_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
-            if (recipe != null) {
-                return recipe;
-            }
-            recipe = CORE_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
-            if (recipe != null) {
-                return recipe;
-            }
-            recipe = OPTIONAL_INTERNAL_BLUEPRINTS.getOrDefault(name, Collections.emptyMap()).getOrDefault(horizonsBlueprintType, Collections.emptyMap()).get(horizonsBlueprintGrade);
-        }
-        if (recipe != null) {
-            return recipe;
-        }
-        final String error = "could not find blueprint for name/type/grade: " + name + "/" + (horizonsBlueprintType != null ? horizonsBlueprintType.name() : "NULL") + "/" + (horizonsBlueprintGrade != null ? horizonsBlueprintGrade.name() : "NULL");
-        throw new IllegalArgumentException(error);
+        return grade;
     }
 
     public static HorizonsEngineerBlueprint getEngineerRecipe(final HorizonsBlueprintName name) {
@@ -190,6 +223,7 @@ public abstract class HorizonsBlueprintConstants {
         }
         return Craftability.NOT_CRAFTABLE;
     }
+
     public static int getEngineerMaxGrade(final HorizonsBlueprint horizonsBlueprint1, final Engineer engineer) {
         return RECIPES.values().stream()
                 .flatMap(horizonsBlueprintTypeMapMap -> horizonsBlueprintTypeMapMap.values().stream())
@@ -281,11 +315,11 @@ public abstract class HorizonsBlueprintConstants {
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.GUARDIAN_SHARD_CANNON, merge(GuardianShardCannonBlueprints.BLUEPRINTS, GuardianShardCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINE_LAUNCHER, MineLauncherBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MINING_LASER, MiningLaserPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MISSILE_RACK, merge(MissileRackBlueprints.BLUEPRINTS,MissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MULTI_CANNON, merge(MultiCannonBlueprints.BLUEPRINTS,MultiCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MISSILE_RACK, merge(MissileRackBlueprints.BLUEPRINTS, MissileRackPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.MULTI_CANNON, merge(MultiCannonBlueprints.BLUEPRINTS, MultiCannonPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.PLASMA_ACCELERATOR, PlasmaAcceleratorBlueprints.BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.PULSE_LASER, PulseLaserBlueprints.BLUEPRINTS);
-        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.RAIL_GUN, merge(RailGunBlueprints.BLUEPRINTS,RailGunPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
+        HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.RAIL_GUN, merge(RailGunBlueprints.BLUEPRINTS, RailGunPreEngineeredBlueprints.PRE_ENGINEERED_BLUEPRINTS));
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.REMOTE_RELEASE_FLAK_LAUNCHER, RemoteReleaseFlakLauncherBlueprints.PRE_ENGINEERED_BLUEPRINTS);
         HARDPOINT_BLUEPRINTS.put(HorizonsBlueprintName.TORPEDO_PYLON, TorpedoPylonBlueprints.BLUEPRINTS);
         OPTIONAL_INTERNAL_BLUEPRINTS.put(HorizonsBlueprintName.AUTO_FIELD_MAINTENANCE_UNIT, AutoFieldMaintenanceUnitBlueprints.BLUEPRINTS);

@@ -19,10 +19,10 @@ public class GuardianGaussCannon extends HardpointModule {
 
     static {
         GUARDIAN_GAUSS_CANNON_1_D_F_PRE.getModifications().add(
-                new Modification(HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION, 1.0, HorizonsBlueprintGrade.GRADE_5)
+                new Modification(HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
         GUARDIAN_GAUSS_CANNON_2_B_F_PRE.getModifications().add(
-                new Modification(HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION, 1.0, HorizonsBlueprintGrade.GRADE_5)
+                new Modification(HorizonsBlueprintType.HIGH_CAPACITY_MAGAZINE_RAPID_FIRE_MODIFICATION, 1.0, HorizonsBlueprintGrade.GRADE_1)
         );
     }
     public static final List<GuardianGaussCannon> GUARDIAN_GAUSS_CANNONS = List.of(

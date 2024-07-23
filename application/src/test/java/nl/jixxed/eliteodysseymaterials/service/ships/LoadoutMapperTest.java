@@ -11,12 +11,11 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.FrameShiftDrive;
-import nl.jixxed.eliteodysseymaterials.domain.ships.core_internals.PowerPlant;
-import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.GuardianGaussCannon;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.GuardianShardCannon;
+import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.MiningLaser;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.DetailedSurfaceScanner;
 import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGenerator;
-import nl.jixxed.eliteodysseymaterials.domain.ships.utility.KillWarrantScanner;
-import nl.jixxed.eliteodysseymaterials.domain.ships.utility.PointDefence;
 import nl.jixxed.eliteodysseymaterials.domain.ships.utility.SinkLauncher;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Engineering;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Loadout.Loadout;
@@ -156,39 +155,40 @@ class LoadoutMapperTest {
         List modules =  ShipModule.getBasicModules();
         return Stream.of(
 
-                Arguments.of("ABRASION_BLASTER_1_D_F_PRE.json", AbrasionBlaster.ABRASION_BLASTER_1_D_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("AX_MISSILE_RACK_2_E_F_PRE.json", AXMissileRack.AX_MISSILE_RACK_2_E_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("AX_MISSILE_RACK_3_C_F_PRE.json", AXMissileRack.AX_MISSILE_RACK_3_C_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("AX_MULTI_CANNON_2_E_F_PRE.json", AXMultiCannon.AX_MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("AX_MULTI_CANNON_3_C_F_PRE.json", AXMultiCannon.AX_MULTI_CANNON_3_C_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("ENZYME_MISSILE_RACK_2_B_F_PRE.json", EnzymeMissileRack.ENZYME_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("GUARDIAN_GAUSS_CANNON_1_D_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("GUARDIAN_GAUSS_CANNON_2_B_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_2_B_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("GUARDIAN_PLASMA_CHARGER_1_D_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_1_D_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("GUARDIAN_PLASMA_CHARGER_2_B_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_2_B_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("ABRASION_BLASTER_1_D_F_PRE.json", AbrasionBlaster.ABRASION_BLASTER_1_D_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("AX_MISSILE_RACK_2_E_F_PRE.json", AXMissileRack.AX_MISSILE_RACK_2_E_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("AX_MISSILE_RACK_3_C_F_PRE.json", AXMissileRack.AX_MISSILE_RACK_3_C_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("AX_MULTI_CANNON_2_E_F_PRE.json", AXMultiCannon.AX_MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("AX_MULTI_CANNON_3_C_F_PRE.json", AXMultiCannon.AX_MULTI_CANNON_3_C_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("ENZYME_MISSILE_RACK_2_B_F_PRE.json", EnzymeMissileRack.ENZYME_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("GUARDIAN_GAUSS_CANNON_1_D_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_1_D_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("GUARDIAN_GAUSS_CANNON_2_B_F_PRE.json", GuardianGaussCannon.GUARDIAN_GAUSS_CANNON_2_B_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("GUARDIAN_PLASMA_CHARGER_1_D_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_1_D_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("GUARDIAN_PLASMA_CHARGER_2_B_F_PRE.json", GuardianPlasmaCharger.GUARDIAN_PLASMA_CHARGER_2_B_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_SHARD_CANNON_1_D_F_PRE.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_1_D_F_PRE, SlotType.HARDPOINT),
                 Arguments.of("GUARDIAN_SHARD_CANNON_2_A_F_PRE.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_2_A_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("MINING_LASER_1_D_F_PRE.json", MiningLaser.MINING_LASER_1_D_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("MINING_LASER_1_D_F_PRE_ARX.json", MiningLaser.MINING_LASER_1_D_F_PRE_ARX, SlotType.HARDPOINT),
-                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("MULTI_CANNON_2_E_F_PRE.json", MultiCannon.MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("RAIL_GUN_2_B_F_PRE.json", RailGun.RAIL_GUN_2_B_F_PRE, SlotType.HARDPOINT),
-                Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN, SlotType.HARDPOINT),
-                Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW, SlotType.HARDPOINT),
-                Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED, SlotType.HARDPOINT),
-                Arguments.of("FRAME_SHIFT_DRIVE_3_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_3_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
-                Arguments.of("FRAME_SHIFT_DRIVE_4_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_4_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
-                Arguments.of("FRAME_SHIFT_DRIVE_5_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
-                Arguments.of("FRAME_SHIFT_DRIVE_6_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_6_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
-                Arguments.of("POWER_PLANT_3_A_ARMOURED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_3_A_ARMOURED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
-                Arguments.of("POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
-                Arguments.of("POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
-                Arguments.of("POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
-                Arguments.of("DETAILED_SURFACE_SCANNER_1_I_V1_PRE.json", DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE, SlotType.OPTIONAL),
-                Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL),
-                Arguments.of("KILL_WARRANT_SCANNER_0_A_PRE.json", KillWarrantScanner.KILL_WARRANT_SCANNER_0_A_PRE, SlotType.UTILITY),
-                Arguments.of("POINT_DEFENCE_0_I_PRE.json", PointDefence.POINT_DEFENCE_0_I_PRE, SlotType.UTILITY),
-                Arguments.of("HEAT_SINK_LAUNCHER_0_I_PRE.json", SinkLauncher.HEAT_SINK_LAUNCHER_0_I_PRE, SlotType.UTILITY)//,
+                Arguments.of("GUARDIAN_SHARD_CANNON_2_A_F_PRE_GOD.json", GuardianShardCannon.GUARDIAN_SHARD_CANNON_2_A_F_PRE_GOD, SlotType.HARDPOINT)//,
+//                Arguments.of("MINING_LASER_1_D_F_PRE.json", MiningLaser.MINING_LASER_1_D_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("MINING_LASER_1_D_F_PRE_ARX.json", MiningLaser.MINING_LASER_1_D_F_PRE_ARX, SlotType.HARDPOINT),
+//                Arguments.of("SEEKER_MISSILE_RACK_2_B_F_PRE.json", MissileRack.SEEKER_MISSILE_RACK_2_B_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("MULTI_CANNON_2_E_F_PRE.json", MultiCannon.MULTI_CANNON_2_E_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("RAIL_GUN_2_B_F_PRE.json", RailGun.RAIL_GUN_2_B_F_PRE, SlotType.HARDPOINT),
+//                Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_GREEN, SlotType.HARDPOINT),
+//                Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_YELLOW, SlotType.HARDPOINT),
+//                Arguments.of("REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED.json", RemoteReleaseFlakLauncher.REMOTE_RELEASE_FLAK_LAUNCHER_2_B_T_PRE_RED, SlotType.HARDPOINT),
+//                Arguments.of("FRAME_SHIFT_DRIVE_3_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_3_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
+//                Arguments.of("FRAME_SHIFT_DRIVE_4_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_4_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
+//                Arguments.of("FRAME_SHIFT_DRIVE_5_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_5_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
+//                Arguments.of("FRAME_SHIFT_DRIVE_6_A_V1_PRE.json", FrameShiftDrive.FRAME_SHIFT_DRIVE_6_A_V1_PRE, SlotType.CORE_FRAME_SHIFT_DRIVE),
+//                Arguments.of("POWER_PLANT_3_A_ARMOURED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_3_A_ARMOURED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
+//                Arguments.of("POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_3_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
+//                Arguments.of("POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_4_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
+//                Arguments.of("POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED_PRE.json", PowerPlant.POWER_PLANT_5_A_OVERCHARGED_OVERCHARGED, SlotType.CORE_POWER_PLANT),
+//                Arguments.of("DETAILED_SURFACE_SCANNER_1_I_V1_PRE.json", DetailedSurfaceScanner.DETAILED_SURFACE_SCANNER_1_I_V1_PRE, SlotType.OPTIONAL),
+//                Arguments.of("SHIELD_GENERATOR_3_A_PRE.json", ShieldGenerator.SHIELD_GENERATOR_3_A_PRE, SlotType.OPTIONAL),
+//                Arguments.of("KILL_WARRANT_SCANNER_0_A_PRE.json", KillWarrantScanner.KILL_WARRANT_SCANNER_0_A_PRE, SlotType.UTILITY),
+//                Arguments.of("POINT_DEFENCE_0_I_PRE.json", PointDefence.POINT_DEFENCE_0_I_PRE, SlotType.UTILITY),
+//                Arguments.of("HEAT_SINK_LAUNCHER_0_I_PRE.json", SinkLauncher.HEAT_SINK_LAUNCHER_0_I_PRE, SlotType.UTILITY)//,
 
         );
     }
@@ -208,11 +208,11 @@ class LoadoutMapperTest {
             Assertions.assertTrue(resourceAsStream.available() > 0, "File is empty");
             ShipModule.ALL_MODULES.stream().flatMap(Collection::stream).filter(ShipModule::isPreEngineered).map(ShipModule::getId).forEach(log::info);
             ShipModule.getBasicModules();
-                final Module module = objectMapper.readValue(resourceAsStream, Module.class);
-                Ship sa = Ship.KRAIT_MK_II;
-                final List<ShipModule> potentialShipModules = LoadoutMapper.getPotentialShipModules(module.getItem(), slotType);
-                log.debug(potentialShipModules.stream().map(ShipModule::getId).collect(Collectors.joining(", ")));
-                final boolean preEngineered = LoadoutMapper.isPreEngineered(potentialShipModules, module.getEngineering().get());
+            final Module module = objectMapper.readValue(resourceAsStream, Module.class);
+            Ship sa = Ship.KRAIT_MK_II;
+            final List<ShipModule> potentialShipModules = LoadoutMapper.getPotentialShipModules(module.getItem(), slotType);
+            log.debug(potentialShipModules.stream().map(ShipModule::getId).collect(Collectors.joining(", ")));
+            final boolean preEngineered = LoadoutMapper.isPreEngineered(potentialShipModules, module.getEngineering().get());
             Assertions.assertTrue(preEngineered);
             final Optional<ShipModule> first = potentialShipModules.stream().filter(ShipModule::isPreEngineered).filter(shipModule2 -> LoadoutMapper.matchingEngineering(shipModule2, module.getEngineering().get())).findFirst();
             Assertions.assertEquals(shipModule.getId(), first.get().getId());

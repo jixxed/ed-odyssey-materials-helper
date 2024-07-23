@@ -6,11 +6,13 @@
   "AmmoInClip": 5,
   "AmmoInHopper": 180,
   "Health": 1.000000,
+  "Value": 477185,
   "Engineering": {
-    "EngineerID": 300001,
-    "BlueprintID": 128988382,
+    "Engineer": "Didi Vatermann",
+    "EngineerID": 300000,
+    "BlueprintID": 128984342,
     "BlueprintName": "weapon_longrange",
-    "Level": 1,
+    "Level": 5,
     "Quality": 0.000000,
     "Modifiers": [
       {
@@ -27,7 +29,7 @@
       },
       {
         "Label": "DistributorDraw",
-        "Value": 3.430000,
+        "Value": 3.932500,
         "OriginalValue": 0.650000,
         "LessIsGood": 1
       },
@@ -45,13 +47,13 @@
       },
       {
         "Label": "MaximumRange",
-        "Value": 2999.998291,
+        "Value": 8500.000000,
         "OriginalValue": 1700.000000,
         "LessIsGood": 0
       },
       {
         "Label": "ShotSpeed",
-        "Value": 6299.208984,
+        "Value": 6296.296875,
         "OriginalValue": 1133.333374,
         "LessIsGood": 0
       },
@@ -60,12 +62,6 @@
         "Value": 1.500000,
         "OriginalValue": 5.000000,
         "LessIsGood": 1
-      },
-      {
-        "Label": "DamageFalloffRange",
-        "Value": 1499.999146,
-        "OriginalValue": 1700.0,
-        "LessIsGood": 0
       }
     ]
   }

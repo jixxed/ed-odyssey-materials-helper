@@ -67,6 +67,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     SHOCK_CANNON(BlueprintGroup.SHOCK_CANNONS, BlueprintCategory.HARDPOINT),
     GUARDIAN_SHARD_CANNON(BlueprintGroup.GUARDIAN_SHARD_CANNONS, BlueprintCategory.HARDPOINT),
     GUARDIAN_SHARD_CANNON_PRE(BlueprintGroup.GUARDIAN_SHARD_CANNONS, BlueprintCategory.HARDPOINT, false),
+    GUARDIAN_SHARD_CANNON_PRE_GOD(BlueprintGroup.GUARDIAN_SHARD_CANNONS, BlueprintCategory.HARDPOINT, false),
     GUARDIAN_GAUSS_CANNON(BlueprintGroup.GUARDIAN_GAUSS_CANNONS, BlueprintCategory.HARDPOINT),
     GUARDIAN_GAUSS_CANNON_PRE(BlueprintGroup.GUARDIAN_GAUSS_CANNONS, BlueprintCategory.HARDPOINT, false),
     GUARDIAN_PLASMA_CHARGER(BlueprintGroup.GUARDIAN_PLASMA_CHARGERS, BlueprintCategory.HARDPOINT),
