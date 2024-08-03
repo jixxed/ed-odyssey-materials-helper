@@ -197,13 +197,16 @@ class SlotBox extends StackPane {
         if (!isCurrentShip()) {
             this.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    close();
-                    this.popOver = getPopOver();
+                    if(this.popOver != null && this.popOver.isShowing()){
+                        close();
+                    }else {
+                        this.popOver = getPopOver();
 
-                    final Bounds boundsInLocal = this.getBoundsInLocal();
-                    final Bounds bounds = this.localToScreen(boundsInLocal);
-                    this.popOver.show(this, bounds.getMinX(),
-                            bounds.getMaxY());
+                        final Bounds boundsInLocal = this.getBoundsInLocal();
+                        final Bounds bounds = this.localToScreen(boundsInLocal);
+                        this.popOver.show(this, bounds.getMinX(),
+                                bounds.getMaxY());
+                    }
                 } else if (event.getButton().equals(MouseButton.SECONDARY)) {
                     close();
                     if (!slot.getSlotType().isCore()) {
