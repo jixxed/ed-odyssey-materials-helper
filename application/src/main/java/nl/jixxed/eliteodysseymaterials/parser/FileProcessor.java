@@ -36,8 +36,6 @@ import java.nio.file.StandardOpenOption;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -68,8 +66,7 @@ public class FileProcessor {
     private static synchronized void processJournalFast(final File file) {
         EventService.publish(new JournalInitEvent(false));
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
-            final Map<JournalEventType, String> messages = new EnumMap<>(JournalEventType.class);
-            final List<String> alwaysProcessMessages = new ArrayList<>();
+            final List<String> messages = new ArrayList<>();
             if (file.length() >= position) {
                 // Skip over already processed bytes.
                 is.skip(position);
@@ -82,90 +79,31 @@ public class FileProcessor {
             while ((line = lineReader.readLine()) != null) {
                 //try to read line as json, if exception occurs we get JsonProcessingException and can try to read again later
                 JsonNode jsonNode = OBJECT_MAPPER.readTree(line);
-                final List<JournalEventType> alwaysTrackMaterialEventTypes = List.of(
-                        JournalEventType.MISSIONCOMPLETED,
-                        JournalEventType.MATERIALCOLLECTED,
-                        JournalEventType.MATERIALTRADE,
-                        JournalEventType.ENGINEERCRAFT,
-                        JournalEventType.LOCATION,
-                        JournalEventType.FSDJUMP,
-                        JournalEventType.CARRIERJUMP,
-                        JournalEventType.APPROACHSETTLEMENT,
-                        JournalEventType.CODEXENTRY,
-                        JournalEventType.DOCKED,
-                        JournalEventType.FSSALLBODIESFOUND,
-                        JournalEventType.FSSSIGNALDISCOVERED,
-                        JournalEventType.FSSBODYSIGNALS,
-                        JournalEventType.FSSDISCOVERYSCAN,
-                        JournalEventType.NAVBEACONSCAN,
-                        JournalEventType.SAASIGNALSFOUND,
-                        JournalEventType.SCANBARYCENTRE,
-                        JournalEventType.SCAN
-                );
                 if (jsonNode.get(EVENT) != null) {
                     final String newLine = removeBugs(jsonNode);
                     testAndReport(newLine, JournalEventTypes.EVENT_TYPES.get(jsonNode.get(EVENT).asText()));
                     final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
-                    if (alwaysTrackMaterialEventTypes.contains(journalEventType)) {
-                        alwaysProcessMessages.add(newLine);
-                    } else if (!JournalEventType.UNKNOWN.equals(journalEventType)) {
-                        if (JournalEventType.MATERIALS.equals(journalEventType)) {
-                            alwaysProcessMessages.removeIf(lineA -> {
-                                try {
-                                    return alwaysTrackMaterialEventTypes.contains(JournalEventType.forName(OBJECT_MAPPER.readTree(lineA).get(EVENT).asText()));
-                                } catch (final JsonProcessingException e) {
-                                    e.printStackTrace();
-                                }
-                                return false;
-                            });
-                            messages.put(journalEventType, newLine);
-                        } else if (JournalEventType.ENGINEERPROGRESS.equals(journalEventType)) {
-                            if (messages.containsKey(JournalEventType.ENGINEERPROGRESS) && jsonNode.has("Engineer")) {
-                                alwaysProcessMessages.add(newLine);//add additional engineerprogress messages to alwaysProcessMessages instead
-                            } else if (jsonNode.has("Engineers")) {
-                                alwaysProcessMessages.removeIf(line2 -> { //clear any additional engineerprogress messages if we get a full message (again)
-                                    try {
-                                        return JournalEventType.ENGINEERPROGRESS.equals(OBJECT_MAPPER.readTree(line2).get(EVENT));
-                                    } catch (final JsonProcessingException e) {
-                                        return false;
-                                    }
-                                });
-                                messages.put(journalEventType, newLine);//set the full message (again)
-                            }
-                        } else {
-                            messages.put(journalEventType, newLine);
-                        }
-
-                    }
+                    messages.add(newLine);
                 }
                 position = is.getCount();
             }
 
-            final List<String> singleMessages = messages.entrySet().stream()
-                    .sorted(Comparator.comparing(entry -> {
-                        try {
-                            final JsonNode jsonNode = OBJECT_MAPPER.readTree(entry.getValue());
-                            //force fileheader to be first because timestamp is local time vs server time and can be ahead
-                            if(jsonNode.get("event").asText().equals(JournalEventType.FILEHEADER.friendlyName())){
-                                return "0";
-                            }
-                            return jsonNode.get("timestamp").asText();
-                        } catch (final JsonProcessingException e) {
-                            log.error("Failed to read timestamp for event", e);
-                        }
-                        return "";
-                    }))
-                    .filter(entry -> (!entry.getKey().equals(JournalEventType.BACKPACKCHANGE) && !entry.getKey().equals(JournalEventType.BACKPACK)) || backpackAfterShiplocker(messages, entry))
-                    .map(Map.Entry::getValue)
-                    .collect(Collectors.toList());
             AtomicInteger index = new AtomicInteger(1);
-            Integer total = singleMessages.size() + alwaysProcessMessages.size();
-            Stream.concat(singleMessages.stream(), alwaysProcessMessages.stream())
+            Integer total = messages.size();
+            messages.stream()
+                    .filter(event -> {
+                        try {
+                            return
+                                    (!OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACKCHANGE.name()) && !OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACK.name()) || backpackAfterShiplocker(messages, event));
+                        } catch (final JsonProcessingException e) {
+                            return false;
+                        }
+                    })
                     .sorted(Comparator.comparing(event -> {
                         try {
                             final JsonNode jsonNode = OBJECT_MAPPER.readTree(event);
                             //force fileheader to be first because timestamp is local time vs server time and can be ahead
-                            if(jsonNode.get("event").asText().equals(JournalEventType.FILEHEADER.friendlyName())){
+                            if (jsonNode.get("event").asText().equals(JournalEventType.FILEHEADER.friendlyName())) {
                                 return "0";
                             }
                             return jsonNode.get("timestamp").asText();
@@ -199,9 +137,16 @@ public class FileProcessor {
         return jsonNode.toString();
     }
 
-    private static boolean backpackAfterShiplocker(final Map<JournalEventType, String> messages, final Map.Entry<JournalEventType, String> entry) {
+    private static boolean backpackAfterShiplocker(final List<String> messages, final String event) {
         try {
-            return ZonedDateTime.parse(OBJECT_MAPPER.readTree(entry.getValue()).get("timestamp").asText()).isAfter(ZonedDateTime.parse(OBJECT_MAPPER.readTree(messages.get(JournalEventType.SHIPLOCKER)).get("timestamp").asText()));
+            return ZonedDateTime.parse(OBJECT_MAPPER.readTree(event).get("timestamp").asText()).isAfter(ZonedDateTime.parse(OBJECT_MAPPER.readTree(messages.stream().filter(ev -> {
+                try {
+                    return
+                            (OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.SHIPLOCKER.name()));
+                } catch (final JsonProcessingException e) {
+                    return false;
+                }
+            }).findFirst().orElse("")).get("timestamp").asText()));
         } catch (final JsonProcessingException e) {
             return false;
         }
@@ -252,7 +197,7 @@ public class FileProcessor {
     }
 
     public static synchronized void processCapiFile(final File file, final JournalEventType journalEventType) {
-        if(journalEventType.equals(JournalEventType.CAPIFLEETCARRIER)) {
+        if (journalEventType.equals(JournalEventType.CAPIFLEETCARRIER)) {
             ApplicationState.getInstance().getFcMaterials().set(true);
         }
         Platform.runLater(() -> MessageHandler.handleCapiMessage(file, journalEventType));
