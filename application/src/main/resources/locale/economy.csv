@@ -1,19 +1,19 @@
 messageKey,,en,de,es,fr,pt,ru
-economy.agri,Agriculture,,,Agricultura,,,
-economy.colony,Colony,,,Colonia,,,
-economy.extraction,Extraction,,,Extracción,,,
-economy.hightech,High Tech,,,Alta Tecnología,,,
-economy.industrial,Industrial,,,Industrial,,,
-economy.military,Military,,,Militar,,,
-economy.refinery,Refinery,,,Refineria,,,
-economy.service,Service,,,Servicios,,,
-economy.terraforming,Terraforming,,,Terraformación,,,
-economy.tourism,Tourism,,,Turismo,,,
-economy.prison,Prison,,,Prisión,,,
-economy.damaged,Damaged,,,Dañado,,,
-economy.rescue,Rescue,,,Rescate,,,
-economy.repair,Repair,,,Reparación,,,
-economy.carrier,Private Enterprise,,,Empresa Privada,,,
-economy.engineer,Engineering,,,Ingeniería,,,
-economy.none,None,,,Ninguna,,,
-economy.unknown,Unknown,,,Desconocida,,,
+economy.agri,Agriculture,,,Agricultura,,,Сельское хозяйство
+economy.colony,Colony,,,Colonia,,,Колония
+economy.extraction,Extraction,,,Extracción,,,Добыча ископаемых
+economy.hightech,High Tech,,,Alta Tecnología,,,Высокие технологии
+economy.industrial,Industrial,,,Industrial,,,Промышленность
+economy.military,Military,,,Militar,,,Военная
+economy.refinery,Refinery,,,Refineria,,,Переработка
+economy.service,Service,,,Servicios,,,Сфера услуг
+economy.terraforming,Terraforming,,,Terraformación,,,Терраформирование
+economy.tourism,Tourism,,,Turismo,,,Туризм
+economy.prison,Prison,,,Prisión,,,Тюрьма
+economy.damaged,Damaged,,,Dañado,,,Поврежденная
+economy.rescue,Rescue,,,Rescate,,,Спасательный корабль
+economy.repair,Repair,,,Reparación,,,Ремонт
+economy.carrier,Private Enterprise,,,Empresa Privada,,,Частное предприятие
+economy.engineer,Engineering,,,Ingeniería,,,Инженерное дело
+economy.none,None,,,Ninguna,,,Нет
+economy.unknown,Unknown,,,Desconocida,,,Неизвестно
