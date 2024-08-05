@@ -698,8 +698,8 @@ public abstract class OdysseyBlueprintConstants {
                         Good.WEAPONSCHEMATIC, 1,
                         Good.COMPRESSIONLIQUEFIEDGAS, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.WEAPONCOMPONENT, 5,
-                        Asset.TUNGSTENCARBIDE, 5
+                        Asset.WEAPONCOMPONENT, 2,
+                        Asset.TUNGSTENCARBIDE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1"
@@ -709,11 +709,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.KARMA_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.KARMA_2_3,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 5,
-                        Good.COMPRESSIONLIQUEFIEDGAS, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.WEAPONCOMPONENT, 15,
-                        Asset.TUNGSTENCARBIDE, 15
+                        Good.WEAPONSCHEMATIC, 2,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.WEAPONCOMPONENT, 5,
+                        Asset.TUNGSTENCARBIDE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2"
@@ -722,11 +722,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.KARMA_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.KARMA_3_4,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 10,
-                        Good.COMPRESSIONLIQUEFIEDGAS, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.WEAPONCOMPONENT, 25,
-                        Asset.TUNGSTENCARBIDE, 25
+                        Good.WEAPONSCHEMATIC, 4,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.WEAPONCOMPONENT, 9,
+                        Asset.TUNGSTENCARBIDE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3"
@@ -735,11 +735,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.KARMA_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.KARMA_4_5,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 15,
-                        Good.COMPRESSIONLIQUEFIEDGAS, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.WEAPONCOMPONENT, 35,
-                        Asset.TUNGSTENCARBIDE, 35
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.WEAPONCOMPONENT, 12,
+                        Asset.TUNGSTENCARBIDE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4"
@@ -752,8 +752,8 @@ public abstract class OdysseyBlueprintConstants {
                         Good.WEAPONSCHEMATIC, 1,
                         Good.IONISEDGAS, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.MICROELECTRODE, 5,
-                        Asset.OPTICALFIBRE, 5
+                        Asset.MICROELECTRODE, 2,
+                        Asset.OPTICALFIBRE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1"
@@ -763,11 +763,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.TK_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.TK_2_3,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 5,
-                        Good.IONISEDGAS, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.MICROELECTRODE, 15,
-                        Asset.OPTICALFIBRE, 15
+                        Good.WEAPONSCHEMATIC, 2,
+                        Good.IONISEDGAS, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.MICROELECTRODE, 5,
+                        Asset.OPTICALFIBRE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2"
@@ -776,11 +776,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.TK_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.TK_3_4,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 10,
-                        Good.IONISEDGAS, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.MICROELECTRODE, 25,
-                        Asset.OPTICALFIBRE, 25
+                        Good.WEAPONSCHEMATIC, 4,
+                        Good.IONISEDGAS, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.MICROELECTRODE, 9,
+                        Asset.OPTICALFIBRE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3"
@@ -789,11 +789,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.TK_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.TK_4_5,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 15,
-                        Good.IONISEDGAS, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.MICROELECTRODE, 35,
-                        Asset.OPTICALFIBRE, 35
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.IONISEDGAS, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.MICROELECTRODE, 12,
+                        Asset.OPTICALFIBRE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4"
@@ -806,8 +806,8 @@ public abstract class OdysseyBlueprintConstants {
                         Good.WEAPONSCHEMATIC, 1,
                         Good.IONISEDGAS, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.MICROELECTRODE, 5,
-                        Asset.CHEMICALSUPERBASE, 5
+                        Asset.MICROELECTRODE, 2,
+                        Asset.CHEMICALSUPERBASE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1"
@@ -817,11 +817,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.MANTICORE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.MANTICORE_2_3,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 5,
-                        Good.IONISEDGAS, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.MICROELECTRODE, 15,
-                        Asset.CHEMICALSUPERBASE, 15
+                        Good.WEAPONSCHEMATIC, 2,
+                        Good.IONISEDGAS, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.MICROELECTRODE, 5,
+                        Asset.CHEMICALSUPERBASE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2"
@@ -830,11 +830,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.MANTICORE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.MANTICORE_3_4,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 10,
-                        Good.IONISEDGAS, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.MICROELECTRODE, 25,
-                        Asset.CHEMICALSUPERBASE, 25
+                        Good.WEAPONSCHEMATIC, 4,
+                        Good.IONISEDGAS, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.MICROELECTRODE, 9,
+                        Asset.CHEMICALSUPERBASE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3"
@@ -843,11 +843,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.MANTICORE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.MANTICORE_4_5,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 15,
-                        Good.IONISEDGAS, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.MICROELECTRODE, 35,
-                        Asset.CHEMICALSUPERBASE, 35
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.IONISEDGAS, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.MICROELECTRODE, 12,
+                        Asset.CHEMICALSUPERBASE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4"
