@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.export;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -76,7 +77,7 @@ public class XlsExporter {
         return workbook;
     }
 
-    public static XSSFWorkbook createXlsWishlist(final Map<Raw, Integer> wishlistNeededRaw, final Map<Encoded, Integer> wishlistNeededEncoded, final Map<Manufactured, Integer> wishlistNeededManufactured, final Map<Commodity, Integer> wishlistNeededCommodity) {
+    public static XSSFWorkbook createXlsWishlist(final Map<Raw, WishlistMaterial> wishlistNeededRaw, final Map<Encoded, WishlistMaterial> wishlistNeededEncoded, final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured, final Map<Commodity, WishlistMaterial> wishlistNeededCommodity) {
         final XSSFWorkbook workbook = new XSSFWorkbook();
         final XSSFSheet sheet = workbook.createSheet("wishlist");
 //        final StringBuilder textBuilder = new StringBuilder();
@@ -97,7 +98,7 @@ public class XlsExporter {
         final XSSFFont dataFont = workbook.createFont();
         dataFont.setFontHeight(14);
         dataStyle.setFont(dataFont);
-        ((List<Map<HorizonsMaterial, Integer>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
+        ((List<Map<HorizonsMaterial, WishlistMaterial>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
                 wishlistNeededMaterials.entrySet().stream()
                         .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
                         .forEach(item -> {
@@ -121,7 +122,7 @@ public class XlsExporter {
                             createCell(sheet, dataRow, 2, fc, dataStyle);
                             createCell(sheet, dataRow, 3, total, dataStyle);
                             createCell(sheet, dataRow, 4, item.getValue(), dataStyle);
-                            createCell(sheet, dataRow, 5, Math.max(0, item.getValue() - ship), dataStyle);
+                            createCell(sheet, dataRow, 5, Math.max(0, item.getValue().getRequired() - ship), dataStyle);
                         })
         );
         return workbook;

@@ -4,6 +4,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
@@ -21,6 +22,7 @@ import org.controlsfx.control.SegmentedBar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
@@ -30,11 +32,25 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
     private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
     private SegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment present;
-    private TypeSegment notPresent;
+    private TypeSegment missingForMinimum;
+    private TypeSegment missingForRequired;
+    private TypeSegment missingForMaximum;
+    private Integer amountMinimum;
+    private Integer amountRequired;
+    private Integer amountMaximum;
+    private Integer minimum;
+    private Integer required;
+    private Integer maximum;
     protected List<EventListener<?>> eventListeners = new ArrayList<>();
 
-    HorizonsWishlistIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer amountRequired, final Integer amountAvailable) {
+    HorizonsWishlistIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer amountMinimum, final Integer amountRequired, final Integer amountMaximum, final Integer amountAvailable) {
         super(storageType, horizonsMaterial, amountRequired, amountAvailable);
+        this.amountMinimum = amountMinimum;
+        this.amountMaximum = amountMaximum;
+        this.amountRequired = amountRequired;
+        this.minimum = amountMinimum;
+        this.maximum = amountMaximum;
+        this.required = amountRequired;
         initComponents();
         initEventHandling();
     }
@@ -50,15 +66,26 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
         this.segmentedBar.getStyleClass().add("ingredient-progressbar");
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
+//        green/red = current material count
+//        dark grey = minimum requirement(all engineers G5) - current material count
+//        light grey = current requirement(based on shortest path) - max(minimum requirement, current material count)
+//        light green/red = maximum requirement(all engineers G1) - current requirement(based on shortest path)
+
         this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                 SegmentType.PRESENT, Color.rgb(255, 255, 255),
-                SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
+                SegmentType.MISSING_FOR_MINIMUM, Color.rgb(128, 128, 128),
+                SegmentType.MISSING_FOR_REQUIRED, Color.rgb(192, 192, 192),
+                SegmentType.MISSING_FOR_MAXIMUM, Color.rgb(255, 255, 255)
         ), false));
-        final Integer progress = Math.min(this.getLeftAmount(), this.getRightAmount());
+        final Integer progress = Math.min(this.getRightAmount(), this.amountMaximum);
         this.present = new TypeSegment(progress, SegmentType.PRESENT);
-        this.notPresent = new TypeSegment(Math.max(this.getLeftAmount() - progress, 0), SegmentType.NOT_PRESENT);
-        this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
+//        this.notPresent = new TypeSegment(Math.max(this.getLeftAmount() - progress, 0), SegmentType.NOT_PRESENT);
+        this.missingForMinimum = new TypeSegment(Math.max(0, amountMinimum - progress), SegmentType.MISSING_FOR_MINIMUM);
+        this.missingForRequired = new TypeSegment(Math.max(0, amountRequired - Math.max(amountMinimum, progress)), SegmentType.MISSING_FOR_REQUIRED);
+        this.missingForMaximum = new TypeSegment(Math.max(0, amountMaximum - Math.max(amountRequired, progress)), SegmentType.MISSING_FOR_MAXIMUM);
+        this.segmentedBar.getSegments().addAll(this.present, this.missingForMinimum,        this.missingForRequired,        this.missingForMaximum);
         this.getChildren().add(this.segmentedBar);
+        this.getLeftAmountLabel().setText(getLeftAmountString());
     }
     @Override
     protected void installPopOver() {
@@ -104,26 +131,34 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
         this.setRightAmount(materialCountBoth);
         showAsHovered(this.hoverProperty().getValue());
         this.getStyleClass().removeAll(INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
-        if (materialCountBoth >= Integer.parseInt(this.getLeftAmountLabel().getText()) && materialCountShip < Integer.parseInt(this.getLeftAmountLabel().getText())) {
+        if (materialCountBoth >= getLeftAmount() && materialCountShip < getLeftAmount()) {
             this.getStyleClass().addAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
-        } else if (this.getRightAmount() >= Integer.parseInt(this.getLeftAmountLabel().getText())) {
+        } else if (this.getRightAmount() >= getLeftAmount()) {
             this.getStyleClass().addAll(INGREDIENT_FILLED_CLASS);
         } else {
             this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
         }
         if(this.present != null){
-            final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
+            final Integer progress = Math.min(this.getRightAmount(), this.amountMaximum);
+//            final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
             this.present.setValue(progress);
-            this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
+            this.missingForMinimum.setValue(Math.max(0, amountMinimum - progress));
+            this.missingForRequired.setValue(Math.max(0, amountRequired - Math.max(amountMinimum, progress)));
+            this.missingForMaximum.setValue(Math.max(0, amountMaximum - Math.max(amountRequired, progress)));
+//            this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
             if(Math.max(this.getLeftAmount() - progress, 0) > 0){
                 this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                         SegmentType.PRESENT, Color.web("#ff7c7c"),
-                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
+                        SegmentType.MISSING_FOR_MINIMUM, Color.rgb(128, 128, 128),
+                        SegmentType.MISSING_FOR_REQUIRED, Color.rgb(192, 192, 192),
+                        SegmentType.MISSING_FOR_MAXIMUM, Color.web("#FFC8C8")
                 ), false));
             }else{
                 this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                         SegmentType.PRESENT, Color.web("#89d07f"),
-                        SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
+                        SegmentType.MISSING_FOR_MINIMUM, Color.rgb(128, 128, 128),
+                        SegmentType.MISSING_FOR_REQUIRED, Color.rgb(192, 192, 192),
+                        SegmentType.MISSING_FOR_MAXIMUM, Color.web("#BED3BB")
                 ), false));
             }
         }
@@ -138,14 +173,21 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
         update();
     }
 
-    void highlight(final boolean enable, final Integer amountRequiredForRecipe) {
+    void highlight(final boolean enable, final WishlistMaterial amount) {
         if (enable) {
             this.getStyleClass().add("wishlist-highlight");
-            this.getLeftAmountLabel().setText(amountRequiredForRecipe.toString());
+            setLeftAmount(amount.getRequired());
+            this.amountMinimum = amount.getMinimum();
+            this.amountMaximum = amount.getMaximum();
+            this.amountRequired = amount.getRequired();
         } else {
             this.getStyleClass().removeAll("wishlist-highlight");
-            this.getLeftAmountLabel().setText(this.getLeftAmount().toString());
+            setLeftAmount(required);
+            this.amountMinimum = minimum;
+            this.amountMaximum = maximum;
+            this.amountRequired = required;
         }
+        this.getLeftAmountLabel().setText(getLeftAmountString());
         update();
     }
 
@@ -156,4 +198,13 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
             this.getStyleClass().removeAll("wishlist-lowlight");
         }
     }
+
+    @Override
+    protected String getLeftAmountString() {
+        if(Objects.equals(this.amountMinimum, this.amountMaximum)) {
+            return this.amountRequired!= null ? this.amountRequired.toString() : "0";
+        }
+        return this.amountRequired +  " (" + this.amountMinimum  + " - " + this.amountMaximum + ")";
+    }
+
 }

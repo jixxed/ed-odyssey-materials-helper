@@ -261,7 +261,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         menuItem.setOnAction(event -> {
             final HorizonsWishlistBlueprint bp;
             if (this.blueprint instanceof HorizonsModuleBlueprint horizonsModuleBlueprint) {
-                bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), new EnumMap<>(Map.of(horizonsModuleBlueprint.getHorizonsBlueprintGrade(), getGradeRolls(this.blueprint.getHorizonsBlueprintType(), horizonsModuleBlueprint.getHorizonsBlueprintGrade()))));
+                bp = new HorizonsModuleWishlistBlueprint(horizonsModuleBlueprint.getHorizonsBlueprintType(), new EnumMap<>(Map.of(horizonsModuleBlueprint.getHorizonsBlueprintGrade(), 1D)));
             } else if (this.blueprint instanceof HorizonsExperimentalEffectBlueprint horizonsExperimentalEffectBlueprint) {
                 bp = new HorizonsExperimentalWishlistBlueprint(horizonsExperimentalEffectBlueprint.getHorizonsBlueprintType());
             } else if (BlueprintCategory.SYNTHESIS.equals((this.blueprint.getBlueprintName()).getBlueprintCategory())) {
@@ -283,18 +283,14 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         menuItem.setOnAction(event -> {
             final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades((this.blueprint.getBlueprintName()), this.blueprint.getHorizonsBlueprintType());
 
-            final Map<HorizonsBlueprintGrade, Integer> gradeRolls = new EnumMap<>(HorizonsBlueprintGrade.class);
-            blueprintGrades.forEach(horizonsBlueprintGrade -> gradeRolls.put(horizonsBlueprintGrade, getGradeRolls(this.blueprint.getHorizonsBlueprintType(), horizonsBlueprintGrade)));
-            final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(this.blueprint.getHorizonsBlueprintType(), gradeRolls);
+            final Map<HorizonsBlueprintGrade, Double> gradePercentages = new EnumMap<>(HorizonsBlueprintGrade.class);
+            blueprintGrades.forEach(horizonsBlueprintGrade -> gradePercentages.put(horizonsBlueprintGrade, 1D));
+            final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(this.blueprint.getHorizonsBlueprintType(), gradePercentages);
             bp.setRecipeName((this.blueprint.getBlueprintName()));
             bp.setVisible(true);
             EventService.publish(new HorizonsWishlistBlueprintEvent(commander, wishlist.getUuid(), List.of(bp), Action.ADDED));
         });
         return menuItem;
-    }
-
-    private static int getGradeRolls(HorizonsBlueprintType type, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return type.getGradeRolls(horizonsBlueprintGrade);
     }
 
 

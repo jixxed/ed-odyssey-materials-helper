@@ -62,7 +62,7 @@ class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Templ
         this.blueprintsLabel = LabelBuilder.builder().withStyleClass(SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("tab.wishlist.travel.path.column.blueprints")).build();
         this.distance = LabelBuilder.builder().withNonLocalizedText(" " + ((this.index > 1) ? "+" : "") + NUMBER_FORMAT.format(this.pathItem.getDistance()) + "Ly").build();
         this.engineer = LabelBuilder.builder().withStyleClass("shortest-path-item-label-big").withText(LocaleService.getStringBinding(() -> " " + LocaleService.getLocalizedStringForCurrentLocale(this.pathItem.getEngineer().getLocalizationKey()))).build();
-        this.blueprints.addAll(this.pathItem.getBlueprints().stream().flatMap(temp -> temp.getRecipe().stream().map(bp -> (bp instanceof HorizonsBlueprint horizonsBlueprint)
+        this.blueprints.addAll(this.pathItem.getBlueprints().stream().flatMap(temp -> temp.getRecipe().keySet().stream().map(bp -> (bp instanceof HorizonsBlueprint horizonsBlueprint)
                         ? HorizonsBlueprintConstants.getRecipe(horizonsBlueprint.getBlueprintName(), horizonsBlueprint.getHorizonsBlueprintType(), HorizonsBlueprintGrade.GRADE_1)
                         : bp).distinct())
                 .collect(Collectors.groupingBy(

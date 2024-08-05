@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
+import nl.jixxed.eliteodysseymaterials.domain.IntegerRange;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
@@ -22,12 +23,14 @@ public class MaterialCollectedMessageProcessor implements MessageProcessor<Mater
                     StorageService.addMaterial(horizonsMaterial, event.getCount().intValue());
                 }
                 if (WishlistService.isMaterialOnWishlist(horizonsMaterial)) {
+                    final IntegerRange allWishlistsCount = WishlistService.getAllWishlistsCount(horizonsMaterial);
                     NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"),
                             LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification.horizons",
                                     LocaleService.LocalizationKey.of(horizonsMaterial.getLocalizationKey()),
                                     event.getCount().intValue(),
                                     StorageService.getMaterialCount(horizonsMaterial),
-                                    WishlistService.getAllWishlistsCount(horizonsMaterial)));
+                                    allWishlistsCount.min(),
+                                    allWishlistsCount.max()));
                 }
 
                 EventService.publish(new StorageEvent(StoragePool.SHIP));

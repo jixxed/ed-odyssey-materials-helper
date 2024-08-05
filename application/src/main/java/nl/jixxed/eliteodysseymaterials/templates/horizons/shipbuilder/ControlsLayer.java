@@ -34,7 +34,6 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuIte
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import org.controlsfx.control.PopOver;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -376,9 +375,9 @@ public class ControlsLayer extends AnchorPane implements Template {
                         //get grade
                         final HorizonsBlueprintGrade grade = modification.getGrade();
                         //get grades before and including grade
-                        final Map<HorizonsBlueprintGrade, Integer> gradeRolls = new EnumMap<>(HorizonsBlueprintGrade.class);
+                        final Map<HorizonsBlueprintGrade, Double> gradePercentageToComplete = new EnumMap<>(HorizonsBlueprintGrade.class);
                         if (all || slot.getOldModule() == null || (slot.getOldModule().getModification().stream().noneMatch(oldMod -> modification.getType().equals(oldMod.getType())))) {
-                            addRolls(modification, name, modification.getType(), grade, gradeRolls);
+                            addAllUpTo(modification, name, modification.getType(), grade, gradePercentageToComplete);
                         } else {
                             final ShipConfigurationModification oldModification = slot.getOldModule().getModification().stream().filter(oldMod -> oldMod.getType().equals(modification.getType())).findFirst().orElseThrow(IllegalArgumentException::new);
                             final HorizonsBlueprintGrade oldGrade = oldModification.getGrade();
@@ -390,31 +389,31 @@ public class ControlsLayer extends AnchorPane implements Template {
 
                                 //reduce number of rolls based on percentage completed
                                 blueprintGrades.forEach(horizonsBlueprintGrade -> {
-                                    int rolls;
+                                    double percentageToComplete;
                                     if (horizonsBlueprintGrade.equals(oldGrade) && horizonsBlueprintGrade.equals(grade)) {
-                                        rolls = (int) Math.ceil((modification.getPercentComplete().doubleValue() - oldModification.getPercentComplete().doubleValue()) * (double) getGradeRolls(modification.getType(), horizonsBlueprintGrade));
+                                        percentageToComplete = modification.getPercentComplete().doubleValue() - oldModification.getPercentComplete().doubleValue();
                                     } else if (horizonsBlueprintGrade.equals(grade)) {
-                                        rolls = (int) Math.ceil(modification.getPercentComplete().multiply(BigDecimal.valueOf(getGradeRolls(modification.getType(), horizonsBlueprintGrade))).doubleValue());
+                                        percentageToComplete = modification.getPercentComplete().doubleValue();
                                     } else if (horizonsBlueprintGrade.equals(oldGrade)) {
-                                        rolls = (int) Math.ceil((1D - oldModification.getPercentComplete().doubleValue()) * (double) getGradeRolls(modification.getType(), horizonsBlueprintGrade));
+                                        percentageToComplete = 1D - oldModification.getPercentComplete().doubleValue();
                                     } else {
-                                        rolls = getGradeRolls(modification.getType(), horizonsBlueprintGrade);
+                                        percentageToComplete = 1D;
                                     }
-                                    if(rolls > 0) {
-                                        gradeRolls.put(horizonsBlueprintGrade, rolls);
+                                    if(percentageToComplete > 0D) {
+                                        gradePercentageToComplete.put(horizonsBlueprintGrade, percentageToComplete);
                                     }
                                 });
 
                             } else {
-                                addRolls(modification, name, modification.getType(), grade, gradeRolls);
+                                addAllUpTo(modification, name, modification.getType(), grade, gradePercentageToComplete);
                             }
 
                             //cases
                             //oldgrade is lower -> upgrade from oldgrade to new grade
                             //no oldmodule or oldgrade is higher -> upgrade from 0 to new grade
                         }
-                        if (!gradeRolls.values().stream().allMatch(rolls -> rolls.equals(0))) {
-                            final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(modification.getType(), gradeRolls);
+                        if (!gradePercentageToComplete.values().stream().allMatch(rolls -> rolls.equals(0))) {
+                            final HorizonsModuleWishlistBlueprint bp = new HorizonsModuleWishlistBlueprint(modification.getType(), gradePercentageToComplete);
                             bp.setRecipeName(name);
                             bp.setVisible(true);
                             wishlistBlueprints.add(bp);
@@ -435,7 +434,7 @@ public class ControlsLayer extends AnchorPane implements Template {
         return wishlistBlueprints;
     }
 
-    private static void addRolls(ShipConfigurationModification modification, HorizonsBlueprintName name, HorizonsBlueprintType type, HorizonsBlueprintGrade grade, Map<HorizonsBlueprintGrade, Integer> gradeRolls) {
+    private static void addAllUpTo(ShipConfigurationModification modification, HorizonsBlueprintName name, HorizonsBlueprintType type, HorizonsBlueprintGrade grade, Map<HorizonsBlueprintGrade, Double> gradePercentageToComplete) {
         final Set<HorizonsBlueprintGrade> blueprintGrades = HorizonsBlueprintConstants.getBlueprintGrades(name, modification.getType())
                 .stream()
                 .filter(gradeToAdd -> gradeToAdd.getGrade() <= grade.getGrade())
@@ -443,12 +442,12 @@ public class ControlsLayer extends AnchorPane implements Template {
 
         //reduce number of rolls based on percentage for final grade
         blueprintGrades.forEach(horizonsBlueprintGrade -> {
-            final int rolls = (horizonsBlueprintGrade.equals(grade)) ? (int) Math.ceil(modification.getPercentComplete().multiply(BigDecimal.valueOf(getGradeRolls(type, horizonsBlueprintGrade))).doubleValue()) : getGradeRolls(type, horizonsBlueprintGrade);
-            gradeRolls.put(horizonsBlueprintGrade, rolls);
+            final double percentageToComplete = (horizonsBlueprintGrade.equals(grade)) ? modification.getPercentComplete().doubleValue() : 1D;
+            gradePercentageToComplete.put(horizonsBlueprintGrade, percentageToComplete);
         });
     }
-
-    private static int getGradeRolls(HorizonsBlueprintType type, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return type.getGradeRolls(horizonsBlueprintGrade);
-    }
+//
+//    private static int getGradeRolls(HorizonsBlueprintType type, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
+//        return type.getGradeRolls(horizonsBlueprintGrade);
+//    }
 }

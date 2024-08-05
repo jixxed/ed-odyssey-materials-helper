@@ -9,6 +9,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -42,7 +43,8 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private final HorizonsStorageType storageType;
     @EqualsAndHashCode.Include
     private final HorizonsMaterial horizonsMaterial;
-    private final Integer leftAmount;
+    @Setter
+    private Integer leftAmount;
     private Integer rightAmount;
 
     private Label nameLabel;
@@ -97,9 +99,9 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
 
         this.leftHBox = BoxBuilder.builder().withNodes(this.leftDescriptionLabel, this.leftAmountLabel).withStyleClass("ingredient-quantity-section").buildHBox();
         this.rightHBox = BoxBuilder.builder().withNodes(this.rightAmountLabel, this.rightDescriptionLabel).withStyleClass("ingredient-quantity-section").buildHBox();
-        this.leftAmountLabel.setText(this.leftAmount.toString());
+        this.leftAmountLabel.setText(getLeftAmountString());
         HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
-        this.rightAmountLabel.setText(this.rightAmount.toString());
+        this.rightAmountLabel.setText(getRightAmountString());
         this.region = new Region();
         HBox.setHgrow(this.region, Priority.ALWAYS);
         this.region2 = new Region();
@@ -114,6 +116,14 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
         this.getStyleClass().add("ingredient");
 
         update();
+    }
+
+    protected String getRightAmountString() {
+        return this.rightAmount.toString();
+    }
+
+    protected String getLeftAmountString() {
+        return this.leftAmount.toString();
     }
 
     protected void installPopOver() {
@@ -145,7 +155,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
             materialCountShip = materialCountBoth;
         }
         setRightAmount(materialCountBoth);
-        this.rightAmountLabel.setText(this.rightAmount.toString());
+        this.rightAmountLabel.setText(getRightAmountString());
         this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);
         if (materialCountBoth >= this.leftAmount && materialCountShip < this.leftAmount) {
             this.getStyleClass().addAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS);

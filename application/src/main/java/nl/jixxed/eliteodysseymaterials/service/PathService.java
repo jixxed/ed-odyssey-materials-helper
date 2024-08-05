@@ -315,7 +315,7 @@ public class PathService {
                                 (wishlistBlueprints.stream().filter(WishlistBlueprintTemplate::isVisibleBlueprint).noneMatch(
                                         wbp -> (wbp.getPrimaryRecipe() instanceof HorizonsModuleBlueprint)
                                                 && wbp.getPrimaryRecipe().getBlueprintName().equals(bp.getPrimaryRecipe().getBlueprintName())
-                                                && !wbp.getRecipe().stream().allMatch(bp1 -> ((HorizonsModuleBlueprint) bp1).getEngineers().contains(engineer)))
+                                                && !wbp.getRecipe().keySet().stream().allMatch(bp1 -> ((HorizonsModuleBlueprint) bp1).getEngineers().contains(engineer)))
                                         ||
                                         wishlistBlueprints.stream().filter(WishlistBlueprintTemplate::isVisibleBlueprint).anyMatch(wbp -> (wbp.getPrimaryRecipe() instanceof HorizonsModuleBlueprint hwbp)
                                                 && hwbp.getBlueprintName().equals(bp.getPrimaryRecipe().getBlueprintName())

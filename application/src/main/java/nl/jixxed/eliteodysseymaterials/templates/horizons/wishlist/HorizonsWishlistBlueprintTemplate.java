@@ -17,15 +17,13 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistBlueprintTemplate<HorizonsBlueprintName> {
@@ -95,7 +93,13 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
                 .withText(titleStringBinding)
                 .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
                 .withHoverProperty((observable, oldValue, newValue) -> {
-                    this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.blueprint.getRequiredAmount(wishlistIngredient.getHorizonsMaterial())));
+                    this.wishlistIngredients.forEach(wishlistIngredient -> {
+                        final Integer requiredAmount = this.blueprint.getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), null);
+                        final Integer minimumAmount = this.blueprint.getMinimumAmount(wishlistIngredient.getHorizonsMaterial());
+                        final Integer maximumAmount = this.blueprint.getMaximumAmount(wishlistIngredient.getHorizonsMaterial());
+
+                        wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount,requiredAmount,maximumAmount));
+                    });
                     this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
                     this.highlight(newValue);
                 })
@@ -191,8 +195,8 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
     }
 
     @Override
-    public List<Blueprint<HorizonsBlueprintName>> getRecipe() {
-        return (this.blueprint == null) ? Collections.emptyList() : List.of(this.blueprint);
+    public Map<Blueprint<HorizonsBlueprintName>, Double> getRecipe() {
+        return (this.blueprint == null) ? Collections.emptyMap() : Map.of(this.blueprint, 1D);
     }
 
     @Override
@@ -248,5 +252,10 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
     @Override
     public void onDestroy() {
         EventService.removeListener(this.storageEventEventListener);
+    }
+
+    @Override
+    public void setEngineer(Engineer engineer) {
+        //not needed
     }
 }

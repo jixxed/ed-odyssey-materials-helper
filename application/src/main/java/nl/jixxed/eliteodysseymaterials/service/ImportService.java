@@ -235,19 +235,15 @@ public class ImportService {
 
     }
 
-    private static EnumMap<HorizonsBlueprintGrade, Integer> createGradeMap(HorizonsBlueprintType type, Integer grade, final Double fraction) {
+    private static EnumMap<HorizonsBlueprintGrade, Double> createGradeMap(HorizonsBlueprintType type, Integer grade, final Double fraction) {
         final HorizonsBlueprintGrade topGrade = HorizonsBlueprintGrade.valueOf("GRADE_" + grade--);
-        final EnumMap<HorizonsBlueprintGrade, Integer> gradeRolls = new EnumMap<>(HorizonsBlueprintGrade.class);
-        gradeRolls.put(topGrade, (int) Math.ceil(getGradeRolls(type, topGrade) * fraction));
+        final EnumMap<HorizonsBlueprintGrade, Double> gradeRolls = new EnumMap<>(HorizonsBlueprintGrade.class);
+        gradeRolls.put(topGrade, fraction);
         for (int i = grade; i > 0; i--) {
             final HorizonsBlueprintGrade horizonsBlueprintGrade = HorizonsBlueprintGrade.valueOf("GRADE_" + i);
-            gradeRolls.put(horizonsBlueprintGrade, getGradeRolls(type, horizonsBlueprintGrade));
+            gradeRolls.put(horizonsBlueprintGrade, 1D);
         }
         return gradeRolls;
-    }
-
-    private static int getGradeRolls(HorizonsBlueprintType type, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return type.getGradeRolls(horizonsBlueprintGrade);
     }
 
     private static ImportResult importLoadout(final String decoded) {

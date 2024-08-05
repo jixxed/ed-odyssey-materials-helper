@@ -193,17 +193,18 @@ public abstract class HorizonsBlueprintConstants {
     }
 
     public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1));
+        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1D) , null);
     }
 
-    public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Integer> horizonsBlueprintGrades) {
-        final List<Craftability> craftabilities = horizonsBlueprintGrades.entrySet().stream().map(horizonsBlueprintGradeRolls -> {
-            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGradeRolls.getKey());
+    public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Double> horizonsBlueprintGrades, Engineer engineer) {
+        final List<Craftability> craftabilities = horizonsBlueprintGrades.entrySet().stream().map(gradePercentageToComplete -> {
+            final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsBlueprintName, horizonsBlueprintType, gradePercentageToComplete.getKey());
             final AtomicBoolean hasRaw = new AtomicBoolean(true);
             final AtomicBoolean hasEncoded = new AtomicBoolean(true);
             final AtomicBoolean hasManufactured = new AtomicBoolean(true);
             final AtomicBoolean hasCommodity = new AtomicBoolean(true);
-            final Integer numberOfRolls = horizonsBlueprintGradeRolls.getValue();
+            final Double percentageToComplete = gradePercentageToComplete.getValue();
+            int numberOfRolls = blueprint.getHorizonsBlueprintGrade().getNumberOfRolls(engineer, horizonsBlueprintType);
             blueprint.getMaterialCollection(Raw.class).forEach((material, amountRequired) -> hasRaw.set(hasRaw.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
             blueprint.getMaterialCollection(Encoded.class).forEach((material, amountRequired) -> hasEncoded.set(hasEncoded.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));
             blueprint.getMaterialCollection(Manufactured.class).forEach((material, amountRequired) -> hasManufactured.set(hasManufactured.get() && (StorageService.getMaterialCount(material) - (amountRequired * numberOfRolls)) >= 0));

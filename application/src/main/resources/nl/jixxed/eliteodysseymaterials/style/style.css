@@ -2153,6 +2153,9 @@
 .wishlist-rolls-label {
     -fx-text-alignment: center;
     -fx-alignment: center;
+    -fx-min-height: 2em;
+    -fx-max-height: 2em;
+    -fx-padding: 0 0.5em 0 0.2em;
 }
 
 .grade-selects {
@@ -2161,6 +2164,16 @@
 
 .grade-selects-title {
     -fx-font-size: 1.3em;
+    -fx-max-width: 20.7em;
+    -fx-wrap-text: true;
+}
+
+.grade-selects-explain {
+    -fx-font-size: 1.0em;
+    -fx-font-style: italic;
+    -fx-max-width: 20.7em;
+    -fx-wrap-text: true;
+    -fx-padding:  0.5em 0 1em 0;
 }
 
 .wishlist-hint-box {
@@ -2171,6 +2184,8 @@
 .wishlist-hint-white {
     -fx-text-fill: #fff;
     -fx-font-style: italic;
+    -fx-max-width: 30em;
+    -fx-wrap-text: true;
 }
 
 .wishlist-hint-yellow {
