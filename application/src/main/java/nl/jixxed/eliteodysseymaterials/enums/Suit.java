@@ -28,9 +28,9 @@ public enum Suit implements Equipment {
             Map.entry(DynamicStat.BATTERY_RECHARGE_DURATION, 13.5),
             Map.entry(DynamicStat.ARCCUTTER_POWER_USAGE, 150.0),
             Map.entry(DynamicStat.AMMO_CAPACITY, 100),
-            Map.entry(DynamicStat.GOODS_CAPACITY, 15),
-            Map.entry(DynamicStat.ASSETS_CAPACITY, 30),
-            Map.entry(DynamicStat.DATA_CAPACITY, 10)
+            Map.entry(DynamicStat.GOODS_CAPACITY, 40),
+            Map.entry(DynamicStat.ASSETS_CAPACITY, 60),
+            Map.entry(DynamicStat.DATA_CAPACITY, 20)
     ),
     DOMINATOR(
             new LevelValue(OdysseyBlueprintName.NONE, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_1_2, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_2_3, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_3_4, OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_4_5),
@@ -49,8 +49,8 @@ public enum Suit implements Equipment {
             Map.entry(DynamicStat.JUMP_ASSIST_RECHARGE, 1.0),
             Map.entry(DynamicStat.BATTERY_RECHARGE_DURATION, 10.0),
             Map.entry(DynamicStat.AMMO_CAPACITY, 100),
-            Map.entry(DynamicStat.GOODS_CAPACITY, 5),
-            Map.entry(DynamicStat.ASSETS_CAPACITY, 10),
+            Map.entry(DynamicStat.GOODS_CAPACITY, 10),
+            Map.entry(DynamicStat.ASSETS_CAPACITY, 20),
             Map.entry(DynamicStat.DATA_CAPACITY, 10)
     ),
     ARTEMIS(
@@ -71,8 +71,8 @@ public enum Suit implements Equipment {
             Map.entry(DynamicStat.BATTERY_RECHARGE_DURATION, 17.0),
             Map.entry(DynamicStat.GENETICSAMPLER_POWER_USAGE, 450.0),
             Map.entry(DynamicStat.AMMO_CAPACITY, 100),
-            Map.entry(DynamicStat.GOODS_CAPACITY, 10),
-            Map.entry(DynamicStat.ASSETS_CAPACITY, 20),
+            Map.entry(DynamicStat.GOODS_CAPACITY, 20),
+            Map.entry(DynamicStat.ASSETS_CAPACITY, 40),
             Map.entry(DynamicStat.DATA_CAPACITY, 10)
     ),
     FLIGHTSUIT(
