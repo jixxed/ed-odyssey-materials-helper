@@ -157,7 +157,7 @@ public abstract class OdysseyBlueprintConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A3, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A3,
                 Map.of(
-                        Data.OPINIONPOLLS, 10
+                        Data.OPINIONPOLLS, 5
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.KIT_FOWLER)
         ));
@@ -171,7 +171,7 @@ public abstract class OdysseyBlueprintConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A5, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A5,
                 Map.of(
-                        Data.SMEARCAMPAIGNPLANS, 8
+                        Data.SMEARCAMPAIGNPLANS, 5
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YARDEN_BOND)
         ));
@@ -183,19 +183,19 @@ public abstract class OdysseyBlueprintConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B2, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B2,
                 Map.of(
-                        Data.SETTLEMENTDEFENCEPLANS, 15
+                        Data.SETTLEMENTDEFENCEPLANS, 5
                 ),
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.WELLINGTON_BECK)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B3, new TotalMaterialEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B3,
                 Map.of(
-                        Data.CLASSICENTERTAINMENT, 25,
-                        Data.MULTIMEDIAENTERTAINMENT, 25,
-                        Data.CATMEDIA, 25
+                        Data.CLASSICENTERTAINMENT, 15,
+                        Data.MULTIMEDIAENTERTAINMENT, 15,
+                        Data.CATMEDIA, 15
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.WELLINGTON_BECK),
-                25
+                15
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B4, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B4,
