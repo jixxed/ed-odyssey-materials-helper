@@ -52,4 +52,4 @@ horizons.wishlist.coriolis.tooltip,Return to the app by going to MATERIALS NEEDE
 horizons.wishlist.shipbuilder,Create in Ship Editor,Create in Ship Editor,Im Schiff-Editor erstellen,Crear en el editor de naves,Créer dans l’éditeur de vaisseaux,Crie no editor de naves,Создать в редакторе кораблей
 wishlist.percentage.per.grade,Percentage per grade to complete:,,,,,,
 wishlist.percentage.per.grade.explain,"If a grade is less or equal to 20% and a higher grade is configured, the materials for the lower grade are excluded, assuming that the higher grade can be crafted immediately",,,,,,
-tab.wishlist.material.hint.required.explain,"The required amount shows the value based on the current shortest path, as well as the minimum and maximum amounts based on your engineers' ranks unless those amounts are equal.",,,,,,
+tab.wishlist.material.hint.required.explain,"The required amount shows the value based on the current shortest path, as well as the minimum and maximum amounts based on your engineers’ ranks unless those amounts are equal.",,,,,,
