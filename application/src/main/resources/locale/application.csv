@@ -13,9 +13,9 @@ application.language.russian,Русский,Русский,Русский,Рус
 application.language.spanish,Español,Español,Español,Español,Español,Español,Español
 application.orientation.horizontal,Horizontal,Horizontal,Horizontal,Horizontal,Horizontal,Horizontal,По горизонтали
 application.orientation.vertical,Vertical,Vertical,Vertikal,Vertical,Vertical,Vertical,По вертикали
-game.expansion.horizons,Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available)
+game.expansion.horizons,Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Contenido de Odyssey no disponible),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available)
 game.expansion.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey
-game.expansion.None,Base game,Base game,Base game,Base game,Base game,Base game,Base game
+game.expansion.None,Base game,Base game,Base game,Juego Base,Base game,Base game,Base game
 tabs.engineers,Engineers,Engineers,Ingenieure,Ingenieros,Ingénieurs,Engenheiros,Инженеры
 tabs.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать
 tabs.imported.wishlist,Imported wishlist,Imported wishlist,Importierte Wunschliste,Lista de deseos importada,Liste de souhaits importée,Lista de desejos importada,Импортированный список желаемого
@@ -27,7 +27,7 @@ tabs.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey
 tabs.horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons,Horizons
 tabs.odyssey.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
 tabs.horizons.materials,Materials,Materials,Materialien,Materiales,Matériaux,Materiais,Материалы
-tabs.horizons.commodities,Commodities,Commodities,Waren,Productos básicos,Marchandises,Mercadorias,Товары
+tabs.horizons.commodities,Commodities,Commodities,Waren,Mercancías,Marchandises,Mercadorias,Товары
 statusbar.last.message,Latest observed relevant message: {0} ({1}),Latest observed relevant message: {0} ({1}),Letzte beobachtete relevante Nachricht: {0} ({1}),Último mensaje relevante observado: {0} ({1}),Dernier message pertinent observé: {0} ({1}),Última mensagem relevante observada: {0} ({1}),Последнее наблюдаемое релевантное сообщение: {0} ({1})
 statusbar.login,Please login to the game,Please login to the game,Bitte logge dich in das Spiel ein,Inicia sesión en el juego.,Veuillez vous connecter au jeu,Por favor entre no jogo,"Пожалуйста, войдите в игру"
 statusbar.watching.none,None - No Odyssey journals found at {0},None - No Odyssey journals found at {0},Keine - Keine Odyssey journal-Datei gefunden bei {0},None - No se encontraron revistas de Odyssey en {0},None - Aucun journal Odyssey trouvé à {0},Nenhum - Nenhum diário Odyssey encontrado em {0},None - журналов Odyssey в {0} не найдено.
@@ -47,28 +47,28 @@ search.filter.placeholder,Show materials,Show materials,Materialien anzeigen,Mos
 search.filter.prohibited,Prohibited,Prohibited,Verboten,Prohibido,Interdites,Proibida,Запрещенные
 search.filter.required_engineer,Only required engineer unlocking,Only required engineer unlocking,Nur erforderliches Entsperren durch Ingenieure,Solo se requiere desbloqueo del ingeniero,Seul le déverrouillage de l’ingénieur requis,Somente desbloqueio de engenheiro necessário,Требуется только разблокировка инженера
 search.filter.required_engineer_blueprint,Only required engineer unlocking + blueprint,Only required engineer unlocking + blueprint,Nur erforderliches Entsperren des Ingenieurs + Blaupause,Solo se requiere desbloqueo de ingeniero + plano,Seul le déverrouillage de l’ingénieur requis + le plan,Somente desbloqueio de engenheiro obrigatório + planta,Требуется только разблокировка инженера + чертеж
-search.filter.raw,Raw,Raw,,,,,Сырые материалы
-search.filter.encoded,Encoded,Encoded,,,,,Зашифрованные материалы
-search.filter.manufactured,Manufactured,Manufactured,,,,,Производственные материалы
-search.filter.guardian,Guardian,Guardian,,,,,Материалы Стражей
-search.filter.thargoid,Thargoid,Thargoid,,,,,Материалы Таргоидов
-search.filter.human,Human,Human,,,,,Материалы Человеческие
+search.filter.raw,Raw,Raw,,Materias Primas,,,Сырые материалы
+search.filter.encoded,Encoded,Encoded,,Codificados,,,Зашифрованные материалы
+search.filter.manufactured,Manufactured,Manufactured,,Manufacturados,,,Производственные материалы
+search.filter.guardian,Guardian,Guardian,,Guardián,,,Материалы Стражей
+search.filter.thargoid,Thargoid,Thargoid,,Targoide,,,Материалы Таргоидов
+search.filter.human,Human,Human,,Humano,,,Материалы Человеческие
 search.sort.alphabetical,Alphabetical (default),Alphabetical (default),Alphabetisch (Standard),Alfabético (predeterminado),Alphabétique (par défaut),Alfabético (padrão),По алфавиту (по умолчанию)
 search.sort.engineer_blueprint_irrelevant,"Engineer unlocking, blueprint, irrelevant","Engineer unlocking, blueprint, irrelevant","Entsperrung durch Ingenieur, Blaupause, irrelevant","Desbloqueo del ingeniero, plano, irrelevante","Déverrouillage de l’ingénieur, plan, non pertinent","Desbloqueio do engenheiro, planta, irrelevante","Разблокировка инженера, чертеж, нерелевантно"
 search.sort.placeholder,Sort materials,Sort materials,Materialien sortieren,Clasificar materiales,Trier les matériaux,Classificar materiais,Сортировать материалы
 search.sort.quantity,Quantity,Quantity,Menge,Cantidad,Quantité,Quantidade,Количество
 search.sort.relevant_irrelevant,"Relevant, irrelevant","Relevant, irrelevant","Relevant, irrelevant","Relevante, irrelevante","Pertinent, non pertinent","Relevante, irrelevante","Релевантные, нерелевантные"
 search.text.placeholder,Search,Search,Suchen,Buscar,Rechercher,Pesquisa,Поиск
-search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Transportista de flota,Transporteur de flotte,Transportadora de frota,Флотоносец
+search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Carguero,Transporteur de flotte,Transportadora de frota,Флотоносец
 search.filter.backpack,Backpack,Backpack,Rucksack,Mochila,Sac à dos,Mochila,Рюкзак
-search.sort.quantity_ship,Ship quantity,Ship quantity,Schiffsmenge,Cantidad de barcos,Quantité de navire,Quantidade de navio,Количество на корабле
-search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,FleetCarrier Menge,Cantidad de flotador,Quantité Fleetcarrier,Quantidade FleetCarrier,Количество на флотоносце
+search.sort.quantity_ship,Ship quantity,Ship quantity,Schiffsmenge,Cantidad de naves,Quantité de navire,Quantidade de navio,Количество на корабле
+search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,FleetCarrier Menge,Cantidad de cargueros,Quantité Fleetcarrier,Quantidade FleetCarrier,Количество на флотоносце
 search.sort.quantity_total,Total quantity,Total quantity,Gesamtmenge,Cantidad total,Quantité totale,Quantidade total,Общая численность
-search.filter.ship,Ship,Ship,Schiff,Barco,Bateau,Navio,Судно
+search.filter.ship,Ship,Ship,Schiff,Nave,Bateau,Navio,Судно
 search.filter.not_on_wishlist,Not or more than on wishlist,Not or more than on wishlist,Nicht oder mehr als auf der Wunschliste,No o más que en la lista de deseos,Pas ou plus que sur la liste de souhaits,Não ou mais do que na lista de desejos,"Не или больше, чем в списке желаний"
 search.grouping.category,Category (default),Category (default),Kategorie (Standard),Categoría (predeterminado),Catégorie (par défaut),Categoria (padrão),Категория (по умолчанию)
 search.grouping.none,None,None,Keiner,Ninguna,Aucun,Nenhum,Никто
-search.grouping.placeholder,Group materials,Group materials,Gruppenmaterialien,Materiales grupales,Matériaux de groupe,Materiais de grupo,Групповые материалы
+search.grouping.placeholder,Group materials,Group materials,Gruppenmaterialien,Grupo de Materiales,Matériaux de groupe,Materiais de grupo,Групповые материалы
 search.sort.grade,Grade,Grade,Klasse,Calificación,Noter,Avaliar,Оценка
 search.sort.quantity_required,Quantity required,Quantity required,Erforderliche Menge,Cantidad requerida,Quantité Nécessaire,Quantidade Requerida,Требуемое количество
 notification.type.irrelevant_point,Point to irrelevant material,Point to irrelevant material,Auf irrelevantes Material hinweisen,Señalar material irrelevante,Pointer du matériau non pertinent,Apontar para material irrelevante,При указывании на ненужные материалы
@@ -78,7 +78,7 @@ notification.type.irrelevant_pickup,Irrelevant Pickup,Irrelevant Pickup,Irreleva
 notification.type.wishlist_pickup,Wishlist Pickup,Wishlist Pickup,Wunschliste Abholung,Recogida de la lista de deseos,Ramassage de la liste de souhaits,Pickup da lista de desejos,Подобрал из списка желаемого
 notification.type.trade,Trade,Trade,Handeln,Comercio,Échange,Troca,Торговля
 notification.type.import,Import,Import,Importieren,Importar,Importer,Importar,Импорт
-notification.type.copy,Copy,Copy,Kopieren,Dupdo,Copie,cópia de,Копия
+notification.type.copy,Copy,Copy,Kopieren,Copiar,Copie,cópia de,Копия
 notification.type.error,Error,Error,Fehler,Error,Erreur,Erro,Ошибка
 notification.type.success,Success,Success,Erfolg,Éxito,Succès,Sucesso,Успех
 notification.collected.wishlist.material.notification,{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2},{0} {1}/{2}
@@ -91,25 +91,25 @@ version.dialog.text,A new version is available!,A new version is available!,Eine
 version.dialog.text2,Did you know that there is an auto updater available for this app?,Did you know that there is an auto updater available for this app?,"Wussten Sie, dass für diese App ein Auto-Updater verfügbar ist?",¿Sabía que hay un actualizador automático disponible para esta aplicación?,Saviez-vous qu’il y a une mise à jour automatique disponible pour cette application?,Você sabia que existe um atualizador de automóveis disponível para este aplicativo?,"Знаете ли вы, что для этого приложения доступен автоматический обновленный обновление?"
 version.dialog.ok,Ok,Ok,OK,De acuerdo,D’accord,OK,Хорошо
 version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,Baixar,Скачать
-statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
-segment.type.present,Present,,,,,,Присутствует
-segment.type.not_present,Not present,,,,,,Не присутствует
+statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,Los datos de su carguero pueden estar obsoletos. Vincula tu cuenta de Frontier.,,,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
+segment.type.present,Present,,,Presente,,,Присутствует
+segment.type.not_present,Not present,,,No presente,,,Не присутствует
 segment.type.power_group_p,P,,,,,,
 segment.type.power_group_1,1,,,,,,
 segment.type.power_group_2,2,,,,,,
 segment.type.power_group_3,3,,,,,,
 segment.type.power_group_4,4,,,,,,
 segment.type.power_group_5,5,,,,,,
-segment.type.hardpoint_none,None,,,,,,Отсутствует
-segment.type.hardpoint_thermal,Thermal,,,,,,Термический
-segment.type.hardpoint_kinetic,Kinetic,,,,,,Кинетический
-segment.type.hardpoint_explosive,Explosive,,,,,,Взрывной
-segment.type.hardpoint_absolute,Absolute,,,,,,Абсолютный
-segment.type.hardpoint_caustic,Caustic,,,,,,Едкий
-segment.type.hardpoint_antixeno,Anti-xeno,,,,,,АИ
-segment.type.power_group_none,Available,,,,,,Доступно
-segment.type.power_overpower,Power deficit,,,,,,Энергодефицит
-tabs.onfoot,On foot,,,,,,Пеший режим
-tabs.ships,Ships,,,,,,Корабельный режим
-notification.type.hge,High grade emission,,,,,,Высокоуровневый сигнал
-tabs.hge,HGE Tracker,,,,,,Трекер ВУС
+segment.type.hardpoint_none,None,,,Ninguno,,,Отсутствует
+segment.type.hardpoint_thermal,Thermal,,,Térmico,,,Термический
+segment.type.hardpoint_kinetic,Kinetic,,,Cinético,,,Кинетический
+segment.type.hardpoint_explosive,Explosive,,,Explosivo,,,Взрывной
+segment.type.hardpoint_absolute,Absolute,,,Absoluto,,,Абсолютный
+segment.type.hardpoint_caustic,Caustic,,,Caústico,,,Едкий
+segment.type.hardpoint_antixeno,Anti-xeno,,,Anti-Xeno,,,АИ
+segment.type.power_group_none,Available,,,Disponible,,,Доступно
+segment.type.power_overpower,Power deficit,,,Déficit de Energía,,,Энергодефицит
+tabs.onfoot,On foot,,,A pie,,,Пеший режим
+tabs.ships,Ships,,,Naves,,,Корабельный режим
+notification.type.hge,High grade emission,,,Señal de Alta Calidad,,,Высокоуровневый сигнал
+tabs.hge,HGE Tracker,,,Seguimiento de señales de Alta Calidad,,,Трекер ВУС
