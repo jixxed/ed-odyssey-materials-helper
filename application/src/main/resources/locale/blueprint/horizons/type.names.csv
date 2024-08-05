@@ -170,7 +170,7 @@ blueprint.horizons.type.c3_azimuth_enhanced_ax_multicannon,C3 Azimuth Enhanced A
 blueprint.horizons.type.expanded_probe_scanning_radius_x2,Expanded Probe Scanning Radius x2,Expanded Probe Scanning Radius x2,Erweiterter Sonden-Scanradius x2,Radio de escaneo de sonda expandida x2,Rayon de balayage de sonde élargi x2,Raio de varredura de sonda expandido x2,Увеличение радиуса сканирования зондов x2
 blueprint.horizons.type.ammo_capacity_x2,Ammo Capacity X 2,Ammo Capacity X 2,,Capacidad de munición X 2,,,Количество боезапаса
 blueprint.horizons.type.armoured_overcharged,"Armoured, Overcharged","Armoured, Overcharged",,"Reforzado, Sobracargado",,,"Бронированная, Усиленная"
-blueprint.horizons.type.decorative_green,Decorative Green,Decorative Green,,Decorativo verda,,,Декоративный зеленый
+blueprint.horizons.type.decorative_green,Decorative Green,Decorative Green,,Decorativo verde,,,Декоративный зеленый
 blueprint.horizons.type.decorative_red,Decorative Red,Decorative Red,,Decorativo rojo,,,Декоративный красный
 blueprint.horizons.type.decorative_yellow,Decorative Yellow,Decorative Yellow,,Decorativo amarillo,,,Декоративный желтый
 blueprint.horizons.type.fast_scanner_long_range_scanner,"Fast Scanner, Long Range Scanner","Fast Scanner, Long Range Scanner",,"Escaneo rápido, Escaner de largo alcance",,,"Быстрый сканер, Сканер дальнего действия"
