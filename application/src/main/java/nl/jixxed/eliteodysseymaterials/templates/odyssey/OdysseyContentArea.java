@@ -21,7 +21,6 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers.OdysseyEngine
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout.OdysseyLoadoutEditorTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMaterialTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.menu.OdysseyBlueprintBar;
-import nl.jixxed.eliteodysseymaterials.templates.odyssey.trade.OdysseyTradeTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistTab;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ class OdysseyContentArea extends AnchorPane {
     private OdysseyWishlistTab wishlistTab;
     private OdysseyEngineersTab odysseyEngineersTab;
     private OdysseyLoadoutEditorTab loadoutEditorTab;
-    private OdysseyTradeTab tradeTab;
+//    private OdysseyTradeTab tradeTab;
     private TabPane tabs;
     private VBox body;
     private OdysseyBartenderTab odysseyBartenderTab;
@@ -55,16 +54,16 @@ class OdysseyContentArea extends AnchorPane {
         this.loadoutEditorTab = new OdysseyLoadoutEditorTab();
         this.odysseyEngineersTab = new OdysseyEngineersTab();
         this.odysseyBartenderTab = new OdysseyBartenderTab();
-        this.tradeTab = new OdysseyTradeTab();
+//        this.tradeTab = new OdysseyTradeTab();
         this.overview.setClosable(false);
         this.wishlistTab.setClosable(false);
         this.loadoutEditorTab.setClosable(false);
         this.odysseyEngineersTab.setClosable(false);
         this.odysseyBartenderTab.setClosable(false);
-        this.tradeTab.setClosable(false);
+//        this.tradeTab.setClosable(false);
 
         this.odysseySearchBar = new OdysseySearchBar();
-        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.odysseyBartenderTab, this.tradeTab, this.odysseyEngineersTab);
+        this.tabs = new TabPane(this.overview, this.wishlistTab, this.loadoutEditorTab, this.odysseyBartenderTab, /*this.tradeTab,*/ this.odysseyEngineersTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
