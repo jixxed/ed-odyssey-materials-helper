@@ -1,16 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.application.Platform;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Commander;
-import nl.jixxed.eliteodysseymaterials.domain.MaterialStatistic;
 import nl.jixxed.eliteodysseymaterials.domain.Terminal;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.DnsHelper;
@@ -21,16 +17,10 @@ import nl.jixxed.eliteodysseymaterials.service.message.MaterialTrackingItem;
 import nl.jixxed.eliteodysseymaterials.service.message.MaterialTrackingMessage;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Files;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -50,15 +40,15 @@ public class MaterialTrackingService {
     static final List<BackpackChangeEvent> BACKPACK_CHANGE_EVENTS = new ArrayList<>();
     private static boolean isEnabled = false;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-    private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
+//    private static final Map<OdysseyMaterial, MaterialStatistic> MATERIAL_STATISTICS = new ConcurrentHashMap<>();
     private static final Map<String, Terminal> TERMINAL_DATAS = new ConcurrentHashMap<>();
     private static Thread thread;
 
-    static {
-        OdysseyMaterial.getAllMaterials().forEach(material ->
-                MATERIAL_STATISTICS.put(material, new MaterialStatistic())
-        );
-    }
+//    static {
+//        OdysseyMaterial.getAllMaterials().forEach(material ->
+//                MATERIAL_STATISTICS.put(material, new MaterialStatistic())
+//        );
+//    }
 
     public static synchronized void initialize() {
         log.debug("Initialize MaterialTrackingService");
@@ -73,37 +63,37 @@ public class MaterialTrackingService {
         EVENT_LISTENERS.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
             close();
         }));
-        //check if statistics file exists
-        thread = new Thread(() -> {
-            log.info("Start load material statistics");
-            final File statisticsFile = new File(OsConstants.STATISTICS);
-            try {
-                if (!statisticsFile.exists() || modifiedBeforeMonday(statisticsFile)) {
-                    log.info("Start download of material statistics");
-                    final URL url = new URL("https://material-tracking-report.s3.eu-west-1.amazonaws.com/material-report.json");
-                    try (final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream()); final FileOutputStream fileOutputStream = new FileOutputStream(statisticsFile)) {
-                        fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-                    }
-                }
-                log.info("Load material statistics from file");
-                //map file to MATERIAL_STATISTICS
-                final JsonNode jsonNode = OBJECT_MAPPER.readTree(Files.readString(statisticsFile.toPath()));
-                for (final OdysseyMaterial odysseyMaterial : MATERIAL_STATISTICS.keySet()) {
-                    final JsonNode materialStat = jsonNode.get(odysseyMaterial.name());
-                    if(materialStat != null) {
-                        MATERIAL_STATISTICS.put(odysseyMaterial, OBJECT_MAPPER.readValue(materialStat.toString(), MaterialStatistic.class));
-                    }
-                }
-                log.info("Load material statistics finished");
-            } catch (final IOException ex) {
-                log.error("Load material statistics failed", ex);
-                log.info("Deleted file due to suspected corruption: " + statisticsFile.delete());
-                Platform.runLater(() ->
-                        NotificationService.showError(NotificationType.ERROR, "Error", "Failed to download material statistics.")
-                );
-            }
-        }, "Material Statistics Loader Thread");
-        thread.start();
+//        //check if statistics file exists
+//        thread = new Thread(() -> {
+//            log.info("Start load material statistics");
+//            final File statisticsFile = new File(OsConstants.STATISTICS);
+//            try {
+//                if (!statisticsFile.exists() || modifiedBeforeMonday(statisticsFile)) {
+//                    log.info("Start download of material statistics");
+//                    final URL url = new URL("https://material-tracking-report.s3.eu-west-1.amazonaws.com/material-report.json");
+//                    try (final ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream()); final FileOutputStream fileOutputStream = new FileOutputStream(statisticsFile)) {
+//                        fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+//                    }
+//                }
+//                log.info("Load material statistics from file");
+//                //map file to MATERIAL_STATISTICS
+//                final JsonNode jsonNode = OBJECT_MAPPER.readTree(Files.readString(statisticsFile.toPath()));
+//                for (final OdysseyMaterial odysseyMaterial : MATERIAL_STATISTICS.keySet()) {
+//                    final JsonNode materialStat = jsonNode.get(odysseyMaterial.name());
+//                    if(materialStat != null) {
+//                        MATERIAL_STATISTICS.put(odysseyMaterial, OBJECT_MAPPER.readValue(materialStat.toString(), MaterialStatistic.class));
+//                    }
+//                }
+//                log.info("Load material statistics finished");
+//            } catch (final IOException ex) {
+//                log.error("Load material statistics failed", ex);
+//                log.info("Deleted file due to suspected corruption: " + statisticsFile.delete());
+//                Platform.runLater(() ->
+//                        NotificationService.showError(NotificationType.ERROR, "Error", "Failed to download material statistics.")
+//                );
+//            }
+//        }, "Material Statistics Loader Thread");
+//        thread.start();
     }
 
     static void registerData(final String dataPortName, final DataPortType dataPortType, final Data data, final Integer id) {
@@ -120,9 +110,9 @@ public class MaterialTrackingService {
         return previousMonday.isAfter(ZonedDateTime.ofInstant(Instant.ofEpochMilli(statisticsFile.lastModified()), ZoneId.systemDefault()));
     }
 
-    static MaterialStatistic getMaterialStatistic(final OdysseyMaterial odysseyMaterial) {
-        return MATERIAL_STATISTICS.get(odysseyMaterial);
-    }
+//    static MaterialStatistic getMaterialStatistic(final OdysseyMaterial odysseyMaterial) {
+//        return MATERIAL_STATISTICS.get(odysseyMaterial);
+//    }
 
     public static synchronized void close() {
         log.debug("Close MaterialTrackingService");

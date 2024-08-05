@@ -179,7 +179,7 @@ public class MaterialService {
             if (odysseyMaterial instanceof Data data) {
                 addSpawnRatesToTooltip(data, vBox);
             }
-            addStatisticsToTooltip(odysseyMaterial, vBox);
+//            addStatisticsToTooltip(odysseyMaterial, vBox);
         }
         return vBox;
 
@@ -250,27 +250,27 @@ public class MaterialService {
         });
     }
 
-    private static void addStatisticsToTooltip(final OdysseyMaterial odysseyMaterial, final VBox vBox) {
-        final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(odysseyMaterial);
-        //economies
-        vBox.getChildren().add(LabelBuilder.builder().build());
-        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.economies")).build());
-        vBox.getChildren().add(LabelBuilder.builder()
-                .withText(ObservableResourceFactory.getStringBinding(() -> statistic.getEconomies().stream().sorted(Comparator.comparing(EconomyStatistic::getAmount).reversed()).map(economyStatistic -> economyStatistic.getEconomy() + "(" + economyStatistic.getAmount() + ")").collect(Collectors.joining(", ")))).build());
-        //best avg
-        vBox.getChildren().add(LabelBuilder.builder().build());
-        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.avg")).build());
-        statistic.getBestavg().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
-        //best runs
-        vBox.getChildren().add(LabelBuilder.builder().build());
-        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.runs")).build());
-        statistic.getBestrun().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
-        //most collected
-        vBox.getChildren().add(LabelBuilder.builder().build());
-        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.settlements")).build());
-        statistic.getMostcollected().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
-
-    }
+//    private static void addStatisticsToTooltip(final OdysseyMaterial odysseyMaterial, final VBox vBox) {
+//        final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(odysseyMaterial);
+//        //economies
+//        vBox.getChildren().add(LabelBuilder.builder().build());
+//        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.economies")).build());
+//        vBox.getChildren().add(LabelBuilder.builder()
+//                .withText(ObservableResourceFactory.getStringBinding(() -> statistic.getEconomies().stream().sorted(Comparator.comparing(EconomyStatistic::getAmount).reversed()).map(economyStatistic -> economyStatistic.getEconomy() + "(" + economyStatistic.getAmount() + ")").collect(Collectors.joining(", ")))).build());
+//        //best avg
+//        vBox.getChildren().add(LabelBuilder.builder().build());
+//        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.avg")).build());
+//        statistic.getBestavg().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
+//        //best runs
+//        vBox.getChildren().add(LabelBuilder.builder().build());
+//        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.runs")).build());
+//        statistic.getBestrun().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
+//        //most collected
+//        vBox.getChildren().add(LabelBuilder.builder().build());
+//        vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.statistics.settlements")).build());
+//        statistic.getMostcollected().forEach(settlementStatistic -> addSettlementStatistic(vBox, settlementStatistic));
+//
+//    }
 
     private static void addSettlementStatistic(final VBox vBox, final SettlementStatistic settlementStatistic) {
         final Double distance = LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ()));
