@@ -41,6 +41,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
+@Deprecated
 public class HighGradeEmissionService {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
@@ -182,11 +183,9 @@ public class HighGradeEmissionService {
         headers.put("id", getUniqueId(commander));
         try {
             final String text = MAPPER.writeValueAsString(message);
-//            writeToFile(text);
             connection.send("/post/hge2", headers, Buffer.buffer(text),
                     ar -> {
                         if (ar.succeeded()) {
-//                            log.info("Completed sending message: {}", ar.result());
                         } else {
                             log.error("Failed to send message", ar.cause());
                         }
@@ -203,14 +202,7 @@ public class HighGradeEmissionService {
             final String id = getUniqueId(commander);
             headers.put("id", id);
             headers.put("user_id", id);
-//            log.info("unsubscribe");
-//            connection.unsubscribe("/subscription/hge2/" + id)
-//                    .onSuccess(frame -> log.info("Unsubscribed from /subscription/hge2/" + id))
-//                    .onFailure(throwable -> log.error("Failed to unsubscribe from /subscription/hge2/" + id, throwable));
-//            log.info("subscribe");
             connection.subscribe("/subscription/hge2/" + id, headers, frame -> {
-//                        log.info("Message to /subscription/hge2/{}: {}", id, frame.getBodyAsString());
-//                        writeToFile(frame.getBodyAsString());
                         try {
                             final MessageV2 message = MAPPER.readValue(frame.getBodyAsString(), MessageV2.class);
                             log.debug(frame.getBodyAsString());
@@ -330,11 +322,6 @@ public class HighGradeEmissionService {
         }));
     }
 
-//    private static void createCleaner() {
-//        vertx.setPeriodic(1000 * 10, (l) -> messages.removeIf(message -> LocalDateTime.now().isAfter(message.getExpiration())));
-//    }
-
-
     private static Faction mapFaction(nl.jixxed.eliteodysseymaterials.schemas.journal.FSDJump.Faction faction, boolean isLeading) {
         return new Faction(
                 faction.getName(),
@@ -378,36 +365,6 @@ public class HighGradeEmissionService {
         FACTIONS.clear();
         FACTIONS.addAll(factions);
     }
-
-    //{ "timestamp":"2024-06-09T09:32:55Z",
-// "event":"FSSSignalDiscovered",
-// "SystemAddress":2557820834522,
-// "SignalName":"$USS_HighGradeEmissions;",
-// "SignalName_Localised":"Unidentified signal source",
-// "SignalType":"USS",
-// "USSType":"$USS_Type_VeryValuableSalvage;",
-// "USSType_Localised":"High grade emissions",
-// "SpawningState":"$FactionState_Election_desc;", OR
-// "SpawningState":"",
-// "SpawningFaction":"LDS 413 Resistance",
-// "ThreatLevel":0,
-// "TimeRemaining":660.575867 }
-
-
-//    { "timestamp":"2024-07-02T19:00:46Z",
-//    "event":"FSSSignalDiscovered",
-//    "SystemAddress":7267755828649,
-//    "SignalName":"$USS_HighGradeEmissions;",
-//    "SignalName_Localised":"Unidentified signal source",
-//    "SignalType":"USS",
-//    "USSType":"$USS_Type_VeryValuableSalvage;",
-//    "USSType_Localised":"High grade emissions",
-//    "SpawningState":"$FactionState_None;",
-//    "SpawningState_Localised":"None",
-//    "SpawningFaction":"$faction_none;",
-//    "SpawningFaction_Localised":"None",
-//    "ThreatLevel":0,
-//    "TimeRemaining":2386.907471 }
 
     public static void fssSignalDiscovered(FSSSignalDiscovered event) {
         LocalDateTime now = ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime();
@@ -517,11 +474,6 @@ public class HighGradeEmissionService {
         NotificationService.showInformation(NotificationType.HGE, LocaleService.LocaleString.of("notification.hge.title"), text);
     }
 
-    // { "timestamp":"2024-06-09T09:46:20Z", "event":"USSDrop", "USSType":"$USS_Type_VeryValuableSalvage;", "USSType_Localised":"High grade emissions", "USSThreat":0 }
-    //   { "timestamp":"2024-06-09T09:51:28Z", "event":"MaterialCollected", "Category":"Manufactured", "Name":"fedproprietarycomposites", "Name_Localised":"Proprietary Composites", "Count":3 }
-    //   { "timestamp":"2024-06-09T09:52:35Z", "event":"SupercruiseEntry", "Taxi":false, "Multicrew":false, "StarSystem":"LDS 413", "SystemAddress":2557820834522 }
-    //   { "timestamp":"2024-06-09T22:07:21Z", "event":"Shutdown" }
-    //   { "timestamp":"2024-06-11T18:56:41Z", "event":"Music", "MusicTrack":"MainMenu" }
     public static void ussDrop(USSDrop event) {
         if (processing && event.getUSSType().equals("$USS_Type_VeryValuableSalvage;")) {
             trackingUSS = true;
@@ -582,42 +534,7 @@ public class HighGradeEmissionService {
 
     public static List<HgeStarSystem> getLastFoundSystems(HorizonsMaterialType materialType) {
         return lastFoundSystems.entrySet().stream().filter(entry -> materialType.equals(entry.getKey())).map(entry -> entry.getValue().asList()).findFirst().orElse(Collections.emptyList());
-        //TODO TEST
-//        return List.of(
-//                new HgeStarSystem(
-//                        new StarSystem("LDS 413", Economy.AGRI,Economy.COLONY, Government.COMMUNISM, Security.HIGH, Allegiance.INDEPENDENT, BigInteger.valueOf(10000000L), State.NONE, 1.0, 2.0, 3.0),
-//                        Set.of(
-//                                new FactionV2("LDS 413 Resistance 1", 0.5D, State.BOOM, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.BOOM), Set.of(), true),
-//                                new FactionV2("LDS 413 Resistance 2", 0.1D, State.ELECTION, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.ELECTION), Set.of(), true),
-//                                new FactionV2("LDS 413 Resistance 3", 0.1D, State.WAR, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.WAR), Set.of(), true),
-//                                new FactionV2("LDS 413 Resistance 4", 0.1D, State.WAR, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.WAR), Set.of(), true),
-//                                new FactionV2("LDS 413 Resistance 5", 0.1D, State.EXPANSION, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.EXPANSION), Set.of(), true),
-//                                new FactionV2("LDS 413 Resistance 6", 0.1D, State.CIVILUNREST, Allegiance.INDEPENDENT, Government.COOPERATIVE, Set.of(), Set.of(State.CIVILUNREST), Set.of(), true)
-//                        )
-//                ),
-//                new HgeStarSystem(
-//                        new StarSystem("SOL 413", Economy.AGRI,Economy.COLONY, Government.COMMUNISM, Security.HIGH, Allegiance.FEDERATION, BigInteger.valueOf(10000000L), State.NONE, 6.0, 5.0, 4.0),
-//                        Set.of(
-//                                new FactionV2("SOL 413 Resistance 1", 0.5D, State.BOOM, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.BOOM), Set.of(), true),
-//                                new FactionV2("SOL 413 Resistance 2", 0.1D, State.ELECTION, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.OUTBREAK), Set.of(), true),
-//                                new FactionV2("SOL 413 Resistance 3", 0.1D, State.WAR, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
-//                                new FactionV2("SOL 413 Resistance 4", 0.1D, State.WAR, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
-//                                new FactionV2("SOL 413 Resistance 5", 0.1D, State.EXPANSION, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.EXPANSION), Set.of(), true),
-//                                new FactionV2("SOL 413 Resistance 6", 0.1D, State.CIVILUNREST, Allegiance.FEDERATION, Government.CORPORATE, Set.of(), Set.of(State.CIVILUNREST), Set.of(), true)
-//                        )
-//                ),
-//                new HgeStarSystem(
-//                        new StarSystem("BAN 413", Economy.AGRI,Economy.COLONY, Government.COMMUNISM, Security.HIGH, Allegiance.EMPIRE, BigInteger.valueOf(10000000L), State.NONE, 7.0, 8.0, 9.0),
-//                        Set.of(
-//                                new FactionV2("BAN 413 Resistance 1", 0.5D, State.BOOM, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.BOOM), Set.of(), true),
-//                                new FactionV2("BAN 413 Resistance 2", 0.1D, State.OUTBREAK, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.OUTBREAK), Set.of(), true),
-//                                new FactionV2("BAN 413 Resistance 3", 0.1D, State.CIVILWAR, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
-//                                new FactionV2("BAN 413 Resistance 4", 0.1D, State.CIVILWAR, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.CIVILWAR), Set.of(), true),
-//                                new FactionV2("BAN 413 Resistance 5", 0.1D, State.EXPANSION, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.EXPANSION), Set.of(), true),
-//                                new FactionV2("BAN 413 Resistance 6", 0.1D, State.CIVILUNREST, Allegiance.EMPIRE, Government.CORPORATE, Set.of(), Set.of(State.CIVILUNREST), Set.of(), true)
-//                        )
-//                )
-//        );
+
     }
 
     record Faction(String name, State state, Double influence, Allegiance allegiance, Government government,

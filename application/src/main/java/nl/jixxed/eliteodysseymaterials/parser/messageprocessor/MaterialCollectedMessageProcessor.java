@@ -13,7 +13,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 public class MaterialCollectedMessageProcessor implements MessageProcessor<MaterialCollected> {
     @Override
     public void process(final MaterialCollected event) {
-        HighGradeEmissionService.materialCollected(event);
+//        HighGradeEmissionService.materialCollected(event);
         try {
             final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(event.getName());
             if (!horizonsMaterial.isUnknown()) {
