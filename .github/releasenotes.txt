@@ -6,7 +6,16 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added spanish translations
-Added guardian zone resistance to FSD Booster
-Flip caustic/explosive labels for armour/shield in ship editor
-Override Power Distributor Shielded modification description
+New ship engineering logic has been implemented
+- Gives the exact amount of materials needed for on the wishlist (min/max/current shortest path)
+- Grade rolls configuration has been removed.
+    - Old wishlists are migrated to the new system.
+    - Any roll on a grade results in a 100% craft for that grade in the new system
+Updated blueprint costs for Odyssey blueprints
+Removed material statistics from the material overview (invalid/old data after the engineering update changes)
+Removed Trade tab (largely unused)
+Removed HGE Tracker (no need for it, since it is now so easy to collect)
+Shipbuilder module selection popup will now close when clicking the module again
+Renamed Frame Shift Drive Booster to Guardian Frame Shift Drive Booster (to make it easier to find/search)
+Added Godshard module
+Updated translations ES/RU (Thanks to Cashiot/RetroPaladin)
