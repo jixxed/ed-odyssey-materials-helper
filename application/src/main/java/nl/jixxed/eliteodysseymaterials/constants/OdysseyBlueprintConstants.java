@@ -285,10 +285,9 @@ public abstract class OdysseyBlueprintConstants {
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
                         Good.HEALTHMONITOR, 1,
-                        Good.LARGECAPACITYPOWERREGULATOR, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.CARBONFIBREPLATING, 5,
-                        Asset.GRAPHENE, 5
+                        Asset.CARBONFIBREPLATING, 2,
+                        Asset.GRAPHENE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1",
@@ -303,12 +302,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.MAVERICK_SUIT_GRADE_2_3,
                 Map.of(
-                        Good.SUITSCHEMATIC, 5,
-                        Good.HEALTHMONITOR, 5,
-                        Good.LARGECAPACITYPOWERREGULATOR, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.CARBONFIBREPLATING, 15,
-                        Asset.GRAPHENE, 15
+                        Good.SUITSCHEMATIC, 2,
+                        Good.HEALTHMONITOR, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.CARBONFIBREPLATING, 5,
+                        Asset.GRAPHENE,  5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2",
@@ -323,12 +321,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.MAVERICK_SUIT_GRADE_3_4,
                 Map.of(
-                        Good.SUITSCHEMATIC, 10,
-                        Good.HEALTHMONITOR, 10,
-                        Good.LARGECAPACITYPOWERREGULATOR, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.CARBONFIBREPLATING, 25,
-                        Asset.GRAPHENE, 25
+                        Good.SUITSCHEMATIC, 4,
+                        Good.HEALTHMONITOR, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.CARBONFIBREPLATING, 9,
+                        Asset.GRAPHENE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3",
@@ -343,12 +340,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.MAVERICK_SUIT_GRADE_4_5,
                 Map.of(
-                        Good.SUITSCHEMATIC, 15,
-                        Good.HEALTHMONITOR, 15,
-                        Good.LARGECAPACITYPOWERREGULATOR, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.CARBONFIBREPLATING, 35,
-                        Asset.GRAPHENE, 35
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.CARBONFIBREPLATING, 12,
+                        Asset.GRAPHENE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4",
@@ -365,10 +361,9 @@ public abstract class OdysseyBlueprintConstants {
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
                         Good.HEALTHMONITOR, 1,
-                        Good.LARGECAPACITYPOWERREGULATOR, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.TITANIUMPLATING, 5,
-                        Asset.GRAPHENE, 5
+                        Asset.TITANIUMPLATING, 2,
+                        Asset.GRAPHENE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1",
@@ -383,12 +378,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_2_3,
                 Map.of(
-                        Good.SUITSCHEMATIC, 5,
-                        Good.HEALTHMONITOR, 5,
-                        Good.LARGECAPACITYPOWERREGULATOR, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.TITANIUMPLATING, 15,
-                        Asset.GRAPHENE, 15
+                        Good.SUITSCHEMATIC, 2,
+                        Good.HEALTHMONITOR, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.TITANIUMPLATING, 5,
+                        Asset.GRAPHENE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2",
@@ -403,12 +397,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_3_4,
                 Map.of(
-                        Good.SUITSCHEMATIC, 10,
-                        Good.HEALTHMONITOR, 10,
-                        Good.LARGECAPACITYPOWERREGULATOR, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.TITANIUMPLATING, 25,
-                        Asset.GRAPHENE, 25
+                        Good.SUITSCHEMATIC, 4,
+                        Good.HEALTHMONITOR, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.TITANIUMPLATING, 9,
+                        Asset.GRAPHENE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3",
@@ -423,12 +416,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_4_5,
                 Map.of(
-                        Good.SUITSCHEMATIC, 15,
-                        Good.HEALTHMONITOR, 15,
-                        Good.LARGECAPACITYPOWERREGULATOR, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.TITANIUMPLATING, 35,
-                        Asset.GRAPHENE, 35
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.TITANIUMPLATING, 12,
+                        Asset.GRAPHENE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4",
@@ -445,10 +437,9 @@ public abstract class OdysseyBlueprintConstants {
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
                         Good.HEALTHMONITOR, 1,
-                        Good.LARGECAPACITYPOWERREGULATOR, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.AEROGEL, 5,
-                        Asset.GRAPHENE, 5
+                        Asset.AEROGEL, 2,
+                        Asset.GRAPHENE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1",
@@ -463,12 +454,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_2_3,
                 Map.of(
-                        Good.SUITSCHEMATIC, 5,
-                        Good.HEALTHMONITOR, 5,
-                        Good.LARGECAPACITYPOWERREGULATOR, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.AEROGEL, 15,
-                        Asset.GRAPHENE, 15
+                        Good.SUITSCHEMATIC, 2,
+                        Good.HEALTHMONITOR, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.AEROGEL, 5,
+                        Asset.GRAPHENE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2",
@@ -483,12 +473,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_3_4,
                 Map.of(
-                        Good.SUITSCHEMATIC, 10,
-                        Good.HEALTHMONITOR, 10,
-                        Good.LARGECAPACITYPOWERREGULATOR, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.AEROGEL, 25,
-                        Asset.GRAPHENE, 25
+                        Good.SUITSCHEMATIC, 4,
+                        Good.HEALTHMONITOR, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.AEROGEL, 9,
+                        Asset.GRAPHENE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3",
@@ -503,12 +492,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_4_5,
                 Map.of(
-                        Good.SUITSCHEMATIC, 15,
-                        Good.HEALTHMONITOR, 15,
-                        Good.LARGECAPACITYPOWERREGULATOR, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.AEROGEL, 35,
-                        Asset.GRAPHENE, 35
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.AEROGEL, 12,
+                        Asset.GRAPHENE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4",
