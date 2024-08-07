@@ -2253,11 +2253,11 @@ public class Ship {
                 ),
                 List.of(
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1152).y(496).index(0).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1227).y(435).index(1).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(904).y(765).index(2).slotSize(1).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1227).y(435).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(904).y(765).index(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1323).y(425).index(3).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1247).y(341).index(4).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1247).y(341).index(5).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1247).y(341).index(4).slotSize(1).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1247).y(341).index(5).slotSize(1).build()
                 ),
                 List.of(//TODO not mentioned on livestream
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1117).y(365).index(0).slotSize(0).build(),
@@ -2269,7 +2269,7 @@ public class Ship {
                         Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.TYPE_8_ARMOUR_GRADE_1).build(),
                         Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
                         Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(5).shipModule(Thrusters.THRUSTERS_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_E).build(),
+                        Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
                         Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(3).shipModule(LifeSupport.LIFE_SUPPORT_3_E).build(),
                         Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(4).shipModule(PowerDistributor.POWER_DISTRIBUTOR_4_E).build(),
                         Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(3).shipModule(Sensors.SENSORS_3_E).build(),
@@ -2277,15 +2277,15 @@ public class Ship {
 
                 ),
                 List.of(
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
                         Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).build(),
                         Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(6).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_4_E).build(),
                         Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).build(),
                         Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).build()
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
                 ));
     public static final Ship TYPE_9 = new Ship(
             ShipType.TYPE_9,
