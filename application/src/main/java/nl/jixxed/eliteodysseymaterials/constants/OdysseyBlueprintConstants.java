@@ -878,11 +878,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_KINETIC, new ModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_KINETIC,
                 Map.of(
-                        Data.BALLISTICSDATA, 5,
-                        Data.TOPOGRAPHICALSURVEYS, 5,
-                        Asset.METALCOIL, 5,
-                        Asset.RDX, 5,
-                        Asset.WEAPONCOMPONENT, 3
+                        Data.BALLISTICSDATA, 10,
+                        Data.TOPOGRAPHICALSURVEYS, 10,
+                        Asset.METALCOIL, 10,
+                        Asset.RDX, 10,
+                        Asset.WEAPONCOMPONENT, 5
 
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
@@ -892,11 +892,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_LASER, new ModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_LASER,
                 Map.of(
-                        Data.STELLARACTIVITYLOGS, 5,
-                        Data.RISKASSESSMENTS, 8,
-                        Asset.OPTICALLENS, 3,
-                        Asset.MICROTRANSFORMER, 8,
-                        Asset.CIRCUITBOARD, 3
+                        Data.STELLARACTIVITYLOGS, 10,
+                        Data.RISKASSESSMENTS, 15,
+                        Asset.OPTICALLENS, 5,
+                        Asset.MICROTRANSFORMER, 15,
+                        Asset.CIRCUITBOARD, 5
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         OdysseyModifier.WEAPON_EFFECTIVE_RANGE, "+50%"
@@ -905,11 +905,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_PLASMA, new ModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_PLASMA,
                 Map.of(
-                        Data.CHEMICALFORMULAE, 5,
-                        Data.MINERALSURVEY, 8,
-                        Asset.ELECTROMAGNET, 5,
-                        Asset.MOTOR, 3,
-                        Asset.ELECTRICALFUSE, 3
+                        Data.CHEMICALFORMULAE, 10,
+                        Data.MINERALSURVEY, 15,
+                        Asset.ELECTROMAGNET, 10,
+                        Asset.MOTOR, 5,
+                        Asset.ELECTRICALFUSE, 5
 
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
@@ -919,11 +919,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC, new ModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC,
                 Map.of(
-                        Data.WEAPONTESTDATA, 5,
-                        Data.MEDICALRECORDS, 3,
-                        Asset.CHEMICALCATALYST, 5,
-                        Asset.RDX, 8,
-                        Asset.WEAPONCOMPONENT, 3
+                        Data.WEAPONTESTDATA, 10,
+                        Data.MEDICALRECORDS, 5,
+                        Asset.CHEMICALCATALYST, 10,
+                        Asset.RDX, 15,
+                        Asset.WEAPONCOMPONENT, 5
                 ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
@@ -932,11 +932,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER, new ModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER,
                 Map.of(
-                        Data.SPECTRALANALYSISDATA, 5,
-                        Data.BIOMETRICDATA, 3,
-                        Asset.IONBATTERY, 5,
-                        Asset.OPTICALLENS, 3,
-                        Asset.SCRAMBLER, 5
+                        Data.SPECTRALANALYSISDATA, 10,
+                        Data.BIOMETRICDATA, 5,
+                        Asset.IONBATTERY, 10,
+                        Asset.OPTICALLENS, 5,
+                        Asset.SCRAMBLER, 10
                 ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
@@ -945,11 +945,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA, new ModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA,
                 Map.of(
-                        Data.CHEMICALEXPERIMENTDATA, 5,
-                        Data.BLOODTESTRESULTS, 3,
-                        Asset.IONBATTERY, 5,
-                        Asset.ELECTROMAGNET, 5,
-                        Asset.MICROSUPERCAPACITOR, 8
+                        Data.CHEMICALEXPERIMENTDATA, 10,
+                        Data.BLOODTESTRESULTS, 5,
+                        Asset.IONBATTERY, 10,
+                        Asset.ELECTROMAGNET, 10,
+                        Asset.MICROSUPERCAPACITOR, 15
                 ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
@@ -958,11 +958,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC, new ModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC,
                 Map.of(
-                        Data.EXTRACTIONYIELDDATA, 5,
-                        Data.BIOMETRICDATA, 3,
-                        Data.COMBATANTPERFORMANCE, 5,
-                        Asset.RDX, 5,
-                        Asset.VISCOELASTICPOLYMER, 5
+                        Data.EXTRACTIONYIELDDATA, 10,
+                        Data.BIOMETRICDATA, 5,
+                        Data.COMBATANTPERFORMANCE, 10,
+                        Asset.RDX, 10,
+                        Asset.VISCOELASTICPOLYMER, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
@@ -971,11 +971,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_LASER, new ModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_LASER,
                 Map.of(
-                        Data.RADIOACTIVITYDATA, 3,
-                        Data.COMBATANTPERFORMANCE, 5,
-                        Asset.OPTICALLENS, 3,
-                        Asset.ELECTRICALWIRING, 8,
-                        Asset.METALCOIL, 5
+                        Data.RADIOACTIVITYDATA, 5,
+                        Data.COMBATANTPERFORMANCE, 10,
+                        Asset.OPTICALLENS, 5,
+                        Asset.ELECTRICALWIRING, 15,
+                        Asset.METALCOIL, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
@@ -984,11 +984,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA, new ModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA,
                 Map.of(
-                        Data.CHEMICALPATENTS, 3,
-                        Data.COMBATANTPERFORMANCE, 5,
-                        Asset.CHEMICALCATALYST, 5,
-                        Asset.ELECTROMAGNET, 5,
-                        Asset.METALCOIL, 5
+                        Data.CHEMICALPATENTS, 5,
+                        Data.COMBATANTPERFORMANCE, 10,
+                        Asset.CHEMICALCATALYST, 10,
+                        Asset.ELECTROMAGNET, 10,
+                        Asset.METALCOIL, 10
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
