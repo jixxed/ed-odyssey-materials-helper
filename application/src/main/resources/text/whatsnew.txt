@@ -1,3 +1,10 @@
+Version 2.89
+-------------
+Updated Type-8 images and default loadout
+Implemented most of Type-8 base stats (excl. heat)
+Fix for failure to read journal files
+Properly initialize config values in shipbuilder on first load
+
 Version 2.88
 -------------
 New ship engineering logic has been implemented
