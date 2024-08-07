@@ -13,6 +13,9 @@ Shipbuilder module selection popup will now close when clicking the module again
 Renamed Frame Shift Drive Booster to Guardian Frame Shift Drive Booster (to make it easier to find/search)
 Added Godshard module
 Updated translations ES/RU (Thanks to Cashiot/RetroPaladin)
+Removed listed power draw from Experimental Weapon Stabiliser
+wrap text in what's new and privacy policy dialog
+Refresh Odyssey totals after UI init
 
 Version 2.87
 -------------
