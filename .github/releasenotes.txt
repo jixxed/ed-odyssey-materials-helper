@@ -6,7 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Updated Type-8 images and default loadout
-Implemented most of Type-8 base stats (excl. heat)
-Fix for failure to read journal files
-Properly initialize config values in shipbuilder on first load
+Fix powerup button

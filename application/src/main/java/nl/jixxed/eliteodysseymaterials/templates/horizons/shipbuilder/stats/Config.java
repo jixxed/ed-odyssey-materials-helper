@@ -142,10 +142,10 @@ public class Config extends Stats implements Template {
                 updatePower(ship.getCargoHatch().getShipModule());
             });
         }).withGraphic(this.power).build();
+        initPowerBox();
         this.getShip().ifPresent(ship -> {
             updatePower(ship.getCargoHatch().getShipModule());
         });
-        initPowerBox();
     }
 
     private void initPowerBox() {
