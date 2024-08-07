@@ -2223,47 +2223,47 @@ public class Ship {
                 0,//TODO
                 0,//TODO
                 Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, 130.0),//TODO
-                        Map.entry(HorizonsModifier.BOOST_SPEED, 200.0),//TODO
-                        Map.entry(HorizonsModifier.MANOEUVRABILITY, 0.0),//TODO
-                        Map.entry(HorizonsModifier.SHIELDS, 240.0),//TODO
-                        Map.entry(HorizonsModifier.ARMOUR, 480.0),//TODO
-                        Map.entry(HorizonsModifier.MASS, 850.0),//TODO
+                        Map.entry(HorizonsModifier.TOP_SPEED, 200.0),//TODO
+                        Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),//TODO
+                        Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
+                        Map.entry(HorizonsModifier.SHIELDS, 228.0),
+                        Map.entry(HorizonsModifier.ARMOUR, 440.0),
+                        Map.entry(HorizonsModifier.MASS, 400.0),
 //                    Map.entry(HorizonsModifier.FWDACC,20.03),
 //                    Map.entry(HorizonsModifier.REVACC,10.11),
 //                    Map.entry(HorizonsModifier.LATACC,10.03),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 30.769),//TODO
-                        Map.entry(HorizonsModifier.BOOST_COST, 19.0),//TODO
-                        Map.entry(HorizonsModifier.PITCH_SPEED, 20.0),//TODO
-                        Map.entry(HorizonsModifier.YAW_SPEED, 8.0),//TODO
-                        Map.entry(HorizonsModifier.ROLL_SPEED, 20.0),//TODO
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 46.0),//TODO 46
+                        Map.entry(HorizonsModifier.BOOST_COST, 13.0),//TODO
+                        Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),//TODO
+                        Map.entry(HorizonsModifier.YAW_SPEED, 18.0),//TODO
+                        Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),//TODO
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,100.0),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,80.0),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 15.0),//TODO
+                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),//TODO
                         Map.entry(HorizonsModifier.HEAT_CAPACITY, 289.0),//TODO
                         Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),//TODO
                         Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 48.35),//TODO
                         Map.entry(HorizonsModifier.FUEL_COST, 50.0),//TODO
-                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),//TODO
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),//TODO
-                        Map.entry(HorizonsModifier.MASS_LOCK, 16.0),//TODO
-                        Map.entry(HorizonsModifier.CREW, 3.0)//TODO
+                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),//TODO
+                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),//TODO
+                        Map.entry(HorizonsModifier.MASS_LOCK, 23.0),//TODO
+                        Map.entry(HorizonsModifier.CREW, 0.0)//TODO
 
+                ),// 2 116 55   // 1 -18 -21
+                List.of(
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(935).y(429).index(3).slotSize(1).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(4).slotSize(1).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(5).slotSize(1).build()
                 ),
                 List.of(
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1152).y(496).index(0).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1227).y(435).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(904).y(765).index(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1323).y(425).index(3).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1247).y(341).index(4).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1247).y(341).index(5).slotSize(1).build()
-                ),
-                List.of(//TODO not mentioned on livestream
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1117).y(365).index(0).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(806).y(672).index(1).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(880).y(717).index(2).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(709).y(550).index(3).slotSize(0).build()
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(945).y(336).index(0).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(832).y(437).index(1).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(802).y(647).index(2).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(924).y(750).index(3).slotSize(0).build()
                 ),
                 List.of(
                         Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.TYPE_8_ARMOUR_GRADE_1).build(),
