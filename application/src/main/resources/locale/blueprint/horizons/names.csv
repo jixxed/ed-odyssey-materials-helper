@@ -220,9 +220,9 @@ blueprint.horizons.name.xeno_limpet_controller.short,Xeno,Xeno,,Xeno,,,Иные
 blueprint.horizons.name.xeno_scanner,Xeno Scanner,Xeno Scanner,,Escáner Xeno,,,Ксено-сканер
 blueprint.horizons.name.cargo_hatch,Cargo Hatch,Cargo Hatch,,Escotilla de carga,,,Грузовой люк
 blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,Guardian Nanite Munitions,,Munición de nanocitos guardián,,,Нанитные боеприпасы
-blueprint.horizons.name.basic_discovery_scanner,Basic Discovery Scanner,Basic Discovery Scanner,,,,,
-blueprint.horizons.name.intermediate_discovery_scanner,Intermediate Discovery Scanner,Intermediate Discovery Scanner,,,,,
-blueprint.horizons.name.advanced_discovery_scanner,Advanced Discovery Scanner,Advanced Discovery Scanner,,,,,
-blueprint.horizons.name.guardian_shard_cannon_pre_god,Godshard Guardian Shard Cannon,Godshard Guardian Shard Cannon,,,,,
-blueprint.horizons.name.guardian_shard_cannon_pre_god_clarifier,God,God,,,,,
-blueprint.horizons.name.frame_shift_drive_booster,Guardian Frame Shift Drive Booster,,,,,,
+blueprint.horizons.name.basic_discovery_scanner,Basic Discovery Scanner,Basic Discovery Scanner,,,,,Базовый сканер обнаружения
+blueprint.horizons.name.intermediate_discovery_scanner,Intermediate Discovery Scanner,Intermediate Discovery Scanner,,,,,Улучшенный сканер обнаружения
+blueprint.horizons.name.advanced_discovery_scanner,Advanced Discovery Scanner,Advanced Discovery Scanner,,,,,Полнофункциональный сканер обнаружения
+blueprint.horizons.name.guardian_shard_cannon_pre_god,Godshard Guardian Shard Cannon,Godshard Guardian Shard Cannon,,,,,Божественное осколочное орудие Стражей
+blueprint.horizons.name.guardian_shard_cannon_pre_god_clarifier,God,God,,,,,Божественное
+blueprint.horizons.name.frame_shift_drive_booster,Guardian Frame Shift Drive Booster,,,,,,Ускоритель FSD Стражей
