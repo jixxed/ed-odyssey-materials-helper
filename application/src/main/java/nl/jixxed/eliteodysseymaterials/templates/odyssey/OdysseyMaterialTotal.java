@@ -49,7 +49,7 @@ class OdysseyMaterialTotal extends VBox {
         initTotalHeader();
         initTotals();
         initSubTotal();
-
+        updateTotals();
         this.getStyleClass().add("material-total");
         this.getStyleClass().add("material-total-" + this.storageType.name().toLowerCase());
     }
