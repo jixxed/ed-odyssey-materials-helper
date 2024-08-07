@@ -91,14 +91,6 @@ public class FileProcessor {
             AtomicInteger index = new AtomicInteger(1);
             Integer total = messages.size();
             messages.stream()
-                    .filter(event -> {
-                        try {
-                            return
-                                    (!OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACKCHANGE.name()) && !OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACK.name()) || backpackAfterShiplocker(messages, event));
-                        } catch (final JsonProcessingException e) {
-                            return false;
-                        }
-                    })
                     .sorted(Comparator.comparing(event -> {
                         try {
                             final JsonNode jsonNode = OBJECT_MAPPER.readTree(event);
@@ -112,6 +104,14 @@ public class FileProcessor {
                         }
                         return "";
                     }))
+                    .filter(event -> {
+                        try {
+                            return
+                                    (!OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACKCHANGE.name()) && !OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.BACKPACK.name()) || backpackAfterShiplocker(messages, event));
+                        } catch (final JsonProcessingException e) {
+                            return false;
+                        }
+                    })
                     .forEach(message -> {
                         Platform.runLater(() -> MessageHandler.handleMessage(message, file));
                         Platform.runLater(() -> EventService.publish(new EventProcessedEvent(index.getAndIncrement(), total)));
@@ -138,18 +138,21 @@ public class FileProcessor {
     }
 
     private static boolean backpackAfterShiplocker(final List<String> messages, final String event) {
-        try {
-            return ZonedDateTime.parse(OBJECT_MAPPER.readTree(event).get("timestamp").asText()).isAfter(ZonedDateTime.parse(OBJECT_MAPPER.readTree(messages.stream().filter(ev -> {
-                try {
-                    return
-                            (OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.SHIPLOCKER.name()));
-                } catch (final JsonProcessingException e) {
-                    return false;
-                }
-            }).findFirst().orElse("")).get("timestamp").asText()));
-        } catch (final JsonProcessingException e) {
-            return false;
-        }
+        final Optional<String> shiplockerTimestamp = messages.stream().filter(ev -> {
+            try {
+                return
+                        (OBJECT_MAPPER.readTree(event).get(EVENT).asText().equalsIgnoreCase(JournalEventType.SHIPLOCKER.name()));
+            } catch (final JsonProcessingException e) {
+                return false;
+            }
+        }).findFirst();
+        return shiplockerTimestamp.map(timestamp -> {
+            try {
+                return ZonedDateTime.parse(OBJECT_MAPPER.readTree(event).get("timestamp").asText()).isAfter(ZonedDateTime.parse(OBJECT_MAPPER.readTree(timestamp).get("timestamp").asText()));
+            } catch (final JsonProcessingException e) {
+                return false;
+            }
+        }).orElse(false);
     }
 
     private static void testAndReport(String message, Class<? extends Event> messageClass) {
