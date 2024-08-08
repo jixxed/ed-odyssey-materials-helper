@@ -1,17 +1,17 @@
 messageKey,,en,de,es,fr,pt,ru
-government.anarchy,Anarchy,,,Anarquía,,,
-government.communism,Communism,,,Comunismo,,,
-government.confederacy,Confederacy,,,Confederación,,,
-government.cooperative,Cooperative,,,Cooperativa,,,
-government.corporate,Corporate,,,Corporación,,,
-government.democracy,Democracy,,,Democracia,,,
-government.dictatorship,Dictatorship,,,Dictadura,,,
-government.feudal,Feudal,,,Feudal,,,
-government.imperial,Imperial,,,Imperial,,,
-government.none,None,,,Ninguna,,,
-government.patronage,Patronage,,,Patronazgo,,,
-government.prisoncolony,Prison Colony,,,Colonia Penal,,,
-government.theocracy,Theocracy,,,Teocracia,,,
-government.engineer,Engineer,,,Ingeniería,,,
-government.privateownership,Private Ownership,,,Propiedad Privada,,,
-government.unknown,Unknown,,,Desconocida,,,
+government.anarchy,Anarchy,,,Anarquía,,,Анархия
+government.communism,Communism,,,Comunismo,,,Коммунизм
+government.confederacy,Confederacy,,,Confederación,,,Конфедерация
+government.cooperative,Cooperative,,,Cooperativa,,,Кооперация
+government.corporate,Corporate,,,Corporación,,,Корпоративная
+government.democracy,Democracy,,,Democracia,,,Демократия
+government.dictatorship,Dictatorship,,,Dictadura,,,Диктатура
+government.feudal,Feudal,,,Feudal,,,Феодализм
+government.imperial,Imperial,,,Imperial,,,Имперская
+government.none,None,,,Ninguna,,,Нет
+government.patronage,Patronage,,,Patronazgo,,,Патронаж
+government.prisoncolony,Prison Colony,,,Colonia Penal,,,Тюремная колония
+government.theocracy,Theocracy,,,Teocracia,,,Теократия
+government.engineer,Engineer,,,Ingeniería,,,Мастерская
+government.privateownership,Private Ownership,,,Propiedad Privada,,,Частная собственность
+government.unknown,Unknown,,,Desconocida,,,Неизвестно

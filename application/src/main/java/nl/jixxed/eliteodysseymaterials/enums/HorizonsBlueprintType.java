@@ -2,9 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 
 @RequiredArgsConstructor
 public enum HorizonsBlueprintType {
@@ -196,6 +194,7 @@ public enum HorizonsBlueprintType {
     OVERCHARGED_OVERCHARGED(false, true),
     OVERCHARGED_WEAPON_FOCUSED_WEAPON(false, true),
     LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS(false, true),
+    LONG_RANGE_WEAPON_FOCUSED_WEAPON_PENETRATOR_MUNITIONS_GOD(false, true),
     HIGH_CAPACITY_MAGAZINE_THERMAL_CASCADE(false, true),
     EXPANDED_PROBE_SCANNING_RADIUS_X2(false, true),
     INCREASED_FSD_RANGE_FASTER_FSD_BOOT_SEQUENCE(false, true),
@@ -479,10 +478,5 @@ public enum HorizonsBlueprintType {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey());
     }
 
-    public int getGradeRolls(final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        if (ANTI_GUARDIAN_ZONE_RESISTANCE.equals(this)) {
-            return 1;
-        }
-        return PreferencesService.getPreference(PreferenceConstants.WISHLIST_GRADE_ROLLS_PREFIX + horizonsBlueprintGrade.name(), horizonsBlueprintGrade.getDefaultNumberOfRolls());
-    }
+
 }

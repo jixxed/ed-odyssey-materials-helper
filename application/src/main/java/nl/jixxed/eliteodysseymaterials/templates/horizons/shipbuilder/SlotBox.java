@@ -25,6 +25,7 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HardpointGroup;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModuleHighlightEvent;
@@ -37,7 +38,6 @@ import org.controlsfx.control.PopOver;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.NumberFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -46,11 +46,6 @@ import java.util.stream.Collectors;
 @Slf4j
 class SlotBox extends StackPane {
 
-    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
-
-    static {
-        NUMBER_FORMAT.setMaximumFractionDigits(2);
-    }
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @Getter
@@ -197,13 +192,16 @@ class SlotBox extends StackPane {
         if (!isCurrentShip()) {
             this.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    close();
-                    this.popOver = getPopOver();
+                    if(this.popOver != null && this.popOver.isShowing()){
+                        close();
+                    }else {
+                        this.popOver = getPopOver();
 
-                    final Bounds boundsInLocal = this.getBoundsInLocal();
-                    final Bounds bounds = this.localToScreen(boundsInLocal);
-                    this.popOver.show(this, bounds.getMinX(),
-                            bounds.getMaxY());
+                        final Bounds boundsInLocal = this.getBoundsInLocal();
+                        final Bounds bounds = this.localToScreen(boundsInLocal);
+                        this.popOver.show(this, bounds.getMinX(),
+                                bounds.getMaxY());
+                    }
                 } else if (event.getButton().equals(MouseButton.SECONDARY)) {
                     close();
                     if (!slot.getSlotType().isCore()) {
@@ -725,7 +723,7 @@ class SlotBox extends StackPane {
             if (!shipModule.getModifications().isEmpty()) {
                 if (!shipModule.isLegacy()) {
                     this.iconBox.getChildren().add(
-                            LabelBuilder.builder().withStyleClass("module-percent-modified").withNonLocalizedText(shipModule.getModifications().getFirst().getModificationCompleteness().map(completeness -> NUMBER_FORMAT.format(completeness.multiply(BigDecimal.valueOf(100))) + "%").orElse("")).build()
+                            LabelBuilder.builder().withStyleClass("module-percent-modified").withNonLocalizedText(shipModule.getModifications().getFirst().getModificationCompleteness().map(completeness -> Formatters.NUMBER_FORMAT_2.format(completeness.multiply(BigDecimal.valueOf(100))) + "%").orElse("")).build()
                     );
                 }
                 this.iconBox.getChildren().addAll(
@@ -1076,7 +1074,7 @@ class SlotBox extends StackPane {
             progressSlider.setStyle("-fx-fit-to-width: true;-fx-max-width: 40em;-fx-pref-width: 40em;");
             progressSlider.disableProperty().bind(toggleGroup.selectedToggleProperty().isNull());
             final TextField textvalue = TextFieldBuilder.builder().withFocusTraversable(false).build();
-            textvalue.textProperty().bind(progressSlider.valueProperty().map(number -> NUMBER_FORMAT.format(number) + "%"));
+            textvalue.textProperty().bind(progressSlider.valueProperty().map(number -> Formatters.NUMBER_FORMAT_2.format(number) + "%"));
             textvalue.setDisable(true);
             textvalue.setStyle("-fx-max-width: 4.5em;-fx-min-width: 4.5em;");
             progression.getChildren().add(progressSlider);

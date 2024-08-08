@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.export;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -46,11 +47,11 @@ public class CsvExporter {
         return textBuilder.toString();
     }
 
-    public static String createCsvWishlist(final Map<Raw, Integer> wishlistNeededRaw, final Map<Encoded, Integer> wishlistNeededEncoded, final Map<Manufactured, Integer> wishlistNeededManufactured, final Map<Commodity, Integer> wishlistNeededCommodity) {
+    public static String createCsvWishlist(final Map<Raw, WishlistMaterial> wishlistNeededRaw, final Map<Encoded, WishlistMaterial> wishlistNeededEncoded, final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured, final Map<Commodity, WishlistMaterial> wishlistNeededCommodity) {
         final StringBuilder textBuilder = new StringBuilder();
         textBuilder.append(String.join(",", "Material", "Available S", "Available FC", "Available Total", "Required", "Need"));
         textBuilder.append("\n");
-        ((List<Map<HorizonsMaterial, Integer>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
+        ((List<Map<HorizonsMaterial, WishlistMaterial>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
                 wishlistNeededMaterials.entrySet().stream()
                         .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
                         .forEach(item -> {
@@ -68,7 +69,7 @@ public class CsvExporter {
                                         StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.SHIP) + StorageService.getCommodityCount((Commodity) item.getKey(), StoragePool.FLEETCARRIER);
                                 default -> 0;
                             };
-                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(total), String.valueOf(item.getValue()), String.valueOf(Math.max(0, item.getValue() - ship))));
+                            textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(total), String.valueOf(item.getValue()), String.valueOf(Math.max(0, item.getValue().getRequired() - ship))));
                             textBuilder.append("\n");
                         })
         );

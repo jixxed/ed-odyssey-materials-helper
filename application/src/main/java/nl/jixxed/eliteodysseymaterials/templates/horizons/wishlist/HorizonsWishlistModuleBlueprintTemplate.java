@@ -17,21 +17,18 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.components.ButtonIntField;
+import nl.jixxed.eliteodysseymaterials.templates.components.CompletionSlider;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 import org.controlsfx.control.PopOver;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements WishlistBlueprintTemplate<HorizonsBlueprintName> {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -43,7 +40,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     private final Integer sequenceID;
     private final HorizonsModuleWishlistBlueprint wishlistBlueprint;
     private final BlueprintCategory blueprintCategory;
-    private List<Blueprint<HorizonsBlueprintName>> blueprints;
+    private Map<Blueprint<HorizonsBlueprintName>, Double> blueprints;
     @Getter
     private final String wishlistUUID;
 
@@ -57,12 +54,15 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     private EventListener<StorageEvent> storageEventEventListener;
     private Tooltip tooltip;
 
+    private Engineer engineer;
+    private List<CompletionSlider> sliders = new ArrayList<>();
+
     HorizonsWishlistModuleBlueprintTemplate(final String wishlistUUID, final HorizonsModuleWishlistBlueprint wishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.wishlistBlueprint = wishlistBlueprint;
         this.sequenceID = counter++;
         this.blueprintCategory = HorizonsBlueprintConstants.getRecipeCategory(wishlistBlueprint.getRecipeName(), false);
-        this.blueprints = wishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().flatMap(gradeRolls -> IntStream.range(0, gradeRolls.getValue()).mapToObj(value -> HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradeRolls.getKey()))).toList();
+        this.blueprints = wishlistBlueprint.getPercentageToComplete().entrySet().stream().map(gradePercentage -> Map.entry(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradePercentage.getKey()), gradePercentage.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         initComponents();
         initEventHandling();
     }
@@ -89,10 +89,17 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                 .withText(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
                         LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
                         LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
-                        this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))))
-                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.NONE)))))
+                        this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))))
+                .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.NONE)))))
                 .withHoverProperty((observable, oldValue, newValue) -> {
-                    this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, (this.blueprints.stream().map(bp -> ((HorizonsBlueprint) bp).getRequiredAmount(wishlistIngredient.getHorizonsMaterial())).reduce(0, Integer::sum))));
+
+
+                    this.wishlistIngredients.forEach(wishlistIngredient -> {
+                        Integer requiredAmount =  (this.blueprints.keySet().stream().map(bp -> ((HorizonsBlueprint) bp).getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), engineer)).reduce(0, Integer::sum));
+                        Integer minimumAmount =  (this.blueprints.keySet().stream().map(bp -> ((HorizonsBlueprint) bp).getMinimumAmount(wishlistIngredient.getHorizonsMaterial())).reduce(0, Integer::sum));
+                        Integer maximumAmount =  (this.blueprints.keySet().stream().map(bp -> ((HorizonsBlueprint) bp).getMaximumAmount(wishlistIngredient.getHorizonsMaterial())).reduce(0, Integer::sum));
+                        wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount, requiredAmount, maximumAmount));
+                    });
                     this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
                     this.highlight(newValue);
                 })
@@ -112,34 +119,51 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                     .withStyleClass("wishlist-item-button").withNonLocalizedText("\u25BC")
                     .withOnAction(event -> {
                         if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
-                            final VBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
+                            final HBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
                                     {
-                                        final ButtonIntField buttonIntField = new ButtonIntField(0, 15, this.wishlistBlueprint.getBlueprintGradeRolls().getOrDefault(grade, 0));
-                                        buttonIntField.addHandlerOnValidChange(rolls -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                                            this.wishlistBlueprint.setBlueprintGradeRollsFor(grade, rolls);
-                                            this.blueprints = this.wishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().flatMap(gradeRolls -> IntStream.range(0, gradeRolls.getValue()).mapToObj(value -> HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradeRolls.getKey()))).toList();
+                                        CompletionSlider completionSlider = new CompletionSlider(0D, 100D, this.wishlistBlueprint.getPercentageToComplete().getOrDefault(grade, 0D) * 100D);
+                                        sliders.add(completionSlider);
+                                        completionSlider.setChangeListener(percentage -> {
+                                            this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, percentage / 100D);
+                                            this.blueprints = this.wishlistBlueprint.getPercentageToComplete().entrySet().stream().map(gradePercentage -> Map.entry(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradePercentage.getKey()), gradePercentage.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
                                             modify();
                                             EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
                                             this.wishlistRecipeName.textProperty().bind(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
                                                     LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
                                                     LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
-                                                    this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))));
-                                            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+                                                    this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))));
+                                            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
                                             this.canCraft(craftability);
-                                        }));
-                                        buttonIntField.getStyleClass().add("wishlist-rolls-select");
+                                        });
+//                                        final ButtonIntField buttonIntField = new ButtonIntField(0, 15, this.wishlistBlueprint.getBlueprintGradeRolls().getOrDefault(grade, 0));
+//                                        buttonIntField.addHandlerOnValidChange(rolls -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+//                                            this.wishlistBlueprint.setBlueprintGradeRollsFor(grade, rolls);
+//                                            this.blueprints = this.wishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().flatMap(gradeRolls -> IntStream.range(0, gradeRolls.getValue()).mapToObj(value -> HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradeRolls.getKey()))).toList();
+//                                            modify();
+//                                            EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
+//                                            this.wishlistRecipeName.textProperty().bind(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
+//                                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
+//                                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
+//                                                    this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))));
+//                                            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+//                                            this.canCraft(craftability);
+//                                        }));
+//                                        buttonIntField.getStyleClass().add("wishlist-rolls-select");
                                         final DestroyableLabel label = LabelBuilder.builder().withStyleClass("wishlist-rolls-label").withNonLocalizedText(String.valueOf(grade.getGrade())).build();
-                                        final AnchorPane anchorPane2 = new AnchorPane(label);
-                                        AnchorPaneHelper.setAnchor(label, 0D, 0D, 0D, 0D);
+//                                        final AnchorPane anchorPane2 = new AnchorPane(label);
+//                                        AnchorPaneHelper.setAnchor(label, 0D, 0D, 0D, 0D);
                                         return BoxBuilder.builder().withNodes(
-                                                anchorPane2,
-                                                buttonIntField
-                                        ).buildVBox();
+                                                label,
+                                                completionSlider
+                                        ).buildHBox();
                                     })
-                                    .toArray(VBox[]::new);
+                                    .toArray(HBox[]::new);
 
-                            final HBox grades = BoxBuilder.builder().withStyleClasses("grade-selects").withNodes(gradeControls).buildHBox();
-                            final VBox gradePopOverContent = BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(LabelBuilder.builder().withStyleClass("grade-selects-title").withText(LocaleService.getStringBinding("wishlist.rolls.per.grade")).build(), grades).buildVBox();
+                            final VBox grades = BoxBuilder.builder().withStyleClasses("grade-selects").withNodes(gradeControls).buildVBox();
+                            final VBox gradePopOverContent = BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(
+                                    LabelBuilder.builder().withStyleClass("grade-selects-title").withText(LocaleService.getStringBinding("wishlist.percentage.per.grade")).build(),
+                                    LabelBuilder.builder().withStyleClass("grade-selects-explain").withText(LocaleService.getStringBinding("wishlist.percentage.per.grade.explain")).build(),
+                                    grades).buildVBox();
                             final PopOver popOver = new PopOver(gradePopOverContent);
                             popOverRef.set(popOver);
                             popOver.setDetachable(false);
@@ -167,7 +191,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
         Tooltip.install(this.wishlistRecipeName, this.tooltip);
 
         initFadeTransition();
-        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
         this.canCraft(craftability);
     }
 
@@ -191,7 +215,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
 
     private void initEventHandling() {
         this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
-            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getBlueprintGradeRolls());
+            final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
             this.canCraft(craftability);
         });
     }
@@ -220,8 +244,8 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     public void addWishlistIngredients(final List<Ingredient> wishlistIngredients) {
         this.wishlistIngredients.clear();
         this.otherIngredients.clear();
-        this.wishlistIngredients.addAll(wishlistIngredients.stream().map(HorizonsWishlistIngredient.class::cast).filter(wishlistIngredient -> this.blueprints.stream().anyMatch(bp -> ((HorizonsBlueprint) bp).hasIngredient(wishlistIngredient.getHorizonsMaterial()))).collect(Collectors.toSet()));
-        this.otherIngredients.addAll(wishlistIngredients.stream().map(HorizonsWishlistIngredient.class::cast).filter(wishlistIngredient -> this.blueprints.stream().noneMatch(bp -> ((HorizonsBlueprint) bp).hasIngredient(wishlistIngredient.getHorizonsMaterial()))).collect(Collectors.toSet()));
+        this.wishlistIngredients.addAll(wishlistIngredients.stream().map(HorizonsWishlistIngredient.class::cast).filter(wishlistIngredient -> this.blueprints.keySet().stream().anyMatch(bp -> ((HorizonsBlueprint) bp).hasIngredient(wishlistIngredient.getHorizonsMaterial()))).collect(Collectors.toSet()));
+        this.otherIngredients.addAll(wishlistIngredients.stream().map(HorizonsWishlistIngredient.class::cast).filter(wishlistIngredient -> this.blueprints.keySet().stream().noneMatch(bp -> ((HorizonsBlueprint) bp).hasIngredient(wishlistIngredient.getHorizonsMaterial()))).collect(Collectors.toSet()));
     }
 
     @Override
@@ -240,13 +264,13 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     }
 
     @Override
-    public List<Blueprint<HorizonsBlueprintName>> getRecipe() {
+    public Map<Blueprint<HorizonsBlueprintName>, Double> getRecipe() {
         return this.blueprints;
     }
 
     @Override
     public HorizonsBlueprint getPrimaryRecipe() {
-        return (HorizonsBlueprint) this.blueprints.stream().max(Comparator.comparing(bp -> ((HorizonsBlueprint) bp).getHorizonsBlueprintGrade().getGrade())).orElse(null);
+        return (HorizonsBlueprint) this.blueprints.keySet().stream().max(Comparator.comparing(bp -> ((HorizonsBlueprint) bp).getHorizonsBlueprintGrade().getGrade())).orElse(null);
     }
 
     @Override
@@ -281,5 +305,11 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     @Override
     public void onDestroy() {
         EventService.removeListener(this.storageEventEventListener);
+        sliders.forEach(CompletionSlider::destroy);
+    }
+
+    @Override
+    public void setEngineer(Engineer engineer) {
+        this.engineer = engineer;
     }
 }

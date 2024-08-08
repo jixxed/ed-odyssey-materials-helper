@@ -4,12 +4,14 @@ import nl.jixxed.eliteodysseymaterials.domain.Blueprint;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintCategory;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
+import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 
 import java.util.List;
+import java.util.Map;
 
 public interface WishlistBlueprintTemplate<E extends BlueprintName<E>> {
 
-    List<Blueprint<E>> getRecipe();
+    Map<Blueprint<E>, Double> getRecipe();
 
     Blueprint<E> getPrimaryRecipe();
 
@@ -33,4 +35,6 @@ public interface WishlistBlueprintTemplate<E extends BlueprintName<E>> {
     void addWishlistIngredients(final List<Ingredient> wishlistIngredients);
 
     String getWishlistUUID();
+
+    void setEngineer(Engineer currentEngineerForRecipe);
 }

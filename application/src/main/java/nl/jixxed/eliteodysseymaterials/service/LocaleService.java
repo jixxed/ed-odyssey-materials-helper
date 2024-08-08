@@ -9,7 +9,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.domain.*;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.HorizonsEngineeringBlueprint;
+import nl.jixxed.eliteodysseymaterials.domain.ModuleBlueprint;
 import nl.jixxed.eliteodysseymaterials.enums.ApplicationLocale;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.Data;
@@ -95,21 +97,21 @@ public class LocaleService {
         return ObservableResourceFactory.getStringBinding(supplier);
     }
 
-    private static void addStatisticsToTooltip(final OdysseyMaterial odysseyMaterial, final StringBuilder builder) {
-        final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(odysseyMaterial);
-        builder.append("\n\n")
-                .append("Economies:")
-                .append("\n")
-                .append(statistic.getEconomies().stream().map(economyStatistic -> economyStatistic.getEconomy() + "(" + economyStatistic.getAmount() + ")").collect(Collectors.joining(",")))
-                .append("\n\n")
-                .append("Most collected in settlements:")
-                .append("\n")
-                .append(statistic.getMostcollected().stream().map(settlementStatistic -> settlementStatistic.getAmount() + " - " + settlementStatistic.getSettlement() + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + "(" + LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ())) + ")").collect(Collectors.joining("\n")))
-                .append("\n\n")
-                .append("Best runs:")
-                .append("\n")
-                .append(statistic.getBestrun().stream().map(settlementStatistic -> settlementStatistic.getAmount() + " - " + settlementStatistic.getSettlement() + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + "(" + LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ())) + ")").collect(Collectors.joining("\n")));
-    }
+//    private static void addStatisticsToTooltip(final OdysseyMaterial odysseyMaterial, final StringBuilder builder) {
+//        final MaterialStatistic statistic = MaterialTrackingService.getMaterialStatistic(odysseyMaterial);
+//        builder.append("\n\n")
+//                .append("Economies:")
+//                .append("\n")
+//                .append(statistic.getEconomies().stream().map(economyStatistic -> economyStatistic.getEconomy() + "(" + economyStatistic.getAmount() + ")").collect(Collectors.joining(",")))
+//                .append("\n\n")
+//                .append("Most collected in settlements:")
+//                .append("\n")
+//                .append(statistic.getMostcollected().stream().map(settlementStatistic -> settlementStatistic.getAmount() + " - " + settlementStatistic.getSettlement() + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + "(" + LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ())) + ")").collect(Collectors.joining("\n")))
+//                .append("\n\n")
+//                .append("Best runs:")
+//                .append("\n")
+//                .append(statistic.getBestrun().stream().map(settlementStatistic -> settlementStatistic.getAmount() + " - " + settlementStatistic.getSettlement() + " | " + settlementStatistic.getBody() + " | " + settlementStatistic.getSystem() + "(" + LocationService.calculateDistance(LocationService.getCurrentStarSystem(), new StarSystem(settlementStatistic.getSystem(), settlementStatistic.getX(), settlementStatistic.getY(), settlementStatistic.getZ())) + ")").collect(Collectors.joining("\n")));
+//    }
 
     public static StringBinding getToolTipStringBinding(final ModuleBlueprint recipe, final String localizationKey) {
         return ObservableResourceFactory.getStringBinding(() -> MessageFormat.format(ObservableResourceFactory.getResources().getString(localizationKey).translateEscapes(), recipe.getEngineers().stream().map(engineer -> ObservableResourceFactory.getResources().getString(engineer.getLocalizationKey())).collect(Collectors.joining(", "))));

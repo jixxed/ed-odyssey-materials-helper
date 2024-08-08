@@ -84,7 +84,6 @@ blueprint.horizons.name.first_class_passenger_cabin.short,(FIR),,,,,,(ПРВ)
 blueprint.horizons.name.flechette_launcher_munitions,Flechette Launcher Munitions,Flechette Launcher Munitions,Flechettewerfermunition,Municion de lanzador de Flechette,Flechette Launcher Munitions,Munições de Flechette Launcher,Стреловидные боеприпасы
 blueprint.horizons.name.fragment_cannon,Fragment Cannon,Fragment Cannon,Splitterkanone,Cañón de fragmentación,Canon de fragment,Canhão de fragmento,Залповое орудие
 blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Frameshiftantrieb,Motor de distorsión,Lecteur de décalage du cadre,Unidade de mudança de quadro,Рамочно-сместительный двигатель
-blueprint.horizons.name.frame_shift_drive_booster,Frame Shift Drive Booster,,,Potenciador de Motor de Distorsión,,,Ускоритель FSD
 blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Frameshift-Unterbrecher,Interdictor,Interdictor de lecteur de décalage de cadre,Interditor de transmissão de mudança de quadro,Перехватчик FSD
 blueprint.horizons.name.frame_shift_drive_pre,Frame Shift Drive,,,Motor de Distorsión,,,FSD
 blueprint.horizons.name.frame_shift_drive_overcharge,Frame Shift Drive (SCO),,,Motor de Distorsión (SDS),,,FSD (ПГР)
@@ -224,3 +223,6 @@ blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,Guar
 blueprint.horizons.name.basic_discovery_scanner,Basic Discovery Scanner,Basic Discovery Scanner,,,,,
 blueprint.horizons.name.intermediate_discovery_scanner,Intermediate Discovery Scanner,Intermediate Discovery Scanner,,,,,
 blueprint.horizons.name.advanced_discovery_scanner,Advanced Discovery Scanner,Advanced Discovery Scanner,,,,,
+blueprint.horizons.name.guardian_shard_cannon_pre_god,Godshard Guardian Shard Cannon,Godshard Guardian Shard Cannon,,,,,
+blueprint.horizons.name.guardian_shard_cannon_pre_god_clarifier,God,God,,,,,
+blueprint.horizons.name.frame_shift_drive_booster,Guardian Frame Shift Drive Booster,,,,,,

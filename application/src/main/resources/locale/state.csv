@@ -1,29 +1,29 @@
 messageKey,,en,de,es,fr,pt,ru
-state.unknown,Unknown,,,Desconocido,,,
-state.none,None,,,Ninguno,,,
-state.boom,Boom,,,Auge,,,
-state.bust,Bust,,,Quiebra,,,
-state.civilunrest,Civil Unrest,,,Disturbios,,,
-state.civilwar,Civil War,,,Guerra Civil,,,
-state.election,Election,,,Elecciones,,,
-state.expansion,Expansion,,,Expansión,,,
-state.famine,Famine,,,Hambruna,,,
-state.investment,Investment,,,Inversión,,,
-state.lockdown,Lockdown,,,Bloqueo,,,
-state.outbreak,Outbreak,,,Epidemia,,,
-state.retreat,Retreat,,,Retirada,,,
-state.war,War,,,Guerra,,,
-state.civilliberty,Civil Liberty,,,Libertad Civil,,,
-state.pirateattack,Pirate Attack,,,Ataque pirata,,,
-state.blight,Blight,,,Plaga,,,
-state.drought,Drought,,,Sequía,,,
-state.infrastructurefailure,Infrastructure Failure,,,Fallo de Infraestructuras,,,
-state.naturaldisaster,Natural Disaster,,,Desastre Natural,,,
-state.publicholiday,Public Holiday,,,Día Festivo,,,
-state.terrorism,Terrorist Attack,,,Ataque terrorista,,,
-state.coldwar,Cold War,,,Guerra Fria,,,
-state.colonisation,Colonisation,,,Colonización,,,
-state.historicevent,Historic Event,,,Evento Historico,,,
-state.revolution,Revolution,,,Revolución,,,
-state.technologicalleap,Technological Leap,,,Salto Tecnológico,,,
-state.tradewar,Trade War,,,Guerra comercial,,,
+state.unknown,Unknown,,,Desconocido,,,Неизвестно
+state.none,None,,,Ninguno,,,Нет
+state.boom,Boom,,,Auge,,,Бум
+state.bust,Bust,,,Quiebra,,,Спад
+state.civilunrest,Civil Unrest,,,Disturbios,,,Гражданские беспорядки
+state.civilwar,Civil War,,,Guerra Civil,,,Гражданская война
+state.election,Election,,,Elecciones,,,Выборы
+state.expansion,Expansion,,,Expansión,,,Экспансия
+state.famine,Famine,,,Hambruna,,,Голод
+state.investment,Investment,,,Inversión,,,Инвестирование
+state.lockdown,Lockdown,,,Bloqueo,,,Изоляция
+state.outbreak,Outbreak,,,Epidemia,,,Эпидемия
+state.retreat,Retreat,,,Retirada,,,Отступление
+state.war,War,,,Guerra,,,Война
+state.civilliberty,Civil Liberty,,,Libertad Civil,,,Гражданская свобода
+state.pirateattack,Pirate Attack,,,Ataque pirata,,,Атака пиратов
+state.blight,Blight,,,Plaga,,,Неурожай
+state.drought,Drought,,,Sequía,,,Засуха
+state.infrastructurefailure,Infrastructure Failure,,,Fallo de Infraestructuras,,,Сбой инфраструктуры
+state.naturaldisaster,Natural Disaster,,,Desastre Natural,,,Стихийные бедствия
+state.publicholiday,Public Holiday,,,Día Festivo,,,Официальные праздники
+state.terrorism,Terrorist Attack,,,Ataque terrorista,,,Атака террористов
+state.coldwar,Cold War,,,Guerra Fria,,,Холодная война
+state.colonisation,Colonisation,,,Colonización,,,Колонизация
+state.historicevent,Historic Event,,,Evento Historico,,,Историческое событие
+state.revolution,Revolution,,,Revolución,,,Революция
+state.technologicalleap,Technological Leap,,,Salto Tecnológico,,,Технологический скачок
+state.tradewar,Trade War,,,Guerra comercial,,,Торговая война

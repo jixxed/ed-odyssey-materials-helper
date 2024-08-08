@@ -48,6 +48,7 @@ public class StartDialog extends VBox implements Template {
             whatsnew = "";
         }
         final TextArea whatsNewContent = new TextArea(whatsnew);
+        whatsNewContent.setWrapText(true);
         whatsNewContent.setEditable(false);
         whatsNewContent.setFocusTraversable(false);
         VBox.setVgrow(whatsNewContent, Priority.ALWAYS);
@@ -62,6 +63,7 @@ public class StartDialog extends VBox implements Template {
             policy = "";
         }
         final TextArea policyContent = new TextArea(policy);
+        policyContent.setWrapText(true);
         policyContent.setEditable(false);
         policyContent.setFocusTraversable(false);
         VBox.setVgrow(policyContent, Priority.ALWAYS);

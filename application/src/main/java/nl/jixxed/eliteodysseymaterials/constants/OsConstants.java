@@ -61,6 +61,7 @@ public class OsConstants {
         CUSTOM_CSS = CONFIG_DIRECTORY + "/style.css";
         OS_SLASH = "/";
     }
+
     private static void setMacOS() {
         USER_HOME = System.getProperty("user.home");
         CONFIG_DIRECTORY = USER_HOME + "/.config/odyssey-materials-helper";

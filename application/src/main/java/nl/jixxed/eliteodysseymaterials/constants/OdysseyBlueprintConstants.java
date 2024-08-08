@@ -157,7 +157,7 @@ public abstract class OdysseyBlueprintConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A3, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A3,
                 Map.of(
-                        Data.OPINIONPOLLS, 10
+                        Data.OPINIONPOLLS, 5
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.KIT_FOWLER)
         ));
@@ -171,7 +171,7 @@ public abstract class OdysseyBlueprintConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_A5, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_A5,
                 Map.of(
-                        Data.SMEARCAMPAIGNPLANS, 8
+                        Data.SMEARCAMPAIGNPLANS, 5
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.YARDEN_BOND)
         ));
@@ -183,19 +183,19 @@ public abstract class OdysseyBlueprintConstants {
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B2, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B2,
                 Map.of(
-                        Data.SETTLEMENTDEFENCEPLANS, 15
+                        Data.SETTLEMENTDEFENCEPLANS, 5
                 ),
                 () -> APPLICATION_STATE.isEngineerKnown(Engineer.WELLINGTON_BECK)
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B3, new TotalMaterialEngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B3,
                 Map.of(
-                        Data.CLASSICENTERTAINMENT, 25,
-                        Data.MULTIMEDIAENTERTAINMENT, 25,
-                        Data.CATMEDIA, 25
+                        Data.CLASSICENTERTAINMENT, 15,
+                        Data.MULTIMEDIAENTERTAINMENT, 15,
+                        Data.CATMEDIA, 15
                 ),
                 () -> APPLICATION_STATE.isEngineerUnlocked(Engineer.WELLINGTON_BECK),
-                25
+                15
         ));
         ENGINEER_UNLOCK_REQUIREMENTS.put(OdysseyBlueprintName.ENGINEER_B4, new EngineerBlueprint(
                 OdysseyBlueprintName.ENGINEER_B4,
@@ -285,10 +285,9 @@ public abstract class OdysseyBlueprintConstants {
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
                         Good.HEALTHMONITOR, 1,
-                        Good.LARGECAPACITYPOWERREGULATOR, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.CARBONFIBREPLATING, 5,
-                        Asset.GRAPHENE, 5
+                        Asset.CARBONFIBREPLATING, 2,
+                        Asset.GRAPHENE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1",
@@ -303,12 +302,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.MAVERICK_SUIT_GRADE_2_3,
                 Map.of(
-                        Good.SUITSCHEMATIC, 5,
-                        Good.HEALTHMONITOR, 5,
-                        Good.LARGECAPACITYPOWERREGULATOR, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.CARBONFIBREPLATING, 15,
-                        Asset.GRAPHENE, 15
+                        Good.SUITSCHEMATIC, 2,
+                        Good.HEALTHMONITOR, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.CARBONFIBREPLATING, 5,
+                        Asset.GRAPHENE,  5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2",
@@ -323,12 +321,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.MAVERICK_SUIT_GRADE_3_4,
                 Map.of(
-                        Good.SUITSCHEMATIC, 10,
-                        Good.HEALTHMONITOR, 10,
-                        Good.LARGECAPACITYPOWERREGULATOR, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.CARBONFIBREPLATING, 25,
-                        Asset.GRAPHENE, 25
+                        Good.SUITSCHEMATIC, 4,
+                        Good.HEALTHMONITOR, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.CARBONFIBREPLATING, 9,
+                        Asset.GRAPHENE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3",
@@ -343,12 +340,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.MAVERICK_SUIT_GRADE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.MAVERICK_SUIT_GRADE_4_5,
                 Map.of(
-                        Good.SUITSCHEMATIC, 15,
-                        Good.HEALTHMONITOR, 15,
-                        Good.LARGECAPACITYPOWERREGULATOR, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.CARBONFIBREPLATING, 35,
-                        Asset.GRAPHENE, 35
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.CARBONFIBREPLATING, 12,
+                        Asset.GRAPHENE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4",
@@ -365,10 +361,9 @@ public abstract class OdysseyBlueprintConstants {
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
                         Good.HEALTHMONITOR, 1,
-                        Good.LARGECAPACITYPOWERREGULATOR, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.TITANIUMPLATING, 5,
-                        Asset.GRAPHENE, 5
+                        Asset.TITANIUMPLATING, 2,
+                        Asset.GRAPHENE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1",
@@ -383,12 +378,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_2_3,
                 Map.of(
-                        Good.SUITSCHEMATIC, 5,
-                        Good.HEALTHMONITOR, 5,
-                        Good.LARGECAPACITYPOWERREGULATOR, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.TITANIUMPLATING, 15,
-                        Asset.GRAPHENE, 15
+                        Good.SUITSCHEMATIC, 2,
+                        Good.HEALTHMONITOR, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.TITANIUMPLATING, 5,
+                        Asset.GRAPHENE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2",
@@ -403,12 +397,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_3_4,
                 Map.of(
-                        Good.SUITSCHEMATIC, 10,
-                        Good.HEALTHMONITOR, 10,
-                        Good.LARGECAPACITYPOWERREGULATOR, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.TITANIUMPLATING, 25,
-                        Asset.GRAPHENE, 25
+                        Good.SUITSCHEMATIC, 4,
+                        Good.HEALTHMONITOR, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.TITANIUMPLATING, 9,
+                        Asset.GRAPHENE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3",
@@ -423,12 +416,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.DOMINATOR_SUIT_GRADE_4_5,
                 Map.of(
-                        Good.SUITSCHEMATIC, 15,
-                        Good.HEALTHMONITOR, 15,
-                        Good.LARGECAPACITYPOWERREGULATOR, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.TITANIUMPLATING, 35,
-                        Asset.GRAPHENE, 35
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.TITANIUMPLATING, 12,
+                        Asset.GRAPHENE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4",
@@ -445,10 +437,9 @@ public abstract class OdysseyBlueprintConstants {
                 Map.of(
                         Good.SUITSCHEMATIC, 1,
                         Good.HEALTHMONITOR, 1,
-                        Good.LARGECAPACITYPOWERREGULATOR, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.AEROGEL, 5,
-                        Asset.GRAPHENE, 5
+                        Asset.AEROGEL, 2,
+                        Asset.GRAPHENE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1",
@@ -463,12 +454,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_2_3,
                 Map.of(
-                        Good.SUITSCHEMATIC, 5,
-                        Good.HEALTHMONITOR, 5,
-                        Good.LARGECAPACITYPOWERREGULATOR, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.AEROGEL, 15,
-                        Asset.GRAPHENE, 15
+                        Good.SUITSCHEMATIC, 2,
+                        Good.HEALTHMONITOR, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.AEROGEL, 5,
+                        Asset.GRAPHENE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2",
@@ -483,12 +473,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_3_4,
                 Map.of(
-                        Good.SUITSCHEMATIC, 10,
-                        Good.HEALTHMONITOR, 10,
-                        Good.LARGECAPACITYPOWERREGULATOR, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.AEROGEL, 25,
-                        Asset.GRAPHENE, 25
+                        Good.SUITSCHEMATIC, 4,
+                        Good.HEALTHMONITOR, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.AEROGEL, 9,
+                        Asset.GRAPHENE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3",
@@ -503,12 +492,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_UPGRADES.put(OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.ARTEMIS_SUIT_GRADE_4_5,
                 Map.of(
-                        Good.SUITSCHEMATIC, 15,
-                        Good.HEALTHMONITOR, 15,
-                        Good.LARGECAPACITYPOWERREGULATOR, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.AEROGEL, 35,
-                        Asset.GRAPHENE, 35
+                        Good.SUITSCHEMATIC, 5,
+                        Good.HEALTHMONITOR, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.AEROGEL, 12,
+                        Asset.GRAPHENE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4",
@@ -523,10 +511,10 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.ADDED_MELEE_DAMAGE, new ModuleBlueprint(
                 OdysseyBlueprintName.ADDED_MELEE_DAMAGE,
                 Map.of(
-                        Data.COMBATTRAININGMATERIAL, 10,
-                        Data.COMBATANTPERFORMANCE, 10,
-                        Asset.EPINEPHRINE, 10,
-                        Asset.MICROTHRUSTERS, 15
+                        Data.COMBATTRAININGMATERIAL, 5,
+                        Data.COMBATANTPERFORMANCE, 5,
+                        Asset.EPINEPHRINE, 5,
+                        Asset.MICROTHRUSTERS, 8
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER, Engineer.ELEANOR_BRESA),
                 Map.of(
                         OdysseyModifier.WEAPON_MELEE_DAMAGE_MULTIPLIER, "+150%",
@@ -536,10 +524,10 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.COMBAT_MOVEMENT_SPEED, new ModuleBlueprint(
                 OdysseyBlueprintName.COMBAT_MOVEMENT_SPEED,
                 Map.of(
-                        Data.EVACUATIONPROTOCOLS, 10,
-                        Data.GENETICRESEARCH, 5,
-                        Asset.EPINEPHRINE, 10,
-                        Asset.PHNEUTRALISER, 15
+                        Data.EVACUATIONPROTOCOLS, 5,
+                        Data.GENETICRESEARCH, 3,
+                        Asset.EPINEPHRINE, 5,
+                        Asset.PHNEUTRALISER, 8
                 ), List.of(Engineer.TERRA_VELASQUEZ, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.MOVEMENT_SPEED_PENALTY, "-100%"
@@ -548,11 +536,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.DAMAGE_RESISTANCE, new ModuleBlueprint(
                 OdysseyBlueprintName.DAMAGE_RESISTANCE,
                 Map.of(
-                        Data.WEAPONINVENTORY, 10,
-                        Data.BALLISTICSDATA, 10,
-                        Asset.TITANIUMPLATING, 5,
-                        Asset.EPOXYADHESIVE, 15,
-                        Asset.CARBONFIBREPLATING, 5
+                        Data.WEAPONINVENTORY, 5,
+                        Data.BALLISTICSDATA, 5,
+                        Asset.TITANIUMPLATING, 3,
+                        Asset.EPOXYADHESIVE, 8,
+                        Asset.CARBONFIBREPLATING, 3
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA),
                 Map.of(
                         OdysseyModifier.EXPLOSIVE_DAMAGE_REDUCTION, "+10%",
@@ -564,11 +552,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.ENHANCED_TRACKING, new ModuleBlueprint(
                 OdysseyBlueprintName.ENHANCED_TRACKING,
                 Map.of(
-                        Data.TOPOGRAPHICALSURVEYS, 10,
-                        Data.STELLARACTIVITYLOGS, 10,
-                        Data.SPECTRALANALYSISDATA, 10,
-                        Asset.TRANSMITTER, 5,
-                        Asset.CIRCUITBOARD, 5
+                        Data.TOPOGRAPHICALSURVEYS, 5,
+                        Data.STELLARACTIVITYLOGS, 5,
+                        Data.SPECTRALANALYSISDATA, 5,
+                        Asset.TRANSMITTER, 3,
+                        Asset.CIRCUITBOARD, 3
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER, Engineer.ROSA_DAYETTE),
                 Map.of(
                         OdysseyModifier.LOS_ANALYSIS_RANGE, "+100%",
@@ -578,10 +566,10 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.EXTRA_AMMO_CAPACITY, new ModuleBlueprint(
                 OdysseyBlueprintName.EXTRA_AMMO_CAPACITY,
                 Map.of(
-                        Data.RECYCLINGLOGS, 15,
-                        Data.WEAPONTESTDATA, 10,
-                        Data.PRODUCTIONREPORTS, 10,
-                        Asset.WEAPONCOMPONENT, 5
+                        Data.RECYCLINGLOGS, 8,
+                        Data.WEAPONTESTDATA, 5,
+                        Data.PRODUCTIONREPORTS, 5,
+                        Asset.WEAPONCOMPONENT, 3
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER, Engineer.ELEANOR_BRESA),
                 Map.of(
                         OdysseyModifier.AMMO_CAPACITY_MULTIPLIER, "+50%"
@@ -590,11 +578,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.EXTRA_BACKPACK_CAPACITY, new ModuleBlueprint(
                 OdysseyBlueprintName.EXTRA_BACKPACK_CAPACITY,
                 Map.of(
-                        Data.WEAPONINVENTORY, 10,
-                        Data.CHEMICALINVENTORY, 10,
-                        Data.DIGITALDESIGNS, 10,
-                        Asset.EPOXYADHESIVE, 10,
-                        Asset.MEMORYCHIP, 5
+                        Data.WEAPONINVENTORY, 5,
+                        Data.CHEMICALINVENTORY, 5,
+                        Data.DIGITALDESIGNS, 5,
+                        Asset.EPOXYADHESIVE, 5,
+                        Asset.MEMORYCHIP, 3
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         OdysseyModifier.BACKPACK_COMPONENT_CAPACITY, "+100%",
@@ -605,10 +593,10 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.FASTER_SHIELD_REGEN, new ModuleBlueprint(
                 OdysseyBlueprintName.FASTER_SHIELD_REGEN,
                 Map.of(
-                        Data.REACTOROUTPUTREVIEW, 10,
-                        Asset.IONBATTERY, 5,
-                        Asset.MICROTRANSFORMER, 15,
-                        Asset.ELECTRICALWIRING, 15
+                        Data.REACTOROUTPUTREVIEW, 5,
+                        Asset.IONBATTERY, 3,
+                        Asset.MICROTRANSFORMER, 8,
+                        Asset.ELECTRICALWIRING, 8
                 ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA),
                 Map.of(
                         OdysseyModifier.SHIELD_REGENERATION_RATE, "+25%"
@@ -617,11 +605,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.IMPROVED_BATTERY_CAPACITY, new ModuleBlueprint(
                 OdysseyBlueprintName.IMPROVED_BATTERY_CAPACITY,
                 Map.of(
-                        Data.REACTOROUTPUTREVIEW, 10,
-                        Data.MAINTENANCELOGS, 15,
-                        Asset.IONBATTERY, 5,
-                        Asset.MICROSUPERCAPACITOR, 10,
-                        Asset.ELECTRICALWIRING, 10
+                        Data.REACTOROUTPUTREVIEW, 5,
+                        Data.MAINTENANCELOGS, 8,
+                        Asset.IONBATTERY, 3,
+                        Asset.MICROSUPERCAPACITOR, 5,
+                        Asset.ELECTRICALWIRING, 5
                 ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         OdysseyModifier.BATTERY_ENERGY_CAPACITY, "+50%"
@@ -630,10 +618,10 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.IMPROVED_JUMP_ASSIST, new ModuleBlueprint(
                 OdysseyBlueprintName.IMPROVED_JUMP_ASSIST,
                 Map.of(
-                        Good.GMEDS, 10,
-                        Data.TOPOGRAPHICALSURVEYS, 10,
-                        Asset.MICROTHRUSTERS, 5,
-                        Asset.MOTOR, 10
+                        Good.GMEDS, 5,
+                        Data.TOPOGRAPHICALSURVEYS, 5,
+                        Asset.MICROTHRUSTERS, 3,
+                        Asset.MOTOR, 5
                 ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.JUMP_ASSIST_BOOST_DURATION, "+33%",
@@ -644,10 +632,10 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.INCREASED_AIR_RESERVES, new ModuleBlueprint(
                 OdysseyBlueprintName.INCREASED_AIR_RESERVES,
                 Map.of(
-                        Data.PHARMACEUTICALPATENTS, 5,
-                        Data.AIRQUALITYREPORTS, 15,
-                        Asset.OXYGENICBACTERIA, 10,
-                        Asset.PHNEUTRALISER, 15
+                        Data.PHARMACEUTICALPATENTS, 3,
+                        Data.AIRQUALITYREPORTS, 8,
+                        Asset.OXYGENICBACTERIA, 5,
+                        Asset.PHNEUTRALISER, 8
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.AIR_CAPACITY, "+400%"
@@ -656,11 +644,11 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.INCREASED_SPRINT_DURATION, new ModuleBlueprint(
                 OdysseyBlueprintName.INCREASED_SPRINT_DURATION,
                 Map.of(
-                        Data.TROOPDEPLOYMENTRECORDS, 5,
-                        Data.GENESEQUENCINGDATA, 5,
-                        Data.MEDICALTRIALRECORDS, 5,
-                        Asset.OXYGENICBACTERIA, 10,
-                        Asset.CHEMICALCATALYST, 15
+                        Data.TROOPDEPLOYMENTRECORDS, 3,
+                        Data.GENESEQUENCINGDATA, 3,
+                        Data.MEDICALTRIALRECORDS, 3,
+                        Asset.OXYGENICBACTERIA, 5,
+                        Asset.CHEMICALCATALYST, 8
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.SPRINT_DURATION, "+100%"
@@ -669,22 +657,22 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.NIGHT_VISION, new ModuleBlueprint(
                 OdysseyBlueprintName.NIGHT_VISION,
                 Map.of(
-                        Good.SURVEILLANCEEQUIPMENT, 10,
-                        Data.SURVEILLEANCELOGS, 5,
-                        Data.NOCDATA, 5,
-                        Data.RADIOACTIVITYDATA, 5,
-                        Asset.CIRCUITSWITCH, 10
+                        Good.SURVEILLANCEEQUIPMENT, 5,
+                        Data.SURVEILLEANCELOGS, 3,
+                        Data.NOCDATA, 3,
+                        Data.RADIOACTIVITYDATA, 3,
+                        Asset.CIRCUITSWITCH, 5
                 ), List.of(Engineer.ODEN_GEIGER, Engineer.YI_SHEN),
                 Collections.emptyMap()
         ));
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.QUIETER_FOOTSTEPS, new ModuleBlueprint(
                 OdysseyBlueprintName.QUIETER_FOOTSTEPS,
                 Map.of(
-                        Data.SETTLEMENTASSAULTPLANS, 5,
-                        Data.TACTICALPLANS, 10,
-                        Data.PATROLROUTES, 10,
-                        Asset.MICROHYDRAULICS, 5,
-                        Asset.VISCOELASTICPOLYMER, 15
+                        Data.SETTLEMENTASSAULTPLANS, 3,
+                        Data.TACTICALPLANS, 5,
+                        Data.PATROLROUTES, 5,
+                        Asset.MICROHYDRAULICS, 3,
+                        Asset.VISCOELASTICPOLYMER, 8
                 ), List.of(Engineer.YARDEN_BOND, Engineer.YI_SHEN),
                 Map.of(
                         OdysseyModifier.FOOTSTEP_AUDIBLE_RANGE_MULTIPLIER, "-50%"
@@ -693,10 +681,10 @@ public abstract class OdysseyBlueprintConstants {
         SUIT_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.REDUCED_TOOL_BATTERY_CONSUMPTION, new ModuleBlueprint(
                 OdysseyBlueprintName.REDUCED_TOOL_BATTERY_CONSUMPTION,
                 Map.of(
-                        Data.REACTOROUTPUTREVIEW, 10,
-                        Asset.ELECTRICALWIRING, 15,
-                        Asset.ELECTRICALFUSE, 5,
-                        Asset.MICROTRANSFORMER, 10
+                        Data.REACTOROUTPUTREVIEW, 5,
+                        Asset.ELECTRICALWIRING, 8,
+                        Asset.ELECTRICALFUSE, 3,
+                        Asset.MICROTRANSFORMER, 5
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         OdysseyModifier.TOOL_ENERGY_DRAIN_MULTIPLIER, "-50%"
@@ -710,8 +698,8 @@ public abstract class OdysseyBlueprintConstants {
                         Good.WEAPONSCHEMATIC, 1,
                         Good.COMPRESSIONLIQUEFIEDGAS, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.WEAPONCOMPONENT, 5,
-                        Asset.TUNGSTENCARBIDE, 5
+                        Asset.WEAPONCOMPONENT, 2,
+                        Asset.TUNGSTENCARBIDE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1"
@@ -721,11 +709,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.KARMA_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.KARMA_2_3,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 5,
-                        Good.COMPRESSIONLIQUEFIEDGAS, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.WEAPONCOMPONENT, 15,
-                        Asset.TUNGSTENCARBIDE, 15
+                        Good.WEAPONSCHEMATIC, 2,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.WEAPONCOMPONENT, 5,
+                        Asset.TUNGSTENCARBIDE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2"
@@ -734,11 +722,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.KARMA_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.KARMA_3_4,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 10,
-                        Good.COMPRESSIONLIQUEFIEDGAS, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.WEAPONCOMPONENT, 25,
-                        Asset.TUNGSTENCARBIDE, 25
+                        Good.WEAPONSCHEMATIC, 4,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.WEAPONCOMPONENT, 9,
+                        Asset.TUNGSTENCARBIDE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3"
@@ -747,11 +735,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.KARMA_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.KARMA_4_5,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 15,
-                        Good.COMPRESSIONLIQUEFIEDGAS, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.WEAPONCOMPONENT, 35,
-                        Asset.TUNGSTENCARBIDE, 35
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.COMPRESSIONLIQUEFIEDGAS, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.WEAPONCOMPONENT, 12,
+                        Asset.TUNGSTENCARBIDE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4"
@@ -764,8 +752,8 @@ public abstract class OdysseyBlueprintConstants {
                         Good.WEAPONSCHEMATIC, 1,
                         Good.IONISEDGAS, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.MICROELECTRODE, 5,
-                        Asset.OPTICALFIBRE, 5
+                        Asset.MICROELECTRODE, 2,
+                        Asset.OPTICALFIBRE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1"
@@ -775,11 +763,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.TK_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.TK_2_3,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 5,
-                        Good.IONISEDGAS, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.MICROELECTRODE, 15,
-                        Asset.OPTICALFIBRE, 15
+                        Good.WEAPONSCHEMATIC, 2,
+                        Good.IONISEDGAS, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.MICROELECTRODE, 5,
+                        Asset.OPTICALFIBRE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2"
@@ -788,11 +776,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.TK_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.TK_3_4,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 10,
-                        Good.IONISEDGAS, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.MICROELECTRODE, 25,
-                        Asset.OPTICALFIBRE, 25
+                        Good.WEAPONSCHEMATIC, 4,
+                        Good.IONISEDGAS, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.MICROELECTRODE, 9,
+                        Asset.OPTICALFIBRE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3"
@@ -801,11 +789,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.TK_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.TK_4_5,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 15,
-                        Good.IONISEDGAS, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.MICROELECTRODE, 35,
-                        Asset.OPTICALFIBRE, 35
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.IONISEDGAS, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.MICROELECTRODE, 12,
+                        Asset.OPTICALFIBRE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4"
@@ -818,8 +806,8 @@ public abstract class OdysseyBlueprintConstants {
                         Good.WEAPONSCHEMATIC, 1,
                         Good.IONISEDGAS, 1,
                         Data.MANUFACTURINGINSTRUCTIONS, 1,
-                        Asset.MICROELECTRODE, 5,
-                        Asset.CHEMICALSUPERBASE, 5
+                        Asset.MICROELECTRODE, 2,
+                        Asset.CHEMICALSUPERBASE, 2
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "1"
@@ -829,11 +817,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.MANTICORE_2_3, new UpgradeBlueprint(
                 OdysseyBlueprintName.MANTICORE_2_3,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 5,
-                        Good.IONISEDGAS, 5,
-                        Data.MANUFACTURINGINSTRUCTIONS, 5,
-                        Asset.MICROELECTRODE, 15,
-                        Asset.CHEMICALSUPERBASE, 15
+                        Good.WEAPONSCHEMATIC, 2,
+                        Good.IONISEDGAS, 2,
+                        Data.MANUFACTURINGINSTRUCTIONS, 2,
+                        Asset.MICROELECTRODE, 5,
+                        Asset.CHEMICALSUPERBASE, 5
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "2"
@@ -842,11 +830,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.MANTICORE_3_4, new UpgradeBlueprint(
                 OdysseyBlueprintName.MANTICORE_3_4,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 10,
-                        Good.IONISEDGAS, 10,
-                        Data.MANUFACTURINGINSTRUCTIONS, 10,
-                        Asset.MICROELECTRODE, 25,
-                        Asset.CHEMICALSUPERBASE, 25
+                        Good.WEAPONSCHEMATIC, 4,
+                        Good.IONISEDGAS, 4,
+                        Data.MANUFACTURINGINSTRUCTIONS, 4,
+                        Asset.MICROELECTRODE, 9,
+                        Asset.CHEMICALSUPERBASE, 9
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "3"
@@ -855,11 +843,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_UPGRADES.put(OdysseyBlueprintName.MANTICORE_4_5, new UpgradeBlueprint(
                 OdysseyBlueprintName.MANTICORE_4_5,
                 Map.of(
-                        Good.WEAPONSCHEMATIC, 15,
-                        Good.IONISEDGAS, 15,
-                        Data.MANUFACTURINGINSTRUCTIONS, 15,
-                        Asset.MICROELECTRODE, 35,
-                        Asset.CHEMICALSUPERBASE, 35
+                        Good.WEAPONSCHEMATIC, 5,
+                        Good.IONISEDGAS, 5,
+                        Data.MANUFACTURINGINSTRUCTIONS, 5,
+                        Asset.MICROELECTRODE, 12,
+                        Asset.CHEMICALSUPERBASE, 12
                 ),
                 Map.of(
                         OdysseyModifier.ENGINEER_MODIFICATION_SLOTS, "4"
@@ -868,20 +856,20 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.AUDIO_MASKING, new ModuleBlueprint(
                 OdysseyBlueprintName.AUDIO_MASKING,
                 Map.of(
-                        Data.AUDIOLOGS, 5,
-                        Data.PATROLROUTES, 10,
-                        Asset.SCRAMBLER, 10,
-                        Asset.TRANSMITTER, 15,
-                        Asset.CIRCUITBOARD, 5
+                        Data.AUDIOLOGS, 3,
+                        Data.PATROLROUTES, 5,
+                        Asset.SCRAMBLER, 5,
+                        Asset.TRANSMITTER, 8,
+                        Asset.CIRCUITBOARD, 3
                 ), List.of(Engineer.YARDEN_BOND, Engineer.YI_SHEN)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.FASTER_HANDLING, new ModuleBlueprint(
                 OdysseyBlueprintName.FASTER_HANDLING,
                 Map.of(
-                        Data.OPERATIONALMANUAL, 10,
-                        Data.COMBATANTPERFORMANCE, 10,
-                        Data.COMBATTRAININGMATERIAL, 10,
-                        Asset.VISCOELASTICPOLYMER, 5
+                        Data.OPERATIONALMANUAL, 5,
+                        Data.COMBATANTPERFORMANCE, 5,
+                        Data.COMBATTRAININGMATERIAL, 5,
+                        Asset.VISCOELASTICPOLYMER, 3
                 ), List.of(Engineer.HERO_FERRARI, Engineer.YARDEN_BOND, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.HANDLING_SPEED, "+30-50%"
@@ -890,11 +878,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_KINETIC, new ModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_KINETIC,
                 Map.of(
-                        Data.BALLISTICSDATA, 10,
-                        Data.TOPOGRAPHICALSURVEYS, 10,
-                        Asset.METALCOIL, 10,
-                        Asset.RDX, 10,
-                        Asset.WEAPONCOMPONENT, 5
+                        Data.BALLISTICSDATA, 5,
+                        Data.TOPOGRAPHICALSURVEYS, 5,
+                        Asset.METALCOIL, 5,
+                        Asset.RDX, 5,
+                        Asset.WEAPONCOMPONENT, 3
 
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
@@ -904,11 +892,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_LASER, new ModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_LASER,
                 Map.of(
-                        Data.STELLARACTIVITYLOGS, 10,
-                        Data.RISKASSESSMENTS, 15,
-                        Asset.OPTICALLENS, 5,
-                        Asset.MICROTRANSFORMER, 15,
-                        Asset.CIRCUITBOARD, 5
+                        Data.STELLARACTIVITYLOGS, 5,
+                        Data.RISKASSESSMENTS, 8,
+                        Asset.OPTICALLENS, 3,
+                        Asset.MICROTRANSFORMER, 8,
+                        Asset.CIRCUITBOARD, 3
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
                         OdysseyModifier.WEAPON_EFFECTIVE_RANGE, "+50%"
@@ -917,11 +905,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.GREATER_RANGE_PLASMA, new ModuleBlueprint(
                 OdysseyBlueprintName.GREATER_RANGE_PLASMA,
                 Map.of(
-                        Data.CHEMICALFORMULAE, 10,
-                        Data.MINERALSURVEY, 15,
-                        Asset.ELECTROMAGNET, 10,
-                        Asset.MOTOR, 5,
-                        Asset.ELECTRICALFUSE, 5
+                        Data.CHEMICALFORMULAE, 5,
+                        Data.MINERALSURVEY, 8,
+                        Asset.ELECTROMAGNET, 5,
+                        Asset.MOTOR, 3,
+                        Asset.ELECTRICALFUSE, 3
 
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE),
                 Map.of(
@@ -931,11 +919,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC, new ModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_KINETIC,
                 Map.of(
-                        Data.WEAPONTESTDATA, 10,
-                        Data.MEDICALRECORDS, 5,
-                        Asset.CHEMICALCATALYST, 10,
-                        Asset.RDX, 15,
-                        Asset.WEAPONCOMPONENT, 5
+                        Data.WEAPONTESTDATA, 5,
+                        Data.MEDICALRECORDS, 3,
+                        Asset.CHEMICALCATALYST, 5,
+                        Asset.RDX, 8,
+                        Asset.WEAPONCOMPONENT, 3
                 ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
@@ -944,11 +932,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER, new ModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_LASER,
                 Map.of(
-                        Data.SPECTRALANALYSISDATA, 10,
-                        Data.BIOMETRICDATA, 5,
-                        Asset.IONBATTERY, 10,
-                        Asset.OPTICALLENS, 5,
-                        Asset.SCRAMBLER, 10
+                        Data.SPECTRALANALYSISDATA, 5,
+                        Data.BIOMETRICDATA, 3,
+                        Asset.IONBATTERY, 5,
+                        Asset.OPTICALLENS, 3,
+                        Asset.SCRAMBLER, 5
                 ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
@@ -957,11 +945,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA, new ModuleBlueprint(
                 OdysseyBlueprintName.HEADSHOT_DAMAGE_PLASMA,
                 Map.of(
-                        Data.CHEMICALEXPERIMENTDATA, 10,
-                        Data.BLOODTESTRESULTS, 5,
-                        Asset.IONBATTERY, 10,
-                        Asset.ELECTROMAGNET, 10,
-                        Asset.MICROSUPERCAPACITOR, 15
+                        Data.CHEMICALEXPERIMENTDATA, 5,
+                        Data.BLOODTESTRESULTS, 3,
+                        Asset.IONBATTERY, 5,
+                        Asset.ELECTROMAGNET, 5,
+                        Asset.MICROSUPERCAPACITOR, 8
                 ), List.of(Engineer.UMA_LASZLO, Engineer.YI_SHEN),
                 Map.of(
                         OdysseyModifier.HEADSHOT_DAMAGE_MULTIPLIER, "+50%"
@@ -970,11 +958,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC, new ModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_KINETIC,
                 Map.of(
-                        Data.EXTRACTIONYIELDDATA, 10,
-                        Data.BIOMETRICDATA, 5,
-                        Data.COMBATANTPERFORMANCE, 10,
-                        Asset.RDX, 10,
-                        Asset.VISCOELASTICPOLYMER, 10
+                        Data.EXTRACTIONYIELDDATA, 5,
+                        Data.BIOMETRICDATA, 3,
+                        Data.COMBATANTPERFORMANCE, 5,
+                        Asset.RDX, 5,
+                        Asset.VISCOELASTICPOLYMER, 5
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
@@ -983,11 +971,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_LASER, new ModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_LASER,
                 Map.of(
-                        Data.RADIOACTIVITYDATA, 5,
-                        Data.COMBATANTPERFORMANCE, 10,
-                        Asset.OPTICALLENS, 5,
-                        Asset.ELECTRICALWIRING, 15,
-                        Asset.METALCOIL, 10
+                        Data.RADIOACTIVITYDATA, 3,
+                        Data.COMBATANTPERFORMANCE, 5,
+                        Asset.OPTICALLENS, 3,
+                        Asset.ELECTRICALWIRING, 8,
+                        Asset.METALCOIL, 5
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
@@ -996,11 +984,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA, new ModuleBlueprint(
                 OdysseyBlueprintName.HIGHER_ACCURACY_PLASMA,
                 Map.of(
-                        Data.CHEMICALPATENTS, 5,
-                        Data.COMBATANTPERFORMANCE, 10,
-                        Asset.CHEMICALCATALYST, 10,
-                        Asset.ELECTROMAGNET, 10,
-                        Asset.METALCOIL, 10
+                        Data.CHEMICALPATENTS, 3,
+                        Data.COMBATANTPERFORMANCE, 5,
+                        Asset.CHEMICALCATALYST, 5,
+                        Asset.ELECTROMAGNET, 5,
+                        Asset.METALCOIL, 5
                 ), List.of(Engineer.YARDEN_BOND, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS),
                 Map.of(
                         OdysseyModifier.HIP_FIRE_ACCURACY, "40-43%"
@@ -1009,11 +997,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.MAGAZINE_SIZE, new ModuleBlueprint(
                 OdysseyBlueprintName.MAGAZINE_SIZE,
                 Map.of(
-                        Data.WEAPONTESTDATA, 10,
-                        Data.SECURITYEXPENSES, 5,
-                        Asset.WEAPONCOMPONENT, 5,
-                        Asset.TUNGSTENCARBIDE, 5,
-                        Asset.METALCOIL, 10
+                        Data.WEAPONTESTDATA, 5,
+                        Data.SECURITYEXPENSES, 3,
+                        Asset.WEAPONCOMPONENT, 3,
+                        Asset.TUNGSTENCARBIDE, 3,
+                        Asset.METALCOIL, 5
 
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.KIT_FOWLER, Engineer.ELEANOR_BRESA),
                 Map.of(
@@ -1023,20 +1011,20 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.NOISE_SUPPRESSOR, new ModuleBlueprint(
                 OdysseyBlueprintName.NOISE_SUPPRESSOR,
                 Map.of(
-                        Data.ATMOSPHERICDATA, 10,
-                        Data.MININGANALYTICS, 10,
-                        Asset.VISCOELASTICPOLYMER, 15,
-                        Asset.WEAPONCOMPONENT, 5
+                        Data.ATMOSPHERICDATA, 5,
+                        Data.MININGANALYTICS, 5,
+                        Asset.VISCOELASTICPOLYMER, 8,
+                        Asset.WEAPONCOMPONENT, 3
                 ), List.of(Engineer.HERO_FERRARI, Engineer.TERRA_VELASQUEZ, Engineer.BALTANOS)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.RELOAD_SPEED, new ModuleBlueprint(
                 OdysseyBlueprintName.RELOAD_SPEED,
                 Map.of(
-                        Data.OPERATIONALMANUAL, 10,
-                        Data.PRODUCTIONREPORTS, 10,
-                        Data.COMBATTRAININGMATERIAL, 10,
-                        Asset.MICROHYDRAULICS, 10,
-                        Asset.ELECTROMAGNET, 10
+                        Data.OPERATIONALMANUAL, 5,
+                        Data.PRODUCTIONREPORTS, 5,
+                        Data.COMBATTRAININGMATERIAL, 5,
+                        Asset.MICROHYDRAULICS, 5,
+                        Asset.ELECTROMAGNET, 5
                 ), List.of(Engineer.JUDE_NAVARRO, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA),
                 Map.of(
                         OdysseyModifier.RELOAD_SPEED, "+25%",
@@ -1046,19 +1034,19 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.SCOPE, new ModuleBlueprint(
                 OdysseyBlueprintName.SCOPE,
                 Map.of(
-                        Data.SPECTRALANALYSISDATA, 10,
-                        Data.BIOMETRICDATA, 5,
-                        Asset.OPTICALLENS, 10,
-                        Asset.OPTICALFIBRE, 5
+                        Data.SPECTRALANALYSISDATA, 5,
+                        Data.BIOMETRICDATA, 3,
+                        Asset.OPTICALLENS, 5,
+                        Asset.OPTICALFIBRE, 3
                 ), List.of(Engineer.ODEN_GEIGER, Engineer.WELLINGTON_BECK, Engineer.ROSA_DAYETTE)
         ));
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.STABILITY, new ModuleBlueprint(
                 OdysseyBlueprintName.STABILITY,
                 Map.of(
-                        Data.MININGANALYTICS, 10,
-                        Data.RISKASSESSMENTS, 15,
-                        Asset.VISCOELASTICPOLYMER, 10,
-                        Asset.MICROHYDRAULICS, 10
+                        Data.MININGANALYTICS, 5,
+                        Data.RISKASSESSMENTS, 8,
+                        Asset.VISCOELASTICPOLYMER, 5,
+                        Asset.MICROHYDRAULICS, 5
                 ), List.of(Engineer.DOMINO_GREEN, Engineer.ODEN_GEIGER, Engineer.ROSA_DAYETTE),
                 Map.of(
                         OdysseyModifier.INSTABILITY, "-50%"
@@ -1067,11 +1055,11 @@ public abstract class OdysseyBlueprintConstants {
         WEAPON_MODULE_BLUEPRINTS.put(OdysseyBlueprintName.STOWED_RELOADING, new ModuleBlueprint(
                 OdysseyBlueprintName.STOWED_RELOADING,
                 Map.of(
-                        Data.DIGITALDESIGNS, 10,
-                        Data.OPERATIONALMANUAL, 10,
-                        Data.PRODUCTIONSCHEDULE, 10,
-                        Asset.CIRCUITBOARD, 5,
-                        Asset.ENCRYPTEDMEMORYCHIP, 15
+                        Data.DIGITALDESIGNS, 5,
+                        Data.OPERATIONALMANUAL, 5,
+                        Data.PRODUCTIONSCHEDULE, 5,
+                        Asset.CIRCUITBOARD, 3,
+                        Asset.ENCRYPTEDMEMORYCHIP, 8
                 ), List.of(Engineer.KIT_FOWLER, Engineer.UMA_LASZLO, Engineer.ELEANOR_BRESA)
         ));
     }

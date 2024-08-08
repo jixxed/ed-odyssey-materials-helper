@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.export;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.domain.WishlistMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
@@ -68,7 +69,7 @@ public class TextExporter {
         return textBuilder.toString();
     }
 
-    public static String createTextWishlist(final Map<Raw, Integer> wishlistNeededRaw, final Map<Encoded, Integer> wishlistNeededEncoded, final Map<Manufactured, Integer> wishlistNeededManufactured, final Map<Commodity, Integer> wishlistNeededCommodity) {
+    public static String createTextWishlist(final Map<Raw, WishlistMaterial> wishlistNeededRaw, final Map<Encoded, WishlistMaterial> wishlistNeededEncoded, final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured, final Map<Commodity, WishlistMaterial> wishlistNeededCommodity) {
         final StringBuilder textBuilder = new StringBuilder();
         final Integer maxNameLengthRaw = wishlistNeededRaw.keySet().stream()
                 .map(item -> LocaleService.getLocalizedStringForCurrentLocale(item.getLocalizationKey()).length())
@@ -91,7 +92,7 @@ public class TextExporter {
         textBuilder.append(String.format("%12s", "Required"));
         textBuilder.append(String.format("%12s", "Need"));
         textBuilder.append("\n\n");
-        ((List<Map<HorizonsMaterial, Integer>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
+        ((List<Map<HorizonsMaterial, WishlistMaterial>>) (List<?>) List.of(wishlistNeededRaw, wishlistNeededEncoded, wishlistNeededManufactured, wishlistNeededCommodity)).forEach(wishlistNeededMaterials ->
                 wishlistNeededMaterials.entrySet().stream()
                         .sorted(Comparator.comparing(item -> item.getKey().getStorageType()))
                         .forEach(item -> {
@@ -113,7 +114,7 @@ public class TextExporter {
                             textBuilder.append(String.format("%18s", fc));
                             textBuilder.append(String.format("%18s", total));
                             textBuilder.append(String.format("%12s", item.getValue()));
-                            textBuilder.append(String.format("%12s", Math.max(0, item.getValue() - ship)));
+                            textBuilder.append(String.format("%12s", Math.max(0, item.getValue().getRequired() - ship)));
                             textBuilder.append("\n");
                         })
         );

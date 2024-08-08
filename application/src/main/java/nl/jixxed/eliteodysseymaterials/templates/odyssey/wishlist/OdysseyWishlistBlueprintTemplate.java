@@ -23,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTempla
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -177,8 +178,8 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     }
 
     @Override
-    public List<Blueprint<OdysseyBlueprintName>> getRecipe() {
-        return List.of(this.blueprint);
+    public Map<Blueprint<OdysseyBlueprintName>, Double> getRecipe() {
+        return Map.of(this.blueprint, 1D);
     }
 
     @Override
@@ -214,5 +215,10 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     @Override
     public void onDestroy() {
         EventService.removeListener(this.storageEventEventListener);
+    }
+
+    @Override
+    public void setEngineer(Engineer engineer) {
+        //not needed
     }
 }

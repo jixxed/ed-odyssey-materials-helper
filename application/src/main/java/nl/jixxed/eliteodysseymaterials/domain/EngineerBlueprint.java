@@ -19,14 +19,12 @@ public class EngineerBlueprint extends OdysseyBlueprint {
         super(blueprintName, materials);
         this.other = Collections.emptyList();
         this.isCompletedSupplier = isCompletedSupplier;
-
     }
 
     public EngineerBlueprint(final BlueprintName<OdysseyBlueprintName> blueprintName, final List<String> other, final Supplier<Boolean> isCompletedSupplier) {
         super(blueprintName, Collections.emptyMap());
         this.other = other;
         this.isCompletedSupplier = isCompletedSupplier;
-
     }
 
     public List<String> getOther() {

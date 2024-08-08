@@ -71,14 +71,15 @@ public class Config extends Stats implements Template {
         fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
         fuelreserve.getStyleClass().add("config-fuelreserve");
         cargo = new IntField(0, maxCargo, getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
+        int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
 
         this.live.setDisable(!isCurrentShip());
         fuel.getStyleClass().add("config-intfield");
         cargo.getStyleClass().add("config-intfield");
         powerBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-power-config").buildHBox();
         powerBox();
-        fuelLabel = createLabel("ship.stats.config.fuel", "0");
-        cargoLabel = createLabel("ship.stats.config.cargo", "0", "0");
+        fuelLabel = createLabel("ship.stats.config.fuel", String.valueOf(maxFuel));
+        cargoLabel = createLabel("ship.stats.config.cargo", String.valueOf(maxCargo), String.valueOf(maxPassenger));
         fuelreserve.disableProperty().bind(live.selectedProperty());
         fuel.disableProperty().bind(live.selectedProperty());
         cargo.disableProperty().bind(live.selectedProperty());
@@ -142,6 +143,9 @@ public class Config extends Stats implements Template {
             });
         }).withGraphic(this.power).build();
         initPowerBox();
+        this.getShip().ifPresent(ship -> {
+            updatePower(ship.getCargoHatch().getShipModule());
+        });
     }
 
     private void initPowerBox() {

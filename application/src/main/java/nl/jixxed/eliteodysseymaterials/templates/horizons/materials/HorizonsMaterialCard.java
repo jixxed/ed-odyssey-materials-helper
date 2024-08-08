@@ -8,6 +8,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -32,7 +33,7 @@ import org.controlsfx.control.SegmentedBar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 public class HorizonsMaterialCard extends VBox implements Template {
 
     private DestroyableResizableImageView gradeImage;
@@ -79,6 +80,9 @@ public class HorizonsMaterialCard extends VBox implements Template {
         this.segmentedBar.setInfoNodeFactory(segment -> null);
         this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true));
         this.present = new TypeSegment(materialCount, SegmentType.PRESENT);
+        if(maxAmount - materialCount < 0){
+            log.error("Material count is higher than max amount for material: " + LocaleService.getLocalizedStringForCurrentLocale(this.material.getLocalizationKey()));
+        }
         this.notPresent = new TypeSegment(maxAmount - materialCount, SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
         final HBox hBox = BoxBuilder.builder().withStyleClass("horizons-materialcard-textline").withNodes(this.gradeImage, this.nameLabel).buildHBox();

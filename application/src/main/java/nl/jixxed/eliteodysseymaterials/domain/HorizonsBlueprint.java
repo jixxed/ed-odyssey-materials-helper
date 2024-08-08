@@ -6,6 +6,7 @@ import lombok.ToString;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
     private final boolean preEngineered;
 
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final Map<? extends HorizonsMaterial, Integer> materials) {
-        this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), null);
+        this(horizonsBlueprintName, HorizonsBlueprintType.ENGINEER, HorizonsBlueprintGrade.NONE, materials, Collections.emptyMap(), List.of());
     }
 
     public HorizonsBlueprint(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<? extends HorizonsMaterial, Integer> materials, final Map<HorizonsModifier, HorizonsModifierValue> modifiers, final List<Engineer> engineers) {
@@ -91,9 +92,28 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
         return getMaterialCollection(HorizonsMaterial.class).containsKey(material);
     }
 
-    public Integer getRequiredAmount(final HorizonsMaterial material) {
+    public Integer getRequiredAmount(final HorizonsMaterial material, final Engineer engineer) {
         final Integer amount = getMaterialCollection(HorizonsMaterial.class).get(material);
-        return amount != null ? amount : 0;
+        return amount != null ? amount * getNumberOfRolls(engineer) : 0;
+    }
+
+
+    public Integer getMinimumAmount(final HorizonsMaterial material) {
+        final Engineer engineer = getEngineers().stream().max(Comparator.comparing(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
+
+        final Integer amount = getMaterialCollection(HorizonsMaterial.class).get(material);
+        return amount != null ? amount * getNumberOfRolls(engineer) : 0;
+    }
+
+    public Integer getMaximumAmount(final HorizonsMaterial material) {
+        final Engineer engineer = getEngineers().stream().min(Comparator.comparing(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
+        final Integer amount = getMaterialCollection(HorizonsMaterial.class).get(material);
+
+        return amount != null ? amount * getNumberOfRolls(engineer) : 0;
+    }
+
+    private int getNumberOfRolls(Engineer engineer) {
+        return this instanceof HorizonsModuleBlueprint ? horizonsBlueprintGrade.getNumberOfRolls(engineer, horizonsBlueprintType) : 1;
     }
 
     @Override

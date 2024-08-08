@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,40 +83,48 @@ public class WishlistService {
 
     }
 
-    public static Integer getCurrentWishlistCount(final HorizonsMaterial horizonsMaterial) {
+    public static IntegerRange getCurrentWishlistCount(final HorizonsMaterial horizonsMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
                 getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream()
-                        .mapToInt(horizonsWishlistBlueprint -> {
+                        .map(horizonsWishlistBlueprint -> {
                             if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
-                                return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().mapToInt(entry -> {
+                                return horizonsModuleWishlistBlueprint.getPercentageToComplete().entrySet().stream().map(entry -> {
                                     final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
-                                    return blueprint.getRequiredAmount(horizonsMaterial) * entry.getValue();
-                                }).sum();
+                                    return new IntegerRange(
+                                            (Integer) (blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(5, getBlueprintType(horizonsModuleWishlistBlueprint))),
+                                            (Integer) (blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(5, getBlueprintType(horizonsModuleWishlistBlueprint)))
+                                    );
+                                }).reduce(new IntegerRange(0, 0), IntegerRange::sum);
                             } else {//other
                                 final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsWishlistBlueprint), getBlueprintGrade(horizonsWishlistBlueprint));
-                                return blueprint.getRequiredAmount(horizonsMaterial);
+                                return new IntegerRange( blueprint.getRequiredAmount(horizonsMaterial, null), blueprint.getRequiredAmount(horizonsMaterial, null));
                             }
                         })
-                        .sum()
-        ).orElse(0);
+                        .reduce(new IntegerRange(0, 0), IntegerRange::sum)
+        ).orElse(new IntegerRange(0, 0));
     }
 
-    public static Integer getAllWishlistsCount(final HorizonsMaterial horizonsMaterial) {
+    public static IntegerRange getAllWishlistsCount(final HorizonsMaterial horizonsMaterial) {
         return APPLICATION_STATE.getPreferredCommander().map(commander ->
-                getHorizonsWishlists(commander).getWishlists().stream().mapToInt(wishlist -> wishlist.getItems().stream()
-                        .mapToInt(horizonsWishlistBlueprint -> {
+                getHorizonsWishlists(commander).getWishlists().stream().map(wishlist -> wishlist.getItems().stream()
+                        .map(horizonsWishlistBlueprint -> {
                             if (horizonsWishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
-                                return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().mapToInt(entry -> {
+                                return horizonsModuleWishlistBlueprint.getPercentageToComplete().entrySet().stream().map(entry -> {
                                     final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
-                                    return blueprint.getRequiredAmount(horizonsMaterial) * entry.getValue();
-                                }).sum();
+                                    final Integer minRank = blueprint.getEngineers().stream().map(eng -> ApplicationState.getInstance().getEngineerRank(eng)).min(Comparator.comparingInt(Integer::intValue)).orElse(0);
+                                    final Integer maxRank = blueprint.getEngineers().stream().map(eng -> ApplicationState.getInstance().getEngineerRank(eng)).max(Comparator.comparingInt(Integer::intValue)).orElse(0);
+                                    return new IntegerRange(
+                                            (Integer) (blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(minRank, getBlueprintType(horizonsModuleWishlistBlueprint))),
+                                            (Integer) (blueprint.getRequiredAmount(horizonsMaterial, null) * entry.getKey().getNumberOfRolls(maxRank, getBlueprintType(horizonsModuleWishlistBlueprint)))
+                                    );
+                                }).reduce(new IntegerRange(0, 0), IntegerRange::sum);
                             } else {//other
                                 final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe((HorizonsBlueprintName) horizonsWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsWishlistBlueprint), getBlueprintGrade(horizonsWishlistBlueprint));
-                                return blueprint.getRequiredAmount(horizonsMaterial);
+                                return new IntegerRange( blueprint.getRequiredAmount(horizonsMaterial, null), blueprint.getRequiredAmount(horizonsMaterial, null));
                             }
                         })
-                        .sum()
-                ).sum()).orElse(0);
+                        .reduce(new IntegerRange(0, 0), IntegerRange::sum)
+                ).reduce(new IntegerRange(0, 0), IntegerRange::sum)).orElse(new IntegerRange(0, 0));
     }
 
     private static HorizonsBlueprintType getBlueprintType(final WishlistBlueprint<HorizonsBlueprintName> blueprint) {
@@ -153,7 +162,7 @@ public class WishlistService {
                         .anyMatch(wishlist -> wishlist.getItems().stream()
                                 .anyMatch(wishlistBlueprint -> {
                                     if (wishlistBlueprint instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {//modules
-                                        return horizonsModuleWishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().anyMatch(entry -> {
+                                        return horizonsModuleWishlistBlueprint.getPercentageToComplete().entrySet().stream().anyMatch(entry -> {
                                             final HorizonsBlueprint blueprint = (HorizonsBlueprint) HorizonsBlueprintConstants.getRecipe(horizonsModuleWishlistBlueprint.getRecipeName(), getBlueprintType(horizonsModuleWishlistBlueprint), entry.getKey());
                                             return blueprint.hasIngredient(horizonsMaterial);
                                         });
@@ -230,7 +239,7 @@ public class WishlistService {
                 .findFirst();
         existingRecipe.ifPresent(recipe -> {
             if (recipe instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
-                moduleWishlistBlueprint.setBlueprintGradeRolls(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getBlueprintGradeRolls());
+                moduleWishlistBlueprint.setPercentageToComplete(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getPercentageToComplete());
             }
         });
         saveHorizonsWishlists(commander, wishlists);
