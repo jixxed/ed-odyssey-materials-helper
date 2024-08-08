@@ -9,11 +9,11 @@ ship.stats.config.engine,Engine,,,Motores,,,ДВГ
 ship.stats.config.weapon,Weapon,,,Armas,,,ОРУ
 ship.stats.config.cargo_hatch,Cargo hatch,,,Escotilla de Carga,,,Грузовой ковш
 ship.stats.thermalpower,Thermals & power,,,Energía y Calor,,,Нагрев и Мощность
-ship.stats.thermal,Thermals,,,Calor,,,Нагрев
+ship.stats.thermal,Thermals,,,Temperatura,,,Нагрев
 ship.stats.power,Power,,,Energía,,,Мощность
-ship.stats.thermal.idle.thermals,Idle heat,,,Calor en Parado,,,В покое
-ship.stats.thermal.thruster.thermals,Full thrust heat,,,Calor a Máxima Aceleración,,,В движении
-ship.stats.thermal.fsd.thermals,FSD charging heat,,,Calor Cargando MDD,,,При зарядке FSD
+ship.stats.thermal.idle.thermals,Idle heat,,,Temperatura en Parado,,,В покое
+ship.stats.thermal.thruster.thermals,Full thrust heat,,,Temperatura a Máxima Aceleración,,,В движении
+ship.stats.thermal.fsd.thermals,FSD charging heat,,,Temperatura Cargando MDD,,,При зарядке FSD
 ship.stats.thermal.idle.thermals.value,{0}%,,,,,,
 ship.stats.thermal.thruster.thermals.value,{0}%,,,,,,
 ship.stats.thermal.fsd.thermals.value,{0}%,,,,,,

@@ -64,9 +64,9 @@ material.manufactured.tg_biomechanicalconduits,Bio-Mechanical Conduits (Thargoid
 material.manufactured.tg_propulsionelement,Propulsion Elements (Thargoid),Propulsion Elements (Thargoid),Schubantriebelemente,Elementos de propulsión,Éléments de propulsion,Elementos de Propulsão,Реактивные элементы
 material.manufactured.tg_weaponparts,Weapon Parts (Thargoid),Weapon Parts (Thargoid),Waffenteile,Piezas de armamento,Pièces d’armement,Peças de Arma,Детали вооружения
 material.manufactured.tg_wreckagecomponents,Wreckage Components (Thargoid),Wreckage Components (Thargoid),Wrackteilkomponenten,Restos de accidentes,Débris d’épave,Restos de componentes,Обломки кораблекрушений
-material.manufactured.tg_causticgeneratorparts,Corrosive Mechanisms (Thargoid),Corrosive Mechanisms (Thargoid),,,,,Разъедающие механизмы
-material.manufactured.tg_causticshard,Caustic Shard (Thargoid),Caustic Shard (Thargoid),,,,,Едкий осколок
-material.manufactured.tg_causticcrystal,Caustic Crystal (Thargoid),Caustic Crystal (Thargoid),,,,,Едкий кристалл
+material.manufactured.tg_causticgeneratorparts,Corrosive Mechanisms (Thargoid),Corrosive Mechanisms (Thargoid),,Mecanismos Corrosivos,,,Разъедающие механизмы
+material.manufactured.tg_causticshard,Caustic Shard (Thargoid),Caustic Shard (Thargoid),,Fragmento Caústico,,,Едкий осколок
+material.manufactured.tg_causticcrystal,Caustic Crystal (Thargoid),Caustic Crystal (Thargoid),,Cristal Caústico,,,Едкий кристалл
 material.manufactured.tg_abrasion01,Heat Exposure Specimen,Heat Exposure Specimen,,,Spécimen exposé à la chaleur,Espécime de exposição ao calor,Образец теплового воздействия
 material.manufactured.tg_abrasion02,Phasing Membrane Residue,Phasing Membrane Residue,Phasenmembranreste,,,Resíduo de membrana faseada,Остаток фазирующей мембраны
 material.manufactured.tg_abrasion03,Hardened Surface Fragments,Hardened Surface Fragments,,Fragmentos de superficie endurecida,Fragments superficiels durcis,Fragmentos de superfície endurecida,Окаменелые фрагменты поверхности
