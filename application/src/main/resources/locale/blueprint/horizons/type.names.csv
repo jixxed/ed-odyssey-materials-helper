@@ -190,4 +190,4 @@ blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Ph
 blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"Thermal Resistant, Kinetic Resistant","Thermal Resistant, Kinetic Resistant",,"Resistencia térmica, Resistencia cinética,",,,"Термическая защита, Кинетическая защита"
 blueprint.horizons.type.none,None,None,,,,,Нет
 blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,Resistencia zona Anti-Guardián,,,Сопротивление отключающему полю
-blueprint.horizons.type.long_range_weapon_focused_weapon_penetrator_munitions_god,"Long Range, Focused, Penetrator Munitions",,,,,,
+blueprint.horizons.type.long_range_weapon_focused_weapon_penetrator_munitions_god,"Long Range, Focused, Penetrator Munitions",,,,,,"Дальнобойное, Точность, Бронебойные снаряды"
