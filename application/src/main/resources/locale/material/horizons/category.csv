@@ -4,12 +4,12 @@ material.category.capacitors,Capacitors,Capacitors,Kondensatoren,Condensadores,C
 material.category.chemical,Chemical,Chemical,Chemikalie,Químico,Chimique,Químico,Химикаты
 material.category.commodity,Commodities,Commodities,Waren,Productos básicos,Marchandises,Mercadorias,Товары
 material.category.composite,Composite,Composite,Zusammengesetzt,Compuesto,Composite,Composto,Композиты
-material.category.conductive,Conductive,Conductive,Leitfähig,Conductivo,Conducteur,Condutivo,Проводящие
+material.category.conductive,Conductive,Conductive,Leitfähig,Conductivo,Conducteur,Condutores,Проводящие
 material.category.crystals,Crystals,Crystals,Kristalle,Cristales,Cristaux,Cristais,Кристаллы
 material.category.data_archives,Data Archives,Data Archives,Datenarchive,Archivos de datos,Archives de données,Arquivos de Dados,Архивы данных
 material.category.emission_data,Emission Data,Emission Data,Emissionsdaten,Datos de emisión,Données d’émission,Dados de Emissão,Данные об излучении
 material.category.encoded_firmware,Encoded Firmware,Encoded Firmware,Kodierte Firmware,Firmware codificado,Firmware encodé,Firmware codificado,Зашифрованная микропрограмма
-material.category.encryption_files,Encryption Files,Encryption Files,Verschlüsselungsdateien,Archivos de cifrado,Fichiers de chiffrement,Arquivos de Criptografia,Файлы шифрования
+material.category.encryption_files,Encryption Files,Encryption Files,Verschlüsselungsdateien,Archivos de cifrado,Fichiers de chiffrement,Arquivos Criptográficos,Файлы шифрования
 material.category.guardian,Guardian,Guardian,Guardian,Guardian,Guardian,Guardian,Стражи
 material.category.heat,Heat,Heat,Hitze,Calor,Chaleur,Calor,Тепло
 material.category.mechanical_components,Mechanical Components,Mechanical Components,Mechanische Komponenten,Componentes mecánicos,Composants mécaniques,Componentes Mecânicos,Механические компоненты

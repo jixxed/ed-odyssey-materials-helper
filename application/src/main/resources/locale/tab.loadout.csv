@@ -3,23 +3,23 @@ loadout.equipment.level.current,Current grade,Current grade,Aktueller Grad,Calif
 loadout.equipment.level.target,Target grade,Target grade,Zielnote,Grado objetivo,Niveau cible,Grau alvo,Желаемый уровень
 loadout.equipment.modifications,Modifications:,Modifications:,Modifikationen:,Modificaciones:,Modifications:,Modificações:,Модификации:
 loadout.equipment.stats.header.current,Current,Current,Current,Actual,Actuel,Atual,Текущий
-loadout.equipment.stats.header.modded,Modded,Modded,Modded,Modificado,Modded,Modded,Отличия
+loadout.equipment.stats.header.modded,Modded,Modded,Modded,Modificado,Modded,Modificado,Отличия
 loadout.equipment.stats.header.target,Target,Target,Target,Objetivo,Cible,Destino,Желаемый
 loadout.equipment.stats.toggle.all,All,All,All,Todo,Tous,Todos,Все
 loadout.equipment.stats.toggle.changed,Changed,Changed,Geändert,Cambiado,Modifié,Alterado,Отличающиеся
 loadout.equipment.stats,Stats:,Stats:,Statistik:,Estadísticas:,Statistiques:,Estatísticas:,Статистика:
 loadout.equipment.warning,Target grade does not have enough modification slots,Target grade does not have enough modification slots,Zielklasse hat nicht genügend Modifikationsplätze,El grado objetivo no tiene suficientes espacios de modificación,Le grade cible n’a pas assez d’emplacements de modification,A nota alvo não tem slots de modificação suficientes,У желаемого уровня недостаточно слотов для модификации
 loadout.modification.clear,Clear,Clear,Löschen,Borrar,Effacer,Clear,Убрать
-tab.loadout.add.suit,Add suit,Add suit,Anzug hinzufügen,Agregar traje,Ajouter une combinaison,Adicionar terno,Добавить костюм
-tab.loadout.add.weapon,Add weapon,Add weapon,Waffe hinzufügen,Agregar arma,Ajouter une arme,Adicionar arma,Добавить оружие
-tab.loadout.copy,Copy loadout to clipboard,Copy loadout to clipboard,Loadout in die Zwischenablage kopieren,Copiar equipamiento al portapapeles,Copier le chargement dans le presse-papiers,Copiar loadout para a área de transferência,Копировать снаряжение в буфер обмена
-tab.loadout.create,Create loadout,Create loadout,Loadout erstellen,Crear equipamiento,Créer un chargement,Criar loadout,Создать снаряжение
+tab.loadout.add.suit,Add suit,Add suit,Anzug hinzufügen,Agregar traje,Ajouter une combinaison,Adicionar Traje,Добавить костюм
+tab.loadout.add.weapon,Add weapon,Add weapon,Waffe hinzufügen,Agregar arma,Ajouter une arme,Adicionar Arma,Добавить оружие
+tab.loadout.copy,Copy loadout to clipboard,Copy loadout to clipboard,Loadout in die Zwischenablage kopieren,Copiar equipamiento al portapapeles,Copier le chargement dans le presse-papiers,Copiar Carregamento para a área de transferência,Копировать снаряжение в буфер обмена
+tab.loadout.create,Create loadout,Create loadout,Loadout erstellen,Crear equipamiento,Créer un chargement,Criar Carregamento,Создать снаряжение
 tab.loadout.delete.confirm.content,Do you wish to continue?,Do you wish to continue?,Möchten Sie fortfahren?,¿Desea continuar?,Souhaitez-vous continuer?,Deseja continuar?,Продолжить?
-tab.loadout.delete.confirm.header,You are about to delete your loadout,You are about to delete your loadout,Du bist dabei dein Loadout zu löschen,Estás a punto de eliminar tu equipamiento,Vous êtes sur le point de supprimer votre chargement,Você está prestes a deletar seu loadout,Вы собираетесь удалить свое снаряжение
+tab.loadout.delete.confirm.header,You are about to delete your loadout,You are about to delete your loadout,Du bist dabei dein Loadout zu löschen,Estás a punto de eliminar tu equipamiento,Vous êtes sur le point de supprimer votre chargement,Você está prestes a apagar seu carregamento,Вы собираетесь удалить свое снаряжение
 tab.loadout.delete.confirm.title,Confirm deletion,Confirm deletion,Löschen bestätigen,Confirmar eliminación,Confirmer la suppression,Confirmar exclusão,Подтвердить удаление
-tab.loadout.delete,Delete loadout,Delete loadout,Loadout löschen,Eliminar equipamiento,Supprimer le chargement,Excluir loadout,Удалить снаряжение
+tab.loadout.delete,Delete loadout,Delete loadout,Loadout löschen,Eliminar equipamiento,Supprimer le chargement,Excluir carrregamento,Удалить снаряжение
 tab.loadout.rename.prompt,New name (max. 50 characters),New name (max. 50 characters),Neuer Name (max. 50 Zeichen),Nuevo nombre (máx.50 caracteres),Nouveau nom (max. 50 caractères),Novo nome (máx. 50 caracteres),Новое имя (макс. 50 символов)
-tab.loadout.rename,Rename loadout,Rename loadout,Loadout umbenennen,Cambiar nombre de equipamiento,Renommer le chargement,Renomear loadout,Переименовать снаряжение
+tab.loadout.rename,Rename loadout,Rename loadout,Loadout umbenennen,Cambiar nombre de equipamiento,Renommer le chargement,Renomear carregamento,Переименовать снаряжение
 loadout.create.new.wishlist,Create new,Create new,Erstelle neu,Crear nuevo,Créer un nouveau,Crie um novo,Создать новый
-tab.loadout.clone,Clone loadout,Clone loadout,Klonlast,Carga de clones,Chargement de clone,Clone Loadout,Клонировать сборку
+tab.loadout.clone,Clone loadout,Clone loadout,Klonlast,Carga de clones,Chargement de clone,Clonar Carregamento,Клонировать сборку
 blueprint.add.all.to.wishlist,Add all to wishlist,Add all to wishlist,Fügen Sie alle zur Wunschliste hinzu,Agregar todo a la lista de deseos,Ajouter tout à WishList,Adicione tudo à lista de desejos,Добавьте все в список желаний

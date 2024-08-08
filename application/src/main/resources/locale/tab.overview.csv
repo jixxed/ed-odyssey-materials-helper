@@ -4,13 +4,13 @@ total.type.name.sub_total,Total (Backpack + Ship),Total (Backpack + Ship),Gesamt
 total.type.name.blueprint,Blueprint,Blueprint,Bauplan,Plano,Plan directeur,Blueprint,Чертеж
 total.type.name.chemical,Chemical,Chemical,Chemie,Químico,Chimie,Química,Химикаты
 total.type.name.circuit,Circuit,Circuit,Schaltung,Circuito,Circuit,Circuito,Схемы
-total.type.name.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Non pertinent,Irrelevant,Неиспользуемые
-total.type.name.tech,Tech,Tech,Tech,Tecnología,Technologie,Tech,Техника
+total.type.name.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Non pertinent,Irrelevante,Неиспользуемые
+total.type.name.tech,Tech,Tech,Tech,Tecnología,Technologie,Tecnologia,Техника
 total.type.name.total,Total,Total,Gesamt,Total,Total,Total,Всего
 storage.type.horizons.name.encoded,Encoded,Encoded,Codiert,Codificado,Codé,Codificado,Зашифрованные
 storage.type.horizons.name.manufactured,Manufactured,Manufactured,Hergestellt,Fabricado,Fabriqué,Fabricado,Производственные
 storage.type.horizons.name.other,Other,Other,Sonstiges,Otro,Autre,Outro,Другой
-storage.type.horizons.name.raw,Raw,Raw,Roh,Crudo,Brut,Cru,Хим. элементы
+storage.type.horizons.name.raw,Raw,Raw,Roh,Crudo,Brut,Bruto,Хим. элементы
 storage.type.name.asset,Assets,Assets,Assets,Activos,Actifs,Ativos,Активы
 storage.type.name.data,Data,Data,Daten,Datos,Données,Data,Данные
 storage.type.name.good,Goods,Goods,Waren,Bienes,Marchandises,Bens,Товары
