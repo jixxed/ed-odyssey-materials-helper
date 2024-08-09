@@ -2220,8 +2220,8 @@ public class Ship {
                 ));
         public static final Ship TYPE_8 = new Ship(
                 ShipType.TYPE_8,
-                0,//TODO
-                0,//TODO
+                36238840,//TODO
+                38453970,//TODO
                 Map.ofEntries(
                         Map.entry(HorizonsModifier.TOP_SPEED, 200.0),//TODO
                         Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),//TODO
@@ -2232,7 +2232,7 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.FWDACC,20.03),
 //                    Map.entry(HorizonsModifier.REVACC,10.11),
 //                    Map.entry(HorizonsModifier.LATACC,10.03),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 46.0),//TODO 46
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),//TODO 46
                         Map.entry(HorizonsModifier.BOOST_COST, 13.0),//TODO
                         Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),//TODO
                         Map.entry(HorizonsModifier.YAW_SPEED, 18.0),//TODO
@@ -2240,7 +2240,7 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,100.0),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,80.0),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 20.0),//TODO
+                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),//TODO
                         Map.entry(HorizonsModifier.HEAT_CAPACITY, 289.0),//TODO
                         Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),//TODO
                         Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 48.35),//TODO
@@ -2248,7 +2248,7 @@ public class Ship {
                         Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),//TODO
                         Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),//TODO
                         Map.entry(HorizonsModifier.MASS_LOCK, 23.0),//TODO
-                        Map.entry(HorizonsModifier.CREW, 0.0)//TODO
+                        Map.entry(HorizonsModifier.CREW, 1.0)//TODO
 
                 ),// 2 116 55   // 1 -18 -21
                 List.of(
