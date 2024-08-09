@@ -187,7 +187,7 @@ blueprint.horizons.name.research_limpet_controller,Research Limpet Controller,Re
 blueprint.horizons.name.retributor_beam_laser,Retributor Beam Laser,Retributor Beam Laser,,,,Laser de Feixe Retributor,Пучковый лазер «Каратель»
 blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack,Rocket Propelled Containment Missile,Rocket Propelled Containment Missile,,,,Míssel de Contenção Propelido por Foguete,Ракетный FSD-разрушитель
 blueprint.horizons.name.rocket_propelled_fsd_disrupter_missile_rack.short,Containment Missile,Containment Missile,,,,Míssel de Contenção,Ракетный FSD-разрушитель
-blueprint.horizons.name.seeker_missile_rack,Seeker Missile Rack,Seeker Missile Rack,Suchraketengestell,Estante para misiles buscadores,Support de missile Seeker,Estante de Mísseis Buscadores,Блок ракет с самонаведением
+blueprint.horizons.name.seeker_missile_rack,Seeker Missile Rack,Seeker Missile Rack,Suchraketengestell,Lanzamisiles buscadores,Support de missile Seeker,Estante de Mísseis Buscadores,Блок ракет с самонаведением
 blueprint.horizons.name.seeker_missile_rack_pre,Seeker Missile Rack,Seeker Missile Rack,,,,Estante de Mísseis Buscadores,Блок ракет с самонаведением
 blueprint.horizons.name.seismic_charge_launcher,Seismic Charge Launcher,Seismic Charge Launcher,,Lanzador de carga sísmica,,Lançador de Carga Sísmica,Пусковая установка для сейсмических снарядов
 blueprint.horizons.name.seismic_charge_munitions,Seismic Charge Munitions,Seismic Charge Munitions,Seismischer-Lader-Munition,Municiones de carga sísmica,Munitions de charge sismique,Munição de Carga Sísmica,Сейсмические боеприпасы
@@ -224,5 +224,5 @@ blueprint.horizons.name.basic_discovery_scanner,Basic Discovery Scanner,Basic Di
 blueprint.horizons.name.intermediate_discovery_scanner,Intermediate Discovery Scanner,Intermediate Discovery Scanner,,,,Scanner de Descoberta Intermediária,Улучшенный сканер обнаружения
 blueprint.horizons.name.advanced_discovery_scanner,Advanced Discovery Scanner,Advanced Discovery Scanner,,,,Scanner de Descoberta Avançada,Полнофункциональный сканер обнаружения
 blueprint.horizons.name.guardian_shard_cannon_pre_god,Godshard Guardian Shard Cannon,Godshard Guardian Shard Cannon,,,,Canhão de Fragmentos Guardian Godshard,Божественное осколочное орудие Стражей
-blueprint.horizons.name.guardian_shard_cannon_pre_god_clarifier,God,God,,,,Deus,Божественное
-blueprint.horizons.name.frame_shift_drive_booster,Guardian Frame Shift Drive Booster,,,,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
+blueprint.horizons.name.guardian_shard_cannon_pre_god_clarifier,God,God,,Dios,,Deus,Божественное
+blueprint.horizons.name.frame_shift_drive_booster,Guardian Frame Shift Drive Booster,,,Potenciador de Motor de Distorsión Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
