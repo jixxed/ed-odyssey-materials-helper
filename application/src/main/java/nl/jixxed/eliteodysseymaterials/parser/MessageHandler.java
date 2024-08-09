@@ -71,6 +71,8 @@ class MessageHandler {
             Map.entry(JournalEventType.LOADOUT, new LoadoutMessageProcessor()),
             Map.entry(JournalEventType.LOCATION, new LocationMessageProcessor()),
             Map.entry(JournalEventType.TOUCHDOWN, new TouchdownMessageProcessor()),
+            Map.entry(JournalEventType.SCIENTIFICRESEARCH, new ScientificResearchMessageProcessor()),
+
             Map.entry(JournalEventType.UNDOCKED, new UndockedMessageProcessor()),
             Map.entry(JournalEventType.LIFTOFF, new LiftOffMessageProcessor()),
             Map.entry(JournalEventType.APPROACHBODY, new ApproachBodyMessageProcessor()),

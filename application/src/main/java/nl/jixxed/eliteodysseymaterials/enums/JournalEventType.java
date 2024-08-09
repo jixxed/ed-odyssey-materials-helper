@@ -69,7 +69,8 @@ public enum JournalEventType {
     USSDROP("USSDrop"),
     SHUTDOWN("Shutdown"),
     MUSIC("Music"),
-    STARTJUMP("StartJump");
+    STARTJUMP("StartJump"),
+    SCIENTIFICRESEARCH("ScientificResearch");
     private final String name;
 
     public static JournalEventType forName(final String name) {
