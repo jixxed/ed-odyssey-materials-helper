@@ -115,10 +115,10 @@ blueprint.horizons.name.heat_sink_launcher,Heat Sink Launcher,Heat Sink Launcher
 blueprint.horizons.name.heat_sink_launcher.short,Heat,,,Calor,,,Теплоотвод
 blueprint.horizons.name.heat_sink_launcher_pre,Heat Sink Launcher,Heat Sink Launcher,,Eyector Térmico,,,Теплоотводная катапульта
 blueprint.horizons.name.heat_sink_launcher_pre.short,Heat,,,,,,Теплоотвод
-blueprint.horizons.name.heatsinks,Heatsinks,Heatsinks,Kühlkörper,Disipadores de calor,Dissipateurs de chaleur,Dissipadores de calor,Теплоотводы
+blueprint.horizons.name.heatsinks,Heatsinks,Heatsinks,Kühlkörper,Eyectores térmicos,Dissipateurs de chaleur,Dissipadores de calor,Теплоотводы
 blueprint.horizons.name.high_velocity_munitions,High Velocity Munitions,High Velocity Munitions,Hochgeschwindigkeitsmunition,Municiones de alta velocidad,Munitions à grande vitesse,Munições de alta velocidade,Высокоскоростные боеприпасы
 blueprint.horizons.name.hull_reinforcement_package,Hull Reinforcement Package,Hull Reinforcement Package,Rumpfhüllenverstärkung,Paquete de refuerzo de casco,Forfait de renforcement de la coque,Pacote de reforço de casco,Набор для усиления корпуса
-blueprint.horizons.name.human_livery,Human Livery,Human Livery,Menschliche Lackierung,Librea humana,Livrée humaine,Viária humana,Украшения кокпита
+blueprint.horizons.name.human_livery,Human Livery,Human Livery,Menschliche Lackierung,Bróker Humano,Livrée humaine,Viária humana,Украшения кокпита
 blueprint.horizons.name.human_modules,Human Modules,Human Modules,Menschliche Module,Módulos humanos,Modules humains,Módulos humanos,Модули людей
 blueprint.horizons.name.human_weapons,Human Weapons,Human Weapons,Menschliche Waffen,Armas humanas,Armes humaines,Armas humanas,Оружие людей
 blueprint.horizons.name.imperial_hammer_rail_gun,Imperial Hammer Rail Gun,Imperial Hammer Rail Gun,,,,,Имперский молот
@@ -172,7 +172,7 @@ blueprint.horizons.name.pulse_disruptor_laser,Pulse Disruptor Laser,,,,,,Див�
 blueprint.horizons.name.pulse_laser,Pulse Laser,Pulse Laser,Pulslaser,Láser de pulsos,Laser à impulsion,Laser de pulso,Импульсный лазер
 blueprint.horizons.name.pulse_wave_analyser,Pulse Wave Analyser,Pulse Wave Analyser,,Analizador de Onda de Pulso,,,Анализатор импульсных волн
 blueprint.horizons.name.pulse_wave_xeno_scanner,Pulse Wave Xeno Scanner,Pulse Wave Xeno Scanner,,Xeno-Escaner de Onda de Pulso,,,Ксено-сканер импульсных волн
-blueprint.horizons.name.rail_gun,Rail Gun,Rail Gun,Schienenkanone,Pistola de riel,Pistolet ferroviaire,Pistola ferroviária,Рельсотрон
+blueprint.horizons.name.rail_gun,Rail Gun,Rail Gun,Schienenkanone,Cañón de riel,Pistolet ferroviaire,Pistola ferroviária,Рельсотрон
 blueprint.horizons.name.rail_gun_pre,Rail Gun,Rail Gun,,,,,Рельсотрон
 blueprint.horizons.name.reactive_surface_composite_armour,Reactive Surface Composite Armour,Reactive Surface Composite Armour,,Blindaje de superficie reactiva,,,Композит с реактивной поверхностью
 blueprint.horizons.name.recon_limpet_controller,Recon Limpet Controller,Recon Limpet Controller,,Controlador de dron de reconocimiento,,,Контроллер дрона-разведчика
@@ -212,7 +212,7 @@ blueprint.horizons.name.sub_surface_extraction_missile,Sub Surface Extraction Mi
 blueprint.horizons.name.supercruise_assist,Supercruise Assist,Supercruise Assist,,Asistente de supercrucero,,,Помощь в гиперкрейсерском режиме
 blueprint.horizons.name.thargoid_pulse_neutraliser,Thargoid Pulse Neutraliser,Thargoid Pulse Neutraliser,,Neutralizador de pulsos targoide,,,Нейтрализатор таргоидских импульсов
 blueprint.horizons.name.thrusters,Thrusters,Thrusters,Triebwerke,Propulsores,Propulseurs,Propulsores,Маневровые двигатели
-blueprint.horizons.name.torpedo_pylon,Torpedo Pylon,Torpedo Pylon,Torpedo Pylon,Pilón de torpedo,Pylône de torpille,Pilão de torpedo,Торпедная установка
+blueprint.horizons.name.torpedo_pylon,Torpedo Pylon,Torpedo Pylon,Torpedo Pylon,Lanzatorpedos,Pylône de torpille,Pilão de torpedo,Торпедная установка
 blueprint.horizons.name.universal_multi_limpet_controller,Universal Multi Limpet Controller,Universal Multi Limpet Controller,,Controladora de drones universal,,,Универсальный мультиконтроллер дронов
 blueprint.horizons.name.universal_multi_limpet_controller.short,Universal,Universal,,Universal,,,Универсал
 blueprint.horizons.name.xeno_limpet_controller,Xeno Limpet Controller,Xeno Limpet Controller,,Controladora de drones AX,,,Контроллер дронов иных
@@ -220,9 +220,9 @@ blueprint.horizons.name.xeno_limpet_controller.short,Xeno,Xeno,,Xeno,,,Иные
 blueprint.horizons.name.xeno_scanner,Xeno Scanner,Xeno Scanner,,Escáner Xeno,,,Ксено-сканер
 blueprint.horizons.name.cargo_hatch,Cargo Hatch,Cargo Hatch,,Escotilla de carga,,,Грузовой люк
 blueprint.horizons.name.guardian_nanite_munitions,Guardian Nanite Munitions,Guardian Nanite Munitions,,Munición de nanocitos guardián,,,Нанитные боеприпасы
-blueprint.horizons.name.basic_discovery_scanner,Basic Discovery Scanner,Basic Discovery Scanner,,,,,
-blueprint.horizons.name.intermediate_discovery_scanner,Intermediate Discovery Scanner,Intermediate Discovery Scanner,,,,,
-blueprint.horizons.name.advanced_discovery_scanner,Advanced Discovery Scanner,Advanced Discovery Scanner,,,,,
-blueprint.horizons.name.guardian_shard_cannon_pre_god,Godshard Guardian Shard Cannon,Godshard Guardian Shard Cannon,,,,,
-blueprint.horizons.name.guardian_shard_cannon_pre_god_clarifier,God,God,,,,,
-blueprint.horizons.name.frame_shift_drive_booster,Guardian Frame Shift Drive Booster,,,,,,
+blueprint.horizons.name.basic_discovery_scanner,Basic Discovery Scanner,Basic Discovery Scanner,,,,,Базовый сканер обнаружения
+blueprint.horizons.name.intermediate_discovery_scanner,Intermediate Discovery Scanner,Intermediate Discovery Scanner,,,,,Улучшенный сканер обнаружения
+blueprint.horizons.name.advanced_discovery_scanner,Advanced Discovery Scanner,Advanced Discovery Scanner,,,,,Полнофункциональный сканер обнаружения
+blueprint.horizons.name.guardian_shard_cannon_pre_god,Godshard Guardian Shard Cannon,Godshard Guardian Shard Cannon,,,,,Божественное осколочное орудие Стражей
+blueprint.horizons.name.guardian_shard_cannon_pre_god_clarifier,God,God,,,,,Божественное
+blueprint.horizons.name.frame_shift_drive_booster,Guardian Frame Shift Drive Booster,,,,,,Ускоритель FSD Стражей
