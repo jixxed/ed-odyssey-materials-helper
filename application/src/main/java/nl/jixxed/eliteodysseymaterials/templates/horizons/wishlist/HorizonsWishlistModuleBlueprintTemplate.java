@@ -26,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 import org.controlsfx.control.PopOver;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -269,7 +270,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     }
 
     @Override
-    public HorizonsBlueprint getPrimaryRecipe() {
+    public @Nullable HorizonsBlueprint getPrimaryRecipe() {
         return (HorizonsBlueprint) this.blueprints.keySet().stream().max(Comparator.comparing(bp -> ((HorizonsBlueprint) bp).getHorizonsBlueprintGrade().getGrade())).orElse(null);
     }
 

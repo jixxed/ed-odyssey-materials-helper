@@ -638,6 +638,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setEngineer(getCurrentEngineerForRecipe(wishlistBlueprint.getPrimaryRecipe(), pathItems)));
         this.wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
+                .filter(temp -> Objects.nonNull(temp.getPrimaryRecipe()))
                 .forEach(template -> template.getRecipe().entrySet()
                     .forEach(entry -> {
                         final Blueprint<HorizonsBlueprintName> recipe = entry.getKey();
@@ -671,14 +672,6 @@ public class HorizonsWishlistTab extends HorizonsTab {
                         } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
                             ((HorizonsBlueprint) recipe).getMaterialCollection(HorizonsMaterial.class).forEach((key, value) -> this.wishlistNeededAll.merge(key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
                         }
-    //                    if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Raw.class).forEach((key, value) -> this.wishlistNeededRaw.merge((Raw) key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(Math.max(maxRank, grade.getGrade())) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Encoded.class).forEach((key, value) -> this.wishlistNeededEncoded.merge((Encoded) key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Manufactured.class).forEach((key, value) -> this.wishlistNeededManufactured.merge((Manufactured) key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Commodity.class).forEach((key, value) -> this.wishlistNeededCommodity.merge((Commodity) key,new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                    } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(HorizonsMaterial.class).forEach((key, value) -> this.wishlistNeededAll.merge(key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                    }
                     }));
         final List<Ingredient> allIngredients = new ArrayList<>();
         if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
@@ -731,6 +724,9 @@ public class HorizonsWishlistTab extends HorizonsTab {
     }
 
     private Engineer getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> recipe, List<PathItem<HorizonsBlueprintName>> pathItems) {
+        if(recipe == null){
+            return null;
+        }
         return pathItems.stream()
                 .filter(pathItem -> pathItem.getRecipes().keySet().stream().anyMatch(blueprint -> blueprint.getBlueprintName().equals(recipe.getBlueprintName()) && ((HorizonsBlueprint)blueprint).getHorizonsBlueprintType().equals(((HorizonsBlueprint)recipe).getHorizonsBlueprintType())))
                 .findFirst()
