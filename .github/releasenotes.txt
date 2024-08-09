@@ -6,7 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Updated translations PT/ES/RU
-Added Type-8 Armours and tweaked stats
-Set Odyssey blueprints for Headshot Damage, Accuracy and Range to old expensive values(fdev bug?)
-Fix for when all blueprint grade sliders are set to 0, causing an exception starting the app
+Handle Scientific Research events
+Fix highlighting of wishlist blueprints
