@@ -1,8 +1,8 @@
 messageKey,,en,de,es,fr,pt,ru
-modifier.horizons.unit.absolute_damage_ratio,%,,,,,,
-modifier.horizons.unit.ammo_capacity,,,,,,,
+modifier.horizons.unit.absolute_damage_ratio,%,,,,,%,
+modifier.horizons.unit.ammo_capacity,,,,,,un,
 modifier.horizons.unit.ammo_clip_size,,,,,,,
-modifier.horizons.unit.ammo_cost,Cr,,,,,,Кр
+modifier.horizons.unit.ammo_cost,Cr,,,,,Cr,Кр
 modifier.horizons.unit.ammo_maximum,,,,,,,
 modifier.horizons.unit.anti_xeno_damage,none,,,,,,
 modifier.horizons.unit.anti_xeno_damage_ratio,%,,,,,,

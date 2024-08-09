@@ -1,15 +1,15 @@
 messageKey,,en,de,es,fr,pt,ru
-blueprint.name.artemis_suit_grade_1_2,Artemis Suit Grade 1>2,Artemis Suit Grade 1>2,Artemis Anzug Grade 1>2,Artemis Suit Grade 1>2,Combinaison Artemis Grade 1>2,Nível Traje Artemis 1>2,Комбинезон Artemis 1>2
-blueprint.name.artemis_suit_grade_2_3,Artemis Suit Grade 2>3,Artemis Suit Grade 2>3,Artemis Anzug Grad 2>3,Artemis Suit Grade 2>3,Combinaison Artemis Grade 2>3,Nível Traje Artemis 2>3,Комбинезон Artemis 2>3
-blueprint.name.artemis_suit_grade_3_4,Artemis Suit Grade 3>4,Artemis Suit Grade 3>4,Artemis Anzug Grad 3>4,Artemis Suit Grade 3>4,Combinaison Artemis Grade 3>4,Nível Traje Artemis 3>4,Комбинезон Artemis 3>4
-blueprint.name.artemis_suit_grade_4_5,Artemis Suit Grade 4>5,Artemis Suit Grade 4>5,Artemis Anzug Grad 4>5,Artemis Suit Grade 4>5,Combinaison Artemis Grade 4>5,Nível Traje Artemis 4>5,Комбинезон Artemis 4>5
-blueprint.name.audio_masking,Audio Masking,Audio Masking,Audio-Maskierung,Audio Masking,Camouflage sonore,Mascaramento de Áudio,Аудиомаскировка
-blueprint.name.combat_movement_speed,Combat Movement Speed,Combat Movement Speed,Kampfbewegungsgeschwindigkeit,Combat Movement Speed,Combat Movement Speed,Velocidade de Movimento de Combate,Скорость передвижения в бою
-blueprint.name.damage_resistance,Damage Resistance,Damage Resistance,Schadensresistenz,Damage Resistance,Résistance aux dégâts,Resistência a Dano,Сопротивление урону
-blueprint.name.dominator_suit_grade_1_2,Dominator Suit Grade 1>2,Dominator Suit Grade 1>2,Dominator Anzug Grade 1>2,Dominator Suit Grade 1>2,Combinaison Dominator Grade 1>2,Nível Traje Dominador 1>2,Комбинезон Dominator 1>2
-blueprint.name.dominator_suit_grade_2_3,Dominator Suit Grade 2>3,Dominator Suit Grade 2>3,Dominator Anzug Grad 2>3,Dominator Suit Grade 2>3,Combinaison Dominator Grade 2>3,Nível Traje Dominador 2>3,Комбинезон Dominator 2>3
-blueprint.name.dominator_suit_grade_3_4,Dominator Suit Grade 3>4,Dominator Suit Grade 3>4,Dominator Anzug Grad 3>4,Dominator Suit Grade 3>4,Combinaison Dominator Grade 3>4,Nível Traje Dominador 3>4,Комбинезон Dominator 3>4
-blueprint.name.dominator_suit_grade_4_5,Dominator Suit Grade 4>5,Dominator Suit Grade 4>5,Dominator Anzug Grad 4>5,Dominator Suit Grade 4>5,Combinaison Dominator Grade 4>5,Nível Traje Dominador 4>5,Комбинезон Dominator 4>5
+blueprint.name.artemis_suit_grade_1_2,Artemis Suit Grade 1>2,Artemis Suit Grade 1>2,Artemis Anzug Grade 1>2,Artemis Suit Grade 1>2,Combinaison Artemis Grade 1>2,Artemis Suit Grade 1>2,Комбинезон Artemis 1>2
+blueprint.name.artemis_suit_grade_2_3,Artemis Suit Grade 2>3,Artemis Suit Grade 2>3,Artemis Anzug Grad 2>3,Artemis Suit Grade 2>3,Combinaison Artemis Grade 2>3,Artemis Suit Grade 2>3,Комбинезон Artemis 2>3
+blueprint.name.artemis_suit_grade_3_4,Artemis Suit Grade 3>4,Artemis Suit Grade 3>4,Artemis Anzug Grad 3>4,Artemis Suit Grade 3>4,Combinaison Artemis Grade 3>4,Artemis Suit Grade 3>4,Комбинезон Artemis 3>4
+blueprint.name.artemis_suit_grade_4_5,Artemis Suit Grade 4>5,Artemis Suit Grade 4>5,Artemis Anzug Grad 4>5,Artemis Suit Grade 4>5,Combinaison Artemis Grade 4>5,Artemis Suit Grade 4>5,Комбинезон Artemis 4>5
+blueprint.name.audio_masking,Audio Masking,Audio Masking,Audio-Maskierung,Audio Masking,Camouflage sonore,Audio Masking,Аудиомаскировка
+blueprint.name.combat_movement_speed,Combat Movement Speed,Combat Movement Speed,Kampfbewegungsgeschwindigkeit,Combat Movement Speed,Combat Movement Speed,Combat Movement Speed,Скорость передвижения в бою
+blueprint.name.damage_resistance,Damage Resistance,Damage Resistance,Schadensresistenz,Damage Resistance,Résistance aux dégâts,Damage Resistance,Сопротивление урону
+blueprint.name.dominator_suit_grade_1_2,Dominator Suit Grade 1>2,Dominator Suit Grade 1>2,Dominator Anzug Grade 1>2,Dominator Suit Grade 1>2,Combinaison Dominator Grade 1>2,Dominator Suit Grade 1>2,Комбинезон Dominator 1>2
+blueprint.name.dominator_suit_grade_2_3,Dominator Suit Grade 2>3,Dominator Suit Grade 2>3,Dominator Anzug Grad 2>3,Dominator Suit Grade 2>3,Combinaison Dominator Grade 2>3,Dominator Suit Grade 2>3,Комбинезон Dominator 2>3
+blueprint.name.dominator_suit_grade_3_4,Dominator Suit Grade 3>4,Dominator Suit Grade 3>4,Dominator Anzug Grad 3>4,Dominator Suit Grade 3>4,Combinaison Dominator Grade 3>4,Dominator Suit Grade 3>4,Комбинезон Dominator 3>4
+blueprint.name.dominator_suit_grade_4_5,Dominator Suit Grade 4>5,Dominator Suit Grade 4>5,Dominator Anzug Grad 4>5,Dominator Suit Grade 4>5,Combinaison Dominator Grade 4>5,Dominator Suit Grade 4>5,Комбинезон Dominator 4>5
 blueprint.name.engineer_a1,A1. Domino Green,A1. Domino Green,A1. Domino Green,A1. Domino Green,A1. Domino Green,A1. Domino Green,A1. Домино Грин
 blueprint.name.engineer_a2,A2. Domino Green -> Kit Fowler,A2. Domino Green -> Kit Fowler,A2. Domino Green -> Kit Fowler,A2. Domino Green -> Kit Fowler,A2. Domino Green -> Kit Fowler,A2. Domino Green -> Kit Fowler,A2. Домино Грин -> Кит Фаулер
 blueprint.name.engineer_a3,A3. Kit Fowler,A3. Kit Fowler,A3. Kit Fowler,A3. Kit Fowler,A3. Kit Fowler,A3. Kit Fowler,A3. Кит Фаулер
