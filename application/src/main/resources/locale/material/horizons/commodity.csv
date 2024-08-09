@@ -419,19 +419,19 @@ material.commodity.undergroundsupport,Grom Underground Support,Grom Underground 
 material.commodity.gromcounterintelligence,Grom Counter Intelligence,Grom Counter Intelligence,Grom-Spionageabwehr,Contrainteligencia de Grom,Renseignements militaires de Grom,Contra-inteligência de Grom,Разведданные Грома
 material.commodity.gromwartrophies,Yuri Grom’s Military Supplies,Yuri Grom’s Military Supplies,Yuri Groms Militärausrüstung,Suministros militares de Yuri Grom,Fournitures militaires de Yuri Grom,Suprimentos Militares de Yuri Grom,Военные припасы Юрия Грома
 material.commodity.thargoidtissuesampletype6,Thargoid Glaive Tissue Sample,Thargoid Glaive Tissue Sample,,Muestra de tejido de Glaive Thargoide,,,Образец ткани таргоидского корабля «Глефа»
-material.commodity.thargoidtissuesampletype9a,Titan Deep Tissue Sample,Titan Deep Tissue Sample,,,,,Образец глубокой ткани Титана
-material.commodity.thargoidtissuesampletype9b,Titan Tissue Sample,Titan Tissue Sample,,,,,Образец ткани Титана
-material.commodity.thargoidtissuesampletype9c,Titan Partial Tissue Sample,Titan Partial Tissue Sample,,,,,Неполный образец ткани Титана
-material.commodity.thargoidtissuesampletype10a,Titan Maw Deep Tissue Sample,Titan Maw Deep Tissue Sample,,,,,Образец глубокой ткани пасти Титана
-material.commodity.thargoidtissuesampletype10b,Titan Maw Tissue Sample,Titan Maw Tissue Sample,,,,,Образец ткани пасти Титана
-material.commodity.thargoidtissuesampletype10c,Titan Maw Partial Tissue Sample,Titan Maw Partial Tissue Sample,,,,,Неполный образец ткани пасти Титана
+material.commodity.thargoidtissuesampletype9a,Titan Deep Tissue Sample,Titan Deep Tissue Sample,,Muestra de tejido profundo de Titan,,,Образец глубокой ткани Титана
+material.commodity.thargoidtissuesampletype9b,Titan Tissue Sample,Titan Tissue Sample,,Muestra de tejido de Titan,,,Образец ткани Титана
+material.commodity.thargoidtissuesampletype9c,Titan Partial Tissue Sample,Titan Partial Tissue Sample,,Muestra de tejido parcial de Titan,,,Неполный образец ткани Титана
+material.commodity.thargoidtissuesampletype10a,Titan Maw Deep Tissue Sample,Titan Maw Deep Tissue Sample,,Muestra de tejido profunda de fauces de Titan,,,Образец глубокой ткани пасти Титана
+material.commodity.thargoidtissuesampletype10b,Titan Maw Tissue Sample,Titan Maw Tissue Sample,,Muestra de tejido de fauces de Titan,,,Образец ткани пасти Титана
+material.commodity.thargoidtissuesampletype10c,Titan Maw Partial Tissue Sample,Titan Maw Partial Tissue Sample,,Muestra de tejido parcial de fauces de Titan,,,Неполный образец ткани пасти Титана
 material.commodity.thargoidtissuesampletype7,Thargoid Scythe Tissue Sample,Thargoid Scythe Tissue Sample,,Muestra de tejido de Scythe Thargoide,,Amostra de tecido de Scythe Thargoid,Образец ткани таргоидского корабля «Коса»
 material.commodity.unknownsack,Protective Membrane Scrap,Protective Membrane Scrap,Unbrauchbare Schutzmembran,Fragmento de membrana protectora,,,Остатки защитной мембраны
-material.commodity.thargoidpod,Thargoid Bio-storage Capsule,Thargoid Bio-storage Capsule,,,,,Таргоидская капсула для биоматериалов
-material.commodity.coralsap,Coral Sap,Coral Sap,,,,,Коралловая смола
-material.commodity.unknownmineral,Impure Spire Mineral,,,,,,Неочищенный минерал со шпилей
-material.commodity.unknownrefinedmineral,Semi-Refined Spire Mineral,,,,,,Полуочищенный минерал со шпилей
-material.commodity.thargoidbonefragments,Bone Fragments,,,,,,Фрагменты кости
-material.commodity.thargoidcystspecimen,Cyst Specimen,,,,,,Образец кисты
-material.commodity.thargoidorgansample,Organ Sample,,,,,,Образец органа
-material.commodity.thargoidtitandrivecomponent,Titan Drive Component,,,,,,Компонент двигателя титана
+material.commodity.thargoidpod,Thargoid Bio-storage Capsule,Thargoid Bio-storage Capsule,,Cápsula de Bioconservación Targoide,,,Таргоидская капсула для биоматериалов
+material.commodity.coralsap,Coral Sap,Coral Sap,,Savia del Árbol Coral,,,Коралловая смола
+material.commodity.unknownmineral,Impure Spire Mineral,,,Mineral de Aguja Impuro,,,Неочищенный минерал со шпилей
+material.commodity.unknownrefinedmineral,Semi-Refined Spire Mineral,,,Mineral de Aguja Semi-Refinado,,,Полуочищенный минерал со шпилей
+material.commodity.thargoidbonefragments,Bone Fragments,,,Fragmento de Hueso,,,Фрагменты кости
+material.commodity.thargoidcystspecimen,Cyst Specimen,,,Especimen de Quiste,,,Образец кисты
+material.commodity.thargoidorgansample,Organ Sample,,,Muestra de Órgano,,,Образец органа
+material.commodity.thargoidtitandrivecomponent,Titan Drive Component,,,Componente de motor de Titan,,,Компонент двигателя титана

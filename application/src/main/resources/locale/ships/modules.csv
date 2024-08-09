@@ -169,8 +169,8 @@ ships.module.name.hpt_multicannon_turret_large,Multi-Cannon,,,Multicañón,,,О�
 ships.module.name.hpt_plasmaaccelerator_fixed_medium,Plasma Accelerator,,,Acelerador de Plasma,,,Ускоритель плазмы
 ships.module.name.hpt_plasmaaccelerator_fixed_large,Plasma Accelerator,,,Acelerador de Plasma,,,Ускоритель плазмы
 ships.module.name.hpt_plasmaaccelerator_fixed_huge,Plasma Accelerator,,,Acelerador de Plasma,,,Ускоритель плазмы
-ships.module.name.hpt_railgun_fixed_small,Rail Gun,,,,,,Рельсотрон
-ships.module.name.hpt_railgun_fixed_medium,Rail Gun,,,,,,Рельсотрон
+ships.module.name.hpt_railgun_fixed_small,Rail Gun,,,Cañón de Riel,,,Рельсотрон
+ships.module.name.hpt_railgun_fixed_medium,Rail Gun,,,Cañón de Riel,,,Рельсотрон
 ships.module.name.hpt_basicmissilerack_fixed_small,Seeker Missile Rack,,,Lanzamisiles de Seguimiento,,,Блок ракетБлок ракет с самонаведением
 ships.module.name.hpt_basicmissilerack_fixed_medium,Seeker Missile Rack,,,Lanzamisiles de Seguimiento,,,Блок ракетБлок ракет с самонаведением
 ships.module.name.hpt_basicmissilerack_fixed_large,Seeker Missile Rack,,,Lanzamisiles de Seguimiento,,,Блок ракетБлок ракет с самонаведением
