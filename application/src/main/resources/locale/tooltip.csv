@@ -11,24 +11,24 @@ material.tooltip.text.no,No,No,Nein,No,Non,Não,Нет
 material.tooltip.text.yes,Yes,Yes,Ja,Sí,Oui,Sim,Да
 material.tooltip.is.rare,Rare:,Rare:,Selten:,Extraño:,Rare:,Cru:,Редкий:
 material.tooltip.type,Type:,Type:,Typ:,Tipo:,Taper:,Tipo:,Тип:
-material.tooltip.type.raw,Type: Raw,Type: Raw,Typ: Element,Tipo: Raw,Type: brut,Tipo: cru,Тип: Элементы
-material.tooltip.type.encoded,Type: Encoded,Type: Encoded,Typ: Verschlüsselt,Tipo: codificado,Type: codé,Tipo: codificado,Тип: Зашифрованные данные
-material.tooltip.type.manufactured,Type: Manufactured,Type: Manufactured,Typ: Gefertigt,Tipo: fabricado,Type: fabriqué,Tipo: fabricado,Тип: Промышленные материалы
-material.tooltip.fleetcarrier,Fleet carrier,Fleet carrier,Carrier,Transportista de flota,Transporteur de flotte,Transportadora de frota,Флотоносец
+material.tooltip.type.raw,Type: Raw,Type: Raw,Typ: Element,Tipo: Materia Prima,Type: brut,Tipo: cru,Тип: Элементы
+material.tooltip.type.encoded,Type: Encoded,Type: Encoded,Typ: Verschlüsselt,Tipo: Datos,Type: codé,Tipo: codificado,Тип: Зашифрованные данные
+material.tooltip.type.manufactured,Type: Manufactured,Type: Manufactured,Typ: Gefertigt,Tipo: Manufacturado,Type: fabriqué,Tipo: fabricado,Тип: Промышленные материалы
+material.tooltip.fleetcarrier,Fleet carrier,Fleet carrier,Carrier,Carguero,Transporteur de flotte,Transportadora de frota,Флотоносец
 material.tooltip.fleetcarrier.not.linked,Frontier account link not available,Frontier account link not available,Frontier Konto Verbindung nicht verfügbar,Enlace de cuenta de Frontier no disponible,Lien de compte Frontier non disponible,Link da conta de Frontier não disponível,Аккаунт Frontier не привязан
 material.tooltip.fleetcarrier.buy,Buy {0}({1} remaining) @ ${2},Buy {0}({1} remaining) @ ${2},Kaufen {0} ({1} verbleibend) @ $ {2},Comprar {0} ({1} restante) @ $ {2},Acheter {0} ({1} restant) @ $ {2},Compre {0} ({1} restante) @ $ {2},Купить {0} ({1} оставшееся) @ $ {2}
 material.tooltip.fleetcarrier.sell,Sell {0} @ ${1},Sell {0} @ ${1},Verkaufen {0} @ $ {1},Vender {0} @ $ {1},Vendre {0} @ $ {1},Vender {0} @ $ {1},Продать {0} @ $ {1}
 material.tooltip.fleetcarrier.storage,Stored amount: {0},Stored amount: {0},Gelagerte Menge: {0},Cantidad almacenada: {0},Montant stocké: {0},Quantidade armazenada: {0},Хранящаяся сумма: {0}
-material.tooltip.statistics.avg,Best average collected per visit:,Best average collected per visit:,Höchster Durchschnitt pro Besuch:,El mejor promedio recolectado por visita:,Meilleure moyenne collectée par visite:,Melhor média coletada por visita:,Лучшее среднее значение за визит:
-material.tooltip.statistics.runs,Most collected in a single visit:,Most collected in a single visit:,Am meisten bei einem Besuch gesammelt:,La mayoría recolectó en una sola visita:,La plupart collectés en une seule visite:,Mais coletado em uma única visita:,Наиболее собрано за один визит:
-material.tooltip.statistics.settlements,Most collected in locations:,Most collected in locations:,Meist gesammelte Orte:,La más recolectada en ubicaciones:,La plupart collectés dans les endroits:,Mais coletado em locais:,Большинство собрано в местах:
+material.tooltip.statistics.avg,Best average collected per visit:,Best average collected per visit:,Höchster Durchschnitt pro Besuch:,El mejor promedio recogido por visita:,Meilleure moyenne collectée par visite:,Melhor média coletada por visita:,Лучшее среднее значение за визит:
+material.tooltip.statistics.runs,Most collected in a single visit:,Most collected in a single visit:,Am meisten bei einem Besuch gesammelt:,Mayor recolección en una sola visita:,La plupart collectés en une seule visite:,Mais coletado em uma única visita:,Наиболее собрано за один визит:
+material.tooltip.statistics.settlements,Most collected in locations:,Most collected in locations:,Meist gesammelte Orte:,Mayor recolección en ubicaciones:,La plupart collectés dans les endroits:,Mais coletado em locais:,Большинство собрано в местах:
 material.tooltip.spawnlocations,Where to find:,Where to find:,Wo zu finden:,Donde encontrar:,Où trouver:,Onde achar:,Где найти:
-material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn chance(Avg. 3-4 chances per dataport):,Spawn Chance (Durchschnittlich 3-4 Chancen pro Datenport):,Chance de desagüe (avg. 3-4 posibilidades por papel de datos):,Spawn Chance (avg. 3-4 chances par données):,Chance de Spawn (Avg. 3-4 chances por Dataport):,Spawn Chance (Avg. 3-4 шансов на DataPort):
+material.tooltip.spawnrates,Spawn chance(Avg. 3-4 chances per dataport):,Spawn chance(Avg. 3-4 chances per dataport):,Spawn Chance (Durchschnittlich 3-4 Chancen pro Datenport):,Posibilidad de aparición (Media 3-4 posibilidades por punto de datos):,Spawn Chance (avg. 3-4 chances par données):,Chance de Spawn (Avg. 3-4 chances por Dataport):,Spawn Chance (Avg. 3-4 шансов на DataPort):
 material.tooltip.is.live,LIVE-only material,LIVE-only material,Nur LIVE-Material,Material solo en LIVE,Matériel en LIVE uniquement,Material somente ao LIVE,Материал для LIVE-версии
 material.tooltip.is.live.commodity,LIVE-only commodity,LIVE-only commodity,Nur LIVE-Ware,Productos básicos solo en LIVE,Marchandise en LIVE,Mercadoria apenas ao LIVE,Товар для LIVE-версии
-material.tooltip.downtrade,Downtrade:,Downtrade:,Eintauschen:,Abatido:,Descente:,Baixa:,Нисходящий:
+material.tooltip.downtrade,Downtrade:,Downtrade:,Eintauschen:,Intercambio óptimo:,Descente:,Baixa:,Нисходящий:
 material.tooltip.downtrade.entry,{0} from {1},{0} from {1},{0} von {1},{0} de {1},{0} de {1},{0} de {1},{0} из {1}
 material.tooltip.downtrade.none,No downtrades possible,No downtrades possible,,No hay intercambio óptimo,,,
-material.tooltip.tradesuggestions,"Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)","Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)",,,,,
+material.tooltip.tradesuggestions,"Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)","Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)",,"Recibe {0} Intercambiando {1} {2} ({3} en posesión, {4} reservados, {5} usados)",,,
 material.tooltip.tradesuggestions.none,No complete trades can be made,No complete trades can be made,,No se pueden hacer intercambios completos,,,
 material.tooltip.trade,Trade suggestions:,Trade suggestions:,,Intercambios sugeridos,,,
