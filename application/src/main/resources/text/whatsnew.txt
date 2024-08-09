@@ -1,3 +1,8 @@
+Version 2.93
+-------------
+Add Type-8 to ship selection
+Fix highlighting of hidden wishlist blueprints
+
 Version 2.92
 -------------
 Handle Scientific Research events

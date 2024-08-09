@@ -6,5 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Handle Scientific Research events
-Fix highlighting of wishlist blueprints
+Add Type-8 to ship selection
+Fix highlighting of hidden wishlist blueprints
