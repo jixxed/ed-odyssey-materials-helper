@@ -1134,3 +1134,8 @@ ships.module.name.python_nx_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzad
 ships.module.name.python_nx_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,,Композит военного класса
 ships.module.name.python_nx_armour_mirrored,Mirrored Surface Composite,,,Compuesto de superficie Reflectante,,,Композит с зеркальной поверхностью
 ships.module.name.python_nx_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,,Композит с реактивной поверхностью
+ships.module.name.type_8_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,,Лёгкие сплавы
+ships.module.name.type_8_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,,Укреплённые сплавы
+ships.module.name.type_8_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,,Композит военного класса
+ships.module.name.type_8_armour_mirrored,Mirrored Surface Composite,,,Compuesto de superficie Reflectante,,,Композит с зеркальной поверхностью
+ships.module.name.type_8_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,,Композит с реактивной поверхностью
