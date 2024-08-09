@@ -114,7 +114,7 @@ ext {
     version_mockito_inline = "5.2.0"
     version_guava = "33.2.1-jre"
     version_j2objc_annotations = "3.0.0"
-    version_netty = "4.1.111.Final"
+    version_netty = "4.1.112.Final"
     version_vertx = "4.5.8"
     version_mockito = "5.12.0"
 }
