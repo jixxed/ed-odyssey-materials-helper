@@ -51,7 +51,7 @@ search.filter.raw,Raw,Raw,,Materias Primas,,,Сырые материалы
 search.filter.encoded,Encoded,Encoded,,Codificados,,,Зашифрованные материалы
 search.filter.manufactured,Manufactured,Manufactured,,Manufacturados,,,Производственные материалы
 search.filter.guardian,Guardian,Guardian,,Guardián,,,Материалы Стражей
-search.filter.thargoid,Thargoid,Thargoid,,Targoide,,,Материалы Таргоидов
+search.filter.thargoid,Thargoid,Thargoid,,Thargoide,,,Материалы Таргоидов
 search.filter.human,Human,Human,,Humano,,,Материалы Человеческие
 search.sort.alphabetical,Alphabetical (default),Alphabetical (default),Alphabetisch (Standard),Alfabético (predeterminado),Alphabétique (par défaut),Alfabético (padrão),По алфавиту (по умолчанию)
 search.sort.engineer_blueprint_irrelevant,"Engineer unlocking, blueprint, irrelevant","Engineer unlocking, blueprint, irrelevant","Entsperrung durch Ingenieur, Blaupause, irrelevant","Desbloqueo del ingeniero, plano, irrelevante","Déverrouillage de l’ingénieur, plan, non pertinent","Desbloqueio do engenheiro, planta, irrelevante","Разблокировка инженера, чертеж, нерелевантно"
