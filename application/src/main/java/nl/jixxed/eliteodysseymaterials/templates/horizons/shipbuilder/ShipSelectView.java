@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -57,7 +56,7 @@ public class ShipSelectView extends VBox implements Template {
     @Override
     public void initComponents() {
         table = new Table<>();
-        Ship.ALL.stream().filter(Predicate.not(Ship.TYPE_8::equals)).forEach(ship -> {
+        Ship.ALL.forEach(ship -> {
             final LinkedHashMap<String, Supplier<Object>> values = new LinkedHashMap<>();
             values.put("ship.view.header.ship.name", () -> LocaleService.LocalizationKey.of(ship.getShipType().getLocalizationKey()));
             values.put("ship.view.header.price", () -> new FormattedLong(ship.getRetailPrice()));

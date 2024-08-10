@@ -26,6 +26,7 @@ import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 import org.controlsfx.control.PopOver;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -95,9 +96,9 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
 
 
                     this.wishlistIngredients.forEach(wishlistIngredient -> {
-                        Integer requiredAmount =  (this.blueprints.keySet().stream().map(bp -> ((HorizonsBlueprint) bp).getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), engineer)).reduce(0, Integer::sum));
-                        Integer minimumAmount =  (this.blueprints.keySet().stream().map(bp -> ((HorizonsBlueprint) bp).getMinimumAmount(wishlistIngredient.getHorizonsMaterial())).reduce(0, Integer::sum));
-                        Integer maximumAmount =  (this.blueprints.keySet().stream().map(bp -> ((HorizonsBlueprint) bp).getMaximumAmount(wishlistIngredient.getHorizonsMaterial())).reduce(0, Integer::sum));
+                        Integer requiredAmount =  (this.blueprints.entrySet().stream().map(entry ->(int)Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), engineer))).reduce(0, Integer::sum));
+                        Integer minimumAmount =  (this.blueprints.entrySet().stream().map(entry -> (int)Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMinimumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
+                        Integer maximumAmount =  (this.blueprints.entrySet().stream().map(entry -> (int)Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMaximumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
                         wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount, requiredAmount, maximumAmount));
                     });
                     this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
@@ -269,7 +270,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     }
 
     @Override
-    public HorizonsBlueprint getPrimaryRecipe() {
+    public @Nullable HorizonsBlueprint getPrimaryRecipe() {
         return (HorizonsBlueprint) this.blueprints.keySet().stream().max(Comparator.comparing(bp -> ((HorizonsBlueprint) bp).getHorizonsBlueprintGrade().getGrade())).orElse(null);
     }
 
@@ -311,5 +312,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     @Override
     public void setEngineer(Engineer engineer) {
         this.engineer = engineer;
+        final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
+        this.canCraft(craftability);
     }
 }

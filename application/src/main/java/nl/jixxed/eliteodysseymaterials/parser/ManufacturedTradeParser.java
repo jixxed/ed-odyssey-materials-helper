@@ -10,7 +10,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialTrade.Received;
 import java.util.Map;
 
 @Slf4j
-public class ManufacturedTradeParser implements HorizonsParser {
+public class ManufacturedTradeParser implements HorizonsParser<MaterialTrade> {
     @Override
     public void parse(final MaterialTrade event, final Map<HorizonsMaterial, Integer> storage) {
         final Paid paid = event.getPaid();

@@ -1,3 +1,20 @@
+Version 2.93
+-------------
+Add Type-8 to ship selection
+Fix highlighting of hidden wishlist blueprints
+
+Version 2.92
+-------------
+Handle Scientific Research events
+Fix highlighting of wishlist blueprints
+
+Version 2.91
+-------------
+Updated translations PT/ES/RU
+Added Type-8 Armours and tweaked stats
+Set Odyssey blueprints for Headshot Damage, Accuracy and Range to old expensive values(fdev bug?)
+Fix for when all blueprint grade sliders are set to 0, causing an exception starting the app
+
 Version 2.90
 -------------
 Fix powerup button

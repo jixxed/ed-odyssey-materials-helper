@@ -638,48 +638,41 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setEngineer(getCurrentEngineerForRecipe(wishlistBlueprint.getPrimaryRecipe(), pathItems)));
         this.wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
+                .filter(temp -> Objects.nonNull(temp.getPrimaryRecipe()))
                 .forEach(template -> template.getRecipe().entrySet()
-                    .forEach(entry -> {
-                        final Blueprint<HorizonsBlueprintName> recipe = entry.getKey();
-                        final Double percentageToComplete = entry.getValue();
-                        final Engineer engineer = getCurrentEngineerForRecipe(recipe, pathItems);
-                        final HorizonsBlueprintGrade grade = ((HorizonsBlueprint) recipe).getHorizonsBlueprintGrade();
-                        //lowest engineer rank available for recipe
-                        final Integer minRank = ((HorizonsBlueprint) recipe).getEngineers().stream().map(eng -> ApplicationState.getInstance().getEngineerRank(eng)).min(Comparator.comparingInt(Integer::intValue)).orElse(0);
-                        final Integer maxRank = ((HorizonsBlueprint) recipe).getEngineers().stream().map(eng -> ApplicationState.getInstance().getEngineerRank(eng)).max(Comparator.comparingInt(Integer::intValue)).orElse(0);
-                        final int minRoll;
-                        final int currentRoll;
-                        final int maxRoll;
-                        if(percentageToComplete < 0.2 && ((HorizonsBlueprint)template.getPrimaryRecipe()).getHorizonsBlueprintGrade().getGrade() > ((HorizonsBlueprint) recipe).getHorizonsBlueprintGrade().getGrade()){
-                            minRoll = 0;
-                            currentRoll = 0;
-                            maxRoll = 0;
-                        }else if(engineer != null && recipe instanceof HorizonsModuleBlueprint) {
-                            minRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(Math.max(maxRank, grade.getGrade()), ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
-                            currentRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(engineer, ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
-                            maxRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(minRank, ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
-                        }else{
-                            minRoll = 1;
-                            currentRoll = 1;
-                            maxRoll = 1;
-                        }
-                        if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Raw.class).forEach((key, value) -> this.wishlistNeededRaw.merge((Raw) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Encoded.class).forEach((key, value) -> this.wishlistNeededEncoded.merge((Encoded) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Manufactured.class).forEach((key, value) -> this.wishlistNeededManufactured.merge((Manufactured) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(Commodity.class).forEach((key, value) -> this.wishlistNeededCommodity.merge((Commodity) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
-                        } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
-                            ((HorizonsBlueprint) recipe).getMaterialCollection(HorizonsMaterial.class).forEach((key, value) -> this.wishlistNeededAll.merge(key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
-                        }
-    //                    if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Raw.class).forEach((key, value) -> this.wishlistNeededRaw.merge((Raw) key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(Math.max(maxRank, grade.getGrade())) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Encoded.class).forEach((key, value) -> this.wishlistNeededEncoded.merge((Encoded) key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Manufactured.class).forEach((key, value) -> this.wishlistNeededManufactured.merge((Manufactured) key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(Commodity.class).forEach((key, value) -> this.wishlistNeededCommodity.merge((Commodity) key,new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                    } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
-    //                        ((HorizonsBlueprint) recipe).getMaterialCollection(HorizonsMaterial.class).forEach((key, value) -> this.wishlistNeededAll.merge(key, new WishlistMaterial((engineer != null ? grade.getNumberOfRolls(5) * value : value), grade.getNumberOfRolls(engineer) * value, (engineer != null ? grade.getNumberOfRolls(minRank) * value : value)), WishlistMaterial::sum));
-    //                    }
-                    }));
+                        .forEach(entry -> {
+                            final Blueprint<HorizonsBlueprintName> recipe = entry.getKey();
+                            final Double percentageToComplete = entry.getValue();
+                            final Engineer engineer = getCurrentEngineerForRecipe(recipe, pathItems);
+                            final HorizonsBlueprintGrade grade = ((HorizonsBlueprint) recipe).getHorizonsBlueprintGrade();
+                            //lowest engineer rank available for recipe
+                            final Integer minRank = ((HorizonsBlueprint) recipe).getEngineers().stream().map(eng -> ApplicationState.getInstance().getEngineerRank(eng)).min(Comparator.comparingInt(Integer::intValue)).orElse(0);
+                            final Integer maxRank = ((HorizonsBlueprint) recipe).getEngineers().stream().map(eng -> ApplicationState.getInstance().getEngineerRank(eng)).max(Comparator.comparingInt(Integer::intValue)).orElse(0);
+                            final int minRoll;
+                            final int currentRoll;
+                            final int maxRoll;
+                            if (percentageToComplete < 0.2 && ((HorizonsBlueprint) template.getPrimaryRecipe()).getHorizonsBlueprintGrade().getGrade() > ((HorizonsBlueprint) recipe).getHorizonsBlueprintGrade().getGrade()) {
+                                minRoll = 0;
+                                currentRoll = 0;
+                                maxRoll = 0;
+                            } else if (engineer != null && recipe instanceof HorizonsModuleBlueprint) {
+                                minRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(Math.max(maxRank, grade.getGrade()), ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
+                                currentRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(engineer, ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
+                                maxRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(minRank, ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
+                            } else {
+                                minRoll = 1;
+                                currentRoll = 1;
+                                maxRoll = 1;
+                            }
+                            if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Raw.class).forEach((key, value) -> this.wishlistNeededRaw.merge((Raw) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Encoded.class).forEach((key, value) -> this.wishlistNeededEncoded.merge((Encoded) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Manufactured.class).forEach((key, value) -> this.wishlistNeededManufactured.merge((Manufactured) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(Commodity.class).forEach((key, value) -> this.wishlistNeededCommodity.merge((Commodity) key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
+                            } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
+                                ((HorizonsBlueprint) recipe).getMaterialCollection(HorizonsMaterial.class).forEach((key, value) -> this.wishlistNeededAll.merge(key, new WishlistMaterial(minRoll * value, currentRoll * value, maxRoll * value), WishlistMaterial::sum));
+                            }
+                        }));
         final List<Ingredient> allIngredients = new ArrayList<>();
         if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
             final List<HorizonsWishlistIngredient> ingredientsRaw = this.wishlistNeededRaw.entrySet().stream()
@@ -690,17 +683,17 @@ public class HorizonsWishlistTab extends HorizonsTab {
             final List<HorizonsWishlistIngredient> ingredientsEncoded = this.wishlistNeededEncoded.entrySet().stream()
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
-                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(),  wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(),  StorageService.getEncoded().get(wishlistItem.getKey())))
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getEncoded().get(wishlistItem.getKey())))
                     .toList();
             final List<HorizonsWishlistIngredient> ingredientsManufactured = this.wishlistNeededManufactured.entrySet().stream()
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
-                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(),  wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(),  StorageService.getManufactured().get(wishlistItem.getKey())))
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getManufactured().get(wishlistItem.getKey())))
                     .toList();
             final List<HorizonsWishlistIngredient> ingredientsCommodities = this.wishlistNeededCommodity.entrySet().stream()
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getCommodityCount(entry.getKey(), StoragePool.SHIP) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
-                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(),  wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(),  StorageService.getCommoditiesShip().get(wishlistItem.getKey())))
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getCommoditiesShip().get(wishlistItem.getKey())))
                     .toList();
             allIngredients.addAll(ingredientsRaw);
             allIngredients.addAll(ingredientsEncoded);
@@ -715,7 +708,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue().getRequired())
                     .map(wishlistItem -> {
                         final Integer materialCount = (wishlistItem.getKey() instanceof Commodity commodity) ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) + StorageService.getCommodityCount(commodity, StoragePool.SHIP) : StorageService.getMaterialCount(wishlistItem.getKey());
-                        return new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(),  materialCount);
+                        return new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), materialCount);
                     })
                     .toList();
             allIngredients.addAll(ingredientsAll);
@@ -731,11 +724,25 @@ public class HorizonsWishlistTab extends HorizonsTab {
     }
 
     private Engineer getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> recipe, List<PathItem<HorizonsBlueprintName>> pathItems) {
+        if (recipe == null) {
+            return null;
+        }
         return pathItems.stream()
-                .filter(pathItem -> pathItem.getRecipes().keySet().stream().anyMatch(blueprint -> blueprint.getBlueprintName().equals(recipe.getBlueprintName()) && ((HorizonsBlueprint)blueprint).getHorizonsBlueprintType().equals(((HorizonsBlueprint)recipe).getHorizonsBlueprintType())))
+                .filter(pathItem -> pathItem.getRecipes().keySet().stream().anyMatch(blueprint -> blueprint.getBlueprintName().equals(recipe.getBlueprintName()) && ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType().equals(((HorizonsBlueprint) recipe).getHorizonsBlueprintType())))
                 .findFirst()
                 .map(PathItem::getEngineer)
-                .orElse(null);
+                .orElse(getBestEngineer(recipe));
+    }
+
+    private Engineer getBestEngineer(Blueprint<HorizonsBlueprintName> recipe) {
+        if (recipe instanceof HorizonsWishlistModuleBlueprintTemplate moduleBlueprint) {
+            recipe = moduleBlueprint.getPrimaryRecipe();
+        }
+        if (!(recipe instanceof HorizonsModuleBlueprint)) {
+            return null;
+        }
+        return ((HorizonsModuleBlueprint) recipe).getEngineers().stream().max(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
+
     }
 
     private void removeAndAddFlows() {
