@@ -1,7 +1,7 @@
 messageKey,,en,de,es,fr,pt,ru
-horizons.materials.nearest.trader,Closest trader,Closest trader,Nächster Händler,Comerciante más cercano,Commerçant le plus proche,Trader mais próximo,Ближайший торговец
-total.type.name.sub_total,Total (Backpack + Ship),Total (Backpack + Ship),Gesamt (Rucksack + Schiff),Total (mochila + barco),Total (sac à dos + navire),Total (mochila + navio),Всего (рюкзак + корабль)
-total.type.name.blueprint,Blueprint,Blueprint,Bauplan,Plano,Plan directeur,Blueprint,Чертеж
+horizons.materials.nearest.trader,Closest trader,Closest trader,Nächster Händler,Comerciante más cercano,Commerçant le plus proche,Mercador mais próximo,Ближайший торговец
+total.type.name.sub_total,Total (Backpack + Ship),Total (Backpack + Ship),Gesamt (Rucksack + Schiff),Total (mochila + barco),Total (sac à dos + navire),Total (mochila + nave),Всего (рюкзак + корабль)
+total.type.name.blueprint,Blueprint,Blueprint,Bauplan,Plano,Plan directeur,Projeto,Чертеж
 total.type.name.chemical,Chemical,Chemical,Chemie,Químico,Chimie,Química,Химикаты
 total.type.name.circuit,Circuit,Circuit,Schaltung,Circuito,Circuit,Circuito,Схемы
 total.type.name.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Non pertinent,Irrelevante,Неиспользуемые

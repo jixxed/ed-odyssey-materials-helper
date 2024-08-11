@@ -1,6 +1,6 @@
 messageKey,,en,de,es,fr,pt,ru
 loadout.modification.name.added_melee_damage,Added Melee Damage,Added Melee Damage,Nahkampf- schaden hinzugefügt,Daño cuerpo a cuerpo agregado,Ajout de dégâts de mêlée,Adicionado dano corpo a corpo,Дополнительный урон в ближнем бою
-loadout.modification.name.audio_masking,Audio Masking,Audio Masking,Audio- maskierung,Enmascaramiento de audio,Masquage audio,Máscara de áudio,Аудиомаскировка
+loadout.modification.name.audio_masking,Audio Masking,Audio Masking,Audio- maskierung,Enmascaramiento de audio,Masquage audio,Mascaramento de áudio,Аудиомаскировка
 loadout.modification.name.combat_movement_speed,Combat Movement Speed,Combat Movement Speed,Kampf- bewegungs- geschwindig- keit,Velocidad de movimiento de combate,Vitesse de mouvement de combat,Velocidade de movimento de combate,Скорость передвижения в бою
 loadout.modification.name.damage_resistance,Damage Resistance,Damage Resistance,Schadens- resistenz,Resistencia al daño,Résistance aux dommages,Resistência a danos,Сопротивление урону
 loadout.modification.name.enhanced_tracking,Enhanced Tracking,Enhanced Tracking,Erweitertes Tracking,Seguimiento mejorado,Suivi amélioré,Rastreamento aprimorado,Улучшенное отслеживание
@@ -25,7 +25,7 @@ loadout.modification.name.magazine_size,Magazine Size,Magazine Size,Magazingrö�
 loadout.modification.name.night_vision,Night Vision,Night Vision,Nachtsicht,Visión nocturna,Vision nocturne,Visão noturna,Ночное видение
 loadout.modification.name.noise_suppressor,Noise Suppressor,Noise Suppressor,Rausch- unterdrücker,Supresor de ruido,Suppresseur de bruit,Supressor de ruído,Глушитель
 loadout.modification.name.none,None,None,Keine,Ninguno,Aucun,Nenhum,Нет
-loadout.modification.name.quieter_footsteps,Quieter Footsteps,Quieter Footsteps,Leisere Schritte,Pasos silenciosos,Pas plus silencieux,Passos mais silenciosos,Приглушённые шаги
+loadout.modification.name.quieter_footsteps,Quieter Footsteps,Quieter Footsteps,Leisere Schritte,Pasos silenciosos,Pas plus silencieux,Passos silenciosos,Приглушённые шаги
 loadout.modification.name.reduced_tool_battery_consumption,Reduced Tool Battery Consumption,Reduced Tool Battery Consumption,Reduzierter Batterie- verbrauch des Werkzeugs,Consumo reducido de batería de herramientas,Consommation réduite de la batterie de l’outil,Consumo reduzido de bateria da ferramenta,Сниженный расход батареи инструмента
 loadout.modification.name.reload_speed,Reload Speed,Reload Speed,Neulade- geschwindig- keit,Velocidad de recarga,Vitesse de rechargement,Velocidade de recarga,Скорость перезарядки
 loadout.modification.name.scope,Scope,Scope,Umfang,Alcance,Portée,Luneta,Прицел
