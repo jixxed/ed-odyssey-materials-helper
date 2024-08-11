@@ -16,7 +16,7 @@ blueprint.category.name.blueprints,Blueprints,Blueprints,Bauplan,Planos,Plans,Bl
 blueprint.synthesis.grade1,BASIC,BASIC,EINFACH,BÁSICO,BASIQUE,Básico,БАЗОВЫЙ
 blueprint.synthesis.grade2,STANDARD,STANDARD,STANDARD,ESTÁNDAR,LA NORME,PADRÃO,СТАНДАРТНЫЙ
 blueprint.synthesis.grade3,PREMIUM,PREMIUM,PREMIUM,PREMIUM,PRIME,PRÊMIO,ПРЕМИУМ
-blueprint.label.tips,Tips,Tips,Tipps,Puntas,Des astuces,Pontas,Советы
+blueprint.label.tips,Tips,Tips,Tipps,Consejos,Des astuces,Pontas,Советы
 blueprint.engineer.pinnable.tooltip,Double-click to pin blueprint to this engineer,Double-click to pin blueprint to this engineer,Doppelklick um Bauplan beim Ingenieur an zu pinnen,Haga doble clic para fijar un plano a este ingeniero,Double-cliquez pour épingler Blueprint à cet ingénieur,Clique duas vezes para prender o plano para este engenheiro,"Дважды щелкните, чтобы прикрепить чертеж к этому инженеру"
 blueprint.add.to.wishlist.all.grade,Add all grades to {0},Add all grades to {0},Füge alle Stufen zu {0} hinzu,Agregue todos los niveles a {0},Ajouter toutes les notes à {0},Adicione todas as notas a {0},Добавьте все апгрейды в {0}
 blueprint.add.to.wishlist.single.grade,Add this grade to {0},Add this grade to {0},Füge diese Stufe zu {0} hinzu,Agregue este nivel a {0},Ajoutez cette note à {0},Adicione esta nota a {0},Добавьте этот апгрейд в {0}
