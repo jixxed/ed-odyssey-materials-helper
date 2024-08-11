@@ -245,7 +245,7 @@ material.commodity.rutile,Rutile,Rutile,Rutil,Rutilo,Rutile,Rutilo,Рутил
 material.commodity.serendibite,Serendibite,Serendibite,Serendibit,Serendibita,Serendibite,Serendibita,Серендибит
 material.commodity.taaffeite,Taaffeite,Taaffeite,Taaffeit,Taaffeíta,Taafféite,Taaffeita,Тааффеит
 material.commodity.uraninite,Uraninite,Uraninite,Uraninit,Uraninita,Uraninite,Uraninita,Уранинит
-material.commodity.drones,Limpets,Limpets,Limpets,Limpets,Limpets,Limpets,Limpets
+material.commodity.drones,Limpets,Limpets,Limpets,Drones,Limpets,Limpets,Limpets
 material.commodity.airelics,AI Relics,AI Relics,KI-Relikte,Reliquias de IA,Reliquats d’IA,Relíquias de IA,Фрагменты ИИ
 material.commodity.ancientcasket,Guardian Casket,Guardian Casket,Guardianschatulle,Féretro guardián,Cercueil des Guardians,Caixão Guardian,Шкатулка Стражей
 material.commodity.ancientorb,Guardian Orb,Guardian Orb,Guardiankugel,Orbe guardián,Orbe des Guardians,Orbe Guardian,Сфера Стражей
@@ -427,7 +427,7 @@ material.commodity.thargoidtissuesampletype10b,Titan Maw Tissue Sample,Titan Maw
 material.commodity.thargoidtissuesampletype10c,Titan Maw Partial Tissue Sample,Titan Maw Partial Tissue Sample,,Muestra parcial d Fauces de Titán,,,Неполный образец ткани пасти Титана
 material.commodity.thargoidtissuesampletype7,Thargoid Scythe Tissue Sample,Thargoid Scythe Tissue Sample,,Muestra de tejido de Scythe Thargoide,,Amostra de tecido de Scythe Thargoid,Образец ткани таргоидского корабля «Коса»
 material.commodity.unknownsack,Protective Membrane Scrap,Protective Membrane Scrap,Unbrauchbare Schutzmembran,Fragmento de membrana protectora,,,Остатки защитной мембраны
-material.commodity.thargoidpod,Thargoid Bio-storage Capsule,Thargoid Bio-storage Capsule,,Cápsula de Bioconservación Targoide,,,Таргоидская капсула для биоматериалов
+material.commodity.thargoidpod,Thargoid Bio-storage Capsule,Thargoid Bio-storage Capsule,,Cápsula de Bioconservación Thargoide,,,Таргоидская капсула для биоматериалов
 material.commodity.coralsap,Coral Sap,Coral Sap,,Savia del Árbol Coral,,,Коралловая смола
 material.commodity.unknownmineral,Impure Spire Mineral,,,Mineral de aguja impuro,,,Неочищенный минерал со шпилей
 material.commodity.unknownrefinedmineral,Semi-Refined Spire Mineral,,,Mineral de aguja Semi-Refinado,,,Полуочищенный минерал со шпилей
