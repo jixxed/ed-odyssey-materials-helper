@@ -56,7 +56,11 @@ public class Slot {
     }
     //some ships have their last slotnumbers offset due to military slots
     public int getNamedIndex() {
-        return namedIndex != null ? namedIndex : index + 1;
+        return hasNamedIndex() ? namedIndex : index + 1;
+    }
+    //some ships have their last slotnumbers offset due to military slots
+    public boolean hasNamedIndex() {
+        return namedIndex != null;
     }
 
     public boolean isOccupied() {
