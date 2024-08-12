@@ -1,3 +1,8 @@
+Version 2.94
+-------------
+Update Odyssey engineer unlock descriptions to match new quantities
+Fix type-8 weapon slot layout, preventing the Ship Editor to load the ship
+
 Version 2.93
 -------------
 Add Type-8 to ship selection
