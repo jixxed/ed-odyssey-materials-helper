@@ -169,8 +169,8 @@ ships.module.name.hpt_multicannon_turret_large,Multi-Cannon,,,Multicañón,,,О�
 ships.module.name.hpt_plasmaaccelerator_fixed_medium,Plasma Accelerator,,,Acelerador de Plasma,,,Ускоритель плазмы
 ships.module.name.hpt_plasmaaccelerator_fixed_large,Plasma Accelerator,,,Acelerador de Plasma,,,Ускоритель плазмы
 ships.module.name.hpt_plasmaaccelerator_fixed_huge,Plasma Accelerator,,,Acelerador de Plasma,,,Ускоритель плазмы
-ships.module.name.hpt_railgun_fixed_small,Rail Gun,,,,,,Рельсотрон
-ships.module.name.hpt_railgun_fixed_medium,Rail Gun,,,,,,Рельсотрон
+ships.module.name.hpt_railgun_fixed_small,Rail Gun,,,Cañón de Riel,,,Рельсотрон
+ships.module.name.hpt_railgun_fixed_medium,Rail Gun,,,Cañón de Riel,,,Рельсотрон
 ships.module.name.hpt_basicmissilerack_fixed_small,Seeker Missile Rack,,,Lanzamisiles de Seguimiento,,,Блок ракетБлок ракет с самонаведением
 ships.module.name.hpt_basicmissilerack_fixed_medium,Seeker Missile Rack,,,Lanzamisiles de Seguimiento,,,Блок ракетБлок ракет с самонаведением
 ships.module.name.hpt_basicmissilerack_fixed_large,Seeker Missile Rack,,,Lanzamisiles de Seguimiento,,,Блок ракетБлок ракет с самонаведением
@@ -815,11 +815,11 @@ ships.module.name.int_shieldgenerator_size8_class3_fast,Bi-Weave Shield Generato
 ships.module.name.hpt_plasmaaccelerator_fixed_large_advanced,Advanced Plasma Accelerator,,,Acelerador de Plasma Avanzado,,,Ускоритель плазмы
 ships.module.name.hpt_mininglaser_fixed_small_advanced,Mining Lance,,,Lanza de Minería,,,Копье шахтера
 ships.module.name.hpt_railgun_fixed_medium_burst,Imperial Hammer Rail Gun,,,Martillo Imperial,,,Рельсотрон
-ships.module.name.hpt_pulselaser_fixed_medium_disruptor,Pulse Disruptor Laser,,,Láser Disruptor de Pulsos,,,Диверсант
+ships.module.name.hpt_pulselaser_fixed_medium_disruptor,Pulse Disruptor Laser,,,Láser de pulsos Disruptor,,,Диверсант
 ships.module.name.hpt_slugshot_fixed_large_range,Pacifier Frag-Cannon,,,Cañón de Fragmentación Pacificador,,,Орудие
 ships.module.name.hpt_drunkmissilerack_fixed_medium,Pack-Hound Missile Rack,,,Misiles Sabueso,,,Блок ракет
-ships.module.name.hpt_multicannon_fixed_small_strong,Enforcer Cannon,,,,,,Орудие
-ships.module.name.hpt_beamlaser_fixed_small_heat,Retributor Beam Laser,,,,,,Пучковый лазер
+ships.module.name.hpt_multicannon_fixed_small_strong,Enforcer Cannon,,,Cañón Ejecutor,,,Орудие
+ships.module.name.hpt_beamlaser_fixed_small_heat,Retributor Beam Laser,,,Láser de Rayos Vengador,,,Пучковый лазер
 ships.module.name.hpt_minelauncher_fixed_small_impulse,Shock Mine Launcher,,,,,,Минирующее устройство
 ships.module.name.hpt_pulselaserburst_fixed_small_scatter,Cytoscrambler Burst Laser,,,Láser de Citodistorsión,,,Пульсирующий лазер
 ships.module.name.diamondbackxl_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,,Лёгкие сплавы
@@ -891,7 +891,7 @@ ships.module.name.int_passengercabin_size6_class4,Luxury Class Passenger Cabin,,
 ships.module.name.int_fighterbay_size5_class1,Fighter Hangar,,,Bahía de Cazas,,,Ангар для истребителей
 ships.module.name.int_fighterbay_size6_class1,Fighter Hangar,,,Bahía de Cazas,,,Ангар для истребителей
 ships.module.name.int_fighterbay_size7_class1,Fighter Hangar,,,Bahía de Cazas,,,Ангар для истребителей
-ships.module.name.hpt_dumbfiremissilerack_fixed_medium_lasso,Rocket Propelled FSD Disruptor,,,,,,Ракетный FSD-разрушитель
+ships.module.name.hpt_dumbfiremissilerack_fixed_medium_lasso,Rocket Propelled FSD Disruptor,,,Misil de Contención,,,Ракетный FSD-разрушитель
 ships.module.name.int_passengercabin_size2_class1,Economy Class Passenger Cabin,,,Cabina de Pasajeros Económica,,,"Пассажирские каюты эконом-класса "
 ships.module.name.int_passengercabin_size3_class1,Economy Class Passenger Cabin,,,Cabina de Pasajeros Económica,,,"Пассажирские каюты эконом-класса "
 ships.module.name.int_passengercabin_size3_class2,Business Class Passenger Cabin,,,Cabina de Pasajeros Preferente,,,Пассажирские каюты бизнес-класса
@@ -1127,7 +1127,7 @@ ships.module.name.hpt_atventdisruptorpylon_fixed_large,Guardian Nanite Torpedo P
 ships.module.name.hpt_human_extraction_fixed_medium,Sub Surface Extraction Missile,,,Misil de Extracción de Sub-Superficie,,,Ракета для извлечения груза из-под корпуса
 ships.module.name.modularcargobaydoor,Cargo Bay Door,,,Compuerta de Bodega de Carga,,,Люк грузового ковша
 ships.module.name.hpt_causticsinklauncher_turret_tiny,Caustic Sink Launcher,,,Eyector Caústico,,,Антикоррозионная катапульта
-ships.module.name.hpt_antiunknownshutdown_tiny_v2,TG Pulse Neutraliser,,,Neutralizador de Pulsos Targoide,,,Нейтрализатор таргоидских импульсов
+ships.module.name.hpt_antiunknownshutdown_tiny_v2,TG Pulse Neutraliser,,,Neutralizador de Pulsos Thargoide,,,Нейтрализатор таргоидских импульсов
 ships.module.name.hpt_xenoscanner_advanced_tiny,Pulse Wave Xeno Scanner,,,Xeno-Escáner de Onda de Pulso,,,Ксено-сканер импульсных волн
 ships.module.name.python_nx_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,,Лёгкие сплавы
 ships.module.name.python_nx_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,,Укреплённые сплавы
