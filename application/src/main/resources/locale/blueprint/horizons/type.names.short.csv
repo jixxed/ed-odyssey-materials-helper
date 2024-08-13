@@ -1,22 +1,22 @@
 messageKey,,en,de,es,fr,pt,ru
-blueprint.horizons.type.short.thermal_resistant_hull_reinforcement,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente,Résistant thermique,Resistência Térmica,Термостойкий усилитель
-blueprint.horizons.type.short.blast_resistant_hull_reinforcement,Blast Resistant,Blast Resistant,Explosionsbeständig,Resistente a la explosión,Résistant aux explosions,Resistência Explosiva,Взрывостойкий усилитель
-blueprint.horizons.type.short.heavy_duty_hull_reinforcement,Heavy Duty,Heavy Duty,Schwerlast,Alta resistencia,À toute épreuve,Trabalho pesado,Толстая броня
+blueprint.horizons.type.short.thermal_resistant_hull_reinforcement,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente,Résistant thermique,de Resistência Térmica,Термостойкий усилитель
+blueprint.horizons.type.short.blast_resistant_hull_reinforcement,Blast Resistant,Blast Resistant,Explosionsbeständig,Resistente a la explosión,Résistant aux explosions,de Resistência Explosiva,Взрывостойкий усилитель
+blueprint.horizons.type.short.heavy_duty_hull_reinforcement,Heavy Duty,Heavy Duty,Schwerlast,Alta resistencia,À toute épreuve,Pesado,Толстая броня
 blueprint.horizons.type.short.lightweight_hull_reinforcement,Lightweight,Lightweight,Leichtgewicht,Ligero,Poids léger,Leve,Легкая броня
-blueprint.horizons.type.short.kinetic_resistant_hull_reinforcement,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a la cinética,Cinétique,Resistência Cinética,Противокинетический усилитель
-blueprint.horizons.type.short.enhanced_low_power_shields,Enhanced Low Power,Enhanced Low Power,,Bajas energía,,Baixo Consumo Melhorado,Усиленный энергосберегающий щит
-blueprint.horizons.type.short.kinetic_resistant_shields,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a la cinética,Cinétique,Resistência Cinética,Противокинетический щит
-blueprint.horizons.type.short.reinforced_shields,Reinforced,Reinforced,Verstärkt,Reforzado,Renforcé,Reforçado,Усиленный щит
-blueprint.horizons.type.short.thermal_resistant_shields,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente,Résistant thermique,Resistência Térmica,Термостойкий щит
+blueprint.horizons.type.short.kinetic_resistant_hull_reinforcement,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a la cinética,Cinétique,de Resistência Cinética,Противокинетический усилитель
+blueprint.horizons.type.short.enhanced_low_power_shields,Enhanced Low Power,Enhanced Low Power,,Bajas energía,,"de Baixo Consumo, Aprimorados",Усиленный энергосберегающий щит
+blueprint.horizons.type.short.kinetic_resistant_shields,Kinetic Resistant,Kinetic Resistant,Kinetisch resistent,Resistente a la cinética,Cinétique,de Resistência Cinética,Противокинетический щит
+blueprint.horizons.type.short.reinforced_shields,Reinforced,Reinforced,Verstärkt,Reforzado,Renforcé,Reforçados,Усиленный щит
+blueprint.horizons.type.short.thermal_resistant_shields,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente,Résistant thermique,de Resistência Térmica,Термостойкий щит
 blueprint.horizons.type.short.efficient_weapon,Efficient,Efficient,,Eficiente,,Eficiente,Эффективное орудие
-blueprint.horizons.type.short.focused_weapon,Focused,Focused,,Centrado,,Focado,Точное орудие
-blueprint.horizons.type.short.lightweight_mount,Lightweight,Lightweight,Leichtgewicht,Ligero,Poids léger,Leve,Облегчённый
-blueprint.horizons.type.short.long_range_weapon,Long Range,Long Range,,Rango largo,,Longo Alcance,Дальнобойное орудие
-blueprint.horizons.type.short.rapid_fire_modification,Rapid Fire,Rapid Fire,,Disparo rápido,,Fogo Rápido,Улучшение скорострельности
-blueprint.horizons.type.short.overcharged_weapon,Overcharged,Overcharged,Überladen,Sobrecargado,Surchargé,Sobrecarregado,Усиленная силовая установка
-blueprint.horizons.type.short.short_range_blaster,Short Range,Short Range,,Corto alcance,,Curto Alcance,Бластер малого радиуса действия
-blueprint.horizons.type.short.sturdy_mount,Sturdy Mount,Sturdy Mount,Stabiles Gestell,Montura resistente,Monture robuste,Montagem resistente,Прочное крепление
+blueprint.horizons.type.short.focused_weapon,Focused,Focused,,Centrado,,com Foco,Точное орудие
+blueprint.horizons.type.short.lightweight_mount,Lightweight,Lightweight,Leichtgewicht,Ligero,Poids léger,Encaixe Leve,Облегчённый
+blueprint.horizons.type.short.long_range_weapon,Long Range,Long Range,,Rango largo,,de Longa Distância,Дальнобойное орудие
+blueprint.horizons.type.short.rapid_fire_modification,Rapid Fire,Rapid Fire,,Disparo rápido,,Modificação de Disparo Rápido,Улучшение скорострельности
+blueprint.horizons.type.short.overcharged_weapon,Overcharged,Overcharged,Überladen,Sobrecargado,Surchargé,Arma Sobrecarregada,Усиленная силовая установка
+blueprint.horizons.type.short.short_range_blaster,Short Range,Short Range,,Corto alcance,,Disparo de Curto Alcance,Бластер малого радиуса действия
+blueprint.horizons.type.short.sturdy_mount,Sturdy Mount,Sturdy Mount,Stabiles Gestell,Montura resistente,Monture robuste,Encaixe Robusto,Прочное крепление
 blueprint.horizons.type.short.expanded_fsd_interdictor_capture_arc,Expanded Capture Arc,,,Arco de escáner expandido,,Raio de Captura Expandido,Расширенная дуга захвата
-blueprint.horizons.type.short.expanded_probe_scanning_radius,Expanded Scanning Radius,,,Radio de escáner expandido,,Raio de Escaneamento Expandido,Увеличенный радиус сканирования
+blueprint.horizons.type.short.expanded_probe_scanning_radius,Expanded Scanning Radius,,,Radio de escáner expandido,,Expansão do Raio de Escaneamento da Sonda,Увеличенный радиус сканирования
 blueprint.horizons.type.short.long_range_fsd_interdictor,Long Range,Long Range,,Rango largo,,Longo Alcance,Дальнобойное орудие
-blueprint.horizons.type.short.faster_fsd_boot_sequence,Faster Boot,Faster Boot,,Inicio rápido,,Inicialização Rápida,Последовательность быстрого запуска
+blueprint.horizons.type.short.faster_fsd_boot_sequence,Faster Boot,Faster Boot,,Inicio rápido,,Sequência de Inicialização do MDD Mais Rápida,Последовательность быстрого запуска

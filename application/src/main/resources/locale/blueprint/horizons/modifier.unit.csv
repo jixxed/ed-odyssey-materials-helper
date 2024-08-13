@@ -107,8 +107,8 @@ modifier.horizons.unit.hull_strength,HP,,,,,,
 modifier.horizons.unit.integrity,,,,,,,
 modifier.horizons.unit.jam_duration,s,,,,,,с
 modifier.horizons.unit.jitter,°,,,,,,
-modifier.horizons.unit.jump_range,Ly,,,,,,Св. лет
-modifier.horizons.unit.jump_range_increase,Ly,,,,,,Св. лет
+modifier.horizons.unit.jump_range,Ly,,,,,Al,Св. лет
+modifier.horizons.unit.jump_range_increase,Ly,,,,,Al,Св. лет
 modifier.horizons.unit.kinetic_damage_ratio,%,,,,,,
 modifier.horizons.unit.kinetic_resistance,%,,,,,,
 modifier.horizons.unit.limpets,,,,,,,

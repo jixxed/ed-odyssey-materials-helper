@@ -1,8 +1,8 @@
 messageKey,,en,de,es,fr,pt,ru
-horizons.materials.nearest.trader,Closest trader,Closest trader,Nächster Händler,Comerciante más cercano,Commerçant le plus proche,Trader mais próximo,Ближайший торговец
-total.type.name.sub_total,Total (Backpack + Ship),Total (Backpack + Ship),Gesamt (Rucksack + Schiff),Total (Mochila + Nave),Total (sac à dos + navire),Total (mochila + navio),Всего (рюкзак + корабль)
-total.type.name.blueprint,Blueprint,Blueprint,Bauplan,Plano,Plan directeur,Blueprint,Чертеж
-total.type.name.chemical,Chemical,Chemical,Chemie,Químico,Chimie,Química,Химикаты
+horizons.materials.nearest.trader,Closest trader,Closest trader,Nächster Händler,Comerciante más cercano,Commerçant le plus proche,Mediador mais próximo,Ближайший торговец
+total.type.name.sub_total,Total (Backpack + Ship),Total (Backpack + Ship),Gesamt (Rucksack + Schiff),Total (Mochila + Nave),Total (sac à dos + navire),Total (Mochila + Nave),Всего (рюкзак + корабль)
+total.type.name.blueprint,Blueprint,Blueprint,Bauplan,Plano,Plan directeur,Projeto,Чертеж
+total.type.name.chemical,Chemical,Chemical,Chemie,Químico,Chimie,Químico,Химикаты
 total.type.name.circuit,Circuit,Circuit,Schaltung,Circuito,Circuit,Circuito,Схемы
 total.type.name.irrelevant,Irrelevant,Irrelevant,Irrelevant,Irrelevante,Non pertinent,Irrelevante,Неиспользуемые
 total.type.name.tech,Tech,Tech,Tech,Tecnología,Technologie,Tecnologia,Техника
