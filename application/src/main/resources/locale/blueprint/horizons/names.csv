@@ -11,7 +11,7 @@ blueprint.horizons.name.armour,Armour,Armour,Rüstung,Blindaje,Armure,Blindagem,
 blueprint.horizons.name.auto_field_maintenance_unit,Auto Field Maintenance Unit,Auto Field Maintenance Unit,Automatische Feldwartungs-Einheit,Unidad de automantenimiento,Unité de maintenance des champs automobiles,Unidade de Manutenção,Блок автоматического полевого ремонта
 blueprint.horizons.name.ax_explosive_munitions,AX Explosive Munitions,AX Explosive Munitions,AX Explosivmunition,Munición explosiva AX,Munitions explosives à hache,Munição Explosiva AX,Взрывчатые боеприпасы АИ
 blueprint.horizons.name.ax_missile_rack,Ax Missile Rack,Ax Missile Rack,,Lanzamisiles AX,,Estante de Mísseis AX,Блок ракет АИ
-blueprint.horizons.name.ax_missile_rack_pre,Ax Missile Rack,Ax Missile Rack,,,,Estante de Mísseis AX(Pré-Fabricado),Блок ракет АИ
+blueprint.horizons.name.ax_missile_rack_pre,Ax Missile Rack,Ax Missile Rack,,,,Estante de Mísseis AX,Блок ракет АИ
 blueprint.horizons.name.ax_multi_cannon,Ax Multi Cannon,Ax Multi Cannon,,Multicañón AX,,Canhão de Repetição AX,Многоствольное орудие АИ
 blueprint.horizons.name.ax_multi_cannon_pre,Enhanced Ax Multi Cannon,Enhanced Ax Multi Cannon,,Multicañón AX mejorado,,Canhão de Repetição AX Melhorado,Улучшенное многоствольное орудие АИ
 blueprint.horizons.name.ax_remote_flak_munitions,AX Remote Flak Munitions,AX Remote Flak Munitions,AX Munition für ferngezündete Flak,Munición AX antiaerea remota,Munitions de flak à distance ax,Munição de AX de Flak Remoto,Зенитные снаряды с дистанционным подрывом АИ
