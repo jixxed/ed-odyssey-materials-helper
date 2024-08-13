@@ -2991,6 +2991,7 @@ public class Ship {
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> !slot.getShipModule().isPassivePower())
+                .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> powerValues.compute(
                         slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
                         (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)
