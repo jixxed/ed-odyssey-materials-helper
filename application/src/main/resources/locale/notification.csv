@@ -2,8 +2,8 @@ messageKey,,en,de,es,fr,pt,ru
 notification.value.text,{0},,,,,,
 notification.abc.title,,,,,,,
 notification.abc.text,,,,,,,
-notification.collected.irrelevant.material.title,Collected irrelevant material,Collected irrelevant material,Irrrelevantes Material gesammelt,Material irrelevante recopilado,Matériel non pertinent collecté,Recolheu material irrelevante,Собран нерелевантный материал
-notification.collected.wishlist.material.title,Collected wishlist material,Collected wishlist material,Gesammelte Wunschlistematerial,Material de lista de deseos recogido,Matériel de liste de souhaits collecté,Material da lista de desejos coletados,Собран материал из списка желаний
+notification.collected.irrelevant.material.title,Collected irrelevant material,Collected irrelevant material,Irrrelevantes Material gesammelt,Material irrelevante recopilado,Matériel non pertinent collecté,Coletou material irrelevante,Собран нерелевантный материал
+notification.collected.wishlist.material.title,Collected wishlist material,Collected wishlist material,Gesammelte Wunschlistematerial,Material de lista de deseos recogido,Matériel de liste de souhaits collecté,Coletou material da lista de desejos,Собран материал из списка желаний
 notification.trade.a.bid.was.pulled,A bid was pulled.,A bid was pulled.,Ein Gebot wurde gezogen.,Se retiró una oferta.,Une offre a été retirée.,Um lance foi retirado.,Ставка была снята.
 notification.trade.message.from,Message from {0},Message from {0},Nachricht von {0},Mensaje de {0},Message de {0},Mensagem de {0},Сообщение от {0}
 notification.trade.title,Trade,Trade,Handel,Comercio,Commerce,Comércio,Торговля
@@ -12,13 +12,13 @@ notification.trade.you.received.a.bid.on.an.offer,You received a bid on an offer
 notification.trade.your.bid.has.been.accepted,Your bid has been accepted.,Your bid has been accepted.,Ihr Gebot wurde angenommen.,Su oferta ha sido aceptada.,Votre offre a été acceptée.,Seu lance foi aceito.,Ваша ставка принята.
 notification.trade.your.bid.has.been.rejected,Your bid has been rejected.,Your bid has been rejected.,Ihr Gebot wurde abgelehnt.,Su oferta ha sido rechazada.,Votre offre a été rejetée.,Seu lance foi rejeitado.,Ваша ставка отклонена.
 notification.trade.your.bid.was.pulled,Your bid was pulled.,Your bid was pulled.,Ihr Gebot wurde zurückgezogen.,Su oferta fue retirada.,Votre offre a été retirée.,Seu lance foi retirado.,Ваша ставка была снята.
-notification.hge.outbreak.text,Pharmaceutical Isolators(G5)\n,,,Aislantes Farmaceúticos(G5)\n,,,Фармацевтические изоляционные материалы(G5)\n
-notification.hge.civilwar.text,Military Grade Alloys(G5)\nMilitary Supercapacitors(G5)\n,,,Aleaciones Militares(G5)\nSupercapacitadores Militares(G5)\n,,,Сплавы военного класса(G5)\nВоенные суперконденсаторы(G5)\n
-notification.hge.boom.text,Proto Heat Radiators(G5)\nProto Radiolic Alloys(G5) / Proto Light Alloys(G4)\n,,,Protoradiadores Térmicos(G5)\nAleaciones Protoradiadas(G5) / Protoaleaciones ligeras(G4)\n,,,Прототипы теплоизлучателей(G5)\nСплавы для изготовления зондов(G5) / Опытные лёгкие сплавы(G4)\n
-notification.hge.civilunrest.text,Improvised Components(G5)\n,,,Componentes Improvisados(G5)\n,,,Кустарные компоненты(G5)\n
-notification.hge.empire.text,Imperial Shielding(G5)\n,,,Escudos Imperiales(G5)\n,,,Имперская защита(G5)\n
-notification.hge.federation.text,Core Dynamic Composites(G5)/ Proprietary Composites(G4)\n,,,Compuestos de Core Dynamics(G5)/ Compuestos con Patente(G4)\n,,,Композиты Core Dynamics(G5)/ Патентованные композиты(G4)\n
-notification.hge.unknown.text,Unknown\n,,,Unknown\n,,,Неизвестно\n
-notification.hge.title,High Grade Emissions Scanned,,,Señal de Alta Calidad Escaneada,,,Высокоуровневый сигнал отсканирован
-notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,Lealtad del Sistema: {0}\nEstado de facción: {1}\nMateriales esperados:\n{2},,,Принадлежность системы: {0}\nсостояние фракции: {1}\nОжидаемые материалы:\n{2}
-notification.imported.slef.error.text,Failed to import slef,,,Fallo al importar SLEF,,,Не получается импортировать slef
+notification.hge.outbreak.text,Pharmaceutical Isolators(G5)\n,,,Aislantes Farmaceúticos(G5)\n,,Isolantes Farmacêuticos,Фармацевтические изоляционные материалы(G5)\n
+notification.hge.civilwar.text,Military Grade Alloys(G5)\nMilitary Supercapacitors(G5)\n,,,Aleaciones Militares(G5)\nSupercapacitadores Militares(G5)\n,,Supercapacitores Militares,Сплавы военного класса(G5)\nВоенные суперконденсаторы(G5)\n
+notification.hge.boom.text,Proto Heat Radiators(G5)\nProto Radiolic Alloys(G5) / Proto Light Alloys(G4)\n,,,Protoradiadores Térmicos(G5)\nAleaciones Protoradiadas(G5) / Protoaleaciones ligeras(G4)\n,,Proto Radiadores Térmicos(G5)\nProto-Ligas Radiólicas(G5) / Proto-Ligas Leves(G4)\n,Прототипы теплоизлучателей(G5)\nСплавы для изготовления зондов(G5) / Опытные лёгкие сплавы(G4)\n
+notification.hge.civilunrest.text,Improvised Components(G5)\n,,,Componentes Improvisados(G5)\n,,Componentes Improvidados(G5)\n,Кустарные компоненты(G5)\n
+notification.hge.empire.text,Imperial Shielding(G5)\n,,,Escudos Imperiales(G5)\n,,Proteção Imperial(G5)\n,Имперская защита(G5)\n
+notification.hge.federation.text,Core Dynamic Composites(G5)/ Proprietary Composites(G4)\n,,,Compuestos de Core Dynamics(G5)/ Compuestos con Patente(G4)\n,,Componentes da Core Dynamic(G5)/ Componentes Proprietários(G4)\n,Композиты Core Dynamics(G5)/ Патентованные композиты(G4)\n
+notification.hge.unknown.text,Unknown\n,,,Unknown\n,,Desconhecido\n,Неизвестно\n
+notification.hge.title,High Grade Emissions Scanned,,,Señal de Alta Calidad Escaneada,,HGE Escaneada,Высокоуровневый сигнал отсканирован
+notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,Lealtad del Sistema: {0}\nEstado de facción: {1}\nMateriales esperados:\n{2},,Filiação do Sistema: {0}\nEstado da Facção: {1}\nMateriais Esperados:\n{2},Принадлежность системы: {0}\nсостояние фракции: {1}\nОжидаемые материалы:\n{2}
+notification.imported.slef.error.text,Failed to import slef,,,Fallo al importar SLEF,,Falha na importação do SLEF,Не получается импортировать slef

@@ -13,7 +13,7 @@ modifier.horizons.name.armour,Armour,Armour,,Blindaje,,Blindagem,Броня
 modifier.horizons.name.armour_hardness,Armour Hardness,Armour Hardness,,Clase del Blindaje,,Classe da Blindagem,Рейтинг брони
 modifier.horizons.name.armour_piercing,Armour Piercing,Armour Piercing,Panzerung durchdringen,Penetración del blindaje,Perçage d’armure,Perfuração de Blindagem,Бронебойность
 modifier.horizons.name.auto_reload_while_firing,Auto Reload While Firing,Auto Reload While Firing,Automatische Neulade beim Schießen neu laden,Recarga automática mientras se dispara,Rechargement automatique pendant le tir,Recarregamento automático durante o disparo,Перезарядка во время стрельбы
-modifier.horizons.name.bin_count,Bin Count,Bin Count,,,,Bin Count,Количество ячеек
+modifier.horizons.name.bin_count,Bin Count,Bin Count,,,,Capacidade,Количество ячеек
 modifier.horizons.name.boost_augmenter_power_use,Boost Augmenter Power Use,Boost Augmenter Power Use,,,,Consumo de energia do potencializador,
 modifier.horizons.name.boost_cost,Boost Cost,Boost Cost,,,,Custo do Impulso,
 modifier.horizons.name.boost_speed,Boost Speed,Boost Speed,,Velocidad en Posquemador,,Velocidade do Impulso,
@@ -126,9 +126,9 @@ modifier.horizons.name.maximum_range,Maximum Range,Maximum Range,Maximale Reichw
 modifier.horizons.name.min_breach_chance,Min Breach Chance,Min Breach Chance,,Porcentaje Mínimo de Fisura,,Chance de Violação Mínima,Минимальный шанс пробития
 modifier.horizons.name.min_pitch_speed,Min Pitch Speed,Min Pitch Speed,,Velocidad Mínima de Cabeceo,,Velocidade de Arfagem Mínima,Минимальная скорость тангажа
 modifier.horizons.name.mine_bonus,Mine Bonus,Mine Bonus,,,,Mine Bonus,Шахтерский бонус
-modifier.horizons.name.minimum_multiplier,Minimum Multiplier,Minimum Multiplier,,Multiplicador mínimo,,,Минимальный множитель
-modifier.horizons.name.module_defence_absorption,Module Defence Absorption,Module Defence Absorption,,,,,Поглощение урона модулям
-modifier.horizons.name.no_damage_to_untargeted_ships,No Damage To Untargeted Ships,No Damage To Untargeted Ships,Kein Schaden an nicht gezielten Schiffen,No hace daño a naves no fijadas,Aucun dommage aux navires non ciblés,Sem danos a navios não direcionados,"Не наносит урон кораблям, которые не выбраны в цель"
+modifier.horizons.name.minimum_multiplier,Minimum Multiplier,Minimum Multiplier,,Multiplicador mínimo,,Multiplicador Mínimo,Минимальный множитель
+modifier.horizons.name.module_defence_absorption,Module Defence Absorption,Module Defence Absorption,,,,Absorção do Módulo de Defesa,Поглощение урона модулям
+modifier.horizons.name.no_damage_to_untargeted_ships,No Damage To Untargeted Ships,No Damage To Untargeted Ships,Kein Schaden an nicht gezielten Schiffen,No hace daño a naves no fijadas,Aucun dommage aux navires non ciblés,Sem danos a naves não visadas,"Не наносит урон кораблям, которые не выбраны в цель"
 modifier.horizons.name.optimal_mass,Optimal Mass,Optimal Mass,Optimale Masse,Masa óptima,Masse optimale,Massa ideal,Оптимальная масса
 modifier.horizons.name.optimal_multiplier,Optimal Multiplier,Optimal Multiplier,Optimaler Multiplikator,Multiplicador óptimo,Multiplicateur optimal,Multiplicador ideal,Оптимальный усилитель
 modifier.horizons.name.part_of_damage_through_shields,Part Of Damage Through Shields,Part Of Damage Through Shields,Teil des Schadens durch Schilde,Parte del daño atraviesa los escudos,Une partie des dégâts par des boucliers,Parte dos danos através de escudos,Часть урона проходит сквозь щиты
