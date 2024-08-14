@@ -3,8 +3,8 @@ blueprint.horizons.type.ammo_capacity,Ammo Capacity,Ammo Capacity,Munitionskapaz
 blueprint.horizons.type.angled_plating,Angled Plating,Angled Plating,Winkelüberzug,Enchapado en ángulo,Placage incliné,Revestimento Inclinado,Угловая броня
 blueprint.horizons.type.armoured,Armoured,Armoured,Gepanzert,Blindado,Blindé,Blindado,Бронированная силовая установка
 blueprint.horizons.type.auto_loader,Auto Loader,Auto Loader,Autolader,Cargador automático,Chargeur automatique,Carregador Automático,Автоматическая система заряжения
-blueprint.horizons.type.blast_block,Blast Block,Blast Block,Blastblock,Bloqueo de explosivos,Bloc d’explosion,Bloco de Explosão,Блокировка взрыва
-blueprint.horizons.type.blast_resistant,Blast Resistant,Blast Resistant,Explosionsbeständig,Resistente a la explosión,Résistant aux explosions,Resistência a Explosões,Взрывостойкий усилитель
+blueprint.horizons.type.blast_block,Blast Block,Blast Block,Blastblock,Bloqueo de explosivos,Bloc d’explosion,Bloqueio Explosivo,Блокировка взрыва
+blueprint.horizons.type.blast_resistant,Blast Resistant,Blast Resistant,Explosionsbeständig,Resistente a la explosión,Résistant aux explosions,Resistente a Explosões,Взрывостойкий усилитель
 blueprint.horizons.type.blast_resistant_hull_reinforcement,Blast Resistant Hull Reinforcement,Blast Resistant Hull Reinforcement,Detonationsresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a explosiones,Renforcement de la coque résistante aux explosions,Reforço de Casco Resistente a Explosão,Взрывостойкое усиление корпуса
 blueprint.horizons.type.bobblehead,Bobblehead,Bobblehead,Bobblehead,Cabezón,Bobble-tête,Bobblehead,Таргоидский перехватчик (Кивающая фигура)
 blueprint.horizons.type.boss_cells,Boss Cells,Boss Cells,Bosszellen,Celdas de jefe,Cellules de boss,Células Boss,Босс-ячейки
