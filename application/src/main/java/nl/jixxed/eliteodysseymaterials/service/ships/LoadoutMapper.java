@@ -220,7 +220,16 @@ public class LoadoutMapper {
 
     private static Slot getHardpointSlot(List<ImageSlot> hardpointSlots, String slotName) {
         final int slotNumber = Integer.parseInt(slotName.substring(slotName.length() - 1));
-        return getHardpointSlots(hardpointSlots, slotName).get(slotNumber - 1);
+        try {
+            return getHardpointSlots(hardpointSlots, slotName).stream()
+                    .filter(Slot::hasNamedIndex)
+                    .filter(slot -> slot.getNamedIndex() == slotNumber)
+                    .findFirst()
+                    .orElseGet(() -> getHardpointSlots(hardpointSlots, slotName).get(slotNumber - 1));
+        } catch (IllegalStateException ex) {
+            hardpointSlots.stream().map(slot -> slot.toString()).forEach(log::debug);
+            throw ex;
+        }
     }
 
     private static List<ImageSlot> getHardpointSlots(List<ImageSlot> hardpointSlots, String slotName) {

@@ -2252,12 +2252,12 @@ public class Ship {
 
                 ),// 2 116 55   // 1 -18 -21
                 List.of(
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(935).y(429).index(3).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(4).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(5).slotSize(1).build()
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).namedIndex(1).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(2).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(935).y(429).index(3).namedIndex(4).slotSize(1).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(4).namedIndex(5).slotSize(1).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(5).namedIndex(6).slotSize(1).build()
                 ),
                 List.of(
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(945).y(336).index(0).slotSize(0).build(),
@@ -2991,6 +2991,7 @@ public class Ship {
         getUtilitySlots().stream()
                 .filter(Slot::isOccupied)
                 .filter(slot -> !slot.getShipModule().isPassivePower())
+                .filter(slot -> slot.getShipModule().isPowered())
                 .forEach(slot -> powerValues.compute(
                         slot.getShipModule().isPassivePowerWithoutToggle() ? -1 : slot.getShipModule().getPowerGroup(),
                         (key, value) -> value + (double) slot.getShipModule().getAttributeValue(HorizonsModifier.POWER_DRAW)

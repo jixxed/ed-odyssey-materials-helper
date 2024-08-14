@@ -363,7 +363,8 @@ public enum HorizonsBlueprintType {
             case "decorative_green" -> DECORATIVE_GREEN;
             case "decorative_red" -> DECORATIVE_RED;
             case "decorative_yellow" -> DECORATIVE_YELLOW;
-            case "guardianweapon_sturdy" -> ANTI_GUARDIAN_ZONE_RESISTANCE;
+            case "guardianweapon_sturdy",
+                 "guardianmodule_sturdy" -> ANTI_GUARDIAN_ZONE_RESISTANCE;
             //experimental effects
             case "special_auto_loader" -> AUTO_LOADER;
             case "special_concordant_sequence" -> CONCORDANT_SEQUENCE;
