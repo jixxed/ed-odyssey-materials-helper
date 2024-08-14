@@ -183,6 +183,7 @@ public class SlotBoxEntry extends VBox {
 
     private boolean isSimilar(ShipModule shipModule, ShipModule clone) {
         final boolean b = shipModule.getName().getBlueprintGroup().equals(clone.getName().getBlueprintGroup()) &&
+                shipModule.isPreEngineered() == clone.isPreEngineered() &&
                 shipModule.getAllowedBlueprints().size() == clone.getAllowedBlueprints().size() &&
                 shipModule.getAllowedExperimentalEffects().size() == clone.getAllowedExperimentalEffects().size() &&
                 shipModule.getAllowedBlueprints().containsAll(clone.getAllowedBlueprints()) &&
