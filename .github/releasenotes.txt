@@ -6,5 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Update Odyssey engineer unlock descriptions to match new quantities
-Fix type-8 weapon slot layout, preventing the Ship Editor to load the ship
+Correct modified shard cannon descriptions
+Fix Anti-Guardian Zone Resistance blueprint detection
+Fix power calculations for some utilities

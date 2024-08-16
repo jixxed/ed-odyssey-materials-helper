@@ -1,3 +1,9 @@
+Version 2.95
+-------------
+Correct modified shard cannon descriptions
+Fix Anti-Guardian Zone Resistance blueprint detection
+Fix power calculations for some utilities
+
 Version 2.94
 -------------
 Update Odyssey engineer unlock descriptions to match new quantities
