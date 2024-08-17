@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.helper;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -12,6 +13,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 public class CSVResourceBundle extends ResourceBundle {
     private static final Map<String, ResourceBundle> BUNDLES = new HashMap<>();
     private Properties properties = new Properties();
@@ -32,9 +34,14 @@ public class CSVResourceBundle extends ResourceBundle {
                 // reading to properties
                 StreamSupport.stream(csvParser.spliterator(), true).forEach(csvRecord -> {
                     final String key = csvRecord.get(0);
-                    String translation = csvRecord.get(translationColumn);
-                    translation = translation.isEmpty() ? csvRecord.get(1) : translation;
-                    this.properties.put(key, translation);
+                    try{
+                        String translation = csvRecord.get(translationColumn);
+                        translation = translation.isEmpty() ? csvRecord.get(1) : translation;
+                        this.properties.put(key, translation);
+                    } catch (ArrayIndexOutOfBoundsException exception){
+                        log.error("Failed to get translation for key: " + key);
+                        throw exception;
+                    }
                 });
 
             } catch (final IOException e) {
