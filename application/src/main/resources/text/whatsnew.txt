@@ -1,3 +1,7 @@
+Version 2.96
+-------------
+Fix translation bug preventing RU locale from launching the app
+
 Version 2.95
 -------------
 Correct modified shard cannon descriptions
