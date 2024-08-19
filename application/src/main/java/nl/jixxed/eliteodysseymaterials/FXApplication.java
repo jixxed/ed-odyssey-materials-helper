@@ -394,6 +394,7 @@ public class FXApplication extends Application {
         final boolean urlSchemeAsked = PreferencesService.getPreference(PreferenceConstants.URL_SCHEME, false).equals(true);
         if (!urlSchemeAsked) {
             final Stage urlSchemeStage = new Stage();
+            urlSchemeStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
 
             final Scene urlSchemeScene = new Scene(new URLSchemeDialog(urlSchemeStage), 640, 175);
             urlSchemeStage.initModality(Modality.APPLICATION_MODAL);
@@ -410,7 +411,7 @@ public class FXApplication extends Application {
         final boolean urlSchemeAsked = PreferencesService.getPreference(PreferenceConstants.EDDN_ASKED, false).equals(true);
         if (!urlSchemeAsked) {
             final Stage eddnStage = new Stage();
-
+            eddnStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
             final Scene eddnScene = new Scene(new EDDNDialog(eddnStage), 640, 175);
             eddnStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
@@ -434,6 +435,7 @@ public class FXApplication extends Application {
 
             if (VersionService.getBuildVersion() != null && !buildVersion.equals(latestVersion) && !latestVersion.isBlank()) {
                 final Stage versionStage = new Stage();
+                versionStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
 
                 final Scene versionScene = new Scene(new VersionDialog(versionStage, this), 640, 175);
                 versionStage.initModality(Modality.APPLICATION_MODAL);
@@ -454,6 +456,7 @@ public class FXApplication extends Application {
             final Stage policyStage = new Stage();
 
             final Scene policyScene = new Scene(new StartDialog(policyStage), 640, 480);
+            policyStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
             policyStage.initModality(Modality.APPLICATION_MODAL);
             final JMetro jMetro = new JMetro(Style.DARK);
             jMetro.setScene(policyScene);
