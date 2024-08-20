@@ -6,4 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Fix translation bug preventing RU locale from launching the app
+Add application icons to all dialogs
+Add support package generation for application failures
+Add on demand option to generate support package under Settings

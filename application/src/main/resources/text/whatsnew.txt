@@ -1,3 +1,9 @@
+Version 2.97
+-------------
+Add application icons to all dialogs
+Add support package generation for application failures
+Add on demand option to generate support package under Settings
+
 Version 2.96
 -------------
 Fix translation bug preventing RU locale from launching the app
