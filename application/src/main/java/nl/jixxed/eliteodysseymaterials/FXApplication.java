@@ -130,7 +130,8 @@ public class FXApplication extends Application {
                             });
                         }catch (Throwable t){
                             log.error("Failed to initialize the UI", t);
-                            showAlert(t);
+                            String supportFile = SupportService.createSupportPackage();
+                            showAlert(supportFile, t);
                         }
                     });
                     log.debug("setupFleetCarrierWatcher");
@@ -167,19 +168,27 @@ public class FXApplication extends Application {
                     ARService.toggle();
                 }
             }
-
         } catch (final Exception ex) {
-            showAlert(ex);
+
+            String supportFile = ""            ;
+            try {
+                supportFile = SupportService.createSupportPackage();
+            }catch (Exception e){
+                log.error("Failed to create support package", e);
+            }
+
+            showAlert(supportFile, ex);
         }
     }
 
-    private void showAlert(final Throwable t) {
+
+    private void showAlert(final String supportFile, final Throwable t) {
         final Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setResizable(true);
         alert.getDialogPane().setPrefSize(800, 800);
         Platform.runLater(() -> alert.setResizable(false));
         alert.setTitle("Application Error");
-        alert.setHeaderText("Please contact the developer with the following information");
+        alert.setHeaderText("Please contact the developer with the following information and include the following generated support file for reproduction purposes:\n" + supportFile);
         final StringWriter stringWriter = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(stringWriter);
         t.printStackTrace(printWriter);
