@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -25,11 +26,13 @@ import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
+import nl.jixxed.eliteodysseymaterials.service.SupportService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -93,9 +96,10 @@ public class General extends VBox implements Template {
         final HBox blueprintExpandedSetting = createBlueprintExpandedSetting();
         final HBox importFromClipboardSetting = createImportFromClipboardSetting();
         final HBox importSlefFromClipboardSetting = createImportSlefFromClipboardSetting();
+        final HBox supportPackageSetting = createSupportPackageSetting();
         final HBox wipSetting = createWIPSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting, importFromClipboardSetting,importSlefFromClipboardSetting);
+        this.getChildren().addAll(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting, importFromClipboardSetting,importSlefFromClipboardSetting,supportPackageSetting);
     }
 
     @Override
@@ -339,6 +343,20 @@ public class General extends VBox implements Template {
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(importSlefClipboardLabel, importSlefClipboard, importSlefClipboardExplainLabel)
+                .buildHBox();
+    }
+    private HBox createSupportPackageSetting() {
+        final DestroyableLabel supportPackageLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.support.package")).build();
+        final DestroyableLabel supportPackageExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.support.package.explain")).build();
+        final Button supportPackage = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.support.package.create")).withOnAction(event -> {
+            final String supportPackageFile = SupportService.createSupportPackage();
+            HostServices host = application.getHostServices();
+            host.showDocument(Path.of(supportPackageFile).toFile().getAbsoluteFile().getParent());
+
+        }).build();
+        return BoxBuilder.builder()
+                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
+                .withNodes(supportPackageLabel, supportPackage, supportPackageExplainLabel)
                 .buildHBox();
     }
 }

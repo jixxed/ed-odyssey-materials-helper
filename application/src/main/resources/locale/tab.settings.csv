@@ -92,3 +92,6 @@ settings.button.import.clipboard.slef.explain,Import SLEF from the clipboard.,Im
 settings.button.import.clipboard.import.slef,Import SLEF,Import SLEF,Import SLEF,Importar SLEF,Importer SLEF,Importar SLEF,Импортировать SLEF
 tab.settings.notification.test,Test,Test,Test,Prueba,Test,Test,Тест
 tab.settings.notification.screen,Screen,Screen,Screen,Pantalla,Écran,Tela,Экран
+settings.button.support.package,Support package,,,,,,
+settings.button.support.package.create,Create,,,,,,
+settings.button.support.package.explain,Creates a support package for the developer to assist in reproducing issues,,,,,,
