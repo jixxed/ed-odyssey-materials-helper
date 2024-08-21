@@ -64,7 +64,7 @@ public class FileProcessor {
 
     @SuppressWarnings("java:S2674")
     private static synchronized void processJournalFast(final File file) {
-        EventService.publish(new JournalInitEvent(false));
+        Platform.runLater(() -> EventService.publish(new JournalInitEvent(false)));
         try (final CountingInputStream is = new CountingInputStream(Files.newInputStream(Paths.get(file.toURI()), StandardOpenOption.READ))) {
             final List<String> messages = new ArrayList<>();
             if (file.length() >= position) {
