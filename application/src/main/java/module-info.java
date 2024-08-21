@@ -40,7 +40,8 @@ module nl.jixxed.eliteodysseymaterials {
     requires com.ibm.icu;
     requires org.apache.xmlbeans;
     requires org.checkerframework.checker.qual;
-    requires com.google.code.findbugs.jsr305;//byte buffer
+    requires com.google.code.findbugs.jsr305;
+    requires sentry;
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;

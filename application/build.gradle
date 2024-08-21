@@ -86,6 +86,7 @@ jlink {
         name = 'Elite Dangerous Odyssey Materials Helper'
         jvmArgs = [
                 '-Dapp.version=' + project.version,
+//                '-Dlogging.appender.console.level.sentry=ERROR',
                 '-Xmx1280M',
                 '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
@@ -180,6 +181,8 @@ dependencies {
     implementation "org.apache.poi:poi-ooxml"
     implementation "org.apache.commons:commons-math3"
     implementation "com.zaxxer:SparseBitSet"
+    implementation "io.sentry:sentry"
+    implementation "io.sentry:sentry-logback"
     implementation "com.google.j2objc:j2objc-annotations:${project.getProperties().version_j2objc_annotations}"
 
     implementation 'io.github.classgraph:classgraph'
@@ -626,3 +629,17 @@ tasks.withType(Test).configureEach {
 tasks.withType(JavaExec).configureEach {
     jvmArgs += "--enable-preview"
 }
+def localprops = new Properties()
+
+file("local.properties").withInputStream { localprops.load(it) }
+//sentry {
+//    includeSourceContext = true
+//
+//    org = localprops.getProperty("sentry.org") ?: System.getenv("SENTRY_ORG")
+//    projectName = localprops.getProperty("sentry.project") ?: System.getenv("SENTRY_PROJECT")
+//    authToken = localprops.getProperty("sentry.authtoken") ?: System.getenv("SENTRY_AUTH_TOKEN")
+//}
+//
+//sentryCollectSourcesJava{
+//    dependsOn generateJsonSchema2Pojo
+//}

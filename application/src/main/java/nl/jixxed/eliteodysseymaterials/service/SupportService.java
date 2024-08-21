@@ -23,23 +23,28 @@ import java.util.zip.ZipOutputStream;
 @Slf4j
 public class SupportService {
 
-
     public static String createSupportPackage() {
+        return createSupportPackage(null);
+    }
+
+    public static String createSupportPackage(String name) {
         Path backupFolder = Path.of(OsConstants.CONFIG_DIRECTORY + "/backup");
         Path configFolder = Path.of(OsConstants.CONFIG_DIRECTORY);
         Path supportFolder = Path.of(OsConstants.CONFIG_DIRECTORY + "/support");
         Path journalFolder = Path.of(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
         try {
             log.info("Creating support package.");
-            return zipFolder(configFolder, journalFolder, supportFolder,backupFolder);
+            return zipFolder(configFolder, journalFolder, supportFolder,backupFolder, name);
         } catch (Exception e) {
             log.error("Failed to create support package.", e);
         }
         return "";
     }
 
-    private static String zipFolder(Path configFolderPath,Path journalFolderPath, Path zipPath, Path backupFolderPath) throws Exception {
-        File backupFile = new File(zipPath.toFile().getAbsoluteFile() + "/support." + DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss.SSS").format(LocalDateTime.now()) + ".zip");
+    private static String zipFolder(Path configFolderPath,Path journalFolderPath, Path zipPath, Path backupFolderPath,String name) throws Exception {
+        final String filename = name != null ? name : "support." + DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss.SSS").format(LocalDateTime.now());
+        File backupFile = new File(zipPath.toFile().getAbsoluteFile() + "/" + filename + ".zip");
+        Files.deleteIfExists(backupFile.toPath());
         zipPath.toFile().mkdirs();
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(backupFile))) {
             Files.walkFileTree(configFolderPath, new SimpleFileVisitor<>() {
