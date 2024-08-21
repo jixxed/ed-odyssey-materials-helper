@@ -1,3 +1,9 @@
+Version 2.98
+-------------
+Add automated error reporting to Sentry that includes the support package
+Updated the privacy policy
+Add hint in Settings to disable blur for better bartender AR detection
+
 Version 2.97
 -------------
 Add application icons to all dialogs
