@@ -76,11 +76,10 @@ application {
 jlink {
     mergedModule {
         excludeProvides servicePattern: 'reactor.blockhound.*'
-//        excludeRequires 'org.apache.logging.log4j'
-//        excludeProvides servicePattern: 'org.apache.logging.*'
+        excludeProvides servicePattern: "jakarta.servlet.*"
     }
-    addExtraDependencies("javafx", "jackson", "log4j")
-    forceMerge("j2objc")
+    addExtraDependencies("javafx", "jackson", "log4j", "ch.qos.logback.core", "ch.qos.logback.classic")
+    forceMerge("j2objc", "logback")
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-header-files', '--no-man-pages')
     launcher {
         name = 'Elite Dangerous Odyssey Materials Helper'
