@@ -629,17 +629,3 @@ tasks.withType(Test).configureEach {
 tasks.withType(JavaExec).configureEach {
     jvmArgs += "--enable-preview"
 }
-def localprops = new Properties()
-
-file("local.properties").withInputStream { localprops.load(it) }
-//sentry {
-//    includeSourceContext = true
-//
-//    org = localprops.getProperty("sentry.org") ?: System.getenv("SENTRY_ORG")
-//    projectName = localprops.getProperty("sentry.project") ?: System.getenv("SENTRY_PROJECT")
-//    authToken = localprops.getProperty("sentry.authtoken") ?: System.getenv("SENTRY_AUTH_TOKEN")
-//}
-//
-//sentryCollectSourcesJava{
-//    dependsOn generateJsonSchema2Pojo
-//}
