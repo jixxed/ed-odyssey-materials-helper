@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.util.Duration;
@@ -171,7 +172,7 @@ public class NotificationService {
                 mediaPlayer.setVolume(volume / 100);
                 mediaPlayer.setOnEndOfMedia(mediaPlayer::dispose);
                 mediaPlayer.play();
-            } catch (final URISyntaxException | NullPointerException ex) {
+            } catch (final URISyntaxException | NullPointerException | MediaException ex) {
                 log.error("Failed to play notification sound", ex);
             }
         }
