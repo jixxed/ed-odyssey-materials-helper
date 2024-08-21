@@ -5,7 +5,7 @@ blueprint.horizons.name.advanced_docking_computer,Advanced Docking Computer,,,Co
 blueprint.horizons.name.advanced_missile_rack,Advanced Missile Rack,Advanced Missile Rack,,Lanzamisiles Avanzado,,Estante de Mísseis Avançada,Продвинутый ракетный лоток
 blueprint.horizons.name.advanced_multi_cannon,Advanced Multi Cannon,Advanced Multi Cannon,,Multicañón Avanzado,,Multicanhão Avancado,Продвинутое многоствольное орудие
 blueprint.horizons.name.advanced_plasma_accelerator,Advanced Plasma Accelerator,Advanced Plasma Accelerator,,Acelerador de Plasma Avanzado,,Acelerador de Plasma Avançado,Улучшенный ускоритель плазмы
-blueprint.horizons.name.afm_refill,AFM Refill,AFM Refill,AFW-Auffrischung,Recarga de UAM,Recharge AFM,AFM Refill,Снабжение АПР
+blueprint.horizons.name.afm_refill,AFM Refill,AFM Refill,AFW-Auffrischung,Recarga de UAM,Recharge AFM,Reabastecimento de UMT,Снабжение АПР
 blueprint.horizons.name.anti_corrosion_cargo_rack,Anti Corrosion Cargo Rack,Anti Corrosion Cargo Rack,,Bodega de carga Anticorrosión,,Estante de Carga Anticorrosão,Антикоррозийный грузовой стеллаж
 blueprint.horizons.name.armour,Armour,Armour,Rüstung,Blindaje,Armure,Blindagem,Переборки
 blueprint.horizons.name.auto_field_maintenance_unit,Auto Field Maintenance Unit,Auto Field Maintenance Unit,Automatische Feldwartungs-Einheit,Unidad de automantenimiento,Unité de maintenance des champs automobiles,Unidade de Manutenção,Блок автоматического полевого ремонта
@@ -14,9 +14,9 @@ blueprint.horizons.name.ax_missile_rack,Ax Missile Rack,Ax Missile Rack,,Lanzami
 blueprint.horizons.name.ax_missile_rack_pre,Ax Missile Rack,Ax Missile Rack,,,,Estante de Mísseis AX,Блок ракет АИ
 blueprint.horizons.name.ax_multi_cannon,Ax Multi Cannon,Ax Multi Cannon,,Multicañón AX,,Canhão de Repetição AX,Многоствольное орудие АИ
 blueprint.horizons.name.ax_multi_cannon_pre,Enhanced Ax Multi Cannon,Enhanced Ax Multi Cannon,,Multicañón AX mejorado,,Canhão de Repetição AX Melhorado,Улучшенное многоствольное орудие АИ
-blueprint.horizons.name.ax_remote_flak_munitions,AX Remote Flak Munitions,AX Remote Flak Munitions,AX Munition für ferngezündete Flak,Munición AX antiaerea remota,Munitions de flak à distance ax,Munição de AX de Flak Remoto,Зенитные снаряды с дистанционным подрывом АИ
+blueprint.horizons.name.ax_remote_flak_munitions,AX Remote Flak Munitions,AX Remote Flak Munitions,AX Munition für ferngezündete Flak,Munición AX antiaerea remota,Munitions de flak à distance ax,Munição AX de Flak Remoto,Зенитные снаряды с дистанционным подрывом АИ
 blueprint.horizons.name.ax_small_calibre_munitions,AX Small Calibre Munitions,AX Small Calibre Munitions,AX kleinkalibrige Munition,Municiones de calibre pequeño AX,Axe Munitions de petit calibre,Munição AX de Pequeno Calibre,Мелкокалиберные боеприпасы АИ
-blueprint.horizons.name.beam_laser,Beam Laser,Beam Laser,Strahlenlaser,Láser de rayo,Laser à faisceau,Laser de Feixe,Пучковый лазер
+blueprint.horizons.name.beam_laser,Beam Laser,Beam Laser,Strahlenlaser,Láser de rayo,Laser à faisceau,Laser Contínuo,Пучковый лазер
 blueprint.horizons.name.bi_weave_shield_generator,Bi-Weave Shield Generator,,,Generador de escudos entrelazado,,Gerador de Escudo Entrelaçado,Двухпоточный генератор щита
 blueprint.horizons.name.burst_laser,Burst Laser,Burst Laser,Salvenlaser,Láser de ráfagas,Laser éclaté,Laser de Rajada,Пульсирующий лазер
 blueprint.horizons.name.business_class_passenger_cabin,Business Class Passenger Cabin,,,Cabina de pasajeros de clase preferente,,Cabine de Passageiro Classe Executiva,Пассажирские каюты бизнес-класса
@@ -83,8 +83,8 @@ blueprint.horizons.name.first_class_passenger_cabin,First Class Passenger Cabin,
 blueprint.horizons.name.first_class_passenger_cabin.short,(FIR),,,,,(VIP),(ПРВ)
 blueprint.horizons.name.flechette_launcher_munitions,Flechette Launcher Munitions,Flechette Launcher Munitions,Flechettewerfermunition,Municion de lanzador de Flechette,Flechette Launcher Munitions,Munição do Lancador de Dardos,Стреловидные боеприпасы
 blueprint.horizons.name.fragment_cannon,Fragment Cannon,Fragment Cannon,Splitterkanone,Cañón de fragmentación,Canon de fragment,Canhão de Fragmentos,Залповое орудие
-blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Frameshiftantrieb,Motor de distorsión,Lecteur de décalage du cadre,Motor de Distorção,Рамочно-сместительный двигатель
-blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Frameshift-Unterbrecher,Interdictor,Interdictor de lecteur de décalage de cadre,Interditor de Motor de Distorção,Перехватчик FSD
+blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Frameshiftantrieb,Motor de distorsión,Lecteur de décalage du cadre,Motor de Distorção de Fase,Рамочно-сместительный двигатель
+blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Frameshift-Unterbrecher,Interdictor,Interdictor de lecteur de décalage de cadre,Interditor de Motor de Distorção de Fase,Перехватчик FSD
 blueprint.horizons.name.frame_shift_drive_pre,Frame Shift Drive,,,Motor de Distorsión,,Motor de Distorção de Fase,FSD
 blueprint.horizons.name.frame_shift_drive_overcharge,Frame Shift Drive (SCO),,,Motor de Distorsión (SDS),,Motor de Distorção de Fase (SSV),FSD (ПГР)
 blueprint.horizons.name.frame_shift_wake_scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Sogwolkenscanner,Escáner de estelas,Scanner de shift de cadre,Scanner de Rastro de Distorção,Сканер следа FSD
@@ -169,7 +169,7 @@ blueprint.horizons.name.power_plant_overcharged_overcharged.short,Extra Overchar
 blueprint.horizons.name.prismatic_shield_generator,Prismatic Shield Generator,,,Generador de escudos prismáticos,,Gerador de Escudo Prismático,Призматический щитогенератор
 blueprint.horizons.name.prospector_limpet_controller,Prospector Limpet Controller,Prospector Limpet Controller,Drohnensteuerung Erzsucher,Controlador de dron prospector,Contrôleur de moquette du prospecteur,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
 blueprint.horizons.name.pulse_disruptor_laser,Pulse Disruptor Laser,,,,,Laser de Pulso Disruptor,Диверсант
-blueprint.horizons.name.pulse_laser,Pulse Laser,Pulse Laser,Pulslaser,Láser de pulsos,Laser à impulsion,Laser de pulso,Импульсный лазер
+blueprint.horizons.name.pulse_laser,Pulse Laser,Pulse Laser,Pulslaser,Láser de pulsos,Laser à impulsion,Laser de Pulso,Импульсный лазер
 blueprint.horizons.name.pulse_wave_analyser,Pulse Wave Analyser,Pulse Wave Analyser,,Analizador de Onda de Pulso,,Analisador de Onda de Pulso,Анализатор импульсных волн
 blueprint.horizons.name.pulse_wave_xeno_scanner,Pulse Wave Xeno Scanner,Pulse Wave Xeno Scanner,,Xeno-Escaner de Onda de Pulso,,Scanner Xeno de Onda de Pulso,Ксено-сканер импульсных волн
 blueprint.horizons.name.rail_gun,Rail Gun,Rail Gun,Schienenkanone,Cañón de riel,Pistolet ferroviaire,Canhão Elétrico,Рельсотрон

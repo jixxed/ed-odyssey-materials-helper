@@ -109,15 +109,15 @@ ships.module.name.cutter_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,
 ships.module.name.cutter_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,Composto de Nível Militar,Композит военного класса
 ships.module.name.cutter_armour_mirrored,Mirrored Surface Composite,,,Compuesto de superficie Reflectante,,Composto de Superfície Reflexiva,Композит с зеркальной поверхностью
 ships.module.name.cutter_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
-ships.module.name.hpt_pulselaser_fixed_small,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_fixed_medium,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_fixed_large,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_fixed_huge,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_gimbal_small,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_gimbal_medium,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_gimbal_large,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_turret_small,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
-ships.module.name.hpt_pulselaser_turret_medium,Pulse Laser,,,Láser de Pulsos,,Laser de pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_fixed_small,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_fixed_medium,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_fixed_large,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_fixed_huge,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_gimbal_small,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_gimbal_medium,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_gimbal_large,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_turret_small,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
+ships.module.name.hpt_pulselaser_turret_medium,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
 ships.module.name.hpt_pulselaser_turret_large,Pulse Laser,,,Láser de Pulsos,,Laser de Rajada,Импульсный лазер
 ships.module.name.hpt_pulselaserburst_fixed_small,Burst Laser,,,Láser de Ráfagas,,Laser de Rajada,Пульсирующий лазер
 ships.module.name.hpt_pulselaserburst_fixed_medium,Burst Laser,,,Láser de Ráfagas,,Laser de Rajada,Пульсирующий лазер
