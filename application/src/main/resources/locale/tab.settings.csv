@@ -95,3 +95,4 @@ tab.settings.notification.screen,Screen,Screen,Screen,Pantalla,Écran,Tela,Эк�
 settings.button.support.package,Support package,,,,,,
 settings.button.support.package.create,Create,,,,,,
 settings.button.support.package.explain,Creates a support package for the developer to assist in reproducing issues,,,,,,
+tab.settings.ar.bartender.toggle.explain,NOTE: Disabling the blur graphics setting ingame to remove transparent backgound at the bartender helps with the detection,,,,,,

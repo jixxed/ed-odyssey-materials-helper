@@ -91,6 +91,7 @@ public class AugmentedReality extends VBox implements Template {
     }
     private HBox createARBartenderSetting() {
         DestroyableLabel arBartenderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.bartender.toggle")).build();
+        DestroyableLabel arBartenderLabelExplain = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.bartender.toggle.explain")).build();
         DestroyableToggleSwitch arBartenderButton = ToggleSwitchBuilder.builder()
                 .withSelectedChangeListener((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE.equals(newValue));
@@ -100,7 +101,7 @@ public class AugmentedReality extends VBox implements Template {
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(arBartenderLabel, arBartenderButton)
+                .withNodes(arBartenderLabel, arBartenderButton, arBartenderLabelExplain)
                 .buildHBox();
     }
 
