@@ -50,7 +50,7 @@ public class ShipsPricesTest {
 
             final Long moduleprice = module.getBasePrice();
             if (price == null || moduleprice != price.longValue()) {
-                log.error(module.getId() + " - " + module.getInternalName() + " price mismatch: moduleprice=" + moduleprice + ", gameprice=" + price);
+                log.warn(module.getId() + " - " + module.getInternalName() + " price mismatch: moduleprice=" + moduleprice + ", gameprice=" + price);
             }
             //return (Executable) () -> Assertions.assertEquals(moduleprice, gameprice < 0 ? moduleprice : gameprice, module.getId() + " - " + module.getInternalName() + " price mismatch: moduleprice=" + moduleprice + ", gameprice=" + gameprice);
         });//.collect(Collectors.toList())
@@ -72,7 +72,7 @@ public class ShipsPricesTest {
             final Long moduleprice = (long) Math.ceil(Math.ceil(module.getBasePrice() * 0.9) * 0.975);
 
             if (price == null || moduleprice != price.longValue()) {
-                log.error(module.getId() + " - " + module.getInternalName() + " price mismatch: moduleprice=" + moduleprice + ", gameprice=" + price);
+                log.warn(module.getId() + " - " + module.getInternalName() + " price mismatch: moduleprice=" + moduleprice + ", gameprice=" + price);
             }
 
         });
