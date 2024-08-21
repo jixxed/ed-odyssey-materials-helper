@@ -18,7 +18,13 @@
       "title" : "Interdicted",
       "description": "Victim pilot name",
       "type" : "string",
-      "examples" : [ "Fred Flintstone" ]
+      "examples" : [ "Fred Flintstone", "$ShipName_PassengerLiner_Cruise;" ]
+    },
+    "Interdicted_Localised" : {
+      "title" : "Interdicted_Localised",
+      "description": "Victim pilot name",
+      "type" : "string",
+      "examples" : [ "Kreuzfahrtschiff" ]
     },
     "IsPlayer" : {
       "title" : "IsPlayer",
