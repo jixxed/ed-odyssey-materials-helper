@@ -152,17 +152,19 @@ class MessageHandler {
         try {
             final String message = Files.readString(file.toPath());
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
-            final String eventName = jsonNode.get(EVENT).asText();
-            log.info("event: " + eventName + "("+jsonNode.get(TIMESTAMP).asText()+")");
-            final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
-            if (messageProcessor != null) {
-                final Class<? extends Event> messageClass = messageProcessor.getMessageClass();
-                final Event event = OBJECT_MAPPER.readValue(message, messageClass);
-                messageProcessor.process(event);
-                EventService.publish(new JournalLineProcessedEvent("now", journalEventType, file));
+            if(jsonNode.has(EVENT) && jsonNode.has(TIMESTAMP)) {
+                final String eventName = jsonNode.get(EVENT).asText();
+                log.info("event: " + eventName + "("+jsonNode.get(TIMESTAMP).asText()+")");
+                final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
+                if (messageProcessor != null) {
+                    final Class<? extends Event> messageClass = messageProcessor.getMessageClass();
+                    final Event event = OBJECT_MAPPER.readValue(message, messageClass);
+                    messageProcessor.process(event);
+                    EventService.publish(new JournalLineProcessedEvent("now", journalEventType, file));
+                }
+                final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+                EDDNService.anyEvent(journalEventType, timestamp);
             }
-            final LocalDateTime timestamp = LocalDateTime.parse(jsonNode.get(TIMESTAMP).asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-            EDDNService.anyEvent(journalEventType, timestamp);
         } catch (final JsonProcessingException e) {
             log.error("Error processing json message", e);
         } catch (final IOException e) {
