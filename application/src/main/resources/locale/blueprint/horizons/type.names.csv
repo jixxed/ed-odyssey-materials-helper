@@ -14,7 +14,7 @@ blueprint.horizons.type.cluster_capacitor,Cluster Capacitor,Cluster Capacitor,Cl
 blueprint.horizons.type.concordant_sequence,Concordant Sequence,Concordant Sequence,Konkordante Sequenz,Secuencia concordante,Séquence concordante,Sequência Concordante,Последовательность координации
 blueprint.horizons.type.corrosion_resistant_cargo_rack,Corrosion Resistant Cargo Rack,Corrosion Resistant Cargo Rack,Korrosionsbeständiges Frachtgestell,Bodega de carga anticorrosión,Support de chargement résistant à la corrosion,Estante de Carga Anticorrosão,Антикоррозийный грузовой стеллаж
 blueprint.horizons.type.corrosive_shell,Corrosive Shell,Corrosive Shell,Korrosionsgranate,Proyectil Corrosivo,Coquille corrosive,Projétil Corrosivo,Разъедающие снаряды
-blueprint.horizons.type.dazzle_shell,Dazzle Shell,Dazzle Shell,Blendgranate,Proyectil Deslumbrante,Coquille d’éblouissement,Projétil Dazzle,Ослепляющие снаряды
+blueprint.horizons.type.dazzle_shell,Dazzle Shell,Dazzle Shell,Blendgranate,Proyectil Deslumbrante,Coquille d’éblouissement,Projétil Cegante,Ослепляющие снаряды
 blueprint.horizons.type.deep_charge,Deep Charge,Deep Charge,Tiefenladung,Carga intensa,Charge profonde,Carga Intensa,Заряд повышенной мощности
 blueprint.horizons.type.deep_plating,Deep Plating,Deep Plating,Tiefenüberzug,Enchapado profundo,Placage profond,Revestimento Espesso,Утолщённая броня
 blueprint.horizons.type.dirty_drive_tuning,Dirty Drive Tuning,Dirty Drive Tuning,Aggressives Antriebstuning,Motor sucio,Digne de lecteur sale,Ajuste de Motor Sujo,«Грязная» донастройка
@@ -39,11 +39,11 @@ blueprint.horizons.type.expanded_probe_scanning_radius,Expanded Probe Scanning R
 blueprint.horizons.type.fast_charge,Fast Charge,Fast Charge,Schnellladen,Carga rápida,Charge rapide,Carga rápida,Быстрый заряд
 blueprint.horizons.type.fast_scanner,Fast Scanner,Fast Scanner,Schnellscanner,Escáner,Scanner rapide,Scanner rápido,Быстрый сканер
 blueprint.horizons.type.faster_fsd_boot_sequence,Faster FSD Boot Sequence,Faster FSD Boot Sequence,Schnellere FSA -Bootsequenz,Secuencia de inicio MDD rápida,Séquence de démarrage FSD plus rapide,Sequência de Inicialização do MDD Mais Rápida,Последовательность быстрого запуска FSD
-blueprint.horizons.type.feedback_cascade,Feedback Cascade,Feedback Cascade,Rückkopplungskaskade,Retroalimentación en cascada,Cascade de rétroaction,Cascata Reverberante,Ответный залп
+blueprint.horizons.type.feedback_cascade,Feedback Cascade,Feedback Cascade,Rückkopplungskaskade,Retroalimentación en cascada,Cascade de rétroaction,Cascata de Realimentação,Ответный залп
 blueprint.horizons.type.flow_control,Flow Control,Flow Control,Flusssteuerung,Control de flujo,Contrôle de flux,Controle de Fluxo,Контроль интенсивности
 blueprint.horizons.type.focused_weapon,Focused Weapon,Focused Weapon,Waffenfokussiert,Arma concentrada,Arme ciblée,Arma com Foco,Точное орудие
 blueprint.horizons.type.force_block,Force Block,Force Block,Kraftblock,Bloqueo cinético,Bloc de force,Bloqueio Cinético,Усиленная блокировка
-blueprint.horizons.type.force_shell,Force Shell,Force Shell,Druckschock,Proyectil de fuerza,Coquille de force,Projétil de força,Усиленные снаряды
+blueprint.horizons.type.force_shell,Force Shell,Force Shell,Druckschock,Proyectil de fuerza,Coquille de force,Projétil de Força,Усиленные снаряды
 blueprint.horizons.type.fsd_interrupt,FSD Interrupt (Dumbfire Only),FSD Interrupt (Dumbfire Only),FSA-Unterbrechung (nur Haltungsfeuer),Interrupción MDD (solo Fire),Interruption FSD (Fired uniquement),Interrupção do FSD (somente não-guiada),Помеха для FSD (только неуправляемые)
 blueprint.horizons.type.guardian_fsd_booster,Guardian FSD Booster,Guardian FSD Booster,Guardian-Frameshiftantrieb-Booster,Potenciador de MDD guardián,Guardian FSD Booster,Potencializador do Motor de Distorção de Fase Guardian,Ускоритель FSD Стражей
 blueprint.horizons.type.guardian_gauss_cannon_fixed_medium,Guardian Gauss Cannon Fixed Medium,Guardian Gauss Cannon Fixed Medium,Guardian-Gausskanone medium fest,Cañón Gauss Guardián Medio fijo,Guardian Gauss Cannon Fixed Medium,Canhão Gauss Guardian (Fixa) (Classe:2),Пушка Гаусса Стражей (2 класс ср. фикс.)
@@ -98,13 +98,13 @@ blueprint.horizons.type.modified_gauss_cannon_fixed_small,Modified Gauss Cannon 
 blueprint.horizons.type.modified_mining_laser_fixed_small,Modified Mining Laser Fixed Small,Modified Mining Laser Fixed Small,Modifizierter Bergbaulaser fest klein,Láser de mineria modificado fijo pequeño,Laser minier modifié fixe petit,Laser de Mineração Modificado Fixo Pequeno,Улучшенный проходочный лазер (1 класс фикс.)
 blueprint.horizons.type.modified_shard_cannon_fixed_medium,Modified Shard Cannon Fixed Medium,Modified Shard Cannon Fixed Medium,Modifizierte Splitterkanone fest Medium,Cañon de esquirlas modificado fijo mediano,Médium fixe du canon à rayons modifiés,Canhão de Fragmentos Modificado (Fixo) (Classe: 2),Модифицированное осколочное орудие Стражей (2 класс ср. фикс.)
 blueprint.horizons.type.modified_shard_cannon_fixed_small,Modified Shard Cannon Fixed Small,Modified Shard Cannon Fixed Small,Modifizierte Splitterkanone fest klein,Cañon de esquirlas modificado fijo pequeño,Canon d’éclats modifié fixé petit,Canhão de Fragmentos Modificado (Fixo) (Classe: 1),Модифицированное осколочное орудие Стражей (1 класс мал. фикс.)
-blueprint.horizons.type.monstered,Monstered,Monstered,Monströs,A lo bestia,Monté,Monstro,Монстрация
+blueprint.horizons.type.monstered,Monstered,Monstered,Monströs,A lo bestia,Monté,Parrudo,Монстрация
 blueprint.horizons.type.multi_servos,Multi Servos,Multi Servos,Multi-Servos,Servos Multi,Multi-servos,Servos Múltiplos,Сервосистема
 blueprint.horizons.type.multi_weave,Multi Weave,Multi Weave,Multigewebe,Multi-Tejido,Tissage multiples,Rede Múltipla,Мультипрошивка
 blueprint.horizons.type.overcharged,Overcharged,Overcharged,Überladen,Sobrecargado,Surchargé,Sobrecarregado,Усиленная силовая установка
 blueprint.horizons.type.overcharged_weapon,Overcharged Weapon,Overcharged Weapon,Überladungswaffe,Arma sobrecargada,Arme surfacturée,Arma Sobrecarregada,Усиленное орудие
 blueprint.horizons.type.overload_munitions,Overload Munitions,Overload Munitions,Überlastungsmunition,Municiones de sobrecarga,Munitions de surcharge,Munição Sobrecarregada,Вызывающие перезагрузку боеприпасы
-blueprint.horizons.type.oversized,Oversized,Oversized,Übergröße,De gran tamaño,Énorme,Superdimensionado,Сверхразмер
+blueprint.horizons.type.oversized,Oversized,Oversized,Übergröße,De gran tamaño,Énorme,Reforçado,Сверхразмер
 blueprint.horizons.type.penetrator_munitions,Penetrator Munitions (Dumbfire Only),Penetrator Munitions (Dumbfire Only),Durchschlagsmunition (nur Direktschuss),Munición penetradora,Pénétrator Munitions (DumbFire uniquement),Munições penetradoras (somente não-guiada),Бронебойные боеголовки (только неуправляемые)
 blueprint.horizons.type.penetrator_payload,Penetrator Payload,Penetrator Payload,Durchschlagssprengkopf,Carga útil del penetrador,Pénétrator charge utile,Carga útil do penetrador,Бронебойные снаряды
 blueprint.horizons.type.phasing_sequence,Phasing Sequence,Phasing Sequence,Phasensequenz,Secuencia de fase,Séquence de phasage,Sequência Faseada,Последовательность фазирования
@@ -145,9 +145,9 @@ blueprint.horizons.type.super_conduits,Super Conduits,Super Conduits,Superleiter
 blueprint.horizons.type.super_penetrator,Super Penetrator,Super Penetrator,Superdurchdringer,Superpenetrador,Super pénétrateur,Super penetrador,Модуль сверхпробития
 blueprint.horizons.type.synthesis,Synthesis,Synthesis,Synthese,Síntesis,Synthèse,Síntese,Синтез
 blueprint.horizons.type.system_focused,System Focused,System Focused,Systemfokussiert,Centrado en Sistemas,Système axé,Distribuidor de Energia com Foco nos Sistemas,Распределитель питания на систему
-blueprint.horizons.type.target_lock_breaker,Target Lock Breaker,Target Lock Breaker,Zielvisierbrecher,Bloqueo de selección,Disjoncteur de la cible,Disjuntor de Travamento de Destino,Генератор помех для системы захвата цели
+blueprint.horizons.type.target_lock_breaker,Target Lock Breaker,Target Lock Breaker,Zielvisierbrecher,Bloqueo de selección,Disjoncteur de la cible,Quebra da Trava do Alvo,Генератор помех для системы захвата цели
 blueprint.horizons.type.thermal_cascade,Thermal Cascade,Thermal Cascade,Hitzesalven,Cascada térmica,Cascade thermique,Cascata Térmica,Термический залп
-blueprint.horizons.type.thermal_conduit,Thermal Conduit,Thermal Conduit,Thermischer Verstärker,Conductore térmico,Conduit thermique,Conduíte Térmico,Проводник тепла
+blueprint.horizons.type.thermal_conduit,Thermal Conduit,Thermal Conduit,Thermischer Verstärker,Conductore térmico,Conduit thermique,Condutor Térmico,Проводник тепла
 blueprint.horizons.type.thermal_resistant,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente a térmico,Résistant thermique,Resistencia Térmica,Термостойкий усилитель
 blueprint.horizons.type.thermal_resistant_hull_reinforcement,Thermal Resistant Hull Reinforcement,Thermal Resistant Hull Reinforcement,Thermalresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a térmico,Renforcement de la coque résistante thermique,Reforço do casco com Resistência Térmica,Термостойкое усиление корпуса
 blueprint.horizons.type.thermal_resistant_shields,Thermal Resistant Shields,Thermal Resistant Shields,Thermalresistente Schilde,Escudos de resistencia térmica,Boucliers résistants thermiques,Escudos com Resistência Térmica,Термостойкие щиты
