@@ -24,7 +24,7 @@ public class EDDNCodexEntryMapper extends EDDNMapper {
                 .withSystem(codexEntry.getSystem())
                 .withSystemAddress(codexEntry.getSystemAddress())
                 .withStarPos(LocationService.getCurrentStarPos(codexEntry.getSystemAddress()))
-                .withBodyID(BigInteger.valueOf(bodyID))
+                .withBodyID(codexEntry.getBodyID().orElseGet(() -> bodyID != null ? BigInteger.valueOf(bodyID) : null))
                 .withBodyName(bodyName)
                 .withCategory(codexEntry.getCategory())
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
