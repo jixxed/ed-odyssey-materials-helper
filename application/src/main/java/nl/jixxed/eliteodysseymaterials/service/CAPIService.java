@@ -83,8 +83,8 @@ public class CAPIService {
                     saveToken(this.oAuth2AccessToken);
                     Platform.runLater(() -> {
                         NotificationService.showInformation(NotificationType.SUCCESS, "Frontier API", "Account linked! You may close the browser window.");
+                        this.active.set(true);
                     });
-                    this.active.set(true);
                 } catch (final InterruptedException e) {
                     log.error("InterruptedException", e);
                 } catch (final ExecutionException e) {
