@@ -289,7 +289,7 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> {
             stopExecutor();
         }));
     }

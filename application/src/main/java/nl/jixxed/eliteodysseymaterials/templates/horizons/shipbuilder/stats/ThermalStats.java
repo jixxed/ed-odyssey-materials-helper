@@ -50,7 +50,7 @@ public class ThermalStats extends Stats implements Template {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(this, ShipConfigEvent.class, event -> update()));
+        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     Value getHeatLevel(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity) {

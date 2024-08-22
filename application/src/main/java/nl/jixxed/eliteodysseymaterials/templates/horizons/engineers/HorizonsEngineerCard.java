@@ -140,17 +140,17 @@ class HorizonsEngineerCard extends EngineerCard {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        this.eventListeners.add(EventService.addListener(this, JournalInitEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> {
             if (event.isInitialised()) {
                 updatePinnedBlueprint();
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, 9, EngineerPinEvent.class, engineerPinEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, 9, EngineerPinEvent.class, engineerPinEvent -> {
             if (this.engineer.equals(engineerPinEvent.getEngineer())) {
                 updatePinnedBlueprint();
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
             final Integer rank = APPLICATION_STATE.getEngineerRank(this.engineer);

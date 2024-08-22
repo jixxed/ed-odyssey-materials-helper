@@ -58,11 +58,11 @@ public class OdysseyBartenderResult extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, OdysseyBartenderMaterialSelectedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, OdysseyBartenderMaterialSelectedEvent.class, event -> {
             this.selectedAsset = event.getOdysseyBartenderMaterial().getAsset();
             recalculate();
         }));
-        this.eventListeners.add(EventService.addListener(this, OdysseyBartenderAmountSelectedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, OdysseyBartenderAmountSelectedEvent.class, event -> {
             final Asset asset = event.getAsset();
             final Integer amountSelected = event.getAmountSelected();
             this.tradeList.put(asset, amountSelected);

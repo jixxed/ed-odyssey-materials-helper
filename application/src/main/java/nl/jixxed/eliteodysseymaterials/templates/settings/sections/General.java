@@ -104,10 +104,10 @@ public class General extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.journalSelectButton, this.fontsizeSelect, this.languageSelect);
         }));
-        this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(true, TerminateApplicationEvent.class, event -> {
             executorService.shutdownNow();
         }));
     }

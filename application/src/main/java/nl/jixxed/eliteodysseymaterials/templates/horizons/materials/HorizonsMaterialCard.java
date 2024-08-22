@@ -97,13 +97,13 @@ public class HorizonsMaterialCard extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 update();
             }
         }));
 
-        this.eventListeners.add(EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsMaterialSearchEvent.class, horizonsMaterialSearchEvent -> {
             update(horizonsMaterialSearchEvent.getSearch().getQuery());
         }));
     }

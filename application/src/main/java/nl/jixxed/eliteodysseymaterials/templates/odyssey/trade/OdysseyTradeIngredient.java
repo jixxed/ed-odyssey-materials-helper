@@ -50,7 +50,7 @@ class OdysseyTradeIngredient extends OdysseyMaterialIngredient {
     @SuppressWarnings("java:S2177")
     private void initEventHandling() {
         if (Boolean.TRUE.equals(this.isGiven)) {
-            this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> this.update()));
+            this.eventListeners.add(EventService.addListener(true, this, StorageEvent.class, storageEvent -> this.update()));
         }
     }
 

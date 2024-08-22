@@ -95,11 +95,11 @@ class OdysseyTradePagination extends VBox {
 
     @SuppressWarnings({"java:S1192", "java:S3776"})
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, TradeSearchEvent.class, tradeSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, TradeSearchEvent.class, tradeSearchEvent -> {
             this.tradeSearch = tradeSearchEvent.getTradeSearch();
             reload();
         }));
-        this.eventListeners.add(EventService.addListener(this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
             final boolean connected = connectionWebSocketEvent.isConnected();
             this.setConnected(connected);
 
@@ -111,7 +111,7 @@ class OdysseyTradePagination extends VBox {
                 this.visibleTrades.clear();
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, DropOffersWebSocketEvent.class, dropOffersWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, DropOffersWebSocketEvent.class, dropOffersWebSocketEvent -> {
             this.updateProperty().increase();
             final List<String> offers = dropOffersWebSocketEvent.getDropOffersMessage().getOfferIds();
             this.trades.stream().filter(trade -> offers.contains(trade.getOfferId())).forEach(TradeSpec::onDestroy);
@@ -125,7 +125,7 @@ class OdysseyTradePagination extends VBox {
             }
         }));
         if (TradeType.REQUEST.equals(this.tradeType)) {
-            this.eventListeners.add(EventService.addListener(this, GetOffersWebSocketEvent.class, getOffersWebSocketEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, GetOffersWebSocketEvent.class, getOffersWebSocketEvent -> {
                 this.updateProperty().increase();
                 final List<Offer> offers = getOffersWebSocketEvent.getGetOffersMessage().getOffers();
                 final List<TradeSpec> allTradeOffers = offers.stream()
@@ -137,7 +137,7 @@ class OdysseyTradePagination extends VBox {
                 reload();
             }));
         }
-        this.eventListeners.add(EventService.addListener(this, PublishOfferWebSocketEvent.class, publishOfferWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, PublishOfferWebSocketEvent.class, publishOfferWebSocketEvent -> {
             try {
                 final Offer offer = publishOfferWebSocketEvent.getPublishOfferMessage().getOffer();
                 final TradeType type = (Objects.equals(offer.getToken(), CryptoHelper.sha256("xt23s778RHY", APPLICATION_STATE.getMarketPlaceToken()))) ? TradeType.OFFER : TradeType.REQUEST;
@@ -154,7 +154,7 @@ class OdysseyTradePagination extends VBox {
             }
         }));
         if (TradeType.OFFER.equals(this.tradeType)) {
-            this.eventListeners.add(EventService.addListener(this, EnlistWebSocketEvent.class, enlistWebSocketEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, EnlistWebSocketEvent.class, enlistWebSocketEvent -> {
                 final List<Offer> offers = enlistWebSocketEvent.getEnlistMessage().getOffers();
                 final List<TradeSpec> myTradeOffers = offers.stream()
                         .map(this::mapOffer)
@@ -165,7 +165,7 @@ class OdysseyTradePagination extends VBox {
             }));
         }
         if (TradeType.REQUEST.equals(this.tradeType)) {
-            this.eventListeners.add(EventService.addListener(this, OnlineOffersWebSocketEvent.class, onlineOffersWebSocketEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, OnlineOffersWebSocketEvent.class, onlineOffersWebSocketEvent -> {
                 final List<Offer> offers = onlineOffersWebSocketEvent.getOnlineOffersMessage().getOffers();
                 if (offers != null) {
                     for (final Offer offer : offers) {
@@ -190,7 +190,7 @@ class OdysseyTradePagination extends VBox {
             }));
         }
         if (TradeType.REQUEST.equals(this.tradeType)) {
-            this.eventListeners.add(EventService.addListener(this, OfflineOffersWebSocketEvent.class, offlineOffersWebSocketEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, OfflineOffersWebSocketEvent.class, offlineOffersWebSocketEvent -> {
                 this.updateProperty().increase();
                 final List<String> offers = offlineOffersWebSocketEvent.getOfflineOffersMessage().getOfferIds();
                 this.trades.stream()

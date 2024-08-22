@@ -215,7 +215,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     }
 
     private void initEventHandling() {
-        this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        this.storageEventEventListener = EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
             this.canCraft(craftability);
         });

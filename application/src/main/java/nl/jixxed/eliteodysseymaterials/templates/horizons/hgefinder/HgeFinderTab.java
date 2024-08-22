@@ -188,15 +188,15 @@ public class HgeFinderTab extends HorizonsTab {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, HorizonsHgeSearchEvent.class, horizonsHgeSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsHgeSearchEvent.class, horizonsHgeSearchEvent -> {
             update(horizonsHgeSearchEvent.getSearch());
         }));
 
-        this.eventListeners.add(EventService.addStaticListener(HighGradeEmissionEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(true, HighGradeEmissionEvent.class, event -> {
             Platform.runLater(() -> createCard(event.getExpiringMessage(), event.getCollectedOrPotentialMaterials()));
         }));
 
-        this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(true, TerminateApplicationEvent.class, event -> {
             if (timer != null) {
                 timer.cancel();
                 log.info("HGE shutdown finished.");

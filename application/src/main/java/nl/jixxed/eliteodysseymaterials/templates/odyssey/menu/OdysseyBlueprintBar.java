@@ -92,12 +92,12 @@ class OdysseyBlueprintBar extends Accordion {
         recipes.getSelectionModel().select(recipes.getItems().get(0));
         recipes.setButtonCell(new ListCell<>() {
             @SuppressWarnings("java:S1068")
-            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(OdysseyBlueprintBar.this, StorageEvent.class, event -> {
+            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, OdysseyBlueprintBar.this, StorageEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
             @SuppressWarnings("java:S1068")
-            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(OdysseyBlueprintBar.this, EngineerEvent.class, event -> {
+            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, OdysseyBlueprintBar.this, EngineerEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
@@ -138,12 +138,12 @@ class OdysseyBlueprintBar extends Accordion {
         return listView -> new ListCell<>() {
 
             @SuppressWarnings("java:S1068")
-            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(OdysseyBlueprintBar.this, StorageEvent.class, event -> {
+            private final EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, OdysseyBlueprintBar.this, StorageEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
             @SuppressWarnings("java:S1068")
-            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(OdysseyBlueprintBar.this, EngineerEvent.class, event -> {
+            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, OdysseyBlueprintBar.this, EngineerEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
@@ -181,7 +181,7 @@ class OdysseyBlueprintBar extends Accordion {
     private Map<OdysseyBlueprintName, Node> createRecipeContent(final Map.Entry<BlueprintCategory, Map<OdysseyBlueprintName, ? extends OdysseyBlueprint>> recipesEntry, final ComboBox<OdysseyBlueprintName> comboBox, final TitledPane categoryTitledPane) {
         final Map<OdysseyBlueprintName, Node> contents = new EnumMap<>(OdysseyBlueprintName.class);
         recipesEntry.getValue().forEach((key, value) -> {
-            this.eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
                 if (blueprintClickEvent.getBlueprintName().equals(key)) {
                     comboBox.getSelectionModel().select(key);
                     this.setExpandedPane(categoryTitledPane);

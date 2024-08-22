@@ -119,14 +119,14 @@ class OdysseyTradeSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.showTradeComboBox.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
             this.sortTradeComboBox.styleProperty().set(fontStyle);
         }));
-        this.eventListeners.add(EventService.addListener(this, SoloModeEvent.class, soloModeEvent ->
+        this.eventListeners.add(EventService.addListener(true, this, SoloModeEvent.class, soloModeEvent ->
                 EventService.publish(new TradeSearchEvent(new TradeSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortTradeComboBox), getShowOrDefault(this.showTradeComboBox))))
         ));
     }

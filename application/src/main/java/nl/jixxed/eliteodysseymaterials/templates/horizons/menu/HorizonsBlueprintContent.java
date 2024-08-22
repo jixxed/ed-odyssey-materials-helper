@@ -346,7 +346,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, wishlistSelectedEvent -> {
             if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final HorizonsWishlists wishlists = loadCommanderWishlists(commander);
@@ -354,13 +354,13 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 });
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 final HorizonsWishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
                 loadInitialCount(wishlists);
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final HorizonsWishlists wishlists = loadCommanderWishlists(commander);
@@ -368,7 +368,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 });
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistChangedEvent.class, wishlistEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
                 final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> {
                             if (wishlistRecipe instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {

@@ -72,7 +72,7 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
 
     @SuppressWarnings("java:S2177")
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
             if(Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())){
                 showAsHovered(this.hoverProperty().getValue());
             }

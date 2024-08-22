@@ -148,7 +148,7 @@ class OdysseyTradeRequest extends OdysseyTrade {
 
     @SuppressWarnings("java:S2177")
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent -> {
             final StarSystem currentStarSystem = locationChangedEvent.getCurrentStarSystem();
             final Double distance = LocationService.calculateDistance(currentStarSystem, getStarSystem());
             this.distanceLabel.textProperty().bind(LocaleService.getStringBinding("trade.request.distance", getStarSystem().getName(), NUMBER_FORMAT.format(distance)));

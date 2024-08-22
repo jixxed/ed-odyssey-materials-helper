@@ -36,11 +36,19 @@ public class EventService {
     }
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addListener(final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
-        return addListener(owner, 5, eventClass, consumer);
+        return addListener(false, owner, eventClass, consumer);
+    }
+    @CheckReturnValue
+    public static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Class<T> eventClass, final Consumer<T> consumer) {
+        return addListener(fxThread, owner, 5, eventClass, consumer);
     }
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addListener(final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
-        final NonStaticEventListener<T> listener = new NonStaticEventListener<>(owner, priority, eventClass, consumer);
+        return addListener(false, owner, priority, eventClass, consumer);
+    }
+    @CheckReturnValue
+    public static <T extends Event> EventListener<T> addListener(final boolean fxThread, final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+        final NonStaticEventListener<T> listener = new NonStaticEventListener<>(fxThread, owner, priority, eventClass, consumer);
         logListener(owner, listener, "register");
         final List<WeakReference<EventListener<? extends Event>>> eventListeners = LISTENERS_MAP.getOrDefault(eventClass, new ArrayList<>());
         eventListeners.add(new WeakReference<>(listener));
@@ -50,11 +58,19 @@ public class EventService {
     }
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addStaticListener(final Class<T> eventClass, final Consumer<T> consumer) {
-        return addStaticListener(5, eventClass, consumer);
+        return addStaticListener( 5, eventClass, consumer);
+    }
+    @CheckReturnValue
+    public static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Class<T> eventClass, final Consumer<T> consumer) {
+        return addStaticListener(fxThread, 5, eventClass, consumer);
     }
     @CheckReturnValue
     public static <T extends Event> EventListener<T> addStaticListener(final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
-        final EventListener<T> listener = new EventListener<>(priority, eventClass, consumer);
+        return addStaticListener(false, priority, eventClass, consumer);
+    }
+    @CheckReturnValue
+    public static <T extends Event> EventListener<T> addStaticListener(final boolean fxThread, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+        final EventListener<T> listener = new EventListener<>(fxThread, priority, eventClass, consumer);
         logListener(null, listener, "register static");
         final List<WeakReference<EventListener<? extends Event>>> eventListeners = LISTENERS_MAP.getOrDefault(eventClass, new ArrayList<>());
         eventListeners.add(new WeakReference<>(listener));

@@ -70,7 +70,7 @@ public class CopyableSystemLabel extends FlowPane implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationEvent -> {
             update();
         }));
     }

@@ -124,14 +124,14 @@ class HorizonsCommoditiesSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.showMaterialsComboBox.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
             this.sortMaterialsComboBox.styleProperty().set(fontStyle);
         }));
-//        eventListeners.add(EventService.addListener(this, OdysseyTabSelectedEvent.class, event -> {
+//        eventListeners.add(EventService.addListener(true, this, OdysseyTabSelectedEvent.class, event -> {
 //            if (OdysseyTabs.OVERVIEW.equals(event.getSelectedTab())) {
 //                this.textField.setDisable(false);
 //                this.showMaterialsComboBox.setDisable(false);

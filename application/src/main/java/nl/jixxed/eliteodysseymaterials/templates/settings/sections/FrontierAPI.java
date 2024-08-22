@@ -51,7 +51,7 @@ public class FrontierAPI extends VBox implements Template {
     @Override
     public void initEventHandling() {
 
-        this.eventListeners.add(EventService.addStaticListener(CommanderSelectedEvent.class, event ->{
+        this.eventListeners.add(EventService.addStaticListener(true, CommanderSelectedEvent.class, event ->{
             this.capiConnectButton.textProperty().bind(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.connect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
             this.capiDisconnectButton.textProperty().bind(LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("tab.settings.capi.disconnect", ApplicationState.getInstance().getPreferredCommander().map(Commander::getName).orElse(""))));
         }));

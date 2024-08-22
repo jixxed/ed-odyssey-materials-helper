@@ -170,7 +170,7 @@ public class WeaponStats extends Stats implements Template {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(this, ShipConfigEvent.class, event -> update()));
+        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     private List<ShipModule> selectedHardPoints() {

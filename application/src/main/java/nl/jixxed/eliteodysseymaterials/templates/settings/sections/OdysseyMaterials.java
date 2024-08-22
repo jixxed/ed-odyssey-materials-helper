@@ -61,7 +61,7 @@ public class OdysseyMaterials extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.readingDirectionSelect);
         }));
     }
@@ -181,7 +181,7 @@ public class OdysseyMaterials extends VBox implements Template {
         return listView -> new ListCell<>() {
 
             @SuppressWarnings("java:S1068")
-            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(this, LanguageChangedEvent.class, event ->
+            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(true, this, LanguageChangedEvent.class, event ->
                     updateText(getItem(), this.emptyProperty().get())
             );
 

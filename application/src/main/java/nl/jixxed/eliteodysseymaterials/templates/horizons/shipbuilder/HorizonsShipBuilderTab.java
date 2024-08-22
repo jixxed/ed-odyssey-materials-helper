@@ -142,26 +142,26 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             refreshContent();
         }));
 
-        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             refreshContent();
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             refreshContent();
         }));
-        this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshContent();
             }
         }));
 
-        this.eventListeners.add(EventService.addListener(this, ShipBuilderEvent.class, importResultEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, ShipBuilderEvent.class, importResultEvent -> {
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                 final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
                 final Optional<ShipConfiguration> selectedShipConfiguration = shipConfigurations.getSelectedShipConfiguration();
@@ -172,7 +172,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
             });
         }));
 
-        this.eventListeners.add(EventService.addListener(this, 9, ShipLoadoutEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
 
             if (this.controlsLayer.getShipSelect().getSelectionModel().getSelectedItem().equals(ShipConfiguration.CURRENT)) {
                 refreshContent();

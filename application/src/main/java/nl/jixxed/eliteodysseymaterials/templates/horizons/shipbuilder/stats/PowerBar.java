@@ -106,7 +106,7 @@ public class PowerBar extends HBox {
         initEventHandling();
     }
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             update();
         }));
     }

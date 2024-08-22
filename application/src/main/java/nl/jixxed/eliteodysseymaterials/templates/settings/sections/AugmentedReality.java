@@ -69,7 +69,7 @@ public class AugmentedReality extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, ARDisableEvent.class, event -> this.arOverlayButton.setSelected(false)));
+        this.eventListeners.add(EventService.addListener(true, this, ARDisableEvent.class, event -> this.arOverlayButton.setSelected(false)));
     }
 
     private HBox createARSetting() {

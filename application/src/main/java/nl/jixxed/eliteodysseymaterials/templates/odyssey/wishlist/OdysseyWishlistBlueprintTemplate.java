@@ -125,7 +125,7 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     }
 
     private void initEventHandling() {
-        this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        this.storageEventEventListener = EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             final Craftability craftability = OdysseyBlueprintConstants.getCraftability((OdysseyBlueprintName) this.getRecipeName());
             this.canCraft(craftability);
         });

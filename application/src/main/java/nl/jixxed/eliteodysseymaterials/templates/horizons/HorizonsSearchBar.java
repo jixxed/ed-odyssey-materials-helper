@@ -71,14 +71,14 @@ class HorizonsSearchBar extends HBox {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
+        this.eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
         //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.button.styleProperty().set(fontStyle);
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsTabSelectedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsTabSelectedEvent.class, event -> {
             if (HorizonsTabs.COMMODITIES.equals(event.getSelectedTab())) {
                 if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.horizonsWishlistSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
                     this.getChildren().remove(this.materialSearchBar);

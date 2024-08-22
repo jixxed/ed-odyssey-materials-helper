@@ -142,7 +142,7 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
     }
 
     private void initEventHandling() {
-        this.storageEventEventListener = EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        this.storageEventEventListener = EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), getBlueprintGrade());
             this.canCraft(craftability);
         });

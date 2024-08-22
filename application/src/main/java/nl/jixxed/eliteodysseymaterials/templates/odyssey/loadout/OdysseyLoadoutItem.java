@@ -77,21 +77,21 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
     public void initEventHandling() {
         if (!Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
 
-            this.eventListeners.add(EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
                 if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
                     APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
                 }
             }));
-            this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+            this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
                     loadCommanderWishlists(commanderSelectedEvent.getCommander())
             ));
-            this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
                         if (this.loadout != null && Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
                             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
                         }
                     }
             ));
-            this.eventListeners.add(EventService.addListener(this, ModificationChangedEvent.class, modificationChangedEvent -> {
+            this.eventListeners.add(EventService.addListener(true, this, ModificationChangedEvent.class, modificationChangedEvent -> {
                 if (modificationChangedEvent.getLoadoutItem() == this) {
                     handleModificationChange(modificationChangedEvent.getModificationChange());
                 }
@@ -99,7 +99,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
 
         }
         if (this.loadout.getEquipment() instanceof Weapon) {
-            this.eventListeners.add(EventService.addListener(this, AmmoCapacityModEvent.class, ammoCapacityModEvent ->
+            this.eventListeners.add(EventService.addListener(true, this, AmmoCapacityModEvent.class, ammoCapacityModEvent ->
                     updateStatsList()
             ));
         }

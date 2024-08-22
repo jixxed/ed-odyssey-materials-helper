@@ -53,7 +53,7 @@ public class StatsLayer extends AnchorPane implements Template {
     @Override
     public void initEventHandling() {
 
-        this.eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             stats.requestLayout();
         }));
     }

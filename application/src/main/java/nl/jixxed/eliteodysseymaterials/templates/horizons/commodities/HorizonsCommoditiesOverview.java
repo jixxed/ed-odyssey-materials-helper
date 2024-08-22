@@ -86,7 +86,7 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
     public void initEventHandling() {
 
         Observable
-                .create(emitter -> this.eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
+                .create(emitter -> this.eventListeners.add(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
                     if (StoragePool.SHIP.equals(storageEvent.getStoragePool()) || StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
                         emitter.onNext(storageEvent);
                     }
@@ -95,7 +95,7 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
                 .observeOn(Schedulers.io())
                 .subscribe(storageEvent -> Platform.runLater(this::update));
 
-        this.eventListeners.add(EventService.addListener(this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
             Platform.runLater(this::update);
         }));

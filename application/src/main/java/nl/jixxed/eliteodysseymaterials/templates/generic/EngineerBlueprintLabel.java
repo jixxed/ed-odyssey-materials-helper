@@ -75,18 +75,18 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
 
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, EngineerEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, EngineerEvent.class, event -> {
             update();
         }));
-        this.eventListeners.add(EventService.addListener(this, EngineerPinEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, EngineerPinEvent.class, event -> {
             if (this.engineer.equals(event.getEngineer()) && !this.horizonsBlueprint.equals(event.getHorizonsBlueprint())) {
                 update();
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, event -> {
             update();
         }));
-        this.eventListeners.add(EventService.addStaticListener(0, JournalInitEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(true, 0, JournalInitEvent.class, event -> {
             update();
         }));
     }

@@ -43,8 +43,8 @@ public abstract class Stats extends VBox {
     }
 
     public void initEventHandlingStats() {
-        this.eventListeners.add(EventService.addListener(this, ShipBuilderEvent.class, event -> update()));
-        this.eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, ShipBuilderEvent.class, event -> update()));
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             update();
         }));
     }

@@ -119,7 +119,7 @@ public class HorizonsMaterialOverview extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, HorizonsMaterialSearchEvent.class, horizonsCommoditiesSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsMaterialSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
             Platform.runLater(this::update);
         }));

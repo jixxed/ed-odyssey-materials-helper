@@ -62,14 +62,14 @@ public class ModulesLayer extends AnchorPane implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
             initShipSlots();
         }));
 
-        this.eventListeners.add(EventService.addListener(this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             if(this.imageLayer.isVisible()){
                 if(this.hardpointsVbox.isVisible()){
                     drawHardpointLine(lastIndex);

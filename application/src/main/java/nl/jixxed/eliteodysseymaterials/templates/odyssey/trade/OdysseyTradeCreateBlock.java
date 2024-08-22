@@ -51,7 +51,7 @@ class OdysseyTradeCreateBlock extends VBox {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
             final boolean connected = connectionWebSocketEvent.isConnected();
             this.setConnected(connected);
         }));

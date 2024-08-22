@@ -345,7 +345,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                 .withContent(this.content)
                 .build();
         this.setContent(this.scrollPane);
-        Observable.create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, emitter::onNext)))
+        Observable.create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, emitter::onNext)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(this::refreshContent));
@@ -397,24 +397,24 @@ public class HorizonsWishlistTab extends HorizonsTab {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistSelectedEvent.class, wishlistChangedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, wishlistChangedEvent -> {
             refreshWishlistBlueprints();
             refreshWishlistRecipes();
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new HorizonsWishlistChangedEvent(this.activeWishlistUUID));
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistBlueprintAlteredEvent.class, wishlistChangedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistBlueprintAlteredEvent.class, wishlistChangedEvent -> {
             refreshContent();
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistChangedEvent.class, wishlistChangedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, wishlistChangedEvent -> {
             this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = WishlistService.getHorizonsWishlists(commander).getWishlist(this.activeWishlistUUID).getItems().size());
 
             this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistBlueprintEvent.class, wishlistEvent ->
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistBlueprintEvent.class, wishlistEvent ->
         {
             if (Action.REMOVED.equals(wishlistEvent.getAction())) {
                 this.wishlistBlueprints.stream()
@@ -440,7 +440,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
             }
             refreshContent();
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
             final HorizonsWishlist selectedWishlist = WishlistService.getHorizonsWishlists(commanderSelectedEvent.getCommander()).getSelectedWishlist();
             this.activeWishlistUUID = selectedWishlist.getUuid();
@@ -455,37 +455,37 @@ public class HorizonsWishlistTab extends HorizonsTab {
             refreshContent();
             EventService.publish(new HorizonsWishlistChangedEvent(this.activeWishlistUUID));
         }));
-        this.eventListeners.add(EventService.addListener(this, LanguageChangedEvent.class, languageChangedEvent ->
+        this.eventListeners.add(EventService.addListener(true, this, LanguageChangedEvent.class, languageChangedEvent ->
         {
             refreshWishlistSelect();
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints()));
-        this.eventListeners.add(EventService.addListener(this, LocationChangedEvent.class, locationChangedEvent -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints()));
+        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent -> refreshContent()));
+        this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST)) {
                 refreshWishlistBlueprints();
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsHideWishlistShortestPathItemEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsHideWishlistShortestPathItemEvent.class, event -> {
             final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
             pathBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setVisibility(false));
             refreshContent();
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsRemoveWishlistShortestPathItemEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsRemoveWishlistShortestPathItemEvent.class, event -> {
             final List<WishlistBlueprintTemplate<HorizonsBlueprintName>> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
             pathBlueprints.forEach(WishlistBlueprintTemplate::remove);
         }));
-        this.eventListeners.add(EventService.addListener(this, EngineerPinEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, EngineerPinEvent.class, event -> {
 
             refreshContent();
         }));
 
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistSearchEvent.class, horizonsWishlistSearchEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistSearchEvent.class, horizonsWishlistSearchEvent -> {
             this.currentSearch = horizonsWishlistSearchEvent.getSearch();
             Platform.runLater(this::refreshContent);
         }));
 
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistCreatedEvent.class, event ->
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistCreatedEvent.class, event ->
         {
             refreshWishlistSelect();
         }));

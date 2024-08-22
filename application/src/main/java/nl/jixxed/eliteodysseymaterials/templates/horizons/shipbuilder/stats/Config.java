@@ -216,7 +216,7 @@ public class Config extends Stats implements Template {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(this, HorizonsShipSelectedEvent.class, event -> {
+        eventListeners.add(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, event -> {
             fuelreserve.setMax(getShip().map(Ship::getMaxFuelReserve).orElse(0.0D));
             Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
             int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
@@ -235,7 +235,7 @@ public class Config extends Stats implements Template {
             this.live.setSelected(this.live.isSelected() && isCurrentShip());
             this.live.setDisable(!isCurrentShip());
         }));
-        eventListeners.add(EventService.addListener(this, StatusEvent.class, event -> {
+        eventListeners.add(EventService.addListener(true, this, StatusEvent.class, event -> {
             if(ApplicationState.getInstance().isLiveStats()) {
                 fuel.setValue(event.getFuelCapacity().intValue());
                 fuelreserve.setValue(event.getFuelReserve().doubleValue());

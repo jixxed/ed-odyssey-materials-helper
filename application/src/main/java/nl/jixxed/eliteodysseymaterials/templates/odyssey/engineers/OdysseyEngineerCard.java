@@ -64,7 +64,7 @@ class OdysseyEngineerCard extends EngineerCard {
 
     @SuppressWarnings("java:S2177")
     private void initEventHandling(final Engineer engineer) {
-        this.eventListeners.add(EventService.addListener(this, EngineerEvent.class, engineerEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, EngineerEvent.class, engineerEvent -> {
             this.getChildren().removeAll(this.unlockSeparator, this.unlockRequirementsTitle);
             this.getChildren().removeAll(this.unlockRequirementsLabels);
             if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {

@@ -100,28 +100,28 @@ class HorizonsContentArea extends AnchorPane {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistBlueprintEvent.class, wishlistEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistBlueprintEvent.class, wishlistEvent -> {
             if (Action.ADDED.equals(wishlistEvent.getAction())) {
                 this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsWishlistOpenShipBuilderEvent.class, horizonsWishlistOpenShipBuilderEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistOpenShipBuilderEvent.class, horizonsWishlistOpenShipBuilderEvent -> {
                 this.tabs.getSelectionModel().select(this.horizonsShipBuilderTab);
         }));
-        this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             this.recipeBar.setVisible(true);
             PreferencesService.setPreference(PreferenceConstants.HORIZONS_RECIPES_VISIBLE, true);
         }));
-        this.eventListeners.add(EventService.addListener(this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth())));
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth())));
-        this.eventListeners.add(EventService.addListener(this, MenuButtonClickedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, ApplicationLifeCycleEvent.class, applicationLifeCycleEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth())));
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> setBodyAnchor(isRecipeBarVisible(), this.recipeBar.getWidth())));
+        this.eventListeners.add(EventService.addListener(true, this, MenuButtonClickedEvent.class, event -> {
             if (Expansion.HORIZONS.equals(event.getExpansion())) {
                 final boolean visibility = !this.recipeBar.isVisible();
                 this.recipeBar.setVisible(visibility);
                 PreferencesService.setPreference(PreferenceConstants.HORIZONS_RECIPES_VISIBLE, visibility);
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, ImportResultEvent.class, importResultEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_EDSY_WISHLIST) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_CORIOLIS_WISHLIST)) {
                 this.tabs.getSelectionModel().select(this.horizonsWishlistTab);
             }else if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP)) {

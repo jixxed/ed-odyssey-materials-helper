@@ -120,7 +120,7 @@ class HorizonsWishlistSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.groupMaterialsComboBox.styleProperty().set(fontStyle);

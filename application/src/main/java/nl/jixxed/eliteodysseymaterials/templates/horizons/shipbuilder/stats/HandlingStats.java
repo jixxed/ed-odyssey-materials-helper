@@ -80,7 +80,7 @@ public class HandlingStats extends Stats implements Template {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(this, ShipConfigEvent.class, event -> update()));
+        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     private static Double getMaximumMultiplier(Optional<Slot> thrusters) {

@@ -107,8 +107,8 @@ class OdysseyMaterialTotal extends VBox {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, JournalLineProcessedEvent.class, journalProcessedEvent -> updateTotals()));
-        this.eventListeners.add(EventService.addListener(this, SoloModeEvent.class, soloModeEvent -> updateTotals()));
+        this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> updateTotals()));
+        this.eventListeners.add(EventService.addListener(true, this, SoloModeEvent.class, soloModeEvent -> updateTotals()));
     }
 
     private void updateTotals() {

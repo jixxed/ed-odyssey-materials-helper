@@ -12,8 +12,8 @@ import java.util.function.Consumer;
 class NonStaticEventListener<T extends Event> extends EventListener<T> {
     private final WeakReference<Object> ownerRef;
 
-    NonStaticEventListener(final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
-        super(priority, eventClass, consumer);
+    NonStaticEventListener(final boolean fxThread, final Object owner, final Integer priority, final Class<T> eventClass, final Consumer<T> consumer) {
+        super(fxThread, priority, eventClass, consumer);
         this.ownerRef = new WeakReference<>(owner);
     }
 

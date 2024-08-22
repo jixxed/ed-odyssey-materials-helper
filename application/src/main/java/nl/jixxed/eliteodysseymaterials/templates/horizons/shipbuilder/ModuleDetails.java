@@ -128,11 +128,11 @@ public class ModuleDetails extends VBox implements Template {
     @Override
     public void initEventHandling() {
 
-        EVENT_LISTENERS.add(EventService.addListener(this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        EVENT_LISTENERS.add(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             update();
         }));
-        EVENT_LISTENERS.add(EventService.addListener(this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
-        EVENT_LISTENERS.add(EventService.addListener(this, ModuleHighlightEvent.class, (event) -> {
+        EVENT_LISTENERS.add(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+        EVENT_LISTENERS.add(EventService.addListener(true, this, ModuleHighlightEvent.class, (event) -> {
             this.shipModule = event.getShipModule();
 
             update();

@@ -41,7 +41,7 @@ class OdysseyChatDialog extends VBox {
     }
 
     private void initEventHandling() {
-        this.xMessageWebSocketEventEventListener = EventService.addListener(this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
+        this.xMessageWebSocketEventEventListener = EventService.addListener(true, this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
             final XMessage message = xMessageWebSocketEvent.getXMessageMessage().getMessage();
             if (message.getOfferId().equals(this.offerId)) {
                 this.chat.appendText(message.getInfo().getNickname() + "(" + message.getInfo().getLocation() + "): " + message.getText() + "\n");

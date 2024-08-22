@@ -115,7 +115,7 @@ public class OdysseyTradeTab extends OdysseyTab {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, ConnectionWebSocketEvent.class, connectionWebSocketEvent -> {
             final boolean connected = connectionWebSocketEvent.isConnected();
             if (connected) {
                 this.status.textProperty().bind(LocaleService.getStringBinding("tab.trade.status.connected"));
@@ -132,9 +132,9 @@ public class OdysseyTradeTab extends OdysseyTab {
                 }
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.ifPresent(MarketPlaceClient::close)));
+        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> this.marketPlaceClient.ifPresent(MarketPlaceClient::close)));
 
-        this.eventListeners.add(EventService.addStaticListener(TerminateApplicationEvent.class, event -> {
+        this.eventListeners.add(EventService.addStaticListener(true, TerminateApplicationEvent.class, event -> {
             this.marketPlaceClient.ifPresent(MarketPlaceClient::close);
             this.stop();
         }));

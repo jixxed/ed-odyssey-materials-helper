@@ -37,7 +37,7 @@ public class LoadingScreen extends AnchorPane implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, EventProcessedEvent.class, event -> {
+        this.eventListeners.add(EventService.addListener(true, this, EventProcessedEvent.class, event -> {
             progressBar.setProgress((double) event.getCurrent() / (double) event.getTotal());
         }));
     }

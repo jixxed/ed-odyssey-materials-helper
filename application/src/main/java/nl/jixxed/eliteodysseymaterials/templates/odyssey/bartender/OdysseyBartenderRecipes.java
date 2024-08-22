@@ -37,7 +37,7 @@ public class OdysseyBartenderRecipes extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, OdysseyBartenderMaterialHoverEvent.class, event -> update(event.getAsset())));
+        this.eventListeners.add(EventService.addListener(true, this, OdysseyBartenderMaterialHoverEvent.class, event -> update(event.getAsset())));
     }
 
     private void update(final Asset asset) {

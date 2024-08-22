@@ -76,13 +76,13 @@ public class HorizonsShips extends VBox implements Template {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addStaticListener(0, LegacyModuleSavedEvent.class, legacyModuleSavedEvent -> {
+        eventListeners.add(EventService.addStaticListener(true, 0, LegacyModuleSavedEvent.class, legacyModuleSavedEvent -> {
             updateModules();
         }));
-        eventListeners.add(EventService.addStaticListener(0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        eventListeners.add(EventService.addStaticListener(true, 0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             updateModules();
         }));
-        eventListeners.add(EventService.addStaticListener(0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        eventListeners.add(EventService.addStaticListener(true, 0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> updateModules()
             );
         }));
@@ -346,7 +346,7 @@ public class HorizonsShips extends VBox implements Template {
         return listView -> new ListCell<>() {
 
             @SuppressWarnings("java:S1068")
-            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(this, LanguageChangedEvent.class, event ->
+            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(true, this, LanguageChangedEvent.class, event ->
                     updateText(getItem(), this.emptyProperty().get())
             );
 

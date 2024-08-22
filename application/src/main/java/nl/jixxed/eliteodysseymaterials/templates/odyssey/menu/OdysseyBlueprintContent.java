@@ -253,7 +253,7 @@ class OdysseyBlueprintContent extends VBox {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
@@ -261,13 +261,13 @@ class OdysseyBlueprintContent extends VBox {
                 });
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 final Wishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
                 loadInitialCount(wishlists);
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             if (!(this.blueprint instanceof EngineerBlueprint) || this.ingredients.stream().noneMatch(ingredient -> OdysseyStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final Wishlists wishlists = loadCommanderWishlists(commander);
@@ -275,7 +275,7 @@ class OdysseyBlueprintContent extends VBox {
                 });
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, WishlistChangedEvent.class, wishlistEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, WishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
                 final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> wishlistRecipe.getRecipeName().equals(this.blueprint.getBlueprintName())).count()).orElse(0L);
                 if (count > 0L) {

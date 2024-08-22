@@ -104,7 +104,7 @@ abstract class OdysseyTrade extends FlowPane {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, XMessageWebSocketEvent.class, xMessageWebSocketEvent -> {
             final XMessage message = xMessageWebSocketEvent.getXMessageMessage().getMessage();
             if (message.getOfferId().equals(this.offerId)) {
                 if (this.chatStage != null && this.chatStage.isShowing()) {

@@ -94,7 +94,7 @@ class HorizonsBlueprintBar extends Accordion {
         final HBox hBoxTypes = BoxBuilder.builder().withNode(types).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
-        this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.TECHBROKER.equals(blueprintName.getBlueprintCategory())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
@@ -149,7 +149,7 @@ class HorizonsBlueprintBar extends Accordion {
         final HBox hBoxTypes = BoxBuilder.builder().withNode(types).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
-        this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && blueprintClickEvent.isExperimental()) {
                 blueprints.getSelectionModel().select(blueprintName);
                 if (blueprintClickEvent.getBlueprint() instanceof HorizonsExperimentalEffectBlueprint) {
@@ -183,7 +183,7 @@ class HorizonsBlueprintBar extends Accordion {
 
         final HBox hBoxBlueprints = BoxBuilder.builder().withNode(blueprints).buildHBox();
         HBox.setHgrow(blueprints, Priority.ALWAYS);
-        this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.SYNTHESIS.equals(blueprintName.getBlueprintCategory())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 final HorizonsBlueprintGrade horizonsBlueprintGrade = ((HorizonsBlueprint) blueprintClickEvent.getBlueprint()).getHorizonsBlueprintGrade();
@@ -238,7 +238,7 @@ class HorizonsBlueprintBar extends Accordion {
                 }
             }
         });
-        this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && sameCategory(recipesEntry.getKey(),blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
                 blueprints.getSelectionModel().select(blueprintName);
                 if (blueprintClickEvent.getBlueprint() instanceof HorizonsModuleBlueprint) {
@@ -448,13 +448,13 @@ class HorizonsBlueprintBar extends Accordion {
         blueprints.valueProperty().addListener((obs, oldValue, newValue) -> {
             setContent(scroll, newValue, HorizonsBlueprintType.ENGINEER, true, generateContent(recipesEngineers.get(newValue)));
         });
-        this.eventListeners.add(EventService.addListener(this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.ENGINEER_UNLOCKS.equals(blueprintName.getBlueprintCategory())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 this.setExpandedPane(categoryTitledPane);
             }
         }));
-        this.eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
+        this.eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
             if (blueprintClickEvent.getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.ENGINEER_UNLOCKS.equals(blueprintName.getBlueprintCategory())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 this.setExpandedPane(categoryTitledPane);
@@ -464,12 +464,12 @@ class HorizonsBlueprintBar extends Accordion {
         blueprints.getSelectionModel().select(blueprints.getItems().get(0));
         blueprints.setButtonCell(new ListCell<>() {
             @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventEventListener = EventService.addListener(HorizonsBlueprintBar.this, StorageEvent.class, event -> {
+            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, StorageEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
             @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(HorizonsBlueprintBar.this, EngineerEvent.class, event -> {
+            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, EngineerEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
@@ -508,12 +508,12 @@ class HorizonsBlueprintBar extends Accordion {
         return listView -> new ListCell<>() {
 
             @SuppressWarnings("java:S1068")
-            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventEventListener = EventService.addListener(HorizonsBlueprintBar.this, StorageEvent.class, event -> {
+            private final nl.jixxed.eliteodysseymaterials.service.event.EventListener<StorageEvent> storageEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, StorageEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
             @SuppressWarnings("java:S1068")
-            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(HorizonsBlueprintBar.this, EngineerEvent.class, event -> {
+            private final EventListener<EngineerEvent> engineerEventEventListener = EventService.addListener(true, HorizonsBlueprintBar.this, EngineerEvent.class, event -> {
                 updateStyle(getItem());
                 updateText(getItem(), this.emptyProperty().get());
             });
@@ -549,7 +549,7 @@ class HorizonsBlueprintBar extends Accordion {
 //    private Map<HorizonsBlueprintName, Node> createRecipeContentEngineers(final Map<HorizonsBlueprintName, ? extends HorizonsEngineerBlueprint> recipesEntry, final ComboBox<HorizonsBlueprintName> comboBox, final TitledPane categoryTitledPane) {
 //        final Map<HorizonsBlueprintName, Node> contents = new EnumMap<>(HorizonsBlueprintName.class);
 //        recipesEntry.forEach((key, value) -> {
-//            eventListeners.add(EventService.addListener(this, BlueprintClickEvent.class, blueprintClickEvent -> {
+//            eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
 //                if (blueprintClickEvent.getBlueprintName().equals(key)) {
 //                    comboBox.getSelectionModel().select(key);
 //                    this.setExpandedPane(categoryTitledPane);
