@@ -8,7 +8,7 @@ blueprint.header.receive,Receive,Receive,Empfangen,Recibir,Recevoir,Receber,По
 blueprint.header.required,Required,Required,Erforderlich,Obligatorio,Obligatoire,Obrigatório,Требуется
 blueprint.label.completed.referrals,Completed Referrals,Completed Referrals,Abgeschlossene Empfehlungen,Referencias completadas,Parrainages terminés,Referências concluídas,Завершенные рефералы
 blueprint.label.description,Description,Description,Beschreibung,Descripción,Description,Descrição,Описание
-blueprint.label.engineers,Engineers crafting this blueprint:,Engineers crafting this blueprint:,Ingenieure die diesen Bauplan erstellen:,Ingenieros que elaboran este plano:,Ingénieurs créant ce plan:,Engenheiros elaborando este blueprint:,"Инженеры, создающие этот чертеж:"
+blueprint.label.engineers,Engineers crafting this blueprint:,Engineers crafting this blueprint:,Ingenieure die diesen Bauplan erstellen:,Ingenieros que elaboran este plano:,Ingénieurs créant ce plan:,Engenheiros Executando este Projeto:,"Инженеры, создающие этот чертеж:"
 blueprint.label.modifiers,Modifiers,Modifiers,Modifikatoren,Modificadores,Modificateurs,Modificadores,Модификаторы
 blueprint.label.nearest,Closest Technology Broker,Closest Technology Broker,Nächster Technologie-Händler,Broker de tecnología más cercano.,,Mediador de Tecnologia Mais Próximo,Ближайший техноброкер
 blueprint.on.wishlist,{0} on wishlist,{0} on wishlist,{0} auf Wunschliste,{0} en la lista de deseos,{0} sur la liste de souhaits,{0} na lista de desejos,{0} в списке желаний
