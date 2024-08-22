@@ -72,11 +72,14 @@ public class StorageService {
 
     public static void addMaterial(final HorizonsMaterial material, final Integer amount) {
         if (material instanceof Raw rawMaterial) {
-            raw.put(rawMaterial, Math.min(raw.get(material) + amount, material.getMaxAmount()));
+            final int value = Math.min(raw.get(material) + amount, material.getMaxAmount());
+            raw.put(rawMaterial, Math.max(value, 0));
         } else if (material instanceof Encoded encodedMaterial) {
-            encoded.put(encodedMaterial, Math.min(encoded.get(material) + amount, material.getMaxAmount()));
+            final int value = Math.min(encoded.get(material) + amount, material.getMaxAmount());
+            encoded.put(encodedMaterial, Math.max(value, 0));
         } else if (material instanceof Manufactured manufacturedMaterial) {
-            manufactured.put(manufacturedMaterial, Math.min(manufactured.get(material) + amount, material.getMaxAmount()));
+            final int value = Math.min(manufactured.get(material) + amount, material.getMaxAmount());
+            manufactured.put(manufacturedMaterial, Math.max(value, 0));
         } else if (material instanceof Commodity commodity) {
             throw new UnsupportedOperationException("use addCommodity instead");
         }
@@ -84,11 +87,14 @@ public class StorageService {
 
     public static void addCommodity(final Commodity commodity, final StoragePool storagePool, final Integer amount) {
         if (StoragePool.FLEETCARRIER.equals(storagePool)) {
-            commoditiesFleetcarrier.put(commodity, commoditiesFleetcarrier.get(commodity) + amount);
+            final int value = commoditiesFleetcarrier.get(commodity) + amount;
+            commoditiesFleetcarrier.put(commodity, Math.max(value, 0));
         } else if (StoragePool.SHIP.equals(storagePool)) {
-            commoditiesShip.put(commodity, commoditiesShip.get(commodity) + amount);
+            final int value = commoditiesShip.get(commodity) + amount;
+            commoditiesShip.put(commodity, Math.max(value, 0));
         } else if (StoragePool.SRV.equals(storagePool)) {
-            commoditiesSrv.put(commodity, commoditiesSrv.get(commodity) + amount);
+            final int value = commoditiesSrv.get(commodity) + amount;
+            commoditiesSrv.put(commodity, Math.max(value, 0));
         } else {
             throw new IllegalArgumentException("storagePool not supported");
         }

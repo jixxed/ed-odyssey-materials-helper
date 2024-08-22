@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.WishlistMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
+@Slf4j
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
 
@@ -78,7 +79,11 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
                 SegmentType.MISSING_FOR_MAXIMUM, Color.rgb(255, 255, 255)
         ), false));
         final Integer progress = Math.min(this.getRightAmount(), this.amountMaximum);
-        this.present = new TypeSegment(progress, SegmentType.PRESENT);
+        try{
+            this.present = new TypeSegment(progress, SegmentType.PRESENT);
+        }catch (IllegalArgumentException e) {
+            log.debug("Error in HorizonsWishlistIngredient", e);
+        }
 //        this.notPresent = new TypeSegment(Math.max(this.getLeftAmount() - progress, 0), SegmentType.NOT_PRESENT);
         this.missingForMinimum = new TypeSegment(Math.max(0, amountMinimum - progress), SegmentType.MISSING_FOR_MINIMUM);
         this.missingForRequired = new TypeSegment(Math.max(0, amountRequired - Math.max(amountMinimum, progress)), SegmentType.MISSING_FOR_REQUIRED);

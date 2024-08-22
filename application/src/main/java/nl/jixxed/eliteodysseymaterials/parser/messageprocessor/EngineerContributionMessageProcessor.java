@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -9,16 +10,21 @@ import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+
 @Slf4j
 public class EngineerContributionMessageProcessor implements MessageProcessor<EngineerContribution> {
 
     @Override
     public void process(final EngineerContribution event) {
-        event.getMaterial().ifPresent(material->{
+        event.getMaterial().ifPresent(material -> {
             try {
                 final HorizonsMaterial horizonsMaterial = HorizonsMaterial.subtypeForName(material);
                 if (!horizonsMaterial.isUnknown()) {
-                    StorageService.removeMaterial(horizonsMaterial, event.getQuantity().intValue());
+                    if (horizonsMaterial instanceof Commodity commodity) {
+                        StorageService.removeCommodity(commodity, StoragePool.SHIP, event.getQuantity().intValue());
+                    } else {
+                        StorageService.removeMaterial(horizonsMaterial, event.getQuantity().intValue());
+                    }
                 }
                 EventService.publish(new StorageEvent(StoragePool.SHIP));
             } catch (final IllegalArgumentException e) {
