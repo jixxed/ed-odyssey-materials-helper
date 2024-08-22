@@ -1,3 +1,7 @@
+Version 2.99
+-------------
+Several bugfixes and improvements
+
 Version 2.98
 -------------
 Add automated error reporting to Sentry that includes the support package

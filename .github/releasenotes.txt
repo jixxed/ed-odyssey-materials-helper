@@ -6,6 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Add automated error reporting to Sentry that includes the support package
-Updated the privacy policy
-Add hint in Settings to disable blur for better bartender AR detection
+Several bugfixes and improvements
