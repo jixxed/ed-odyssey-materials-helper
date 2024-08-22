@@ -211,42 +211,48 @@ public class MaterialService {
             popOver.arrowSizeProperty().set(0);
             popOver.arrowIndentProperty().set(0);
             popOver.cornerRadiusProperty().set(0);
-            final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).get(0).getBounds();
-            final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
-            final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
-            if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
-            } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
-                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
-            } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
-                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
-            } else {
-                popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
-            }
-            final Timeline timelineShow = new Timeline();
-            timelineShow.getKeyFrames().add(new KeyFrame(Duration.millis(500)));
-            timelineShow.setOnFinished(finishEvent -> {
-                if (hoverableNode.isHover() || (contentNode.isHover())) {
-                    if (popOver.getContentNode() != null) {
-                        popOver.show(hoverableNode);
-                    }
-                }
-            });
-            timelineShow.play();
-            final Timeline timelineHide = new Timeline();
-            timelineHide.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
-            timelineHide.setOnFinished(finishEvent -> {
-                if (hoverableNode.isHover() || contentNode.isHover()) {
-                    timelineHide.play();
+            try{
+                final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).get(0).getBounds();
+                final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
+                final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
+                if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                    popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+                } else if (mouseXOnScreen < currentScreen.getWidth() / 2 && mouseYOnScreen > currentScreen.getHeight() / 2) {
+                    popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_BOTTOM);
+                } else if (mouseXOnScreen > currentScreen.getWidth() / 2 && mouseYOnScreen < currentScreen.getHeight() / 2) {
+                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_TOP);
                 } else {
-                    popOver.hide(Duration.ZERO);
-                    if (popOver.getContentNode() != null) {
-                        popOver.setContentNode(null);
-                    }
-                    timelineHide.stop();
+                    popOver.setArrowLocation(PopOver.ArrowLocation.RIGHT_BOTTOM);
                 }
-            });
-            hoverableNode.setOnMouseExited(mouseEvent2 -> timelineHide.play());
+                final Timeline timelineShow = new Timeline();
+                timelineShow.getKeyFrames().add(new KeyFrame(Duration.millis(500)));
+                timelineShow.setOnFinished(finishEvent -> {
+                    if (hoverableNode.isHover() || (contentNode.isHover())) {
+                        if (popOver.getContentNode() != null) {
+                            popOver.show(hoverableNode);
+                        }
+                    }
+                });
+                timelineShow.play();
+                final Timeline timelineHide = new Timeline();
+                timelineHide.getKeyFrames().add(new KeyFrame(Duration.millis(100)));
+                timelineHide.setOnFinished(finishEvent -> {
+                    if (hoverableNode.isHover() || contentNode.isHover()) {
+                        timelineHide.play();
+                    } else {
+                        popOver.hide(Duration.ZERO);
+                        if (popOver.getContentNode() != null) {
+                            popOver.setContentNode(null);
+                        }
+                        timelineHide.stop();
+                    }
+                });
+                hoverableNode.setOnMouseExited(mouseEvent2 -> timelineHide.play());
+            }catch (IndexOutOfBoundsException ex){
+                log.warn("Unable to determine screen to show material info on.");
+            }
+
+
         });
     }
 
