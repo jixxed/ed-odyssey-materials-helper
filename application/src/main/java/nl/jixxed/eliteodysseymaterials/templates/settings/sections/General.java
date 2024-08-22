@@ -319,7 +319,7 @@ public class General extends VBox implements Template {
         final Button importClipboard = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.import.clipboard.import")).withOnAction(event -> {
             Platform.runLater(()->{
                 final String clipboard = Clipboard.getSystemClipboard().getString();
-                if (clipboard.startsWith("edomh://")) {
+                if (clipboard != null && clipboard.startsWith("edomh://")) {
                     deeplinkConsumer.accept(clipboard);
                 }
             });
@@ -335,7 +335,7 @@ public class General extends VBox implements Template {
         final Button importSlefClipboard = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.import.clipboard.import.slef")).withOnAction(event -> {
             Platform.runLater(()->{
                 final String clipboard = Clipboard.getSystemClipboard().getString();
-                if (!clipboard.startsWith("edomh://")) {
+                if (clipboard != null && !clipboard.startsWith("edomh://")) {
                     slefConsumer.accept(clipboard);
                 }
             });
