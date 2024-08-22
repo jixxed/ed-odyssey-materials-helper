@@ -89,7 +89,7 @@ jlink {
         jvmArgs = [
                 '-Dapp.version=' + project.version,
 //                '-Dlogging.appender.console.level.sentry=ERROR',
-                '-Xmx1280M',
+                '-Xmx2048M',
                 '--add-exports=java.base/jdk.internal.misc=nl.jixxed.merged.module',
                 '--add-exports=javafx.base/com.sun.javafx.event=org.controlsfx.controls',
                 '--add-exports=jdk.naming.dns/com.sun.jndi.dns=java.naming',
