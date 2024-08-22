@@ -93,7 +93,7 @@ version.dialog.ok,Ok,Ok,OK,De acuerdo,D’accord,OK,Хорошо
 version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,Baixar,Скачать
 statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,Los datos de su carguero pueden estar obsoletos. Vincula tu cuenta de Frontier.,,Os dados do Porta-Frotas podem estar desatualizados! Vincule sua conta Frontier.,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
 segment.type.present,Present,,,Presente,,Presente,Присутствует
-segment.type.not_present,Not present,,,No presente,,Não Presente,Не присутствует
+segment.type.not_present,Not present,,,No presente,,Ausente,Не присутствует
 segment.type.power_group_p,P,,,,,,
 segment.type.power_group_1,1,,,,,,
 segment.type.power_group_2,2,,,,,,
