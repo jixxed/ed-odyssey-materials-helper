@@ -39,11 +39,11 @@ blueprint.horizons.type.expanded_probe_scanning_radius,Expanded Probe Scanning R
 blueprint.horizons.type.fast_charge,Fast Charge,Fast Charge,Schnellladen,Carga rápida,Charge rapide,Carga rápida,Быстрый заряд
 blueprint.horizons.type.fast_scanner,Fast Scanner,Fast Scanner,Schnellscanner,Escáner,Scanner rapide,Scanner rápido,Быстрый сканер
 blueprint.horizons.type.faster_fsd_boot_sequence,Faster FSD Boot Sequence,Faster FSD Boot Sequence,Schnellere FSA -Bootsequenz,Secuencia de inicio MDD rápida,Séquence de démarrage FSD plus rapide,Sequência de Inicialização do MDD Mais Rápida,Последовательность быстрого запуска FSD
-blueprint.horizons.type.feedback_cascade,Feedback Cascade,Feedback Cascade,Rückkopplungskaskade,Retroalimentación en cascada,Cascade de rétroaction,Cascata Reverberante,Ответный залп
+blueprint.horizons.type.feedback_cascade,Feedback Cascade,Feedback Cascade,Rückkopplungskaskade,Retroalimentación en cascada,Cascade de rétroaction,Cascata de Realimentação,Ответный залп
 blueprint.horizons.type.flow_control,Flow Control,Flow Control,Flusssteuerung,Control de flujo,Contrôle de flux,Controle de Fluxo,Контроль интенсивности
 blueprint.horizons.type.focused_weapon,Focused Weapon,Focused Weapon,Waffenfokussiert,Arma concentrada,Arme ciblée,Arma com Foco,Точное орудие
 blueprint.horizons.type.force_block,Force Block,Force Block,Kraftblock,Bloqueo cinético,Bloc de force,Bloqueio Cinético,Усиленная блокировка
-blueprint.horizons.type.force_shell,Force Shell,Force Shell,Druckschock,Proyectil de fuerza,Coquille de force,Projétil de força,Усиленные снаряды
+blueprint.horizons.type.force_shell,Force Shell,Force Shell,Druckschock,Proyectil de fuerza,Coquille de force,Projétil de Força,Усиленные снаряды
 blueprint.horizons.type.fsd_interrupt,FSD Interrupt (Dumbfire Only),FSD Interrupt (Dumbfire Only),FSA-Unterbrechung (nur Haltungsfeuer),Interrupción MDD (solo Fire),Interruption FSD (Fired uniquement),Interrupção do FSD (somente não-guiada),Помеха для FSD (только неуправляемые)
 blueprint.horizons.type.guardian_fsd_booster,Guardian FSD Booster,Guardian FSD Booster,Guardian-Frameshiftantrieb-Booster,Potenciador de MDD guardián,Guardian FSD Booster,Potencializador do Motor de Distorção de Fase Guardian,Ускоритель FSD Стражей
 blueprint.horizons.type.guardian_gauss_cannon_fixed_medium,Guardian Gauss Cannon Fixed Medium,Guardian Gauss Cannon Fixed Medium,Guardian-Gausskanone medium fest,Cañón Gauss Guardián Medio fijo,Guardian Gauss Cannon Fixed Medium,Canhão Gauss Guardian (Fixa) (Classe:2),Пушка Гаусса Стражей (2 класс ср. фикс.)
