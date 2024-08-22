@@ -14,7 +14,7 @@ blueprint.horizons.type.cluster_capacitor,Cluster Capacitor,Cluster Capacitor,Cl
 blueprint.horizons.type.concordant_sequence,Concordant Sequence,Concordant Sequence,Konkordante Sequenz,Secuencia concordante,Séquence concordante,Sequência Concordante,Последовательность координации
 blueprint.horizons.type.corrosion_resistant_cargo_rack,Corrosion Resistant Cargo Rack,Corrosion Resistant Cargo Rack,Korrosionsbeständiges Frachtgestell,Bodega de carga anticorrosión,Support de chargement résistant à la corrosion,Estante de Carga Anticorrosão,Антикоррозийный грузовой стеллаж
 blueprint.horizons.type.corrosive_shell,Corrosive Shell,Corrosive Shell,Korrosionsgranate,Proyectil Corrosivo,Coquille corrosive,Projétil Corrosivo,Разъедающие снаряды
-blueprint.horizons.type.dazzle_shell,Dazzle Shell,Dazzle Shell,Blendgranate,Proyectil Deslumbrante,Coquille d’éblouissement,Projétil Dazzle,Ослепляющие снаряды
+blueprint.horizons.type.dazzle_shell,Dazzle Shell,Dazzle Shell,Blendgranate,Proyectil Deslumbrante,Coquille d’éblouissement,Projétil Cegante,Ослепляющие снаряды
 blueprint.horizons.type.deep_charge,Deep Charge,Deep Charge,Tiefenladung,Carga intensa,Charge profonde,Carga Intensa,Заряд повышенной мощности
 blueprint.horizons.type.deep_plating,Deep Plating,Deep Plating,Tiefenüberzug,Enchapado profundo,Placage profond,Revestimento Espesso,Утолщённая броня
 blueprint.horizons.type.dirty_drive_tuning,Dirty Drive Tuning,Dirty Drive Tuning,Aggressives Antriebstuning,Motor sucio,Digne de lecteur sale,Ajuste de Motor Sujo,«Грязная» донастройка
@@ -145,9 +145,9 @@ blueprint.horizons.type.super_conduits,Super Conduits,Super Conduits,Superleiter
 blueprint.horizons.type.super_penetrator,Super Penetrator,Super Penetrator,Superdurchdringer,Superpenetrador,Super pénétrateur,Super penetrador,Модуль сверхпробития
 blueprint.horizons.type.synthesis,Synthesis,Synthesis,Synthese,Síntesis,Synthèse,Síntese,Синтез
 blueprint.horizons.type.system_focused,System Focused,System Focused,Systemfokussiert,Centrado en Sistemas,Système axé,Distribuidor de Energia com Foco nos Sistemas,Распределитель питания на систему
-blueprint.horizons.type.target_lock_breaker,Target Lock Breaker,Target Lock Breaker,Zielvisierbrecher,Bloqueo de selección,Disjoncteur de la cible,Disjuntor de Travamento de Destino,Генератор помех для системы захвата цели
+blueprint.horizons.type.target_lock_breaker,Target Lock Breaker,Target Lock Breaker,Zielvisierbrecher,Bloqueo de selección,Disjoncteur de la cible,Quebra da Trava do Alvo,Генератор помех для системы захвата цели
 blueprint.horizons.type.thermal_cascade,Thermal Cascade,Thermal Cascade,Hitzesalven,Cascada térmica,Cascade thermique,Cascata Térmica,Термический залп
-blueprint.horizons.type.thermal_conduit,Thermal Conduit,Thermal Conduit,Thermischer Verstärker,Conductore térmico,Conduit thermique,Conduíte Térmico,Проводник тепла
+blueprint.horizons.type.thermal_conduit,Thermal Conduit,Thermal Conduit,Thermischer Verstärker,Conductore térmico,Conduit thermique,Condutor Térmico,Проводник тепла
 blueprint.horizons.type.thermal_resistant,Thermal Resistant,Thermal Resistant,Thermalresistent,Resistente a térmico,Résistant thermique,Resistencia Térmica,Термостойкий усилитель
 blueprint.horizons.type.thermal_resistant_hull_reinforcement,Thermal Resistant Hull Reinforcement,Thermal Resistant Hull Reinforcement,Thermalresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a térmico,Renforcement de la coque résistante thermique,Reforço do casco com Resistência Térmica,Термостойкое усиление корпуса
 blueprint.horizons.type.thermal_resistant_shields,Thermal Resistant Shields,Thermal Resistant Shields,Thermalresistente Schilde,Escudos de resistencia térmica,Boucliers résistants thermiques,Escudos com Resistência Térmica,Термостойкие щиты
