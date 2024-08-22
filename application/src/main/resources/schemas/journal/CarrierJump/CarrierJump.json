@@ -488,5 +488,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Docked", "StationName", "StationType", "MarketID", "StationFaction", "StationGovernment", "StationEconomy", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType" ]
+  "required" : [ "Docked", "StationName", "StationType", "MarketID", "StationGovernment", "StationEconomy", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType" ]
 }
