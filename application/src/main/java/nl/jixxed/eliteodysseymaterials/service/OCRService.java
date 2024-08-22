@@ -59,6 +59,11 @@ public class OCRService {
     }
 
     static synchronized String imageToString(final BufferedImage image) throws TesseractException {
-        return instance.doOCR(image);
+        try{
+            return instance.doOCR(image);
+        }catch (Error error){
+            log.error("Error in imageToString", error);
+        }
+        return "";
     }
 }
