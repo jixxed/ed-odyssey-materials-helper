@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import io.sentry.Sentry;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.logging.SLF4JLogDelegateFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,32 @@ public class Main {
         setProperty(LOGGER_DELEGATE_FACTORY_CLASS_NAME, SLF4JLogDelegateFactory.class.getName());
         LoggerFactory.getLogger(LoggerFactory.class);
         log.info("launching app with java version: " + getVersion());
+        Sentry.init(options -> {
+            final String buildVersion = getBuildVersion();
+            options.setDsn("https://1aacf97280717f749dfc93a1713f9551@o4507814449774592.ingest.de.sentry.io/4507814504759376");
+            options.setEnvironment(getEnvironment(buildVersion));
+            options.setRelease(buildVersion);
+            options.setEnabled(!buildVersion.equals("dev"));
+        });
         FXApplication.launchFx(args);
+    }
+
+    private static String getEnvironment(String buildVersion) {
+        if (buildVersion.equals("dev")) {
+            return "Development";
+        }else if(buildVersion.contains("beta")){
+            return "Beta";
+        }else{
+            return "Production";
+        }
+    }
+
+    public static String getBuildVersion() {
+        var version = System.getProperty("app.version");
+        if(version == null){
+            return "dev";
+        }
+        return version;
     }
 
     private static void handleDeeplink(final String arg) {

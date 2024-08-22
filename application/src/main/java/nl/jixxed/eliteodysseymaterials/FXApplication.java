@@ -1,5 +1,8 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import io.sentry.Attachment;
+import io.sentry.Hint;
+import io.sentry.Sentry;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.BoundingBox;
@@ -92,7 +95,7 @@ public class FXApplication extends Application {
         LocationService.init();
         PinnedBlueprintService.init();
         ScalingHelper.init();
-        if(Boolean.FALSE.equals(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, false))) {
+        if (Boolean.FALSE.equals(PreferencesService.getPreference(PreferenceConstants.TRACKING_OPT_OUT, false))) {
 //            HighGradeEmissionService.initialize();
         }
         EDDNService.init();
@@ -120,7 +123,7 @@ public class FXApplication extends Application {
                     log.debug("applicationLayout");
 
                     Platform.runLater(() -> {
-                        try{
+                        try {
                             this.applicationLayout = new ApplicationLayout(this);
                             this.content.getChildren().add(this.applicationLayout);
                             setupStyling(scene);
@@ -128,7 +131,7 @@ public class FXApplication extends Application {
                             Platform.runLater(() -> {
                                 EventService.publish(new ApplicationLifeCycleEvent());
                             });
-                        }catch (Throwable t){
+                        } catch (Throwable t) {
                             log.error("Failed to initialize the UI", t);
                             String supportFile = SupportService.createSupportPackage();
                             showAlert(supportFile, t);
@@ -151,7 +154,7 @@ public class FXApplication extends Application {
             createApplicationScene();
             KeyCombination kc = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
             Runnable rn = () -> {
-                Platform.runLater(()->{
+                Platform.runLater(() -> {
                     final String clipboard = Clipboard.getSystemClipboard().getString();
                     if (clipboard.startsWith("edomh://")) {
                         deeplinkConsumer.accept(clipboard);
@@ -169,14 +172,18 @@ public class FXApplication extends Application {
                 }
             }
         } catch (final Exception ex) {
-
-            String supportFile = ""            ;
+            String supportFile = "";
             try {
                 supportFile = SupportService.createSupportPackage();
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error("Failed to create support package", e);
             }
-
+            if (supportFile.isBlank()) {
+                Sentry.captureException(ex);
+            } else {
+                Attachment attachment = new Attachment(supportFile);
+                Sentry.captureException(ex, Hint.withAttachment(attachment));
+            }
             showAlert(supportFile, ex);
         }
     }
@@ -214,7 +221,7 @@ public class FXApplication extends Application {
 //            }
         }));
         this.eventListeners.add(EventService.addListener(this, FontSizeEvent.class, fontSizeEvent -> {
-            if(applicationLayout != null) {
+            if (applicationLayout != null) {
                 this.applicationLayout.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px");
             }
             EventService.publish(new AfterFontSizeSetEvent(fontSizeEvent.getFontSize()));
@@ -320,7 +327,6 @@ public class FXApplication extends Application {
     }
 
 
-
     private Scene createApplicationScene() {
         content = new StackPane(/*this.applicationLayout, */this.loadingScreen);
         content.getStyleClass().add("app");
@@ -377,7 +383,7 @@ public class FXApplication extends Application {
     }
 
     private void setupStyling(final Scene scene) {
-        if(applicationLayout != null) {
+        if (applicationLayout != null) {
             this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");
         }
         final JMetro jMetro = new JMetro(Style.DARK);

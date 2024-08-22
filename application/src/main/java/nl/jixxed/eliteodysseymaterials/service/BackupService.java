@@ -55,7 +55,7 @@ public class BackupService {
                 }
 
                 private boolean isExcluded(String fileName) {
-                    return fileName.equals("lock") || fileName.equals("material-report.json") || fileName.endsWith(".tmp");
+                    return fileName.equals("lock") || fileName.equals("material-report.json") || fileName.endsWith(".tmp") || fileName.startsWith("support.");
                 }
             });
         }

@@ -15,5 +15,6 @@ application/out
 /application/lombok.config
 /application/log/
 /application/log/edomh.log
+/application/local.properties
 todo.txt
 ship.full
