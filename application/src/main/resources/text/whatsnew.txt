@@ -1,3 +1,8 @@
+Version 2.100
+-------------
+prevent commodities and materials from going negative, causing application startup issues.
+more bugfixes
+
 Version 2.99
 -------------
 Several bugfixes and improvements
