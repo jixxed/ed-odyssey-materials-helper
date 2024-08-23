@@ -2241,13 +2241,13 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,80.0),
                         Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),//TODO
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 289.0),//TODO
+                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.67),//TODO
                         Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),//TODO
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 48.35),//TODO
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),//TODO
                         Map.entry(HorizonsModifier.FUEL_COST, 50.0),//TODO
                         Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),//TODO
                         Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),//TODO
-                        Map.entry(HorizonsModifier.MASS_LOCK, 23.0),//TODO
+                        Map.entry(HorizonsModifier.MASS_LOCK, 18.0),//TODO
                         Map.entry(HorizonsModifier.CREW, 1.0)//TODO
 
                 ),// 2 116 55   // 1 -18 -21
