@@ -123,7 +123,7 @@ blueprint.horizons.type.resistance_augmented,Resistance Augmented,Resistance Aug
 blueprint.horizons.type.reverberating_cascade,Reverberating Cascade,Reverberating Cascade,Nachhallende Kaskade,Reverberación en cascada,Réverbération Cascade,Cascata Reverberante,Отражённый залп
 blueprint.horizons.type.scramble_spectrum,Scramble Spectrum,Scramble Spectrum,Frequenzstörung,Espectro de Interferencias,Spectre de brouillage,Espectro Randômico,Отключающая сетка
 blueprint.horizons.type.screening_shell,Screening Shell,Screening Shell,Abschirmende Geschosse,Proyectil deslumbrante,Coquille de dépistage,Projétil com triagem,Заслоняющие снаряды
-blueprint.horizons.type.shielded,Shielded,Shielded,Schildverstärkt,Blindado,Blindé,Blindado,Защищённый
+blueprint.horizons.type.shielded,Shielded,Shielded,Schildverstärkt,Blindado,Blindé,Protegido,Защищённый
 blueprint.horizons.type.shielded_fsd,Shielded FSD,Shielded FSD,schildverstärker Frameshiftantrieb,MDD blindado,FSD blindé,MDD blindado,Защищённый FSD
 blueprint.horizons.type.shift_lock_canister,Shift Lock Canister,Shift Lock Canister,Schaltschließkanister,Cartucho bloqueador,Cartouche de verrouillage de décalage,Shift Lock Canister,Рамоблокирующая кассета
 blueprint.horizons.type.shock_cannon_fixed_large,Shock Cannon Fixed Large,Shock Cannon Fixed Large,Schockkanone groß fest,Cañón de choque fijo grande,Canon d’amortisseur réparé,Canhão de Impacto (Fixa) (Classe: 3),Шоковое орудие (3 класс бол. фикс.)
