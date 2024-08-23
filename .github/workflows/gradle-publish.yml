@@ -116,4 +116,4 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: Production
-          version: "${{ steps.tagName.outputs.tag }}"
+          version: "edomh-app@${{ steps.tagName.outputs.tag }}"
