@@ -14,7 +14,7 @@ material.tooltip.type,Type:,Type:,Typ:,Tipo:,Taper:,Tipo:,Тип:
 material.tooltip.type.raw,Type: Raw,Type: Raw,Typ: Element,Tipo: Materia Prima,Type: brut,Tipo: cru,Тип: Элементы
 material.tooltip.type.encoded,Type: Encoded,Type: Encoded,Typ: Verschlüsselt,Tipo: Datos,Type: codé,Tipo: codificado,Тип: Зашифрованные данные
 material.tooltip.type.manufactured,Type: Manufactured,Type: Manufactured,Typ: Gefertigt,Tipo: Manufacturado,Type: fabriqué,Tipo: fabricado,Тип: Промышленные материалы
-material.tooltip.fleetcarrier,Fleet carrier,Fleet carrier,Carrier,Carguero,Transporteur de flotte,Transportadora de frota,Флотоносец
+material.tooltip.fleetcarrier,Fleet carrier,Fleet carrier,Carrier,Carguero,Transporteur de flotte,Porta-Frota,Флотоносец
 material.tooltip.fleetcarrier.not.linked,Frontier account link not available,Frontier account link not available,Frontier Konto Verbindung nicht verfügbar,Enlace de cuenta de Frontier no disponible,Lien de compte Frontier non disponible,Link da conta de Frontier não disponível,Аккаунт Frontier не привязан
 material.tooltip.fleetcarrier.buy,Buy {0}({1} remaining) @ ${2},Buy {0}({1} remaining) @ ${2},Kaufen {0} ({1} verbleibend) @ $ {2},Comprar {0} ({1} restante) @ $ {2},Acheter {0} ({1} restant) @ $ {2},Compre {0} ({1} restante) @ $ {2},Купить {0} ({1} оставшееся) @ $ {2}
 material.tooltip.fleetcarrier.sell,Sell {0} @ ${1},Sell {0} @ ${1},Verkaufen {0} @ $ {1},Vender {0} @ $ {1},Vendre {0} @ $ {1},Vender {0} @ $ {1},Продать {0} @ $ {1}

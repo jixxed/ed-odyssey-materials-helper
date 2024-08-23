@@ -59,7 +59,7 @@ search.sort.placeholder,Sort materials,Sort materials,Materialien sortieren,Clas
 search.sort.quantity,Quantity,Quantity,Menge,Cantidad,Quantité,Quantidade,Количество
 search.sort.relevant_irrelevant,"Relevant, irrelevant","Relevant, irrelevant","Relevant, irrelevant","Relevante, irrelevante","Pertinent, non pertinent","Relevante, irrelevante","Релевантные, нерелевантные"
 search.text.placeholder,Search,Search,Suchen,Buscar,Rechercher,Pesquisa,Поиск
-search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Carguero,Transporteur de flotte,Transportadora de frota,Флотоносец
+search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Carguero,Transporteur de flotte,Porta-Frota,Флотоносец
 search.filter.backpack,Backpack,Backpack,Rucksack,Mochila,Sac à dos,Mochila,Рюкзак
 search.sort.quantity_ship,Ship quantity,Ship quantity,Schiffsmenge,Cantidad de naves,Quantité de navire,Quantidade de navio,Количество на корабле
 search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,FleetCarrier Menge,Cantidad de cargueros,Quantité Fleetcarrier,Quantidade FleetCarrier,Количество на флотоносце
