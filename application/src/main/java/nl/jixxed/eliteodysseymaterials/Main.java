@@ -1,11 +1,13 @@
 package nl.jixxed.eliteodysseymaterials;
 
+import io.sentry.Attachment;
 import io.sentry.Sentry;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.logging.SLF4JLogDelegateFactory;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.service.SupportService;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,6 +44,19 @@ public class Main {
             options.setEnvironment(getEnvironment(buildVersion));
             options.setRelease("edomh-app@" + buildVersion);
             options.setEnabled(!buildVersion.equals("dev"));
+            options.setBeforeSend((event, hint) -> {
+                String supportFile = "";
+                try {
+                    supportFile = SupportService.createSupportPackage();
+                } catch (Exception e) {
+                    log.error("Failed to create support package", e);
+                }
+                if(!supportFile.isBlank()) {
+                    Attachment attachment = new Attachment(supportFile);
+                    hint.addAttachment(attachment);
+                }
+                return event;
+            });
         });
         FXApplication.launchFx(args);
     }

@@ -1,3 +1,7 @@
+Version 2.103
+-------------
+Add logfile to support package
+
 Version 2.102
 -------------
 Bugfix for registering edomh:// urls
