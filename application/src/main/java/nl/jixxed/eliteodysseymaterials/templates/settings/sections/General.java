@@ -281,9 +281,9 @@ public class General extends VBox implements Template {
                                 log.error("Register check error", e);
                             }
                         }
-                        REGISTERED.set(isRegisteredNow);
                         final boolean finalIsRegisteredNow = isRegisteredNow;
                         Platform.runLater(() -> {
+                            REGISTERED.set(finalIsRegisteredNow);
                             this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
                             this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
                             this.urlSchemeLinkingButton.setDisable(false);
