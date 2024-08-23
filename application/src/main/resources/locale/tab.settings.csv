@@ -1,7 +1,7 @@
 messageKey,,en,de,es,fr,pt,ru
 tab.settings.commander,Commander,Commander,Kommandant,Comandante,Commandant,Comandante,Командир
 tab.settings.journal.folder.select,Select Directory,Select Directory,Verzeichnis auswählen,Seleccionar directorio,Sélectionner un répertoire,Selecione o diretório,Выбрать каталог
-tab.settings.journal.folder,Journal Folder,Journal Folder,Journalordner,Carpeta del diario,Dossier du journal,Pasta do diário,Каталог с логом игры
+tab.settings.journal.folder,Journal Folder,Journal Folder,Journalordner,Carpeta del diario,Dossier du journal,Caminho do Journal,Каталог с логом игры
 tab.settings.language,Language,Language,Sprache,Idioma,Langue,Idioma,Язык
 tab.settings.material.override.add,Add,Add,Hinzufügen,Agregar,Ajouter,Adicionar,Добавить
 tab.settings.material.override.list,These materials are considered relevant,These materials are considered relevant,Diese Materialien gelten als relevant,Estos materiales se consideran relevantes,Ces matériaux sont considérés comme pertinents,Estes materiais são considerados relevantes,Эти материалы считаются нужными
@@ -67,32 +67,32 @@ tab.settings.eddn.toggle,Share galaxy data with EDDN,Share galaxy data with EDDN
 tab.settings.eddn.explain,EDDN requests you to only use one app at a time to share data to reduce server load,EDDN requests you to only use one app at a time to share data to reduce server load,"EDDN fordert Sie auf, nur eine App gleichzeitig zu verwenden, um Daten zu teilen, um die Serverlast zu reduzieren",EDDN le solicita que use solo una aplicación a la vez para compartir datos para reducir la carga del servidor,EDDN vous demande d’utiliser une seule application à la fois pour partager des données pour réduire la charge du serveur,Eddn solicita que você use apenas um aplicativo por vez para compartilhar dados para reduzir a carga do servidor,"EDDN запрашивает вас использовать только одно приложение за раз для обмена данными, чтобы уменьшить загрузку сервера"
 tab.settings.broker.max.range,Technology Broker max. distance(Ls) from star,Technology Broker max. distance(Ls) from star,,,,Distância máxima do mediador de technologia (sL) da Estrela,Техноброкер макс. расстояние(св.с.) от звезды
 tab.settings.title.wishlist.horizons,Horizons Wishlist,Horizons Wishlist,Horizons Wunschliste,Lista de deseos de horizontes,Liste de souhaits Horizons,Lista de desejos Horizons,Cписок желаемого Horizons
-tab.settings.title.wishlist.odyssey,Odyssey Wishlist,Odyssey Wishlist,,,,,Odyssey список желаемого
-tab.settings.flip.remaining.available.horizons,Show remaining,Show remaining,,,,,Показать оставшееся
-tab.settings.flip.remaining.available.horizons.explain,Enabling this will show remaining values instead of available values for the required materials,Enabling this will show remaining values instead of available values for the required materials,,,,,"При включении этой опции будет показываться оставшееся количество требуемых материалов, вместо количества имеющихся материалов"
-tab.settings.flip.remaining.available.odyssey,Show remaining,Show remaining,,,,,Показать оставшееся
-tab.settings.flip.remaining.available.odyssey.explain,Enabling this will show remaining values instead of available values for the required materials,Enabling this will show remaining values instead of available values for the required materials,,,,,"При включении этой опции будет показываться оставшееся количество требуемых материалов, вместо количества имеющихся материалов"
-tab.settings.blueprint.expanded,Tooltip blueprint expanded,,,,,,Раскрытые списки рецептов в карточке материала
-tab.settings.blueprint.expanded.explain,Whether or not blueprints panels are expanded or collapsed in material tooltips,,,,,,Список рецептов в карточке материала будет по умолчанию свернут или раскрыт
+tab.settings.title.wishlist.odyssey,Odyssey Wishlist,Odyssey Wishlist,,,,Lista de Desejos Odissey,Odyssey список желаемого
+tab.settings.flip.remaining.available.horizons,Show remaining,Show remaining,,,,Mostrar em Falta,Показать оставшееся
+tab.settings.flip.remaining.available.horizons.explain,Enabling this will show remaining values instead of available values for the required materials,Enabling this will show remaining values instead of available values for the required materials,,,,Habilitar isso mostrará a quantidade faltante em vez da quantidade disponível para os materiais necessários,"При включении этой опции будет показываться оставшееся количество требуемых материалов, вместо количества имеющихся материалов"
+tab.settings.flip.remaining.available.odyssey,Show remaining,Show remaining,,,,Mostrar em Falta,Показать оставшееся
+tab.settings.flip.remaining.available.odyssey.explain,Enabling this will show remaining values instead of available values for the required materials,Enabling this will show remaining values instead of available values for the required materials,,,,Habilitar isso mostrará a quantidade faltante em vez da quantidade disponível para os materiais necessários,"При включении этой опции будет показываться оставшееся количество требуемых материалов, вместо количества имеющихся материалов"
+tab.settings.blueprint.expanded,Tooltip blueprint expanded,,,,,Dica de Ferramenta de Projeto Expandido,Раскрытые списки рецептов в карточке материала
+tab.settings.blueprint.expanded.explain,Whether or not blueprints panels are expanded or collapsed in material tooltips,,,,,Painéis de projetos são expandidos ou recolhidos nas dicas de ferramentas do material,Список рецептов в карточке материала будет по умолчанию свернут или раскрыт
 tab.settings.capi.explain,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval. Make sure you login with the same commander.,Retrieves API data like fleetcarrier stock and orders on a 5 minute interval. Make sure you login with the same commander.,Ruft API Daten wie FleetCarrier Aktien und Bestellungen in einem Intervall von 5 Minuten ab. Make sure you login with the same commander.,Recupera datos de API como stock de flotante y pedidos en un intervalo de 5 minutos. Make sure you login with the same commander.,Récupère les données de l’API comme le stock et les commandes de FleetCarrier sur un intervalle de 5 minutes. Make sure you login with the same commander.,Recupera dados da API como estoque de FleetCarrier e pedidos em um intervalo de 5 minutos. Make sure you login with the same commander.,"Получает данные API, такие как запасы FleetCarrier и заказы в 5 -минутном интервале. Убедитесь, что вы логинитесь тем же коммандером."
 tab.settings.capi.connect,Connect CMDR {0},Connect CMDR {0},Verbinden CMDR {0},Conectar CMDR {0},Relier CMDR {0},Conectar CMDR {0},Соединить CMDR {0}
-tab.settings.capi.disconnect,Disconnect CMDR {0},Disconnect CMDR {0},Trennen CMDR {0},Desconectar CMDR {0},Débrancher CMDR {0},desconectar CMDR {0},Отсоединить CMDR {0}
-tab.settings.title.ships.horizons,Ships - Legacy modules,,,,,,Корабли - модули Legacy
-tab.settings.ships.new.module,New module from,,,Nuevo módulo,,,Новый модуль из
-tab.settings.ships.new.module.create,Create,,,Crear,,,Создать
-tab.settings.ships.legacy.modules,Legacy modules,,,,,,Модули Legacy
-tab.settings.ships.legacy.modules.remove,Remove,,,Eliminar,,,Удалить
-tab.settings.ships.legacy.modules.edit,Edit,,,Editar,,,Изменить
-tab.settings.ships.legacy.modules.save,Save,,,Guardar,,,Сохранить
+tab.settings.capi.disconnect,Disconnect CMDR {0},Disconnect CMDR {0},Trennen CMDR {0},Desconectar CMDR {0},Débrancher CMDR {0},Desconectar CMDR {0},Отсоединить CMDR {0}
+tab.settings.title.ships.horizons,Ships - Legacy modules,,,,,Naves - Módulos Legacy,Корабли - модули Legacy
+tab.settings.ships.new.module,New module from,,,Nuevo módulo,,Novo Módulo,Новый модуль из
+tab.settings.ships.new.module.create,Create,,,Crear,,Criar,Создать
+tab.settings.ships.legacy.modules,Legacy modules,,,,,Módulos Legacy,Модули Legacy
+tab.settings.ships.legacy.modules.remove,Remove,,,Eliminar,,Remover,Удалить
+tab.settings.ships.legacy.modules.edit,Edit,,,Editar,,Editar,Изменить
+tab.settings.ships.legacy.modules.save,Save,,,Guardar,,Salvar,Сохранить
 settings.button.import.clipboard,Import from clipboard,Import from clipboard,Importieren aus der Zwischenablage,Importar desde el portapapeles,Importer depuis le presse-papiers,Importar da área de transferência,Импортировать из буфера обмена
-settings.button.import.clipboard.explain,Import an edomh:// url from the clipboard. You can also use CTRL+V to paste the url.,Import an edomh:// url from the clipboard. You can also use CTRL+V to paste the url.,"Importieren Sie eine edomh:// URL aus der Zwischenablage. Sie können auch STRG+V verwenden, um die URL einzufügen.",Importe una URL edomh:// del portapapeles. También puede usar CTRL+V para pegar la URL.,Importez une URL edomh:// depuis le presse-papiers. Vous pouvez également utiliser CTRL+V pour coller l’URL.,Importe uma URL edomh:// da área de transferência. Você também pode usar CTRL+V para colar a URL.,Импортируйте URL edomh:// из буфера обмена. Вы также можете использовать CTRL+V для вставки URL.
+settings.button.import.clipboard.explain,Import an edomh:// url from the clipboard. You can also use CTRL+V to paste the url.,Import an edomh:// url from the clipboard. You can also use CTRL+V to paste the url.,"Importieren Sie eine edomh:// URL aus der Zwischenablage. Sie können auch STRG+V verwenden, um die URL einzufügen.",Importe una URL edomh:// del portapapeles. También puede usar CTRL+V para pegar la URL.,Importez une URL edomh:// depuis le presse-papiers. Vous pouvez également utiliser CTRL+V pour coller l’URL.,Importe link edomh:// da área de transferência. Você também pode usar CTRL+V para colar a URL.,Импортируйте URL edomh:// из буфера обмена. Вы также можете использовать CTRL+V для вставки URL.
 settings.button.import.clipboard.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать
 settings.button.import.clipboard.slef,,,,,,,
 settings.button.import.clipboard.slef.explain,Import SLEF from the clipboard.,Import SLEF from the clipboard.,Importieren Sie SLEF aus der Zwischenablage.,Importar SLEF desde el portapapeles.,Importer SLEF depuis le presse-papiers.,Importar SLEF da área de transferência.,Импортировать SLEF из буфера обмена.
 settings.button.import.clipboard.import.slef,Import SLEF,Import SLEF,Import SLEF,Importar SLEF,Importer SLEF,Importar SLEF,Импортировать SLEF
-tab.settings.notification.test,Test,Test,Test,Prueba,Test,Test,Тест
+tab.settings.notification.test,Test,Test,Test,Prueba,Test,Teste,Тест
 tab.settings.notification.screen,Screen,Screen,Screen,Pantalla,Écran,Tela,Экран
 settings.button.support.package,Support package,,,,,,
 settings.button.support.package.create,Create,,,,,,
-settings.button.support.package.explain,Creates a support package for the developer to assist in reproducing issues,,,,,,
+settings.button.support.package.explain,Creates a support package for the developer to assist in reproducing issues,,,,,Crie um pacote de suporte para auxiliar o desenvolvedor na reprodução de problemas,
 tab.settings.ar.bartender.toggle.explain,NOTE: Disabling the blur graphics setting ingame to remove transparent backgound at the bartender helps with the detection,,,,,,
