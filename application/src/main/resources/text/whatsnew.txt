@@ -1,3 +1,7 @@
+Version 2.102
+-------------
+Bugfix for registering edomh:// urls
+
 Version 2.101
 -------------
 Update libraries
