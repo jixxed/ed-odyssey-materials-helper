@@ -15,7 +15,7 @@ application.orientation.horizontal,Horizontal,Horizontal,Horizontal,Horizontal,H
 application.orientation.vertical,Vertical,Vertical,Vertikal,Vertical,Vertical,Vertical,По вертикали
 game.expansion.horizons,Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Contenido de Odyssey no disponible),Horizons (Odyssey content not available),Horizons (Odyssey content not available),Horizons (Контент Odyssey недоступен)
 game.expansion.odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey,Odyssey
-game.expansion.None,Base game,Base game,Base game,Juego Base,Base game,Base game,Базовая версия игры
+game.expansion.none,Base game,Base game,Base game,Juego Base,Base game,Base game,Базовая версия игры
 tabs.engineers,Engineers,Engineers,Ingenieure,Ingenieros,Ingénieurs,Engenheiros,Инженеры
 tabs.import,Import,Import,Importieren,Importar,Importer,Importar,Импортировать
 tabs.imported.wishlist,Imported wishlist,Imported wishlist,Importierte Wunschliste,Lista de deseos importada,Liste de souhaits importée,Lista de desejos importada,Импортированный список желаемого
