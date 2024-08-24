@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.service.SupportService;
+import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,12 +40,16 @@ public class Main {
         LoggerFactory.getLogger(LoggerFactory.class);
         log.info("launching app with java version: " + getVersion());
         Sentry.init(options -> {
+
             final String buildVersion = getBuildVersion();
             options.setDsn("https://1aacf97280717f749dfc93a1713f9551@o4507814449774592.ingest.de.sentry.io/4507814504759376");
             options.setEnvironment(getEnvironment(buildVersion));
             options.setRelease("edomh-app@" + buildVersion);
             options.setEnabled(!buildVersion.equals("dev"));
             options.setBeforeSend((event, hint) -> {
+                if (!VersionService.isLatestVersion()) {
+                    return null;  // Returning null prevents the event from being sent to Sentry
+                }
                 String supportFile = "";
                 try {
                     supportFile = SupportService.createSupportPackage();
