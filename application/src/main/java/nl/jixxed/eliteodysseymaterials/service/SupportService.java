@@ -30,6 +30,8 @@ import java.util.zip.ZipOutputStream;
 @Slf4j
 public class SupportService {
 
+    private static final int DAYS_OF_SUPPORT_PACKAGES_TO_KEEP = 2;
+
     public static String createSupportPackage() {
         return createSupportPackage(null);
     }
@@ -49,6 +51,7 @@ public class SupportService {
         } catch (Exception e) {
             log.error("Failed to create support package.", e);
         }
+        FileService.deleteOldFiles(zipPath, DAYS_OF_SUPPORT_PACKAGES_TO_KEEP);
         return "";
     }
 
