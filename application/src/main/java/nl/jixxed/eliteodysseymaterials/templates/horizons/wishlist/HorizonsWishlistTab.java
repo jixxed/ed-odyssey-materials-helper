@@ -691,6 +691,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                     .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getManufactured().get(wishlistItem.getKey())))
                     .toList();
             final List<HorizonsWishlistIngredient> ingredientsCommodities = this.wishlistNeededCommodity.entrySet().stream()
+                    //might be missing: StorageService.getCommodityCount(entry.getKey(), StoragePool.FLEETCARRIER) +
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getCommodityCount(entry.getKey(), StoragePool.SHIP) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
                     .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getCommoditiesShip().get(wishlistItem.getKey())))
@@ -705,7 +706,8 @@ public class HorizonsWishlistTab extends HorizonsTab {
             this.commodityFlow.getChildren().addAll(ingredientsCommodities.stream().sorted(HorizonsWishlistMaterialSort.getSort(this.currentSearch)).toList());
         } else if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.NONE)) {
             final List<HorizonsWishlistIngredient> ingredientsAll = this.wishlistNeededAll.entrySet().stream()
-                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue().getRequired())
+                    //might be missing: StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) +
+                    .filter(entry -> !this.hideCompleted.get() || ((entry.getKey() instanceof Commodity commodity) ? StorageService.getCommodityCount(commodity, StoragePool.SHIP) : StorageService.getMaterialCount(entry.getKey())) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
                     .map(wishlistItem -> {
                         final Integer materialCount = (wishlistItem.getKey() instanceof Commodity commodity) ? StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER) + StorageService.getCommodityCount(commodity, StoragePool.SHIP) : StorageService.getMaterialCount(wishlistItem.getKey());
