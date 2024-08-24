@@ -103,7 +103,7 @@ modifier.horizons.name.heat_efficiency,Heat Efficiency,Heat Efficiency,Wärmeeff
 modifier.horizons.name.heat_reduced_when_striking_a_target,Heat Reduced When Striking A Target,Heat Reduced When Striking A Target,"Wärme reduziert, wenn ein Ziel getroffen wird",El calor se reduce cuando golpea a un objetivo,La chaleur réduite lors de la frappe d’une cible,Calor Reduzido ao Atingir Alvo,Охлаждает корабль при попадании по цели
 modifier.horizons.name.heatsink_duration,Duration,Duration,Dauer,Duración,Durée,Duração,Продолжительность
 modifier.horizons.name.hull_boost,Hull Boost,Hull Boost,Rumpfschub,Potenciador de casco,Boost de la coque,Incremento do Casco,Усиление корпуса
-modifier.horizons.name.hull_reinforcement,Hull Reinforcement,Hull Reinforcement,Rumpfverstärkung,Refuerzo de casco,Renforcement de la coque,Reforço do Casco,Усилитель корпуса
+modifier.horizons.name.hull_reinforcement,Hull Reinforcement,Hull Reinforcement,Rumpfverstärkung,refuerzo estructural,Renforcement de la coque,Reforço do Casco,Усилитель корпуса
 modifier.horizons.name.hull_strength,Hull Strength,Hull Strength,Rumpfstärke,Fuerza del casco,Force de coque,Força do Casco,Прочность корпуса
 modifier.horizons.name.integrity,Integrity,Integrity,Integrität,Integridad,Intégrité,Integridade,Целостность
 modifier.horizons.name.jam_duration,Jam Duration,Jam Duration,,,,Duração de Interferência,Продолжительность подваления
@@ -186,7 +186,7 @@ modifier.horizons.name.target_shield_cell_disrupted,Target Shield Cell Disrupted
 modifier.horizons.name.target_shield_generator_damaged,Target Shield Generator Damaged,Target Shield Generator Damaged,Zielschildgenerator beschädigt,Generador de escudo objetivo dañado,Générateur de bouclier cible endommagé,Gerador de Escudo do Alvo Danificado,Повреждает щитогенератор у цели
 modifier.horizons.name.target_signature_increased,Target Signature Increased,Target Signature Increased,Zielsignatur stieg,La firma objetivo aumentó,La signature cible a augmenté,Assinatura do Alvo Aumentada,Сигнатура цели увеличилась
 modifier.horizons.name.target_speed_reduced,Target Speed Reduced,Target Speed Reduced,Zielgeschwindigkeit reduziert,Velocidad objetivo reducida,La vitesse cible réduite,Velocidade do Alvo Reduzida,Уменьшает скорость цели
-modifier.horizons.name.target_thrusters_reboot,Target Thrusters Reboot,Target Thrusters Reboot,Target Thrusters Neustart,Reiniciar los propulsores del objetivo,Redémarrage des propulseurs cibles,Reinicialização dos Propulsores,Перезапускает двигатели цели
+modifier.horizons.name.target_thrusters_reboot,Target Thrusters Reboot,Target Thrusters Reboot,Target Thrusters Neustart,Reiniciar los impulsores del objetivo,Redémarrage des propulseurs cibles,Reinicialização dos Propulsores,Перезапускает двигатели цели
 modifier.horizons.name.target_wing_shields_regenerated,Target Wing Shields Regenerated,Target Wing Shields Regenerated,Target Wing Shields regeneriert,Escudos de ala objetivo regenerados,Les boucliers d’aile cible régénérés,Escudos de Ala Alvo Regenerados,Щиты цели в крыле регенерируют
 modifier.horizons.name.thermal_damage_ratio,Thermal Damage Ratio,Thermal Damage Ratio,,Porcentaje de daño Térmico,,Razão de Dano Térmico,Термический урон
 modifier.horizons.name.thermal_drain,Thermal Drain,Thermal Drain,,Drenaje Térmico,,Dreno Térmico,Вывод тепла

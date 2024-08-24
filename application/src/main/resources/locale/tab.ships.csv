@@ -43,7 +43,7 @@ ship.view.header.slot.sensors,SNR,,,,,SEN,СНС
 ship.view.header.slot.fueltank,FT,,,,,COMB,ТБ
 ship.view.header.slot.optional,Optional,,,Opcional,,Opcional,Внутр. модули
 ship.blueprint.add.all.to.wishlist,Add all to wishlist,Add all to wishlist,Fügen Sie alle zur Wunschliste hinzu,Agregar todo a la lista de deseos,Ajouter tout à WishList,Adicionar tudo à lista de desejos,Добавить все в список желаемого
-ship.blueprint.add.changed.to.wishlist,Add changed to wishlist,,,Agregar los cmabios a la lista de deseos,,Adicionar alterado à lista de desejos,Добавить измененное в список желаемого
+ship.blueprint.add.changed.to.wishlist,Add changed to wishlist,,,Agregar los cambios a la lista de deseos,,Adicionar alterado à lista de desejos,Добавить измененное в список желаемого
 ship.create.new.wishlist,Create new,Create new,Erstelle neu,Crear nuevo,Créer un nouveau,Criar novo,Создать новый
 ship.module.buttons.label,Equipped module,,,Módulo equipado,,Módulo equipado,Снаряженный модуль
 ship.module.restore,Restore,,,Restablecer,,Restaurar,Восстановить

@@ -713,16 +713,16 @@ ships.module.name.hpt_shieldbooster_size0_class2,Shield Booster,,,Potenciador de
 ships.module.name.hpt_shieldbooster_size0_class3,Shield Booster,,,Potenciador de Escudos,,Potencializador de Escudo,Усилитель щита
 ships.module.name.hpt_shieldbooster_size0_class4,Shield Booster,,,Potenciador de Escudos,,Potencializador de Escudo,Усилитель щита
 ships.module.name.hpt_shieldbooster_size0_class5,Shield Booster,,,Potenciador de Escudos,,Potencializador de Escudo,Усилитель щита
-ships.module.name.int_hullreinforcement_size1_class1,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size1_class2,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size2_class1,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size2_class2,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size3_class1,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size3_class2,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size4_class1,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size4_class2,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size5_class1,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size5_class2,Hull Reinforcement Package,,,Refuerzo de Casco,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size1_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size1_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size2_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size2_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size3_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size3_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size4_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size4_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size5_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size5_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
 ships.module.name.hpt_cannon_gimbal_large,Cannon,,,Cañón,,Canhão,Орудие
 ships.module.name.diamondback_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,Liga Leve,Лёгкие сплавы
 ships.module.name.diamondback_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,Liga Reforçada,Укреплённые сплавы
@@ -948,16 +948,16 @@ ships.module.name.hpt_atmulticannon_turret_medium,AX Multi-Cannon,,,Multicañón
 ships.module.name.hpt_atmulticannon_turret_large,AX Multi-Cannon,,,Multicañón AX,,Canhão de Repetição AX,Многоствольное орудие АИ
 ships.module.name.hpt_xenoscanner_basic_tiny,Xeno Scanner,,,Escáner Xeno,,Scanner Xeno,Ксено-сканер
 ships.module.name.int_dronecontrol_unkvesselresearch,Research Limpet Controller,,,Controladora de Drones de Investigación,,Controlador de Drone de Pesquisa,Контроллер дрона-исследователя
-ships.module.name.int_metaalloyhullreinforcement_size1_class1,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size1_class2,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size2_class1,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size2_class2,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size3_class1,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size3_class2,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size4_class1,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size4_class2,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size5_class1,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size5_class2,Meta Alloy Hull Reinforcement,,,Refuerzo de Casco de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size1_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size1_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size2_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size2_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size3_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size3_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size4_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size4_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size5_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size5_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
 ships.module.name.int_dronecontrol_decontamination_size1_class1,Decontamination Limpet Controller,,,Controladora de Drones de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
 ships.module.name.int_dronecontrol_decontamination_size3_class1,Decontamination Limpet Controller,,,Controladora de Drones de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
 ships.module.name.int_dronecontrol_decontamination_size5_class1,Decontamination Limpet Controller,,,Controladora de Drones de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
@@ -985,16 +985,16 @@ ships.module.name.typex_3_armour_mirrored,Mirrored Surface Composite,,,Compuesto
 ships.module.name.typex_3_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
 ships.module.name.hpt_guardian_gausscannon_fixed_medium,Guardian Gauss Cannon,,,Cañón Gauss Guardián,,Canhão Gauss Guardian,Пушка Гаусса Стражей
 ships.module.name.int_corrosionproofcargorack_size4_class1,Corrosion Resistant Cargo Rack,,,Bodega de Carga Anticorrosión,,Estante de Carga Anticorrosão,Антикоррозийный грузовой стеллаж
-ships.module.name.int_guardianhullreinforcement_size1_class1,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size1_class2,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size2_class1,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size2_class2,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size3_class1,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size3_class2,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size4_class1,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size4_class2,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size5_class1,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size5_class2,Guardian Hull Reinforcement,,,Refuerzo de Casco Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size1_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size1_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size2_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size2_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size3_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size3_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size4_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size4_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size5_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size5_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
 ships.module.name.int_guardianmodulereinforcement_size1_class1,Guardian Module Reinforcement,,,Refuerzo de Módulo Guardián,,Reforço de Módulo Guardian,Набор для усиления модуля Стражей
 ships.module.name.int_guardianmodulereinforcement_size1_class2,Guardian Module Reinforcement,,,Refuerzo de Módulo Guardián,,Reforço de Módulo Guardian,Набор для усиления модуля Стражей
 ships.module.name.int_guardianmodulereinforcement_size2_class1,Guardian Module Reinforcement,,,Refuerzo de Módulo Guardián,,Reforço de Módulo Guardian,Набор для усиления модуля Стражей
