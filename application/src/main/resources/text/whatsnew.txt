@@ -1,3 +1,8 @@
+Version 2.105
+-------------
+Remove Thargoid wake scan hint to scan scavengers
+bugfixes and improvemments
+
 Version 2.104
 -------------
 fix keelback images in shipbuilder
