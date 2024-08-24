@@ -35,20 +35,24 @@ public class SupportService {
     }
 
     public static String createSupportPackage(String name) {
-        Path backupFolder = Path.of(OsConstants.CONFIG_DIRECTORY + "/backup");
+        final Path zipPath = Path.of(OsConstants.CONFIG_DIRECTORY + "/support");
+        List<Path> excludedPaths = List.of(
+                Path.of(OsConstants.CONFIG_DIRECTORY + "/tesseract"),
+                Path.of(OsConstants.CONFIG_DIRECTORY + "/backup"),
+                zipPath
+        );
         Path configFolder = Path.of(OsConstants.CONFIG_DIRECTORY);
-        Path supportFolder = Path.of(OsConstants.CONFIG_DIRECTORY + "/support");
         Path journalFolder = Path.of(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
         try {
             log.info("Creating support package.");
-            return zipFolder(configFolder, journalFolder, supportFolder, backupFolder, name);
+            return zipFolder(configFolder, journalFolder, zipPath, excludedPaths, name);
         } catch (Exception e) {
             log.error("Failed to create support package.", e);
         }
         return "";
     }
 
-    private static String zipFolder(Path configFolderPath, Path journalFolderPath, Path zipPath, Path backupFolderPath, String name) throws Exception {
+    private static String zipFolder(Path configFolderPath, Path journalFolderPath, Path zipPath, List<Path> excludedPaths, String name) throws Exception {
         final String filename = name != null ? name : "support." + DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss.SSS").format(LocalDateTime.now());
         File backupFile = new File(zipPath.toFile().getAbsoluteFile() + "/" + filename + ".zip");
         Files.deleteIfExists(backupFile.toPath());
@@ -56,7 +60,7 @@ public class SupportService {
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(backupFile))) {
             Files.walkFileTree(configFolderPath, new SimpleFileVisitor<>() {
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    if (!file.startsWith(zipPath) && !file.startsWith(backupFolderPath) && !isExcluded(file.getFileName().toString())) {
+                    if (excludedPaths.stream().noneMatch(file::startsWith) && !isExcluded(file.getFileName().toString())) {
                         zos.putNextEntry(new ZipEntry(configFolderPath.relativize(file).toString()));
                         log.debug("support: " + file.getFileName());
                         Files.copy(file, zos);
@@ -96,7 +100,7 @@ public class SupportService {
                 }
             });
             File logFile = findLogFile();
-            if(logFile != null && logFile.exists()) {
+            if (logFile != null && logFile.exists()) {
                 zos.putNextEntry(new ZipEntry("log/edomh.log"));
                 log.debug("support: " + logFile.getName());
                 Files.copy(Path.of(logFile.getAbsolutePath()), zos);
