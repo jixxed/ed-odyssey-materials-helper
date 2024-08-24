@@ -59,7 +59,7 @@ search.sort.placeholder,Sort materials,Sort materials,Materialien sortieren,Clas
 search.sort.quantity,Quantity,Quantity,Menge,Cantidad,Quantité,Quantidade,Количество
 search.sort.relevant_irrelevant,"Relevant, irrelevant","Relevant, irrelevant","Relevant, irrelevant","Relevante, irrelevante","Pertinent, non pertinent","Relevante, irrelevante","Релевантные, нерелевантные"
 search.text.placeholder,Search,Search,Suchen,Buscar,Rechercher,Pesquisa,Поиск
-search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Carguero,Transporteur de flotte,Transportadora de frota,Флотоносец
+search.filter.fleetcarrier,Fleet carrier,Fleet carrier,Flottenträger,Carguero,Transporteur de flotte,Porta-Frota,Флотоносец
 search.filter.backpack,Backpack,Backpack,Rucksack,Mochila,Sac à dos,Mochila,Рюкзак
 search.sort.quantity_ship,Ship quantity,Ship quantity,Schiffsmenge,Cantidad de naves,Quantité de navire,Quantidade de navio,Количество на корабле
 search.sort.quantity_fleetcarrier,Fleetcarrier quantity,Fleetcarrier quantity,FleetCarrier Menge,Cantidad de cargueros,Quantité Fleetcarrier,Quantidade FleetCarrier,Количество на флотоносце
@@ -69,7 +69,7 @@ search.filter.not_on_wishlist,Not or more than on wishlist,Not or more than on w
 search.grouping.category,Category (default),Category (default),Kategorie (Standard),Categoría (predeterminado),Catégorie (par défaut),Categoria (padrão),Категория (по умолчанию)
 search.grouping.none,None,None,Keiner,Ninguna,Aucun,Nenhum,Никто
 search.grouping.placeholder,Group materials,Group materials,Gruppenmaterialien,Grupo de Materiales,Matériaux de groupe,Materiais de grupo,Групповые материалы
-search.sort.grade,Grade,Grade,Klasse,Calificación,Noter,Avaliar,Оценка
+search.sort.grade,Grade,Grade,Klasse,Calificación,Noter,Grau do Item,Оценка
 search.sort.quantity_required,Quantity required,Quantity required,Erforderliche Menge,Cantidad requerida,Quantité Nécessaire,Quantidade Requerida,Требуемое количество
 notification.type.irrelevant_point,Point to irrelevant material,Point to irrelevant material,Auf irrelevantes Material hinweisen,Señalar material irrelevante,Pointer du matériau non pertinent,Apontar para material irrelevante,При указывании на ненужные материалы
 notification.type.wishlist_point,Point to wishlist material,Point to wishlist material,Zeigen Sie auf Wunschlistematerial,Señalar material de lista de deseos,Pointer à WishList Material,Apontar para o material da lista de desejos,При указывании на материалы из вишлиста

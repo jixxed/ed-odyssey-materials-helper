@@ -7,7 +7,7 @@ blueprint.horizons.type.blast_block,Blast Block,Blast Block,Blastblock,Bloqueo d
 blueprint.horizons.type.blast_resistant,Blast Resistant,Blast Resistant,Explosionsbeständig,Resistente a la explosión,Résistant aux explosions,Resistente a Explosões,Взрывостойкий усилитель
 blueprint.horizons.type.blast_resistant_hull_reinforcement,Blast Resistant Hull Reinforcement,Blast Resistant Hull Reinforcement,Detonationsresistente Rumpfhüllenverstärkung,Refuerzo de casco resistente a explosiones,Renforcement de la coque résistante aux explosions,Reforço de Casco Resistente a Explosão,Взрывостойкое усиление корпуса
 blueprint.horizons.type.bobblehead,Bobblehead,Bobblehead,Bobblehead,Cabezón,Bobble-tête,Bobblehead,Таргоидский перехватчик (Кивающая фигура)
-blueprint.horizons.type.boss_cells,Boss Cells,Boss Cells,Bosszellen,Celdas de jefe,Cellules de boss,Células Chefe,Босс-ячейки
+blueprint.horizons.type.boss_cells,Boss Cells,Boss Cells,Bosszellen,Celdas de jefe,Cellules de boss,Células Resistentes,Босс-ячейки
 blueprint.horizons.type.charge_enhanced,Charge Enhanced,Charge Enhanced,Ladungsoptimiert,Carga mejorada,Charge améliorée,Carga Aumentada,Быстрозаряжающийся распределитель питания
 blueprint.horizons.type.clean_drive_tuning,Clean Drive Tuning,Clean Drive Tuning,Ausgewogenes Antriebstuning,Motor limpio,Réglage de la conduite propre,Ajuste de Motor Limpo,«Чистая» донастройка
 blueprint.horizons.type.cluster_capacitor,Cluster Capacitor,Cluster Capacitor,Cluster-kondensatoren,Supercapacitadores,Condensateur en grappe,Banco de Capacitores,Кассетные конденсаторы
@@ -110,9 +110,9 @@ blueprint.horizons.type.penetrator_payload,Penetrator Payload,Penetrator Payload
 blueprint.horizons.type.phasing_sequence,Phasing Sequence,Phasing Sequence,Phasensequenz,Secuencia de fase,Séquence de phasage,Sequência Faseada,Последовательность фазирования
 blueprint.horizons.type.plasma_slug,Plasma Slug,Plasma Slug,Plasmaprojektil,Proyectil de plasma,Limace de plasma,Projétil de Plasma,Плазменный рельсовый снаряд
 blueprint.horizons.type.radiant_canister,Radiant Canister,Radiant Canister,Strahlender Kanister,Cartucho radiactivo,Cartouche rayonnante,Canister Radiante,Светящаяся кассета
-blueprint.horizons.type.rapid_charge,Rapid Charge,Rapid Charge,Schnelle Aufladung,Carga rápida,Charge rapide,Carga rápida,Щитонакопитель быстрой зарядки
+blueprint.horizons.type.rapid_charge,Rapid Charge,Rapid Charge,Schnelle Aufladung,Carga rápida,Charge rapide,Banco de Célula de Escudo de Recarga Rápida,Щитонакопитель быстрой зарядки
 blueprint.horizons.type.rapid_fire_modification,Rapid Fire Modification,Rapid Fire Modification,Schnellfeuermodifikation,Modificación de disparo rápido,Modification rapide du feu,Modificação de Disparo Rápido,Улучшение скорострельности
-blueprint.horizons.type.recycling_cells,Recycling Cells,Recycling Cells,Recyclingzellen,Células de reciclaje,Recyclage des cellules,Células Recicláveis,Рециркуляционная ячейка
+blueprint.horizons.type.recycling_cells,Recycling Cells,Recycling Cells,Recyclingzellen,Células de reciclaje,Recyclage des cellules,Células de Reciclagem,Рециркуляционная ячейка
 blueprint.horizons.type.reflective_plating,Reflective Plating,Reflective Plating,Reflektorüberzug,Recubrimiento reflectante,Placage réfléchissant,Revestimento Reflexivo,Отражающая броня
 blueprint.horizons.type.regeneration_sequence,Regeneration Sequence,Regeneration Sequence,Regenerationssequenz,Secuencia de regeneración,Séquence de régénération,Sequência de Regeneração,Последовательность восстановления
 blueprint.horizons.type.reinforced,Reinforced,Reinforced,Verstärkt,Reforzado,Renforcé,Reforçado,Усиленный
@@ -123,7 +123,7 @@ blueprint.horizons.type.resistance_augmented,Resistance Augmented,Resistance Aug
 blueprint.horizons.type.reverberating_cascade,Reverberating Cascade,Reverberating Cascade,Nachhallende Kaskade,Reverberación en cascada,Réverbération Cascade,Cascata Reverberante,Отражённый залп
 blueprint.horizons.type.scramble_spectrum,Scramble Spectrum,Scramble Spectrum,Frequenzstörung,Espectro de Interferencias,Spectre de brouillage,Espectro Randômico,Отключающая сетка
 blueprint.horizons.type.screening_shell,Screening Shell,Screening Shell,Abschirmende Geschosse,Proyectil deslumbrante,Coquille de dépistage,Projétil com triagem,Заслоняющие снаряды
-blueprint.horizons.type.shielded,Shielded,Shielded,Schildverstärkt,Blindado,Blindé,Blindado,Защищённый
+blueprint.horizons.type.shielded,Shielded,Shielded,Schildverstärkt,Blindado,Blindé,Protegido,Защищённый
 blueprint.horizons.type.shielded_fsd,Shielded FSD,Shielded FSD,schildverstärker Frameshiftantrieb,MDD blindado,FSD blindé,MDD blindado,Защищённый FSD
 blueprint.horizons.type.shift_lock_canister,Shift Lock Canister,Shift Lock Canister,Schaltschließkanister,Cartucho bloqueador,Cartouche de verrouillage de décalage,Shift Lock Canister,Рамоблокирующая кассета
 blueprint.horizons.type.shock_cannon_fixed_large,Shock Cannon Fixed Large,Shock Cannon Fixed Large,Schockkanone groß fest,Cañón de choque fijo grande,Canon d’amortisseur réparé,Canhão de Impacto (Fixa) (Classe: 3),Шоковое орудие (3 класс бол. фикс.)
@@ -137,7 +137,7 @@ blueprint.horizons.type.shock_cannon_turreted_medium,Shock Cannon Turreted Mediu
 blueprint.horizons.type.shock_cannon_turreted_small,Shock Cannon Turreted Small,Shock Cannon Turreted Small,Schockkanone klein Turm,Cañón de choque torreta pequeño,Canon d’amortisseur à tourelle petite,Canhão de Impacto (Torreta) (Classe: 1),Шоковое орудие (1 класс мал. турель)
 blueprint.horizons.type.short_range_blaster,Short Range Blaster,Short Range Blaster,Kurzdistanzblaster,Destructor de corto alcance,Blaster à courte portée,Arma de Curto Alcance,Бластер малого радиуса действия
 blueprint.horizons.type.smart_rounds,Smart Rounds,Smart Rounds,Intelligente Munition,Munición inteligente,Rondes intelligentes,Projéteis Inteligentes,Умные боеприпасы
-blueprint.horizons.type.specialised,Specialised,Specialised,Speziell,Especializado,Spécialisé,Especializado,Адаптивный щитонакопитель
+blueprint.horizons.type.specialised,Specialised,Specialised,Speziell,Especializado,Spécialisé,Banco de Célula de Escudo Especializado,Адаптивный щитонакопитель
 blueprint.horizons.type.stripped_down,Stripped Down,Stripped Down,Reduktion,Aligerado,Dépouillée,Modelo Leve,Урезанный вариант
 blueprint.horizons.type.sturdy_mount,Sturdy Mount,Sturdy Mount,Stabiles Gestell,Montura resistente,Monture robuste,Encaixe Robusto,Прочное крепление
 blueprint.horizons.type.super_capacitor,Super Capacitor,Super Capacitor,Superkondensator,Supercapacitadores,Condensateur,Super Capacitores,Суперконденсаторы

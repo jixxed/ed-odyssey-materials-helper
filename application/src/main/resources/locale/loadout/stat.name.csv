@@ -39,7 +39,7 @@ loadout.stat.name.rate_of_fire,Rate of fire,Rate of fire,Feuerrate,Tasa de fuego
 loadout.stat.name.reload_speed,Reload speed,Reload speed,Nachladegeschwindigkeit,Velocidad de recarga,Vitesse de rechargement,Velocidade de recarregamento,Время перезарядки
 loadout.stat.name.remove_movement_speed_penalty,No movement speed penalty,No movement speed penalty,Keine Strafe für die Bewegungsgeschwindigkeit,Sin penalización de velocidad de movimiento,Aucune pénalité de vitesse de déplacement,Sem Penalidade de Velocidade de Movimento,Нет штрафа к скорости передвижения
 loadout.stat.name.reserve_ammo,Reserve ammo,Reserve ammo,Munition reservieren,Reservar munición,Réserver des munitions,Munição Reserva,Боекомплект
-loadout.stat.name.scope,Scope,Scope,Scope,Alcance,Portée,Luneta,Прицел
+loadout.stat.name.scope,Scope,Scope,Scope,Alcance,Portée,Mira Telescópica,Прицел
 loadout.stat.name.secondary_slots,Secondary weapons,Secondary weapons,Sekundärwaffen,Armas secundarias,Armes secondaires,Armas secundárias,Дополнительное оружие
 loadout.stat.name.shield_power_usage,Shield Power Usage,Shield Power Usage,Schildstromverbrauch,Uso de energía del escudo,Consommation d’énergie du bouclier,Uso de Energia do Escudo,Расход энергии щитом
 loadout.stat.name.shield_regen,Shield regen,Shield regen,Schildregen,Regeneración del escudo,Régénération du bouclier,Regeneração do Escudo,Регенерация щита
