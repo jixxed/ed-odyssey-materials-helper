@@ -106,7 +106,7 @@ class SlotBox extends StackPane {
         this.iconBox = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-icons").buildHBox();
         this.texts = BoxBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-texts").buildVBox();
         this.slot = slot;
-        if(SlotType.HARDPOINT.equals(slot.getSlotType())){
+        if (SlotType.HARDPOINT.equals(slot.getSlotType())) {
             this.slot.setHardpointGroup(HardpointGroup.A);
         }
         this.modulesLayer = modulesLayer;
@@ -115,7 +115,7 @@ class SlotBox extends StackPane {
         mountingBox();
         powerBox();
         this.emptyLabel = LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-label-empty").withText(LocaleService.getStringBinding("ship.module.slot.empty")).build();
-        this.size = LabelBuilder.builder().withStyleClass((SlotType.HARDPOINT.equals(slot.getSlotType()))  ? "shipbuilder-slots-slotbox-size-hardpoint-label" : "shipbuilder-slots-slotbox-size-label").withNonLocalizedText(slot.getSlotSizeName()).build();
+        this.size = LabelBuilder.builder().withStyleClass((SlotType.HARDPOINT.equals(slot.getSlotType())) ? "shipbuilder-slots-slotbox-size-hardpoint-label" : "shipbuilder-slots-slotbox-size-label").withNonLocalizedText(slot.getSlotSizeName()).build();
 
 
         //testing
@@ -139,7 +139,7 @@ class SlotBox extends StackPane {
             hardpointGroupLabel = LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-hardpoint-group-label").withText(LocaleService.getStringBinding(this.slot.getHardpointGroup().getLocalizationKey())).build();
             final VBox vBox = BoxBuilder.builder().withNodes(hardpointGroupLabel, this.size).buildVBox();
             layer1.getChildren().add(vBox);
-        }else{
+        } else {
             layer1.getChildren().add(this.size);
             hardpointGroupLabel = LabelBuilder.builder().build();
         }
@@ -192,9 +192,9 @@ class SlotBox extends StackPane {
         if (!isCurrentShip()) {
             this.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    if(this.popOver != null && this.popOver.isShowing()){
+                    if (this.popOver != null && this.popOver.isShowing()) {
                         close();
-                    }else {
+                    } else {
                         this.popOver = getPopOver();
 
                         final Bounds boundsInLocal = this.getBoundsInLocal();
@@ -519,7 +519,7 @@ class SlotBox extends StackPane {
             clone.getModifications().addAll(this.getSlot().getShipModule().getModifications());
         }
         clone.getExperimentalEffects().addAll(this.getSlot().getShipModule().getExperimentalEffects());
-        if(this.getSlot().getOldShipModule() != null && isSimilar(clone, this.getSlot().getOldShipModule())){
+        if (this.getSlot().getOldShipModule() != null && isSimilar(clone, this.getSlot().getOldShipModule())) {
             clone.setBuyPrice(this.getSlot().getOldShipModule().getBuyPrice());
         }
         this.getSlot().setShipModule(clone);
@@ -535,6 +535,7 @@ class SlotBox extends StackPane {
                 shipModule.getAllowedBlueprints().containsAll(oldModule.getAllowedBlueprints()) &&
                 shipModule.getAllowedExperimentalEffects().containsAll(oldModule.getAllowedExperimentalEffects());
     }
+
     private void updateBlueprints(ShipModule shipModule, ShipModule oldShipModule) {
 
         this.blueprints.textProperty().bind(
@@ -740,6 +741,7 @@ class SlotBox extends StackPane {
         Tooltip.install(icon, TooltipBuilder.builder().withShowDelay(Duration.seconds(0.1)).withText(LocaleService.getStringBinding(tooltipKey)).build());
         return icon;
     }
+
     private static DestroyableResizableImageView createIconWithTooltip(String imageResource, Integer powerGroup, String... styleClasses) {
         final DestroyableResizableImageView icon = createIconWithoutTooltip(imageResource, styleClasses);
         Tooltip.install(icon, TooltipBuilder.builder().withShowDelay(Duration.seconds(0.1)).withText(LocaleService.getStringBinding("ship.stats.config.power.group", powerGroup)).build());
@@ -828,14 +830,14 @@ class SlotBox extends StackPane {
         Label label = LabelBuilder.builder().withStyleClass("ships-modules-buttons-label").withText(LocaleService.getStringBinding("ship.module.hardpoint.group.label")).build();
         final ToggleGroup toggleGroup = new ToggleGroup();
         ToggleButton[] buttons = Arrays.stream(HardpointGroup.values()).map(group -> {
-             final ToggleButton  groupButton = ToggleButtonBuilder.builder().withStyleClass("toggle-button-blueprints").withNonLocalizedText(group.name()).withOnAction(event -> {
+            final ToggleButton groupButton = ToggleButtonBuilder.builder().withStyleClass("toggle-button-blueprints").withNonLocalizedText(group.name()).withOnAction(event -> {
                 this.slot.setHardpointGroup(group);
                 refresh();
                 notifyChanged();
                 close();
             }).build();
             groupButton.setToggleGroup(toggleGroup);
-            if(group.equals(this.slot.getHardpointGroup())){
+            if (group.equals(this.slot.getHardpointGroup())) {
                 groupButton.setSelected(true);
             }
             groupButton.setFocusTraversable(false);
@@ -843,7 +845,7 @@ class SlotBox extends StackPane {
         }).toArray(ToggleButton[]::new);
 
         HBox box = BoxBuilder.builder().withNodes(buttons).buildHBox();
-        content.getChildren().add(BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(label,box).buildVBox());
+        content.getChildren().add(BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(label, box).buildVBox());
     }
 
     private void addButtons(VBox content) {
@@ -1015,7 +1017,9 @@ class SlotBox extends StackPane {
             toggleButtonsRank = new ArrayList<>();
             Arrays.stream(HorizonsBlueprintGrade.values()).filter(grade -> !HorizonsBlueprintGrade.NONE.equals(grade)).forEach(horizonsBlueprintGrade -> {
                 final ToggleButton toggleButton = ToggleButtonBuilder.builder().withStyleClass("toggle-button-").withNonLocalizedText(String.valueOf(horizonsBlueprintGrade.getGrade())).withOnAction(event -> {
-                    shipModule.getModifications().getFirst().setGrade(horizonsBlueprintGrade);
+                    shipModule.getModifications().stream()
+                            .findFirst()
+                            .ifPresent(modification -> modification.setGrade(horizonsBlueprintGrade));
                     shipModule.getModifiers().clear();
                     notifyChanged();
                     refresh();
@@ -1058,14 +1062,16 @@ class SlotBox extends StackPane {
                     .build();
             progressSlider.setFocusTraversable(false);
             Observable.create((ObservableEmitter<Number> emitter) -> progressSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-                        shipModule.getModifications().getFirst().setModificationCompleteness(BigDecimal.valueOf(newValue.doubleValue()).divide(BigDecimal.valueOf(100D)));
-                        shipModule.getModifiers().clear();
                         emitter.onNext(newValue);
                     }))
                     .debounce(500, TimeUnit.MILLISECONDS)
                     .observeOn(Schedulers.io())
                     .subscribe(newValue -> {
                         Platform.runLater(() -> {
+                                    shipModule.getModifications().stream()
+                                            .findFirst()
+                                            .ifPresent(modification -> modification.setModificationCompleteness(BigDecimal.valueOf(newValue.doubleValue()).divide(BigDecimal.valueOf(100D))));
+                                    shipModule.getModifiers().clear();
                                     notifyChanged();
                                     refresh();
                                 }
