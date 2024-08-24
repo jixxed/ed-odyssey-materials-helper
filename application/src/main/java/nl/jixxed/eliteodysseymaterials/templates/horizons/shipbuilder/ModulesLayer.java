@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ImageSlot;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
@@ -208,10 +209,11 @@ public class ModulesLayer extends AnchorPane implements Template {
 
     void drawHardpointLine(final int index) {
         lastIndex = index;
-        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getHardpointSlots().get(index).getImageIndex() + ".png"));
+        final ImageSlot imageSlot = APPLICATION_STATE.getShip().getHardpointSlots().get(index);
+        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
+        final double x = this.shipImage.getWidth() / 1920D * imageSlot.getX();
+        final double y = this.shipImage.getHeight() / 1090D * imageSlot.getY();
         Platform.runLater(() -> {
-            final double x = this.shipImage.getWidth() / 1920D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getX();
-            final double y = this.shipImage.getHeight() / 1090D * APPLICATION_STATE.getShip().getHardpointSlots().get(index).getY();
             final double slotHeight = 5.0D;
             final double spacing = 0.0D;
             //Setting the properties of the circle
@@ -247,10 +249,11 @@ public class ModulesLayer extends AnchorPane implements Template {
 
     void drawUtilityLine(final int index) {
         lastIndex = index;
-        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + APPLICATION_STATE.getShip().getUtilitySlots().get(index).getImageIndex() + ".png"));
+        final ImageSlot imageSlot = APPLICATION_STATE.getShip().getUtilitySlots().get(index);
+        shipImage.setImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png"));
+        final double x = this.shipImage.getWidth() / 1920D * (double) imageSlot.getX();
+        final double y = this.shipImage.getHeight() / 1090D * (double) imageSlot.getY();
         Platform.runLater(() -> {
-            final double x = this.shipImage.getWidth() / 1920D * (double)APPLICATION_STATE.getShip().getUtilitySlots().get(index).getX();
-            final double y = this.shipImage.getHeight() / 1090D * (double)APPLICATION_STATE.getShip().getUtilitySlots().get(index).getY();
             final double slotHeight = 5.0D;
             final double spacing = 0.0D;
             final double imageWidth = 81D;
