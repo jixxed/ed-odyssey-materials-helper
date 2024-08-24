@@ -20,7 +20,7 @@ public class EncodedScientificResearchParser implements HorizonsParser<Scientifi
         if (Encoded.UNKNOWN.equals(material)) {
             log.warn("Unknown Scientific Research Encoded data detected: " + event);
         } else {
-            storage.put(material, storage.get(material) - count.intValue());
+            storage.put(material, Math.max(0,storage.get(material) - count.intValue()));
         }
     }
 }

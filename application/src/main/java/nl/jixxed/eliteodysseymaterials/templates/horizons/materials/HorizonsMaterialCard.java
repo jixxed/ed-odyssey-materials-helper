@@ -79,7 +79,12 @@ public class HorizonsMaterialCard extends VBox implements Template {
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
         this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true));
-        this.present = new TypeSegment(materialCount, SegmentType.PRESENT);
+try {
+    this.present = new TypeSegment(materialCount, SegmentType.PRESENT);
+
+}catch (IllegalArgumentException ex){
+    log.debug("error");
+}
         if(maxAmount - materialCount < 0){
             log.error("Material count is higher than max amount for material: " + LocaleService.getLocalizedStringForCurrentLocale(this.material.getLocalizationKey()));
         }

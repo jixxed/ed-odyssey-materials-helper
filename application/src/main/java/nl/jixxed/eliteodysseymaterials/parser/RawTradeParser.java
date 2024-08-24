@@ -15,7 +15,7 @@ public class RawTradeParser implements HorizonsParser<MaterialTrade> {
     @Override
     public void parse(final MaterialTrade event, final Map<HorizonsMaterial, Integer> storage) {
         final Paid paid = event.getPaid();
-        final String paidName =paid.getMaterial();
+        final String paidName = paid.getMaterial();
         final int paidAmount = paid.getQuantity().intValue();
         final Received received = event.getReceived();
         final String receivedName = received.getMaterial();
@@ -24,13 +24,13 @@ public class RawTradeParser implements HorizonsParser<MaterialTrade> {
         if (Raw.UNKNOWN.equals(paidMaterial)) {
             log.warn("Unknown Paid Raw data detected: " + event);
         } else {
-            storage.put(paidMaterial, storage.get(paidMaterial) - paidAmount);
+            storage.put(paidMaterial, Math.max(0, storage.get(paidMaterial) - paidAmount));
         }
         final Raw receivedMaterial = Raw.forName(receivedName);
         if (Raw.UNKNOWN.equals(receivedMaterial)) {
             log.warn("Unknown Received Raw data detected: " + event);
         } else {
-            storage.put(receivedMaterial, storage.get(receivedMaterial) + receivedAmount);
+            storage.put(receivedMaterial, Math.max(0, storage.get(receivedMaterial) + receivedAmount));
         }
     }
 }

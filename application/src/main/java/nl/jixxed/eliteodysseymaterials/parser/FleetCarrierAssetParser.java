@@ -25,7 +25,7 @@ public class FleetCarrierAssetParser {
             } else {
                 final Storage storage = knownMap.get(asset);
                 //stack values as items occur multiple times in the json
-                storage.setValue(storage.getValue(storagePool) + amount, storagePool);
+                storage.setValue(Math.max(0,storage.getValue(storagePool) + amount), storagePool);
             }
         });
     }
