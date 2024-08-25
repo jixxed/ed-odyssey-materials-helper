@@ -214,36 +214,42 @@ public class WishlistService {
     private static void changeVisibility(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint wishlistBlueprint) {
         final Wishlists wishlists = getWishlists(commander);
         final Wishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<OdysseyWishlistBlueprint> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistBlueprint.getRecipeName()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).findFirst();
-        existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
-        saveWishlists(commander, wishlists);
-        EventService.publish(new WishlistChangedEvent(wishlistUUID));
+        if(wishlist != null) {
+            final Optional<OdysseyWishlistBlueprint> existingRecipe = wishlist.getItems().stream().filter(recipe -> recipe.getRecipeName().equals(wishlistBlueprint.getRecipeName()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).findFirst();
+            existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
+            saveWishlists(commander, wishlists);
+            EventService.publish(new WishlistChangedEvent(wishlistUUID));
+        }
     }
 
     private static void changeHorizonsVisibility(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint wishlistBlueprint) {
         final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<WishlistBlueprint<HorizonsBlueprintName>> existingRecipe = wishlist.getItems().stream().filter(recipe -> wishlistBlueprint.getUuid().equals(((HorizonsWishlistBlueprint) recipe).getUuid()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).
-                findFirst();
-        existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
-        saveHorizonsWishlists(commander, wishlists);
-        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        if(wishlist != null) {
+            final Optional<WishlistBlueprint<HorizonsBlueprintName>> existingRecipe = wishlist.getItems().stream().filter(recipe -> wishlistBlueprint.getUuid().equals(((HorizonsWishlistBlueprint) recipe).getUuid()) && recipe.isVisible() == !wishlistBlueprint.isVisible()).
+                    findFirst();
+            existingRecipe.ifPresent(recipe -> recipe.setVisible(wishlistBlueprint.isVisible()));
+            saveHorizonsWishlists(commander, wishlists);
+            EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        }
     }
 
     private static void modifyHorizonsBlueprint(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint wishlistBlueprint) {
         final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<HorizonsWishlistBlueprint> existingRecipe = wishlist.getItems().stream()
-                .map(HorizonsWishlistBlueprint.class::cast)
-                .filter(recipe -> recipe.getUuid().equals(wishlistBlueprint.getUuid()))
-                .findFirst();
-        existingRecipe.ifPresent(recipe -> {
-            if (recipe instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
-                moduleWishlistBlueprint.setPercentageToComplete(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getPercentageToComplete());
-            }
-        });
-        saveHorizonsWishlists(commander, wishlists);
-        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        if(wishlist != null) {
+            final Optional<HorizonsWishlistBlueprint> existingRecipe = wishlist.getItems().stream()
+                    .map(HorizonsWishlistBlueprint.class::cast)
+                    .filter(recipe -> recipe.getUuid().equals(wishlistBlueprint.getUuid()))
+                    .findFirst();
+            existingRecipe.ifPresent(recipe -> {
+                if (recipe instanceof HorizonsModuleWishlistBlueprint moduleWishlistBlueprint) {
+                    moduleWishlistBlueprint.setPercentageToComplete(((HorizonsModuleWishlistBlueprint) wishlistBlueprint).getPercentageToComplete());
+                }
+            });
+            saveHorizonsWishlists(commander, wishlists);
+            EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        }
     }
 
     public static void selectHorizonsWishlist(final String wishlistUUID, final Commander commander) {
