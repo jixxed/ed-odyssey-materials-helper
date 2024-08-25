@@ -656,7 +656,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                                 currentRoll = 0;
                                 maxRoll = 0;
                             } else if (engineer != null && recipe instanceof HorizonsModuleBlueprint) {
-                                minRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(Math.max(maxRank, grade.getGrade()), ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
+                                minRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(maxRank, ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
                                 currentRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(engineer, ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
                                 maxRoll = (int) Math.ceil(percentageToComplete * grade.getNumberOfRolls(minRank, ((HorizonsModuleBlueprint) recipe).getHorizonsBlueprintType()));
                             } else {
@@ -733,7 +733,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         return pathItems.stream()
                 .filter(pathItem -> pathItem.getRecipes().keySet().stream().anyMatch(blueprint -> blueprint.getBlueprintName().equals(recipe.getBlueprintName()) && ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType().equals(((HorizonsBlueprint) recipe).getHorizonsBlueprintType())))
                 .findFirst()
-                .map(PathItem::getEngineer);
+                .map(pathItem -> /*pathItem.getEngineer().equals(Engineer.UNKNOWN) ? null :*/ pathItem.getEngineer());
     }
 
     private Engineer getBestEngineer(Blueprint<HorizonsBlueprintName> recipe) {
