@@ -29,6 +29,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ScheduledExecutorService;
@@ -83,7 +84,7 @@ class BottomBar extends HBox {
         }
         this.commanderSelect = ComboBoxBuilder.builder(Commander.class)
                 .withStyleClass("bottombar-dropdown")
-                .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders()))
+                .withItemsProperty(FXCollections.observableArrayList(APPLICATION_STATE.getCommanders().stream().sorted(Comparator.comparing(commander -> commander.getName() + commander.getGameVersion())).toList()))
                 .withValueChangeListener((obs, oldValue, newValue) -> Platform.runLater(() -> {
                     if (newValue != null) {
                         PreferencesService.setPreference(PreferenceConstants.COMMANDER, newValue.getName() + ":" + newValue.getFid() + ":" + newValue.getGameVersion().name());
