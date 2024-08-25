@@ -635,7 +635,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         } catch (final IllegalArgumentException ex) {
             log.error("Failed to generate path", ex);
         }
-        this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setEngineer(getCurrentEngineerForRecipe(wishlistBlueprint.getPrimaryRecipe(), pathItems)));
+        this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setEngineer(getCurrentEngineerForRecipe(wishlistBlueprint.getPrimaryRecipe(), pathItems).orElseGet(() -> getBestEngineer(wishlistBlueprint.getPrimaryRecipe()))));
         this.wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
                 .filter(temp -> Objects.nonNull(temp.getPrimaryRecipe()))
@@ -643,7 +643,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
                         .forEach(entry -> {
                             final Blueprint<HorizonsBlueprintName> recipe = entry.getKey();
                             final Double percentageToComplete = entry.getValue();
-                            final Engineer engineer = getCurrentEngineerForRecipe(recipe, pathItems);
+                            final Engineer engineer = getCurrentEngineerForRecipe(recipe, pathItems).orElseGet(() -> getWorstEngineer(recipe));
                             final HorizonsBlueprintGrade grade = ((HorizonsBlueprint) recipe).getHorizonsBlueprintGrade();
                             //lowest engineer rank available for recipe
                             final Integer minRank = ((HorizonsBlueprint) recipe).getEngineers().stream().map(eng -> ApplicationState.getInstance().getEngineerRank(eng)).min(Comparator.comparingInt(Integer::intValue)).orElse(0);
@@ -726,15 +726,14 @@ public class HorizonsWishlistTab extends HorizonsTab {
 
     }
 
-    private Engineer getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> recipe, List<PathItem<HorizonsBlueprintName>> pathItems) {
+    private Optional<Engineer> getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> recipe, List<PathItem<HorizonsBlueprintName>> pathItems) {
         if (recipe == null) {
             return null;
         }
         return pathItems.stream()
                 .filter(pathItem -> pathItem.getRecipes().keySet().stream().anyMatch(blueprint -> blueprint.getBlueprintName().equals(recipe.getBlueprintName()) && ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType().equals(((HorizonsBlueprint) recipe).getHorizonsBlueprintType())))
                 .findFirst()
-                .map(PathItem::getEngineer)
-                .orElse(getBestEngineer(recipe));
+                .map(PathItem::getEngineer);
     }
 
     private Engineer getBestEngineer(Blueprint<HorizonsBlueprintName> recipe) {
@@ -745,6 +744,16 @@ public class HorizonsWishlistTab extends HorizonsTab {
             return null;
         }
         return ((HorizonsModuleBlueprint) recipe).getEngineers().stream().max(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
+
+    }
+    private Engineer getWorstEngineer(Blueprint<HorizonsBlueprintName> recipe) {
+        if (recipe instanceof HorizonsWishlistModuleBlueprintTemplate moduleBlueprint) {
+            recipe = moduleBlueprint.getPrimaryRecipe();
+        }
+        if (!(recipe instanceof HorizonsModuleBlueprint)) {
+            return null;
+        }
+        return ((HorizonsModuleBlueprint) recipe).getEngineers().stream().min(Comparator.comparingInt(eng -> ApplicationState.getInstance().getEngineerRank(eng))).orElse(null);
 
     }
 
