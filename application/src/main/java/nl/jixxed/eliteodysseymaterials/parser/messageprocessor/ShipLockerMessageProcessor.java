@@ -27,9 +27,9 @@ public class ShipLockerMessageProcessor implements MessageProcessor<ShipLocker> 
         }
         StorageService.resetShipLockerCounts();
 
-        ASSET_PARSER.parse(event.getComponents().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER, StorageService.getAssets());
-        GOOD_PARSER.parse(event.getItems().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER, StorageService.getGoods());
-        DATA_PARSER.parse(event.getData().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER, StorageService.getData());
+        ASSET_PARSER.parse(event.getComponents().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER);
+        GOOD_PARSER.parse(event.getItems().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER);
+        DATA_PARSER.parse(event.getData().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.SHIPLOCKER);
         EventService.publish(new StorageEvent(StoragePool.SHIPLOCKER));
     }
 

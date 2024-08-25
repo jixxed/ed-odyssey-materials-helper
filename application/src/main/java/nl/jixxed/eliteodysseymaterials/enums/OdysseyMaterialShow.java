@@ -3,12 +3,11 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
-import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.service.FavouriteService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
-import java.util.Map;
 import java.util.function.Predicate;
 
 public enum OdysseyMaterialShow {
@@ -39,34 +38,35 @@ public enum OdysseyMaterialShow {
     }
 
     @SuppressWarnings("java:S1452")
-    public static Predicate<? super Map.Entry<? extends OdysseyMaterial, Storage>> getFilter(final Search search) {
+    public static Predicate<? super OdysseyMaterial> getFilter(final Search search) {
         return switch (search.getMaterialShow()) {
-            case ALL -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> true;
+            case ALL -> material -> true;
             case ALL_WITH_STOCK ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> o.getValue().getTotalValue() > 0;
+                    material -> StorageService.getMaterialCount(material,AmountType.TOTAL) > 0;
             case BACKPACK ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> o.getValue().getValue(StoragePool.BACKPACK) > 0;
+                    material -> StorageService.getMaterialCount(material,AmountType.BACKPACK) > 0;
             case FLEETCARRIER ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> o.getValue().getValue(StoragePool.FLEETCARRIER) > 0;
+                    material -> StorageService.getMaterialCount(material,AmountType.FLEETCARRIER) > 0;
             case BLUEPRINT ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(o.getKey());
-            case IRRELEVANT -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> getIrrelevantFilter(o.getKey());
+                    OdysseyBlueprintConstants::isBlueprintIngredientWithOverride;
+            case IRRELEVANT -> OdysseyMaterialShow::getIrrelevantFilter;
             case IRRELEVANT_WITH_STOCK ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> getIrrelevantFilter(o.getKey()) && o.getValue().getTotalValue() > 0;
-            case PROHIBITED -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> o.getKey().isIllegal();
+                    material -> getIrrelevantFilter(material) && StorageService.getMaterialCount(material,AmountType.TOTAL) > 0;
+            case PROHIBITED -> OdysseyMaterial::isIllegal;
             case ALL_ENGINEER ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isEngineeringIngredient(o.getKey());
+                    OdysseyBlueprintConstants::isEngineeringIngredient;
             case REQUIRED_ENGINEER ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(o.getKey());
+                    OdysseyBlueprintConstants::isEngineeringIngredientAndNotCompleted;
             case ALL_ENGINEER_BLUEPRINT ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(o.getKey()) || OdysseyBlueprintConstants.isEngineeringIngredient(o.getKey());
+                    material -> OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material) || OdysseyBlueprintConstants.isEngineeringIngredient(material);
             case REQUIRED_ENGINEER_BLUEPRINT ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(o.getKey()) || OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(o.getKey());
+                    material -> OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(material) || OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material);
             case FAVOURITES ->
-                    (Map.Entry<? extends OdysseyMaterial, Storage> o) -> FavouriteService.isFavourite(o.getKey());
-            case NOT_ON_WISHLIST -> (Map.Entry<? extends OdysseyMaterial, Storage> o) -> {
-                final int amountOnAllWishlists = Wishlist.ALL.getItems().stream().map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(o.getKey())).mapToInt(Integer::intValue).sum();
-                return o.getValue().getTotalValue() > 0 && (amountOnAllWishlists == 0 || amountOnAllWishlists < o.getValue().getTotalValue());
+                    FavouriteService::isFavourite;
+            case NOT_ON_WISHLIST -> material -> {
+                final int amountOnAllWishlists = Wishlist.ALL.getItems().stream().map(odysseyWishlistBlueprint -> OdysseyBlueprintConstants.getRecipe(odysseyWishlistBlueprint.getRecipeName()).getRequiredAmount(material)).mapToInt(Integer::intValue).sum();
+                final Integer materialCount = StorageService.getMaterialCount(material, AmountType.TOTAL);
+                return materialCount > 0 && (amountOnAllWishlists == 0 || amountOnAllWishlists < materialCount);
             };
         };
     }

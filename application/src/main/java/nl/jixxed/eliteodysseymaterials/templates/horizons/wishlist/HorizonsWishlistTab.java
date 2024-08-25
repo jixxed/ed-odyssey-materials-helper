@@ -678,23 +678,23 @@ public class HorizonsWishlistTab extends HorizonsTab {
             final List<HorizonsWishlistIngredient> ingredientsRaw = this.wishlistNeededRaw.entrySet().stream()
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
-                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getRaw().get(wishlistItem.getKey())))
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getMaterialCount(wishlistItem.getKey())))
                     .toList();
             final List<HorizonsWishlistIngredient> ingredientsEncoded = this.wishlistNeededEncoded.entrySet().stream()
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
-                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getEncoded().get(wishlistItem.getKey())))
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getMaterialCount(wishlistItem.getKey())))
                     .toList();
             final List<HorizonsWishlistIngredient> ingredientsManufactured = this.wishlistNeededManufactured.entrySet().stream()
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey()) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
-                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getManufactured().get(wishlistItem.getKey())))
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getMaterialCount(wishlistItem.getKey())))
                     .toList();
             final List<HorizonsWishlistIngredient> ingredientsCommodities = this.wishlistNeededCommodity.entrySet().stream()
                     //might be missing: StorageService.getCommodityCount(entry.getKey(), StoragePool.FLEETCARRIER) +
                     .filter(entry -> !this.hideCompleted.get() || StorageService.getCommodityCount(entry.getKey(), StoragePool.SHIP) < entry.getValue().getRequired())
                     .filter(wishlistItem -> wishlistItem.getValue().getRequired() > 0)
-                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getCommoditiesShip().get(wishlistItem.getKey())))
+                    .map(wishlistItem -> new HorizonsWishlistIngredient(HorizonsStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue().getMinimum(), wishlistItem.getValue().getRequired(), wishlistItem.getValue().getMaximum(), StorageService.getCommodityCount(wishlistItem.getKey(),StoragePool.SHIP)))
                     .toList();
             allIngredients.addAll(ingredientsRaw);
             allIngredients.addAll(ingredientsEncoded);

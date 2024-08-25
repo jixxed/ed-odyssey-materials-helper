@@ -96,4 +96,8 @@ public enum Asset implements OdysseyMaterial {
                 .orElse(Asset.UNKNOWN);
     }
 
+    public boolean isType(final AssetType assetType) {
+        return this.type.equals(assetType);
+    }
+
 }

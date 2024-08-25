@@ -11,10 +11,7 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.AssetType;
-import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
-import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
+import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -129,17 +126,17 @@ class OdysseyMaterialTotal extends VBox {
             update(MaterialTotalType.BLUEPRINT, blueprintTotal);
             update(MaterialTotalType.IRRELEVANT, irrelevantTotal);
         } else if (OdysseyStorageType.ASSET.equals(this.storageType)) {
-            final Integer chemicalAssets = StorageService.getAssets().entrySet().stream()
-                    .filter(assetEntry -> AssetType.CHEMICAL.equals(assetEntry.getKey().getType()))
-                    .map(entry -> entry.getValue().getTotalValue())
+            final Integer chemicalAssets = Arrays.stream(Asset.values())
+                    .filter(asset -> asset.isType(AssetType.CHEMICAL))
+                    .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
                     .reduce(0, Integer::sum);
-            final Integer circuitAssets = StorageService.getAssets().entrySet().stream()
-                    .filter(assetEntry -> AssetType.CIRCUIT.equals(assetEntry.getKey().getType()))
-                    .map(entry -> entry.getValue().getTotalValue())
+            final Integer circuitAssets = Arrays.stream(Asset.values())
+                    .filter(asset -> asset.isType(AssetType.CIRCUIT))
+                    .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
                     .reduce(0, Integer::sum);
-            final Integer techAssets = StorageService.getAssets().entrySet().stream()
-                    .filter(assetEntry -> AssetType.TECH.equals(assetEntry.getKey().getType()))
-                    .map(entry -> entry.getValue().getTotalValue())
+            final Integer techAssets = Arrays.stream(Asset.values())
+                    .filter(asset -> asset.isType(AssetType.TECH))
+                    .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
                     .reduce(0, Integer::sum);
             update(MaterialTotalType.CHEMICAL, chemicalAssets);
             update(MaterialTotalType.CIRCUIT, circuitAssets);

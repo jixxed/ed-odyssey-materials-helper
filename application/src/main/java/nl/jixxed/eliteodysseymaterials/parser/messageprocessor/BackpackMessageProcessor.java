@@ -29,9 +29,9 @@ public class BackpackMessageProcessor implements MessageProcessor<Backpack> {
         }
         StorageService.resetBackPackCounts();
 
-        ASSET_PARSER.parse(event.getComponents().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.BACKPACK, StorageService.getAssets());
-        GOOD_PARSER.parse(event.getItems().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.BACKPACK, StorageService.getGoods());
-        DATA_PARSER.parse(event.getData().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.BACKPACK, StorageService.getData());
+        ASSET_PARSER.parse(event.getComponents().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.BACKPACK);
+        GOOD_PARSER.parse(event.getItems().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.BACKPACK);
+        DATA_PARSER.parse(event.getData().get().stream().map(MaterialMapping::map).collect(Collectors.toList()), StoragePool.BACKPACK);
         EventService.publish(new StorageEvent(StoragePool.BACKPACK));
     }
 

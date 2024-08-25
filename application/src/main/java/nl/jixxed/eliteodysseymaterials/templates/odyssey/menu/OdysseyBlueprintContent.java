@@ -85,9 +85,9 @@ class OdysseyBlueprintContent extends VBox {
     }
 
     private void loadIngredients() {
-        this.ingredients.addAll(getRecipeIngredients(Good.class, OdysseyStorageType.GOOD, StorageService.getGoods()));
-        this.ingredients.addAll(getRecipeIngredients(Asset.class, OdysseyStorageType.ASSET, StorageService.getAssets()));
-        this.ingredients.addAll(getRecipeIngredients(Data.class, OdysseyStorageType.DATA, StorageService.getData()));
+        this.ingredients.addAll(getRecipeIngredients(Good.class, OdysseyStorageType.GOOD));
+        this.ingredients.addAll(getRecipeIngredients(Asset.class, OdysseyStorageType.ASSET));
+        this.ingredients.addAll(getRecipeIngredients(Data.class, OdysseyStorageType.DATA));
         if (this.blueprint instanceof EngineerBlueprint engineerRecipe) {
             this.ingredients.addAll(engineerRecipe.getOther().stream()
                     .map(text -> new MissionIngredient(text, OdysseyStorageType.OTHER))
@@ -287,9 +287,9 @@ class OdysseyBlueprintContent extends VBox {
         }));
     }
 
-    private List<OdysseyMaterialIngredient> getRecipeIngredients(final Class<? extends OdysseyMaterial> materialClass, final OdysseyStorageType storageType, final Map<? extends OdysseyMaterial, Storage> materialMap) {
+    private List<OdysseyMaterialIngredient> getRecipeIngredients(final Class<? extends OdysseyMaterial> materialClass, final OdysseyStorageType storageType) {
         return this.blueprint.getMaterialCollection(materialClass).entrySet().stream()
-                .map(material -> new OdysseyMaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()).getTotalValue()))
+                .map(material -> new OdysseyMaterialIngredient(storageType, material.getKey(), material.getValue(), StorageService.getMaterialCount(material.getKey(),AmountType.TOTAL)))
                 .sorted(Comparator.comparing(OdysseyMaterialIngredient::getName))
                 .collect(Collectors.toCollection(ArrayList::new));
     }

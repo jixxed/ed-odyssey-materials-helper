@@ -12,11 +12,9 @@ import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Search;
-import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialTotals;
@@ -182,26 +180,26 @@ public class OdysseyMaterialOverview extends VBox {
     }
 
     private void addGoods(final Search search) {
-        StorageService.getGoods().entrySet().stream()
+        Arrays.stream(Good.values())
                 .filter(OdysseyMaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
                 .sorted(OdysseyMaterialSort.getSort(search))
-                .forEach(entry -> {
-                    this.goodFlow.getChildren().add(this.materialCards.get(entry.getKey()));
+                .forEach(good -> {
+                    this.goodFlow.getChildren().add(this.materialCards.get(good));
                 });
     }
 
     private void addAssets(final Search search) {
-        StorageService.getAssets().entrySet().stream()
+        Arrays.stream(Asset.values())
                 .filter(OdysseyMaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
-                .sorted(Comparator.comparing((Map.Entry<Asset, Storage> o) -> o.getKey().getType())
+                .sorted(Comparator.comparing(Asset::getType)
                         .thenComparing(OdysseyMaterialSort.getSort(search)))
-                .forEach(entry -> {
-                    final OdysseyMaterialCard materialCard = this.materialCards.get(entry.getKey());
-                    switch (entry.getKey().getType()) {
+                .forEach(asset -> {
+                    final OdysseyMaterialCard materialCard = this.materialCards.get(asset);
+                    switch (asset.getType()) {
                         case TECH -> this.assetTechFlow.getChildren().add(materialCard);
                         case CHEMICAL -> this.assetChemicalFlow.getChildren().add(materialCard);
                         case CIRCUIT -> this.assetCircuitFlow.getChildren().add(materialCard);
@@ -210,22 +208,20 @@ public class OdysseyMaterialOverview extends VBox {
     }
 
     private void addDatas(final Search search) {
-        StorageService.getData().entrySet().stream()
+        Arrays.stream(Data.values())
                 .filter(OdysseyMaterialShow.getFilter(search))
                 .filter(onSearchQuery(search))
                 .filter(onKnownMaterial())
                 .sorted(OdysseyMaterialSort.getSort(search))
-                .forEach(entry -> {
-                    this.dataFlow.getChildren().add(this.materialCards.get(entry.getKey()));
-                });
+                .forEach(data -> this.dataFlow.getChildren().add(this.materialCards.get(data)));
     }
 
-    private Predicate<? super Map.Entry<? extends OdysseyMaterial, Storage>> onKnownMaterial() {
-        return (Map.Entry<? extends OdysseyMaterial, Storage> o) -> !o.getKey().isUnknown();
+    private Predicate<? super OdysseyMaterial> onKnownMaterial() {
+        return material -> !material.isUnknown();
     }
 
-    private Predicate<? super Map.Entry<? extends OdysseyMaterial, Storage>> onSearchQuery(final Search search) {
-        return (Map.Entry<? extends OdysseyMaterial, Storage> o) -> search.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(o.getKey().getLocalizationKey()).toLowerCase().contains(search.getQuery().toLowerCase());
+    private Predicate<? super OdysseyMaterial> onSearchQuery(final Search search) {
+        return material -> search.getQuery().isBlank() || LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey()).toLowerCase().contains(search.getQuery().toLowerCase());
     }
 
 

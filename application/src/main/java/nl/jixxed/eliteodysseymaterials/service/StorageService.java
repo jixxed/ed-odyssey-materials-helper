@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.AnyRelevantStorage;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
@@ -14,25 +13,15 @@ import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StorageService {
-    @Getter
     private static final Map<Raw, Integer> raw = new EnumMap<>(Raw.class);
-    @Getter
     private static final Map<Encoded, Integer> encoded = new EnumMap<>(Encoded.class);
-    @Getter
     private static final Map<Manufactured, Integer> manufactured = new EnumMap<>(Manufactured.class);
-    @Getter
     private static final Map<Commodity, Integer> commoditiesShip = new EnumMap<>(Commodity.class);
-    @Getter
     private static final Map<Commodity, Integer> commoditiesSrv = new EnumMap<>(Commodity.class);
-    @Getter
     private static final Map<Commodity, Integer> commoditiesFleetcarrier = new EnumMap<>(Commodity.class);
-    @Getter
     private static final Map<Good, Storage> goods = new EnumMap<>(Good.class);
-    @Getter
     private static final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
-    @Getter
     private static final Map<Data, Storage> data = new EnumMap<>(Data.class);
-    @Getter
     private static final Map<Consumable, Storage> consumables = new EnumMap<>(Consumable.class);
 
     static {
@@ -85,6 +74,23 @@ public class StorageService {
         }
     }
 
+    public static void removeMaterial(final OdysseyMaterial material, StoragePool storagePool, final Integer amount) {
+        addMaterial(material, storagePool, -amount);
+    }
+
+    public static void addMaterial(OdysseyMaterial material, StoragePool storagePool, int amount) {
+        if (material instanceof Asset assetMaterial) {
+            final int value = assets.get(assetMaterial).getValue(storagePool) + amount;
+            assets.get(assetMaterial).setValue(Math.max(value, 0), storagePool);
+        } else if (material instanceof Good goodMaterial) {
+            final int value = goods.get(goodMaterial).getValue(storagePool) + amount;
+            goods.get(goodMaterial).setValue(Math.max(value, 0), storagePool);
+        }else if (material instanceof Data dataMaterial) {
+            final int value = data.get(dataMaterial).getValue(storagePool) + amount;
+            data.get(dataMaterial).setValue(Math.max(value, 0), storagePool);
+        }
+    }
+
     public static void addCommodity(final Commodity commodity, final StoragePool storagePool, final Integer amount) {
         if (StoragePool.FLEETCARRIER.equals(storagePool)) {
             final int value = commoditiesFleetcarrier.get(commodity) + amount;
@@ -112,6 +118,32 @@ public class StorageService {
         }
         throw new IllegalArgumentException("Unknown material type");
     }
+    public static Integer getMaterialCount(final OdysseyMaterial material, AmountType amountType) {
+        final Storage storage;
+        if (material instanceof Good) {
+           storage = goods.get(material);
+        } else if (material instanceof Data) {
+            storage =  data.get(material);
+        } else if (material instanceof Asset) {
+            storage =  assets.get(material);
+        } else{
+        throw new IllegalArgumentException("Unknown material type");
+        }
+        switch (amountType) {
+            case BACKPACK:
+                return storage.getBackPackValue();
+            case SHIPLOCKER:
+                return storage.getShipLockerValue();
+            case FLEETCARRIER:
+                return storage.getFleetCarrierValue();
+            case TOTAL:
+                return storage.getTotalValue();
+            case AVAILABLE:
+                return storage.getAvailableValue();
+            default:
+                throw new IllegalArgumentException("Unknown amountType");
+        }
+    }
 
     public static Integer getCommodityCount(final Commodity commodity, final StoragePool storagePool) {
         if (StoragePool.FLEETCARRIER.equals(storagePool)) {
@@ -125,73 +157,73 @@ public class StorageService {
     }
 
     public static void resetShipLockerCounts() {
-        getAssets().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-        getData().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
-        getGoods().values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+        assets.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+        data.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
+        goods.values().forEach(value -> value.setValue(0, StoragePool.SHIPLOCKER));
     }
 
     public static void resetFleetCarrierCounts() {
-        getAssets().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
-        getData().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
-        getGoods().values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+         assets.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+         data.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
+         goods.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
         Arrays.stream(Commodity.values()).forEach(material ->
-                getCommoditiesFleetcarrier().put(material, 0)
+                commoditiesFleetcarrier.put(material, 0)
         );
     }
 
     public static void resetSrvCounts() {
         Arrays.stream(Commodity.values()).forEach(material ->
-                getCommoditiesSrv().put(material, 0)
+                commoditiesSrv.put(material, 0)
         );
     }
 
     public static void resetBackPackCounts() {
-        getAssets().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-        getData().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
-        getGoods().values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
+         assets.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
+         data.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
+         goods.values().forEach(value -> value.setValue(0, StoragePool.BACKPACK));
     }
 
     public static void resetHorizonsMaterialCounts() {
         Arrays.stream(Raw.values()).forEach(material ->
-                getRaw().put(material, 0)
+                raw.put(material, 0)
         );
         Arrays.stream(Encoded.values()).forEach(material ->
-                getEncoded().put(material, 0)
+                encoded.put(material, 0)
         );
         Arrays.stream(Manufactured.values()).forEach(material ->
-                getManufactured().put(material, 0)
+                manufactured.put(material, 0)
         );
     }
 
     public static void resetHorizonsCommodityCounts() {
         Arrays.stream(Commodity.values()).forEach(material ->
-                getCommoditiesShip().put(material, 0)
+                commoditiesShip.put(material, 0)
         );
     }
 
     private static void initCounts() {
         Arrays.stream(Asset.values()).forEach(material ->
-                getAssets().put(material, new Storage())
+                assets.put(material, new Storage())
         );
         Arrays.stream(Data.values()).forEach(material ->
-                getData().put(material, new Storage())
+                data.put(material, new Storage())
         );
         Arrays.stream(Good.values()).forEach(material ->
-                getGoods().put(material, new Storage())
+                goods.put(material, new Storage())
         );
         Arrays.stream(Raw.values()).forEach(material ->
-                getRaw().put(material, 0)
+                raw.put(material, 0)
         );
         Arrays.stream(Encoded.values()).forEach(material ->
-                getEncoded().put(material, 0)
+                encoded.put(material, 0)
         );
         Arrays.stream(Manufactured.values()).forEach(material ->
-                getManufactured().put(material, 0)
+                manufactured.put(material, 0)
         );
         Arrays.stream(Commodity.values()).forEach(material -> {
-            getCommoditiesShip().put(material, 0);
-            getCommoditiesFleetcarrier().put(material, 0);
-            getCommoditiesSrv().put(material, 0);
+            commoditiesShip.put(material, 0);
+            commoditiesFleetcarrier.put(material, 0);
+            commoditiesSrv.put(material, 0);
         });
     }
 
@@ -204,4 +236,5 @@ public class StorageService {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
 }

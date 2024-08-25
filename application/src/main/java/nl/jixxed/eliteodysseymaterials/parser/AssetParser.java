@@ -1,20 +1,18 @@
 package nl.jixxed.eliteodysseymaterials.parser;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.mapping.MaterialMapping;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 public class AssetParser implements Parser<MaterialMapping> {
     @Override
-    public void parse(final List<MaterialMapping> components, final StoragePool storagePool, final Map<? extends OdysseyMaterial, Storage> knownMap) {
+    public void parse(final List<MaterialMapping> components, final StoragePool storagePool) {
         components.forEach(component ->
         {
             final String name = component.getName();
@@ -24,9 +22,7 @@ public class AssetParser implements Parser<MaterialMapping> {
                 log.warn("Unknown Asset detected: " + component);
                 ReportService.reportMaterial(component);
             } else {
-                final Storage storage = knownMap.get(asset);
-                //stack values as items occur multiple times in the json
-                storage.setValue(Math.max(0,storage.getValue(storagePool) + amount), storagePool);
+                StorageService.addMaterial(asset, storagePool, amount);
             }
         });
     }

@@ -582,16 +582,16 @@ public class OdysseyWishlistTab extends OdysseyTab {
         final List<Ingredient> allIngredients = new ArrayList<>();
         if (this.currentSearch.getWishlistMaterialGrouping().equals(WishlistMaterialGrouping.CATEGORY)) {
             final List<OdysseyWishlistIngredient> ingredientsData = this.wishlistNeededDatas.entrySet().stream()
-                    .filter(entry -> !this.hideCompleted.get() || StorageService.getData().get(entry.getKey()).getAvailableValue() < entry.getValue())
-                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getData().get(wishlistItem.getKey()).getTotalValue()))
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey(), AmountType.AVAILABLE) < entry.getValue())
+                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getMaterialCount(wishlistItem.getKey(), AmountType.TOTAL)))
                     .toList();
             final List<OdysseyWishlistIngredient> ingredientsGood = this.wishlistNeededGoods.entrySet().stream()
-                    .filter(entry -> !this.hideCompleted.get() || StorageService.getGoods().get(entry.getKey()).getAvailableValue() < entry.getValue())
-                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getGoods().get(wishlistItem.getKey()).getTotalValue()))
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey(), AmountType.AVAILABLE) < entry.getValue())
+                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getMaterialCount(wishlistItem.getKey(), AmountType.TOTAL)))
                     .toList();
             final List<OdysseyWishlistIngredient> ingredientsAsset = this.wishlistNeededAssets.entrySet().stream()
-                    .filter(entry -> !this.hideCompleted.get() || StorageService.getAssets().get(entry.getKey()).getAvailableValue() < entry.getValue())
-                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getAssets().get(wishlistItem.getKey()).getTotalValue()))
+                    .filter(entry -> !this.hideCompleted.get() || StorageService.getMaterialCount(entry.getKey(), AmountType.AVAILABLE) < entry.getValue())
+                    .map(wishlistItem -> new OdysseyWishlistIngredient(OdysseyStorageType.forMaterial(wishlistItem.getKey()), wishlistItem.getKey(), wishlistItem.getValue(), StorageService.getMaterialCount(wishlistItem.getKey(), AmountType.TOTAL)))
                     .toList();
             allIngredients.addAll(ingredientsData);
             allIngredients.addAll(ingredientsGood);

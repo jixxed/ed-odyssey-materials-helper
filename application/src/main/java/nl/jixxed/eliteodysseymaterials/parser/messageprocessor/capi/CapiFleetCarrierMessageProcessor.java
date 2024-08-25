@@ -33,9 +33,9 @@ public class CapiFleetCarrierMessageProcessor implements CapiMessageProcessor {
             BUY_ORDER_PARSER.parse(commodities.get("purchases").elements(), Expansion.HORIZONS);
         }
         if (carrierLocker != null) {
-            ASSET_PARSER.parse(carrierLocker.get("assets").elements(), StoragePool.FLEETCARRIER, StorageService.getAssets());
-            GOOD_PARSER.parse(carrierLocker.get("goods").elements(), StoragePool.FLEETCARRIER, StorageService.getGoods());
-            DATA_PARSER.parse(carrierLocker.get("data").elements(), StoragePool.FLEETCARRIER, StorageService.getData());
+            ASSET_PARSER.parse(carrierLocker.get("assets").elements(), StoragePool.FLEETCARRIER);
+            GOOD_PARSER.parse(carrierLocker.get("goods").elements(), StoragePool.FLEETCARRIER);
+            DATA_PARSER.parse(carrierLocker.get("data").elements(), StoragePool.FLEETCARRIER);
         }
         if (cargo != null) {
             COMMODITY_PARSER.parse(cargo.elements());

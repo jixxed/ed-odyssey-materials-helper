@@ -98,7 +98,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
             initEngineers();
         }
         initModifiers();
-        if(this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint){
+        if (this.blueprint instanceof HorizonsTechBrokerBlueprint blueprint) {
             initClosestTrader(blueprint.getHorizonsBrokerTypes());
         }
 
@@ -114,10 +114,10 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
     }
 
     private void loadIngredients() {
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Raw.class, HorizonsStorageType.RAW, StorageService.getRaw()));
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Encoded.class, HorizonsStorageType.ENCODED, StorageService.getEncoded()));
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Manufactured.class, HorizonsStorageType.MANUFACTURED, StorageService.getManufactured()));
-        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Commodity.class, HorizonsStorageType.COMMODITY, StorageService.getCommoditiesShip()));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Raw.class, HorizonsStorageType.RAW));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Encoded.class, HorizonsStorageType.ENCODED));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Manufactured.class, HorizonsStorageType.MANUFACTURED));
+        this.ingredients.addAll(getRecipeIngredients(this.blueprint, Commodity.class, HorizonsStorageType.COMMODITY));
         if (this.blueprint instanceof HorizonsEngineerBlueprint horizonsEngineerBlueprint) {
             this.ingredients.addAll(horizonsEngineerBlueprint.getOther().stream()
                     .map(text -> new MissionIngredient(text, HorizonsStorageType.OTHER))
@@ -159,7 +159,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         this.recipeHeader = BoxBuilder.builder().withNodes(descriptionTitle, descriptionRegion).buildHBox();
 
         this.getChildren().add(this.recipeHeader);
-        if(GameVersion.LIVE.equals(this.blueprint.getGameVersion())) {
+        if (GameVersion.LIVE.equals(this.blueprint.getGameVersion())) {
             final DestroyableLabel liveOnly = LabelBuilder.builder()
                     .withStyleClass("recipe-live").withText(LocaleService.getStringBinding("blueprint.is.live")).build();
             this.getChildren().add(liveOnly);
@@ -171,7 +171,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 .build();
         final TextFlow textFlow = new TextFlow(description);
         textFlow.getStyleClass().add("blueprint-description");
-        this.getChildren().add( textFlow);
+        this.getChildren().add(textFlow);
     }
 
     @SuppressWarnings("java:S1192")
@@ -388,10 +388,10 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
         }));
     }
 
-    private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint recipe, final Class<? extends HorizonsMaterial> materialClass, final HorizonsStorageType storageType, final Map<? extends HorizonsMaterial, Integer> materialMap) {
+    private List<HorizonsMaterialIngredient> getRecipeIngredients(final HorizonsBlueprint recipe, final Class<? extends HorizonsMaterial> materialClass, final HorizonsStorageType storageType) {
         return recipe.getMaterialCollection(materialClass).entrySet().stream()
                 .map(material -> {
-                    final HorizonsMaterialIngredient horizonsMaterialIngredient = new HorizonsMaterialIngredient(storageType, material.getKey(), material.getValue(), materialMap.get(material.getKey()));
+                    final HorizonsMaterialIngredient horizonsMaterialIngredient = new HorizonsMaterialIngredient(storageType, material.getKey(), material.getValue(), storageType == HorizonsStorageType.COMMODITY ? StorageService.getCommodityCount((Commodity) material.getKey(), StoragePool.SHIP) : StorageService.getMaterialCount(material.getKey()));
                     this.destroyables.add(horizonsMaterialIngredient);
                     return horizonsMaterialIngredient;
                 })

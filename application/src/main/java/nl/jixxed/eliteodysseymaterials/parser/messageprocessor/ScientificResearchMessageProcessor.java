@@ -1,16 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.EncodedScientificResearchParser;
 import nl.jixxed.eliteodysseymaterials.parser.ManufacturedScientificResearchParser;
 import nl.jixxed.eliteodysseymaterials.parser.RawScientificResearchParser;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ScientificResearch.ScientificResearch;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-
-import java.util.Map;
 
 public class ScientificResearchMessageProcessor implements MessageProcessor<ScientificResearch> {
     private static final RawScientificResearchParser RAW_PARSER = new RawScientificResearchParser();
@@ -22,11 +18,11 @@ public class ScientificResearchMessageProcessor implements MessageProcessor<Scie
         final String category = event.getCategory();
         switch (category.toLowerCase()) {
             case "raw" ->
-                    RAW_PARSER.parse(event, (Map<HorizonsMaterial, Integer>) (Map<?, Integer>) StorageService.getRaw());
+                    RAW_PARSER.parse(event);
             case "encoded" ->
-                    ENCODED_PARSER.parse(event, (Map<HorizonsMaterial, Integer>) (Map<?, Integer>) StorageService.getEncoded());
+                    ENCODED_PARSER.parse(event);
             case "manufactured" ->
-                    MANUFACTURED_PARSER.parse(event, (Map<HorizonsMaterial, Integer>) (Map<?, Integer>) StorageService.getManufactured());
+                    MANUFACTURED_PARSER.parse(event);
         }
         EventService.publish(new StorageEvent(StoragePool.SHIP));
     }

@@ -15,7 +15,10 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -48,21 +51,15 @@ public class XlsExporter {
                         .forEach(item -> {
                             final String materialName = LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey());
                             final Integer ship = switch (item.getKey().getStorageType()) {
-                                case GOOD -> StorageService.getGoods().get(item.getKey()).getAvailableValue();
-                                case DATA -> StorageService.getData().get(item.getKey()).getAvailableValue();
-                                case ASSET -> StorageService.getAssets().get(item.getKey()).getAvailableValue();
+                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
                                 case TRADE, CONSUMABLE, OTHER -> 0;
                             };
                             final Integer fc = switch (item.getKey().getStorageType()) {
-                                case GOOD -> StorageService.getGoods().get(item.getKey()).getFleetCarrierValue();
-                                case DATA -> StorageService.getData().get(item.getKey()).getFleetCarrierValue();
-                                case ASSET -> StorageService.getAssets().get(item.getKey()).getFleetCarrierValue();
+                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
                                 case TRADE, CONSUMABLE, OTHER -> 0;
                             };
                             final Integer total = switch (item.getKey().getStorageType()) {
-                                case GOOD -> StorageService.getGoods().get(item.getKey()).getTotalValue();
-                                case DATA -> StorageService.getData().get(item.getKey()).getTotalValue();
-                                case ASSET -> StorageService.getAssets().get(item.getKey()).getTotalValue();
+                                case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
                                 case TRADE, CONSUMABLE, OTHER -> 0;
                             };
                             final Row dataRow = sheet.createRow(rowNumber.getAndIncrement());
@@ -162,76 +159,76 @@ public class XlsExporter {
         final XSSFFont dataFont = workbook.createFont();
         dataFont.setFontHeight(14);
         dataStyle.setFont(dataFont);
-        StorageService.getGoods().forEach((material, storage) -> {
-            if (storage.getTotalValue() > 0) {
+        Arrays.stream(Good.values()).forEach((material) -> {
+            if (StorageService.getMaterialCount(material, AmountType.TOTAL) > 0) {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetGoods.createRow(rowNumber.getAndIncrement());
                 createCell(sheetGoods, dataRow, 0, materialName, dataStyle);
                 createCell(sheetGoods, dataRow, 1, OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", dataStyle);
-                createCell(sheetGoods, dataRow, 2, storage.getBackPackValue(), dataStyle);
-                createCell(sheetGoods, dataRow, 3, storage.getShipLockerValue(), dataStyle);
-                createCell(sheetGoods, dataRow, 4, storage.getFleetCarrierValue(), dataStyle);
-                createCell(sheetGoods, dataRow, 5, storage.getTotalValue(), dataStyle);
+                createCell(sheetGoods, dataRow, 2, StorageService.getMaterialCount(material, AmountType.BACKPACK), dataStyle);
+                createCell(sheetGoods, dataRow, 3, StorageService.getMaterialCount(material, AmountType.SHIPLOCKER), dataStyle);
+                createCell(sheetGoods, dataRow, 4, StorageService.getMaterialCount(material, AmountType.FLEETCARRIER), dataStyle);
+                createCell(sheetGoods, dataRow, 5, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
             }
         });
         rowNumber.set(1);
-        StorageService.getAssets().forEach((material, storage) -> {
-            if (storage.getTotalValue() > 0) {
+        Arrays.stream(Asset.values()).forEach((material) -> {
+            if (StorageService.getMaterialCount(material, AmountType.TOTAL) > 0) {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetAssets.createRow(rowNumber.getAndIncrement());
                 createCell(sheetAssets, dataRow, 0, materialName, dataStyle);
                 createCell(sheetAssets, dataRow, 1, OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", dataStyle);
-                createCell(sheetAssets, dataRow, 2, storage.getBackPackValue(), dataStyle);
-                createCell(sheetAssets, dataRow, 3, storage.getShipLockerValue(), dataStyle);
-                createCell(sheetAssets, dataRow, 4, storage.getFleetCarrierValue(), dataStyle);
-                createCell(sheetAssets, dataRow, 5, storage.getTotalValue(), dataStyle);
+                createCell(sheetAssets, dataRow, 2, StorageService.getMaterialCount(material, AmountType.BACKPACK), dataStyle);
+                createCell(sheetAssets, dataRow, 3, StorageService.getMaterialCount(material, AmountType.SHIPLOCKER), dataStyle);
+                createCell(sheetAssets, dataRow, 4, StorageService.getMaterialCount(material, AmountType.FLEETCARRIER), dataStyle);
+                createCell(sheetAssets, dataRow, 5, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
             }
         });
         rowNumber.set(1);
-        StorageService.getData().forEach((material, storage) -> {
-            if (storage.getTotalValue() > 0) {
+        Arrays.stream(Data.values()).forEach((material) -> {
+            if (StorageService.getMaterialCount(material, AmountType.TOTAL) > 0) {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetData.createRow(rowNumber.getAndIncrement());
                 createCell(sheetData, dataRow, 0, materialName, dataStyle);
                 createCell(sheetData, dataRow, 1, OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(material) ? "Yes" : "No", dataStyle);
-                createCell(sheetData, dataRow, 2, storage.getBackPackValue(), dataStyle);
-                createCell(sheetData, dataRow, 3, storage.getShipLockerValue(), dataStyle);
-                createCell(sheetData, dataRow, 4, storage.getFleetCarrierValue(), dataStyle);
-                createCell(sheetData, dataRow, 5, storage.getTotalValue(), dataStyle);
+                createCell(sheetData, dataRow, 2, StorageService.getMaterialCount(material, AmountType.BACKPACK), dataStyle);
+                createCell(sheetData, dataRow, 3, StorageService.getMaterialCount(material, AmountType.SHIPLOCKER), dataStyle);
+                createCell(sheetData, dataRow, 4, StorageService.getMaterialCount(material, AmountType.FLEETCARRIER), dataStyle);
+                createCell(sheetData, dataRow, 5, StorageService.getMaterialCount(material, AmountType.TOTAL), dataStyle);
             }
         });
         rowNumber.set(1);
-        StorageService.getRaw().forEach((material, amount) -> {
-            if (amount > 0) {
+        Arrays.stream(Raw.values()).forEach((material) -> {
+            final Integer materialCount = StorageService.getMaterialCount(material);
+            if (materialCount > 0) {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetRaw.createRow(rowNumber.getAndIncrement());
                 createCell(sheetRaw, dataRow, 0, materialName, dataStyle);
-                createCell(sheetRaw, dataRow, 1, amount, dataStyle);
+                createCell(sheetRaw, dataRow, 1, materialCount, dataStyle);
             }
         });
         rowNumber.set(1);
-        StorageService.getEncoded().forEach((material, amount) -> {
-            if (amount > 0) {
+        Arrays.stream(Encoded.values()).forEach((material) -> {
+            final Integer materialCount = StorageService.getMaterialCount(material);
+            if (materialCount > 0) {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetEncoded.createRow(rowNumber.getAndIncrement());
                 createCell(sheetEncoded, dataRow, 0, materialName, dataStyle);
-                createCell(sheetEncoded, dataRow, 1, amount, dataStyle);
+                createCell(sheetEncoded, dataRow, 1, materialCount, dataStyle);
             }
         });
         rowNumber.set(1);
-        StorageService.getManufactured().forEach((material, amount) -> {
-            if (amount > 0) {
+        Arrays.stream(Manufactured.values()).forEach((material) -> {
+            final Integer materialCount = StorageService.getMaterialCount(material);
+            if (materialCount > 0) {
                 final String materialName = LocaleService.getLocalizedStringForCurrentLocale(material.getLocalizationKey());
                 final Row dataRow = sheetManufactured.createRow(rowNumber.getAndIncrement());
                 createCell(sheetManufactured, dataRow, 0, materialName, dataStyle);
-                createCell(sheetManufactured, dataRow, 1, amount, dataStyle);
+                createCell(sheetManufactured, dataRow, 1, materialCount, dataStyle);
             }
         });
         rowNumber.set(1);
-        final Set<Commodity> commodities = new HashSet<>();
-        commodities.addAll(StorageService.getCommoditiesShip().keySet());
-        commodities.addAll(StorageService.getCommoditiesFleetcarrier().keySet());
-        commodities.forEach(commodity -> {
+        Arrays.stream(Commodity.values()).forEach((commodity) -> {
             final Integer shipAmount = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
             final Integer fcAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
             if (shipAmount + fcAmount > 0) {

@@ -1,16 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
-import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.parser.EncodedTradeParser;
 import nl.jixxed.eliteodysseymaterials.parser.ManufacturedTradeParser;
 import nl.jixxed.eliteodysseymaterials.parser.RawTradeParser;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.MaterialTrade.MaterialTrade;
-import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-
-import java.util.Map;
 
 public class MaterialTradeMessageProcessor implements MessageProcessor<MaterialTrade> {
     private static final RawTradeParser RAW_TRADE_PARSER = new RawTradeParser();
@@ -22,11 +18,11 @@ public class MaterialTradeMessageProcessor implements MessageProcessor<MaterialT
         final String category = event.getTraderType();
         switch (category) {
             case "raw" ->
-                    RAW_TRADE_PARSER.parse(event, (Map<HorizonsMaterial, Integer>) (Map<?, Integer>) StorageService.getRaw());
+                    RAW_TRADE_PARSER.parse(event);
             case "encoded" ->
-                    ENCODED_TRADE_PARSER.parse(event, (Map<HorizonsMaterial, Integer>) (Map<?, Integer>) StorageService.getEncoded());
+                    ENCODED_TRADE_PARSER.parse(event);
             case "manufactured" ->
-                    MANUFACTURED_TRADE_PARSER.parse(event, (Map<HorizonsMaterial, Integer>) (Map<?, Integer>) StorageService.getManufactured());
+                    MANUFACTURED_TRADE_PARSER.parse(event);
         }
         EventService.publish(new StorageEvent(StoragePool.SHIP));
     }
