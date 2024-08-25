@@ -926,7 +926,8 @@ public class ExperimentalEffectBlueprints {
                     Map.of(
                             Raw.MANGANESE, 4,
                             Manufactured.HYBRIDCAPACITORS, 5,
-                            Manufactured.MECHANICALSCRAP, 5
+                            Manufactured.MECHANICALSCRAP, 5,
+                            Manufactured.MECHANICALCOMPONENTS, 5
                     ),
                     Map.of(
                             HorizonsModifier.TARGET_SENSOR_ACUITY_REDUCED, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))
