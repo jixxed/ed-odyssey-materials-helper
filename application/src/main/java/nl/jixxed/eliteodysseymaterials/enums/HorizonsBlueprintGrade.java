@@ -48,21 +48,6 @@ public enum HorizonsBlueprintGrade {
 
         int diff = engineerRank - grade;
 
-        if (diff == 0) {
-            return 5;
-        }
-        if (diff == 1) {
-            return 4;
-        }
-        if (diff == 2) {
-            return 3;
-        }
-        if (diff == 3) {
-            return 2;
-        }
-        if (diff == 4) {
-            return 1;
-        }
-        return 5;
+        return 5 - diff;
     }
 }
