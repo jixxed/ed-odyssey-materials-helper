@@ -1,11 +1,18 @@
+Version 2.106
+-------------
+Fix dazzle shell recipe for fragment cannon
+Order commander list alphabetically
+Fix some logic for calculating wishlist materials current/min/max
+Bugfixes and improvements
+
 Version 2.105
 -------------
 Remove Thargoid wake scan hint to scan scavengers
-bugfixes and improvemments
+Bugfixes and improvements
 
 Version 2.104
 -------------
-fix keelback images in shipbuilder
+Fix keelback images in shipbuilder
 
 Version 2.103
 -------------
@@ -22,8 +29,8 @@ Update Portuguese translations
 
 Version 2.100
 -------------
-prevent commodities and materials from going negative, causing application startup issues.
-more bugfixes
+Prevent commodities and materials from going negative, causing application startup issues.
+More bugfixes
 
 Version 2.99
 -------------
