@@ -255,7 +255,7 @@ extraJavaModuleInfo {
         requires("com.fasterxml.jackson.core")
         requires("com.fasterxml.jackson.databind")
     }
-    module('failureaccess-1.0.1.jar', 'com.google.guava.failureaccess', '1.0.1')
+//    module('failureaccess-1.0.2.jar', 'com.google.guava.failureaccess', '1.0.2')
     module('jsr305-3.0.2.jar', 'com.google.code.findbugs.jsr305', '3.0.2')
 //    automaticModule("j2objc-annotations-${project.getProperties().version_j2objc_annotations}.jar", 'j2objc')
     module("commons-math3-${project.getProperties().version_apache_commons_math3}.jar", 'org.apache.commons.math3') {
@@ -632,3 +632,14 @@ tasks.withType(Test).configureEach {
 tasks.withType(JavaExec).configureEach {
     jvmArgs += "--enable-preview"
 }
+afterEvaluate {
+    generateEffectiveLombokConfig.mustRunAfter generateJsonSchema2Pojo
+}
+//sourceSets.test.java.srcDirs files("${project.buildDir}/generated/sources/js2p").builtBy(generateJsonSchema2Pojo)
+//task generateEffectiveLombokConfig(type: SomeTaskType) {
+//    // Task configuration here
+//}
+//tasks.named('generateEffectiveLombokConfig') {
+//    dependsOn(tasks.named('generateJsonSchema2Pojo'))
+//    // or alternatively use inputs.files or mustRunAfter as shown above.
+//}
