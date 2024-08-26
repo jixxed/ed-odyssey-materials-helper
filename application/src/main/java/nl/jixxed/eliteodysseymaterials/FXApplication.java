@@ -156,7 +156,7 @@ public class FXApplication extends Application {
             Runnable rn = () -> {
                 Platform.runLater(() -> {
                     final String clipboard = Clipboard.getSystemClipboard().getString();
-                    if (clipboard.startsWith("edomh://")) {
+                    if (clipboard != null && clipboard.startsWith("edomh://")) {
                         deeplinkConsumer.accept(clipboard);
                     }
                 });
