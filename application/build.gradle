@@ -182,6 +182,8 @@ dependencies {
     implementation "nl.jixxed:opencv"
     implementation "org.apache.poi:poi-ooxml"
     implementation "org.apache.commons:commons-math3"
+    implementation "org.apache.commons:commons-compress"
+    implementation "org.apache.xmlbeans:xmlbeans"
     implementation "com.zaxxer:SparseBitSet"
     implementation "io.sentry:sentry"
 //    implementation "io.sentry:sentry-logback"
@@ -286,20 +288,31 @@ extraJavaModuleInfo {
         exportAllPackages()
         requires("org.apache.commons.math3")
         requires("com.zaxxer.sparsebitset")
+        requires("org.apache.logging.log4j")
+        requires("java.desktop")
 
     }
     module("poi-ooxml-lite-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml.schemas", "${project.getProperties().version_apache_poi}") {
         patchRealModule()
         requires("org.apache.poi.poi")
+        requires("org.apache.xmlbeans")
+        requires("org.apache.logging.log4j")
+        requires("java.xml")
         exportAllPackages()
     }
     module("poi-ooxml-${project.getProperties().version_apache_poi}.jar", "org.apache.poi.ooxml", "${project.getProperties().version_apache_poi}") {
         patchRealModule()
         exportAllPackages()
 //        exports("org.apache.poi.xssf.usermodel")
+        requires("org.apache.logging.log4j")
+        requires("org.apache.commons.io")
         requires("org.apache.commons.math3")
+        requires("org.apache.commons.compress")
         requires("org.apache.poi.poi")
+        requires("org.apache.poi.ooxml.schemas")
         requires("com.zaxxer.sparsebitset")
+        requires("org.apache.xmlbeans")
+        requires("java.xml")
     }
     automaticModule("mockito-inline-${project.getProperties().version_mockito_inline}.jar", "mockito.inline")
 

@@ -118,7 +118,7 @@ public class XlsExporter {
                             createCell(sheet, dataRow, 1, ship, dataStyle);
                             createCell(sheet, dataRow, 2, fc, dataStyle);
                             createCell(sheet, dataRow, 3, total, dataStyle);
-                            createCell(sheet, dataRow, 4, item.getValue(), dataStyle);
+                            createCell(sheet, dataRow, 4, item.getValue().getRequired(), dataStyle);
                             createCell(sheet, dataRow, 5, Math.max(0, item.getValue().getRequired() - ship), dataStyle);
                         })
         );

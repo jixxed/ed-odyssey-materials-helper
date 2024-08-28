@@ -243,7 +243,7 @@ public class FXApplication extends Application {
             //Set extension filter for text files
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv"));
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS files (*.xlsx)", "*.xlsx"));
             //Show save file dialog
             final File file = fileChooser.showSaveDialog(this.primaryStage);
             if (file != null) {
@@ -251,7 +251,7 @@ public class FXApplication extends Application {
                     saveTextToFile(event.getTextSupplier().get(), file);
                 } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.csv")) {
                     saveTextToFile(event.getCsvSupplier().get(), file);
-                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.xls")) {
+                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.xlsx")) {
                     saveXlsToFile(event.getXlsSupplier().get(), file);
                 }
             }
@@ -261,7 +261,7 @@ public class FXApplication extends Application {
             //Set extension filter for text files
 //            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv"));
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS files (*.xlsx)", "*.xlsx"));
             //Show save file dialog
             final File file = fileChooser.showSaveDialog(this.primaryStage);
             if (file != null) {
@@ -269,7 +269,7 @@ public class FXApplication extends Application {
                     saveTextToFile(event.getTextSupplier().get(), file);
                 } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.csv")) {
                     saveTextToFile(event.getCsvSupplier().get(), file);
-                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.xls")) {
+                } else if (fileChooser.getSelectedExtensionFilter().getExtensions().contains("*.xlsx")) {
                     saveXlsToFile(event.getXlsSupplier().get(), file);
                 }
             }
