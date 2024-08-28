@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.AmountType;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -15,8 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 class AssetParserTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -47,7 +44,6 @@ class AssetParserTest {
 
     @Test
     void parse_shiplocker_unknown() throws IOException {
-        final Map<Asset, Storage> assets = new HashMap<>();
 
         final ShipLocker shipLocker = this.objectMapper.readValue(DataParserTest.class.getResourceAsStream("/parser/shiplocker_unknown.json"), ShipLocker.class);
         final AssetParser goodParser = new AssetParser();
