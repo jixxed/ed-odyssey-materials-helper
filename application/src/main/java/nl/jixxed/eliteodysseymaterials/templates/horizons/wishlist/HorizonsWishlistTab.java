@@ -635,7 +635,9 @@ public class HorizonsWishlistTab extends HorizonsTab {
         } catch (final IllegalArgumentException ex) {
             log.error("Failed to generate path", ex);
         }
-        this.wishlistBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setEngineer(getCurrentEngineerForRecipe(wishlistBlueprint.getPrimaryRecipe(), pathItems).orElseGet(() -> getBestEngineer(wishlistBlueprint.getPrimaryRecipe()))));
+        this.wishlistBlueprints.stream()
+                .filter(temp -> Objects.nonNull(temp.getPrimaryRecipe()))
+                .forEach(wishlistBlueprint -> wishlistBlueprint.setEngineer(getCurrentEngineerForRecipe(wishlistBlueprint.getPrimaryRecipe(), pathItems).orElseGet(() -> getBestEngineer(wishlistBlueprint.getPrimaryRecipe()))));
         this.wishlistBlueprints.stream()
                 .filter(WishlistBlueprintTemplate::isVisibleBlueprint)
                 .filter(temp -> Objects.nonNull(temp.getPrimaryRecipe()))
@@ -728,12 +730,12 @@ public class HorizonsWishlistTab extends HorizonsTab {
 
     private Optional<Engineer> getCurrentEngineerForRecipe(Blueprint<HorizonsBlueprintName> recipe, List<PathItem<HorizonsBlueprintName>> pathItems) {
         if (recipe == null) {
-            return null;
+            return Optional.empty();
         }
         return pathItems.stream()
                 .filter(pathItem -> pathItem.getRecipes().keySet().stream().anyMatch(blueprint -> blueprint.getBlueprintName().equals(recipe.getBlueprintName()) && ((HorizonsBlueprint) blueprint).getHorizonsBlueprintType().equals(((HorizonsBlueprint) recipe).getHorizonsBlueprintType())))
                 .findFirst()
-                .map(pathItem -> /*pathItem.getEngineer().equals(Engineer.UNKNOWN) ? null :*/ pathItem.getEngineer());
+                .map(PathItem::getEngineer);
     }
 
     private Engineer getBestEngineer(Blueprint<HorizonsBlueprintName> recipe) {
