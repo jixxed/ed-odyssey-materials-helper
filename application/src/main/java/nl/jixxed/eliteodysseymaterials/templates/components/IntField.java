@@ -5,42 +5,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class IntField extends TextField {
     private final IntegerProperty value;
     @Getter
     private int minValue;
     @Getter
     private int maxValue;
+    private boolean isUpdating = false; // Flag to prevent recursive updates
 
-    public void setMinValue(int minValue) {
-        this.minValue = minValue;
-        if(this.value.getValue() < minValue) {
-            this.value.setValue(minValue);
-        }
-    }
-
-    public void setMaxValue(int maxValue) {
-        this.maxValue = maxValue;
-        if(this.value.getValue() > maxValue) {
-            this.value.setValue(maxValue);
-        }
-    }
-
-    // expose an integer value property for the text field.
-    public int getValue() {
-        return this.value.getValue();
-    }
-
-    public void setValue(final int newValue) {
-        this.value.setValue(newValue);
-    }
-
-    public IntegerProperty valueProperty() {
-        return this.value;
-    }
-
-    public IntField(final int minValue, final int maxValue, final int initialValue) {
+    public IntField(int minValue, int maxValue, int initialValue) {
         if (minValue > maxValue) {
             throw new IllegalArgumentException(
                     "IntField min value " + minValue + " greater than max value " + maxValue
@@ -51,66 +27,47 @@ public class IntField extends TextField {
                     "IntField initialValue " + initialValue + " not between " + minValue + " and " + maxValue
             );
         }
-
-        // initialize the field values.
         this.minValue = minValue;
         this.maxValue = maxValue;
-        this.value = new SimpleIntegerProperty(initialValue);
-        setText(initialValue + "");
 
+        // Initialize the value property and set the initial text
+        value = new SimpleIntegerProperty(initialValue);
+        setText(String.valueOf(initialValue));
 
-        // make sure the value property is clamped to the required range
-        // and update the field's text to be in sync with the value.
-        addValueListener();
+        // Listen to changes in the text field's text property
+        addTextListener(minValue, maxValue);
 
         // restrict key input to numerals.
         restrictInputToNumerals();
 
-        // ensure any entered values lie inside the required range.
-        addTextListener();
-    }
-
-    private void addTextListener() {
-        this.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue == null || "".equals(newValue) || (this.minValue < 0 && "-".equals(newValue))) {
-                IntField.this.value.setValue(0);
-                return;
-            }
-            try {
-                final int intValue = Integer.parseInt(newValue);
-                if (this.minValue > intValue || intValue > this.maxValue) {
-                    textProperty().setValue(oldValue);
-                }
-            }catch (NumberFormatException e) {
-                textProperty().setValue(oldValue);
-            }
-
-            IntField.this.value.set(Integer.parseInt(textProperty().get()));
-        });
+        // Listen to changes in the value property
+        addValueListener();
     }
 
     private void addValueListener() {
-        this.value.addListener((observableValue, oldValue, newValue) -> {
-            if (oldValue.equals(newValue)) {
-                return;
-            }
-            if (newValue == null) {
-                this.setText("");
+        value.addListener((observable, oldValue, newValue) -> {
+            if (isUpdating) return;
+
+            isUpdating = true;
+            setText(newValue.toString());
+            isUpdating = false;
+        });
+    }
+
+    private void addTextListener(int minValue, int maxValue) {
+        textProperty().addListener((observable, oldValue, newValue) -> {
+            if (isUpdating) return;
+
+            if (newValue == null || newValue.isEmpty() || !isValidInt(newValue)) {
+                setText(oldValue); // Revert to the old value if the input is invalid
             } else {
-                if (newValue.intValue() < this.minValue) {
-                    IntField.this.value.setValue(this.minValue);
-                    return;
-                }
-
-                if (newValue.intValue() > this.maxValue) {
-                    IntField.this.value.setValue(this.maxValue);
-                    return;
-                }
-
-                if (newValue.intValue() == 0 && (textProperty().get() == null || "".equals(textProperty().get()))) {
-                    // no action required, text property is already blank, we don't need to set it to 0.
+                int intValue = Integer.parseInt(newValue);
+                if (intValue < minValue || intValue > maxValue) {
+                    setText(oldValue); // Revert if the value is out of bounds
                 } else {
-                    this.setText(newValue.toString());
+                    isUpdating = true;
+                    value.set(intValue); // Update the value property
+                    isUpdating = false;
                 }
             }
         });
@@ -128,5 +85,44 @@ public class IntField extends TextField {
                 }
             }
         });
+    }
+
+    // Check if the input string is a valid integer
+    private boolean isValidInt(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public IntegerProperty valueProperty() {
+        return value;
+    }
+
+    public int getValue() {
+        return value.get();
+    }
+
+    public void setValue(int value) {
+        if (value >= minValue && value <= maxValue) {
+            this.value.set(value);
+        }
+    }
+
+
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+        if (this.value.getValue() < minValue) {
+            this.value.setValue(minValue);
+        }
+    }
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+        if (this.value.getValue() > maxValue) {
+            this.value.setValue(maxValue);
+        }
     }
 }
