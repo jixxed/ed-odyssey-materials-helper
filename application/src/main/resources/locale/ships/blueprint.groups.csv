@@ -80,5 +80,5 @@ blueprint.group.name.cargo_racks,Cargo Racks,,,Bodega de Carga,,Racks de carga,�
 blueprint.group.name.fuel_tanks,Fuel Tanks,,,Tanques de Combustible,,Tanques de combustível,Топливные баки
 blueprint.group.name.cargo_hatches,Cargo Hatches,,,Escotillas de Carga,,Escotilhas de carga,Грузовые ковши
 blueprint.group.name.passenger_cabins,Passenger Cabins,,,Cabinas de Pasajero,,Cabines de passageiros,Пассажирские каюты
-blueprint.group.name.discovery_scanners,Discovery Scanners,,,,,Scanners de descoberta,
-blueprint.group.name.frame_shift_drive_boosters,Guardian Frame Shift Drive Boosters,,,,,Amplificadores de Motor de Distorção de Fase Guardian,
+blueprint.group.name.discovery_scanners,Discovery Scanners,,,,,Scanners de descoberta,Исследовательские сканеры
+blueprint.group.name.frame_shift_drive_boosters,Guardian Frame Shift Drive Boosters,,,,,Amplificadores de Motor de Distorção de Fase Guardian,Ускорители FSD Стражей
