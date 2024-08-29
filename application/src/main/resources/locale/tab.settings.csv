@@ -92,7 +92,7 @@ settings.button.import.clipboard.slef.explain,Import SLEF from the clipboard.,Im
 settings.button.import.clipboard.import.slef,Import SLEF,Import SLEF,Import SLEF,Importar SLEF,Importer SLEF,Importar SLEF,Импортировать SLEF
 tab.settings.notification.test,Test,Test,Test,Prueba,Test,Teste,Тест
 tab.settings.notification.screen,Screen,Screen,Screen,Pantalla,Écran,Tela,Экран
-settings.button.support.package,Support package,,,,,Pacote de Suporte,
-settings.button.support.package.create,Create,,,,,Criar,
-settings.button.support.package.explain,Creates a support package for the developer to assist in reproducing issues,,,,,Crie um pacote de suporte para auxiliar o desenvolvedor na reprodução de problemas,
-tab.settings.ar.bartender.toggle.explain,NOTE: Disabling the blur graphics setting ingame to remove transparent backgound at the bartender helps with the detection,,,,,,
+settings.button.support.package,Support package,,,,,Pacote de Suporte,Пакет поддержки
+settings.button.support.package.create,Create,,,,,Criar,Создать
+settings.button.support.package.explain,Creates a support package for the developer to assist in reproducing issues,,,,,Crie um pacote de suporte para auxiliar o desenvolvedor na reprodução de problemas,"Создает пакет поддержки для разработчика, чтобы помочь в воспроизведении проблем"
+tab.settings.ar.bartender.toggle.explain,NOTE: Disabling the blur graphics setting ingame to remove transparent backgound at the bartender helps with the detection,,,,,,"ПРИМЕЧАНИЕ: Отключение настройки размытия графики в игре для удаления прозрачного фона у бармена помогает с обнаружением"
