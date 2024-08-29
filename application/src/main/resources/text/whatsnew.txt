@@ -1,3 +1,10 @@
+Version 2.107
+-------------
+Fix excel export
+export excel in compressed format. xls -> xlsx
+Show (?) when all grades on a wishlist item are set to 0%
+Bugfixes and improvements
+
 Version 2.106
 -------------
 Fix dazzle shell recipe for fragment cannon
