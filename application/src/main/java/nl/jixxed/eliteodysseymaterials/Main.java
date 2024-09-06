@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials;
 
 import io.sentry.Attachment;
 import io.sentry.Sentry;
+import io.sentry.protocol.OperatingSystem;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.logging.SLF4JLogDelegateFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,12 @@ public class Main {
                     Attachment attachment = new Attachment(supportFile);
                     hint.addAttachment(attachment);
                 }
+                OperatingSystem os = new OperatingSystem();
+                os.setName(System.getProperty("os.name"));
+                os.setVersion(System.getProperty("os.version"));
+                os.setBuild(System.getProperty("os.arch"));
+                event.getContexts().setOperatingSystem(os);
+
                 return event;
             });
         });
