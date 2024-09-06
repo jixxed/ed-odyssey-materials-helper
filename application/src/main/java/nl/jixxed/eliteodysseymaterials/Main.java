@@ -66,7 +66,12 @@ public class Main {
                 os.setVersion(System.getProperty("os.version"));
                 os.setBuild(System.getProperty("os.arch"));
                 event.getContexts().setOperatingSystem(os);
-
+                if(APPLICATION_STATE.getFileheader() != null) {
+                    event.setTag("game.version", APPLICATION_STATE.getFileheader().getGameversion());
+                    event.setTag("game.build", APPLICATION_STATE.getFileheader().getBuild());
+                    event.setTag("game.language", APPLICATION_STATE.getFileheader().getLanguage());
+                    event.setTag("game.odyssey", String.valueOf(APPLICATION_STATE.getFileheader().getOdyssey()));
+                }
                 return event;
             });
         });
