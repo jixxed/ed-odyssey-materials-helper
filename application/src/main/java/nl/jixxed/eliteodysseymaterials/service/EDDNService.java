@@ -85,6 +85,7 @@ public class EDDNService {
     private static final ThreadPoolExecutor EXECUTOR_SERVICE = new ThreadPoolExecutor(1, 1,
                     0L, TimeUnit.MILLISECONDS,
                     new LinkedBlockingQueue<Runnable>());
+    public static final String SOFTWARE_NAME = "EDO Materials Helper";
 
     public static void init() {
         OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
@@ -383,13 +384,13 @@ public class EDDNService {
     }
 
     private static Header buildHeader(final Commander commander) {
-        return new Header.HeaderBuilder()
+        return APPLICATION_STATE.getFileheader() != null ? new Header.HeaderBuilder()
                 .withUploaderID(commander.getFid())
                 .withGamebuild(APPLICATION_STATE.getFileheader().getBuild())
                 .withGameversion(APPLICATION_STATE.getFileheader().getGameversion())
-                .withSoftwareName("EDO Materials Helper")
+                .withSoftwareName(SOFTWARE_NAME)
                 .withSoftwareVersion(getBuildVersion())
-                .build();
+                .build() : null;
     }
 
     private static void send(final Object message, final Event event, final String schemaName) {
