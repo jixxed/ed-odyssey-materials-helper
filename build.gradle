@@ -119,7 +119,7 @@ ext {
     version_netty = "4.1.111.Final"
     version_vertx = "4.5.8"
     version_mockito = "5.12.0"
-    version_sentry = "7.14.0"
+    version_sentry = "7.15.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
