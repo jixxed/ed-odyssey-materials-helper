@@ -88,8 +88,8 @@ class HorizonsEngineerCard extends EngineerCard {
                 SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
         ), false));
         final Integer engineerProgress = APPLICATION_STATE.getEngineerRank(this.engineer).equals(5) ? 100 : APPLICATION_STATE.getEngineerProgress(this.engineer);
-        this.present = new TypeSegment(engineerProgress, SegmentType.PRESENT);
-        this.notPresent = new TypeSegment(100 - engineerProgress, SegmentType.NOT_PRESENT);
+        this.present = new TypeSegment(Math.max(0D, engineerProgress), SegmentType.PRESENT);
+        this.notPresent = new TypeSegment(Math.max(0D, 100 - engineerProgress), SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
         final StackPane stackPane = new StackPane(this.segmentedBar, this.grade);
         HBox.setHgrow(stackPane, Priority.ALWAYS);

@@ -79,7 +79,7 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
                 SegmentType.MISSING_FOR_MAXIMUM, Color.rgb(255, 255, 255)
         ), false));
         final Integer progress = Math.min(this.getRightAmount(), this.amountMaximum);
-        this.present = new TypeSegment(progress, SegmentType.PRESENT);
+        this.present = new TypeSegment(Math.max(0, progress), SegmentType.PRESENT);
 //        this.notPresent = new TypeSegment(Math.max(this.getLeftAmount() - progress, 0), SegmentType.NOT_PRESENT);
         this.missingForMinimum = new TypeSegment(Math.max(0, amountMinimum - progress), SegmentType.MISSING_FOR_MINIMUM);
         this.missingForRequired = new TypeSegment(Math.max(0, amountRequired - Math.max(amountMinimum, progress)), SegmentType.MISSING_FOR_REQUIRED);

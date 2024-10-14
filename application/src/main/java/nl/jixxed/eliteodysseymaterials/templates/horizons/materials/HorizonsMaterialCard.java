@@ -79,12 +79,12 @@ public class HorizonsMaterialCard extends VBox implements Template {
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
         this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(SegmentType.PRESENT, Color.web("#89d07f"), SegmentType.NOT_PRESENT, Color.web("#ff7c7c")), true));
-        this.present = new TypeSegment(materialCount, SegmentType.PRESENT);
+        this.present = new TypeSegment(Math.max(0D, materialCount), SegmentType.PRESENT);
 
         if(maxAmount - materialCount < 0){
             log.error("Material count is higher than max amount for material: " + LocaleService.getLocalizedStringForCurrentLocale(this.material.getLocalizationKey()));
         }
-        this.notPresent = new TypeSegment(maxAmount - materialCount, SegmentType.NOT_PRESENT);
+        this.notPresent = new TypeSegment(Math.max(0D, maxAmount - materialCount), SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
         final HBox hBox = BoxBuilder.builder().withStyleClass("horizons-materialcard-textline").withNodes(this.gradeImage, this.nameLabel).buildHBox();
         this.getChildren().add(hBox);

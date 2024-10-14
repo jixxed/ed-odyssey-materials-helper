@@ -53,8 +53,8 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
                 SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
         ), false));
         final Integer progress = Math.min(this.getLeftAmount(), this.getRightAmount());
-        this.present = new TypeSegment(progress, SegmentType.PRESENT);
-        this.notPresent = new TypeSegment(Math.max(this.getLeftAmount() - progress, 0), SegmentType.NOT_PRESENT);
+        this.present = new TypeSegment(Math.max(0, progress), SegmentType.PRESENT);
+        this.notPresent = new TypeSegment(Math.max(0, this.getLeftAmount() - progress), SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
         this.getChildren().add(this.segmentedBar);
     }
