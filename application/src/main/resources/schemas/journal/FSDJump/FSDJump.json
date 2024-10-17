@@ -28,6 +28,11 @@
         false
       ]
     },
+    "Wanted" : {
+      "title" : "Wanted",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
     "StarSystem": {
       "title": "StarSystem",
       "description": "Name of destination starsystem",
@@ -453,6 +458,12 @@
           "Li Yong-Rui"
         ]
       }
+    },
+    "ControllingPower" : {
+      "title" : "ControllingPower",
+      "description": "Controlling power for the system",
+      "type" : "string",
+      "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
     },
     "PowerplayState": {
       "title": "PowerplayState",

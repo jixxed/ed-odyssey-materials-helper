@@ -285,6 +285,12 @@
         "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
       }
     },
+    "ControllingPower" : {
+      "title" : "ControllingPower",
+      "description": "Controlling power for the system",
+      "type" : "string",
+      "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
+    },
     "PowerplayState" : {
       "title" : "PowerplayState",
       "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",

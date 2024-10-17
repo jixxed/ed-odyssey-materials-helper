@@ -10,7 +10,7 @@ public class CommanderMessageProcessor implements MessageProcessor<Commander> {
     @Override
     public void process(final Commander commander) {
         if (!APPLICATION_STATE.getGameVersion().equals(GameVersion.UNKNOWN)) {
-            APPLICATION_STATE.addCommander(commander.getName(), commander.getFID(), APPLICATION_STATE.getGameVersion());
+            APPLICATION_STATE.addCommander(commander.getName(), commander.getFid(), APPLICATION_STATE.getGameVersion());
         }
     }
 

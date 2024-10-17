@@ -182,6 +182,12 @@
                         "examples" : [ "A. Lavigny-Duval", "Zachary Hudson", "Li Yong-Rui" ]
                     }
                 },
+                "ControllingPower" : {
+                    "title" : "ControllingPower",
+                    "description": "Controlling power for the system",
+                    "type" : "string",
+                    "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
+                },
                 "PowerplayState" : {
                     "title" : "PowerplayState",
                     "type" : "string",

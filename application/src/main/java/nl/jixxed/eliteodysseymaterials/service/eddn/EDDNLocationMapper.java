@@ -34,6 +34,7 @@ public class EDDNLocationMapper extends EDDNMapper {
                 .withPopulation(location.getPopulation())
                 .withPowerplayState(location.getPowerplayState().orElse(null))
                 .withPowers(mapToOptionalEmptyIfEmptyList(location.getPowers()).orElse(null))
+                .withControllingPower(location.getControllingPower().orElse(null))
                 .withStationAllegiance(location.getStationAllegiance().orElse(null))
                 .withStationEconomies(mapToOptionalEmptyIfEmptyList(location.getStationEconomies())
                         .map(stationEconomies -> stationEconomies.stream()

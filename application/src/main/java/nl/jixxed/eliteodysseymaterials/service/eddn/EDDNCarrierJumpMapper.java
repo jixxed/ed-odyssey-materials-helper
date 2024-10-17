@@ -26,6 +26,7 @@ public class EDDNCarrierJumpMapper extends EDDNMapper {
                 .withPopulation(carrierJump.getPopulation())
                 .withPowerplayState(carrierJump.getPowerplayState().orElse(null))
                 .withPowers(mapToOptionalEmptyIfEmptyList(carrierJump.getPowers()).orElse(null))
+                .withControllingPower(carrierJump.getControllingPower().orElse(null))
                 .withStationEconomies(carrierJump.getStationEconomies().map(stationEconomies -> stationEconomies.stream()
                                 .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
                                         .withName(stationEconomy.getName())

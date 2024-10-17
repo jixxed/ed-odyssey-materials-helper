@@ -24,6 +24,7 @@ public class EDDNFSDJumpMapper extends EDDNMapper {
                 .withPopulation(fsdjump.getPopulation())
                 .withPowerplayState(fsdjump.getPowerplayState().orElse(null))
                 .withPowers(mapToOptionalEmptyIfEmptyList(fsdjump.getPowers()).orElse(null))
+                .withControllingPower(fsdjump.getControllingPower().orElse(null))
                 .withSystemEconomy(fsdjump.getSystemEconomy())
                 .withSystemAllegiance(fsdjump.getSystemAllegiance())
                 .withSystemFaction(fsdjump.getSystemFaction()
