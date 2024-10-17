@@ -130,7 +130,7 @@ public class EDDNOutfittingMapper extends EDDNMapper {
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))
                 .withMarketId(outfitting.getMarketID())
-                .withModules(mapToNullIfEmptyList(outfitting.getItems())
+                .withModules(mapToOptionalEmptyIfEmptyList(outfitting.getItems())
                         .map(items -> items.stream()
                                 .map(item -> item.getName().toLowerCase())
                                 .filter(name -> name.startsWith("hpt_") || name.startsWith("int_") || name.contains("_armour_"))

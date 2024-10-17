@@ -11,7 +11,7 @@ abstract class EDDNMapper {
         return value;
     }
 
-    static <T> Optional<List<T>> mapToNullIfEmptyList(final Optional<List<T>> optionalList){
+    static <T> Optional<List<T>> mapToOptionalEmptyIfEmptyList(final Optional<List<T>> optionalList){
         if(optionalList.map(List::isEmpty).orElse(true)){
             return Optional.empty();
         }

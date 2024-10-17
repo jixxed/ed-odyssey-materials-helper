@@ -28,7 +28,7 @@ public class EDDNApproachSettlementMapper extends EDDNMapper {
                 .withLongitude(approachSettlement.getLongitude().orElse(null))
                 .withMarketID(approachSettlement.getMarketID().orElse(null))
                 .withName(approachSettlement.getName())
-                .withStationEconomies(mapToNullIfEmptyList(approachSettlement.getStationEconomies())
+                .withStationEconomies(mapToOptionalEmptyIfEmptyList(approachSettlement.getStationEconomies())
                         .map(stationEconomies -> stationEconomies.stream()
                             .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
                                     .withName(stationEconomy.getName())
@@ -42,7 +42,7 @@ public class EDDNApproachSettlementMapper extends EDDNMapper {
                         .withFactionState(approachSettlement.getStationFaction().map(faction -> faction.getFactionState().orElse(null)).orElse(null))
                         .build())
                 .withStationGovernment(approachSettlement.getStationGovernment().orElse(null))
-                .withStationServices(mapToNullIfEmptyList(approachSettlement.getStationServices()).orElse(null))
+                .withStationServices(mapToOptionalEmptyIfEmptyList(approachSettlement.getStationServices()).orElse(null))
                 .withStationAllegiance(approachSettlement.getStationAllegiance().orElse(null))
                 .build();
     }

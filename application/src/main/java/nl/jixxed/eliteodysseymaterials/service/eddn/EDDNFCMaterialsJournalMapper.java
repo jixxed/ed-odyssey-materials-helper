@@ -5,8 +5,6 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.fcmaterialsjournal.Item;
 import nl.jixxed.eliteodysseymaterials.schemas.eddn.fcmaterialsjournal.Message;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FCMaterials.FCMaterials;
 
-import java.util.Collections;
-
 public class EDDNFCMaterialsJournalMapper extends EDDNMapper {
     public static Message mapToEDDN(final FCMaterials fcMaterials, final Expansion expansion) {
         return new Message.MessageBuilder()
@@ -17,7 +15,7 @@ public class EDDNFCMaterialsJournalMapper extends EDDNMapper {
                 .withCarrierID(fcMaterials.getCarrierID())
                 .withMarketID(fcMaterials.getMarketID())
                 .withCarrierName(fcMaterials.getCarrierName())
-                .withItems(mapToNullIfEmptyList(fcMaterials.getItems())
+                .withItems(mapToOptionalEmptyIfEmptyList(fcMaterials.getItems())
                         .map(items -> items.stream()
                                 .map(item -> new Item.ItemBuilder()
                                         .withName(item.getName())
@@ -27,7 +25,7 @@ public class EDDNFCMaterialsJournalMapper extends EDDNMapper {
                                         .withDemand(item.getDemand())
                                         .build())
                                 .toList())
-                        .orElse(Collections.emptyList()))
+                        .orElse(null))
                 .build();
     }
 }

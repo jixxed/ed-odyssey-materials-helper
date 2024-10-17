@@ -18,7 +18,7 @@ public class EDDNCommodityMapper extends EDDNMapper {
                 .withCarrierDockingAccess(market.getCarrierDockingAccess().orElse(null))
                 .withEconomies(null)//capi only field
                 .withProhibited(null)//capi only field
-                .withCommodities(mapToNullIfEmptyList(market.getItems())
+                .withCommodities(mapToOptionalEmptyIfEmptyList(market.getItems())
                         .map(items -> items.stream()
                                 .map(item -> new Item.ItemBuilder()
                                         .withName(cleanName(item.getName()))

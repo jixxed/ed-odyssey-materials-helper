@@ -35,7 +35,7 @@ public class EDDNCodexEntryMapper extends EDDNMapper {
                 .withNearestDestination(codexEntry.getNearestDestination().orElse(null))
                 .withRegion(codexEntry.getRegion())
                 .withSubCategory(codexEntry.getSubCategory())
-                .withTraits(mapToNullIfEmptyList(codexEntry.getTraits()).map(traits -> traits.stream().map(EDDNMapper::nullIfBlank).filter(Objects::nonNull).toList()).orElse(null))
+                .withTraits(mapToOptionalEmptyIfEmptyList(codexEntry.getTraits()).map(traits -> traits.stream().map(EDDNMapper::nullIfBlank).filter(Objects::nonNull).toList()).orElse(null))
                 .withVoucherAmount(codexEntry.getVoucherAmount().orElse(null))
                 .build();
     }

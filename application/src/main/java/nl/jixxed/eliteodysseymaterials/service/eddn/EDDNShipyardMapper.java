@@ -17,7 +17,7 @@ public class EDDNShipyardMapper extends EDDNMapper {
                 .withStationName(shipyard.getStationName())
                 .withSystemName(shipyard.getStarSystem())
                 .withMarketId(shipyard.getMarketID())
-                .withShips(mapToNullIfEmptyList(shipyard.getPriceList())
+                .withShips(mapToOptionalEmptyIfEmptyList(shipyard.getPriceList())
                         .map(prices -> prices.stream()
                                 .map(price -> nullIfBlank(price.getShipType()))
                                 .filter(Objects::nonNull)
