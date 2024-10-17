@@ -47,6 +47,7 @@ public enum ShipType {
     TYPE_X_2(128816581,"TypeX_2", ShipSize.M),
     TYPE_X_3(128816588,"TypeX_3", ShipSize.M),
     KRAIT_LIGHT(128839281,"Krait_Light", ShipSize.M),
+    MANDALAY(0,"Mandalay", ShipSize.M),
     MAMBA(128915979,"Mamba", ShipSize.M);
 
     final long internalID;
