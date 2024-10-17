@@ -2749,7 +2749,76 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(10).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
+        public static final Ship MANDALAY = new Ship(
+                ShipType.MANDALAY,
+                0,//TODO
+                0,//TODO
+                Map.ofEntries(
+                        Map.entry(HorizonsModifier.TOP_SPEED, 285.0),//TODO
+                        Map.entry(HorizonsModifier.BOOST_SPEED, 357.0),//TODO
+                        Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
+                        Map.entry(HorizonsModifier.SHIELDS, 269.0),//TODO
+                        Map.entry(HorizonsModifier.ARMOUR, 414.0),//TODO
+                        Map.entry(HorizonsModifier.MASS, 230.0),
+//                    Map.entry(HorizonsModifier.FWDACC,20.03),
+//                    Map.entry(HorizonsModifier.REVACC,10.11),
+//                    Map.entry(HorizonsModifier.LATACC,10.03),
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),//TODO 46
+                        Map.entry(HorizonsModifier.BOOST_COST, 13.0),//TODO
+                        Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),//TODO
+                        Map.entry(HorizonsModifier.YAW_SPEED, 18.0),//TODO
+                        Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),//TODO
+//                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,100.0),
+//                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
+//                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,80.0),
+                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),//TODO
+                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.67),//TODO
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),//TODO
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),//TODO
+                        Map.entry(HorizonsModifier.FUEL_COST, 50.0),//TODO
+                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),//TODO
+                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),//TODO
+                        Map.entry(HorizonsModifier.MASS_LOCK, 18.0),//TODO
+                        Map.entry(HorizonsModifier.CREW, 1.0)//TODO
 
+                ),// 2 116 55   // 1 -18 -21
+                List.of(
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(2).namedIndex(1).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(935).y(429).index(3).namedIndex(2).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(4).namedIndex(3).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(5).namedIndex(4).slotSize(2).build()
+                ),
+                List.of(
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(945).y(336).index(0).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(832).y(437).index(1).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(802).y(647).index(2).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(924).y(750).index(3).slotSize(0).build()
+                ),
+                List.of(
+                        Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.MANDALAY_ARMOUR_GRADE_1).build(),
+                        Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
+                        Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(5).shipModule(Thrusters.THRUSTERS_5_E).build(),
+                        Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
+                        Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
+                        Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(5).shipModule(PowerDistributor.POWER_DISTRIBUTOR_5_E).build(),
+                        Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(5).shipModule(Sensors.SENSORS_5_E).build(),
+                        Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
+
+                ),
+                List.of(
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(5).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(4).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(3).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).build(),//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).build()//TODO
+                ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
             EAGLE,
@@ -2790,7 +2859,8 @@ public class Ship {
             TYPE_X_3,
             KRAIT_LIGHT,
             MAMBA,
-            PYTHON_NX
+            PYTHON_NX,
+            MANDALAY
     );
 
 
