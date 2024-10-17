@@ -1,3 +1,10 @@
+Version 2.108
+-------------
+Add Mandalay ship (TODO: ship stats)
+Add Mandalay Armour modules (TODO: module stats)
+Fix sending FCMaterials Items list to EDDN. Was sending empty lists.
+Ensure all progress bars initialize whether journal data is correct. (Weekly rewards are not logged and require a fresh journal to show up in the app correctly)
+
 Version 2.107
 -------------
 Fix excel export
