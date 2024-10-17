@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -84,7 +85,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
         if(maxAmount - materialCount < 0){
             log.error("Material count is higher than max amount for material: " + LocaleService.getLocalizedStringForCurrentLocale(this.material.getLocalizationKey()));
         }
-        this.notPresent = new TypeSegment(Math.max(0D, maxAmount - materialCount), SegmentType.NOT_PRESENT);
+        this.notPresent = new TypeSegment(Math.max(0D, (maxAmount - materialCount)), SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
         final HBox hBox = BoxBuilder.builder().withStyleClass("horizons-materialcard-textline").withNodes(this.gradeImage, this.nameLabel).buildHBox();
         this.getChildren().add(hBox);
@@ -113,10 +114,10 @@ public class HorizonsMaterialCard extends VBox implements Template {
         final Integer materialCount = StorageService.getMaterialCount(this.material);
         final Integer maxAmount = this.material.getMaxAmount();
         this.present.setValue(materialCount.equals(0) ? materialCount : Math.max(materialCount, this.material.getMaxAmount() / 7));
-        this.present.setText(materialCount.toString());
+        this.present.textProperty().bind(new SimpleStringProperty(materialCount.toString()));
         final Integer availableStorage = maxAmount - materialCount;
         this.notPresent.setValue(availableStorage.equals(0) ? availableStorage : Math.max(availableStorage, this.material.getMaxAmount() / 7));
-        this.notPresent.setText(String.valueOf(availableStorage));
+        this.notPresent.textProperty().bind(new SimpleStringProperty(String.valueOf(availableStorage)));
     }
 
     private void update(final String search) {
