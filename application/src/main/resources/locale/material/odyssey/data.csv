@@ -114,3 +114,5 @@ material.data.visitorregister,Visitor Register,Visitor Register,Besucherliste,Re
 material.data.weaponinventory,Weapon Inventory,Weapon Inventory,Waffeninventarliste,Inventario de armas,Inventaire d’armement,Estoque de armas,Опись оружия и боеприпасов
 material.data.weapontestdata,Weapon Test Data,Weapon Test Data,Waffentestdaten,Datos de pruebas armamentísticas,Données de test d’armes,Dados de testes de arma,Сведения об испытаниях вооружения
 material.data.xenodefenceprotocols,Xeno-Defence Protocols,Xeno-Defence Protocols,Xeno-Abwehr-Protokolle,Protocolos de xenodefensa,Protocoles anti-xénomorphes,Protocolos de defesa antixeno,Алгоритм противодействия инопланетной угрозе
+material.data.powerpreparationspyware,Power Injection Malware,,,,,,
+material.data.powerspyware,Power Tracker Malware,,,,,,
