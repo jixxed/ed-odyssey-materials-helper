@@ -24,12 +24,12 @@ apply plugin: 'jsonschema2pojo'
 apply plugin: "build-time-tracker"
 
 tasks.register('wrapper', Wrapper) {
-    gradleVersion "8.8"
+    gradleVersion "8.10.2"
 }
 group 'nl.jixxed'
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(22)
+        languageVersion = JavaLanguageVersion.of(23)
     }
     modularity.inferModulePath = true
 }

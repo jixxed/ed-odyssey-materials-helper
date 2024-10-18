@@ -16,12 +16,12 @@ apply plugin: "java"
 apply plugin: "net.jsign"
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(22)
+        languageVersion = JavaLanguageVersion.of(23)
     }
     modularity.inferModulePath = true
 }
 wrapper {
-    gradleVersion "8.8"
+    gradleVersion "8.10.2"
 }
 
 tasks.register('copyInstaller', Copy) {
@@ -100,7 +100,7 @@ ext {
     version_jna = "5.15.0"
     version_junit_jupiter = "5.11.2"
     version_junit_platform = "1.11.2"
-    version_javafx = "21.0.4"
+    version_javafx = "23.0.1"
     version_controlsfx = "11.2.1"
     version_scribejava = "8.3.3"
     version_sparsebitset = "1.3"

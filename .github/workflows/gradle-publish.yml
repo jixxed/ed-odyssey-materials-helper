@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-java@v4.2.1
         with:
           java-version: |
-            22.0.1
+            23.0.1
             21.0.1
           distribution: 'temurin'
           architecture: x64
@@ -57,7 +57,7 @@ jobs:
         uses: actions/setup-java@v4.2.1
         with:
           java-version: |
-            22.0.1
+            23.0.1
             21.0.1
           distribution: 'temurin'
           architecture: x64
