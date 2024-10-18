@@ -54,7 +54,7 @@ public class ThermalStats extends Stats implements Template {
     }
 
     Value getHeatLevel(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity) {
-        if (thermalLoad > 0) {
+        if (thermalLoad > 0D) {
             thermalLoad += baseThermalLoad;
             if (baseThermalLoad > maximumHeatDissipation) {
                 return new Value(Double.NaN, Value.ValueType.ERROR);//error
@@ -153,26 +153,44 @@ public class ThermalStats extends Stats implements Template {
         if (thermalLoad == 0D) {
             var C = -1 / (maximumHeatDissipation * heatLevelAtStart);
             return ((1 / (maximumHeatDissipation * heatLevel)) + C);
+        } else if (thermalLoad < 0D) {
+            thermalLoad /= heatCapacity;
+            var sqrtAdivB = Math.sqrt(-maximumHeatDissipation / thermalLoad);
+            var sqrtAmulB = Math.sqrt(-maximumHeatDissipation * thermalLoad);
+
+            var c = 1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevelAtStart);
+
+            return -1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevel) + c;
+
         }
         thermalLoad /= heatCapacity;
         var sqrtAdivB = Math.sqrt(maximumHeatDissipation / thermalLoad);
         var sqrtAmulB = Math.sqrt(maximumHeatDissipation * thermalLoad);
-        var C = -atanh(heatLevelAtStart * sqrtAdivB) / sqrtAmulB;
-        return ((atanh(heatLevel * sqrtAdivB) / sqrtAmulB) + C);
+        var cReal = 1D / sqrtAmulB * 1D / 2D * (Math.log(1D + sqrtAdivB * heatLevelAtStart) - Math.log(Math.abs(1D - sqrtAdivB * heatLevelAtStart)));
+        return 1D / sqrtAmulB * 1D / 2D * (Math.log(1D + sqrtAdivB * heatLevel) - Math.log(Math.abs(1D - sqrtAdivB * heatLevel))) - cReal;
     }
 
 
     double getHeatLevelAtTime(double heatCapacity, double maximumHeatDissipation, double thermalLoad, double heatLevelAtStart, double seconds) {
         maximumHeatDissipation /= heatCapacity;
-        if (thermalLoad > 0) {
+        if (thermalLoad == 0D) {
             var C = -1 / (maximumHeatDissipation * heatLevelAtStart);
             return ((1 / (seconds - C)) / maximumHeatDissipation);
+        } else if (thermalLoad < 0) {
+            thermalLoad /= heatCapacity;
+            var sqrtAdivB = Math.sqrt(-maximumHeatDissipation / thermalLoad);
+            var sqrtAmulB = Math.sqrt(-maximumHeatDissipation * thermalLoad);
+
+            var c = 1 / sqrtAmulB * Math.atan(sqrtAdivB * heatLevelAtStart);
+            return 1 / sqrtAdivB * Math.tan(sqrtAmulB * (-seconds + c));
+
         }
         thermalLoad /= heatCapacity;
         var sqrtAdivB = Math.sqrt(maximumHeatDissipation / thermalLoad);
         var sqrtAmulB = Math.sqrt(maximumHeatDissipation * thermalLoad);
-        var C = -atanh(heatLevelAtStart * sqrtAdivB) / sqrtAmulB;
-        return (tanh((seconds - C) * sqrtAmulB) / sqrtAdivB);
+        var cReal = 1 / sqrtAmulB * 1 / 2 * (Math.log(1 + sqrtAdivB * heatLevelAtStart) - Math.log(Math.abs(1 - sqrtAdivB * heatLevelAtStart)));
+        var cImag = 1 / sqrtAmulB * 1 / 2 * (-Math.atan2(0, 1 - sqrtAdivB * heatLevelAtStart));
+        return Math.sqrt(thermalLoad / maximumHeatDissipation) * (Math.exp(4 * sqrtAmulB * (seconds + cReal)) - 1) / (Math.exp(4 * sqrtAmulB * (seconds + cReal)) + 2 * Math.exp(2 * sqrtAmulB * (seconds + cReal)) * Math.cos(2 * sqrtAmulB * cImag) + 1);
     }
 
     double atanh(double x) {
