@@ -2233,7 +2233,7 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.REVACC,10.11),
 //                    Map.entry(HorizonsModifier.LATACC,10.03),
                         Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),//TODO 46
-                        Map.entry(HorizonsModifier.BOOST_COST, 13.0),//TODO
+                        Map.entry(HorizonsModifier.BOOST_COST, 9.0),//TODO
                         Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),//TODO
                         Map.entry(HorizonsModifier.YAW_SPEED, 18.0),//TODO
                         Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),//TODO
