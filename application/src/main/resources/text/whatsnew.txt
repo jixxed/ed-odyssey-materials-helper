@@ -1,3 +1,9 @@
+Version 2.109
+-------------
+Added new Data Power Injection Malware/Power Tracker Malware
+Fix Type-8 Boost cost
+Implemented improved heat calculations for ships
+
 Version 2.108
 -------------
 Add Mandalay ship (TODO: ship stats)
