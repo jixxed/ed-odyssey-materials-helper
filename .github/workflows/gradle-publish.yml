@@ -21,7 +21,7 @@ jobs:
           java-version: |
             23.0.1
             21.0.1
-          distribution: 'temurin'
+          distribution: 'zulu'
           architecture: x64
 
       - name: Setup Gradle
@@ -59,7 +59,7 @@ jobs:
           java-version: |
             23.0.1
             21.0.1
-          distribution: 'temurin'
+          distribution: 'zulu'
           architecture: x64
 
       - name: Setup Gradle
