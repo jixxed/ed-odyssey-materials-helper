@@ -6,6 +6,5 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added new Data Power Injection Malware/Power Tracker Malware
-Fix Type-8 Boost cost
-Implemented improved heat calculations for ships
+Remove unknown material notifications, because there will be a lot of new ones and I do not have Early Access to add them before the release
+Add some of the new Powerplay Goods and Data

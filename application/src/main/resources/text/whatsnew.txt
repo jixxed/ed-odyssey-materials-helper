@@ -1,3 +1,8 @@
+Version 2.110
+-------------
+Remove unknown material notifications, because there will be a lot of new ones and I do not have Early Access to add them before the release
+Add some of the new Powerplay Goods and Data
+
 Version 2.109
 -------------
 Added new Data Power Injection Malware/Power Tracker Malware
