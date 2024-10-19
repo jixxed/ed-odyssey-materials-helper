@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterial;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.OrderService;
+import nl.jixxed.eliteodysseymaterials.service.ReportService;
 
 import java.util.Iterator;
 
@@ -21,7 +20,8 @@ public class FleetCarrierSellOrderParser {
                         OrderService.addSellOrder(HorizonsMaterial.subtypeForName(jsonNode.get("name").asText()), jsonNode.get("price").asInt(), jsonNode.get("stock").asInt());
                     } catch (final IllegalArgumentException e) {
                         log.error(e.getMessage());
-                        NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", jsonNode.get("name").asText() + "\nPlease report!");
+                        ReportService.reportMaterial(jsonNode);
+                        //NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", jsonNode.get("name").asText() + "\nPlease report!");
                     }
                 });
             } else {
@@ -30,7 +30,8 @@ public class FleetCarrierSellOrderParser {
                         OrderService.addSellOrder(OdysseyMaterial.subtypeForName(jsonNode.get("name").asText()), jsonNode.get("price").asInt(), jsonNode.get("stock").asInt());
                     } catch (final IllegalArgumentException e) {
                         log.error(e.getMessage());
-                        NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", jsonNode.get("name").asText() + "\nPlease report!");
+                        ReportService.reportMaterial(jsonNode);
+                        //NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", jsonNode.get("name").asText() + "\nPlease report!");
                     }
                 });
             }

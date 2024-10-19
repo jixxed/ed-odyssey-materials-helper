@@ -3,9 +3,7 @@ package nl.jixxed.eliteodysseymaterials.parser;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.enums.Good;
-import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 
 import java.util.Iterator;
@@ -19,7 +17,7 @@ public class FleetCarrierGoodParser  {
             final int amount = itemNode.get(getAmountField()).asInt();
             if (good.isUnknown()) {
                 log.warn("Unknown Good detected: " + itemNode.toPrettyString());
-                NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", name + "\nPlease report!");
+                //NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", name + "\nPlease report!");
             } else {
                 StorageService.addMaterial(good, storagePool, amount);
             }

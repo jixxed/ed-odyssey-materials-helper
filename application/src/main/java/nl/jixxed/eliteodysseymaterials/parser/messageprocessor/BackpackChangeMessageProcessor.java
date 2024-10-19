@@ -89,7 +89,8 @@ public class BackpackChangeMessageProcessor implements MessageProcessor<Backpack
                     try {
                         EventService.publish(createEvent(operation, changeEntry, timestamp));
                     } catch (final IllegalArgumentException e) {
-                        NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", changeEntry.getName() + "\nPlease report!");
+                        //NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Detected", changeEntry.getName() + "\nPlease report!");
+                        ReportService.reportMaterial(changeEntry);
                     }
                 });
     }

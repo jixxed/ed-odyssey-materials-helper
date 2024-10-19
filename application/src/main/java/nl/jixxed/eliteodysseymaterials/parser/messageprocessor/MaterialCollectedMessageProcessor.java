@@ -38,7 +38,7 @@ public class MaterialCollectedMessageProcessor implements MessageProcessor<Mater
         } catch (final IllegalArgumentException e) {
             final String name = event.getName();
             final String category = event.getCategory();
-            NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Collected", category + " - " + name + "\nPlease report!");
+            //NotificationService.showWarning(NotificationType.ERROR, "Unknown Material Collected", category + " - " + name + "\nPlease report!");
             ReportService.reportMaterial(event);
         }
     }
