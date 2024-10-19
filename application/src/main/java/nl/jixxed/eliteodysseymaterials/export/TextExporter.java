@@ -42,15 +42,15 @@ public class TextExporter {
                             textBuilder.append(String.format(materialColumnWidth, LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey())));
                             final Integer ship = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer fc = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             textBuilder.append(String.format("%18s", ship));
                             textBuilder.append(String.format("%18s", fc));

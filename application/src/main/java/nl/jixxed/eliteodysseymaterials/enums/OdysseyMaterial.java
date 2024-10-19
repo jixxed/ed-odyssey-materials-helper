@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public sealed interface OdysseyMaterial extends Material permits Asset, Consumable, Data, Good, TradeOdysseyMaterial {
+public sealed interface OdysseyMaterial extends Material permits Asset, Consumable, Data, Good {
 
     default OdysseyStorageType getStorageType() {
         return OdysseyStorageType.OTHER;
@@ -26,10 +26,7 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
                 if (odysseyMaterial.isUnknown()) {
                     odysseyMaterial = Consumable.forName(fixedName);
                     if (odysseyMaterial.isUnknown()) {
-                        odysseyMaterial = TradeOdysseyMaterial.forName(fixedName);
-                        if (odysseyMaterial.isUnknown()) {
-                            throw new IllegalArgumentException("Unknown material type for name: " + fixedName);
-                        }
+                        throw new IllegalArgumentException("Unknown material type for name: " + fixedName);
                     }
                 }
             }
@@ -70,14 +67,14 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
     }
 
     static OdysseyMaterial forLocalizedName(final String name) {
-        return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Stream.concat(Arrays.stream(Good.values()), Arrays.stream(TradeOdysseyMaterial.values()))))
+        return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
                 .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForCurrentLocale(odysseyMaterial.getLocalizationKey()).equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
     static OdysseyMaterial forLocalizedName(final String name, final Locale locale) {
-        return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Stream.concat(Arrays.stream(Good.values()), Arrays.stream(TradeOdysseyMaterial.values()))))
+        return Stream.concat(Arrays.stream(Data.values()), Stream.concat(Arrays.stream(Asset.values()), Arrays.stream(Good.values())))
                 .filter((OdysseyMaterial odysseyMaterial) -> LocaleService.getLocalizedStringForLocale(locale, odysseyMaterial.getLocalizationKey()).equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);

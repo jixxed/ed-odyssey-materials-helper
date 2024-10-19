@@ -13,7 +13,6 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Fileheader.Fileheader;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.event.trade.EnlistWebSocketEvent;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -117,7 +116,6 @@ public class ApplicationState {
 
     private ApplicationState() {
 
-        this.eventListeners.add(EventService.addListener(this, EnlistWebSocketEvent.class, event -> getPreferredCommander().ifPresent(commander -> PreferencesService.setPreference(PreferenceConstants.MARKETPLACE_TOKEN_PREFIX + commander.getFid(), event.getEnlistMessage().getTrace().getToken()))));
         this.eventListeners.add(EventService.addListener(this, LoadGameEvent.class, event -> {
             this.gameMode = event.getGameMode();
             this.expansion = event.getExpansion();

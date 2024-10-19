@@ -28,17 +28,17 @@ public class CsvExporter {
                             final Integer ship = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET ->
                                         StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer fc = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET ->
                                         StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET ->
                                         StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             textBuilder.append(String.join(",", materialName, String.valueOf(ship), String.valueOf(fc), String.valueOf(total), String.valueOf(item.getValue()), String.valueOf(Math.max(0, item.getValue() - ship))));
                             textBuilder.append("\n");

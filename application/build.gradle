@@ -54,18 +54,6 @@ repositories {
         name 'nexus'
         url "https://nexus.jixxed.nl/nexus/content/repositories/releases"
     }
-    exclusiveContent {
-        forRepository {
-            flatDir {
-                dirs("libs")
-            }
-        }
-        filter {
-            // this repository *only* contains artifacts listed below
-            includeModule("io.vertx", "vertx-core")
-            includeModule("io.vertx", "vertx-stomp")
-        }
-    }
 }
 application {
     mainModule = "nl.jixxed.eliteodysseymaterials"
@@ -210,27 +198,6 @@ dependencies {
     implementation "nl.jixxed.lept4j:lept4j"
     implementation "com.github.jai-imageio:jai-imageio-core"
     testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
-
-    implementation 'io.vertx:vertx-stomp'
-    implementation 'io.vertx:vertx-core'
-
-    implementation 'io.netty:netty-common'
-    implementation 'io.netty:netty-buffer'
-    implementation 'io.netty:netty-transport'
-    implementation 'io.netty:netty-handler'
-    implementation 'io.netty:netty-handler-proxy'
-    implementation 'io.netty:netty-codec-http'
-    implementation 'io.netty:netty-codec-http2'
-    implementation 'io.netty:netty-resolver'
-    implementation 'io.netty:netty-resolver-dns'
-    compileOnly 'io.netty:netty-codec-haproxy'
-    compileOnly 'io.netty:netty-transport-native-epoll'
-    compileOnly 'io.netty:netty-transport-native-kqueue'
-    compileOnly 'org.apache.logging.log4j:log4j-api'
-
-
-
-
 }
 jpackage {
 
@@ -316,24 +283,6 @@ extraJavaModuleInfo {
     }
     automaticModule("mockito-inline-${project.getProperties().version_mockito_inline}.jar", "mockito.inline")
 
-
-//    module("vertx-core-4.5.8.jar", "io.vertx.core"){
-//        patchRealModule()
-//        exportAllPackages()
-//        requires("org.apache.logging.log4j")
-//        requires("com.fasterxml.jackson.core")
-//        requires("com.fasterxml.jackson.databind")
-//        requires("io.netty.common")
-//        requires("io.netty.buffer")
-//        requires("io.netty.transport")
-//        requires("io.netty.handler")
-//        requires("io.netty.handler.proxy")
-//        requires("io.netty.codec.http")
-//        requires("io.netty.codec.http2")
-//        requires("io.netty.resolver")
-//        requires("io.netty.resolver.dns")
-//        requires("org.slf4j")
-//    }
 
 }
 

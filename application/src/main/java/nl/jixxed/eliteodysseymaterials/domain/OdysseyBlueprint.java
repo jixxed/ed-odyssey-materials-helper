@@ -39,8 +39,6 @@ public abstract class OdysseyBlueprint implements Blueprint<OdysseyBlueprintName
             return this.goods;
         } else if (clazz.equals(Asset.class)) {
             return this.assets;
-        } else if (clazz.equals(TradeOdysseyMaterial.class)) {
-            return Collections.emptyMap();
         } else if (clazz.equals(OdysseyMaterial.class)) {
             return Stream.concat(Stream.concat(this.goods.entrySet().stream(), this.assets.entrySet().stream()), this.data.entrySet().stream()).collect(
                     Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

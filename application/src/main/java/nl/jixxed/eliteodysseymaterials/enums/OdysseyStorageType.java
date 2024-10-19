@@ -4,7 +4,6 @@ public enum OdysseyStorageType implements StorageType {
     GOOD,
     DATA,
     ASSET,
-    TRADE,
     CONSUMABLE,
     OTHER;
 

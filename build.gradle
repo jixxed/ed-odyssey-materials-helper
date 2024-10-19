@@ -116,8 +116,6 @@ ext {
     version_mockito_inline = "5.2.0"
     version_guava = "33.3.1-jre"
     version_j2objc_annotations = "3.0.0"
-    version_netty = "4.1.111.Final"
-    version_vertx = "4.5.8"
     version_mockito = "5.14.1"
     version_sentry = "7.15.0"
 }
@@ -175,22 +173,6 @@ allprojects {
                 testImplementation "org.openjfx:javafx-swing:${version_javafx}:${platform}"
                 testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${version_junit_jupiter}"
 
-                implementation "io.vertx:vertx-stomp:${version_vertx}"
-                implementation "io.vertx:vertx-core:${version_vertx}"
-
-                implementation "io.netty:netty-bom:${version_netty}"
-                implementation "io.netty:netty-common:${version_netty}"
-                implementation "io.netty:netty-buffer:${version_netty}"
-                implementation "io.netty:netty-transport:${version_netty}"
-                implementation "io.netty:netty-handler:${version_netty}"
-                implementation "io.netty:netty-handler-proxy:${version_netty}"
-                implementation "io.netty:netty-codec-http:${version_netty}"
-                implementation "io.netty:netty-codec-http2:${version_netty}"
-                implementation "io.netty:netty-resolver:${version_netty}"
-                implementation "io.netty:netty-resolver-dns:${version_netty}"
-                implementation "io.netty:netty-codec-haproxy:${version_netty}"
-                implementation "io.netty:netty-transport-native-epoll:${version_netty}"
-                implementation "io.netty:netty-transport-native-kqueue:${version_netty}"
                 implementation "io.sentry:sentry:${version_sentry}"
                 implementation "io.sentry:sentry-logback:${version_sentry}"
 

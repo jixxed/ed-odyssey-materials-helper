@@ -52,15 +52,15 @@ public class XlsExporter {
                             final String materialName = LocaleService.getLocalizedStringForCurrentLocale(item.getKey().getLocalizationKey());
                             final Integer ship = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.AVAILABLE);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer fc = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.FLEETCARRIER);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             final Integer total = switch (item.getKey().getStorageType()) {
                                 case GOOD, DATA, ASSET -> StorageService.getMaterialCount(item.getKey(), AmountType.TOTAL);
-                                case TRADE, CONSUMABLE, OTHER -> 0;
+                                case CONSUMABLE, OTHER -> 0;
                             };
                             final Row dataRow = sheet.createRow(rowNumber.getAndIncrement());
                             createCell(sheet, dataRow, 0, materialName, dataStyle);

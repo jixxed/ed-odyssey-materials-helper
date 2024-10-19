@@ -111,7 +111,6 @@ public class OdysseyMaterialIngredient extends Ingredient {
                     case CHEMICAL -> imageViewBuilder.withImage("/images/material/chemical.png");
                 }
             }
-            case TRADE -> imageViewBuilder.withImage("/images/material/unknown.png");
             case CONSUMABLE -> imageViewBuilder.withImage("/images/material/unknown.png");
             case OTHER -> throw new IllegalArgumentException("StorageType Other must use MissionIngredient class");
         }

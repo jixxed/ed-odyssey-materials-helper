@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.service;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import nl.jixxed.eliteodysseymaterials.domain.AnyRelevantStorage;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
@@ -33,8 +32,6 @@ public class StorageService {
             case GOOD -> goods;
             case DATA -> data;
             case ASSET -> assets;
-            case TRADE ->
-                    Map.of(TradeOdysseyMaterial.ANY_RELEVANT, new AnyRelevantStorage(), TradeOdysseyMaterial.NOTHING, new Storage(0, 0, 0));
             case CONSUMABLE -> Collections.emptyMap();
             case OTHER -> consumables;
         };

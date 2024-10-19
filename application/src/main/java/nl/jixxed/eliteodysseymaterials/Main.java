@@ -3,8 +3,6 @@ package nl.jixxed.eliteodysseymaterials;
 import io.sentry.Attachment;
 import io.sentry.Sentry;
 import io.sentry.protocol.OperatingSystem;
-import io.vertx.core.logging.LoggerFactory;
-import io.vertx.core.logging.SLF4JLogDelegateFactory;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -18,9 +16,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-
-import static io.vertx.core.logging.LoggerFactory.LOGGER_DELEGATE_FACTORY_CLASS_NAME;
-import static java.lang.System.setProperty;
 
 @Slf4j
 public class Main {
@@ -37,8 +32,6 @@ public class Main {
         if (APPLICATION_STATE.isLocked()) {
             System.exit(0);
         }
-        setProperty(LOGGER_DELEGATE_FACTORY_CLASS_NAME, SLF4JLogDelegateFactory.class.getName());
-        LoggerFactory.getLogger(LoggerFactory.class);
         log.info("launching app with java version: " + getVersion());
         Sentry.init(options -> {
 
