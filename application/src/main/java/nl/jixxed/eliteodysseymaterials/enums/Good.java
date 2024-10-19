@@ -48,6 +48,9 @@ public enum Good implements OdysseyMaterial {
     UNIVERSALTRANSLATOR(false),
     VEHICLESCHEMATIC(false),
     WEAPONSCHEMATIC(false),
+    POWERINDUSTRIAL(false),
+    POWERMISCINDUST(false),
+    POWERINVENTORY(false),
     UNKNOWN(false);
     private final boolean illegal;
 

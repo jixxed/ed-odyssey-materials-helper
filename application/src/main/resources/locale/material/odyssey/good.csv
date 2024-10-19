@@ -45,3 +45,6 @@ material.good.vehicleschematic,Vehicle Schematic,Vehicle Schematic,Fahrzeugplan,
 material.good.weaponschematic,Weapon Schematic,Weapon Schematic,Waffenplan,Esquema de arma,Plan d’arme,Esquema de Arma,Чертеж оружия
 material.good.biomechanicalcomponent,Spire Refinery Compound,,,Compuesto de Refinería de Aguja,,,Очищающий компонент шпиля
 material.good.sabotagedcomponent,Contaminated Spire Refinery Compound,,,Compuesto de Refinería de Aguja Contaminado,,,Зараженный очищающий компонент шпиля
+material.good.powerindustrial,Industrial Component,,,,,,
+material.good.powermiscindust,Industrial Machinery,,,,,,
+material.good.powerinventory,Inventory Record,,,,,,
