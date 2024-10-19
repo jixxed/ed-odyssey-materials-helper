@@ -2,12 +2,24 @@ import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 buildscript {
     repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+
+        exclusiveContent {
+            forRepository {
+                flatDir {
+                    dirs("libs")
+                }
+            }
+            filter {
+                // this repository *only* contains artifacts listed below
+                includeModule("org.beryx", "badass-jlink-plugin")
+            }
         }
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:3.0.1"
+        classpath "org.beryx:badass-jlink-plugin:3.0.2" // patched version for jdk23
         classpath "io.freefair.gradle:lombok-plugin:8.10.2"
         classpath "org.gradlex:extra-java-module-info:1.9"
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.2.2'
