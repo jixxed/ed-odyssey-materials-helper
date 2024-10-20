@@ -86,6 +86,8 @@ public sealed interface OdysseyMaterial extends Material permits Asset, Consumab
 
     boolean isIllegal();
 
+    boolean isPowerplay();
+
     String name();
 
     String getTypeNameLocalized();

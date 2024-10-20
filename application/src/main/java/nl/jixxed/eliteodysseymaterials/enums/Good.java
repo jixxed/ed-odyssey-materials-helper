@@ -48,14 +48,20 @@ public enum Good implements OdysseyMaterial {
     UNIVERSALTRANSLATOR(false),
     VEHICLESCHEMATIC(false),
     WEAPONSCHEMATIC(false),
-    POWERINDUSTRIAL(false),
-    POWERMISCINDUST(false),
-    POWERINVENTORY(false),
+    POWERINDUSTRIAL(false, true),
+    POWERMISCINDUST(false, true),
+    POWERINVENTORY(false, true),
     UNKNOWN(false);
     private final boolean illegal;
+    private boolean powerplay = false;
 
     Good(final boolean illegal) {
         this.illegal = illegal;
+    }
+
+    Good(final boolean illegal, final boolean powerplay) {
+        this(illegal);
+        this.powerplay = powerplay;
     }
 
     public static Good forName(final String name) {
@@ -84,6 +90,11 @@ public enum Good implements OdysseyMaterial {
     @Override
     public boolean isIllegal() {
         return this.illegal;
+    }
+
+    @Override
+    public boolean isPowerplay() {
+        return this.powerplay;
     }
 
     @Override

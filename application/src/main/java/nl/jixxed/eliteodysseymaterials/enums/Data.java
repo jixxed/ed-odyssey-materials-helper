@@ -117,25 +117,31 @@ public enum Data implements OdysseyMaterial {
     WEAPONINVENTORY(false, 5),
     WEAPONTESTDATA(false, 10),
     XENODEFENCEPROTOCOLS(false, 20),
-    POWERPREPARATIONSPYWARE(true, 60, true),
-    POWERSPYWARE(true, 60, true),
-    POWERRESEARCHDATA(false, 0),//TODO time
-    POWEREMPLOYEEDATA(false, 0),//TODO time
-    POWERFINANCIALRECORDS(false, 0),//TODO time
+    POWERPREPARATIONSPYWARE(true, 60, true, true),
+    POWERSPYWARE(true, 60, true, true),
+    POWERRESEARCHDATA(false, 0, true, true),//TODO time
+    POWEREMPLOYEEDATA(false, 0, false, true),//TODO time
+    POWERFINANCIALRECORDS(false, 0, false, true),//TODO time
 
     UNKNOWN(false, 0);
     private final boolean illegal;
     private final int transferTime;
-    private boolean isUpload = false;
+    private boolean upload = false;
+    private boolean powerplay = false;
 
     Data(final boolean illegal, final int transferTime) {
         this.illegal = illegal;
         this.transferTime = transferTime;
     }
 
-    Data(final boolean illegal, final int transferTime, final boolean isUpload) {
+    Data(final boolean illegal, final int transferTime, final boolean upload) {
         this(illegal, transferTime);
-        this.isUpload = isUpload;
+        this.upload = upload;
+    }
+
+    Data(final boolean illegal, final int transferTime, final boolean upload, final boolean powerplay) {
+        this(illegal, transferTime, upload);
+        this.powerplay = powerplay;
     }
 
     public static Data forName(final String name) {
@@ -168,6 +174,11 @@ public enum Data implements OdysseyMaterial {
     }
 
     @Override
+    public boolean isPowerplay() {
+        return this.powerplay;
+    }
+
+    @Override
     public String getTypeNameLocalized() {
         return LocaleService.getLocalizedStringForCurrentLocale("material.asset.type.data");
     }
@@ -177,7 +188,7 @@ public enum Data implements OdysseyMaterial {
     }
 
     public boolean isUpload() {
-        return this.isUpload;
+        return this.upload;
     }
 
     @Override

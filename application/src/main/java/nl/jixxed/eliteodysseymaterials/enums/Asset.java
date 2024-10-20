@@ -80,6 +80,11 @@ public enum Asset implements OdysseyMaterial {
     }
 
     @Override
+    public boolean isPowerplay() {
+        return false;
+    }
+
+    @Override
     public String getTypeNameLocalized() {
         return LocaleService.getLocalizedStringForCurrentLocale(type.getLocalizationKey());
     }

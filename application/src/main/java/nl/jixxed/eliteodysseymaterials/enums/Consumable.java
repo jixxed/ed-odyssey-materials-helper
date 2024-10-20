@@ -47,6 +47,11 @@ public enum Consumable implements OdysseyMaterial {
     }
 
     @Override
+    public boolean isPowerplay() {
+        return false;
+    }
+
+    @Override
     public String getTypeNameLocalized() {
         return LocaleService.getLocalizedStringForCurrentLocale("material.asset.type.consumable");
     }
