@@ -11,7 +11,24 @@ public enum HorizonsCommoditiesShow {
     ALL,
     ALL_WITH_STOCK,
     SHIP,
-    FLEETCARRIER;
+    FLEETCARRIER,
+    CHEMICALS,
+    CONSUMER_ITEMS,
+    FOODS,
+    INDUSTRIAL_MATERIALS,
+    LEGAL_DRUGS,
+    MACHINERY,
+    MEDICINES,
+    METALS,
+    MINERALS,
+    NONMARKETABLE,
+    SALVAGE,
+    SLAVERY,
+    TECHNOLOGY,
+    TEXTILES,
+    WASTE,
+    WEAPONS,
+    POWERPLAY;
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
@@ -31,6 +48,23 @@ public enum HorizonsCommoditiesShow {
             case ALL_WITH_STOCK -> (HorizonsCommodityCard o) -> o.getFleetcarrierAmount() > 0 || o.getShipAmount() > 0;
             case SHIP -> (HorizonsCommodityCard o) -> o.getShipAmount() > 0;
             case FLEETCARRIER -> (HorizonsCommodityCard o) -> o.getFleetcarrierAmount() > 0;
+            case CHEMICALS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.CHEMICALS);
+            case CONSUMER_ITEMS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.CONSUMER_ITEMS);
+            case FOODS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.FOODS);
+            case INDUSTRIAL_MATERIALS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.INDUSTRIAL_MATERIALS);
+            case LEGAL_DRUGS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.LEGAL_DRUGS);
+            case MACHINERY -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.MACHINERY);
+            case MEDICINES -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.MEDICINES);
+            case METALS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.METALS);
+            case MINERALS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.MINERALS);
+            case NONMARKETABLE -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.NONMARKETABLE);
+            case SALVAGE -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.SALVAGE);
+            case SLAVERY -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.SLAVERY);
+            case TECHNOLOGY -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.TECHNOLOGY);
+            case TEXTILES -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.TEXTILES);
+            case WASTE -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.WASTE);
+            case WEAPONS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.WEAPONS);
+            case POWERPLAY -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.POWERPLAY);
         };
     }
 }

@@ -113,3 +113,20 @@ tabs.onfoot,On foot,,,A pie,,A pé,Пеший режим
 tabs.ships,Ships,,,Naves,,Naves,Корабельный режим
 notification.type.hge,High grade emission,,,Señal de Alta Calidad,,Emissões de Alto Grau,Высокоуровневый сигнал
 tabs.hge,HGE Tracker,,,Seguimiento de señales de Alta Calidad,,Buscador de Emissões de Alto Grau,Трекер ВУС
+search.filter.chemicals,Chemicals,Chemicals,Chemikalien,Químicos,Produits chimiques,Produtos químicos,Химикаты
+search.filter.consumer_items,Consumer Items,Consumer Items,Verbraucherartikel,Artículos de consumo,Articles de consommation,Itens de consumo,Потребительские товары
+search.filter.foods,Foods,Foods,Lebensmittel,Alimentos,nourriture,Alimentos,Еда
+search.filter.industrial_materials,Industrial Materials,Industrial Materials,Industriematerialien,Materiales industriales,Matériaux industriels,Materiais industriais,Промышленные материалы
+search.filter.legal_drugs,Legal Drugs,Legal Drugs,Legale Drogen,Drogas legales,Drogues légales,Drogas legais,Легальные лекарства
+search.filter.machinery,Machinery,Machinery,Maschinen,Maquinaria,Machinerie,Máquinas,Машины
+search.filter.medicines,Medicines,Medicines,Medikamente,Medicamentos,Médicaments,Remédios,Лекарства
+search.filter.metals,Metals,Metals,Metalle,Metales,Les métaux,Metais,Металлы
+search.filter.minerals,Minerals,Minerals,Mineralien,Minerales,Minéraux,Minerais,Минералы
+search.filter.nonmarketable,Nonmarketable,Nonmarketable,Nicht marketbar,No comercializado,Non marchant,Não -mercado,Не рыночный
+search.filter.salvage,Salvage,Salvage,Bergung,Salvamento,Sauvetage,Salvamento,Спасение
+search.filter.slavery,Slavery,Slavery,Sklaverei,Esclavitud,Esclavage,Escravidão,Рабство
+search.filter.technology,Technology,Technology,Technologie,Tecnología,Technologie,Tecnologia,Технологии
+search.filter.textiles,Textiles,Textiles,Textilien,Textiles,Textiles,Têxteis,Текстиль
+search.filter.waste,Waste,Waste,Abfall,Residuos,Gaspillage,Desperdício,Напрасно тратить
+search.filter.weapons,Weapons,Weapons,Waffen,Arma,Armes,Armas,Оружие
+search.filter.powerplay,Powerplay,,,,,,

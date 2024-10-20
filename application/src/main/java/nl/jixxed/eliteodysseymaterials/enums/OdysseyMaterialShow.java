@@ -22,6 +22,7 @@ public enum OdysseyMaterialShow {
     IRRELEVANT_WITH_STOCK,
     NOT_ON_WISHLIST,
     PROHIBITED,
+    POWERPLAY,
     BACKPACK,
     FLEETCARRIER,
     FAVOURITES;
@@ -53,6 +54,7 @@ public enum OdysseyMaterialShow {
             case IRRELEVANT_WITH_STOCK ->
                     material -> getIrrelevantFilter(material) && StorageService.getMaterialCount(material,AmountType.TOTAL) > 0;
             case PROHIBITED -> OdysseyMaterial::isIllegal;
+            case POWERPLAY -> OdysseyMaterial::isPowerplay;
             case ALL_ENGINEER ->
                     OdysseyBlueprintConstants::isEngineeringIngredient;
             case REQUIRED_ENGINEER ->

@@ -96,7 +96,24 @@ class HorizonsCommoditiesSearchBar extends HBox {
                 .withItemsProperty(LocaleService.getListBinding(HorizonsCommoditiesShow.ALL,
                         HorizonsCommoditiesShow.ALL_WITH_STOCK,
                         HorizonsCommoditiesShow.SHIP,
-                        HorizonsCommoditiesShow.FLEETCARRIER))
+                        HorizonsCommoditiesShow.FLEETCARRIER,
+                        HorizonsCommoditiesShow.CHEMICALS,
+                        HorizonsCommoditiesShow.CONSUMER_ITEMS,
+                        HorizonsCommoditiesShow.FOODS,
+                        HorizonsCommoditiesShow.INDUSTRIAL_MATERIALS,
+                        HorizonsCommoditiesShow.LEGAL_DRUGS,
+                        HorizonsCommoditiesShow.MACHINERY,
+                        HorizonsCommoditiesShow.MEDICINES,
+                        HorizonsCommoditiesShow.METALS,
+                        HorizonsCommoditiesShow.MINERALS,
+                        HorizonsCommoditiesShow.NONMARKETABLE,
+                        HorizonsCommoditiesShow.SALVAGE,
+                        HorizonsCommoditiesShow.SLAVERY,
+                        HorizonsCommoditiesShow.TECHNOLOGY,
+                        HorizonsCommoditiesShow.TEXTILES,
+                        HorizonsCommoditiesShow.WASTE,
+                        HorizonsCommoditiesShow.WEAPONS,
+                        HorizonsCommoditiesShow.POWERPLAY))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new HorizonsCommoditiesSearchEvent(new CommoditiesSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox))));

@@ -3,8 +3,6 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Arrays;
-
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -494,9 +492,4 @@ public enum Commodity implements HorizonsMaterial {
         return HorizonsStorageType.COMMODITY;
     }
 
-    public static Commodity[] materialsForType(final CommodityType commodityType) {
-        return Arrays.stream(Commodity.values())
-                .filter(commodity -> commodity.getCommodityType().equals(commodityType))
-                .toList().toArray(Commodity[]::new);
-    }
 }

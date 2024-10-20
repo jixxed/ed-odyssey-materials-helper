@@ -104,7 +104,8 @@ class OdysseyMaterialSearchBar extends HBox {
                         OdysseyMaterialShow.BACKPACK,
                         OdysseyMaterialShow.FLEETCARRIER,
                         OdysseyMaterialShow.PROHIBITED,
-                        OdysseyMaterialShow.FAVOURITES))
+                        OdysseyMaterialShow.FAVOURITES,
+                        OdysseyMaterialShow.POWERPLAY))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new SearchEvent(new Search(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), newValue)));
