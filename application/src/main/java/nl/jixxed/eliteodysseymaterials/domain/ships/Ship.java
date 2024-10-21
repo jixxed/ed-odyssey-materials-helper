@@ -2754,32 +2754,32 @@ public class Ship {
                 0,//TODO
                 0,//TODO
                 Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, 285.0),//TODO
-                        Map.entry(HorizonsModifier.BOOST_SPEED, 357.0),//TODO
+                        Map.entry(HorizonsModifier.TOP_SPEED, Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.BOOST_SPEED, Double.NaN),//TODO
                         Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                        Map.entry(HorizonsModifier.SHIELDS, 269.0),//TODO
-                        Map.entry(HorizonsModifier.ARMOUR, 414.0),//TODO
+                        Map.entry(HorizonsModifier.SHIELDS, Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.ARMOUR, Double.NaN),//TODO
                         Map.entry(HorizonsModifier.MASS, 230.0),
-//                    Map.entry(HorizonsModifier.FWDACC,20.03),
-//                    Map.entry(HorizonsModifier.REVACC,10.11),
-//                    Map.entry(HorizonsModifier.LATACC,10.03),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),//TODO 46
-                        Map.entry(HorizonsModifier.BOOST_COST, 13.0),//TODO
-                        Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),//TODO
-                        Map.entry(HorizonsModifier.YAW_SPEED, 18.0),//TODO
-                        Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),//TODO
-//                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,100.0),
-//                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
-//                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,80.0),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),//TODO
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.67),//TODO
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),//TODO
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),//TODO
-                        Map.entry(HorizonsModifier.FUEL_COST, 50.0),//TODO
-                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),//TODO
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),//TODO
-                        Map.entry(HorizonsModifier.MASS_LOCK, 18.0),//TODO
-                        Map.entry(HorizonsModifier.CREW, 1.0)//TODO
+//                    Map.entry(HorizonsModifier.FWDACC,Double.NaN),
+//                    Map.entry(HorizonsModifier.REVACC,Double.NaN),
+//                    Map.entry(HorizonsModifier.LATACC,Double.NaN),
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST,Double.NaN),//TODO 46
+                        Map.entry(HorizonsModifier.BOOST_COST,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.PITCH_SPEED,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.YAW_SPEED,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.ROLL_SPEED,Double.NaN),//TODO
+//                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,Double.NaN),
+//                    Map.entry(HorizonsModifier.YAW_ACCELERATION,Double.NaN),
+//                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,Double.NaN),
+                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.HEAT_CAPACITY,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.FUEL_COST,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.FUEL_RESERVE,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.MASS_LOCK,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.CREW,Double.NaN)//TODO
 
                 ),// 2 116 55   // 1 -18 -21
                 List.of(
