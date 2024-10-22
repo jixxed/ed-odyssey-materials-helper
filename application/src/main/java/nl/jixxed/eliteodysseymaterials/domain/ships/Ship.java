@@ -2782,7 +2782,7 @@ public class Ship {
                         Map.entry(HorizonsModifier.CREW,Double.NaN)//TODO
 
                 ),// 2 116 55   // 1 -18 -21
-                List.of(
+                List.of(//TODO coordinates
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(2).namedIndex(1).slotSize(2).build(),
@@ -2790,7 +2790,7 @@ public class Ship {
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(4).namedIndex(3).slotSize(2).build(),
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(5).namedIndex(4).slotSize(2).build()
                 ),
-                List.of(
+                List.of(//TODO coordinates
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(945).y(336).index(0).slotSize(0).build(),
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(832).y(437).index(1).slotSize(0).build(),
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(802).y(647).index(2).slotSize(0).build(),
@@ -2808,16 +2808,16 @@ public class Ship {
 
                 ),
                 List.of(
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(5).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(4).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(3).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).build(),//TODO
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).build()//TODO
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(4).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(3).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).build(),
+                        Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
                 ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
