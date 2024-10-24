@@ -2754,32 +2754,32 @@ public class Ship {
                 0,//TODO
                 0,//TODO
                 Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.BOOST_SPEED, Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.TOP_SPEED, 280.0),//TODO
+                        Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),//TODO
                         Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                        Map.entry(HorizonsModifier.SHIELDS, Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.ARMOUR, Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.SHIELDS, 220.0),//TODO
+                        Map.entry(HorizonsModifier.ARMOUR, 230.0),//TODO
                         Map.entry(HorizonsModifier.MASS, 230.0),
 //                    Map.entry(HorizonsModifier.FWDACC,Double.NaN),
 //                    Map.entry(HorizonsModifier.REVACC,Double.NaN),
 //                    Map.entry(HorizonsModifier.LATACC,Double.NaN),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST,Double.NaN),//TODO 46
-                        Map.entry(HorizonsModifier.BOOST_COST,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.PITCH_SPEED,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.YAW_SPEED,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.ROLL_SPEED,Double.NaN),//TODO
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST,60.0),//TODO - unknown
+                        Map.entry(HorizonsModifier.BOOST_COST,11.0),//TODO - unknown
+                        Map.entry(HorizonsModifier.PITCH_SPEED,35.0),//TODO
+                        Map.entry(HorizonsModifier.YAW_SPEED,28.0),//TODO
+                        Map.entry(HorizonsModifier.ROLL_SPEED,96.0),//TODO
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,Double.NaN),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,Double.NaN),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,Double.NaN),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.FUEL_COST,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.FUEL_RESERVE,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.MASS_LOCK,Double.NaN),//TODO
-                        Map.entry(HorizonsModifier.CREW,Double.NaN)//TODO
+                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED,24.5),//TODO - unknown
+                        Map.entry(HorizonsModifier.HEAT_CAPACITY,Double.NaN),//TODO - unknown
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN,Double.NaN),//TODO - unknown
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX,Double.NaN),//TODO - unknown
+                        Map.entry(HorizonsModifier.FUEL_COST,50.0),
+                        Map.entry(HorizonsModifier.FUEL_RESERVE,0.5),//TODO - check
+                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS,55.0),//TODO - check
+                        Map.entry(HorizonsModifier.MASS_LOCK,16.0),//TODO - unknown
+                        Map.entry(HorizonsModifier.CREW,1.0)//TODO - check
 
                 ),// 2 116 55   // 1 -18 -21
                 List.of(//TODO coordinates
