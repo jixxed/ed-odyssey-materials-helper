@@ -122,7 +122,9 @@ public enum Data implements OdysseyMaterial {
     POWERRESEARCHDATA(false, 0, false, true),//TODO time
     POWEREMPLOYEEDATA(false, 0, false, true),//TODO time
     POWERFINANCIALRECORDS(false, 0, false, true),//TODO time
-
+    POWERPROPAGANDADATA(false, 0, false, true),//TODO time
+    POWERCLASSIFIEDDATA(false, 0, false, true),//TODO time
+    POWERSECURITY(false, 0, false, true),//TODO time
     UNKNOWN(false, 0);
     private final boolean illegal;
     private final int transferTime;
