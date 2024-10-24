@@ -23,6 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public class Config extends Stats implements Template {
@@ -67,10 +68,10 @@ public class Config extends Stats implements Template {
                     EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
                 });
 
-        fuel = new IntField(0, maxFuel, getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
+        fuel = new IntField(0, maxFuel, maxFuel);
         fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
         fuelreserve.getStyleClass().add("config-fuelreserve");
-        cargo = new IntField(0, maxCargo, getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
+        cargo = new IntField(0, maxCargo, 0);
         int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
 
         this.live.setDisable(!isCurrentShip());
@@ -94,43 +95,47 @@ public class Config extends Stats implements Template {
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.engine"), new GrowingRegion(), enginePipSelect).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.weapon"), new GrowingRegion(), weaponPipSelect).buildHBox());
         this.getChildren().add(BoxBuilder.builder().withNodes(createLabel("ship.stats.config.cargo_hatch"), new GrowingRegion(), powerBox).buildHBox());
-        systemPipSelect.valueProperty().addListener((observable, oldValue, newValue) -> {
+        systemPipSelect.valueProperty().addListener((_, _, newValue) -> {
             ApplicationState.getInstance().setSystemPips(newValue.intValue());
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.PIPS));
         });
-        enginePipSelect.valueProperty().addListener((observable, oldValue, newValue) -> {
+        enginePipSelect.valueProperty().addListener((_, _, newValue) -> {
             ApplicationState.getInstance().setEnginePips(newValue.intValue());
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.PIPS));
         });
-        weaponPipSelect.valueProperty().addListener((observable, oldValue, newValue) -> {
+        weaponPipSelect.valueProperty().addListener((_, _, newValue) -> {
             ApplicationState.getInstance().setWeaponPips(newValue.intValue());
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.PIPS));
         });
-        fuel.valueProperty().addListener((observable, oldValue, newValue) -> {
+        fuel.valueProperty().addListener((_, _, newValue) -> {
             this.getShip().ifPresent(ship -> ship.setCurrentFuel(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
         });
-        cargo.valueProperty().addListener((observable, oldValue, newValue) -> {
+        cargo.valueProperty().addListener((_, _, newValue) -> {
             this.getShip().ifPresent(ship -> ship.setCurrentCargo(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
         });
-        fuelreserve.valueProperty().addListener((observable, oldValue, newValue) -> {
+        fuelreserve.valueProperty().addListener((_, _, newValue) -> {
             this.getShip().ifPresent(ship -> ship.setCurrentFuelReserve(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
         });
-        this.live.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+        this.live.selectedProperty().addListener((_, _, newValue) -> {
             if (Boolean.TRUE.equals(newValue)) {
                 final Optional<ShipConfig> shipConfigOptional = ApplicationState.getInstance().getShipConfig();
                 shipConfigOptional.ifPresent(shipConfig -> {
-                    fuel.setValue(shipConfig.getFuelCapacity().intValue());
-                    fuelreserve.setValue(shipConfig.getFuelReserve().doubleValue());
-                    cargo.setValue(shipConfig.getCargoCapacity().intValue());
-                    systemPipSelect.setValue(shipConfig.getSystemPips());
-                    enginePipSelect.setValue(shipConfig.getEnginePips());
-                    weaponPipSelect.setValue(shipConfig.getWeaponPips());
+                    updateConfig(shipConfig.getFuelCapacity(), shipConfig.getFuelReserve(), shipConfig.getCargoCapacity(), shipConfig.getSystemPips(), shipConfig.getEnginePips(), shipConfig.getWeaponPips());
                 });
             }
         });
+    }
+
+    private void updateConfig(BigDecimal fuelCapacity, BigDecimal fuelReserve, BigDecimal cargoCapacity, Integer systemPips, Integer enginePips, Integer weaponPips) {
+        fuel.setValue(fuelCapacity.intValue());
+        fuelreserve.setValue(fuelReserve.doubleValue());
+        cargo.setValue(cargoCapacity.intValue());
+        systemPipSelect.setValue(systemPips);
+        enginePipSelect.setValue(enginePips);
+        weaponPipSelect.setValue(weaponPips);
     }
 
     private void powerBox() {
@@ -217,17 +222,16 @@ public class Config extends Stats implements Template {
     @Override
     public void initEventHandling() {
         eventListeners.add(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, event -> {
-            fuelreserve.setMax(getShip().map(Ship::getMaxFuelReserve).orElse(0.0D));
-            Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
+            double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
             int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
             int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
             int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
             fuel.setMaxValue(maxFuel);
+            fuel.setValue(maxFuel);
             fuelreserve.setMax(maxFuelReserve);
+            fuelreserve.setValue(maxFuelReserve);
             cargo.setMaxValue(maxCargo + maxPassenger);
-            fuel.setValue(getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
-            fuelreserve.setValue(getShip().map(Ship::getCurrentFuelReserve).orElse(0D));
-            cargo.setValue(getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
+            cargo.setValue(0);
             initPowerBox();
             this.getShip().ifPresent(ship -> {
                 updatePower(ship.getCargoHatch().getShipModule());
@@ -237,12 +241,13 @@ public class Config extends Stats implements Template {
         }));
         eventListeners.add(EventService.addListener(true, this, StatusEvent.class, event -> {
             if(ApplicationState.getInstance().isLiveStats()) {
-                fuel.setValue(event.getFuelCapacity().intValue());
-                fuelreserve.setValue(event.getFuelReserve().doubleValue());
-                cargo.setValue(event.getCargoCapacity().intValue());
-                systemPipSelect.setValue(event.getSystemPips());
-                enginePipSelect.setValue(event.getEnginePips());
-                weaponPipSelect.setValue(event.getWeaponPips());
+                updateConfig(
+                        event.getFuelCapacity(),
+                        event.getFuelReserve(),
+                        event.getCargoCapacity(),
+                        event.getSystemPips(),
+                        event.getEnginePips(),
+                        event.getWeaponPips());
             }
         }));
     }

@@ -62,7 +62,7 @@ public class IntField extends TextField {
                 setText(oldValue); // Revert to the old value if the input is invalid
             } else {
                 int intValue = Integer.parseInt(newValue);
-                if (intValue < minValue || intValue > maxValue) {
+                if (intValue < getMinValue() || intValue > getMaxValue()) {
                     setText(oldValue); // Revert if the value is out of bounds
                 } else {
                     isUpdating = true;
@@ -75,7 +75,7 @@ public class IntField extends TextField {
 
     private void restrictInputToNumerals() {
         this.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
-            if (this.minValue < 0) {
+            if (this.getMinValue() < 0) {
                 if (!"-0123456789".contains(keyEvent.getCharacter())) {
                     keyEvent.consume();
                 }
