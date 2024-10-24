@@ -1,0 +1,23 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When a holoscreen is hacked",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "PowerBefore" : {
+      "title" : "PowerBefore",
+      "description": "The power that owned the holo screen",
+      "type" : "string",
+      "examples" : [ "Archon Delaine", "Yuri Grom", "Aisling Duval" ]
+    },
+    "PowerAfter" : {
+      "title" : "PowerAfter",
+      "description": "The power that now owns the holo screen",
+      "type" : "string",
+      "examples" : [ "Archon Delaine", "Yuri Grom", "Aisling Duval" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "PowerBefore", "PowerAfter" ]
+}

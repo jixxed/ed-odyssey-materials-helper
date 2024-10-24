@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "description": "When Written: when requesting power micro-resources.",
+  "extends": { "$ref": "../_Event.json" },
+  "allOf": [{ "$ref": "../_Event.json" }],
+  "properties": {
+    "TotalCount": {
+      "title": "TotalCount",
+      "description": "The total number of micro-resources requested.",
+      "type": "integer",
+      "examples": [1, 2, 3]
+    },
+    "MicroResources": {
+      "title": "MicroResources",
+      "description": "Details of the micro-resources requested.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "title": "Name",
+            "description": "The internal name of the micro-resource.",
+            "type": "string",
+            "examples": ["powerfinancialrecords"]
+          },
+          "Name_Localised": {
+            "title": "Name_Localised",
+            "description": "The localized name of the micro-resource.",
+            "type": "string",
+            "examples": ["Power Industrial Data"]
+          },
+          "Category": {
+            "title": "Category",
+            "description": "The category of the micro-resource.",
+            "type": "string",
+            "examples": ["Data"]
+          },
+          "Count": {
+            "title": "Count",
+            "description": "The count of this type of micro-resource.",
+            "type": "integer",
+            "examples": [1]
+          }
+        },
+        "required": ["Name", "Category", "Count"],
+        "additionalProperties": false
+      }
+    },
+    "MarketID": {
+      "title": "MarketID",
+      "description": "The ID of the market where the request took place.",
+      "type": "integer",
+      "examples": [3223182848]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["timestamp", "event", "TotalCount", "MicroResources", "MarketID"]
+}
