@@ -51,6 +51,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     BURST_LASER(BlueprintGroup.BURST_LASERS, BlueprintCategory.HARDPOINT),
     CYTOSCRAMBLER_BURST_LASER(BlueprintGroup.BURST_LASERS, BlueprintCategory.HARDPOINT, false),
     CANNON(BlueprintGroup.CANNONS, BlueprintCategory.HARDPOINT),
+    CONCORD_CANNON(BlueprintGroup.CANNONS, BlueprintCategory.HARDPOINT, false),
     FRAGMENT_CANNON(BlueprintGroup.FRAGMENT_CANNONS, BlueprintCategory.HARDPOINT),
     PACIFIER_FRAGMENT_CANNON(BlueprintGroup.FRAGMENT_CANNONS, BlueprintCategory.HARDPOINT, false),
     MINE_LAUNCHER(BlueprintGroup.MINE_LAUNCHERS, BlueprintCategory.HARDPOINT),
