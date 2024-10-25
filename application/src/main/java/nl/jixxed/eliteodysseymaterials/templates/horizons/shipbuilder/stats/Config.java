@@ -61,6 +61,7 @@ public class Config extends Stats implements Template {
         Double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
         int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
         int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
+        int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
         live = new CheckBox();
         live.setSelected(ApplicationState.getInstance().isLiveStats());
         live.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -71,8 +72,7 @@ public class Config extends Stats implements Template {
         fuel = new IntField(0, maxFuel, this.getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
         fuelreserve = new Slider(0, maxFuelReserve, this.getShip().map(Ship::getCurrentFuelReserve).orElse(0D).intValue());
         fuelreserve.getStyleClass().add("config-fuelreserve");
-        cargo = new IntField(0, maxCargo, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
-        int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
+        cargo = new IntField(0, maxCargo + maxPassenger, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
 
         this.live.setDisable(!isCurrentShip());
         fuel.getStyleClass().add("config-intfield");
@@ -271,9 +271,9 @@ public class Config extends Stats implements Template {
             fuel.setMaxValue(maxFuel);
             fuelLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.fuel", maxFuel));
         }
-        if (cargo.getMaxValue() != maxCargo + maxPassenger) {
-            cargo.setMaxValue(maxCargo + maxPassenger);
-            cargoLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo, maxPassenger));
-        }
+
+        cargo.setMaxValue(maxCargo + maxPassenger);
+        cargoLabel.textProperty().bind(LocaleService.getStringBinding("ship.stats.config.cargo", maxCargo, maxPassenger));
+
     }
 }
