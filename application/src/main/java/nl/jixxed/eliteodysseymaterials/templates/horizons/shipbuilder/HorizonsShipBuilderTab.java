@@ -149,28 +149,23 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
             refreshContent();
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
-            refreshContent();
-        }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
-            refreshContent();
-        }));
+        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, _ -> refreshContent()));
+        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, _ -> refreshContent()));
         this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshContent();
             }
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, ShipBuilderEvent.class, importResultEvent -> {
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
-                final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
-                final Optional<ShipConfiguration> selectedShipConfiguration = shipConfigurations.getSelectedShipConfiguration();
-                selectedShipConfiguration.ifPresent(shipConfiguration -> {
-                    ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), shipConfiguration, shipConfiguration.getName());
-                    ShipService.saveShipConfigurations(commander, shipConfigurations);
-                });
-            });
-        }));
+        this.eventListeners.add(EventService.addListener(true, this, ShipBuilderEvent.class, _ ->
+                APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
+                    final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
+                    final Optional<ShipConfiguration> selectedShipConfiguration = shipConfigurations.getSelectedShipConfiguration();
+                    selectedShipConfiguration.ifPresent(shipConfiguration -> {
+                        ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), shipConfiguration, shipConfiguration.getName());
+                        ShipService.saveShipConfigurations(commander, shipConfigurations);
+                    });
+                })));
 
         this.eventListeners.add(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
 

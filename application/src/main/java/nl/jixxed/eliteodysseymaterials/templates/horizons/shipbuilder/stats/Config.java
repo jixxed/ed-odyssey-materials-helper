@@ -68,10 +68,10 @@ public class Config extends Stats implements Template {
                     EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.LIVE));
                 });
 
-        fuel = new IntField(0, maxFuel, maxFuel);
-        fuelreserve = new Slider(0, maxFuelReserve, maxFuelReserve);
+        fuel = new IntField(0, maxFuel, this.getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
+        fuelreserve = new Slider(0, maxFuelReserve, this.getShip().map(Ship::getCurrentFuelReserve).orElse(0D).intValue());
         fuelreserve.getStyleClass().add("config-fuelreserve");
-        cargo = new IntField(0, maxCargo, 0);
+        cargo = new IntField(0, maxCargo, this.getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
         int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
 
         this.live.setDisable(!isCurrentShip());
@@ -110,14 +110,23 @@ public class Config extends Stats implements Template {
         fuel.valueProperty().addListener((_, _, newValue) -> {
             this.getShip().ifPresent(ship -> ship.setCurrentFuel(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
+            if(Boolean.FALSE.equals(isCurrentShip())) {
+                EventService.publish(new ShipBuilderEvent());
+            }
         });
         cargo.valueProperty().addListener((_, _, newValue) -> {
             this.getShip().ifPresent(ship -> ship.setCurrentCargo(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
+            if(Boolean.FALSE.equals(isCurrentShip())) {
+                EventService.publish(new ShipBuilderEvent());
+            }
         });
         fuelreserve.valueProperty().addListener((_, _, newValue) -> {
             this.getShip().ifPresent(ship -> ship.setCurrentFuelReserve(newValue.doubleValue()));
             EventService.publish(new ShipConfigEvent(ShipConfigEvent.Type.WEIGHT));
+            if(Boolean.FALSE.equals(isCurrentShip())) {
+                EventService.publish(new ShipBuilderEvent());
+            }
         });
         this.live.selectedProperty().addListener((_, _, newValue) -> {
             if (Boolean.TRUE.equals(newValue)) {
@@ -227,11 +236,11 @@ public class Config extends Stats implements Template {
             int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
             int maxPassenger = this.getShip().map(Ship::getMaxPassenger).orElse(0D).intValue();
             fuel.setMaxValue(maxFuel);
-            fuel.setValue(maxFuel);
+            fuel.setValue(getShip().map(Ship::getCurrentFuel).orElse(0D).intValue());
             fuelreserve.setMax(maxFuelReserve);
-            fuelreserve.setValue(maxFuelReserve);
+            fuelreserve.setValue(getShip().map(Ship::getCurrentFuelReserve).orElse(0D));
             cargo.setMaxValue(maxCargo + maxPassenger);
-            cargo.setValue(0);
+            cargo.setValue(getShip().map(Ship::getCurrentCargo).orElse(0D).intValue());
             initPowerBox();
             this.getShip().ifPresent(ship -> {
                 updatePower(ship.getCargoHatch().getShipModule());
