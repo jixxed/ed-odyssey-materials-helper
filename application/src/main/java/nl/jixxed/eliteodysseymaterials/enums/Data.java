@@ -125,6 +125,7 @@ public enum Data implements OdysseyMaterial {
     POWERPROPAGANDADATA(false, 0, false, true),//TODO time
     POWERCLASSIFIEDDATA(false, 0, false, true),//TODO time
     POWERSECURITY(false, 0, false, true),//TODO time
+    POWERPOWER(false, 0, false, true),//TODO time
     UNKNOWN(false, 0);
     private final boolean illegal;
     private final int transferTime;
