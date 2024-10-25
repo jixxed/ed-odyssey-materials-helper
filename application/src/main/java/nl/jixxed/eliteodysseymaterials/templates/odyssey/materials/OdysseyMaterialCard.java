@@ -34,6 +34,7 @@ import java.util.List;
 class OdysseyMaterialCard extends VBox implements Template {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String MATERIAL_IRRELEVANT_CLASS = "material-irrelevant";
+    private static final String MATERIAL_POWERPLAY_CLASS = "material-powerplay";
     private static final String MATERIAL_RELEVANT_CLASS = "material-relevant";
     private static final String MATERIAL_FAVOURITE_CLASS = "material-favourite";
     private static final String MATERIAL_SPECIFIC_CLASS_PREFIX = "material-";
@@ -182,7 +183,7 @@ class OdysseyMaterialCard extends VBox implements Template {
 
     private void updateMaterialCardStyle() {
         this.image = createMaterialImage(this.odysseyMaterial);
-        this.getStyleClass().removeAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_RELEVANT_CLASS);
+        this.getStyleClass().removeAll(MATERIAL_IRRELEVANT_CLASS, MATERIAL_RELEVANT_CLASS, MATERIAL_POWERPLAY_CLASS);
         this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
         if (this.odysseyMaterial.isUnknown()) {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS);
@@ -196,6 +197,8 @@ class OdysseyMaterialCard extends VBox implements Template {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS);
         } else if (OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(this.odysseyMaterial)) {
             this.getStyleClass().addAll(MATERIAL_RELEVANT_CLASS);
+        } else if (this.odysseyMaterial.isPowerplay()) {
+            this.getStyleClass().addAll(MATERIAL_POWERPLAY_CLASS);
         } else {
             this.getStyleClass().addAll(MATERIAL_IRRELEVANT_CLASS);
         }

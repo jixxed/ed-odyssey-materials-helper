@@ -151,6 +151,11 @@
     -fx-text-fill: #2e92df;
 }
 
+.material-powerplay .label {
+    -fx-font-weight: normal;
+    -fx-text-fill: #6d3da8;
+}
+
 .material-unknown {
     -fx-background-color: #ba5efa;
 }
