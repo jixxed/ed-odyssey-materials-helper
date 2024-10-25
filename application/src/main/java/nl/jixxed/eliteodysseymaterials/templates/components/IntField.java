@@ -1,9 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.components;
 
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,14 +20,10 @@ public class IntField extends TextField {
 
     public IntField(int minValue, int maxValue, int initialValue) {
         if (minValue > maxValue) {
-            throw new IllegalArgumentException(
-                    "IntField min value " + minValue + " greater than max value " + maxValue
-            );
+            throw new IllegalArgumentException("IntField min value " + minValue + " greater than max value " + maxValue);
         }
         if (!((minValue <= initialValue) && (initialValue <= maxValue))) {
-            throw new IllegalArgumentException(
-                    "IntField initialValue " + initialValue + " not between " + minValue + " and " + maxValue
-            );
+            throw new IllegalArgumentException("IntField initialValue " + initialValue + " not between " + minValue + " and " + maxValue);
         }
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -42,6 +40,19 @@ public class IntField extends TextField {
 
         // Listen to changes in the value property
         addValueListener();
+        //select all text when clicking on the field, unless the field is active or disabled
+        addMouseClickBehavior();
+
+    }
+
+    private void addMouseClickBehavior() {
+        this.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+            if (this.getSelectedText().equals(this.getText())) {
+                this.deselect();
+            } else if (this.getSelectedText().isEmpty() && !this.isFocused()) {
+                Platform.runLater(this::selectAll);
+            }
+        });
     }
 
     private void addValueListener() {
