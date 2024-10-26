@@ -6,7 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Add some of the new Powerplay Goods and Data
-Added different style for Powerplay materials
-Added persistence for ship builder config fuel/cargo
-UX: Select all text when clicking on fuel/cargo
+Bugfix for trying to persist a ship when no ship is selected

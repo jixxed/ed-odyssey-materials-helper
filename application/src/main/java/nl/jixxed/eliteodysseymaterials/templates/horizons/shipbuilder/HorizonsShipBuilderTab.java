@@ -158,6 +158,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         }));
 
         this.eventListeners.add(EventService.addListener(true, this, ShipBuilderEvent.class, _ ->
+        {
+            if (APPLICATION_STATE.getShip() != null) {
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final ShipConfigurations shipConfigurations = ShipService.getShipConfigurations(commander);
                     final Optional<ShipConfiguration> selectedShipConfiguration = shipConfigurations.getSelectedShipConfiguration();
@@ -165,7 +167,9 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                         ShipMapper.toShipConfiguration(APPLICATION_STATE.getShip(), shipConfiguration, shipConfiguration.getName());
                         ShipService.saveShipConfigurations(commander, shipConfigurations);
                     });
-                })));
+                });
+            }
+        }));
 
         this.eventListeners.add(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
 

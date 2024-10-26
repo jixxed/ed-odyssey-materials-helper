@@ -1,3 +1,7 @@
+Version 2.113
+-------------
+Bugfix for trying to persist a ship when no ship is selected
+
 Version 2.112
 -------------
 Add some of the new Powerplay Goods and Data
