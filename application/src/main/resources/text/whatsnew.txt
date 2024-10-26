@@ -1,3 +1,10 @@
+Version 2.112
+-------------
+Add some of the new Powerplay Goods and Data
+Added different style for Powerplay materials
+Added persistence for ship builder config fuel/cargo
+UX: Select all text when clicking on fuel/cargo
+
 Version 2.111
 -------------
 Add some of the new Powerplay Goods and Data
