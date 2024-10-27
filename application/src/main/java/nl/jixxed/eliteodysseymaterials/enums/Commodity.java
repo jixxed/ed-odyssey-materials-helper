@@ -443,6 +443,9 @@ public enum Commodity implements HorizonsMaterial {
     UNDERGROUNDSUPPORT(CommodityType.POWERPLAY, FALSE),
     GROMCOUNTERINTELLIGENCE(CommodityType.POWERPLAY, FALSE),
     GROMWARTROPHIES(CommodityType.POWERPLAY, FALSE),
+    KAINEMISINFORMATION(CommodityType.POWERPLAY, FALSE),
+    KAINEAIDSUPPLIES(CommodityType.POWERPLAY, FALSE),
+    KAINELOBBYINGMATERIALS(CommodityType.POWERPLAY, FALSE),
     UNKNOWN(CommodityType.UNKNOWN, FALSE);
     private final CommodityType commodityType;
     private final boolean rareCommodity;

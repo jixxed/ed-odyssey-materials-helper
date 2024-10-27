@@ -1151,13 +1151,6 @@ public enum SuperPower {
                             new RankReward(86, 40),
                             new RankReward(100, 50)
                     )
-//                    SuperPowerPerk.INCREASE_TRADE_BOND_RARE_GOODS_AWARD, List.of(
-//                            new RankReward(55, 10),
-//                            new RankReward(67, 20),
-//                            new RankReward(78, 30),
-//                            new RankReward(94, 40),
-//                            new RankReward(100, 50)
-//                    )
             ),
             Map.ofEntries(
 //                    34	Retributor Beam Laser
