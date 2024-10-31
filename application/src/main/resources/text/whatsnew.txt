@@ -1,3 +1,8 @@
+Version 2.114
+-------------
+Added and reordered new powerplay materials/commodities
+Added heat stats to mandalay
+
 Version 2.113
 -------------
 Bugfix for trying to persist a ship when no ship is selected
