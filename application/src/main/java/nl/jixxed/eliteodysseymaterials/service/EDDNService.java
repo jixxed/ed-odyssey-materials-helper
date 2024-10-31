@@ -77,6 +77,7 @@ import java.util.zip.Deflater;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EDDNService {
+    private static final Semaphore SEMAPHORE = new Semaphore(1, true);
     private static final JsonValidationService JSON_VALIDATION_SERVICE = JsonValidationService.newInstance();
     private static final ProblemHandler PROBLEM_HANDLER = ProblemHandler.throwing();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -434,8 +435,13 @@ public class EDDNService {
                     .header("Content-Encoding", "gzip")
                     .POST(HttpRequest.BodyPublishers.ofByteArray(convertJsonToCompressed(data)))
                     .build();
-            final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            log.info(event+": "+send.body() + " -> " + data);
+            SEMAPHORE.acquire(); // Acquire the permit before sending the request
+            try {
+                final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                log.info(event + ": " + send.body() + " -> " + data);
+            } finally {
+                SEMAPHORE.release(); // Release the permit after the request is completed
+            }
             // Do something useful here
         } catch (final JsonValidatingException ex) {
             log.error("Schema validation failed. Not sending Data to EDDN.", ex);
