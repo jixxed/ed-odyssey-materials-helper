@@ -446,6 +446,7 @@ public enum Commodity implements HorizonsMaterial {
     KAINEMISINFORMATION(CommodityType.POWERPLAY, FALSE),
     KAINEAIDSUPPLIES(CommodityType.POWERPLAY, FALSE),
     KAINELOBBYINGMATERIALS(CommodityType.POWERPLAY, FALSE),
+    LAVIGNYSTRATEGICREPORTS(CommodityType.POWERPLAY, FALSE),
     UNKNOWN(CommodityType.UNKNOWN, FALSE);
     private final CommodityType commodityType;
     private final boolean rareCommodity;

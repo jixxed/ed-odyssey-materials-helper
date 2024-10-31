@@ -56,7 +56,13 @@ public enum Good implements OdysseyMaterial {
     POWERCOMPUTER(false, true),
     POWEREXPERIMENT(false, true),
     POWERAGRICULTURE(false, true),
+    POWERMEDICAL(false, true),
     POWEREXTRACTION(false, true),
+    POWERMISCCOMPUTER(false, true),
+    POWERSECURITY(false, true),
+    POWERPOWER(false, true),
+    POWEREQUIPMENT(false, true),
+    POWERRESEARCH(false, true),
     UNKNOWN(false);
     private final boolean illegal;
     private boolean powerplay = false;

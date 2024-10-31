@@ -71,6 +71,12 @@
       "type" : "string",
       "examples" : [ "Archon Delaine" ]
     },
+    "OpposingPower" : {
+      "title" : "OpposingPower",
+      "description": "the opposing power, if relevant",
+      "type" : "string",
+      "examples" : [ "Archon Delaine" ]
+    },
     "ThreatLevel" : {
       "title" : "ThreatLevel",
       "description": "If a Unidentified Signal Source(USS) Event",
