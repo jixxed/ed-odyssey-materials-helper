@@ -107,20 +107,20 @@ public class ThermalStats extends Stats implements Template {
 //            el.innerHTML = '<small class="semantic" edsy-text="n-a">N/A</small>';
 //        }
 //    }; // updateUIStatsThmLevel()
-    double getHeatLevelForDuration(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity, double duration) {
+    Value getHeatLevelForDuration(double thermalLoad, double baseThermalLoad, double maximumHeatDissipation, double heatCapacity, double duration) {
         if (thermalLoad > 0) {
             thermalLoad += baseThermalLoad;
             if (baseThermalLoad > maximumHeatDissipation) {
-                return Double.NaN;//error
+                return new Value(Double.NaN, Value.ValueType.ERROR);//error
             } else if (thermalLoad > maximumHeatDissipation) {
                 var baseHeatLevel = getEquilibriumHeatLevel(maximumHeatDissipation, baseThermalLoad);
                 var time10 = getTimeUntilHeatLevel(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, 1.0);
                 if ((time10 > duration)) {
-                    return getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5;
+                    return new Value(getHeatLevelAtTime(heatCapacity, maximumHeatDissipation, thermalLoad, baseHeatLevel, duration) / 1.5* 100, Value.ValueType.PERCENTAGE);
                 } else {
                     var time15 = (heatCapacity / 2) / (thermalLoad - maximumHeatDissipation); // displayed heatlevel 66% -> 100% is actual heatlevel 1.0 -> 1.5
                     if ((time10 + time15) > duration) {
-                        return (2 + ((duration - time10) / time15)) / 3;
+                        return new Value((2 + ((duration - time10) / time15)) / 3* 100, Value.ValueType.SECONDS);
                     } else {
                         duration -= time10 + time15;
                         var peakHeatLevel = 1.5 + (duration * (thermalLoad - maximumHeatDissipation) / heatCapacity);
@@ -128,10 +128,10 @@ public class ThermalStats extends Stats implements Template {
                     }
                 }
             } else {
-                return getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5;
+                return new Value(getEquilibriumHeatLevel(maximumHeatDissipation, thermalLoad) / 1.5* 100, Value.ValueType.PERCENTAGE);
             }
         }
-        return Double.NaN;
+        return new Value(Double.NaN, Value.ValueType.ERROR);
     }
 //    var getTimeUntilHeatLevel = function(heatcap, heatdismax, thmload, heatlevel0, heatlevel) {
 //        // https://forums.frontier.co.uk/threads/research-detailed-heat-mechanics.286628/post-6519883
@@ -228,7 +228,7 @@ public class ThermalStats extends Stats implements Template {
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
-            return getHeatLevel(powerForHeat, 0, maximumHeatDissipation, heatCapacity);
+            return getHeatLevelForDuration(powerForHeat, 0, maximumHeatDissipation, heatCapacity, 60);
         }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
@@ -271,7 +271,7 @@ public class ThermalStats extends Stats implements Template {
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
-            return getHeatLevel(engineHeat, powerForHeat, maximumHeatDissipation, heatCapacity);
+            return getHeatLevelForDuration(engineHeat, powerForHeat, maximumHeatDissipation, heatCapacity, 60);
         }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
@@ -310,7 +310,7 @@ public class ThermalStats extends Stats implements Template {
 
             final double powerForHeat = getPowerForHeat(powerCapacity, heatEfficiency);
 
-            return getHeatLevel(fsdHeat, powerForHeat + engineHeat, maximumHeatDissipation, heatCapacity);
+            return getHeatLevelForDuration(fsdHeat, powerForHeat + engineHeat, maximumHeatDissipation, heatCapacity, 60);
         }).orElse(new Value(0D, Value.ValueType.PERCENTAGE));
     }
 
