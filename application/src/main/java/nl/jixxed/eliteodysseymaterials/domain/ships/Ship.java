@@ -50,8 +50,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.3),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 20.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
 
             ),
             List.of(
@@ -111,8 +110,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.34),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 28.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
 
             ),
             List.of(
@@ -173,8 +171,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.25),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 20.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
 
             ),
             List.of(
@@ -233,8 +230,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.36),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
 
             ),
             List.of(
@@ -296,8 +292,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.37),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 28.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 6.0)
 
             ),
             List.of(
@@ -358,8 +353,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.41),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
 
             ),
             List.of(
@@ -422,8 +416,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.49),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
 
             ),
             List.of(
@@ -487,8 +480,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.46),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
 
             ),
             List.of(
@@ -553,8 +545,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.49),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 40.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
 
             ),
             List.of(
@@ -618,8 +609,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.51),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
 
             ),
             List.of(
@@ -686,8 +676,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.39),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
 
             ),
             List.of(
@@ -750,8 +739,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.5),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 35.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 9.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 9.0)
 
             ),
             List.of(
@@ -815,8 +803,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 42.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0)
 
             ),
             List.of(
@@ -881,8 +868,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.41),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 30.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 7.0)
 
             ),
             List.of(
@@ -947,8 +933,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.39),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 45.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
 
             ),
             List.of(
@@ -1012,8 +997,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.47),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 52.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 8.0)
 
             ),
             List.of(
@@ -1076,8 +1060,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.57),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0)
 
             ),
             List.of(
@@ -1141,8 +1124,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.63),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 52.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 11.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 11.0)
 
             ),
             List.of(
@@ -1210,8 +1192,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
 
             ),
             List.of(
@@ -1280,8 +1261,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 54.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0),
-                    Map.entry(HorizonsModifier.CREW, 1.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 10.0)
 
             ),
             List.of(
@@ -1349,8 +1329,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0)
 
             ),
             List.of(
@@ -1419,8 +1398,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.72),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
 
             ),
             List.of(
@@ -1487,8 +1465,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.74),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0)
 
             ),
             List.of(
@@ -1555,8 +1532,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0)
 
             ),
             List.of(
@@ -1626,8 +1602,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 13.0)
 
             ),
             List.of(
@@ -1698,8 +1673,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.82),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
 
             ),
             List.of(
@@ -1769,8 +1743,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.63),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 14.0)
 
             ),
             List.of(
@@ -1837,8 +1810,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.63),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 16.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 16.0)
 
             ),
             List.of(
@@ -1906,8 +1878,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.79),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 15.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 15.0)
 
             ),
             List.of(
@@ -1973,8 +1944,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.67),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0)
 
             ),
             List.of(
@@ -2041,8 +2011,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.5),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0),
-                    Map.entry(HorizonsModifier.CREW, 2.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 12.0)
 
             ),
             List.of(
@@ -2109,8 +2078,7 @@ public class Ship {
                         Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                         Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
                         Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK, 17.0),
-                        Map.entry(HorizonsModifier.CREW, 2.0)
+                        Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
 
                 ),
                 List.of(
@@ -2179,8 +2147,7 @@ public class Ship {
                         Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                         Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
                         Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK, 17.0),
-                        Map.entry(HorizonsModifier.CREW, 2.0)
+                        Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
 
                 ),
                 List.of(
@@ -2316,8 +2283,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 16.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 16.0)
 
             ),
             List.of(
@@ -2387,8 +2353,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.81),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 60.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 18.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 18.0)
 
             ),
             List.of(
@@ -2461,8 +2426,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 0.77),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 75.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 26.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 26.0)
 
             ),
             List.of(
@@ -2541,8 +2505,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 1.07),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 23.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 23.0)
 
             ),
             List.of(
@@ -2621,8 +2584,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 1.13),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 24.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 24.0)
 
             ),
             List.of(
@@ -2700,8 +2662,7 @@ public class Ship {
                     Map.entry(HorizonsModifier.FUEL_COST, 50.0),
                     Map.entry(HorizonsModifier.FUEL_RESERVE, 1.16),
                     Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                    Map.entry(HorizonsModifier.MASS_LOCK, 26.0),
-                    Map.entry(HorizonsModifier.CREW, 3.0)
+                    Map.entry(HorizonsModifier.MASS_LOCK, 26.0)
 
             ),
             List.of(
@@ -2778,11 +2739,10 @@ public class Ship {
                         Map.entry(HorizonsModifier.FUEL_COST,50.0),
                         Map.entry(HorizonsModifier.FUEL_RESERVE,0.5),
                         Map.entry(HorizonsModifier.ARMOUR_HARDNESS,55.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK,11.0),
-                        Map.entry(HorizonsModifier.CREW,1.0)
+                        Map.entry(HorizonsModifier.MASS_LOCK,11.0)
 
-                ),// 2 116 55   // 1 -18 -21
-                List.of(//TODO coordinates
+                ),
+                List.of(
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1051).y(444).index(0).namedIndex(1).slotSize(2).build(),
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(914).y(570).index(1).namedIndex(2).slotSize(2).build(),
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1161).y(702).index(2).namedIndex(3).slotSize(2).build(),
@@ -2790,7 +2750,7 @@ public class Ship {
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1331).y(702).index(4).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
                         ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1230).y(818).index(5).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
                 ),
-                List.of(//TODO coordinates
+                List.of(
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1331).y(469).index(0).slotSize(0).build(),
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1091).y(355).index(1).slotSize(0).build(),
                         ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1164).y(348).index(2).slotSize(0).build(),
