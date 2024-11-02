@@ -2903,6 +2903,11 @@
     -fx-max-width: 3em;
     -fx-pref-width: 3em;
 }
+.ship-view-header-fighterbay {
+    -fx-min-width: 5.5em;
+    -fx-max-width: 5.5em;
+    -fx-pref-width: 5.5em;
+}
 
 .ship-view-header-crew {
     -fx-min-width: 3em;
