@@ -2153,7 +2153,7 @@ public class Ship {
         public static final Ship PYTHON_NX = new Ship(
                 ShipType.PYTHON_NX,
                 59255259,
-                59255259,
+                67527359,
                 Map.ofEntries(
                         Map.entry(HorizonsModifier.TOP_SPEED, 256.0),
                         Map.entry(HorizonsModifier.BOOST_SPEED, 345.0),
@@ -2751,8 +2751,8 @@ public class Ship {
 
         public static final Ship MANDALAY = new Ship(
                 ShipType.MANDALAY,
-                0,//TODO
-                0,//TODO
+                16527693,//TODO
+                17639221,//TODO
                 Map.ofEntries(
                         Map.entry(HorizonsModifier.TOP_SPEED, 280.0),//TODO
                         Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),//TODO
@@ -2763,8 +2763,8 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.FWDACC,Double.NaN),
 //                    Map.entry(HorizonsModifier.REVACC,Double.NaN),
 //                    Map.entry(HorizonsModifier.LATACC,Double.NaN),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST,60.0),//TODO - unknown
-                        Map.entry(HorizonsModifier.BOOST_COST,11.0),//TODO - unknown
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST,71.5),//TODO
+                        Map.entry(HorizonsModifier.BOOST_COST,14.0),//TODO
                         Map.entry(HorizonsModifier.PITCH_SPEED,35.0),//TODO
                         Map.entry(HorizonsModifier.YAW_SPEED,28.0),//TODO
                         Map.entry(HorizonsModifier.ROLL_SPEED,96.0),//TODO
@@ -2772,9 +2772,9 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,Double.NaN),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,Double.NaN),
                         Map.entry(HorizonsModifier.MIN_PITCH_SPEED,24.5),//TODO - unknown
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY,217.40),//TODO - unknown
+                        Map.entry(HorizonsModifier.HEAT_CAPACITY,250.0),//TODO
                         Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN,Double.NaN),//TODO - unknown
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX,54.14),//TODO - unknown
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX,51.0),//TODO
                         Map.entry(HorizonsModifier.FUEL_COST,50.0),
                         Map.entry(HorizonsModifier.FUEL_RESERVE,0.5),//TODO - check
                         Map.entry(HorizonsModifier.ARMOUR_HARDNESS,55.0),//TODO - check
@@ -2783,18 +2783,18 @@ public class Ship {
 
                 ),// 2 116 55   // 1 -18 -21
                 List.of(//TODO coordinates
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(0).namedIndex(1).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(935).y(429).index(1).namedIndex(2).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(2).namedIndex(3).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(3).namedIndex(4).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(4).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(5).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1051).y(444).index(0).namedIndex(1).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(914).y(570).index(1).namedIndex(2).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1161).y(702).index(2).namedIndex(3).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(855).y(517).index(3).namedIndex(4).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1331).y(702).index(4).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1230).y(818).index(5).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
                 ),
                 List.of(//TODO coordinates
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(945).y(336).index(0).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(832).y(437).index(1).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(802).y(647).index(2).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(924).y(750).index(3).slotSize(0).build()
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1331).y(469).index(0).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1091).y(355).index(1).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1164).y(348).index(2).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(785).y(625).index(3).slotSize(0).build()
                 ),
                 List.of(
                         Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.MANDALAY_ARMOUR_GRADE_1).build(),
