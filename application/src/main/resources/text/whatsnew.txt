@@ -1,3 +1,16 @@
+Version 2.115
+-------------
+Added Fighterbay to ship selection view
+Improved crew in ship select view
+Filter Fighterbay modules in shipbuilder if ship doesn't support it
+Fix Kaine Lobbying Materials
+Add throttle to EDDN messages to prevent overloading the server
+Update Mandalay armour prices and mass
+Improved thermal calculations for ships
+Updated Mandalay stats and price
+Added Mandalay images and module locations
+Updated data transfer times for Powerplay data materials
+
 Version 2.114
 -------------
 Added and reordered new powerplay materials/commodities
