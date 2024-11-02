@@ -61,7 +61,8 @@ public class ShipSelectView extends VBox implements Template {
             values.put("ship.view.header.ship.name", () -> LocaleService.LocalizationKey.of(ship.getShipType().getLocalizationKey()));
             values.put("ship.view.header.price", () -> new FormattedLong(ship.getRetailPrice()));
             values.put("ship.view.header.size", () -> LocaleService.LocalizationKey.of(ship.getShipType().getShipSize().getLocalizationKey()));
-            values.put("ship.view.header.crew", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.CREW)));
+            values.put("ship.view.header.crew", () -> "1 + " + ship.getShipType().getMultiCrewSeats());
+            values.put("ship.view.header.fighterbay", () -> new FormattedBoolean(ship.getShipType().isFighterBay()));
             values.put("ship.view.header.masslock", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.MASS_LOCK)));
             values.put("ship.view.header.mass", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.MASS)));
             values.put("ship.view.header.jumprange", () -> new FormattedDouble(calculateJumpRangeMax(ship), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL));
@@ -165,6 +166,8 @@ public class ShipSelectView extends VBox implements Template {
             return LocaleService.getStringBinding(fmt::toString);
         if (value instanceof FormattedDouble fmt)
             return LocaleService.getStringBinding(fmt::toString);
+        if (value instanceof FormattedBoolean fmt)
+            return LocaleService.getStringBinding(fmt::toString);
         if (value instanceof String)
             return LocaleService.getStringBinding((Supplier<String>) (Supplier<?>) valueSupplier);
         throw new IllegalArgumentException("unsupported format");
@@ -242,4 +245,21 @@ public class ShipSelectView extends VBox implements Template {
             return Double.compare(this.value, anotherDouble.value);
         }
     }
+
+    @RequiredArgsConstructor
+    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+    class FormattedBoolean implements Comparable<FormattedBoolean> {
+        @EqualsAndHashCode.Include
+        final boolean value;
+
+        @Override
+        public String toString() {
+            return LocaleService.getLocalizedStringForCurrentLocale(value ? "ship.view.yes" : "ship.view.no");
+        }
+
+        public int compareTo(FormattedBoolean anotherBoolean) {
+            return Boolean.compare(this.value, anotherBoolean.value);
+        }
+    }
+
 }

@@ -1,9 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals;
 
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleClass;
-import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
-import nl.jixxed.eliteodysseymaterials.domain.ships.OptionalModule;
-import nl.jixxed.eliteodysseymaterials.domain.ships.Origin;
+import nl.jixxed.eliteodysseymaterials.domain.ships.*;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
@@ -50,5 +47,10 @@ public class FighterHangar extends OptionalModule {
     @Override
     public int getGrouping() {
         return 1;
+    }
+
+    @Override
+    public boolean isAllowed(ShipType shipType) {
+        return shipType.isFighterBay();
     }
 }
