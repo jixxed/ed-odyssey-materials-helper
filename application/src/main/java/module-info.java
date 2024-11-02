@@ -601,6 +601,9 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingInvite to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingJoin to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.RequestPowerMicroResources to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.DeliverPowerMicroResources to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.HoloscreenHacked to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.slef to com.fasterxml.jackson.databind;
     exports nl.jixxed.eliteodysseymaterials.schemas.slef;
     exports nl.jixxed.eliteodysseymaterials.schemas.eddn.approachsettlement;

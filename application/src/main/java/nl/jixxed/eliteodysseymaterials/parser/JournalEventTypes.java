@@ -66,6 +66,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.DataScanned.DataScanned;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.DatalinkScan.DatalinkScan;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.DatalinkVoucher.DatalinkVoucher;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.DeleteSuitLoadout.DeleteSuitLoadout;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.DeliverPowerMicroResources.DeliverPowerMicroResources;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Died.Died;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.DisbandedSquadron.DisbandedSquadron;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.DiscoveryScan.DiscoveryScan;
@@ -105,6 +106,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Friends.Friends;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FuelScoop.FuelScoop;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.HeatDamage.HeatDamage;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.HeatWarning.HeatWarning;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.HoloscreenHacked.HoloscreenHacked;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.HullDamage.HullDamage;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Interdicted.Interdicted;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Interdiction.Interdiction;
@@ -188,6 +190,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Repair.Repair;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.RepairAll.RepairAll;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.RepairDrone.RepairDrone;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Reputation.Reputation;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.RequestPowerMicroResources.RequestPowerMicroResources;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.ReservoirReplenished.ReservoirReplenished;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.RestockVehicle.RestockVehicle;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Resupply.Resupply;
@@ -517,6 +520,9 @@ public class JournalEventTypes {
             Map.entry("WingAdd", WingAdd.class),
             Map.entry("WingInvite", WingInvite.class),
             Map.entry("WingJoin", WingJoin.class),
-            Map.entry("WingLeave", WingLeave.class)
+            Map.entry("WingLeave", WingLeave.class),
+            Map.entry("RequestPowerMicroResources", RequestPowerMicroResources.class),
+            Map.entry("DeliverPowerMicroResources", DeliverPowerMicroResources.class),
+            Map.entry("HoloscreenHacked", HoloscreenHacked.class)
     );
 }

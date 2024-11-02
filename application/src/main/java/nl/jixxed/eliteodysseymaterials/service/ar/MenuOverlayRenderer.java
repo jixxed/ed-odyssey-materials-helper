@@ -64,7 +64,13 @@ public class MenuOverlayRenderer {
                             (float) preference.getGreen(),
                             (float) preference.getBlue(),
                             (float) preference.getOpacity());
-                } else {
+                } else if (odysseyMaterial.isPowerplay()){
+                    final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_POWERPLAY_COLOR, javafx.scene.paint.Color.PURPLE.toString()));
+                    color = new Color((float) preference.getRed(),
+                            (float) preference.getGreen(),
+                            (float) preference.getBlue(),
+                            (float) preference.getOpacity());
+                }else {
                     final javafx.scene.paint.Color preference = javafx.scene.paint.Color.valueOf(PreferencesService.getPreference(PreferenceConstants.AR_IRRELEVANT_COLOR, javafx.scene.paint.Color.RED.toString()));
                     color = new Color((float) preference.getRed(),
                             (float) preference.getGreen(),
@@ -79,6 +85,8 @@ public class MenuOverlayRenderer {
                         text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.wishlist") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText + "/" + WishlistService.getAllWishlistsCount(odysseyMaterial);
                     } else if (OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(odysseyMaterial)) {
                         text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.blueprint") + " - " + StorageService.getMaterialStorage(odysseyMaterial).getTotalValue() + backPackText;
+                    } else if (odysseyMaterial.isPowerplay()){
+                        text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.powerplay");
                     } else {
                         text = LocaleService.getLocalizedStringForCurrentLocale("ar.overlay.irrelevant");
                     }

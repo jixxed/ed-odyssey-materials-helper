@@ -35,6 +35,7 @@ public class PreferenceConstants {
     public static final String WISHLIST_GRADE_ROLLS_PREFIX = "wishlist.grade.rolls.";
     public static final String ENABLE_AR = "ar.enabled";
     public static final String AR_IRRELEVANT_COLOR = "ar.irrelevant.color";
+    public static final String AR_POWERPLAY_COLOR = "ar.powerplay.color";
     public static final String AR_BLUEPRINT_COLOR = "ar.blueprint.color";
     public static final String AR_WISHLIST_COLOR = "ar.wishlist.color";
     public static final String AR_BARTENDER_COLOR = "ar.bartender.color";

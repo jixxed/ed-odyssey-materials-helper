@@ -96,3 +96,5 @@ settings.button.support.package,Support package,,,,,Pacote de Suporte,Пакет
 settings.button.support.package.create,Create,,,,,Criar,Создать
 settings.button.support.package.explain,Creates a support package for the developer to assist in reproducing issues,,,,,Crie um pacote de suporte para auxiliar o desenvolvedor na reprodução de problemas,"Создает пакет поддержки для разработчика, чтобы помочь в воспроизведении проблем"
 tab.settings.ar.bartender.toggle.explain,NOTE: Disabling the blur graphics setting ingame to remove transparent backgound at the bartender helps with the detection,,,,,,"ПРИМЕЧАНИЕ: Отключение настройки размытия графики в игре для удаления прозрачного фона у бармена помогает с обнаружением"
+tab.settings.ar.color.powerplay,Powerplay color,,,,,,
+ar.overlay.powerplay,Powerplay,,,,,,

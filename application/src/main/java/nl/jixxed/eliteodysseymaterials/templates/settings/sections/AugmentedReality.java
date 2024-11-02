@@ -58,13 +58,14 @@ public class AugmentedReality extends VBox implements Template {
         final HBox arSetting = createARSetting();
         final HBox arLocaleSetting = createARLocaleSetting();
         final HBox arBartenderSetting = createARBartenderSetting();
+        final HBox arColorPowerplaySetting = createARColorSetting(PreferenceConstants.AR_POWERPLAY_COLOR, "tab.settings.ar.color.powerplay", Color.PURPLE);
         final HBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
         final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
         final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
         final HBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.WHITE);
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arBartenderSetting, arColorBartenderSetting);
+        this.getChildren().addAll(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
     }
 
     @Override
