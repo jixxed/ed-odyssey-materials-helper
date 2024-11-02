@@ -18,7 +18,7 @@ public class GoodParser implements Parser<MaterialMapping> {
             final String name = item.getName();
             final Good good = Good.forName(name);
             final int amount = item.getCount().intValue();
-            if (good.isUnknown() || Good.POWERRESEARCH.equals(good)) {
+            if (good.isUnknown()) {
                 log.warn("Unknown Good detected: " + item);
                 ReportService.reportMaterial(item);
             } else {
