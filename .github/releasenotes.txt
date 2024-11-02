@@ -6,14 +6,6 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added Fighterbay to ship selection view
-Improved crew in ship select view
-Filter Fighterbay modules in shipbuilder if ship doesn't support it
-Fix Kaine Lobbying Materials
-Add throttle to EDDN messages to prevent overloading the server
-Update Mandalay armour prices and mass
-Improved thermal calculations for ships
-Updated Mandalay stats and price
-Added Mandalay images and module locations
-Updated data transfer times for Powerplay data materials
-Added SpawningPower and OpposingPower to fsssignaldiscovered sent to EDDN
+Fix detecting RequestPowerMicroResources, DeliverPowerMicroResources, HoloscreenHacked journal events
+Updated some transfer times and bartender sell prices for Powerplay materials
+Added powerplay to AR data terminal overlay (purple) + configuration option

@@ -1,3 +1,9 @@
+Version 2.116
+-------------
+Fix detecting RequestPowerMicroResources, DeliverPowerMicroResources, HoloscreenHacked journal events
+Updated some transfer times and bartender sell prices for Powerplay materials
+Added powerplay to AR data terminal overlay (purple) + configuration option
+
 Version 2.115
 -------------
 Added Fighterbay to ship selection view
