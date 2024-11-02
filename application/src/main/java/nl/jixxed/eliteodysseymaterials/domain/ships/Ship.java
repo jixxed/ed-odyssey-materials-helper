@@ -2190,8 +2190,8 @@ public class Ship {
                 36238840,//TODO
                 38453970,//TODO
                 Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, 200.0),//TODO
-                        Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),//TODO
+                        Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
+                        Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
                         Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
                         Map.entry(HorizonsModifier.SHIELDS, 228.0),
                         Map.entry(HorizonsModifier.ARMOUR, 440.0),
@@ -2199,23 +2199,22 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.FWDACC,20.03),
 //                    Map.entry(HorizonsModifier.REVACC,10.11),
 //                    Map.entry(HorizonsModifier.LATACC,10.03),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),//TODO 46
-                        Map.entry(HorizonsModifier.BOOST_COST, 9.0),//TODO
-                        Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),//TODO
-                        Map.entry(HorizonsModifier.YAW_SPEED, 18.0),//TODO
-                        Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),//TODO
+                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),
+                        Map.entry(HorizonsModifier.BOOST_COST, 9.0),
+                        Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),
+                        Map.entry(HorizonsModifier.YAW_SPEED, 18.0),
+                        Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,100.0),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,80.0),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),//TODO
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.75),//TODO
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),//TODO
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),//TODO
-                        Map.entry(HorizonsModifier.FUEL_COST, 50.0),//TODO
-                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),//TODO
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),//TODO
-                        Map.entry(HorizonsModifier.MASS_LOCK, 18.0),//TODO
-                        Map.entry(HorizonsModifier.CREW, 1.0)//TODO
+                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),
+                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.75),
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),
+                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),
+                        Map.entry(HorizonsModifier.FUEL_COST, 50.0),
+                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
+                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),
+                        Map.entry(HorizonsModifier.MASS_LOCK, 18.0)
 
                 ),// 2 116 55   // 1 -18 -21
                 List.of(
