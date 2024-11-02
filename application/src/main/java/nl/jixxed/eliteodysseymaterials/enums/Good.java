@@ -62,7 +62,7 @@ public enum Good implements OdysseyMaterial {
     POWERSECURITY(false, true),
     POWERPOWER(false, true),
     POWEREQUIPMENT(false, true),
-    POWERRESEARCH(false, true),
+    POWERRESEARCH(false, true),//GoodParser
     UNKNOWN(false);
     private final boolean illegal;
     private boolean powerplay = false;

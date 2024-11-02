@@ -119,7 +119,7 @@ public enum Data implements OdysseyMaterial {
     XENODEFENCEPROTOCOLS(false, 20),
     POWERPREPARATIONSPYWARE(true, 60, true, true),
     POWERSPYWARE(true, 60, true, true),//TODO time
-    POWERMEGASHIPDATA(false, 0, false, true),//TODO time
+    POWERMEGASHIPDATA(false, 0, false, true),//TODO time + DataParser
     POWERRESEARCHDATA(false, 0, false, true),//TODO time
     POWEREMPLOYEEDATA(false, 15, false, true),
     POWERFINANCIALRECORDS(false, 15, false, true),
