@@ -18,7 +18,7 @@ public class DataParser implements Parser<MaterialMapping> {
             final String name = dataVal.getName();
             final Data data = Data.forName(name);
             final int amount = dataVal.getCount().intValue();
-            if (data.isUnknown()) {
+            if (data.isUnknown() || Data.POWERMEGASHIPDATA.equals(data)) {
                 log.warn("Unknown Data detected: " + dataVal);
                 ReportService.reportMaterial(dataVal);
             } else {
