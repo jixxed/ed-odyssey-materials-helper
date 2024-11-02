@@ -1,3 +1,7 @@
+Version 2.117
+-------------
+Cleanup material reporting for powerplay materials
+
 Version 2.116
 -------------
 Fix detecting RequestPowerMicroResources, DeliverPowerMicroResources, HoloscreenHacked journal events
