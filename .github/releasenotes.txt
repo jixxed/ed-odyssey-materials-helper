@@ -16,3 +16,4 @@ Improved thermal calculations for ships
 Updated Mandalay stats and price
 Added Mandalay images and module locations
 Updated data transfer times for Powerplay data materials
+Added SpawningPower and OpposingPower to fsssignaldiscovered sent to EDDN
