@@ -237,16 +237,15 @@ public enum SuperPower {
                             new RankReward(94, 25)
                     ),
                     SuperPowerPerk.INCREASE_EXPLORATION_DATA_SALES, List.of(
-                            new RankReward(5, 75),
-                            new RankReward(14, 90),
-                            new RankReward(22, 105),
-                            new RankReward(32, 120),
-                            new RankReward(48, 135),
-                            new RankReward(55, 150),
-                            new RankReward(67, 160),
-                            new RankReward(73, 180),
-                            new RankReward(86, 200),
-                            new RankReward(100, 210)
+                            new RankReward(5, 20),
+                            new RankReward(14, 30),
+                            new RankReward(22, 40),
+                            new RankReward(32, 50),
+                            new RankReward(48, 60),
+                            new RankReward(55, 70),
+                            new RankReward(67, 80),
+                            new RankReward(73, 90),
+                            new RankReward(86, 100)
 
                     ),
                     SuperPowerPerk.REDUCED_REARM_PRICES_IN_OWN_TERRITORY, List.of(
