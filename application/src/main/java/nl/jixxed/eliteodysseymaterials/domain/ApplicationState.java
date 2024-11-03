@@ -109,6 +109,15 @@ public class ApplicationState {
     private boolean liveStats = false;
     @Getter
     @Setter
+    private Power power = Power.NONE;
+    @Getter
+    @Setter
+    private long powerRank = 0;
+    @Getter
+    @Setter
+    private long powerMerits = 0;
+    @Getter
+    @Setter
     private boolean engineerProcessed = false;
 
     @Getter
@@ -187,6 +196,12 @@ public class ApplicationState {
     }
 
 
+    public void resetPowerplay() {
+            this.power = Power.NONE;
+            this.powerRank = 0;
+            this.powerMerits = 0;
+            EventService.publish(new PowerplayEvent(Power.NONE, 0L, 0L));
+    }
     public void resetEngineerStates() {
         engineerProcessed = false;
         this.engineerStates.forEach((engineer, engineerState) -> {

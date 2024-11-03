@@ -18,9 +18,6 @@ import java.util.stream.Stream;
 
 
 public class Ship {
-        static{
-                final List<List<? extends ShipModule>> modules = ShipModule.ALL_MODULES;
-        }
     public static final Ship SIDE_WINDER = new Ship(
             ShipType.SIDE_WINDER,
             5070,
@@ -2049,210 +2046,210 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
-        public static final Ship PYTHON = new Ship(
-                ShipType.PYTHON,
-                55316050,
-                56978180,
-                Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, 230.0),
-                        Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
-                        Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
-                        Map.entry(HorizonsModifier.SHIELDS, 260.0),
-                        Map.entry(HorizonsModifier.ARMOUR, 260.0),
-                        Map.entry(HorizonsModifier.MASS, 350.0),
+    public static final Ship PYTHON = new Ship(
+            ShipType.PYTHON,
+            55316050,
+            56978180,
+            Map.ofEntries(
+                    Map.entry(HorizonsModifier.TOP_SPEED, 230.0),
+                    Map.entry(HorizonsModifier.BOOST_SPEED, 300.0),
+                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 2.0),
+                    Map.entry(HorizonsModifier.SHIELDS, 260.0),
+                    Map.entry(HorizonsModifier.ARMOUR, 260.0),
+                    Map.entry(HorizonsModifier.MASS, 350.0),
 //                    Map.entry(HorizonsModifier.FWDACC,29.59),
 //                    Map.entry(HorizonsModifier.REVACC,18.02),
 //                    Map.entry(HorizonsModifier.LATACC,15.92),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 60.87),
-                        Map.entry(HorizonsModifier.BOOST_COST, 23.0),
-                        Map.entry(HorizonsModifier.PITCH_SPEED, 29.0),
-                        Map.entry(HorizonsModifier.YAW_SPEED, 10.0),
-                        Map.entry(HorizonsModifier.ROLL_SPEED, 90.0),
+                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 60.87),
+                    Map.entry(HorizonsModifier.BOOST_COST, 23.0),
+                    Map.entry(HorizonsModifier.PITCH_SPEED, 29.0),
+                    Map.entry(HorizonsModifier.YAW_SPEED, 10.0),
+                    Map.entry(HorizonsModifier.ROLL_SPEED, 90.0),
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,200.0),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,100.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,220.0),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 24.0),
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 300.0),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
-                        Map.entry(HorizonsModifier.FUEL_COST, 50.0),
-                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
+                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 24.0),
+                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 300.0),
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
+                    Map.entry(HorizonsModifier.FUEL_COST, 50.0),
+                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
+                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 65.0),
+                    Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
 
-                ),
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(996).y(714).index(0).slotSize(3).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1154).y(552).index(1).slotSize(3).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1595).y(324).index(2).slotSize(3).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1209).y(846).index(3).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1314).y(729).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
-                ),
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1211).y(750).index(0).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1240).y(718).index(1).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(646).y(500).index(2).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1076).y(910).index(3).slotSize(0).build()
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.PYTHON_ARMOUR_GRADE_1).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(7).shipModule(PowerPlant.POWER_PLANT_7_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(6).shipModule(Thrusters.THRUSTERS_6_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(7).shipModule(PowerDistributor.POWER_DISTRIBUTOR_7_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(6).shipModule(Sensors.SENSORS_6_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(996).y(714).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1154).y(552).index(1).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1595).y(324).index(2).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1209).y(846).index(3).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1314).y(729).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1211).y(750).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1240).y(718).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(646).y(500).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1076).y(910).index(3).slotSize(0).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.PYTHON_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(7).shipModule(PowerPlant.POWER_PLANT_7_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(6).shipModule(Thrusters.THRUSTERS_6_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(7).shipModule(PowerDistributor.POWER_DISTRIBUTOR_7_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(6).shipModule(Sensors.SENSORS_6_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
 
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
-                ));
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(2).shipModule(CargoRack.CARGO_RACK_1_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+            ));
 
-        public static final Ship PYTHON_NX = new Ship(
-                ShipType.PYTHON_NX,
-                59255259,
-                67527359,
-                Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, 256.0),
-                        Map.entry(HorizonsModifier.BOOST_SPEED, 345.0),
-                        Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                        Map.entry(HorizonsModifier.SHIELDS, 335.0),
-                        Map.entry(HorizonsModifier.ARMOUR, 280.0),
-                        Map.entry(HorizonsModifier.MASS, 450.0),
+    public static final Ship PYTHON_NX = new Ship(
+            ShipType.PYTHON_NX,
+            59255259,
+            67527359,
+            Map.ofEntries(
+                    Map.entry(HorizonsModifier.TOP_SPEED, 256.0),
+                    Map.entry(HorizonsModifier.BOOST_SPEED, 345.0),
+                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
+                    Map.entry(HorizonsModifier.SHIELDS, 335.0),
+                    Map.entry(HorizonsModifier.ARMOUR, 280.0),
+                    Map.entry(HorizonsModifier.MASS, 450.0),
 //                    Map.entry(HorizonsModifier.FWDACC,31.65),
 //                    Map.entry(HorizonsModifier.REVACC,25.94),
 //                    Map.entry(HorizonsModifier.LATACC,20.09),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 85.85),
-                        Map.entry(HorizonsModifier.BOOST_COST, 20.0),
-                        Map.entry(HorizonsModifier.PITCH_SPEED, 37.01),
-                        Map.entry(HorizonsModifier.YAW_SPEED, 12.51),
-                        Map.entry(HorizonsModifier.ROLL_SPEED, 91.03),
+                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 85.85),
+                    Map.entry(HorizonsModifier.BOOST_COST, 20.0),
+                    Map.entry(HorizonsModifier.PITCH_SPEED, 37.01),
+                    Map.entry(HorizonsModifier.YAW_SPEED, 12.51),
+                    Map.entry(HorizonsModifier.ROLL_SPEED, 91.03),
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,120.0),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,120.0),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 260.0),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
-                        Map.entry(HorizonsModifier.FUEL_COST, 50.0),
-                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
+                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 30.0),
+                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 260.0),
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 2.68),
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 52.05),
+                    Map.entry(HorizonsModifier.FUEL_COST, 50.0),
+                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.83),
+                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 70.0),
+                    Map.entry(HorizonsModifier.MASS_LOCK, 17.0)
 
-                ),
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(933).y(624).index(0).slotSize(3).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1100).y(460).index(1).slotSize(3).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1609).y(227).index(2).slotSize(3).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1015).y(525).index(3).slotSize(3).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1157).y(768).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1277).y(640).index(5).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
-                ),
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1232).y(725).index(0).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1256).y(699).index(1).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(569).y(428).index(2).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1000).y(868).index(3).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(574).y(532).index(4).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(967).y(215).index(5).slotSize(0).build()
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.PYTHON_NX_ARMOUR_GRADE_1).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(6).shipModule(PowerPlant.POWER_PLANT_6_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(6).shipModule(Thrusters.THRUSTERS_6_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
-                        Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(6).shipModule(PowerDistributor.POWER_DISTRIBUTOR_6_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(5).shipModule(Sensors.SENSORS_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(4).shipModule(FuelTank.FUEL_TANK_4_C).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(933).y(624).index(0).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1100).y(460).index(1).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1609).y(227).index(2).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1015).y(525).index(3).slotSize(3).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1157).y(768).index(4).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1277).y(640).index(5).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1232).y(725).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1256).y(699).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(569).y(428).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1000).y(868).index(3).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(574).y(532).index(4).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(967).y(215).index(5).slotSize(0).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.PYTHON_NX_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(6).shipModule(PowerPlant.POWER_PLANT_6_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(6).shipModule(Thrusters.THRUSTERS_6_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
+                    Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(6).shipModule(PowerDistributor.POWER_DISTRIBUTOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(5).shipModule(Sensors.SENSORS_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(4).shipModule(FuelTank.FUEL_TANK_4_C).build()
 
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(3).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).shipModule(CargoRack.CARGO_RACK_1_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
-                ));
-        public static final Ship TYPE_8 = new Ship(
-                ShipType.TYPE_8,
-                36238840,//TODO
-                38453970,//TODO
-                Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
-                        Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
-                        Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
-                        Map.entry(HorizonsModifier.SHIELDS, 228.0),
-                        Map.entry(HorizonsModifier.ARMOUR, 440.0),
-                        Map.entry(HorizonsModifier.MASS, 400.0),
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(ShieldGenerator.SHIELD_GENERATOR_6_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(1).shipModule(CargoRack.CARGO_RACK_1_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+            ));
+    public static final Ship TYPE_8 = new Ship(
+            ShipType.TYPE_8,
+            36238840,//TODO
+            38453970,//TODO
+            Map.ofEntries(
+                    Map.entry(HorizonsModifier.TOP_SPEED, 200.0),
+                    Map.entry(HorizonsModifier.BOOST_SPEED, 340.0),
+                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 1.0),
+                    Map.entry(HorizonsModifier.SHIELDS, 228.0),
+                    Map.entry(HorizonsModifier.ARMOUR, 440.0),
+                    Map.entry(HorizonsModifier.MASS, 400.0),
 //                    Map.entry(HorizonsModifier.FWDACC,20.03),
 //                    Map.entry(HorizonsModifier.REVACC,10.11),
 //                    Map.entry(HorizonsModifier.LATACC,10.03),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),
-                        Map.entry(HorizonsModifier.BOOST_COST, 9.0),
-                        Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),
-                        Map.entry(HorizonsModifier.YAW_SPEED, 18.0),
-                        Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),
+                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 45.0),
+                    Map.entry(HorizonsModifier.BOOST_COST, 9.0),
+                    Map.entry(HorizonsModifier.PITCH_SPEED, 28.0),
+                    Map.entry(HorizonsModifier.YAW_SPEED, 18.0),
+                    Map.entry(HorizonsModifier.ROLL_SPEED, 60.0),
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,100.0),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,50.0),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,80.0),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.75),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),
-                        Map.entry(HorizonsModifier.FUEL_COST, 50.0),
-                        Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK, 18.0)
+                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 18.0),
+                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 235.75),
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, 3.1),
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 36.25),
+                    Map.entry(HorizonsModifier.FUEL_COST, 50.0),
+                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.52),
+                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 58.0),
+                    Map.entry(HorizonsModifier.MASS_LOCK, 18.0)
 
-                ),// 2 116 55   // 1 -18 -21
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).namedIndex(1).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(2).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(935).y(429).index(3).namedIndex(4).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(4).namedIndex(5).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(5).namedIndex(6).slotSize(1).build()
-                ),
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(945).y(336).index(0).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(832).y(437).index(1).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(802).y(647).index(2).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(924).y(750).index(3).slotSize(0).build()
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.TYPE_8_ARMOUR_GRADE_1).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(5).shipModule(Thrusters.THRUSTERS_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
-                        Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(3).shipModule(LifeSupport.LIFE_SUPPORT_3_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(4).shipModule(PowerDistributor.POWER_DISTRIBUTOR_4_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(3).shipModule(Sensors.SENSORS_3_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
+            ),// 2 116 55   // 1 -18 -21
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(803).y(749).index(0).namedIndex(1).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1088).y(582).index(1).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1029).y(539).index(2).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(935).y(429).index(3).namedIndex(4).slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1262).y(528).index(4).namedIndex(5).slotSize(1).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1105).y(359).index(5).namedIndex(6).slotSize(1).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(945).y(336).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(832).y(437).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(802).y(647).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(924).y(750).index(3).slotSize(0).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.TYPE_8_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(5).shipModule(Thrusters.THRUSTERS_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
+                    Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(3).shipModule(LifeSupport.LIFE_SUPPORT_3_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(4).shipModule(PowerDistributor.POWER_DISTRIBUTOR_4_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(3).shipModule(Sensors.SENSORS_3_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
 
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).shipModule(CargoRack.CARGO_RACK_7_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(6).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_4_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
-                ));
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(7).shipModule(CargoRack.CARGO_RACK_7_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(6).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(5).shipModule(CargoRack.CARGO_RACK_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_4_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+            ));
     public static final Ship TYPE_9 = new Ship(
             ShipType.TYPE_9,
             72108220,
@@ -2709,75 +2706,75 @@ public class Ship {
                     Slot.builder().slotType(SlotType.OPTIONAL).index(11).slotSize(1).namedIndex(10).shipModule(Computer.SUPERCRUISE_ASSIST).build()
             ));
 
-        public static final Ship MANDALAY = new Ship(
-                ShipType.MANDALAY,
-                16527693,
-                17639221,
-                Map.ofEntries(
-                        Map.entry(HorizonsModifier.TOP_SPEED, 280.0),
-                        Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
-                        Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
-                        Map.entry(HorizonsModifier.SHIELDS, 220.0),
-                        Map.entry(HorizonsModifier.ARMOUR, 230.0),
-                        Map.entry(HorizonsModifier.MASS, 230.0),
+    public static final Ship MANDALAY = new Ship(
+            ShipType.MANDALAY,
+            16527693,
+            17639221,
+            Map.ofEntries(
+                    Map.entry(HorizonsModifier.TOP_SPEED, 280.0),
+                    Map.entry(HorizonsModifier.BOOST_SPEED, 350.0),
+                    Map.entry(HorizonsModifier.MANOEUVRABILITY, 5.0),
+                    Map.entry(HorizonsModifier.SHIELDS, 220.0),
+                    Map.entry(HorizonsModifier.ARMOUR, 230.0),
+                    Map.entry(HorizonsModifier.MASS, 230.0),
 //                    Map.entry(HorizonsModifier.FWDACC,Double.NaN),
 //                    Map.entry(HorizonsModifier.REVACC,Double.NaN),
 //                    Map.entry(HorizonsModifier.LATACC,Double.NaN),
-                        Map.entry(HorizonsModifier.MINIMUM_THRUST,71.5),
-                        Map.entry(HorizonsModifier.BOOST_COST,14.0),
-                        Map.entry(HorizonsModifier.PITCH_SPEED,35.0),
-                        Map.entry(HorizonsModifier.YAW_SPEED,28.0),
-                        Map.entry(HorizonsModifier.ROLL_SPEED,96.0),
+                    Map.entry(HorizonsModifier.MINIMUM_THRUST, 71.5),
+                    Map.entry(HorizonsModifier.BOOST_COST, 14.0),
+                    Map.entry(HorizonsModifier.PITCH_SPEED, 35.0),
+                    Map.entry(HorizonsModifier.YAW_SPEED, 28.0),
+                    Map.entry(HorizonsModifier.ROLL_SPEED, 96.0),
 //                    Map.entry(HorizonsModifier.PITCH_ACCELERATION,Double.NaN),
 //                    Map.entry(HorizonsModifier.YAW_ACCELERATION,Double.NaN),
 //                    Map.entry(HorizonsModifier.ROLL_ACCELERATION,Double.NaN),
-                        Map.entry(HorizonsModifier.MIN_PITCH_SPEED,24.5),
-                        Map.entry(HorizonsModifier.HEAT_CAPACITY,250.0),
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN,Double.NaN),//TODO - unknown
-                        Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX,51.0),
-                        Map.entry(HorizonsModifier.FUEL_COST,50.0),
-                        Map.entry(HorizonsModifier.FUEL_RESERVE,0.5),
-                        Map.entry(HorizonsModifier.ARMOUR_HARDNESS,55.0),
-                        Map.entry(HorizonsModifier.MASS_LOCK,11.0)
+                    Map.entry(HorizonsModifier.MIN_PITCH_SPEED, 24.5),
+                    Map.entry(HorizonsModifier.HEAT_CAPACITY, 250.0),
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MIN, Double.NaN),//TODO - unknown
+                    Map.entry(HorizonsModifier.HEAT_DISSIPATION_MAX, 51.0),
+                    Map.entry(HorizonsModifier.FUEL_COST, 50.0),
+                    Map.entry(HorizonsModifier.FUEL_RESERVE, 0.5),
+                    Map.entry(HorizonsModifier.ARMOUR_HARDNESS, 55.0),
+                    Map.entry(HorizonsModifier.MASS_LOCK, 11.0)
 
-                ),
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1051).y(444).index(0).namedIndex(1).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(914).y(570).index(1).namedIndex(2).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1161).y(702).index(2).namedIndex(3).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(855).y(517).index(3).namedIndex(4).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1331).y(702).index(4).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1230).y(818).index(5).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
-                ),
-                List.of(
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1331).y(469).index(0).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1091).y(355).index(1).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1164).y(348).index(2).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(785).y(625).index(3).slotSize(0).build()
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.MANDALAY_ARMOUR_GRADE_1).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(5).shipModule(Thrusters.THRUSTERS_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
-                        Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(5).shipModule(PowerDistributor.POWER_DISTRIBUTOR_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(5).shipModule(Sensors.SENSORS_5_E).build(),
-                        Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1051).y(444).index(0).namedIndex(1).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(914).y(570).index(1).namedIndex(2).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1161).y(702).index(2).namedIndex(3).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(855).y(517).index(3).namedIndex(4).slotSize(2).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1331).y(702).index(4).namedIndex(1).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                    ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1230).y(818).index(5).namedIndex(2).slotSize(1).shipModule(PulseLaser.PULSE_LASER_1_F_F).build()
+            ),
+            List.of(
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1331).y(469).index(0).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1091).y(355).index(1).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1164).y(348).index(2).slotSize(0).build(),
+                    ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(785).y(625).index(3).slotSize(0).build()
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.MANDALAY_ARMOUR_GRADE_1).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_PLANT).index(1).slotSize(5).shipModule(PowerPlant.POWER_PLANT_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_THRUSTERS).index(2).slotSize(5).shipModule(Thrusters.THRUSTERS_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FRAME_SHIFT_DRIVE).index(3).slotSize(5).shipModule(FrameShiftDrive.FRAME_SHIFT_DRIVE_OVERCHARGE_5_C).build(),
+                    Slot.builder().slotType(SlotType.CORE_LIFE_SUPPORT).index(4).slotSize(4).shipModule(LifeSupport.LIFE_SUPPORT_4_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_POWER_DISTRIBUTION).index(5).slotSize(5).shipModule(PowerDistributor.POWER_DISTRIBUTOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_SENSORS).index(6).slotSize(5).shipModule(Sensors.SENSORS_5_E).build(),
+                    Slot.builder().slotType(SlotType.CORE_FUEL_TANK).index(7).slotSize(5).shipModule(FuelTank.FUEL_TANK_5_C).build()
 
-                ),
-                List.of(
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(4).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(3).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).build(),
-                        Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
-                ));
+            ),
+            List.of(
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(0).slotSize(6).shipModule(CargoRack.CARGO_RACK_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(1).slotSize(5).shipModule(ShieldGenerator.SHIELD_GENERATOR_5_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(2).slotSize(4).shipModule(CargoRack.CARGO_RACK_3_E).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(3).slotSize(4).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(4).slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(5).slotSize(3).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(6).slotSize(2).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(7).slotSize(1).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(8).slotSize(1).build(),
+                    Slot.builder().slotType(SlotType.OPTIONAL).index(9).slotSize(1).shipModule(Computer.SUPERCRUISE_ASSIST).build()
+            ));
     public static final List<Ship> ALL = List.of(
             SIDE_WINDER,
             EAGLE,

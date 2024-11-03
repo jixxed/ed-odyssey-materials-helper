@@ -504,6 +504,7 @@ public class FXApplication extends Application {
 
     private void reset(final File watchedFolder) {
         APPLICATION_STATE.resetEngineerStates();
+        APPLICATION_STATE.resetPowerplay();
         StorageService.resetShipLockerCounts();
         StorageService.resetBackPackCounts();
         StorageService.resetFleetCarrierCounts();

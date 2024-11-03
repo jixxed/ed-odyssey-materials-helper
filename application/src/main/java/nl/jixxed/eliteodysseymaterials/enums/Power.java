@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.hardpoint.*;
@@ -7,8 +8,8 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.ShieldGen
 
 import java.util.List;
 import java.util.Map;
-
-public enum SuperPower {
+@Getter
+public enum Power {
     ZEMINA_TORVAL(
             Map.of(
 //    Zemina Torval: Perk: reduced rebuy when killed in your Power's Territory -> rank 2: -20%
@@ -35,22 +36,7 @@ public enum SuperPower {
 //    Zemina Torval: Perk: Imperial slaves commodity profits in Power Territory -> rank 94: +50%
 //    Zemina Torval: Perk: Trade Bond on sales in Power territory -> rank 100: +20%
 
-    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(33, -80),
-                            new RankReward(42, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_MINING_COMMODITY_PAYOUT, List.of(
+                    PowerPerk.INCREASE_MINING_COMMODITY_PAYOUT, List.of(
                             new RankReward(5, 10),
                             new RankReward(14, 15),
                             new RankReward(22, 20),
@@ -60,14 +46,14 @@ public enum SuperPower {
                             new RankReward(67, 40),
                             new RankReward(73, 43)
                     ),
-                    SuperPowerPerk.INCREASE_IMPERIAL_SLAVES_COMMODITY_PAYOUT, List.of(
+                    PowerPerk.INCREASE_IMPERIAL_SLAVES_COMMODITY_PAYOUT, List.of(
                             new RankReward(24, 10),
                             new RankReward(42, 20),
                             new RankReward(52, 30),
                             new RankReward(78, 40),
                             new RankReward(94, 50)
                     ),
-                    SuperPowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
+                    PowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
                             new RankReward(86, 10),
                             new RankReward(100, 20)
                     )
@@ -123,22 +109,8 @@ public enum SuperPower {
 //Felicia Winters: Perk: increase on food  and medicine profits in Power Territory -> rank 86: +40%
 //Felicia Winters: Perk: Increase in minor faction reputation gain in Power Territory -> rank 94: +100%
 //Felicia Winters: Perk: increase on food  and medicine profits in Power Territory -> rank 100: +60%
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(33, -80),
-                            new RankReward(42, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_SALVAGE_PROFIT, List.of(
+
+                    PowerPerk.INCREASE_SALVAGE_PROFIT, List.of(
                             new RankReward(5, 10),
                             new RankReward(14, 20),
                             new RankReward(22, 33),
@@ -149,14 +121,14 @@ public enum SuperPower {
                             new RankReward(73, 80),
                             new RankReward(86, 90)
                     ),
-                    SuperPowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
+                    PowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
                             new RankReward(24, 20),
                             new RankReward(42, 40),
                             new RankReward(52, 60),
                             new RankReward(78, 80),
                             new RankReward(94, 100)
                     ),
-                    SuperPowerPerk.INCREASE_FOOD_AND_MEDICINE_PROFIT, List.of(
+                    PowerPerk.INCREASE_FOOD_AND_MEDICINE_PROFIT, List.of(
                             new RankReward(73, 20),
                             new RankReward(86, 40),
                             new RankReward(100, 60)
@@ -214,29 +186,14 @@ public enum SuperPower {
 //Li Yong-Rui: Perk: Exploration Data Sales -> rank 100: +210%
 //Li Yong-Rui: Perk: Rearm Refuel Repair prices -> rank 100: -100%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
+                    PowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
                             new RankReward(24, 5),
                             new RankReward(42, 10),
                             new RankReward(52, 15),
                             new RankReward(78, 20),
                             new RankReward(94, 25)
                     ),
-                    SuperPowerPerk.INCREASE_EXPLORATION_DATA_SALES, List.of(
+                    PowerPerk.INCREASE_EXPLORATION_DATA_SALES, List.of(
                             new RankReward(5, 20),
                             new RankReward(14, 30),
                             new RankReward(22, 40),
@@ -248,7 +205,7 @@ public enum SuperPower {
                             new RankReward(86, 100)
 
                     ),
-                    SuperPowerPerk.REDUCED_REARM_PRICES_IN_OWN_TERRITORY, List.of(
+                    PowerPerk.REDUCED_REARM_PRICES_IN_OWN_TERRITORY, List.of(
                             new RankReward(86, -50),
                             new RankReward(100, -100)
                     )
@@ -277,7 +234,7 @@ public enum SuperPower {
             ),
             new StarSystem("Lembava", -43.25, -64.34, -77.69)
     ),
-    ARCHON_DELANE(
+    ARCHON_DELAINE(
             Map.of(
 //Archon Delaine: Perk: reduced rebuy when killed in your Power's Territory -> rank 2: -20%
 //Archon Delaine: Perk: on Bounties placed on you -> rank 5: -10%
@@ -302,22 +259,7 @@ public enum SuperPower {
 //Archon Delaine: Perk: on Bounties placed on you -> rank 86: +90%
 //Archon Delaine: Perk: on Bounties placed on you -> rank 100: -100%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_BOUNTY_VALUE_IN_OWN_TERRITORY, List.of(
+                    PowerPerk.REDUCED_BOUNTY_VALUE_IN_OWN_TERRITORY, List.of(
                             new RankReward(5, -10),
                             new RankReward(14, -20),
                             new RankReward(22, -33),
@@ -329,7 +271,7 @@ public enum SuperPower {
                             new RankReward(86, -80),
                             new RankReward(100, -100)
                     ),
-                    SuperPowerPerk.INCREASE_BLACK_MARKET_PROFITS, List.of(
+                    PowerPerk.INCREASE_BLACK_MARKET_PROFITS, List.of(
                             new RankReward(24, 10),
                             new RankReward(42, 15),
                             new RankReward(52, 20),
@@ -398,22 +340,7 @@ public enum SuperPower {
 //Nakato Kaine: Perk: Search and Rescue Payouts -> rank 94: +120%
 //Nakato Kaine: Perk: Mining Commodity Profits -> rank 100: +50%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
+                    PowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
                             new RankReward(5, 75),
                             new RankReward(14, 90),
                             new RankReward(22, 105),
@@ -421,14 +348,14 @@ public enum SuperPower {
                             new RankReward(48, 135),
                             new RankReward(55, 150)
                     ),
-                    SuperPowerPerk.INCREASE_SEARCH_AND_RESCUE_PAYOUT, List.of(
+                    PowerPerk.INCREASE_SEARCH_AND_RESCUE_PAYOUT, List.of(
                             new RankReward(24, 40),
                             new RankReward(42, 60),
                             new RankReward(52, 80),
                             new RankReward(78, 100),
                             new RankReward(94, 120)
                     ),
-                    SuperPowerPerk.INCREASE_MINING_COMMODITY_PAYOUT, List.of(
+                    PowerPerk.INCREASE_MINING_COMMODITY_PAYOUT, List.of(
                             new RankReward(55, 10),
                             new RankReward(67, 20),
                             new RankReward(73, 30),
@@ -498,22 +425,7 @@ public enum SuperPower {
 //Jerome Archer: Perk: Weapon Module Cost -> rank 94: -30%
 //Jerome Archer: Perk: Bounty Payouts -> rank 100: +100%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
+                    PowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
                             new RankReward(5, 10),
                             new RankReward(14, 20),
                             new RankReward(22, 30),
@@ -525,7 +437,7 @@ public enum SuperPower {
                             new RankReward(86, 90),
                             new RankReward(100, 100)
                     ),
-                    SuperPowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
+                    PowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
                             new RankReward(24, -10),
                             new RankReward(42, -15),
                             new RankReward(52, -20),
@@ -594,22 +506,7 @@ public enum SuperPower {
 //Patreus: Perk: Bounty Payouts -> rank 94: +80%
 //Patreus: Perk: Rearm Prices -> rank 100: -90%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
+                    PowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
                             new RankReward(5, -5),
                             new RankReward(14, -10),
                             new RankReward(22, -15),
@@ -619,14 +516,14 @@ public enum SuperPower {
                             new RankReward(67, -35),
                             new RankReward(73, -40)
                     ),
-                    SuperPowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
+                    PowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
                             new RankReward(24, 20),
                             new RankReward(42, 35),
                             new RankReward(52, 50),
                             new RankReward(78, 65),
                             new RankReward(94, 80)
                     ),
-                    SuperPowerPerk.REDUCED_REARM_PRICES_IN_OWN_TERRITORY, List.of(
+                    PowerPerk.REDUCED_REARM_PRICES_IN_OWN_TERRITORY, List.of(
                             new RankReward(86, -40),
                             new RankReward(100, -90)
                     )
@@ -693,22 +590,7 @@ public enum SuperPower {
 //Pranav Antal: Perk: Organics Data Sales -> rank 94: +50%
 //Pranav Antal: Perk: Technology Commodity Profits -> rank 100: +50%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
+                    PowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
                             new RankReward(5, 75),
                             new RankReward(14, 90),
                             new RankReward(22, 105),
@@ -716,14 +598,14 @@ public enum SuperPower {
                             new RankReward(48, 135),
                             new RankReward(55, 150)
                     ),
-                    SuperPowerPerk.INCREASE_ORGANICS_DATA_SALES, List.of(
+                    PowerPerk.INCREASE_ORGANICS_DATA_SALES, List.of(
                             new RankReward(24, 10),
                             new RankReward(42, 20),
                             new RankReward(52, 30),
                             new RankReward(78, 40),
                             new RankReward(94, 50)
                     ),
-                    SuperPowerPerk.INCREASE_TECHNOLOGY_COMMODITY_PROFIT, List.of(
+                    PowerPerk.INCREASE_TECHNOLOGY_COMMODITY_PROFIT, List.of(
                             new RankReward(55, 10),
                             new RankReward(67, 20),
                             new RankReward(73, 30),
@@ -806,22 +688,7 @@ public enum SuperPower {
 //Yuri Grom: Perk: Weapon Module Cost -> rank 94: -30%
 //Yuri Grom: Perk: Bounty Payout -> rank 100: +60%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
+                    PowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
                             new RankReward(5, 2),
                             new RankReward(14, 5),
                             new RankReward(22, 7),
@@ -833,7 +700,7 @@ public enum SuperPower {
                             new RankReward(86, 40),
                             new RankReward(100, 60)
                     ),
-                    SuperPowerPerk.INCREASE_EXPLORATION_DATA_SALES, List.of(
+                    PowerPerk.INCREASE_EXPLORATION_DATA_SALES, List.of(
                             new RankReward(5, 2),
                             new RankReward(14, 5),
                             new RankReward(22, 7),
@@ -841,7 +708,7 @@ public enum SuperPower {
                             new RankReward(48, 13),
                             new RankReward(55, 15)
                     ),
-                    SuperPowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
+                    PowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
                             new RankReward(5, 2),
                             new RankReward(14, 5),
                             new RankReward(22, 7),
@@ -849,7 +716,7 @@ public enum SuperPower {
                             new RankReward(48, 13),
                             new RankReward(55, 15)
                     ),
-                    SuperPowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
+                    PowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
                             new RankReward(24, -10),
                             new RankReward(42, -15),
                             new RankReward(52, -20),
@@ -893,7 +760,7 @@ public enum SuperPower {
             ),
             new StarSystem("Euryale", 35.38, -68.97, 24.81)
     ),
-    A_LAVINGNY_DUVAL(
+    A_LAVIGNY_DUVAL(
             Map.of(
                     //A. Lavingy-Duval: Perk: reduced rebuy when killed in your Power's Territory -> rank 2: -20%
 //A. Lavingy-Duval: Perk: Bounty Payout -> rank 5: +10%
@@ -919,22 +786,7 @@ public enum SuperPower {
 //A. Lavingy-Duval: Perk: Weapon Module Cost -> rank 94: -30%
 //A. Lavingy-Duval: Perk: Bounty Payout -> rank 100: +100%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
+                    PowerPerk.INCREASE_BOUNTY_PAYOUT, List.of(
                             new RankReward(5, 10),
                             new RankReward(14, 20),
                             new RankReward(22, 30),
@@ -946,7 +798,7 @@ public enum SuperPower {
                             new RankReward(86, 90),
                             new RankReward(100, 100)
                     ),
-                    SuperPowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
+                    PowerPerk.REDUCED_WEAPON_MODULE_COST_IN_OWN_TERRITORY, List.of(
                             new RankReward(24, -10),
                             new RankReward(42, -15),
                             new RankReward(52, -20),
@@ -1017,22 +869,7 @@ public enum SuperPower {
 //Aisling Duval: Perk: Minor Faction Reputation Gain -> rank 94: +100%
 //Aisling Duval: Perk: Search and Rescue Payout -> rank 100: +200%
 
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_SEARCH_AND_RESCUE_PAYOUT, List.of(
+                    PowerPerk.INCREASE_SEARCH_AND_RESCUE_PAYOUT, List.of(
                             new RankReward(5, 20),
                             new RankReward(14, 40),
                             new RankReward(22, 60),
@@ -1044,7 +881,7 @@ public enum SuperPower {
                             new RankReward(86, 180),
                             new RankReward(100, 200)
                     ),
-                    SuperPowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
+                    PowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
                             new RankReward(24, 20),
                             new RankReward(42, 40),
                             new RankReward(52, 60),
@@ -1113,37 +950,21 @@ public enum SuperPower {
 //Edmund Mahon: Perk: Minor Faction Reputation Gain -> rank 86: +40%
 //Edmund Mahon: Perk: Trade Profits  on RARE GOODS Sales -> rank 94: +40%
 //Edmund Mahon: Perk: Minor Faction Reputation Gain -> rank 100: +50%
-
-                    SuperPowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
-                            new RankReward(11, -33),
-                            new RankReward(29, -66),
-                            new RankReward(60, -100)
-                    ),
-                    SuperPowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
-                            new RankReward(2, -20),
-                            new RankReward(8, -40),
-                            new RankReward(17, -60),
-                            new RankReward(27, -80),
-                            new RankReward(36, -100)
-                    ),
-                    SuperPowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
+                    PowerPerk.INCREASE_TRADE_BOND_SALES_AWARD, List.of(
                             new RankReward(5, 5),
                             new RankReward(14, 10),
                             new RankReward(22, 15),
                             new RankReward(32, 20),
                             new RankReward(48, 25)
                     ),
-                    SuperPowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
+                    PowerPerk.INCREASE_MINOR_FACTION_REPUTATION, List.of(
                             new RankReward(24, 20),
                             new RankReward(42, 40),
                             new RankReward(52, 60),
                             new RankReward(78, 80),
                             new RankReward(94, 100)
                     ),
-                    SuperPowerPerk.INCREASE_TRADE_BOND_RARE_GOODS_AWARD, List.of(
+                    PowerPerk.INCREASE_TRADE_BOND_RARE_GOODS_AWARD, List.of(
                             new RankReward(55, 10),
                             new RankReward(67, 20),
                             new RankReward(73, 30),
@@ -1186,20 +1007,107 @@ public enum SuperPower {
 
             ),
             new StarSystem("Gateway", -11.0, 77.84, -0.88)
+    ),
+    NONE(
+            Map.of(),
+            Map.of(),
+            new StarSystem("Sol", 0.0, 0.0, 0.0)
+    ),
+    ALL(
+            Map.of(
+                    PowerPerk.RANK_DECAL, List.of(
+                            new RankReward(1, 1)
+                    ),
+                    PowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
+                            new RankReward(11, -33),
+                            new RankReward(29, -66),
+                            new RankReward(60, -100)
+                    ),
+                    PowerPerk.REDUCED_REBUY_IN_OWN_TERRITORY, List.of(
+                            new RankReward(2, -20),
+                            new RankReward(8, -40),
+                            new RankReward(17, -60),
+                            new RankReward(27, -80),
+                            new RankReward(36, -100)
+                    )
+            ),
+            Map.of(),
+            new StarSystem("Sol", 0.0, 0.0, 0.0)
     );
 
-    private final Map<SuperPowerPerk, List<RankReward>> perks;
+    private final Map<PowerPerk, List<RankReward>> perks;
     private final Map<ShipModule, Integer> unlockables;
     private final StarSystem starSystem;
 
-    SuperPower(Map<SuperPowerPerk, List<RankReward>> perks, Map<ShipModule, Integer> unlockables, StarSystem starSystem) {
+    Power(Map<PowerPerk, List<RankReward>> perks, Map<ShipModule, Integer> unlockables, StarSystem starSystem) {
         this.perks = perks;
         this.unlockables = unlockables;
         this.starSystem = starSystem;
     }
 
+    public static Power forName(String power) {
+        switch (power) {
+            case "Arissa Lavigny-Duval", "A. Lavigny-Duval":
+                return A_LAVIGNY_DUVAL;
+            case "Aisling Duval":
+                return AISLING_DUVAL;
+            case "Archon Delaine":
+                return ARCHON_DELAINE;
+            case "Denton Patreus":
+                return DENTON_PATREUS;
+            case "Edmund Mahon":
+                return EDMUND_MAHON;
+            case "Felicia Winters":
+                return FELICIA_WINTERS;
+            case "Li Yong-Rui":
+                return LI_YONG_RUI;
+            case "Pranav Antal":
+                return PRANAV_ANTAL;
+            case "Yuri Grom":
+                return YURI_GROM;
+            case "Jerome Archer":
+                return JEROME_ARCHER;
+            case "Zachary Hudson":
+                return NONE;
+            case "Zemina Torval":
+                return ZEMINA_TORVAL;
+            case "Nakato Kaine":
+                return NAKATO_KAINE;
+            default:
+                throw new IllegalArgumentException("Unknown power: " + power);
+        }
+    }
+
     //localization key
     public String getLocalizationKey() {
-        return "superpower." + this.name().toLowerCase();
+        return "power." + this.name().toLowerCase();
+    }
+
+    public Double getDistance(final double x, final double y, final double z) {
+        return Math.sqrt(Math.pow(this.getStarSystem().getX() - x, 2) + Math.pow(this.getStarSystem().getY() - y, 2) + Math.pow(this.getStarSystem().getZ() - z, 2));
+    }
+
+    public Double getDistance(final StarSystem starSystem) {
+        return getDistance(starSystem.getX(), starSystem.getY(), starSystem.getZ());
+    }
+
+    public Object getNextRankMerits(Long rank) {
+        int requiredMerits = 0;
+        if(rank >= 2L){
+            requiredMerits += 2000;
+        }
+        if(rank >= 3L){
+            requiredMerits += 3000;
+        }
+        if(rank >= 4L){
+            requiredMerits += 4000;
+        }
+        if(rank >= 5L){
+            requiredMerits += 6000;
+        }
+        if(rank >= 6L){
+            requiredMerits = requiredMerits + ( 6000 * (rank.intValue() - 5));
+        }
+        return requiredMerits;
     }
 }

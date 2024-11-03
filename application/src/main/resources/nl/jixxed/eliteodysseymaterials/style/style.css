@@ -4106,3 +4106,126 @@
     -fx-font-size: 1.5em;
     -fx-padding: 0.5em 0 0.5em 0;
 }
+
+.power-grid {
+    -fx-hgap: 0.25em;
+    -fx-vgap: 0.25em;
+    -fx-padding: 0.3em;
+}
+
+.power-name {
+    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    -fx-label-padding: 0.3em;
+    /*-fx-cursor: hand;*/
+}
+
+/*.power-name:hover {*/
+/*    -fx-text-fill: #2e92df;*/
+/*}*/
+
+.power-card {
+    -fx-min-width: 21em;
+    -fx-max-width: 21em;
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 0 0 10 0;
+}
+
+.power-card .separator {
+    -fx-padding: 5 0 0 0;
+}
+
+.power-image {
+    /*225x140*/
+    -fx-min-width: 21em;
+    -fx-pref-width: 21em;
+    -fx-max-width: 21em;
+    -fx-pref-height: 13.06em;
+}
+.power-location {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0.3em;
+}
+
+.power-location-line {
+    -fx-max-width: 21em;
+}
+
+.power-location-line:hover {
+    -fx-cursor: hand;
+}
+
+.power-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+.power-distance {
+    -fx-text-fill: #777;
+    -fx-label-padding: 0.3em;
+}
+
+.power-category {
+    -fx-text-fill: white;
+    -fx-font-size: 1.1em;
+    -fx-label-padding: 0.3em;
+}
+
+.power-module {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0 0.3em 0 0.1em;
+    -fx-max-width: 17.9em;
+    -fx-wrap-text: true;
+}
+
+.power-perk {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0 0.3em 0 0.1em;
+    -fx-max-width: 17.9em;
+    -fx-wrap-text: true;
+}
+
+.power-rank {
+    -fx-text-fill: #0078d6;
+    -fx-label-padding: 0 0 0 0.3em;
+    -fx-text-alignment: center;
+    -fx-min-width: 3em;
+    -fx-max-width: 3em;
+}
+.power-category-explain{
+    /*-fx-text-fill: white;*/
+    -fx-text-fill: #0078d6;
+    /*-fx-font-style: italic;*/
+    -fx-label-padding: 0.3em;
+    -fx-wrap-text: true;
+}
+.power-category-ranks{
+    -fx-text-fill: white;
+    -fx-label-padding: 0.3em;
+    -fx-font-style: italic;
+    -fx-wrap-text: true;
+}
+.power-category-current{
+    -fx-text-fill: white;
+    -fx-label-padding: 0.3em;
+    -fx-font-style: italic;
+}
+.power-segmented-bar{
+    -fx-pref-height: 1em;
+    -fx-min-height: 1em;
+    -fx-max-height: 1em;
+    -fx-background-color: black;
+}
+.power-rank-unlocked{
+    -fx-text-fill: #dcc030 !important;
+}
+.power-current-merits{
+    -fx-text-fill: white;
+    -fx-label-padding: 0.1em 0.3em 0 0;
+}
+.power-current-rank{
+    -fx-text-fill: white;
+    -fx-label-padding: 0.1em 0 0 0.3em;
+}

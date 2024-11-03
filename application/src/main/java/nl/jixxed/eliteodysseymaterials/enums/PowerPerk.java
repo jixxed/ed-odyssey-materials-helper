@@ -1,6 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
-public enum SuperPowerPerk {
+public enum PowerPerk {
     RANK_DECAL,
     REDUCED_REBUY_BY_OPPOSING_POWER,
     REDUCED_REBUY_IN_OWN_TERRITORY,
@@ -24,6 +24,9 @@ public enum SuperPowerPerk {
     INCREASE_EXPLORATION_DATA_SALES;
 
     public String getLocalizationKey() {
-        return "superpower.perk." + this.name().toLowerCase();
+        return "power.perk." + this.name().toLowerCase();
+    }
+    public String getLocalizationTitleKey() {
+        return "power.perk.title." + this.name().toLowerCase();
     }
 }

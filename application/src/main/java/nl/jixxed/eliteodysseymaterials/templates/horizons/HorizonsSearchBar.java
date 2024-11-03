@@ -13,6 +13,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommoditiesSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineerSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialSearchBar;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay.PowerplaySearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistSearchBar;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ class HorizonsSearchBar extends HBox {
     private HorizonsCommoditiesSearchBar commoditiesSearchBar;
     private HorizonsWishlistSearchBar horizonsWishlistSearchBar;
     private HorizonsEngineerSearchBar horizonsEngineerSearchBar;
+    private PowerplaySearchBar powerplaySearchBar;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsSearchBar() {
@@ -41,6 +43,7 @@ class HorizonsSearchBar extends HBox {
         this.commoditiesSearchBar = new HorizonsCommoditiesSearchBar();
         this.horizonsWishlistSearchBar = new HorizonsWishlistSearchBar();
         this.horizonsEngineerSearchBar = new HorizonsEngineerSearchBar();
+        this.powerplaySearchBar = new PowerplaySearchBar();
 
         applyFontSizingHack();
 
@@ -48,6 +51,7 @@ class HorizonsSearchBar extends HBox {
         HBox.setHgrow(this.commoditiesSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.horizonsWishlistSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.horizonsEngineerSearchBar, Priority.ALWAYS);
+        HBox.setHgrow(this.powerplaySearchBar, Priority.ALWAYS);
         this.getChildren().addAll(this.button, this.materialSearchBar);
     }
 
@@ -69,7 +73,7 @@ class HorizonsSearchBar extends HBox {
             EventService.publish(new MenuButtonClickedEvent(Expansion.HORIZONS));
         });
     }
-
+    
     private void initEventHandling() {
         this.eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
         //hack for component resizing on other fontsizes
@@ -78,37 +82,22 @@ class HorizonsSearchBar extends HBox {
             this.styleProperty().set(fontStyle);
             this.button.styleProperty().set(fontStyle);
         }));
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsTabSelectedEvent.class, event -> {
-            if (HorizonsTabs.COMMODITIES.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.horizonsWishlistSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
-                    this.getChildren().remove(this.materialSearchBar);
-                    this.getChildren().remove(this.horizonsWishlistSearchBar);
-                    this.getChildren().remove(this.horizonsEngineerSearchBar);
-                    this.getChildren().add(this.commoditiesSearchBar);
-                }
-            } else if (HorizonsTabs.WISHLIST.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.commoditiesSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
-                    this.getChildren().remove(this.materialSearchBar);
-                    this.getChildren().remove(this.commoditiesSearchBar);
-                    this.getChildren().remove(this.horizonsEngineerSearchBar);
-                    this.getChildren().add(this.horizonsWishlistSearchBar);
-                }
-            } else if (HorizonsTabs.ENGINEERS.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.commoditiesSearchBar) || this.getChildren().contains(this.horizonsWishlistSearchBar)) {
-                    this.getChildren().remove(this.materialSearchBar);
-                    this.getChildren().remove(this.commoditiesSearchBar);
-                    this.getChildren().remove(this.horizonsWishlistSearchBar);
-                    this.getChildren().add(this.horizonsEngineerSearchBar);
-                }
-            } else {
-                if (this.getChildren().contains(this.horizonsWishlistSearchBar) || this.getChildren().contains(this.commoditiesSearchBar) || this.getChildren().contains(this.horizonsEngineerSearchBar)) {
-                    this.getChildren().remove(this.horizonsWishlistSearchBar);
-                    this.getChildren().remove(this.commoditiesSearchBar);
-                    this.getChildren().remove(this.horizonsEngineerSearchBar);
-                    this.getChildren().add(this.materialSearchBar);
-                }
-            }
-        }));
+        this.eventListeners.add(EventService.addListener(true, this, HorizonsTabSelectedEvent.class, event -> switchTab(event.getSelectedTab())));
+    }
+
+    private void switchTab(HorizonsTabs selectedTab) {
+        this.getChildren().removeAll(this.materialSearchBar, this.commoditiesSearchBar, this.horizonsWishlistSearchBar, this.horizonsEngineerSearchBar, this.powerplaySearchBar);
+        if (HorizonsTabs.COMMODITIES.equals(selectedTab)) {
+            this.getChildren().add(this.commoditiesSearchBar);
+        } else if (HorizonsTabs.WISHLIST.equals(selectedTab)) {
+            this.getChildren().add(this.horizonsWishlistSearchBar);
+        } else if (HorizonsTabs.ENGINEERS.equals(selectedTab)) {
+            this.getChildren().add(this.horizonsEngineerSearchBar);
+        } else if (HorizonsTabs.POWERPLAY.equals(selectedTab)) {
+            this.getChildren().add(this.powerplaySearchBar);
+        } else {
+            this.getChildren().add(this.materialSearchBar);
+        }
     }
 
     private boolean isRecipeBarVisible() {

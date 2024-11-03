@@ -20,6 +20,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCo
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineersTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.menu.HorizonsBlueprintBar;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay.PowerplayTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.HorizonsShipBuilderTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistTab;
 
@@ -37,6 +38,7 @@ class HorizonsContentArea extends AnchorPane {
     private TabPane tabs;
     private VBox body;
     private HorizonsEngineersTab horizonsEngineersTab;
+    private PowerplayTab powerplayTab;
     private HorizonsWishlistTab horizonsWishlistTab;
     private HorizonsShipBuilderTab horizonsShipBuilderTab;
     private HorizonsCommoditiesOverviewTab horizonsCommoditiesOverview;
@@ -56,6 +58,8 @@ class HorizonsContentArea extends AnchorPane {
 
         this.horizonsEngineersTab = new HorizonsEngineersTab();
         this.horizonsEngineersTab.setClosable(false);
+        this.powerplayTab = new PowerplayTab();
+        this.powerplayTab.setClosable(false);
         this.horizonsWishlistTab = new HorizonsWishlistTab(application);
         this.horizonsWishlistTab.setClosable(false);
         this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
@@ -64,7 +68,7 @@ class HorizonsContentArea extends AnchorPane {
 //        this.hgeFinderTab.setClosable(false);
 
         this.searchBar = new HorizonsSearchBar();
-        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab,/* this.hgeFinderTab,*/ this.horizonsEngineersTab);
+        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab,/* this.hgeFinderTab,*/ this.horizonsEngineersTab, this.powerplayTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

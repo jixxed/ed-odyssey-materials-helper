@@ -6,6 +6,7 @@ import io.sentry.protocol.OperatingSystem;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.service.SupportService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 
@@ -16,9 +17,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @Slf4j
 public class Main {
+    static {
+        final List<List<? extends ShipModule>> modules = ShipModule.ALL_MODULES;
+    }
+
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
 

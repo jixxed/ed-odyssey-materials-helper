@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
@@ -26,14 +27,12 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class EngineerCard extends VBox {
-    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     protected static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     protected static final Function<BlueprintName, HBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
             .withNodes(LabelBuilder.builder()
@@ -48,10 +47,6 @@ public class EngineerCard extends VBox {
                             .build()).buildHBox();
     protected static final String ENGINEER_CATEGORY_STYLE_CLASS = "engineer-category";
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
-
-    static {
-        NUMBER_FORMAT.setMaximumFractionDigits(2);
-    }
 
     @Getter
     protected final Engineer engineer;
@@ -75,7 +70,7 @@ public class EngineerCard extends VBox {
 
     private void initEventHandling(final Engineer engineer) {
         this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent ->
-                this.engineerDistance.setText("(" + NUMBER_FORMAT.format(
+                this.engineerDistance.setText("(" + Formatters.NUMBER_FORMAT_2.format(
                         engineer.getDistance(
                                 locationChangedEvent.getCurrentStarSystem().getX(),
                                 locationChangedEvent.getCurrentStarSystem().getY(),
@@ -123,7 +118,7 @@ public class EngineerCard extends VBox {
                 .withStyleClass("engineer-location")
                 .withNonLocalizedText(this.engineer.getSettlement().getSettlementName() + " | " + this.engineer.getStarSystem().getName())
                 .build();
-        String distance = "(" + NUMBER_FORMAT.format(
+        String distance = "(" + Formatters.NUMBER_FORMAT_2.format(
                 engineer.getDistance(
                         LocationService.getCurrentStarSystem().getX(),
                         LocationService.getCurrentStarSystem().getY(),

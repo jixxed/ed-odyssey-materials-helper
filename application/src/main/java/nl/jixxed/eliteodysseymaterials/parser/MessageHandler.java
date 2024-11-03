@@ -106,6 +106,7 @@ class MessageHandler {
             Map.entry(JournalEventType.MARKETSELL, new MarketSellMessageProcessor()),
             Map.entry(JournalEventType.SHUTDOWN, new ShutdownMessageProcessor()),
             Map.entry(JournalEventType.STARTJUMP, new StartJumpMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAY, new PowerplayMessageProcessor()),
             Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),
             Map.entry(JournalEventType.DELIVERPOWERMICRORESOURCES, new DeliverPowerMicroResourcesMessageProcessor()),
 
