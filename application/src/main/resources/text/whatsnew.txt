@@ -1,3 +1,11 @@
+Version 2.118
+-------------
+Added powerplay tab
+- Track your powerplay progression towards unlocks
+- See what other powers have to offer
+- Required event is only written at startup, so requires a relog to update
+- Not entirely confident about the source data for the unlocking ranks, so do report any errors you find
+
 Version 2.117
 -------------
 Cleanup material reporting for powerplay materials
