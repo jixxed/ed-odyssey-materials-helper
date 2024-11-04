@@ -4195,11 +4195,14 @@
     -fx-max-width: 3em;
 }
 .power-category-explain{
-    /*-fx-text-fill: white;*/
-    -fx-text-fill: #0078d6;
-    /*-fx-font-style: italic;*/
-    -fx-label-padding: 0.3em;
-    -fx-wrap-text: true;
+    -fx-padding: 0.3em;
+    /*-fx-wrap-text: true;*/
+}
+.power-category-explain > Text{
+    -fx-fill: #0078d6;
+}
+.power-category-explain-highlight {
+    -fx-fill: white;
 }
 .power-category-ranks{
     -fx-text-fill: white;

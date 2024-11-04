@@ -132,7 +132,7 @@ public class LocaleService {
         return ObservableResourceFactory.getListBinding(supplier);
     }
 
-    private static Object localizeParameter(final Object parameter) {
+    public static Object localizeParameter(final Object parameter) {
         if (parameter instanceof LocalizationKey localizationKey) {
             return ObservableResourceFactory.getResources().getString(localizationKey.getKey());
         } else if (parameter instanceof OdysseyMaterial odysseyMaterial) {

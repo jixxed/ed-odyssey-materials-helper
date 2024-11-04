@@ -5,7 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextFlow;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.builder.HighlightTextFlowBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.Power;
@@ -55,9 +57,14 @@ public class PowerplayPerk extends VBox implements Template {
                 .withStyleClass("power-category")
                 .withText(LocaleService.getStringBinding(this.perk.getLocalizationTitleKey()))
                 .build();
-        Label subtitle = LabelBuilder.builder()
+//        Label subtitle = LabelBuilder.builder()
+//                .withStyleClass("power-category-explain")
+//                .withText(LocaleService.getStringBinding(this.perk.getLocalizationKey(), this.rewards.getLast().reward(), this.rewards.stream().map(RankReward::rank).map(String::valueOf).collect(Collectors.joining(", "))))
+//                .build();
+        TextFlow subtitle = HighlightTextFlowBuilder.builder()
                 .withStyleClass("power-category-explain")
-                .withText(LocaleService.getStringBinding(this.perk.getLocalizationKey(), this.rewards.getLast().reward(), this.rewards.stream().map(RankReward::rank).map(String::valueOf).collect(Collectors.joining(", "))))
+                .withHighlightStyleClass("power-category-explain-highlight")
+                .withText(this.perk.getLocalizationKey(), this.rewards.getLast().reward() + "%", this.rewards.stream().map(RankReward::rank).map(String::valueOf).collect(Collectors.joining(", ")))
                 .build();
         final Integer reward = this.rewards.stream().filter(rankReward -> rankReward.rank() <= 55).max(Comparator.comparing(RankReward::rank)).map(RankReward::reward).orElse(0);
         currentProgress = LabelBuilder.builder()
