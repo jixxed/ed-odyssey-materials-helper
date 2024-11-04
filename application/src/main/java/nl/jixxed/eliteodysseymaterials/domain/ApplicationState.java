@@ -159,7 +159,7 @@ public class ApplicationState {
 
     public boolean isEngineerInvited(final Engineer engineer) {
         final EngineerState engineerState = this.engineerStates.get(engineer).getEngineerState();
-        return EngineerState.INVITED.equals(engineerState);
+        return EngineerState.INVITED.equals(engineerState) || EngineerState.UNLOCKED.equals(engineerState);
     }
 
     public boolean isEngineerUnlockedExact(final Engineer engineer) {

@@ -58,17 +58,17 @@ class HorizonsEngineerCard extends EngineerCard {
 
     HorizonsEngineerCard(final Engineer engineer) {
         super(engineer);
-        if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
-            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
-        } else {
-            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
-        }
         initComponents();
         initEventHandling(engineer);
     }
 
 
     private void initComponents() {
+        if (APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
+            this.image.setImage(ImageService.getImage("/images/engineer/" + engineer.name().toLowerCase() + ".jpg"));
+        } else {
+            this.image.setImage(ImageService.getImage("/images/engineer/locked.png"));
+        }
         this.pinnedBlueprintTitle = getPinnedBlueprintTitle();
         this.hardpointTitle = getHardpointTitle();
         this.utilityMountTitle = getUtilityMountTitle();
@@ -117,8 +117,10 @@ class HorizonsEngineerCard extends EngineerCard {
             this.getChildren().addAll(new Separator(Orientation.HORIZONTAL), this.optionalInternalTitle);
             this.getChildren().addAll(this.optionalInternalBlueprintLabels);
         }
-        this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
-        this.getChildren().addAll(this.unlockRequirementsLabels);
+        if (!APPLICATION_STATE.isEngineerUnlockedExact(engineer)) {
+            this.getChildren().addAll(this.unlockSeparator, this.unlockRequirementsTitle);
+            this.getChildren().addAll(this.unlockRequirementsLabels);
+        }
         this.getStyleClass().add("engineer-card");
     }
 
