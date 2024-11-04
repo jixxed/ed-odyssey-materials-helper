@@ -1016,7 +1016,7 @@ public enum Power {
     ALL(
             Map.of(
                     PowerPerk.RANK_DECAL, List.of(
-                            new RankReward(1, 1)
+                            new RankReward(1, 100)
                     ),
                     PowerPerk.REDUCED_REBUY_BY_OPPOSING_POWER, List.of(
                             new RankReward(11, -33),
