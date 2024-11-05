@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum NotificationType {
     IRRELEVANT_PICKUP(true),
+    POWERPLAY_PICKUP(false),
     WISHLIST_PICKUP(false),
+    SHIP_WISHLIST_PICKUP(false),
     RELEVANT_POINT(true),
     WISHLIST_POINT(true),
     IRRELEVANT_POINT(true),
@@ -17,7 +19,6 @@ public enum NotificationType {
     COPY(true),
     ERROR(true),
     SUCCESS(true);
-
     private final boolean defaultEnabled;
 
 }

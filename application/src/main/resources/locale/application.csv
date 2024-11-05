@@ -130,3 +130,6 @@ search.filter.textiles,Textiles,Textiles,Textilien,Textiles,Textiles,Têxteis,Т
 search.filter.waste,Waste,Waste,Abfall,Residuos,Gaspillage,Desperdício,Напрасно тратить
 search.filter.weapons,Weapons,Weapons,Waffen,Arma,Armes,Armas,Оружие
 search.filter.powerplay,Powerplay,,,,,,
+notification.collected.wishlist.material.notification,{0}: {1},,,,,,
+notification.type.powerplay_pickup,Powerplay Pickup,,,,,,
+notification.type.ship_wishlist_pickup,Ship Wishlist Pickup,,,,,,

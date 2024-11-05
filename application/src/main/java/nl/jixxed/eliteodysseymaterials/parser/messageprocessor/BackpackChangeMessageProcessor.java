@@ -66,7 +66,13 @@ public class BackpackChangeMessageProcessor implements MessageProcessor<Backpack
                         .filter(Objects::nonNull)
                         .filter(pair -> !(pair.getKey() instanceof Consumable))
                         .forEach(pair -> {
-                            if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(pair.getKey()))
+                            if (pair.getKey().isPowerplay()) {
+                                NotificationService.showInformation(NotificationType.POWERPLAY_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.powerplay.material.title"),
+                                        LocaleService.getLocalizedStringForCurrentLocale("notification.collected.powerplay.material.notification",
+                                                LocaleService.LocalizationKey.of(pair.getKey().getLocalizationKey()),
+                                                StorageService.getMaterialStorage(pair.getKey()).getTotalValue() + pair.getValue())
+                                );
+                            } else if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(pair.getKey()))
                                     || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(pair.getKey()))) {
                                 NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(pair.getKey().getLocalizationKey()));
                             } else if (WishlistService.isMaterialOnWishlist(pair.getKey())) {
