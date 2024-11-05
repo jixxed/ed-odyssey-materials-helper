@@ -6,8 +6,9 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Added powerplay tab
-- Track your powerplay progression towards unlocks
-- See what other powers have to offer
-- Required event is only written at startup, so requires a relog to update
-- Not entirely confident about the source data for the unlocking ranks, so do report any errors you find
+Fix unlock prerequisites on Ship Engineer card showing as incomplete
+Add value highlighting to power perks
+Set Pranav Antal Exobio to 30% (was 50%)
+Show rank decal as un(locked) instead of percentage
+Add control for ship wishlist material notifications
+Add control for powerplay material notifications

@@ -1,3 +1,12 @@
+Version 2.119
+-------------
+Fix unlock prerequisites on Ship Engineer card showing as incomplete
+Add value highlighting to power perks
+Set Pranav Antal Exobio to 30% (was 50%)
+Show rank decal as un(locked) instead of percentage
+Add control for ship wishlist material notifications
+Add control for powerplay material notifications
+
 Version 2.118
 -------------
 Added powerplay tab
