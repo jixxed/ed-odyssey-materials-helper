@@ -89,7 +89,7 @@ public class PowerplayCard extends VBox {
         this.getChildren().remove(rankAndMeritsBox);
         if (this.power.equals(power)) {
             rankLabel.textProperty().bind(LocaleService.getStringBinding("tab.powerplay.rank", this.rank));
-            meritsLabel.textProperty().bind(LocaleService.getStringBinding("tab.powerplay.merits", this.merits, this.power.getNextRankMerits(this.rank + 1)));
+            meritsLabel.textProperty().bind(LocaleService.getStringBinding("tab.powerplay.merits", this.merits, Power.getMeritsRequiredForRank(this.rank + 1)));
             this.getChildren().add(3, rankAndMeritsBox);
         }
     }
@@ -103,7 +103,7 @@ public class PowerplayCard extends VBox {
                 .build();
         meritsLabel = LabelBuilder.builder()
                 .withStyleClass("power-current-merits")
-                .withText(LocaleService.getStringBinding("tab.powerplay.merits", ApplicationState.getInstance().getPowerMerits(), this.power.getNextRankMerits(ApplicationState.getInstance().getPowerRank() + 1)))
+                .withText(LocaleService.getStringBinding("tab.powerplay.merits", ApplicationState.getInstance().getPowerMerits(), Power.getMeritsRequiredForRank(ApplicationState.getInstance().getPowerRank() + 1)))
                 .build();
         rankAndMeritsBox = BoxBuilder.builder().withNodes(rankLabel, new GrowingRegion(), meritsLabel).buildHBox();
         this.getChildren().addAll(

@@ -55,6 +55,7 @@ public enum Power {
                     Map.entry(PulseLaser.PULSE_DISRUPTOR_LASER_2_E_F, 91),
                     Map.entry(Cannon.CONCORD_CANNON_2_D_G, 97)
             ),
+            Allegiance.EMPIRE,
             new StarSystem("Synteini", 51.78, -76.41, 28.72)
     ),
 
@@ -105,6 +106,7 @@ public enum Power {
                     Map.entry(MiningLaser.MINING_LANCE_BEAM_LASER_1_D_F, 91),
                     Map.entry(BurstLaser.CYTOSCRAMBLER_BURST_LASER_1_F_F, 97)
             ),
+            Allegiance.FEDERATION,
             new StarSystem("Rhea", 58.13, 22.59, -28.59)
     ),
 
@@ -156,6 +158,7 @@ public enum Power {
                     Map.entry(FragmentCannon.PACIFIER_FRAG_CANNON_3_C_F, 91),
                     Map.entry(PlasmaAccelerator.ADVANCED_PLASMA_ACCELERATOR_3_B_F, 97)
             ),
+            Allegiance.INDEPENDENT,
             new StarSystem("Lembava", -43.25, -64.34, -77.69)
     ),
     ARCHON_DELAINE(
@@ -200,6 +203,7 @@ public enum Power {
                     Map.entry(RailGun.IMPERIAL_HAMMER_RAIL_GUN_2_B_F, 91),
                     Map.entry(BeamLaser.RETRIBUTOR_BEAM_LASER_1_E_F, 97)
             ),
+            Allegiance.INDEPENDENT,
             new StarSystem("Harma", -99.25, -100.97, 20.41)
     ),
     NAKATO_KAINE(
@@ -250,6 +254,7 @@ public enum Power {
                     Map.entry(MiningLaser.MINING_LANCE_BEAM_LASER_1_D_F, 97)
 
             ),
+            Allegiance.ALLIANCE,
             new StarSystem("Tionisla", 82.25, 48.75, 68.16)
     ),
     JEROME_ARCHER(
@@ -296,6 +301,7 @@ public enum Power {
                     Map.entry(BeamLaser.RETRIBUTOR_BEAM_LASER_1_E_F, 91),
                     Map.entry(MiningLaser.MINING_LANCE_BEAM_LASER_1_D_F, 97)
             ),
+            Allegiance.FEDERATION,
             new StarSystem("Nanomam", -14.78, 19.66, -15.25)
     ),
     DENTON_PATREUS(
@@ -344,6 +350,7 @@ public enum Power {
                     Map.entry(PulseLaser.PULSE_DISRUPTOR_LASER_2_E_F, 91),
                     Map.entry(BurstLaser.CYTOSCRAMBLER_BURST_LASER_1_F_F, 97)
             ),
+            Allegiance.EMPIRE,
             new StarSystem("Eotienses", 49.5, -104.03, 6.31)
     ),
     PRANAV_ANTAL(
@@ -392,6 +399,7 @@ public enum Power {
                     Map.entry(PlasmaAccelerator.ADVANCED_PLASMA_ACCELERATOR_3_B_F, 97)
 
             ),
+            Allegiance.INDEPENDENT,
             new StarSystem("Polevnic", -79.91, -87.47, -33.53)
     ),
     YURI_GROM(
@@ -454,6 +462,7 @@ public enum Power {
                     Map.entry(BurstLaser.CYTOSCRAMBLER_BURST_LASER_1_F_F, 97)
 
             ),
+            Allegiance.INDEPENDENT,
             new StarSystem("Euryale", 35.38, -68.97, 24.81)
     ),
     A_LAVIGNY_DUVAL(
@@ -500,6 +509,7 @@ public enum Power {
                     Map.entry(FragmentCannon.PACIFIER_FRAG_CANNON_3_C_F, 97)
 
             ),
+            Allegiance.EMPIRE,
             new StarSystem("Kamadhenu", 110.0, -99.97, -13.38)
     ),
     AISLING_DUVAL(
@@ -546,6 +556,7 @@ public enum Power {
                     Map.entry(BurstLaser.CYTOSCRAMBLER_BURST_LASER_1_F_F, 97)
 
             ),
+            Allegiance.EMPIRE,
             new StarSystem("Cubeo", 128.28, -155.63, 84.22)
     ),
     EDMUND_MAHON(
@@ -594,11 +605,13 @@ public enum Power {
                     Map.entry(BurstLaser.CYTOSCRAMBLER_BURST_LASER_1_F_F, 97)
 
             ),
+            Allegiance.ALLIANCE,
             new StarSystem("Gateway", -11.0, 77.84, -0.88)
     ),
     NONE(
             Map.of(),
             Map.of(),
+            Allegiance.NONE,
             new StarSystem("Sol", 0.0, 0.0, 0.0)
     ),
     ALL(
@@ -620,16 +633,19 @@ public enum Power {
                     )
             ),
             Map.of(),
+            Allegiance.NONE,
             new StarSystem("Sol", 0.0, 0.0, 0.0)
     );
 
     private final Map<PowerPerk, List<RankReward>> perks;
     private final Map<ShipModule, Integer> unlockables;
+    private final Allegiance allegiance;
     private final StarSystem starSystem;
 
-    Power(Map<PowerPerk, List<RankReward>> perks, Map<ShipModule, Integer> unlockables, StarSystem starSystem) {
+    Power(Map<PowerPerk, List<RankReward>> perks, Map<ShipModule, Integer> unlockables, Allegiance allegiance, StarSystem starSystem) {
         this.perks = perks;
         this.unlockables = unlockables;
+        this.allegiance = allegiance;
         this.starSystem = starSystem;
     }
 
@@ -679,22 +695,22 @@ public enum Power {
         return getDistance(starSystem.getX(), starSystem.getY(), starSystem.getZ());
     }
 
-    public Object getNextRankMerits(Long rank) {
+    @SuppressWarnings("java:S128")
+    public static int getMeritsRequiredForRank(Long rank) {
         int requiredMerits = 0;
-        if(rank >= 2L){
-            requiredMerits += 2000;
-        }
-        if(rank >= 3L){
-            requiredMerits += 3000;
-        }
-        if(rank >= 4L){
-            requiredMerits += 4000;
-        }
-        if(rank >= 5L){
-            requiredMerits += 6000;
-        }
-        if(rank >= 6L){
-            requiredMerits = requiredMerits + ( 6000 * (rank.intValue() - 5));
+        switch (Math.min(rank.intValue(), 6)) {
+            case 6:
+                requiredMerits += 8000 * (rank.intValue() - 5);
+            case 5:
+                requiredMerits += 6000;
+            case 4:
+                requiredMerits += 4000;
+            case 3:
+                requiredMerits += 3000;
+            case 2:
+                requiredMerits += 2000;
+                break;
+            default:
         }
         return requiredMerits;
     }
