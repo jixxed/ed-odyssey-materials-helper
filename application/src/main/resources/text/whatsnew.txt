@@ -1,3 +1,7 @@
+Version 2.120
+-------------
+Bugfix for powerplay/wishlist notification
+
 Version 2.119
 -------------
 Fix unlock prerequisites on Ship Engineer card showing as incomplete
