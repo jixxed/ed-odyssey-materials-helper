@@ -1,3 +1,7 @@
+Version 2.121
+-------------
+Fix power rank/merit calculation
+
 Version 2.120
 -------------
 Bugfix for powerplay/wishlist notification
