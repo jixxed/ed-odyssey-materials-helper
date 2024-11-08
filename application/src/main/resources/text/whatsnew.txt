@@ -1,3 +1,9 @@
+Version 2.122
+-------------
+Update Concord Cannon stats and engineering
+Add Boost interval stat to ships
+- Highlight recharge in green when boost is infinite
+
 Version 2.121
 -------------
 Fix power rank/merit calculation
