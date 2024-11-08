@@ -198,32 +198,33 @@ public enum HorizonsModifier {
     FIGHTER_PITCH_RATE(811, "FighterPitchRate"),
     FIGHTER_ROLL_RATE(812, "FighterRollRate"),
     FIGHTER_YAW_RATE(813, "FighterYawRate"),
-    CREW(1001, ""),//ship
-    TOP_SPEED(1002, ""),//ship
-    BOOST_SPEED(1003, ""),//ship
-    MINIMUM_THRUST(1004, ""),//ship
-    BOOST_COST(1005, false, ""),//ship
-    MANOEUVRABILITY(1006, ""),//ship
-    MIN_PITCH_SPEED(1007, ""),//ship
-    PITCH_SPEED(1008, ""),//ship
-    YAW_SPEED(1009, ""),//ship
-    ROLL_SPEED(1010, ""),//ship
-    SHIELDS(1011, ""),//ship
-    ARMOUR(1012, ""),//ship
-    ARMOUR_HARDNESS(1013, ""),//ship
-    HEAT_CAPACITY(1014, ""),//ship
-    HEAT_DISSIPATION_MIN(1015, ""),//ship
-    HEAT_DISSIPATION_MAX(1016, ""),//ship
-    MASS_LOCK(1017, false, ""),//ship
-    FUEL_COST(1018, false, ""),//ship
-    FUEL_RESERVE(1019, ""),//ship
+    CREW(1010, ""),//ship
+    TOP_SPEED(1020, ""),//ship
+    BOOST_SPEED(1030, ""),//ship
+    MINIMUM_THRUST(1040, ""),//ship
+    BOOST_COST(1050, false, ""),//ship
+    BOOST_INTERVAL(1055, ""),
+    MANOEUVRABILITY(1060, ""),//ship
+    MIN_PITCH_SPEED(1070, ""),//ship
+    PITCH_SPEED(1080, ""),//ship
+    YAW_SPEED(1090, ""),//ship
+    ROLL_SPEED(1100, ""),//ship
+    SHIELDS(1110, ""),//ship
+    ARMOUR(1120, ""),//ship
+    ARMOUR_HARDNESS(1130, ""),//ship
+    HEAT_CAPACITY(1140, ""),//ship
+    HEAT_DISSIPATION_MIN(1150, ""),//ship
+    HEAT_DISSIPATION_MAX(1160, ""),//ship
+    MASS_LOCK(1170, false, ""),//ship
+    FUEL_COST(1180, false, ""),//ship
+    FUEL_RESERVE(1190, ""),//ship
     FUEL_EFFICIENCY(2000, ""),//synthesis
-    HEAT_DISSIPATION(2001, ""),//synthesis
-    HULL_STRENGTH(2002, ""),//synthesis
-    JUMP_RANGE(2003, ""),//synthesis
-    LIMPETS(2004, ""),//synthesis
-    REFILL(2005, ""),//synthesis
-    DAMAGE_BOOST(2006, ""),//synthesis
+    HEAT_DISSIPATION(2010, ""),//synthesis
+    HULL_STRENGTH(2020, ""),//synthesis
+    JUMP_RANGE(2030, ""),//synthesis
+    LIMPETS(2040, ""),//synthesis
+    REFILL(2050, ""),//synthesis
+    DAMAGE_BOOST(2060, ""),//synthesis
     BOOST_AUGMENTER_POWER_USE(8000, false, "BoostAugmenterPowerUse"),//todo remove?
     BOOST_SPEED_MULTIPLIER(8000, "BoostSpeedMultiplier"),//todo remove?
     LISTED_POWER_DRAW(9999, false, ""),

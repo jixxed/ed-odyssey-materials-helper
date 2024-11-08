@@ -68,6 +68,7 @@ public class ShipSelectView extends VBox implements Template {
             values.put("ship.view.header.jumprange", () -> new FormattedDouble(calculateJumpRangeMax(ship), Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL));
             values.put("ship.view.header.speed", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.TOP_SPEED)));
             values.put("ship.view.header.boost", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.BOOST_SPEED)));
+            values.put("ship.view.header.boostinterval", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.BOOST_INTERVAL), Formatters.NUMBER_FORMAT_1));
             values.put("ship.view.header.shield", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.SHIELDS)));
             values.put("ship.view.header.armor", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.ARMOUR)));
             values.put("ship.view.header.hardness", () -> new FormattedDouble((Double) ship.getAttributes().get(HorizonsModifier.ARMOUR_HARDNESS)));

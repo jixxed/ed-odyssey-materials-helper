@@ -18,13 +18,14 @@ import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RangeIndicator extends VBox {
+public class RechargeRangeIndicator extends VBox {
     protected final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private Pane lines;
     private HBox values;
     private Line bar;
     private Line start;
+    private Line recharge;
     private Line end;
     private Line current;
     private Label startValueLabel;
@@ -34,13 +35,15 @@ public class RangeIndicator extends VBox {
     private double startValue;
     private double endValue;
     private double currentValue;
+    private double rechargeValue;
 
     private String currentValueLocalizationKey;
 
-    public RangeIndicator(double startValue, double endValue, double currentValue, String title, String currentValueLocalizationKey) {
+    public RechargeRangeIndicator(double startValue, double endValue, double currentValue, double rechargeValue, String title, String currentValueLocalizationKey) {
         this.startValue = startValue;
         this.endValue = endValue;
         this.currentValue = currentValue;
+        this.rechargeValue = rechargeValue;
         this.currentValueLocalizationKey = currentValueLocalizationKey;
         this.startValueLabel = LabelBuilder.builder().build();
         this.endValueLabel = LabelBuilder.builder().build();
@@ -50,12 +53,14 @@ public class RangeIndicator extends VBox {
         bar = new Line(0, 0, 0, 0);
         start = new Line(0, 0, 0, 0);
         end = new Line(0, 0, 0, 0);
+        recharge = new Line(0, 0, 0, 0);
         current = new Line(0, 0, 0, 0);
         bar.getStyleClass().add("range-indicator-line");
         start.getStyleClass().add("range-indicator-line");
+        recharge.getStyleClass().add("range-indicator-line");
         end.getStyleClass().add("range-indicator-line");
         current.getStyleClass().addAll("range-indicator-line", "range-indicator-line-current");
-        lines = new Pane(bar, start, end, current);
+        lines = new Pane(bar, start, end, recharge, current);
         this.getStyleClass().add("range-indicator");
         update();
         this.getChildren().addAll(this.titleLabel, lines, values);
@@ -68,10 +73,12 @@ public class RangeIndicator extends VBox {
         }));
     }
 
-    public void updateValues(double startValue, double currentValue, double endValue) {
+    public void updateValues(double startValue, double currentValue, double endValue, double rechargeValue) {
         this.startValue = startValue;
         this.endValue = endValue;
         this.currentValue = currentValue;
+        this.rechargeValue = rechargeValue;
+
         update();
     }
 
@@ -91,6 +98,16 @@ public class RangeIndicator extends VBox {
         end.setEndX(sliderWidth);
         end.setStartX(sliderWidth);
         end.setEndY(sliderHeight / 2);
+        double interval = (Double.isNaN(rechargeValue) || endValue == 0d) ? 0D : (rechargeValue - startValue) / (endValue - startValue);
+        if(rechargeValue >= startValue) {
+            recharge.setEndX(sliderWidth * interval);
+            recharge.setStartX(sliderWidth * interval);
+            recharge.setEndY(sliderHeight / 2);
+        }else{
+            recharge.setEndX(0);
+            recharge.setStartX(0);
+            recharge.setEndY(0);
+        }
         if (Double.isFinite(currentValue) && Double.isFinite(endValue) && Double.isFinite(startValue) && !(currentValue <= startValue) && !(currentValue >= endValue)) {
             double progress = (Double.isNaN(currentValue) || endValue == 0d) ? 0D : (currentValue - startValue) / (endValue - startValue);
             current.setStartX(sliderWidth * progress);
@@ -112,6 +129,12 @@ public class RangeIndicator extends VBox {
             current.setStartX(end.getEndX());
             current.setEndX(end.getEndX());
             current.setEndY(sliderHeight);
+        }
+        this.currentValueLabel.getStyleClass().remove("range-indicator-current-green");
+        this.current.getStyleClass().remove("range-indicator-line-current-green");
+        if(!Double.isNaN(rechargeValue) && currentValue <= rechargeValue){
+            this.currentValueLabel.getStyleClass().add("range-indicator-current-green");
+            this.current.getStyleClass().add("range-indicator-line-current-green");
         }
     }
 }

@@ -2945,6 +2945,12 @@
     -fx-pref-width: 4em;
 }
 
+.ship-view-header-boostinterval {
+    -fx-min-width: 7em;
+    -fx-max-width: 7em;
+    -fx-pref-width: 7em;
+}
+
 .ship-view-header-shield {
     -fx-min-width: 4em;
     -fx-max-width: 4em;
@@ -3316,8 +3322,14 @@
     -fx-stroke: #2e92df;
     -fx-stroke-width: 0.2em;
 }
+.range-indicator-line-current-green{
+    -fx-stroke: #89d07f;
+}
 .range-indicator-current{
     -fx-text-fill: #2e92df;
+}
+.range-indicator-current-green{
+    -fx-text-fill: #89d07f;
 }
 .range-indicator-values{
     -fx-min-width: 15em;

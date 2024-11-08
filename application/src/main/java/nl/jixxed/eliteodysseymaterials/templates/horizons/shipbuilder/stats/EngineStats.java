@@ -18,10 +18,9 @@ import java.util.Optional;
 
 @Slf4j
 public class EngineStats extends Stats implements Template {
-    private static final double BOOST_MARGIN = 0.005;
     private RangeIndicator speedIndicator;
     private RangeIndicator boostIndicator;
-    private RangeIndicator rechargeIndicator;
+    private RechargeRangeIndicator rechargeIndicator;
 
     public EngineStats() {
         super();
@@ -33,7 +32,7 @@ public class EngineStats extends Stats implements Template {
     public void initComponents() {
         speedIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.speed", "ship.stats.engine.speed.value");
         boostIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.boost", "ship.stats.engine.boost.value");
-        rechargeIndicator = new RangeIndicator(0D,0D,0D, "ship.stats.engine.recharge", "ship.stats.engine.recharge.value");
+        rechargeIndicator = new RechargeRangeIndicator(0D,0D,0D, 0D, "ship.stats.engine.recharge", "ship.stats.engine.recharge.value");
 
         this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.engine"), new GrowingRegion()).buildHBox());
         this.getChildren().add(new Separator(Orientation.HORIZONTAL));
@@ -108,13 +107,14 @@ public class EngineStats extends Stats implements Template {
             final Double maximumMultiplier = getMaximumMultiplier(thrusters);
             final Double topSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.TOP_SPEED, 0.0D);
             final Double boostSpeed = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_SPEED, 0.0D);
+            final Double boostInterval = (Double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_INTERVAL, 0.0D);
             final ModuleProfile moduleProfile = new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumMultiplier, optimalMultiplier, maximumMultiplier);
 
             final double multiplier = ApplicationState.getInstance().getEnginePips() / 8.0;
             final double engineCapacity = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINES_CAPACITY)).orElse(0D);
             final double engineRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.ENGINES_RECHARGE)).orElse(0D);
             final double boostCost = (double) ship.getAttributes().getOrDefault(HorizonsModifier.BOOST_COST, 0D);
-            final boolean engineCapacityEnough = engineCapacity > boostCost + BOOST_MARGIN;
+            final boolean engineCapacityEnough = engineCapacity > boostCost;
 
             var currentSpeed = calculateCurrentSpeed(ship, topSpeed , moduleProfile, multiplier);
             var currentBoost = engineCapacityEnough ? calculateCurrentSpeed(ship, boostSpeed, moduleProfile, multiplier) : Double.NaN;
@@ -130,7 +130,7 @@ public class EngineStats extends Stats implements Template {
 
             this.speedIndicator.updateValues(minSpeed, currentSpeed, maxSpeed);
             this.boostIndicator.updateValues(minBoost, currentBoost, maxBoost);
-            this.rechargeIndicator.updateValues(minRecharge, currentRecharge, maxRecharge);
+            this.rechargeIndicator.updateValues(minRecharge, currentRecharge, maxRecharge, boostInterval);
         });
     }
 
