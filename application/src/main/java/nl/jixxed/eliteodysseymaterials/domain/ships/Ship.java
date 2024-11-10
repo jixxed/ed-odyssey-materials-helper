@@ -2624,7 +2624,7 @@ public class Ship {
 //                    Map.entry(HorizonsModifier.REVACC,25.94),
 //                    Map.entry(HorizonsModifier.LATACC,20.09),
                         Map.entry(HorizonsModifier.MINIMUM_THRUST, 85.85),
-                        Map.entry(HorizonsModifier.BOOST_INTERVAL, 4.5),
+                        Map.entry(HorizonsModifier.BOOST_INTERVAL, 5.0),
                         Map.entry(HorizonsModifier.BOOST_COST, 20.0),
                         Map.entry(HorizonsModifier.PITCH_SPEED, 37.01),
                         Map.entry(HorizonsModifier.YAW_SPEED, 12.51),
