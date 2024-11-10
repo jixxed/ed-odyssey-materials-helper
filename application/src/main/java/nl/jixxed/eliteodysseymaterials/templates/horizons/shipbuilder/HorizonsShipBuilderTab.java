@@ -34,6 +34,8 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     @Getter
     private StatsLayer statsLayer;
     @Getter
+    private StatsBGLayer statsBGLayer;
+    @Getter
     private ModulesLayer modulesLayer;
     @Getter
     private DetailsLayer detailsLayer;
@@ -64,20 +66,23 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
                 .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
         controlsLayer = new ControlsLayer();
         statsLayer = new StatsLayer();
+        statsBGLayer = new StatsBGLayer(statsLayer);
         detailsLayer = new DetailsLayer();
         modulesLayer = new ModulesLayer(this);
         shipSelectionLayer = new ShipSelectionLayer(this);
         noShipLayer = new NoShipLayer();
         controlsLayer.setVisible(false);
         statsLayer.setVisible(false);
+        statsBGLayer.setVisible(false);
         modulesLayer.setVisible(false);
         detailsLayer.setVisible(false);
         shipSelectionLayer.setVisible(false);
         noShipLayer.setVisible(false);
         controlsLayer.setPickOnBounds(false);
         statsLayer.setPickOnBounds(false);
+        statsBGLayer.setPickOnBounds(false);
         detailsLayer.setPickOnBounds(false);
-        final StackPane stackPane = new StackPane(noShipLayer, shipSelectionLayer, modulesLayer, controlsLayer, detailsLayer, statsLayer);
+        final StackPane stackPane = new StackPane(noShipLayer, shipSelectionLayer, modulesLayer, statsBGLayer, controlsLayer, detailsLayer, statsLayer);
         stackPane.getStyleClass().add(SHIP_CONTENT_STYLE_CLASS);
         this.setContent(stackPane);
         refreshContent();
@@ -115,6 +120,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     private void showNoShip() {
         controlsLayer.setVisible(true);
         statsLayer.setVisible(false);
+        statsBGLayer.setVisible(false);
         modulesLayer.setVisible(false);
         detailsLayer.setVisible(false);
         shipSelectionLayer.setVisible(false);
@@ -124,6 +130,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     private void showShip() {
         controlsLayer.setVisible(true);
         statsLayer.setVisible(true);
+        statsBGLayer.setVisible(true);
         modulesLayer.setVisible(true);
         detailsLayer.setVisible(true);
         shipSelectionLayer.setVisible(false);
@@ -134,6 +141,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     private void showShipSelect() {
         controlsLayer.setVisible(true);
         statsLayer.setVisible(false);
+        statsBGLayer.setVisible(false);
         modulesLayer.setVisible(false);
         detailsLayer.setVisible(false);
         shipSelectionLayer.setVisible(true);

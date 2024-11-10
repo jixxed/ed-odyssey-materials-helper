@@ -3488,10 +3488,16 @@
 .shipbuilder-stats-box{
     /*-fx-min-height: 20em;*/
     /*-fx-max-height: 20em;*/
-    -fx-background-color: #0f0f0f;
+    /*-fx-background-color: #0f0f0f;*/
     -fx-background-insets: 0em 1.3em 0em 0em;
     -fx-padding: 0em 1.3em 0em 0em;
-
+}
+.shipbuilder-stats-layer-bg{
+    -fx-background-insets: 0em 1.3em 0em 0em;
+    -fx-padding: 0em 1.3em 0em 0em;
+}
+.shipbuilder-stats-box-bg{
+    -fx-background-color: #0f0f0f;
 }
 .shipbuilder-slots-hbox{
     /*-fx-padding: 3.25em 0em 0em 0.25em;*/
