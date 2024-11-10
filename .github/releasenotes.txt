@@ -6,6 +6,7 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Update Concord Cannon stats and engineering
-Add Boost interval stat to ships
-- Highlight recharge in green when boost is infinite
+Allow searching for spawn locations in ship materials tab
+Update Type-8 boost interval
+Allow module stats to run down further to be able to show the full range of stats
+Correct boost interval for Python Mk2
