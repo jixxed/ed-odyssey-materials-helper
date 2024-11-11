@@ -1,6 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import javafx.animation.FadeTransition;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -90,7 +91,7 @@ public class HorizonsWishlistBlueprintTemplate extends HBox implements WishlistB
         }
         this.wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("wishlist-label")
-                .withText(titleStringBinding)
+                .withText(Bindings.createStringBinding(() -> titleStringBinding.get().trim(), titleStringBinding))
                 .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(this.blueprint)))
                 .withHoverProperty((observable, oldValue, newValue) -> {
                     this.wishlistIngredients.forEach(wishlistIngredient -> {
