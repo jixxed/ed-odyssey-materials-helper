@@ -123,7 +123,7 @@ public class OdysseyMaterialIngredient extends Ingredient {
 
 
     protected void update() {
-        setRightAmount(StorageService.getMaterials(this.storageType).get(this.odysseyMaterial).getTotalValue());
+        setRightAmount(StorageService.getMaterialStorage(this.odysseyMaterial).getTotalValue());
         if (this.rightAmount >= this.leftAmount) {
             this.rightAmountLabel.setText(this.rightAmount.toString());
             this.getStyleClass().removeAll(INGREDIENT_WITH_AMOUNT_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);

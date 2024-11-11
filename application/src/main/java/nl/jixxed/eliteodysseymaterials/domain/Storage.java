@@ -39,6 +39,9 @@ public class Storage {
         return this.shipLocker;
     }
 
+    /**
+     * Sets the value of the storage pool. Only StorageService should call this method.
+     */
     public void setValue(final Integer value, final StoragePool pool) {
         if (pool == StoragePool.BACKPACK) {
             this.backPack = value;

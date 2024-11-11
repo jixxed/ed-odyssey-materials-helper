@@ -2,7 +2,6 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.OdysseyBlueprint;
-import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
@@ -57,8 +56,7 @@ public class UpgradeWeaponMessageProcessor implements MessageProcessor<UpgradeWe
             odysseyBlueprint = BLUEPRINT_MAPPING_KARMA.get(targetClass);
         }
         odysseyBlueprint.getMaterialCollection(OdysseyMaterial.class).forEach((key, value) -> {
-            final Storage materialStorage = StorageService.getMaterialStorage(key);
-            materialStorage.setValue(materialStorage.getValue(StoragePool.SHIPLOCKER) - value, StoragePool.SHIPLOCKER);
+            StorageService.removeMaterial(key,StoragePool.SHIPLOCKER, value);
         });
     }
 

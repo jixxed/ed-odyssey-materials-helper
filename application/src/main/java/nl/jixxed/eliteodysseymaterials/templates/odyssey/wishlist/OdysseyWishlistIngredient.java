@@ -82,7 +82,7 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     @Override
     protected void update() {
 
-        final Storage storage = StorageService.getMaterials(this.getOdysseyMaterial().getStorageType()).get(this.getOdysseyMaterial());
+        final Storage storage = StorageService.getMaterialStorage(this.getOdysseyMaterial());
         final int leftAmount = Integer.parseInt(this.getLeftAmountLabel().getText());
         this.getStyleClass().removeAll(INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS, INGREDIENT_FILLED_CLASS, INGREDIENT_UNFILLED_CLASS);
         if (storage.getTotalValue() >= leftAmount && storage.getShipLockerValue() + storage.getBackPackValue() < leftAmount) {
