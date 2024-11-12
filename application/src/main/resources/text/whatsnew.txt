@@ -1,3 +1,8 @@
+Version 2.124
+-------------
+Bugfix application fails to start due to missing care packages events and engineering events causing quantities < 0
+Trim whitespace from engineer blueprints on ship wishlist
+
 Version 2.123
 -------------
 Allow searching for spawn locations in ship materials tab
