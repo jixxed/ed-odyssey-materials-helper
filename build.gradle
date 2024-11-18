@@ -158,7 +158,7 @@ allprojects {
                 implementation "javax.servlet:javax.servlet-api:4.0.1"
                 implementation "org.controlsfx:controlsfx:${version_controlsfx}"
                 implementation "org.jfxtras:jmetro:11.6.16"
-                implementation 'io.github.classgraph:classgraph:4.8.177'
+                implementation 'io.github.classgraph:classgraph:4.8.179'
 
                 testImplementation "de.saxsys:mvvmfx-testing-utils:1.8.0"
                 testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver:0.1"
