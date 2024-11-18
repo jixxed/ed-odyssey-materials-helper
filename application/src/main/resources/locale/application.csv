@@ -126,10 +126,10 @@ search.filter.nonmarketable,Nonmarketable,Nonmarketable,Nicht marketbar,No comer
 search.filter.salvage,Salvage,Salvage,Bergung,Salvamento,Sauvetage,Salvamento,Спасение
 search.filter.slavery,Slavery,Slavery,Sklaverei,Esclavitud,Esclavage,Escravidão,Рабство
 search.filter.technology,Technology,Technology,Technologie,Tecnología,Technologie,Tecnologia,Технологии
-search.filter.textiles,Textiles,Textiles,Textilien,Textiles,Textiles,Têxteis,Текстиль
-search.filter.waste,Waste,Waste,Abfall,Residuos,Gaspillage,Desperdício,Напрасно тратить
+search.filter.textiles,Textiles,Textiles,Textilien,Textiles,Textiles,Têxteis,Ткани
+search.filter.waste,Waste,Waste,Abfall,Residuos,Gaspillage,Desperdício,Отходы
 search.filter.weapons,Weapons,Weapons,Waffen,Arma,Armes,Armas,Оружие
 search.filter.powerplay,Powerplay,,,,,,
 notification.collected.powerplay.material.notification,{0}: {1},,,,,,
-notification.type.powerplay_pickup,Powerplay Pickup,,,,,,
-notification.type.ship_wishlist_pickup,Ship Wishlist Pickup,,,,,,
+notification.type.powerplay_pickup,Powerplay Pickup,,,,,,Взятие материала Powerplay
+notification.type.ship_wishlist_pickup,Ship Wishlist Pickup,,,,,,Взятие материала для корабля
