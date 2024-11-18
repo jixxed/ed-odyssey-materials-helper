@@ -23,9 +23,9 @@ public class FragmentCannonBlueprints {
                                     Raw.CARBON, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+600%", true, percentagePositive(0.0, 6.0)),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-2%", false, percentageNegative(0.0, 0.02))
                             ),
                             List.of(
@@ -40,9 +40,9 @@ public class FragmentCannonBlueprints {
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+800%", true, percentagePositive(6.0, 8.0)),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-4%", false, percentageNegative(0.02, 0.04))
                             ),
                             List.of(
@@ -58,9 +58,9 @@ public class FragmentCannonBlueprints {
                                     Manufactured.MECHANICALEQUIPMENT, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+1000%", true, percentagePositive(8.0, 10.0)),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-6%", false, percentageNegative(0.04, 0.06))
                             ),
                             List.of(
@@ -76,9 +76,9 @@ public class FragmentCannonBlueprints {
                                     Manufactured.MECHANICALCOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("4", true, plus(4.0)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+1200%", true, percentagePositive(10.0, 12.0)),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-8%", false, percentageNegative(0.06, 0.08))
                             ),
                             List.of(
@@ -93,9 +93,9 @@ public class FragmentCannonBlueprints {
                                     Manufactured.CONFIGURABLECOMPONENTS, 1
                             ),
                             Map.of(
-                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("6", true, plus(6.0)),
+                                    HorizonsModifier.AMMO_CLIP_SIZE, new HorizonsNumberModifierValue("3", true, plus(3.0)),
                                     HorizonsModifier.BURST_RATE_OF_FIRE, new HorizonsNumberModifierValue("+1400%", true, percentagePositive(12.0, 14.0)),
-                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("2", true, plus(2.0)),
+                                    HorizonsModifier.BURST_SIZE, new HorizonsNumberModifierValue("1", true, plus(1.0)),
                                     HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("-10%", false, percentageNegative(0.08, 0.1))
                             ),
                             List.of(
