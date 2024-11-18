@@ -225,4 +225,4 @@ modifier.horizons.name.overcharge_max_acceleration_rate,Overcharge Max Accelerat
 modifier.horizons.name.overcharge_heat_generation_rate,Overcharge Heat Generation Rate,,,Ratio de Generación de calor de la Sobrecarga,,Razão de Geração de Calor Sobrecarregado,Повышение скорости нагрева
 modifier.horizons.name.overcharge_control_interference,Overcharge Control Interference,,,Interferencia de control de la Sobrecarga,,Interferência de Controle de Sobrecarga,Влияние перегрузки на управление
 modifier.horizons.name.listed_power_draw,Listed Power Draw,Listed Power Draw,,Consumo de Energía Listado,,Consumo de Energia Nominal,Заявленное потребление мощности
-modifier.horizons.name.boost_interval,Boost Interval,,,,,,
+modifier.horizons.name.boost_interval,Boost Interval,,,,,,Интервал ускорения
