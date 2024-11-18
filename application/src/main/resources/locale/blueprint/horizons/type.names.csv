@@ -186,7 +186,7 @@ blueprint.horizons.type.long_range_weapon_incendiary_rounds_arx,"Long Range, Inc
 blueprint.horizons.type.overcharged_overcharged,Extra Overcharged,Extra Overcharged,,Extra sobrecargado,,Extra Sobrecarregado,Сверх-Усиленная
 blueprint.horizons.type.overcharged_weapon_auto_loader,"Overcharged, Auto Loader","Overcharged, Auto Loader",,"Sobrecargado, Autocargador",,"Sobrecarregado, Carregador Automático","Усиленное, Автоматическая перезарядка"
 blueprint.horizons.type.overcharged_weapon_focused_weapon,"Overcharged Weapon, Focused Weapon","Overcharged Weapon, Focused Weapon",,"Arma sobrecargada, Arma concentrada",,"Arma Sobrecarregada, Arma Focada","Усиленное, Точное"
-blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,"Disparo rapido, Secuencia de fase",,"Tiro Rápido, Sequência de Fases",Скорострельноеб Последовательность фазирования
+blueprint.horizons.type.rapid_fire_modification_phasing_sequence,"Rapid Fire, Phasing Sequence","Rapid Fire, Phasing Sequence",,"Disparo rapido, Secuencia de fase",,"Tiro Rápido, Sequência de Fases","Скорострельное, Последовательность фазирования"
 blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"Thermal Resistant, Kinetic Resistant","Thermal Resistant, Kinetic Resistant",,"Resistencia térmica, Resistencia cinética,",,"Resistente Térmico, Resistente Cinético","Термическая защита, Кинетическая защита"
 blueprint.horizons.type.none,None,None,,,,Nenhum,Нет
 blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,Resistencia zona Anti-Guardián,,Resistência a Zona Anti-Guardian,Сопротивление отключающему полю
