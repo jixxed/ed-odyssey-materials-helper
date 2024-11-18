@@ -121,5 +121,5 @@ ship.stats.armour.mrp.integrity,Integrity,,,Integridad,,Integridade,Целост
 ship.stats.armour.mrp.protection,Protection,,,Protección,,Proteção,Защита
 ship.stats.armour.scb.restoration,Cell Bank,,,Banco de Células,,Banco de Células,Щитонакопитель
 ship.stats.config.power.group,Power group {0},,,Prioridad Energética {0},,Prioridade Energética {0},Огневая группа {0}
-ship.stats.totaljumprange,Total jump range,,,,,,
+ship.stats.totaljumprange,Total jump range,,,,,,Макс. расстояние за бак
 ship.stats.totaljumprange.value,{0} Ly,,,{0} AL,,{0} Al,{0} с.л.
