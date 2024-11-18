@@ -1,6 +1,6 @@
 messageKey,,en,de,es,fr,pt,ru
 tab.powerplay.unlockables,Modules,,,,,,Модули
-tab.powerplay.current.reward,Current reward {0}%,,,,,,Награда
+tab.powerplay.current.reward,Current reward {0}%,,,,,,Награда {0}%
 tab.powerplay.current.reward.unlocked,Unlocked,,,,,,Разблокировано
 tab.powerplay.current.reward.locked,Locked,,,,,,Заблокировано
 tab.powerplay.rank,Rank {0},,,,,,Ранг {0}
