@@ -92,8 +92,8 @@ ship.module.icon.tooltip.guardian,Guardian,,,Guardián,,Guardian,Стражи
 ship.module.icon.tooltip.multicrew,Multicrew,,,Multitripulación,,Multicrew,
 ship.module.icon.tooltip.community.goal.module,Community Goal Module,,,Módulo de Logro de la Comunidad,,Módulo de meta da comunidade,Модуль ЦС
 ship.module.icon.tooltip.engineered,Engineered,,,Ingenierizado,,Projetado,Модифицированный
-ship.view.header.fighterbay,Fighter Bay,,,,,,
+ship.view.header.fighterbay,Fighter Bay,,,,,,Ангар для истребителей
 ship.view.no,No,No,Nein,No,Non,Não,Нет
 ship.view.yes,Yes,Yes,Ja,Sí,Oui,Sim,Да
 tabs.powerplay,Powerplay,,,,,,
-ship.view.header.boostinterval,Boost interval,,,,,,
+ship.view.header.boostinterval,Boost interval,,,,,,Интервал ускорения
