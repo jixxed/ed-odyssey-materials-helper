@@ -9,9 +9,9 @@ power.perk.reduced_refuel_prices_in_own_territory,Up to {0} reduced refuel price
 power.perk.reduced_repair_prices_in_own_territory,Up to {0} reduced repair prices in your power’s territory. Unlocks at ranks {1},,,,,,{0} стоимости ремонта на территории вашей державы. Открывается на ранге {1}
 power.perk.increase_food_and_medicine_profit,Up to {0} increase on food and medicine profits in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли на еду и медицину на территории вашей державы. Открывается на ранге {1}
 power.perk.increase_minor_faction_reputation,Up to {0} increase in minor faction reputation gain in your power’s territory. Unlocks at ranks {1},,,,,,Доп. бонус {0} к повышению репутации с малыми фракциями на территории вашей державы. Открывается на ранге {1}
-power.perk.increase_salvage_profit,Up to {0} increase salvage profits in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли за сдачу спасенного имущества на территории вашей державы. Открывается на ранге {1}
+power.perk.increase_salvage_profit,Up to {0} increase salvage profits in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли за продажу спасенного имущества на территории вашей державы. Открывается на ранге {1}
 power.perk.increase_bounty_payout,Up to {0} increase in bounty payouts in your power’s territory. Unlocks at ranks {1},,,,,,{0} к полученным наградам на территории вашей державы. Открывается на ранге {1}
-power.perk.increase_search_and_rescue_payout,Up to {0} increased search and rescue payout in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли за сдачу спасательных капсул на территории вашей державы. Открывается на ранге {1}
+power.perk.increase_search_and_rescue_payout,Up to {0} increased search and rescue payout in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли за поиск и спасение на территории вашей державы. Открывается на ранге {1}
 power.perk.increase_mining_commodity_payout,Up to {0} increase in mining commodity payouts in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли за продажу шахтерских товаров на территории вашей державы. Открывается на ранге {1}
 power.perk.increase_imperial_slaves_commodity_payout,Up to {0} increase in imperial slaves commodity payouts in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли за продажу Имперских рабов на территории вашей державы. Открывается на ранге {1}
 power.perk.increase_trade_bond_sales_award,Up to {0} awarded trade bond on sales in your power’s territory. Unlocks at ranks {1},,,,,,{0} повышение прибыли за торговлю на территории вашей державы. Открывается на ранге {1}
@@ -30,9 +30,9 @@ power.perk.title.reduced_refuel_prices_in_own_territory,Reduced refuel,,,,,,Це
 power.perk.title.reduced_repair_prices_in_own_territory,Reduced repair,,,,,,Цена ремонта
 power.perk.title.increase_food_and_medicine_profit,Food and medicine profits,,,,,,Прибыль от продажи еды и мед. товаров
 power.perk.title.increase_minor_faction_reputation,Minor faction reputation,,,,,,Репутация с малой фракцией
-power.perk.title.increase_salvage_profit,Salvage profits,,,,,,Бонус выплат за спасение имущества
+power.perk.title.increase_salvage_profit,Salvage profits,,,,,,Бонус выплат за продажу спасенного имущества
 power.perk.title.increase_bounty_payout,Bounty payouts,,,,,,Бонус к наградам
-power.perk.title.increase_search_and_rescue_payout,Search and rescue payouts,,,,,,Бонус выплат за сбор спас. капсул
+power.perk.title.increase_search_and_rescue_payout,Search and rescue payouts,,,,,,Бонус выплат за поиск и спасение
 power.perk.title.increase_mining_commodity_payout,Mining commodity payouts,,,,,,Цена шахтерских товаров
 power.perk.title.increase_imperial_slaves_commodity_payout,Imperial slaves commodity payouts,,,,,,Цена Имперских рабов
 power.perk.title.increase_trade_bond_sales_award,Trade bond on sales,,,,,,Прибыль торговли
