@@ -114,11 +114,11 @@ material.data.visitorregister,Visitor Register,Visitor Register,Besucherliste,Re
 material.data.weaponinventory,Weapon Inventory,Weapon Inventory,Waffeninventarliste,Inventario de armas,Inventaire d’armement,Estoque de armas,Опись оружия и боеприпасов
 material.data.weapontestdata,Weapon Test Data,Weapon Test Data,Waffentestdaten,Datos de pruebas armamentísticas,Données de test d’armes,Dados de testes de arma,Сведения об испытаниях вооружения
 material.data.xenodefenceprotocols,Xeno-Defence Protocols,Xeno-Defence Protocols,Xeno-Abwehr-Protokolle,Protocolos de xenodefensa,Protocoles anti-xénomorphes,Protocolos de defesa antixeno,Алгоритм противодействия инопланетной угрозе
-material.data.powerpreparationspyware,Power Injection Malware,,,,,,
-material.data.powerspyware,Power Tracker Malware,,,,,,
-material.data.powerresearchdata,Power Research Data,,,,,,
-material.data.poweremployeedata,Power Association Data,,,,,,
-material.data.powerfinancialrecords,Power Industrial Data,,,,,,
-material.data.powerpropagandadata,Power Political Data,,Politische Daten der Macht,,,,
-material.data.powerclassifieddata,Power Classified Data,,,,,,
-material.data.powermegashipdata,Power Megaship Data,,,,,,
+material.data.powerpreparationspyware,Power Injection Malware,,,,,,ПО-инъектор
+material.data.powerspyware,Power Tracker Malware,,,,,,Отслеживающее вредоносное ПО
+material.data.powerresearchdata,Power Research Data,,,,,,Данные об исследованиях державы
+material.data.poweremployeedata,Power Association Data,,,,,,Данные о связях державы
+material.data.powerfinancialrecords,Power Industrial Data,,,,,,Данные о промышленности державы
+material.data.powerpropagandadata,Power Political Data,,Politische Daten der Macht,,,,Данные о политической обстановке
+material.data.powerclassifieddata,Power Classified Data,,,,,,Секретные данные державы
+material.data.powermegashipdata,Power Megaship Data,,,,,,Данные о гиганстком корабле державы
