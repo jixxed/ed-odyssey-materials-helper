@@ -107,7 +107,7 @@ ext {
     version_apache_poi = "5.3.0"
     version_apache_commons_math3 = "3.6.1"
     version_apache_commons_compress = "1.27.1"
-    version_apache_commons_io = "2.17.0"
+    version_apache_commons_io = "2.18.0"
     version_apache_xmlbeans = "5.2.2"
     version_opencv = "4.5.3-0"
     version_lept4j = "1.16.6"
