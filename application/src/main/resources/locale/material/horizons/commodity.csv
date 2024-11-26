@@ -280,7 +280,7 @@ material.commodity.m3_tissuesample_spores,Mollusc Spores,Mollusc Spores,Molluske
 material.commodity.militaryintelligence,Military Intelligence,Military Intelligence,Militärische Geheimdokumente,Inteligencia militar,Renseignements militaires,Inteligência militar,Разведданные
 material.commodity.mysteriousidol,Mysterious Idol,Mysterious Idol,Mysteriöses Idol,Ídolo misterioso,Idole mystérieuse,Ídolo misterioso,Таинственный идол
 material.commodity.occupiedcryopod,Occupied Escape Pod,Occupied Escape Pod,Besetzte Rettungskapsel,Cápsula de escape ocupada,Nacelle d’évacuation occupée,Cápsula de escape ocupada,Спасательная капсула с пассажиром
-material.commodity.p_particulatesample,Anomaly Particles,Anomaly Particles,Anomaly Particles,Anomaly Particles,Anomaly Particles,Anomaly Particles,Anomaly Particles
+material.commodity.p_particulatesample,Anomaly Particles,Anomaly Particles,Anomaly Particles,Anomaly Particles,Anomaly Particles,Anomaly Particles,Аномальные частицы
 material.commodity.personaleffects,Personal Effects,Personal Effects,Persönliches,Efectos personales,Effets personnels,Itens pessoais,Личные вещи
 material.commodity.personalgifts,Personal Gifts,Personal Gifts,Persönliche Geschenke,Regalos personales,Cadeaux personnels,Presentes pessoais,Персональные подарки
 material.commodity.politicalprisoner,Political Prisoners,Political Prisoners,Politische Gefangene,Prisioneros políticos,Prisonniers politiques,Prisioneiros políticos,Политзаключенные
@@ -435,7 +435,7 @@ material.commodity.thargoidbonefragments,Bone Fragments,,,Fragmentos de Hueso,,,
 material.commodity.thargoidcystspecimen,Cyst Specimen,,,Especimen de Quiste,,,Образец кисты
 material.commodity.thargoidorgansample,Organ Sample,,,Muestra de Órgano,,,Образец органа
 material.commodity.thargoidtitandrivecomponent,Titan Drive Component,,,Componente de Motor de Titán,,,Компонент двигателя титана
-material.commodity.kainemisinformation,Kaine Misinformation,,,,,,
-material.commodity.kaineaidsupplies,Kaine Aid Supplies,,,,,,
-material.commodity.kainelobbyingmaterial,Kaine Lobbying Materials,,,,,,
-material.commodity.lavignystrategicreports,Lavigny Strategic Reports,,,,,,
+material.commodity.kainemisinformation,Kaine Misinformation,,,,,,Дезинформация Кейн
+material.commodity.kaineaidsupplies,Kaine Aid Supplies,,,,,,Гуманитарная помощь Кейн
+material.commodity.kainelobbyingmaterial,Kaine Lobbying Materials,,,,,,Лоббистские материалы Кейн
+material.commodity.lavignystrategicreports,Lavigny Strategic Reports,,,,,,Оперативный доклад Лавиньи
