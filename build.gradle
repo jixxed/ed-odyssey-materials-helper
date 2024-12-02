@@ -136,7 +136,7 @@ allprojects {
                 implementation "com.google.j2objc:j2objc-annotations:${version_j2objc_annotations}"
                 implementation "commons-io:commons-io:${version_apache_commons_io}"
                 implementation "io.github.pustike:commons-csv:1.7.0"
-                implementation "io.reactivex.rxjava3:rxjava:3.1.9"
+                implementation "io.reactivex.rxjava3:rxjava:3.1.10"
                 implementation "net.java.dev.jna:jna-platform:${version_jna}"
                 implementation "net.java.dev.jna:jna:${version_jna}"
                 implementation "nl.jixxed.lept4j:lept4j:${version_lept4j}"
