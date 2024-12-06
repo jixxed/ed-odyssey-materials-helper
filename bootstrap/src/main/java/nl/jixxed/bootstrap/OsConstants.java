@@ -21,7 +21,7 @@ class OsConstants {
     private static void setWindows() {
         UPDATE_FILE_SUFFIX = "portable.zip";
         KILL_COMMAND = "taskkill /F /IM \"Elite Dangerous Odyssey Materials Helper.exe\"";
-        START_COMMAND = "cmd /c \"%s\\Elite Dangerous Odyssey Materials Helper.exe\"";
+        START_COMMAND = "cmd /c \"\"%s\\Elite Dangerous Odyssey Materials Helper.exe\"\"";
         VERSION_FILE = "%s\\app\\Elite Dangerous Odyssey Materials Helper.cfg";
     }
 

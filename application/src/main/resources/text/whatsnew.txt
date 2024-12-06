@@ -1,3 +1,9 @@
+Version 2.125
+-------------
+Bugfix for autoupdater failing to launch the application with an ampersand(&) in the path
+Fix clip size and burst size for Double Shot experimental effect on Fragment Cannon
+Add more detailed values to Concord Cannon
+
 Version 2.124
 -------------
 Bugfix application fails to start due to missing care packages events and engineering events causing quantities < 0
