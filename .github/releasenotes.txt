@@ -10,3 +10,4 @@ Bugfix for autoupdater failing to launch the application with an ampersand(&) in
 Fix clip size and burst size for Double Shot experimental effect on Fragment Cannon
 Add more detailed values to Concord Cannon
 Remove Tactical Core Chip from blueprint requirements
+Queue notification sounds to prevent overlapping sounds
