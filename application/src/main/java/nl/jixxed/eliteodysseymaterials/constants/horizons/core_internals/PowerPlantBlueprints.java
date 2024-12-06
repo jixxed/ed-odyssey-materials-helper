@@ -209,8 +209,7 @@ public class PowerPlantBlueprints {
                     HorizonsBlueprintGrade.GRADE_1, new HorizonsModuleBlueprint(HorizonsBlueprintName.POWER_PLANT, HorizonsBlueprintType.ANTI_GUARDIAN_ZONE_RESISTANCE, HorizonsBlueprintGrade.GRADE_1,
                             Map.of(
                                     Manufactured.TG_ABRASION03,2,
-                                    Manufactured.TG_CAUSTICCRYSTAL,1,
-                                    Manufactured.UNKNOWNCORECHIP,1
+                                    Manufactured.TG_CAUSTICCRYSTAL,1
                             ),
                             Map.of(
                                     HorizonsModifier.ANTI_GUARDIAN_ZONE_RESISTANCE, new HorizonsBooleanModifierValue(UTF8Constants.CHECK_TRUE, true, bool(Boolean.TRUE))

@@ -9,3 +9,4 @@ The portable zip versions are used as update packages. You can run them standalo
 Bugfix for autoupdater failing to launch the application with an ampersand(&) in the path
 Fix clip size and burst size for Double Shot experimental effect on Fragment Cannon
 Add more detailed values to Concord Cannon
+Remove Tactical Core Chip from blueprint requirements
