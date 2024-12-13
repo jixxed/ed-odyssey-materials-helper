@@ -48,7 +48,8 @@ public enum ShipType {
     TYPE_X_3(128816588,"TypeX_3", ShipSize.M, false, 1),
     KRAIT_LIGHT(128839281,"Krait_Light", ShipSize.M, false, 1),
     MANDALAY(0,"Mandalay", ShipSize.M, false, 1),
-    MAMBA(128915979,"Mamba", ShipSize.M, false, 1);
+    MAMBA(128915979,"Mamba", ShipSize.M, false, 1),
+    COBRA_MK_V(128947462,"CobraMkV", ShipSize.S, false, 2);
 
     final long internalID;
     final String internalName;
