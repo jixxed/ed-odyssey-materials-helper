@@ -5,18 +5,6 @@ buildscript {
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-
-        exclusiveContent {
-            forRepository {
-                flatDir {
-                    dirs("libs")
-                }
-            }
-            filter {
-                // this repository *only* contains artifacts listed below
-                includeModule("org.beryx", "badass-jlink-plugin")
-            }
-        }
     }
     dependencies {
         classpath "org.beryx:badass-jlink-plugin:3.1.1" // patched version for jdk23
