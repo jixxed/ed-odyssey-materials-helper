@@ -1,3 +1,7 @@
+Version 2.126
+-------------
+Add Corba Mk V image
+
 Version 2.125
 -------------
 Bugfix for autoupdater failing to launch the application with an ampersand(&) in the path

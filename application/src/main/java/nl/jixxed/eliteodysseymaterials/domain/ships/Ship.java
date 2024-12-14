@@ -2851,17 +2851,17 @@ public class Ship {
 
                 ),
                 List.of(
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(2).slotSize(2).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(3).slotSize(1).build(),
-                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(960).y(540).index(4).slotSize(1).build()
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1490).y(504).index(0).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(2).x(1313).y(283).index(1).slotSize(2).shipModule(PulseLaser.PULSE_LASER_1_F_F).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(875).y(378).index(2).slotSize(2).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1329).y(502).index(3).slotSize(1).build(),
+                        ImageSlot.builder().slotType(SlotType.HARDPOINT).imageIndex(1).x(1070).y(784).index(4).slotSize(1).build()
                 ),
                 List.of(
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(960).y(540).index(0).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(960).y(540).index(1).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(960).y(540).index(2).slotSize(0).build(),
-                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(960).y(540).index(3).slotSize(0).build()
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(1193).y(792).index(0).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(2).x(691).y(395).index(1).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(1096).y(225).index(2).slotSize(0).build(),
+                        ImageSlot.builder().slotType(SlotType.UTILITY).imageIndex(1).x(661).y(635).index(3).slotSize(0).build()
                 ),
                 List.of(
                         Slot.builder().slotType(SlotType.CORE_ARMOUR).index(0).slotSize(1).shipModule(Armour.COBRA_MK_V_ARMOUR_GRADE_1).build(),
