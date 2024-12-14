@@ -7,7 +7,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath "org.beryx:badass-jlink-plugin:3.1.1" // patched version for jdk23
+        classpath "org.beryx:badass-jlink-plugin:3.1.1"
         classpath "io.freefair.gradle:lombok-plugin:8.11"
         classpath "org.gradlex:extra-java-module-info:1.9"
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:1.2.2'
@@ -303,9 +303,7 @@ run {
     //, '-Xmx1G', '-XX:+UseCompressedOops', '-XX:+PrintGCDetails', '-XX:SoftRefLRUPolicyMSPerMB=100'
 }
 test {
-    useJUnitPlatform {
-
-    }
+    useJUnitPlatform ()
 }
 // Each configuration is set to the default value
 jsonSchema2Pojo {
