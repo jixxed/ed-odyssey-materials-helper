@@ -1,3 +1,8 @@
+Version 2.127
+-------------
+Add new FSD V1 SCO modules and techbroker unlocks
+Fix Cobra Mk V stats
+
 Version 2.126
 -------------
 Add Corba Mk V image
