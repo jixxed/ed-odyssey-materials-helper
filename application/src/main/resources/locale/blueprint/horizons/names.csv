@@ -87,6 +87,7 @@ blueprint.horizons.name.frame_shift_drive,Frame Shift Drive,Frame Shift Drive,Fr
 blueprint.horizons.name.frame_shift_drive_interdictor,Frame Shift Drive Interdictor,Frame Shift Drive Interdictor,Frameshift-Unterbrecher,Interdictor,Interdictor de lecteur de décalage de cadre,Interditor de Motor de Distorção de Fase,Перехватчик FSD
 blueprint.horizons.name.frame_shift_drive_pre,Frame Shift Drive,,,Motor de Distorsión,,Motor de Distorção de Fase,FSD
 blueprint.horizons.name.frame_shift_drive_overcharge,Frame Shift Drive (SCO),,,Motor de Distorsión (SDS),,Motor de Distorção de Fase (SSV),FSD (ПГР)
+blueprint.horizons.name.frame_shift_drive_overcharge_pre,Frame Shift Drive (SCO),,,Motor de Distorsión (SDS),,Motor de Distorção de Fase (SSV),FSD (ПГР)
 blueprint.horizons.name.frame_shift_wake_scanner,Frame Shift Wake Scanner,Frame Shift Wake Scanner,Sogwolkenscanner,Escáner de estelas,Scanner de shift de cadre,Scanner de Rastro de Distorção,Сканер следа FSD
 blueprint.horizons.name.fsd_injection,FSD Injection,FSD Injection,FSA-Einspeisung,Inyección del MDD,Injection de FSD,Injeção em MDD,FSD инъекция
 blueprint.horizons.name.fuel_scoop,Fuel Scoop,Fuel Scoop,Treibstoffsammler,Colector de combustible,Scoop de carburant,Coletor de combustível,Топливозаборник

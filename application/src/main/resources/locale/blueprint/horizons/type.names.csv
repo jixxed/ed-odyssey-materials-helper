@@ -191,3 +191,9 @@ blueprint.horizons.type.thermal_resistant_shields_kinetic_resistant_shields,"The
 blueprint.horizons.type.none,None,None,,,,Nenhum,Нет
 blueprint.horizons.type.anti_guardian_zone_resistance,Anti-Guardian Zone Resistance,,,Resistencia zona Anti-Guardián,,Resistência a Zona Anti-Guardian,Сопротивление отключающему полю
 blueprint.horizons.type.long_range_weapon_focused_weapon_penetrator_munitions_god,"Long Range, Focused, Penetrator Munitions",,,,,"Longo Alcance, Focado, Munições Penetradoras","Дальнобойное, Точность, Бронебойные снаряды"
+blueprint.horizons.type.engineered_fsd_sco_a2_v1,Engineered FSD SCO 2A V1,,,,,,
+blueprint.horizons.type.engineered_fsd_sco_a3_v1,Engineered FSD SCO 3A V1,,,,,,
+blueprint.horizons.type.engineered_fsd_sco_a4_v1,Engineered FSD SCO 4A V1,,,,,,
+blueprint.horizons.type.engineered_fsd_sco_a5_v1,Engineered FSD SCO 5A V1,,,,,,
+blueprint.horizons.type.engineered_fsd_sco_a6_v1,Engineered FSD SCO 6A V1,,,,,,
+blueprint.horizons.type.engineered_fsd_sco_a7_v1,Engineered FSD SCO 7A V1,,,,,,

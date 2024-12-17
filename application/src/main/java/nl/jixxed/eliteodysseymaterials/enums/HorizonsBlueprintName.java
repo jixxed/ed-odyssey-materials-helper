@@ -126,6 +126,7 @@ public enum HorizonsBlueprintName implements BlueprintName<HorizonsBlueprintName
     FRAME_SHIFT_DRIVE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL),
     FRAME_SHIFT_DRIVE_PRE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL, false),
     FRAME_SHIFT_DRIVE_OVERCHARGE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL, false),
+    FRAME_SHIFT_DRIVE_OVERCHARGE_PRE(BlueprintGroup.FRAME_SHIFT_DRIVES, BlueprintCategory.CORE_INTERNAL, false),
     LIFE_SUPPORT(BlueprintGroup.LIFE_SUPPORTS, BlueprintCategory.CORE_INTERNAL),
     POWER_DISTRIBUTOR(BlueprintGroup.POWER_DISTRIBUTORS, BlueprintCategory.CORE_INTERNAL),
     GUARDIAN_POWER_DISTRIBUTOR(BlueprintGroup.POWER_DISTRIBUTORS, BlueprintCategory.CORE_INTERNAL, false),
