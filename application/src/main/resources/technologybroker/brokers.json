@@ -339,14 +339,7 @@
 {"name":"Desy","coords":{"x":-9534.21875,"y":-912.21875,"z":19792.375},"station":{"name":"Bresa Modifications","distanceToArrival":3680.610968,"primaryEconomy":"Colony","id":128987099, "type": "Unknown"}}
 {"name":"Kojeara","coords":{"x":-9513.09375,"y":-908.84375,"z":19814.28125},"station":{"name":"Rosa's Shop","distanceToArrival":2535.101536,"primaryEconomy":"Colony","id":128986587, "type": "Unknown"}}
 {"name":"Deriso", "coords":{"x":-9520.3125,"y":-909.5,"z":19808.75},"station":{"name":"The Divine Apparatus","distanceToArrival":2421.827461,"primaryEconomy":"Colony","id":128986843, "type": "Unknown"}}
-{"name":"Koleti", "coords":  {"x": 118.84, "y": -70.31, "z":-20.53},"station":{"name":"Rescue Ship Cavell","distanceToArrival":384.0,"primaryEconomy":"Rescue","id":129019519, "type": "Aegis"}}
-{"name":"Xinca", "coords":  {"x": 123.91, "y": -6.41, "z":-48.94},"station":{"name":"Rescue Ship Foerster","distanceToArrival":344.0,"primaryEconomy":"Rescue","id":129020031, "type": "Aegis"}}
-{"name":"Chacocels", "coords":  {"x": 99.91, "y": -143.69, "z":-51.16},"station":{"name":"Rescue Ship Seacole","distanceToArrival":335.0,"primaryEconomy":"Rescue","id":129021055, "type": "Aegis"}}
-{"name":"Hixkaramu", "coords":  {"x": 115.63, "y": -48.59, "z":-58.28},"station":{"name":"Imperial Sanctum(Rescue Ship)","distanceToArrival":24.0,"primaryEconomy":"Rescue","id":129021311, "type": "Aegis"}}
-{"name":"Telin", "coords":  {"x": 23.72, "y": -79.44, "z":-108.72},"station":{"name":"Rescue Ship Hutner","distanceToArrival":22.0,"primaryEconomy":"Rescue","id":129020287, "type": "Aegis"}}
-{"name":"Mac Cimi", "coords":  {"x": 37.84, "y": -21.59, "z":-124.91}, "station":{"name":"Rescue Ship Cornwallis","distanceToArrival":54.0,"primaryEconomy":"Rescue","id":129019775, "type": "Aegis"}}
-{"name":"Triteia", "coords":  {"x": -47.31, "y": 16.91, "z":-65.91}, "station":{"name":"Rescue Ship Kisseih","distanceToArrival":467.0,"primaryEconomy":"Rescue","id":129020799, "type": "Aegis"}}
-{"name":"Haritanis", "coords":  {"x": -64.56, "y": -89.63, "z":-70.66}, "station":{"name":"Rescue Ship Bertschinger","distanceToArrival":233.0,"primaryEconomy":"Rescue","id":129019263, "type": "Aegis"}}
-{"name":"Cornsar","coords":  {"x": -94.16, "y": -53.56, "z":-15.91}, "station":{"name":"Rescue Ship Yoshida","distanceToArrival":42.0,"primaryEconomy":"Rescue","id":129020543, "type": "Aegis"}}
-{"name":"Gera", "coords":  {"x": -88.81, "y": 11.69, "z":-33.59}, "station":{"name":"Federal Haven(Rescue Ship)","distanceToArrival":412.0,"primaryEconomy":"Rescue","id":129021567, "type": "Aegis"}}
-{"name":"Sun Wen", "coords":  {"x": -36.91, "y": 51.09, "z":-67.56}, "station":{"name":"Allied Solace(Rescue Ship)","distanceToArrival":21.0,"primaryEconomy":"Rescue","id":129021823, "type": "Aegis"}}
+{"name":"Luyten's Star","coords":{"x":6.5625,"y":2.34375,"z":-10.25},"station":{"name":"Rescue Ship Hutner","distanceToArrival":297.0,"primaryEconomy":"Rescue","id":129020287, "type": "Aegis"}}
+{"name":"V886 Centauri","coords":{"x":45.16,"y":12.13,"z":26.97},"station":{"name":"Rescue Ship Cornwallis","distanceToArrival":769.0,"primaryEconomy":"Rescue","id":129019775, "type": "Aegis"}}
+{"name":"Hixkaramu","coords":{"x":115.63,"y":-48.59,"z":-58.28},"station":{"name":"Imperial Sanctum(Rescue Ship)","distanceToArrival":24.0,"primaryEconomy":"Rescue","id":129021311, "type": "Aegis"}}
+{"name":"Sun Wen","coords":{"x":-36.91,"y":51.09,"z":-67.56},"station":{"name":"Allied Solace(Rescue Ship)","distanceToArrival":21.0,"primaryEconomy":"Rescue","id":129021823, "type": "Aegis"}}
