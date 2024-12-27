@@ -325,7 +325,7 @@
 {"name":"Shinrarta Dezhra","coords":{"x":55.71875,"y":17.59375,"z":27.15625},"station":{"name":"Jameson Memorial","distanceToArrival":336.905756,"primaryEconomy":"High Tech","id":128666762, "type": "Guardian"}}
 {"name":"Alioth","coords":{"x":-33.65625,"y":72.46875,"z":-20.65625},"station":{"name":"The Witness Odysseus","distanceToArrival":1241.393993,"primaryEconomy":"High Tech","id":129008728, "type": "Sirius"}}
 {"name":"Leesti","coords":{"x":72.75,"y":48.75,"z":68.25},"station":{"name":"Chariot of Rhea","distanceToArrival":3099.343224,"primaryEconomy":"High Tech","id":129008984, "type": "Sirius"}}
-{"name":"Luyten's Star","coords":{"x":6.5625,"y":2.34375,"z":-10.25},"station":{"name":"Spirit of Laelaps","distanceToArrival":424.844532,"primaryEconomy":"High Tech","id":128975207, "type": "Sirius"}}
+{"name":"V886 Centauri","coords":{"x":45.16,"y":12.13,"z":26.97},"station":{"name":"Spirit of Laelaps","distanceToArrival":769.0,"primaryEconomy":"High Tech","id":128975207, "type": "Sirius"}}
 {"name":"Arimpox","coords":{"x":-39.90625,"y":109.5625,"z":10.40625},"station":{"name":"El Centinela Cadejo","distanceToArrival":154.175188,"primaryEconomy":"High Tech","id":129009240, "type": "Sirius"}}
 {"name":"Andecavi","coords":{"x":39.84375,"y":42.15625,"z":-125.34375},"station":{"name":"Kumiho Sky","distanceToArrival":925.242166,"primaryEconomy":"High Tech","id":129009496, "type": "Sirius"}}
 {"name":"LTT 198","coords":{"x":2.53125,"y":-71.625,"z":9.71875},"station":{"name":"Zetian's Recall","distanceToArrival":102.301577,"primaryEconomy":"Refinery","id":128989574, "type": "Torval"}}
