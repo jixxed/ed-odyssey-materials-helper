@@ -82,7 +82,7 @@ public class CAPIService {
                     log.info("save access token");
                     saveToken(this.oAuth2AccessToken);
                     Platform.runLater(() -> {
-                        NotificationService.showInformation(NotificationType.SUCCESS, "Frontier API", "Account linked! You may close the browser window.");
+                        NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.success"));
                         this.active.set(true);
                     });
                 } catch (final InterruptedException e) {
@@ -219,7 +219,10 @@ public class CAPIService {
                         log.warn("Frontier API returned an error. Disabling service.");
                         Platform.runLater(() -> {
                             this.active.set(false);
-                            NotificationService.showError(NotificationType.ERROR, "Frontier API", "Failed to authenticate. Try to re-authenticate to the API under Settings.");
+                            final String pathname = commander.getCommanderFolder();
+                            final boolean delete = new File(pathname + OsConstants.OS_SLASH + AppConstants.FLEETCARRIER_FILE).delete();
+                            if(delete) log.info("Deleted stale fleetcarrier file");
+                            NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.auth.fail"));
                         });
                     }
                 });

@@ -8,6 +8,6 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public class BackpackEvent implements Event {
+public class BackpackEvent implements TimestampedEvent {
     private final String timestamp;
 }

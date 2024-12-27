@@ -8,6 +8,6 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public class NavRouteEvent implements Event {
+public class NavRouteEvent implements TimestampedEvent {
     private final String timestamp;
 }

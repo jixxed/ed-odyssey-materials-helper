@@ -15,6 +15,8 @@ import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiFleetCar
 import nl.jixxed.eliteodysseymaterials.parser.messageprocessor.capi.CapiMessageProcessor;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.service.EDDNService;
+import nl.jixxed.eliteodysseymaterials.service.OrderService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 
@@ -213,5 +215,11 @@ class MessageHandler {
         } catch (final IOException e) {
             log.error("Error processing CAPI", e);
         }
+    }
+
+
+    static void clearCapi() {
+        StorageService.resetFleetCarrierCounts();
+        OrderService.clearOrders();
     }
 }
