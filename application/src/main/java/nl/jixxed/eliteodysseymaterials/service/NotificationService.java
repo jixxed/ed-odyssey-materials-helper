@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.service;
 
+import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
@@ -29,7 +30,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class NotificationService {
     private static boolean enabled = false;
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-    private static final BlockingQueue<MediaPlayer> soundQueue = new LinkedBlockingQueue<>();
+    private static final BlockingQueue<String> soundQueue = new LinkedBlockingQueue<>();
     private static boolean isPlaying = false;
 
     public static void init() {
@@ -164,6 +165,7 @@ public class NotificationService {
         }
     }
 
+
     private static void playSound(final NotificationType notificationType) {
         final boolean playSounds = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND, Boolean.TRUE);
         final double volume = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_VOLUME, 50);
@@ -177,29 +179,33 @@ public class NotificationService {
                     resource = new File(customSoundPath).toURI();
                 }
 
-                final Media sound = new Media(resource.toString());
-                final MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.setVolume(volume / 100);
-                mediaPlayer.setOnEndOfMedia(() -> {
-                    mediaPlayer.dispose();
-                    playNextSound();
-                });
-
-                soundQueue.add(mediaPlayer);
+                soundQueue.add(resource.toString());
                 if (!isPlaying) {
-                    playNextSound();
+                    playNextSound(volume);
                 }
-            } catch (final URISyntaxException | NullPointerException | MediaException ex) {
+            } catch (final URISyntaxException | NullPointerException ex) {
                 log.error("Failed to play notification sound", ex);
             }
         }
     }
 
-    private static synchronized void playNextSound() {
-        MediaPlayer nextSound = soundQueue.poll();
-        if (nextSound != null) {
+    private static synchronized void playNextSound(final double volume) {
+        String nextSoundPath = soundQueue.poll();
+        if (nextSoundPath != null) {
             isPlaying = true;
-            nextSound.play();
+            try {
+                final Media sound = new Media(nextSoundPath);
+                final MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.setVolume(volume / 100);
+                mediaPlayer.setOnEndOfMedia(() -> {
+                    mediaPlayer.dispose();
+                    Platform.runLater(() -> playNextSound(volume));
+                });
+                mediaPlayer.play();
+            } catch (final MediaException ex) {
+                log.error("Failed to play notification sound", ex);
+                isPlaying = false;
+            }
         } else {
             isPlaying = false;
         }
