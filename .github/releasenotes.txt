@@ -6,5 +6,7 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Add new FSD V1 SCO modules and techbroker unlocks
-Fix Cobra Mk V stats
+Update resque ships locations/existence
+Add powerplay totals to odyssey materials tab
+Remove error popup for when you don't own a fleetcarrier
+more memory efficiently queue audio

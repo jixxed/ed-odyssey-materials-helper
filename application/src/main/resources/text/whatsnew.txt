@@ -1,3 +1,10 @@
+Version 2.128
+-------------
+Update resque ships locations/existence
+Add powerplay totals to odyssey materials tab
+Remove error popup for when you don't own a fleetcarrier
+more memory efficiently queue audio
+
 Version 2.127
 -------------
 Add new FSD V1 SCO modules and techbroker unlocks
