@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum MaterialTotalType {
     BLUEPRINT,
+    POWERPLAY,
     IRRELEVANT,
     CHEMICAL,
     CIRCUIT,

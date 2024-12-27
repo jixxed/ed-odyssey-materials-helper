@@ -1201,6 +1201,11 @@
     -fx-label-padding: 2px;
 
 }
+.material-total-value-powerplay-row {
+    -fx-text-fill: #6d3da8;
+    -fx-label-padding: 2px;
+
+}
 
 .wishlist-label {
     -fx-label-padding: 5;

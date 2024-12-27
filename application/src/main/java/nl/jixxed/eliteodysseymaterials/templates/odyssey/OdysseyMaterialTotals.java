@@ -20,9 +20,9 @@ public class OdysseyMaterialTotals extends FlowPane implements Template {
 
     @Override
     public void initComponents() {
-        this.goodsTotal = new OdysseyMaterialTotal(OdysseyStorageType.GOOD, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
+        this.goodsTotal = new OdysseyMaterialTotal(OdysseyStorageType.GOOD, MaterialTotalType.BLUEPRINT, MaterialTotalType.POWERPLAY, MaterialTotalType.IRRELEVANT);
         this.assetsTotal = new OdysseyMaterialTotal(OdysseyStorageType.ASSET, MaterialTotalType.CHEMICAL, MaterialTotalType.CIRCUIT, MaterialTotalType.TECH);
-        this.dataTotal = new OdysseyMaterialTotal(OdysseyStorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.IRRELEVANT);
+        this.dataTotal = new OdysseyMaterialTotal(OdysseyStorageType.DATA, MaterialTotalType.BLUEPRINT, MaterialTotalType.POWERPLAY, MaterialTotalType.IRRELEVANT);
         this.getChildren().addAll(this.goodsTotal, this.assetsTotal, this.dataTotal);
         this.setOrientation(Orientation.HORIZONTAL);
         this.getStyleClass().add(FLOW_PANE_STYLE_CLASS);

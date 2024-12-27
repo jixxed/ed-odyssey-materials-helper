@@ -108,7 +108,6 @@ public class ApplicationState {
     @Setter
     private boolean liveStats = false;
     @Getter
-    @Setter
     private Power power = Power.NONE;
     @Getter
     @Setter
@@ -122,6 +121,8 @@ public class ApplicationState {
 
     @Getter
     private final BooleanProperty fcMaterials = new SimpleBooleanProperty(false);
+    @Getter
+    private final BooleanProperty powerplay = new SimpleBooleanProperty(false);
 
     private ApplicationState() {
 
@@ -136,6 +137,11 @@ public class ApplicationState {
             applicationState = new ApplicationState();
         }
         return applicationState;
+    }
+
+    public void setPower(Power power){
+        this.power = power;
+        powerplay.set(Power.NONE != power);
     }
 
     public GameMode getGameMode() {
@@ -197,7 +203,7 @@ public class ApplicationState {
 
 
     public void resetPowerplay() {
-            this.power = Power.NONE;
+            setPower(Power.NONE);
             this.powerRank = 0;
             this.powerMerits = 0;
             EventService.publish(new PowerplayEvent(Power.NONE, 0L, 0L));
