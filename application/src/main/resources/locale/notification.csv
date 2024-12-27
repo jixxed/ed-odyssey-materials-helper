@@ -23,3 +23,6 @@ notification.hge.title,High Grade Emissions Scanned,,,Señal de Alta Calidad Esc
 notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpected materials:\n{2},,,Lealtad del Sistema: {0}\nEstado de facción: {1}\nMateriales esperados:\n{2},,Filiação do Sistema: {0}\nEstado da Facção: {1}\nMateriais Esperados:\n{2},Принадлежность системы: {0}\nсостояние фракции: {1}\nОжидаемые материалы:\n{2}
 notification.imported.slef.error.text,Failed to import slef,,,Fallo al importar SLEF,,Falha na importação do SLEF,Не получается импортировать slef
 notification.collected.powerplay.material.title,Collected powerplay material,,,,,,Взят материал Powerplay
+notification.capi.title,"Frontier API",,,,,,
+notification.capi.message.auth.fail,"Failed to authenticate. Try to re-authenticate to the API under Settings.",,,,,,
+notification.capi.message.auth.success,"Account linked! You may close the browser window.",,,,,,

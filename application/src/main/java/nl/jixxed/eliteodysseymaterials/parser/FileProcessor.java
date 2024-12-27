@@ -18,10 +18,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Status.Status;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.ReportService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventProcessedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StatusEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -193,19 +190,28 @@ public class FileProcessor {
         }
     }
 
-    public static synchronized void processCargoStateFile(final File file, final JournalEventType journalEventType) {
-        Platform.runLater(() -> MessageHandler.handleMessage(file, journalEventType));
+    public static synchronized void processCargoStateFile(final Optional<File> file, final JournalEventType journalEventType) {
+        file.ifPresent(f -> Platform.runLater(() -> MessageHandler.handleMessage(f, journalEventType)));
     }
 
-    public static synchronized void processOtherStateFile(final File file) {
-        Platform.runLater(() -> MessageHandler.handleStateFileMessage(file));
+    public static synchronized void processOtherStateFile(final Optional<File> file) {
+        file.ifPresent(f -> Platform.runLater(() -> MessageHandler.handleStateFileMessage(f)));
     }
 
-    public static synchronized void processCapiFile(final File file, final JournalEventType journalEventType) {
+    public static synchronized void processCapiFile(final Optional<File> file, final JournalEventType journalEventType) {
         if (journalEventType.equals(JournalEventType.CAPIFLEETCARRIER)) {
-            ApplicationState.getInstance().getFcMaterials().set(true);
+            file.ifPresentOrElse(
+                    f -> {
+                        Platform.runLater(() -> MessageHandler.handleCapiMessage(f, journalEventType));
+                        ApplicationState.getInstance().getFcMaterials().set(true);
+                    },
+                    () -> {
+                        Platform.runLater(MessageHandler::clearCapi);
+                        ApplicationState.getInstance().getFcMaterials().set(false);
+                        Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
+                    });
+
         }
-        Platform.runLater(() -> MessageHandler.handleCapiMessage(file, journalEventType));
     }
 
     public static synchronized void processStatusFile(final File file) {

@@ -13,10 +13,10 @@ public class GameStateWatcher {
     private FileWatcher fileWatcher;
     private boolean allowPolling;
 
-    public void watch(final File folder, final Consumer<File> fileProcessor, final String filename, final boolean allowPolling, final JournalEventType... eventType) {
+    public void watch(final File folder, final Consumer<Optional<File>> fileProcessor, final String filename, final boolean allowPolling, final JournalEventType... eventType) {
         findLatestFile(folder, filename);
         this.allowPolling = allowPolling;
-        this.watchedFile.ifPresent(fileProcessor);
+        this.watchedFile.ifPresent((f) -> fileProcessor.accept(this.watchedFile));
         this.fileWatcher = new FileWatcher(allowPolling).withListener(new FileAdapter() {
             @Override
             public void onCreated(final FileEvent event) {
@@ -28,11 +28,18 @@ public class GameStateWatcher {
                 handleFile(event, fileProcessor);
             }
 
-            private void handleFile(final FileEvent event, final Consumer<File> fileProcessor) {
+            @Override
+            public void onDeleted(FileEvent event) {
+                handleFile(event, fileProcessor);
+            }
+
+            private void handleFile(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
                 final File file = event.getFile();
                 if (file.isFile() && file.getName().equals(filename)) {
                     GameStateWatcher.this.watchedFile = Optional.of(file);
-                    fileProcessor.accept(file);
+                    fileProcessor.accept(Optional.of(file));
+                }else{
+                    fileProcessor.accept(Optional.empty());
                 }
 
             }

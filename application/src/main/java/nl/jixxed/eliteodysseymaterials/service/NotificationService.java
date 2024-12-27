@@ -21,6 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -92,7 +93,7 @@ public class NotificationService {
     public static void showInformation(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
-            log.info("NOTIFY: " + text);
+            log.info("NOTIFY: " + LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, text.getKey(), text.getParameters()));
             final Screen screen = getScreen();
             if (screen != null) {
                 Notifications.create()
@@ -126,7 +127,7 @@ public class NotificationService {
     static void showWarning(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
-            log.warn("WARN: " + text);
+            log.warn("WARN: " + LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, text.getKey(), text.getParameters()));
             final Screen screen = getScreen();
             if (screen != null) {
                 Notifications.create()
@@ -149,7 +150,7 @@ public class NotificationService {
     private static void showError(final NotificationType notificationType, final LocaleService.LocaleString title, final LocaleService.LocaleString text, final boolean silent) {
         final boolean active = PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled());
         if (enabled && active) {
-            log.error("NOTIFY: " + text);
+            log.error("ERROR: " + LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, text.getKey(), text.getParameters()));
             final Screen screen = getScreen();
             if (screen != null) {
                 Notifications.create()

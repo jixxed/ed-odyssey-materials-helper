@@ -8,6 +8,6 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public class CargoEvent implements Event {
+public class CargoEvent implements TimestampedEvent {
     private final String timestamp;
 }

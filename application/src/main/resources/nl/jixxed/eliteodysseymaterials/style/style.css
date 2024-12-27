@@ -842,7 +842,8 @@
     -fx-label-padding: 0.2em;
     -fx-min-height: 1.6em;
     -fx-min-width: 25em;
-    -fx-text-alignment: center;
+    -fx-alignment: center-left;
+    -fx-wrap-text: true;
 }
 
 .settings-link {

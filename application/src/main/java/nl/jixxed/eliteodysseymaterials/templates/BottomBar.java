@@ -221,6 +221,8 @@ class BottomBar extends HBox {
                     this.apiLabel.textProperty().bind(LocaleService.getStringBinding("statusbar.api.last.update", lastModified.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
 
                 }
+            }else{
+                this.apiLabel.textProperty().bind(LocaleService.getStringBinding("blank"));
             }
         });
     }

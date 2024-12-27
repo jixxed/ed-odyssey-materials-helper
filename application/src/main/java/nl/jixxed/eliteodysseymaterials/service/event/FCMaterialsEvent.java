@@ -8,6 +8,6 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public class FCMaterialsEvent implements Event {
+public class FCMaterialsEvent implements TimestampedEvent {
     private final String timestamp;
 }

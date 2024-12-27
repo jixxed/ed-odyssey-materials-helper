@@ -8,6 +8,6 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public class MarketEvent implements Event {
+public class MarketEvent implements TimestampedEvent {
     private final String timestamp;
 }
