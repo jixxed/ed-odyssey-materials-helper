@@ -4,15 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.HorizonsTradeSuggestion;
 import nl.jixxed.eliteodysseymaterials.domain.StarSystem;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,12 +20,20 @@ import java.util.List;
 public class MaterialTraderService {
     private static final List<MaterialTrader> MATERIAL_TRADERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final String TRADERS_FILE_PATH = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "traders.json";
 
     static {
-
-        final InputStream inputStream = MaterialTraderService.class.getResourceAsStream("/materialtrader/traders.json");
-
+        File brokersFile = new File(TRADERS_FILE_PATH);
+        if (brokersFile.exists()) {
+            update(TRADERS_FILE_PATH);
+        } else {
+            final InputStream inputStream = TechnologyBrokerService.class.getResourceAsStream("/materialtrader/traders.json");
+            update(inputStream);
+        }
+    }
+    private static void update(InputStream inputStream) {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            MATERIAL_TRADERS.clear();
             while (reader.ready()) {
                 final String line = reader.readLine();
                 final MaterialTraderJson jsonTrader = OBJECT_MAPPER.readValue(line, MaterialTraderJson.class);
@@ -38,6 +44,13 @@ public class MaterialTraderService {
         }
     }
 
+    public static void update(String file) {
+        try (var stream = new FileInputStream(file)) {
+            update(stream);
+        } catch (final Exception ex) {
+            log.error("Failed to update material traders.", ex);
+        }
+    }
 
     public static MaterialTrader findClosest(final StarSystem currentLocation, final HorizonsStorageType type) {
         final Integer range = PreferencesService.getPreference(PreferenceConstants.HORIZONS_MATERIAL_TRADER_MAX_RANGE, 5000);
@@ -53,8 +66,8 @@ public class MaterialTraderService {
 
     public static List<HorizonsTradeSuggestion> getTradeSuggestions(final HorizonsMaterial horizonsMaterial) {
         return HorizonsMaterial.getAllMaterials().stream()
-                .filter(mat -> mat.getClass().equals(horizonsMaterial.getClass()))//only same class materials can be traded
-                .filter(mat -> mat.getMaterialType() != HorizonsMaterialType.GUARDIAN && mat.getMaterialType() != HorizonsMaterialType.THARGOID)//only human materials can be traded
+                .filter(mat -> mat.getClass().equals(horizonsMaterial.getClass())) // only same class materials can be traded
+                .filter(mat -> mat.getMaterialType() != HorizonsMaterialType.GUARDIAN && mat.getMaterialType() != HorizonsMaterialType.THARGOID) // only human materials can be traded
                 .sorted(getMaterialSorter(horizonsMaterial).thenComparing(Comparator.comparing(HorizonsMaterial::getRarity).reversed()))
                 .map(material -> new HorizonsTradeSuggestion(material, horizonsMaterial, StorageService.getMaterialCount(material), WishlistService.getCurrentWishlistCount(material).max(), WishlistService.getCurrentWishlistCount(horizonsMaterial).max() - StorageService.getMaterialCount(horizonsMaterial)))
                 .filter(HorizonsTradeSuggestion::canCompleteTrade)
@@ -70,7 +83,6 @@ public class MaterialTraderService {
             return Integer.compare(mat1Type, mat2Type);
         };
     }
-
 
     private static Comparator<HorizonsTradeSuggestion> getSuggestionSorter(final HorizonsMaterial horizonsMaterial) {
         return (sug1, sug2) -> {
