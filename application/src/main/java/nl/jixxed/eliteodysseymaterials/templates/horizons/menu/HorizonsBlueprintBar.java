@@ -95,11 +95,14 @@ class HorizonsBlueprintBar extends Accordion {
         HBox.setHgrow(blueprints, Priority.ALWAYS);
         HBox.setHgrow(types, Priority.ALWAYS);
         this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && BlueprintCategory.TECHBROKER.equals(blueprintName.getBlueprintCategory())) {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName
+                    && BlueprintCategory.TECHBROKER.equals(blueprintName.getBlueprintCategory())
+                    && HorizonsBlueprintConstants.getTechbrokerUnlocks().get(blueprintName).containsKey(((HorizonsTechBrokerBlueprint) blueprintClickEvent.getBlueprint()).getHorizonsBlueprintType())) {
                 blueprints.getSelectionModel().select(blueprintName);
                 types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
                 this.setExpandedPane(categoryTitledPane);
             }
+
         }));
 
         //auto select first option
@@ -220,7 +223,7 @@ class HorizonsBlueprintBar extends Accordion {
                 types,
                 recipesEntry.getValue().entrySet().stream().filter(entry -> entry.getValue().values().stream().anyMatch(map -> map.values().stream().anyMatch(bp -> !bp.isPreEngineered()))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).keySet(),
                 recipesEntry.getValue().entrySet().stream()
-                        .map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().entrySet().stream().filter(entry -> entry.getValue().entrySet().stream().anyMatch(horizonsBlueprintGradeHorizonsBlueprintEntry ->!horizonsBlueprintGradeHorizonsBlueprintEntry.getValue().isPreEngineered() )).map(horizonsBlueprintTypeMapEntry -> horizonsBlueprintTypeMapEntry.getKey()).collect(Collectors.toSet())))
+                        .map(horizonsBlueprintNameMapEntry -> Map.entry(horizonsBlueprintNameMapEntry.getKey(), horizonsBlueprintNameMapEntry.getValue().entrySet().stream().filter(entry -> entry.getValue().entrySet().stream().anyMatch(horizonsBlueprintGradeHorizonsBlueprintEntry -> !horizonsBlueprintGradeHorizonsBlueprintEntry.getValue().isPreEngineered())).map(horizonsBlueprintTypeMapEntry -> horizonsBlueprintTypeMapEntry.getKey()).collect(Collectors.toSet())))
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
         );
 
@@ -239,7 +242,7 @@ class HorizonsBlueprintBar extends Accordion {
             }
         });
         this.eventListeners.add(EventService.addListener(true, this, HorizonsBlueprintClickEvent.class, blueprintClickEvent -> {
-            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && sameCategory(recipesEntry.getKey(),blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
+            if (blueprintClickEvent.getBlueprint().getBlueprintName() instanceof HorizonsBlueprintName blueprintName && sameCategory(recipesEntry.getKey(), blueprintName.getBlueprintCategory()) && !blueprintClickEvent.isExperimental()) {
                 blueprints.getSelectionModel().select(blueprintName);
                 if (blueprintClickEvent.getBlueprint() instanceof HorizonsModuleBlueprint) {
                     types.getSelectionModel().select(getBlueprintType(blueprintClickEvent.getBlueprint()));
@@ -274,7 +277,7 @@ class HorizonsBlueprintBar extends Accordion {
     }
 
     private boolean sameCategory(BlueprintCategory menuCategory, BlueprintCategory blueprintCategory) {
-        if(BlueprintCategory.OPTIONAL_INTERNAL.equals(menuCategory) && (BlueprintCategory.OPTIONAL_INTERNAL.equals(blueprintCategory)|| BlueprintCategory.OPTIONAL_MILITARY.equals(blueprintCategory))) {
+        if (BlueprintCategory.OPTIONAL_INTERNAL.equals(menuCategory) && (BlueprintCategory.OPTIONAL_INTERNAL.equals(blueprintCategory) || BlueprintCategory.OPTIONAL_MILITARY.equals(blueprintCategory))) {
             return true;
         }
         return menuCategory.equals(blueprintCategory);

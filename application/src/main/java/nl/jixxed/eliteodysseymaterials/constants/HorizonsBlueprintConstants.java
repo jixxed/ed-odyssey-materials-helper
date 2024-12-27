@@ -70,7 +70,13 @@ public abstract class HorizonsBlueprintConstants {
     }
 
     public static Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, HorizonsBlueprint>> getTechbrokerUnlocks() {
-        return TECHBROKER_UNLOCKS;
+        return TECHBROKER_UNLOCKS.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().entrySet().stream()
+                                .filter(type -> !HorizonsBlueprintType.CAUSTIC_SINK_LAUNCHER.equals(type.getKey()) && !HorizonsBlueprintType.THARGOID_PULSE_NEUTRALISER.equals(type.getKey()))
+                                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                ));
     }
 
     public static final Map<BlueprintCategory, Map<HorizonsBlueprintName, Map<HorizonsBlueprintType, Map<HorizonsBlueprintGrade, HorizonsBlueprint>>>> RECIPES =
@@ -193,7 +199,7 @@ public abstract class HorizonsBlueprintConstants {
     }
 
     public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final HorizonsBlueprintGrade horizonsBlueprintGrade) {
-        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1D) , null);
+        return getCraftability(horizonsBlueprintName, horizonsBlueprintType, horizonsBlueprintGrade == null ? Collections.emptyMap() : Map.of(horizonsBlueprintGrade, 1D), null);
     }
 
     public static Craftability getCraftability(final HorizonsBlueprintName horizonsBlueprintName, final HorizonsBlueprintType horizonsBlueprintType, final Map<HorizonsBlueprintGrade, Double> horizonsBlueprintGrades, Engineer engineer) {
