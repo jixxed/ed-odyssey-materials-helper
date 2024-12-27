@@ -192,7 +192,6 @@ public class CAPIService {
                             // no FC -> disable endpoint
                             Platform.runLater(() -> {
                                 this.fcEnabled.set(false);
-                                NotificationService.showError(NotificationType.ERROR, "Frontier API", "Empty response from FC endpoint. Endpoint disabled. Do you own a FC?");
                             });
                         } else if (response.getCode() == 200) {
                             log.info("Frontier API returned a " + response.getCode() + ". Storing response.");
@@ -220,7 +219,7 @@ public class CAPIService {
                         log.warn("Frontier API returned an error. Disabling service.");
                         Platform.runLater(() -> {
                             this.active.set(false);
-                            NotificationService.showError(NotificationType.ERROR, "Frontier API", "Failed to authenticate. Try to re-authenticate to the API.");
+                            NotificationService.showError(NotificationType.ERROR, "Frontier API", "Failed to authenticate. Try to re-authenticate to the API under Settings.");
                         });
                     }
                 });
