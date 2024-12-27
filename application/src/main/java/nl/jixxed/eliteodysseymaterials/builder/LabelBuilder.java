@@ -24,6 +24,7 @@ public class LabelBuilder {
     private ChangeListener<? super Boolean> hoverPropertyChangeListener;
     private boolean visibility = true;
     private ObservableValue<Boolean> visibilityObservable;
+    private ObservableValue<Boolean> managedObservable;
 
     public static LabelBuilder builder() {
         return new LabelBuilder();
@@ -74,6 +75,11 @@ public class LabelBuilder {
         return this;
     }
 
+    public LabelBuilder withManagedProperty(final ObservableValue<Boolean> observable) {
+        this.managedObservable = observable;
+        return this;
+    }
+
     public DestroyableLabel build() {
         final DestroyableLabel label = new DestroyableLabel();
         label.getStyleClass().addAll(this.styleClasses);
@@ -87,6 +93,11 @@ public class LabelBuilder {
         }
         if (this.nodeOrientation != null) {
             label.setNodeOrientation(this.nodeOrientation);
+        }
+        if (this.managedObservable != null) {
+            label.managedProperty().bind(this.managedObservable);
+            label.managedProperty().bind(this.managedObservable);
+            label.managedProperty().bind(this.managedObservable);
         }
         if (this.hoverPropertyChangeListener != null) {
             label.addChangeListener(label.hoverProperty(), this.hoverPropertyChangeListener);
