@@ -235,12 +235,12 @@ public class JournalWatcher {
 
                 final JsonNode journalMessage = this.objectMapper.readTree(line);
                 final JsonNode eventNode = journalMessage.get("event");
-                if (eventNode.asText().equals("Commander")) {
+                if (eventNode != null && eventNode.asText().equals("Commander")) {
                     return true;
                 }
             }
 
-        } catch (final IOException e) {
+        } catch (final Exception e) {
             log.error("Error checking for commander header in file: " + file.getName(), e);
         }
         return false;
