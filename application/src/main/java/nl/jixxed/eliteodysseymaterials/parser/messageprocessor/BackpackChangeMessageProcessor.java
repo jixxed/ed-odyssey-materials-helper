@@ -67,17 +67,17 @@ public class BackpackChangeMessageProcessor implements MessageProcessor<Backpack
                         .filter(pair -> !(pair.getKey() instanceof Consumable))
                         .forEach(pair -> {
                             if (pair.getKey().isPowerplay()) {
-                                NotificationService.showInformation(NotificationType.POWERPLAY_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.powerplay.material.title"),
-                                        LocaleService.getLocalizedStringForCurrentLocale("notification.collected.powerplay.material.notification",
+                                NotificationService.showInformation(NotificationType.POWERPLAY_PICKUP, LocaleService.LocaleString.of("notification.collected.powerplay.material.title"),
+                                        LocaleService.LocaleString.of("notification.collected.powerplay.material.notification",
                                                 LocaleService.LocalizationKey.of(pair.getKey().getLocalizationKey()),
                                                 StorageService.getMaterialStorage(pair.getKey()).getTotalValue() + pair.getValue())
                                 );
                             } else if ((APPLICATION_STATE.getSoloMode() && OdysseyBlueprintConstants.isNotRelevantWithOverrideAndNotRequiredEngineeringIngredient(pair.getKey()))
                                     || (!APPLICATION_STATE.getSoloMode() && !OdysseyBlueprintConstants.isEngineeringOrBlueprintIngredientWithOverride(pair.getKey()))) {
-                                NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.irrelevant.material.title"), LocaleService.getLocalizedStringForCurrentLocale(pair.getKey().getLocalizationKey()));
+                                NotificationService.showInformation(NotificationType.IRRELEVANT_PICKUP, LocaleService.LocaleString.of("notification.collected.irrelevant.material.title"),LocaleService.LocaleString.of(pair.getKey().getLocalizationKey()));
                             } else if (WishlistService.isMaterialOnWishlist(pair.getKey())) {
-                                NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.title"),
-                                        LocaleService.getLocalizedStringForCurrentLocale("notification.collected.wishlist.material.notification",
+                                NotificationService.showInformation(NotificationType.WISHLIST_PICKUP, LocaleService.LocaleString.of("notification.collected.wishlist.material.title"),
+                                        LocaleService.LocaleString.of("notification.collected.wishlist.material.notification",
                                                 LocaleService.LocalizationKey.of(pair.getKey().getLocalizationKey()),
                                                 StorageService.getMaterialStorage(pair.getKey()).getTotalValue() + pair.getValue(),
                                                 WishlistService.getAllWishlistsCount(pair.getKey()))
