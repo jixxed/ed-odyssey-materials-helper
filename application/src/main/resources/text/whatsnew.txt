@@ -1,3 +1,10 @@
+Version 2.129
+-------------
+Remove techbroker blueprints for Caustic Sink and Pulse Neutralizer
+Retrieve techbroker and trader data from github so it won't require a new release for updates
+Move Spirit of Laelaps to V886 Centauri
+Gracefully handle issue when listing commanders
+
 Version 2.128
 -------------
 Update resque ships locations/existence
