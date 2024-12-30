@@ -21,14 +21,14 @@ import java.util.List;
 public class TechnologyBrokerService {
     private static final List<TechnologyBroker> TECHNOLOGY_BROKERS = new ArrayList<>();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String BROKERS_FILE_PATH = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "brokers.json";
+    private static final String BROKERS_FILE_PATH = OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "brokers.jsonl";
 
     static {
         File brokersFile = new File(BROKERS_FILE_PATH);
         if (brokersFile.exists()) {
             update(BROKERS_FILE_PATH);
         } else {
-            final InputStream inputStream = TechnologyBrokerService.class.getResourceAsStream("/technologybroker/brokers.json");
+            final InputStream inputStream = TechnologyBrokerService.class.getResourceAsStream("/technologybroker/brokers.jsonl");
             update(inputStream);
         }
     }

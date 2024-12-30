@@ -27,12 +27,12 @@ public class FileSyncService {
 
     private static final List<SyncItem> SYNC_ITEMS = new ArrayList<>();
 
-    public static final String BROKERS_URL = "https://raw.githubusercontent.com/jixxed/ed-odyssey-materials-helper/refs/heads/master/application/src/main/resources/technologybroker/brokers.json";
-    public static final String TRADERS_URL = "https://raw.githubusercontent.com/jixxed/ed-odyssey-materials-helper/refs/heads/master/application/src/main/resources/materialtrader/traders.json";
+    public static final String BROKERS_URL = "https://raw.githubusercontent.com/jixxed/ed-odyssey-materials-helper/refs/heads/master/application/src/main/resources/technologybroker/brokers.jsonl";
+    public static final String TRADERS_URL = "https://raw.githubusercontent.com/jixxed/ed-odyssey-materials-helper/refs/heads/master/application/src/main/resources/materialtrader/traders.jsonl";
 
     static {
-        SYNC_ITEMS.add(new SyncItem(BROKERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "brokers.json", TechnologyBrokerService::update));
-        SYNC_ITEMS.add(new SyncItem(TRADERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "traders.json", MaterialTraderService::update));
+        SYNC_ITEMS.add(new SyncItem(BROKERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "brokers.jsonl", TechnologyBrokerService::update));
+        SYNC_ITEMS.add(new SyncItem(TRADERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "traders.jsonl", MaterialTraderService::update));
     }
 
     public static void init() {
