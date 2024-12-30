@@ -1,3 +1,12 @@
+Version 2.130
+-------------
+Improved visualization of changed modules in the shipbuilder
+- Shows if the module has been changed by highlighting it in blue
+- Shows if only the experimental effect has been changed by highlighting it in blue
+- Shows a changed icon in the bottom left of the module
+Disabled SCO drives, lifesupport and sensors buttons that are of different sizes than the slot, to match ingame
+Added missing size 6 Luxury cabins to orca, dolphin, beluga
+
 Version 2.129
 -------------
 Remove techbroker blueprints for Caustic Sink and Pulse Neutralizer
