@@ -75,7 +75,7 @@ public class PassengerCabin extends OptionalModule {
     }
     @Override
     public boolean isAllowed(ShipType shipType) {
-        if(LUXURY_CLASS_PASSENGER_CABIN_5_B.equals(this)){
+        if(LUXURY_CLASS_PASSENGER_CABIN_5_B.equals(this) || LUXURY_CLASS_PASSENGER_CABIN_6_B.equals(this)) {
             return (shipType.equals(ShipType.DOLPHIN) || shipType.equals(ShipType.BELUGA_LINER) || shipType.equals(ShipType.ORCA));
         }
         return true;
