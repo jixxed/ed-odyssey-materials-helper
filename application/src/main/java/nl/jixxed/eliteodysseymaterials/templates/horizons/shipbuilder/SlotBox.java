@@ -11,6 +11,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -54,7 +55,7 @@ class SlotBox extends StackPane {
     private final ModulesLayer modulesLayer;
     private final DestroyableLabel emptyLabel;
     private final DestroyableLabel module;
-    private final DestroyableLabel blueprints;
+    private final BlueprintsTextFlow blueprints;
     private final DestroyableLabel size;
     private final VBox texts;
     private final VBox sizeBox;
@@ -65,6 +66,7 @@ class SlotBox extends StackPane {
     private final StackPane layer2;
     private final DestroyableLabel hardpointGroupLabel;
     private DestroyableResizableImageView power;
+    private DestroyableResizableImageView changedImage;
     private final VBox powerBox;
     IntegerProperty maxGrade = new SimpleIntegerProperty(0);
     private static final DataFormat customFormat =
@@ -87,6 +89,9 @@ class SlotBox extends StackPane {
     private Slider progressSlider;
     private List<ToggleButton> toggleButtonsRank;
     private ToggleGroup toggleGroupRank;
+    private Button restore;
+    private Button save;
+    private Button clear;
 
     SlotBox(final ModulesLayer modulesLayer, final Slot slot) {
         this.setFocusTraversable(true);
@@ -117,31 +122,39 @@ class SlotBox extends StackPane {
         this.emptyLabel = LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-label-empty").withText(LocaleService.getStringBinding("ship.module.slot.empty")).build();
         this.size = LabelBuilder.builder().withStyleClass((SlotType.HARDPOINT.equals(slot.getSlotType())) ? "shipbuilder-slots-slotbox-size-hardpoint-label" : "shipbuilder-slots-slotbox-size-label").withNonLocalizedText(slot.getSlotSizeName()).build();
 
-
+        this.changedImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("shipbuilder-slots-slotbox-changed-image")
+                .withImage("/images/ships/icons/changed.png")
+                .build();
         //testing
         this.module = LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-module-label")/*.withText(LocaleService.getStringBinding(Optional.ofNullable(slot.getShipModule()).map(mod -> mod.getName().getLocalizationKey()).orElse("blank")))*/.build();
-        this.blueprints = LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-blueprints-label").withText(
-                LocaleService.getStringBinding(() -> Optional.ofNullable(slot.getShipModule()).map(mod -> {
-                    final String mods = mod.getModifications().stream()
-                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey()))
-                            .collect(Collectors.joining(", "));
-                    final String effects = mod.getExperimentalEffects().stream()
-                            .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey()))
-                            .collect(Collectors.joining(", "));
-                    return mods + ((mods.isEmpty() || effects.isEmpty()) ? "" : ", " + effects);
-                }).orElse(""))
-        ).build();
+        this.blueprints = new BlueprintsTextFlow();
+//        LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-blueprints-label").withText(
+//                LocaleService.getStringBinding(() -> Optional.ofNullable(slot.getShipModule()).map(mod -> {
+//                    final String mods = mod.getModifications().stream()
+//                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey()))
+//                            .collect(Collectors.joining(", "));
+//                    final String effects = mod.getExperimentalEffects().stream()
+//                            .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey()))
+//                            .collect(Collectors.joining(", "));
+//                    return mods + ((mods.isEmpty() || effects.isEmpty()) ? "" : ", " + effects);
+//                }).orElse(""))
+//        ).build();
         updateBlueprints(slot.getShipModule(), slot.getOldShipModule());
 
         this.texts.getChildren().addAll(this.iconBox, this.module, this.blueprints);
 
+        final BorderPane pane = new BorderPane();
+        pane.getStyleClass().add("shipbuilder-slots-slotbox-changed-image-pane");
+        pane.setCenter(this.changedImage);
         if (SlotType.HARDPOINT.equals(slot.getSlotType())) {
             hardpointGroupLabel = LabelBuilder.builder().withStyleClass("shipbuilder-slots-slotbox-hardpoint-group-label").withText(LocaleService.getStringBinding(this.slot.getHardpointGroup().getLocalizationKey())).build();
-            final VBox vBox = BoxBuilder.builder().withNodes(hardpointGroupLabel, this.size).buildVBox();
+            final VBox vBox = BoxBuilder.builder().withNodes(hardpointGroupLabel, this.size, pane).buildVBox();
             layer1.getChildren().add(vBox);
         } else {
-            layer1.getChildren().add(this.size);
             hardpointGroupLabel = LabelBuilder.builder().build();
+            final VBox vBox = BoxBuilder.builder().withNodes(this.size, pane).buildVBox();
+            layer1.getChildren().add(vBox);
         }
         layer1.getChildren().addAll(new Separator(Orientation.VERTICAL), sizeBox, (this.getSlot().getSlotType().equals(SlotType.HARDPOINT)) ? mountingBox : classBox, this.texts, powerBox);
 
@@ -528,45 +541,57 @@ class SlotBox extends StackPane {
     }
 
     private boolean isSimilar(ShipModule shipModule, ShipModule oldModule) {
-        return shipModule.getName().getBlueprintGroup().equals(oldModule.getName().getBlueprintGroup()) &&
-                Objects.equals(shipModule.getId(), oldModule.getId()) &&
-                shipModule.getAllowedBlueprints().size() == oldModule.getAllowedBlueprints().size() &&
-                shipModule.getAllowedExperimentalEffects().size() == oldModule.getAllowedExperimentalEffects().size() &&
-                shipModule.getAllowedBlueprints().containsAll(oldModule.getAllowedBlueprints()) &&
-                shipModule.getAllowedExperimentalEffects().containsAll(oldModule.getAllowedExperimentalEffects());
+        return (shipModule == null && oldModule == null) || (shipModule != null && shipModule.isSame(oldModule));
+//                shipModule.getName().getBlueprintGroup().equals(oldModule.getName().getBlueprintGroup()) &&
+//                Objects.equals(shipModule.getId(), oldModule.getId()) &&
+//                shipModule.getAllowedBlueprints().size() == oldModule.getAllowedBlueprints().size() &&
+//                shipModule.getAllowedExperimentalEffects().size() == oldModule.getAllowedExperimentalEffects().size() &&
+//                shipModule.getAllowedBlueprints().containsAll(oldModule.getAllowedBlueprints()) &&
+//                shipModule.getAllowedExperimentalEffects().containsAll(oldModule.getAllowedExperimentalEffects());
     }
 
     private void updateBlueprints(ShipModule shipModule, ShipModule oldShipModule) {
-
-        this.blueprints.textProperty().bind(
-                LocaleService.getStringBinding(() -> Optional.ofNullable(shipModule).map(mod -> {
-                    final String mods = mod.getModifications().stream()
-                            .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey(true)))
-                            .collect(Collectors.joining(", "));
-                    final String effects = mod.getExperimentalEffects().stream()
-                            .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey(true)))
-                            .collect(Collectors.joining(", "));
-                    return mods + ((mods.isEmpty() || effects.isEmpty()) ? "" : ", " + effects);
-                }).orElse(""))
-        );
-        if (similarModules(shipModule, oldShipModule)) {
-            if (!this.blueprints.getStyleClass().contains("shipbuilder-slots-slotbox-blueprints-label-gold")) {
-                this.blueprints.getStyleClass().add("shipbuilder-slots-slotbox-blueprints-label-gold");
+        this.blueprints.setBlueprints(LocaleService.getStringBinding(() -> Optional.ofNullable(shipModule).map(mod ->
+                mod.getModifications().stream()
+                        .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getModification().getLocalizationKey(true)))
+                        .collect(Collectors.joining(", "))
+        ).orElse("")));
+        this.blueprints.setEffects(LocaleService.getStringBinding(() -> Optional.ofNullable(shipModule).map(mod ->
+                (!mod.getExperimentalEffects().isEmpty() ? ", " : "") + mod.getExperimentalEffects().stream()
+                        .map(effect -> LocaleService.getLocalizedStringForCurrentLocale(effect.getLocalizationKey(true)))
+                        .collect(Collectors.joining(", "))
+        ).orElse("")));
+        if (shipModule != null) {
+            final boolean sameModule = shipModule.isSameSize(oldShipModule) && shipModule.isSameClass(oldShipModule) && (!(shipModule instanceof ExternalModule externalModule) || externalModule.isSameMounting(oldShipModule));
+            final boolean sameModifications = shipModule.isSameModifications(oldShipModule);
+            if (sameModule && sameModifications) {
+                this.blueprints.setBlueprintsStyle("shipbuilder-slots-slotbox-blueprints-label-gold");
+            } else {
+                this.blueprints.setBlueprintsStyle("shipbuilder-slots-slotbox-blueprints-label-blue");
             }
-        } else {
-            this.blueprints.getStyleClass().removeAll("shipbuilder-slots-slotbox-blueprints-label-gold");
+            if (sameModule && sameModifications && shipModule.isSameExperimentalEffects(oldShipModule)) {
+                this.blueprints.setEffectsStyle("shipbuilder-slots-slotbox-blueprints-label-gold");
+            } else {
+                this.blueprints.setEffectsStyle("shipbuilder-slots-slotbox-blueprints-label-blue");
+            }
         }
+        final boolean isSimilar = similarModules(shipModule, oldShipModule);
+        this.changedImage.setVisible(!isSimilar);
     }
 
     private static boolean similarModules(ShipModule shipModule, ShipModule oldShipModule) {
-        return shipModule != null && oldShipModule != null && shipModule.getId().equals(oldShipModule.getId()) && matchingExperimentalEffects(shipModule, oldShipModule) && matchingBlueprints(shipModule, oldShipModule);
+        return (shipModule == null && oldShipModule == null) || (shipModule != null && shipModule.isSame(oldShipModule));//shipModule != null && oldShipModule != null && shipModule.getId().equals(oldShipModule.getId()) && matchingExperimentalEffects(shipModule, oldShipModule) && matchingBlueprints(shipModule, oldShipModule);
     }
 
     private static boolean matchingExperimentalEffects(ShipModule shipModule, ShipModule oldShipModule) {
+        if (shipModule.getExperimentalEffects().size() == 0 && oldShipModule.getExperimentalEffects().size() == 0)
+            return true;
         return new HashSet<>(shipModule.getExperimentalEffects()).containsAll(oldShipModule.getExperimentalEffects());
     }
 
     private static boolean matchingBlueprints(ShipModule shipModule, ShipModule oldShipModule) {
+        if (shipModule.getModifications().size() == 0 && oldShipModule.getModifications().size() == 0)
+            return true;
         boolean matching = shipModule.getModifications().size() == oldShipModule.getModifications().size();
         if (matching) {
             for (Modification modification : shipModule.getModifications()) {
@@ -805,7 +830,7 @@ class SlotBox extends StackPane {
         if (SlotType.HARDPOINT.equals(slot.getSlotType())) {
             addHardpointGroupButtons(content);
         }
-        addButtons(content);
+        addChangedButtons(content);
         //add engineering
         if (this.slot.isOccupied() && !this.slot.getShipModule().isLegacy()) {
             addEngineering(content);
@@ -848,32 +873,36 @@ class SlotBox extends StackPane {
         content.getChildren().add(BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(label, box).buildVBox());
     }
 
-    private void addButtons(VBox content) {
+    private void addChangedButtons(VBox content) {
         Label label = LabelBuilder.builder().withStyleClass("ships-modules-buttons-label").withText(LocaleService.getStringBinding("ship.module.buttons.label")).build();
-        final Button restore = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.restore")).withOnAction(event -> {
-            this.slot.setShipModule(this.slot.getOldShipModule().Clone());
+        restore = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.restore")).withOnAction(event -> {
+            this.slot.setShipModule(this.slot.getOldShipModule() == null ? null : this.slot.getOldShipModule().Clone());
             refresh();
             notifyChanged();
             close();
         }).build();
-        final Button save = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.save")).withOnAction(event -> {
-            this.slot.setOldShipModule(this.slot.getShipModule().Clone());
+        save = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.save")).withOnAction(event -> {
+            this.slot.setOldShipModule(this.slot.getShipModule() == null ? null : this.slot.getShipModule().Clone());
             refresh();
             close();
         }).build();
-        final Button clear = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.clear")).withOnAction(event -> {
+        clear = ButtonBuilder.builder().withText(LocaleService.getStringBinding("ship.module.clear")).withOnAction(event -> {
             this.slot.setOldShipModule(null);
             refresh();
             close();
         }).build();
-        restore.setDisable(this.slot.getOldShipModule() == null || this.slot.getOldShipModule().getModuleSize().intValue() > this.slot.getSlotSize());
-        save.setDisable(this.slot.getShipModule() == null);
-        clear.setDisable(this.slot.getOldShipModule() == null);
+        setChangedButtonsState();
         restore.setFocusTraversable(false);
         save.setFocusTraversable(false);
         clear.setFocusTraversable(false);
         HBox box = BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(label, new GrowingRegion(), restore, save, clear).buildHBox();
         content.getChildren().add(box);
+    }
+
+    private void setChangedButtonsState() {
+        restore.setDisable(isSimilar(this.slot.getShipModule(), this.slot.getOldShipModule()));
+        save.setDisable(isSimilar(this.slot.getShipModule(), this.slot.getOldShipModule()));
+        clear.setDisable(this.slot.getOldShipModule() == null);
     }
 
     private void addSearch(VBox content, final List<SlotBoxEntry> entries) {
@@ -964,6 +993,7 @@ class SlotBox extends StackPane {
                                             }
                                             notifyChanged();
                                             refresh();
+                                            setChangedButtonsState();
                                         }).build();
                                 button.setFocusTraversable(false);
                                 button.selectedProperty().set((experimental ? shipModule.getExperimentalEffects().contains(horizonsBlueprintType) : shipModule.getModifications().stream().anyMatch(modification -> modification.getModification().equals(horizonsBlueprintType))));
@@ -1093,11 +1123,25 @@ class SlotBox extends StackPane {
     public void refresh() {
         final Optional<ShipModule> shipModule = Optional.ofNullable(this.slot.getShipModule());
         this.module.textProperty().bind(shipModule.map(mod -> LocaleService.getStringBinding(mod.getName().getLocalizationKey())).orElse(LocaleService.getStringBinding("blank")));
+        shipModule.ifPresent(
+                module -> {
+                    final boolean sameSize = module.isSameSize(this.slot.getOldShipModule());
+                    final boolean sameClass = module.isSameClass(this.slot.getOldShipModule());
+                    final boolean sameMounting = !(module instanceof ExternalModule externalModule) || externalModule.isSameMounting(this.slot.getOldShipModule());
+                    if (sameSize && sameClass && sameMounting) {
+                        this.module.getStyleClass().removeAll("shipbuilder-slots-slotbox-label-blue");
+                    } else {
+                        this.module.getStyleClass().add("shipbuilder-slots-slotbox-label-blue");
+                    }
+                });
+
         if (shipModule.isEmpty()) {
             hideContents();
         } else {
             showContents(shipModule.get(), this.slot.getOldShipModule());
         }
+        final boolean isSame = similarModules(this.slot.getShipModule(), this.slot.getOldShipModule());
+        this.changedImage.setVisible(!isSame);
     }
 
     public void close() {

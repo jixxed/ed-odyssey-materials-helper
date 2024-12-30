@@ -547,4 +547,31 @@ public abstract class ShipModule implements Serializable {
     public String toString() {
         return LocaleService.getLocalizedStringForCurrentLocale(getLocalizationKey()) + " " + getModuleSize().intValue() + getModuleClass().name();
     }
+
+    public boolean isSame(ShipModule other){
+        if(other == null){
+            return false;
+        }
+        //compare this module name, size, class, modifications, experimental effects
+        return this.getName().equals(other.getName())
+                && this.getModuleSize().equals(other.getModuleSize())
+                && this.getModuleClass().equals(other.getModuleClass())
+                && isSameModifications(other)
+                && isSameExperimentalEffects(other);
+    }
+
+    public boolean isSameSize(ShipModule other) {
+        return other != null && this.getModuleSize() == other.getModuleSize();
+    }
+    public boolean isSameClass(ShipModule other) {
+        return other != null && this.getModuleClass() == other.getModuleClass();
+    }
+    public boolean isSameModifications(ShipModule other) {
+        return other != null && this.modifications.size() == other.getModifications().size()
+                && new HashSet<>(this.getModifications()).containsAll(other.getModifications());
+    }
+    public boolean isSameExperimentalEffects(ShipModule other) {
+        return other != null && this.experimentalEffects.size() == other.getExperimentalEffects().size()
+                && new HashSet<>(this.getExperimentalEffects()).containsAll(other.getExperimentalEffects());
+    }
 }

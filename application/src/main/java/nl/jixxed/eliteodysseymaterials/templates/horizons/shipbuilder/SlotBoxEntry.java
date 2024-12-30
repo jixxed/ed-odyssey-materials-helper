@@ -166,7 +166,7 @@ public class SlotBoxEntry extends VBox {
 
     private static boolean isButtonDisabled(SlotBox slotBox, ShipModule shipModule) {
         return switch (shipModule.getName()){
-            case FRAME_SHIFT_DRIVE_OVERCHARGE, FRAME_SHIFT_DRIVE_OVERCHARGE_PRE, SENSORS, LIFE_SUPPORT -> slotBox.getSlot().getSlotSize() == shipModule.getModuleSize().intValue();
+            case FRAME_SHIFT_DRIVE_OVERCHARGE, FRAME_SHIFT_DRIVE_OVERCHARGE_PRE, SENSORS, LIFE_SUPPORT -> slotBox.getSlot().getSlotSize() != shipModule.getModuleSize().intValue();
             default -> slotBox.getSlot().getSlotSize() < shipModule.getModuleSize().intValue();
         };
 
@@ -190,12 +190,13 @@ public class SlotBoxEntry extends VBox {
     }
 
     private boolean isSimilar(ShipModule shipModule, ShipModule clone) {
-        final boolean b = shipModule.getName().getBlueprintGroup().equals(clone.getName().getBlueprintGroup()) &&
-                shipModule.isPreEngineered() == clone.isPreEngineered() &&
-                shipModule.getAllowedBlueprints().size() == clone.getAllowedBlueprints().size() &&
-                shipModule.getAllowedExperimentalEffects().size() == clone.getAllowedExperimentalEffects().size() &&
-                shipModule.getAllowedBlueprints().containsAll(clone.getAllowedBlueprints()) &&
-                shipModule.getAllowedExperimentalEffects().containsAll(clone.getAllowedExperimentalEffects());
+        final boolean b = shipModule.isSame(clone);
+//                shipModule.getName().getBlueprintGroup().equals(clone.getName().getBlueprintGroup()) &&
+//                shipModule.isPreEngineered() == clone.isPreEngineered() &&
+//                shipModule.getAllowedBlueprints().size() == clone.getAllowedBlueprints().size() &&
+//                shipModule.getAllowedExperimentalEffects().size() == clone.getAllowedExperimentalEffects().size() &&
+//                shipModule.getAllowedBlueprints().containsAll(clone.getAllowedBlueprints()) &&
+//                shipModule.getAllowedExperimentalEffects().containsAll(clone.getAllowedExperimentalEffects());
         log.debug("similar:" + b);
         return b;
     }

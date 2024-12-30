@@ -32,4 +32,15 @@ public abstract class ExternalModule extends ShipModule {
     public String getMountingClarifier(){
         return Mounting.NA.equals(this.mounting) ? "" : " (" + this.mounting.getShortName() + ")";
     }
+
+    @Override
+    public boolean isSame(ShipModule other){
+        //compare this module name, size, class, modifications, experimental effects
+        return super.isSame(other) && other instanceof ExternalModule externalModule &&
+                isSameMounting(externalModule);
+    }
+
+    public boolean isSameMounting(ShipModule other) {
+        return other instanceof ExternalModule externalModule && this.getMounting() == externalModule.getMounting();
+    }
 }
