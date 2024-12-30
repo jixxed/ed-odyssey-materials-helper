@@ -631,11 +631,19 @@ class SlotBox extends StackPane {
         }
     }
 
+    private boolean isSizeButtonEnabled(ShipModule shipModule) {
+        return switch (shipModule.getName()){
+            case FRAME_SHIFT_DRIVE_OVERCHARGE, FRAME_SHIFT_DRIVE_OVERCHARGE_PRE, SENSORS, LIFE_SUPPORT -> false;
+            default -> true;
+        };
+
+    }
     private void updateSize(ShipModule shipModule) {
         if (shipModule != null) {
             if (!isCurrentShip()) {
-                this.sizeUp.setVisible(shipModule.getModuleSize().intValue() < slot.getSlotSize() && shipModule.findHigherSize().map(biggerModule -> biggerModule.getModuleSize().intValue() <= slot.getSlotSize()).orElse(false));
-                this.sizeDown.setVisible(shipModule.findHighestSize(Math.min(this.slot.getSlotSize(), shipModule.getModuleSize().intValue())).flatMap(ShipModule::findLowerSize).isPresent());
+
+                this.sizeUp.setVisible(isSizeButtonEnabled(shipModule) && shipModule.getModuleSize().intValue() < slot.getSlotSize() && shipModule.findHigherSize().map(biggerModule -> biggerModule.getModuleSize().intValue() <= slot.getSlotSize()).orElse(false));
+                this.sizeDown.setVisible(isSizeButtonEnabled(shipModule) && shipModule.findHighestSize(Math.min(this.slot.getSlotSize(), shipModule.getModuleSize().intValue())).flatMap(ShipModule::findLowerSize).isPresent());
             }
             final int min = Math.min(
                     shipModule.findHighestSize(this.slot.getSlotSize()).map(highestModule -> highestModule.getModuleSize().intValue()).orElse(0),
