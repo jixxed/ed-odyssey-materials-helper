@@ -119,7 +119,7 @@ public class SlotBoxEntry extends VBox {
                                             }
 //                                    HBox.setHgrow(button, Priority.ALWAYS);
                                             button.setFocusTraversable(false);
-                                            button.setDisable(slotBox.getSlot().getSlotSize() < shipModule.getModuleSize().intValue());
+                                            button.setDisable(isButtonDisabled(slotBox, shipModule));
                                             if(shipModule instanceof ShieldGenerator){
                                                 double maxMass = ApplicationState.getInstance().getShip().getMaximumMass();
                                                 final double maxMassForModule = (double)shipModule.getAttributeValue(HorizonsModifier.SHIELDGEN_MAXIMUM_MASS);
@@ -161,6 +161,14 @@ public class SlotBoxEntry extends VBox {
         final VBox vBox = BoxBuilder.builder().withStyleClass("ships-modules-item").withNodes(BoxBuilder.builder().withNodes(new GrowingRegion(), this.name, new GrowingRegion()).buildHBox()).buildVBox();
         vBox.getChildren().addAll(this.options);
         this.getChildren().add(vBox);
+
+    }
+
+    private static boolean isButtonDisabled(SlotBox slotBox, ShipModule shipModule) {
+        return switch (shipModule.getName()){
+            case FRAME_SHIFT_DRIVE_OVERCHARGE, FRAME_SHIFT_DRIVE_OVERCHARGE_PRE, SENSORS, LIFE_SUPPORT -> slotBox.getSlot().getSlotSize() == shipModule.getModuleSize().intValue();
+            default -> slotBox.getSlot().getSlotSize() < shipModule.getModuleSize().intValue();
+        };
 
     }
 
