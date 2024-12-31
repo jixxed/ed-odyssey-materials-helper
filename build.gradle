@@ -24,18 +24,14 @@ wrapper {
     gradleVersion "8.10.2"
 }
 
-task copyInstaller {
-    project.ext { packageType = "msi" }
-    copy {
-        from 'bootstrap/build/jpackage/'
-        into 'output'
-        include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
-        rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper.Auto.Updater-' + version + '.msi')
-    }
+tasks.register('copyInstaller', Copy) {
+    from 'bootstrap/build/jpackage/'
+    into 'output'
+    include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
+    rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper.Auto.Updater-' + version + '.msi')
 }
 
 tasks.register('copyDeb', Copy) {
-    project.ext { packageType = "deb" }
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
@@ -43,7 +39,6 @@ tasks.register('copyDeb', Copy) {
 }
 
 tasks.register('copyRpm', Copy) {
-    project.ext { packageType = "rpm" }
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm')
@@ -67,7 +62,7 @@ tasks.register('makeLinuxPortable', Zip) {
 }
 
 tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
-    from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper'
+    from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.linux.autoupdater.zip'
