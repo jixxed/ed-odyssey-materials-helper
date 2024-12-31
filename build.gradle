@@ -26,7 +26,6 @@ wrapper {
 
 task copyInstaller {
     project.ext { packageType = "msi" }
-    dependsOn("createReleaseMsi")
     copy {
         from 'bootstrap/build/jpackage/'
         into 'output'
@@ -37,7 +36,6 @@ task copyInstaller {
 
 tasks.register('copyDeb', Copy) {
     project.ext { packageType = "deb" }
-    dependsOn("createReleaseDeb")
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
@@ -46,7 +44,6 @@ tasks.register('copyDeb', Copy) {
 
 tasks.register('copyRpm', Copy) {
     project.ext { packageType = "rpm" }
-    dependsOn("createReleaseRpm")
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm')

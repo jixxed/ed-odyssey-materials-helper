@@ -43,7 +43,7 @@ application {
     mainClass = "nl.jixxed.bootstrap.Main"
 }
 def packageType = System.getProperty("packageType") ?: 'msi' // default to windows
-ext { packageType = "packageType" }
+
 jlink {
     addExtraDependencies("javafx")
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-man-pages')
@@ -60,8 +60,8 @@ jlink {
         }
     }
     jpackage {
-        installerType = project.ext.packageType
-        if (project.ext.packageType.equals('msi')) {
+        installerType = packageType
+        if (packageType == 'msi') {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.ico']
             installerOptions = [
                     '--description', 'Installer for ED Odyssey Materials Helper',
@@ -73,7 +73,7 @@ jlink {
                     '--win-menu', '--win-shortcut', '--win-menu-group', 'Odyssey Material Helper'
             ] as List<String>
         }
-        if (project.ext.packageType.equals('deb')) {
+        if (packageType == 'deb') {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
@@ -85,7 +85,7 @@ jlink {
                     '--linux-shortcut'
             ] as List<String>
         }
-        if (project.ext.packageType.equals('rpm')) {
+        if (packageType == 'rpm') {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
