@@ -24,7 +24,8 @@ wrapper {
     gradleVersion "8.10.2"
 }
 
-tasks.register('copyInstaller', Copy) {
+tasks.register('copyMsi', Copy) {
+    dependsOn(":bootstrap:jpackage")
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
@@ -71,12 +72,12 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
 
 tasks.register("createRelease") {
     dependsOn subprojects.jpackage
-    finalizedBy makePortable, copyInstaller
+    finalizedBy makePortable, copyMsi
 }
 
 tasks.register("createReleaseSigned") {
     dependsOn subprojects.jpackageSigned
-    finalizedBy makePortable, copyInstaller
+    finalizedBy makePortable, copyMsi
 }
 
 tasks.register("createPortableRelease") {
