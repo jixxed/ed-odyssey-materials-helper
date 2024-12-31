@@ -21,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Consumer;
@@ -150,11 +149,12 @@ public class JournalWatcher {
                     .filter(file -> file.getName().endsWith(AppConstants.JOURNAL_FILE_SUFFIX))
                     .filter(this::isNewerThanTwoYears)
                     .filter(this::hasFileHeader)
+                    .filter(this::hasCommanderHeader)
                     .filter(this::isSelectedCommander)
                     .max(Comparator.comparingLong(this::getFileTimestamp));
             log.info("Registered watched file: " + this.currentlyWatchedFile.map(File::getName).orElse("No file"));
         } catch (final NullPointerException ex) {
-            log.error("Failed to Registered watched file at " + folder.getAbsolutePath());
+            log.error("Failed to Registered watched file at " + folder.getAbsolutePath(), ex);
         }
     }
 
@@ -248,9 +248,19 @@ public class JournalWatcher {
 
     private synchronized boolean hasFileHeader(final File file) {
         try (final Scanner scanner = new Scanner(file, StandardCharsets.UTF_8)) {
-            return scanner.hasNext();
-        } catch (final NoSuchElementException | IOException e) {
-            log.error("Error checking for file header", e);
+
+            if (scanner.hasNext()) {
+                final String line = scanner.nextLine();
+
+                final JsonNode journalMessage = this.objectMapper.readTree(line);
+                final JsonNode eventNode = journalMessage.get("event");
+                if (eventNode != null && eventNode.asText().equals("Fileheader")) {
+                    return true;
+                }
+            }
+
+        } catch (final Exception e) {
+            log.error("Error checking for file header in file: " + file.getName(), e);
         }
         return false;
     }
