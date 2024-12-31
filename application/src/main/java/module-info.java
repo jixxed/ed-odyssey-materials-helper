@@ -39,6 +39,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires org.checkerframework.checker.qual;
     requires com.google.code.findbugs.jsr305;
     requires sentry;
+    requires oslib.master.SNAPSHOT;
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;

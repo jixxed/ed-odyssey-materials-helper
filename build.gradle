@@ -1,4 +1,4 @@
-import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import org.gradle.internal.os.OperatingSystem;
 
 buildscript {
     repositories {
@@ -24,29 +24,36 @@ wrapper {
     gradleVersion "8.10.2"
 }
 
-tasks.register('copyInstaller', Copy) {
-    dependsOn ":bootstrap:jpackage"
-    from 'bootstrap/build/jpackage/'
-    into 'output'
-    include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
-    rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper.Auto.Updater-' + version + '.msi')
+task copyInstaller {
+    project.ext { packageType = "msi" }
+    dependsOn("createReleaseMsi")
+    copy {
+        from 'bootstrap/build/jpackage/'
+        into 'output'
+        include('Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
+        rename('Elite Dangerous Odyssey Materials Helper-' + version + '.msi', 'Elite.Dangerous.Odyssey.Materials.Helper.Auto.Updater-' + version + '.msi')
+    }
 }
 
 tasks.register('copyDeb', Copy) {
+    project.ext { packageType = "deb" }
+    dependsOn("createReleaseDeb")
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
     rename('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.deb')
 }
 
-task copyRpm(type: Copy) {
+tasks.register('copyRpm', Copy) {
+    project.ext { packageType = "rpm" }
+    dependsOn("createReleaseRpm")
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm')
     rename('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm', 'elite-dangerous-odyssey-materials-helper-auto-updater_' + version + '.rpm')
 }
 
-task makePortable(type: Zip) {
+tasks.register('makePortable', Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
@@ -54,12 +61,20 @@ task makePortable(type: Zip) {
     destinationDirectory = file('/output/')
 }
 
-task makeLinuxPortable(type: Zip) {
+tasks.register('makeLinuxPortable', Zip) {
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
     archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.linux.zip'
-    destinationDirectory  = file('./output/')
+    destinationDirectory = file('./output/')
+}
+
+tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
+    from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper'
+    include '*'
+    include '**/*' //to include contents of a folder present inside Reports directory
+    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.autoupdater.zip'
+    destinationDirectory = file('./output/')
 }
 
 tasks.register("createRelease") {
@@ -79,11 +94,16 @@ tasks.register("createPortableRelease") {
 
 tasks.register("createReleaseLinux") {
     dependsOn subprojects.jpackage
-    finalizedBy makeLinuxPortable, copyDeb
+    finalizedBy makeLinuxPortable, makeLinuxAutoUpdaterPortable, copyDeb
+}
+
+tasks.register("createReleaseLinuxRpm") {
+    dependsOn(":bootstrap:jpackage")
+    finalizedBy copyRpm
 }
 
 
-OperatingSystem os = DefaultNativePlatform.currentOperatingSystem
+OperatingSystem os = OperatingSystem.current()
 def arch = System.getProperty("os.arch")
 def platform = 'linux'
 if (os.isWindows()) {
@@ -177,9 +197,12 @@ allprojects {
                 implementation "io.sentry:sentry-logback:${version_sentry}"
 
                 implementation 'org.apache.logging.log4j:log4j-api:2.24.3'
+
+                implementation "com.github.wille:oslib:master-SNAPSHOT"
             }
         }
-    }}
+    }
+}
 tasks.withType(JavaCompile) {
     options.compilerArgs += "--enable-preview"
 }

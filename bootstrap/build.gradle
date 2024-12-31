@@ -1,4 +1,4 @@
-import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import org.gradle.internal.os.OperatingSystem;
 
 buildscript {
     repositories {
@@ -24,7 +24,7 @@ tasks.register('wrapper', Wrapper) {
     gradleVersion "8.10.2"
 }
 
-OperatingSystem os = DefaultNativePlatform.currentOperatingSystem;
+OperatingSystem os = OperatingSystem.current();
 
 jar {
     manifest {
@@ -42,11 +42,8 @@ application {
     mainModule = "nl.jixxed.bootstrap"
     mainClass = "nl.jixxed.bootstrap.Main"
 }
-if (os.isWindows()) {
-    ext { packageType = ["msi"] }
-} else {
-    ext { packageType = ["deb"] }
-}
+def packageType = System.getProperty("packageType") ?: 'msi' // default to windows
+ext { packageType = "packageType" }
 jlink {
     addExtraDependencies("javafx")
     addOptions('--strip-debug', '--compress', 'zip-0', '--no-man-pages')
@@ -63,8 +60,8 @@ jlink {
         }
     }
     jpackage {
-        if (project.ext.packageType.contains('msi')) {
-            installerType = 'msi'
+        installerType = project.ext.packageType
+        if (project.ext.packageType.equals('msi')) {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.ico']
             installerOptions = [
                     '--description', 'Installer for ED Odyssey Materials Helper',
@@ -76,8 +73,7 @@ jlink {
                     '--win-menu', '--win-shortcut', '--win-menu-group', 'Odyssey Material Helper'
             ] as List<String>
         }
-        if (project.ext.packageType.contains('deb')) {
-            installerType = 'deb'
+        if (project.ext.packageType.equals('deb')) {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
@@ -89,8 +85,7 @@ jlink {
                     '--linux-shortcut'
             ] as List<String>
         }
-        if (project.ext.packageType.contains('rpm')) {
-            installerType = 'rpm'
+        if (project.ext.packageType.equals('rpm')) {
             imageOptions += ['--icon', 'src/main/resources/images/rocket.png']
             installerOptions = [
                     '--resource-dir', 'build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher/lib',
@@ -104,11 +99,13 @@ jlink {
         }
     }
 }
+
 tasks.register("jpackageSigned") {
     dependsOn jpackageImage
     // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
     finalizedBy signInstallerMsi
 }
+
 tasks.register('createSignCert') {
     doLast {
         String base64 = System.getProperty("base64_pfx") ?: ""
@@ -123,6 +120,7 @@ tasks.register('createSignCert') {
         }
     }
 }
+
 tasks.register('signInstallerExe') {
     // not signing exe until bug is fixed https://bugs.openjdk.org/browse/JDK-8326447
     dependsOn createSignCert
@@ -139,12 +137,13 @@ tasks.register('signInstallerExe') {
                 tsaurl: 'http://timestamp.sectigo.com')
     }
 }
+
 tasks.register('signInstallerMsi') {
     dependsOn createSignCert, jpackage
 
     doLast {
         File target = new File('bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper-' + version + '.msi')
-        if(target.exists())
+        if (target.exists())
             println "Signing file ${target}"
         jsign(file: 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper-' + version + '.msi',
                 name: 'Elite Dangerous Odyssey Materials Helper Launcher',
@@ -171,10 +170,10 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core'
     implementation 'commons-io:commons-io'
 
-    implementation group: "org.openjfx", name: "javafx-base", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-controls", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-fxml", classifier:"${platform}"
-    implementation group: "org.openjfx", name: "javafx-graphics", classifier:"${platform}"
+    implementation group: "org.openjfx", name: "javafx-base", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-controls", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-fxml", classifier: "${platform}"
+    implementation group: "org.openjfx", name: "javafx-graphics", classifier: "${platform}"
 }
 
 

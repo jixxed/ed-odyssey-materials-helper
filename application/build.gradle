@@ -1,4 +1,4 @@
-import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+import org.gradle.internal.os.OperatingSystem;
 
 buildscript {
     repositories {
@@ -33,7 +33,7 @@ java {
     }
     modularity.inferModulePath = true
 }
-OperatingSystem os = DefaultNativePlatform.currentOperatingSystem
+OperatingSystem os = OperatingSystem.current()
 jar {
     manifest {
         attributes 'Name': 'nl/jixxed/eliteodysseymaterials',
@@ -54,6 +54,7 @@ repositories {
         name 'nexus'
         url "https://nexus.jixxed.nl/nexus/content/repositories/releases"
     }
+    maven { url 'https://jitpack.io' }
 }
 application {
     mainModule = "nl.jixxed.eliteodysseymaterials"
@@ -67,7 +68,11 @@ jlink {
 //        excludeProvides servicePattern: "jakarta.servlet.*"
     }
     jpackage{
-        imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
+        if(OperatingSystem.current().isLinux()){
+            imageOptions += ['--icon', 'src/main/resources/images/application/rocket.png']
+        }else{
+            imageOptions += ['--icon', 'src/main/resources/images/application/rocket.ico']
+        }
     }
     addExtraDependencies("javafx", "jackson", "log4j")
     forceMerge("j2objc"/*, "logback"*/)
@@ -198,6 +203,7 @@ dependencies {
     implementation "nl.jixxed.lept4j:lept4j"
     implementation "com.github.jai-imageio:jai-imageio-core"
     testImplementation "io.github.secretx33:path-matching-resource-pattern-resolver"
+    implementation "com.github.wille:oslib"
 }
 jpackage {
 
