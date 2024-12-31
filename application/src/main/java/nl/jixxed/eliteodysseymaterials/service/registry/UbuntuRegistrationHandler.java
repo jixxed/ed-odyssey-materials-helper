@@ -22,8 +22,8 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
     private static final String DESKTOPFILE = """
             [Desktop Entry]
             Name=Elite Dangerous Odyssey Materials Helper
-            Exec=""" + CURRENT_DIR_SINGLE_SLASHED + """
-            Elite\\sDangerous\\sOdyssey\\sMaterials\\sHelper %u
+            Exec=\"""" + CURRENT_DIR_SINGLE_SLASHED + """
+            Elite Dangerous Odyssey Materials Helper" %u
             Type=Application
             NoDisplay=true
             Terminal=false
@@ -37,7 +37,7 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
                 final File file = Files.createFile(Path.of(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH)).toFile();
                 writeDesktopFile(file);
                 Runtime.getRuntime().exec("xdg-mime default " + System.getProperty(USER_HOME) + "/.local/share/applications/edomh.desktop x-scheme-handler/edomh").waitFor();
-                Runtime.getRuntime().exec("update-desktop-database /.local/share/applications/").waitFor();//
+                Runtime.getRuntime().exec("update-desktop-database " + System.getProperty(USER_HOME) + "/.local/share/applications/").waitFor();//
             }
         } catch (final IOException | InterruptedException e) {
             log.error("Error creating desktop file", e);
@@ -52,7 +52,7 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
                 if (file.exists() && file.isFile()) {
                     Files.delete(file.getAbsoluteFile().toPath());
                 }
-                Runtime.getRuntime().exec("update-desktop-database /.local/share/applications/").waitFor();
+                Runtime.getRuntime().exec("update-desktop-database " + System.getProperty(USER_HOME) + "/.local/share/applications/").waitFor();//
             }
 
         } catch (final IOException | InterruptedException e) {
