@@ -1,3 +1,8 @@
+Version 2.131
+-------------
+Added some additional linux builds for the auto updater
+Improved handling of corrupted journal files
+
 Version 2.130
 -------------
 Improved visualization of changed modules in the shipbuilder

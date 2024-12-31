@@ -73,7 +73,7 @@ tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
     from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
-    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.portable.autoupdater.zip'
+    archiveFileName = 'Elite.Dangerous.Odyssey.Materials.Helper-' + project.version + '.linux.autoupdater.zip'
     destinationDirectory = file('./output/')
 }
 
