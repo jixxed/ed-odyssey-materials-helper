@@ -68,6 +68,7 @@ jlink {
 //        excludeProvides servicePattern: "jakarta.servlet.*"
     }
     jpackage{
+        skipInstaller = true
         if(OperatingSystem.current().isLinux()){
             imageOptions += ['--icon', 'src/main/resources/images/application/rocket.png']
         }else{

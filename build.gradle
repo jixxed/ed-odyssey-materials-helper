@@ -33,6 +33,7 @@ tasks.register('copyMsi', Copy) {
 }
 
 tasks.register('copyDeb', Copy) {
+    dependsOn(":bootstrap:jpackage")
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper_' + version + '_amd64.deb')
@@ -40,6 +41,7 @@ tasks.register('copyDeb', Copy) {
 }
 
 tasks.register('copyRpm', Copy) {
+    dependsOn(":bootstrap:jpackage")
     from 'bootstrap/build/jpackage/'
     into 'output'
     include('elite-dangerous-odyssey-materials-helper-' + version + '-1.x86_64.rpm')
@@ -47,6 +49,7 @@ tasks.register('copyRpm', Copy) {
 }
 
 tasks.register('makePortable', Zip) {
+    dependsOn(":application:jpackage")
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
@@ -55,6 +58,7 @@ tasks.register('makePortable', Zip) {
 }
 
 tasks.register('makeLinuxPortable', Zip) {
+    dependsOn(":application:jpackage")
     from 'application/build/jpackage/Elite Dangerous Odyssey Materials Helper'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory
@@ -63,6 +67,7 @@ tasks.register('makeLinuxPortable', Zip) {
 }
 
 tasks.register('makeLinuxAutoUpdaterPortable', Zip) {
+    dependsOn(":bootstrap:jpackage")
     from 'bootstrap/build/jpackage/Elite Dangerous Odyssey Materials Helper Launcher'
     include '*'
     include '**/*' //to include contents of a folder present inside Reports directory

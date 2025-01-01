@@ -1,3 +1,8 @@
+Version 2.132
+-------------
+Fixed Ubuntu edomh:// url registration
+Fixed audio of notifications stops playing after a while
+
 Version 2.131
 -------------
 Added some additional linux builds for the auto updater

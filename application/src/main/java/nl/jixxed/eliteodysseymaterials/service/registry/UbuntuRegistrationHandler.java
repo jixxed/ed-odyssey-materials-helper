@@ -36,7 +36,7 @@ public class UbuntuRegistrationHandler implements RegistrationHandler {
             if (!IS_JAVA) {
                 final File file = Files.createFile(Path.of(System.getProperty(USER_HOME) + DESKTOP_FILE_PATH)).toFile();
                 writeDesktopFile(file);
-                Runtime.getRuntime().exec("xdg-mime default " + System.getProperty(USER_HOME) + "/.local/share/applications/edomh.desktop x-scheme-handler/edomh").waitFor();
+                Runtime.getRuntime().exec("xdg-mime default edomh.desktop x-scheme-handler/edomh").waitFor();
                 Runtime.getRuntime().exec("update-desktop-database " + System.getProperty(USER_HOME) + "/.local/share/applications/").waitFor();//
             }
         } catch (final IOException | InterruptedException e) {
