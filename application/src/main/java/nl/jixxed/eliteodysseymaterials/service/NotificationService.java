@@ -33,6 +33,7 @@ public class NotificationService {
     private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
     private static final BlockingQueue<String> soundQueue = new LinkedBlockingQueue<>();
     private static boolean isPlaying = false;
+    private static MediaPlayer mediaPlayer;
 
     public static void init() {
         EVENT_LISTENERS.add(EventService.addStaticListener(JournalInitEvent.class, journalInitEvent -> enabled = journalInitEvent.isInitialised()));
@@ -196,7 +197,7 @@ public class NotificationService {
             isPlaying = true;
             try {
                 final Media sound = new Media(nextSoundPath);
-                final MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.setVolume(volume / 100);
                 mediaPlayer.setOnEndOfMedia(() -> {
                     mediaPlayer.dispose();
