@@ -36,7 +36,7 @@ public class ReportService {
                     final HttpClient httpClient = HttpClient.newHttpClient();
                     final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
                     final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/submit-new"))
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-material"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))
                             .build();
                     final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -61,7 +61,7 @@ public class ReportService {
                     final HttpClient httpClient = HttpClient.newHttpClient();
                     final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
                     final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/submit-unknown-journal"))
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-unknown-journal"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))
                             .build();
                     final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());

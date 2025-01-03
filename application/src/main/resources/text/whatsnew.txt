@@ -1,3 +1,7 @@
+Version 2.133
+-------------
+Reconfigured renamed API endpoints
+
 Version 2.132
 -------------
 Fixed Ubuntu edomh:// url registration

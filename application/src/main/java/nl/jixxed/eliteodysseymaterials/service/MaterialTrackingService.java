@@ -190,7 +190,7 @@ public class MaterialTrackingService {
                     final HttpClient httpClient = HttpClient.newHttpClient();
                     final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
                     final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/submit"))
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-material-tracking"))
                             .POST(HttpRequest.BodyPublishers.ofString(data))
                             .build();
                     final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -230,7 +230,7 @@ public class MaterialTrackingService {
                     final HttpClient httpClient = HttpClient.newHttpClient();
                     final String domainName = DnsHelper.resolveCname("edmattracking.jixxed.nl");
                     final HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create("https://" + domainName + "/Prod/submit-data"))
+                            .uri(URI.create("https://" + domainName + "/Prod/v2/submit-data-tracking"))
                             .POST(HttpRequest.BodyPublishers.ofString(datax))
                             .build();
                     final HttpResponse<String> send = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
