@@ -100,6 +100,7 @@ public class FXApplication extends Application {
 //            HighGradeEmissionService.initialize();
         }
         EDDNService.init();
+        TraderBrokerService.init();
         try {
             try {
                 final GraphicsEnvironment ge =

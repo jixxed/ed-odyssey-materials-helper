@@ -22,6 +22,8 @@ public class LocationService {
     private static BigInteger currentSystemAddress = new BigInteger("0");
     private static String body = "";
     private static String station = "";
+    @Getter
+    private static BigInteger marketID = BigInteger.ZERO;//default to 0 when not docked at a station
     private static Double latitude = DEFAULT_LATITUDE;
     private static Double longitude = DEFAULT_LONGITUDE;
     private static Long bodyID;
@@ -39,16 +41,19 @@ public class LocationService {
             body = event.getApproachBody().getBody();
             bodyID = event.getApproachBody().getBodyID().longValue();
             station = "";
+            marketID = BigInteger.ZERO;
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(ApproachSettlementJournalEvent.class, event -> {//when approaching settlement, also on startup if at settlement
             body = event.getApproachSettlement().getBodyName();
             bodyID = event.getApproachSettlement().getBodyID().longValue();
             station = "";
+            marketID = BigInteger.ZERO;
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(DockedJournalEvent.class, event -> {//Always player controlled
             station = event.getDocked().getStationName();
+            marketID = event.getDocked().getMarketID();
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(FSDJumpJournalEvent.class, event -> {//After jump to other system
@@ -71,11 +76,13 @@ public class LocationService {
             body = "";
             bodyID = null;
             station = "";
+            marketID = BigInteger.ZERO;
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(LiftOffJournalEvent.class, event -> {//can be either player or AI controlled
             if (event.getLiftoff().getPlayerControlled() || event.getLiftoff().getTaxi().orElse(false)) {// both false means ship sent away
                 station = "";
+                marketID = BigInteger.ZERO;
                 latitude = DEFAULT_LATITUDE;
                 longitude = DEFAULT_LONGITUDE;
             }
@@ -91,11 +98,13 @@ public class LocationService {
             //if we already have a station from before the relog, we keep the station
             if (!Objects.equals(event.getStationName(), "")) {
                 station = event.getStationName();
+                marketID = event.getLocation().getMarketID().orElse(BigInteger.ZERO);
             }
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(SupercruiseEntryJournalEvent.class, event -> {//on entering SC
             station = "";
+            marketID = BigInteger.ZERO;
             latitude = DEFAULT_LATITUDE;
             longitude = DEFAULT_LONGITUDE;
             notifyListeners();
@@ -109,6 +118,7 @@ public class LocationService {
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(UndockedJournalEvent.class, event -> {//Always player controlled
             station = "";
+            marketID = BigInteger.ZERO;
             latitude = DEFAULT_LATITUDE;
             longitude = DEFAULT_LONGITUDE;
             notifyListeners();
