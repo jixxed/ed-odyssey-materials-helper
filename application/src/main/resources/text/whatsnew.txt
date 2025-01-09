@@ -1,3 +1,7 @@
+Version 2.134
+-------------
+Add tracking of material trader and technology broker types
+
 Version 2.133
 -------------
 Reconfigured renamed API endpoints
