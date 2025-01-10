@@ -343,3 +343,11 @@
 {"name":"V886 Centauri","coords":{"x":45.16,"y":12.13,"z":26.97},"station":{"name":"Rescue Ship Cornwallis","distanceToArrival":769.0,"primaryEconomy":"Rescue","id":129019775, "type": "Aegis"}}
 {"name":"Hixkaramu","coords":{"x":115.63,"y":-48.59,"z":-58.28},"station":{"name":"Imperial Sanctum(Rescue Ship)","distanceToArrival":24.0,"primaryEconomy":"Rescue","id":129021311, "type": "Aegis"}}
 {"name":"Sun Wen","coords":{"x":-36.91,"y":51.09,"z":-67.56},"station":{"name":"Allied Solace(Rescue Ship)","distanceToArrival":21.0,"primaryEconomy":"Rescue","id":129021823, "type": "Aegis"}}
+{"name":"Luyten's Star","coords":{"x":6.5625,"y":2.34375,"z":-10.25},"station":{"name":"Rescue Ship Hutner","distanceToArrival":297.0,"primaryEconomy":"Rescue","id":129020287, "type": "Rescue"}}
+{"name":"V886 Centauri","coords":{"x":45.16,"y":12.13,"z":26.97},"station":{"name":"Rescue Ship Cornwallis","distanceToArrival":769.0,"primaryEconomy":"Rescue","id":129019775, "type": "Rescue"}}
+{"name":"Hixkaramu","coords":{"x":115.63,"y":-48.59,"z":-58.28},"station":{"name":"Imperial Sanctum(Rescue Ship)","distanceToArrival":24.0,"primaryEconomy":"Rescue","id":129021311, "type": "Rescue"}}
+{"name":"Sun Wen","coords":{"x":-36.91,"y":51.09,"z":-67.56},"station":{"name":"Allied Solace(Rescue Ship)","distanceToArrival":21.0,"primaryEconomy":"Rescue","id":129021823, "type": "Rescue"}}
+{"name":"LTT 198","coords":{"x":2.53125,"y":-71.625,"z":9.71875},"station":{"name":"Zetian's Recall","distanceToArrival":102.301577,"primaryEconomy":"Refinery","id":128989574, "type": "Torval Mining"}}
+{"name":"LTT 198","coords":{"x":2.53125,"y":-71.625,"z":9.71875},"station":{"name":"Pride of Bitterwood","distanceToArrival":486.594097,"primaryEconomy":"Extraction","id":128985295, "type": "Torval Mining"}}
+{"name":"Laguz","coords":{"x":20.9375,"y":-109.40625,"z":71.8125},"station":{"name":"Champion of Commerce","distanceToArrival":2638.365314,"primaryEconomy":"Refinery","id":128989318, "type": "Torval Mining"}}
+{"name":"21 Eridani","coords":{"x":17.125,"y":-76.59375,"z":-77.0},"station":{"name":"The House Ascendant","distanceToArrival":1075.538713,"primaryEconomy":"Refinery","id":128989830, "type": "Torval Mining"}}

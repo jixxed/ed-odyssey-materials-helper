@@ -479,7 +479,7 @@ public class TechbrokerBlueprints {
                             Raw.PHOSPHORUS, 28),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.TORVAL)
+                    List.of(HorizonsBrokerType.TORVALMINING)
             )),
             Map.entry(HorizonsBlueprintType.E2_SIRIUS_CORPORATION_AX_MISSILE_RACK, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.E2_SIRIUS_CORPORATION_AX_MISSILE_RACK,
                     Map.of(
@@ -516,7 +516,7 @@ public class TechbrokerBlueprints {
                     ),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.AEGIS, HorizonsBrokerType.SALVATION)
+                    List.of(HorizonsBrokerType.RESCUE, HorizonsBrokerType.SALVATION)
             )),
             Map.entry(HorizonsBlueprintType.C3_AZIMUTH_ENHANCED_AX_MULTICANNON, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.C3_AZIMUTH_ENHANCED_AX_MULTICANNON,
                     Map.of(
@@ -529,7 +529,7 @@ public class TechbrokerBlueprints {
                     ),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.AEGIS, HorizonsBrokerType.SALVATION)
+                    List.of(HorizonsBrokerType.RESCUE, HorizonsBrokerType.SALVATION)
             )));
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> HUMAN_MODULES = Map.ofEntries(
             Map.entry(HorizonsBlueprintType.ENGINEERED_DETAILED_SURFACE_SCANNER_V1,
@@ -541,7 +541,7 @@ public class TechbrokerBlueprints {
                             Raw.NIOBIUM, 24),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVAL, HorizonsBrokerType.SIRIUS)
+                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVALMINING, HorizonsBrokerType.SIRIUS)
             )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_V1,
             new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_V1,
@@ -552,7 +552,7 @@ public class TechbrokerBlueprints {
                             Encoded.DATAMINEDWAKE, 18),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVAL, HorizonsBrokerType.SIRIUS)
+                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVALMINING, HorizonsBrokerType.SIRIUS)
             )),
             Map.entry(HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER,
             new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER,
@@ -577,7 +577,7 @@ public class TechbrokerBlueprints {
                     ),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.AEGIS),
+                    List.of(HorizonsBrokerType.RESCUE),
                     GameVersion.LIVE
             )),
             Map.entry(HorizonsBlueprintType.THARGOID_PULSE_NEUTRALISER,
@@ -590,7 +590,7 @@ public class TechbrokerBlueprints {
                     ),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.AEGIS),
+                    List.of(HorizonsBrokerType.RESCUE),
                     GameVersion.LIVE
             )),
             Map.entry(HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
@@ -602,7 +602,7 @@ public class TechbrokerBlueprints {
                             Commodity.REINFORCEDMOUNTINGPLATE, 12),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.AEGIS)
+                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.RESCUE)
             )),
             Map.entry(HorizonsBlueprintType.CORROSION_RESISTANT_CARGO_RACK, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.CORROSION_RESISTANT_CARGO_RACK,
                     Map.of(
@@ -613,7 +613,7 @@ public class TechbrokerBlueprints {
                             Commodity.RADIATIONBAFFLE, 22),
                     Map.of(),
                     List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.AEGIS)
+                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.RESCUE)
             )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_SCO_A2_V1,
             new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A2_V1,

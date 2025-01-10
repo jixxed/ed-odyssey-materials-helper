@@ -1,13 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.enums;
 
 public enum HorizonsBrokerType {
-    HUMAN,
-    GUARDIAN,
-    TORVAL,
-    SALVATION,
-    SIRIUS,
-    AEGIS,
-    UNKNOWN;
+    GUARDIAN("Guardian"),
+    HUMAN("Human"),
+    SIRIUS("Sirius"),
+    TORVALMINING("Torval Mining"),
+    SALVATION("Salvation"),
+    RESCUE("Rescue"),
+    UNKNOWN("Unknown"),
+    NONE("None");
+    private final String displayName;
+
+    HorizonsBrokerType(String displayName) {
+        this.displayName = displayName;
+    }
 
     public static HorizonsBrokerType forName(final String name) {
         try {
@@ -18,6 +24,19 @@ public enum HorizonsBrokerType {
 
     }
 
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public static HorizonsBrokerType forDisplayName(final String displayName) {
+        for (final HorizonsBrokerType type : values()) {
+            if (type.displayName.equalsIgnoreCase(displayName)) {
+                return type;
+            }
+        }
+        return UNKNOWN;
+    }
     public String getLocalizationKey() {
         return "horizons.technology.broker.type." + this.name().toLowerCase();
     }
