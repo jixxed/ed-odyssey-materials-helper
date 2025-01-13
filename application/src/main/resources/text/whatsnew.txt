@@ -1,3 +1,8 @@
+Version 2.134
+-------------
+Updated material trader and technology broker information to be updated daily
+Added Ls distance to material trader and technology broker cards when in system
+
 Version 2.133
 -------------
 Add tracking of material trader and technology broker types
