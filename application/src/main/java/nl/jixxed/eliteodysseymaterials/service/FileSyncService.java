@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,6 +21,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -27,12 +30,39 @@ public class FileSyncService {
 
     private static final List<SyncItem> SYNC_ITEMS = new ArrayList<>();
 
-    public static final String BROKERS_URL = "https://raw.githubusercontent.com/jixxed/ed-odyssey-materials-helper/refs/heads/master/application/src/main/resources/technologybroker/brokers.jsonl";
-    public static final String TRADERS_URL = "https://raw.githubusercontent.com/jixxed/ed-odyssey-materials-helper/refs/heads/master/application/src/main/resources/materialtrader/traders.jsonl";
+    public static final String BROKERS_TRADERS_URL = "https://d3a17kxijdwucd.cloudfront.net/traders_brokers.zip";
 
     static {
-        SYNC_ITEMS.add(new SyncItem(BROKERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "brokers.jsonl", TechnologyBrokerService::update));
-        SYNC_ITEMS.add(new SyncItem(TRADERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "traders.jsonl", MaterialTraderService::update));
+        SYNC_ITEMS.add(new SyncItem(BROKERS_TRADERS_URL, Duration.ofDays(1), OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + "traders_brokers.zip", FileSyncService::extractZipFiles));
+    }
+
+    private static void extractZipFiles(String zipFilePath) {
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFilePath))) {
+            ZipEntry entry;
+            byte[] buffer = new byte[1024];
+            while ((entry = zis.getNextEntry()) != null) {
+                String entryName = entry.getName();
+                if (entryName.equals("traders.jsonl") || entryName.equals("brokers.jsonl")) {
+                    File outputFile = new File(OsConstants.CONFIG_DIRECTORY + OsConstants.OS_SLASH + entryName);
+                    try (FileOutputStream fos = new FileOutputStream(outputFile)) {
+                        int len;
+                        while ((len = zis.read(buffer)) > 0) {
+                            fos.write(buffer, 0, len);
+                        }
+                    }
+
+                    // Update respective services based on file name
+                    if (entryName.equals("traders.jsonl")) {
+                        MaterialTraderService.update(outputFile.getAbsolutePath());
+                    } else if (entryName.equals("brokers.jsonl")) {
+                        TechnologyBrokerService.update(outputFile.getAbsolutePath());
+                    }
+                }
+                zis.closeEntry();
+            }
+        } catch (IOException e) {
+            log.error("Failed to extract zip file", e);
+        }
     }
 
     public static void init() {

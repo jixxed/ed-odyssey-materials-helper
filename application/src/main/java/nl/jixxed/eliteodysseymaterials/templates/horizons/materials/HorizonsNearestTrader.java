@@ -69,7 +69,13 @@ public class HorizonsNearestTrader extends VBox implements Template {
             final Location currentLocation = LocationService.getCurrentLocation();
             final MaterialTrader closest = MaterialTraderService.findClosest(currentLocation.getStarSystem(), this.type);
             this.location.setText(closest.getName() + " | " + closest.getStarSystem().getName());
-            this.distance.setText("(" + NUMBER_FORMAT.format(MaterialTraderService.getDistance(closest.getStarSystem(), currentLocation.getStarSystem())) + "Ly)");
+            final Double starDistance = MaterialTraderService.getDistance(closest.getStarSystem(), currentLocation.getStarSystem());
+            if(starDistance > 0D) {
+                this.distance.setText("(" + NUMBER_FORMAT.format(starDistance) + "Ly)");
+            }else{
+                this.distance.setText("(" + NUMBER_FORMAT.format(closest.getDistanceFromStar()) + "Ls ±"+ NUMBER_FORMAT.format(closest.getDistanceFromStarVariance())+"Ls)");
+            }
+
             this.system = closest.getStarSystem().getName();
             this.getStyleClass().remove("nearest-trader-hidden");
 

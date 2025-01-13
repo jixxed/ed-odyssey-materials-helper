@@ -37,7 +37,7 @@ public class MaterialTraderService {
             while (reader.ready()) {
                 final String line = reader.readLine();
                 final MaterialTraderJson jsonTrader = OBJECT_MAPPER.readValue(line, MaterialTraderJson.class);
-                MATERIAL_TRADERS.add(new MaterialTrader(new StarSystem(jsonTrader.getName(), jsonTrader.getCoords().getX(), jsonTrader.getCoords().getY(), jsonTrader.getCoords().getZ()), jsonTrader.getStation().getName(), jsonTrader.getStation().getDistanceToArrival(), HorizonsStorageType.forName(jsonTrader.getStation().getType())));
+                MATERIAL_TRADERS.add(new MaterialTrader(new StarSystem(jsonTrader.getName(), jsonTrader.getCoords().getX(), jsonTrader.getCoords().getY(), jsonTrader.getCoords().getZ()), jsonTrader.getStation().getName(), jsonTrader.getStation().getDistanceToArrival(), jsonTrader.getStation().getVarianceToArrival(), HorizonsStorageType.forName(jsonTrader.getStation().getType())));
             }
         } catch (final IOException ex) {
             throw new RuntimeException(ex);

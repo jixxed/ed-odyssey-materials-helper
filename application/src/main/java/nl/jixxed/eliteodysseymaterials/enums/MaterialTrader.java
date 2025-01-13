@@ -14,6 +14,8 @@ public class MaterialTrader {
     @Getter
     private final Double distanceFromStar;
     @Getter
+    private final Double distanceFromStarVariance;
+    @Getter
     private final HorizonsStorageType type;
 
 

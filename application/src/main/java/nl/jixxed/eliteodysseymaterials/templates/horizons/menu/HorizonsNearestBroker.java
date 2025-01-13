@@ -70,7 +70,12 @@ public class HorizonsNearestBroker extends VBox implements Template {
             final TechnologyBroker closest = TechnologyBrokerService.findClosest(currentLocation.getStarSystem(), this.horizonsBrokerTypes);
             this.title.textProperty().bind(LocaleService.getStringBinding(closest.getType().getLocalizationKey()));
             this.location.setText(closest.getName() + " | " + closest.getStarSystem().getName());
-            this.distance.setText("(" + NUMBER_FORMAT.format(TechnologyBrokerService.getDistance(closest.getStarSystem(), currentLocation.getStarSystem())) + "Ly)");
+            final Double starDistance = TechnologyBrokerService.getDistance(closest.getStarSystem(), currentLocation.getStarSystem());
+            if(starDistance > 0D) {
+                this.distance.setText("(" + NUMBER_FORMAT.format(starDistance) + "Ly)");
+            }else{
+                this.distance.setText("(" + NUMBER_FORMAT.format(closest.getDistanceFromStar()) + "Ls ±"+ NUMBER_FORMAT.format(closest.getDistanceFromStarVariance())+"Ls)");
+            }
             this.system = closest.getStarSystem().getName();
             this.getStyleClass().remove("nearest-broker-hidden");
 
