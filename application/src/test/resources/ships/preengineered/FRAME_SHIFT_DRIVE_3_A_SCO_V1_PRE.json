@@ -1,0 +1,52 @@
+{
+  "Slot": "FrameShiftDrive",
+  "Item": "int_hyperdrive_overcharge_size3_class5",
+  "On": true,
+  "Priority": 0,
+  "Health": 1.000000,
+  "Engineering": {
+    "EngineerID": 399999,
+    "BlueprintID": 128998592,
+    "BlueprintName": "FSD_LongRange",
+    "Level": 5,
+    "Quality": 1.000000,
+    "Modifiers": [
+      {
+        "Label": "Mass",
+        "Value": 6.500000,
+        "OriginalValue": 5.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "Integrity",
+        "Value": 56.000000,
+        "OriginalValue": 80.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "PowerDraw",
+        "Value": 0.517500,
+        "OriginalValue": 0.450000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "BootTime",
+        "Value": 2.000000,
+        "OriginalValue": 10.000000,
+        "LessIsGood": 1
+      },
+      {
+        "Label": "FSDOptimalMass",
+        "Value": 283.899994,
+        "OriginalValue": 167.000000,
+        "LessIsGood": 0
+      },
+      {
+        "Label": "FSDHeatRate",
+        "Value": 16.800001,
+        "OriginalValue": 14.000000,
+        "LessIsGood": 1
+      }
+    ]
+  }
+}
