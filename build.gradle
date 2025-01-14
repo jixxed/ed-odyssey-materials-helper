@@ -135,7 +135,7 @@ ext {
     version_guava = "33.4.0-jre"
     version_j2objc_annotations = "3.0.0"
     version_mockito = "5.15.2"
-    version_sentry = "7.19.1"
+    version_sentry = "7.20.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
