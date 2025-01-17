@@ -201,18 +201,19 @@ public class FileProcessor {
     public static synchronized void processCapiFile(final Optional<File> file, final JournalEventType journalEventType) {
         if (journalEventType.equals(JournalEventType.CAPIFLEETCARRIER)) {
             file.ifPresentOrElse(
-                    f -> {
-                        Platform.runLater(() -> MessageHandler.handleCapiMessage(f, journalEventType));
+                    f -> Platform.runLater(() -> {
+                        MessageHandler.handleCapiMessage(f, journalEventType);
                         ApplicationState.getInstance().getFcMaterials().set(true);
-                    },
-                    () -> {
-                        Platform.runLater(MessageHandler::clearCapi);
+                    }),
+                    () -> Platform.runLater(() -> {
+                        MessageHandler.clearCapi();
                         ApplicationState.getInstance().getFcMaterials().set(false);
-                        Platform.runLater(() -> EventService.publish(new CapiFleetCarrierEvent()));
-                    });
+                        EventService.publish(new CapiFleetCarrierEvent());
+                    }));
 
         }
     }
+
 
     public static synchronized void processStatusFile(final File file) {
         try {

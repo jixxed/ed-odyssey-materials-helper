@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.domain;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
@@ -139,9 +140,9 @@ public class ApplicationState {
         return applicationState;
     }
 
-    public void setPower(Power power){
+    public void setPower(Power power) {
         this.power = power;
-        powerplay.set(Power.NONE != power);
+        Platform.runLater(() -> powerplay.set(Power.NONE != power));
     }
 
     public GameMode getGameMode() {
@@ -203,11 +204,14 @@ public class ApplicationState {
 
 
     public void resetPowerplay() {
+        Platform.runLater(() -> {
             setPower(Power.NONE);
             this.powerRank = 0;
             this.powerMerits = 0;
             EventService.publish(new PowerplayEvent(Power.NONE, 0L, 0L));
+        });
     }
+
     public void resetEngineerStates() {
         engineerProcessed = false;
         this.engineerStates.forEach((engineer, engineerState) -> {
