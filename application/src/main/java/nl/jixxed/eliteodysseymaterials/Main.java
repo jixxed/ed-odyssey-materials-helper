@@ -17,6 +17,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +28,7 @@ public class Main {
     }
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-
+    private static Instant lastSentTime = Instant.MIN;
 
     public static void main(final String[] args) {
         //handle deeplinks
@@ -50,6 +52,10 @@ public class Main {
                 if (!VersionService.isLatestVersion()) {
                     return null;  // Returning null prevents the event from being sent to Sentry
                 }
+                if (Duration.between(lastSentTime, Instant.now()).getSeconds() < 30) {
+                    return null;  // Throttle if less than 30 seconds have passed
+                }
+                lastSentTime = Instant.now();
                 String supportFile = "";
                 try {
                     supportFile = SupportService.createSupportPackage();
