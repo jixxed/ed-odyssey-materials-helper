@@ -1,3 +1,7 @@
+Version 2.135
+-------------
+Minor patches, bugfixes and localization
+
 Version 2.134
 -------------
 Updated material trader and technology broker information to be updated daily
