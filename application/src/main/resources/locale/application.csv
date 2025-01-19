@@ -88,7 +88,7 @@ eddn.registration.text2,Would you like to help the community and allow this app 
 eddn.registration.no,No,No,Nein,No,Non,Não,Нет
 eddn.registration.yes,Yes,Yes,Ja,Sí,Oui,Sim,Да
 version.dialog.text,A new version is available!,A new version is available!,Eine neue Version ist verfügbar!,¡Una nueva version esta disponible!,Une nouvelle version est disponible !,Uma nova versão está disponível!,Новая версия доступна!
-version.dialog.text2,Did you know that there is an auto updater available for this app?,Did you know that there is an auto updater available for this app?,"Wussten Sie, dass für diese App ein Auto-Updater verfügbar ist?",¿Sabía que hay un actualizador automático disponible para esta aplicación?,Saviez-vous qu'une mise à jour automatique est disponible pour cette application ?,Você sabia que há um atualizador automático disponível para este aplicativo?,"Знаете ли вы, что для этого приложения доступен автоматический обновленный обновление?"
+version.dialog.text2,Did you know that there is an auto updater available for this app?,Did you know that there is an auto updater available for this app?,"Wussten Sie, dass für diese App ein Auto-Updater verfügbar ist?",¿Sabía que hay un actualizador automático disponible para esta aplicación?,Saviez-vous que la mise à jour automatique est disponible pour cette application ?,Você sabia que há um atualizador automático disponível para este aplicativo?,"Знаете ли вы, что для этого приложения доступен автоматический обновленный обновление?"
 version.dialog.ok,Ok,Ok,OK,De acuerdo,D’accord,OK,Хорошо
 version.dialog.download,Download,Download,Herunterladen,Descargar,Télécharger,Baixar,Скачать
 statusbar.api.stale,Fleetcarrier data might be stale! Link your Frontier account,Fleetcarrier data might be stale! Link your Frontier account,,Los datos de su carguero pueden estar obsoletos. Vincula tu cuenta de Frontier.,Les données du porte-vaisseaux sont peut-être obsolètes ! Associez votre compte Frontier.,Os dados do Porta-Frotas podem estar desatualizados! Vincule sua conta Frontier.,Данные о флотоносце могут быть устаревшими! Подключите аккаунт Frontier.
@@ -106,7 +106,7 @@ segment.type.hardpoint_kinetic,Kinetic,,,Cinético,Cinétique,,Кинетиче�
 segment.type.hardpoint_explosive,Explosive,,,Explosivo,Explosif,,Взрывной
 segment.type.hardpoint_absolute,Absolute,,,Absoluto,Absolu,,Абсолютный
 segment.type.hardpoint_caustic,Caustic,,,Caústico,Caustique,,Едкий
-segment.type.hardpoint_antixeno,Anti-xeno,,,Anti-Xeno,Anti-Xeno,,АИ
+segment.type.hardpoint_antixeno,Anti-xeno,,,Anti-Xeno,Anti-Xéno,,АИ
 segment.type.power_group_none,Available,,,Disponible,Disponible,,Доступно
 segment.type.power_overpower,Power deficit,,,Déficit de Energía,Manque de puissance,,Энергодефицит
 tabs.onfoot,On foot,,,A pie,Au sol,A pé,Пеший режим
