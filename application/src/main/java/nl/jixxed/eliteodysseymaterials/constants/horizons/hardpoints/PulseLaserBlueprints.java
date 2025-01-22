@@ -115,7 +115,8 @@ public class PulseLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+40%", true, percentagePositive(0.0, 0.4)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+1%", false, percentagePositive(0.0, 0.01)),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36))
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+36%", true, percentagePositive(0.0, 0.36))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -131,7 +132,8 @@ public class PulseLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+60%", true, percentagePositive(0.4, 0.6)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+2%", false, percentagePositive(0.01, 0.02)),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52))
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+52%", true, percentagePositive(0.36, 0.52))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -148,7 +150,8 @@ public class PulseLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+80%", true, percentagePositive(0.6, 0.8)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+3%", false, percentagePositive(0.02, 0.03)),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68))
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+68%", true, percentagePositive(0.52, 0.68))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -165,7 +168,8 @@ public class PulseLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.8, 1.0)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+4%", false, percentagePositive(0.03, 0.04)),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84))
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+84%", true, percentagePositive(0.68, 0.84))
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
@@ -182,7 +186,9 @@ public class PulseLaserBlueprints {
                             Map.of(
                                     HorizonsModifier.ARMOUR_PIERCING, new HorizonsNumberModifierValue("+120%", true, percentagePositive(1.0, 1.2)),
                                     HorizonsModifier.THERMAL_LOAD, new HorizonsNumberModifierValue("+5%", false, percentagePositive(0.04, 0.05)),
-                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0))
+                                    HorizonsModifier.MAXIMUM_RANGE, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0)),
+                                    HorizonsModifier.DAMAGE_FALLOFF_START, new HorizonsNumberModifierValue("+100%", true, percentagePositive(0.84, 1.0))
+
                             ),
                             List.of(
                                     Engineer.MEL_BRANDON,
