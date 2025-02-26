@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
@@ -14,7 +15,7 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatsLayer extends AnchorPane implements Template {
+public class StatsLayer extends Pane implements Template {
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
     @Getter
     private HBox stats;

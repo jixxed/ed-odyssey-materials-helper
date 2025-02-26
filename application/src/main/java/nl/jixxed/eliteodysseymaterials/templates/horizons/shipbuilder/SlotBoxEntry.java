@@ -39,9 +39,7 @@ public class SlotBoxEntry extends VBox {
     private static final double BOOST_MARGIN = 0.005;
     Label name;
     List<HBox> options;
-    private ModulesLayer modulesLayer;
-    public SlotBoxEntry(final ModulesLayer modulesLayer, final SlotBox slotBox, final List<ShipModule> shipModulesList) {
-        this.modulesLayer = modulesLayer;
+    public SlotBoxEntry(final SlotBox slotBox, final List<ShipModule> shipModulesList) {
         this.getStyleClass().add("ships-modules");
         //add ship modules
         final ShipModule firstModule = shipModulesList.get(0);

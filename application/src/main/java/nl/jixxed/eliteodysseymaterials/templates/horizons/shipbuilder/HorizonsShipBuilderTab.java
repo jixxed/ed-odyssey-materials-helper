@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfiguration;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurations;
@@ -32,16 +33,9 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
     @Getter
     private ControlsLayer controlsLayer;
     @Getter
-    private StatsLayer statsLayer;
-    @Getter
-    private StatsBGLayer statsBGLayer;
-    @Getter
-    private ModulesLayer modulesLayer;
-    @Getter
-    private DetailsLayer detailsLayer;
-    @Getter
     private ShipSelectionLayer shipSelectionLayer;
     private NoShipLayer noShipLayer;
+    private ShipLayer shipLayer;
 //    private Region filler;
 //    private VBox right;
 
@@ -64,27 +58,18 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
         APPLICATION_STATE.getPreferredCommander()
                 .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                 .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
+        shipLayer = new ShipLayer();
         controlsLayer = new ControlsLayer();
-        statsLayer = new StatsLayer();
-        statsBGLayer = new StatsBGLayer(statsLayer);
-        detailsLayer = new DetailsLayer();
-        modulesLayer = new ModulesLayer(this);
         shipSelectionLayer = new ShipSelectionLayer(this);
         noShipLayer = new NoShipLayer();
         controlsLayer.setVisible(false);
-        statsLayer.setVisible(false);
-        statsBGLayer.setVisible(false);
-        modulesLayer.setVisible(false);
-        detailsLayer.setVisible(false);
         shipSelectionLayer.setVisible(false);
         noShipLayer.setVisible(false);
         controlsLayer.setPickOnBounds(false);
-        statsLayer.setPickOnBounds(false);
-        statsBGLayer.setPickOnBounds(false);
-        detailsLayer.setPickOnBounds(false);
-        final StackPane stackPane = new StackPane(noShipLayer, shipSelectionLayer, modulesLayer, statsBGLayer, controlsLayer, detailsLayer, statsLayer);
+        final StackPane stackPane = new StackPane(noShipLayer, shipSelectionLayer,  shipLayer);
         stackPane.getStyleClass().add(SHIP_CONTENT_STYLE_CLASS);
-        this.setContent(stackPane);
+        content = BoxBuilder.builder().withNodes(controlsLayer, stackPane).buildVBox();
+        this.setContent(content);
         refreshContent();
         EventService.publish(new ShipConfigEvent(NONE));
 ////        initShipSelectView();
@@ -107,7 +92,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
             shipConfiguration.ifPresentOrElse(configuration -> {
                 if (configuration.getShipType() != null) {
                     showShip();
-                    modulesLayer.initShipSlots();
+                    shipLayer.initShipSlots();
                 } else if (configuration == ShipConfiguration.CURRENT) {
                     showNoShip();
                 } else {
@@ -119,20 +104,14 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
 
     private void showNoShip() {
         controlsLayer.setVisible(true);
-        statsLayer.setVisible(false);
-        statsBGLayer.setVisible(false);
-        modulesLayer.setVisible(false);
-        detailsLayer.setVisible(false);
+        shipLayer.setVisible(false);
         shipSelectionLayer.setVisible(false);
         noShipLayer.setVisible(true);
     }
 
     private void showShip() {
         controlsLayer.setVisible(true);
-        statsLayer.setVisible(true);
-        statsBGLayer.setVisible(true);
-        modulesLayer.setVisible(true);
-        detailsLayer.setVisible(true);
+        shipLayer.setVisible(true);
         shipSelectionLayer.setVisible(false);
         noShipLayer.setVisible(false);
 
@@ -140,10 +119,7 @@ public class HorizonsShipBuilderTab extends HorizonsTab {
 
     private void showShipSelect() {
         controlsLayer.setVisible(true);
-        statsLayer.setVisible(false);
-        statsBGLayer.setVisible(false);
-        modulesLayer.setVisible(false);
-        detailsLayer.setVisible(false);
+        shipLayer.setVisible(false);
         shipSelectionLayer.setVisible(true);
         noShipLayer.setVisible(false);
 

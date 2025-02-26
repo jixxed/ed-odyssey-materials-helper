@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.BooleanProperty;
@@ -11,20 +12,28 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
+import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.HardpointModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.ImageSlot;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
+import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -39,6 +48,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 public class ModuleDetails extends VBox implements Template {
+    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     private VBox properties;
 
@@ -48,17 +58,53 @@ public class ModuleDetails extends VBox implements Template {
     private DestroyableLabel modulePrice;
     private DestroyableLabel moduleEngineering;
     private DestroyableLabel moduleName;
+    private DestroyableResizableImageView gridImage;
+    private DestroyableResizableImageView shipImage;
+    private StackPane imageLayer;
     private BooleanProperty hasModule = new SimpleBooleanProperty(false);
+    private Slot slot;
+    private Shape slotPosition;
     private ShipModule shipModule;
-    DetailsLayer layer;
-    public ModuleDetails(DetailsLayer layer) {
-        this.layer = layer;
+
+    //    DetailsLayer layer;
+    public ModuleDetails(Slot slot) {
+
+
+        this.slot = slot;
+        shipModule = slot.getShipModule();
         initComponents();
         initEventHandling();
+        update();
     }
 
     @Override
     public void initComponents() {
+        if (slot instanceof ImageSlot imageSlot) {
+            gridImage = ResizableImageViewBuilder.builder().withStyleClass("shipbuilder-ship-image").withImage("/images/ships/ship/grid2.png").build();
+            shipImage = ResizableImageViewBuilder.builder().withStyleClass("shipbuilder-ship-image").withImage(ImageService.getImage("/images/ships/ship/" + APPLICATION_STATE.getShip().getShipType().name().toLowerCase() + "." + imageSlot.getImageIndex() + ".png")).build();
+//            slotPosition = new Circle();
+            Circle outerCircle = new Circle();
+            Circle innerCircle = new Circle();
+            outerCircle.setRadius(ScalingHelper.getPixelDoubleFromEm(0.1D));
+            innerCircle.setRadius(ScalingHelper.getPixelDoubleFromEm(0.09D));
+            slotPosition = Shape.subtract(outerCircle, innerCircle);
+            slotPosition.setStroke(Color.valueOf("#89D07F"));
+            slotPosition.setFill(Color.valueOf("#89D07F"));
+            ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1), slotPosition);
+            scaleTransition.setFromX(1.0);
+            scaleTransition.setFromY(1.0);
+            scaleTransition.setToX(4.0);
+            scaleTransition.setToY(4.0);
+            scaleTransition.setCycleCount(ScaleTransition.INDEFINITE);
+            scaleTransition.setAutoReverse(true);
+            scaleTransition.play();
+            final Pane pane = new Pane(slotPosition);
+            pane.getStyleClass().add( "shipbuilder-ship-image");
+            this.imageLayer = new StackPane(gridImage, shipImage, pane);
+            this.imageLayer.getStyleClass().add("shipbuilder-stackpane");
+            this.getChildren().add(imageLayer);
+
+        }
         this.getStyleClass().add("stats-values");
         legacySaveButton = ButtonBuilder.builder().withStyleClass("module-details-save-legacy").withText(LocaleService.getStringBinding("module.details.save.legacy")).build();
         legacySaveButton.setMnemonicParsing(false);
@@ -81,7 +127,7 @@ public class ModuleDetails extends VBox implements Template {
         attributes.visibleProperty().bind(hasModule);
         this.getChildren().add(attributes);
         this.getChildren().add(new GrowingRegion());
-        this.maxHeightProperty().bind(this.layer.heightProperty());
+//        this.maxHeightProperty().bind(this.layer.heightProperty());
     }
 
     private void addEngineering(String text) {
@@ -123,14 +169,15 @@ public class ModuleDetails extends VBox implements Template {
         );
         properties.getChildren().add(flowPane);
     }
+
     private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void initEventHandling() {
 
-        EVENT_LISTENERS.add(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            update();
-        }));
+//        EVENT_LISTENERS.add(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+//            update();
+//        }));
         EVENT_LISTENERS.add(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
         EVENT_LISTENERS.add(EventService.addListener(true, this, ModuleHighlightEvent.class, (event) -> {
             this.shipModule = event.getShipModule();
@@ -140,6 +187,14 @@ public class ModuleDetails extends VBox implements Template {
     }
 
     private void update() {
+        if (slot instanceof ImageSlot imageSlot) {
+            Platform.runLater(() -> {
+                final double x = this.shipImage.getWidth() / 1920D * imageSlot.getX();
+                final double y = this.shipImage.getHeight() / 1080D * imageSlot.getY();
+                slotPosition.setTranslateX(x);
+                slotPosition.setTranslateY(y);
+            });
+        }
         properties.getChildren().clear();
         this.getChildren().remove(legacySaveButton);
         attributes.getChildren().clear();

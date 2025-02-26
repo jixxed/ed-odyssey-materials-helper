@@ -19,7 +19,7 @@ public class DetailsLayer extends AnchorPane implements Template {
     @Override
     public void initComponents() {
         this.getStyleClass().add("shipbuilder-details-layer");
-        this.moduleDetails = new ModuleDetails(this);
+//        this.moduleDetails = new ModuleDetails(this);
         moduleDetails.setPickOnBounds(false);
         final VBox pane = new VBox(this.moduleDetails/*, new GrowingRegion()*/);
         pane.setPickOnBounds(false);
