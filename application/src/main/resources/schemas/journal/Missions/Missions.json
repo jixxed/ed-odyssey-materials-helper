@@ -22,6 +22,11 @@
             "type" : "string",
             "examples" : [ "Mission_OnFoot_Hack_Download_Covert_MB_name", "Mission_OnFoot_Hack_Download_MB_name", "Mission_OnFoot_Sabotage_Power_MB_name" ]
           },
+          "Name_Localised" : {
+            "title" : "Name",
+            "type" : "string",
+            "examples" : [ "Construction du port principal", "Construct primary port" ]
+          },
           "PassengerMission" : {
             "title" : "PassengerMission",
             "type" : "boolean",

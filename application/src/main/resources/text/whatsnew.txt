@@ -1,3 +1,8 @@
+Version 2.136
+-------------
+Add Name_Localized to Missions event
+Add Haematite and steel commodities
+
 Version 2.135
 -------------
 Minor patches, bugfixes and localization
