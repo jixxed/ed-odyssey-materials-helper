@@ -2,6 +2,7 @@ Version 2.136
 -------------
 Add Name_Localized to Missions event
 Add Haematite and steel commodities
+Fixes to focused weapon blueprint stats. Added damage falloff start and shot speed
 
 Version 2.135
 -------------

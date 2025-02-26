@@ -8,3 +8,4 @@ The portable zip versions are used as update packages. You can run them standalo
 **Release notes for this version:**
 Add Name_Localized to Missions event
 Add Haematite and steel commodities
+Fixes to focused weapon blueprint stats. Added damage falloff start and shot speed
