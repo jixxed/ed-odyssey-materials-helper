@@ -6,6 +6,4 @@ The auto updaters will check for a new version on launch.
 The portable zip versions are used as update packages. You can run them standalone, but they are no longer truly portable as settings are stored on the local machine.
 
 **Release notes for this version:**
-Add Name_Localized to Missions event
-Add Haematite and steel commodities
-Fixes to focused weapon blueprint stats. Added damage falloff start and shot speed
+Add conversion info to tooltips of refinable commodities
