@@ -132,7 +132,7 @@
           "examples" : [ "Harow" ]
         },
         "Name_Localised" : {
-          "title" : "Name",
+          "title" : "Name_Localised",
           "type" : "string",
           "examples" : [ "Harow" ]
         }

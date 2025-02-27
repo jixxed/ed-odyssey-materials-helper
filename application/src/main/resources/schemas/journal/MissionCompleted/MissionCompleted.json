@@ -16,7 +16,7 @@
       "examples" : [ "Mission_OnFoot_Hack_Download_Offline_MB_name", "Mission_OnFoot_Hack_Download_MB_name", "Mission_OnFoot_Hack_Download_Covert_MB_name" ]
     },
     "LocalisedName" : {
-      "title" : "Name",
+      "title" : "LocalisedName",
       "type" : "string",
       "examples" : [ "Turn on power at Walter Drilling Platform" ]
     },
