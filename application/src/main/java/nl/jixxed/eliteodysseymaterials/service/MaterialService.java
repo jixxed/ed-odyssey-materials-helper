@@ -64,8 +64,15 @@ public class MaterialService {
                 vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding((horizonsMaterial instanceof Commodity commodity) ? "material.tooltip.is.live.commodity" : "material.tooltip.is.live")).build());
             }
             if (horizonsMaterial instanceof Commodity commodity) {
-                vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.type") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey()))).build());
-                vBox.getChildren().add(LabelBuilder.builder().withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.isRareCommodity() ? "material.tooltip.text.yes" : "material.tooltip.text.no"))).build());
+                vBox.getChildren().add(
+                        LabelBuilder.builder()
+                                .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.type") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey())))
+                                .build());
+                vBox.getChildren().add(
+                        LabelBuilder.builder()
+                                .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.isRareCommodity() ? "material.tooltip.text.yes" : "material.tooltip.text.no")))
+                                .build());
+                addRefinableToTooltip(commodity, vBox);
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
             } else if (horizonsMaterial instanceof Raw) {
                 vBox.getChildren().add(LabelBuilder.builder().withText(LocaleService.getStringBinding("material.tooltip.type.raw")).build());
@@ -87,6 +94,19 @@ public class MaterialService {
         return vBox;
 
 
+    }
+
+    private static void addRefinableToTooltip(Commodity commodity, VBox vBox) {
+        Refinable.getRefinable(commodity).ifPresent(refinable -> {
+            vBox.getChildren().add(LabelBuilder.builder().build());
+            vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.refining")).build());
+            vBox.getChildren().add(LabelBuilder.builder().withText(
+                    LocaleService.getStringBinding("material.tooltip.refinable",
+                            LocaleService.LocalizationKey.of(refinable.getCommodityFrom().getLocalizationKey()),
+                            LocaleService.LocalizationKey.of(refinable.getCommodityTo().getLocalizationKey()),
+                            refinable.getCommodityIn(),
+                            refinable.getCommodityOut())).build());
+        });
     }
 
     private static void addHorizonsTradeToTooltip(final HorizonsMaterial horizonsMaterial, final VBox vBox) {
