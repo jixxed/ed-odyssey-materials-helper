@@ -32,5 +32,5 @@ material.tooltip.downtrade.none,No downtrades possible,No downtrades possible,,N
 material.tooltip.tradesuggestions,"Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)","Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)",,"Recibe {0} Intercambiando {1} {2} ({3} en posesión, {4} reservados, {5} usados)",,"Receba {0} Trocando {1} {2} ({3} estocado, {4} reservado, {5} usado)","Получить {0} через обмен {1} {2} ({3} в наличии, {4} зарезервировано, {5} использовано)"
 material.tooltip.tradesuggestions.none,No complete trades can be made,No complete trades can be made,,No se pueden hacer intercambios completos,,Nenhuma transação completa pode ser feita,Полные сделки не могут быть совершены
 material.tooltip.trade,Trade suggestions:,Trade suggestions:,,Intercambios sugeridos,,Sugestões de transação:,Торговые предложения:
-material.tooltip.refining,Refining,,,,,,
-material.tooltip.refinable,{0} can be refined into {1} at a conversion rate of {2} to {3},,,,,,
+material.tooltip.refining,Refining,,,,,,Переработка
+material.tooltip.refinable,{0} can be refined into {1} at a conversion rate of {2} to {3},,,,,,{0} может быть очищен в {1} по курсу {2} к {3}
