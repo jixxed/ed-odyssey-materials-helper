@@ -1,3 +1,7 @@
+Version 2.138
+-------------
+Fix fleetcarrier stock and orders not being shown consistently
+
 Version 2.137
 -------------
 Add conversion info to tooltips of refinable commodities
