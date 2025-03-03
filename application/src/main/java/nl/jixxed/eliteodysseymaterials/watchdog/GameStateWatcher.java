@@ -30,7 +30,7 @@ public class GameStateWatcher {
 
             @Override
             public void onDeleted(FileEvent event) {
-                handleFile(event, fileProcessor);
+                handleDelete(event, fileProcessor);
             }
 
             private void handleFile(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
@@ -38,10 +38,13 @@ public class GameStateWatcher {
                 if (file.isFile() && file.getName().equals(filename)) {
                     GameStateWatcher.this.watchedFile = Optional.of(file);
                     fileProcessor.accept(Optional.of(file));
-                }else{
+                }
+            }
+            private void handleDelete(final FileEvent event, final Consumer<Optional<File>> fileProcessor) {
+                final File file = event.getFile();
+                if (file.getName().equals(filename)) {
                     fileProcessor.accept(Optional.empty());
                 }
-
             }
         }).watch(folder);
     }

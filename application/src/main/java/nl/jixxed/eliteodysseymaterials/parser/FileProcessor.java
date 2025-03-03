@@ -204,6 +204,7 @@ public class FileProcessor {
                     f -> Platform.runLater(() -> {
                         MessageHandler.handleCapiMessage(f, journalEventType);
                         ApplicationState.getInstance().getFcMaterials().set(true);
+                        EventService.publish(new CapiFleetCarrierEvent());
                     }),
                     () -> Platform.runLater(() -> {
                         MessageHandler.clearCapi();
