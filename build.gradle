@@ -166,7 +166,7 @@ allprojects {
                 implementation "org.apache.poi:poi-ooxml:${version_apache_poi}"
                 implementation "org.eclipse.parsson:jakarta.json:1.1.7"
                 implementation "org.leadpony.justify:justify:3.1.0"
-                implementation "org.slf4j:slf4j-api:2.0.16"
+                implementation "org.slf4j:slf4j-api:2.0.17"
                 implementation "org.openjfx:javafx-base:${version_javafx}:${platform}"
                 implementation "org.openjfx:javafx-controls:${version_javafx}:${platform}"
                 implementation "org.openjfx:javafx-fxml:${version_javafx}:${platform}"
