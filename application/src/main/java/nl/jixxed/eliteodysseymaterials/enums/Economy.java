@@ -28,6 +28,7 @@ public enum Economy {
     CARRIER("$economy_Carrier;", "Private Enterprise"),
     ENGINEER("$economy_Engineer;", "Engineering"),
     NONE("$economy_None;", "None"),
+    CONTRABAND("$economy_Contraband;", "Contraband"),
     UNKNOWN("", "Unknown");
 
     private final String key;

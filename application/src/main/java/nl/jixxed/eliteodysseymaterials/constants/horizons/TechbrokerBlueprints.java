@@ -18,7 +18,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 18,
                             Encoded.ANCIENTTECHNOLOGICALDATA, 21,
                             Manufactured.HEATRESISTANTCERAMICS, 15,
-                            Commodity.POWERGRIDASSEMBLY, 10),
+                            RegularCommodity.POWERGRIDASSEMBLY, 10),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -29,7 +29,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCELL, 21,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 21,
                             Manufactured.FOCUSCRYSTALS, 24,
-                            Commodity.HNSHOCKMOUNT, 8),
+                            RegularCommodity.HNSHOCKMOUNT, 8),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -40,7 +40,7 @@ public class TechbrokerBlueprints {
                             Encoded.ANCIENTBIOLOGICALDATA, 20,
                             Manufactured.GUARDIAN_POWERCELL, 24,
                             Manufactured.PHASEALLOYS, 18,
-                            Commodity.HEATSINKINTERLINK, 6),
+                            RegularCommodity.HEATSINKINTERLINK, 6),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -51,7 +51,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_SENTINEL_WRECKAGECOMPONENTS, 21,
                             Encoded.ANCIENTCULTURALDATA, 16,
                             Encoded.ANCIENTHISTORICALDATA, 16,
-                            Commodity.REINFORCEDMOUNTINGPLATE, 12),
+                            RegularCommodity.REINFORCEDMOUNTINGPLATE, 12),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -62,7 +62,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_SENTINEL_WRECKAGECOMPONENTS, 18,
                             Encoded.ANCIENTTECHNOLOGICALDATA, 15,
                             Manufactured.GUARDIAN_POWERCONDUIT, 20,
-                            Commodity.REINFORCEDMOUNTINGPLATE, 9),
+                            RegularCommodity.REINFORCEDMOUNTINGPLATE, 9),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -73,7 +73,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCELL, 17,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 20,
                             Encoded.ANCIENTLANGUAGEDATA, 24,
-                            Commodity.DIAGNOSTICSENSOR, 8),
+                            RegularCommodity.DIAGNOSTICSENSOR, 8),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -84,7 +84,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCELL, 18,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 20,
                             Raw.MANGANESE, 15,
-                            Commodity.MAGNETICEMITTERCOIL, 6),
+                            RegularCommodity.MAGNETICEMITTERCOIL, 6),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -105,7 +105,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 28,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 20,
                             Raw.CHROMIUM, 28,
-                            Commodity.COOLINGHOSES, 10),
+                            RegularCommodity.COOLINGHOSES, 10),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -116,7 +116,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 19,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 16,
                             Raw.CHROMIUM, 14,
-                            Commodity.COOLINGHOSES, 8),
+                            RegularCommodity.COOLINGHOSES, 8),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -137,7 +137,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 26,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 24,
                             Raw.CHROMIUM, 26,
-                            Commodity.ARTICULATIONMOTORS, 10),
+                            RegularCommodity.ARTICULATIONMOTORS, 10),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -148,7 +148,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 21,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 20,
                             Raw.CHROMIUM, 16,
-                            Commodity.ARTICULATIONMOTORS, 8),
+                            RegularCommodity.ARTICULATIONMOTORS, 8),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -169,7 +169,7 @@ public class TechbrokerBlueprints {
                             Encoded.GUARDIAN_WEAPONBLUEPRINT, 1,
                             Manufactured.GUARDIAN_SENTINEL_WRECKAGECOMPONENTS, 20,
                             Raw.CARBON, 20,
-                            Commodity.MICROCONTROLLERS, 18),
+                            RegularCommodity.MICROCONTROLLERS, 18),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -180,7 +180,7 @@ public class TechbrokerBlueprints {
                             Encoded.GUARDIAN_WEAPONBLUEPRINT, 1,
                             Manufactured.GUARDIAN_SENTINEL_WRECKAGECOMPONENTS, 20,
                             Raw.CARBON, 14,
-                            Commodity.POWERTRANSFERCONDUITS, 12),
+                            RegularCommodity.POWERTRANSFERCONDUITS, 12),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -201,7 +201,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_SENTINEL_WRECKAGECOMPONENTS, 20,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 26,
                             Raw.CARBON, 28,
-                            Commodity.MICROCONTROLLERS, 12),
+                            RegularCommodity.MICROCONTROLLERS, 12),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -212,7 +212,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_SENTINEL_WRECKAGECOMPONENTS, 16,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 20,
                             Raw.CARBON, 15,
-                            Commodity.MICROCONTROLLERS, 12),
+                            RegularCommodity.MICROCONTROLLERS, 12),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.GUARDIAN, HorizonsBrokerType.SALVATION)
@@ -233,7 +233,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCELL, 5,
                             Manufactured.GUARDIAN_TECHCOMPONENT, 5,
                             Raw.NIOBIUM, 4,
-                            Commodity.THERMALCOOLINGUNITS, 2),
+                            RegularCommodity.THERMALCOOLINGUNITS, 2),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.SALVATION)
@@ -255,7 +255,7 @@ public class TechbrokerBlueprints {
                             Encoded.GUARDIAN_WEAPONBLUEPRINT, 1,
                             Manufactured.GUARDIAN_SENTINEL_WRECKAGECOMPONENTS, 5,
                             Raw.GERMANIUM, 4,
-                            Commodity.POWERCONVERTER, 2),
+                            RegularCommodity.POWERCONVERTER, 2),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.SALVATION)
@@ -277,7 +277,7 @@ public class TechbrokerBlueprints {
                             Manufactured.GUARDIAN_POWERCONDUIT, 5,
                             Manufactured.GUARDIAN_SENTINEL_WEAPONPARTS, 5,
                             Raw.ARSENIC, 4,
-                            Commodity.POWERTRANSFERCONDUITS, 2),
+                            RegularCommodity.POWERTRANSFERCONDUITS, 2),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.SALVATION)
@@ -333,7 +333,7 @@ public class TechbrokerBlueprints {
                             Raw.IRON, 30,
                             Raw.MOLYBDENUM, 24,
                             Raw.GERMANIUM, 26,
-                            Commodity.CMMCOMPOSITE, 8),
+                            RegularCommodity.CMMCOMPOSITE, 8),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -344,7 +344,7 @@ public class TechbrokerBlueprints {
                             Raw.IRON, 28,
                             Raw.MOLYBDENUM, 28,
                             Raw.GERMANIUM, 24,
-                            Commodity.ARTICULATIONMOTORS, 10),
+                            RegularCommodity.ARTICULATIONMOTORS, 10),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -355,7 +355,7 @@ public class TechbrokerBlueprints {
                             Raw.TUNGSTEN, 26,
                             Raw.RHENIUM, 24,
                             Raw.TECHNETIUM, 26,
-                            Commodity.POWERCONVERTER, 8),
+                            RegularCommodity.POWERCONVERTER, 8),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -366,7 +366,7 @@ public class TechbrokerBlueprints {
                             Raw.TUNGSTEN, 26,
                             Raw.RHENIUM, 20,
                             Raw.TECHNETIUM, 28,
-                            Commodity.IONDISTRIBUTOR, 6),
+                            RegularCommodity.IONDISTRIBUTOR, 6),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -377,7 +377,7 @@ public class TechbrokerBlueprints {
                             Raw.TUNGSTEN, 10,
                             Raw.RHENIUM, 8,
                             Raw.TECHNETIUM, 12,
-                            Commodity.POWERCONVERTER, 4),
+                            RegularCommodity.POWERCONVERTER, 4),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -388,7 +388,7 @@ public class TechbrokerBlueprints {
                             Raw.RHENIUM, 24,
                             Raw.TECHNETIUM, 22,
                             Raw.VANADIUM, 28,
-                            Commodity.POWERTRANSFERCONDUITS, 12),
+                            RegularCommodity.POWERTRANSFERCONDUITS, 12),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -399,7 +399,7 @@ public class TechbrokerBlueprints {
                             Raw.RHENIUM, 20,
                             Raw.TECHNETIUM, 28,
                             Raw.VANADIUM, 24,
-                            Commodity.POWERCONVERTER, 10),
+                            RegularCommodity.POWERCONVERTER, 10),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -410,7 +410,7 @@ public class TechbrokerBlueprints {
                             Raw.TUNGSTEN, 11,
                             Raw.RHENIUM, 8,
                             Raw.TECHNETIUM, 10,
-                            Commodity.POWERTRANSFERCONDUITS, 4),
+                            RegularCommodity.POWERTRANSFERCONDUITS, 4),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -421,7 +421,7 @@ public class TechbrokerBlueprints {
                             Raw.TUNGSTEN, 28,
                             Raw.RHENIUM, 22,
                             Raw.TECHNETIUM, 24,
-                            Commodity.IONDISTRIBUTOR, 10),
+                            RegularCommodity.IONDISTRIBUTOR, 10),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -432,7 +432,7 @@ public class TechbrokerBlueprints {
                             Raw.TUNGSTEN, 22,
                             Raw.RHENIUM, 20,
                             Raw.TECHNETIUM, 28,
-                            Commodity.POWERTRANSFERCONDUITS, 8),
+                            RegularCommodity.POWERTRANSFERCONDUITS, 8),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -443,7 +443,7 @@ public class TechbrokerBlueprints {
                             Raw.TUNGSTEN, 12,
                             Raw.RHENIUM, 10,
                             Raw.TECHNETIUM, 10,
-                            Commodity.IONDISTRIBUTOR, 4),
+                            RegularCommodity.IONDISTRIBUTOR, 4),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS)
@@ -454,7 +454,7 @@ public class TechbrokerBlueprints {
                             Manufactured.UNKNOWNENERGYCELL, 16,
                             Manufactured.UNKNOWNORGANICCIRCUITRY, 18,
                             Raw.MOLYBDENUM, 16,
-                            Commodity.RADIATIONBAFFLE, 6),
+                            RegularCommodity.RADIATIONBAFFLE, 6),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.SIRIUS)
@@ -464,7 +464,7 @@ public class TechbrokerBlueprints {
                             Map.of(
                                     Manufactured.PROTORADIOLICALLOYS, 16,
                                     Raw.PHOSPHORUS, 28,
-                                    Commodity.OSMIUM, 10,
+                                    RegularCommodity.OSMIUM, 10,
                                     Manufactured.CONDUCTIVECERAMICS, 24,
                                     Manufactured.HYBRIDCAPACITORS, 26),
                             Map.of(),
@@ -473,7 +473,7 @@ public class TechbrokerBlueprints {
                     )),
             Map.entry(HorizonsBlueprintType.MODIFIED_MINING_LASER_FIXED_SMALL, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_WEAPONS, HorizonsBlueprintType.MODIFIED_MINING_LASER_FIXED_SMALL,
                     Map.of(
-                            Commodity.OSMIUM, 16,
+                            RegularCommodity.OSMIUM, 16,
                             Raw.ARSENIC, 20,
                             Raw.RHENIUM, 24,
                             Raw.PHOSPHORUS, 28),
@@ -499,7 +499,7 @@ public class TechbrokerBlueprints {
                             Manufactured.HEATDISPERSIONPLATE, 9,
                             Raw.VANADIUM, 13,
                             Manufactured.HIGHDENSITYCOMPOSITES, 10,
-                            Raw.TECHNETIUM,3,
+                            Raw.TECHNETIUM, 3,
                             Manufactured.MILITARYSUPERCAPACITORS, 10
                     ),
                     Map.of(),
@@ -533,177 +533,177 @@ public class TechbrokerBlueprints {
             )));
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> HUMAN_MODULES = Map.ofEntries(
             Map.entry(HorizonsBlueprintType.ENGINEERED_DETAILED_SURFACE_SCANNER_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_DETAILED_SURFACE_SCANNER_V1,
-                    Map.of(
-                            Manufactured.MECHANICALSCRAP, 26,
-                            Raw.GERMANIUM, 22,
-                            Manufactured.MECHANICALCOMPONENTS, 28,
-                            Raw.NIOBIUM, 24),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVALMINING, HorizonsBrokerType.SIRIUS)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_DETAILED_SURFACE_SCANNER_V1,
+                            Map.of(
+                                    Manufactured.MECHANICALSCRAP, 26,
+                                    Raw.GERMANIUM, 22,
+                                    Manufactured.MECHANICALCOMPONENTS, 28,
+                                    Raw.NIOBIUM, 24),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVALMINING, HorizonsBrokerType.SIRIUS)
+                    )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_V1,
-                    Map.of(
-                            Raw.TELLURIUM, 26,
-                            Manufactured.ELECTROCHEMICALARRAYS, 26,
-                            Manufactured.CHEMICALPROCESSORS, 28,
-                            Encoded.DATAMINEDWAKE, 18),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVALMINING, HorizonsBrokerType.SIRIUS)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_V1,
+                            Map.of(
+                                    Raw.TELLURIUM, 26,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 26,
+                                    Manufactured.CHEMICALPROCESSORS, 28,
+                                    Encoded.DATAMINEDWAKE, 18),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.TORVALMINING, HorizonsBrokerType.SIRIUS)
+                    )),
             Map.entry(HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER,
-                    Map.of(
-                            Manufactured.MECHANICALSCRAP, 8,
-                            Raw.NIOBIUM, 6,
-                            Raw.VANADIUM, 6,
-                            Manufactured.MECHANICALCOMPONENTS, 5
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.SIRIUS)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.SIRIUS_HEAT_SINK_LAUNCHER,
+                            Map.of(
+                                    Manufactured.MECHANICALSCRAP, 8,
+                                    Raw.NIOBIUM, 6,
+                                    Raw.VANADIUM, 6,
+                                    Manufactured.MECHANICALCOMPONENTS, 5
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.SIRIUS)
+                    )),
             Map.entry(HorizonsBlueprintType.CAUSTIC_SINK_LAUNCHER,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.CAUSTIC_SINK_LAUNCHER,
-                    Map.of(
-                            Manufactured.CHEMICALSTORAGEUNITS, 15,
-                            Manufactured.GALVANISINGALLOYS, 10,
-                            Manufactured.TG_CAUSTICSHARD, 20,
-                            Manufactured.TG_CAUSTICGENERATORPARTS, 10,
-                            Commodity.THARGOIDGENERATORTISSUESAMPLE, 5
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.RESCUE),
-                    GameVersion.LIVE
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.CAUSTIC_SINK_LAUNCHER,
+                            Map.of(
+                                    Manufactured.CHEMICALSTORAGEUNITS, 15,
+                                    Manufactured.GALVANISINGALLOYS, 10,
+                                    Manufactured.TG_CAUSTICSHARD, 20,
+                                    Manufactured.TG_CAUSTICGENERATORPARTS, 10,
+                                    RegularCommodity.THARGOIDGENERATORTISSUESAMPLE, 5
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.RESCUE),
+                            GameVersion.LIVE
+                    )),
             Map.entry(HorizonsBlueprintType.THARGOID_PULSE_NEUTRALISER,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.THARGOID_PULSE_NEUTRALISER,
-                    Map.of(
-                            Encoded.TG_SHUTDOWNDATA, 5,
-                            Manufactured.UNKNOWNENERGYSOURCE, 5,
-                            Manufactured.TG_PROPULSIONELEMENT, 5,
-                            Commodity.ANCIENTRELICTG, 1
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.RESCUE),
-                    GameVersion.LIVE
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.THARGOID_PULSE_NEUTRALISER,
+                            Map.of(
+                                    Encoded.TG_SHUTDOWNDATA, 5,
+                                    Manufactured.UNKNOWNENERGYSOURCE, 5,
+                                    Manufactured.TG_PROPULSIONELEMENT, 5,
+                                    RegularCommodity.ANCIENTRELICTG, 1
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.RESCUE),
+                            GameVersion.LIVE
+                    )),
             Map.entry(HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.META_ALLOY_HULL_REINFORCEMENT,
                     Map.of(
-                            Commodity.METAALLOYS, 16,
+                            RegularCommodity.METAALLOYS, 16,
                             Manufactured.FOCUSCRYSTALS, 25,
                             Encoded.SHIELDPATTERNANALYSIS, 22,
                             Manufactured.CONFIGURABLECOMPONENTS, 20,
-                            Commodity.REINFORCEDMOUNTINGPLATE, 12),
+                            RegularCommodity.REINFORCEDMOUNTINGPLATE, 12),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.RESCUE)
             )),
             Map.entry(HorizonsBlueprintType.CORROSION_RESISTANT_CARGO_RACK, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.CORROSION_RESISTANT_CARGO_RACK,
                     Map.of(
-                            Commodity.METAALLOYS, 16,
+                            RegularCommodity.METAALLOYS, 16,
                             Raw.IRON, 26,
                             Manufactured.CHEMICALMANIPULATORS, 18,
-                            Commodity.NEOFABRICINSULATION, 12,
-                            Commodity.RADIATIONBAFFLE, 22),
+                            RegularCommodity.NEOFABRICINSULATION, 12,
+                            RegularCommodity.RADIATIONBAFFLE, 22),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN, HorizonsBrokerType.SIRIUS, HorizonsBrokerType.RESCUE)
             )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_SCO_A2_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A2_V1,
-                    Map.of(
-                            Raw.TELLURIUM, 14,
-                            Manufactured.ELECTROCHEMICALARRAYS, 6,
-                            Manufactured.CHEMICALPROCESSORS, 9,
-                            Manufactured.TG_PROPULSIONELEMENT, 4,
-                            Encoded.DATAMINEDWAKE, 10,
-                            Commodity.THARGOIDTITANDRIVECOMPONENT, 1
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A2_V1,
+                            Map.of(
+                                    Raw.TELLURIUM, 14,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 6,
+                                    Manufactured.CHEMICALPROCESSORS, 9,
+                                    Manufactured.TG_PROPULSIONELEMENT, 4,
+                                    Encoded.DATAMINEDWAKE, 10,
+                                    RegularCommodity.THARGOIDTITANDRIVECOMPONENT, 1
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN)
+                    )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_SCO_A3_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A3_V1,
-                    Map.of(
-                            Raw.TELLURIUM, 16,
-                            Manufactured.ELECTROCHEMICALARRAYS, 9,
-                            Manufactured.CHEMICALPROCESSORS, 11,
-                            Manufactured.TG_PROPULSIONELEMENT, 5,
-                            Encoded.DATAMINEDWAKE, 12,
-                            Commodity.THARGOIDTITANDRIVECOMPONENT, 1
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A3_V1,
+                            Map.of(
+                                    Raw.TELLURIUM, 16,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 9,
+                                    Manufactured.CHEMICALPROCESSORS, 11,
+                                    Manufactured.TG_PROPULSIONELEMENT, 5,
+                                    Encoded.DATAMINEDWAKE, 12,
+                                    RegularCommodity.THARGOIDTITANDRIVECOMPONENT, 1
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN)
+                    )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_SCO_A4_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A4_V1,
-                    Map.of(
-                            Raw.TELLURIUM, 20,
-                            Manufactured.ELECTROCHEMICALARRAYS, 9,
-                            Manufactured.CHEMICALPROCESSORS, 13,
-                            Manufactured.TG_PROPULSIONELEMENT, 6,
-                            Encoded.DATAMINEDWAKE, 13,
-                            Commodity.THARGOIDTITANDRIVECOMPONENT, 1
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A4_V1,
+                            Map.of(
+                                    Raw.TELLURIUM, 20,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 9,
+                                    Manufactured.CHEMICALPROCESSORS, 13,
+                                    Manufactured.TG_PROPULSIONELEMENT, 6,
+                                    Encoded.DATAMINEDWAKE, 13,
+                                    RegularCommodity.THARGOIDTITANDRIVECOMPONENT, 1
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN)
+                    )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_SCO_A5_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A5_V1,
-                    Map.of(
-                            Raw.TELLURIUM, 24,
-                            Manufactured.ELECTROCHEMICALARRAYS, 12,
-                            Manufactured.CHEMICALPROCESSORS, 14,
-                            Manufactured.TG_PROPULSIONELEMENT, 7,
-                            Encoded.DATAMINEDWAKE, 15,
-                            Commodity.THARGOIDTITANDRIVECOMPONENT, 1
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A5_V1,
+                            Map.of(
+                                    Raw.TELLURIUM, 24,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 12,
+                                    Manufactured.CHEMICALPROCESSORS, 14,
+                                    Manufactured.TG_PROPULSIONELEMENT, 7,
+                                    Encoded.DATAMINEDWAKE, 15,
+                                    RegularCommodity.THARGOIDTITANDRIVECOMPONENT, 1
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN)
+                    )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_SCO_A6_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A6_V1,
-                    Map.of(
-                            Raw.TELLURIUM, 28,
-                            Manufactured.ELECTROCHEMICALARRAYS, 12,
-                            Manufactured.CHEMICALPROCESSORS, 16,
-                            Manufactured.TG_PROPULSIONELEMENT, 8,
-                            Encoded.DATAMINEDWAKE, 15,
-                            Commodity.THARGOIDTITANDRIVECOMPONENT, 1
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN)
-            )),
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A6_V1,
+                            Map.of(
+                                    Raw.TELLURIUM, 28,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 12,
+                                    Manufactured.CHEMICALPROCESSORS, 16,
+                                    Manufactured.TG_PROPULSIONELEMENT, 8,
+                                    Encoded.DATAMINEDWAKE, 15,
+                                    RegularCommodity.THARGOIDTITANDRIVECOMPONENT, 1
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN)
+                    )),
             Map.entry(HorizonsBlueprintType.ENGINEERED_FSD_SCO_A7_V1,
-            new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A7_V1,
-                    Map.of(
-                            Raw.TELLURIUM, 28,
-                            Manufactured.ELECTROCHEMICALARRAYS, 14,
-                            Manufactured.CHEMICALPROCESSORS, 18,
-                            Manufactured.TG_PROPULSIONELEMENT, 12,
-                            Encoded.DATAMINEDWAKE, 16,
-                            Commodity.THARGOIDTITANDRIVECOMPONENT, 1
-                    ),
-                    Map.of(),
-                    List.of(),
-                    List.of(HorizonsBrokerType.HUMAN)
-            )));
+                    new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_MODULES, HorizonsBlueprintType.ENGINEERED_FSD_SCO_A7_V1,
+                            Map.of(
+                                    Raw.TELLURIUM, 28,
+                                    Manufactured.ELECTROCHEMICALARRAYS, 14,
+                                    Manufactured.CHEMICALPROCESSORS, 18,
+                                    Manufactured.TG_PROPULSIONELEMENT, 12,
+                                    Encoded.DATAMINEDWAKE, 16,
+                                    RegularCommodity.THARGOIDTITANDRIVECOMPONENT, 1
+                            ),
+                            Map.of(),
+                            List.of(),
+                            List.of(HorizonsBrokerType.HUMAN)
+                    )));
     public static final Map<HorizonsBlueprintType, HorizonsBlueprint> HUMAN_LIVERY = Map.of(
             HorizonsBlueprintType.BOBBLEHEAD, new HorizonsTechBrokerBlueprint(HorizonsBlueprintName.HUMAN_LIVERY, HorizonsBlueprintType.BOBBLEHEAD,
                     Map.of(
-                            Commodity.METAALLOYS, 10,
-                            Commodity.THARGOIDHEART, 1),
+                            RegularCommodity.METAALLOYS, 10,
+                            RegularCommodity.THARGOIDHEART, 1),
                     Map.of(),
                     List.of(),
                     List.of(HorizonsBrokerType.HUMAN)

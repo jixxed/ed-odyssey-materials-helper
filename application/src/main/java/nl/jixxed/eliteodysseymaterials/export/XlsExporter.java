@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class XlsExporter {
@@ -228,7 +229,7 @@ public class XlsExporter {
             }
         });
         rowNumber.set(1);
-        Arrays.stream(Commodity.values()).forEach((commodity) -> {
+        Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach((commodity) -> {
             final Integer shipAmount = StorageService.getCommodityCount(commodity, StoragePool.SHIP);
             final Integer fcAmount = StorageService.getCommodityCount(commodity, StoragePool.FLEETCARRIER);
             if (shipAmount + fcAmount > 0) {

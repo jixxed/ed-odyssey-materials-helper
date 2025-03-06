@@ -78,7 +78,7 @@ public class HorizonsBlueprint implements Blueprint<HorizonsBlueprintName> {
             return this.encoded;
         } else if (clazz.equals(Manufactured.class)) {
             return this.manufactured;
-        } else if (clazz.equals(Commodity.class)) {
+        } else if (clazz.equals(RegularCommodity.class) || clazz.equals(RareCommodity.class) || clazz.equals(Commodity.class)) {
             return this.commodities;
         } else if (clazz.equals(HorizonsMaterial.class)) {
             return Stream.concat(Stream.concat(Stream.concat(this.raw.entrySet().stream(), this.encoded.entrySet().stream()), this.manufactured.entrySet().stream()), this.commodities.entrySet().stream()).collect(

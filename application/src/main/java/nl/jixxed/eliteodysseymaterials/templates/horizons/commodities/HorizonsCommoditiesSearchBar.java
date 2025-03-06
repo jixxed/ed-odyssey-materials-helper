@@ -113,7 +113,9 @@ class HorizonsCommoditiesSearchBar extends HBox {
                         HorizonsCommoditiesShow.TEXTILES,
                         HorizonsCommoditiesShow.WASTE,
                         HorizonsCommoditiesShow.WEAPONS,
-                        HorizonsCommoditiesShow.POWERPLAY))
+                        HorizonsCommoditiesShow.POWERPLAY,
+                        HorizonsCommoditiesShow.SOLD_AT_STATION,
+                        HorizonsCommoditiesShow.BOUGHT_AT_STATION))
                 .withValueChangeListener((options, oldValue, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new HorizonsCommoditiesSearchEvent(new CommoditiesSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox))));

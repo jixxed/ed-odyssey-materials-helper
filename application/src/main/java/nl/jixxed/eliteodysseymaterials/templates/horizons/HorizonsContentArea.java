@@ -16,6 +16,7 @@ import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation.HorizonsColonisationTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommoditiesOverviewTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineersTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMaterialTab;
@@ -42,6 +43,7 @@ class HorizonsContentArea extends AnchorPane {
     private HorizonsWishlistTab horizonsWishlistTab;
     private HorizonsShipBuilderTab horizonsShipBuilderTab;
     private HorizonsCommoditiesOverviewTab horizonsCommoditiesOverview;
+    private HorizonsColonisationTab horizonsColonisationTab;
     private final List<EventListener<?>> eventListeners = new ArrayList<>();
 //    private HgeFinderTab hgeFinderTab;
 
@@ -64,11 +66,13 @@ class HorizonsContentArea extends AnchorPane {
         this.horizonsWishlistTab.setClosable(false);
         this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
         this.horizonsShipBuilderTab.setClosable(false);
+        this.horizonsColonisationTab = new HorizonsColonisationTab();
+        this.horizonsColonisationTab.setClosable(false);
 //        this.hgeFinderTab = new HgeFinderTab();
 //        this.hgeFinderTab.setClosable(false);
 
         this.searchBar = new HorizonsSearchBar();
-        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab,/* this.hgeFinderTab,*/ this.horizonsEngineersTab, this.powerplayTab);
+        this.tabs = new TabPane(this.horizonsMaterialOverview, this.horizonsCommoditiesOverview, this.horizonsWishlistTab, this.horizonsShipBuilderTab,/* this.hgeFinderTab,*/ this.horizonsEngineersTab, this.powerplayTab, this.horizonsColonisationTab);
         this.tabs.getStyleClass().add("odyssey-tab-pane");
         this.tabs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

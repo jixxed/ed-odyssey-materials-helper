@@ -28,8 +28,8 @@ import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
@@ -62,7 +62,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
     private final Map<Raw, WishlistMaterial> wishlistNeededRaw = new EnumMap<>(Raw.class);
     private final Map<Encoded, WishlistMaterial> wishlistNeededEncoded = new EnumMap<>(Encoded.class);
     private final Map<Manufactured, WishlistMaterial> wishlistNeededManufactured = new EnumMap<>(Manufactured.class);
-    private final Map<Commodity, WishlistMaterial> wishlistNeededCommodity = new EnumMap<>(Commodity.class);
+    private final Map<Commodity, WishlistMaterial> wishlistNeededCommodity = new HashMap<>();
 
     private ComboBox<HorizonsWishlist> wishlistSelect;
     private Label noBlueprint;

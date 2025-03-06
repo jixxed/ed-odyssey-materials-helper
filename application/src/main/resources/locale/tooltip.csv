@@ -34,3 +34,6 @@ material.tooltip.tradesuggestions.none,No complete trades can be made,No complet
 material.tooltip.trade,Trade suggestions:,Trade suggestions:,,Intercambios sugeridos,,Sugestões de transação:,Торговые предложения:
 material.tooltip.refining,Refining,,,,,,
 material.tooltip.refinable,{0} can be refined into {1} at a conversion rate of {2} to {3},,,,,,
+material.tooltip.market,Market,,,,,,
+material.tooltip.market.sells,The current market sells this commodity for {0}CR/T and has a stock of {1}T,,,,,,
+material.tooltip.market.buys,The current market buys this commodity for {0}CR/T and has a demand of {1}T,,,,,,

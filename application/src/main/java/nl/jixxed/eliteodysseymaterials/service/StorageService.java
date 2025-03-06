@@ -5,19 +5,17 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StorageService {
     private static final Map<Raw, Integer> raw = new EnumMap<>(Raw.class);
     private static final Map<Encoded, Integer> encoded = new EnumMap<>(Encoded.class);
     private static final Map<Manufactured, Integer> manufactured = new EnumMap<>(Manufactured.class);
-    private static final Map<Commodity, Integer> commoditiesShip = new EnumMap<>(Commodity.class);
-    private static final Map<Commodity, Integer> commoditiesSrv = new EnumMap<>(Commodity.class);
-    private static final Map<Commodity, Integer> commoditiesFleetcarrier = new EnumMap<>(Commodity.class);
+    private static final Map<Commodity, Integer> commoditiesShip = new HashMap<>();
+    private static final Map<Commodity, Integer> commoditiesSrv = new HashMap<>();
+    private static final Map<Commodity, Integer> commoditiesFleetcarrier = new HashMap<>();
     private static final Map<Good, Storage> goods = new EnumMap<>(Good.class);
     private static final Map<Asset, Storage> assets = new EnumMap<>(Asset.class);
     private static final Map<Data, Storage> data = new EnumMap<>(Data.class);
@@ -163,13 +161,13 @@ public class StorageService {
          assets.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
          data.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
          goods.values().forEach(value -> value.setValue(0, StoragePool.FLEETCARRIER));
-        Arrays.stream(Commodity.values()).forEach(material ->
+        Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material ->
                 commoditiesFleetcarrier.put(material, 0)
         );
     }
 
     public static void resetSrvCounts() {
-        Arrays.stream(Commodity.values()).forEach(material ->
+        Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material ->
                 commoditiesSrv.put(material, 0)
         );
     }
@@ -193,7 +191,7 @@ public class StorageService {
     }
 
     public static void resetHorizonsCommodityCounts() {
-        Arrays.stream(Commodity.values()).forEach(material ->
+        Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material ->
                 commoditiesShip.put(material, 0)
         );
     }
@@ -217,7 +215,7 @@ public class StorageService {
         Arrays.stream(Manufactured.values()).forEach(material ->
                 manufactured.put(material, 0)
         );
-        Arrays.stream(Commodity.values()).forEach(material -> {
+        Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material -> {
             commoditiesShip.put(material, 0);
             commoditiesFleetcarrier.put(material, 0);
             commoditiesSrv.put(material, 0);

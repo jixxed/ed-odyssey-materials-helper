@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.parser.messageprocessor;
 
 import nl.jixxed.eliteodysseymaterials.schemas.journal.Market.Market;
 import nl.jixxed.eliteodysseymaterials.service.EDDNService;
+import nl.jixxed.eliteodysseymaterials.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketEvent;
 
@@ -13,6 +14,7 @@ public class MarketMessageProcessor implements MessageProcessor<Market> {
         if(event.getItems().isEmpty()) {
             EventService.publish(new MarketEvent(event.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))));
         }else {
+            MarketService.updateMarket(event);
             EDDNService.commodity(event);
         }
     }

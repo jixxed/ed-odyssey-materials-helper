@@ -15,10 +15,12 @@ import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -82,7 +84,7 @@ public class HorizonsCommodityCard extends VBox implements Template {
         this.firstLine.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.5));
         this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
         this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
-
+        updateStyle();
 
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
 
@@ -95,6 +97,9 @@ public class HorizonsCommodityCard extends VBox implements Template {
                 updateQuantity();
             }
         }));
+        this.eventListeners.add(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
+            updateStyle();
+        }));
     }
 
     private void updateQuantity() {
@@ -103,5 +108,18 @@ public class HorizonsCommodityCard extends VBox implements Template {
         this.leftAmountLabel.setText(this.fleetcarrierAmount.toString());
         this.rightAmountLabel.setText(this.shipAmount.toString());
 
+    }
+
+    private void updateStyle() {
+        this.getStyleClass().removeAll("horizons-commoditycard-sells", "horizons-commoditycard-buys", "horizons-commoditycard-buys-sells");
+        final boolean sells = MarketService.sells(commodity);
+        final boolean buys = MarketService.buys(commodity);
+        if (sells && buys) {
+            this.getStyleClass().add("horizons-commoditycard-buys-sells");
+        } else if (sells) {
+            this.getStyleClass().add("horizons-commoditycard-sells");
+        } else if (buys) {
+            this.getStyleClass().add("horizons-commoditycard-buys");
+        }
     }
 }

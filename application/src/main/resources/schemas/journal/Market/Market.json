@@ -80,12 +80,12 @@
           },
           "StockBracket" : {
             "title" : "StockBracket",
-            "type" : "null",
+            "type" : "integer",
             "examples" : [ 0 ]
           },
           "DemandBracket" : {
             "title" : "DemandBracket",
-            "type" : "null",
+            "type" : "integer",
             "examples" : [ 3 ]
           },
           "Stock" : {

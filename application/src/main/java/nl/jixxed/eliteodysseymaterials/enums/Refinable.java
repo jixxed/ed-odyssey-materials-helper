@@ -8,15 +8,15 @@ import java.util.Optional;
 @Getter
 @RequiredArgsConstructor
 public enum Refinable {
-    BAUXITE_ALUMINIUM(Commodity.BAUXITE, Commodity.ALUMINIUM),
-    BERTRANDITE_BERYLLIUM(Commodity.BERTRANDITE, Commodity.BERYLLIUM),
-    COLTAN_TANTALUM(Commodity.COLTAN, Commodity.TANTALUM),
-    GALLITE_GALLIUM(Commodity.GALLITE, Commodity.GALLIUM),
-    HAEMATITE_STEEL(Commodity.HAEMATITE, Commodity.STEEL),
-    INDITE_INDIUM(Commodity.INDITE, Commodity.INDIUM),
-    LEPIDOLITE_LITHIUM(Commodity.LEPIDOLITE, Commodity.LITHIUM),
-    RUTILE_TITANIUM(Commodity.RUTILE, Commodity.TITANIUM),
-    URANINITE_URANIUM(Commodity.URANINITE, Commodity.URANIUM);
+    BAUXITE_ALUMINIUM(RegularCommodity.BAUXITE, RegularCommodity.ALUMINIUM),
+    BERTRANDITE_BERYLLIUM(RegularCommodity.BERTRANDITE, RegularCommodity.BERYLLIUM),
+    COLTAN_TANTALUM(RegularCommodity.COLTAN, RegularCommodity.TANTALUM),
+    GALLITE_GALLIUM(RegularCommodity.GALLITE, RegularCommodity.GALLIUM),
+    HAEMATITE_STEEL(RegularCommodity.HAEMATITE, RegularCommodity.STEEL),
+    INDITE_INDIUM(RegularCommodity.INDITE, RegularCommodity.INDIUM),
+    LEPIDOLITE_LITHIUM(RegularCommodity.LEPIDOLITE, RegularCommodity.LITHIUM),
+    RUTILE_TITANIUM(RegularCommodity.RUTILE, RegularCommodity.TITANIUM),
+    URANINITE_URANIUM(RegularCommodity.URANINITE, RegularCommodity.URANIUM);
 
     private final Commodity commodityFrom;
     private final Commodity commodityTo;

@@ -27,7 +27,6 @@ module nl.jixxed.eliteodysseymaterials {
     requires nl.jixxed.tess4j;
     requires nl.jixxed.lept4j;
     requires org.apache.commons.io;
-    requires java.desktop;
     requires org.leadpony.justify;
     requires jakarta.json;
     requires ch.qos.logback.classic;
@@ -40,6 +39,7 @@ module nl.jixxed.eliteodysseymaterials {
     requires com.google.code.findbugs.jsr305;
     requires sentry;
     requires oslib.master.SNAPSHOT;
+    requires org.apache.commons.lang3;
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;

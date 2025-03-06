@@ -2243,10 +2243,22 @@
     -fx-min-width: 17.9em;
     -fx-max-width: 17.9em;
 }
+.horizons-commoditycard-buys-sells{
+    -fx-border-color: #2e92df;
+    -fx-border-width: 1;
+}
 
 .horizons-commoditycard-live {
     -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%);
     -fx-border-color: #0f0f0f;
+    -fx-border-width: 1;
+}
+.horizons-commoditycard-sells{
+    -fx-border-color: #dcc030;
+    -fx-border-width: 1;
+}
+.horizons-commoditycard-buys{
+    -fx-border-color: #89d07f;
     -fx-border-width: 1;
 }
 
@@ -2295,6 +2307,7 @@
 
 .blueprint-listing-flowpane {
     -fx-spacing: 0.5em;
+    -fx-max-width: 40em;
 }
 
 .blueprint-listing-label {
@@ -4279,4 +4292,83 @@
     -fx-max-width: 1.4em;
     -fx-min-height: 1.5em;
     -fx-max-height: 1.5em;
+}
+.material-tooltip-description{
+    -fx-max-width: 40em;
+    -fx-wrap-text: true;
+}
+.horizons-colonisation-entry{
+    -fx-min-width: 32em;
+    -fx-max-width: 32em;
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-background-color: #0f0f0f;
+}
+.horizons-colonisation-entry-available{
+    -fx-border-color: #dcc030;
+}
+.horizons-colonisation-entry-values{
+    -fx-hgap: 1em;
+    -fx-spacing: 1em;
+}
+.horizons-colonisation-entry-commodity{
+    -fx-min-width: 30em;
+    -fx-max-width: 30em;
+    -fx-alignment: center-left;
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
+}
+.horizons-colonisation-entry-amount-left{
+    /*-fx-min-width: 5.5em;*/
+    -fx-pref-width: 5.5em;
+    /*-fx-padding: 0, 0, 0, 3em;*/
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
+    -fx-text-alignment: left;
+}
+.horizons-colonisation-entry-amount-right{
+    /*-fx-min-width: 5.5em;*/
+    -fx-pref-width: 5.5em;
+    /*-fx-padding: 0, 0, 0, 3em;*/
+    -fx-min-height: 2em;
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+}
+.bill-of-materials{
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-vgap: 0.2em;
+}
+.colonisation-buttons{
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-vgap: 0.2em;
+}
+
+.market-location {
+    -fx-text-fill: #0078d6 !important;
+    -fx-label-padding: 0.4em;
+}
+
+.market-location-line {
+    -fx-max-width: 21em;
+}
+
+.market-location-line:hover {
+    -fx-cursor: hand;
+}
+
+.market-copy-icon {
+    -fx-max-width: 1em;
+    -fx-max-height: 1em;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+.market-distance {
+    -fx-text-fill: #777;
+    -fx-label-padding: 0.4em;
+}
+
+.market-location-line:hover > .market-location {
+    -fx-text-fill: #2e92df !important;
 }

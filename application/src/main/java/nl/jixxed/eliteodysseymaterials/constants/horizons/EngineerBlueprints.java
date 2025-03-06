@@ -14,7 +14,7 @@ public class EngineerBlueprints {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     public static final HorizonsEngineerBlueprint ENGINEER_A = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_A,
-            Map.of(Commodity.SOONTILLRELICS, 3),
+            Map.of(RareCommodity.SOONTILLRELICS, 3),
             List.of("blueprint.description.horizons.engineer_a_learn",
                     "blueprint.description.horizons.engineer_a_invite",
                     "blueprint.description.horizons.engineer_a_unlock"),
@@ -32,7 +32,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A2 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_A2,
-            Map.of(Commodity.XIHECOMPANIONS, 25),
+            Map.of(RareCommodity.XIHECOMPANIONS, 25),
             List.of("blueprint.description.horizons.engineer_a2_learn",
                     "blueprint.description.horizons.engineer_a2_invite",
                     "blueprint.description.horizons.engineer_a2_unlock"),
@@ -42,7 +42,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A3 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_A3,
-            Map.of(Commodity.MODULARTERMINALS, 25),
+            Map.of(RegularCommodity.MODULARTERMINALS, 25),
             List.of("blueprint.description.horizons.engineer_a3_learn",
                     "blueprint.description.horizons.engineer_a3_invite",
                     "blueprint.description.horizons.engineer_a3_unlock"),
@@ -62,7 +62,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_A3B = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_A3B,
-            Map.of(Commodity.KONGGAALE, 25),
+            Map.of(RareCommodity.KONGGAALE, 25),
             List.of("blueprint.description.horizons.engineer_a3b_learn",
                     "blueprint.description.horizons.engineer_a3b_invite",
                     "blueprint.description.horizons.engineer_a3b_unlock"),
@@ -91,7 +91,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_B1 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_B1,
-            Map.of(Commodity.OSMIUM, 10),
+            Map.of(RegularCommodity.OSMIUM, 10),
             List.of("blueprint.description.horizons.engineer_b1_learn",
                     "blueprint.description.horizons.engineer_b1_invite",
                     "blueprint.description.horizons.engineer_b1_unlock"),
@@ -100,7 +100,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_B2 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_B2,
-            Map.of(Commodity.GOLD, 200),
+            Map.of(RegularCommodity.GOLD, 200),
             List.of("blueprint.description.horizons.engineer_b2_learn",
                     "blueprint.description.horizons.engineer_b2_invite",
                     "blueprint.description.horizons.engineer_b2_unlock"),
@@ -120,7 +120,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_C = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_C,
-            Map.of(Commodity.METAALLOYS, 1),
+            Map.of(RegularCommodity.METAALLOYS, 1),
             List.of("blueprint.description.horizons.engineer_c_learn",
                     "blueprint.description.horizons.engineer_c_invite",
                     "blueprint.description.horizons.engineer_c_unlock"),
@@ -169,7 +169,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D1 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_D1,
-            Map.of(Commodity.PROGENITORCELLS, 200),
+            Map.of(RegularCommodity.PROGENITORCELLS, 200),
             List.of("blueprint.description.horizons.engineer_d1_learn",
                     "blueprint.description.horizons.engineer_d1_invite",
                     "blueprint.description.horizons.engineer_d1_unlock"),
@@ -178,7 +178,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D2 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_D2,
-            Map.of(Commodity.PAINITE, 10),
+            Map.of(RegularCommodity.PAINITE, 10),
             List.of("blueprint.description.horizons.engineer_d2_learn",
                     "blueprint.description.horizons.engineer_d2_invite",
                     "blueprint.description.horizons.engineer_d2_unlock"),
@@ -189,7 +189,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D2A = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_D2A,
-            Map.of(Commodity.LAVIANBRANDY, 50),
+            Map.of(RareCommodity.LAVIANBRANDY, 50),
             List.of("blueprint.description.horizons.engineer_d2a_learn",
                     "blueprint.description.horizons.engineer_d2a_invite",
                     "blueprint.description.horizons.engineer_d2a_unlock"),
@@ -199,7 +199,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_D2B = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_D2B,
-            Map.of(Commodity.BROMELLITE, 50),
+            Map.of(RegularCommodity.BROMELLITE, 50),
             List.of("blueprint.description.horizons.engineer_d2b_learn",
                     "blueprint.description.horizons.engineer_d2b_invite",
                     "blueprint.description.horizons.engineer_d2b_unlock"),
@@ -209,7 +209,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_E,
-            Map.of(Commodity.LANDMINES, 200),
+            Map.of(RegularCommodity.LANDMINES, 200),
             List.of("blueprint.description.horizons.engineer_e_learn",
                     "blueprint.description.horizons.engineer_e_invite",
                     "blueprint.description.horizons.engineer_e_unlock"),
@@ -219,7 +219,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E1 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_E1,
-            Map.of(Commodity.OCCUPIEDCRYOPOD, 25),
+            Map.of(RegularCommodity.OCCUPIEDCRYOPOD, 25),
             List.of("blueprint.description.horizons.engineer_e1_learn",
                     "blueprint.description.horizons.engineer_e1_invite",
                     "blueprint.description.horizons.engineer_e1_unlock"),
@@ -228,7 +228,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E2 = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_E2,
-            Map.of(Commodity.KAMITRACIGARS, 50),
+            Map.of(RareCommodity.KAMITRACIGARS, 50),
             List.of("blueprint.description.horizons.engineer_e2_learn",
                     "blueprint.description.horizons.engineer_e2_invite",
                     "blueprint.description.horizons.engineer_e2_unlock"),
@@ -238,7 +238,7 @@ public class EngineerBlueprints {
     );
     public static final HorizonsEngineerBlueprint ENGINEER_E2A = new HorizonsEngineerBlueprint(
             HorizonsBlueprintName.ENGINEER_E2A,
-            Map.of(Commodity.FUJINTEA, 50),
+            Map.of(RareCommodity.FUJINTEA, 50),
             List.of("blueprint.description.horizons.engineer_e2a_learn",
                     "blueprint.description.horizons.engineer_e2a_invite",
                     "blueprint.description.horizons.engineer_e2a_unlock"),

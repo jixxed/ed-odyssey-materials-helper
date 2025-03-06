@@ -133,3 +133,6 @@ search.filter.powerplay,Powerplay,,,,Luttes d’influence galactiques,,
 notification.collected.powerplay.material.notification,{0}: {1},,,,,,
 notification.type.powerplay_pickup,Powerplay Pickup,,,,Collecte luttes d’influence galactiques,,Взятие материала Powerplay
 notification.type.ship_wishlist_pickup,Ship Wishlist Pickup,,,,Collecte liste de souhaits du vaisseau,,Взятие материала для корабля
+search.filter.sold_at_station,Sold at current market,,,,,,
+search.filter.bought_at_station,Bought at current market,,,,,,
+tabs.horizons.colonisation,Colonisation (WIP),,,,,,

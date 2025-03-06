@@ -14,10 +14,7 @@ import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
@@ -27,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class HorizonsCommoditiesOverview extends VBox implements Template {
     private HorizonsCommodityCard[] commodityCards;
@@ -41,7 +39,7 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
     @Override
     public void initComponents() {
         this.getStyleClass().add("horizons-material-overview");
-        this.commodityCards = Arrays.stream(Commodity.values()).filter(Predicate.not(Commodity::isUnknown)).map(HorizonsCommodityCard::new).toList().toArray(HorizonsCommodityCard[]::new);
+        this.commodityCards = Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).filter(Predicate.not(Commodity::isUnknown)).map(HorizonsCommodityCard::new).toList().toArray(HorizonsCommodityCard[]::new);
         update();
         this.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.5));
     }
@@ -97,6 +95,9 @@ public class HorizonsCommoditiesOverview extends VBox implements Template {
 
         this.eventListeners.add(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
+            Platform.runLater(this::update);
+        }));
+        this.eventListeners.add(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
             Platform.runLater(this::update);
         }));
     }

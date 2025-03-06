@@ -24,6 +24,7 @@ import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
@@ -48,6 +49,8 @@ public class MaterialService {
     private static final String STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE = "material-tooltip-subtitle";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_LOCATION_LINE = "material-tooltip-location-line";
     private static final String STYLECLASS_MATERIAL_TOOLTIP_TITLE = "material-tooltip-title";
+    private static final String STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION = "material-tooltip-description";
+
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -66,12 +69,22 @@ public class MaterialService {
             if (horizonsMaterial instanceof Commodity commodity) {
                 vBox.getChildren().add(
                         LabelBuilder.builder()
+                                .withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION)
+                                .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(commodity.getDescriptionLocalizationKey())))
+                                .build());
+                vBox.getChildren().add(LabelBuilder.builder().build());
+                if (horizonsMaterial instanceof RareCommodity rareCommodity) {
+                    vBox.getChildren().add(getMarketLocation(rareCommodity));
+                }
+                vBox.getChildren().add(
+                        LabelBuilder.builder()
                                 .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.type") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.getCommodityType().getLocalizationKey())))
                                 .build());
                 vBox.getChildren().add(
                         LabelBuilder.builder()
-                                .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity.isRareCommodity() ? "material.tooltip.text.yes" : "material.tooltip.text.no")))
+                                .withText(ObservableResourceFactory.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale("material.tooltip.is.rare") + " " + LocaleService.getLocalizedStringForCurrentLocale(commodity instanceof RareCommodity ? "material.tooltip.text.yes" : "material.tooltip.text.no")))
                                 .build());
+                addMarketToTooltip(commodity, vBox);
                 addRefinableToTooltip(commodity, vBox);
                 addFleetCarrierOrdersToTooltip(commodity, vBox);
             } else if (horizonsMaterial instanceof Raw) {
@@ -94,6 +107,69 @@ public class MaterialService {
         return vBox;
 
 
+    }
+
+    private static void addMarketToTooltip(Commodity commodity, VBox vBox) {
+        final Optional<MarketItem> marketItem = MarketService.getMarketItem(commodity);
+        final boolean sells = MarketService.sells(commodity);
+        final boolean buys = MarketService.buys(commodity);
+        marketItem.ifPresent(item -> {
+            if (buys || sells) {
+                vBox.getChildren().add(LabelBuilder.builder().build());
+                vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.market")).build());
+                if (buys) {
+                    vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION).withText(
+                            LocaleService.getStringBinding("material.tooltip.market.buys",
+                                    item.sellPrice(),
+                                    item.demand())).build());
+                }
+                if (sells) {
+                    vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION).withText(
+                            LocaleService.getStringBinding("material.tooltip.market.sells",
+                                    item.buyPrice(),
+                                    item.stock())).build());
+                }
+            }
+        });
+
+    }
+
+    private static FlowPane getMarketLocation(RareCommodity rareCommodity) {
+        var engineerLocation = LabelBuilder.builder()
+                .withStyleClass("market-location")
+                .withNonLocalizedText(rareCommodity.getStation() + " | " + rareCommodity.getStarSystem().getName())
+                .build();
+        String distance = "(" + Formatters.NUMBER_FORMAT_2.format(
+                rareCommodity.getStarSystem().getDistance(
+                        LocationService.getCurrentStarSystem()
+                )
+        ) + "Ly)";
+        var distanceLabel = LabelBuilder.builder()
+                .withStyleClass("market-distance")
+                .withNonLocalizedText(distance)
+                .build();
+
+        var copyIcon = ResizableImageViewBuilder.builder()
+                .withStyleClass("market-copy-icon")
+                .withImage("/images/other/copy.png")
+                .build();
+
+        return FlowPaneBuilder.builder().withStyleClass("market-location-line")
+                .withOnMouseClicked(event -> {
+                    copyLocationToClipboard(rareCommodity.getStarSystem());
+                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
+                })
+                .withNodes(engineerLocation, new StackPane(copyIcon), distanceLabel)
+                .build();
+
+    }
+
+
+    private static void copyLocationToClipboard(StarSystem starSystem) {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(starSystem.getName());
+        clipboard.setContent(content);
     }
 
     private static void addRefinableToTooltip(Commodity commodity, VBox vBox) {
@@ -231,7 +307,7 @@ public class MaterialService {
             popOver.arrowSizeProperty().set(0);
             popOver.arrowIndentProperty().set(0);
             popOver.cornerRadiusProperty().set(0);
-            try{
+            try {
                 final Rectangle2D currentScreen = Screen.getScreensForRectangle(mouseEvent.getScreenX(), mouseEvent.getScreenY(), 1, 1).get(0).getBounds();
                 final double mouseXOnScreen = mouseEvent.getScreenX() - currentScreen.getMinX();
                 final double mouseYOnScreen = mouseEvent.getScreenY() - currentScreen.getMinY();
@@ -268,7 +344,7 @@ public class MaterialService {
                     }
                 });
                 hoverableNode.setOnMouseExited(mouseEvent2 -> timelineHide.play());
-            }catch (IndexOutOfBoundsException ex){
+            } catch (IndexOutOfBoundsException ex) {
                 log.warn("Unable to determine screen to show material info on.");
             }
 
@@ -384,7 +460,7 @@ public class MaterialService {
             vBox.getChildren().add(LabelBuilder.builder().build());
             vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_SUBTITLE).withText(LocaleService.getStringBinding("material.tooltip.used.in.recipes")).build());
             final List<OdysseyBlueprintListing> odysseyBlueprintListings = recipesContainingMaterial.entrySet().stream().
-            map(entry -> new OdysseyBlueprintListing(OdysseyBlueprintConstants.getRecipeCategory(entry.getKey()),entry.getKey(),entry.getValue()))
+                    map(entry -> new OdysseyBlueprintListing(OdysseyBlueprintConstants.getRecipeCategory(entry.getKey()), entry.getKey(), entry.getValue()))
                     .sorted()
                     .collect(Collectors.toList());
             FlowPane catBox = null;
@@ -407,7 +483,7 @@ public class MaterialService {
                     catBox.getChildren().add(build);
                 } else {
                     //append
-                    final String[] classes =  new String[]{"blueprint-listing-label"};
+                    final String[] classes = new String[]{"blueprint-listing-label"};
                     final DestroyableLabel build = LabelBuilder.builder()
                             .withStyleClasses(classes)
                             .withText(odysseyBlueprintListing.toStringBinding())

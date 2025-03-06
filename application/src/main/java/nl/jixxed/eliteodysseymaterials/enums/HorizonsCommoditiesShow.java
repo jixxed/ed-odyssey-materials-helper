@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.enums;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommodityCard;
 
 import java.util.function.Predicate;
@@ -10,6 +11,8 @@ import java.util.function.Predicate;
 public enum HorizonsCommoditiesShow {
     ALL,
     ALL_WITH_STOCK,
+    SOLD_AT_STATION,
+    BOUGHT_AT_STATION,
     SHIP,
     FLEETCARRIER,
     CHEMICALS,
@@ -65,6 +68,8 @@ public enum HorizonsCommoditiesShow {
             case WASTE -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.WASTE);
             case WEAPONS -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.WEAPONS);
             case POWERPLAY -> (HorizonsCommodityCard o) -> o.getCommodity().getCommodityType().equals(CommodityType.POWERPLAY);
+            case SOLD_AT_STATION -> (HorizonsCommodityCard o) -> MarketService.sells(o.getCommodity());
+            case BOUGHT_AT_STATION -> (HorizonsCommodityCard o) -> MarketService.buys(o.getCommodity());
         };
     }
 }
