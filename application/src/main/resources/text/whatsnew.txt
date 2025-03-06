@@ -1,3 +1,10 @@
+Version 2.141
+-------------
+Fix updating Colonisation UI on Market entry
+Add stock bracket icons
+New styling for commodities + rare indicator
+Add market info to commodity cards
+
 Version 2.140
 -------------
 Bugfix for commodities on wishlist

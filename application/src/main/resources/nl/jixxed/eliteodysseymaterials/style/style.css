@@ -2231,24 +2231,25 @@
     -fx-min-width: 50em;
 }
 
+.horizons-commoditycard-pane {
+    -fx-background-color: #0f0f0f;
+}
 .horizons-commoditycard {
     -fx-padding: 0.2em, 0.2em, 0.2em, 0.2em;
-    -fx-background-color: #0f0f0f;
     /*-fx-pref-height: 5.4em;*/
     /*-fx-min-height: 5.4em;*/
     /*-fx-max-height: 5em;*/
     -fx-alignment: center-left;
-    -fx-background-color: #0f0f0f;
-    -fx-pref-width: 17.9em;
-    -fx-min-width: 17.9em;
-    -fx-max-width: 17.9em;
+    -fx-pref-width: 32.9em;
+    -fx-min-width: 32.9em;
+    -fx-max-width: 32.9em;
 }
 .horizons-commoditycard-buys-sells{
     -fx-border-color: #2e92df;
     -fx-border-width: 1;
 }
 
-.horizons-commoditycard-live {
+.horizons-commoditycard-pane-live {
     -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%);
     -fx-border-color: #0f0f0f;
     -fx-border-width: 1;
@@ -2293,6 +2294,40 @@
     -fx-text-alignment: right;
 }
 
+.station-box {
+    -fx-min-width: 12em;
+    -fx-max-width: 12em;
+    -fx-pref-height: 100%;
+    -fx-alignment: bottom-center;
+}
+.station-arrow{
+    -fx-padding: 0 0.25em 0.45em 0.25em;
+    -fx-min-width: 2em;
+    -fx-max-width: 2em;
+    -fx-pref-height: 100%;
+    -fx-alignment: bottom-center;
+}
+.station-amount-buy {
+    /*-fx-pref-width: 13em;*/
+    -fx-padding: 0 0em 0.45em 0.25em;
+    -fx-min-height: 2em;
+    -fx-alignment: bottom-right;
+    -fx-text-alignment: right;
+}
+.station-amount-sell {
+    /*-fx-pref-width: 13em;*/
+    -fx-padding: 0 0.25em 0.45em 0em;
+    -fx-min-height: 2em;
+    -fx-alignment: bottom-left;
+    -fx-text-alignment: left;
+}
+.horizons-commoditycard-market-box{
+    -fx-min-width: 32.8em;
+    -fx-max-width: 32.8em;
+    -fx-pref-height: 100%;
+    -fx-alignment: bottom-center;
+    -fx-padding: 0 0em 0.5em 0;
+}
 .horizons-commoditycard-name {
     /*-fx-spacing: 0, 0, 0, 1em;*/
     -fx-min-width: 1em;
@@ -2576,7 +2611,7 @@
 }
 
 .nearest-trader-location-line {
-    -fx-max-width: 21em;
+    -fx-max-width: 32em;
 }
 
 .nearest-trader-location-line:hover {
@@ -4303,13 +4338,27 @@
     -fx-padding: 0.2em;
     -fx-hgap: 0.2em;
     -fx-background-color: #0f0f0f;
+    -fx-border-color: #0f0f0f;
 }
 .horizons-colonisation-entry-available{
     -fx-border-color: #dcc030;
 }
 .horizons-colonisation-entry-values{
-    -fx-hgap: 1em;
-    -fx-spacing: 1em;
+    -fx-hgap: 0.5em;
+    -fx-spacing: 0.5em;
+    -fx-min-width: 31.6em;
+    -fx-max-width: 31.6em;
+}
+.horizons-colonisation-entry-values-sub{
+    -fx-hgap: 0.5em;
+    -fx-spacing: 0.5em;
+    -fx-min-width: 15.28em;
+    -fx-max-width: 15.28em;
+}
+.horizons-colonisation-entry-values-market{
+
+    -fx-hgap: 0.2em;
+    -fx-spacing: 0.2em;
 }
 .horizons-colonisation-entry-commodity{
     -fx-min-width: 30em;
@@ -4320,7 +4369,7 @@
 }
 .horizons-colonisation-entry-amount-left{
     /*-fx-min-width: 5.5em;*/
-    -fx-pref-width: 5.5em;
+    /*-fx-pref-width: 5.5em;*/
     /*-fx-padding: 0, 0, 0, 3em;*/
     -fx-min-height: 2em;
     -fx-alignment: center-left;
@@ -4328,7 +4377,7 @@
 }
 .horizons-colonisation-entry-amount-right{
     /*-fx-min-width: 5.5em;*/
-    -fx-pref-width: 5.5em;
+    /*-fx-pref-width: 5.5em;*/
     /*-fx-padding: 0, 0, 0, 3em;*/
     -fx-min-height: 2em;
     -fx-alignment: center-right;
@@ -4347,11 +4396,11 @@
 
 .market-location {
     -fx-text-fill: #0078d6 !important;
-    -fx-label-padding: 0.4em;
+    -fx-label-padding:  0em 0.4em 0em 0em;
 }
 
 .market-location-line {
-    -fx-max-width: 21em;
+    -fx-max-width: 35em;
 }
 
 .market-location-line:hover {
@@ -4365,10 +4414,15 @@
     -fx-fit-to-width: true;
 }
 .market-distance {
-    -fx-text-fill: #777;
+    -fx-text-fill: #777 !important;
     -fx-label-padding: 0.4em;
 }
 
 .market-location-line:hover > .market-location {
     -fx-text-fill: #2e92df !important;
+}
+.horizons-commoditycard-rare-image{
+
+    -fx-pref-height: 100%;
+    -fx-opacity: 0.3;
 }

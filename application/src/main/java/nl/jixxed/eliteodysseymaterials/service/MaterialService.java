@@ -33,6 +33,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.HorizonsBlueprintClickEvent
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import org.controlsfx.control.PopOver;
 
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.function.Consumer;
@@ -121,7 +122,7 @@ public class MaterialService {
                     vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION).withText(
                             LocaleService.getStringBinding("material.tooltip.market.buys",
                                     item.sellPrice(),
-                                    item.demand())).build());
+                                    item.demand().equals(BigInteger.ONE) ? "∞" : item.demand())).build());
                 }
                 if (sells) {
                     vBox.getChildren().add(LabelBuilder.builder().withStyleClass(STYLECLASS_MATERIAL_TOOLTIP_DESCRIPTION).withText(

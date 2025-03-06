@@ -69,7 +69,7 @@ public class HighlightTextFlowBuilder {
         StringBinding localeStringBinding = LocaleService.getStringBinding(this.localeKey);
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(localeStringBinding.get());
-
+        //TODO: this is bugged, throws errors when switching locale because parameter position changes within the string. Fix this.
         int lastIndex = 0;
         while (matcher.find()) {
             int start = matcher.start();
