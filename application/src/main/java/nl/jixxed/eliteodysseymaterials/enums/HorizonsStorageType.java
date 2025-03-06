@@ -9,7 +9,15 @@ public enum HorizonsStorageType implements StorageType {
     UNKNOWN;
 
     public static HorizonsStorageType forMaterial(final HorizonsMaterial horizonsMaterial) {
-        return HorizonsStorageType.valueOf(horizonsMaterial.getClass().getSimpleName().toUpperCase());
+        return HorizonsStorageType.valueOf(remapCommodity(horizonsMaterial.getClass().getSimpleName().toUpperCase()));
+    }
+
+    private static String remapCommodity(String type) {
+        //if REGULARCOMMODITY or RARECOMMODITY, return COMMODITY
+        if (type.contains("COMMODITY")) {
+            return "COMMODITY";
+        }
+        return type;
     }
 
     public static HorizonsStorageType forName(final String name) {
