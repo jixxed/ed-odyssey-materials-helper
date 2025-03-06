@@ -1,3 +1,7 @@
+Version 2.142
+-------------
+Fix missing images and commoditycard styling
+
 Version 2.141
 -------------
 Fix updating Colonisation UI on Market entry
