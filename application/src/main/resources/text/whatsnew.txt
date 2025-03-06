@@ -1,3 +1,7 @@
+Version 2.140
+-------------
+Bugfix for commodities on wishlist
+
 Version 2.139
 -------------
 Hide free pulse laser from UI
