@@ -1,6 +1,14 @@
 Version 2.138
 -------------
 Fix fleetcarrier stock and orders not being shown consistently
+Split rare and regular commodities
+Show market indicator for commodities
+- the card will have a colored outline if the current market buys/sells the commodity
+Added descriptions for commodities
+Added market information to commodities tooltips
+Added copy system name for rare commodities to commodities tooltips
+Added WIP Colonisation tab
+Added free pulse laser module
 
 Version 2.137
 -------------

@@ -7,3 +7,10 @@ The portable zip versions are used as update packages. You can run them standalo
 
 **Release notes for this version:**
 Fix fleetcarrier stock and orders not being shown consistently
+Show market indicator for commodities
+- the card will have a colored outline if the current market buys/sells the commodity
+Added descriptions for commodities
+Added market information to commodities tooltips
+Added copy system name for rare commodities to commodities tooltips
+Added WIP Colonisation tab
+Added free pulse laser module
