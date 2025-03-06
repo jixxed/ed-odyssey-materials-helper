@@ -2233,6 +2233,8 @@
 
 .horizons-commoditycard-pane {
     -fx-background-color: #0f0f0f;
+    -fx-border-color: #0f0f0f;
+    -fx-border-width: 0.05em;
 }
 .horizons-commoditycard {
     -fx-padding: 0.2em, 0.2em, 0.2em, 0.2em;
@@ -2244,23 +2246,20 @@
     -fx-min-width: 32.9em;
     -fx-max-width: 32.9em;
 }
-.horizons-commoditycard-buys-sells{
-    -fx-border-color: #2e92df;
-    -fx-border-width: 1;
-}
-
 .horizons-commoditycard-pane-live {
     -fx-background-color: linear-gradient(from 0px 0px to 10px 10px, repeat, #0f0f0f 0%, #1f1f1f 25%, #0f0f0f 50%, #1f1f1f 75%);
     -fx-border-color: #0f0f0f;
-    -fx-border-width: 1;
 }
+
+.horizons-commoditycard-buys-sells{
+    -fx-border-color: #2e92df;
+}
+
 .horizons-commoditycard-sells{
     -fx-border-color: #dcc030;
-    -fx-border-width: 1;
 }
 .horizons-commoditycard-buys{
     -fx-border-color: #89d07f;
-    -fx-border-width: 1;
 }
 
 .horizons-commoditycard-firstline {
@@ -2331,8 +2330,8 @@
 .horizons-commoditycard-name {
     /*-fx-spacing: 0, 0, 0, 1em;*/
     -fx-min-width: 1em;
-    -fx-pref-width: 14em;
-    -fx-max-width: 14em;
+    -fx-pref-width: 28em;
+    -fx-max-width: 28em;
     -fx-padding: 0.5em, 0, 0, 0;
     /*-fx-pref-height: 2.5em;*/
     -fx-alignment: center-left;
