@@ -585,6 +585,7 @@ ships.module.name.int_sensors_size1_class1_free,Sensors,,,Sensores,,Sensores,С�
 ships.module.name.int_shieldgenerator_size2_class1_free,Shield Generator,,,Generador de Escudos,,Gerador de Escudo,Щитогенератор
 ships.module.name.int_stellarbodydiscoveryscanner_standard_free,Basic Discovery Scanner,,,,,Scanner de Descoberta Básico,Базовый сканер обнаружения
 ships.module.name.int_cargorack_size2_class1_free,Cargo Rack,,,Bodega de Carga,,Estante de Carga,Грузовой стеллаж
+ships.module.name.hpt_pulselaser_fixed_smallfree,Pulse Laser,,,Láser de Pulsos,,Laser de Pulso,Импульсный лазер
 ships.module.name.int_fuelscoop_size1_class1,Fuel Scoop,,,Colector de Combustible,,Coletor de Combustível,Топливозаборник
 ships.module.name.int_fuelscoop_size2_class1,Fuel Scoop,,,Colector de Combustible,,Coletor de Combustível,Топливозаборник
 ships.module.name.int_fuelscoop_size3_class1,Fuel Scoop,,,Colector de Combustible,,Coletor de Combustível,Топливозаборник
