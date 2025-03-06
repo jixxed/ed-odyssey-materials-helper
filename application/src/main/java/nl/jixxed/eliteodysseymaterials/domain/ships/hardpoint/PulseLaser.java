@@ -75,4 +75,8 @@ public class PulseLaser extends HardpointModule {
         }
         return super.getClarifier();
     }
+
+    public boolean isSelectable() {
+        return !PULSE_LASER_1_F_F_FREE.equals(this);
+    }
 }
