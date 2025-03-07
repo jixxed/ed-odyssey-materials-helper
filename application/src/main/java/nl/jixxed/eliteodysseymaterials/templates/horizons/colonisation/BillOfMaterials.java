@@ -1,7 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
 import javafx.scene.layout.FlowPane;
-import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
+import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.Template;
 
@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 public class BillOfMaterials extends FlowPane implements Template {
 
-    ColonisationBuildable buildable;
+    ColonisationItem colonisationItem ;
 
     public BillOfMaterials() {
         initComponents();
@@ -27,17 +27,21 @@ public class BillOfMaterials extends FlowPane implements Template {
         //NOOP
     }
 
-    public void setBuildable(ColonisationBuildable buildable) {
-        this.buildable = buildable;
+    public void setBuildable(ColonisationItem colonisationItem ) {
+        this.colonisationItem = colonisationItem;
         update();
 
     }
 
     private void update() {
+        clear();
+        colonisationItem.getConstructionRequirements().entrySet().stream()
+                .sorted(Comparator.comparing(commodityIntegerEntry -> LocaleService.getLocalizedStringForCurrentLocale(commodityIntegerEntry.getKey().getLocalizationKey())))
+                .forEach(entry -> this.getChildren().add(new BillOfMaterialsEntry(colonisationItem, entry.getKey(), entry.getValue())));
+    }
+
+    public void clear() {
         this.getChildren().forEach(entry -> ((BillOfMaterialsEntry) entry).onDestroy());
         this.getChildren().clear();
-        buildable.getBlueprintCost().entrySet().stream()
-                .sorted(Comparator.comparing(commodityIntegerEntry -> LocaleService.getLocalizedStringForCurrentLocale(commodityIntegerEntry.getKey().getLocalizationKey())))
-                .forEach(entry -> this.getChildren().add(new BillOfMaterialsEntry(entry.getKey(), entry.getValue())));
     }
 }

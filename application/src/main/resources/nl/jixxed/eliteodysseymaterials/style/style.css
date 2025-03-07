@@ -4374,6 +4374,14 @@
     -fx-alignment: center-left;
     -fx-text-alignment: left;
 }
+.horizons-colonisation-entry-amount-sum{
+    -fx-min-height: 2em;
+    -fx-alignment: center-left;
+    -fx-text-alignment: left;
+    -fx-min-width: 5.5em;
+    -fx-max-width: 5.5em;
+
+}
 .horizons-colonisation-entry-amount-right{
     /*-fx-min-width: 5.5em;*/
     /*-fx-pref-width: 5.5em;*/
@@ -4388,6 +4396,11 @@
     -fx-vgap: 0.2em;
 }
 .colonisation-buttons{
+    -fx-padding: 0.2em;
+    -fx-hgap: 0.2em;
+    -fx-vgap: 0.2em;
+}
+.colonisation-projects{
     -fx-padding: 0.2em;
     -fx-hgap: 0.2em;
     -fx-vgap: 0.2em;
