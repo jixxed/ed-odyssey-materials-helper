@@ -64,7 +64,7 @@ public class StorageService {
         } else if (material instanceof Manufactured manufacturedMaterial) {
             final int value = Math.min(manufactured.get(material) + amount, material.getMaxAmount());
             manufactured.put(manufacturedMaterial, Math.max(value, 0));
-        } else if (material instanceof Commodity commodity) {
+        } else if (material instanceof Commodity _) {
             throw new UnsupportedOperationException("use addCommodity instead");
         }
     }
@@ -102,42 +102,23 @@ public class StorageService {
     }
 
     public static Integer getMaterialCount(final HorizonsMaterial material) {
-        if (material instanceof Raw) {
-            return raw.get(material);
-        } else if (material instanceof Encoded) {
-            return encoded.get(material);
-        } else if (material instanceof Manufactured) {
-            return manufactured.get(material);
-        } else if (material instanceof Commodity) {
-            throw new UnsupportedOperationException("Use getCommodityCount instead");
-        }
-        throw new IllegalArgumentException("Unknown material type");
+        return switch (material) {
+            case Raw _ -> raw.get(material);
+            case Encoded _ -> encoded.get(material);
+            case Manufactured _ -> manufactured.get(material);
+            case Commodity _ -> throw new UnsupportedOperationException("Use getCommodityCount instead");
+        };
     }
+
     public static Integer getMaterialCount(final OdysseyMaterial material, AmountType amountType) {
-        final Storage storage;
-        if (material instanceof Good) {
-           storage = goods.get(material);
-        } else if (material instanceof Data) {
-            storage =  data.get(material);
-        } else if (material instanceof Asset) {
-            storage =  assets.get(material);
-        } else{
-        throw new IllegalArgumentException("Unknown material type");
-        }
-        switch (amountType) {
-            case BACKPACK:
-                return storage.getBackPackValue();
-            case SHIPLOCKER:
-                return storage.getShipLockerValue();
-            case FLEETCARRIER:
-                return storage.getFleetCarrierValue();
-            case TOTAL:
-                return storage.getTotalValue();
-            case AVAILABLE:
-                return storage.getAvailableValue();
-            default:
-                throw new IllegalArgumentException("Unknown amountType");
-        }
+        final Storage storage = getMaterialStorage(material);
+        return switch (amountType) {
+            case BACKPACK -> storage.getBackPackValue();
+            case SHIPLOCKER -> storage.getShipLockerValue();
+            case FLEETCARRIER -> storage.getFleetCarrierValue();
+            case TOTAL -> storage.getTotalValue();
+            case AVAILABLE -> storage.getAvailableValue();
+        };
     }
 
     public static Integer getCommodityCount(final Commodity commodity, final StoragePool storagePool) {
@@ -206,15 +187,9 @@ public class StorageService {
         Arrays.stream(Good.values()).forEach(material ->
                 goods.put(material, new Storage())
         );
-        Arrays.stream(Raw.values()).forEach(material ->
-                raw.put(material, 0)
-        );
-        Arrays.stream(Encoded.values()).forEach(material ->
-                encoded.put(material, 0)
-        );
-        Arrays.stream(Manufactured.values()).forEach(material ->
-                manufactured.put(material, 0)
-        );
+
+        resetHorizonsMaterialCounts();
+
         Stream.concat(Arrays.stream(RegularCommodity.values()), Arrays.stream(RareCommodity.values())).forEach(material -> {
             commoditiesShip.put(material, 0);
             commoditiesFleetcarrier.put(material, 0);

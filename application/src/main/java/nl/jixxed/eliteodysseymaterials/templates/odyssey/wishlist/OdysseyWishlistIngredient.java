@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
+import nl.jixxed.eliteodysseymaterials.enums.AmountType;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
@@ -61,8 +62,8 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
 
     private void showAsHovered(final Boolean newValue) {
         final Boolean showRemaining = !PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_ODYSSEY, Boolean.FALSE);
-        if (showRemaining.equals(newValue) && (this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()) > 0) {
-            this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - StorageService.getMaterialStorage(getOdysseyMaterial()).getAvailableValue()));
+        if (showRemaining.equals(newValue) && (this.getLeftAmount() - StorageService.getMaterialCount(getOdysseyMaterial(), AmountType.AVAILABLE)) > 0) {
+            this.getRightAmountLabel().setText(String.valueOf(this.getLeftAmount() - StorageService.getMaterialCount(getOdysseyMaterial(), AmountType.AVAILABLE)));
             setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.remaining"));
         } else {
             setRightDescriptionLabel(LocaleService.getStringBinding("blueprint.header.available"));
