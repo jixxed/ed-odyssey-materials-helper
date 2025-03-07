@@ -1,4 +1,4 @@
-package nl.jixxed.eliteodysseymaterials.templates;
+package nl.jixxed.eliteodysseymaterials;
 
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 

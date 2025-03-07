@@ -41,7 +41,6 @@ module nl.jixxed.eliteodysseymaterials {
     requires oslib.master.SNAPSHOT;
     requires org.apache.commons.lang3;
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
-    opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.domain.ships to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml, org.controlsfx.controls;
@@ -659,4 +658,5 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.service.ships;
     exports nl.jixxed.eliteodysseymaterials.templates.components.slider;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind, javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials to java.desktop, javafx.fxml, javafx.graphics, org.controlsfx.controls;
 }

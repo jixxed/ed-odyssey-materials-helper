@@ -22,7 +22,7 @@ class NonStaticEventListener<T extends Event> extends EventListener<T> {
         if (this.ownerRef == null || this.ownerRef.get() == null) {
             dispose();
         } else {
-            this.consumer.accept(event);
+            super.handleEvent(event);
         }
     }
 
