@@ -236,7 +236,7 @@ public class ShieldStats extends Stats implements Template {
                 .findFirst()
                 .map(sgSlot -> {
                     final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
-                    final double systemRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
+                    final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
                     final Double regenRate = (Double)sgSlot.getShipModule().getAttributeValue(REGEN_RATE);
                     final Double energyPerRegen = (Double)sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
@@ -253,8 +253,8 @@ public class ShieldStats extends Stats implements Template {
                 .findFirst()
                 .map(sgSlot -> {
                     final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
-                    final double systemCapacity = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_CAPACITY)).orElse(0D);
-                    final double systemRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
+                    final double systemCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_CAPACITY)).orElse(0D);
+                    final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
                     final Double brokenRegenRate = (Double)sgSlot.getShipModule().getAttributeValue(BROKEN_REGEN_RATE);
                     final Double energyPerRegen = (Double)sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);

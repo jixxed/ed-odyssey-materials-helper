@@ -276,8 +276,8 @@ public class WeaponStats extends Stats implements Template {
         final Optional<Slot> powerDistributor = getShip().flatMap(ship -> ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied));
 
         final double multiplier = Math.pow(pips / 8.0, 1.1);
-        final double weaponCapacity = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY)).orElse(0D);
-        final double weaponRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_RECHARGE)).orElse(0D);
+        final double weaponCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY)).orElse(0D);
+        final double weaponRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_RECHARGE)).orElse(0D);
 
         AtomicReference<Double> wepcap_burst_cur = new AtomicReference<>(weaponCapacity / Math.max(0, eps_cur.get() - weaponRecharge * multiplier));
         selectedHardPoints().forEach(shipModule -> {
@@ -394,8 +394,8 @@ public class WeaponStats extends Stats implements Template {
         final Optional<Slot> powerDistributor = getShip().flatMap(ship -> ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst());
 
         final double multiplier = Math.pow(pips / 8.0, 1.1);
-        final double weaponCapacity = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY)).orElse(0D);
-        final double weaponRecharge = (double) powerDistributor.map(slot -> slot.getShipModule().getAttributeValue(HorizonsModifier.WEAPONS_RECHARGE)).orElse(0D);
+        final double weaponCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_CAPACITY)).orElse(0D);
+        final double weaponRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(HorizonsModifier.WEAPONS_RECHARGE)).orElse(0D);
 
         AtomicReference<Double> wepcap_burst_cur = new AtomicReference<>(weaponCapacity / Math.max(0, eps_cur.get() - weaponRecharge * multiplier));
         selectedHardPoints().forEach(shipModule2 -> {

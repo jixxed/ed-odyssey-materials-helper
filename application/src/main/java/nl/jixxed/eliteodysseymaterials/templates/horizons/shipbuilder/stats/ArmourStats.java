@@ -112,7 +112,7 @@ public class ArmourStats extends Stats implements Template {
                             }
                     );
 
-            double armourResistance = (double) armourSlot.map(slot -> slot.getShipModule().getAttributeValue(horizonsModifier)).orElse(0D);
+            double armourResistance = (double) armourSlot.map(slot -> slot.getShipModule()).map(sm -> sm.getAttributeValue(horizonsModifier)).orElse(0D);
             return getEffectiveDamageResistance(armourResistance, (1 - totalModuleMultiplier.get()), (1 - minimumMultiplier.get()));
         }).orElse(0D) * 100D;
     }
