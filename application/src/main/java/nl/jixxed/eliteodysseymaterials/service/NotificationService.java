@@ -96,17 +96,21 @@ public class NotificationService {
         if (enabled && active) {
             log.info("NOTIFY: " + LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, text.getKey(), text.getParameters()));
             final Screen screen = getScreen();
-            if (screen != null) {
-                Notifications.create()
-                        .darkStyle()
-                        .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
-                        .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
-                        .hideAfter(Duration.seconds(10))
-                        .owner(screen)
-                        .showInformation();
-            }
-            if (!silent) {
-                playSound(notificationType);
+            try {
+                if (screen != null) {
+                    Notifications.create()
+                            .darkStyle()
+                            .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
+                            .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
+                            .hideAfter(Duration.seconds(10))
+                            .owner(screen)
+                            .showInformation();
+                }
+                if (!silent) {
+                    playSound(notificationType);
+                }
+            } catch (NullPointerException ex) {
+                log.error("Failed to create notification", ex);
             }
         }
     }
@@ -130,16 +134,20 @@ public class NotificationService {
         if (enabled && active) {
             log.warn("WARN: " + LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, text.getKey(), text.getParameters()));
             final Screen screen = getScreen();
-            if (screen != null) {
-                Notifications.create()
-                        .darkStyle()
-                        .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
-                        .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
-                        .owner(screen)
-                        .showWarning();
-            }
-            if (!silent) {
-                playSound(notificationType);
+            try {
+                if (screen != null) {
+                    Notifications.create()
+                            .darkStyle()
+                            .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
+                            .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
+                            .owner(screen)
+                            .showWarning();
+                }
+                if (!silent) {
+                    playSound(notificationType);
+                }
+            } catch (NullPointerException ex) {
+                log.error("Failed to create notification", ex);
             }
         }
     }
@@ -153,16 +161,20 @@ public class NotificationService {
         if (enabled && active) {
             log.error("ERROR: " + LocaleService.getLocalizedStringForLocale(Locale.ENGLISH, text.getKey(), text.getParameters()));
             final Screen screen = getScreen();
-            if (screen != null) {
-                Notifications.create()
-                        .darkStyle()
-                        .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
-                        .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
-                        .owner(screen)
-                        .showError();
-            }
-            if (!silent) {
-                playSound(notificationType);
+            try {
+                if (screen != null) {
+                    Notifications.create()
+                            .darkStyle()
+                            .title(LocaleService.getLocalizedStringForCurrentLocale(title.getKey(), title.getParameters()))
+                            .text(LocaleService.getLocalizedStringForCurrentLocale(text.getKey(), text.getParameters()))
+                            .owner(screen)
+                            .showError();
+                }
+                if (!silent) {
+                    playSound(notificationType);
+                }
+            } catch (NullPointerException ex) {
+                log.error("Failed to create notification", ex);
             }
         }
     }
