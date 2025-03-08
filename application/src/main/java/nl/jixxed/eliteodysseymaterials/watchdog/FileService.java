@@ -54,16 +54,22 @@ public class FileService {
 
     public static void unsubscribe(final FileListener fileListener) {
         WATCHPATH_LISTENERS.values().forEach(fileListeners -> fileListeners.remove(fileListener));
+        stopWatchers();
+        startWatchers();
     }
 
     private static void stopWatchers() {
-        WATCHPATH_FOLDERWATCHERS.forEach((watchPath, folderWatch) -> folderWatch.terminate());
+        WATCHPATH_FOLDERWATCHERS.forEach((watchPath, folderWatch) -> {
+            log.info("Unregistered folder watch for " + folderWatch.getFolder());
+            folderWatch.terminate();
+        });
         WATCHPATH_FOLDERWATCHERS.clear();
     }
 
     private static void startWatchers() {
         final Boolean polling = PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, false);
         WATCHPATH_LISTENERS.entrySet().stream().filter(entry-> entry.getValue() != null && !entry.getValue().isEmpty()).map(Map.Entry::getKey).forEach(watchPath -> WATCHPATH_FOLDERWATCHERS.computeIfAbsent(watchPath, key -> {
+            log.info("Registered folder watch for " + key.getPath());
             if (polling && key.getAllowPolling()) {
                 if (OsCheck.isWindows()) {
                     //optimized poller for windows using JNA

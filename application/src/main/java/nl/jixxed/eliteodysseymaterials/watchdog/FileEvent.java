@@ -5,7 +5,6 @@ import lombok.Getter;
 import java.io.File;
 import java.nio.file.WatchEvent;
 
-
 public class FileEvent {
     @Getter
     private WatchEvent.Kind<?> kind;

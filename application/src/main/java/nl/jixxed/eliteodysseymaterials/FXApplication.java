@@ -316,6 +316,7 @@ public class FXApplication extends Application {
             if (!watchedFolderFleetCarrier.exists()) {
                 watchedFolderFleetCarrier.mkdirs();
             }
+
             this.fleetCarrierWatcher = new GameStateWatcher();
             ApplicationState.getInstance().getFcMaterials().set(false);
             this.fleetCarrierWatcher.watch(watchedFolderFleetCarrier, file -> FileProcessor.processCapiFile(file, JournalEventType.CAPIFLEETCARRIER), AppConstants.FLEETCARRIER_FILE, false, JournalEventType.CAPIFLEETCARRIER);

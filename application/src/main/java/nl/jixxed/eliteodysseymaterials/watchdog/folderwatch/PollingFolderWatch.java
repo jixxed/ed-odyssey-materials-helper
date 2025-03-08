@@ -1,5 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.watchdog.folderwatch;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.watchdog.FileEvent;
 
@@ -14,6 +15,7 @@ import java.util.function.Consumer;
 import static java.nio.file.StandardWatchEventKinds.*;
 @Slf4j
 public class PollingFolderWatch implements Runnable, FolderWatch {
+    @Getter
     private final String folder;
     private final Consumer<FileEvent> changeConsumer;
     private final ScheduledExecutorService executor;

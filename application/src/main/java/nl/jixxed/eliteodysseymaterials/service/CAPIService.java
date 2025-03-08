@@ -102,6 +102,7 @@ public class CAPIService {
             if (event.isInitialised()) {
                 Platform.runLater(() -> {
                             this.active.set(this.loadToken(APPLICATION_STATE.getPreferredCommander().orElse(null)));
+                            this.fcEnabled.set(true);
                             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                                 if (this.timer != null) {
                                     this.timer.cancel();
@@ -188,10 +189,17 @@ public class CAPIService {
                         }
                         // handle response
                         if (response.getCode() == 204) {
-                            log.warn("Frontier API returned a " + response.getCode() + ". Disabling FC endpoint.");
+                            log.warn("Frontier API returned a " + response.getCode() + "(No fleetcarrier). Disabling FC endpoint.");
                             // no FC -> disable endpoint
                             Platform.runLater(() -> {
                                 this.fcEnabled.set(false);
+                            });
+                        }else if (response.getCode() == 400) {
+                            log.warn("Frontier API returned a " + response.getCode() + "(No game entitlement). Disabling FC endpoint.");
+                            // no FC -> disable endpoint
+                            Platform.runLater(() -> {
+                                this.fcEnabled.set(false);
+                                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.capi.title"), LocaleService.LocaleString.of("notification.capi.message.400"));
                             });
                         } else if (response.getCode() == 200) {
                             log.info("Frontier API returned a " + response.getCode() + ". Storing response.");

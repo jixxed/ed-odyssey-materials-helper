@@ -4,6 +4,7 @@ import com.sun.jna.Platform;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinBase;
 import com.sun.jna.platform.win32.WinNT;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.watchdog.FileEvent;
 
@@ -22,6 +23,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 
 @Slf4j
 public class JNAWindowsPollingFolderWatch implements Runnable, FolderWatch {
+    @Getter
     private final String folder;
     private final Consumer<FileEvent> changeConsumer;
     private final ScheduledExecutorService executor;
