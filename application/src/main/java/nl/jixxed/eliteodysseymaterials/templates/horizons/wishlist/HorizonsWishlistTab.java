@@ -410,7 +410,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         }));
         this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, wishlistChangedEvent -> {
             this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
-            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = WishlistService.getHorizonsWishlists(commander).getWishlist(this.activeWishlistUUID).getItems().size());
+            APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = Optional.ofNullable(WishlistService.getHorizonsWishlists(commander).getWishlist(this.activeWishlistUUID)).map(wl->wl.getItems().size()).orElse(0));
 
             this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
         }));
