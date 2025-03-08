@@ -188,9 +188,11 @@ public class WishlistService {
     private static void addToHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint recipe) {
         final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        wishlist.getItems().add(recipe);
-        saveHorizonsWishlists(commander, wishlists);
-        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        if(wishlist != null) {
+            wishlist.getItems().add(recipe);
+            saveHorizonsWishlists(commander, wishlists);
+            EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        }
     }
 
     private static void removeFromWishList(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint recipe) {
@@ -205,10 +207,12 @@ public class WishlistService {
     private static void removeFromHorizonsWishList(final String wishlistUUID, final Commander commander, final HorizonsWishlistBlueprint recipe) {
         final HorizonsWishlists wishlists = getHorizonsWishlists(commander);
         final HorizonsWishlist wishlist = wishlists.getWishlist(wishlistUUID);
-        final Optional<WishlistBlueprint<HorizonsBlueprintName>> found = wishlist.getItems().stream().filter(wishlistRecipe -> ((HorizonsWishlistBlueprint) wishlistRecipe).getUuid().equals(recipe.getUuid())).findFirst();
-        found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
-        saveHorizonsWishlists(commander, wishlists);
-        EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        if(wishlist != null) {
+            final Optional<WishlistBlueprint<HorizonsBlueprintName>> found = wishlist.getItems().stream().filter(wishlistRecipe -> ((HorizonsWishlistBlueprint) wishlistRecipe).getUuid().equals(recipe.getUuid())).findFirst();
+            found.ifPresent(wishlistRecipe -> wishlist.getItems().remove(wishlistRecipe));
+            saveHorizonsWishlists(commander, wishlists);
+            EventService.publish(new HorizonsWishlistChangedEvent(wishlistUUID));
+        }
     }
 
     private static void changeVisibility(final String wishlistUUID, final Commander commander, final OdysseyWishlistBlueprint wishlistBlueprint) {

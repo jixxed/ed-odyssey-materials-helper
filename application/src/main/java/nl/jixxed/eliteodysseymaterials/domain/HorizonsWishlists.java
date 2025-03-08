@@ -73,7 +73,9 @@ public class HorizonsWishlists {
     public void renameWishlist(final String uuid, final String name) {
         if (name != null && !name.isEmpty()) {
             final HorizonsWishlist wishlist = getWishlist(uuid);
-            wishlist.setName((name.length() > 50) ? name.substring(0, 50) : name);
+            if(wishlist != null) {
+                wishlist.setName((name.length() > 50) ? name.substring(0, 50) : name);
+            }
         }
     }
 
