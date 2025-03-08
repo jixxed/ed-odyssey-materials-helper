@@ -146,7 +146,7 @@ material.commodity.grain,Grain,Grain,Getreide,Grano,Céréales,Cereal,Зерно
 material.commodity.grandidierite,Grandidierite,Grandidierite,Grandidierit,Grandidierita,Grandidiérite,Grandidierita,Грандидьерит
 material.commodity.gromcounterintelligence,Grom Counter Intelligence,Grom Counter Intelligence,Grom-Spionageabwehr,Contrainteligencia de Grom,Renseignements militaires de Grom,Contra-inteligência de Grom,Разведданные Грома
 material.commodity.gromwartrophies,Yuri Grom’s Military Supplies,Yuri Grom’s Military Supplies,Yuri Groms Militärausrüstung,Suministros militares de Yuri Grom,Fournitures militaires de Yuri Grom,Suprimentos Militares de Yuri Grom,Военные припасы Юрия Грома
-material.commodity.haematite,Haematite,,,,,,
+material.commodity.haematite,Haematite,,,,,,Гематит
 material.commodity.hafnium178,Hafnium 178,Hafnium 178,Hafnium 178,Hafnio 178,Hafnium 178,Háfnio 178,Гафний-178
 material.commodity.haidneblackbrew,Haiden Black Brew,Haiden Black Brew,Haiden-Schwarzbier,Infusión negra de Haiden,Tisane noire de Haiden,Infusão negra de Haiden,Гайденовский черный напиток
 material.commodity.harmasilversearum,Harma Silver Sea Rum,Harma Silver Sea Rum,Harma Silberseerum,Ron Harma Silver Sea,Rhum marin Harma Silver,Rum Mar Prata de Harma,Ром «Серебряное море Harma»
@@ -335,7 +335,7 @@ material.commodity.smallexplorationdatacash,Small Survey Data Cache,Small Survey
 material.commodity.soontillrelics,Soontill Relics,Soontill Relics,Soontill-Relikte,Reliquias de Soontill,Reliques de Soontill,Relíquias de Soontill,Реликты Сунтилла
 material.commodity.sothiscrystallinegold,Sothis Crystalline Gold,Sothis Crystalline Gold,Sothis-Kristallingold,Oro cristalino de Sothis,Or cristallin de Sothis,Ouro cristalino de Sothis,Кристаллическое золото системы Sothis
 material.commodity.spacepioneerrelics,Space Pioneer Relics,Space Pioneer Relics,Weltraumpionier-Relikte,Reliquias de pioneros espaciales,Reliques des pionniers de l’espace,Relíquias de pioneiros espaciais,Следы первопроходцев космоса
-material.commodity.steel,Steel,,,,,,
+material.commodity.steel,Steel,,,,,,Сталь
 material.commodity.structuralregulators,Structural Regulators,Structural Regulators,Strukturregulatoren,Reguladores estructurales,Régulateur(s) structurel(s),Registradores estruturais,Конструкционные регуляторы
 material.commodity.superconductors,Superconductors,Superconductors,Supraleiter,Superconductores,Supraconducteur(s),Supercondutores,Сверхпроводники
 material.commodity.surfacestabilisers,Surface Stabilisers,Surface Stabilisers,Oberflächenstabilisierer,Estabilizadores de superficie,Stabilisateurs de surface,Estabilizadores de superfície,Стабилизаторы поверхности
