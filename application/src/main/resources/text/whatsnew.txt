@@ -1,3 +1,14 @@
+Version 2.143
+-------------
+Added colonisation persistence
+- Edit required materials for your project
+- Add/remove projects
+- All projects overview
+Improved account switching performance
+Fixed loading bar progression
+Gracefully handle 400 error(No game entitlement) from Frontier API
+Fixed some potential internal errors
+
 Version 2.142
 -------------
 Fix missing images and commoditycard styling
