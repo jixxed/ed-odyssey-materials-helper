@@ -24,6 +24,6 @@ notification.hge.common.text,System allegiance: {0}\nFaction state: {1}\nExpecte
 notification.imported.slef.error.text,Failed to import slef,,,Fallo al importar SLEF,,Falha na importação do SLEF,Не получается импортировать slef
 notification.collected.powerplay.material.title,Collected powerplay material,,,,,,Взят материал Powerplay
 notification.capi.title,"Frontier API",,,,,,
-notification.capi.message.auth.fail,"Failed to authenticate. Try to re-authenticate to the API under Settings.",,,,,,
-notification.capi.message.auth.success,"Account linked! You may close the browser window.",,,,,,
-notification.capi.message.400,"The API reports you do not own Elite: Dangerous. This is common for the Epic gamestore.",,,,,,
+notification.capi.message.auth.fail,"Failed to authenticate. Try to re-authenticate to the API under Settings.",,,,,,"Не удалось аутентифицироваться. Попробуйте повторно аутентифицироваться в API в разделе Настройки."
+notification.capi.message.auth.success,"Account linked! You may close the browser window.",,,,,,"Аккаунт привязан! Вы можете закрыть окно браузера."
+notification.capi.message.400,"The API reports you do not own Elite: Dangerous. This is common for the Epic gamestore.",,,,,,"API сообщает, что у вас нет Elite: Dangerous. Это обычное дело для игрового магазина Epic."
