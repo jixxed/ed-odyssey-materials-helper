@@ -53,7 +53,7 @@ horizons.wishlist.shipbuilder,Create in Ship Editor,Create in Ship Editor,Im Sch
 wishlist.percentage.per.grade,Percentage per grade to complete:,,,,,,Процент на уровнь улучшения для для завершения:
 wishlist.percentage.per.grade.explain,"If a grade is less or equal to 20% and a higher grade is configured, the materials for the lower grade are excluded, assuming that the higher grade can be crafted immediately",,,,,,"Если уровень меньше или равен 20% и настроен более высокий уровень, материалы для более низкого уровня исключаются, предполагая, что более высокий уровень может быть изготовлен немедленно."
 tab.wishlist.material.hint.required.explain,"The required amount shows the value based on the current shortest path, as well as the minimum and maximum amounts based on your engineers’ ranks unless those amounts are equal.",,,,,,"Необходимое количество показывает значение, основанное на текущем кратчайшем пути, а также минимальное и максимальное количество, основанное на рангах ваших инженеров, если эти количества не равны."
-tab.colonisation.delete.confirm.content,Do you wish to continue?,,,,,,
-tab.colonisation.delete.confirm.header,You are about to delete your colonisation project,,,,,,
-tab.colonisation.delete.confirm.title,Confirm deletion,,,,,,
-tab.colonisation.delete,Delete colonisation project,,,,,,
+tab.colonisation.delete.confirm.content,Do you wish to continue?,,,,,,Хотите продолжить?
+tab.colonisation.delete.confirm.header,You are about to delete your colonisation project,,,,,,Вы собираетесь удалить проект колонизации
+tab.colonisation.delete.confirm.title,Confirm deletion,,,,,,Подтвердить удаление
+tab.colonisation.delete,Delete colonisation project,,,,,,Удалить проект колонизации
