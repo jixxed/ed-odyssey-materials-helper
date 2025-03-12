@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -25,15 +23,11 @@ import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public class EngineerBlueprintLabel extends HBox implements DestroyableComponent {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private final Engineer engineer;
     private final int rank;
     private final boolean exact;
@@ -171,8 +165,8 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
 
             };
 
-            this.addEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
-            this.addEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
+            this.registerEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
+            this.registerEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
 
         }
     }
@@ -214,8 +208,4 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
         EventService.removeListener(this);
     }
 
-    @Override
-    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
-        return Collections.emptyMap();
-    }
 }

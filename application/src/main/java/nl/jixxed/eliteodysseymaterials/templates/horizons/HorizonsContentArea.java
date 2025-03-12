@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons;
 
-import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -16,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.ImportResult;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorPane;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation.HorizonsColonisationTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.commodities.HorizonsCommoditiesOverviewTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.engineers.HorizonsEngineersTab;
@@ -25,13 +24,10 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay.PowerplayTab
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.HorizonsShipBuilderTab;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistTab;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SuppressWarnings("java:S110")
 @Slf4j
 public
-class HorizonsContentArea extends AnchorPane {
+class HorizonsContentArea extends DestroyableAnchorPane {
 
     private HorizonsSearchBar searchBar;
     private HorizonsMaterialTab horizonsMaterialOverview;
@@ -44,15 +40,15 @@ class HorizonsContentArea extends AnchorPane {
     private HorizonsShipBuilderTab horizonsShipBuilderTab;
     private HorizonsCommoditiesOverviewTab horizonsCommoditiesOverview;
     private HorizonsColonisationTab horizonsColonisationTab;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 //    private HgeFinderTab hgeFinderTab;
 
-    public HorizonsContentArea(final Application application) {
-        initComponents(application);
+    public HorizonsContentArea() {
+        initComponents();
         initEventHandling();
     }
 
-    private void initComponents(final Application application) {
+    private void initComponents() {
         this.horizonsMaterialOverview = new HorizonsMaterialTab();
         this.horizonsMaterialOverview.setClosable(false);
         this.horizonsCommoditiesOverview = new HorizonsCommoditiesOverviewTab();
@@ -62,7 +58,7 @@ class HorizonsContentArea extends AnchorPane {
         this.horizonsEngineersTab.setClosable(false);
         this.powerplayTab = new PowerplayTab();
         this.powerplayTab.setClosable(false);
-        this.horizonsWishlistTab = new HorizonsWishlistTab(application);
+        this.horizonsWishlistTab = new HorizonsWishlistTab();
         this.horizonsWishlistTab.setClosable(false);
         this.horizonsShipBuilderTab = new HorizonsShipBuilderTab();
         this.horizonsShipBuilderTab.setClosable(false);

@@ -21,19 +21,18 @@ import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 import org.controlsfx.control.PopOver;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
+public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTemplate {
 
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -44,7 +43,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements Template {
     private FlowPane loadoutItemsFlow;
     private MenuButton menuButton;
     private DestroyableMenuButton addToWishlist;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     public OdysseyLoadoutEditorTab() {
         initComponents();

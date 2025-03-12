@@ -14,10 +14,10 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 @Slf4j
-public class EDDNDialog extends VBox implements Template {
+public class EDDNDialog extends VBox implements DestroyableTemplate {
     private final Stage stage;
 
     public EDDNDialog(final Stage stage) {

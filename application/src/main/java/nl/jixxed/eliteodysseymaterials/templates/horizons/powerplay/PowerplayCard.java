@@ -24,7 +24,6 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
@@ -52,7 +51,7 @@ public class PowerplayCard extends VBox {
     private Label engineerDistance;
     private DestroyableResizableImageView copyIcon;
     protected FlowPane location;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private Label unlockablesTitle;
     private List<PowerplayUnlockableModule> unlockablesLabels;
     private Separator unlockablesSeparator;

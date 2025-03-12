@@ -24,8 +24,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.text.NumberFormat;
 import java.util.Comparator;
@@ -36,7 +36,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class ShipSelectView extends VBox implements Template {
+public class ShipSelectView extends VBox implements DestroyableTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private HorizonsShipBuilderTab tab;
     private Table<Ship, String, Supplier<Object>> table;

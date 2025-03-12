@@ -6,10 +6,10 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-public class ARDebugOverlay extends VBox implements Template {
+public class ARDebugOverlay extends VBox implements DestroyableTemplate {
     private final Stage stage;
     @Getter
     private DestroyableResizableImageView resizableImageView1;

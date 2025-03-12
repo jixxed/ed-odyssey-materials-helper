@@ -20,12 +20,9 @@ import nl.jixxed.eliteodysseymaterials.enums.WishlistMaterialGrouping;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistSearchEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -36,7 +33,7 @@ class HorizonsWishlistSearchBar extends HBox {
     private TextField textField;
     private ComboBox<WishlistMaterialGrouping> groupMaterialsComboBox;
     private ComboBox<HorizonsWishlistMaterialSort> sortMaterialsComboBox;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     public HorizonsWishlistSearchBar() {
         initComponents();

@@ -7,12 +7,12 @@ import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.PathItem;
 import nl.jixxed.eliteodysseymaterials.enums.BlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class ShortestPathFlow<T extends BlueprintName<T>> extends FlowPane implements Template {
+public class ShortestPathFlow<T extends BlueprintName<T>> extends FlowPane implements DestroyableTemplate {
     @Getter
     private final ObservableList<ShortestPathItem<T>> items = FXCollections.observableArrayList();
     private final Expansion expansion;

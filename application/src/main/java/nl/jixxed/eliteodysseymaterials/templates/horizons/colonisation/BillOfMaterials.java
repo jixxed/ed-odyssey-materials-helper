@@ -3,11 +3,11 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 import javafx.scene.layout.FlowPane;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Comparator;
 
-public class BillOfMaterials extends FlowPane implements Template {
+public class BillOfMaterials extends FlowPane implements DestroyableTemplate {
 
     ColonisationItem colonisationItem ;
 

@@ -1,48 +1,34 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableCheckBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
 
-public class ShipAttribute implements Template {
-    private final ShipModule shipModule;
-    private final HorizonsModifier modifier;
+//todo refactor this into a component instead of a container
+public class ShipAttribute {
     @Getter
     private DestroyableLabel title;
     @Getter
-    private HBox valuesLine;
+    private DestroyableHBox valuesLine;
     @Getter
-    private TextField textField;
+    private DestroyableTextField textField;
     @Getter
-    private CheckBox checkBox;
+    private DestroyableCheckBox checkBox;
 
     public ShipAttribute(ShipModule shipModule, HorizonsModifier modifier) {
-        super();
-        this.shipModule = shipModule;
-        this.modifier = modifier;
-        initComponents();
-        initEventHandling();
+        addAttribute(shipModule, modifier);
     }
 
-    @Override
-    public void initComponents() {
-        addAttribute();
-    }
-
-    @Override
-    public void initEventHandling() {
-
-    }
-
-    private void addAttribute() {
+    private void addAttribute(ShipModule shipModule, HorizonsModifier modifier) {
         final Object originalAttributeValue = shipModule.getOriginalAttributeValue(modifier);
         valuesLine = BoxBuilder.builder().withStyleClass("settings-legacy-module-details-label-values").withNodes().buildHBox();
 
@@ -65,18 +51,19 @@ public class ShipAttribute implements Template {
                         value
                 );
             }
-            textField = new TextField(currentValue.toString());
-            textField.textProperty().addListener((observable, oldValue, newValue) -> {
-                textField.getStyleClass().removeAll("settings-legacy-module-valid", "settings-legacy-module-invalid");
-                try {
-                    final double parsedValue = Double.parseDouble(newValue);
-                    textField.getStyleClass().add("settings-legacy-module-valid");
-                    shipModule.getModifiers().put(modifier, parsedValue);
-                } catch (NumberFormatException | NullPointerException e) {
-                    textField.getStyleClass().add("settings-legacy-module-invalid");
-                    shipModule.getModifiers().put(modifier, currentValue);
-                }
-            });
+            textField = TextFieldBuilder.builder().withNonLocalizedText(currentValue.toString())
+                    .withTextProperty((observable, oldValue, newValue) -> {
+                        textField.getStyleClass().removeAll("settings-legacy-module-valid", "settings-legacy-module-invalid");
+                        try {
+                            final double parsedValue = Double.parseDouble(newValue);
+                            textField.getStyleClass().add("settings-legacy-module-valid");
+                            shipModule.getModifiers().put(modifier, parsedValue);
+                        } catch (NumberFormatException | NullPointerException e) {
+                            textField.getStyleClass().add("settings-legacy-module-invalid");
+                            shipModule.getModifiers().put(modifier, currentValue);
+                        }
+                    })
+                    .build();
         }
         if (originalAttributeValue instanceof Boolean originalValue) {
             final Object modified = shipModule.getModifiers().get(modifier);
@@ -96,21 +83,11 @@ public class ShipAttribute implements Template {
                         value
                 );
             }
-            checkBox = new CheckBox();
-            checkBox.setSelected(currentValue);
-            checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> shipModule.getModifiers().put(modifier, newValue));
-//            textField = new TextField(currentValue.toString());
-//            textField.textProperty().addListener((observable, oldValue, newValue) -> {
-//                textField.getStyleClass().removeAll("settings-legacy-module-valid", "settings-legacy-module-invalid");
-//                try {
-//                    final double parsedValue = Double.parseDouble(newValue);
-//                    textField.getStyleClass().add("settings-legacy-module-valid");
-//                    shipModule.getModifiers().put(modifier, parsedValue);
-//                } catch (NumberFormatException | NullPointerException e) {
-//                    textField.getStyleClass().add("settings-legacy-module-invalid");
-//                    shipModule.getModifiers().put(modifier, currentValue);
-//                }
-//            });
+
+            checkBox = CheckBoxBuilder.builder()
+                    .withSelected(currentValue)
+                    .withSelectedProperty((_, _, newValue) -> shipModule.getModifiers().put(modifier, newValue))
+                    .build();
         }
 
     }

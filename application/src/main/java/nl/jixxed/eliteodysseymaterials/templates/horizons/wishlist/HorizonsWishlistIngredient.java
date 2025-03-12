@@ -42,6 +42,7 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
     private Integer minimum;
     private Integer required;
     private Integer maximum;
+    @Getter
     protected List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsWishlistIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer amountMinimum, final Integer amountRequired, final Integer amountMaximum, final Integer amountAvailable) {

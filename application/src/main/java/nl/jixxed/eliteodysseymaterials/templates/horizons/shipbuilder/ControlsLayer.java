@@ -23,25 +23,24 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import org.controlsfx.control.PopOver;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ControlsLayer extends AnchorPane implements Template {
+public class ControlsLayer extends AnchorPane implements DestroyableTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     @Getter
     private ComboBox<ShipConfiguration> shipSelect;
     private MenuButton menuButton;

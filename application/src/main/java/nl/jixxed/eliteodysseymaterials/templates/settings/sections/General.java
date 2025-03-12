@@ -10,7 +10,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -28,13 +27,12 @@ import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.SupportService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -44,8 +42,8 @@ import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.slefConsumer
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
-public class General extends VBox implements Template {
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+public class General extends DestroyableVBox implements DestroyableTemplate {
+
     private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final Application application;
     private Label journalFolderLabel;
@@ -151,8 +149,8 @@ public class General extends VBox implements Template {
         this.blueprintExpandedLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.blueprint.expanded")).build();
         this.blueprintExpandedExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.blueprint.expanded.explain")).build();
         this.blueprintExpandedCheckBox = CheckBoxBuilder.builder()
-                .withValue(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE))
-                .withChangeListener((observable, oldValue, newValue) -> {
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE))
+                .withSelectedProperty((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, newValue);
                     EventService.publish(new TooltipBlueprintsExpandEvent(newValue));
                 })
@@ -167,8 +165,8 @@ public class General extends VBox implements Template {
         this.wipLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip")).build();
         this.wipExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip.explain")).build();
         this.wipCheckBox = CheckBoxBuilder.builder()
-                .withValue(PreferencesService.getPreference(PreferenceConstants.WIP, Boolean.FALSE))
-                .withChangeListener((observable, oldValue, newValue) -> {
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.WIP, Boolean.FALSE))
+                .withSelectedProperty((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.WIP, newValue);
                     EventService.publish(new WipVisibilityEvent(newValue));
                 })
@@ -241,8 +239,8 @@ public class General extends VBox implements Template {
         this.pollLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.poll")).build();
         this.pollExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.poll.explain")).build();
         this.pollCheckBox = CheckBoxBuilder.builder()
-                .withValue(PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, Boolean.FALSE))
-                .withChangeListener((observable, oldValue, newValue) -> {
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, Boolean.FALSE))
+                .withSelectedProperty((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.POLLING_FILE_MODE, newValue);
                     EventService.publish(new PollingFileModeEvent(newValue));
                 })

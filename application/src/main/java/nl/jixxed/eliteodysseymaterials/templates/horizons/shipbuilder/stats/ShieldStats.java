@@ -23,9 +23,9 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
 
 @Slf4j
-public class ShieldStats extends Stats implements Template {
+public class ShieldStats extends Stats implements DestroyableTemplate {
     private Shield shieldResistance;
     private Shield shieldIntegrity;
     private DestroyableLabel regenTime;

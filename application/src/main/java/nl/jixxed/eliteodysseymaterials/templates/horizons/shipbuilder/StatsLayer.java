@@ -4,18 +4,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.*;
 
-import java.util.ArrayList;
-import java.util.List;
+public class StatsLayer extends AnchorPane implements DestroyableTemplate {
 
-public class StatsLayer extends AnchorPane implements Template {
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     @Getter
     private HBox stats;
 

@@ -24,14 +24,11 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-
-import java.util.ArrayList;
-import java.util.List;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 @Slf4j
-class OdysseyMaterialCard extends VBox implements Template {
+class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String MATERIAL_IRRELEVANT_CLASS = "material-irrelevant";
     private static final String MATERIAL_POWERPLAY_CLASS = "material-powerplay";
@@ -54,7 +51,7 @@ class OdysseyMaterialCard extends VBox implements Template {
     private DestroyableResizableImageView backpackImage;
     private DestroyableResizableImageView shipImage;
 //    private DestroyableResizableImageView totalImage;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     @Getter
     private final BooleanProperty showFC = new SimpleBooleanProperty(false);

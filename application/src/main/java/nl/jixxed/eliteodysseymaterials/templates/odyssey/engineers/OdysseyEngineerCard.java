@@ -14,7 +14,6 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EngineerEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerCard;
@@ -33,7 +32,7 @@ class OdysseyEngineerCard extends EngineerCard {
     private List<HBox> weaponBlueprintLabels;
     private HBox specialisation;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     OdysseyEngineerCard(final Engineer engineer) {
         super(engineer);
         if (APPLICATION_STATE.isEngineerUnlocked(engineer)) {

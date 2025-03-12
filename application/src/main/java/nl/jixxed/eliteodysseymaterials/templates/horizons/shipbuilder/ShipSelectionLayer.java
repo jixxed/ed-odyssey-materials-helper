@@ -5,15 +5,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ShipSelectionLayer extends AnchorPane implements Template {
+public class ShipSelectionLayer extends AnchorPane implements DestroyableTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private VBox shipSelectView;
     private HorizonsShipBuilderTab tab;
     private ScrollPane scrollPane;

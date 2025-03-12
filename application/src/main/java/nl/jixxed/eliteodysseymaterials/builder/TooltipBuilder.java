@@ -8,6 +8,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +41,16 @@ public class TooltipBuilder {
         return this;
     }
 
+    public TooltipBuilder withText(final String localeKey, Object ... parameters) {
+        this.stringBinding = LocaleService.getStringBinding(localeKey, parameters);
+        return this;
+    }
+
+    public TooltipBuilder withNonLocalizedText(final String nonLocalizedText) {
+        this.nonLocalizedText = nonLocalizedText;
+        return this;
+    }
+
     public TooltipBuilder withShowDelay(final Duration showDelay) {
         this.showDelay = showDelay;
         return this;
@@ -69,10 +80,5 @@ public class TooltipBuilder {
         tooltip.setContentDisplay(ContentDisplay.LEFT);
         tooltip.setTextOverrun(OverrunStyle.CLIP);
         return tooltip;
-    }
-
-    public TooltipBuilder withNonLocalizedText(final String nonLocalizedText) {
-            this.nonLocalizedText = nonLocalizedText;
-            return this;
     }
 }

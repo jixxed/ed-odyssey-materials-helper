@@ -25,7 +25,6 @@ import nl.jixxed.eliteodysseymaterials.export.XlsExporter;
 import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -111,7 +110,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
     private HBox materialHintYellow;
     private HBox materialHintGreen;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     public OdysseyWishlistTab() {
         initComponents();
         initEventHandling();

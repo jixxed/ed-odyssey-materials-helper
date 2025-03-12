@@ -4,9 +4,9 @@ import javafx.geometry.Orientation;
 import javafx.scene.layout.FlowPane;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialTotalType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-public class OdysseyMaterialTotals extends FlowPane implements Template {
+public class OdysseyMaterialTotals extends FlowPane implements DestroyableTemplate {
 
     private static final String FLOW_PANE_STYLE_CLASS = "material-overview-flow-pane";
     private OdysseyMaterialTotal goodsTotal;

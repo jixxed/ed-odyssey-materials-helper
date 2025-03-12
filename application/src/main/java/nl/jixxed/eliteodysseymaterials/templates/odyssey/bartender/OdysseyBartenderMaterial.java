@@ -17,15 +17,12 @@ import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class OdysseyBartenderMaterial extends HBox implements Template {
+public class OdysseyBartenderMaterial extends HBox implements DestroyableTemplate {
     @Getter
     private final Asset asset;
     private int amountSelected = 0;
@@ -51,7 +48,7 @@ public class OdysseyBartenderMaterial extends HBox implements Template {
     private DestroyableLabel shipLabel;
     private DestroyableLabel fleetCarrierLabel;
     private EventHandler<MouseEvent> mouseEventEventHandler;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     OdysseyBartenderMaterial(final Asset asset) {
         this.asset = asset;

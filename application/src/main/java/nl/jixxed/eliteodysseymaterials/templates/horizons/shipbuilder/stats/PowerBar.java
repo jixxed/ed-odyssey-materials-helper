@@ -24,6 +24,7 @@ import java.util.*;
 import static nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats.PowerStats.*;
 
 public class PowerBar extends HBox {
+    @Getter
     protected final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private SegmentedBar<TypeSegment> segmentedBar;

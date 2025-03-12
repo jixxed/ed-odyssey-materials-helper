@@ -18,6 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerBlueprintLabel;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.MissionIngredient;
@@ -37,8 +38,8 @@ class OdysseyBlueprintContent extends VBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private Label countLabel;
     private HBox recipeHeader;
-    private MenuButton addToWishlist;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private DestroyableMenuButton addToWishlist;
+
 
     OdysseyBlueprintContent(final OdysseyBlueprint blueprint) {
         this.blueprint = blueprint;
@@ -158,12 +159,12 @@ class OdysseyBlueprintContent extends VBox {
                 event.consume();
             }
         });
-        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+        this.addToWishlist.registerEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             if (this.addToWishlist.getItems().size() == 1) {
                 event.consume();
             }
         });
-        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
+        this.addToWishlist.registerEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
             if (this.addToWishlist.getItems().size() == 1) {
                 event.consume();
             }

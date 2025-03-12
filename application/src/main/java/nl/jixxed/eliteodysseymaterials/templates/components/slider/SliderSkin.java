@@ -17,6 +17,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +26,7 @@ import java.util.List;
 public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
     private StackPane fill = new StackPane();
 
-    private StackPane thumb, track;
+    private DestroyableStackPane thumb, track;
 
     private double trackToTickGap = 2;
 
@@ -36,23 +37,23 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
     public SliderSkin(Slider control) {
         super(control);
 
-        track = (StackPane) getSkinnable().lookup(".track");
-        thumb = (StackPane) getSkinnable().lookup(".thumb");
+        track = (DestroyableStackPane) getSkinnable().lookup(".track");
+        thumb = (DestroyableStackPane) getSkinnable().lookup(".thumb");
 
         fill.getStyleClass().add("fill");
 
         // Add fill right above track
         getChildren().add(getChildren().indexOf(track) + 1, fill);
 
-        track.addEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnTrack);
-        track.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnTrack);
-        track.addEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromTrack);
+        track.registerEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnTrack);
+        track.registerEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnTrack);
+        track.registerEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromTrack);
 
         fill.setEventDispatcher(track.eventDispatcherProperty().get());
 
-        thumb.addEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnThumb);
-        thumb.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnThumb);
-        thumb.addEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromThumb);
+        thumb.registerEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnThumb);
+        thumb.registerEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnThumb);
+        thumb.registerEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromThumb);
 
         registerChangeListener(control.showTickMarksProperty(), this::thickMarksChanged);
         registerChangeListener(control.showTickLabelsProperty(), this::thickMarksChanged);

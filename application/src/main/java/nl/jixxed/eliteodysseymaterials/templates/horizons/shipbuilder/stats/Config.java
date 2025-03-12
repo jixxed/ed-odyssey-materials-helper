@@ -16,17 +16,17 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
 import nl.jixxed.eliteodysseymaterials.templates.components.PipSelect;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public class Config extends Stats implements Template {
+public class Config extends Stats implements DestroyableTemplate {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private PipSelect systemPipSelect;

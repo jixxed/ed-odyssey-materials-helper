@@ -5,27 +5,24 @@ import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderAmountSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class OdysseyBartenderResult extends VBox implements Template {
+public class OdysseyBartenderResult extends VBox implements DestroyableTemplate {
     private final Map<Asset, Integer> tradeList = new HashMap<>();
     private Asset selectedAsset;
     private DestroyableLabel costPerItem;
     private DestroyableLabel totalOffered;
     private DestroyableLabel wasted;
     private DestroyableLabel toReceive;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     OdysseyBartenderResult() {
         initComponents();

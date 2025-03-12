@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class Stats extends VBox {
+    @Getter
     protected final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     protected Stats() {

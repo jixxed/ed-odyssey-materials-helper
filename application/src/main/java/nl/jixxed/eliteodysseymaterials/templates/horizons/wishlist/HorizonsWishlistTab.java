@@ -3,7 +3,6 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -18,6 +17,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
@@ -29,7 +29,6 @@ import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
@@ -115,7 +114,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
     private HBox materialHintRed;
     private HBox materialHintYellow;
     private HBox materialHintGreen;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     static {
         NUMBER_FORMAT.setMaximumFractionDigits(2);
@@ -126,8 +125,8 @@ public class HorizonsWishlistTab extends HorizonsTab {
     private Button edsyButton;
     private Button coriolisButton;
 
-    public HorizonsWishlistTab(final Application application) {
-        initComponents(application);
+    public HorizonsWishlistTab() {
+        initComponents();
         initEventHandling();
 
     }
@@ -148,7 +147,7 @@ public class HorizonsWishlistTab extends HorizonsTab {
         this.wishlistSelect.styleProperty().set(fontStyle);
     }
 
-    private void initComponents(final Application application) {
+    private void initComponents() {
         initLabels();
         initShortestPathTable();
         final Set<HorizonsWishlist> items = APPLICATION_STATE.getPreferredCommander()
@@ -270,10 +269,10 @@ public class HorizonsWishlistTab extends HorizonsTab {
             EventService.publish(new HorizonsWishlistOpenShipBuilderEvent());
         }).build();
         this.edsyButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("horizons.wishlist.edsy")).withOnAction(event -> {
-            application.getHostServices().showDocument("https://edsy.org");
+            FXApplication.getInstance().getHostServices().showDocument("https://edsy.org");
         }).build();
         this.coriolisButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("horizons.wishlist.coriolis")).withOnAction(event -> {
-            application.getHostServices().showDocument("https://coriolis.io");
+            FXApplication.getInstance().getHostServices().showDocument("https://coriolis.io");
         }).build();
         Tooltip.install(this.edsyButton, TooltipBuilder.builder().withShowDelay(Duration.millis(100D)).withText(LocaleService.getStringBinding("horizons.wishlist.edsy.tooltip")).build());
         Tooltip.install(this.coriolisButton, TooltipBuilder.builder().withShowDelay(Duration.millis(100D)).withText(LocaleService.getStringBinding("horizons.wishlist.coriolis.tooltip")).build());

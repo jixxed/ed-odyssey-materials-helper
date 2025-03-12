@@ -10,11 +10,11 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.optional_internals.FrameShif
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 @Slf4j
-public class JumpStats extends Stats implements Template {
+public class JumpStats extends Stats implements DestroyableTemplate {
     private RangeIndicator jumpRangeIndicator;
     private RangeIndicator totalJumpRangeIndicator;
     public JumpStats() {

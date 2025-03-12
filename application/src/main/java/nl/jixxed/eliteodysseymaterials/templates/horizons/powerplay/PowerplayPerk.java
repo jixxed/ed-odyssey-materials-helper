@@ -15,25 +15,23 @@ import nl.jixxed.eliteodysseymaterials.enums.Power;
 import nl.jixxed.eliteodysseymaterials.enums.PowerPerk;
 import nl.jixxed.eliteodysseymaterials.enums.RankReward;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import org.controlsfx.control.SegmentedBar;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PowerplayPerk extends VBox implements Template {
+public class PowerplayPerk extends VBox implements DestroyableTemplate {
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     public static final int MAX_RANK = 100;
     private SegmentedBar<TypeSegment> segmentedBar;
     private Power power;

@@ -3,7 +3,6 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -12,19 +11,16 @@ import nl.jixxed.eliteodysseymaterials.domain.Commander;
 import nl.jixxed.eliteodysseymaterials.service.CAPIService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
-public class FrontierAPI extends VBox implements Template {
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+public class FrontierAPI extends DestroyableVBox implements DestroyableTemplate {
+
     private DestroyableLabel capiStatusLabel;
     private Button capiConnectButton;
     private Button capiDisconnectButton;

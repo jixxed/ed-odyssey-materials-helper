@@ -20,14 +20,13 @@ import nl.jixxed.eliteodysseymaterials.service.LoadoutService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
+public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTemplate {
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_NAME = "loadout-item-stats-name";
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE = "loadout-item-stats-value";
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED = "loadout-item-stats-value-modded";
@@ -46,9 +45,10 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
     private DestroyableMenuButton addToWishlist;
     private DestroyableToggleSwitch statsToggle;
     private BooleanProperty isValid;
+    @Getter
     private final List<Destroyable> destroyables = new ArrayList<>();
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     private final void setValid(final boolean value) {
         isValidProperty().set(value);
@@ -111,7 +111,7 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
         this.getStyleClass().add("loadout-item");
         this.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.stats = BoxBuilder.builder().withNodes().buildVBox();
-        this.statsToggle = ToggleSwitchBuilder.builder()
+        this.statsToggle = register(ToggleSwitchBuilder.builder()
                 .withSelected(this.loadout.isShowChanged())
                 .withText(LocaleService.getStringBinding(this.loadout.isShowChanged() ? "loadout.equipment.stats.toggle.changed" : "loadout.equipment.stats.toggle.all"))
                 .withSelectedChangeListener((observable, oldValue, newValue) -> {
@@ -126,34 +126,30 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
                     }
                     updateStatsList();
                 })
-                .build();
-        addDestroyableNode(this.statsToggle);
+                .build());
         //navbar
-        final DestroyableLabel left = LabelBuilder.builder().withNonLocalizedText("<").withOnMouseClicked(event -> {
+        final DestroyableLabel left =  register(LabelBuilder.builder().withNonLocalizedText("<").withOnMouseClicked(event -> {
             this.loadoutSet.moveDown(this.loadout);
             saveLoadoutSet();
             EventService.publish(new LoadoutMovedEvent());
-        }).build();
-        addDestroyableNode(left);
+        }).build());
         if (this.loadoutSet.getLoadouts().indexOf(this.loadout) <= 0) {
             left.setVisible(false);
         }
         final Region regionL = new Region();
         HBox.setHgrow(regionL, Priority.ALWAYS);
-        final DestroyableLabel delete = LabelBuilder.builder().withNonLocalizedText("delete").withOnMouseClicked(event -> {
+        final DestroyableLabel delete = register(LabelBuilder.builder().withNonLocalizedText("delete").withOnMouseClicked(event -> {
             this.loadoutSet.removeLoadout(this.loadout);
             saveLoadoutSet();
             EventService.publish(new LoadoutRemovedEvent(this));
-        }).build();
-        addDestroyableNode(delete);
+        }).build());
         final Region regionR = new Region();
         HBox.setHgrow(regionR, Priority.ALWAYS);
-        final DestroyableLabel right = LabelBuilder.builder().withNonLocalizedText(">").withOnMouseClicked(event -> {
+        final DestroyableLabel right = register(LabelBuilder.builder().withNonLocalizedText(">").withOnMouseClicked(event -> {
             this.loadoutSet.moveUp(this.loadout);
             saveLoadoutSet();
             EventService.publish(new LoadoutMovedEvent());
-        }).build();
-        addDestroyableNode(right);
+        }).build());
         if (this.loadoutSet.getLoadouts().indexOf(this.loadout) == this.loadoutSet.getLoadouts().size() - 1) {
             right.setVisible(false);
         }
@@ -478,12 +474,6 @@ public class OdysseyLoadoutItem extends VBox implements DestroyableTemplate {
         vBox.getChildren().add(resizableImageView);
         hBox.getChildren().addAll(vBox);
         return hBox;
-    }
-
-
-    @Override
-    public List<Destroyable> getDestroyablesList() {
-        return this.destroyables;
     }
 
     @Override

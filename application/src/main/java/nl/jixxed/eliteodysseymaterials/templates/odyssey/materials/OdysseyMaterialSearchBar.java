@@ -22,8 +22,6 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -35,7 +33,7 @@ class OdysseyMaterialSearchBar extends HBox {
     private ComboBox<OdysseyMaterialShow> showMaterialsComboBox;
     private ComboBox<OdysseyMaterialSort> sortMaterialsComboBox;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     public OdysseyMaterialSearchBar() {
         initComponents();
         initEventHandling();

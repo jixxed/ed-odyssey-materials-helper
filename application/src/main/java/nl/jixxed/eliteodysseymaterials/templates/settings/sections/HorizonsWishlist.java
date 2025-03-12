@@ -3,7 +3,6 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.CheckBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -11,19 +10,16 @@ import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-
-import java.util.ArrayList;
-import java.util.List;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
-public class HorizonsWishlist extends VBox implements Template {
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+public class HorizonsWishlist extends DestroyableVBox implements DestroyableTemplate {
+
     private Label wishlistHorizonsGradeRollsLabel;
     private HBox wishlistHorizonsGradeRolls;
     private DestroyableLabel flipHorizonsRemainingAvailableLabel;
@@ -77,8 +73,8 @@ public class HorizonsWishlist extends VBox implements Template {
         this.flipHorizonsRemainingAvailableLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.flip.remaining.available.horizons")).build();
         this.flipHorizonsRemainingAvailableExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.flip.remaining.available.horizons.explain")).build();
         this.flipHorizonsRemainingAvailableCheckBox  = CheckBoxBuilder.builder()
-                .withValue(PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE))//available is default(false)
-                .withChangeListener((observable, oldValue, newValue) -> {
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, Boolean.FALSE))//available is default(false)
+                .withSelectedProperty((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.FLIP_WISHLIST_REMAINING_AVAILABLE_HORIZONS, newValue);
                     EventService.publish(new FlipRemainingAvailableEvent(Expansion.HORIZONS, newValue));
                 })

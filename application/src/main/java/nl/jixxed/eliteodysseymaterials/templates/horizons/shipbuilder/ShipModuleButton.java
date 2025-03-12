@@ -1,12 +1,13 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-import javafx.scene.control.Button;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
+
 @AllArgsConstructor
-public class ShipModuleButton extends Button {
-    @Getter
+@Getter
+public class ShipModuleButton extends DestroyableButton {
     private ShipModule shipModule;
 
 }

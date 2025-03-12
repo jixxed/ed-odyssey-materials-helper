@@ -9,17 +9,14 @@ import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Shield extends StackPane implements Template {
+public class Shield extends StackPane implements DestroyableTemplate {
 
     private static final NumberFormat NUMBER_FORMAT_2 = NumberFormat.getNumberInstance();
 
@@ -47,7 +44,7 @@ public class Shield extends StackPane implements Template {
     private String title;
     private String color;
     private String symbol;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private DestroyableResizableImageView shield;
 
     public Shield(String title, String symbol, String color) {

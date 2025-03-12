@@ -22,6 +22,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
@@ -83,6 +84,12 @@ public class FXApplication extends Application {
     private StackPane content;
     private Scene scene;
 
+    @Getter
+    private static FXApplication instance;
+
+    public FXApplication() {
+        instance = this;
+    }
 
     public Stage getPrimaryStage() {
         return this.primaryStage;
@@ -126,7 +133,7 @@ public class FXApplication extends Application {
 
                     Platform.runLater(() -> {
                         try {
-                            this.applicationLayout = new ApplicationLayout(this);
+                            this.applicationLayout = new ApplicationLayout();
                             this.content.getChildren().add(this.applicationLayout);
                             setupStyling(scene);
                             this.applicationLayout.styleProperty().set("-fx-font-size: " + FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize() + "px");

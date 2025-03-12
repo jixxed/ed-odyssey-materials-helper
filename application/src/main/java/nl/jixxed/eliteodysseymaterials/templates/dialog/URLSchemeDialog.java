@@ -15,10 +15,10 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 @Slf4j
-public class URLSchemeDialog extends VBox implements Template {
+public class URLSchemeDialog extends VBox implements DestroyableTemplate {
     private final Stage stage;
 
     public URLSchemeDialog(final Stage stage) {

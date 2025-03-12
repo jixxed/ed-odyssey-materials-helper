@@ -6,22 +6,21 @@ import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialHoverEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class OdysseyBartenderRecipes extends VBox implements Template {
+public class OdysseyBartenderRecipes extends VBox implements DestroyableTemplate {
     private DestroyableLabel title;
     private final List<DestroyableLabel> recipes = new ArrayList<>();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     OdysseyBartenderRecipes() {
         initComponents();

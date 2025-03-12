@@ -1,12 +1,11 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.OsConstants;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -17,29 +16,26 @@ import nl.jixxed.eliteodysseymaterials.service.ARService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableToggleSwitch;
+import nl.jixxed.eliteodysseymaterials.service.event.ARDisableEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ARLocaleChangeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.ARWhitelistChangeEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 @Slf4j
-public class AugmentedReality extends VBox implements Template {
+public class AugmentedReality extends DestroyableVBox implements DestroyableTemplate {
     private static final String TESS4J_DIR = new File(OsConstants.TESS4J).getPath();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private DestroyableLabel arOverlayLabel;
     private DestroyableToggleSwitch arOverlayButton;
     private TextField arCharacterWhitelistTextField;
-    private final Application application;
-    public AugmentedReality(Application application) {
-        this.application = application;
+
+    public AugmentedReality() {
         this.initComponents();
         this.initEventHandling();
     }
@@ -53,8 +49,8 @@ public class AugmentedReality extends VBox implements Template {
                 .withStyleClass(SETTINGS_LABEL_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.ar.explain"))
                 .build();
-        final Hyperlink vccLink = HyperlinkBuilder.builder().withStyleClass(SETTINGS_LINK_CLASS).withAction(actionEvent ->
-                this.application.getHostServices().showDocument("https://aka.ms/vs/17/release/vc_redist.x64.exe")).withText(LocaleService.getStringBinding("tab.settings.ar.link")).build();
+        final Hyperlink vccLink = HyperlinkBuilder.builder().withStyleClass(SETTINGS_LINK_CLASS).withOnAction(actionEvent ->
+                FXApplication.getInstance().getHostServices().showDocument("https://aka.ms/vs/17/release/vc_redist.x64.exe")).withText(LocaleService.getStringBinding("tab.settings.ar.link")).build();
         final HBox arSetting = createARSetting();
         final HBox arLocaleSetting = createARLocaleSetting();
         final HBox arBartenderSetting = createARBartenderSetting();

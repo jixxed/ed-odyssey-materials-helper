@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import lombok.Getter;
 import lombok.NonNull;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -21,14 +22,10 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ModificationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
 import java.util.ArrayList;
@@ -38,7 +35,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
+class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableTemplate {
     private static final String LOADOUT_MODIFICATION_STYLE_CLASS = "loadout-modification";
     private static final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "loadout-modification-image";
     private static final String LOADOUT_MODIFICATION_IMAGE_HOVER_STYLE_CLASS = "loadout-modification-image-hover";
@@ -49,7 +46,6 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
     private Loadout loadout;
     private final int position;
     private PopOver popOver;
-    private final List<Destroyable> destroyables = new ArrayList<>();
     private OdysseyLoadoutItem loadoutItem;
 
     private boolean dragFlag = false;
@@ -57,7 +53,9 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
     private ScheduledThreadPoolExecutor executor;
 
     private ScheduledFuture<?> scheduledFuture;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    @Getter
+    private final List<Destroyable> destroyables = new ArrayList<>();
+
 
     OdysseyLoadoutModification(final Loadout loadout, final Integer position, final OdysseyLoadoutItem loadoutItem) {
         this.loadout = loadout;
@@ -105,8 +103,8 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
 
             };
 
-            this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
-            this.imageView.addDestroyableEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
+            this.imageView.registerEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
+            this.imageView.registerEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
         }
         VBox.setVgrow(this.imageView, Priority.ALWAYS);
         this.getChildren().addAll(this.imageView, this.label);
@@ -236,7 +234,7 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
         if (Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).anyMatch(modification::equals)) {
             modSelectImage.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS);
         } else {
-            modSelectImage.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, getModificationSelectedEventHandler(modification));
+            modSelectImage.registerEventHandler(MouseEvent.MOUSE_CLICKED, getModificationSelectedEventHandler(modification));
         }
         final DestroyableLabel modLabel = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding(modification.getLocalizationKey())).build();
         this.destroyables.add(modLabel);
@@ -312,10 +310,5 @@ class OdysseyLoadoutModification extends VBox implements DestroyableTemplate {
         this.imageView = null;
         this.label = null;
         stopExecutor();
-    }
-
-    @Override
-    public List<Destroyable> getDestroyablesList() {
-        return this.destroyables;
     }
 }

@@ -14,11 +14,13 @@ import nl.jixxed.eliteodysseymaterials.domain.CommoditiesSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsCommoditiesSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -26,10 +28,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class HorizonsCommoditiesOverview extends VBox implements Template {
+public class HorizonsCommoditiesOverview extends VBox implements DestroyableTemplate {
     private HorizonsCommodityCard[] commodityCards;
     private CommoditiesSearch currentSearch = new CommoditiesSearch("", HorizonsCommoditiesSort.ALPHABETICAL, HorizonsCommoditiesShow.ALL);
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     HorizonsCommoditiesOverview() {
         initComponents();

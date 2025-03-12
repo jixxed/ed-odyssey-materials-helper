@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 
-import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -16,6 +14,7 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorPane;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.bartender.OdysseyBartenderTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers.OdysseyEngineersTab;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.loadout.OdysseyLoadoutEditorTab;
@@ -23,13 +22,10 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMateri
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.menu.OdysseyBlueprintBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistTab;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SuppressWarnings("java:S110")
 @Slf4j
 public
-class OdysseyContentArea extends AnchorPane {
+class OdysseyContentArea extends DestroyableAnchorPane {
 
     private OdysseySearchBar odysseySearchBar;
     private OdysseyBlueprintBar odysseyBlueprintBar;
@@ -41,14 +37,14 @@ class OdysseyContentArea extends AnchorPane {
     private TabPane tabs;
     private VBox body;
     private OdysseyBartenderTab odysseyBartenderTab;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
-    public OdysseyContentArea(final Application application) {
-        initComponents(application);
+
+    public OdysseyContentArea() {
+        initComponents();
         initEventHandling();
     }
 
-    private void initComponents(final Application application) {
+    private void initComponents() {
         this.overview = new OdysseyMaterialTab();
         this.wishlistTab = new OdysseyWishlistTab();
         this.loadoutEditorTab = new OdysseyLoadoutEditorTab();
@@ -77,7 +73,7 @@ class OdysseyContentArea extends AnchorPane {
         this.body = new VBox(this.odysseySearchBar, this.tabs);
         HBox.setHgrow(this.body, Priority.ALWAYS);
 
-        this.odysseyBlueprintBar = new OdysseyBlueprintBar(application);
+        this.odysseyBlueprintBar = new OdysseyBlueprintBar();
         this.odysseyBlueprintBar.visibleProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(newValue, this.odysseyBlueprintBar.getWidth()));
         this.odysseyBlueprintBar.widthProperty().addListener((observable, oldValue, newValue) -> setBodyAnchor(isRecipeBarVisible(), newValue.doubleValue()));
         this.odysseyBlueprintBar.visibleProperty().set(isRecipeBarVisible());

@@ -20,10 +20,11 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsMaterialsShow;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.HorizonsTabSelectedEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -33,7 +34,7 @@ class HorizonsMaterialSearchBar extends HBox {
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private TextField textField;
     private ComboBox<HorizonsMaterialsShow> showMaterialsComboBox;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     public HorizonsMaterialSearchBar() {
         initComponents();

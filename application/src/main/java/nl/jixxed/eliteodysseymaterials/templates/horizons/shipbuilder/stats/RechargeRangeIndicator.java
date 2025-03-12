@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RechargeRangeIndicator extends VBox {
+    @Getter
     protected final List<EventListener<?>> eventListeners = new ArrayList<>();
 
     private Pane lines;

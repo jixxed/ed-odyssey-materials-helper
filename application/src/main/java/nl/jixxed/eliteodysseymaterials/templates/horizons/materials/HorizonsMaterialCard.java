@@ -18,22 +18,20 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import org.controlsfx.control.SegmentedBar;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 @Slf4j
-public class HorizonsMaterialCard extends VBox implements Template {
+public class HorizonsMaterialCard extends VBox implements DestroyableTemplate {
 
     private DestroyableResizableImageView gradeImage;
     private Label nameLabel;
@@ -42,7 +40,7 @@ public class HorizonsMaterialCard extends VBox implements Template {
     private final HorizonsMaterial material;
     private TypeSegment present;
     private TypeSegment notPresent;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     HorizonsMaterialCard(final HorizonsMaterial material) {
         this.material = material;

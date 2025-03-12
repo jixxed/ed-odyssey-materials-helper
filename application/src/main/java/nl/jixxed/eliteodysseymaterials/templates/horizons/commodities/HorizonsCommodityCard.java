@@ -17,20 +17,17 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MarketService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
-public class HorizonsCommodityCard extends StackPane implements Template {
+public class HorizonsCommodityCard extends StackPane implements DestroyableTemplate {
     private DestroyableResizableImageView typeImage;
     private Label nameLabel;
     @Getter
@@ -56,7 +53,7 @@ public class HorizonsCommodityCard extends StackPane implements Template {
     private Region region2;
     @Getter
     private final Commodity commodity;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private DestroyableLabel stationBuy;
     private DestroyableLabel stationSell;
     private HBox market;

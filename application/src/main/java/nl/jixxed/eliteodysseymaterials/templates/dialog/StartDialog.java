@@ -14,7 +14,7 @@ import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class StartDialog extends VBox implements Template {
+public class StartDialog extends VBox implements DestroyableTemplate {
     public static final String POLICY_LEVEL_REQUIRED = "v3";
     private final Stage stage;
 

@@ -13,9 +13,9 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class ThermalStats extends Stats implements Template {
+public class ThermalStats extends Stats implements DestroyableTemplate {
     private DestroyableLabel idleThermals;
     private DestroyableLabel thrusterThermals;
     private DestroyableLabel fsdThermals;

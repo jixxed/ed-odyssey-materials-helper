@@ -15,26 +15,24 @@ import nl.jixxed.eliteodysseymaterials.domain.HorizonsMaterialsSearch;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class HorizonsMaterialOverview extends VBox implements Template {
+public class HorizonsMaterialOverview extends VBox implements DestroyableTemplate {
 
     private HorizonsMaterialCard[] rawCards;
     private HorizonsMaterialCard[] encodedCards;
     private HorizonsMaterialCard[] manufacturedCards;
     private HBox nearestTraders;
     private HorizonsMaterialsSearch currentSearch = new HorizonsMaterialsSearch("", HorizonsMaterialsShow.ALL);
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     HorizonsMaterialOverview() {
         initComponents();
         initEventHandling();

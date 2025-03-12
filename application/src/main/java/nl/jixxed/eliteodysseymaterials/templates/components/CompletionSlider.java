@@ -11,13 +11,12 @@ import javafx.scene.layout.HBox;
 import nl.jixxed.eliteodysseymaterials.builder.SliderBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TextFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.DoubleConsumer;
 
-public class CompletionSlider extends HBox implements Template, Destroyable {
+public class CompletionSlider extends HBox implements DestroyableTemplate {
 
     private Double min;
     private Double max;

@@ -14,9 +14,6 @@ import nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers.OdysseyEngine
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMaterialSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistSearchBar;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 class OdysseySearchBar extends HBox {
 
@@ -26,7 +23,7 @@ class OdysseySearchBar extends HBox {
     private OdysseyWishlistSearchBar wishlistSearchBar;
     private OdysseyEngineerSearchBar engineerSearchBar;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     OdysseySearchBar() {
         initComponents();
         initEventHandling();

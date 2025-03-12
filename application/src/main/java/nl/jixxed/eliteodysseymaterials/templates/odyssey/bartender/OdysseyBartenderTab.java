@@ -16,19 +16,18 @@ import nl.jixxed.eliteodysseymaterials.enums.AssetType;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.CommanderSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyBartenderMaterialSelectedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
 import java.util.*;
 
 import static nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs.BARTENDER;
 
-public class OdysseyBartenderTab extends OdysseyTab implements Template {
+public class OdysseyBartenderTab extends OdysseyTab implements DestroyableTemplate {
     private OdysseyBartenderMaterial selectedMaterial;
     private final Map<AssetType, List<OdysseyBartenderMaterial>> bartenderMaterials = Map.of(
             AssetType.CHEMICAL, new ArrayList<>(),
@@ -45,7 +44,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements Template {
     private VBox right;
     private Region filler;
     private final BooleanProperty detailView = new SimpleBooleanProperty(false);
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     public OdysseyBartenderTab() {
         initComponents();

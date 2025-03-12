@@ -659,4 +659,5 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.service.ships;
     exports nl.jixxed.eliteodysseymaterials.templates.components.slider;
     opens nl.jixxed.eliteodysseymaterials.domain to com.fasterxml.jackson.databind, javafx.fxml, org.controlsfx.controls;
+    exports nl.jixxed.eliteodysseymaterials.templates.destroyables;
 }

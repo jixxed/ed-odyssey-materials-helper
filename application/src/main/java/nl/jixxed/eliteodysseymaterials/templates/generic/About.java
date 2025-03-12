@@ -1,17 +1,17 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import javafx.application.Application;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.FXApplication;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.VersionService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
 import java.io.IOException;
 
@@ -25,31 +25,31 @@ class About extends VBox {
     private Hyperlink donate;
     private Hyperlink donate2;
     private Hyperlink discord;
-    private ImageView donateImage;
-    private ImageView donate2Image;
-    private ImageView discordImage;
+    private DestroyableResizableImageView donateImage;
+    private DestroyableResizableImageView donate2Image;
+    private DestroyableResizableImageView discordImage;
 
-    public About(final Application application) {
-        initComponents(application);
+    public About() {
+        initComponents();
         versionCheck();
     }
 
-    private void initComponents(final Application application) {
+    private void initComponents() {
         this.getStyleClass().add("about");
         this.versionLabel = LabelBuilder.builder().withStyleClass("about-version").build();
-        this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withAction(actionEvent ->
-                application.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases")).build();
-        this.linkTutorial = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.tutorial")).withAction(actionEvent ->
-                application.getHostServices().showDocument("https://www.youtube.com/playlist?list=PLg3S2KmbzGpPvHqMJrP2yFKEyUr8Axn0T")).build();
-        this.donateImage = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/paypal.png").build();
-        this.donate2Image = ImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/github_sponsors.png").build();
-        this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
-        this.donate = HyperlinkBuilder.builder().withStyleClass("about-donate-button").withAction(actionEvent ->
-                application.getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper")).withGraphic(this.donateImage).build();
-        this.donate2 = HyperlinkBuilder.builder().withStyleClass("about-donate-button").withAction(actionEvent ->
-                application.getHostServices().showDocument("https://github.com/sponsors/jixxed")).withGraphic(this.donate2Image).build();
-        this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withAction(actionEvent ->
-                application.getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA")).withGraphic(this.discordImage).build();
+        this.link = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.download")).withOnAction(actionEvent ->
+                FXApplication.getInstance().getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases")).build();
+        this.linkTutorial = HyperlinkBuilder.builder().withStyleClass("about-download-link").withText(LocaleService.getStringBinding("menu.about.tutorial")).withOnAction(actionEvent ->
+                FXApplication.getInstance().getHostServices().showDocument("https://www.youtube.com/playlist?list=PLg3S2KmbzGpPvHqMJrP2yFKEyUr8Axn0T")).build();
+        this.donateImage = ResizableImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/paypal.png").build();
+        this.donate2Image = ResizableImageViewBuilder.builder().withStyleClass("about-donate-image").withImage("/images/github_sponsors.png").build();
+        this.discordImage = ResizableImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
+        this.donate = HyperlinkBuilder.builder().withStyleClass("about-donate-button").withOnAction(actionEvent ->
+                FXApplication.getInstance().getHostServices().showDocument("https://www.paypal.com/donate?business=4LB2HUSB7NDAS&item_name=Odyssey+Materials+Helper")).withGraphic(this.donateImage).build();
+        this.donate2 = HyperlinkBuilder.builder().withStyleClass("about-donate-button").withOnAction(actionEvent ->
+                FXApplication.getInstance().getHostServices().showDocument("https://github.com/sponsors/jixxed")).withGraphic(this.donate2Image).build();
+        this.discord = HyperlinkBuilder.builder().withStyleClass("about-discord").withOnAction(actionEvent ->
+                FXApplication.getInstance().getHostServices().showDocument("https://discord.gg/M8Rgz4AmmA")).withGraphic(this.discordImage).build();
 
         final DestroyableLabel commissionPP = LabelBuilder.builder().withStyleClass("about-donate-commission").withNonLocalizedText("2.89%+39ct").build();
         final DestroyableLabel commissionGH = LabelBuilder.builder().withStyleClass("about-donate-commission").withNonLocalizedText("0%").build();
@@ -69,7 +69,7 @@ class About extends VBox {
         );
         Tooltip.install(commissionPP, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withNonLocalizedText("Commission").build());
         Tooltip.install(commissionGH, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withNonLocalizedText("Commission").build());
-        this.discordImage = ImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
+        this.discordImage = ResizableImageViewBuilder.builder().withStyleClass("about-discord-image").withImage("/images/other/discord_button.png").build();
     }
 
     private void versionCheck() {

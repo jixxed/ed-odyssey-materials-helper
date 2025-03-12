@@ -50,6 +50,7 @@ public class OdysseyMaterialIngredient extends Ingredient {
     private Region region;
     private HBox secondLine;
     private Region region2;
+    @Getter
     protected List<EventListener<?>> eventListeners = new ArrayList<>();
 
 

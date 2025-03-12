@@ -22,7 +22,6 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
@@ -46,7 +45,7 @@ public class EngineerCard extends VBox {
                             .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
                             .build()).buildHBox();
     protected static final String ENGINEER_CATEGORY_STYLE_CLASS = "engineer-category";
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     @Getter
     protected final Engineer engineer;

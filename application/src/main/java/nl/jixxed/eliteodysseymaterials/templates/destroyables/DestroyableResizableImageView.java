@@ -1,25 +1,16 @@
 package nl.jixxed.eliteodysseymaterials.templates.destroyables;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@SuppressWarnings("java:S3740")
+@Getter
 public class DestroyableResizableImageView extends Pane implements DestroyableComponent {
 
+
     private final ImageView iv;
-    private final HashMap<ObservableValue, List<ChangeListener>> listenersMap = new HashMap<>();
-    private final HashMap<EventType, List<EventHandler>> eventHandlersMap = new HashMap<>();
 
     public DestroyableResizableImageView() {
         this.iv = new ImageView();
@@ -47,29 +38,5 @@ public class DestroyableResizableImageView extends Pane implements DestroyableCo
 
     public final Image getImage() {
         return this.iv.getImage();
-    }
-
-    final void unbind() {
-        this.iv.fitWidthProperty().unbind();
-        this.iv.fitHeightProperty().unbind();
-    }
-
-    @Override
-    public void destroyInternal() {
-        this.iv.fitWidthProperty().unbind();
-        this.iv.fitHeightProperty().unbind();
-        this.eventHandlersMap.forEach((eventType, eventHandlers) -> eventHandlers.forEach(eventHandler -> removeEventHandler(eventType, eventHandler)));
-    }
-
-    public void addDestroyableEventHandler(final EventType eventType, final EventHandler eventHandler) {
-        final List<EventHandler> eventHandlers = this.eventHandlersMap.getOrDefault(eventType, new ArrayList<>());
-        eventHandlers.add(eventHandler);
-        this.eventHandlersMap.put(eventType, eventHandlers);
-        addEventHandler(eventType, eventHandler);
-    }
-
-    @Override
-    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
-        return this.listenersMap;
     }
 }

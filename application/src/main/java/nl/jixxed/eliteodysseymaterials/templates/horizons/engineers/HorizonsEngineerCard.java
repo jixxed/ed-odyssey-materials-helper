@@ -21,7 +21,6 @@ import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
@@ -54,7 +53,7 @@ class HorizonsEngineerCard extends EngineerCard {
     private SegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment present;
     private TypeSegment notPresent;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     HorizonsEngineerCard(final Engineer engineer) {
         super(engineer);

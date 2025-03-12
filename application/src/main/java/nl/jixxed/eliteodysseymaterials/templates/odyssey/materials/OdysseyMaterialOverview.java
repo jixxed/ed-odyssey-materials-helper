@@ -15,11 +15,13 @@ import nl.jixxed.eliteodysseymaterials.domain.Search;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialTotals;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
@@ -36,7 +38,7 @@ public class OdysseyMaterialOverview extends VBox {
     private final Map<OdysseyMaterial, OdysseyMaterialCard> materialCards = new HashMap<>();
     private Search currentSearch = new Search("", OdysseyMaterialSort.ALPHABETICAL, OdysseyMaterialShow.ALL);
     private ChangeListener<Number> resizeListener;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     OdysseyMaterialOverview(final ScrollPane scrollPane) {
         this.scrollPane = scrollPane;

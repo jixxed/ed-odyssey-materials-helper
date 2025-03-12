@@ -59,7 +59,7 @@ public class ResizableImageViewBuilder {
         imageView.setImage(this.image);
         imageView.setPreserveRatio(this.preserveRatio);
         if (this.onMouseClicked != null) {
-            imageView.addDestroyableEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);
+            imageView.registerEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);
         }
         return imageView;
 

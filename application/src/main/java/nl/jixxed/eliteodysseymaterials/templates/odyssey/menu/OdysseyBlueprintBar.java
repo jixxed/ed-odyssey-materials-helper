@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.menu;
 
-import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -18,23 +17,23 @@ import nl.jixxed.eliteodysseymaterials.enums.Craftability;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
 import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.generic.About;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.Map;
 
 @Slf4j
 public
-class OdysseyBlueprintBar extends Accordion {
+class OdysseyBlueprintBar extends Accordion implements DestroyableTemplate {
     private About about;
     private TitledPane[] categoryTitledPanes;
     private TitledPane aboutTitledPane;
-    private final Application application;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
-    public OdysseyBlueprintBar(final Application application) {
-        this.application = application;
+
+    public OdysseyBlueprintBar() {
         initComponents();
 
     }
@@ -52,7 +51,7 @@ class OdysseyBlueprintBar extends Accordion {
     }
 
     private void initAboutTitledPane() {
-        this.about = new About(this.application);
+        this.about = new About();
         this.aboutTitledPane = TitledPaneBuilder.builder().withContent(this.about).withText(LocaleService.getStringBinding("menu.about")).build();
     }
 

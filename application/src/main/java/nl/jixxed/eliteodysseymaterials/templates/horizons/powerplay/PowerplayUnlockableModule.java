@@ -6,18 +6,14 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.enums.Power;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+public class PowerplayUnlockableModule extends HBox implements DestroyableTemplate {
 
-public class PowerplayUnlockableModule extends HBox implements Template {
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
     private Integer unlockRank;
     private ShipModule unlockable;
     private Power power;

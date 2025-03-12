@@ -1,6 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings;
 
-import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Label;
@@ -14,12 +13,8 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 import nl.jixxed.eliteodysseymaterials.templates.settings.sections.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 public class SettingsTab extends OdysseyTab {
@@ -29,15 +24,12 @@ public class SettingsTab extends OdysseyTab {
     public static final String SETTINGS_SPACING_10_CLASS = "settings-spacing-10";
     public static final String SETTINGS_JOURNAL_LINE_STYLE_CLASS = "settings-journal-line";
     public static final String SETTINGS_BUTTON_STYLE_CLASS = "settings-button";
-    private final Application application;
-
 
     public static final BooleanProperty REGISTERED = new SimpleBooleanProperty(RegistryService.isRegistered());
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
 
-    public SettingsTab(final Application application) {
-        this.application = application;
+
+    public SettingsTab() {
         initComponents();
         initEventHandling();
     }
@@ -58,18 +50,18 @@ public class SettingsTab extends OdysseyTab {
                 .withNodes(settingsLabel)
                 .buildVBox();
         settings.getChildren().addAll(
-                new General(application),
+                new General(),
                 new OdysseyMaterials(),
                 new HorizonsMaterials(),
                 new OdysseyWishlist(),
                 new HorizonsWishlist(),
                 new HorizonsShips(),
-                new Notifications(application),
+                new Notifications(),
                 new FrontierAPI()
         );
         //AR
         if (OsCheck.isWindows()) {
-            settings.getChildren().add(new AugmentedReality(application));
+            settings.getChildren().add(new AugmentedReality());
         }
         //Tracking
         settings.getChildren().add(new Tracking());

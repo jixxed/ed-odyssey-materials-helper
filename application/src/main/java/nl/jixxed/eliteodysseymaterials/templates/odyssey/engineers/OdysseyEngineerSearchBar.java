@@ -14,12 +14,9 @@ import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.OdysseyEngineerSearchEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -29,7 +26,7 @@ class OdysseyEngineerSearchBar extends HBox {
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
     private TextField textField;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     public OdysseyEngineerSearchBar() {
         initComponents();
         initEventHandling();

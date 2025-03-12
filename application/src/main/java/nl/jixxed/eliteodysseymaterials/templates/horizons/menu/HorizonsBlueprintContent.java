@@ -3,12 +3,15 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.menu;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.*;
@@ -16,11 +19,8 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.EngineerBlueprintLabel;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.MissionIngredient;
@@ -30,15 +30,20 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
+class HorizonsBlueprintContent extends DestroyableVBox implements DestroyableTemplate {
     private static final String RECIPE_TITLE_LABEL_STYLE_CLASS = "recipe-title-label";
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private Label countLabel;
     private final List<Ingredient> ingredients = new ArrayList<>();
     private final HorizonsBlueprint blueprint;
     private HBox recipeHeader;
-    private MenuButton addToWishlist;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    private DestroyableMenuButton addToWishlist;
+
+    @Getter
+    private final List<Destroyable> destroyables = new ArrayList<>();
+
+
+    
 
     HorizonsBlueprintContent(final HorizonsBlueprint blueprint) {
         this.blueprint = blueprint;
@@ -176,7 +181,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
 
     @SuppressWarnings("java:S1192")
     private void initRecipe() {
-        this.addToWishlist = new MenuButton();
+        this.addToWishlist = MenuButtonBuilder.builder().build();
         this.addToWishlist.getStyleClass().add("recipe-wishlist-button");
         this.addToWishlist.textProperty().bind(LocaleService.getStringBinding("blueprint.add.to.wishlist"));
         this.addToWishlist.getItems().addAll(new ArrayList<>());
@@ -195,12 +200,12 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 event.consume();
             }
         });
-        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+        this.addToWishlist.registerEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             if (this.addToWishlist.getItems().size() == 1) {
                 event.consume();
             }
         });
-        this.addToWishlist.addEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
+        this.addToWishlist.registerEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
             if (this.addToWishlist.getItems().size() == 1) {
                 event.consume();
             }
@@ -346,7 +351,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, wishlistSelectedEvent -> {
             if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final HorizonsWishlists wishlists = loadCommanderWishlists(commander);
@@ -354,13 +359,13 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 });
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 final HorizonsWishlists wishlists = loadCommanderWishlists(commanderSelectedEvent.getCommander());
                 loadInitialCount(wishlists);
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        register(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             if (!(this.blueprint instanceof HorizonsEngineerBlueprint) || !this.ingredients.stream().allMatch(ingredient -> HorizonsStorageType.OTHER.equals(ingredient.getType()))) {//material based recipes
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final HorizonsWishlists wishlists = loadCommanderWishlists(commander);
@@ -368,7 +373,7 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 });
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, wishlistEvent -> {
+        register(EventService.addListener(true, this, HorizonsWishlistChangedEvent.class, wishlistEvent -> {
             if (this.countLabel != null) {
                 final long count = APPLICATION_STATE.getPreferredCommander().map(commander -> WishlistService.getHorizonsWishlists(commander).getSelectedWishlist().getItems().stream().filter(wishlistRecipe -> {
                             if (wishlistRecipe instanceof HorizonsModuleWishlistBlueprint horizonsModuleWishlistBlueprint) {
@@ -397,13 +402,6 @@ class HorizonsBlueprintContent extends VBox implements DestroyableTemplate {
                 })
                 .sorted(Comparator.comparing(HorizonsMaterialIngredient::getName))
                 .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    private final List<Destroyable> destroyables = new ArrayList<>();
-
-    @Override
-    public List<Destroyable> getDestroyablesList() {
-        return this.destroyables;
     }
 
     @Override

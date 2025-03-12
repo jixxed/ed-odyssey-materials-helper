@@ -8,12 +8,10 @@ import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Engineer;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsEngineerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class HorizonsEngineersTab extends HorizonsTab {
     private ScrollPane scrollPane;
     private FlowPane flowPane;
     private HorizonsEngineerCard[] horizonsEngineerCards;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     public HorizonsEngineersTab() {
         initComponents();

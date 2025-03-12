@@ -19,8 +19,8 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements Template {
+class ShortestPathItem<T extends BlueprintName<T>> extends VBox implements DestroyableTemplate {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
     private static final String SHORTEST_PATH_ITEM_LABEL_STYLE_CLASS = "shortest-path-item-label";
     private final PathItem<T> pathItem;

@@ -4,9 +4,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-public class DetailsLayer extends AnchorPane implements Template {
+public class DetailsLayer extends AnchorPane implements DestroyableTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @Getter
     private ModuleDetails moduleDetails;

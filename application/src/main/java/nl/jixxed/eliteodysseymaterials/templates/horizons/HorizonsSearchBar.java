@@ -16,9 +16,6 @@ import nl.jixxed.eliteodysseymaterials.templates.horizons.materials.HorizonsMate
 import nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay.PowerplaySearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistSearchBar;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 class HorizonsSearchBar extends HBox {
 
@@ -29,7 +26,7 @@ class HorizonsSearchBar extends HBox {
     private HorizonsWishlistSearchBar horizonsWishlistSearchBar;
     private HorizonsEngineerSearchBar horizonsEngineerSearchBar;
     private PowerplaySearchBar powerplaySearchBar;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     HorizonsSearchBar() {
         initComponents();

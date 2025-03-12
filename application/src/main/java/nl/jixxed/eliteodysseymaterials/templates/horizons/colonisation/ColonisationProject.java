@@ -10,12 +10,12 @@ import nl.jixxed.eliteodysseymaterials.domain.ColonisationItem;
 import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
 import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class ColonisationProject extends HBox implements Template {
+public class ColonisationProject extends HBox implements DestroyableTemplate {
 
     private ColonisationItem colonisationItem;
     private Consumer<ColonisationItem> callbackSelect;

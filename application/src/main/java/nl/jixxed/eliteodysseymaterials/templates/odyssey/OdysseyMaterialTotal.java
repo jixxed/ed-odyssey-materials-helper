@@ -16,13 +16,14 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.Map;
 
 class OdysseyMaterialTotal extends VBox {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
@@ -38,7 +39,7 @@ class OdysseyMaterialTotal extends VBox {
     private Label totalValueLabel;
     private Label subTotalValueLabel;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     OdysseyMaterialTotal(final OdysseyStorageType storageType, final MaterialTotalType... totalTypes) {
         this.storageType = storageType;
         this.totalTypes = totalTypes;

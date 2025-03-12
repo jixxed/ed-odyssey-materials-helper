@@ -8,13 +8,11 @@ import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.enums.Power;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +21,7 @@ public class PowerplayTab extends HorizonsTab {
     private ScrollPane scrollPane;
     private FlowPane flowPane;
     private PowerplayCard[] powerplayCards;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private String currentSearch = "";
 
     public PowerplayTab() {

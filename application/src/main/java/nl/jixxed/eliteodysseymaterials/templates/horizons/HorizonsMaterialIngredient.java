@@ -1,8 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons;
 
 import javafx.beans.binding.StringBinding;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -28,10 +26,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizab
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist.HorizonsWishlistIngredient;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class HorizonsMaterialIngredient extends Ingredient implements DestroyableComponent {
@@ -60,7 +55,7 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     private HBox secondLine;
     private Region region2;
 
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     public List<EventListener<?>> getEventListeners() {
         return this.eventListeners;
@@ -217,11 +212,5 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     public void destroyInternal() {
         this.eventListeners.forEach(EventService::removeListener);
     }
-
-    @Override
-    public Map<ObservableValue, List<ChangeListener>> getListenersMap() {
-        return Collections.emptyMap();
-    }
-
 
 }

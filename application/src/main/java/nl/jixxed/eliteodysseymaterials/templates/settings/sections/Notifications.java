@@ -1,9 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -17,32 +15,28 @@ import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
-public class Notifications extends VBox implements Template {
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+public class Notifications extends DestroyableVBox implements DestroyableTemplate {
+
     private CheckBox notificationSoundCheckBox;
     private Label notificationSoundLabel;
     private Label notificationVolumeLabel;
     private Slider notificationVolumeSlider;
     private Button playNotificationButton;
-    private Application application;
 
-    public Notifications(Application application) {
-        this.application = application;
+    public Notifications() {
         this.initComponents();
         this.initEventHandling();
     }
@@ -163,8 +157,8 @@ public class Notifications extends VBox implements Template {
     private HBox createNotificationSetting() {
         this.notificationSoundLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.notification")).build();
         this.notificationSoundCheckBox = CheckBoxBuilder.builder()
-                .withValue(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND, Boolean.TRUE))
-                .withChangeListener((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND, newValue))
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_SOUND, Boolean.TRUE))
+                .withSelectedProperty((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND, newValue))
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
@@ -182,14 +176,14 @@ public class Notifications extends VBox implements Template {
         final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MP3 files (*.mp3)", "*.mp3");
         notificationSoundSelect.getExtensionFilters().add(extFilter);
         final CheckBox notificationEnabledCheckBox = CheckBoxBuilder.builder()
-                .withValue(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled()))
-                .withChangeListener((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), newValue))
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), notificationType.isDefaultEnabled()))
+                .withSelectedProperty((observable, oldValue, newValue) -> PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_PREFIX + notificationType.name(), newValue))
                 .build();
         final Button customNotificationSoundSelectButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.settings.notification.sound.select"))
                 .withOnAction(e -> {
-                    final File selectedFile = notificationSoundSelect.showOpenDialog(((FXApplication) this.application).getPrimaryStage());
+                    final File selectedFile = notificationSoundSelect.showOpenDialog((FXApplication.getInstance()).getPrimaryStage());
                     if (selectedFile != null) {
                         selectedNotificationSoundLabel.setText(selectedFile.getAbsolutePath());
                         PreferencesService.setPreference(PreferenceConstants.NOTIFICATION_SOUND_CUSTOM_FILE_PREFIX + notificationType.name(), selectedFile.getAbsolutePath());

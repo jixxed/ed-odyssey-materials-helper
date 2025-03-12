@@ -13,21 +13,18 @@ import nl.jixxed.eliteodysseymaterials.domain.MarketItem;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
 import nl.jixxed.eliteodysseymaterials.service.*;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
-public class BillOfMaterialsEntry extends VBox implements Template {
+public class BillOfMaterialsEntry extends VBox implements DestroyableTemplate {
     private Commodity commodity;
     private Integer requiredAmount;
     private DestroyableLabel commodityLabel;
@@ -36,7 +33,7 @@ public class BillOfMaterialsEntry extends VBox implements Template {
     private DestroyableLabel fleetCarrierLabel;
     private DestroyableLabel shipLabel;
     private DestroyableLabel marketLabel;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private DestroyableResizableImageView fleetCarrierImage;
     private DestroyableResizableImageView shipImage;
     private DestroyableResizableImageView sumImage;

@@ -15,8 +15,6 @@ import nl.jixxed.eliteodysseymaterials.service.ships.ShipMapper;
 import nl.jixxed.eliteodysseymaterials.service.ships.ShipService;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent.Type.NONE;
@@ -24,7 +22,7 @@ import static nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent.Type
 public class HorizonsShipBuilderTab extends HorizonsTab {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String SHIP_CONTENT_STYLE_CLASS = "ships-content";
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     private Label noShip;
     private VBox content;
     private VBox contentChild;

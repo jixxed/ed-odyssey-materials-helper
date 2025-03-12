@@ -11,13 +11,13 @@ import nl.jixxed.eliteodysseymaterials.domain.ships.SlotType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.Optional;
 
 @Slf4j
-public class EngineStats extends Stats implements Template {
+public class EngineStats extends Stats implements DestroyableTemplate {
     private RangeIndicator speedIndicator;
     private RangeIndicator boostIndicator;
     private RechargeRangeIndicator rechargeIndicator;

@@ -18,8 +18,8 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.helper.BlueprintHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
 import nl.jixxed.eliteodysseymaterials.templates.generic.About;
@@ -38,7 +38,7 @@ class HorizonsBlueprintBar extends Accordion {
     private TitledPane[] categoryTitledPanes;
     private TitledPane aboutTitledPane;
     private final Application application;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     public HorizonsBlueprintBar(final Application application) {
         this.application = application;

@@ -5,18 +5,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class LoadingScreen extends AnchorPane implements Template {
+public class LoadingScreen extends AnchorPane implements DestroyableTemplate {
     private static ProgressBar progressBar;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    @Getter
+
 
     public LoadingScreen() {
         initComponents();

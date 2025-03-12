@@ -26,10 +26,11 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintGrade;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintType;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import org.controlsfx.control.SearchableComboBox;
 
 import java.util.*;
@@ -39,8 +40,8 @@ import java.util.stream.Collectors;
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
-public class HorizonsShips extends VBox implements Template {
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+public class HorizonsShips extends DestroyableVBox implements DestroyableTemplate {
+
     private ListView<ShipLegacyModule> modulesList;
     private GridPane attributes;
     private Button saveButton;

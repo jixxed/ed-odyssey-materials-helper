@@ -17,17 +17,15 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.TechnologyBrokerService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
-public class HorizonsNearestBroker extends VBox implements Template {
+public class HorizonsNearestBroker extends VBox implements DestroyableTemplate {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 
     static {
@@ -40,7 +38,7 @@ public class HorizonsNearestBroker extends VBox implements Template {
     private Label distance;
     private String system = "";
     private DestroyableResizableImageView copyIcon;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     HorizonsNearestBroker(final List<HorizonsBrokerType> horizonsBrokerTypes) {
         this.horizonsBrokerTypes = horizonsBrokerTypes;

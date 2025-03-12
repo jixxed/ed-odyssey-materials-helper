@@ -3,13 +3,9 @@ package nl.jixxed.eliteodysseymaterials.templates;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import jfxtras.styles.jmetro.JMetroStyleClass;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ComboBoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.AppConstants;
@@ -22,6 +18,8 @@ import nl.jixxed.eliteodysseymaterials.enums.GameVersion;
 import nl.jixxed.eliteodysseymaterials.helper.POIHelper;
 import nl.jixxed.eliteodysseymaterials.service.*;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;
 import java.time.Instant;
@@ -37,24 +35,25 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-class BottomBar extends HBox {
+class BottomBar extends DestroyableHBox implements DestroyableTemplate {
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+    @Getter
+    private final List<Destroyable> destroyables = new ArrayList<>();
+
 
     private String system = "";
     private String body = "";
     private String station = "";
 
-    private Label gameModeLabel;
-    private Label apiLabel;
-    private Label watchedFileLabel;
-    private Label eddnQueueLabel;
-    private Label login;
-    private Label commanderLabel;
-    private Label locationLabel;
-    private Region region;
-    private ComboBox<Commander> commanderSelect;
+    private DestroyableLabel gameModeLabel;
+    private DestroyableLabel apiLabel;
+    private DestroyableLabel watchedFileLabel;
+    private DestroyableLabel eddnQueueLabel;
+    private DestroyableLabel login;
+    private DestroyableLabel commanderLabel;
+    private DestroyableLabel locationLabel;
+    private DestroyableComboBox<Commander> commanderSelect;
     private Double latitude;
     private Double longitude;
     private Separator apiLabelSeparator;
@@ -67,11 +66,9 @@ class BottomBar extends HBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("bottombar");
         this.getStyleClass().add(JMetroStyleClass.BACKGROUND);
-        this.region = new Region();
-        HBox.setHgrow(this.region, Priority.ALWAYS);
         this.locationLabel = LabelBuilder.builder().build();
         this.apiLabel = LabelBuilder.builder().build();
         updateApiLabel();
@@ -107,7 +104,7 @@ class BottomBar extends HBox {
         this.apiLabelSeparator = new Separator(Orientation.VERTICAL);
         this.apiLabelSeparator.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
         this.apiLabel.visibleProperty().bind(CAPIService.getInstance().getActive().or(ApplicationState.getInstance().getFcMaterials()));
-        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, this.region, this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
+        this.getChildren().addAll(this.watchedFileLabel, new Separator(Orientation.VERTICAL), this.gameModeLabel, this.apiLabelSeparator, this.apiLabel, this.login, this.eddnQueueLabel, new GrowingRegion(), this.locationLabel, new Separator(Orientation.VERTICAL), this.commanderLabel, this.commanderSelect);
 
         executorService.scheduleAtFixedRate(() -> {
             if (eddnTransmitting.get()) {
@@ -127,7 +124,7 @@ class BottomBar extends HBox {
         });
     }
 
-    private void initEventHandling() {
+    public void initEventHandling() {
         this.eventListeners.add(EventService.addListener(true, this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged));
         this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, this::updateLocationLabel));
         this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel));

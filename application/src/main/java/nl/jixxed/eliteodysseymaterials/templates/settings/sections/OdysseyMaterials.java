@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
@@ -17,16 +16,16 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
-public class OdysseyMaterials extends VBox implements Template {
+public class OdysseyMaterials extends DestroyableVBox implements DestroyableTemplate {
 
     private Label readingDirectionLabel;
     private ComboBox<MaterialOrientation> readingDirectionSelect;
@@ -39,7 +38,7 @@ public class OdysseyMaterials extends VBox implements Template {
     private Label overrideListLabel;
     private ListView<OdysseyMaterial> overrideListView;
     private Button overrideRemoveButton;
-    private final List<EventListener<?>> eventListeners = new ArrayList<>();
+
     public OdysseyMaterials() {
         this.initComponents();
         this.initEventHandling();
@@ -208,8 +207,8 @@ public class OdysseyMaterials extends VBox implements Template {
         this.soloModeLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.solo.mode")).build();
         this.soloModeExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.solo.mode.explain")).build();
         this.soloModeCheckBox = CheckBoxBuilder.builder()
-                .withValue(PreferencesService.getPreference(PreferenceConstants.SOLO_MODE, Boolean.FALSE))
-                .withChangeListener((observable, oldValue, newValue) -> {
+                .withSelected(PreferencesService.getPreference(PreferenceConstants.SOLO_MODE, Boolean.FALSE))
+                .withSelectedProperty((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.SOLO_MODE, newValue);
                     EventService.publish(new SoloModeEvent(newValue));
                 })

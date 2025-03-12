@@ -15,17 +15,17 @@ import nl.jixxed.eliteodysseymaterials.builder.HyperlinkBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.templates.Template;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 @Slf4j
-public class VersionDialog extends VBox implements Template {
+public class VersionDialog extends VBox implements DestroyableTemplate {
     private final Stage stage;
     private final Hyperlink link;
 
     public VersionDialog(final Stage stage, final FXApplication fxApplication) {
         super();
         this.stage = stage;
-        this.link = HyperlinkBuilder.builder().withStyleClass("version-dialog-download-link").withText(LocaleService.getStringBinding("version.dialog.download")).withAction(actionEvent -> {
+        this.link = HyperlinkBuilder.builder().withStyleClass("version-dialog-download-link").withText(LocaleService.getStringBinding("version.dialog.download")).withOnAction(actionEvent -> {
             fxApplication.getHostServices().showDocument("https://github.com/jixxed/ed-odyssey-materials-helper/releases/latest");
             System.exit(0);
         }).build();
