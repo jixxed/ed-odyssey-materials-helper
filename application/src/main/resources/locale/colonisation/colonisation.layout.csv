@@ -1,8 +1,8 @@
 messageKey,,en,de,es,fr,pt,ru
-colonisation.layout.no_truss,No truss,,,,,,Без поддержки
-colonisation.layout.dual_truss,Dual truss,,,,,,Двойная ферма
-colonisation.layout.quad_truss,Quad truss,,,,,,Квадроферма
-colonisation.layout.asteroid,Asteroid,,,,,,База на астероиде
+colonisation.layout.no_truss,No truss,,,Sin Celosía,,,Без поддержки
+colonisation.layout.dual_truss,Dual truss,,,Celosía Doble,,,Двойная ферма
+colonisation.layout.quad_truss,Quad truss,,,Celosía Cuádruple,,,Квадроферма
+colonisation.layout.asteroid,Asteroid,,,Asteroide,,,База на астероиде
 colonisation.layout.ocellus,Ocellus,,,,,,Оцеллус
 colonisation.layout.apollo,Apollo,,,,,,
 colonisation.layout.artemis,Artemis,,,,,,

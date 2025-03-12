@@ -45,18 +45,18 @@ material.good.vehicleschematic,Vehicle Schematic,Vehicle Schematic,Fahrzeugplan,
 material.good.weaponschematic,Weapon Schematic,Weapon Schematic,Waffenplan,Esquema de arma,Plan d’arme,Esquema de Arma,Чертеж оружия
 material.good.biomechanicalcomponent,Spire Refinery Compound,,,Compuesto de Refinería de Aguja,,,Очищающий компонент шпиля
 material.good.sabotagedcomponent,Contaminated Spire Refinery Compound,,,Compuesto de Refinería de Aguja Contaminado,,,Зараженный очищающий компонент шпиля
-material.good.powerindustrial,Industrial Component,,,,,,Промышленный компонент
-material.good.powermiscindust,Industrial Machinery,,,,,,Промышленные машины
-material.good.powerinventory,Inventory Record,,,,,,Опись имущества
-material.good.powerplaymilitary,Military Schematic,,,,,,Военные схемы
-material.good.powerelectronics,Electronics Package,,,,,,Набор электроники
-material.good.powercomputer,Computer Parts,,,,,,Компьютерные детали
-material.good.powerexperiment,Experiment Prototype,,,,,,Экспериментальный прототип
-material.good.poweragriculture,Agricultural Sample,,,,,,Образец сельхозпроизводства
-material.good.powerextraction,Extraction Sample,,,,,,Образец добычи
-material.good.powerequipment,Personal protective Equipment,,,,,,Средства индивидуальной защиты
-material.good.powermedical,Medical Sample,,,,,,Медицинский образец
-material.good.powermisccomputer,Data Storage Device,,,,,,Запоминающее устройство
-material.good.powersecurity,Security Logs,,,,,,Журнал службы безопасности
-material.good.powerpower,Energy Regulator,,,,,,Энергорегулятор
-material.good.powerresearch,Research Notes,,Forschungsnotizen,,,,Исследовательские заметки
+material.good.powerindustrial,Industrial Component,,,Componente industrial,,,Промышленный компонент
+material.good.powermiscindust,Industrial Machinery,,,Maquinaria industrial,,,Промышленные машины
+material.good.powerinventory,Inventory Record,,,Registro de inventario,,,Опись имущества
+material.good.powerplaymilitary,Military Schematic,,,Plano militar,,,Военные схемы
+material.good.powerelectronics,Electronics Package,,,Paquete de componentes electrónicos,,,Набор электроники
+material.good.powercomputer,Computer Parts,,,Piezas informáticas,,,Компьютерные детали
+material.good.powerexperiment,Experiment Prototype,,,Prototipo experimental,,,Экспериментальный прототип
+material.good.poweragriculture,Agricultural Sample,,,Muestra de proceso agrícola,,,Образец сельхозпроизводства
+material.good.powerextraction,Extraction Sample,,,Extracción fallida,,,Образец добычи
+material.good.powerequipment,Personal protective Equipment,,,Equipamiento de protección personal,,,Средства индивидуальной защиты
+material.good.powermedical,Medical Sample,,,Naves Médicas,,,Медицинский образец
+material.good.powermisccomputer,Data Storage Device,,,Dispositivo de almacenamiento de datos,,,Запоминающее устройство
+material.good.powersecurity,Security Logs,,,Registros de seguridad,,,Журнал службы безопасности
+material.good.powerpower,Energy Regulator,,,Regulador de energía,,,Энергорегулятор
+material.good.powerresearch,Research Notes,,Forschungsnotizen,Notas de investigación,,,Исследовательские заметки

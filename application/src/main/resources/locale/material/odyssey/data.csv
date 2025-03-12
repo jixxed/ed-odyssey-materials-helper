@@ -114,11 +114,11 @@ material.data.visitorregister,Visitor Register,Visitor Register,Besucherliste,Re
 material.data.weaponinventory,Weapon Inventory,Weapon Inventory,Waffeninventarliste,Inventario de armas,Inventaire d’armement,Estoque de armas,Опись оружия и боеприпасов
 material.data.weapontestdata,Weapon Test Data,Weapon Test Data,Waffentestdaten,Datos de pruebas armamentísticas,Données de test d’armes,Dados de testes de arma,Сведения об испытаниях вооружения
 material.data.xenodefenceprotocols,Xeno-Defence Protocols,Xeno-Defence Protocols,Xeno-Abwehr-Protokolle,Protocolos de xenodefensa,Protocoles anti-xénomorphes,Protocolos de defesa antixeno,Алгоритм противодействия инопланетной угрозе
-material.data.powerpreparationspyware,Power Injection Malware,,,,,,ПО-инъектор
-material.data.powerspyware,Power Tracker Malware,,,,,,Отслеживающее вредоносное ПО
-material.data.powerresearchdata,Power Research Data,,,,,,Данные об исследованиях державы
-material.data.poweremployeedata,Power Association Data,,,,,,Данные о связях державы
-material.data.powerfinancialrecords,Power Industrial Data,,,,,,Данные о промышленности державы
-material.data.powerpropagandadata,Power Political Data,,Politische Daten der Macht,,,,Данные о политической обстановке
-material.data.powerclassifieddata,Power Classified Data,,,,,,Секретные данные державы
-material.data.powermegashipdata,Power Megaship Data,,,,,,Данные о гиганстком корабле державы
+material.data.powerpreparationspyware,Power Injection Malware,,,Software malicioso de inyección de potencia,,,ПО-инъектор
+material.data.powerspyware,Power Tracker Malware,,,Software malicioso de seguimiento de potencia,,,Отслеживающее вредоносное ПО
+material.data.powerresearchdata,Power Research Data,,,Datos de investigación de la potencia,,,Данные об исследованиях державы
+material.data.poweremployeedata,Power Association Data,,,Información de asociacion de potencia,,,Данные о связях державы
+material.data.powerfinancialrecords,Power Industrial Data,,,Datos industriales de la potencia,,,Данные о промышленности державы
+material.data.powerpropagandadata,Power Political Data,,Politische Daten der Macht,Información politica de la potencia,,,Данные о политической обстановке
+material.data.powerclassifieddata,Power Classified Data,,,Información clasificada de la potencia,,,Секретные данные державы
+material.data.powermegashipdata,Power Megaship Data,,,Datos de meganave de potencia,,,Данные о гиганстком корабле державы

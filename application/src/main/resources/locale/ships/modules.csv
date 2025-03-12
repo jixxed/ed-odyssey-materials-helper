@@ -361,46 +361,46 @@ ships.module.name.int_lifesupport_size8_class2,Life Support,,,Soporte Vital,,Sup
 ships.module.name.int_lifesupport_size8_class3,Life Support,,,Soporte Vital,,Suporte de Vida,Система жизнеобеспечения
 ships.module.name.int_lifesupport_size8_class4,Life Support,,,Soporte Vital,,Suporte de Vida,Система жизнеобеспечения
 ships.module.name.int_lifesupport_size8_class5,Life Support,,,Soporte Vital,,Suporte de Vida,Система жизнеобеспечения
-ships.module.name.int_powerdistributor_size1_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size1_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size1_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size1_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size1_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size2_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size2_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size2_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size2_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size2_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size3_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size3_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size3_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size3_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size3_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size4_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size4_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size4_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size4_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size4_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size5_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size5_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size5_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size5_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size5_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size6_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size6_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size6_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size6_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size6_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size7_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size7_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size7_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size7_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size7_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size8_class1,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size8_class2,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size8_class3,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size8_class4,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
-ships.module.name.int_powerdistributor_size8_class5,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size1_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size1_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size1_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size1_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size1_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size2_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size2_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size2_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size2_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size2_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size3_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size3_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size3_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size3_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size3_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size4_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size4_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size4_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size4_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size4_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size5_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size5_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size5_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size5_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size5_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size6_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size6_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size6_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size6_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size6_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size7_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size7_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size7_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size7_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size7_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size8_class1,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size8_class2,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size8_class3,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size8_class4,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size8_class5,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
 ships.module.name.int_sensors_size1_class1,Sensors,,,Sensores,,Sensores,Сенсоры
 ships.module.name.int_sensors_size1_class2,Sensors,,,Sensores,,Sensores,Сенсоры
 ships.module.name.int_sensors_size1_class3,Sensors,,,Sensores,,Sensores,Сенсоры
@@ -536,51 +536,51 @@ ships.module.name.int_fueltank_size5_class3,Fuel Tank,,,Tanque de Combustible,,T
 ships.module.name.int_fueltank_size6_class3,Fuel Tank,,,Tanque de Combustible,,Tanque de Combustível,Топливный бак
 ships.module.name.int_fueltank_size7_class3,Fuel Tank,,,Tanque de Combustible,,Tanque de Combustível,Топливный бак
 ships.module.name.int_fueltank_size8_class3,Fuel Tank,,,Tanque de Combustible,,Tanque de Combustível,Топливный бак
-ships.module.name.int_dronecontrol_resourcesiphon,Limpet Control,,,Controladora de Drones,,Controlador de Drones,Контроллер дронов
-ships.module.name.int_dronecontrol_resourcesiphon_size1_class1,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size1_class2,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size1_class3,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size1_class4,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size1_class5,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size3_class1,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size3_class2,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size3_class3,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size3_class4,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size3_class5,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size5_class1,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size5_class2,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size5_class3,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size5_class4,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size5_class5,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size7_class1,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size7_class2,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size7_class3,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size7_class4,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
-ships.module.name.int_dronecontrol_resourcesiphon_size7_class5,Hatch Breaker Limpet Controller,,,Controladora de Drones de Extracción,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon,Limpet Control,,,Lanzador de Drones,,Controlador de Drones,Контроллер дронов
+ships.module.name.int_dronecontrol_resourcesiphon_size1_class1,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size1_class2,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size1_class3,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size1_class4,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size1_class5,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size3_class1,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size3_class2,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size3_class3,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size3_class4,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size3_class5,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size5_class1,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size5_class2,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size5_class3,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size5_class4,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size5_class5,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size7_class1,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size7_class2,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size7_class3,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size7_class4,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
+ships.module.name.int_dronecontrol_resourcesiphon_size7_class5,Hatch Breaker Limpet Controller,,,Lanzador Dron Extractor,,Controlador de Drone Quebra-Escotilha,Контроллер дрона-взломщика трюма
 ships.module.name.hpt_cargoscanner_size0_class1,Cargo Scanner,,,Escáner de Manifiesto,,Scanner de Carga,Сканер груза
 ships.module.name.hpt_cargoscanner_size0_class2,Cargo Scanner,,,Escáner de Manifiesto,,Scanner de Carga,Сканер груза
 ships.module.name.hpt_cargoscanner_size0_class3,Cargo Scanner,,,Escáner de Manifiesto,,Scanner de Carga,Сканер груза
 ships.module.name.hpt_cargoscanner_size0_class4,Cargo Scanner,,,Escáner de Manifiesto,,Scanner de Carga,Сканер груза
 ships.module.name.hpt_cargoscanner_size0_class5,Cargo Scanner,,,Escáner de Manifiesto,,Scanner de Carga,Сканер груза
-ships.module.name.hpt_cloudscanner_size0_class1,Frame Shift Wake Scanner,,,Escáner de Estelas,,Scanner de Rastro de Distorção,Следовой сканер
-ships.module.name.hpt_cloudscanner_size0_class2,Frame Shift Wake Scanner,,,Escáner de Estelas,,Scanner de Rastro de Distorção,Следовой сканер
-ships.module.name.hpt_cloudscanner_size0_class3,Frame Shift Wake Scanner,,,Escáner de Estelas,,Scanner de Rastro de Distorção,Следовой сканер
-ships.module.name.hpt_cloudscanner_size0_class4,Frame Shift Wake Scanner,,,Escáner de Estelas,,Scanner de Rastro de Distorção,Следовой сканер
-ships.module.name.hpt_cloudscanner_size0_class5,Frame Shift Wake Scanner,,,Escáner de Estelas,,Scanner de Rastro de Distorção,Следовой сканер
+ships.module.name.hpt_cloudscanner_size0_class1,Frame Shift Wake Scanner,,,Escáner de Estelas de Distorsión,,Scanner de Rastro de Distorção,Следовой сканер
+ships.module.name.hpt_cloudscanner_size0_class2,Frame Shift Wake Scanner,,,Escáner de Estelas de Distorsión,,Scanner de Rastro de Distorção,Следовой сканер
+ships.module.name.hpt_cloudscanner_size0_class3,Frame Shift Wake Scanner,,,Escáner de Estelas de Distorsión,,Scanner de Rastro de Distorção,Следовой сканер
+ships.module.name.hpt_cloudscanner_size0_class4,Frame Shift Wake Scanner,,,Escáner de Estelas de Distorsión,,Scanner de Rastro de Distorção,Следовой сканер
+ships.module.name.hpt_cloudscanner_size0_class5,Frame Shift Wake Scanner,,,Escáner de Estelas de Distorsión,,Scanner de Rastro de Distorção,Следовой сканер
 ships.module.name.hpt_crimescanner_size0_class1,Kill Warrant Scanner,,,Escáner de Registro Criminal,,Scanner de Registro Criminal,Сканер преступников
 ships.module.name.hpt_crimescanner_size0_class2,Kill Warrant Scanner,,,Escáner de Registro Criminal,,Scanner de Registro Criminal,Сканер преступников
 ships.module.name.hpt_crimescanner_size0_class3,Kill Warrant Scanner,,,Escáner de Registro Criminal,,Scanner de Registro Criminal,Сканер преступников
 ships.module.name.hpt_crimescanner_size0_class4,Kill Warrant Scanner,,,Escáner de Registro Criminal,,Scanner de Registro Criminal,Сканер преступников
 ships.module.name.hpt_crimescanner_size0_class5,Kill Warrant Scanner,,,Escáner de Registro Criminal,,Scanner de Registro Criminal,Сканер преступников
-ships.module.name.int_stellarbodydiscoveryscanner_standard,Basic Discovery Scanner,,,,,Scanner de Descoberta Básico,Базовый сканер обнаружения
-ships.module.name.int_stellarbodydiscoveryscanner_intermediate,Intermediate Discovery Scanner,,,,,Scanner de Descoberta Intermediário,Улучшенный сканер обнаружения
-ships.module.name.int_stellarbodydiscoveryscanner_advanced,Advanced Discovery Scanner,,,,,Scanner de Descoberta Avançado,Полнофункциональный сканер обнаружения
-ships.module.name.int_detailedsurfacescanner_tiny,Detailed Surface Scanner,,,Escáner de Superficie Detallado,,Scanner de Superfície Detalhada,Подробный сканер поверхности
+ships.module.name.int_stellarbodydiscoveryscanner_standard,Basic Discovery Scanner,,,Escáner de Exploración Básico,,Scanner de Descoberta Básico,Базовый сканер обнаружения
+ships.module.name.int_stellarbodydiscoveryscanner_intermediate,Intermediate Discovery Scanner,,,Escáner de Exploración Intermedio,,Scanner de Descoberta Intermediário,Улучшенный сканер обнаружения
+ships.module.name.int_stellarbodydiscoveryscanner_advanced,Advanced Discovery Scanner,,,Escáner de Exploración Avanzado,,Scanner de Descoberta Avançado,Полнофункциональный сканер обнаружения
+ships.module.name.int_detailedsurfacescanner_tiny,Detailed Surface Scanner,,,Escáner de Análisis de Superficie,,Scanner de Superfície Detalhada,Подробный сканер поверхности
 ships.module.name.int_powerplant_size2_class1_free,Power Plant,,,Nucleo de Energía,,Gerador de Energia,Силовая установка
 ships.module.name.int_engine_size2_class1_free,Thrusters,,,Impulsores,,Propulsores,Маневровые двигатели
 ships.module.name.int_hyperdrive_size2_class1_free,Frame Shift Drive,,,Motor de Distorsión,,Motor de Distorção de Fase,Двигатель FSD
 ships.module.name.int_lifesupport_size1_class1_free,Life Support,,,Soporte Vital,,Suporte de Vida,Система жизнеобеспечения
-ships.module.name.int_powerdistributor_size1_class1_free,Power Distributor,,,Distribuidor,,Distribuidor de Energia,Распределитель питания
+ships.module.name.int_powerdistributor_size1_class1_free,Power Distributor,,,Distribuidor de Energía,,Distribuidor de Energia,Распределитель питания
 ships.module.name.int_sensors_size1_class1_free,Sensors,,,Sensores,,Sensores,Сенсоры
 ships.module.name.int_shieldgenerator_size2_class1_free,Shield Generator,,,Generador de Escudos,,Gerador de Escudo,Щитогенератор
 ships.module.name.int_stellarbodydiscoveryscanner_standard_free,Basic Discovery Scanner,,,,,Scanner de Descoberta Básico,Базовый сканер обнаружения
@@ -646,26 +646,26 @@ ships.module.name.int_refinery_size1_class5,Refinery,,,Refinería,,Refinaria,О�
 ships.module.name.int_refinery_size2_class5,Refinery,,,Refinería,,Refinaria,Очиститель
 ships.module.name.int_refinery_size3_class5,Refinery,,,Refinería,,Refinaria,Очиститель
 ships.module.name.int_refinery_size4_class5,Refinery,,,Refinería,,Refinaria,Очиститель
-ships.module.name.int_fsdinterdictor_size1_class1,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size2_class1,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size3_class1,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size4_class1,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size1_class2,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size2_class2,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size3_class2,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size4_class2,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size1_class3,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size2_class3,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size3_class3,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size4_class3,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size1_class4,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size2_class4,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size3_class4,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size4_class4,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size1_class5,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size2_class5,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size3_class5,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
-ships.module.name.int_fsdinterdictor_size4_class5,Frame Shift Drive Interdictor,,,Interdictor,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size1_class1,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size2_class1,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size3_class1,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size4_class1,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size1_class2,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size2_class2,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size3_class2,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size4_class2,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size1_class3,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size2_class3,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size3_class3,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size4_class3,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size1_class4,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size2_class4,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size3_class4,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size4_class4,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size1_class5,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size2_class5,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size3_class5,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
+ships.module.name.int_fsdinterdictor_size4_class5,Frame Shift Drive Interdictor,,,Interdictor de MDD,,Interditor do Motor de Distorção de Fase,Перехватчик FSD
 ships.module.name.hpt_dumbfiremissilerack_fixed_small,Missile Rack,,,Lanzamisiles,,Estante de Mísseis,Блок ракет
 ships.module.name.hpt_dumbfiremissilerack_fixed_medium,Missile Rack,,,Lanzamisiles,,Estante de Mísseis,Блок ракет
 ships.module.name.int_fueltank_size1_class3_free,Fuel Tank,,,Tanque de Combustible,,Tanque de Combustível,Топливный бак
@@ -714,16 +714,16 @@ ships.module.name.hpt_shieldbooster_size0_class2,Shield Booster,,,Potenciador de
 ships.module.name.hpt_shieldbooster_size0_class3,Shield Booster,,,Potenciador de Escudos,,Potencializador de Escudo,Усилитель щита
 ships.module.name.hpt_shieldbooster_size0_class4,Shield Booster,,,Potenciador de Escudos,,Potencializador de Escudo,Усилитель щита
 ships.module.name.hpt_shieldbooster_size0_class5,Shield Booster,,,Potenciador de Escudos,,Potencializador de Escudo,Усилитель щита
-ships.module.name.int_hullreinforcement_size1_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size1_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size2_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size2_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size3_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size3_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size4_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size4_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size5_class1,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
-ships.module.name.int_hullreinforcement_size5_class2,Hull Reinforcement Package,,,refuerzo estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size1_class1,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size1_class2,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size2_class1,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size2_class2,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size3_class1,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size3_class2,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size4_class1,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size4_class2,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size5_class1,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
+ships.module.name.int_hullreinforcement_size5_class2,Hull Reinforcement Package,,,Paquete de Refuerzo Estructural,,Pacote de Reforço de Casco,Набор для усиления корпуса
 ships.module.name.hpt_cannon_gimbal_large,Cannon,,,Cañón,,Canhão,Орудие
 ships.module.name.diamondback_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,Liga Leve,Лёгкие сплавы
 ships.module.name.diamondback_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,Liga Reforçada,Укреплённые сплавы
@@ -735,66 +735,66 @@ ships.module.name.empire_courier_armour_grade2,Reinforced Alloy,,,Aleaciones Ref
 ships.module.name.empire_courier_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,Composto de Nível Militar,Композит военного класса
 ships.module.name.empire_courier_armour_mirrored,Mirrored Surface Composite,,,Compuesto de superficie Reflectante,,Composto de Superfície Reflexiva,Композит с зеркальной поверхностью
 ships.module.name.empire_courier_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
-ships.module.name.int_dronecontrol_collection_size1_class1,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size1_class2,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size1_class3,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size1_class4,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size1_class5,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size3_class1,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size3_class2,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size3_class3,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size3_class4,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size3_class5,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size5_class1,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size5_class2,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size5_class3,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size5_class4,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size5_class5,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size7_class1,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size7_class2,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size7_class3,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size7_class4,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_collection_size7_class5,Collector Limpet Controller,,,Controladora de Drones Recolectores,,Controlador de Drone Coletor,Контроллер дрона-сборщика
-ships.module.name.int_dronecontrol_fueltransfer_size1_class1,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size1_class2,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size1_class3,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size1_class4,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size1_class5,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size3_class1,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size3_class2,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size3_class3,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size3_class4,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size3_class5,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size5_class1,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size5_class2,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size5_class3,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size5_class4,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size5_class5,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size7_class1,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size7_class2,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size7_class3,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size7_class4,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_fueltransfer_size7_class5,Fuel Transfer Limpet Controller,,,Controladora de Drones de Repostaje,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
-ships.module.name.int_dronecontrol_prospector_size1_class1,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size1_class2,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size1_class3,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size1_class4,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size1_class5,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size3_class1,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size3_class2,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size3_class3,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size3_class4,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size3_class5,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size5_class1,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size5_class2,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size5_class3,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size5_class4,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size5_class5,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size7_class1,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size7_class2,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size7_class3,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size7_class4,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
-ships.module.name.int_dronecontrol_prospector_size7_class5,Prospector Limpet Controller,,,Controladora de Drones Prospectores,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_collection_size1_class1,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size1_class2,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size1_class3,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size1_class4,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size1_class5,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size3_class1,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size3_class2,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size3_class3,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size3_class4,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size3_class5,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size5_class1,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size5_class2,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size5_class3,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size5_class4,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size5_class5,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size7_class1,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size7_class2,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size7_class3,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size7_class4,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_collection_size7_class5,Collector Limpet Controller,,,Lanzador Dron Colector,,Controlador de Drone Coletor,Контроллер дрона-сборщика
+ships.module.name.int_dronecontrol_fueltransfer_size1_class1,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size1_class2,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size1_class3,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size1_class4,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size1_class5,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size3_class1,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size3_class2,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size3_class3,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size3_class4,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size3_class5,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size5_class1,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size5_class2,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size5_class3,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size5_class4,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size5_class5,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size7_class1,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size7_class2,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size7_class3,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size7_class4,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_fueltransfer_size7_class5,Fuel Transfer Limpet Controller,,,Lanzador Dron Combustible,,Controlador de Drone de Combustível,Контроллер дрона-заправщика
+ships.module.name.int_dronecontrol_prospector_size1_class1,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size1_class2,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size1_class3,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size1_class4,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size1_class5,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size3_class1,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size3_class2,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size3_class3,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size3_class4,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size3_class5,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size5_class1,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size5_class2,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size5_class3,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size5_class4,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size5_class5,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size7_class1,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size7_class2,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size7_class3,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size7_class4,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
+ships.module.name.int_dronecontrol_prospector_size7_class5,Prospector Limpet Controller,,,Lanzador Dron Prospector,,Controlador de Drone Prospector,Контроллер дрона-геологоразведчика
 ships.module.name.hpt_slugshot_gimbal_large,Fragment Cannon,,,Cañón de Fragmentación,,Canhão de Fragmentos,Орудие
 ships.module.name.hpt_slugshot_turret_large,Fragment Cannon,,,Cañón de Fragmentación,,Canhão de Fragmentos,Орудие
 ships.module.name.int_shieldgenerator_size1_class5_strong,Prismatic Shield Generator,,,Generador de Escudos Prismáticos,,Gerador de Escudo Prismático,Щитогенератор
@@ -814,15 +814,15 @@ ships.module.name.int_shieldgenerator_size6_class3_fast,Bi-Weave Shield Generato
 ships.module.name.int_shieldgenerator_size7_class3_fast,Bi-Weave Shield Generator,,,Generador de Escudos Entrelazados,,Gerador de Escudo Entrelaçado,Щитогенератор
 ships.module.name.int_shieldgenerator_size8_class3_fast,Bi-Weave Shield Generator,,,Generador de Escudos Entrelazados,,Gerador de Escudo Entrelaçado,Щитогенератор
 ships.module.name.hpt_plasmaaccelerator_fixed_large_advanced,Advanced Plasma Accelerator,,,Acelerador de Plasma Avanzado,,Acelerador de Plasma Avançado,Ускоритель плазмы
-ships.module.name.hpt_mininglaser_fixed_small_advanced,Mining Lance,,,Lanza de Minería,,,Копье шахтера
-ships.module.name.hpt_railgun_fixed_medium_burst,Imperial Hammer Rail Gun,,,Martillo Imperial,,Canhão Elétrico Martelo Imperial,Рельсотрон
-ships.module.name.hpt_pulselaser_fixed_medium_disruptor,Pulse Disruptor Laser,,,Láser Disruptor de Pulsos,,Laser de Pulso Disruptor,Диверсант
+ships.module.name.hpt_mininglaser_fixed_small_advanced,Mining Lance,,,Láser de Rayo Lanza Perforadora,,,Копье шахтера
+ships.module.name.hpt_railgun_fixed_medium_burst,Imperial Hammer Rail Gun,,,Cañón de Riel Martillo Imperial,,Canhão Elétrico Martelo Imperial,Рельсотрон
+ships.module.name.hpt_pulselaser_fixed_medium_disruptor,Pulse Disruptor Laser,,,Láser de Pulsos Disruptores,,Laser de Pulso Disruptor,Диверсант
 ships.module.name.hpt_slugshot_fixed_large_range,Pacifier Frag-Cannon,,,Cañón de Fragmentación Pacificador,,Canhão de Fragmentos Pacificador,Орудие
-ships.module.name.hpt_drunkmissilerack_fixed_medium,Pack-Hound Missile Rack,,,Misiles Sabueso,,Estante de Mísseis de Enxame,Блок ракет
-ships.module.name.hpt_multicannon_fixed_small_strong,Enforcer Cannon,,,,,Canhão Enforcer,Орудие
-ships.module.name.hpt_beamlaser_fixed_small_heat,Retributor Beam Laser,,,,,Laser Contínuo Retributor,Пучковый лазер
-ships.module.name.hpt_minelauncher_fixed_small_impulse,Shock Mine Launcher,,,,,Lança Minas de Impacto,Минирующее устройство
-ships.module.name.hpt_pulselaserburst_fixed_small_scatter,Cytoscrambler Burst Laser,,,Láser de Citodistorsión,,Laser de Rajada Cito-Espalhador,Пульсирующий лазер
+ships.module.name.hpt_drunkmissilerack_fixed_medium,Pack-Hound Missile Rack,,,Lanzamisiles Jauría de Sabuesos,,Estante de Mísseis de Enxame,Блок ракет
+ships.module.name.hpt_multicannon_fixed_small_strong,Enforcer Cannon,,,Multicañón Ejecutor,,Canhão Enforcer,Орудие
+ships.module.name.hpt_beamlaser_fixed_small_heat,Retributor Beam Laser,,,Láser de Rayo Vengador,,Laser Contínuo Retributor,Пучковый лазер
+ships.module.name.hpt_minelauncher_fixed_small_impulse,Shock Mine Launcher,,,Lanzaminas de Impacto,,Lança Minas de Impacto,Минирующее устройство
+ships.module.name.hpt_pulselaserburst_fixed_small_scatter,Cytoscrambler Burst Laser,,,Láser de Ráfagas de Citodistorsión,,Laser de Rajada Cito-Espalhador,Пульсирующий лазер
 ships.module.name.diamondbackxl_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,Liga Leve,Лёгкие сплавы
 ships.module.name.diamondbackxl_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,Liga Reforçada,Укреплённые сплавы
 ships.module.name.diamondbackxl_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,Composto de Nível Militar,Композит военного класса
@@ -878,8 +878,8 @@ ships.module.name.int_corrosionproofcargorack_size6_class1,Corrosion Resistant C
 ships.module.name.hpt_beamlaser_gimbal_huge,Beam Laser,,,Láser de Rayo,,Laser Contínuo,Пучковый лазер
 ships.module.name.hpt_pulselaser_gimbal_huge,Pulse Laser,,,Láser de Pulso,,Laser de Pulso,Импульсный лазер
 ships.module.name.hpt_multicannon_gimbal_huge,Multi-Cannon,,,Multicañón,,Canhão de Repetição,Орудие
-ships.module.name.int_engine_size3_class5_fast,Enhanced Performance Thrusters,,,Motores de Rendimiento Mejorados,,Propulsores de Desempenho Melhorado,Маневровые двигатели
-ships.module.name.int_engine_size2_class5_fast,Enhanced Performance Thrusters,,,Motores de Rendimiento Mejorados,,Propulsores de Desempenho Melhorado,Маневровые двигатели
+ships.module.name.int_engine_size3_class5_fast,Enhanced Performance Thrusters,,,Propulsores de Rendimiento Mejorados,,Propulsores de Desempenho Melhorado,Маневровые двигатели
+ships.module.name.int_engine_size2_class5_fast,Enhanced Performance Thrusters,,,Propulsores de Rendimiento Mejorados,,Propulsores de Desempenho Melhorado,Маневровые двигатели
 ships.module.name.hpt_pulselaserburst_gimbal_huge,Burst Laser,,,Láser de Ráfagas,,Laser de Rajada,Пульсирующий лазер
 ships.module.name.int_passengercabin_size4_class1,Economy Class Passenger Cabin,,,Cabina de Pasajeros Económica,,Cabine de Passageiro Classe Econômica,"Пассажирские каюты эконом-класса "
 ships.module.name.int_passengercabin_size4_class2,Business Class Passenger Cabin,,,Cabina de Pasajeros Preferente,,Cabine de Passageiro Classe Executiva,Пассажирские каюты бизнес-класса
@@ -889,10 +889,10 @@ ships.module.name.int_passengercabin_size6_class1,Economy Class Passenger Cabin,
 ships.module.name.int_passengercabin_size6_class2,Business Class Passenger Cabin,,,Cabina de Pasajeros Preferente,,Cabine de Passageiro Classe Executiva,Пассажирские каюты бизнес-класса
 ships.module.name.int_passengercabin_size6_class3,First Class Passenger Cabin,,,Cabina de Pasajeros de Primera Clase,,Cabine de Passageiro Primeira Classe,Пассажирские каюты первого класса
 ships.module.name.int_passengercabin_size6_class4,Luxury Class Passenger Cabin,,,Cabina de Pasajeros de Lujo,,Cabine de Passageiro Classe de Luxo,Пассажирские каюты класса люкс
-ships.module.name.int_fighterbay_size5_class1,Fighter Hangar,,,Bahía de Cazas,,Hangar de Caça,Ангар для истребителей
-ships.module.name.int_fighterbay_size6_class1,Fighter Hangar,,,Bahía de Cazas,,Hangar de Caça,Ангар для истребителей
-ships.module.name.int_fighterbay_size7_class1,Fighter Hangar,,,Bahía de Cazas,,Hangar de Caça,Ангар для истребителей
-ships.module.name.hpt_dumbfiremissilerack_fixed_medium_lasso,Rocket Propelled FSD Disruptor,,,,,Foguete Disruptor de MDD,Ракетный FSD-разрушитель
+ships.module.name.int_fighterbay_size5_class1,Fighter Hangar,,,Hangar de Cazas,,Hangar de Caça,Ангар для истребителей
+ships.module.name.int_fighterbay_size6_class1,Fighter Hangar,,,Hangar de Cazas,,Hangar de Caça,Ангар для истребителей
+ships.module.name.int_fighterbay_size7_class1,Fighter Hangar,,,Hangar de Cazas,,Hangar de Caça,Ангар для истребителей
+ships.module.name.hpt_dumbfiremissilerack_fixed_medium_lasso,Rocket Propelled FSD Disruptor,,,Misil de Contención Propulsado por Cohetes,,Foguete Disruptor de MDD,Ракетный FSD-разрушитель
 ships.module.name.int_passengercabin_size2_class1,Economy Class Passenger Cabin,,,Cabina de Pasajeros Económica,,Cabine de Passageiro Classe Econômica,"Пассажирские каюты эконом-класса "
 ships.module.name.int_passengercabin_size3_class1,Economy Class Passenger Cabin,,,Cabina de Pasajeros Económica,,Cabine de Passageiro Classe Econômica,"Пассажирские каюты эконом-класса "
 ships.module.name.int_passengercabin_size3_class2,Business Class Passenger Cabin,,,Cabina de Pasajeros Preferente,,Cabine de Passageiro Classe Econômica,Пассажирские каюты бизнес-класса
@@ -912,26 +912,26 @@ ships.module.name.int_modulereinforcement_size5_class2,Module Reinforcement Pack
 ships.module.name.hpt_mininglaser_turret_small,Mining Laser,,,Láser de Minería,,Laser de Mineração,Проходочный лазер
 ships.module.name.hpt_mininglaser_turret_medium,Mining Laser,,,Láser de Minería,,Laser de Mineração,Проходочный лазер
 ships.module.name.hpt_antiunknownshutdown_tiny,Shutdown Field Neutraliser,,,Neutralizador de Onda de Pulso,,Neutralizador de Campo de Desligamento,Нейтрализатор отключающего поля
-ships.module.name.int_dronecontrol_repair_size1_class1,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size1_class2,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size1_class3,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size1_class4,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size1_class5,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size3_class1,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size3_class2,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size3_class3,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size3_class4,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size3_class5,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size5_class1,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size5_class2,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size5_class3,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size5_class4,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size5_class5,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size7_class1,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size7_class2,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size7_class3,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size7_class4,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
-ships.module.name.int_dronecontrol_repair_size7_class5,Repair Limpet Controller,,,Controladora de Drones de Reparación,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size1_class1,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size1_class2,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size1_class3,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size1_class4,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size1_class5,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size3_class1,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size3_class2,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size3_class3,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size3_class4,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size3_class5,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size5_class1,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size5_class2,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size5_class3,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size5_class4,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size5_class5,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size7_class1,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size7_class2,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size7_class3,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size7_class4,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
+ships.module.name.int_dronecontrol_repair_size7_class5,Repair Limpet Controller,,,Lanzador Dron Reparador,,Controlador de Drone de Reparo,Контроллер дрона-ремонтника
 ships.module.name.type9_military_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,Liga Leve,Лёгкие сплавы
 ships.module.name.type9_military_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,Liga Reforçada,Укреплённые сплавы
 ships.module.name.type9_military_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,Composto de Nível Militar,Композит военного класса
@@ -944,25 +944,25 @@ ships.module.name.hpt_atmulticannon_fixed_medium,AX Multi-Cannon,,,Multicañón 
 ships.module.name.hpt_atmulticannon_fixed_large,AX Multi-Cannon,,,Multicañón AX,,Canhão de Repetição AX,Многоствольное орудие АИ
 ships.module.name.hpt_atdumbfiremissile_turret_medium,AX Missile Rack,,,Lanzamisiles AX,,Estante de Mísseis AX,Блок ракет АИ
 ships.module.name.hpt_atdumbfiremissile_turret_large,AX Missile Rack,,,Lanzamisiles AX,,Estante de Mísseis AX,Блок ракет АИ
-ships.module.name.hpt_flakmortar_turret_medium,Remote Release Flak Launcher,,,Antiaereo Remoto,,Lançador de Flak Remoto,Зенитная установка (снаряды с дистанционным подрывом)
+ships.module.name.hpt_flakmortar_turret_medium,Remote Release Flak Launcher,,,Lanzador Antiaereo Remoto,,Lançador de Flak Remoto,Зенитная установка (снаряды с дистанционным подрывом)
 ships.module.name.hpt_atmulticannon_turret_medium,AX Multi-Cannon,,,Multicañón AX,,Canhão de Repetição AX,Многоствольное орудие АИ
 ships.module.name.hpt_atmulticannon_turret_large,AX Multi-Cannon,,,Multicañón AX,,Canhão de Repetição AX,Многоствольное орудие АИ
 ships.module.name.hpt_xenoscanner_basic_tiny,Xeno Scanner,,,Escáner Xeno,,Scanner Xeno,Ксено-сканер
 ships.module.name.int_dronecontrol_unkvesselresearch,Research Limpet Controller,,,Controladora de Drones de Investigación,,Controlador de Drone de Pesquisa,Контроллер дрона-исследователя
-ships.module.name.int_metaalloyhullreinforcement_size1_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size1_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size2_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size2_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size3_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size3_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size4_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size4_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size5_class1,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_metaalloyhullreinforcement_size5_class2,Meta Alloy Hull Reinforcement,,,refuerzo estructural de Metaaleaciones,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
-ships.module.name.int_dronecontrol_decontamination_size1_class1,Decontamination Limpet Controller,,,Controladora de Drones de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
-ships.module.name.int_dronecontrol_decontamination_size3_class1,Decontamination Limpet Controller,,,Controladora de Drones de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
-ships.module.name.int_dronecontrol_decontamination_size5_class1,Decontamination Limpet Controller,,,Controladora de Drones de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
-ships.module.name.int_dronecontrol_decontamination_size7_class1,Decontamination Limpet Controller,,,Controladora de Drones de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
+ships.module.name.int_metaalloyhullreinforcement_size1_class1,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size1_class2,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size2_class1,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size2_class2,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size3_class1,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size3_class2,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size4_class1,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size4_class2,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size5_class1,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_metaalloyhullreinforcement_size5_class2,Meta Alloy Hull Reinforcement,,,Refuerzo Estructural de Aleaciones Metálicas,,Reforço de Casco com Metaligas,Метасплавное усиление корпуса
+ships.module.name.int_dronecontrol_decontamination_size1_class1,Decontamination Limpet Controller,,,Lanzador Dron de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
+ships.module.name.int_dronecontrol_decontamination_size3_class1,Decontamination Limpet Controller,,,Lanzador Dron de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
+ships.module.name.int_dronecontrol_decontamination_size5_class1,Decontamination Limpet Controller,,,Lanzador Dron de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
+ships.module.name.int_dronecontrol_decontamination_size7_class1,Decontamination Limpet Controller,,,Lanzador Dron de Descontaminación,,Controlador de Drone de Descontaminação,Контроллер дрона-очистителя
 ships.module.name.hpt_xenoscannermk2_basic_tiny,Enhanced Xeno Scanner,,,Escáner Xeno Mejorado,,Scanner Xeno Aprimorado,Улучшенный ксено-сканер
 ships.module.name.krait_mkii_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,Liga Leve,Лёгкие сплавы
 ships.module.name.krait_mkii_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,Liga Reforçada,Укреплённые сплавы
@@ -986,16 +986,16 @@ ships.module.name.typex_3_armour_mirrored,Mirrored Surface Composite,,,Compuesto
 ships.module.name.typex_3_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
 ships.module.name.hpt_guardian_gausscannon_fixed_medium,Guardian Gauss Cannon,,,Cañón Gauss Guardián,,Canhão Gauss Guardian,Пушка Гаусса Стражей
 ships.module.name.int_corrosionproofcargorack_size4_class1,Corrosion Resistant Cargo Rack,,,Bodega de Carga Anticorrosión,,Estante de Carga Anticorrosão,Антикоррозийный грузовой стеллаж
-ships.module.name.int_guardianhullreinforcement_size1_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size1_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size2_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size2_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size3_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size3_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size4_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size4_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size5_class1,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
-ships.module.name.int_guardianhullreinforcement_size5_class2,Guardian Hull Reinforcement,,,refuerzo estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size1_class1,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size1_class2,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size2_class1,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size2_class2,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size3_class1,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size3_class2,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size4_class1,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size4_class2,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size5_class1,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
+ships.module.name.int_guardianhullreinforcement_size5_class2,Guardian Hull Reinforcement,,,Refuerzo Estructural Guardián,,Reforço de Casco Guardian,Набор для усиления корпуса Стражей
 ships.module.name.int_guardianmodulereinforcement_size1_class1,Guardian Module Reinforcement,,,Refuerzo de Módulo Guardián,,Reforço de Módulo Guardian,Набор для усиления модуля Стражей
 ships.module.name.int_guardianmodulereinforcement_size1_class2,Guardian Module Reinforcement,,,Refuerzo de Módulo Guardián,,Reforço de Módulo Guardian,Набор для усиления модуля Стражей
 ships.module.name.int_guardianmodulereinforcement_size2_class1,Guardian Module Reinforcement,,,Refuerzo de Módulo Guardián,,Reforço de Módulo Guardian,Набор для усиления модуля Стражей
@@ -1016,26 +1016,26 @@ ships.module.name.int_guardianshieldreinforcement_size4_class1,Guardian Shield R
 ships.module.name.int_guardianshieldreinforcement_size4_class2,Guardian Shield Reinforcement,,,Refuerzo de Escudo Guardián,,Reforço de Módulo Guardian,Набор для усиления щита Стражей
 ships.module.name.int_guardianshieldreinforcement_size5_class1,Guardian Shield Reinforcement,,,Refuerzo de Escudo Guardián,,Reforço de Módulo Guardian,Набор для усиления щита Стражей
 ships.module.name.int_guardianshieldreinforcement_size5_class2,Guardian Shield Reinforcement,,,Refuerzo de Escudo Guardián,,Reforço de Módulo Guardian,Набор для усиления щита Стражей
-ships.module.name.int_guardianfsdbooster_size1,Guardian FSD Booster,,,Potenciador de Salto Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
-ships.module.name.int_guardianfsdbooster_size2,Guardian FSD Booster,,,Potenciador de Salto Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
-ships.module.name.int_guardianfsdbooster_size3,Guardian FSD Booster,,,Potenciador de Salto Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
-ships.module.name.int_guardianfsdbooster_size4,Guardian FSD Booster,,,Potenciador de Salto Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
-ships.module.name.int_guardianfsdbooster_size5,Guardian FSD Booster,,,Potenciador de Salto Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
-ships.module.name.int_guardianpowerdistributor_size1,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerdistributor_size2,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerdistributor_size3,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerdistributor_size4,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerdistributor_size5,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerdistributor_size6,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerdistributor_size7,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerdistributor_size8,Guardian Hybrid Power Distributor,,,Distribuidor Híbrido Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
-ships.module.name.int_guardianpowerplant_size2,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrido Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
-ships.module.name.int_guardianpowerplant_size3,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrido Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
-ships.module.name.int_guardianpowerplant_size4,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrido Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
-ships.module.name.int_guardianpowerplant_size5,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrido Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
-ships.module.name.int_guardianpowerplant_size6,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrido Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
-ships.module.name.int_guardianpowerplant_size7,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrido Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
-ships.module.name.int_guardianpowerplant_size8,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrido Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
+ships.module.name.int_guardianfsdbooster_size1,Guardian FSD Booster,,,Potenciador de Motor de Distorsión Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
+ships.module.name.int_guardianfsdbooster_size2,Guardian FSD Booster,,,Potenciador de Motor de Distorsión Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
+ships.module.name.int_guardianfsdbooster_size3,Guardian FSD Booster,,,Potenciador de Motor de Distorsión Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
+ships.module.name.int_guardianfsdbooster_size4,Guardian FSD Booster,,,Potenciador de Motor de Distorsión Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
+ships.module.name.int_guardianfsdbooster_size5,Guardian FSD Booster,,,Potenciador de Motor de Distorsión Guardián,,Potencializador de Motor de Distorção Guardian,Ускоритель FSD Стражей
+ships.module.name.int_guardianpowerdistributor_size1,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerdistributor_size2,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerdistributor_size3,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerdistributor_size4,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerdistributor_size5,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerdistributor_size6,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerdistributor_size7,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerdistributor_size8,Guardian Hybrid Power Distributor,,,Distribuidor de Energía Híbrida Guardián,,Distribuidor de Energia Híbrido Guardian,Гибридный распределитель питания Стражей
+ships.module.name.int_guardianpowerplant_size2,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrida Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
+ships.module.name.int_guardianpowerplant_size3,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrida Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
+ships.module.name.int_guardianpowerplant_size4,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrida Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
+ships.module.name.int_guardianpowerplant_size5,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrida Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
+ships.module.name.int_guardianpowerplant_size6,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrida Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
+ships.module.name.int_guardianpowerplant_size7,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrida Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
+ships.module.name.int_guardianpowerplant_size8,Guardian Hybrid Power Plant,,,Núcleo de Energía Híbrida Guardián,,Gerador de Energia Híbrido Guardian,Гибридная силовая установка Стражей
 ships.module.name.hpt_causticmissile_fixed_medium,Enzyme Missile Rack,,,Lanzamisiles de Enzimas,,Estante de Mísseis Enzimáticos,Блок ракет
 ships.module.name.hpt_flechettelauncher_fixed_medium,Remote Release Flechette Launcher,,,Lanzador de Flechettes Remoto,,Lançador de Dardos de Liberação Remota,Установка для стрельбы стреловидными снарядами с дистанционным подрывом
 ships.module.name.hpt_flechettelauncher_turret_medium,Remote Release Flechette Launcher,,,Lanzador de Flechettes Remoto,,Lançador de Dardos de Liberação Remota,Установка для стрельбы стреловидными снарядами с дистанционным подрывом
@@ -1043,25 +1043,25 @@ ships.module.name.hpt_guardian_plasmalauncher_fixed_medium,Guardian Plasma Charg
 ships.module.name.hpt_guardian_plasmalauncher_turret_medium,Guardian Plasma Charger,,,Cargador de Plasma Guardián,,Carregador de Plasma Guardian,Плазменная пушка Стражей
 ships.module.name.hpt_guardian_shardcannon_fixed_medium,Guardian Shard Cannon,,,Cañón de Esquirlas Guardián,,Canhão de Fragmentos Guardian,Осколочное орудие Стражей
 ships.module.name.hpt_guardian_shardcannon_turret_medium,Guardian Shard Cannon,,,Cañón de Esquirlas Guardián,,Canhão de Fragmentos Guardian,Осколочное орудие Стражей
-ships.module.name.hpt_plasmashockcannon_fixed_medium,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
-ships.module.name.hpt_plasmashockcannon_gimbal_medium,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
-ships.module.name.hpt_plasmashockcannon_turret_medium,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
+ships.module.name.hpt_plasmashockcannon_fixed_medium,Shock Cannon,,,Cañon de Impácto,,Canhão de Impulso,Шоковое орудие
+ships.module.name.hpt_plasmashockcannon_gimbal_medium,Shock Cannon,,,Cañon de Impácto,,Canhão de Impulso,Шоковое орудие
+ships.module.name.hpt_plasmashockcannon_turret_medium,Shock Cannon,,,Cañon de Impácto,,Canhão de Impulso,Шоковое орудие
 ships.module.name.hpt_guardian_shardcannon_fixed_large,Guardian Shard Cannon,,,Cañón de Esquirlas Guardián,,Canhão de Fragmentos Guardian,Осколочное орудие Стражей
 ships.module.name.hpt_guardian_shardcannon_turret_large,Guardian Shard Cannon,,,Cañón de Esquirlas Guardián,,Canhão de Fragmentos Guardian,Осколочное орудие Стражей
-ships.module.name.hpt_plasmashockcannon_fixed_large,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
-ships.module.name.hpt_plasmashockcannon_gimbal_large,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
-ships.module.name.hpt_plasmashockcannon_turret_large,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
+ships.module.name.hpt_plasmashockcannon_fixed_large,Shock Cannon,,,Cañon de Impácto,,Canhão de Impulso,Шоковое орудие
+ships.module.name.hpt_plasmashockcannon_gimbal_large,Shock Cannon,,,Cañon de Impácto,,Canhão de Impulso,Шоковое орудие
+ships.module.name.hpt_plasmashockcannon_turret_large,Shock Cannon,,,Cañon de Impácto,,Canhão de Impulso,Шоковое орудие
 ships.module.name.hpt_guardian_plasmalauncher_fixed_large,Guardian Plasma Charger,,,Cargador de Plasma Guardián,,Carregador de Plasma Guardian,Плазменная пушка Стражей
 ships.module.name.hpt_guardian_plasmalauncher_turret_large,Guardian Plasma Charger,,,Cargador de Plasma Guardián,,Carregador de Plasma Guardian,Плазменная пушка Стражей
-ships.module.name.int_dronecontrol_recon_size1_class1,Recon Limpet Controller,,,Controladora de Drones de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
+ships.module.name.int_dronecontrol_recon_size1_class1,Recon Limpet Controller,,,Lanzador Dron de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
 ships.module.name.krait_light_armour_grade1,Lightweight Alloy,,,Aleaciones Ligeras,,Liga Leve,Лёгкие сплавы
 ships.module.name.krait_light_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,Liga Reforçada,Укреплённые сплавы
 ships.module.name.krait_light_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,Composto de Nível Militar,Композит военного класса
 ships.module.name.krait_light_armour_mirrored,Mirrored Surface Composite,,,Compuesto de superficie Reflectante,,Composto de Superfície Reflexiva,Композит с зеркальной поверхностью
 ships.module.name.krait_light_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
-ships.module.name.int_dronecontrol_recon_size3_class1,Recon Limpet Controller,,,Controladora de Drones de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
-ships.module.name.int_dronecontrol_recon_size5_class1,Recon Limpet Controller,,,Controladora de Drones de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
-ships.module.name.int_dronecontrol_recon_size7_class1,Recon Limpet Controller,,,Controladora de Drones de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
+ships.module.name.int_dronecontrol_recon_size3_class1,Recon Limpet Controller,,,Lanzador Dron de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
+ships.module.name.int_dronecontrol_recon_size5_class1,Recon Limpet Controller,,,Lanzador Dron de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
+ships.module.name.int_dronecontrol_recon_size7_class1,Recon Limpet Controller,,,Lanzador Dron de Reconocimiento,,Controlador de Drone de Reconhecimento,Контроллер дрона-разведчика
 ships.module.name.hpt_dumbfiremissilerack_fixed_large,Missile Rack,,,Lanzamisiles,,Estante de Mísseis,Блок ракет
 ships.module.name.hpt_plasmashockcannon_turret_small,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
 ships.module.name.hpt_plasmashockcannon_gimbal_small,Shock Cannon,,,,,Canhão de Impulso,Шоковое орудие
@@ -1071,12 +1071,12 @@ ships.module.name.hpt_guardian_plasmalauncher_fixed_small,Guardian Plasma Charge
 ships.module.name.hpt_guardian_shardcannon_turret_small,Guardian Shard Cannon,,,Cañón de Esquirlas Guardián,,Canhão de Fragmentos Guardian,Осколочное орудие Стражей
 ships.module.name.hpt_guardian_shardcannon_fixed_small,Guardian Shard Cannon,,,Cañón de Esquirlas Guardián,,Canhão de Fragmentos Guardian,Осколочное орудие Стражей
 ships.module.name.hpt_guardian_gausscannon_fixed_small,Guardian Gauss Cannon,,,Cañón Gauss Guardián,,Canhão Gauss Guardian,Пушка Гаусса Стражей
-ships.module.name.hpt_mining_subsurfdispmisle_fixed_small,Sub-Surface Displacement Missile,,,Misiles de Sub-Superficie,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
-ships.module.name.hpt_mining_subsurfdispmisle_turret_small,Sub-Surface Displacement Missile,,,Misiles de Sub-Superficie,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
-ships.module.name.hpt_mining_subsurfdispmisle_fixed_medium,Sub-Surface Displacement Missile,,,Misiles de Sub-Superficie,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
-ships.module.name.hpt_mining_subsurfdispmisle_turret_medium,Sub-Surface Displacement Missile,,,Misiles de Sub-Superficie,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
-ships.module.name.hpt_mining_abrblstr_fixed_small,Abrasion Blaster,,,Bláster de Abrasión,,Detonador de Abrasão,Абразивный бластер
-ships.module.name.hpt_mining_abrblstr_turret_small,Abrasion Blaster,,,Bláster de Abrasión,,Detonador de Abrasão,Абразивный бластер
+ships.module.name.hpt_mining_subsurfdispmisle_fixed_small,Sub-Surface Displacement Missile,,,Misil de Desplaz. Subterraneo,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
+ships.module.name.hpt_mining_subsurfdispmisle_turret_small,Sub-Surface Displacement Missile,,,Misil de Desplaz. Subterraneo,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
+ships.module.name.hpt_mining_subsurfdispmisle_fixed_medium,Sub-Surface Displacement Missile,,,Misil de Desplaz. Subterraneo,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
+ships.module.name.hpt_mining_subsurfdispmisle_turret_medium,Sub-Surface Displacement Missile,,,Misil de Desplaz. Subterraneo,,Míssel de Deslocamento Subterrâneo,Вытесняющая ракета для добычи глубинных залежей
+ships.module.name.hpt_mining_abrblstr_fixed_small,Abrasion Blaster,,,Destructor de Abrasión,,Detonador de Abrasão,Абразивный бластер
+ships.module.name.hpt_mining_abrblstr_turret_small,Abrasion Blaster,,,Destructor de Abrasión,,Detonador de Abrasão,Абразивный бластер
 ships.module.name.hpt_mining_seismchrgwarhd_fixed_medium,Seismic Charge Launcher,,,Lanzador de Carga Sísmica,,Lançador de Carga Sísmica,Пусковая установка для сейсмических снарядов
 ships.module.name.hpt_mining_seismchrgwarhd_turret_medium,Seismic Charge Launcher,,,Lanzador de Carga Sísmica,,Lançador de Carga Sísmica,Пусковая установка для сейсмических снарядов
 ships.module.name.hpt_mrascanner_size0_class1,Pulse Wave Analyser,,,Analizador de Onda de Pulso,,Analisador de Onda de Pulso,Анализатор импульсных волн
@@ -1089,25 +1089,25 @@ ships.module.name.mamba_armour_grade2,Reinforced Alloy,,,Aleaciones Reforzadas,,
 ships.module.name.mamba_armour_grade3,Military Grade Composite,,,Compuesto de Grado Militar,,Composto de Nível Militar,Композит военного класса
 ships.module.name.mamba_armour_mirrored,Mirrored Surface Composite,,,Compuesto de superficie Reflectante,,Composto de Superfície Reflexiva,Композит с зеркальной поверхностью
 ships.module.name.mamba_armour_reactive,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
-ships.module.name.int_supercruiseassist,Supercruise Assist,,,Asistente de Supercrucero,,Assistência de Supervelocidade,Помощь в гиперкрейском режиме
+ships.module.name.int_supercruiseassist,Supercruise Assist,,,Asistencia de Supercrucero,,Assistência de Supervelocidade,Помощь в гиперкрейском режиме
 ships.module.name.int_dockingcomputer_advanced,Advanced Docking Computer,,,Computadora de Aterrizaje Avanzada,,Computador de Docagem Avançado,Улучшенный стыковочный компьютер
 ships.module.name.hpt_multicannon_fixed_medium_advanced,Advanced Multi-Cannon,,,Multicañón Avanzado,,Canhão de Repetição Avançado,Продвинутое многоствольное орудие
 ships.module.name.hpt_multicannon_fixed_small_advanced,Advanced Multi-Cannon,,,Multicañón Avanzado,,Canhão de Repetição Avançado,Продвинутое многоствольное орудие
 ships.module.name.hpt_dumbfiremissilerack_fixed_small_advanced,Advanced Missile Rack,,,Lanzamisiles Avanzado,,Estante de Mísseis Avançada,Продвинутый ракетный лоток
 ships.module.name.hpt_dumbfiremissilerack_fixed_medium_advanced,Advanced Missile Rack,,,Lanzamisiles Avanzado,,Estante de Mísseis Avançada,Продвинутый ракетный лоток
-ships.module.name.int_planetapproachsuite_advanced,Advanced Planetary Approach Suite,,,,,Inst. Avançado de Aproximação Planetária,Продвинутый комплект для сближения с планетой
-ships.module.name.int_multidronecontrol_mining_size3_class1,Mining Multi Limpet Controller,,,Multi-controladora de Drones de Minería,,Cont. Multidrones de Mineração,Мультиконтроллер дронов-добытчиков
-ships.module.name.int_multidronecontrol_mining_size3_class3,Mining Multi Limpet Controller,,,Multi-controladora de Drones de Minería,,Cont. Multidrones de Mineração,Мультиконтроллер дронов-добытчиков
-ships.module.name.int_multidronecontrol_operations_size3_class3,Operations Multi Limpet Controller,,,Multi-controladora de Drones de Operaciones,,Controlador de Drones Operacionais,Контроллер операционных дронов
-ships.module.name.int_multidronecontrol_operations_size3_class4,Operations Multi Limpet Controller,,,Multi-controladora de Drones de Operaciones,,Controlador de Drones Operacionais,Контроллер операционных дронов
-ships.module.name.int_multidronecontrol_rescue_size3_class2,Rescue Multi Limpet Controller,,,Multi-controladora de Drones de Rescate,,Controlador de Drones de Resgate,Контроллер дронов-спасателей
-ships.module.name.int_multidronecontrol_rescue_size3_class3,Rescue Multi Limpet Controller,,,Multi-controladora de Drones de Rescate,,Controlador de Drones de Resgate,Контроллер дронов-спасателей
-ships.module.name.int_multidronecontrol_xeno_size3_class3,Xeno Multi Limpet Controller,,,Multi-controladora de Drones AX,,Controlador de Drones Alienígenas,Контроллер дронов иных
-ships.module.name.int_multidronecontrol_xeno_size3_class4,Xeno Multi Limpet Controller,,,Multi-controladora de Drones AX,,Controlador de Drones Alienígenas,Контроллер дронов иных
-ships.module.name.int_multidronecontrol_universal_size7_class3,Universal Multi Limpet Controller,,,Multi-controladora de Drones Universal,,Controlador Multidrones Universal,Универсальный мультиконтроллер дронов
-ships.module.name.int_multidronecontrol_universal_size7_class5,Universal Multi Limpet Controller,,,Multi-controladora de Drones Universal,,Controlador Multidrones Universal,Универсальный мультиконтроллер дронов
-ships.module.name.int_expmodulestabiliser_size3_class3,Experimental Weapon Stabiliser,,,Estabilizador de Armas Experimental,,Estabilizador de Arma Experimental,Стабилизатор экспериментального оружия
-ships.module.name.int_expmodulestabiliser_size5_class3,Experimental Weapon Stabiliser,,,Estabilizador de Armas Experimental,,Estabilizador de Arma Experimental,Стабилизатор экспериментального оружия
+ships.module.name.int_planetapproachsuite_advanced,Advanced Planetary Approach Suite,,,Equipo de Aproximación Planetaria Avanzado,,Inst. Avançado de Aproximação Planetária,Продвинутый комплект для сближения с планетой
+ships.module.name.int_multidronecontrol_mining_size3_class1,Mining Multi Limpet Controller,,,Multilanzador Dron de Minería,,Cont. Multidrones de Mineração,Мультиконтроллер дронов-добытчиков
+ships.module.name.int_multidronecontrol_mining_size3_class3,Mining Multi Limpet Controller,,,Multilanzador Dron de Minería,,Cont. Multidrones de Mineração,Мультиконтроллер дронов-добытчиков
+ships.module.name.int_multidronecontrol_operations_size3_class3,Operations Multi Limpet Controller,,,Lanzador Dron de Operaciones,,Controlador de Drones Operacionais,Контроллер операционных дронов
+ships.module.name.int_multidronecontrol_operations_size3_class4,Operations Multi Limpet Controller,,,Lanzador Dron de Operaciones,,Controlador de Drones Operacionais,Контроллер операционных дронов
+ships.module.name.int_multidronecontrol_rescue_size3_class2,Rescue Multi Limpet Controller,,,Lanzador Dron de Rescate,,Controlador de Drones de Resgate,Контроллер дронов-спасателей
+ships.module.name.int_multidronecontrol_rescue_size3_class3,Rescue Multi Limpet Controller,,,Lanzador Dron de Rescate,,Controlador de Drones de Resgate,Контроллер дронов-спасателей
+ships.module.name.int_multidronecontrol_xeno_size3_class3,Xeno Multi Limpet Controller,,,Lanzador Dron Xeno,,Controlador de Drones Alienígenas,Контроллер дронов иных
+ships.module.name.int_multidronecontrol_xeno_size3_class4,Xeno Multi Limpet Controller,,,Lanzador Dron Xeno,,Controlador de Drones Alienígenas,Контроллер дронов иных
+ships.module.name.int_multidronecontrol_universal_size7_class3,Universal Multi Limpet Controller,,,Multilanzador Dron Universal,,Controlador Multidrones Universal,Универсальный мультиконтроллер дронов
+ships.module.name.int_multidronecontrol_universal_size7_class5,Universal Multi Limpet Controller,,,Multilanzador Dron Universal,,Controlador Multidrones Universal,Универсальный мультиконтроллер дронов
+ships.module.name.int_expmodulestabiliser_size3_class3,Experimental Weapon Stabiliser,,,Estabilizador de Armas Experimentales,,Estabilizador de Arma Experimental,Стабилизатор экспериментального оружия
+ships.module.name.int_expmodulestabiliser_size5_class3,Experimental Weapon Stabiliser,,,Estabilizador de Armas Experimentales,,Estabilizador de Arma Experimental,Стабилизатор экспериментального оружия
 ships.module.name.hpt_atdumbfiremissile_fixed_large_v2,Enhanced AX Missile Rack,,,Lanzamisiles AX Mejorado,,Estante de Mísseis AX Melhorado,Улучшенный блок АИ-ракет
 ships.module.name.hpt_atmulticannon_fixed_medium_v2,Enhanced AX Multi-Cannon,,,Multicañón AX Mejorado,,Canhão de Repetição AX Melhorado,Улучшенное многоствольное орудие АИ
 ships.module.name.hpt_atdumbfiremissile_fixed_medium_v2,Enhanced AX Missile Rack,,,Lanzamisiles AX Mejorado,,Estante de Mísseis AX Melhorado,Улучшенный блок АИ-ракет
@@ -1123,9 +1123,9 @@ ships.module.name.armour.reinforced_alloy,Reinforced Alloy,,,Aleaciones Reforzad
 ships.module.name.armour.military_grade_composite,Military Grade Composite,,,Compuesto de Grado Militar,,Composto de Nível Militar,Композит военного класса
 ships.module.name.armour.mirrored_surface_composite,Mirrored Surface Composite,,,Compuesto de superficie Reflectante,,Composto de Superfície Reflexiva,Композит с зеркальной поверхностью
 ships.module.name.armour.reactive_surface_composite,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
-ships.module.name.hpt_atventdisruptorpylon_fixed_medium,Guardian Nanite Torpedo Pylon,,,Torpedo de Nanocitos Guardián,,Pilone de Torpedo de Nanite Guardian,Торпедная нанитная установка Стражей
-ships.module.name.hpt_atventdisruptorpylon_fixed_large,Guardian Nanite Torpedo Pylon,,,Torpedo de Nanocitos Guardián,,Pilone de Torpedo de Nanite Guardian,Торпедная нанитная установка Стражей
-ships.module.name.hpt_human_extraction_fixed_medium,Sub Surface Extraction Missile,,,Misil de Extracción de Sub-Superficie,,Míssel de Extração Subterrâneo,Ракета для извлечения груза из-под корпуса
+ships.module.name.hpt_atventdisruptorpylon_fixed_medium,Guardian Nanite Torpedo Pylon,,,Lanzatorpedos Nanotecnológico Guardián,,Pilone de Torpedo de Nanite Guardian,Торпедная нанитная установка Стражей
+ships.module.name.hpt_atventdisruptorpylon_fixed_large,Guardian Nanite Torpedo Pylon,,,Lanzatorpedos Nanotecnológico Guardián,,Pilone de Torpedo de Nanite Guardian,Торпедная нанитная установка Стражей
+ships.module.name.hpt_human_extraction_fixed_medium,Sub Surface Extraction Missile,,,Misil de Extracción Subterranea,Míssel de Extração Subterrâneo,Ракета для извлечения груза из-под корпуса
 ships.module.name.modularcargobaydoor,Cargo Bay Door,,,Compuerta de Bodega de Carga,,Porta do compartimento de carga,Люк грузового ковша
 ships.module.name.hpt_causticsinklauncher_turret_tiny,Caustic Sink Launcher,,,Eyector Caústico,,Dissipador Cáustico,Антикоррозионная катапульта
 ships.module.name.hpt_antiunknownshutdown_tiny_v2,TG Pulse Neutraliser,,,Neutralizador de Pulsos Targoide,,Neutralizador de Pulso Thargoid,Нейтрализатор таргоидских импульсов
