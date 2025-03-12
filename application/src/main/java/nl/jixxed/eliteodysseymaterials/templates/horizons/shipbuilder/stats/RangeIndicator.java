@@ -11,16 +11,11 @@ import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.helper.ScalingHelper;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RangeIndicator extends VBox {
-    @Getter
-    protected final List<EventListener<?>> eventListeners = new ArrayList<>();
+
 
     private Pane lines;
     private HBox values;

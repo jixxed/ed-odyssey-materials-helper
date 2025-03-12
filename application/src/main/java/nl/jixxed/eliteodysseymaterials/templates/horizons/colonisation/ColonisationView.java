@@ -12,12 +12,10 @@ import nl.jixxed.eliteodysseymaterials.enums.ColonisationBuildable;
 import nl.jixxed.eliteodysseymaterials.enums.ColonisationCategory;
 import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalInitEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -27,9 +25,6 @@ public class ColonisationView extends VBox implements DestroyableTemplate {
     private FlowPane projects;
     private BillOfMaterials billOfMaterials;
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-
-    @Getter
-    private final java.util.List<EventListener<?>> eventListeners = new ArrayList<>();
 
     public ColonisationView() {
         initComponents();

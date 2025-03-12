@@ -17,14 +17,10 @@ import nl.jixxed.eliteodysseymaterials.enums.StorageType;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class OdysseyMaterialIngredient extends Ingredient {
@@ -50,8 +46,6 @@ public class OdysseyMaterialIngredient extends Ingredient {
     private Region region;
     private HBox secondLine;
     private Region region2;
-    @Getter
-    protected List<EventListener<?>> eventListeners = new ArrayList<>();
 
 
     public OdysseyMaterialIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer leftAmount, final Integer rightAmount) {

@@ -11,7 +11,6 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
@@ -20,8 +19,6 @@ import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegme
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsMaterialIngredient;
 import org.controlsfx.control.SegmentedBar;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 @Slf4j
@@ -42,8 +39,6 @@ public class HorizonsWishlistIngredient extends HorizonsMaterialIngredient {
     private Integer minimum;
     private Integer required;
     private Integer maximum;
-    @Getter
-    protected List<EventListener<?>> eventListeners = new ArrayList<>();
 
     HorizonsWishlistIngredient(final HorizonsStorageType storageType, final HorizonsMaterial horizonsMaterial, final Integer amountMinimum, final Integer amountRequired, final Integer amountMaximum, final Integer amountAvailable) {
         super(storageType, horizonsMaterial, amountRequired, amountAvailable);
