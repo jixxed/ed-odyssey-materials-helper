@@ -1,5 +1,5 @@
 messageKey,,en,de,es,fr,pt,ru
-ship.stats.config,Configuration,,,Configuración,,Configuração,Конфигурация
+ship.stats.config,Configuration,,,Ajustes,,Configuração,Конфигурация
 ship.stats.config.live,Live,,,,,ao Vivo,
 ship.stats.config.fuelreserve,Fuel reserve,,,Reserva de Combustible,,Reservas de Combustível,Резерв топлива
 ship.stats.config.fuel,Fuel (Max. {0}),,,Combustible (Max. {0}),,Comb (Max. {0}),Топливо (Макс. {0})
@@ -11,7 +11,7 @@ ship.stats.config.cargo_hatch,Cargo hatch,,,Escotilla de Carga,,Escotilha de Car
 ship.stats.thermalpower,Thermals & power,,,Energía y Calor,,Térmicos e Energia,Нагрев и Мощность
 ship.stats.thermal,Thermals,,,Temperatura,,Térmicos,Нагрев
 ship.stats.power,Power,,,Energía,,Energia,Мощность
-ship.stats.thermal.idle.thermals,Idle heat,,,Temperatura en Parado,,Calor estático,В покое
+ship.stats.thermal.idle.thermals,Idle heat,,,Temperatura en Reposo,,Calor estático,В покое
 ship.stats.thermal.thruster.thermals,Full thrust heat,,,Temperatura a Máxima Aceleración,,Calor em velocidade máxima,В движении
 ship.stats.thermal.fsd.thermals,FSD charging heat,,,Temperatura Cargando MDD,,Calor de carregamento de MDD,При зарядке FSD
 ship.stats.thermal.idle.thermals.value,{0}%,,,,,,
@@ -32,19 +32,19 @@ ship.stats.jumprange.maxfueled,Maximum range (full fuel),,,Máximo Salto (Combus
 ship.stats.jumprange.max,Maximum range (minimal fuel),,,Máximo Salto (Combustible Mínimo),,Alcance Máximo (Combustível mínimo),Максимальная дальность (минимум топлива)
 ship.stats.engine,Engine,,,Motor,,Motor,Двигатель
 ship.stats.engine.speed,Speed,,,Velocidad,,Velocidade,Скорость
-ship.stats.engine.boost,Boost,,,Posquemador,,Impulso,Ускорение
+ship.stats.engine.boost,Boost,,,Postquemador,,Impulso,Ускорение
 ship.stats.engine.recharge,Recharge,,,Recarga,,Recarga,Перезарядка
 ship.stats.engine.speed.value,{0} m/s,,,,,,{0} м/с
 ship.stats.engine.boost.value,{0} m/s,,,,,,{0} м/с
 ship.stats.engine.recharge.value,{0} s,,,,,,{0} с
 ship.stats.engine.currentspeed,Current speed,,,Velocidad Actual,,Velocidade Atual,Текущая скорость
-ship.stats.engine.currentboost,Current boost,,,Posquemador Actual,,Impulso Atual,Текущее ускорение
+ship.stats.engine.currentboost,Current boost,,,Postquemador Actual,,Impulso Atual,Текущее ускорение
 ship.stats.engine.currentrecharge,Current recharge,,,Recarga Actual,,Recarga Atual,Текущая перезарядка
 ship.stats.engine.minspeed,Minimum speed(Full Cargo),,,Velocidad Mínima(Carga Completa),,Velocidade Mínima (Carga Plena),Минимальная скорость (полный трюм)
-ship.stats.engine.minboost,Minimum boost(Full Cargo),,,Posquemador Mínimo(Carga Completa),,Impulso Máximo (Carga Plena),Минимальное ускорение (полный трюм)
+ship.stats.engine.minboost,Minimum boost(Full Cargo),,,Postquemador Mínimo(Carga Completa),,Impulso Máximo (Carga Plena),Минимальное ускорение (полный трюм)
 ship.stats.engine.minrecharge,Minimum recharge(Full Cargo),,,Recarga Mínima(Carga Completa),,Recarga Mínima (Carga Plena),Минимальная перезарядка (полный трюм)
 ship.stats.engine.maxspeed,Maximum speed(No Cargo),,,Velocidad Máxima(Sin Carga),,Velocidade Máxima (Sem Carga),Максимальная скорость (нет груза)
-ship.stats.engine.maxboost,Maximum boost(No Cargo),,,Posquemador Máximo(Sin Carga),,Impulso Máximo (Sem Carga),Максимальное ускорение (нет груза)
+ship.stats.engine.maxboost,Maximum boost(No Cargo),,,Postquemador Máximo(Sin Carga),,Impulso Máximo (Sem Carga),Максимальное ускорение (нет груза)
 ship.stats.engine.maxrecharge,Maximum recharge(No Cargo),,,Máxima Recarga(Sin Carga),,Recarga Máxima (Sem Carga),Максимальная перезарядка (нет груза)
 ship.stats.handling,Handling,,,Manejo,,Manobrabilidade,Управление
 ship.stats.handling.pitch,Pitch,,,Cabeceo,,Arfagem,Тангаж
