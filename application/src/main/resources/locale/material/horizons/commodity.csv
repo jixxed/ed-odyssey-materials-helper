@@ -146,7 +146,7 @@ material.commodity.grain,Grain,Grain,Getreide,Grano,Céréales,Cereal,Зерно
 material.commodity.grandidierite,Grandidierite,Grandidierite,Grandidierit,Grandidierita,Grandidiérite,Grandidierita,Грандидьерит
 material.commodity.gromcounterintelligence,Grom Counter Intelligence,Grom Counter Intelligence,Grom-Spionageabwehr,Contrainteligencia de Grom,Renseignements militaires de Grom,Contra-inteligência de Grom,Разведданные Грома
 material.commodity.gromwartrophies,Yuri Grom’s Military Supplies,Yuri Grom’s Military Supplies,Yuri Groms Militärausrüstung,Suministros militares de Yuri Grom,Fournitures militaires de Yuri Grom,Suprimentos Militares de Yuri Grom,Военные припасы Юрия Грома
-material.commodity.haematite,Haematite,,,,,,Гематит
+material.commodity.haematite,Haematite,,,Hematita,,,Гематит
 material.commodity.hafnium178,Hafnium 178,Hafnium 178,Hafnium 178,Hafnio 178,Hafnium 178,Háfnio 178,Гафний-178
 material.commodity.haidneblackbrew,Haiden Black Brew,Haiden Black Brew,Haiden-Schwarzbier,Infusión negra de Haiden,Tisane noire de Haiden,Infusão negra de Haiden,Гайденовский черный напиток
 material.commodity.harmasilversearum,Harma Silver Sea Rum,Harma Silver Sea Rum,Harma Silberseerum,Ron Harma Silver Sea,Rhum marin Harma Silver,Rum Mar Prata de Harma,Ром «Серебряное море Harma»
@@ -258,8 +258,8 @@ material.commodity.nonlethalweapons,Non-Lethal Weapons,Non-Lethal Weapons,Nichtt
 material.commodity.occupiedcryopod,Occupied Escape Pod,Occupied Escape Pod,Besetzte Rettungskapsel,Cápsula de escape ocupada,Nacelle d’évacuation occupée,Cápsula de escape ocupada,Спасательная капсула с пассажиром
 material.commodity.ochoengchillies,Ochoeng Chillies,Ochoeng Chillies,Ochoeng-Chili,Chiles de Ochoeng,Piments d’Ochoeng,Pimentas de Ochoeng,Перчик чили с Очоенга
 material.commodity.onionhead,Onionhead,Onionhead,Onionhead,Cebollazo,Tête d’oignon,Onionhead,Луковая головка
-material.commodity.onionheada,Onionhead Alpha Strain,Onionhead Alpha Strain,Onionhead (Alpha),Cepa alfa de cebollazo,Variété alpha de tête d’oignon,Cepa alfa de Onionhead,Луковая головка, сорт альфа
-material.commodity.onionheadb,Onionhead Beta Strain,Onionhead Beta Strain,Onionhead (Beta),Cepa beta de cebollazo,Variété bêta de tête d’oignon,Cepa beta de Onionhead,Луковая головка, сорт бета
+material.commodity.onionheada,Onionhead Alpha Strain,Onionhead Alpha Strain,Onionhead (Alpha),Cepa alfa de cebollazo,Variété alpha de tête d’oignon,Cepa alfa de Onionhead,"Луковая головка, сорт альфа"
+material.commodity.onionheadb,Onionhead Beta Strain,Onionhead Beta Strain,Onionhead (Beta),Cepa beta de cebollazo,Variété bêta de tête d’oignon,Cepa beta de Onionhead,"Луковая головка, сорт бета"
 material.commodity.onionheadc,Onionhead Gamma Strain,Onionhead Gamma Strain,Onionhead Gamma -Stamm,Souche gamma oignon,Cepa gamma de cabeza de cebolla,Cepa gama de ceionhead,Лукхеда гамма -штамм
 material.commodity.onionheadderivatives,Onionhead Derivatives,Onionhead Derivatives,Onionhead-Derivantien,Derivados de Cebollazo,Produits dérivés à base de tête d’oignon,Derivados de Onionhead,Компоненты луковых головок
 material.commodity.onionheadsamples,Onionhead Samples,Onionhead Samples,Onionhead-Proben,Muestras de Cebollazo,Échantillons de tête d’oignon,Amostras de Onionhead,Образцы луковых головок
@@ -335,7 +335,7 @@ material.commodity.smallexplorationdatacash,Small Survey Data Cache,Small Survey
 material.commodity.soontillrelics,Soontill Relics,Soontill Relics,Soontill-Relikte,Reliquias de Soontill,Reliques de Soontill,Relíquias de Soontill,Реликты Сунтилла
 material.commodity.sothiscrystallinegold,Sothis Crystalline Gold,Sothis Crystalline Gold,Sothis-Kristallingold,Oro cristalino de Sothis,Or cristallin de Sothis,Ouro cristalino de Sothis,Кристаллическое золото системы Sothis
 material.commodity.spacepioneerrelics,Space Pioneer Relics,Space Pioneer Relics,Weltraumpionier-Relikte,Reliquias de pioneros espaciales,Reliques des pionniers de l’espace,Relíquias de pioneiros espaciais,Следы первопроходцев космоса
-material.commodity.steel,Steel,,,,,,Сталь
+material.commodity.steel,Steel,,,Acero,,,Сталь
 material.commodity.structuralregulators,Structural Regulators,Structural Regulators,Strukturregulatoren,Reguladores estructurales,Régulateur(s) structurel(s),Registradores estruturais,Конструкционные регуляторы
 material.commodity.superconductors,Superconductors,Superconductors,Supraleiter,Superconductores,Supraconducteur(s),Supercondutores,Сверхпроводники
 material.commodity.surfacestabilisers,Surface Stabilisers,Surface Stabilisers,Oberflächenstabilisierer,Estabilizadores de superficie,Stabilisateurs de surface,Estabilizadores de superfície,Стабилизаторы поверхности
@@ -403,7 +403,7 @@ material.commodity.unknownresin,Thargoid Resin,Thargoid Resin,Thargoidenharz,Res
 material.commodity.unknownsack,Protective Membrane Scrap,Protective Membrane Scrap,Unbrauchbare Schutzmembran,Fragmento de membrana protectora,,,Остатки защитной мембраны
 material.commodity.unknowntechnologysamples,Thargoid Technology Samples,Thargoid Technology Samples,Technologieproben der Thargoiden,Muestras de tecnología Thargoide,Échantillons de technologie thargoid,Amostras de Tecnologia Thargoid,Образцы таргоидских технологий
 material.commodity.unmarkedweapons,Unmarked Military supplies,Unmarked Military supplies,Unmarkierte Militärmaterialien,Suministros militares sin marcar,Surplus militaire banalisé,Mantimentos militares sem marca,Военные припасы без меток
-material.commodity.unocuppiedescapepod,Unoccupied Escape Pod,Unoccupied Escape Pod,Unbesetzte Fluchtkapsel,Podaz de escape desocupado,Pod évadé inoccupé,Pods de fuga desocupada,Пустая спасательная капсула
+material.commodity.unocuppiedescapepod,Unoccupied Escape Pod,Unoccupied Escape Pod,Unbesetzte Fluchtkapsel,Cápsula de escape desocupada,Pod évadé inoccupé,Pods de fuga desocupada,Пустая спасательная капсула
 material.commodity.unstabledatacore,Unstable Data Core,Unstable Data Core,Instabiler Datenkern,Unidad de datos inestable,Centre de données instable,Núcleo de dados instável,Нестабильное ядро данных
 material.commodity.uraninite,Uraninite,Uraninite,Uraninit,Uraninita,Uraninite,Uraninita,Уранинит
 material.commodity.uranium,Uranium,Uranium,Uran,Uranio,Uranium,Urânio,Уран

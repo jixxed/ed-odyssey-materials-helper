@@ -5,17 +5,17 @@ material.tooltip.data.download,Download time: {0} seconds,Download time: {0} sec
 material.tooltip.data.upload,Upload time: {0} seconds,Upload time: {0} seconds,Upload-Zeit: {0} Sekunden,Tiempo de carga: {0} segundos,Temps de téléchargement: {0} secondes,Tempo de upload: {0} segundos,Время загрузки: {0} секунд
 material.tooltip.illegal,This material is prohibited in some systems and can only be sold in anarchy systems,This material is prohibited in some systems and can only be sold in anarchy systems,Dieses Material ist in einigen Systemen verboten und kann nur in Anarchiesystemen verkauft werden,Este material está prohibido en algunos sistemas y solo se puede vender en sistemas de anarquía.,Ce matériel est interdit dans certains systèmes et ne peut être vendu que dans des systèmes anarchiques,Este material é proibido em alguns sistemas e só pode ser vendido em sistemas anarquistas,Этот материал запрещен в некоторых системах и может продаваться только в системах c анархией
 material.tooltip.statistics.economies,Economies:,Economies:,Wirtschaft:,Economías:,Économies:,Economias:,Экономика:
-material.tooltip.unknown,"Unknown material, please report to the developer.","Unknown material, please report to the developer.","Unbekanntes Material, bitte dem Entwickler melden.","Material desconocido, informe al desarrollador.","Matériel inconnu, veuillez le signaler au développeur.","Material desconhecido, por favor informe ao desenvolvedor.","Неизвестный материал, сообщите разработчику."
+material.tooltip.unknown,"Unknown material, please report to the developer.","Unknown material, please report to the developer.","Unbekanntes Material, bitte dem Entwickler melden.","Material desconocido, por favor informe al desarrollador.","Matériel inconnu, veuillez le signaler au développeur.","Material desconhecido, por favor informe ao desenvolvedor.","Неизвестный материал, сообщите разработчику."
 material.tooltip.used.in.recipes,Used in recipes:,Used in recipes:,In Bauplänen verwendet:,Usado en recetas:,Utilisé dans les recettes:,Usado nos Projetos:,Используется в рецептах:
 material.tooltip.text.no,No,No,Nein,No,Non,Não,Нет
 material.tooltip.text.yes,Yes,Yes,Ja,Sí,Oui,Sim,Да
-material.tooltip.is.rare,Rare:,Rare:,Selten:,Extraño:,Rare:,Cru:,Редкий:
+material.tooltip.is.rare,Rare:,Rare:,Selten:,Raro:,Rare:,Cru:,Редкий:
 material.tooltip.type,Type:,Type:,Typ:,Tipo:,Taper:,Tipo:,Тип:
 material.tooltip.type.raw,Type: Raw,Type: Raw,Typ: Element,Tipo: Materia Prima,Type: brut,Tipo: cru,Тип: Элементы
 material.tooltip.type.encoded,Type: Encoded,Type: Encoded,Typ: Verschlüsselt,Tipo: Datos,Type: codé,Tipo: codificado,Тип: Зашифрованные данные
 material.tooltip.type.manufactured,Type: Manufactured,Type: Manufactured,Typ: Gefertigt,Tipo: Manufacturado,Type: fabriqué,Tipo: fabricado,Тип: Промышленные материалы
-material.tooltip.fleetcarrier,Fleet carrier,Fleet carrier,Carrier,Carguero,Transporteur de flotte,Porta-Frota,Флотоносец
-material.tooltip.fleetcarrier.not.linked,Frontier account link not available,Frontier account link not available,Frontier Konto Verbindung nicht verfügbar,Enlace de cuenta de Frontier no disponible,Lien de compte Frontier non disponible,Link da conta de Frontier não disponível,Аккаунт Frontier не привязан
+material.tooltip.fleetcarrier,Fleet carrier,Fleet carrier,Carrier,Portanaves,Transporteur de flotte,Porta-Frota,Флотоносец
+material.tooltip.fleetcarrier.not.linked,Frontier account link not available,Frontier account link not available,Frontier Konto Verbindung nicht verfügbar,Enlace a cuenta de Frontier no disponible,Lien de compte Frontier non disponible,Link da conta de Frontier não disponível,Аккаунт Frontier не привязан
 material.tooltip.fleetcarrier.buy,Buy {0}({1} remaining) @ ${2},Buy {0}({1} remaining) @ ${2},Kaufen {0} ({1} verbleibend) @ $ {2},Comprar {0} ({1} restante) @ $ {2},Acheter {0} ({1} restant) @ $ {2},Compre {0} ({1} restante) @ $ {2},Купить {0} ({1} оставшееся) @ $ {2}
 material.tooltip.fleetcarrier.sell,Sell {0} @ ${1},Sell {0} @ ${1},Verkaufen {0} @ $ {1},Vender {0} @ $ {1},Vendre {0} @ $ {1},Vender {0} @ $ {1},Продать {0} @ $ {1}
 material.tooltip.fleetcarrier.storage,Stored amount: {0},Stored amount: {0},Gelagerte Menge: {0},Cantidad almacenada: {0},Montant stocké: {0},Quantidade armazenada: {0},Хранящаяся сумма: {0}
@@ -28,12 +28,12 @@ material.tooltip.is.live,LIVE-only material,LIVE-only material,Nur LIVE-Material
 material.tooltip.is.live.commodity,LIVE-only commodity,LIVE-only commodity,Nur LIVE-Ware,Productos básicos solo en LIVE,Marchandise en LIVE,Mercadoria apenas ao LIVE,Товар для LIVE-версии
 material.tooltip.downtrade,Downtrade:,Downtrade:,Eintauschen:,Intercambio óptimo:,Descente:,Baixa:,Нисходящий:
 material.tooltip.downtrade.entry,{0} from {1},{0} from {1},{0} von {1},{0} de {1},{0} de {1},{0} de {1},{0} из {1}
-material.tooltip.downtrade.none,No downtrades possible,No downtrades possible,,No hay intercambio óptimo,,Sem transações possíveis,Нет нисходящей торговли
+material.tooltip.downtrade.none,No downtrades possible,No downtrades possible,,No hay intercambio óptimo posible,,Sem transações possíveis,Нет нисходящей торговли
 material.tooltip.tradesuggestions,"Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)","Receive {0} from trading {1} {2} ({3} owned, {4} reserved, {5} used)",,"Recibe {0} Intercambiando {1} {2} ({3} en posesión, {4} reservados, {5} usados)",,"Receba {0} Trocando {1} {2} ({3} estocado, {4} reservado, {5} usado)","Получить {0} через обмен {1} {2} ({3} в наличии, {4} зарезервировано, {5} использовано)"
 material.tooltip.tradesuggestions.none,No complete trades can be made,No complete trades can be made,,No se pueden hacer intercambios completos,,Nenhuma transação completa pode ser feita,Полные сделки не могут быть совершены
 material.tooltip.trade,Trade suggestions:,Trade suggestions:,,Intercambios sugeridos,,Sugestões de transação:,Торговые предложения:
-material.tooltip.refining,Refining,,,,,,Переработка
-material.tooltip.refinable,{0} can be refined into {1} at a conversion rate of {2} to {3},,,,,,{0} может быть очищен в {1} по курсу {2} к {3}
-material.tooltip.market,Market,,,,,,Рынок
-material.tooltip.market.sells,The current market sells this commodity for {0}CR/T and has a stock of {1}T,,,,,,Здешний рынок продает этот товар по цене {0}КР/T и предлагает {1}T на продажу
-material.tooltip.market.buys,The current market buys this commodity for {0}CR/T and has a demand of {1}T,,,,,,Здешний рынок покупает этот товар по цене {0}КР/T и запрашивает {1}T
+material.tooltip.refining,Refining,,,Refinando,,,Переработка
+material.tooltip.refinable,{0} can be refined into {1} at a conversion rate of {2} to {3},,,{0} puede ser refinado a {1} a una tasa de conversión de {2} a {3},,,{0} может быть очищен в {1} по курсу {2} к {3}
+material.tooltip.market,Market,,,Mercado,,,Рынок
+material.tooltip.market.sells,The current market sells this commodity for {0}CR/T and has a stock of {1}T,,,El mercado actual vende esta mercancía por {0}Cr/t y tiene una oferta de {1}t,,,Здешний рынок продает этот товар по цене {0}КР/T и предлагает {1}T на продажу
+material.tooltip.market.buys,The current market buys this commodity for {0}CR/T and has a demand of {1}T,,,El mercado actual compra esta mercancía por {0}Cr/t y tiene una demanda de {1}t,,,Здешний рынок покупает этот товар по цене {0}КР/T и запрашивает {1}T

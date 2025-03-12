@@ -13,7 +13,7 @@ state.lockdown,Lockdown,,,Bloqueo,,Quarentena,Изоляция
 state.outbreak,Outbreak,,,Epidemia,,Epidemia,Эпидемия
 state.retreat,Retreat,,,Retirada,,Retirada,Отступление
 state.war,War,,,Guerra,,Guerra,Война
-state.civilliberty,Civil Liberty,,,Libertad Civil,,Liberdade Civil,Гражданская свобода
+state.civilliberty,Civil Liberty,,,Libertad,,Liberdade Civil,Гражданская свобода
 state.pirateattack,Pirate Attack,,,Ataque pirata,,Ataque pirata,Атака пиратов
 state.blight,Blight,,,Plaga,,Praga,Неурожай
 state.drought,Drought,,,Sequía,,Seca,Засуха

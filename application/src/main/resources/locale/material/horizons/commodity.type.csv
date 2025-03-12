@@ -1,6 +1,6 @@
 messageKey,,en,de,es,fr,pt,ru
 material.commoditytype.chemicals,Chemicals,Chemicals,Chemikalien,Químicos,Produits chimiques,Produtos químicos,Химикаты
-material.commoditytype.consumer_items,Consumer Items,Consumer Items,Verbraucherartikel,Artículos de consumo,Articles de consommation,Itens de consumo,Потребительские товары
+material.commoditytype.consumer_items,Consumer Items,Consumer Items,Verbraucherartikel,Bienes de consumo,Articles de consommation,Itens de consumo,Потребительские товары
 material.commoditytype.foods,Foods,Foods,Lebensmittel,Alimentos,nourriture,Alimentos,Еда
 material.commoditytype.industrial_materials,Industrial Materials,Industrial Materials,Industriematerialien,Materiales industriales,Matériaux industriels,Materiais industriais,Промышленные материалы
 material.commoditytype.legal_drugs,Legal Drugs,Legal Drugs,Legale Drogen,Drogas legales,Drogues légales,Drogas legais,Легальные лекарства
@@ -14,5 +14,5 @@ material.commoditytype.slavery,Slavery,Slavery,Sklaverei,Esclavitud,Esclavage,Es
 material.commoditytype.technology,Technology,Technology,Technologie,Tecnología,Technologie,Tecnologia,Технологии
 material.commoditytype.textiles,Textiles,Textiles,Textilien,Textiles,Textiles,Têxteis,Текстиль
 material.commoditytype.waste,Waste,Waste,Abfall,Residuos,Gaspillage,Desperdício,Напрасно тратить
-material.commoditytype.weapons,Weapons,Weapons,Waffen,Arma,Armes,Armas,Оружие
+material.commoditytype.weapons,Weapons,Weapons,Waffen,Armamento,Armes,Armas,Оружие
 material.commoditytype.powerplay,Powerplay,,,,,,
