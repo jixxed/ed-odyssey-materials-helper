@@ -55,11 +55,11 @@ public class OdysseyBartenderResult extends VBox implements DestroyableTemplate 
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, OdysseyBartenderMaterialSelectedEvent.class, event -> {
+        register(EventService.addListener(true, this, OdysseyBartenderMaterialSelectedEvent.class, event -> {
             this.selectedAsset = event.getOdysseyBartenderMaterial().getAsset();
             recalculate();
         }));
-        this.eventListeners.add(EventService.addListener(true, this, OdysseyBartenderAmountSelectedEvent.class, event -> {
+        register(EventService.addListener(true, this, OdysseyBartenderAmountSelectedEvent.class, event -> {
             final Asset asset = event.getAsset();
             final Integer amountSelected = event.getAmountSelected();
             this.tradeList.put(asset, amountSelected);

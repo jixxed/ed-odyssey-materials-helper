@@ -36,7 +36,7 @@ public class OdysseyBartenderRecipes extends VBox implements DestroyableTemplate
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, OdysseyBartenderMaterialHoverEvent.class, event -> update(event.getAsset())));
+        register(EventService.addListener(true, this, OdysseyBartenderMaterialHoverEvent.class, event -> update(event.getAsset())));
     }
 
     private void update(final Asset asset) {

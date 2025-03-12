@@ -82,7 +82,7 @@ public class PowerStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
+        register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     private Map<Integer, Double> calculateRetractedPower() {

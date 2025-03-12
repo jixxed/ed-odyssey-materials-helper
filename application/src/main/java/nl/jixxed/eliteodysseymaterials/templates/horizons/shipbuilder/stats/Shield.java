@@ -100,7 +100,7 @@ public class Shield extends StackPane implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> shield.setImage(ImageService.getImage("/images/ships/icons/shield2_" + color + ".png"))));
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> shield.setImage(ImageService.getImage("/images/ships/icons/shield2_" + color + ".png"))));
     }
 
     public void updateValues(double raw, double kinetic, double thermal, double caustic, double explosive) {

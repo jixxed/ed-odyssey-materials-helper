@@ -72,14 +72,14 @@ class HorizonsSearchBar extends HBox {
     }
     
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
+        register(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
         //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.button.styleProperty().set(fontStyle);
         }));
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsTabSelectedEvent.class, event -> switchTab(event.getSelectedTab())));
+        register(EventService.addListener(true, this, HorizonsTabSelectedEvent.class, event -> switchTab(event.getSelectedTab())));
     }
 
     private void switchTab(HorizonsTabs selectedTab) {

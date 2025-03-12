@@ -43,7 +43,7 @@ public class PowerplayUnlockableModule extends HBox implements DestroyableTempla
     @Override
     public void initEventHandling() {
 
-        this.eventListeners.add(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
+        register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
                 this.update(powerplayEvent.getPower(), powerplayEvent.getRank())));
     }
 

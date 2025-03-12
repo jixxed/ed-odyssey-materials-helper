@@ -83,7 +83,7 @@ public class ColonisationView extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(this, JournalInitEvent.class, journalInitEvent -> {
+        register(EventService.addListener(this, JournalInitEvent.class, journalInitEvent -> {
             if (journalInitEvent.isInitialised()) refreshProjects();
 
             APPLICATION_STATE.getPreferredCommander().ifPresentOrElse(commander -> {

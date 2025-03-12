@@ -43,7 +43,7 @@ public class EngineStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
+        register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
     }
 
     private double calculateMinRecharge(double boostCost, double engineRecharge) {

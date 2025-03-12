@@ -125,12 +125,12 @@ public class HorizonsCommodityCard extends StackPane implements DestroyableTempl
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
+        register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             if (storageEvent.getStoragePool().equals(StoragePool.FLEETCARRIER) || storageEvent.getStoragePool().equals(StoragePool.SHIP)) {
                 updateQuantity();
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
+        register(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
             updateQuantity();
             updateStyle();
         }));

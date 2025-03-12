@@ -45,7 +45,7 @@ public class StatsLayer extends AnchorPane implements DestroyableTemplate {
     @Override
     public void initEventHandling() {
 
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+        register(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             stats.requestLayout();
         }));
     }

@@ -56,7 +56,7 @@ public class HorizonsNearestTrader extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationEvent -> {
+        register(EventService.addListener(true, this, LocationChangedEvent.class, locationEvent -> {
             update();
         }));
     }

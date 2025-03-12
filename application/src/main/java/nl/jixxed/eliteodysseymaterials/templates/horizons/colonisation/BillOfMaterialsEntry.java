@@ -89,12 +89,12 @@ public class BillOfMaterialsEntry extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(this, StorageEvent.class, storageEvent -> {
+        register(EventService.addListener(this, StorageEvent.class, storageEvent -> {
             if (StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool()) || StoragePool.SHIP.equals(storageEvent.getStoragePool())) {
                 update();
             }
         }));
-        eventListeners.add(EventService.addListener(this, MarketUpdatedEvent.class, event -> {
+        register(EventService.addListener(this, MarketUpdatedEvent.class, event -> {
             update();
         }));
     }

@@ -86,7 +86,7 @@ public class HorizonsCommoditiesOverview extends VBox implements DestroyableTemp
     public void initEventHandling() {
 
         Observable
-                .create(emitter -> this.eventListeners.add(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
+                .create(emitter -> register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
                     if (StoragePool.SHIP.equals(storageEvent.getStoragePool()) || StoragePool.FLEETCARRIER.equals(storageEvent.getStoragePool())) {
                         emitter.onNext(storageEvent);
                     }
@@ -95,11 +95,11 @@ public class HorizonsCommoditiesOverview extends VBox implements DestroyableTemp
                 .observeOn(Schedulers.io())
                 .subscribe(storageEvent -> Platform.runLater(this::update));
 
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
+        register(EventService.addListener(true, this, HorizonsCommoditiesSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
             Platform.runLater(this::update);
         }));
-        this.eventListeners.add(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
+        register(EventService.addListener(true, this, MarketUpdatedEvent.class, marketUpdatedEvent -> {
             Platform.runLater(this::update);
         }));
     }

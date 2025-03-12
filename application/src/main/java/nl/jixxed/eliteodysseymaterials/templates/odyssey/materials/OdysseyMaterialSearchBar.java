@@ -131,14 +131,14 @@ class OdysseyMaterialSearchBar extends HBox {
 
     private void initEventHandling() {
         //hack for component resizing on other fontsizes
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
             this.styleProperty().set(fontStyle);
             this.showMaterialsComboBox.styleProperty().set(fontStyle);
             this.textField.styleProperty().set(fontStyle);
             this.sortMaterialsComboBox.styleProperty().set(fontStyle);
         }));
-        this.eventListeners.add(EventService.addListener(true, this, OdysseyTabSelectedEvent.class, event -> {
+        register(EventService.addListener(true, this, OdysseyTabSelectedEvent.class, event -> {
             if (OdysseyTabs.OVERVIEW.equals(event.getSelectedTab())) {
                 this.textField.setDisable(false);
                 this.showMaterialsComboBox.setDisable(false);
@@ -149,7 +149,7 @@ class OdysseyMaterialSearchBar extends HBox {
                 this.sortMaterialsComboBox.setDisable(true);
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, SoloModeEvent.class, soloModeEvent ->
+        register(EventService.addListener(true, this, SoloModeEvent.class, soloModeEvent ->
                 EventService.publish(new SearchEvent(new Search(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox))))
         ));
     }

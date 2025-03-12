@@ -49,12 +49,12 @@ public class PowerplayTab extends HorizonsTab {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, PowerSearchEvent.class, powerSearchEvent -> {
+        register(EventService.addListener(true, this, PowerSearchEvent.class, powerSearchEvent -> {
             currentSearch = powerSearchEvent.getSearch();
             update(powerSearchEvent.getSearch());
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, PowerplayEvent.class, event -> {
+        register(EventService.addListener(true, this, PowerplayEvent.class, event -> {
             update(currentSearch);
         }));
     }

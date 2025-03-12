@@ -287,7 +287,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> {
+        register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> {
             stopExecutor();
         }));
     }

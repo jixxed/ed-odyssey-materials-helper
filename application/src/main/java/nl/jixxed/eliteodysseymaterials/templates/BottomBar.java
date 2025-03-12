@@ -125,19 +125,19 @@ class BottomBar extends DestroyableHBox implements DestroyableTemplate {
     }
 
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged));
-        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, this::updateLocationLabel));
-        this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel));
-        this.eventListeners.add(EventService.addListener(true, this, EngineerEvent.class, event -> hideLoginRequest()));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAddedEvent.class, this::handleAddedCommander));
-        this.eventListeners.add(EventService.addListener(true, this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed()));
-        this.eventListeners.add(EventService.addListener(true, this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear()));
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px")));
-        this.eventListeners.add(EventService.addListener(true, this, LoadGameEvent.class, this::handleLoadGame));
-        this.eventListeners.add(EventService.addListener(true, this, JournalInitEvent.class, event -> updateApiLabel()));
-        this.eventListeners.add(EventService.addListener(true, this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
-        this.eventListeners.add(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
-        this.eventListeners.add(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+        register(EventService.addListener(true, this, 0, WatchedFolderChangedEvent.class, this::resetAfterWatchedFolderChanged));
+        register(EventService.addListener(true, this, LocationChangedEvent.class, this::updateLocationLabel));
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, this::updateWatchedFileLabel));
+        register(EventService.addListener(true, this, EngineerEvent.class, event -> hideLoginRequest()));
+        register(EventService.addListener(true, this, CommanderAddedEvent.class, this::handleAddedCommander));
+        register(EventService.addListener(true, this, 0, CommanderAllListedEvent.class, event -> afterAllCommandersListed()));
+        register(EventService.addListener(true, this, 0, CommanderResetEvent.class, event -> this.commanderSelect.getItems().clear()));
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> this.commanderSelect.styleProperty().set("-fx-font-size: " + fontSizeEvent.getFontSize() + "px")));
+        register(EventService.addListener(true, this, LoadGameEvent.class, this::handleLoadGame));
+        register(EventService.addListener(true, this, JournalInitEvent.class, event -> updateApiLabel()));
+        register(EventService.addListener(true, this, CapiFleetCarrierEvent.class, event -> updateApiLabel()));
+        register(EventService.addListener(true, this, EDDNQueueEvent.class, event -> eddnTransmitting.set(true)));
+        register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
     }
 
     private void updateEDDNLabel() {

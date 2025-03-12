@@ -45,7 +45,7 @@ public class HorizonsEngineersTab extends HorizonsTab {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsEngineerSearchEvent.class, horizonsEngineerSearchEvent -> {
+        register(EventService.addListener(true, this, HorizonsEngineerSearchEvent.class, horizonsEngineerSearchEvent -> {
             update(horizonsEngineerSearchEvent.getSearch());
         }));
     }

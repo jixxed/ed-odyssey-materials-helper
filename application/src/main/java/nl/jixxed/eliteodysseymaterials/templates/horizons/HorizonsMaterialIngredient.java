@@ -74,8 +74,8 @@ public class HorizonsMaterialIngredient extends Ingredient implements Destroyabl
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
-        this.eventListeners.add(EventService.addListener(true, this, StorageEvent.class, evt -> {
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
+        register(EventService.addListener(true, this, StorageEvent.class, evt -> {
             if (evt.getStoragePool().equals(StoragePool.SHIP)) {
                 this.update();
             }

@@ -128,7 +128,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableTempla
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, OdysseyBartenderMaterialSelectedEvent.class, odysseyBartenderMaterialSelectedEvent -> {
+        register(EventService.addListener(true, this, OdysseyBartenderMaterialSelectedEvent.class, odysseyBartenderMaterialSelectedEvent -> {
             this.detailView.set(true);
             this.title.textProperty().bind(LocaleService.getStringBinding("tabs.bartender.select.material.trade"));
             final OdysseyBartenderMaterial odysseyBartenderMaterial = odysseyBartenderMaterialSelectedEvent.getOdysseyBartenderMaterial();
@@ -149,7 +149,7 @@ public class OdysseyBartenderTab extends OdysseyTab implements DestroyableTempla
             }
 
         }));
-        this.eventListeners.add(EventService.addListener(true, this, 9, CommanderSelectedEvent.class, event -> {
+        register(EventService.addListener(true, this, 9, CommanderSelectedEvent.class, event -> {
             resetView();
         }));
     }

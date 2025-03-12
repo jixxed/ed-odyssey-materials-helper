@@ -48,7 +48,7 @@ public class OdysseyEngineersTab extends OdysseyTab {
 
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, OdysseyEngineerSearchEvent.class, odysseyEngineerSearchEvent -> {
+        register(EventService.addListener(true, this, OdysseyEngineerSearchEvent.class, odysseyEngineerSearchEvent -> {
             update(odysseyEngineerSearchEvent.getSearch());
         }));
     }

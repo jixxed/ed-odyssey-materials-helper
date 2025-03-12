@@ -66,7 +66,7 @@ public class PowerplayCard extends VBox {
     }
 
     private void initEventHandling(final Power engineer) {
-        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent -> {
+        register(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent -> {
             if (!Power.ALL.equals(this.power)) {
                 this.engineerDistance.setText("(" + Formatters.NUMBER_FORMAT_2.format(
                         engineer.getDistance(
@@ -77,7 +77,7 @@ public class PowerplayCard extends VBox {
                 ) + "Ly)");
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
+        register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
                 this.update(powerplayEvent.getPower(), powerplayEvent.getMerits(), powerplayEvent.getRank())));
     }
 

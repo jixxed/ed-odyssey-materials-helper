@@ -64,7 +64,7 @@ public class RechargeRangeIndicator extends VBox {
     }
 
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             update();
         }));
     }

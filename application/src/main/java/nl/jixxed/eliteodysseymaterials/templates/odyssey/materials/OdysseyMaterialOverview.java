@@ -84,13 +84,13 @@ public class OdysseyMaterialOverview extends VBox {
 
     private void initEventHandling() {
 
-        this.eventListeners.add(EventService.addListener(true, this, IrrelevantMaterialOverrideEvent.class, event -> {
+        register(EventService.addListener(true, this, IrrelevantMaterialOverrideEvent.class, event -> {
             Platform.runLater(() -> {
                 this.updateContent(this.currentSearch);
                 layoutChildren();
             });
         }));
-        this.eventListeners.add(EventService.addListener(true, this, OrientationChangeEvent.class, orientationChangeEvent -> {
+        register(EventService.addListener(true, this, OrientationChangeEvent.class, orientationChangeEvent -> {
             final Orientation orientation = orientationChangeEvent.getMaterialOrientation().getOrientation();
             this.assetChemicalFlow.setOrientation(orientation);
             this.assetCircuitFlow.setOrientation(orientation);
@@ -99,7 +99,7 @@ public class OdysseyMaterialOverview extends VBox {
             this.dataFlow.setOrientation(orientation);
             Platform.runLater(() -> this.updateContent(this.currentSearch));
         }));
-        this.eventListeners.add(EventService.addListener(true, this, 1, SearchEvent.class, searchEvent -> {
+        register(EventService.addListener(true, this, 1, SearchEvent.class, searchEvent -> {
             this.currentSearch = searchEvent.getSearch();
             Platform.runLater(() -> {
                 this.updateContent(this.currentSearch);
@@ -107,9 +107,9 @@ public class OdysseyMaterialOverview extends VBox {
             });
 
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch))));
+        register(EventService.addListener(true, this, CommanderResetEvent.class, event -> Platform.runLater(() -> this.updateContent(this.currentSearch))));
         Observable
-                .create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
+                .create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> register(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> {
                     if (JournalEventType.BACKPACK.equals(journalProcessedEvent.getJournalEventType())
                             || JournalEventType.EMBARK.equals(journalProcessedEvent.getJournalEventType())
                             || JournalEventType.SHIPLOCKER.equals(journalProcessedEvent.getJournalEventType())) {

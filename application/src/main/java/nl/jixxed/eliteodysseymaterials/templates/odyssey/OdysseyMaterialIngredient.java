@@ -61,7 +61,7 @@ public class OdysseyMaterialIngredient extends Ingredient {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
     }
 
     private void initComponents() {

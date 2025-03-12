@@ -240,21 +240,21 @@ public class ControlsLayer extends AnchorPane implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, horizonsWishlistSelectedEvent -> {
+        register(EventService.addListener(true, this, HorizonsWishlistSelectedEvent.class, horizonsWishlistSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
 
-        this.eventListeners.add(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
+        register(EventService.addListener(true, this, 9, ShipLoadoutEvent.class, event -> {
             EventService.publish(new HorizonsShipSelectedEvent(this.shipSelect.getSelectionModel().getSelectedItem().getUuid()));
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent -> {
+        register(EventService.addListener(true, this, HorizonsShipChangedEvent.class, horizonsShipChangedEvent -> {
             this.activeShipUUID = horizonsShipChangedEvent.getShipUUID();
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
+        register(EventService.addListener(true, this, 0, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander()
                     .flatMap(commander -> ShipService.getShipConfigurations(commander).getSelectedShipConfiguration())
                     .ifPresent(configuration -> APPLICATION_STATE.setShip(ShipMapper.toShip(configuration)));
@@ -262,7 +262,7 @@ public class ControlsLayer extends AnchorPane implements DestroyableTemplate {
             EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             final Optional<ShipConfiguration> shipConfiguration = ShipService.getShipConfigurations(commanderSelectedEvent.getCommander()).getSelectedShipConfiguration();
             this.activeShipUUID = shipConfiguration.map(ShipConfiguration::getUuid).orElse(null);
             refreshShipSelect();
@@ -270,12 +270,12 @@ public class ControlsLayer extends AnchorPane implements DestroyableTemplate {
             EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        register(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             refreshShipSelect();
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
         }));
 
-        this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
+        register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_HORIZONS_SHIP) || importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_SLEF)) {
                 refreshShipSelect();
                 EventService.publish(new HorizonsShipChangedEvent(this.activeShipUUID));

@@ -58,30 +58,30 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
     @Override
     public void initEventHandling() {
 
-        this.eventListeners.add(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
+        register(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistSelectedEvent -> {
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
         }));
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, event -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, LanguageChangedEvent.class, event -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, LoadoutSetSelectedEvent.class, loadoutSetSelectedEvent -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, LoadoutRemovedEvent.class, loadoutRemovedEvent -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, LoadoutMovedEvent.class, loadoutMovedEvent -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, event -> refreshContent()));
+        register(EventService.addListener(true, this, LanguageChangedEvent.class, event -> refreshContent()));
+        register(EventService.addListener(true, this, LoadoutSetSelectedEvent.class, loadoutSetSelectedEvent -> refreshContent()));
+        register(EventService.addListener(true, this, LoadoutRemovedEvent.class, loadoutRemovedEvent -> refreshContent()));
+        register(EventService.addListener(true, this, LoadoutMovedEvent.class, loadoutMovedEvent -> refreshContent()));
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
             refreshLoadoutSetSelect();
             refreshContent();
             loadCommanderWishlists(commanderSelectedEvent.getCommander());
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        register(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             refreshLoadoutSetSelect();
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
         }));
-        this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
+        register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_LOADOUT)) {
                 refreshLoadoutSetSelect();
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, 9, LoadoutEvent.class, event -> {
+        register(EventService.addListener(true, this, 9, LoadoutEvent.class, event -> {
             refreshCurrentLoadout();
         }));
 

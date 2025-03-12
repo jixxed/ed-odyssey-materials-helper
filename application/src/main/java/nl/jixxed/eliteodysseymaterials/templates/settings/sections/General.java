@@ -102,10 +102,10 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.journalSelectButton, this.fontsizeSelect, this.languageSelect);
         }));
-        this.eventListeners.add(EventService.addStaticListener(true, TerminateApplicationEvent.class, event -> {
+        register(EventService.addStaticListener(true, TerminateApplicationEvent.class, event -> {
             executorService.shutdownNow();
         }));
     }

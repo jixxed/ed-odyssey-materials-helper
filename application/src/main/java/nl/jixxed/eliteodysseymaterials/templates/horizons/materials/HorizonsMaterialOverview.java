@@ -131,7 +131,7 @@ public class HorizonsMaterialOverview extends VBox implements DestroyableTemplat
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, HorizonsMaterialSearchEvent.class, horizonsCommoditiesSearchEvent -> {
+        register(EventService.addListener(true, this, HorizonsMaterialSearchEvent.class, horizonsCommoditiesSearchEvent -> {
             this.currentSearch = horizonsCommoditiesSearchEvent.getSearch();
             Platform.runLater(this::update);
         }));

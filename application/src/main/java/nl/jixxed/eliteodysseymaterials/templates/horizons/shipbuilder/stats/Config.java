@@ -230,7 +230,7 @@ public class Config extends Stats implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, event -> {
+        register(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, event -> {
             double maxFuelReserve = this.getShip().map(Ship::getMaxFuelReserve).orElse(0D);
             int maxFuel = this.getShip().map(Ship::getMaxFuel).orElse(0D).intValue();
             int maxCargo = this.getShip().map(Ship::getMaxCargo).orElse(0D).intValue();
@@ -248,7 +248,7 @@ public class Config extends Stats implements DestroyableTemplate {
             this.live.setSelected(this.live.isSelected() && isCurrentShip());
             this.live.setDisable(!isCurrentShip());
         }));
-        eventListeners.add(EventService.addListener(true, this, StatusEvent.class, event -> {
+        register(EventService.addListener(true, this, StatusEvent.class, event -> {
             if(ApplicationState.getInstance().isLiveStats()) {
                 updateConfig(
                         event.getFuelCapacity(),

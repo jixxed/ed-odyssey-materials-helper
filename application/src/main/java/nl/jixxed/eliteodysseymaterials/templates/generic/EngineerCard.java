@@ -68,7 +68,7 @@ public class EngineerCard extends VBox {
     }
 
     private void initEventHandling(final Engineer engineer) {
-        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent ->
+        register(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent ->
                 this.engineerDistance.setText("(" + Formatters.NUMBER_FORMAT_2.format(
                         engineer.getDistance(
                                 locationChangedEvent.getCurrentStarSystem().getX(),

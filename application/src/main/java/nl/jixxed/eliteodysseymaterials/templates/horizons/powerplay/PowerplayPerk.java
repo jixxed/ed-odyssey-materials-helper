@@ -82,7 +82,7 @@ public class PowerplayPerk extends VBox implements DestroyableTemplate {
 
     @Override
     public void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
+        register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
                 this.update()));
     }
 

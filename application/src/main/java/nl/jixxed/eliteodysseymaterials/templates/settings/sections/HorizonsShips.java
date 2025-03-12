@@ -77,13 +77,13 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableTemplat
 
     @Override
     public void initEventHandling() {
-        eventListeners.add(EventService.addStaticListener(true, 0, LegacyModuleSavedEvent.class, legacyModuleSavedEvent -> {
+        register(EventService.addStaticListener(true, 0, LegacyModuleSavedEvent.class, legacyModuleSavedEvent -> {
             updateModules();
         }));
-        eventListeners.add(EventService.addStaticListener(true, 0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
+        register(EventService.addStaticListener(true, 0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
             updateModules();
         }));
-        eventListeners.add(EventService.addStaticListener(true, 0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
+        register(EventService.addStaticListener(true, 0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> updateModules()
             );
         }));

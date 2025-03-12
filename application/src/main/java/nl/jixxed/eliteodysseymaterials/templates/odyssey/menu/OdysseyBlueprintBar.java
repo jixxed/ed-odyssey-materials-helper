@@ -180,7 +180,7 @@ class OdysseyBlueprintBar extends Accordion implements DestroyableTemplate {
     private Map<OdysseyBlueprintName, Node> createRecipeContent(final Map.Entry<BlueprintCategory, Map<OdysseyBlueprintName, ? extends OdysseyBlueprint>> recipesEntry, final ComboBox<OdysseyBlueprintName> comboBox, final TitledPane categoryTitledPane) {
         final Map<OdysseyBlueprintName, Node> contents = new EnumMap<>(OdysseyBlueprintName.class);
         recipesEntry.getValue().forEach((key, value) -> {
-            this.eventListeners.add(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
+            register(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> {
                 if (blueprintClickEvent.getBlueprintName().equals(key)) {
                     comboBox.getSelectionModel().select(key);
                     this.setExpandedPane(categoryTitledPane);

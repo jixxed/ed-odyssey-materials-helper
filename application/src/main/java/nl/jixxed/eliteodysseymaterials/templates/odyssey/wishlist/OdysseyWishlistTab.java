@@ -310,7 +310,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
                 .withContent(this.content)
                 .build();
         this.setContent(this.scrollPane);
-        Observable.create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> this.eventListeners.add(EventService.addListener(true, this, JournalLineProcessedEvent.class, emitter::onNext)))
+        Observable.create((ObservableEmitter<JournalLineProcessedEvent> emitter) -> register(EventService.addListener(true, this, JournalLineProcessedEvent.class, emitter::onNext)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(this::refreshContent));
@@ -357,21 +357,21 @@ public class OdysseyWishlistTab extends OdysseyTab {
     }
 
     private void initEventHandling() {
-        this.eventListeners.add(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
-        this.eventListeners.add(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistChangedEvent -> {
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizingHack(fontSizeEvent.getFontSize())));
+        register(EventService.addListener(true, this, WishlistSelectedEvent.class, wishlistChangedEvent -> {
             refreshWishlistBlueprints();
             refreshWishlistRecipes();
             refreshBlueprintOverview();
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.activeWishlistUUID));
         }));
-        this.eventListeners.add(EventService.addListener(true, this, WishlistChangedEvent.class, wishlistChangedEvent -> {
+        register(EventService.addListener(true, this, WishlistChangedEvent.class, wishlistChangedEvent -> {
             this.activeWishlistUUID = wishlistChangedEvent.getWishlistUUID();
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> this.wishlistSize = WishlistService.getWishlists(commander).getWishlist(this.activeWishlistUUID).getItems().size());
 
             this.textProperty().bind(LocaleService.getSupplierStringBinding("tabs.wishlist", () -> (this.wishlistSize > 0) ? " (" + this.wishlistSize + ")" : ""));
         }));
-        this.eventListeners.add(EventService.addListener(true, this, WishlistBlueprintEvent.class, wishlistEvent ->
+        register(EventService.addListener(true, this, WishlistBlueprintEvent.class, wishlistEvent ->
         {
             if (Action.REMOVED.equals(wishlistEvent.getAction())) {
                 this.wishlistBlueprints.stream()
@@ -397,7 +397,7 @@ public class OdysseyWishlistTab extends OdysseyTab {
             }
             refreshContent();
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, commanderSelectedEvent ->
         {
             final Wishlist selectedWishlist = WishlistService.getWishlists(commanderSelectedEvent.getCommander()).getSelectedWishlist();
             this.activeWishlistUUID = selectedWishlist.getUuid();
@@ -412,31 +412,31 @@ public class OdysseyWishlistTab extends OdysseyTab {
             refreshContent();
             EventService.publish(new WishlistChangedEvent(this.activeWishlistUUID));
         }));
-        this.eventListeners.add(EventService.addListener(true, this, LanguageChangedEvent.class, languageChangedEvent ->
+        register(EventService.addListener(true, this, LanguageChangedEvent.class, languageChangedEvent ->
         {
             refreshWishlistSelect();
         }));
-        this.eventListeners.add(EventService.addListener(true, this, WishlistCreatedEvent.class, event ->
+        register(EventService.addListener(true, this, WishlistCreatedEvent.class, event ->
         {
             refreshWishlistSelect();
         }));
-        this.eventListeners.add(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints()));
-        this.eventListeners.add(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent -> refreshContent()));
-        this.eventListeners.add(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
+        register(EventService.addListener(true, this, CommanderAllListedEvent.class, commanderAllListedEvent -> refreshWishlistBlueprints()));
+        register(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent -> refreshContent()));
+        register(EventService.addListener(true, this, ImportResultEvent.class, importResultEvent -> {
             if (importResultEvent.getResult().getResultType().equals(ImportResult.ResultType.SUCCESS_ODYSSEY_WISHLIST)) {
                 refreshWishlistBlueprints();
             }
         }));
-        this.eventListeners.add(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, event -> {
+        register(EventService.addListener(true, this, HideWishlistShortestPathItemEvent.class, event -> {
             final List<OdysseyWishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
             pathBlueprints.forEach(wishlistBlueprint -> wishlistBlueprint.setVisibility(false));
             refreshContent();
         }));
-        this.eventListeners.add(EventService.addListener(true, this, RemoveWishlistShortestPathItemEvent.class, event -> {
+        register(EventService.addListener(true, this, RemoveWishlistShortestPathItemEvent.class, event -> {
             final List<OdysseyWishlistBlueprintTemplate> pathBlueprints = getPathWishlistBlueprints(event.getPathItem());
             pathBlueprints.forEach(OdysseyWishlistBlueprintTemplate::remove);
         }));
-        this.eventListeners.add(EventService.addListener(true, this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent -> {
+        register(EventService.addListener(true, this, OdysseyWishlistSearchEvent.class, odysseyWishlistSearchEvent -> {
             this.currentSearch = odysseyWishlistSearchEvent.getSearch();
             Platform.runLater(this::refreshContent);
         }));
