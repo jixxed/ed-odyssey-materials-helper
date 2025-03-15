@@ -13,7 +13,12 @@
     "StationName" : {
       "title" : "StationName",
       "type" : "string",
-      "examples" : [ "Thoreau Station", "Poisson Plant", "A1A-B2B" ]
+      "examples" : [ "A1A-B2B", "Shinn Enterprise", "$EXT_PANEL_ColonisationShip:#index=1;" ]
+    },
+    "StationName_Localised" : {
+      "title" : "StationName",
+      "type" : "string",
+      "examples" : [ "System Colonisation Ship" ]
     },
     "StationType" : {
       "title" : "StationType",
