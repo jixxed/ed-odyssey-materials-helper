@@ -20,6 +20,7 @@ public class ColonisationProject extends HBox implements Template {
     private ColonisationItem colonisationItem;
     private Consumer<ColonisationItem> callbackSelect;
     private Runnable callbackDelete;
+
     public ColonisationProject(ColonisationItem colonisationItem, Consumer<ColonisationItem> callbackSelect, Runnable callbackDelete) {
         super();
         this.colonisationItem = colonisationItem;
@@ -31,13 +32,19 @@ public class ColonisationProject extends HBox implements Template {
 
     @Override
     public void initComponents() {
-        Button project = ButtonBuilder.builder()
-                .withNonLocalizedText(colonisationItem.getName())
-                .withOnAction(event -> {
-                    callbackSelect.accept(colonisationItem);
-                }).build();
-        this.getChildren().add(project);
-        if(ColonisationItem.ALL != colonisationItem) {
+        if (ColonisationItem.ALL == colonisationItem) {
+            Button project = ButtonBuilder.builder()
+                    .withText(LocaleService.getStringBinding("colonisation.all.projects"))
+                    .withOnAction(event -> {
+                        callbackSelect.accept(colonisationItem);
+                    }).build();
+            this.getChildren().add(project);
+        } else {
+            Button project = ButtonBuilder.builder()
+                    .withNonLocalizedText(colonisationItem.getName())
+                    .withOnAction(event -> {
+                        callbackSelect.accept(colonisationItem);
+                    }).build();
             Button delete = ButtonBuilder.builder()
                     .withNonLocalizedText("X")
                     .withOnAction(event -> {
@@ -57,7 +64,7 @@ public class ColonisationProject extends HBox implements Template {
                         }
 
                     }).build();
-            this.getChildren().add(delete);
+            this.getChildren().addAll(project, delete);
         }
     }
 

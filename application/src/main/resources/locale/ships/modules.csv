@@ -1125,7 +1125,7 @@ ships.module.name.armour.mirrored_surface_composite,Mirrored Surface Composite,,
 ships.module.name.armour.reactive_surface_composite,Reactive Surface Composite,,,Compuesto de Superficie Reactiva,,Composto de Superfície Reativa,Композит с реактивной поверхностью
 ships.module.name.hpt_atventdisruptorpylon_fixed_medium,Guardian Nanite Torpedo Pylon,,,Lanzatorpedos Nanotecnológico Guardián,,Pilone de Torpedo de Nanite Guardian,Торпедная нанитная установка Стражей
 ships.module.name.hpt_atventdisruptorpylon_fixed_large,Guardian Nanite Torpedo Pylon,,,Lanzatorpedos Nanotecnológico Guardián,,Pilone de Torpedo de Nanite Guardian,Торпедная нанитная установка Стражей
-ships.module.name.hpt_human_extraction_fixed_medium,Sub Surface Extraction Missile,,,Misil de Extracción Subterranea,Míssel de Extração Subterrâneo,Ракета для извлечения груза из-под корпуса
+ships.module.name.hpt_human_extraction_fixed_medium,Sub Surface Extraction Missile,,,Misil de Extracción Subterranea,,Míssel de Extração Subterrâneo,Ракета для извлечения груза из-под корпуса
 ships.module.name.modularcargobaydoor,Cargo Bay Door,,,Compuerta de Bodega de Carga,,Porta do compartimento de carga,Люк грузового ковша
 ships.module.name.hpt_causticsinklauncher_turret_tiny,Caustic Sink Launcher,,,Eyector Caústico,,Dissipador Cáustico,Антикоррозионная катапульта
 ships.module.name.hpt_antiunknownshutdown_tiny_v2,TG Pulse Neutraliser,,,Neutralizador de Pulsos Targoide,,Neutralizador de Pulso Thargoid,Нейтрализатор таргоидских импульсов

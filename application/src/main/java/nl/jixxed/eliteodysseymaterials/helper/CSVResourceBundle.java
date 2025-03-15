@@ -44,6 +44,10 @@ public class CSVResourceBundle extends ResourceBundle {
                     }
                 });
 
+            } catch (final IllegalStateException e) {
+                log.error(resourceBundle);
+                log.error(e.getMessage(), e);
+                throw new IllegalArgumentException(e);
             } catch (final IOException e) {
                 throw new IllegalArgumentException(e);
             }

@@ -22,7 +22,7 @@ public class ColonisationItem {
     @JsonIgnore
     public static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     @JsonIgnore
-    public static final ColonisationItem ALL = new ColonisationItem("0", "All colonization projects", null, new HashMap<>());
+    public static final ColonisationItem ALL = new ColonisationItem("0", "All colonisation projects", null, new HashMap<>());
     @EqualsAndHashCode.Include
     private String uuid = UUID.randomUUID().toString();
     private String name;
