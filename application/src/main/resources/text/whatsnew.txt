@@ -1,3 +1,8 @@
+Version 2.145
+-------------
+Add StationName_Localised to Location and Docking related journal events
+Russian and Spanish localisation updates(thnx RetroPaladin & Jugom!)
+
 Version 2.144
 -------------
 Rolled back account switching changes

@@ -26,7 +26,7 @@ public class LocationMessageProcessor implements MessageProcessor<Location> {
     }
     @Override
     public void process(final Location event) {
-        final String station = event.getStationName().orElse("");
+        final String station = event.getStationName_Localised().orElseGet(()-> event.getStationName().orElse(""));
         final String body = event.getBody();
         final String starSystem = event.getStarSystem();
         final Economy economy = Economy.forKey(event.getSystemEconomy());

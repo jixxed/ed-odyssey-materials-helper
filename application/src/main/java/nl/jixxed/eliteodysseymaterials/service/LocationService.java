@@ -52,7 +52,7 @@ public class LocationService {
             notifyListeners();
         }));
         EVENT_LISTENERS.add(EventService.addStaticListener(DockedJournalEvent.class, event -> {//Always player controlled
-            station = event.getDocked().getStationName();
+            station = event.getDocked().getStationName_Localised().orElseGet(() -> event.getDocked().getStationName());
             marketID = event.getDocked().getMarketID();
             notifyListeners();
         }));
