@@ -4,9 +4,8 @@ import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
@@ -14,38 +13,36 @@ import nl.jixxed.eliteodysseymaterials.enums.Asset;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class OdysseyMaterialIngredient extends Ingredient {
+public class OdysseyMaterialIngredient extends Ingredient implements DestroyableEventTemplate {
     private static final String INGREDIENT_WITH_AMOUNT_CLASS = "ingredient-with-amount";
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
     @EqualsAndHashCode.Include
     private final OdysseyStorageType storageType;
+    @Getter
     @EqualsAndHashCode.Include
     private final OdysseyMaterial odysseyMaterial;
+    @Getter
     private final Integer leftAmount;
     private Integer rightAmount;
 
-    private Label nameLabel;
+    private DestroyableLabel nameLabel;
     private DestroyableResizableImageView image;
-    private Label leftAmountLabel;
-    private Label rightAmountLabel;
-    private Label leftDescriptionLabel;
-    private Label rightDescriptionLabel;
-    private HBox leftHBox;
-    private HBox rightHBox;
-    private HBox firstLine;
-    private Region region;
-    private HBox secondLine;
-    private Region region2;
+    private DestroyableLabel leftAmountLabel;
+    private DestroyableLabel rightAmountLabel;
+    private DestroyableLabel rightDescriptionLabel;
 
 
     public OdysseyMaterialIngredient(final OdysseyStorageType storageType, final OdysseyMaterial odysseyMaterial, final Integer leftAmount, final Integer rightAmount) {
@@ -60,32 +57,47 @@ public class OdysseyMaterialIngredient extends Ingredient {
         initEventHandling();
     }
 
-    private void initEventHandling() {
-        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> this.update()));
-    }
-
-    private void initComponents() {
-        this.nameLabel = LabelBuilder.builder().withStyleClass("ingredient-name").withText(LocaleService.getStringBinding(this.odysseyMaterial.getLocalizationKey())).build();
+    public void initComponents() {
+        this.nameLabel = LabelBuilder.builder()
+                .withStyleClass("ingredient-name")
+                .withText(this.odysseyMaterial.getLocalizationKey())
+                .build();
         initImage();
 
-        this.leftAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-required").build();
-        this.rightAmountLabel = LabelBuilder.builder().withStyleClass("ingredient-available").build();
-        this.leftDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.required")).build();
-        this.rightDescriptionLabel = LabelBuilder.builder().withStyleClass("ingredient-quantity-label").withText(LocaleService.getStringBinding("blueprint.header.available")).build();
+        this.leftAmountLabel = LabelBuilder.builder()
+                .withStyleClass("ingredient-required")
+                .withNonLocalizedText("0")
+                .build();
+        this.rightAmountLabel = LabelBuilder.builder()
+                .withStyleClass("ingredient-available")
+                .withNonLocalizedText("0")
+                .build();
+        DestroyableLabel leftDescriptionLabel = LabelBuilder.builder()
+                .withStyleClass("ingredient-quantity-label")
+                .withText("blueprint.header.required")
+                .build();
+        this.rightDescriptionLabel = LabelBuilder.builder()
+                .withStyleClass("ingredient-quantity-label")
+                .withText("blueprint.header.available")
+                .build();
 
-        this.leftHBox = BoxBuilder.builder().withNodes(this.leftDescriptionLabel, this.leftAmountLabel).withStyleClass("ingredient-quantity-section").buildHBox();
-        this.rightHBox = BoxBuilder.builder().withNodes(this.rightAmountLabel, this.rightDescriptionLabel).withStyleClass("ingredient-quantity-section").buildHBox();
+        DestroyableHBox leftHBox = BoxBuilder.builder()
+                .withNodes(leftDescriptionLabel, this.leftAmountLabel)
+                .withStyleClass("ingredient-quantity-section").buildHBox();
+        DestroyableHBox rightHBox = BoxBuilder.builder()
+                .withNodes(this.rightAmountLabel, this.rightDescriptionLabel)
+                .withStyleClass("ingredient-quantity-section").buildHBox();
         this.leftAmountLabel.setText(this.leftAmount.toString());
         HBox.setHgrow(this.leftAmountLabel, Priority.ALWAYS);
         this.rightAmountLabel.setText(this.rightAmount.toString());
-        this.region = new Region();
-        HBox.setHgrow(this.region, Priority.ALWAYS);
-        this.region2 = new Region();
-        VBox.setVgrow(this.region2, Priority.ALWAYS);
 
-        this.firstLine = BoxBuilder.builder().withNodes(this.image, this.nameLabel).buildHBox();
-        this.secondLine = new HBox(this.leftHBox, this.region, this.rightHBox);
-        this.getChildren().addAll(this.firstLine, this.region2, this.secondLine);
+        DestroyableHBox firstLine = BoxBuilder.builder()
+                .withNodes(this.image, this.nameLabel)
+                .buildHBox();
+        DestroyableHBox secondLine = BoxBuilder.builder()
+                .withNodes(leftHBox, new GrowingRegion(), rightHBox)
+                .buildHBox();
+        this.getNodes().addAll(firstLine, new GrowingRegion(), secondLine);
 
         MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
         this.getStyleClass().add("ingredient");
@@ -93,9 +105,14 @@ public class OdysseyMaterialIngredient extends Ingredient {
         update();
     }
 
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, _ -> this.update()));
+    }
+
     @SuppressWarnings("java:S6205")
     private void initImage() {
-        final ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder().withStyleClass("ingredient-image");
+        final ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
+                .withStyleClass("ingredient-image");
         switch (this.storageType) {
             case DATA -> imageViewBuilder.withImage("/images/material/data.png");
             case GOOD -> imageViewBuilder.withImage("/images/material/good.png");
@@ -140,16 +157,8 @@ public class OdysseyMaterialIngredient extends Ingredient {
         return this.nameLabel.getText();
     }
 
-    public OdysseyMaterial getOdysseyMaterial() {
-        return this.odysseyMaterial;
-    }
-
     protected Label getLeftAmountLabel() {
         return this.leftAmountLabel;
-    }
-
-    public Integer getLeftAmount() {
-        return this.leftAmount;
     }
 
     protected Integer getRightAmount() {
@@ -160,24 +169,8 @@ public class OdysseyMaterialIngredient extends Ingredient {
         return this.rightAmountLabel;
     }
 
-
-    protected void setLeftDescriptionLabel(final StringBinding leftDescriptionLabel) {
-        this.leftDescriptionLabel.textProperty().bind(leftDescriptionLabel);
-    }
-
     protected void setRightDescriptionLabel(final StringBinding rightDescriptionLabel) {
-        this.rightDescriptionLabel.textProperty().bind(rightDescriptionLabel);
+        this.rightDescriptionLabel.addBinding(this.rightDescriptionLabel.textProperty(), rightDescriptionLabel);
     }
 
-    protected Label getLeftDescriptionLabel() {
-        return this.leftDescriptionLabel;
-    }
-
-    protected Label getRightDescriptionLabel() {
-        return this.rightDescriptionLabel;
-    }
-
-    public void onDestroy() {
-        this.eventListeners.forEach(EventService::removeListener);
-    }
 }

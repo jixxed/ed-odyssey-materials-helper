@@ -8,24 +8,30 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractLabeledBuilder<T extends AbstractLabeledBuilder<T>> extends AbstractControlBuilder<T> {
     private StringBinding stringBinding;
     private String nonLocalizedText;
     private DestroyableResizableImageView graphic;
+    private Boolean mnemonicParsing;
 
     public T withText(final StringBinding stringBinding) {
         this.stringBinding = stringBinding;
         return (T) this;
     }
 
-    public T withText(final String localeKey, Object ... parameters) {
+    public T withText(final String localeKey, Object... parameters) {
         this.stringBinding = LocaleService.getStringBinding(localeKey, parameters);
         return (T) this;
     }
 
     public T withNonLocalizedText(final String nonLocalizedText) {
         this.nonLocalizedText = nonLocalizedText;
+        return (T) this;
+    }
+
+    public T withMnemonicParsing(boolean mnemonicParsing) {
+        this.mnemonicParsing = mnemonicParsing;
         return (T) this;
     }
 
@@ -43,6 +49,9 @@ public abstract class AbstractLabeledBuilder<T extends AbstractLabeledBuilder<T>
         }
         if (this.graphic != null) {
             labeled.setGraphic(this.graphic);
+        }
+        if (this.mnemonicParsing != null) {
+            labeled.setMnemonicParsing(this.mnemonicParsing);
         }
         return labeled;
     }

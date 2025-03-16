@@ -30,29 +30,43 @@ public class ShipAttribute {
 
     private void addAttribute(ShipModule shipModule, HorizonsModifier modifier) {
         final Object originalAttributeValue = shipModule.getOriginalAttributeValue(modifier);
-        valuesLine = BoxBuilder.builder().withStyleClass("settings-legacy-module-details-label-values").withNodes().buildHBox();
+        valuesLine = BoxBuilder.builder()
+                .withStyleClass("settings-legacy-module-details-label-values")
+                .withNodes().buildHBox();
 
-        title = LabelBuilder.builder().withStyleClass("settings-legacy-module-details-label-title").withText(LocaleService.getStringBinding(modifier.getLocalizationKey())).build();
+        title = LabelBuilder.builder()
+                .withStyleClass("settings-legacy-module-details-label-title")
+                .withText(LocaleService.getStringBinding(modifier.getLocalizationKey()))
+                .build();
         if (originalAttributeValue instanceof Double originalValue) {
-            final Object modified= shipModule.getModifiers().get(modifier);
+            final Object modified = shipModule.getModifiers().get(modifier);
             final Double currentValue = modified != null ? Double.valueOf(modified.toString()) : originalValue;
-            final DestroyableLabel value = LabelBuilder.builder().withStyleClass("settings-legacy-module-details-label").withNonLocalizedText(modifier.format(currentValue)).build();
+            final DestroyableLabel value = LabelBuilder.builder()
+                    .withStyleClass("settings-legacy-module-details-label")
+                    .withNonLocalizedText(modifier.format(currentValue))
+                    .build();
             if (currentValue > originalValue && modifier.isHigherBetter() || currentValue < originalValue && !modifier.isHigherBetter()) {
                 value.getStyleClass().add("settings-legacy-module-details-label-green");
             } else if (currentValue < originalValue && modifier.isHigherBetter() || currentValue > originalValue && !modifier.isHigherBetter()) {
                 value.getStyleClass().add("settings-legacy-module-details-label-red");
             }
-            valuesLine.getChildren().addAll(
-                    LabelBuilder.builder().withStyleClass("settings-legacy-module-details-label").withNonLocalizedText(modifier.format(originalAttributeValue)).build()
+            valuesLine.getNodes().addAll(
+                    LabelBuilder.builder()
+                            .withStyleClass("settings-legacy-module-details-label")
+                            .withNonLocalizedText(modifier.format(originalAttributeValue))
+                            .build()
             );
             if (isModifiedAttribute(originalValue, currentValue)) {
-                valuesLine.getChildren().addAll(
-                        LabelBuilder.builder().withNonLocalizedText(" → ").build(),
+                valuesLine.getNodes().addAll(
+                        LabelBuilder.builder()
+                                .withNonLocalizedText(" → ")
+                                .build(),
                         value
                 );
             }
-            textField = TextFieldBuilder.builder().withNonLocalizedText(currentValue.toString())
-                    .withTextProperty((observable, oldValue, newValue) -> {
+            textField = TextFieldBuilder.builder()
+                    .withNonLocalizedText(currentValue.toString())
+                    .withTextProperty((_, _, newValue) -> {
                         textField.getStyleClass().removeAll("settings-legacy-module-valid", "settings-legacy-module-invalid");
                         try {
                             final double parsedValue = Double.parseDouble(newValue);
@@ -68,18 +82,26 @@ public class ShipAttribute {
         if (originalAttributeValue instanceof Boolean originalValue) {
             final Object modified = shipModule.getModifiers().get(modifier);
             final Boolean currentValue = modified != null ? Boolean.TRUE.equals(modified) : originalValue;
-            final DestroyableLabel value = LabelBuilder.builder().withStyleClass("settings-legacy-module-details-label").withNonLocalizedText(modifier.format(currentValue)).build();
+            final DestroyableLabel value = LabelBuilder.builder()
+                    .withStyleClass("settings-legacy-module-details-label")
+                    .withNonLocalizedText(modifier.format(currentValue))
+                    .build();
             if (Boolean.TRUE.equals(currentValue)) {
                 value.getStyleClass().add("settings-legacy-module-details-label-green");
             } else if (Boolean.FALSE.equals(currentValue)) {
                 value.getStyleClass().add("settings-legacy-module-details-label-red");
             }
-            valuesLine.getChildren().addAll(
-                    LabelBuilder.builder().withStyleClass("settings-legacy-module-details-label").withNonLocalizedText(modifier.format(originalAttributeValue)).build()
+            valuesLine.getNodes().addAll(
+                    LabelBuilder.builder()
+                            .withStyleClass("settings-legacy-module-details-label")
+                            .withNonLocalizedText(modifier.format(originalAttributeValue))
+                            .build()
             );
             if (!originalValue.equals(currentValue)) {
-                valuesLine.getChildren().addAll(
-                        LabelBuilder.builder().withNonLocalizedText(" → ").build(),
+                valuesLine.getNodes().addAll(
+                        LabelBuilder.builder()
+                                .withNonLocalizedText(" → ")
+                                .build(),
                         value
                 );
             }

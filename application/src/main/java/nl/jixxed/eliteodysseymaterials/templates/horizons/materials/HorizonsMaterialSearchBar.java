@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
@@ -24,16 +25,20 @@ import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsMaterialSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsTabSelectedEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
 
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public
-class HorizonsMaterialSearchBar extends HBox {
+public class HorizonsMaterialSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private TextField textField;
-    private ComboBox<HorizonsMaterialsShow> showMaterialsComboBox;
+    private DestroyableTextField textField;
+    private DestroyableComboBox<HorizonsMaterialsShow> showMaterialsComboBox;
+    private Disposable subscribe;
 
 
     public HorizonsMaterialSearchBar() {
@@ -41,7 +46,7 @@ class HorizonsMaterialSearchBar extends HBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("root");
         initSearchTextField();
         initSearchTextFilter();
@@ -49,7 +54,7 @@ class HorizonsMaterialSearchBar extends HBox {
         setDefaultOptions();
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
-        this.getChildren().addAll(this.textField, this.showMaterialsComboBox);
+        this.getNodes().addAll(this.textField, this.showMaterialsComboBox);
     }
 
     private void applyFontSizingHack() {
@@ -67,24 +72,27 @@ class HorizonsMaterialSearchBar extends HBox {
                 .withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder"))
                 .withFocusTraversable(false)
                 .build();
-        Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
+        subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> Platform.runLater(() -> EventService.publish(new HorizonsMaterialSearchEvent(new HorizonsMaterialsSearch(newValue, getShowOrDefault(this.showMaterialsComboBox))))));
     }
 
     private void initSearchTextFilter() {
-        final Tooltip showMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("search.filter.placeholder")).build();
+        final Tooltip showMaterialsTooltip = TooltipBuilder.builder()
+                .withText("search.filter.placeholder")
+                .build();
         this.showMaterialsComboBox = ComboBoxBuilder.builder(HorizonsMaterialsShow.class)
                 .withStyleClasses("root", "filter-and-sort")
-                .withItemsProperty(LocaleService.getListBinding(HorizonsMaterialsShow.ALL,
+                .withItemsProperty(LocaleService.getListBinding(
+                        HorizonsMaterialsShow.ALL,
                         HorizonsMaterialsShow.RAW,
                         HorizonsMaterialsShow.ENCODED,
                         HorizonsMaterialsShow.MANUFACTURED,
                         HorizonsMaterialsShow.GUARDIAN,
                         HorizonsMaterialsShow.THARGOID,
                         HorizonsMaterialsShow.HUMAN))
-                .withValueChangeListener((options, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new HorizonsMaterialSearchEvent(new HorizonsMaterialsSearch(getQueryOrDefault(this.textField), getShowOrDefault(this.showMaterialsComboBox))));
                         PreferencesService.setPreference("search.horizons.materials.filter", newValue.name());
@@ -97,7 +105,7 @@ class HorizonsMaterialSearchBar extends HBox {
     }
 
 
-    private void initEventHandling() {
+    public void initEventHandling() {
         //hack for component resizing on other fontsizes
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
@@ -129,4 +137,10 @@ class HorizonsMaterialSearchBar extends HBox {
         return (showMaterialsComboBox.getValue() != null) ? showMaterialsComboBox.getValue() : HorizonsMaterialsShow.ALL;
     }
 
+    @Override
+    public void destroyInternal() {
+        if (subscribe != null) {
+            subscribe.dispose();
+        }
+    }
 }

@@ -3,41 +3,35 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.enums.*;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.JournalLineProcessedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.SoloModeEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
-class OdysseyMaterialTotal extends VBox {
+class OdysseyMaterialTotal extends DestroyableVBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String MATERIAL_TOTAL_VALUE_ROW_STYLE_CLASS = "material-total-value-row";
     private static final String MATERIAL_TOTAL_VALUE_IRRELEVANT_ROW_STYLE_CLASS = "material-total-value-irrelevant-row";
     private static final String MATERIAL_TOTAL_VALUE_POWERPLAY_ROW_STYLE_CLASS = "material-total-value-powerplay-row";
+    public static final String MATERIAL_TOTAL_TOTAL_ROW_STYLE_CLASS = "material-total-total-row";
 
-    private final Map<MaterialTotalType, Label> totals = new EnumMap<>(MaterialTotalType.class);
-    private final Map<MaterialTotalType, Label> totalValues = new EnumMap<>(MaterialTotalType.class);
-    private Label name;
+    private final Map<MaterialTotalType, DestroyableLabel> totals = new EnumMap<>(MaterialTotalType.class);
+    private final Map<MaterialTotalType, DestroyableLabel> totalValues = new EnumMap<>(MaterialTotalType.class);
     private final OdysseyStorageType storageType;
     private final MaterialTotalType[] totalTypes;
-    private Label totalValueLabel;
-    private Label subTotalValueLabel;
+    private DestroyableLabel totalValueLabel;
+    private DestroyableLabel subTotalValueLabel;
 
 
     OdysseyMaterialTotal(final OdysseyStorageType storageType, final MaterialTotalType... totalTypes) {
@@ -47,7 +41,7 @@ class OdysseyMaterialTotal extends VBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         initTotalHeader();
         initTotals();
         initSubTotal();
@@ -56,19 +50,40 @@ class OdysseyMaterialTotal extends VBox {
         this.getStyleClass().add("material-total-" + this.storageType.name().toLowerCase());
     }
 
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, _ -> updateTotals()));
+        register(EventService.addListener(true, this, SoloModeEvent.class, _ -> updateTotals()));
+    }
+
     private void initSubTotal() {
-        final Label subTotal = LabelBuilder.builder().withStyleClass("material-total-total-row").withText(LocaleService.getStringBinding(MaterialTotalType.SUB_TOTAL.getLocalizationKey())).build();
-        final Label total = LabelBuilder.builder().withStyleClass("material-total-total-row").withText(LocaleService.getStringBinding(MaterialTotalType.TOTAL.getLocalizationKey())).build();
+        final DestroyableLabel subTotal = LabelBuilder.builder()
+                .withStyleClass(MATERIAL_TOTAL_TOTAL_ROW_STYLE_CLASS)
+                .withText(MaterialTotalType.SUB_TOTAL.getLocalizationKey())
+                .build();
+        final DestroyableLabel total = LabelBuilder.builder()
+                .withStyleClass(MATERIAL_TOTAL_TOTAL_ROW_STYLE_CLASS)
+                .withText(MaterialTotalType.TOTAL.getLocalizationKey())
+                .build();
         this.totals.put(MaterialTotalType.SUB_TOTAL, subTotal);
         this.totals.put(MaterialTotalType.TOTAL, total);
 
-        this.subTotalValueLabel = LabelBuilder.builder().withStyleClass("material-total-total-row").withNonLocalizedText("0").build();
-        this.totalValueLabel = LabelBuilder.builder().withStyleClass("material-total-total-row").withNonLocalizedText("0").build();
+        this.subTotalValueLabel = LabelBuilder.builder()
+                .withStyleClass(MATERIAL_TOTAL_TOTAL_ROW_STYLE_CLASS)
+                .withNonLocalizedText("0")
+                .build();
+        this.totalValueLabel = LabelBuilder.builder()
+                .withStyleClass(MATERIAL_TOTAL_TOTAL_ROW_STYLE_CLASS)
+                .withNonLocalizedText("0")
+                .build();
 
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
-        final HBox subTotalBox = BoxBuilder.builder().withNodes(subTotal, new GrowingRegion(), this.subTotalValueLabel).buildHBox();
-        final HBox totalBox = BoxBuilder.builder().withNodes(total, new GrowingRegion(), this.totalValueLabel).buildHBox();
-        this.getChildren().addAll(totalBox, subTotalBox);
+        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
+        final DestroyableHBox subTotalBox = BoxBuilder.builder()
+                .withNodes(subTotal, new GrowingRegion(), this.subTotalValueLabel)
+                .buildHBox();
+        final DestroyableHBox totalBox = BoxBuilder.builder()
+                .withNodes(total, new GrowingRegion(), this.totalValueLabel)
+                .buildHBox();
+        this.getNodes().addAll(totalBox, subTotalBox);
     }
 
     private void initTotals() {
@@ -76,14 +91,14 @@ class OdysseyMaterialTotal extends VBox {
             if (MaterialTotalType.TOTAL.equals(totalType)) {
                 throw new IllegalArgumentException("TOTAL not supported");
             }
-            final Label totalName = LabelBuilder.builder()
-                    .withText(LocaleService.getStringBinding(totalType.getLocalizationKey()))
+            final DestroyableLabel totalName = LabelBuilder.builder()
+                    .withText(totalType.getLocalizationKey())
                     .withStyleClass(getStyleClass(totalType))
                     .withVisibilityProperty(getVisibility(totalType))
                     .withManagedProperty(getVisibility(totalType))
                     .build();
             this.totals.put(totalType, totalName);
-            final Label totalValue = LabelBuilder.builder()
+            final DestroyableLabel totalValue = LabelBuilder.builder()
                     .withStyleClass(getStyleClass(totalType))
                     .withVisibilityProperty(getVisibility(totalType))
                     .withManagedProperty(getVisibility(totalType))
@@ -92,26 +107,20 @@ class OdysseyMaterialTotal extends VBox {
             this.totalValues.put(totalType, totalValue);
         });
 
-        this.totals.keySet().forEach(key -> {
-            final Region region = new Region();
-            HBox.setHgrow(region, Priority.ALWAYS);
-            this.getChildren().add(new HBox(this.totals.get(key), region, this.totalValues.get(key)));
-        });
-        final Region vRegion = new Region();
-        VBox.setVgrow(vRegion, Priority.ALWAYS);
-        this.getChildren().add(vRegion);
+        this.totals.keySet().forEach(key ->
+                this.getNodes().add(BoxBuilder.builder().withNodes(this.totals.get(key), new GrowingRegion(), this.totalValues.get(key)).buildHBox()));
+        this.getNodes().add(new GrowingRegion());
     }
 
     private ObservableValue<Boolean> getVisibility(MaterialTotalType totalType) {
-        return switch (totalType)
-        {
+        return switch (totalType) {
             case POWERPLAY -> APPLICATION_STATE.getPowerplay();
             default -> new SimpleBooleanProperty(true);
         };
     }
 
     private static String getStyleClass(MaterialTotalType totalType) {
-        return switch (totalType){
+        return switch (totalType) {
             case POWERPLAY -> MATERIAL_TOTAL_VALUE_POWERPLAY_ROW_STYLE_CLASS;
             case IRRELEVANT -> MATERIAL_TOTAL_VALUE_IRRELEVANT_ROW_STYLE_CLASS;
             default -> MATERIAL_TOTAL_VALUE_ROW_STYLE_CLASS;
@@ -119,68 +128,71 @@ class OdysseyMaterialTotal extends VBox {
     }
 
     private void initTotalHeader() {
-        this.name = LabelBuilder.builder()
+        DestroyableLabel name = LabelBuilder.builder()
                 .withStyleClass("material-total-name")
-                .withText(LocaleService.getStringBinding(this.storageType.getLocalizationKey()))
+                .withText(this.storageType.getLocalizationKey())
                 .build();
 
-        this.getChildren().addAll(this.name, new Separator(Orientation.HORIZONTAL));
-    }
-
-    private void initEventHandling() {
-        register(EventService.addListener(true, this, JournalLineProcessedEvent.class, journalProcessedEvent -> updateTotals()));
-        register(EventService.addListener(true, this, SoloModeEvent.class, soloModeEvent -> updateTotals()));
+        this.getNodes().addAll(name, new DestroyableSeparator(Orientation.HORIZONTAL));
     }
 
     private void updateTotals() {
         boolean powerplay = Power.NONE != ApplicationState.getInstance().getPower();
         if (OdysseyStorageType.DATA.equals(this.storageType) || OdysseyStorageType.GOOD.equals(this.storageType)) {
-            final Integer blueprintTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
-                    .filter(material -> (APPLICATION_STATE.getSoloMode())
-                            ? OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) || OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
-                            : OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) || OdysseyBlueprintConstants.isEngineeringIngredient(material.getKey()))
-                    .map(entry -> entry.getValue().getTotalValue())
-                    .reduce(0, Integer::sum);
-            final Integer powerplayTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
-                    .filter(material -> powerplay && material.getKey().isPowerplay())
-                    .map(entry -> entry.getValue().getTotalValue())
-                    .reduce(0, Integer::sum);
-            final Integer irrelevantTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
-                    .filter(material ->
-                            (!powerplay || !material.getKey().isPowerplay()) &&
-                                    (APPLICATION_STATE.getSoloMode()
-                            ? !OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) && !OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
-                            : !OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) && !OdysseyBlueprintConstants.isEngineeringIngredient(material.getKey())))
-                    .map(entry -> entry.getValue().getTotalValue())
-                    .reduce(0, Integer::sum);
-
-            update(MaterialTotalType.BLUEPRINT, blueprintTotal);
-            update(MaterialTotalType.POWERPLAY, powerplayTotal);
-            update(MaterialTotalType.IRRELEVANT, irrelevantTotal);
+            updateDataOrGoods(powerplay);
         } else if (OdysseyStorageType.ASSET.equals(this.storageType)) {
-            final Integer chemicalAssets = Arrays.stream(Asset.values())
-                    .filter(asset -> asset.isType(AssetType.CHEMICAL))
-                    .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
-                    .reduce(0, Integer::sum);
-            final Integer circuitAssets = Arrays.stream(Asset.values())
-                    .filter(asset -> asset.isType(AssetType.CIRCUIT))
-                    .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
-                    .reduce(0, Integer::sum);
-            final Integer techAssets = Arrays.stream(Asset.values())
-                    .filter(asset -> asset.isType(AssetType.TECH))
-                    .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
-                    .reduce(0, Integer::sum);
-            update(MaterialTotalType.CHEMICAL, chemicalAssets);
-            update(MaterialTotalType.CIRCUIT, circuitAssets);
-            update(MaterialTotalType.TECH, techAssets);
+            updateAssets();
         }
         updateTotalsLabels();
+    }
+
+    private void updateAssets() {
+        final Integer chemicalAssets = Arrays.stream(Asset.values())
+                .filter(asset -> asset.isType(AssetType.CHEMICAL))
+                .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
+                .reduce(0, Integer::sum);
+        final Integer circuitAssets = Arrays.stream(Asset.values())
+                .filter(asset -> asset.isType(AssetType.CIRCUIT))
+                .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
+                .reduce(0, Integer::sum);
+        final Integer techAssets = Arrays.stream(Asset.values())
+                .filter(asset -> asset.isType(AssetType.TECH))
+                .map(asset -> StorageService.getMaterialCount(asset, AmountType.TOTAL))
+                .reduce(0, Integer::sum);
+        update(MaterialTotalType.CHEMICAL, chemicalAssets);
+        update(MaterialTotalType.CIRCUIT, circuitAssets);
+        update(MaterialTotalType.TECH, techAssets);
+    }
+
+    private void updateDataOrGoods(boolean powerplay) {
+        final Integer blueprintTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
+                .filter(material -> (APPLICATION_STATE.getSoloMode())
+                        ? OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) || OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                        : OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) || OdysseyBlueprintConstants.isEngineeringIngredient(material.getKey()))
+                .map(entry -> entry.getValue().getTotalValue())
+                .reduce(0, Integer::sum);
+        final Integer powerplayTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
+                .filter(material -> powerplay && material.getKey().isPowerplay())
+                .map(entry -> entry.getValue().getTotalValue())
+                .reduce(0, Integer::sum);
+        final Integer irrelevantTotal = StorageService.getMaterials(this.storageType).entrySet().stream()
+                .filter(material ->
+                        (!powerplay || !material.getKey().isPowerplay()) &&
+                                (APPLICATION_STATE.getSoloMode()
+                                        ? !OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) && !OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(material.getKey())
+                                        : !OdysseyBlueprintConstants.isBlueprintIngredientWithOverride(material.getKey()) && !OdysseyBlueprintConstants.isEngineeringIngredient(material.getKey())))
+                .map(entry -> entry.getValue().getTotalValue())
+                .reduce(0, Integer::sum);
+
+        update(MaterialTotalType.BLUEPRINT, blueprintTotal);
+        update(MaterialTotalType.POWERPLAY, powerplayTotal);
+        update(MaterialTotalType.IRRELEVANT, irrelevantTotal);
     }
 
     private void update(final MaterialTotalType type, final Integer amount) {
 
         if (this.totalValues.containsKey(type)) {
-            final Label label = this.totalValues.get(type);
+            final DestroyableLabel label = this.totalValues.get(type);
             label.setText(amount.toString());
         }
     }

@@ -1,13 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.event.EventHandler;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import lombok.Getter;
-import lombok.Setter;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
@@ -20,69 +16,115 @@ import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PinnedBlueprintService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
-import java.util.function.Consumer;
-
-public class EngineerBlueprintLabel extends HBox implements DestroyableComponent {
+public class EngineerBlueprintLabel extends DestroyableHBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
 
     private final Engineer engineer;
-    private final int rank;
+    private final int blueprintGrade;
     private final boolean exact;
     private final HorizonsBlueprint horizonsBlueprint;
-    @Getter
-    private Label label;
+    private DestroyableLabel label;
     private DestroyableResizableImageView image;
     private DestroyableResizableImageView pinned;
     private Integer currentEngineerRank = 0;
-    @Setter
-    private Consumer<JournalLineProcessedEvent> journalProcessedEventConsumer;
     private boolean dragFlag = false;
 
     public EngineerBlueprintLabel(final Engineer engineer) {
         this(engineer, false, 0);
     }
 
-    public EngineerBlueprintLabel(final Engineer engineer, final boolean exact, final int rank) {
-        this(engineer, null, exact, rank);
+    public EngineerBlueprintLabel(final Engineer engineer, final boolean exact, final int blueprintGrade) {
+        this(engineer, null, exact, blueprintGrade);
     }
 
-    public EngineerBlueprintLabel(final Engineer engineer, final HorizonsBlueprint horizonsBlueprint, final boolean exact, final int rank) {
+    public EngineerBlueprintLabel(final Engineer engineer, final HorizonsBlueprint horizonsBlueprint, final boolean exact, final int blueprintGrade) {
         this.horizonsBlueprint = horizonsBlueprint;
         this.engineer = engineer;
-        this.rank = rank;
+        this.blueprintGrade = blueprintGrade;
         this.exact = exact;
-        this.journalProcessedEventConsumer = event -> {
-            if (exact) {
-                this.updateStyle(APPLICATION_STATE.isEngineerUnlockedExact(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
-            } else {
-                this.updateStyle(APPLICATION_STATE.isEngineerUnlocked(this.engineer), APPLICATION_STATE.getEngineerRank(this.engineer));
-            }
 
-        };
         initComponents();
         initEventHandling();
 
     }
 
+    public void initComponents() {
+        this.getStyleClass().add("engineer-label");
+        this.label = LabelBuilder.builder()
+                .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
+                .build();
+        if (this.engineer.isHorizons()) {
+            addGradeImage();
+            addPinnedImage();
+            this.getStyleClass().add("engineer-label-big");
+        }
+        this.getNodes().add(this.label);
+        if (this.engineer.isHorizons() && this.horizonsBlueprint != null) {
+            final int engineerMaxGrade = HorizonsBlueprintConstants.getEngineerMaxGrade(this.horizonsBlueprint, this.engineer);
+            if (engineerMaxGrade > 0) {
+                this.getNodes().add(LabelBuilder.builder()
+                        .withNonLocalizedText("\u2191" + engineerMaxGrade)
+                        .build());
+            }
+        }
+        if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+            this.registerEventHandler(MouseEvent.MOUSE_CLICKED, getClickMouseEventHandler());
+            this.registerEventHandler(MouseEvent.MOUSE_DRAGGED, getDragMouseEventHandler());
+        }
 
-    private void initEventHandling() {
-        register(EventService.addListener(true, this, EngineerEvent.class, event -> {
-            update();
-        }));
+        update();
+    }
+
+    private EventHandler<MouseEvent> getDragMouseEventHandler() {
+        return event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                this.dragFlag = true;
+            }
+        };
+    }
+
+    private EventHandler<MouseEvent> getClickMouseEventHandler() {
+        return event -> {
+            if (event.getButton().equals(MouseButton.SECONDARY)) {
+                return;
+            }
+            if (!this.dragFlag && event.getClickCount() > 1) {
+                processMultiClick();
+            }
+
+            this.dragFlag = false;
+        };
+    }
+
+    private void addPinnedImage() {
+        this.pinned = ResizableImageViewBuilder.builder()
+                .withStyleClasses("engineer-pinned-image")
+                .withImage("/images/ships/engineers/pinned.png")
+                .build();
+        this.getNodes().add(this.pinned);
+    }
+
+    private void addGradeImage() {
+        this.image = ResizableImageViewBuilder.builder()
+                .withStyleClasses("engineer-grade-image")
+                .build();
+        this.getNodes().add(this.image);
+    }
+
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, EngineerEvent.class, event -> update()));
         register(EventService.addListener(true, this, EngineerPinEvent.class, event -> {
             if (this.engineer.equals(event.getEngineer()) && !this.horizonsBlueprint.equals(event.getHorizonsBlueprint())) {
                 update();
             }
         }));
-        register(EventService.addListener(true, this, CommanderSelectedEvent.class, event -> {
-            update();
-        }));
-        register(EventService.addStaticListener(true, 0, JournalInitEvent.class, event -> {
-            update();
-        }));
+        register(EventService.addListener(true, this, CommanderSelectedEvent.class, event -> update()));
+        register(EventService.addListener(true, this, 0, JournalInitEvent.class, event -> update()));
     }
 
     private void update() {
@@ -98,16 +140,13 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
                 this.image.setImage(ImageService.getImage("/images/ships/engineers/ranks/" + imageString + ".png"));
                 this.currentEngineerRank = engineerRank;
             }
-            if (PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint)) {
-                if (!this.getChildren().contains(this.pinned)) {
-                    this.pinned.setImage(ImageService.getImage("/images/ships/engineers/pinned.png"));
-                    this.getChildren().add(this.pinned);
-                }
-            } else {
-                this.pinned.setImage(null);
-                this.getChildren().remove(this.pinned);
-            }
+            setPinnedVisibility(PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint));
         }
+    }
+
+    private void setPinnedVisibility(boolean visible) {
+        this.pinned.setVisible(visible);
+        this.pinned.setManaged(visible);
     }
 
 
@@ -125,60 +164,13 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
         return imageString;
     }
 
-    private void initComponents() {
-        this.label = LabelBuilder.builder().withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey())).build();
-        this.getStyleClass().add("engineer-label");
-        if (this.engineer.isHorizons()) {
-            this.image = ResizableImageViewBuilder.builder().withStyleClasses("engineer-grade-image").build();
-            this.getChildren().add(this.image);
-            this.pinned = ResizableImageViewBuilder.builder().withStyleClasses("engineer-grade-image").build();
-            this.getStyleClass().add("engineer-label-big");
-        }
-        this.getChildren().add(this.label);
-        if (this.engineer.isHorizons() && this.horizonsBlueprint != null) {
-            final int engineerMaxGrade = HorizonsBlueprintConstants.getEngineerMaxGrade(this.horizonsBlueprint, this.engineer);
-            if (engineerMaxGrade > 0) {
-                this.getChildren().add(LabelBuilder.builder().withNonLocalizedText("\u2191" + engineerMaxGrade).build());
-            }
-        }
-        update();
-
-        if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
-            final EventHandler<MouseEvent> imageDragMouseEventHandler = event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    this.dragFlag = true;
-                }
-            };
-
-            final EventHandler<MouseEvent> imageClickMouseEventHandler = event -> {
-
-                if (event.getButton().equals(MouseButton.SECONDARY)) {
-                    return;
-                }
-                if (!this.dragFlag) {
-                    if (event.getClickCount() == 1) {
-                    } else if (event.getClickCount() > 1) {
-                        processMultiClick();
-                    }
-                }
-                this.dragFlag = false;
-
-            };
-
-            this.registerEventHandler(MouseEvent.MOUSE_CLICKED, imageClickMouseEventHandler);
-            this.registerEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
-
-        }
-    }
 
     private void processMultiClick() {
         if (PinnedBlueprintService.isPinned(this.engineer, this.horizonsBlueprint)) {
             PinnedBlueprintService.unpinBlueprint(this.engineer);
-//            PreferencesService.setPreference("blueprint.pinned." + this.engineer.name(), "");
             EventService.publish(new EngineerPinEvent(this.engineer, this.horizonsBlueprint, false));
         } else if (this.currentEngineerRank >= this.horizonsBlueprint.getHorizonsBlueprintGrade().getGrade()) {
             PinnedBlueprintService.pinBlueprint(this.engineer, this.horizonsBlueprint);
-//            PreferencesService.setPreference("blueprint.pinned." + this.engineer.name(), this.horizonsBlueprint.getHorizonsBlueprintName().name() + ":" + this.horizonsBlueprint.getHorizonsBlueprintType().name() + ":" + this.horizonsBlueprint.getHorizonsBlueprintGrade().getGrade());
             EventService.publish(new EngineerPinEvent(this.engineer, this.horizonsBlueprint, true));
         }
         update();
@@ -188,10 +180,12 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
     private void updateStyle(final boolean unlocked, final Integer currentEngineerRank) {
         this.label.getStyleClass().removeAll("engineer-unlocked", "engineer-locked");
         final String styleClass;
-        if (unlocked && currentEngineerRank >= this.rank) {
+        if (unlocked && currentEngineerRank >= this.blueprintGrade) {
             styleClass = "engineer-unlocked";
-            if(this.horizonsBlueprint instanceof HorizonsModuleBlueprint){
-                final Tooltip tooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip")).build();
+            if (this.horizonsBlueprint instanceof HorizonsModuleBlueprint) {
+                final Tooltip tooltip = TooltipBuilder.builder()
+                        .withText(LocaleService.getStringBinding("blueprint.engineer.pinnable.tooltip"))
+                        .build();
                 Tooltip.install(this, tooltip);
                 this.getStyleClass().add("engineer-label-pinnable");
             }
@@ -203,9 +197,7 @@ public class EngineerBlueprintLabel extends HBox implements DestroyableComponent
         this.label.getStyleClass().add(styleClass);
     }
 
-    @Override
-    public void destroyInternal() {
-        EventService.removeListener(this);
+    public String getEngineerName() {
+        return this.label.getText();
     }
-
 }

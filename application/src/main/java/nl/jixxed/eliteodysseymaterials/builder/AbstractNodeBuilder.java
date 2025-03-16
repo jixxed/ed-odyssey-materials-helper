@@ -14,12 +14,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
     private final List<String> styleClasses = new ArrayList<>();
     private boolean visibility = true;
+    private boolean disable = false;
+    private Boolean pickOnBounds;
+
     private EventHandler<? super MouseEvent> onMouseClicked;
     private ObservableValue<Boolean> visibilityObservable;
+    private ObservableValue<Boolean> disableObservable;
     private ObservableValue<Boolean> managedObservable;
     private ChangeListener<Boolean> hoverPropertyChangeListener;
     private NodeOrientation nodeOrientation;
@@ -64,8 +68,25 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         return (T) this;
     }
 
+    public T withDisable(boolean disable) {
+        this.disable = disable;
+        return (T) this;
+    }
+
+    public T withDisableProperty(final ObservableValue<Boolean> observable) {
+        this.disableObservable = observable;
+        return (T) this;
+    }
+
+    public T withPickOnBounds(boolean pickOnBounds) {
+        this.pickOnBounds = pickOnBounds;
+        return (T) this;
+    }
+
     public <N extends Node & DestroyableComponent> N build(N node) {
         node.getStyleClass().addAll(this.styleClasses);
+        node.setDisable(this.disable);
+        node.setVisible(this.visibility);
         if (this.onMouseClicked != null) {
             node.registerEventHandler(MouseEvent.MOUSE_CLICKED, this.onMouseClicked);
         }
@@ -75,15 +96,21 @@ public abstract class AbstractNodeBuilder<T extends AbstractNodeBuilder<T>> {
         if (this.managedObservable != null) {
             node.addBinding(node.managedProperty(), this.managedObservable);
         }
+        if (this.disableObservable != null) {
+            node.addBinding(node.disableProperty(), this.disableObservable);
+        }
         if (this.hoverPropertyChangeListener != null) {
             node.addChangeListener(node.hoverProperty(), this.hoverPropertyChangeListener);
         }
         if (this.nodeOrientation != null) {
             node.setNodeOrientation(this.nodeOrientation);
         }
-        node.setVisible(this.visibility);
+        if (pickOnBounds != null) {
+            node.setPickOnBounds(pickOnBounds);
+        }
         return node;
     }
 
     public abstract <N extends Node> N build();
+
 }

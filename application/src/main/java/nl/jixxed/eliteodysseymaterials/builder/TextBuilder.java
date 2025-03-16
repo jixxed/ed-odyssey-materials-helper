@@ -8,7 +8,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableText;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class TextBuilder extends AbstractNodeBuilder<TextBuilder> {
+public class TextBuilder extends AbstractShapeBuilder<TextBuilder> {
     private StringBinding stringBinding;
     private String nonLocalizedText;
     private NodeOrientation nodeOrientation;

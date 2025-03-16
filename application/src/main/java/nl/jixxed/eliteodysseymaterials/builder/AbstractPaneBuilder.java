@@ -4,34 +4,40 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractPaneBuilder<T extends AbstractPaneBuilder<T>> extends AbstractNodeBuilder<T> {
     private final List<Node> nodes = new ArrayList<>();
 
-    public T withNode(final Node node) {
+    @SuppressWarnings("unchecked")
+    public <E extends Node & DestroyableComponent> T withNode(final E node) {
         this.nodes.add(node);
         return (T) this;
     }
 
-    public T withNodes(final Node... nodes) {
+    @SuppressWarnings("unchecked")
+    public <E extends Node & DestroyableComponent> T withNodes(final E... nodes) {
         this.nodes.addAll(Arrays.asList(nodes));
         return (T) this;
     }
 
-    public T withNodes(final List<? extends Node> nodes) {
+    @SuppressWarnings("unchecked")
+    public <E extends Node & DestroyableComponent> T withNodes(final List<E> nodes) {
         this.nodes.addAll(nodes);
         return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     public <P extends Pane & DestroyableComponent> P build(P pane) {
         super.build(pane);
         pane.getChildren().addAll(this.nodes);
+        pane.registerAll((List<Destroyable>) (List<?>) this.nodes);
         return pane;
     }
 }

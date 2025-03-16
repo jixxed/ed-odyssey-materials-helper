@@ -1,63 +1,67 @@
 package nl.jixxed.eliteodysseymaterials.templates.overlay.ar;
 
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import lombok.Getter;
+import nl.jixxed.eliteodysseymaterials.builder.AnchorPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
-public class ARDebugOverlay extends VBox implements DestroyableTemplate {
-    private final Stage stage;
-    @Getter
+@Getter
+public class ARDebugOverlay extends DestroyableVBox implements DestroyableTemplate {
     private DestroyableResizableImageView resizableImageView1;
-    @Getter
     private DestroyableResizableImageView resizableImageView2;
-    @Getter
     private DestroyableResizableImageView resizableImageView3;
-    @Getter
     private DestroyableResizableImageView resizableImageView4;
-    @Getter
     private DestroyableResizableImageView resizableImageView5;
-    @Getter
     private DestroyableResizableImageView resizableImageView6;
 
-    public ARDebugOverlay(final Stage stage) {
+    public ARDebugOverlay() {
         super();
-        this.stage = stage;
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.resizableImageView1 = ResizableImageViewBuilder.builder().build();
-        this.resizableImageView2 = ResizableImageViewBuilder.builder().build();
-        this.resizableImageView3 = ResizableImageViewBuilder.builder().build();
-        this.resizableImageView4 = ResizableImageViewBuilder.builder().build();
-        this.resizableImageView5 = ResizableImageViewBuilder.builder().build();
-        this.resizableImageView6 = ResizableImageViewBuilder.builder().build();
-//        final AnchorPane anchorPane = new AnchorPane(this.resizableImageView);
+        this.resizableImageView1 = ResizableImageViewBuilder.builder()
+                .build();
+        this.resizableImageView2 = ResizableImageViewBuilder.builder()
+                .build();
+        this.resizableImageView3 = ResizableImageViewBuilder.builder()
+                .build();
+        this.resizableImageView4 = ResizableImageViewBuilder.builder()
+                .build();
+        this.resizableImageView5 = ResizableImageViewBuilder.builder()
+                .build();
+        this.resizableImageView6 = ResizableImageViewBuilder.builder()
+                .build();
         AnchorPaneHelper.setAnchor(this.resizableImageView1, 0D, 0D, 0D, 0D);
         AnchorPaneHelper.setAnchor(this.resizableImageView2, 0D, 0D, 0D, 0D);
         AnchorPaneHelper.setAnchor(this.resizableImageView3, 0D, 0D, 0D, 0D);
         AnchorPaneHelper.setAnchor(this.resizableImageView4, 0D, 0D, 0D, 0D);
         AnchorPaneHelper.setAnchor(this.resizableImageView5, 0D, 0D, 0D, 0D);
         AnchorPaneHelper.setAnchor(this.resizableImageView6, 0D, 0D, 0D, 0D);
-        this.getChildren().addAll(
-                new AnchorPane(this.resizableImageView1),
-                new AnchorPane(this.resizableImageView2),
-                new AnchorPane(this.resizableImageView3),
-                new AnchorPane(this.resizableImageView4),
-                new AnchorPane(this.resizableImageView5),
-                new AnchorPane(this.resizableImageView6)
+        this.getNodes().addAll(
+                AnchorPaneBuilder.builder()
+                        .withNodes(this.resizableImageView1)
+                        .build(),
+                AnchorPaneBuilder.builder()
+                        .withNodes(this.resizableImageView2)
+                        .build(),
+                AnchorPaneBuilder.builder()
+                        .withNodes(this.resizableImageView3)
+                        .build(),
+                AnchorPaneBuilder.builder()
+                        .withNodes(this.resizableImageView4)
+                        .build(),
+                AnchorPaneBuilder.builder()
+                        .withNodes(this.resizableImageView5)
+                        .build(),
+                AnchorPaneBuilder.builder()
+                        .withNodes(this.resizableImageView6)
+                        .build()
         );
-    }
-
-    @Override
-    public void initEventHandling() {
     }
 
     public DestroyableResizableImageView getResizableImageView(final int index) {

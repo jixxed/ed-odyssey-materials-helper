@@ -1,30 +1,26 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.materials;
 
-import javafx.scene.control.Label;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.Location;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsStorageType;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialTrader;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
+import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialTraderService;
 import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.text.NumberFormat;
 
-public class HorizonsNearestTrader extends VBox implements DestroyableTemplate {
+public class HorizonsNearestTrader extends DestroyableVBox implements DestroyableEventTemplate {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 
     static {
@@ -32,11 +28,10 @@ public class HorizonsNearestTrader extends VBox implements DestroyableTemplate {
     }
 
     private final HorizonsStorageType type;
-    private Label location;
-    private Label title;
-    private Label distance;
+    private DestroyableLabel location;
+    private DestroyableLabel title;
+    private DestroyableLabel distance;
     private String system = "";
-    private DestroyableResizableImageView copyIcon;
 
 
     HorizonsNearestTrader(final HorizonsStorageType type) {
@@ -48,9 +43,12 @@ public class HorizonsNearestTrader extends VBox implements DestroyableTemplate {
     @Override
     public void initComponents() {
         this.getStyleClass().add("nearest-trader");
-        this.title = LabelBuilder.builder().withStyleClass("nearest-trader-title").withText(LocaleService.getStringBinding(this.type.getLocalizationKey())).build();
-        this.getChildren().add(this.title);
-        this.getChildren().add(getTraderLocation());
+        this.title = LabelBuilder.builder()
+                .withStyleClass("nearest-trader-title")
+                .withText(this.type.getLocalizationKey())
+                .build();
+        this.getNodes().add(this.title);
+        this.getNodes().add(getTraderLocation());
         update();
     }
 
@@ -67,10 +65,10 @@ public class HorizonsNearestTrader extends VBox implements DestroyableTemplate {
             final MaterialTrader closest = MaterialTraderService.findClosest(currentLocation.getStarSystem(), this.type);
             this.location.setText(closest.getName() + " | " + closest.getStarSystem().getName());
             final Double starDistance = MaterialTraderService.getDistance(closest.getStarSystem(), currentLocation.getStarSystem());
-            if(starDistance > 0D) {
-                this.distance.setText("(" + NUMBER_FORMAT.format(starDistance) + "Ly)");
-            }else{
-                this.distance.setText("(" + NUMBER_FORMAT.format(closest.getDistanceFromStar()) + "Ls ±"+ NUMBER_FORMAT.format(closest.getDistanceFromStarVariance())+"Ls)");
+            if (starDistance > 0D) {
+                this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("tab.trader.distance", Formatters.NUMBER_FORMAT_2.format(starDistance)));
+            } else {
+                this.distance.addBinding(this.distance.textProperty(), LocaleService.getStringBinding("tab.trader.distance.in.system", Formatters.NUMBER_FORMAT_2.format(closest.getDistanceFromStar()), Formatters.NUMBER_FORMAT_2.format(closest.getDistanceFromStarVariance())));
             }
 
             this.system = closest.getStarSystem().getName();
@@ -81,7 +79,7 @@ public class HorizonsNearestTrader extends VBox implements DestroyableTemplate {
         }
     }
 
-    private FlowPane getTraderLocation() {
+    private DestroyableFlowPane getTraderLocation() {
         this.location = LabelBuilder.builder()
                 .withStyleClass("nearest-trader-location")
                 .withNonLocalizedText("")
@@ -89,28 +87,30 @@ public class HorizonsNearestTrader extends VBox implements DestroyableTemplate {
 
         this.distance = LabelBuilder.builder()
                 .withStyleClass("nearest-trader-distance")
-                .withNonLocalizedText("(0Ly)")
+                .withText("tab.trader.distance", 0)
                 .build();
 
-        this.copyIcon = ResizableImageViewBuilder.builder()
+        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("nearest-trader-copy-icon")
                 .withImage("/images/other/copy.png")
                 .build();
 
-        return FlowPaneBuilder.builder().withStyleClass("nearest-trader-location-line")
-                .withOnMouseClicked(event -> {
+        final DestroyableStackPane copyIconStackPane = StackPaneBuilder.builder()
+                .withNodes(copyIcon)
+                .build();
+
+        return FlowPaneBuilder.builder()
+                .withStyleClass("nearest-trader-location-line")
+                .withOnMouseClicked(_ -> {
                     copyLocationToClipboard();
-                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
+                    NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.system.copied.text"));
                 })
-                .withNodes(this.location, new StackPane(this.copyIcon), this.distance)
+                .withNodes(this.location, copyIconStackPane, this.distance)
                 .build();
 
     }
 
     private void copyLocationToClipboard() {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent content = new ClipboardContent();
-        content.putString(this.system);
-        clipboard.setContent(content);
+        ClipboardHelper.copyToClipboard(this.system);
     }
 }

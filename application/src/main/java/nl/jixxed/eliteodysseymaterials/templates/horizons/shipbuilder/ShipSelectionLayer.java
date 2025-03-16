@@ -1,43 +1,34 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-public class ShipSelectionLayer extends AnchorPane implements DestroyableTemplate {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+public class ShipSelectionLayer extends DestroyableAnchorPane implements DestroyableTemplate {
 
-    private VBox shipSelectView;
     private HorizonsShipBuilderTab tab;
-    private ScrollPane scrollPane;
+
     public ShipSelectionLayer(HorizonsShipBuilderTab tab) {
         this.tab = tab;
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
         this.getStyleClass().add("shipbuilder-shipselection-layer");
-        this.shipSelectView = new ShipSelectView(this.tab);
+        ShipSelectView shipSelectView = new ShipSelectView(this.tab);
 
-        this.scrollPane = ScrollPaneBuilder.builder()
-                .withContent(this.shipSelectView)
+        DestroyableScrollPane scrollPane = ScrollPaneBuilder.builder()
+                .withContent(shipSelectView)
                 .withStyleClass("shipbuilder-shipselection-scrollpane")
                 .build();
-        this.getChildren().add(this.scrollPane);
-        AnchorPane.setTopAnchor(this.scrollPane,0D);
-        AnchorPane.setRightAnchor(this.scrollPane,0D);
-        AnchorPane.setBottomAnchor(this.scrollPane,0D);
-        AnchorPane.setLeftAnchor(this.scrollPane,0D);
-
-    }
-
-    @Override
-    public void initEventHandling() {
+        this.getNodes().add(scrollPane);
+        AnchorPane.setTopAnchor(scrollPane, 0D);
+        AnchorPane.setRightAnchor(scrollPane, 0D);
+        AnchorPane.setBottomAnchor(scrollPane, 0D);
+        AnchorPane.setLeftAnchor(scrollPane, 0D);
 
     }
 }

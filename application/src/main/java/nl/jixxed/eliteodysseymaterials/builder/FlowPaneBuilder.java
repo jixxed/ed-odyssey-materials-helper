@@ -1,7 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.builder;
 
 import javafx.geometry.Orientation;
-import javafx.scene.layout.FlowPane;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
@@ -20,7 +19,7 @@ public class FlowPaneBuilder extends AbstractPaneBuilder<FlowPaneBuilder> {
     }
 
     @SuppressWarnings("unchecked")
-    public FlowPane build() {
+    public DestroyableFlowPane build() {
         final DestroyableFlowPane flowPane = new DestroyableFlowPane();
         super.build(flowPane);
 

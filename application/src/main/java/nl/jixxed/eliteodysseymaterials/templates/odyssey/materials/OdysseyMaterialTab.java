@@ -1,24 +1,26 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.materials;
 
-import javafx.scene.control.ScrollPane;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 
-public class OdysseyMaterialTab extends OdysseyTab {
+public class OdysseyMaterialTab extends OdysseyTab implements DestroyableTemplate {
 
     private static final double SCROLL_SPEED = 0.01;
-    private ScrollPane scrollPane;
+    private DestroyableScrollPane scrollPane;
     private OdysseyMaterialOverview materialOverview;
 
     public OdysseyMaterialTab() {
         initComponents();
     }
 
-    private void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.odyssey.materials"));
-        this.scrollPane = ScrollPaneBuilder.builder().build();
+    public void initComponents() {
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.odyssey.materials"));
+        this.scrollPane = ScrollPaneBuilder.builder()
+                .build();
         this.materialOverview = new OdysseyMaterialOverview(this.scrollPane);
         this.scrollPane.setContent(this.materialOverview);
         this.setContent(this.scrollPane);

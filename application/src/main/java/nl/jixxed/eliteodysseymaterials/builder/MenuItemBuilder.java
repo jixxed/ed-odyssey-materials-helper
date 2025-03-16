@@ -74,6 +74,7 @@ public class MenuItemBuilder {
         this.onAction = onAction;
         return this;
     }
+
     public MenuItemBuilder withDisableProperty(BooleanBinding disabledBinding) {
         this.disabledBinding = disabledBinding;
         return this;
@@ -97,6 +98,7 @@ public class MenuItemBuilder {
         }
         if (this.onAction != null) {
             menuItem.registerEventHandler(ActionEvent.ACTION, this.onAction);
+            menuItem.setOnAction(this.onAction);
         }
         if (this.disabledBinding != null) {
             menuItem.addBinding(menuItem.disableProperty(), this.disabledBinding);

@@ -2,9 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.settings;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -13,6 +11,8 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.helper.OsCheck;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 import nl.jixxed.eliteodysseymaterials.templates.settings.sections.*;
 
@@ -27,29 +27,21 @@ public class SettingsTab extends OdysseyTab {
 
     public static final BooleanProperty REGISTERED = new SimpleBooleanProperty(RegistryService.isRegistered());
 
-
-
     public SettingsTab() {
         initComponents();
-        initEventHandling();
-    }
-
-
-    private void initEventHandling() {
-
     }
 
     private void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.settings"));
-        final Label settingsLabel = LabelBuilder.builder()
+        this.addBinding(this.textProperty(),LocaleService.getStringBinding("tabs.settings"));
+        final DestroyableLabel settingsLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
                 .withText(LocaleService.getStringBinding("tabs.settings"))
                 .build();
-        final VBox settings = BoxBuilder.builder()
+        final DestroyableVBox settings = BoxBuilder.builder()
                 .withStyleClasses("settings-vbox", SETTINGS_SPACING_10_CLASS)
                 .withNodes(settingsLabel)
                 .buildVBox();
-        settings.getChildren().addAll(
+        settings.getNodes().addAll(
                 new General(),
                 new OdysseyMaterials(),
                 new HorizonsMaterials(),
@@ -61,10 +53,10 @@ public class SettingsTab extends OdysseyTab {
         );
         //AR
         if (OsCheck.isWindows()) {
-            settings.getChildren().add(new AugmentedReality());
+            settings.getNodes().add(new AugmentedReality());
         }
         //Tracking
-        settings.getChildren().add(new Tracking());
+        settings.getNodes().add(new Tracking());
 
         ScrollPane scrollPane = ScrollPaneBuilder.builder()
                 .withContent(settings)

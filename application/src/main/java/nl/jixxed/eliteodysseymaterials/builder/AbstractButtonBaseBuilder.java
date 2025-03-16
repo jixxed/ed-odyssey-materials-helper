@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractButtonBaseBuilder<T extends AbstractButtonBaseBuilder<T>> extends AbstractLabeledBuilder<T> {
     private EventHandler<ActionEvent> onAction;
 
@@ -24,5 +24,4 @@ public abstract class AbstractButtonBaseBuilder<T extends AbstractButtonBaseBuil
         }
         return button;
     }
-
 }

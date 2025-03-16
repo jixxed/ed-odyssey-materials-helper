@@ -8,29 +8,21 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplat
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
 public class HorizonsMaterialTab extends HorizonsTab implements DestroyableTemplate {
-    private ScrollPane scrollPane;
-    private HorizonsMaterialOverview materialOverview;
 
     public HorizonsMaterialTab() {
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.materialOverview = new HorizonsMaterialOverview();
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.horizons.materials"));
+        HorizonsMaterialOverview materialOverview = new HorizonsMaterialOverview();
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.horizons.materials"));
         this.setClosable(false);
-        this.scrollPane = ScrollPaneBuilder.builder()
-                .withContent(this.materialOverview)
-                .build();
-        this.setContent(this.scrollPane);
+        ScrollPane scrollPane = register(ScrollPaneBuilder.builder()
+                .withContent(materialOverview)
+                .build());
+        this.setContent(scrollPane);
 
-    }
-
-    @Override
-    public void initEventHandling() {
-        //NOOP
     }
 
     @Override

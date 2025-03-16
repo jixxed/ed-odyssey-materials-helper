@@ -5,11 +5,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -26,7 +23,7 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTemplate {
+public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableEventTemplate {
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_NAME = "loadout-item-stats-name";
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE = "loadout-item-stats-value";
     private static final String STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED = "loadout-item-stats-value-modded";
@@ -40,15 +37,11 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
     @Getter
     private LoadoutSet loadoutSet;
     private Loadout loadout;
-    private final List<HBox> statsList;
-    private VBox stats;
+    private final List<DestroyableHBox> statsList;
+    private DestroyableVBox stats;
     private DestroyableMenuButton addToWishlist;
     private DestroyableToggleSwitch statsToggle;
     private BooleanProperty isValid;
-    @Getter
-    private final List<Destroyable> destroyables = new ArrayList<>();
-
-
 
     private final void setValid(final boolean value) {
         isValidProperty().set(value);
@@ -109,18 +102,19 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
     @SuppressWarnings("java:S3776")
     public void initComponents() {
         this.getStyleClass().add("loadout-item");
-        this.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        this.stats = BoxBuilder.builder().withNodes().buildVBox();
+        this.addBinding(this.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        this.stats = BoxBuilder.builder()
+                .withNodes().buildVBox();
         this.statsToggle = register(ToggleSwitchBuilder.builder()
                 .withSelected(this.loadout.isShowChanged())
-                .withText(LocaleService.getStringBinding(this.loadout.isShowChanged() ? "loadout.equipment.stats.toggle.changed" : "loadout.equipment.stats.toggle.all"))
+                .withText(this.loadout.isShowChanged() ? "loadout.equipment.stats.toggle.changed" : "loadout.equipment.stats.toggle.all")
                 .withSelectedChangeListener((observable, oldValue, newValue) -> {
                     if (newValue != null && newValue) {
-                        this.statsToggle.textProperty().bind(LocaleService.getStringBinding("loadout.equipment.stats.toggle.changed"));
+                        this.statsToggle.addBinding(this.statsToggle.textProperty(), LocaleService.getStringBinding("loadout.equipment.stats.toggle.changed"));
                         this.loadout.setShowChanged(true);
                         saveLoadoutSet();
                     } else {
-                        this.statsToggle.textProperty().bind(LocaleService.getStringBinding("loadout.equipment.stats.toggle.all"));
+                        this.statsToggle.addBinding(this.statsToggle.textProperty(), LocaleService.getStringBinding("loadout.equipment.stats.toggle.all"));
                         this.loadout.setShowChanged(false);
                         saveLoadoutSet();
                     }
@@ -128,54 +122,63 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
                 })
                 .build());
         //navbar
-        final DestroyableLabel left =  register(LabelBuilder.builder().withNonLocalizedText("<").withOnMouseClicked(event -> {
-            this.loadoutSet.moveDown(this.loadout);
-            saveLoadoutSet();
-            EventService.publish(new LoadoutMovedEvent());
-        }).build());
+        final DestroyableLabel left = register(LabelBuilder.builder()
+                .withNonLocalizedText("<")
+                .withOnMouseClicked(event -> {
+                    this.loadoutSet.moveDown(this.loadout);
+                    saveLoadoutSet();
+                    EventService.publish(new LoadoutMovedEvent());
+                })
+                .build());
         if (this.loadoutSet.getLoadouts().indexOf(this.loadout) <= 0) {
             left.setVisible(false);
         }
-        final Region regionL = new Region();
+        final DestroyableRegion regionL = new DestroyableRegion();
         HBox.setHgrow(regionL, Priority.ALWAYS);
-        final DestroyableLabel delete = register(LabelBuilder.builder().withNonLocalizedText("delete").withOnMouseClicked(event -> {
-            this.loadoutSet.removeLoadout(this.loadout);
-            saveLoadoutSet();
-            EventService.publish(new LoadoutRemovedEvent(this));
-        }).build());
-        final Region regionR = new Region();
+        final DestroyableLabel delete = register(LabelBuilder.builder()
+                .withNonLocalizedText("delete")
+                .withOnMouseClicked(event -> {
+                    this.loadoutSet.removeLoadout(this.loadout);
+                    saveLoadoutSet();
+                    EventService.publish(new LoadoutRemovedEvent(this));
+                })
+                .build());
+        final DestroyableRegion regionR = new DestroyableRegion();
         HBox.setHgrow(regionR, Priority.ALWAYS);
-        final DestroyableLabel right = register(LabelBuilder.builder().withNonLocalizedText(">").withOnMouseClicked(event -> {
-            this.loadoutSet.moveUp(this.loadout);
-            saveLoadoutSet();
-            EventService.publish(new LoadoutMovedEvent());
-        }).build());
+        final DestroyableLabel right = register(LabelBuilder.builder()
+                .withNonLocalizedText(">")
+                .withOnMouseClicked(event -> {
+                    this.loadoutSet.moveUp(this.loadout);
+                    saveLoadoutSet();
+                    EventService.publish(new LoadoutMovedEvent());
+                })
+                .build());
         if (this.loadoutSet.getLoadouts().indexOf(this.loadout) == this.loadoutSet.getLoadouts().size() - 1) {
             right.setVisible(false);
         }
-        final HBox navBar = BoxBuilder.builder().withStyleClass("loadout-navbar").withNodes(left, regionL, delete, regionR, right).buildHBox();
+        final DestroyableHBox navBar = BoxBuilder.builder()
+                .withStyleClass("loadout-navbar")
+                .withNodes(left, regionL, delete, regionR, right)
+                .buildHBox();
         navBar.setVisible(!this.loadoutSet.equals(LoadoutSet.CURRENT));
         //image
         final DestroyableResizableImageView image = ResizableImageViewBuilder.builder()
                 .withStyleClass("loadout-item-image")
                 .withImage(this.loadout.getEquipment().getImage())
                 .build();
-        this.destroyables.add(image);
         //title
         final DestroyableLabel title = LabelBuilder.builder()
                 .withStyleClass("loadout-item-title")
-                .withText(LocaleService.getStringBinding(this.loadout.getEquipment().getLocalizationKey()))
+                .withText(this.loadout.getEquipment().getLocalizationKey())
                 .build();
-        this.destroyables.add(title);
-        final HBox imageBox = centerImage(image);
-        this.getChildren().addAll(navBar, imageBox, title);
+        final DestroyableHBox imageBox = centerImage(image);
+        this.getNodes().addAll(navBar, imageBox, title);
         if (Suit.FLIGHTSUIT != this.loadout.getEquipment()) {
             //current level
             final DestroyableLabel currentLevelLabel = LabelBuilder.builder()
                     .withStyleClass("loadout-item-level-label")
-                    .withText(LocaleService.getStringBinding("loadout.equipment.level.current"))
+                    .withText("loadout.equipment.level.current")
                     .build();
-            this.destroyables.add(currentLevelLabel);
             final DestroyableComboBox<Integer> currentLevel = ComboBoxBuilder.builder(Integer.class)
                     .withItemsProperty(FXCollections.observableArrayList(1, 2, 3, 4, 5))
                     .withValueChangeListener((observable, oldValue, newValue) -> {
@@ -186,20 +189,18 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
                         }
                     })
                     .build();
-            this.destroyables.add(currentLevel);
             currentLevel.getSelectionModel().select(this.loadout.getCurrentLevel());
-            final Region regionCurrent = new Region();
+            final DestroyableRegion regionCurrent = new DestroyableRegion();
             HBox.setHgrow(regionCurrent, Priority.ALWAYS);
             currentLevelLabel.setAlignment(Pos.CENTER_LEFT);
-            final HBox currentLevelBox = BoxBuilder.builder()
+            final DestroyableHBox currentLevelBox = BoxBuilder.builder()
                     .withNodes(currentLevelLabel, regionCurrent, currentLevel)
                     .buildHBox();
             //target level
             final DestroyableLabel targetLevelLabel = LabelBuilder.builder()
                     .withStyleClass("loadout-item-level-label")
-                    .withText(LocaleService.getStringBinding("loadout.equipment.level.target"))
+                    .withText("loadout.equipment.level.target")
                     .build();
-            this.destroyables.add(targetLevelLabel);
             final DestroyableComboBox<Integer> targetLevel = ComboBoxBuilder.builder(Integer.class)
                     .withItemsProperty(FXCollections.observableArrayList(1, 2, 3, 4, 5))
                     .withValueChangeListener((observable, oldValue, newValue) -> {
@@ -211,12 +212,11 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
                         }
                     })
                     .build();
-            this.destroyables.add(targetLevel);
             targetLevel.getSelectionModel().select(this.loadout.getTargetLevel());
-            final Region regionTarget = new Region();
+            final DestroyableRegion regionTarget = new DestroyableRegion();
             HBox.setHgrow(regionTarget, Priority.ALWAYS);
             targetLevelLabel.setAlignment(Pos.CENTER_LEFT);
-            final HBox targetLevelBox = BoxBuilder.builder()
+            final DestroyableHBox targetLevelBox = BoxBuilder.builder()
                     .withNodes(targetLevelLabel, regionTarget, targetLevel)
                     .buildHBox();
             //auto set correct levels on change
@@ -235,45 +235,48 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
             targetLevel.setDisable(this.loadoutSet.equals(LoadoutSet.CURRENT));
             //modifications
             final DestroyableLabel modificationsLabel = LabelBuilder
-                    .builder().withStyleClass("loadout-item-subtitle")
-                    .withText(LocaleService.getStringBinding("loadout.equipment.modifications"))
+                    .builder()
+                    .withStyleClass("loadout-item-subtitle")
+                    .withText("loadout.equipment.modifications")
                     .build();
-            this.destroyables.add(modificationsLabel);
             final OdysseyLoadoutModification loadoutModification1 = new OdysseyLoadoutModification(this.loadout, 0, this);
             final OdysseyLoadoutModification loadoutModification2 = new OdysseyLoadoutModification(this.loadout, 1, this);
             final OdysseyLoadoutModification loadoutModification3 = new OdysseyLoadoutModification(this.loadout, 2, this);
             final OdysseyLoadoutModification loadoutModification4 = new OdysseyLoadoutModification(this.loadout, 3, this);
 
-            this.destroyables.add(loadoutModification1);
-            this.destroyables.add(loadoutModification2);
-            this.destroyables.add(loadoutModification3);
-            this.destroyables.add(loadoutModification4);
-
-            final HBox modifications = BoxBuilder.builder()
+            final DestroyableHBox modifications = BoxBuilder.builder()
                     .withNodes(loadoutModification1, createRegion(), loadoutModification2, createRegion(), loadoutModification3, createRegion(), loadoutModification4)
                     .buildHBox();
-            this.getChildren().addAll(currentLevelBox, targetLevelBox, modificationsLabel, modifications);
+            this.getNodes().addAll(currentLevelBox, targetLevelBox, modificationsLabel, modifications);
 
         }
         //stats
-        final Label statsLabel = LabelBuilder.builder()
+        final DestroyableLabel statsLabel = LabelBuilder.builder()
                 .withStyleClass("loadout-item-subtitle")
-                .withText(LocaleService.getStringBinding("loadout.equipment.stats"))
+                .withText("loadout.equipment.stats")
                 .build();
-        final Region region = new Region();
+        final DestroyableRegion region = new DestroyableRegion();
         HBox.setHgrow(region, Priority.ALWAYS);
 
-        final HBox statsLine = BoxBuilder.builder().withNodes(statsLabel, region, this.statsToggle).buildHBox();
+        final DestroyableHBox statsLine = BoxBuilder.builder()
+                .withNodes(statsLabel, region, this.statsToggle).buildHBox();
         updateStatsList();
 
-        this.getChildren().addAll(statsLine, this.stats);
+        this.getNodes().addAll(statsLine, this.stats);
         if (Suit.FLIGHTSUIT != this.loadout.getEquipment() && !this.loadoutSet.equals(LoadoutSet.CURRENT)) {
-            this.addToWishlist = MenuButtonBuilder.builder().withStyleClass("loadout-wishlist-button").withText(LocaleService.getStringBinding("blueprint.add.to.wishlist")).build();
-            final Label warning = LabelBuilder.builder().withStyleClass("loadout-warning").withText(LocaleService.getStringBinding("loadout.equipment.warning")).withVisibilityProperty(isValidProperty()).build();
+            this.addToWishlist = MenuButtonBuilder.builder()
+                    .withStyleClass("loadout-wishlist-button")
+                    .withText("blueprint.add.to.wishlist")
+                    .build();
+            final DestroyableLabel warning = LabelBuilder.builder()
+                    .withStyleClass("loadout-warning")
+                    .withText("loadout.equipment.warning")
+                    .withVisibilityProperty(isValidProperty())
+                    .build();
             APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
-            final Region region1 = new Region();
+            final DestroyableRegion region1 = new DestroyableRegion();
             VBox.setVgrow(region1, Priority.ALWAYS);
-            this.getChildren().addAll(region1, this.addToWishlist, warning);
+            this.getNodes().addAll(region1, this.addToWishlist, warning);
         }
     }
 
@@ -324,7 +327,7 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
                     EventService.publish(new WishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                 }
             });
-            createNew.textProperty().bind(LocaleService.getStringBinding("loadout.create.new.wishlist"));
+            createNew.addBinding(createNew.textProperty(), LocaleService.getStringBinding("loadout.create.new.wishlist"));
             createNew.getStyleClass().add("loadout-wishlist-create-new");
             this.addToWishlist.getItems().add(createNew);
         }
@@ -354,17 +357,20 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
                 {
                     if (!Objects.equals(currentGroup.get(), statObjectEntry.getKey().getStatGroup())) {
 
-                        final Separator separator = new Separator(Orientation.HORIZONTAL);
+                        final DestroyableSeparator separator = new DestroyableSeparator(Orientation.HORIZONTAL);
                         HBox.setHgrow(separator, Priority.ALWAYS);
-                        this.statsList.add(new HBox(separator));
+                        this.statsList.add(BoxBuilder.builder().withNode(separator).buildHBox());
 
                         currentGroup.set(statObjectEntry.getKey().getStatGroup());
                         final StatGroup group = statObjectEntry.getKey().getStatGroup();
-                        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME).withText(LocaleService.getStringBinding(group.getLocalizationKey())).build();
-                        this.destroyables.add(nameColumn);
-                        this.statsList.add(BoxBuilder.builder().withNodes(
-                                nameColumn
-                        ).buildHBox());
+                        final DestroyableLabel nameColumn = LabelBuilder.builder()
+                                .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME)
+                                .withText(group.getLocalizationKey())
+                                .build();
+                        this.statsList.add(BoxBuilder.builder()
+                                .withNodes(
+                                        nameColumn
+                                ).buildHBox());
                     }
                     if (statObjectEntry.getKey() instanceof DynamicStat stat) {
                         handleDynamicStat(statObjectEntry, stat);
@@ -373,24 +379,34 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
                     }
                 });
         addHeader();
-        this.stats.getChildren().clear();
-        this.stats.getChildren().addAll(this.statsList);
+        this.stats.getNodes().clear();
+        this.stats.getNodes().addAll(this.statsList);
     }
 
     private void addHeader() {
-        final DestroyableLabel valueColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_NAME).withNonLocalizedText("").build();
-        final DestroyableLabel headerCurrent = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withText(LocaleService.getStringBinding("loadout.equipment.stats.header.current")).build();
-        this.destroyables.add(headerCurrent);
-        this.destroyables.add(valueColumn);
-        final HBox headerRow = BoxBuilder.builder().withNodes(valueColumn, headerCurrent).buildHBox();
+        final DestroyableLabel valueColumn = LabelBuilder.builder()
+                .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_NAME)
+                .withNonLocalizedText("")
+                .build();
+        final DestroyableLabel headerCurrent = LabelBuilder.builder()
+                .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE)
+                .withText("loadout.equipment.stats.header.current")
+                .build();
+        final DestroyableHBox headerRow = BoxBuilder.builder()
+                .withNodes(valueColumn, headerCurrent)
+                .buildHBox();
         if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
             valueColumn.getStyleClass().add(STYLECLASS_LOADOUT_ITEM_STATS_WIDE);
         } else {
-            final DestroyableLabel headerTarget = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withText(LocaleService.getStringBinding("loadout.equipment.stats.header.target")).build();
-            final DestroyableLabel headerModded = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE, STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED).withText(LocaleService.getStringBinding("loadout.equipment.stats.header.modded")).build();
-            this.destroyables.add(headerTarget);
-            this.destroyables.add(headerModded);
-            headerRow.getChildren().addAll(headerTarget, headerModded);
+            final DestroyableLabel headerTarget = LabelBuilder.builder()
+                    .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE)
+                    .withText("loadout.equipment.stats.header.target")
+                    .build();
+            final DestroyableLabel headerModded = LabelBuilder.builder()
+                    .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_HEADER, STYLECLASS_LOADOUT_ITEM_STATS_VALUE, STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED)
+                    .withText("loadout.equipment.stats.header.modded")
+                    .build();
+            headerRow.getNodes().addAll(headerTarget, headerModded);
         }
         this.statsList.add(0, headerRow);
     }
@@ -402,21 +418,28 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
         final StaticStat stat = (StaticStat) statObjectEntry.getKey();
         final Object value = statObjectEntry.getValue();
         final String currentLevelValue = stat.formatValue(value, this.loadout.getEquipment(), this.loadout.getCurrentLevel());
-        final DestroyableLabel nameColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME).withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
-        final DestroyableLabel currentLevelValueLabel = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE).withNonLocalizedText(currentLevelValue).build();
-        this.destroyables.add(nameColumn);
-        this.destroyables.add(currentLevelValueLabel);
-        final Separator separator = new Separator(Orientation.HORIZONTAL);
-        final Separator separator1 = new Separator(Orientation.HORIZONTAL);
+        final DestroyableLabel nameColumn = LabelBuilder.builder()
+                .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME)
+                .withText(stat.getLocalizationKey())
+                .build();
+        final DestroyableLabel currentLevelValueLabel = LabelBuilder.builder()
+                .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE)
+                .withNonLocalizedText(currentLevelValue)
+                .build();
+        final DestroyableSeparator separator = new DestroyableSeparator(Orientation.HORIZONTAL);
+        final DestroyableSeparator separator1 = new DestroyableSeparator(Orientation.HORIZONTAL);
         HBox.setHgrow(separator, Priority.ALWAYS);
         HBox.setHgrow(currentLevelValueLabel, Priority.ALWAYS);
         HBox.setHgrow(separator1, Priority.ALWAYS);
-        this.statsList.add(BoxBuilder.builder().withNodes(
-                nameColumn,
-                BoxBuilder.builder().withStyleClass(STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE_BOX).withNodes(separator,
-                        currentLevelValueLabel,
-                        separator1).buildHBox()
-        ).buildHBox());
+        this.statsList.add(BoxBuilder.builder()
+                .withNodes(
+                        nameColumn,
+                        BoxBuilder.builder()
+                                .withStyleClass(STYLECLASS_LOADOUT_ITEM_STATS_VALUE_WIDE_BOX)
+                                .withNodes(separator,
+                                        currentLevelValueLabel,
+                                        separator1).buildHBox()
+                ).buildHBox());
     }
 
     private void handleDynamicStat(final Map.Entry<Stat, Object> statObjectEntry, final DynamicStat stat) {
@@ -435,18 +458,28 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
         if (this.statsToggle.isSelected() && Objects.equals(currentLevelValue, targetLevelValue) && Objects.equals(targetLevelValue, moddedLevelValue)) {
             return;
         }
-        final Label nameColumn = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME).withText(LocaleService.getStringBinding(stat.getLocalizationKey())).build();
-        final DestroyableLabel currentValueLabel = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withNonLocalizedText(currentLevelValue).build();
-        this.destroyables.add(currentValueLabel);
-        final HBox valueRow = BoxBuilder.builder().withNodes(nameColumn, currentValueLabel).buildHBox();
+        final DestroyableLabel nameColumn = LabelBuilder.builder()
+                .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_NAME)
+                .withText(stat.getLocalizationKey())
+                .build();
+        final DestroyableLabel currentValueLabel = LabelBuilder.builder()
+                .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE)
+                .withNonLocalizedText(currentLevelValue)
+                .build();
+        final DestroyableHBox valueRow = BoxBuilder.builder()
+                .withNodes(nameColumn, currentValueLabel).buildHBox();
         if (Suit.FLIGHTSUIT.equals(this.loadout.getEquipment())) {
             nameColumn.getStyleClass().add(STYLECLASS_LOADOUT_ITEM_STATS_WIDE);
         } else {
-            final DestroyableLabel targetValue = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE).withNonLocalizedText(targetLevelValue).build();
-            final DestroyableLabel moddedValue = LabelBuilder.builder().withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE, STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED).withNonLocalizedText(moddedLevelValue).build();
-            this.destroyables.add(targetValue);
-            this.destroyables.add(moddedValue);
-            valueRow.getChildren().addAll(targetValue, moddedValue);
+            final DestroyableLabel targetValue = LabelBuilder.builder()
+                    .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE)
+                    .withNonLocalizedText(targetLevelValue)
+                    .build();
+            final DestroyableLabel moddedValue = LabelBuilder.builder()
+                    .withStyleClasses(STYLECLASS_LOADOUT_ITEM_STATS_VALUE, STYLECLASS_LOADOUT_ITEM_STATS_VALUE_MODDED)
+                    .withNonLocalizedText(moddedLevelValue)
+                    .build();
+            valueRow.getNodes().addAll(targetValue, moddedValue);
             if (!currentLevelValue.equals(targetLevelValue)) {
                 targetValue.getStyleClass().add(STYLECLASS_CHANGED);
             }
@@ -460,32 +493,22 @@ public class OdysseyLoadoutItem extends DestroyableVBox implements DestroyableTe
         this.statsList.add(valueRow);
     }
 
-    private Region createRegion() {
-        final Region region = new Region();
+    private DestroyableRegion createRegion() {
+        final DestroyableRegion region = new DestroyableRegion();
         HBox.setHgrow(region, Priority.ALWAYS);
         return region;
     }
 
-    private HBox centerImage(final DestroyableResizableImageView resizableImageView) {
-        final HBox hBox = BoxBuilder.builder().buildHBox();
-        final VBox vBox = BoxBuilder.builder().buildVBox();
+    private DestroyableHBox centerImage(final DestroyableResizableImageView resizableImageView) {
+        final DestroyableHBox hBox = BoxBuilder.builder()
+                .buildHBox();
+        final DestroyableVBox vBox = BoxBuilder.builder()
+                .buildVBox();
         hBox.setStyle("-fx-alignment: center;-fx-min-height: 22em");
         vBox.setStyle("-fx-alignment: center;-fx-min-height: 22em");
-        vBox.getChildren().add(resizableImageView);
-        hBox.getChildren().addAll(vBox);
+        vBox.getNodes().add(resizableImageView);
+        hBox.getNodes().addAll(vBox);
         return hBox;
-    }
-
-    @Override
-    public void destroyInternal() {
-        this.eventListeners.forEach(EventService::removeListener);
-        this.statsList.clear();
-        this.loadoutSet = null;
-        this.loadout = null;
-        this.stats = null;
-        this.addToWishlist = null;
-        this.statsToggle = null;
-        this.isValid = null;
     }
 
 }

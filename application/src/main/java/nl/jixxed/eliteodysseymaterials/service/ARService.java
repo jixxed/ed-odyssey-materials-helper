@@ -24,10 +24,11 @@ import nu.pattern.OpenCV;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 
+import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,7 +46,7 @@ import static org.opencv.imgproc.Imgproc.THRESH_OTSU;
 public class ARService {
 
 
-    private static final AtomicBoolean bartenderOverlayEnabled = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR,true));
+    private static final AtomicBoolean bartenderOverlayEnabled = new AtomicBoolean(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, true));
     private static BartenderMenuType newBartenderSubMenu;
 
     static {
@@ -123,9 +124,11 @@ public class ARService {
                 }
         ));
     }
+
     public static void bartenderToggle() {
         bartenderOverlayEnabled.set(PreferencesService.getPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE));
     }
+
     public static void toggle() {
         if (!enabled) {
             enabled = true;
@@ -148,7 +151,7 @@ public class ARService {
             Imgproc.threshold(cocktailMaskScaled, cocktailMaskScaled, 50, 255, Imgproc.THRESH_BINARY);
 
             arStage = new Stage();
-            arOverlay = new AROverlay(arStage);
+            arOverlay = new AROverlay();
             arScene = new Scene(arOverlay, 640, 480);
             arStage.initModality(Modality.WINDOW_MODAL);
             arStage.initStyle(StageStyle.TRANSPARENT);
@@ -191,6 +194,7 @@ public class ARService {
             }
         }
     }
+
     private static void setupTimerDisplay() {
         final TimerTask timerDisplayTask = new TimerTask() {
             @Override

@@ -4,14 +4,10 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
@@ -23,25 +19,23 @@ import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.WishlistService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyTab;
 import org.controlsfx.control.PopOver;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTemplate {
+public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableEventTemplate {
 
 
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private ScrollPane scrollPane;
 
     private String activeLoadoutSetUUID;
-    private ComboBox<LoadoutSet> loadoutSetSelect;
-    private FlowPane loadoutItemsFlow;
-    private MenuButton menuButton;
+    private DestroyableComboBox<LoadoutSet> loadoutSetSelect;
+    private DestroyableFlowPane loadoutItemsFlow;
+    private DestroyableMenuButton menuButton;
     private DestroyableMenuButton addToWishlist;
 
 
@@ -91,9 +85,8 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
             final LoadoutSet selectedLoadoutSet = LoadoutService.getLoadoutSetList(commander).getSelectedLoadoutSet();
             this.activeLoadoutSetUUID = selectedLoadoutSet.getUuid();
-            this.loadoutItemsFlow.getChildren().stream().map(OdysseyLoadoutItem.class::cast).forEach(OdysseyLoadoutItem::destroy);
-            this.loadoutItemsFlow.getChildren().clear();
-            this.loadoutItemsFlow.getChildren().addAll(selectedLoadoutSet.getLoadouts().stream()
+            this.loadoutItemsFlow.getNodes().clear();
+            this.loadoutItemsFlow.getNodes().addAll(selectedLoadoutSet.getLoadouts().stream()
                     .map(loadout -> new OdysseyLoadoutItem(selectedLoadoutSet, loadout))
                     .toList());
         });
@@ -101,13 +94,16 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
 
     @Override
     public void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.loadout"));
-        final Node menu = initMenu();
-        this.loadoutItemsFlow = FlowPaneBuilder.builder().build();
-        this.loadoutItemsFlow.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        this.loadoutItemsFlow.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
-        final VBox vBox = BoxBuilder.builder().withStyleClass("loadout-box").withNodes(menu, this.loadoutItemsFlow).buildVBox();
-        vBox.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        this.addBinding(this.textProperty(), LocaleService.getStringBinding("tabs.loadout"));
+        final DestroyableHBox menu = initMenu();
+        this.loadoutItemsFlow = FlowPaneBuilder.builder()
+                .build();
+        this.loadoutItemsFlow.addBinding(this.loadoutItemsFlow.hgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        this.loadoutItemsFlow.addBinding(this.loadoutItemsFlow.vgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        final DestroyableVBox vBox = BoxBuilder.builder()
+                .withStyleClass("loadout-box")
+                .withNodes(menu, this.loadoutItemsFlow).buildVBox();
+        vBox.addBinding(vBox.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         this.scrollPane = ScrollPaneBuilder.builder()
                 .withContent(vBox)
                 .build();
@@ -117,8 +113,10 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
         APPLICATION_STATE.getPreferredCommander().ifPresent(this::loadCommanderWishlists);
     }
 
-    private Node initMenu() {
-        this.addToWishlist = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("blueprint.add.all.to.wishlist")).build();
+    private DestroyableHBox initMenu() {
+        this.addToWishlist = MenuButtonBuilder.builder()
+                .withText("blueprint.add.all.to.wishlist")
+                .build();
         final Set<LoadoutSet> items = APPLICATION_STATE.getPreferredCommander()
                 .map(commander -> LoadoutService.getLoadoutSetList(commander).getAllLoadoutSets())
                 .orElse(Collections.emptySet());
@@ -145,7 +143,10 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
                     LoadoutService.saveLoadoutSetList(commander, loadoutSetList);
                     refreshContent();
                 })));
-        final MenuButton addSuitButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.add.suit")).withMenuItems(suitMenuItems).build();
+        final DestroyableMenuButton addSuitButton = MenuButtonBuilder.builder()
+                .withText("tab.loadout.add.suit")
+                .withMenuItems(suitMenuItems)
+                .build();
         final Map<String, EventHandler<ActionEvent>> weaponMenuItems = Arrays.stream(Weapon.values()).collect(Collectors.toMap(Weapon::getLocalizationKey, weapon -> event ->
                 APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
                     final LoadoutSetList loadoutSetList = LoadoutService.getLoadoutSetList(commander);
@@ -154,14 +155,25 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
                     LoadoutService.saveLoadoutSetList(commander, loadoutSetList);
                     refreshContent();
                 })));
-        final MenuButton addWeaponButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.add.weapon")).withMenuItems(weaponMenuItems).build();
-        addSuitButton.disableProperty().bind(this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
-        addWeaponButton.disableProperty().bind(this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
+        final DestroyableMenuButton addWeaponButton = MenuButtonBuilder.builder()
+                .withText("tab.loadout.add.weapon")
+                .withMenuItems(weaponMenuItems)
+                .build();
+        addSuitButton.addBinding(addSuitButton.disableProperty(), this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
+        addWeaponButton.addBinding(addWeaponButton.disableProperty(), this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
         final EventHandler<ActionEvent> createHandler = event -> {
-            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
-            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.create")).build();
-            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
-            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
+            final DestroyableTextField textField = TextFieldBuilder.builder()
+                    .withStyleClasses("root", "loadout-newname")
+                    .withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt"))
+                    .build();
+            final DestroyableButton button = ButtonBuilder.builder()
+                    .withText("tab.loadout.create")
+                    .build();
+            final DestroyableHBox popOverContent = BoxBuilder.builder()
+                    .withNodes(textField, button).buildHBox();
+            final PopOver popOver = new PopOver(BoxBuilder.builder()
+                    .withStyleClass("popover-menubutton-box")
+                    .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
             popOver.setDetachable(false);
             popOver.setHeaderAlwaysVisible(false);
             popOver.getStyleClass().add("popover-menubutton-layout");
@@ -182,11 +194,19 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
             });
         };
         final EventHandler<ActionEvent> renameHandler = event -> {
-            final TextField textField = TextFieldBuilder.builder().withStyleClasses("root", "loadout-newname").withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt")).build();
+            final DestroyableTextField textField = TextFieldBuilder.builder()
+                    .withStyleClasses("root", "loadout-newname")
+                    .withPromptTextProperty(LocaleService.getStringBinding("tab.loadout.rename.prompt"))
+                    .build();
 
-            final Button button = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.loadout.rename")).build();
-            final HBox popOverContent = BoxBuilder.builder().withNodes(textField, button).buildHBox();
-            final PopOver popOver = new PopOver(BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
+            final DestroyableButton button = ButtonBuilder.builder()
+                    .withText("tab.loadout.rename")
+                    .build();
+            final DestroyableHBox popOverContent = BoxBuilder.builder()
+                    .withNodes(textField, button).buildHBox();
+            final PopOver popOver = new PopOver(BoxBuilder.builder()
+                    .withStyleClass("popover-menubutton-box")
+                    .withNodes(new GrowingRegion(), popOverContent, new GrowingRegion()).buildVBox());
             popOver.setDetachable(false);
             popOver.setHeaderAlwaysVisible(false);
             popOver.getStyleClass().add("popover-menubutton-layout");
@@ -223,7 +243,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
         };
         final EventHandler<ActionEvent> copyHandler = event -> {
             copyLoadoutSetToClipboard();
-            NotificationService.showInformation(NotificationType.COPY, "Loadout Editor", "The loadout has been copied to your clipboard");
+            NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.loadout.copied.text"));
         };
         final EventHandler<ActionEvent> cloneHandler = event -> {
             APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
@@ -235,29 +255,29 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
                 refreshLoadoutSetSelect();
             });
         };
-        this.menuButton = MenuButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.wishlist.options")).withMenuItems(
-                Map.of("tab.loadout.create", createHandler,
-                        "tab.loadout.rename", renameHandler,
-                        "tab.loadout.delete", deleteHandler,
-                        "tab.loadout.clone", cloneHandler,
-                        "tab.loadout.copy", copyHandler)).build();
+        this.menuButton = MenuButtonBuilder.builder()
+                .withText("tab.wishlist.options")
+                .withMenuItems(
+                        Map.of("tab.loadout.create", createHandler,
+                                "tab.loadout.rename", renameHandler,
+                                "tab.loadout.delete", deleteHandler,
+                                "tab.loadout.clone", cloneHandler,
+                                "tab.loadout.copy", copyHandler))
+                .build();
         this.menuButton.setFocusTraversable(false);
         this.menuButton.getItems().forEach(menuItem -> {
             if (!menuItem.getOnAction().equals(createHandler) && !menuItem.getOnAction().equals(cloneHandler)) {
-                menuItem.disableProperty().bind(this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
+                ((DestroyableMenuItem) menuItem).addBinding(menuItem.disableProperty(), this.loadoutSetSelect.getSelectionModel().selectedItemProperty().isEqualTo(LoadoutSet.CURRENT));
             }
         });
-        final HBox hBoxBlueprints = BoxBuilder.builder().withNodes(this.loadoutSetSelect, this.menuButton, addSuitButton, addWeaponButton, this.addToWishlist).buildHBox();
-        hBoxBlueprints.spacingProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.25));
+        final DestroyableHBox hBoxBlueprints = BoxBuilder.builder()
+                .withNodes(this.loadoutSetSelect, this.menuButton, addSuitButton, addWeaponButton, this.addToWishlist).buildHBox();
+        hBoxBlueprints.addBinding(hBoxBlueprints.spacingProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.25));
         return hBoxBlueprints;
     }
 
     private void copyLoadoutSetToClipboard() {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent clipboardContent = new ClipboardContent();
-
-        clipboardContent.putString(ClipboardHelper.createClipboardLoadout());
-        clipboard.setContent(clipboardContent);
+        ClipboardHelper.copyToClipboard(ClipboardHelper.createClipboardLoadout());
     }
 
     private void refreshLoadoutSetSelect() {
@@ -308,7 +328,7 @@ public class OdysseyLoadoutEditorTab extends OdysseyTab implements DestroyableTe
                     EventService.publish(new WishlistBlueprintEvent(commander, newWishlist.getUuid(), wishlistBlueprints, Action.ADDED));
                 }
             });
-            createNew.textProperty().bind(LocaleService.getStringBinding("loadout.create.new.wishlist"));
+            createNew.addBinding(createNew.textProperty(), LocaleService.getStringBinding("loadout.create.new.wishlist"));
             createNew.getStyleClass().add("loadout-wishlist-create-new");
             this.addToWishlist.getItems().add(createNew);
         }

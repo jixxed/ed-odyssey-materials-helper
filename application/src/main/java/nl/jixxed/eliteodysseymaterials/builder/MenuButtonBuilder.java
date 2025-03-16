@@ -3,17 +3,17 @@ package nl.jixxed.eliteodysseymaterials.builder;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.MenuItem;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuButton;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableMenuItem;
 
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MenuButtonBuilder extends AbstractButtonBaseBuilder<MenuButtonBuilder> {
-    private List<MenuItem> items;
+    private List<DestroyableMenuItem> items;
 
     public static MenuButtonBuilder builder() {
         return new MenuButtonBuilder();
@@ -23,9 +23,10 @@ public class MenuButtonBuilder extends AbstractButtonBaseBuilder<MenuButtonBuild
         this.items = menuItems.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(stringEventHandlerEntry -> {
             final EventHandler<ActionEvent> eventHandler = stringEventHandlerEntry.getValue();
             final String textLocaleKey = stringEventHandlerEntry.getKey();
-            return (MenuItem) MenuItemBuilder.builder()
+            return  MenuItemBuilder.builder()
                     .withOnAction(eventHandler)
-                    .withText(textLocaleKey).build();
+                    .withText(textLocaleKey)
+                    .build();
         }).toList();
         return this;
     }
@@ -40,7 +41,7 @@ public class MenuButtonBuilder extends AbstractButtonBaseBuilder<MenuButtonBuild
             if (disableBindings.containsKey(textLocaleKey)) {
                 menuItemBuilder = menuItemBuilder.withDisableProperty(disableBindings.get(textLocaleKey));
             }
-            return (MenuItem) menuItemBuilder.build();
+            return menuItemBuilder.build();
         }).toList();
         return this;
     }
@@ -48,7 +49,8 @@ public class MenuButtonBuilder extends AbstractButtonBaseBuilder<MenuButtonBuild
     @SuppressWarnings("unchecked")
     public DestroyableMenuButton build() {
         final DestroyableMenuButton menuButton = new DestroyableMenuButton();
-        if (this.items != null) {
+        if (this.items != null){
+            menuButton.registerAll(this.items);
             menuButton.getItems().addAll(this.items);
         }
         return menuButton;

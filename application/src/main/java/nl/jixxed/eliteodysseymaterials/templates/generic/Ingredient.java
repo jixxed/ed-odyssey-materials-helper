@@ -1,9 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
-public abstract class Ingredient extends VBox {
+public abstract class Ingredient extends DestroyableVBox {
 
     public abstract StorageType getType();
 

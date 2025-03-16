@@ -1,10 +1,7 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 
 import javafx.animation.FadeTransition;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
@@ -16,8 +13,11 @@ import nl.jixxed.eliteodysseymaterials.domain.*;
 import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.EventService;
+import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
+import nl.jixxed.eliteodysseymaterials.service.event.WishlistBlueprintEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBlueprintTemplate<OdysseyBlueprintName> {
+public class OdysseyWishlistBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<OdysseyBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String VISIBLE_STYLE_CLASS = "visible";
     private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
@@ -41,14 +41,14 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     @Getter
     private final String wishlistUUID;
 
-    private Button visibilityButton;
+    private DestroyableButton visibilityButton;
     private DestroyableResizableImageView visibilityImage;
-    private Label wishlistRecipeName;
-    private Button removeBlueprint;
+    private DestroyableLabel wishlistRecipeName;
+    private DestroyableButton removeBlueprint;
     private final Set<OdysseyWishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<OdysseyWishlistIngredient> otherIngredients = new HashSet<>();
-    private EventListener<StorageEvent> storageEventEventListener;
-    private Tooltip tooltip;
+    private DestroyableTooltip tooltip;
+
     public OdysseyWishlistBlueprintTemplate(final String wishlistUUID, final OdysseyWishlistBlueprint odysseyWishlistBlueprint) {
         this.wishlistUUID = wishlistUUID;
         this.odysseyWishlistBlueprint = odysseyWishlistBlueprint;
@@ -59,7 +59,7 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
             this.visibilityImage = ResizableImageViewBuilder.builder()
                     .withStyleClass("wishlist-visible-image")
@@ -70,14 +70,14 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
                     .withOnAction(event -> setVisibility(!this.visible))
                     .withGraphic(this.visibilityImage)
                     .build();
-            this.getChildren().addAll(this.visibilityButton);
+            this.getNodes().addAll(this.visibilityButton);
             setVisibility(this.odysseyWishlistBlueprint.isVisible());
         } else {
             setVisibility(true);
         }
         this.wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("wishlist-label")
-                .withText(LocaleService.getStringBinding(this.odysseyWishlistBlueprint.getRecipeName().getLocalizationKey()))
+                .withText(this.odysseyWishlistBlueprint.getRecipeName().getLocalizationKey())
                 .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.odysseyWishlistBlueprint.getRecipeName())))
                 .withHoverProperty((observable, oldValue, newValue) -> {
                     this.wishlistIngredients.forEach(wishlistIngredient -> wishlistIngredient.highlight(newValue, this.blueprint.getRequiredAmount(wishlistIngredient.getOdysseyMaterial())));
@@ -85,13 +85,14 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
                     this.highlight(newValue);
                 })
                 .build();
-        this.getChildren().addAll(this.wishlistRecipeName);
+        this.getNodes().addAll(this.wishlistRecipeName);
         if (!this.wishlistUUID.equals(HorizonsWishlist.ALL.getUuid())) {
             this.removeBlueprint = ButtonBuilder.builder()
-                    .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
-                    .withOnAction(event -> remove())
+                    .withStyleClass("wishlist-item-button")
+                    .withNonLocalizedText("X")
+                    .withOnAction(event -> destroyTemplate())
                     .build();
-            this.getChildren().add(this.removeBlueprint);
+            this.getNodes().add(this.removeBlueprint);
         }
         this.getStyleClass().add("wishlist-item");
 
@@ -110,11 +111,6 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
         this.canCraft(craftability);
     }
 
-    @Override
-    public void remove() {
-        EventService.removeListener(this.storageEventEventListener);
-        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.REMOVED)));
-    }
 
     private void initFadeTransition() {
         final FadeTransition fadeTransition = new FadeTransition(Duration.millis(2000));
@@ -124,11 +120,11 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
         fadeTransition.play();
     }
 
-    private void initEventHandling() {
-        this.storageEventEventListener = EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             final Craftability craftability = OdysseyBlueprintConstants.getCraftability((OdysseyBlueprintName) this.getRecipeName());
             this.canCraft(craftability);
-        });
+        }));
     }
 
     private void highlight(final boolean enable) {
@@ -144,12 +140,12 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
         if (Craftability.CRAFTABLE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable");
             if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
-                this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"));
+                this.tooltip.addBinding(this.tooltip.textProperty(), LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip"));
             }
         } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable-with-trade");
             if (this.blueprint instanceof ModuleBlueprint moduleRecipe) {
-                this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip.craftable"));
+                this.tooltip.addBinding(this.tooltip.textProperty(), LocaleService.getToolTipStringBinding(moduleRecipe, "tab.wishlist.blueprint.tooltip.craftable"));
             }
         }
     }
@@ -213,8 +209,8 @@ public class OdysseyWishlistBlueprintTemplate extends HBox implements WishlistBl
     }
 
     @Override
-    public void onDestroy() {
-        EventService.removeListener(this.storageEventEventListener);
+    public void destroyInternal() {
+        APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new WishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.odysseyWishlistBlueprint), Action.REMOVED)));
     }
 
     @Override

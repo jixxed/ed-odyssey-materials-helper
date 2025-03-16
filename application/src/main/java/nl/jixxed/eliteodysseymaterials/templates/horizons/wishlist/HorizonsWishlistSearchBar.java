@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -22,17 +23,19 @@ import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.AfterFontSizeSetEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsWishlistSearchEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public
-class HorizonsWishlistSearchBar extends HBox {
+class HorizonsWishlistSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private TextField textField;
-    private ComboBox<WishlistMaterialGrouping> groupMaterialsComboBox;
-    private ComboBox<HorizonsWishlistMaterialSort> sortMaterialsComboBox;
+    private DestroyableTextField textField;
+    private DestroyableComboBox<WishlistMaterialGrouping> groupMaterialsComboBox;
+    private DestroyableComboBox<HorizonsWishlistMaterialSort> sortMaterialsComboBox;
+    private Disposable subscribe;
 
 
     public HorizonsWishlistSearchBar() {
@@ -40,7 +43,7 @@ class HorizonsWishlistSearchBar extends HBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("root");
         initSearchTextField();
         initSearchTextFilter();
@@ -52,7 +55,7 @@ class HorizonsWishlistSearchBar extends HBox {
 
         HBox.setHgrow(this.textField, Priority.ALWAYS);
 
-        this.getChildren().addAll(this.textField, this.groupMaterialsComboBox, this.sortMaterialsComboBox);
+        this.getNodes().addAll(this.textField, this.groupMaterialsComboBox, this.sortMaterialsComboBox);
     }
 
     private void applyFontSizingHack() {
@@ -66,14 +69,18 @@ class HorizonsWishlistSearchBar extends HBox {
     }
 
     private void initSearchTextSort() {
-        final Tooltip sortMaterialsTooltip = TooltipBuilder.builder()
-                .withText(LocaleService.getStringBinding("search.sort.placeholder"))
+        final DestroyableTooltip sortMaterialsTooltip = TooltipBuilder.builder()
+                .withText("search.sort.placeholder")
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(HorizonsWishlistMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
-                .withItemsProperty(LocaleService.getListBinding(HorizonsWishlistMaterialSort.ALPHABETICAL, HorizonsWishlistMaterialSort.GRADE, HorizonsWishlistMaterialSort.QUANTITY_REQUIRED))
+                .withItemsProperty(LocaleService.getListBinding(
+                        HorizonsWishlistMaterialSort.ALPHABETICAL,
+                        HorizonsWishlistMaterialSort.GRADE,
+                        HorizonsWishlistMaterialSort.QUANTITY_REQUIRED
+                ))
                 .withPromptTextProperty(LocaleService.getStringBinding("search.sort.placeholder"))
-                .withValueChangeListener((options, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new HorizonsWishlistSearchEvent(new HorizonsWishlistMaterialSearch(getQueryOrDefault(this.textField), newValue, getShowOrDefault(this.groupMaterialsComboBox))));
                         PreferencesService.setPreference("search.horizons.wishlist.sort", newValue.name());
@@ -85,12 +92,14 @@ class HorizonsWishlistSearchBar extends HBox {
     }
 
     private void initSearchTextFilter() {
-        final Tooltip groupMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("search.grouping.placeholder")).build();
+        final Tooltip groupMaterialsTooltip = TooltipBuilder.builder()
+                .withText("search.grouping.placeholder")
+                .build();
         this.groupMaterialsComboBox = ComboBoxBuilder.builder(WishlistMaterialGrouping.class)
                 .withStyleClasses("root", "filter-and-sort")
                 .withItemsProperty(LocaleService.getListBinding(WishlistMaterialGrouping.CATEGORY,
                         WishlistMaterialGrouping.NONE))
-                .withValueChangeListener((options, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         EventService.publish(new HorizonsWishlistSearchEvent(new HorizonsWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox))));
                         PreferencesService.setPreference("search.horizons.wishlist.grouping", newValue.name());
@@ -108,14 +117,14 @@ class HorizonsWishlistSearchBar extends HBox {
                 .withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder"))
                 .withFocusTraversable(false)
                 .build();
-        Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
+        subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.addChangeListener(this.textField.textProperty(), (_, _, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
-                .subscribe(newValue -> EventService.publish(new HorizonsWishlistSearchEvent(new HorizonsWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
+                .subscribe(_ -> EventService.publish(new HorizonsWishlistSearchEvent(new HorizonsWishlistMaterialSearch(getQueryOrDefault(this.textField), getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.groupMaterialsComboBox)))));
     }
 
 
-    private void initEventHandling() {
+    public void initEventHandling() {
         //hack for component resizing on other fontsizes
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
@@ -155,4 +164,10 @@ class HorizonsWishlistSearchBar extends HBox {
         return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : HorizonsWishlistMaterialSort.ALPHABETICAL;
     }
 
+    @Override
+    public void destroyInternal() {
+        if (subscribe != null) {
+            subscribe.dispose();
+        }
+    }
 }

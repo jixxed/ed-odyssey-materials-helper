@@ -1,21 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
-import nl.jixxed.eliteodysseymaterials.enums.*;
+import nl.jixxed.eliteodysseymaterials.enums.Engineer;
+import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
+import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
+import nl.jixxed.eliteodysseymaterials.enums.OdysseyBlueprintName;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -24,26 +17,14 @@ import nl.jixxed.eliteodysseymaterials.service.NotificationService;
 import nl.jixxed.eliteodysseymaterials.service.event.BlueprintClickEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class EngineerCard extends VBox {
+public abstract class EngineerCard extends DestroyableVBox implements DestroyableEventTemplate {
     protected static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
-    protected static final Function<BlueprintName, HBox> RECIPE_TO_ENGINEER_BLUEPRINT_LABEL = recipeName -> BoxBuilder.builder()
-            .withNodes(LabelBuilder.builder()
-                            .withStyleClass("engineer-bullet")
-                            .withNonLocalizedText("\u2022")
-                            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
-                            .build(),
-                    LabelBuilder.builder()
-                            .withStyleClass("engineer-blueprint")
-                            .withText(LocaleService.getStringBinding(recipeName.getLocalizationKey()))
-                            .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(recipeName)))
-                            .build()).buildHBox();
     protected static final String ENGINEER_CATEGORY_STYLE_CLASS = "engineer-category";
 
 
@@ -52,43 +33,44 @@ public class EngineerCard extends VBox {
 
     protected DestroyableResizableImageView image;
 
-    protected Label name;
-    private Label engineerLocation;
-    private Label engineerDistance;
-    private DestroyableResizableImageView copyIcon;
-    protected FlowPane location;
-    protected Label unlockRequirementsTitle;
-    protected List<HBox> unlockRequirementsLabels;
-    protected Separator unlockSeparator;
+    protected DestroyableLabel name;
+    private DestroyableLabel engineerDistance;
+    protected DestroyableFlowPane location;
+    protected DestroyableLabel unlockRequirementsTitle;
+    protected List<DestroyableHBox> unlockRequirementsLabels;
+    protected DestroyableSeparator unlockSeparator;
 
     public EngineerCard(final Engineer engineer) {
         this.engineer = engineer;
-        initComponents();
-        initEventHandling(engineer);
+        initComponents2();
+        initEventHandling2();
     }
 
-    private void initEventHandling(final Engineer engineer) {
+    private void initComponents2() {
+        this.getStyleClass().add("engineer-card");
+
+        this.image = register(getEngineerImageView());
+        this.name = register(getEngineerName());
+        this.location = register(getEngineerLocation());
+        this.unlockRequirementsTitle = register(getUnlockRequirementsTitle());
+        this.unlockRequirementsLabels = getUnlockRequirements();
+        registerAll(this.unlockRequirementsLabels);
+        this.unlockSeparator = register(new DestroyableSeparator(Orientation.HORIZONTAL));
+    }
+
+
+    private void initEventHandling2() {
         register(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent ->
-                this.engineerDistance.setText("(" + Formatters.NUMBER_FORMAT_2.format(
+                addBinding(this.engineerDistance.textProperty(), LocaleService.getStringBinding("tab.engineer.distance", Formatters.NUMBER_FORMAT_2.format(
                         engineer.getDistance(
                                 locationChangedEvent.getCurrentStarSystem().getX(),
                                 locationChangedEvent.getCurrentStarSystem().getY(),
                                 locationChangedEvent.getCurrentStarSystem().getZ()
                         )
-                ) + "Ly)")));
+                )))));
     }
 
-    private void initComponents() {
-        this.image = getEngineerImageView();
-        this.name = getEngineerName();
-        this.location = getEngineerLocation();
-        this.unlockRequirementsTitle = getUnlockRequirementsTitle();
-        this.unlockRequirementsLabels = getUnlockRequirements();
-        this.unlockSeparator = new Separator(Orientation.HORIZONTAL);
-        this.getStyleClass().add("engineer-card");
-    }
-
-    protected List<HBox> getUnlockRequirements() {
+    protected List<DestroyableHBox> getUnlockRequirements() {
         return this.engineer.getPrerequisites().stream()
                 .map(prerequisite -> BoxBuilder.builder()
                         .withNodes(LabelBuilder.builder()
@@ -104,7 +86,7 @@ public class EngineerCard extends VBox {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private Label getUnlockRequirementsTitle() {
+    private DestroyableLabel getUnlockRequirementsTitle() {
         return LabelBuilder.builder()
                 .withStyleClass(ENGINEER_CATEGORY_STYLE_CLASS)
                 .withText(LocaleService.getStringBinding("tab.engineer.unlock.prerequisites"))
@@ -112,51 +94,50 @@ public class EngineerCard extends VBox {
     }
 
 
-    private FlowPane getEngineerLocation() {
-        this.engineerLocation = LabelBuilder.builder()
+    private DestroyableFlowPane getEngineerLocation() {
+        DestroyableLabel engineerLocation = LabelBuilder.builder()
                 .withStyleClass("engineer-location")
                 .withNonLocalizedText(this.engineer.getSettlement().getSettlementName() + " | " + this.engineer.getStarSystem().getName())
                 .build();
-        String distance = "(" + Formatters.NUMBER_FORMAT_2.format(
-                engineer.getDistance(
-                        LocationService.getCurrentStarSystem().getX(),
-                        LocationService.getCurrentStarSystem().getY(),
-                        LocationService.getCurrentStarSystem().getZ()
-                )
-        ) + "Ly)";
         this.engineerDistance = LabelBuilder.builder()
                 .withStyleClass("engineer-distance")
-                .withNonLocalizedText(distance)
+                .withText("tab.engineer.distance", Formatters.NUMBER_FORMAT_2.format(
+                        engineer.getDistance(
+                                LocationService.getCurrentStarSystem().getX(),
+                                LocationService.getCurrentStarSystem().getY(),
+                                LocationService.getCurrentStarSystem().getZ()
+                        )))
                 .build();
-
-        this.copyIcon = ResizableImageViewBuilder.builder()
+        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("engineer-copy-icon")
                 .withImage("/images/other/copy.png")
                 .build();
 
-        return FlowPaneBuilder.builder().withStyleClass("engineer-location-line")
+        final DestroyableStackPane copyIconStackPane = StackPaneBuilder.builder()
+                .withNodes(copyIcon)
+                .build();
+
+        return FlowPaneBuilder.builder()
+                .withStyleClass("engineer-location-line")
                 .withOnMouseClicked(event -> {
                     copyLocationToClipboard();
-                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
+                    NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.system.copied.text"));
                 })
-                .withNodes(this.engineerLocation, new StackPane(this.copyIcon), this.engineerDistance)
+                .withNodes(engineerLocation, copyIconStackPane, this.engineerDistance)
                 .build();
 
     }
 
     private void copyLocationToClipboard() {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent content = new ClipboardContent();
-        content.putString(this.engineer.getStarSystem().getName());
-        clipboard.setContent(content);
+        ClipboardHelper.copyToClipboard(this.engineer.getStarSystem().getName());
     }
 
 
-    private Label getEngineerName() {
+    private DestroyableLabel getEngineerName() {
         return LabelBuilder.builder()
                 .withStyleClass("engineer-name")
                 .withText(LocaleService.getStringBinding(this.engineer.getLocalizationKey()))
-                .withOnMouseClicked(event -> EventService.publish(new BlueprintClickEvent(this.engineer.isOdyssey() ? OdysseyBlueprintName.forEngineer(this.engineer) : HorizonsBlueprintName.forEngineer(this.engineer))))
+                .withOnMouseClicked(_ -> EventService.publish(new BlueprintClickEvent(this.engineer.isOdyssey() ? OdysseyBlueprintName.forEngineer(this.engineer) : HorizonsBlueprintName.forEngineer(this.engineer))))
                 .build();
     }
 

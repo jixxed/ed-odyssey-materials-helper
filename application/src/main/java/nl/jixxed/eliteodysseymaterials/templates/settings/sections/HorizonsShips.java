@@ -5,16 +5,15 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.util.Callback;
 import lombok.extern.slf4j.Slf4j;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ToggleButtonBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ShipConfigurationModification;
@@ -29,9 +28,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
-import org.controlsfx.control.SearchableComboBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,22 +37,47 @@ import java.util.stream.Collectors;
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
-public class HorizonsShips extends DestroyableVBox implements DestroyableTemplate {
+public class HorizonsShips extends DestroyableVBox implements DestroyableEventTemplate {
 
-    private ListView<ShipLegacyModule> modulesList;
-    private GridPane attributes;
-    private Button saveButton;
-    private TextField name;
-    private Label typeLabel;
-    private Label typeValueLabel;
-    private ShipModule selectedShipModule;
-    private List<ToggleButton> toggleButtonsRank;
+    public static final String SETTINGS_LEGACY_MODULE_BUTTON_STYLE_CLASS = "settings-legacy-module-button";
+    public static final String SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS = "settings-legacy-module-label";
+    public static final String SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS = "settings-legacy-module-cb";
+    private DestroyableListView<ShipLegacyModule> modulesList;
+    private DestroyableGridPane attributes;
+    private DestroyableButton saveButton;
+    private DestroyableTextField nameValue;
+    private DestroyableLabel typeValue;
+    private List<DestroyableToggleButton> toggleButtonsRank;
     private ToggleGroup toggleGroupRank;
-    IntegerProperty maxGrade = new SimpleIntegerProperty(0);
-    private VBox blueprints;
-    private VBox effects;
-    private Label blueprintLabel;
-    private Label effectLabel;
+    private final IntegerProperty maxGrade = new SimpleIntegerProperty(0);
+    private DestroyableVBox blueprints;
+    private DestroyableVBox effects;
+    private DestroyableLabel blueprintLabel;
+    private DestroyableLabel effectLabel;
+
+    private static final Callback<ListView<ShipLegacyModule>, ListCell<ShipLegacyModule>> legacyModulesCellFactory = _ -> new DestroyableListCell<>() {
+
+        @SuppressWarnings("java:S1068")
+        private final EventListener<EngineerEvent> engineerEventListener = register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
+            updateText(getItem(), this.emptyProperty().get());
+        }));
+
+        @Override
+        protected void updateItem(final ShipLegacyModule item, final boolean empty) {
+            super.updateItem(item, empty);
+            updateText(item, empty);
+        }
+
+        private void updateText(final ShipLegacyModule item, final boolean empty) {
+            if (empty || item == null) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                setText(item.getName());
+            }
+        }
+
+    };
 
     public HorizonsShips() {
         this.initComponents();
@@ -64,135 +86,116 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableTemplat
 
     @Override
     public void initComponents() {
-        final Label shipsLabel = LabelBuilder.builder()
+        final DestroyableLabel shipsLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.ships.horizons"))
+                .withText("tab.settings.title.ships.horizons")
                 .build();
-        final HBox horizonsShipsCreateModule = createHorizonsShipsCreateModule();
-        final HBox horizonsShipsModuleList = createHorizonsShipsModuleList();
+        final DestroyableHBox horizonsShipsCreateModule = createHorizonsShipsCreateModule();
+        final DestroyableHBox horizonsShipsModuleList = createHorizonsShipsModuleList();
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(shipsLabel, horizonsShipsCreateModule, horizonsShipsModuleList);
+        this.getNodes().addAll(shipsLabel, horizonsShipsCreateModule, horizonsShipsModuleList);
     }
 
     @Override
     public void initEventHandling() {
-        register(EventService.addStaticListener(true, 0, LegacyModuleSavedEvent.class, legacyModuleSavedEvent -> {
-            updateModules();
-        }));
-        register(EventService.addStaticListener(true, 0, CommanderSelectedEvent.class, commanderSelectedEvent -> {
-            updateModules();
-        }));
-        register(EventService.addStaticListener(true, 0, CommanderAllListedEvent.class, commanderAllListedEvent -> {
-            ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> updateModules()
-            );
-        }));
+        register(EventService.addListener(true, this, 0, LegacyModuleSavedEvent.class, _ -> updateModules()));
+        register(EventService.addListener(true, this, 0, CommanderSelectedEvent.class, _ -> updateModules()));
+        register(EventService.addListener(true, this, 0, CommanderAllListedEvent.class, _ -> updateModules()));
     }
 
-    private HBox createHorizonsShipsCreateModule() {
-        final Label newLegacyModuleLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ships.new.module")).build();
-        SearchableComboBox<ShipModule> shipModuleSearchableComboBox = new SearchableComboBox<>(FXCollections.observableList(ShipModule.getBasicModules()));
+    private DestroyableHBox createHorizonsShipsCreateModule() {
+        final DestroyableLabel newLegacyModuleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ships.new.module")
+                .build();
+        DestroyableSearchableComboBox<ShipModule> shipModuleSearchableComboBox = SearchableComboBoxBuilder.builder(ShipModule.class)
+                .withItemsProperty(FXCollections.observableList(ShipModule.getBasicModules()))
+                .build();
 
-        Button create = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.ships.new.module.create")).withOnAction(event -> {
-            final ShipModule selectedItem = shipModuleSearchableComboBox.getSelectionModel().getSelectedItem();
-            LegacyModuleService.saveLegacyModule(selectedItem);
-            updateModules();
-        }).build();
-        create.disableProperty().bind(shipModuleSearchableComboBox.getSelectionModel().selectedItemProperty().isNull());
+        DestroyableButton create = ButtonBuilder.builder()
+                .withText("tab.settings.ships.new.module.create")
+                .withOnAction(_ -> {
+                    final ShipModule selectedItem = shipModuleSearchableComboBox.getSelectionModel().getSelectedItem();
+                    LegacyModuleService.saveLegacyModule(selectedItem);
+                    updateModules();
+                })
+                .withDisableProperty(shipModuleSearchableComboBox.getSelectionModel().selectedItemProperty().isNull())
+                .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(newLegacyModuleLabel, shipModuleSearchableComboBox, create)
                 .buildHBox();
     }
 
-    private HBox createHorizonsShipsModuleList() {
+    private DestroyableHBox createHorizonsShipsModuleList() {
 
-        final Label legacyModulesLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules")).build();
-        this.modulesList = new ListView<>();
-        Button removeButton = ButtonBuilder.builder()
-                .withStyleClass("settings-legacy-module-button")
-                .withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules.remove"))
+        final DestroyableLabel legacyModulesLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules"))
+                .build();
+        this.modulesList = ListViewBuilder.builder(ShipLegacyModule.class)
+                .withStyleClass("settings-legacy-modules-list")
+                .withCellFactory(legacyModulesCellFactory)
+                .build();
+        DestroyableButton removeButton = ButtonBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_BUTTON_STYLE_CLASS)
+                .withText("tab.settings.ships.legacy.modules.remove")
                 .withOnAction(e -> {
                     if (this.modulesList.getSelectionModel().getSelectedItem() != null) {
                         LegacyModuleService.deleteLegacyModule(this.modulesList.getSelectionModel().getSelectedItem().getUuid());
                         this.modulesList.getItems().remove(this.modulesList.getSelectionModel().getSelectedItem());
                     }
-//                    EventService.publish(new LegacyModuleRemovedEvent());
                 })
                 .build();
 
-        removeButton.disableProperty().bind(this.modulesList.getSelectionModel().selectedItemProperty().isNull());
+        removeButton.addBinding(removeButton.disableProperty(), this.modulesList.getSelectionModel().selectedItemProperty().isNull());
         saveButton = ButtonBuilder.builder()
-                .withStyleClass("settings-legacy-module-button")
-                .withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules.save"))
-                .withOnAction(e -> {
-//                    LegacyModuleService.deleteLegacyModule(this.modulesList.getSelectionModel().getSelectedItem().getUuid());
-//                    this.modulesList.getItems().remove(this.modulesList.getSelectionModel().getSelectedItem());
-//                    EventService.publish(new LegacyModuleUpdatedEvent());
-                })
+                .withStyleClass(SETTINGS_LEGACY_MODULE_BUTTON_STYLE_CLASS)
+                .withText("tab.settings.ships.legacy.modules.save")
                 .build();
-        saveButton.disableProperty().bind(this.modulesList.getSelectionModel().selectedItemProperty().isNull());
-        this.modulesList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    blueprints.getChildren().clear();
-                    effects.getChildren().clear();
-                    attributes.getChildren().clear();
-                    if (newValue != null) {
-                        final ShipModule shipModule = ShipModule.getModule(newValue.getId()).Clone();
-
-                        maxGrade.set(Optional.ofNullable(newValue)
-                                .map(module -> module.getModification().stream()
-                                        .findFirst()
-                                        .map(modification -> HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), modification.getType()).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).orElse(0))
-                                        .orElse(0))
-                                .orElse(0));
-                        newValue.getModification().forEach(shipConfigurationModification -> {
-                            shipModule.applyModification(shipConfigurationModification.getType(), shipConfigurationModification.getGrade(), null);
-                                }
-                        );
-                        newValue.getExperimentalEffect().forEach(shipConfigurationExperimentalEffect -> {
-                            shipModule.applyExperimentalEffect(shipConfigurationExperimentalEffect.getType());
-                                }
-                        );
-                        shipModule.getModifiers().putAll(newValue.getModifiers());
-                        shipModule.setLegacy(true);
-                        blueprints.getChildren().add(getBlueprintSection(newValue, shipModule, false));
-                        effects.getChildren().add(getBlueprintSection(newValue, shipModule, true));
-                        showAttributes(shipModule);
-                        name.setText(newValue.getName());
-                        typeValueLabel.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize() + shipModule.getModuleClass() + (shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting() : ""));
-                        saveButton.setOnAction(actionEvent -> {
-                            LegacyModuleService.updateLegacyModule(newValue.getUuid(), name.getText(), shipModule);
-                            updateModules();
-                            modulesList.getSelectionModel().select(newValue);
-                        });
-                    } else {
-                        typeValueLabel.setText("");
-                        name.setText("");
-                    }
-
-                }
-        );
+        saveButton.addBinding(saveButton.disableProperty(), this.modulesList.getSelectionModel().selectedItemProperty().isNull());
+        this.modulesList.addChangeListener(this.modulesList.getSelectionModel().selectedItemProperty(), (_, _, newValue) -> update(newValue));
         updateModules();
-        this.modulesList.getStyleClass().add("settings-legacy-modules-list");
-        this.modulesList.setCellFactory(getLegacyModulesCellFactory());
 //
-        Label nameLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules.name")).build();
-        name = new TextField();
-        name.getStyleClass().add("settings-legacy-module-cb");
-        typeLabel = LabelBuilder.builder().withStyleClass("settings-legacy-module-label").withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules.type")).build();
-        typeValueLabel = LabelBuilder.builder().withStyleClass("settings-legacy-module-label").build();
-        blueprintLabel = LabelBuilder.builder().withStyleClass("settings-legacy-module-label").withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules.blueprint")).build();
-        blueprints = BoxBuilder.builder().withStyleClass("settings-legacy-module-cb").buildVBox();
-        effectLabel = LabelBuilder.builder().withStyleClass("settings-legacy-module-label").withText(LocaleService.getStringBinding("tab.settings.ships.legacy.modules.effect")).build();
-        effects = BoxBuilder.builder().withStyleClass("settings-legacy-module-cb").buildVBox();
-        final VBox buttons = BoxBuilder.builder().withStyleClass("settings-legacy-modules-buttons").withNodes(removeButton, saveButton, typeLabel, typeValueLabel, nameLabel, name,  blueprints,  effects).buildVBox();
-        attributes = new GridPane();
-        attributes.getStyleClass().add("settings-legacy-modules-attributes-grid");
-        nameLabel.visibleProperty().bind(modulesList.getSelectionModel().selectedItemProperty().isNotNull());
-        typeLabel.visibleProperty().bind(modulesList.getSelectionModel().selectedItemProperty().isNotNull());
-        name.visibleProperty().bind(modulesList.getSelectionModel().selectedItemProperty().isNotNull());
-        typeValueLabel.visibleProperty().bind(modulesList.getSelectionModel().selectedItemProperty().isNotNull());
-
+        DestroyableLabel nameTitle = LabelBuilder.builder()
+                .withText("tab.settings.ships.legacy.modules.name")
+                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
+                .build();
+        nameValue = TextFieldBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
+                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
+                .build();
+        DestroyableLabel typeTitle = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
+                .withText("tab.settings.ships.legacy.modules.type")
+                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
+                .build();
+        typeValue = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
+                .withVisibilityProperty(modulesList.getSelectionModel().selectedItemProperty().isNotNull())
+                .build();
+        blueprintLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
+                .withText("tab.settings.ships.legacy.modules.blueprint")
+                .build();
+        blueprints = BoxBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
+                .buildVBox();
+        effectLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_LABEL_STYLE_CLASS)
+                .withText("tab.settings.ships.legacy.modules.effect")
+                .build();
+        effects = BoxBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
+                .buildVBox();
+        final DestroyableVBox buttons = BoxBuilder.builder()
+                .withStyleClass("settings-legacy-modules-buttons")
+                .withNodes(removeButton, saveButton, typeTitle, typeValue, nameTitle, nameValue, blueprints, effects)
+                .buildVBox();
+        attributes = GridPaneBuilder.builder()
+                .withStyleClass("settings-legacy-modules-attributes-grid")
+                .build();
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
@@ -201,8 +204,51 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableTemplat
 
     }
 
+    private void update(ShipLegacyModule newValue) {
+        blueprints.getNodes().clear();
+        effects.getNodes().clear();
+        attributes.getNodes().clear();
+        if (newValue != null) {
+            final ShipModule shipModule = ShipModule.getModule(newValue.getId()).Clone();
+
+            maxGrade.set(Optional.of(newValue)
+                    .map(module -> module.getModification().stream()
+                            .findFirst()
+                            .map(modification -> HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), modification.getType()).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).orElse(0))
+                            .orElse(0))
+                    .orElse(0));
+            newValue.getModification()
+                    .forEach(modification -> shipModule.applyModification(modification.getType(), modification.getGrade(), null));
+            newValue.getExperimentalEffect()
+                    .forEach(effect -> shipModule.applyExperimentalEffect(effect.getType()));
+            shipModule.getModifiers().putAll(newValue.getModifiers());
+            shipModule.setLegacy(true);
+            blueprints.getNodes().add(getBlueprintSection(newValue, shipModule, false));
+            effects.getNodes().add(getBlueprintSection(newValue, shipModule, true));
+            showAttributes(shipModule);
+            nameValue.setText(newValue.getName());
+            typeValue.addBinding(typeValue.textProperty(), LocaleService.getStringBinding("tab.settings.module",
+                    LocaleService.LocalizationKey.of(shipModule.getLocalizationKey()),
+                    shipModule.getModuleSize(),
+                    shipModule.getModuleClass(),
+                    (shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting() : "")));
+
+            saveButton.registerEventHandler(ActionEvent.ACTION, _ -> {
+                LegacyModuleService.updateLegacyModule(newValue.getUuid(), nameValue.getText(), shipModule);
+                updateModules();
+                modulesList.getSelectionModel().select(newValue);
+            });
+        } else {
+            typeValue.textProperty().unbind();
+            nameValue.setText("");
+        }
+    }
+
     private void updateModules() {
-        final ObservableList<ShipLegacyModule> items = ApplicationState.getInstance().getPreferredCommander().map(commander -> LegacyModuleService.loadModules(commander).getLegacyModules().stream().collect(Collectors.toCollection(FXCollections::observableArrayList))).orElseGet(FXCollections::emptyObservableList);
+        final ObservableList<ShipLegacyModule> items = ApplicationState.getInstance().getPreferredCommander()
+                .map(commander -> LegacyModuleService.loadModules(commander).getLegacyModules().stream()
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList)))
+                .orElseGet(FXCollections::emptyObservableList);
         this.modulesList.setItems(items);
     }
 
@@ -222,152 +268,145 @@ public class HorizonsShips extends DestroyableVBox implements DestroyableTemplat
         });
     }
 
-    private VBox getBlueprintSection(ShipLegacyModule shipLegacyModule, final ShipModule shipModule, final boolean experimental) {
+    private <E extends Node & DestroyableComponent> DestroyableVBox getBlueprintSection(ShipLegacyModule shipLegacyModule, final ShipModule shipModule, final boolean experimental) {
 
         if (shipLegacyModule != null) {
             final List<HorizonsBlueprintType> allowedBlueprints = experimental ? shipModule.getAllowedExperimentalEffects() : shipModule.getAllowedBlueprints();
-            if (shipModule != null && !allowedBlueprints.isEmpty()) {
+            if (!allowedBlueprints.isEmpty()) {
                 final ToggleGroup toggleGroup = new ToggleGroup();
-                final List<ToggleButton> toggleButtons = allowedBlueprints.stream()
+                final List<DestroyableToggleButton> toggleButtons = allowedBlueprints.stream()
                         .sorted(Comparator.comparing(horizonsBlueprintType -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey(true))))
-                        .map(horizonsBlueprintType -> {
-                                    final int multiplier = (experimental ? shipModule.getExperimentalEffects().stream().filter(horizonsBlueprintType::equals).toList().size() : shipModule.getModifications().stream().filter(modification -> modification.getModification().equals(horizonsBlueprintType)).toList().size());
-                                    final StringBinding blueprintStringBinding;
-                                    if (multiplier > 1) {
-                                        blueprintStringBinding = LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey(true)).concat(" x" + multiplier));
-                                    } else {
-                                        blueprintStringBinding = LocaleService.getStringBinding(horizonsBlueprintType.getLocalizationKey(true));
-                                    }
-                                    final ToggleButton button = ToggleButtonBuilder.builder()
-                                            .withStyleClass("settings-legacy-module-button")
-                                            .withText(blueprintStringBinding)
-                                            .withOnAction(event -> {
-                                                if (experimental) {
-                                                    if (((ToggleButton) event.getTarget()).isSelected()) {
-                                                        shipModule.getExperimentalEffects().clear();
-                                                        shipModule.getExperimentalEffects().add(horizonsBlueprintType);
-                                                    } else {
-                                                        shipModule.getExperimentalEffects().clear();
-                                                    }
-                                                } else {
-                                                    if (((ToggleButton) event.getTarget()).isSelected()) {
-                                                        final HorizonsBlueprintGrade maxGradeForModification = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElseThrow(IllegalArgumentException::new);
-                                                        final HorizonsBlueprintGrade grade = HorizonsBlueprintGrade.forDigit(((ToggleButton) toggleGroupRank.getSelectedToggle()).getText());
-                                                        shipModule.getModifications().clear();
-                                                        shipModule.getModifications().add(new Modification(horizonsBlueprintType, (Double) null, grade.getGrade() <= maxGradeForModification.getGrade() ? grade : maxGradeForModification));
-                                                        maxGrade.set(maxGradeForModification.getGrade());
-                                                    } else {
-                                                        shipModule.getModifications().clear();
-                                                        maxGrade.set(0);
-                                                    }
-                                                }
-                                            }).build();
-                                    button.selectedProperty().set((experimental ? shipLegacyModule.getExperimentalEffect().stream().anyMatch(effect -> effect.getType().equals(horizonsBlueprintType)) : shipLegacyModule.getModification().stream().anyMatch(modification -> modification.getType().equals(horizonsBlueprintType))));
-                                    button.selectedProperty().addListener((observable, oldValue, newValue) ->
-                                    {
-                                        if (Boolean.TRUE.equals(oldValue)) {
-                                            if (experimental) {
-                                                shipModule.getExperimentalEffects().clear();
-                                            } else {
-                                                shipModule.getModifications().clear();
-                                            }
-                                        }
-                                        if (Boolean.TRUE.equals(newValue)) {
-                                            if (experimental) {
-                                                shipModule.getExperimentalEffects().clear();
-                                                shipModule.getExperimentalEffects().add(horizonsBlueprintType);
-                                            } else {
-                                                final HorizonsBlueprintGrade maxGradeForModification = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElseThrow(IllegalArgumentException::new);
-                                                final HorizonsBlueprintGrade grade = HorizonsBlueprintGrade.forDigit(((ToggleButton) toggleGroupRank.getSelectedToggle()).getText());
-                                                shipModule.getModifications().clear();
-                                                shipModule.getModifications().add(new Modification(horizonsBlueprintType, (Double) null, grade.getGrade() <= maxGradeForModification.getGrade() ? grade : maxGradeForModification));
-                                            }
-                                        }
-                                    });
-                                    button.setFocusTraversable(false);
-                                    if ((experimental && shipModule.getExperimentalEffects().size() <= 1) || (!experimental && shipModule.getModifications().size() <= 1)) {
-                                        button.setToggleGroup(toggleGroup);
-                                    } else {
-                                        button.setDisable(true);
-                                    }
-                                    return button;
-                                }
-
-                        ).toList();
-
-                final VBox vBox = BoxBuilder.builder().withStyleClass("settings-legacy-module-cb").buildVBox();
-                vBox.getChildren().add(experimental ? effectLabel : blueprintLabel);
-                vBox.getChildren().addAll(toggleButtons);
+                        .map(horizonsBlueprintType -> createBlueprintButton(shipLegacyModule, shipModule, experimental, horizonsBlueprintType, toggleGroup))
+                        .toList();
+                final DestroyableVBox vBox = BoxBuilder.builder()
+                        .withStyleClass(SETTINGS_LEGACY_MODULE_CB_STYLE_CLASS)
+                        .withNode((experimental ? effectLabel : blueprintLabel))
+                        .withNodes(toggleButtons)
+                        .buildVBox();
                 addGradeSelection(experimental, shipLegacyModule, shipModule, toggleGroup, vBox);
                 return vBox;
             }
         }
-        return new VBox();
+        return BoxBuilder.builder()
+                .buildVBox();
     }
 
-    private void addGradeSelection(boolean experimental, ShipLegacyModule shipLegacyModule, ShipModule shipModule, ToggleGroup toggleGroup, VBox vBox) {
+    //TODO needs refactoring
+    private DestroyableToggleButton createBlueprintButton(ShipLegacyModule shipLegacyModule, ShipModule shipModule, boolean experimental, HorizonsBlueprintType horizonsBlueprintType, ToggleGroup toggleGroup) {
+        final int multiplier = experimental
+                ? shipModule.getExperimentalEffects().stream().filter(horizonsBlueprintType::equals).toList().size()
+                : shipModule.getModifications().stream().filter(modification -> modification.getModification().equals(horizonsBlueprintType)).toList().size();
+        final StringBinding blueprintStringBinding;
+        if (multiplier > 1) {
+            blueprintStringBinding = LocaleService.getStringBinding(() -> LocaleService.getLocalizedStringForCurrentLocale(horizonsBlueprintType.getLocalizationKey(true)).concat(" x" + multiplier));
+        } else {
+            blueprintStringBinding = LocaleService.getStringBinding(horizonsBlueprintType.getLocalizationKey(true));
+        }
+        final DestroyableToggleButton button = ToggleButtonBuilder.builder()
+                .withStyleClass(SETTINGS_LEGACY_MODULE_BUTTON_STYLE_CLASS)
+                .withText(blueprintStringBinding)
+                .withOnAction(event -> {
+                    if (experimental) {
+                        if (((ToggleButton) event.getTarget()).isSelected()) {
+                            shipModule.getExperimentalEffects().clear();
+                            shipModule.getExperimentalEffects().add(horizonsBlueprintType);
+                        } else {
+                            shipModule.getExperimentalEffects().clear();
+                        }
+                    } else {
+                        if (((ToggleButton) event.getTarget()).isSelected()) {
+                            final HorizonsBlueprintGrade maxGradeForModification = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream()
+                                    .max(Comparator.comparing(HorizonsBlueprintGrade::getGrade))
+                                    .orElseThrow(IllegalArgumentException::new);
+                            final HorizonsBlueprintGrade grade = HorizonsBlueprintGrade.forDigit(((ToggleButton) toggleGroupRank.getSelectedToggle()).getText());
+                            shipModule.getModifications().clear();
+                            shipModule.getModifications().add(new Modification(horizonsBlueprintType, (Double) null, grade.getGrade() <= maxGradeForModification.getGrade() ? grade : maxGradeForModification));
+                            maxGrade.set(maxGradeForModification.getGrade());
+                        } else {
+                            shipModule.getModifications().clear();
+                            maxGrade.set(0);
+                        }
+                    }
+                })
+                .withSelected((experimental ? shipLegacyModule.getExperimentalEffect().stream().anyMatch(effect -> effect.getType().equals(horizonsBlueprintType)) : shipLegacyModule.getModification().stream().anyMatch(modification -> modification.getType().equals(horizonsBlueprintType))))
+                .withFocusTraversable(false)
+                .build();
+        button.addChangeListener(button.selectedProperty(), (_, oldValue, newValue) ->
+        {
+            if (Boolean.TRUE.equals(oldValue)) {
+                if (experimental) {
+                    shipModule.getExperimentalEffects().clear();
+                } else {
+                    shipModule.getModifications().clear();
+                }
+            }
+            if (Boolean.TRUE.equals(newValue)) {
+                if (experimental) {
+                    shipModule.getExperimentalEffects().clear();
+                    shipModule.getExperimentalEffects().add(horizonsBlueprintType);
+                } else {
+                    final HorizonsBlueprintGrade maxGradeForModification = HorizonsBlueprintConstants.getBlueprintGrades(shipModule.getName().getPrimary(), horizonsBlueprintType).stream().max(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).orElseThrow(IllegalArgumentException::new);
+                    final HorizonsBlueprintGrade grade = HorizonsBlueprintGrade.forDigit(((ToggleButton) toggleGroupRank.getSelectedToggle()).getText());
+                    shipModule.getModifications().clear();
+                    shipModule.getModifications().add(new Modification(horizonsBlueprintType, (Double) null, grade.getGrade() <= maxGradeForModification.getGrade() ? grade : maxGradeForModification));
+                }
+            }
+        });
+        if ((experimental && shipModule.getExperimentalEffects().size() <= 1) || (!experimental && shipModule.getModifications().size() <= 1)) {
+            button.setToggleGroup(toggleGroup);
+        } else {
+            button.setDisable(true);
+        }
+        return button;
+    }
+
+    private void addGradeSelection(boolean experimental, ShipLegacyModule shipLegacyModule, ShipModule shipModule, ToggleGroup toggleGroup, DestroyableVBox vBox) {
         if (!experimental) {
-            final HBox progression = BoxBuilder.builder().withStyleClass("settings-legacy-module-grades").buildHBox();
+            final DestroyableHBox progression = BoxBuilder.builder()
+                    .withStyleClass("settings-legacy-module-grades")
+                    .buildHBox();
             toggleGroupRank = new ToggleGroup();
             toggleButtonsRank = new ArrayList<>();
             Arrays.stream(HorizonsBlueprintGrade.values()).filter(grade -> !HorizonsBlueprintGrade.NONE.equals(grade)).forEach(horizonsBlueprintGrade -> {
-                final ToggleButton toggleButton = ToggleButtonBuilder.builder()
-                        .withStyleClass("settings-legacy-module-button-grade").withNonLocalizedText(String.valueOf(horizonsBlueprintGrade.getGrade())).withOnAction(event -> {
-                    shipModule.getModifications().getFirst().setGrade(horizonsBlueprintGrade);
-                }).build();
-                toggleButton.setToggleGroup(toggleGroupRank);
-                toggleButton.disableProperty().bind(toggleGroup.selectedToggleProperty().isNull().or(maxGrade.lessThan(horizonsBlueprintGrade.getGrade())));
-                toggleButton.disableProperty().addListener((observable, oldValue, newValue) -> {
-                    if (Boolean.TRUE.equals(newValue) && toggleButton.isSelected()) {
-                        toggleButton.setSelected(false);
-                        toggleButtonsRank.stream().filter(toggle -> !toggle.isDisabled()).max(Comparator.comparing(ToggleButton::getText)).ifPresent(button -> button.setSelected(true));
-                    }
-                });
-                maxGrade.addListener((observable, oldValue, newValue) -> {
-                    if (oldValue.equals(0) && newValue.equals(horizonsBlueprintGrade.getGrade())) {
-                        toggleButton.setSelected(true);
-                    }
-                });
-                toggleButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                    if (Boolean.TRUE.equals(!newValue) && toggleButton.getToggleGroup().getSelectedToggle() == null) {
-                        toggleButton.setSelected(true);
-                    }
-                });
-                toggleButton.setSelected(horizonsBlueprintGrade.equals(shipLegacyModule.getModification().stream().findFirst().map(ShipConfigurationModification::getGrade).orElse(HorizonsBlueprintGrade.GRADE_5)));
+                final DestroyableToggleButton toggleButton = createToggleButton(shipLegacyModule, shipModule, toggleGroup, horizonsBlueprintGrade);
                 toggleButtonsRank.add(toggleButton);
 
             });
-            progression.getChildren().addAll(toggleButtonsRank);
+            progression.getNodes().addAll(toggleButtonsRank);
 
-            vBox.getChildren().add(progression);
+            vBox.getNodes().add(progression);
         }
     }
 
-    private Callback<ListView<ShipLegacyModule>, ListCell<ShipLegacyModule>> getLegacyModulesCellFactory() {
-        return listView -> new ListCell<>() {
-
-            @SuppressWarnings("java:S1068")
-            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(true, this, LanguageChangedEvent.class, event ->
-                    updateText(getItem(), this.emptyProperty().get())
-            );
-
-
-            @Override
-            protected void updateItem(final ShipLegacyModule item, final boolean empty) {
-                super.updateItem(item, empty);
-                updateText(item, empty);
+    private DestroyableToggleButton createToggleButton(ShipLegacyModule shipLegacyModule, ShipModule shipModule, ToggleGroup toggleGroup, HorizonsBlueprintGrade horizonsBlueprintGrade) {
+        final DestroyableToggleButton toggleButton = ToggleButtonBuilder.builder()
+                .withStyleClass("settings-legacy-module-button-grade")
+                .withNonLocalizedText(String.valueOf(horizonsBlueprintGrade.getGrade()))
+                .withOnAction(_ -> shipModule.getModifications().getFirst().setGrade(horizonsBlueprintGrade))
+                .withDisableProperty(toggleGroup.selectedToggleProperty().isNull().or(maxGrade.lessThan(horizonsBlueprintGrade.getGrade())))
+                .withSelected(horizonsBlueprintGrade.equals(shipLegacyModule.getModification().stream().findFirst().map(ShipConfigurationModification::getGrade).orElse(HorizonsBlueprintGrade.GRADE_5)))
+                .withToggleGroup(toggleGroup)
+                .build();
+        toggleButton.setToggleGroup(toggleGroupRank);
+        toggleButton.addChangeListener(toggleButton.disableProperty(), (_, _, newValue) -> {
+            if (Boolean.TRUE.equals(newValue) && toggleButton.isSelected()) {
+                toggleButton.setSelected(false);
+                toggleButtonsRank.stream()
+                        .filter(toggle -> !toggle.isDisabled())
+                        .max(Comparator.comparing(ToggleButton::getText)).ifPresent(button -> button.setSelected(true));
             }
-
-            private void updateText(final ShipLegacyModule item, final boolean empty) {
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    setText(item.getName());
-                }
+        });
+        addChangeListener(maxGrade, (_, oldValue, newValue) -> {
+            if (oldValue.equals(0) && newValue.equals(horizonsBlueprintGrade.getGrade())) {
+                toggleButton.setSelected(true);
             }
-
-        };
+        });
+        toggleButton.addChangeListener(toggleButton.selectedProperty(), (_, _, newValue) -> {
+            if (Boolean.TRUE.equals(!newValue) && toggleButton.getToggleGroup().getSelectedToggle() == null) {
+                toggleButton.setSelected(true);
+            }
+        });
+        return toggleButton;
     }
 
 }

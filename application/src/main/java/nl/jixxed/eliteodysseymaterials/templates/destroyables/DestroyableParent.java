@@ -12,6 +12,10 @@ import java.util.Map;
 
 public interface DestroyableParent extends DestroyableComponent {
 
+    default ObservableListOverride getNodes() {
+        return new ObservableListOverride(DestroyableParent.this, DestroyableParent.this.getChildren());
+    }
+
     default Map<ObservableList<Node>, List<ListChangeListener<? super Node>>> getListChangeListeners() {
         return DestroyableManager.getListListeners(this);
     }
@@ -19,7 +23,6 @@ public interface DestroyableParent extends DestroyableComponent {
     default Map<ObservableList<Node>, List<InvalidationListener>> getListInvalidationListeners() {
         return DestroyableManager.getListInvalidationListeners(this);
     }
-
     ObservableList<Node> getChildren();
 
     @Override

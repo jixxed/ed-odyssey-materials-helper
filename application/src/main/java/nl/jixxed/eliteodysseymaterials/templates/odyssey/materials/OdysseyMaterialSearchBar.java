@@ -2,6 +2,7 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.materials;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -21,17 +22,22 @@ import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComboBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextField;
 
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public
-class OdysseyMaterialSearchBar extends HBox {
+class OdysseyMaterialSearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private TextField textField;
-    private ComboBox<OdysseyMaterialShow> showMaterialsComboBox;
-    private ComboBox<OdysseyMaterialSort> sortMaterialsComboBox;
+    private DestroyableTextField textField;
+    private DestroyableComboBox<OdysseyMaterialShow> showMaterialsComboBox;
+    private DestroyableComboBox<OdysseyMaterialSort> sortMaterialsComboBox;
+    private Disposable subscribe;
 
 
     public OdysseyMaterialSearchBar() {
@@ -39,7 +45,7 @@ class OdysseyMaterialSearchBar extends HBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("root");
         initSearchTextField();
         initSearchTextFilter();
@@ -53,10 +59,10 @@ class OdysseyMaterialSearchBar extends HBox {
 //        HBox.setHgrow(this.showMaterialsComboBox, Priority.ALWAYS);
 //        HBox.setHgrow(this.sortMaterialsComboBox, Priority.ALWAYS);
 
-        this.getChildren().addAll(this.textField, this.showMaterialsComboBox, this.sortMaterialsComboBox);
+        this.getNodes().addAll(this.textField, this.showMaterialsComboBox, this.sortMaterialsComboBox);
     }
 
-    private void applyFontSizingHack() {
+    public void applyFontSizingHack() {
         //hack for component resizing on other fontsizes
         final Integer fontSize = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
         final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSize);
@@ -68,7 +74,7 @@ class OdysseyMaterialSearchBar extends HBox {
 
     private void initSearchTextSort() {
         final Tooltip sortMaterialsTooltip = TooltipBuilder.builder()
-                .withText(LocaleService.getStringBinding("search.sort.placeholder"))
+                .withText("search.sort.placeholder")
                 .build();
         this.sortMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialSort.class)
                 .withStyleClasses("root", "filter-and-sort")
@@ -86,7 +92,9 @@ class OdysseyMaterialSearchBar extends HBox {
     }
 
     private void initSearchTextFilter() {
-        final Tooltip showMaterialsTooltip = TooltipBuilder.builder().withText(LocaleService.getStringBinding("search.filter.placeholder")).build();
+        final Tooltip showMaterialsTooltip = TooltipBuilder.builder()
+                .withText("search.filter.placeholder")
+                .build();
         this.showMaterialsComboBox = ComboBoxBuilder.builder(OdysseyMaterialShow.class)
                 .withStyleClasses("root", "filter-and-sort")
                 .withItemsProperty(LocaleService.getListBinding(OdysseyMaterialShow.ALL,
@@ -122,14 +130,14 @@ class OdysseyMaterialSearchBar extends HBox {
                 .withPromptTextProperty(LocaleService.getStringBinding("search.text.placeholder"))
                 .withFocusTraversable(false)
                 .build();
-        Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
+        subscribe = Observable.create((ObservableEmitter<String> emitter) -> this.textField.textProperty().addListener((observable, oldValue, newValue) -> emitter.onNext(newValue)))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(newValue -> EventService.publish(new SearchEvent(new Search(newValue, getSortOrDefault(this.sortMaterialsComboBox), getShowOrDefault(this.showMaterialsComboBox)))));
     }
 
 
-    private void initEventHandling() {
+    public void initEventHandling() {
         //hack for component resizing on other fontsizes
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
@@ -183,4 +191,10 @@ class OdysseyMaterialSearchBar extends HBox {
         return (sortMaterialsComboBox.getValue() != null) ? sortMaterialsComboBox.getValue() : OdysseyMaterialSort.ALPHABETICAL;
     }
 
+    @Override
+    public void destroyInternal() {
+        if (subscribe != null) {
+            subscribe.dispose();
+        }
+    }
 }

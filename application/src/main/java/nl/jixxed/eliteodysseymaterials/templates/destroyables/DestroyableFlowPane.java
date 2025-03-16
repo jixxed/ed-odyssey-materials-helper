@@ -4,6 +4,6 @@ import javafx.scene.layout.FlowPane;
 import lombok.Getter;
 
 @Getter
-public class DestroyableFlowPane extends FlowPane implements DestroyableComponent {
+public class DestroyableFlowPane extends FlowPane implements DestroyableParent {
 
 }

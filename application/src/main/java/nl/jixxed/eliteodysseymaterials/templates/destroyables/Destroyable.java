@@ -11,11 +11,11 @@ public interface Destroyable {
         return DestroyableManager.getListeners(this);
     }
 
-    default List<Property<Object>> getBindings(){
+    default Set<Property<Object>> getBindings(){
         return DestroyableManager.getBindings(this);
     }
 
-    default List<Destroyable> getDestroyables(){
+    default Set<Destroyable> getDestroyables(){
         return DestroyableManager.getDestroyables(this);
     }
 

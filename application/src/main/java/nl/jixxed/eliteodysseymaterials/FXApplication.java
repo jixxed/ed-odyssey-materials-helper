@@ -462,7 +462,7 @@ public class FXApplication extends Application {
                 final Stage versionStage = new Stage();
                 versionStage.getIcons().add(new Image(FXApplication.class.getResourceAsStream(AppConstants.APP_ICON_PATH)));
 
-                final Scene versionScene = new Scene(new VersionDialog(versionStage, this), 640, 175);
+                final Scene versionScene = new Scene(new VersionDialog(versionStage), 640, 175);
                 versionStage.initModality(Modality.APPLICATION_MODAL);
                 final JMetro jMetro = new JMetro(Style.DARK);
                 jMetro.setScene(versionScene);

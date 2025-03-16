@@ -3,6 +3,7 @@ package nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist;
 import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 import lombok.EqualsAndHashCode;
+import nl.jixxed.eliteodysseymaterials.builder.SegmentedBarBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Storage;
 import nl.jixxed.eliteodysseymaterials.enums.AmountType;
@@ -17,8 +18,8 @@ import nl.jixxed.eliteodysseymaterials.service.event.FlipRemainingAvailableEvent
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.SegmentType;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegment;
 import nl.jixxed.eliteodysseymaterials.templates.components.segmentbar.TypeSegmentView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableSegmentedBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyMaterialIngredient;
-import org.controlsfx.control.SegmentedBar;
 
 import java.util.Map;
 
@@ -29,7 +30,7 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     private static final String INGREDIENT_FILLED_CLASS = "ingredient-filled";
     private static final String INGREDIENT_UNFILLED_CLASS = "ingredient-unfilled";
     private static final String INGREDIENT_FILLED_NOT_SHIPLOCKER_CLASS = "ingredient-filled-partial";
-    private SegmentedBar<TypeSegment> segmentedBar;
+    private DestroyableSegmentedBar<TypeSegment> segmentedBar;
     private TypeSegment present;
     private TypeSegment notPresent;
 
@@ -40,12 +41,12 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     }
 
     @SuppressWarnings("java:S2177")
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("wishlist-ingredient");
         this.hoverProperty().addListener((observable, oldValue, newValue) -> {
             showAsHovered(newValue);
         });
-        this.segmentedBar = new SegmentedBar<>();
+        this.segmentedBar = SegmentedBarBuilder.builder(TypeSegment.class).build();
         this.segmentedBar.getStyleClass().add("ingredient-progressbar");
         this.segmentedBar.setOrientation(Orientation.HORIZONTAL);
         this.segmentedBar.setInfoNodeFactory(segment -> null);
@@ -57,7 +58,7 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
         this.present = new TypeSegment(Math.max(0, progress), SegmentType.PRESENT);
         this.notPresent = new TypeSegment(Math.max(0, this.getLeftAmount() - progress), SegmentType.NOT_PRESENT);
         this.segmentedBar.getSegments().addAll(this.present, this.notPresent);
-        this.getChildren().add(this.segmentedBar);
+        this.getNodes().add(this.segmentedBar);
     }
 
     private void showAsHovered(final Boolean newValue) {
@@ -72,9 +73,9 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
     }
 
     @SuppressWarnings("java:S2177")
-    private void initEventHandling() {
+    public void initEventHandling() {
         register(EventService.addListener(true, this, FlipRemainingAvailableEvent.class, flipRemainingAvailableEvent -> {
-            if(Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())){
+            if (Expansion.ODYSSEY.equals(flipRemainingAvailableEvent.getExpansion())) {
                 showAsHovered(this.hoverProperty().getValue());
             }
         }));
@@ -95,16 +96,16 @@ class OdysseyWishlistIngredient extends OdysseyMaterialIngredient {
             this.getStyleClass().addAll(INGREDIENT_UNFILLED_CLASS);
         }
         showAsHovered(this.hoverProperty().getValue());
-        if(this.present != null){
+        if (this.present != null) {
             final int progress = Math.min(this.getLeftAmount(), this.getRightAmount());
             this.present.setValue(progress);
             this.notPresent.setValue(Math.max(this.getLeftAmount() - progress, 0));
-            if(Math.max(this.getLeftAmount() - progress, 0) > 0){
+            if (Math.max(this.getLeftAmount() - progress, 0) > 0) {
                 this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                         SegmentType.PRESENT, Color.web("#ff7c7c"),
                         SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)
                 ), false));
-            }else{
+            } else {
                 this.segmentedBar.setSegmentViewFactory(segment -> new TypeSegmentView(segment, Map.of(
                         SegmentType.PRESENT, Color.web("#89d07f"),
                         SegmentType.NOT_PRESENT, Color.rgb(128, 128, 128)

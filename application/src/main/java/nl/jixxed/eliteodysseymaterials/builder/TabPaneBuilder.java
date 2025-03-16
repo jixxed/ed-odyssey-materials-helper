@@ -6,6 +6,7 @@ import javafx.geometry.Side;
 import javafx.scene.control.Tab;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTab;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTabPane;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TabPaneBuilder extends AbstractControlBuilder<TabPaneBuilder> {
-    private final List<Tab> tabs = new ArrayList<>();
+    private final List<DestroyableTab> tabs = new ArrayList<>();
     private Side side;
     private DoubleBinding maxWidthProperty;
     private DoubleBinding minWidthProperty;
@@ -25,7 +26,7 @@ public class TabPaneBuilder extends AbstractControlBuilder<TabPaneBuilder> {
         return new TabPaneBuilder();
     }
 
-    public TabPaneBuilder withTabs(final Tab... tabs) {
+    public TabPaneBuilder withTabs(final DestroyableTab... tabs) {
         this.tabs.addAll(Arrays.stream(tabs).toList());
         return this;
     }
@@ -61,6 +62,7 @@ public class TabPaneBuilder extends AbstractControlBuilder<TabPaneBuilder> {
         super.build(tabPane);
 
         tabPane.getTabs().addAll(tabs);
+        tabPane.registerAll(tabs);
         if(side != null) {
             tabPane.setSide(side);
         }

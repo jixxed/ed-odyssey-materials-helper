@@ -1,19 +1,18 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
+import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
-public class DetailsLayer extends AnchorPane implements DestroyableTemplate {
-    private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
+public class DetailsLayer extends DestroyableAnchorPane implements DestroyableTemplate {
     @Getter
     private ModuleDetails moduleDetails;
 
     public DetailsLayer() {
         initComponents();
-        initEventHandling();
     }
 
     @Override
@@ -21,18 +20,15 @@ public class DetailsLayer extends AnchorPane implements DestroyableTemplate {
         this.getStyleClass().add("shipbuilder-details-layer");
         this.moduleDetails = new ModuleDetails(this);
         moduleDetails.setPickOnBounds(false);
-        final VBox pane = new VBox(this.moduleDetails/*, new GrowingRegion()*/);
-        pane.setPickOnBounds(false);
-        pane.getStyleClass().add("stats-values-pane");
-        this.getChildren().add(pane);
-        AnchorPane.setRightAnchor(pane, 0D);
-        AnchorPane.setTopAnchor(pane, 0D);
-        AnchorPane.setBottomAnchor(pane, 0D);
-
-    }
-
-    @Override
-    public void initEventHandling() {
+        final DestroyableVBox vBox = BoxBuilder.builder()
+                .withStyleClass("stats-values-pane")
+                .withNodes(this.moduleDetails)
+                .withPickOnBounds(false)
+                .buildVBox();
+        this.getNodes().add(vBox);
+        AnchorPane.setRightAnchor(vBox, 0D);
+        AnchorPane.setTopAnchor(vBox, 0D);
+        AnchorPane.setBottomAnchor(vBox, 0D);
 
     }
 }

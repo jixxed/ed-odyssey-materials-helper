@@ -1,14 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
@@ -24,8 +22,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -33,7 +30,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static nl.jixxed.eliteodysseymaterials.enums.HorizonsModifier.*;
 
 @Slf4j
-public class ShieldStats extends Stats implements DestroyableTemplate {
+public class ShieldStats extends Stats implements DestroyableEventTemplate {
     private Shield shieldResistance;
     private Shield shieldIntegrity;
     private DestroyableLabel regenTime;
@@ -49,45 +46,64 @@ public class ShieldStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
-        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.shield"), new GrowingRegion()).buildHBox());
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(new GrowingRegion(), createTitle("ship.stats.shield"), new GrowingRegion())
+                .buildHBox());
+        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
         shieldResistance = new Shield("RES", "%", "blue");
         shieldIntegrity = new Shield("STR", "\u2795", "red");
-        final VBox shields = BoxBuilder.builder().withNodes(shieldResistance, shieldIntegrity).buildVBox();
-        regenTime = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.shield.build.unit", 0)).build();
-        rebuildTime = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.shield.build.unit", 0)).build();
-        final DestroyableLabel regen = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.shield.regen")).build();
-        final DestroyableLabel rebuild = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.shield.rebuild")).build();
-        Tooltip.install(regen, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(LocaleService.getStringBinding("ship.stats.shield.regen.tooltip")).build());
-        Tooltip.install(rebuild, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(LocaleService.getStringBinding("ship.stats.shield.rebuild.tooltip")).build());
-        scbRestoration = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.armour.scb.restoration.unit", 0, 0)).build();
-        scbRestoration.setVisible(false);
-        scbRestorationLabel = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.armour.scb.restoration")).build();
-        scbRestorationLabel.setVisible(false);
+        final DestroyableVBox shields = BoxBuilder.builder()
+                .withNodes(shieldResistance, shieldIntegrity).buildVBox();
+        regenTime = LabelBuilder.builder()
+                .withStyleClass("ship-stats-shield-label")
+                .withText("ship.stats.shield.build.unit", 0)
+                .build();
+        rebuildTime = LabelBuilder.builder()
+                .withStyleClass("ship-stats-shield-label")
+                .withText("ship.stats.shield.build.unit", 0)
+                .build();
+        final DestroyableLabel regen = LabelBuilder.builder()
+                .withText("ship.stats.shield.regen")
+                .build();
+        final DestroyableLabel rebuild = LabelBuilder.builder()
+                .withText("ship.stats.shield.rebuild")
+                .build();
+        Tooltip.install(regen, TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.shield.regen.tooltip")
+                .build());
+        Tooltip.install(rebuild, TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.shield.rebuild.tooltip")
+                .build());
+        scbRestoration = LabelBuilder.builder()
+                .withStyleClass("ship-stats-shield-label")
+                .withText("ship.stats.armour.scb.restoration.unit", 0, 0)
+                .withVisibility(false)
+                .build();
+        scbRestorationLabel = LabelBuilder.builder()
+                .withText("ship.stats.armour.scb.restoration")
+                .withVisibility(false)
+                .build();
 
-        final VBox rebuildBox = BoxBuilder.builder().withNodes(new GrowingRegion(),
-                BoxBuilder.builder().withNodes(
-                                new GrowingRegion(),
-                                scbRestoration)
-                        .buildHBox(),
-                BoxBuilder.builder().withNodes(
-                                new GrowingRegion(),
-                                scbRestorationLabel)
-                        .buildHBox(),
-                BoxBuilder.builder().withNodes(
-                                regenTime,
-                                new GrowingRegion(),
-                                rebuildTime)
-                        .buildHBox(),
-                BoxBuilder.builder().withNodes(
-                                regen,
-                                new GrowingRegion(),
-                                rebuild)
-                        .buildHBox()
-        ).buildVBox();
-        final StackPane stackPane = new StackPane(shields, rebuildBox);
+        final DestroyableVBox rebuildBox = BoxBuilder.builder()
+                .withNodes(new GrowingRegion(),
+                        BoxBuilder.builder()
+                                .withNodes(new GrowingRegion(), scbRestoration)
+                                .buildHBox(),
+                        BoxBuilder.builder()
+                                .withNodes(new GrowingRegion(), scbRestorationLabel)
+                                .buildHBox(),
+                        BoxBuilder.builder()
+                                .withNodes(regenTime, new GrowingRegion(), rebuildTime)
+                                .buildHBox(),
+                        BoxBuilder.builder()
+                                .withNodes(regen, new GrowingRegion(), rebuild)
+                                .buildHBox()
+                ).buildVBox();
+        final DestroyableStackPane stackPane = StackPaneBuilder.builder().withNodes(shields, rebuildBox).build();
         stackPane.getStyleClass().add("shield-stats-stackpane");
-        this.getChildren().addAll(stackPane);
+        this.getNodes().addAll(stackPane);
 
     }
 
@@ -174,7 +190,7 @@ public class ShieldStats extends Stats implements DestroyableTemplate {
                                     .filter(slot -> slot.getShipModule() instanceof ShieldBooster)
                                     .mapToDouble(slot -> (Double) slot.getShipModule().getAttributeValue(SHIELD_BOOST))
                                     .sum();
-                            return  shieldReinforcement + (shields
+                            return shieldReinforcement + (shields
                                     * getEffectiveShieldBoostMultiplier(totalShieldBoost)
                                     * getMassCurveMultiplier((double) ship.getAttributes().getOrDefault(MASS, 0D), new ModuleProfile(minimumMass, optimalMass, maximumMass, minimumStrength, optimalStrength, maximumStrength)));
                         }).orElse(0D))
@@ -217,13 +233,13 @@ public class ShieldStats extends Stats implements DestroyableTemplate {
     protected void update() {
         shieldResistance.updateValues(0D, calculateResistanceKinetic(), calculateResistanceThermal(), calculateResistanceCaustic(), calculateResistanceExplosive());
         shieldIntegrity.updateValues(calculateStrengthRaw(), calculateStrengthKinetic(), calculateStrengthThermal(), calculateStrengthCaustic(), calculateStrengthExplosive());
-        regenTime.textProperty().bind(LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRegenTime())));
-        rebuildTime.textProperty().bind(LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRebuildTime())));
+        regenTime.addBinding(regenTime.textProperty(), LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRegenTime())));
+        rebuildTime.addBinding(rebuildTime.textProperty(), LocaleService.getStringBinding("ship.stats.shield.build.unit", Formatters.NUMBER_FORMAT_0.format(calculateRebuildTime())));
         final Scb scb = calculateSCB();
         if (scb.amount > 0D) {
             scbRestoration.setVisible(true);
             scbRestorationLabel.setVisible(true);
-            scbRestoration.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.scb.restoration.unit", Formatters.NUMBER_FORMAT_1.format(scb.charges), Formatters.NUMBER_FORMAT_1.format(scb.amount)));
+            scbRestoration.addBinding(scbRestoration.textProperty(), LocaleService.getStringBinding("ship.stats.armour.scb.restoration.unit", Formatters.NUMBER_FORMAT_1.format(scb.charges), Formatters.NUMBER_FORMAT_1.format(scb.amount)));
         } else {
             scbRestoration.setVisible(false);
             scbRestorationLabel.setVisible(false);
@@ -238,8 +254,8 @@ public class ShieldStats extends Stats implements DestroyableTemplate {
                     final Optional<Slot> powerDistributor = ship.getCoreSlots().stream().filter(slot -> slot.getSlotType().equals(SlotType.CORE_POWER_DISTRIBUTION)).findFirst().filter(Slot::isOccupied);
                     final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
-                    final Double regenRate = (Double)sgSlot.getShipModule().getAttributeValue(REGEN_RATE);
-                    final Double energyPerRegen = (Double)sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
+                    final Double regenRate = (Double) sgSlot.getShipModule().getAttributeValue(REGEN_RATE);
+                    final Double energyPerRegen = (Double) sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
                     final double rawShieldStrength = rawShieldStrength();
                     final Double fastTime = 0D;
                     final Double slowTime = (rawShieldStrength / 2) / Math.min(regenRate, (systemRecharge * multiplier) / energyPerRegen);
@@ -256,8 +272,8 @@ public class ShieldStats extends Stats implements DestroyableTemplate {
                     final double systemCapacity = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_CAPACITY)).orElse(0D);
                     final double systemRecharge = (double) powerDistributor.map(Slot::getShipModule).map(sm -> sm.getAttributeValue(SYSTEMS_RECHARGE)).orElse(0D);
                     final double multiplier = Math.pow(ApplicationState.getInstance().getSystemPips() / 8.0, 1.1);
-                    final Double brokenRegenRate = (Double)sgSlot.getShipModule().getAttributeValue(BROKEN_REGEN_RATE);
-                    final Double energyPerRegen = (Double)sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
+                    final Double brokenRegenRate = (Double) sgSlot.getShipModule().getAttributeValue(BROKEN_REGEN_RATE);
+                    final Double energyPerRegen = (Double) sgSlot.getShipModule().getAttributeValue(ENERGY_PER_REGEN);
                     final double rawShieldStrength = rawShieldStrength();
                     final Double fastTime = Math.min((rawShieldStrength / 2) / brokenRegenRate, (systemCapacity / Math.max(0, brokenRegenRate * energyPerRegen - systemRecharge * multiplier)));
                     final Double slowTime = ((rawShieldStrength / 2) - brokenRegenRate * fastTime) / Math.min(brokenRegenRate, (systemRecharge * multiplier) / energyPerRegen);

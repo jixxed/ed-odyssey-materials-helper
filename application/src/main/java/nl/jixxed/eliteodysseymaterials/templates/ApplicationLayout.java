@@ -16,14 +16,14 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.FontSizeEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ImportResultEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTab;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTabPane;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.OdysseyContentArea;
 import nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab;
 
-public class ApplicationLayout extends DestroyableAnchorPane implements DestroyableTemplate {
+public class ApplicationLayout extends DestroyableAnchorPane implements DestroyableEventTemplate {
     private BottomBar bottomBar;
     private OdysseyContentArea odysseyContentArea;
     private HorizonsContentArea horizonsContentArea;
@@ -55,7 +55,7 @@ public class ApplicationLayout extends DestroyableAnchorPane implements Destroya
     public void initComponents() {
         this.getStyleClass().add("app");
         this.bottomBar = new BottomBar();
-        this.bottomBar.heightProperty().addListener(observable -> AnchorPaneHelper.setAnchor(this.odysseyContentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
+        addChangeListener(this.bottomBar.heightProperty(), (_, _, _) -> AnchorPaneHelper.setAnchor(this.odysseyContentArea, 0.0, this.bottomBar.getHeight(), 0.0, 0.0));
         this.settingsTab = new SettingsTab();
         this.settingsTab.setClosable(false);
         AnchorPaneHelper.setAnchor(this.bottomBar, null, 0.0, 0.0, 0.0);
@@ -75,22 +75,22 @@ public class ApplicationLayout extends DestroyableAnchorPane implements Destroya
                 .withTabs(this.odyssey, this.horizons, this.settingsTab)
                 .withStyleClass("tab-main")
                 .withSide(Side.LEFT)
-                .withMinWidthProperty(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)))
-                .withMaxWidthProperty(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)))
                 .withSelectedTab(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 0))
                 .withSelectedItemListener((_, _, newValue) -> PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_MAIN, this.tabsMain.getTabs().indexOf(newValue)))
                 .build();
+        this.tabsMain.addBinding(this.tabsMain.minWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
+        this.tabsMain.addBinding(this.tabsMain.maxWidthProperty(), this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
         AnchorPaneHelper.setAnchor(this.tabsMain, 0.0, ScalingHelper.getPixelDoubleFromEm(2D), 0.0, 0.0);
 //        this.tabsMain.getStyleClass().add("tab-main");
 //        this.tabsMain.setSide(Side.LEFT);
-//        this.tabsMain.tabMaxWidthProperty().bind(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
-//        this.tabsMain.tabMinWidthProperty().bind(this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
+//        this.tabsMain.addBinding(//        this.tabsMain.tabMaxWidthProperty(),this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
+//        this.tabsMain.addBinding(//        this.tabsMain.tabMinWidthProperty(),this.tabsMain.heightProperty().divide(3).subtract(this.fontSize.multiply(5.14)));
 //        this.odyssey.setContent(this.odysseyContentArea);
 //        this.horizons.setContent(this.horizonsContentArea);
 //        this.tabsMain.getSelectionModel().select(Math.min(PreferencesService.getPreference(PreferenceConstants.SELECTED_TAB_MAIN, 0), this.tabsMain.getTabs().size()-1));
 //        this.tabsMain.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 //            PreferencesService.setPreference(PreferenceConstants.SELECTED_TAB_MAIN, this.tabsMain.getTabs().indexOf(newValue));
 //        });
-        this.getChildren().addAll(this.tabsMain, this.bottomBar);
+        this.getNodes().addAll(this.tabsMain, this.bottomBar);
     }
 }

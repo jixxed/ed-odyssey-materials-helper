@@ -22,13 +22,13 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     private WeakInvalidationListener weakBuildListener;
     private InvalidationListener layoutListener;
     private WeakInvalidationListener weakLayoutListener;
-    private Map<SegmentedBar.Segment,PopOver> popOvers = new HashMap<>();
+    private Map<SegmentedBar.Segment, PopOver> popOvers = new HashMap<>();
 
     public SegmentedBarSkin(SegmentedBar<T> bar) {
         super(bar);
         this.weakBuildListener = new WeakInvalidationListener(this.buildListener);
         this.layoutListener = (it) -> {
-            ((SegmentedBar)this.getSkinnable()).requestLayout();
+            ((SegmentedBar) this.getSkinnable()).requestLayout();
         };
         this.weakLayoutListener = new WeakInvalidationListener(this.layoutListener);
         bar.segmentViewFactoryProperty().addListener(this.weakBuildListener);
@@ -40,7 +40,7 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
     }
 
     protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        if (((SegmentedBar)this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL)) {
+        if (((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL)) {
             OptionalDouble maxHeight = this.getChildren().stream().mapToDouble((node) -> {
                 return node.prefHeight(-1.0);
             }).max();
@@ -49,11 +49,11 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
             }
         }
 
-        return ((SegmentedBar)this.getSkinnable()).getPrefHeight();
+        return ((SegmentedBar) this.getSkinnable()).getPrefHeight();
     }
 
     protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        if (((SegmentedBar)this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL)) {
+        if (((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL)) {
             OptionalDouble maxWidth = this.getChildren().stream().mapToDouble((node) -> {
                 return node.prefWidth(height);
             }).max();
@@ -62,35 +62,35 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
             }
         }
 
-        return ((SegmentedBar)this.getSkinnable()).getPrefWidth();
+        return ((SegmentedBar) this.getSkinnable()).getPrefWidth();
     }
 
     protected double computeMinHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return ((SegmentedBar)this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL) ? this.computePrefHeight(width, topInset, rightInset, bottomInset, leftInset) : 0.0;
+        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL) ? this.computePrefHeight(width, topInset, rightInset, bottomInset, leftInset) : 0.0;
     }
 
     protected double computeMinWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return ((SegmentedBar)this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL) ? this.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset) : 0.0;
+        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL) ? this.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset) : 0.0;
     }
 
     protected double computeMaxHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return ((SegmentedBar)this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL) ? this.computePrefHeight(width, topInset, rightInset, bottomInset, leftInset) : Double.MAX_VALUE;
+        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL) ? this.computePrefHeight(width, topInset, rightInset, bottomInset, leftInset) : Double.MAX_VALUE;
     }
 
     protected double computeMaxWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-        return ((SegmentedBar)this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL) ? this.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset) : Double.MAX_VALUE;
+        return ((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.VERTICAL) ? this.computePrefWidth(height, topInset, rightInset, bottomInset, leftInset) : Double.MAX_VALUE;
     }
 
     private void buildSegments() {
         this.segmentNodes.clear();
         this.getChildren().clear();
-        List<T> segments = ((SegmentedBar)this.getSkinnable()).getSegments();
+        List<T> segments = ((SegmentedBar) this.getSkinnable()).getSegments();
         int size = segments.size();
-        Callback<T, Node> cellFactory = ((SegmentedBar)this.getSkinnable()).getSegmentViewFactory();
+        Callback<T, Node> cellFactory = ((SegmentedBar) this.getSkinnable()).getSegmentViewFactory();
 
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             T segment = segments.get(i);
-            Node segmentNode = (Node)cellFactory.call(segment);
+            Node segmentNode = (Node) cellFactory.call(segment);
             this.segmentNodes.put(segment, segmentNode);
             this.getChildren().add(segmentNode);
             segmentNode.getStyleClass().add("segment");
@@ -114,27 +114,27 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
             });
         }
 
-        ((SegmentedBar)this.getSkinnable()).requestLayout();
+        ((SegmentedBar) this.getSkinnable()).requestLayout();
     }
 
     private void showPopOver(Node owner, T segment) {
-        Callback<T, Node> infoNodeFactory = ((SegmentedBar)this.getSkinnable()).getInfoNodeFactory();
+        Callback<T, Node> infoNodeFactory = ((SegmentedBar) this.getSkinnable()).getInfoNodeFactory();
         Node infoNode = null;
         if (infoNodeFactory != null) {
-            infoNode = (Node)infoNodeFactory.call(segment);
+            infoNode = (Node) infoNodeFactory.call(segment);
         }
         if (infoNode != null && this.popOvers.get(segment) == null) {
-                var popOver = new PopOver();
-                this.popOvers.put(segment,popOver);
-                popOver.getStyleClass().add("power-progressbar-popover");
-                popOver.setDetachable(false);
-                popOver.setHeaderAlwaysVisible(false);
-                popOver.arrowSizeProperty().set(0);
-                popOver.arrowIndentProperty().set(0);
-                popOver.cornerRadiusProperty().set(0);
-                popOver.setContentNode(infoNode);
-                popOver.show(owner, -2.0);
-            }
+            var popOver = new PopOver();
+            this.popOvers.put(segment, popOver);
+            popOver.getStyleClass().add("power-progressbar-popover");
+            popOver.setDetachable(false);
+            popOver.setHeaderAlwaysVisible(false);
+            popOver.arrowSizeProperty().set(0);
+            popOver.arrowIndentProperty().set(0);
+            popOver.cornerRadiusProperty().set(0);
+            popOver.setContentNode(infoNode);
+            popOver.show(owner, -2.0);
+        }
 
     }
 
@@ -142,23 +142,23 @@ public class SegmentedBarSkin<T extends SegmentedBar.Segment> extends SkinBase<S
         final PopOver popOver = this.popOvers.get(segment);
         if (popOver != null && popOver.isShowing()) {
             popOver.hide();
-            this.popOvers.put(segment,null);
+            this.popOvers.put(segment, null);
         }
     }
 
     protected void layoutChildren(double contentX, double contentY, double contentWidth, double contentHeight) {
-        double total = ((SegmentedBar)this.getSkinnable()).getTotal();
-        List<T> segments = ((SegmentedBar)this.getSkinnable()).getSegments();
+        double total = ((SegmentedBar) this.getSkinnable()).getTotal();
+        List<T> segments = ((SegmentedBar) this.getSkinnable()).getSegments();
         int size = segments.size();
         double x = contentX;
         double y = contentY + contentHeight;
 
-        for(int i = 0; i < size; ++i) {
-            SegmentedBar.Segment segment = (SegmentedBar.Segment)segments.get(i);
-            Node segmentNode = (Node)this.segmentNodes.get(segment);
+        for (int i = 0; i < size; ++i) {
+            SegmentedBar.Segment segment = (SegmentedBar.Segment) segments.get(i);
+            Node segmentNode = (Node) this.segmentNodes.get(segment);
             double segmentValue = segment.getValue();
             double segmentWidth;
-            if (((SegmentedBar)this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL)) {
+            if (((SegmentedBar) this.getSkinnable()).getOrientation().equals(Orientation.HORIZONTAL)) {
                 segmentWidth = segmentValue / total * contentWidth;
                 segmentNode.resizeRelocate(x, contentY, segmentWidth, contentHeight);
                 x += segmentWidth;

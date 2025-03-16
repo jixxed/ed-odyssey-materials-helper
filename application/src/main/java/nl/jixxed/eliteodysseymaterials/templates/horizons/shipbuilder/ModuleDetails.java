@@ -7,10 +7,10 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -23,13 +23,10 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.service.ships.LegacyModuleService;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -38,19 +35,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
-public class ModuleDetails extends VBox implements DestroyableTemplate {
+public class ModuleDetails extends DestroyableVBox implements DestroyableEventTemplate {
 
-    private VBox properties;
+    private DestroyableVBox properties;
 
-    private VBox attributes;
-    private static final List<EventListener<?>> EVENT_LISTENERS = new ArrayList<>();
-    private Button legacySaveButton;
+    private DestroyableVBox attributes;
+    private DestroyableButton legacySaveButton;
     private DestroyableLabel modulePrice;
     private DestroyableLabel moduleEngineering;
     private DestroyableLabel moduleName;
     private BooleanProperty hasModule = new SimpleBooleanProperty(false);
     private ShipModule shipModule;
     DetailsLayer layer;
+
     public ModuleDetails(DetailsLayer layer) {
         this.layer = layer;
         initComponents();
@@ -60,79 +57,115 @@ public class ModuleDetails extends VBox implements DestroyableTemplate {
     @Override
     public void initComponents() {
         this.getStyleClass().add("stats-values");
-        legacySaveButton = ButtonBuilder.builder().withStyleClass("module-details-save-legacy").withText(LocaleService.getStringBinding("module.details.save.legacy")).build();
-        legacySaveButton.setMnemonicParsing(false);
-        legacySaveButton.setOnMouseClicked(mouseEvent -> {
+        legacySaveButton = ButtonBuilder.builder()
+                .withStyleClass("module-details-save-legacy")
+                .withText("module.details.save.legacy")
+                .withMnemonicParsing(false)
+                .withOnMouseClicked(mouseEvent -> {
                     if (mouseEvent.isAltDown()) {
                         legacySaveButton.getOnAction().handle(new ActionEvent());
                     }
-                }
-        );
-        moduleName = LabelBuilder.builder().withStyleClass("module-details-title").withNonLocalizedText("").build();
-        this.getChildren().add(moduleName);
-        moduleName.visibleProperty().bind(hasModule);
-        properties = BoxBuilder.builder().buildVBox();
-        properties.visibleProperty().bind(hasModule);
-        this.getChildren().add(properties);
-        final DestroyableLabel moduleSpecs = LabelBuilder.builder().withStyleClass("module-details-title").withText(LocaleService.getStringBinding("module.details.module.specs")).build();
-        moduleSpecs.visibleProperty().bind(hasModule);
-        this.getChildren().add(moduleSpecs);
-        attributes = BoxBuilder.builder().buildVBox();
-        attributes.visibleProperty().bind(hasModule);
-        this.getChildren().add(attributes);
-        this.getChildren().add(new GrowingRegion());
-        this.maxHeightProperty().bind(this.layer.heightProperty());
+                })
+                .build();
+
+        moduleName = LabelBuilder.builder()
+                .withStyleClass("module-details-title")
+                .withNonLocalizedText("")
+                .build();
+        this.getNodes().add(moduleName);
+        moduleName.addBinding(moduleName.visibleProperty(), hasModule);
+        properties = BoxBuilder.builder()
+                .buildVBox();
+        properties.addBinding(properties.visibleProperty(), hasModule);
+        this.getNodes().add(properties);
+        final DestroyableLabel moduleSpecs = LabelBuilder.builder()
+                .withStyleClass("module-details-title")
+                .withText("module.details.module.specs")
+                .build();
+        moduleSpecs.addBinding(moduleSpecs.visibleProperty(), hasModule);
+        this.getNodes().add(moduleSpecs);
+        attributes = BoxBuilder.builder()
+                .buildVBox();
+        attributes.addBinding(attributes.visibleProperty(), hasModule);
+        this.getNodes().add(attributes);
+        this.getNodes().add(new GrowingRegion());
+        this.addBinding(this.maxHeightProperty(), this.layer.heightProperty());
     }
 
     private void addEngineering(String text) {
-        properties.getChildren().add(getSeparator());
-        moduleEngineering = LabelBuilder.builder().withStyleClass("module-details-value").withNonLocalizedText(text).build();
-        final FlowPane flowPane = getFlowPane(
-                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.engineering")).build(),
-                new HBox(moduleEngineering)
+        properties.getNodes().add(getSeparator());
+        moduleEngineering = LabelBuilder.builder()
+                .withStyleClass("module-details-value")
+                .withNonLocalizedText(text)
+                .build();
+        final DestroyableFlowPane flowPane = getFlowPane(
+                LabelBuilder.builder()
+                        .withStyleClass("module-details-label-title")
+                        .withText("module.details.engineering")
+                        .build(),
+                BoxBuilder.builder().withNodes(moduleEngineering).buildHBox()
         );
-        properties.getChildren().add(flowPane);
+        properties.getNodes().add(flowPane);
     }
 
     private void addPrice(String text) {
-        properties.getChildren().add(getSeparator());
-        modulePrice = LabelBuilder.builder().withStyleClass("module-details-value").withText(LocaleService.getStringBinding("module.details.price.value", text)).build();
-        final FlowPane flowPane = getFlowPane(
-                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.price")).build(),
-                new HBox(modulePrice)
+        properties.getNodes().add(getSeparator());
+        modulePrice = LabelBuilder.builder()
+                .withStyleClass("module-details-value")
+                .withText("module.details.price.value", text)
+                .build();
+        final DestroyableFlowPane flowPane = getFlowPane(
+                LabelBuilder.builder()
+                        .withStyleClass("module-details-label-title")
+                        .withText("module.details.price")
+                        .build(),
+                BoxBuilder.builder().withNodes(modulePrice).buildHBox()
         );
-        properties.getChildren().add(flowPane);
+        properties.getNodes().add(flowPane);
     }
 
     private void addBuyPrice(String text) {
-        properties.getChildren().add(getSeparator());
-        modulePrice = LabelBuilder.builder().withStyleClass("module-details-value").withText(LocaleService.getStringBinding("module.details.buyprice.value", text)).build();
-        final FlowPane flowPane = getFlowPane(
-                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.buyprice")).build(),
-                new HBox(modulePrice)
+        properties.getNodes().add(getSeparator());
+        modulePrice = LabelBuilder.builder()
+                .withStyleClass("module-details-value")
+                .withText("module.details.buyprice.value", text)
+                .build();
+        final DestroyableFlowPane flowPane = getFlowPane(
+                LabelBuilder.builder()
+                        .withStyleClass("module-details-label-title")
+                        .withText("module.details.buyprice")
+                        .build(),
+                BoxBuilder.builder().withNodes(modulePrice).buildHBox()
         );
-        properties.getChildren().add(flowPane);
+        properties.getNodes().add(flowPane);
     }
 
     private void addRebuyPrice(String text) {
-        properties.getChildren().add(getSeparator());
-        modulePrice = LabelBuilder.builder().withStyleClass("module-details-value").withText(LocaleService.getStringBinding("module.details.rebuyprice.value", text)).build();
-        final FlowPane flowPane = getFlowPane(
-                LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding("module.details.rebuyprice")).build(),
-                new HBox(modulePrice)
+        properties.getNodes().add(getSeparator());
+        modulePrice = LabelBuilder.builder()
+                .withStyleClass("module-details-value")
+                .withText("module.details.rebuyprice.value", text)
+                .build();
+        final DestroyableFlowPane flowPane = getFlowPane(
+                LabelBuilder.builder()
+                        .withStyleClass("module-details-label-title")
+                        .withText("module.details.rebuyprice")
+                        .build(),
+                BoxBuilder.builder().withNodes(modulePrice).buildHBox()
         );
-        properties.getChildren().add(flowPane);
+        properties.getNodes().add(flowPane);
     }
+
     private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void initEventHandling() {
 
-        EVENT_LISTENERS.add(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
+        register(EventService.addListener(true, this, 9, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             update();
         }));
-        EVENT_LISTENERS.add(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
-        EVENT_LISTENERS.add(EventService.addListener(true, this, ModuleHighlightEvent.class, (event) -> {
+        register(EventService.addListener(true, this, TerminateApplicationEvent.class, event -> executorService.shutdown()));
+        register(EventService.addListener(true, this, ModuleHighlightEvent.class, (event) -> {
             this.shipModule = event.getShipModule();
 
             update();
@@ -140,13 +173,13 @@ public class ModuleDetails extends VBox implements DestroyableTemplate {
     }
 
     private void update() {
-        properties.getChildren().clear();
-        this.getChildren().remove(legacySaveButton);
-        attributes.getChildren().clear();
+        properties.getNodes().clear();
+        this.getNodes().remove(legacySaveButton);
+        attributes.getNodes().clear();
         final boolean modulePresent = shipModule != null;
         hasModule.set(false);
         if (modulePresent) {
-            attributes.getChildren().add(getSeparator());
+            attributes.getNodes().add(getSeparator());
             addPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBasePrice()));
             if (shipModule.getBuyPrice() != null) {
                 addBuyPrice(Formatters.NUMBER_FORMAT_0.format(shipModule.getBuyPrice()));
@@ -159,7 +192,7 @@ public class ModuleDetails extends VBox implements DestroyableTemplate {
                                         .map(modification -> LocaleService.getLocalizedStringForCurrentLocale(modification.getLocalizationKey())))
                         .collect(Collectors.joining(", ")));
             }
-            properties.getChildren().add(getSeparator());
+            properties.getNodes().add(getSeparator());
             moduleName.setText(LocaleService.getLocalizedStringForCurrentLocale(shipModule.getLocalizationKey()) + " " + shipModule.getModuleSize().intValue() + shipModule.getModuleClass() + ((shipModule instanceof HardpointModule hardpointModule ? "-" + hardpointModule.getMounting().getShortName() : "")));
 
             shipModule.getAttibutes().stream().filter(Predicate.not(shipModule::isHiddenStat)).sorted(Comparator.comparing(HorizonsModifier::getOrder)).forEach(horizonsModifier -> {
@@ -170,14 +203,14 @@ public class ModuleDetails extends VBox implements DestroyableTemplate {
                     LegacyModuleService.saveLegacyModule(shipModule);
                     EventService.publish(new LegacyModuleSavedEvent());
                 });
-                this.getChildren().addFirst(legacySaveButton);
+                this.getNodes().addFirst(legacySaveButton);
             }
         }
         executorService.schedule(() -> Platform.runLater(() -> hasModule.set(modulePresent)), 50, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
-    private static Separator getSeparator() {
-        final Separator separator = new Separator(Orientation.HORIZONTAL);
+    private static DestroyableSeparator getSeparator() {
+        final DestroyableSeparator separator = new DestroyableSeparator(Orientation.HORIZONTAL);
         separator.getStyleClass().add("module-details-line");
         return separator;
     }
@@ -187,56 +220,61 @@ public class ModuleDetails extends VBox implements DestroyableTemplate {
         final Object minValue = shipModule.getAttributeValue(horizonsModifier, 0.0);
         final Object maxValue = shipModule.getAttributeValue(horizonsModifier, 1.0);
         final Object estimatedValue = shipModule.getAttributeValue(horizonsModifier);
-        final HBox valuesLine = BoxBuilder.builder().withNodes().buildHBox();
-        final VBox attribute = BoxBuilder.builder().withNodes().buildVBox();
+        final DestroyableHBox valuesLine = BoxBuilder.builder()
+                .withNodes().buildHBox();
+        final DestroyableVBox attribute = BoxBuilder.builder()
+                .withNodes().buildVBox();
 
         if (originalAttributeValue instanceof Boolean) {
             booleanLine(horizonsModifier, valuesLine, estimatedValue);
         } else {
-            final DestroyableLabel title = LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding(horizonsModifier.getLocalizationKey())).build();
+            final DestroyableLabel title = LabelBuilder.builder()
+                    .withStyleClass("module-details-label-title")
+                    .withText(horizonsModifier.getLocalizationKey())
+                    .build();
             if (isModifiedAttribute(originalAttributeValue, maxValue)) {
                 if (shipModule.getModifiers().containsKey(horizonsModifier)) {
                     doubleLineWithActualValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue);
                 } else {
                     doubleLIneWithEstimatedValue(horizonsModifier, shipModule, valuesLine, (Double) originalAttributeValue, (Double) estimatedValue);
                 }
-                final FlowPane flowPane = getFlowPane(title, valuesLine);
-                this.attributes.visibleProperty().bind(flowPane.needsLayoutProperty().not());
+                final DestroyableFlowPane flowPane = getFlowPane(title, valuesLine);
+                this.attributes.addBinding(this.attributes.visibleProperty(), flowPane.needsLayoutProperty().not());
 
-                attribute.getChildren().add(
+                attribute.getNodes().add(
                         flowPane
                 );
                 if (!shipModule.getModifications().isEmpty()) {
                     addTooltip(horizonsModifier, shipModule, (Double) originalAttributeValue, (Double) minValue, (Double) maxValue, (Double) estimatedValue, attribute);
                 }
-                attributes.getChildren().add(attribute);
-                attributes.getChildren().add(getSeparator());
+                attributes.getNodes().add(attribute);
+                attributes.getNodes().add(getSeparator());
             } else {
-                valuesLine.getChildren().add(LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(originalAttributeValue)).build());
+                valuesLine.getNodes().add(LabelBuilder.builder()
+                        .withStyleClass("module-details-label")
+                        .withNonLocalizedText(horizonsModifier.format(originalAttributeValue))
+                        .build());
 
-                final FlowPane flowPane = getFlowPane(title, valuesLine);
-                this.attributes.visibleProperty().bind(flowPane.needsLayoutProperty().not());
+                final DestroyableFlowPane flowPane = getFlowPane(title, valuesLine);
+                this.attributes.addBinding(this.attributes.visibleProperty(), flowPane.needsLayoutProperty().not());
 
-                attribute.getChildren().add(
+                attribute.getNodes().add(
                         flowPane
                 );
-                attributes.getChildren().add(attribute);
-                attributes.getChildren().add(getSeparator());
+                attributes.getNodes().add(attribute);
+                attributes.getNodes().add(getSeparator());
             }
         }
     }
 
-    private FlowPane getFlowPane(DestroyableLabel title, Pane valuesLine) {
-        final FlowPane flowPane = FlowPaneBuilder.builder()
+    private <E extends Pane & DestroyableComponent> DestroyableFlowPane getFlowPane(DestroyableLabel title, E valuesLine) {
+        final DestroyableFlowPane flowPane = FlowPaneBuilder.builder()
                 .withStyleClass("fit-to-width")
-                .withNodes(
-                        title,
-                        valuesLine
-                )
+                .withNodes(title, valuesLine)
                 .withOrientation(Orientation.HORIZONTAL)
                 .build();
-        flowPane.maxHeightProperty().bind(title.heightProperty().add(valuesLine.heightProperty()));
-        flowPane.prefWidthProperty().bind(this.widthProperty());
+        flowPane.addBinding(flowPane.maxHeightProperty(), title.heightProperty().add(valuesLine.heightProperty()));
+        flowPane.addBinding(flowPane.prefWidthProperty(), this.widthProperty());
         flowPane.needsLayoutProperty().addListener(((observable, oldValue, newValue) -> {
             final double itemsWidth = flowPane.getChildren().stream().map(Region.class::cast).mapToDouble(Region::getWidth).sum();
             final double parentWidth = this.getWidth();
@@ -269,53 +307,78 @@ public class ModuleDetails extends VBox implements DestroyableTemplate {
         StringBinding text = hasActualValue
                 ? LocaleService.getStringBinding("tab.ships.details.tooltip.actual", minValueText, estValueText, actValueText, maxValueText)
                 : LocaleService.getStringBinding("tab.ships.details.tooltip.estimated", minValueText, estValueText, maxValueText);
-        final Tooltip tooltip = TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(text).build();
+        final Tooltip tooltip = TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText(text)
+                .build();
         Tooltip.install(attribute, tooltip);
     }
 
-    private static void doubleLIneWithEstimatedValue(HorizonsModifier horizonsModifier, ShipModule shipModule, HBox valuesLine, double originalAttributeValue, double estimatedValue) {
-        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(estimatedValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%")).build();
+    private static void doubleLIneWithEstimatedValue(HorizonsModifier horizonsModifier, ShipModule shipModule, DestroyableHBox valuesLine, double originalAttributeValue, double estimatedValue) {
+        final DestroyableLabel value = LabelBuilder.builder()
+                .withStyleClass("module-details-label")
+                .withNonLocalizedText(horizonsModifier.format(estimatedValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%"))
+                .build();
         if (estimatedValue > originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue < originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-green");
         } else if (estimatedValue < originalAttributeValue && horizonsModifier.isHigherBetter() || estimatedValue > originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-red");
         }
-        valuesLine.getChildren().addAll(
-                LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(originalAttributeValue)).build(),
-                LabelBuilder.builder().withNonLocalizedText(" → ").build(),
+        valuesLine.getNodes().addAll(
+                LabelBuilder.builder()
+                        .withStyleClass("module-details-label")
+                        .withNonLocalizedText(horizonsModifier.format(originalAttributeValue))
+                        .build(),
+                LabelBuilder.builder()
+                        .withNonLocalizedText(" → ")
+                        .build(),
                 value
         );
     }
 
-    private static void doubleLineWithActualValue(HorizonsModifier horizonsModifier, ShipModule shipModule, HBox valuesLine, double originalAttributeValue) {
+    private static void doubleLineWithActualValue(HorizonsModifier horizonsModifier, ShipModule shipModule, DestroyableHBox valuesLine, double originalAttributeValue) {
         final double currentValue = Double.parseDouble(shipModule.getModifiers().get(horizonsModifier).toString());
-        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(currentValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%")).build();
+        final DestroyableLabel value = LabelBuilder.builder()
+                .withStyleClass("module-details-label")
+                .withNonLocalizedText(horizonsModifier.format(currentValue) + (shipModule.isLegacy() ? "" : " @ " + Formatters.NUMBER_FORMAT_2_DUAL_DECIMAL.format(shipModule.getAttributeCompleteness(horizonsModifier).multiply(BigDecimal.valueOf(100))) + "%"))
+                .build();
         if (currentValue > originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue < originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-green");
         } else if (currentValue < originalAttributeValue && horizonsModifier.isHigherBetter() || currentValue > originalAttributeValue && !horizonsModifier.isHigherBetter()) {
             value.getStyleClass().add("module-details-label-red");
         }
-        valuesLine.getChildren().addAll(
-                LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(originalAttributeValue)).build(),
-                LabelBuilder.builder().withNonLocalizedText(" → ").build(),
+        valuesLine.getNodes().addAll(
+                LabelBuilder.builder()
+                        .withStyleClass("module-details-label")
+                        .withNonLocalizedText(horizonsModifier.format(originalAttributeValue))
+                        .build(),
+                LabelBuilder.builder()
+                        .withNonLocalizedText(" → ")
+                        .build(),
                 value
         );
     }
 
-    private void booleanLine(HorizonsModifier horizonsModifier, HBox valuesLine, Object estimatedValue) {
-        final DestroyableLabel value = LabelBuilder.builder().withStyleClass("module-details-label").withNonLocalizedText(horizonsModifier.format(estimatedValue)).build();
+    private void booleanLine(HorizonsModifier horizonsModifier, DestroyableHBox valuesLine, Object estimatedValue) {
+        final DestroyableLabel value = LabelBuilder.builder()
+                .withStyleClass("module-details-label")
+                .withNonLocalizedText(horizonsModifier.format(estimatedValue))
+                .build();
         if (Boolean.TRUE.equals(estimatedValue)) {
             value.getStyleClass().add("module-details-label-green");
         }
-        final DestroyableLabel title = LabelBuilder.builder().withStyleClass("module-details-label-title").withText(LocaleService.getStringBinding(horizonsModifier.getLocalizationKey())).build();
-        valuesLine.getChildren().addAll(
+        final DestroyableLabel title = LabelBuilder.builder()
+                .withStyleClass("module-details-label-title")
+                .withText(horizonsModifier.getLocalizationKey())
+                .build();
+        valuesLine.getNodes().addAll(
                 title,
                 new GrowingRegion(),
                 value
         );
         title.setPadding(new Insets(0, 0, 0, ScalingHelper.getPixelDoubleFromEm(0.2)));
         valuesLine.setPadding(new Insets(0, ScalingHelper.getPixelDoubleFromEm(0.6), 0, 0));
-        attributes.getChildren().add(valuesLine);
+        attributes.getNodes().add(valuesLine);
     }
 
     private static boolean isModifiedAttribute(Object originalAttributeValue, Object attributeValue) {

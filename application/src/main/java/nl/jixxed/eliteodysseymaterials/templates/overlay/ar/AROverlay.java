@@ -1,34 +1,26 @@
 package nl.jixxed.eliteodysseymaterials.templates.overlay.ar;
 
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableAnchorPane;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
-public class AROverlay extends AnchorPane implements DestroyableTemplate {
-    private final Stage stage;
+public class AROverlay extends DestroyableAnchorPane implements DestroyableTemplate {
     @Getter
     private DestroyableResizableImageView resizableImageView;
 
-    public AROverlay(final Stage stage) {
+    public AROverlay() {
         super();
-        this.stage = stage;
         initComponents();
-        initEventHandling();
     }
 
     @Override
     public void initComponents() {
-        this.resizableImageView = ResizableImageViewBuilder.builder().build();
-//        final AnchorPane anchorPane = new AnchorPane(this.resizableImageView);
+        this.resizableImageView = ResizableImageViewBuilder.builder()
+                .build();
         AnchorPaneHelper.setAnchor(this.resizableImageView, 0D, 0D, 0D, 0D);
-        this.getChildren().add(this.resizableImageView);
-    }
-
-    @Override
-    public void initEventHandling() {
+        this.getNodes().add(this.resizableImageView);
     }
 }

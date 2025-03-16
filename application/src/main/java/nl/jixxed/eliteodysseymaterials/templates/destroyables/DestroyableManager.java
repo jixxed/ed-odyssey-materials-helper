@@ -10,27 +10,28 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 
 import java.util.*;
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DestroyableManager {
     private static final Map<Destroyable, Map<ObservableValue<Object>, List<ChangeListener<Object>>>> CHANGE_LISTENERS = new WeakHashMap<>();
     private static final Map<DestroyableParent, Map<ObservableList<Node>, List<ListChangeListener<? super Node>>>> LIST_CHANGE_LISTENERS = new WeakHashMap<>();
     private static final Map<DestroyableParent, Map<ObservableList<Node>, List<InvalidationListener>>> LIST_INVALIDATION_LISTENERS = new WeakHashMap<>();
-    private static final Map<Destroyable, List<Property<Object>>> BINDINGS = new WeakHashMap<>();
+    private static final Map<Destroyable, Set<Property<Object>>> BINDINGS = new WeakHashMap<>();
     private static final Map<Destroyable, Map<EventType<? extends Event>, List<EventHandler<? super Event>>>> EVENT_HANDLERS = new WeakHashMap<>();
     private static final Map<Destroyable, Map<EventType<? extends Event>, List<EventHandler<? super Event>>>> EVENT_FILTERS = new WeakHashMap<>();
 
-    private static final Map<Destroyable, List<Destroyable>> DESTROYABLES = new WeakHashMap<>();
+    private static final Map<Destroyable, Set<Destroyable>> DESTROYABLES = new WeakHashMap<>();
     private static final Map<Destroyable, List<EventListener<? extends nl.jixxed.eliteodysseymaterials.service.event.Event>>> EVENT_LISTENERS = new WeakHashMap<>();
 
-
-
-    public static List<Destroyable> getDestroyables(Destroyable d){
-        return DestroyableManager.DESTROYABLES.computeIfAbsent(d, _ -> new ArrayList<>());
+    public static Set<Destroyable> getDestroyables(Destroyable d){
+        return DestroyableManager.DESTROYABLES.computeIfAbsent(d, _ -> new HashSet<>());
     }
 
+    @SuppressWarnings("java:S1452")
     public static List<EventListener<? extends nl.jixxed.eliteodysseymaterials.service.event.Event>> getEventListeners(Destroyable d){
         return DestroyableManager.EVENT_LISTENERS.computeIfAbsent(d, _ -> new ArrayList<>());
     }
@@ -39,12 +40,13 @@ public class DestroyableManager {
         return DestroyableManager.CHANGE_LISTENERS.computeIfAbsent(d, _ -> new HashMap<>());
     }
 
+    @SuppressWarnings("java:S1452")
     public static Map<ObservableList<Node>, List<ListChangeListener<? super Node>>> getListListeners(DestroyableParent d) {
         return DestroyableManager.LIST_CHANGE_LISTENERS.computeIfAbsent(d, _ -> new HashMap<>());
     }
 
-    public static List<Property<Object>> getBindings(Destroyable d){
-        return DestroyableManager.BINDINGS.computeIfAbsent(d, _ -> new ArrayList<>());
+    public static Set<Property<Object>> getBindings(Destroyable d){
+        return DestroyableManager.BINDINGS.computeIfAbsent(d, _ -> new HashSet<>());
     }
 
     @SuppressWarnings("java:S1452")

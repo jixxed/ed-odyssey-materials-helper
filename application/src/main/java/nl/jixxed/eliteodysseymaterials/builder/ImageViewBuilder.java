@@ -4,21 +4,21 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableImageView;
 
 import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ImageViewBuilder {
+public class ImageViewBuilder extends  AbstractNodeBuilder<ImageViewBuilder> {
     private final List<String> styleClasses = new ArrayList<>();
     private Image image;
     private boolean preserveRatio = true;
     private final Map<EventType<MouseEvent>, EventHandler<? super MouseEvent>> eventHandlers = new HashMap<>();
-    private ObservableValue<? extends Number> fitHeightBinding;
+    private ObservableValue<Number> fitHeightBinding;
 
     public static ImageViewBuilder builder() {
         return new ImageViewBuilder();
@@ -44,7 +44,7 @@ public class ImageViewBuilder {
         return this;
     }
 
-    public ImageViewBuilder withFitHeightBinding(final ObservableValue<? extends Number> fitHeightBinding) {
+    public ImageViewBuilder withFitHeightBinding(final ObservableValue<Number> fitHeightBinding) {
         this.fitHeightBinding = fitHeightBinding;
         return this;
     }
@@ -59,16 +59,17 @@ public class ImageViewBuilder {
         return this;
     }
 
-    public ImageView build() {
-        final ImageView imageView = new ImageView();
-        imageView.getStyleClass().addAll(this.styleClasses);
+    public DestroyableImageView build() {
+        final DestroyableImageView imageView = new DestroyableImageView();
+        super.build(imageView);
+
         imageView.setImage(this.image);
         imageView.setPreserveRatio(this.preserveRatio);
         if (this.fitHeightBinding != null) {
-            imageView.fitHeightProperty().bind(this.fitHeightBinding);
+            imageView.addBinding(imageView.fitHeightProperty(), this.fitHeightBinding);
         }
         if (!this.eventHandlers.isEmpty()) {
-            this.eventHandlers.forEach(imageView::addEventHandler);
+            this.eventHandlers.forEach(imageView::registerEventHandler);
 
         }
         return imageView;

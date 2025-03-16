@@ -1,24 +1,27 @@
 package nl.jixxed.eliteodysseymaterials.templates.odyssey;
 
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import lombok.extern.slf4j.Slf4j;
+import nl.jixxed.eliteodysseymaterials.builder.ButtonBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyTabs;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableButton;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.engineers.OdysseyEngineerSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.materials.OdysseyMaterialSearchBar;
 import nl.jixxed.eliteodysseymaterials.templates.odyssey.wishlist.OdysseyWishlistSearchBar;
 
 @Slf4j
-class OdysseySearchBar extends HBox {
+class OdysseySearchBar extends DestroyableHBox implements DestroyableEventTemplate {
 
     private static final String FX_FONT_SIZE_DPX = "-fx-font-size: %dpx";
-    private Button button;
+    private DestroyableButton button;
     private OdysseyMaterialSearchBar materialSearchBar;
     private OdysseyWishlistSearchBar wishlistSearchBar;
     private OdysseyEngineerSearchBar engineerSearchBar;
@@ -29,19 +32,19 @@ class OdysseySearchBar extends HBox {
         initEventHandling();
     }
 
-    private void initComponents() {
+    public void initComponents() {
         this.getStyleClass().add("root");
         initMenuButton();
         this.materialSearchBar = new OdysseyMaterialSearchBar();
-        this.wishlistSearchBar = new OdysseyWishlistSearchBar();
-        this.engineerSearchBar = new OdysseyEngineerSearchBar();
+        this.wishlistSearchBar = register(new OdysseyWishlistSearchBar());
+        this.engineerSearchBar = register(new OdysseyEngineerSearchBar());
 
         applyFontSizingHack();
 
         HBox.setHgrow(this.materialSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.wishlistSearchBar, Priority.ALWAYS);
         HBox.setHgrow(this.engineerSearchBar, Priority.ALWAYS);
-        this.getChildren().addAll(this.button, this.materialSearchBar);
+        this.getNodes().addAll(this.button, this.materialSearchBar);
     }
 
     private void applyFontSizingHack() {
@@ -54,17 +57,18 @@ class OdysseySearchBar extends HBox {
 
 
     private void initMenuButton() {
-        this.button = new Button();
-        this.button.setText(isRecipeBarVisible() ? "<" : ">");
-        this.button.getStyleClass().addAll("root", "menubutton");
-        this.button.setOnAction(event -> {
-            this.button.setText(isRecipeBarVisible() ? ">" : "<");
-            EventService.publish(new MenuButtonClickedEvent(Expansion.ODYSSEY));
-        });
+        this.button = ButtonBuilder.builder()
+                .withNonLocalizedText(isRecipeBarVisible() ? "<" : ">")
+                .withStyleClasses("root", "menubutton")
+                .withOnMouseClicked(_ -> {
+                    this.button.setText(isRecipeBarVisible() ? ">" : "<");
+                    EventService.publish(new MenuButtonClickedEvent(Expansion.ODYSSEY));
+                })
+                .build();
     }
 
-    private void initEventHandling() {
-        register(EventService.addListener(true, this, BlueprintClickEvent.class, blueprintClickEvent -> this.button.setText("<")));
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, BlueprintClickEvent.class, _ -> this.button.setText("<")));
         //hack for component resizing on other fontsizes
         register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
             final String fontStyle = String.format(FX_FONT_SIZE_DPX, fontSizeEvent.getFontSize());
@@ -72,35 +76,20 @@ class OdysseySearchBar extends HBox {
             this.button.styleProperty().set(fontStyle);
         }));
         register(EventService.addListener(true, this, OdysseyTabSelectedEvent.class, event -> {
-            if (OdysseyTabs.TRADE.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.wishlistSearchBar) || this.getChildren().contains(this.engineerSearchBar)) {
-                    this.getChildren().remove(this.materialSearchBar);
-                    this.getChildren().remove(this.wishlistSearchBar);
-                    this.getChildren().remove(this.engineerSearchBar);
-                }
-            } else if (OdysseyTabs.WISHLIST.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.engineerSearchBar)) {
-                    this.getChildren().remove(this.materialSearchBar);
-                    this.getChildren().remove(this.engineerSearchBar);
-                    this.getChildren().add(this.wishlistSearchBar);
-                }
-            } else if (OdysseyTabs.ENGINEERS.equals(event.getSelectedTab())) {
-                if (this.getChildren().contains(this.materialSearchBar) || this.getChildren().contains(this.wishlistSearchBar)) {
-                    this.getChildren().remove(this.materialSearchBar);
-                    this.getChildren().remove(this.wishlistSearchBar);
-                    this.getChildren().add(this.engineerSearchBar);
-                }
-            } else {
-                if (this.getChildren().contains(this.wishlistSearchBar) || this.getChildren().contains(this.engineerSearchBar)) {
-                    this.getChildren().remove(this.wishlistSearchBar);
-                    this.getChildren().remove(this.engineerSearchBar);
-                    this.getChildren().add(this.materialSearchBar);
-                }
-            }
+            switchTab(event.getSelectedTab());
         }));
     }
 
     private boolean isRecipeBarVisible() {
         return PreferencesService.getPreference(PreferenceConstants.RECIPES_VISIBLE, Boolean.TRUE);
+    }
+
+    private void switchTab(OdysseyTabs selectedTab) {
+        this.getChildren().removeAll(this.materialSearchBar, this.wishlistSearchBar, this.engineerSearchBar);
+        switch (selectedTab) {
+            case WISHLIST -> this.getChildren().add(this.wishlistSearchBar);
+            case ENGINEERS -> this.getChildren().add(this.engineerSearchBar);
+            case null, default -> this.getChildren().add(this.materialSearchBar);
+        }
     }
 }

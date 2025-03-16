@@ -1,14 +1,12 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.TooltipBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ShipModule;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Slot;
@@ -20,8 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipConfigEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -41,38 +38,60 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
-        this.getChildren().add(BoxBuilder.builder().withNodes(new GrowingRegion(), createTitle("ship.stats.armour"), new GrowingRegion()).buildHBox());
-        this.getChildren().add(new Separator(Orientation.HORIZONTAL));
+        this.getNodes().add(BoxBuilder.builder()
+                .withNodes(new GrowingRegion(), createTitle("ship.stats.armour"), new GrowingRegion())
+                .buildHBox());
+        this.getNodes().add(new DestroyableSeparator(Orientation.HORIZONTAL));
         armourResistance = new Shield("RES", "%", "blue");
         armourIntegrity = new Shield("INT", "\u2795", "red");
 
-        final VBox shields = BoxBuilder.builder().withNodes(armourResistance, armourIntegrity).buildVBox();
-        mrpIntegrity = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.armour.mrp.integrity.unit", 0)).build();
-        mrpProtection = LabelBuilder.builder().withStyleClass("ship-stats-shield-label").withText(LocaleService.getStringBinding("ship.stats.armour.mrp.protection.unit", 0)).build();
-        final DestroyableLabel mrp = LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.armour.mrp.short")).build();
-        Tooltip.install(mrp, TooltipBuilder.builder().withShowDelay(Duration.ZERO).withText(LocaleService.getStringBinding("ship.stats.armour.mrp")).build());
-        final VBox rebuild = BoxBuilder.builder().withNodes(new GrowingRegion(),
-                BoxBuilder.builder().withNodes(
-                                mrpIntegrity,
-                                new GrowingRegion(),
-                                mrpProtection)
-                        .buildHBox(),
-                BoxBuilder.builder().withNodes(
-                                LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.armour.mrp.integrity")).build(),
-                                new GrowingRegion(),
-                                mrp,
-                                new GrowingRegion(),
-                                LabelBuilder.builder().withText(LocaleService.getStringBinding("ship.stats.armour.mrp.protection")).build())
-                        .buildHBox()
-        ).buildVBox();
-        final StackPane stackPane = new StackPane(shields, rebuild);
+        final DestroyableVBox shields = BoxBuilder.builder()
+                .withNodes(armourResistance, armourIntegrity)
+                .buildVBox();
+        mrpIntegrity = LabelBuilder.builder()
+                .withStyleClass("ship-stats-shield-label")
+                .withText("ship.stats.armour.mrp.integrity.unit", 0)
+                .build();
+        mrpProtection = LabelBuilder.builder()
+                .withStyleClass("ship-stats-shield-label")
+                .withText("ship.stats.armour.mrp.protection.unit", 0)
+                .build();
+        final DestroyableLabel mrp = LabelBuilder.builder()
+                .withText("ship.stats.armour.mrp.short")
+                .build();
+        Tooltip.install(mrp, TooltipBuilder.builder()
+                .withShowDelay(Duration.ZERO)
+                .withText("ship.stats.armour.mrp")
+                .build());
+        final DestroyableVBox rebuild = BoxBuilder.builder()
+                .withNodes(new GrowingRegion(),
+                        BoxBuilder.builder()
+                                .withNodes(
+                                        mrpIntegrity,
+                                        new GrowingRegion(),
+                                        mrpProtection)
+                                .buildHBox(),
+                        BoxBuilder.builder()
+                                .withNodes(
+                                        LabelBuilder.builder()
+                                                .withText("ship.stats.armour.mrp.integrity")
+                                                .build(),
+                                        new GrowingRegion(),
+                                        mrp,
+                                        new GrowingRegion(),
+                                        LabelBuilder.builder()
+                                                .withText("ship.stats.armour.mrp.protection")
+                                                .build())
+                                .buildHBox()
+                ).buildVBox();
+        final DestroyableStackPane stackPane = StackPaneBuilder.builder().withNodes(shields, rebuild).build();
         stackPane.getStyleClass().add("shield-stats-stackpane");
-        this.getChildren().addAll(stackPane);
+        this.getNodes().addAll(stackPane);
     }
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, ShipConfigEvent.class, event -> update()));
+        register(EventService.addListener(true, this, ShipConfigEvent.class, _ -> update()));
     }
 
     public double getEffectiveDamageResistance(double baseResistance, double extraResistance, double bestResistance) {
@@ -191,8 +210,8 @@ public class ArmourStats extends Stats implements DestroyableTemplate {
     protected void update() {
         armourResistance.updateValues(calculateResistanceRaw(), calculateResistanceKinetic(), calculateResistanceThermal(), calculateResistanceCaustic(), calculateResistanceExplosive());
         armourIntegrity.updateValues(calculateIntegrityRaw(), calculateIntegrityKinetic(), calculateIntegrityThermal(), calculateIntegrityCaustic(), calculateIntegrityExplosive());
-        mrpIntegrity.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.mrp.integrity.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPIntegrity())));
-        mrpProtection.textProperty().bind(LocaleService.getStringBinding("ship.stats.armour.mrp.protection.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPProtection())));
+        mrpIntegrity.addBinding(mrpIntegrity.textProperty(), LocaleService.getStringBinding("ship.stats.armour.mrp.integrity.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPIntegrity())));
+        mrpProtection.addBinding(mrpProtection.textProperty(), LocaleService.getStringBinding("ship.stats.armour.mrp.protection.unit", Formatters.NUMBER_FORMAT_0.format(calculateMRPProtection())));
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class AbstractTextInputControlBuilder<T extends AbstractTextInputControlBuilder<T>> extends AbstractControlBuilder<T> {
     private final List<String> styleClasses = new ArrayList<>();
     private StringBinding stringBinding;
@@ -20,6 +20,7 @@ public abstract class AbstractTextInputControlBuilder<T extends AbstractTextInpu
     private String nonLocalizedText;
     private ChangeListener<String> textPropertyChangeListener;
     private Boolean isTraversable;
+    private Boolean isEditable;
 
     public T withStyleClass(final String styleClass) {
         this.styleClasses.add(styleClass);
@@ -62,6 +63,11 @@ public abstract class AbstractTextInputControlBuilder<T extends AbstractTextInpu
         return (T) this;
     }
 
+    public T withEditable(final boolean isEditable) {
+        this.isEditable = isEditable;
+        return (T) this;
+    }
+
     public <P extends TextInputControl & DestroyableComponent> P build(P textInputControl) {
         super.build(textInputControl);
 
@@ -75,6 +81,9 @@ public abstract class AbstractTextInputControlBuilder<T extends AbstractTextInpu
         }
         if (this.isTraversable != null) {
             textInputControl.setFocusTraversable(this.isTraversable);
+        }
+        if (this.isEditable != null) {
+            textInputControl.setEditable(this.isEditable);
         }
         if (this.textPropertyChangeListener != null) {
             textInputControl.addChangeListener(textInputControl.textProperty(), this.textPropertyChangeListener);

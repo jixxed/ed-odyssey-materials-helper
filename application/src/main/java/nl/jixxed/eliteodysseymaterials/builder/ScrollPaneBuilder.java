@@ -5,6 +5,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,7 +18,7 @@ public class ScrollPaneBuilder extends AbstractControlBuilder<ScrollPaneBuilder>
     }
 
 
-    public ScrollPaneBuilder withContent(final Node content) {
+    public <E extends Node & Destroyable> ScrollPaneBuilder withContent(final E content) {
         this.content = content;
         return this;
     }
@@ -27,7 +28,7 @@ public class ScrollPaneBuilder extends AbstractControlBuilder<ScrollPaneBuilder>
         final DestroyableScrollPane scrollPane = new DestroyableScrollPane();
         super.build(scrollPane);
 
-        scrollPane.setContent(this.content);
+        scrollPane.setContentNode(scrollPane.register((Node & Destroyable)this.content));
         scrollPane.setPannable(true);
         scrollPane.setFitToHeight(false);
         scrollPane.setFitToWidth(true);

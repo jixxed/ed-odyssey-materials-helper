@@ -1,15 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
-import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
-import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -27,9 +21,7 @@ import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.RegistryService;
 import nl.jixxed.eliteodysseymaterials.service.SupportService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -42,32 +34,17 @@ import static nl.jixxed.eliteodysseymaterials.helper.DeeplinkHelper.slefConsumer
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
 @Slf4j
-public class General extends DestroyableVBox implements DestroyableTemplate {
+public class General extends DestroyableVBox implements DestroyableEventTemplate {
 
     private static final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-    private final Application application;
-    private Label journalFolderLabel;
-    private Label selectedFolderLabel;
-    private Button journalSelectButton;
-    private Label fontsizeLabel;
-    private ComboBox<FontSize> fontsizeSelect;
-    private ComboBox<ApplicationLocale> languageSelect;
-    private Label languageLabel;
-    private Label wipLabel;
-    private Label wipExplainLabel;
-    private CheckBox wipCheckBox;
-    private Label urlSchemeLinkingLabel;
-    private Button urlSchemeLinkingButton;
-    private Label urlSchemeLinkingActiveLabel;
-    private Label pollLabel;
-    private Label pollExplainLabel;
-    private CheckBox pollCheckBox;
-    private DestroyableLabel blueprintExpandedLabel;
-    private DestroyableLabel blueprintExpandedExplainLabel;
-    private CheckBox blueprintExpandedCheckBox;
+    private DestroyableLabel selectedFolderLabel;
+    private DestroyableButton journalSelectButton;
+    private DestroyableComboBox<FontSize> fontsizeSelect;
+    private DestroyableComboBox<ApplicationLocale> languageSelect;
+    private DestroyableButton urlSchemeLinkingButton;
+    private DestroyableLabel urlSchemeLinkingActiveLabel;
 
-    public General(final Application application) {
-        this.application = application;
+    public General() {
         this.initComponents();
         this.initEventHandling();
         applyFontSizingHack();
@@ -81,47 +58,54 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
 
     @Override
     public void initComponents() {
-        final Label generalLabel = LabelBuilder.builder()
+        final DestroyableLabel generalLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.general"))
+                .withText("tab.settings.title.general")
                 .build();
-        final HBox langSetting = createLangSetting();
-        final HBox fontSetting = creatFontSetting();
-        final HBox customJournalFolderSetting = createCustomJournalFolderSetting();
-        final HBox pollSetting = createPollSetting();
-        final HBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
-        final HBox exportInventory = createExportInventorySetting();
-        final HBox blueprintExpandedSetting = createBlueprintExpandedSetting();
-        final HBox importFromClipboardSetting = createImportFromClipboardSetting();
-        final HBox importSlefFromClipboardSetting = createImportSlefFromClipboardSetting();
-        final HBox supportPackageSetting = createSupportPackageSetting();
-        final HBox wipSetting = createWIPSetting();
+        final DestroyableHBox langSetting = createLangSetting();
+        final DestroyableHBox fontSetting = creatFontSetting();
+        final DestroyableHBox customJournalFolderSetting = createCustomJournalFolderSetting();
+        final DestroyableHBox pollSetting = createPollSetting();
+        final DestroyableHBox urlSchemeLinkingSetting = createUrlSchemeLinkingSetting();
+        final DestroyableHBox exportInventory = createExportInventorySetting();
+        final DestroyableHBox blueprintExpandedSetting = createBlueprintExpandedSetting();
+        final DestroyableHBox importFromClipboardSetting = createImportFromClipboardSetting();
+        final DestroyableHBox importSlefFromClipboardSetting = createImportSlefFromClipboardSetting();
+        final DestroyableHBox supportPackageSetting = createSupportPackageSetting();
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(generalLabel, langSetting, fontSetting, customJournalFolderSetting, pollSetting, urlSchemeLinkingSetting, exportInventory, blueprintExpandedSetting, importFromClipboardSetting,importSlefFromClipboardSetting,supportPackageSetting);
+        this.getNodes().addAll(
+                generalLabel,
+                langSetting,
+                fontSetting,
+                customJournalFolderSetting,
+                pollSetting,
+                urlSchemeLinkingSetting,
+                exportInventory,
+                blueprintExpandedSetting,
+                importFromClipboardSetting,
+                importSlefFromClipboardSetting,
+                supportPackageSetting
+        );
     }
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.journalSelectButton, this.fontsizeSelect, this.languageSelect);
-        }));
-        register(EventService.addStaticListener(true, TerminateApplicationEvent.class, event -> {
-            executorService.shutdownNow();
-        }));
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.journalSelectButton, this.fontsizeSelect, this.languageSelect)));
+        register(EventService.addStaticListener(true, TerminateApplicationEvent.class, _ -> executorService.shutdownNow()));
     }
 
     private static void applyFontSizeToComponents(Integer size, Node... components) {
-        final String style =  String.format("-fx-font-size: %dpx;", size);
+        final String style = String.format("-fx-font-size: %dpx;", size);
 
         for (Node component : components) {
             component.setStyle(style);
         }
     }
 
-    private HBox createLangSetting() {
-        this.languageLabel = LabelBuilder.builder()
+    private DestroyableHBox createLangSetting() {
+        DestroyableLabel languageLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.language"))
+                .withText("tab.settings.language")
                 .build();
         this.languageSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
@@ -141,14 +125,20 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.languageLabel, this.languageSelect)
+                .withNodes(languageLabel, this.languageSelect)
                 .buildHBox();
     }
 
-    private HBox createBlueprintExpandedSetting() {
-        this.blueprintExpandedLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.blueprint.expanded")).build();
-        this.blueprintExpandedExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.blueprint.expanded.explain")).build();
-        this.blueprintExpandedCheckBox = CheckBoxBuilder.builder()
+    private DestroyableHBox createBlueprintExpandedSetting() {
+        DestroyableLabel blueprintExpandedLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.blueprint.expanded")
+                .build();
+        DestroyableLabel blueprintExpandedExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.blueprint.expanded.explain")
+                .build();
+        DestroyableCheckBox blueprintExpandedCheckBox = CheckBoxBuilder.builder()
                 .withSelected(PreferencesService.getPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, Boolean.FALSE))
                 .withSelectedProperty((observable, oldValue, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.TOOLTIP_BLUEPRINT_EXPANDED, newValue);
@@ -157,34 +147,24 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.blueprintExpandedLabel, this.blueprintExpandedCheckBox, this.blueprintExpandedExplainLabel)
+                .withNodes(blueprintExpandedLabel, blueprintExpandedCheckBox, blueprintExpandedExplainLabel)
                 .buildHBox();
     }
 
-    private HBox createWIPSetting() {
-        this.wipLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip")).build();
-        this.wipExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.wip.explain")).build();
-        this.wipCheckBox = CheckBoxBuilder.builder()
-                .withSelected(PreferencesService.getPreference(PreferenceConstants.WIP, Boolean.FALSE))
-                .withSelectedProperty((observable, oldValue, newValue) -> {
-                    PreferencesService.setPreference(PreferenceConstants.WIP, newValue);
-                    EventService.publish(new WipVisibilityEvent(newValue));
-                })
+    private DestroyableHBox createCustomJournalFolderSetting() {
+        DestroyableLabel journalFolderLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.journal.folder")
                 .build();
-        return BoxBuilder.builder()
-                .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.wipLabel, this.wipCheckBox, this.wipExplainLabel)
-                .buildHBox();
-    }
-
-    private HBox createCustomJournalFolderSetting() {
-        this.journalFolderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.journal.folder")).build();
-        this.selectedFolderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER)).build();
+        this.selectedFolderLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withNonLocalizedText(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER))
+                .build();
 
         final DirectoryChooser journalFolderSelect = new DirectoryChooser();
         this.journalSelectButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.journal.folder.select"))
+                .withText("tab.settings.journal.folder.select")
                 .withOnAction(e -> {
                     File initialDirectory = new File(PreferencesService.getPreference(PreferenceConstants.JOURNAL_FOLDER, OsConstants.DEFAULT_WATCHED_FOLDER));
                     if (!initialDirectory.exists()) {
@@ -193,7 +173,7 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
                     if (initialDirectory.exists()) {
                         journalFolderSelect.setInitialDirectory(initialDirectory);
                     }
-                    final File selectedDirectory = journalFolderSelect.showDialog(((FXApplication) this.application).getPrimaryStage());
+                    final File selectedDirectory = journalFolderSelect.showDialog((FXApplication.getInstance()).getPrimaryStage());
                     if (selectedDirectory != null) {
                         this.selectedFolderLabel.setText(selectedDirectory.getAbsolutePath());
                         PreferencesService.setPreference(PreferenceConstants.JOURNAL_FOLDER, selectedDirectory.getAbsolutePath());
@@ -206,14 +186,14 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
 
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.journalFolderLabel, this.journalSelectButton, this.selectedFolderLabel)
+                .withNodes(journalFolderLabel, this.journalSelectButton, this.selectedFolderLabel)
                 .buildHBox();
     }
 
-    private HBox creatFontSetting() {
-        this.fontsizeLabel = LabelBuilder.builder()
+    private DestroyableHBox creatFontSetting() {
+        DestroyableLabel fontsizeLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.textsize"))
+                .withText("tab.settings.textsize")
                 .build();
         this.fontsizeSelect = ComboBoxBuilder.builder(FontSize.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
@@ -231,32 +211,41 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.fontsizeLabel, this.fontsizeSelect)
+                .withNodes(fontsizeLabel, this.fontsizeSelect)
                 .buildHBox();
     }
 
-    private HBox createPollSetting() {
-        this.pollLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.poll")).build();
-        this.pollExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.poll.explain")).build();
-        this.pollCheckBox = CheckBoxBuilder.builder()
+    private DestroyableHBox createPollSetting() {
+        DestroyableLabel pollLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.poll")
+                .build();
+        DestroyableLabel pollExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.poll.explain")
+                .build();
+        DestroyableCheckBox pollCheckBox = CheckBoxBuilder.builder()
                 .withSelected(PreferencesService.getPreference(PreferenceConstants.POLLING_FILE_MODE, Boolean.FALSE))
-                .withSelectedProperty((observable, oldValue, newValue) -> {
+                .withSelectedProperty((_, _, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.POLLING_FILE_MODE, newValue);
                     EventService.publish(new PollingFileModeEvent(newValue));
                 })
                 .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.pollLabel, this.pollCheckBox, this.pollExplainLabel)
+                .withNodes(pollLabel, pollCheckBox, pollExplainLabel)
                 .buildHBox();
     }
 
-    private HBox createUrlSchemeLinkingSetting() {
-        this.urlSchemeLinkingLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.url.scheme")).build();
+    private DestroyableHBox createUrlSchemeLinkingSetting() {
+        DestroyableLabel urlSchemeLinkingLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.url.scheme")
+                .build();
         this.urlSchemeLinkingButton = ButtonBuilder.builder()
-                .withText(LocaleService.getStringBinding(RegistryService.isRegistered() ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"))
-                .withOnAction(event -> {
-                    this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding("tab.settings.url.scheme.checking"));
+                .withText(RegistryService.isRegistered() ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register")
+                .withOnAction(_ -> {
+                    this.urlSchemeLinkingActiveLabel.addBinding(this.urlSchemeLinkingActiveLabel.textProperty(), LocaleService.getStringBinding("tab.settings.url.scheme.checking"));
                     final boolean wasRegistered = RegistryService.isRegistered();
                     if (wasRegistered) {
                         RegistryService.unregisterApplication();
@@ -264,94 +253,132 @@ public class General extends DestroyableVBox implements DestroyableTemplate {
                         RegistryService.registerApplication();
                     }
                     this.urlSchemeLinkingButton.setDisable(true);
-                    executorService.schedule(() -> {
-                        boolean isRegisteredNow = RegistryService.isRegistered();
-                        final int retries = 10;
-                        int retry = 0;
-                        while (wasRegistered == isRegisteredNow) {
-                            try {
-                                isRegisteredNow = RegistryService.isRegistered();
-                                Thread.sleep(1000);
-                                if (retry++ == retries) {
-                                    break;
-                                }
-                            } catch (final InterruptedException e) {
-                                log.error("Register check error", e);
-                            }
-                        }
-                        final boolean finalIsRegisteredNow = isRegisteredNow;
-                        Platform.runLater(() -> {
-                            REGISTERED.set(finalIsRegisteredNow);
-                            this.urlSchemeLinkingButton.textProperty().bind(LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
-                            this.urlSchemeLinkingActiveLabel.textProperty().bind(LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
-                            this.urlSchemeLinkingButton.setDisable(false);
-                        });
-                    }, 1, TimeUnit.SECONDS);
+                    checkRegistration(wasRegistered);
                 })
                 .build();
-        this.urlSchemeLinkingActiveLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding(RegistryService.isRegistered() ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered")).build();
+        this.urlSchemeLinkingActiveLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(RegistryService.isRegistered() ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered")
+                .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.urlSchemeLinkingLabel, this.urlSchemeLinkingButton, this.urlSchemeLinkingActiveLabel)
+                .withNodes(urlSchemeLinkingLabel, this.urlSchemeLinkingButton, this.urlSchemeLinkingActiveLabel)
                 .buildHBox();
     }
 
-    private HBox createExportInventorySetting() {
-        final DestroyableLabel saveInventoryLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.export.inventory")).build();
-        final Button saveInventory = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.export.inventory.save")).withOnAction(event -> {
-            EventService.publish(new SaveInventoryEvent(
-                    () -> TextExporter.createTextInventory(),
-                    () -> CsvExporter.createCsvInventory(),
-                    () -> XlsExporter.createXlsInventory()
-            ));
-        }).build();
+    private void checkRegistration(boolean wasRegistered) {
+        executorService.schedule(() -> {
+            boolean isRegisteredNow = RegistryService.isRegistered();
+            final int retries = 10;
+            int retry = 0;
+            while (wasRegistered == isRegisteredNow) {
+                try {
+                    isRegisteredNow = RegistryService.isRegistered();
+                    Thread.sleep(1000);
+                    if (retry++ == retries) {
+                        break;
+                    }
+                } catch (final InterruptedException e) {
+                    log.error("Register check error", e);
+                    Thread.currentThread().interrupt();
+                }
+            }
+            final boolean finalIsRegisteredNow = isRegisteredNow;
+            Platform.runLater(() -> {
+                REGISTERED.set(finalIsRegisteredNow);
+                this.urlSchemeLinkingButton.addBinding(this.urlSchemeLinkingButton.textProperty(), LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.button.unregister" : "tab.settings.url.scheme.button.register"));
+                this.urlSchemeLinkingActiveLabel.addBinding(this.urlSchemeLinkingActiveLabel.textProperty(), LocaleService.getStringBinding(finalIsRegisteredNow ? "tab.settings.url.scheme.registered" : "tab.settings.url.scheme.unregistered"));
+                this.urlSchemeLinkingButton.setDisable(false);
+            });
+        }, 1, TimeUnit.SECONDS);
+    }
+
+    private DestroyableHBox createExportInventorySetting() {
+        final DestroyableLabel saveInventoryLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.button.export.inventory")
+                .build();
+        final DestroyableButton saveInventory = ButtonBuilder.builder()
+                .withText("settings.button.export.inventory.save")
+                .withOnAction(_ -> EventService.publish(new SaveInventoryEvent(
+                        TextExporter::createTextInventory,
+                        CsvExporter::createCsvInventory,
+                        XlsExporter::createXlsInventory)))
+                .build();
 
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(saveInventoryLabel, saveInventory)
                 .buildHBox();
     }
-    private HBox createImportFromClipboardSetting() {
-        final DestroyableLabel importClipboardLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard")).build();
-        final DestroyableLabel importClipboardExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard.explain")).build();
-        final Button importClipboard = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.import.clipboard.import")).withOnAction(event -> {
-            Platform.runLater(()->{
-                final String clipboard = Clipboard.getSystemClipboard().getString();
-                if (clipboard != null && clipboard.startsWith("edomh://")) {
-                    deeplinkConsumer.accept(clipboard);
-                }
-            });
-        }).build();
+
+    private DestroyableHBox createImportFromClipboardSetting() {
+        final DestroyableLabel importClipboardLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.button.import.clipboard")
+                .build();
+        final DestroyableLabel importClipboardExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.button.import.clipboard.explain")
+                .build();
+        final DestroyableButton importClipboard = ButtonBuilder.builder()
+                .withText("settings.button.import.clipboard.import")
+                .withOnAction(_ ->
+                        Platform.runLater(() -> {
+                            final String clipboard = Clipboard.getSystemClipboard().getString();
+                            if (clipboard != null && clipboard.startsWith("edomh://")) {
+                                deeplinkConsumer.accept(clipboard);
+                            }
+                        }))
+                .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(importClipboardLabel, importClipboard, importClipboardExplainLabel)
                 .buildHBox();
     }
-    private HBox createImportSlefFromClipboardSetting() {
-        final DestroyableLabel importSlefClipboardLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard.slef")).build();
-        final DestroyableLabel importSlefClipboardExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.import.clipboard.slef.explain")).build();
-        final Button importSlefClipboard = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.import.clipboard.import.slef")).withOnAction(event -> {
-            Platform.runLater(()->{
-                final String clipboard = Clipboard.getSystemClipboard().getString();
-                if (clipboard != null && !clipboard.startsWith("edomh://")) {
-                    slefConsumer.accept(clipboard);
-                }
-            });
-        }).build();
+
+    private DestroyableHBox createImportSlefFromClipboardSetting() {
+        final DestroyableLabel importSlefClipboardLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.button.import.clipboard.slef")
+                .build();
+        final DestroyableLabel importSlefClipboardExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.button.import.clipboard.slef.explain")
+                .build();
+        final DestroyableButton importSlefClipboard = ButtonBuilder.builder()
+                .withText("settings.button.import.clipboard.import.slef")
+                .withOnAction(_ ->
+                        Platform.runLater(() -> {
+                            final String clipboard = Clipboard.getSystemClipboard().getString();
+                            if (clipboard != null && !clipboard.startsWith("edomh://")) {
+                                slefConsumer.accept(clipboard);
+                            }
+                        }))
+                .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(importSlefClipboardLabel, importSlefClipboard, importSlefClipboardExplainLabel)
                 .buildHBox();
     }
-    private HBox createSupportPackageSetting() {
-        final DestroyableLabel supportPackageLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.support.package")).build();
-        final DestroyableLabel supportPackageExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("settings.button.support.package.explain")).build();
-        final Button supportPackage = ButtonBuilder.builder().withText(LocaleService.getStringBinding("settings.button.support.package.create")).withOnAction(event -> {
-            final String supportPackageFile = SupportService.createSupportPackage();
-            HostServices host = application.getHostServices();
-            host.showDocument(Path.of(supportPackageFile).toFile().getAbsoluteFile().getParent());
 
-        }).build();
+    private DestroyableHBox createSupportPackageSetting() {
+        final DestroyableLabel supportPackageLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.button.support.package")
+                .build();
+        final DestroyableLabel supportPackageExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("settings.button.support.package.explain")
+                .build();
+        final DestroyableButton supportPackage = ButtonBuilder.builder()
+                .withText("settings.button.support.package.create")
+                .withOnAction(event -> {
+                    final String supportPackageFile = SupportService.createSupportPackage();
+                    HostServices host = FXApplication.getInstance().getHostServices();
+                    host.showDocument(Path.of(supportPackageFile).toFile().getAbsoluteFile().getParent());
+                })
+                .build();
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(supportPackageLabel, supportPackage, supportPackageExplainLabel)

@@ -5,15 +5,11 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import lombok.Getter;
 import lombok.NonNull;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.Loadout;
 import nl.jixxed.eliteodysseymaterials.domain.LoadoutSet;
 import nl.jixxed.eliteodysseymaterials.domain.ModificationChange;
@@ -28,14 +24,12 @@ import nl.jixxed.eliteodysseymaterials.service.event.TerminateApplicationEvent;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import org.controlsfx.control.PopOver;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableTemplate {
+class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableEventTemplate {
     private static final String LOADOUT_MODIFICATION_STYLE_CLASS = "loadout-modification";
     private static final String LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS = "loadout-modification-image";
     private static final String LOADOUT_MODIFICATION_IMAGE_HOVER_STYLE_CLASS = "loadout-modification-image-hover";
@@ -53,9 +47,6 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     private ScheduledThreadPoolExecutor executor;
 
     private ScheduledFuture<?> scheduledFuture;
-    @Getter
-    private final List<Destroyable> destroyables = new ArrayList<>();
-
 
     OdysseyLoadoutModification(final Loadout loadout, final Integer position, final OdysseyLoadoutItem loadoutItem) {
         this.loadout = loadout;
@@ -74,9 +65,10 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
                 .withStyleClasses(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
                 .withImage((this.loadout.getModifications()[this.position] != null) ? this.loadout.getModifications()[this.position].getImage() : "/images/modification/empty.png")
                 .build();
-        this.label = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding((this.loadout.getModifications()[this.position] != null && this.loadout.getModifications()[this.position].getModification() != null) ? this.loadout.getModifications()[this.position].getModification().getLocalizationKey() : "loadout.modification.name.none")).build();
-        this.destroyables.add(this.label);
-        this.destroyables.add(this.imageView);
+        this.label = LabelBuilder.builder()
+                .withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS)
+                .withText((this.loadout.getModifications()[this.position] != null && this.loadout.getModifications()[this.position].getModification() != null) ? this.loadout.getModifications()[this.position].getModification().getLocalizationKey() : "loadout.modification.name.none")
+                .build();
         if (!this.loadoutItem.getLoadoutSet().equals(LoadoutSet.CURRENT)) {
             this.imageView.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_HOVER_STYLE_CLASS);
             final EventHandler<MouseEvent> imageDragMouseEventHandler = event -> {
@@ -107,7 +99,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
             this.imageView.registerEventHandler(MouseEvent.MOUSE_DRAGGED, imageDragMouseEventHandler);
         }
         VBox.setVgrow(this.imageView, Priority.ALWAYS);
-        this.getChildren().addAll(this.imageView, this.label);
+        this.getNodes().addAll(this.imageView, this.label);
 
     }
 
@@ -150,12 +142,12 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     }
 
 
-    private Pane createModificationOptionsGrid() {
-        final GridPane gridPane = new GridPane();
-        final Pane pane = new Pane(gridPane);
+    private DestroyablePane createModificationOptionsGrid() {
+        final DestroyableGridPane gridPane = GridPaneBuilder.builder().build();
+        final DestroyablePane pane = PaneBuilder.builder().withNode(gridPane).build();
         gridPane.getStyleClass().add("loadout-modification-grid");
-        gridPane.hgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
-        gridPane.vgapProperty().bind(ScalingHelper.getPixelDoubleBindingFromEm(0.71));
+        gridPane.addBinding(gridPane.hgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.71));
+        gridPane.addBinding(gridPane.vgapProperty(), ScalingHelper.getPixelDoubleBindingFromEm(0.71));
 
         if (this.loadout.getEquipment() instanceof Weapon) {
             createGridPaneCell(getHeadshotDamageModification(), 0, 0, gridPane);
@@ -229,25 +221,38 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     }
 
     private void createGridPaneCell(@NonNull final Modification modification, final int col, final int row, final GridPane gridPane) {
-        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS).withImage(modification.getImage(false)).build();
-        this.destroyables.add(modSelectImage);
+        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder()
+                .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
+                .withImage(modification.getImage(false))
+                .build();
         if (Arrays.stream(this.loadout.getModifications()).map(SelectedModification::getModification).anyMatch(modification::equals)) {
             modSelectImage.getStyleClass().add(LOADOUT_MODIFICATION_IMAGE_CONSUMED_STYLE_CLASS);
         } else {
             modSelectImage.registerEventHandler(MouseEvent.MOUSE_CLICKED, getModificationSelectedEventHandler(modification));
         }
-        final DestroyableLabel modLabel = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding(modification.getLocalizationKey())).build();
-        this.destroyables.add(modLabel);
-        final VBox modVBox = BoxBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS).withNodes(modSelectImage, modLabel).buildVBox();
+        final DestroyableLabel modLabel = LabelBuilder.builder()
+                .withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS)
+                .withText(modification.getLocalizationKey())
+                .build();
+        final VBox modVBox = BoxBuilder.builder()
+                .withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS)
+                .withNodes(modSelectImage, modLabel).buildVBox();
         gridPane.add(modVBox, col, row);
     }
 
     private void createCancelCell(final int col, final int row, final GridPane gridPane) {
-        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS).withImage("/images/modification/cancel.png").withOnMouseClicked(getClearEventHandler()).build();
-        final DestroyableLabel modLabel = LabelBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS).withText(LocaleService.getStringBinding("loadout.modification.clear")).build();
-        this.destroyables.add(modSelectImage);
-        this.destroyables.add(modLabel);
-        final VBox modVBox = BoxBuilder.builder().withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS).withNodes(modSelectImage, modLabel).buildVBox();
+        final DestroyableResizableImageView modSelectImage = ResizableImageViewBuilder.builder()
+                .withStyleClass(LOADOUT_MODIFICATION_IMAGE_STYLE_CLASS)
+                .withImage("/images/modification/cancel.png")
+                .withOnMouseClicked(getClearEventHandler())
+                .build();
+        final DestroyableLabel modLabel = LabelBuilder.builder()
+                .withStyleClass(LOADOUT_MODIFICATION_LABEL_STYLE_CLASS)
+                .withText("loadout.modification.clear")
+                .build();
+        final VBox modVBox = BoxBuilder.builder()
+                .withStyleClass(LOADOUT_MODIFICATION_STYLE_CLASS)
+                .withNodes(modSelectImage, modLabel).buildVBox();
         gridPane.add(modVBox, col, row);
     }
 
@@ -262,7 +267,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
 
     private void clear() {
         this.imageView.setImage(ImageService.getImage("/images/modification/empty.png"));
-        this.label.textProperty().bind(LocaleService.getStringBinding("loadout.modification.name.none"));
+        this.label.addBinding(this.label.textProperty(), LocaleService.getStringBinding("loadout.modification.name.none"));
         final SelectedModification newModification = new SelectedModification(null, false);
         final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], newModification);
         this.loadout.getModifications()[this.position] = newModification;
@@ -272,7 +277,7 @@ class OdysseyLoadoutModification extends DestroyableVBox implements DestroyableT
     private EventHandler<MouseEvent> getModificationSelectedEventHandler(final Modification modification) {
         return e -> {
             this.imageView.setImage(ImageService.getImage(modification.getImage(false)));
-            this.label.textProperty().bind(LocaleService.getStringBinding(modification.getLocalizationKey()));
+            this.label.addBinding(this.label.textProperty(), LocaleService.getStringBinding(modification.getLocalizationKey()));
             this.label.setWrapText(true);
             final SelectedModification newModification = new SelectedModification(modification, false);
             final ModificationChange modificationChange = new ModificationChange(this.loadout.getModifications()[this.position], newModification);

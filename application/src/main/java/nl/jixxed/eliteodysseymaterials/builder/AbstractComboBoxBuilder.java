@@ -10,8 +10,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableComponent;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuilder<T,V>> extends AbstractControlBuilder<V> {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuilder<T, V>> extends AbstractControlBuilder<V> {
     private ObservableList<T> items;
     private ChangeListener<T> listener;
     private StringBinding promptTextBinding;
@@ -57,7 +57,7 @@ public abstract class AbstractComboBoxBuilder<T, V extends AbstractComboBoxBuild
             });
         }
         if (this.promptTextBinding != null) {
-            comboBox.promptTextProperty().bind(this.promptTextBinding);
+            comboBox.addBinding(comboBox.promptTextProperty(), this.promptTextBinding);
         }
 
         if (this.tooltip != null) {

@@ -1,25 +1,21 @@
 package nl.jixxed.eliteodysseymaterials.templates.generic;
 
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.enums.StorageType;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
+import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableHBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
 
 public class MissionIngredient extends Ingredient {
     private final StorageType storageType;
-    private final String text;
+    private final String localeKey;
 
-    private Label nameLabel;
-    private HBox line;
-    private Region region;
+    private DestroyableLabel nameLabel;
 
-    public MissionIngredient(final String text, final StorageType storageType) {
+    public MissionIngredient(final String localeKey, final StorageType storageType) {
         this.storageType = storageType;
-        this.text = text;
+        this.localeKey = localeKey;
         initComponents();
     }
 
@@ -27,14 +23,12 @@ public class MissionIngredient extends Ingredient {
         this.getStyleClass().addAll("ingredient", "ingredient-without-amount");
         this.nameLabel = LabelBuilder.builder()
                 .withStyleClass("ingredient-name")
-                .withText(LocaleService.getStringBinding(this.text))
+                .withText(this.localeKey)
                 .build();
-        this.line = BoxBuilder.builder()
+        DestroyableHBox line = BoxBuilder.builder()
                 .withNodes(this.nameLabel)
                 .buildHBox();
-        this.region = new Region();
-        HBox.setHgrow(this.region, Priority.ALWAYS);
-        this.getChildren().addAll(this.line, this.region);
+        this.getNodes().addAll(line, new GrowingRegion());
     }
 
 

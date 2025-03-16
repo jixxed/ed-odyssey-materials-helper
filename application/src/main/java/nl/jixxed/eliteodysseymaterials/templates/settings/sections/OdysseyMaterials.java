@@ -2,85 +2,97 @@ package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.beans.binding.ListBinding;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.util.Callback;
 import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.constants.PreferenceConstants;
-import nl.jixxed.eliteodysseymaterials.enums.FontSize;
 import nl.jixxed.eliteodysseymaterials.enums.MaterialOrientation;
 import nl.jixxed.eliteodysseymaterials.enums.OdysseyMaterial;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.PreferencesService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
 
-public class OdysseyMaterials extends DestroyableVBox implements DestroyableTemplate {
+public class OdysseyMaterials extends DestroyableVBox implements DestroyableEventTemplate {
 
-    private Label readingDirectionLabel;
-    private ComboBox<MaterialOrientation> readingDirectionSelect;
-    private CheckBox soloModeCheckBox;
-    private Label soloModeLabel;
-    private Label soloModeExplainLabel;
-    private Label overrideLabel;
-    private ComboBox<OdysseyMaterial> overrideSelect;
-    private Button overrideAddButton;
-    private Label overrideListLabel;
-    private ListView<OdysseyMaterial> overrideListView;
-    private Button overrideRemoveButton;
+    private DestroyableComboBox<MaterialOrientation> readingDirectionSelect;
+    private DestroyableComboBox<OdysseyMaterial> overrideSelect;
+    private DestroyableButton overrideAddButton;
+    private DestroyableListView<OdysseyMaterial> overrideListView;
+
+    private static final Callback<ListView<OdysseyMaterial>, ListCell<OdysseyMaterial>> cellFactory = _ -> new DestroyableListCell<>() {
+
+        @SuppressWarnings("java:S1068")
+        private final EventListener<EngineerEvent> engineerEventListener = register(EventService.addListener(true, this, EngineerEvent.class, _ -> {
+            updateText(getItem(), this.emptyProperty().get());
+        }));
+
+        @Override
+        protected void updateItem(final OdysseyMaterial item, final boolean empty) {
+            super.updateItem(item, empty);
+            updateText(item, empty);
+        }
+
+        private void updateText(final OdysseyMaterial item, final boolean empty) {
+            if (empty || item == null) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                setText(LocaleService.getLocalizedStringForCurrentLocale(item.getLocalizationKey()));
+            }
+        }
+
+    };
 
     public OdysseyMaterials() {
         this.initComponents();
         this.initEventHandling();
     }
+
     @Override
     public void initComponents() {
-        final Label overviewLabel = LabelBuilder.builder()
-                .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.odyssey.materials"))
-                .build();
-        final HBox readingDirectionSetting = createReadingDirectionSetting();
-        final HBox soloModeSetting = createSoloModeSetting();
-        final HBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
-        final HBox irrelevantOverrideList = createIrrelevantOverrideList();
-
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList);
+
+        final DestroyableLabel overviewLabel = LabelBuilder.builder()
+                .withStyleClass("settings-header")
+                .withText("tab.settings.title.odyssey.materials")
+                .build();
+        final DestroyableHBox readingDirectionSetting = createReadingDirectionSetting();
+        final DestroyableHBox soloModeSetting = createSoloModeSetting();
+        final DestroyableHBox irrelevantOverrideList = createIrrelevantOverrideList();
+        final DestroyableHBox irrelevantOverrideSetting = createIrrelevantOverrideSetting();
+
+        this.getNodes().addAll(overviewLabel, readingDirectionSetting, soloModeSetting, irrelevantOverrideSetting, irrelevantOverrideList);
     }
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> {
-            applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.readingDirectionSelect);
-        }));
-    }
-    private void applyFontSizingHack() {
-        final Integer size = FontSize.valueOf(PreferencesService.getPreference(PreferenceConstants.TEXTSIZE, "NORMAL")).getSize();
-        applyFontSizeToComponents(size, this.readingDirectionSelect);
-
+        register(EventService.addListener(true, this, AfterFontSizeSetEvent.class, fontSizeEvent -> applyFontSizeToComponents(fontSizeEvent.getFontSize(), this.readingDirectionSelect)));
     }
 
     private static void applyFontSizeToComponents(Integer size, Node... components) {
-        final String style =  String.format("-fx-font-size: %dpx;", size);
+        final String style = String.format("-fx-font-size: %dpx;", size);
         for (Node component : components) {
             component.setStyle(style);
         }
     }
-    private HBox createReadingDirectionSetting() {
-        this.readingDirectionLabel = LabelBuilder.builder()
+
+    private DestroyableHBox createReadingDirectionSetting() {
+        DestroyableLabel readingDirectionLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.reading.direction"))
+                .withText("tab.settings.reading.direction")
                 .build();
+
         this.readingDirectionSelect = ComboBoxBuilder.builder(MaterialOrientation.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(MaterialOrientation.values()))
@@ -93,25 +105,26 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableTemp
                 .asLocalized()
                 .build();
 
-        this.readingDirectionSelect.getSelectionModel().select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "VERTICAL")));
+        this.readingDirectionSelect.getSelectionModel()
+                .select(MaterialOrientation.valueOf(PreferencesService.getPreference(PreferenceConstants.ORIENTATION, "VERTICAL")));
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.readingDirectionLabel, this.readingDirectionSelect)
+                .withNodes(readingDirectionLabel, this.readingDirectionSelect)
                 .buildHBox();
     }
 
-    private HBox createIrrelevantOverrideSetting() {
-        this.overrideLabel = LabelBuilder.builder()
+    private DestroyableHBox createIrrelevantOverrideSetting() {
+        DestroyableLabel overrideLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.material.override"))
+                .withText("tab.settings.material.override")
                 .build();
 
         final ListBinding<OdysseyMaterial> odysseyMaterialListBinding = LocaleService.getListBinding(OdysseyMaterial.getAllIrrelevantMaterialsWithoutOverride().toArray(OdysseyMaterial[]::new));
         this.overrideSelect = ComboBoxBuilder.builder(OdysseyMaterial.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withItemsProperty(odysseyMaterialListBinding)
-                .withValueChangeListener((observable, oldValue, newValue) ->
+                .withValueChangeListener((_, _, newValue) ->
                         this.overrideAddButton.setDisable(newValue == null || this.overrideListView.getItems().contains(newValue))
                 )
                 .asLocalized()
@@ -119,7 +132,7 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableTemp
 
         this.overrideAddButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.material.override.add"))
+                .withText("tab.settings.material.override.add")
                 .withOnAction(e -> {
                     if (this.overrideSelect.getSelectionModel().getSelectedItem() != null) {
                         final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
@@ -131,91 +144,84 @@ public class OdysseyMaterials extends DestroyableVBox implements DestroyableTemp
                         EventService.publish(new IrrelevantMaterialOverrideEvent());
                     }
                 })
+                .withDisableProperty(this.overrideListView.itemsProperty().map(list -> list.contains(this.overrideSelect.getSelectionModel().getSelectedItem())))
+                .withDisable(true)
                 .build();
-        this.overrideAddButton.setDisable(true);
+//        this.overrideAddButton.setDisable(true);
 
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.overrideLabel, this.overrideSelect, this.overrideAddButton)
+                .withNodes(overrideLabel, this.overrideSelect, this.overrideAddButton)
                 .buildHBox();
     }
 
-    private HBox createIrrelevantOverrideList() {
-        this.overrideListLabel = LabelBuilder.builder()
+    private DestroyableHBox createIrrelevantOverrideList() {
+        DestroyableLabel overrideListLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.material.override.list"))
+                .withText("tab.settings.material.override.list")
                 .build();
-        this.overrideListView = new ListView<>();
+
         final String irrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
-        final ObservableList<OdysseyMaterial> items = Arrays.stream(irrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(OdysseyMaterial::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        this.overrideListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                this.overrideRemoveButton.setDisable(newValue == null)
-        );
-        this.overrideListView.getItems().addListener((ListChangeListener<OdysseyMaterial>) c ->
-                this.overrideAddButton.setDisable(this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()))
-        );
-        this.overrideListView.setItems(items);
-        this.overrideListView.setCellFactory(getCellFactory());
-        this.overrideRemoveButton = ButtonBuilder.builder()
+
+        final ObservableList<OdysseyMaterial> items = Arrays.stream(irrelevantValues.split(","))
+                .filter(string -> !string.isEmpty())
+                .map(OdysseyMaterial::subtypeForName)
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+        this.overrideListView = ListViewBuilder.builder(OdysseyMaterial.class)
+                .withItems(items)
+                .withCellFactory(cellFactory)
+                .build();
+
+        DestroyableButton overrideRemoveButton = ButtonBuilder.builder()
                 .withStyleClass(SETTINGS_BUTTON_STYLE_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.material.override.remove"))
+                .withText("tab.settings.material.override.remove")
                 .withOnAction(e -> {
                     final String currentIrrelevantValues = PreferencesService.getPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, "");
-                    final ObservableList<OdysseyMaterial> currentItems = Arrays.stream(currentIrrelevantValues.split(",")).filter(string -> !string.isEmpty()).map(OdysseyMaterial::subtypeForName).collect(Collectors.toCollection(FXCollections::observableArrayList));
+                    final ObservableList<OdysseyMaterial> currentItems = Arrays.stream(currentIrrelevantValues.split(","))
+                            .filter(string -> !string.isEmpty()).map(OdysseyMaterial::subtypeForName)
+                            .collect(Collectors.toCollection(FXCollections::observableArrayList));
                     currentItems.remove(this.overrideListView.getSelectionModel().getSelectedItem());
-                    PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, currentItems.stream().map(OdysseyMaterial::name).collect(Collectors.joining(",")));
+                    PreferencesService.setPreference(PreferenceConstants.IRRELEVANT_OVERRIDE, currentItems.stream()
+                            .map(OdysseyMaterial::name)
+                            .collect(Collectors.joining(",")));
                     this.overrideListView.getItems().remove(this.overrideListView.getSelectionModel().getSelectedItem());
                     this.overrideAddButton.setDisable(this.overrideSelect.getSelectionModel().getSelectedItem() == null || this.overrideListView.getItems().contains(this.overrideSelect.getSelectionModel().getSelectedItem()));
                     EventService.publish(new IrrelevantMaterialOverrideEvent());
                 })
+                .withDisableProperty(this.overrideListView.getSelectionModel().selectedItemProperty().map(Objects::nonNull))
+                .withDisable(true)
                 .build();
-        this.overrideRemoveButton.setDisable(true);
+
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.overrideListLabel, this.overrideListView, this.overrideRemoveButton)
+                .withNodes(overrideListLabel, this.overrideListView, overrideRemoveButton)
                 .buildHBox();
     }
 
-    private Callback<ListView<OdysseyMaterial>, ListCell<OdysseyMaterial>> getCellFactory() {
-        return listView -> new ListCell<>() {
 
-            @SuppressWarnings("java:S1068")
-            private final EventListener<LanguageChangedEvent> engineerEventEventListener = EventService.addListener(true, this, LanguageChangedEvent.class, event ->
-                    updateText(getItem(), this.emptyProperty().get())
-            );
+    private DestroyableHBox createSoloModeSetting() {
+        DestroyableLabel soloModeLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.solo.mode")
+                .build();
 
+        DestroyableLabel soloModeExplainLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.solo.mode.explain")
+                .build();
 
-            @Override
-            protected void updateItem(final OdysseyMaterial item, final boolean empty) {
-                super.updateItem(item, empty);
-                updateText(item, empty);
-            }
-
-            private void updateText(final OdysseyMaterial item, final boolean empty) {
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    setText(LocaleService.getLocalizedStringForCurrentLocale(item.getLocalizationKey()));
-                }
-            }
-
-        };
-    }
-
-    private HBox createSoloModeSetting() {
-        this.soloModeLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.solo.mode")).build();
-        this.soloModeExplainLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.solo.mode.explain")).build();
-        this.soloModeCheckBox = CheckBoxBuilder.builder()
+        DestroyableCheckBox soloModeCheckBox = CheckBoxBuilder.builder()
                 .withSelected(PreferencesService.getPreference(PreferenceConstants.SOLO_MODE, Boolean.FALSE))
-                .withSelectedProperty((observable, oldValue, newValue) -> {
+                .withSelectedProperty((_, _, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.SOLO_MODE, newValue);
                     EventService.publish(new SoloModeEvent(newValue));
                 })
                 .build();
+
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
-                .withNodes(this.soloModeLabel, this.soloModeCheckBox, this.soloModeExplainLabel)
+                .withNodes(soloModeLabel, soloModeCheckBox, soloModeExplainLabel)
                 .buildHBox();
     }
 }

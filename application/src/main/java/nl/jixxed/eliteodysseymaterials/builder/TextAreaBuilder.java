@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTextArea;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class TextAreaBuilder extends AbstractTextInputControlBuilder<TextFieldBuilder> {
+public class TextAreaBuilder extends AbstractTextInputControlBuilder<TextAreaBuilder> {
 
     public static TextAreaBuilder builder() {
         return new TextAreaBuilder();

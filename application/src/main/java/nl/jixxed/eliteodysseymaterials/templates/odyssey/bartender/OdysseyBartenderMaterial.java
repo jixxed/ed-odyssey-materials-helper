@@ -5,8 +5,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -14,15 +12,12 @@ import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.OdysseyBlueprintConstants;
 import nl.jixxed.eliteodysseymaterials.domain.Wishlist;
 import nl.jixxed.eliteodysseymaterials.enums.Asset;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
-public class OdysseyBartenderMaterial extends HBox implements DestroyableTemplate {
+public class OdysseyBartenderMaterial extends DestroyableHBox implements DestroyableEventTemplate {
     @Getter
     private final Asset asset;
     private int amountSelected = 0;
@@ -60,89 +55,173 @@ public class OdysseyBartenderMaterial extends HBox implements DestroyableTemplat
     public void initComponents() {
         this.getStyleClass().add("bartender-material");
         // amount selected
-        this.amountSelectedLabel = LabelBuilder.builder().withStyleClass("bartender-material-amount-selected").withNonLocalizedText("Sell").build();
-        this.amountSelectedValueLabel = LabelBuilder.builder().withStyleClass("bartender-material-amount-selected-value").withNonLocalizedText("").build();
-        this.amountSelectedLabel.visibleProperty().bind(this.amountSelectedValueLabel.textProperty().isNotEqualTo(""));
+        this.amountSelectedLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-amount-selected")
+                .withNonLocalizedText("Sell")
+                .build();
+        this.amountSelectedValueLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-amount-selected-value")
+                .withNonLocalizedText("")
+                .build();
+        this.amountSelectedLabel.addBinding(this.amountSelectedLabel.visibleProperty(), this.amountSelectedValueLabel.textProperty().isNotEqualTo(""));
         // image
         this.imageView = createMaterialImage();
         // value
-        this.buyValueLabel = LabelBuilder.builder().withStyleClass("bartender-material-value").withText(LocaleService.getStringBinding("bartender.buy.value", String.valueOf(this.asset.getBuyValue()))).build();
-        this.sellValueLabel = LabelBuilder.builder().withStyleClass("bartender-material-value").withText(LocaleService.getStringBinding("bartender.sell.value", String.valueOf(this.asset.getSellValue()))).build();
-        this.buyValueLabel.disableProperty().bind(this.layoutMode.isEqualTo(LayoutMode.TRADE));
-        this.sellValueLabel.disableProperty().bind(this.layoutMode.isEqualTo(LayoutMode.SELECTED));
+        this.buyValueLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-value")
+                .withText("bartender.buy.value", String.valueOf(this.asset.getBuyValue()))
+                .build();
+        this.sellValueLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-value")
+                .withText("bartender.sell.value", String.valueOf(this.asset.getSellValue()))
+                .build();
+        this.buyValueLabel.addBinding(this.buyValueLabel.disableProperty(), this.layoutMode.isEqualTo(LayoutMode.TRADE));
+        this.sellValueLabel.addBinding(this.sellValueLabel.disableProperty(), this.layoutMode.isEqualTo(LayoutMode.SELECTED));
         // name
-        this.nameLabel = LabelBuilder.builder().withStyleClass("bartender-material-name").withText(LocaleService.getStringBinding(this.asset.getLocalizationKey())).build();
+        this.nameLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-name")
+                .withText(this.asset.getLocalizationKey())
+                .build();
         // name
-        this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image").withImage("/images/material/fleetcarrier.png").build();
-        this.wishlistImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image").withImage("/images/material/wishlist.png").build();
-        this.backpackImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image").withImage("/images/material/backpack.png").build();
-        this.shipImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image").withImage("/images/material/ship.png").build();
-        this.wishlistLabel = LabelBuilder.builder().withStyleClass("bartender-material-wishlist").withNonLocalizedText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum())).build();
-        this.backpackLabel = LabelBuilder.builder().withStyleClass("bartender-material-wishlist").withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getBackPackValue())).build();
-        this.shipLabel = LabelBuilder.builder().withStyleClass("bartender-material-wishlist").withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getShipLockerValue())).build();
-        this.fleetCarrierLabel = LabelBuilder.builder().withStyleClass("bartender-material-wishlist").withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getFleetCarrierValue())).build();
+        this.fleetCarrierImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image")
+                .withImage("/images/material/fleetcarrier.png")
+                .build();
+        this.wishlistImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image")
+                .withImage("/images/material/wishlist.png")
+                .build();
+        this.backpackImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image")
+                .withImage("/images/material/backpack.png")
+                .build();
+        this.shipImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image")
+                .withImage("/images/material/ship.png")
+                .build();
+        this.wishlistLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-wishlist")
+                .withNonLocalizedText(String.valueOf(Wishlist.ALL.getItems().stream().map(bp -> OdysseyBlueprintConstants.getRecipe(bp.getRecipeName()).getRequiredAmount(this.asset)).mapToInt(Integer::intValue).sum()))
+                .build();
+        this.backpackLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-wishlist")
+                .withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getBackPackValue()))
+                .build();
+        this.shipLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-wishlist")
+                .withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getShipLockerValue()))
+                .build();
+        this.fleetCarrierLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-wishlist")
+                .withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getFleetCarrierValue()))
+                .build();
         // decrease
-        this.decreaseLabel = LabelBuilder.builder().withStyleClass("bartender-material-button").withNonLocalizedText("-").withOnMouseClicked(event -> {
-            if (this.amountSelected > 0) {
-                this.amountSelected--;
-                EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
-                this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
-                this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
-                updateStyle();
-            }
-        }).build();
+        this.decreaseLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-button")
+                .withNonLocalizedText("-")
+                .withOnMouseClicked(event -> {
+                    if (this.amountSelected > 0) {
+                        this.amountSelected--;
+                        EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
+                        this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
+                        this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
+                        updateStyle();
+                    }
+                })
+                .build();
         // decrease 10
-        this.decreaseTenLabel = LabelBuilder.builder().withStyleClass("bartender-material-button").withNonLocalizedText("--").withOnMouseClicked(event -> {
-            if (this.amountSelected > 0) {
-                this.amountSelected -= (this.amountSelected >= 10) ? 10 : this.amountSelected;
-                EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
-                this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
-                this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
-                updateStyle();
-            }
-        }).build();
+        this.decreaseTenLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-button")
+                .withNonLocalizedText("--")
+                .withOnMouseClicked(event -> {
+                    if (this.amountSelected > 0) {
+                        this.amountSelected -= (this.amountSelected >= 10) ? 10 : this.amountSelected;
+                        EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
+                        this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
+                        this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
+                        updateStyle();
+                    }
+                })
+                .build();
         // amount
-        this.amountLabel = LabelBuilder.builder().withStyleClass("bartender-material-amount").withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue())).build();
+        this.amountLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-amount")
+                .withNonLocalizedText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue()))
+                .build();
         // increase
-        this.increaseLabel = LabelBuilder.builder().withStyleClass("bartender-material-button").withNonLocalizedText("+").withOnMouseClicked(event -> {
-            if (this.amountSelected < StorageService.getMaterialStorage(this.asset).getTotalValue()) {
-                this.amountSelected++;
-                EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
-                this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
-                this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
-                updateStyle();
-            }
-        }).build();
+        this.increaseLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-button")
+                .withNonLocalizedText("+")
+                .withOnMouseClicked(event -> {
+                    if (this.amountSelected < StorageService.getMaterialStorage(this.asset).getTotalValue()) {
+                        this.amountSelected++;
+                        EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
+                        this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
+                        this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
+                        updateStyle();
+                    }
+                })
+                .build();
         // increase 10
-        this.increaseTenLabel = LabelBuilder.builder().withStyleClass("bartender-material-button").withNonLocalizedText("++").withOnMouseClicked(event -> {
-            if (this.amountSelected < StorageService.getMaterialStorage(this.asset).getTotalValue()) {
-                this.amountSelected += (this.amountSelected <= StorageService.getMaterialStorage(this.asset).getTotalValue() - 10) ? 10 : StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected;
-                EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
-                this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
-                this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
-                updateStyle();
-            }
-        }).build();
-        final VBox left = BoxBuilder.builder().withNodes(
-                BoxBuilder.builder().withStyleClass("bartender-material-line-image").withNodes(
-                        this.imageView
-                ).buildHBox()
+        this.increaseTenLabel = LabelBuilder.builder()
+                .withStyleClass("bartender-material-button")
+                .withNonLocalizedText("++")
+                .withOnMouseClicked(event -> {
+                    if (this.amountSelected < StorageService.getMaterialStorage(this.asset).getTotalValue()) {
+                        this.amountSelected += (this.amountSelected <= StorageService.getMaterialStorage(this.asset).getTotalValue() - 10) ? 10 : StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected;
+                        EventService.publish(new OdysseyBartenderAmountSelectedEvent(this.asset, this.amountSelected));
+                        this.amountSelectedValueLabel.setText(this.amountSelected > 0 ? String.valueOf(this.amountSelected) : "");
+                        this.amountLabel.setText(String.valueOf(StorageService.getMaterialStorage(this.asset).getTotalValue() - this.amountSelected));
+                        updateStyle();
+                    }
+                })
+                .build();
+        final DestroyableVBox left = BoxBuilder.builder()
+                .withNodes(
+                        BoxBuilder.builder()
+                                .withStyleClass("bartender-material-line-image")
+                                .withNodes(
+                                        this.imageView
+                                )
+                                .buildHBox()
+                )
+                .buildVBox();
 
-        ).buildVBox();
-
-        final VBox left2 = BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(
-                this.nameLabel,
-                BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(this.buyValueLabel, this.sellValueLabel).buildHBox()
-        ).buildVBox();
-        final VBox middle = BoxBuilder.builder().withNodes(
-                BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(this.backpackImage, this.backpackLabel, this.shipImage, this.shipLabel).buildHBox(),
-                BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(this.fleetCarrierImage, this.fleetCarrierLabel, this.wishlistImage, this.wishlistLabel).buildHBox()
-        ).buildVBox();
-        final VBox right = BoxBuilder.builder().withNodes(
-                BoxBuilder.builder().withStyleClasses("bartender-material-line").withNodes(this.decreaseTenLabel,this.decreaseLabel, this.amountLabel,this.increaseLabel,this.increaseTenLabel).buildHBox(),
-                BoxBuilder.builder().withStyleClass("bartender-material-line").withNodes(this.amountSelectedLabel, new GrowingRegion(), this.amountSelectedValueLabel).buildHBox()
-        ).buildVBox();
-        this.getChildren().addAll(left, left2, new GrowingRegion(), middle, right);
+        final DestroyableVBox left2 = BoxBuilder.builder()
+                .withStyleClass("bartender-material-line")
+                .withNodes(
+                        this.nameLabel,
+                        BoxBuilder.builder()
+                                .withStyleClass("bartender-material-line")
+                                .withNodes(this.buyValueLabel, this.sellValueLabel)
+                                .buildHBox()
+                )
+                .buildVBox();
+        final DestroyableVBox middle = BoxBuilder.builder()
+                .withNodes(
+                        BoxBuilder.builder()
+                                .withStyleClass("bartender-material-line")
+                                .withNodes(this.backpackImage, this.backpackLabel, this.shipImage, this.shipLabel)
+                                .buildHBox(),
+                        BoxBuilder.builder()
+                                .withStyleClass("bartender-material-line")
+                                .withNodes(this.fleetCarrierImage, this.fleetCarrierLabel, this.wishlistImage, this.wishlistLabel)
+                                .buildHBox()
+                )
+                .buildVBox();
+        final DestroyableVBox right = BoxBuilder.builder()
+                .withNodes(
+                        BoxBuilder.builder()
+                                .withStyleClasses("bartender-material-line")
+                                .withNodes(this.decreaseTenLabel, this.decreaseLabel, this.amountLabel, this.increaseLabel, this.increaseTenLabel)
+                                .buildHBox(),
+                        BoxBuilder.builder()
+                                .withStyleClass("bartender-material-line")
+                                .withNodes(this.amountSelectedLabel, new GrowingRegion(), this.amountSelectedValueLabel)
+                                .buildHBox()
+                )
+                .buildVBox();
+        this.getNodes().addAll(left, left2, new GrowingRegion(), middle, right);
         this.mouseEventEventHandler = event -> {
             EventService.publish(new OdysseyBartenderMaterialSelectedEvent(this));
         };
@@ -241,7 +320,8 @@ public class OdysseyBartenderMaterial extends HBox implements DestroyableTemplat
 
     private DestroyableResizableImageView createMaterialImage() {
 
-        ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder().withStyleClass("materialcard-image");
+        ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
+                .withStyleClass("materialcard-image");
         imageViewBuilder = switch (this.asset.getType()) {
             case TECH -> imageViewBuilder.withImage("/images/material/tech.png");
             case CIRCUIT -> imageViewBuilder.withImage("/images/material/circuit.png");

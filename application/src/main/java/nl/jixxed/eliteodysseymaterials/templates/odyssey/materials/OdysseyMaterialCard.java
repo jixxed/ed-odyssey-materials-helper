@@ -4,11 +4,8 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
@@ -24,11 +21,10 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.MaterialService;
 import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 @Slf4j
-class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
+class OdysseyMaterialCard extends DestroyableVBox implements DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String MATERIAL_IRRELEVANT_CLASS = "material-irrelevant";
     private static final String MATERIAL_POWERPLAY_CLASS = "material-powerplay";
@@ -39,12 +35,12 @@ class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
     private final OdysseyMaterial odysseyMaterial;
     private final Storage amounts;
     private DestroyableResizableImageView image;
-    private Label name;
-    private Label fleetCarrierAmount;
-    private Label wishlistAmount;
-    private Label backpackAmount;
-    private Label shiplockerAmount;
-    private Label totalAmount;
+    private DestroyableLabel name;
+    private DestroyableLabel fleetCarrierAmount;
+    private DestroyableLabel wishlistAmount;
+    private DestroyableLabel backpackAmount;
+    private DestroyableLabel shiplockerAmount;
+    private DestroyableLabel totalAmount;
     private OdysseyMaterialShow materialShow;
     private DestroyableResizableImageView fleetCarrierImage;
     private DestroyableResizableImageView wishlistImage;
@@ -55,6 +51,7 @@ class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
 
     @Getter
     private final BooleanProperty showFC = new SimpleBooleanProperty(false);
+
     OdysseyMaterialCard(final OdysseyMaterial odysseyMaterial) {
         this.odysseyMaterial = odysseyMaterial;
         this.amounts = StorageService.getMaterialStorage(odysseyMaterial);
@@ -67,7 +64,7 @@ class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
         this.getStyleClass().add("material");
         this.name = LabelBuilder.builder()
                 .withStyleClass("materialcard-name")
-                .withText(LocaleService.getStringBinding(this.odysseyMaterial))
+                .withText(this.odysseyMaterial.getLocalizationKey())
                 .build();
         this.fleetCarrierAmount = LabelBuilder.builder()
                 .withStyleClass("materialcard-fcamount")
@@ -97,22 +94,36 @@ class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
 
         this.image = createMaterialImage(this.odysseyMaterial);
 
-        final Region region = new Region();
+        final DestroyableRegion region = new DestroyableRegion();
         HBox.setHgrow(region, Priority.ALWAYS);
         MaterialService.addMaterialInfoPopOver(this, this.odysseyMaterial, false);
 
         this.setFavourite(this.odysseyMaterial, FavouriteService.isFavourite(this.odysseyMaterial));
         this.setOnMouseClicked(event -> setFavourite(this.odysseyMaterial, FavouriteService.toggleFavourite(this.odysseyMaterial)));
 
-        this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-fcamount-image").withImage("/images/material/fleetcarrier.png").build();
-        this.wishlistImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/wishlist.png").build();
-        this.backpackImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/backpack.png").build();
-        this.shipImage = ResizableImageViewBuilder.builder().withStyleClasses("materialcard-image", "materialcard-amount-image").withImage("/images/material/ship.png").build();
+        this.fleetCarrierImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image", "materialcard-fcamount-image")
+                .withImage("/images/material/fleetcarrier.png")
+                .build();
+        this.wishlistImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image", "materialcard-amount-image")
+                .withImage("/images/material/wishlist.png")
+                .build();
+        this.backpackImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image", "materialcard-amount-image")
+                .withImage("/images/material/backpack.png")
+                .build();
+        this.shipImage = ResizableImageViewBuilder.builder()
+                .withStyleClasses("materialcard-image", "materialcard-amount-image")
+                .withImage("/images/material/ship.png")
+                .build();
 
-        this.fleetCarrierImage.visibleProperty().bind(ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())));
-        this.fleetCarrierAmount.visibleProperty().bind(ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())));
-        final HBox nameLine = BoxBuilder.builder().withStyleClass("material-name-line").withNodes(this.image, this.name, region, this.wishlistImage, this.wishlistAmount, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.totalAmount).buildHBox();
-        this.getChildren().addAll(nameLine);
+        this.fleetCarrierImage.addBinding(this.fleetCarrierImage.visibleProperty(), ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())));
+        this.fleetCarrierAmount.addBinding(this.fleetCarrierAmount.visibleProperty(), ApplicationState.getInstance().getFcMaterials().and(this.showFC.or(this.hoverProperty())));
+        final DestroyableHBox nameLine = BoxBuilder.builder()
+                .withStyleClass("material-name-line")
+                .withNodes(this.image, this.name, region, this.wishlistImage, this.wishlistAmount, this.backpackImage, this.backpackAmount, this.shipImage, this.shiplockerAmount, this.fleetCarrierImage, this.fleetCarrierAmount, this.totalAmount).buildHBox();
+        this.getNodes().addAll(nameLine);
         updateStyle();
     }
 
@@ -204,7 +215,8 @@ class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
     private DestroyableResizableImageView createMaterialImage(final OdysseyMaterial odysseyMaterial) {
 
         final boolean isEngineerUnlockMaterial = (APPLICATION_STATE.getSoloMode()) ? OdysseyBlueprintConstants.isEngineeringIngredientAndNotCompleted(odysseyMaterial) : OdysseyBlueprintConstants.isEngineeringIngredient(odysseyMaterial);
-        ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder().withStyleClass("materialcard-image");
+        ResizableImageViewBuilder imageViewBuilder = ResizableImageViewBuilder.builder()
+                .withStyleClass("materialcard-image");
         if (odysseyMaterial.isUnknown()) {
             imageViewBuilder.withImage("/images/material/unknown.png");
         } else if (isEngineerUnlockMaterial) {
@@ -231,6 +243,6 @@ class OdysseyMaterialCard extends VBox implements DestroyableTemplate {
         } else {
             this.getStyleClass().remove(MATERIAL_FAVOURITE_CLASS);
         }
-        this.name.textProperty().bind(LocaleService.getStringBinding(odysseyMaterial));
+        this.name.addBinding(this.name.textProperty(), LocaleService.getStringBinding(odysseyMaterial));
     }
 }

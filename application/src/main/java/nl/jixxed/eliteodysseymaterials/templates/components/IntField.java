@@ -56,7 +56,7 @@ public class IntField extends DestroyableTextField {
     }
 
     private void addValueListener() {
-        value.addListener((observable, oldValue, newValue) -> {
+        addChangeListener(value, (observable, oldValue, newValue) -> {
             if (isUpdating) return;
 
             isUpdating = true;
@@ -66,7 +66,7 @@ public class IntField extends DestroyableTextField {
     }
 
     private void addTextListener(int minValue, int maxValue) {
-        textProperty().addListener((observable, oldValue, newValue) -> {
+        addChangeListener(textProperty(), (observable, oldValue, newValue) -> {
             if (isUpdating) return;
 
             if (newValue == null || newValue.isEmpty() || !isValidInt(newValue)) {

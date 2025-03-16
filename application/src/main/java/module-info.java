@@ -40,12 +40,13 @@ module nl.jixxed.eliteodysseymaterials {
     requires sentry;
     requires oslib.master.SNAPSHOT;
     requires org.apache.commons.lang3;
+    exports nl.jixxed.eliteodysseymaterials.service.event;
     exports nl.jixxed.eliteodysseymaterials.log to ch.qos.logback.core;
     opens nl.jixxed.eliteodysseymaterials to javafx.graphics, java.desktop;
     opens nl.jixxed.eliteodysseymaterials.service.message to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.domain.ships to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.templates to javafx.fxml, org.controlsfx.controls;
-    opens nl.jixxed.eliteodysseymaterials.templates.destroyables to javafx.fxml, org.controlsfx.controls;
+    opens nl.jixxed.eliteodysseymaterials.templates.destroyables to javafx.graphics, java.desktop, javafx.fxml, org.controlsfx.controls;
     exports nl.jixxed.eliteodysseymaterials;
     exports nl.jixxed.eliteodysseymaterials.enums;
     exports nl.jixxed.eliteodysseymaterials.domain.ships;

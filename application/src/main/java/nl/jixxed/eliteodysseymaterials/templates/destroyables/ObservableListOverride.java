@@ -10,11 +10,12 @@ import java.lang.ref.WeakReference;
 import java.util.*;
 
 @Slf4j
-public class ObservableListOverride<E extends Node & DestroyableParent> {
-    private final WeakReference<DestroyableParent> parentRef;
+public class ObservableListOverride {
+    private WeakReference<DestroyableParent> parentRef;
     private final WeakReference<ObservableList<Node>> childrenRef;
 
-    public ObservableListOverride(E parent, ObservableList<Node> children) {
+    //<P extends Node & DestroyableParent, <E extends Node & Destroyable>
+    public <P extends DestroyableParent> ObservableListOverride(P parent, ObservableList<Node> children) {
         this.parentRef = new WeakReference<>(parent);
         this.childrenRef = new WeakReference<>(children);
     }
@@ -28,7 +29,7 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
     }
 
     @SafeVarargs
-    public final boolean addAll(E... elements) {
+    public final <E extends Node & Destroyable> boolean addAll(E... elements) {
         parent().registerAll(elements);
         return children().addAll(elements);
     }
@@ -44,24 +45,24 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
     }
 
     @SafeVarargs
-    public final boolean setAll(E... elements) {
+    public final <E extends Node & Destroyable> boolean setAll(E... elements) {
         children().forEach(this::destroy);
         parent().registerAll(elements);
         return children().setAll(elements);
     }
 
-    public boolean setAll(Collection<E> collection) {
+    public <E extends Node & Destroyable> boolean setAll(Collection<E> collection) {
         children().forEach(this::destroy);
         parent().registerAll(collection);
         return children().setAll(collection);
     }
 
-    public boolean removeAll(E... elements) {
+    public <E extends Node & Destroyable> boolean removeAll(E... elements) {
         Arrays.stream(elements).forEach(this::destroy);
         return children().removeAll(elements);
     }
 
-    public boolean retainAll(E... elements) {
+    public <E extends Node & Destroyable> boolean retainAll(E... elements) {
         children().stream().filter(node -> !Arrays.asList(elements).contains(node)).forEach(this::destroy);
         return children().retainAll(elements);
     }
@@ -79,7 +80,7 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
         return children().isEmpty();
     }
 
-    public boolean contains(E node) {
+    public <E extends Node & Destroyable> boolean contains(E node) {
         return children().contains(node);
     }
 
@@ -95,12 +96,12 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
         return children().toArray(a);
     }
 
-    public boolean add(E node) {
+    public <E extends Node & Destroyable> boolean add(E node) {
         parent().register(node);
         return children().add(node);
     }
 
-    public boolean remove(E node) {
+    public <E extends Node & Destroyable> boolean remove(E node) {
         destroy(node);
         return children().remove(node);
     }
@@ -109,12 +110,12 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
         return children().containsAll(collection);
     }
 
-    public boolean addAll(Collection<? extends E> collection) {
+    public <E extends Node & Destroyable> boolean addAll(Collection<? extends E> collection) {
         parent().registerAll(collection);
         return children().addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends E> collection) {
+    public <E extends Node & Destroyable> boolean addAll(int index, Collection<? extends E> collection) {
         parent().registerAll(collection);
         return children().addAll(index, collection);
     }
@@ -139,19 +140,24 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
     }
 
 
-    public E get(int index) {
+    public <E extends Node & Destroyable> E get(int index) {
         return (E) children().get(index);
     }
 
-    public E set(int index, E element) {
+    public <E extends Node & Destroyable> E set(int index, E element) {
         final E node = (E) children().set(index, element);
         destroy(node);
         return node;
     }
 
-    public void add(int index, E element) {
+    public <E extends Node & Destroyable> void add(int index, E element) {
         parent().register(element);
         children().add(index, element);
+    }
+
+    public <E extends Node & Destroyable> void addFirst(E element) {
+        parent().register(element);
+        children().addFirst(element);
     }
 
     public Node remove(int index) {
@@ -159,11 +165,11 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
         return children().remove(index);
     }
 
-    public int indexOf(E element) {
+    public <E extends Node & Destroyable> int indexOf(E element) {
         return children().indexOf(element);
     }
 
-    public int lastIndexOf(E element) {
+    public <E extends Node & Destroyable> int lastIndexOf(E element) {
         return children().lastIndexOf(element);
     }
 
@@ -188,16 +194,18 @@ public class ObservableListOverride<E extends Node & DestroyableParent> {
         parent().removeListListener(children(), listener);
         children().removeListener(listener);
     }
-    
+
     private void destroy(Node node) {
-        try{
-            if (node instanceof Destroyable destroyable) {
+        try {
+            if (node instanceof DestroyableTemplate template) {
+                template.destroyTemplate();
+            } else if (node instanceof Destroyable destroyable) {
                 destroyable.destroy();
-            }else{
+            } else {
                 throw new IllegalArgumentException();
             }
 
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error("Failed to destroy node of type: {}", node.getClass().getName(), e);
         }
     }

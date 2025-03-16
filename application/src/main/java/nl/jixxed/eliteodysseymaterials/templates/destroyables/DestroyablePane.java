@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 public class DestroyablePane extends Pane implements DestroyableParent {
-    ObservableListOverride<DestroyablePane> override = new ObservableListOverride<>(DestroyablePane.this, super.getChildren());
-
-    public ObservableListOverride<DestroyablePane> getNodes() {
-        return override;
-    }
+//    ObservableListOverride override = new ObservableListOverride(DestroyablePane.this, super.getChildren());
+//
+//    public ObservableListOverride getNodes() {
+//        return override;
+//    }
 
 }

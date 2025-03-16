@@ -1,8 +1,6 @@
 package nl.jixxed.eliteodysseymaterials.templates.settings.sections;
 
 import javafx.application.Platform;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import lombok.extern.slf4j.Slf4j;
 import nl.jixxed.eliteodysseymaterials.FXApplication;
@@ -24,55 +22,66 @@ import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import static nl.jixxed.eliteodysseymaterials.templates.settings.SettingsTab.*;
+
 @Slf4j
-public class AugmentedReality extends DestroyableVBox implements DestroyableTemplate {
+public class AugmentedReality extends DestroyableVBox implements DestroyableEventTemplate {
     private static final String TESS4J_DIR = new File(OsConstants.TESS4J).getPath();
 
     private DestroyableLabel arOverlayLabel;
     private DestroyableToggleSwitch arOverlayButton;
-    private TextField arCharacterWhitelistTextField;
+    private DestroyableTextField arCharacterWhitelistTextField;
 
     public AugmentedReality() {
         this.initComponents();
         this.initEventHandling();
     }
+
     @Override
     public void initComponents() {
-        final Label arLabel = LabelBuilder.builder()
+        final DestroyableLabel arLabel = LabelBuilder.builder()
                 .withStyleClass("settings-header")
-                .withText(LocaleService.getStringBinding("tab.settings.title.ar"))
+                .withText("tab.settings.title.ar")
                 .build();
-        final Label arExplainLabel = LabelBuilder.builder()
+        final DestroyableLabel arExplainLabel = LabelBuilder.builder()
                 .withStyleClass(SETTINGS_LABEL_CLASS)
-                .withText(LocaleService.getStringBinding("tab.settings.ar.explain"))
+                .withText("tab.settings.ar.explain")
                 .build();
-        final Hyperlink vccLink = HyperlinkBuilder.builder().withStyleClass(SETTINGS_LINK_CLASS).withOnAction(actionEvent ->
-                FXApplication.getInstance().getHostServices().showDocument("https://aka.ms/vs/17/release/vc_redist.x64.exe")).withText(LocaleService.getStringBinding("tab.settings.ar.link")).build();
-        final HBox arSetting = createARSetting();
-        final HBox arLocaleSetting = createARLocaleSetting();
-        final HBox arBartenderSetting = createARBartenderSetting();
-        final HBox arColorPowerplaySetting = createARColorSetting(PreferenceConstants.AR_POWERPLAY_COLOR, "tab.settings.ar.color.powerplay", Color.PURPLE);
-        final HBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
-        final HBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
-        final HBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
-        final HBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.WHITE);
+        final DestroyableHyperlink vccLink = HyperlinkBuilder.builder()
+                .withStyleClass(SETTINGS_LINK_CLASS)
+                .withOnAction(_ -> FXApplication.getInstance().getHostServices().showDocument("https://aka.ms/vs/17/release/vc_redist.x64.exe"))
+                .withText("tab.settings.ar.link")
+                .build();
+        final DestroyableHBox arSetting = createARSetting();
+        final DestroyableHBox arLocaleSetting = createARLocaleSetting();
+        final DestroyableHBox arBartenderSetting = createARBartenderSetting();
+        final DestroyableHBox arColorPowerplaySetting = createARColorSetting(PreferenceConstants.AR_POWERPLAY_COLOR, "tab.settings.ar.color.powerplay", Color.PURPLE);
+        final DestroyableHBox arColorIrrelevantSetting = createARColorSetting(PreferenceConstants.AR_IRRELEVANT_COLOR, "tab.settings.ar.color.irrelevant", Color.RED);
+        final DestroyableHBox arColorWishlistSetting = createARColorSetting(PreferenceConstants.AR_WISHLIST_COLOR, "tab.settings.ar.color.wishlist", Color.LIME);
+        final DestroyableHBox arColorBlueprintSetting = createARColorSetting(PreferenceConstants.AR_BLUEPRINT_COLOR, "tab.settings.ar.color.blueprint", Color.BLUE);
+        final DestroyableHBox arColorBartenderSetting = createARColorSetting(PreferenceConstants.AR_BARTENDER_COLOR, "tab.settings.ar.color.bartender", Color.WHITE);
 
         this.getStyleClass().addAll("settingsblock", SETTINGS_SPACING_10_CLASS);
-        this.getChildren().addAll(arLabel, BoxBuilder.builder().withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
+        this.getNodes().addAll(arLabel, BoxBuilder.builder()
+                .withNodes(arExplainLabel, vccLink).buildHBox(), arSetting, arLocaleSetting, arColorBlueprintSetting, arColorWishlistSetting, arColorIrrelevantSetting, arColorPowerplaySetting, arBartenderSetting, arColorBartenderSetting);
     }
 
     @Override
     public void initEventHandling() {
-        register(EventService.addListener(true, this, ARDisableEvent.class, event -> this.arOverlayButton.setSelected(false)));
+        register(EventService.addListener(true, this, ARDisableEvent.class, _ -> this.arOverlayButton.setSelected(false)));
     }
 
-    private HBox createARSetting() {
-        this.arOverlayLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.toggle")).build();
+    private DestroyableHBox createARSetting() {
+        this.arOverlayLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.toggle")
+                .build();
         this.arOverlayButton = ToggleSwitchBuilder.builder()
-                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+                .withSelectedChangeListener((_, _, newValue) -> {
                     if (OsCheck.isWindows()) {
                         PreferencesService.setPreference(PreferenceConstants.ENABLE_AR, Boolean.TRUE.equals(newValue));
                         Platform.runLater(ARService::toggle);
@@ -86,11 +95,18 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableTemp
                 .withNodes(this.arOverlayLabel, this.arOverlayButton)
                 .buildHBox();
     }
-    private HBox createARBartenderSetting() {
-        DestroyableLabel arBartenderLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.bartender.toggle")).build();
-        DestroyableLabel arBartenderLabelExplain = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.bartender.toggle.explain")).build();
+
+    private DestroyableHBox createARBartenderSetting() {
+        DestroyableLabel arBartenderLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.bartender.toggle")
+                .build();
+        DestroyableLabel arBartenderLabelExplain = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.bartender.toggle.explain")
+                .build();
         DestroyableToggleSwitch arBartenderButton = ToggleSwitchBuilder.builder()
-                .withSelectedChangeListener((observable, oldValue, newValue) -> {
+                .withSelectedChangeListener((_, _, newValue) -> {
                     PreferencesService.setPreference(PreferenceConstants.ENABLE_BARTENDER_AR, Boolean.TRUE.equals(newValue));
                     Platform.runLater(ARService::bartenderToggle);
                 })
@@ -102,29 +118,38 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableTemp
                 .buildHBox();
     }
 
-    private HBox createARCharacterWhitelistSetting() {
-        DestroyableLabel arCharacterWhitelistLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.character.whitelist")).build();
-        this.arCharacterWhitelistTextField = TextFieldBuilder.builder().withStyleClass("setting-textfield-wide").build();
+    private DestroyableHBox createARCharacterWhitelistSetting() {
+        DestroyableLabel arCharacterWhitelistLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.character.whitelist")
+                .build();
+        this.arCharacterWhitelistTextField = TextFieldBuilder.builder()
+                .withStyleClass("setting-textfield-wide")
+                .build();
         this.arCharacterWhitelistTextField.setText(PreferencesService.getPreference(PreferenceConstants.AR_CHAR_WHITELIST, "ABCDEFGHIJKLMNOPQRSTUVWXYZ- "));
-        Button arCharacterWhitelistSaveButton = ButtonBuilder.builder().withText(LocaleService.getStringBinding("tab.settings.ar.character.whitelist.save")).withOnAction(event -> {
-            PreferencesService.setPreference(PreferenceConstants.AR_CHAR_WHITELIST, this.arCharacterWhitelistTextField.getText());
-            EventService.publish(new ARWhitelistChangeEvent(this.arCharacterWhitelistTextField.getText()));
-        }).build();
+        DestroyableButton arCharacterWhitelistSaveButton = ButtonBuilder.builder()
+                .withText("tab.settings.ar.character.whitelist.save")
+                .withOnAction(_ -> {
+                    PreferencesService.setPreference(PreferenceConstants.AR_CHAR_WHITELIST, this.arCharacterWhitelistTextField.getText());
+                    EventService.publish(new ARWhitelistChangeEvent(this.arCharacterWhitelistTextField.getText()));
+                })
+                .build();
         return BoxBuilder.builder()
                 .withStyleClass(SETTINGS_SPACING_10_CLASS)
                 .withNodes(arCharacterWhitelistLabel, this.arCharacterWhitelistTextField, arCharacterWhitelistSaveButton)
                 .buildHBox();
     }
 
-    private HBox createARLocaleSetting() {
-        DestroyableLabel arLocaleLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding("tab.settings.ar.locale")).build();
-        //download
-        //                                connection.setRequestProperty("accept", "application/json");
-        //
+    private DestroyableHBox createARLocaleSetting() {
+        DestroyableLabel arLocaleLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText("tab.settings.ar.locale")
+                .build();
+
         DestroyableComboBox<ApplicationLocale> arLocaleSelect = ComboBoxBuilder.builder(ApplicationLocale.class)
                 .withStyleClass(SETTINGS_DROPDOWN_CLASS)
                 .withItemsProperty(LocaleService.getListBinding(ApplicationLocale.values()))
-                .withValueChangeListener((obs, oldValue, newValue) -> {
+                .withValueChangeListener((_, _, newValue) -> {
                     if (newValue != null) {
                         final File tessdataPath = new File(TESS4J_DIR, "tessdata");
                         final File targetFile = new File(tessdataPath.getPath(), newValue.getIso6392B() + ".traineddata");
@@ -135,15 +160,14 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableTemp
                             tessdataPath.mkdirs();
                             try (final OutputStream output = new FileOutputStream(targetFile)) {
                                 final String downloadUrl = "https://github.com/tesseract-ocr/tessdata/raw/main/" + newValue.getIso6392B() + ".traineddata";
-                                final URL url = new URL(downloadUrl);
+                                final URL url = new URI(downloadUrl).toURL();
                                 final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                                connection.setRequestProperty("accept", "application/json");
                                 final InputStream responseStream = connection.getInputStream();
                                 output.write(responseStream.readAllBytes());
-                                NotificationService.showInformation(NotificationType.SUCCESS, "Download complete", "Download of OCR languagedata complete");
-                            } catch (final IOException e) {
+                                NotificationService.showInformation(NotificationType.SUCCESS, LocaleService.LocaleString.of("notification.ar.download.complete.title"), LocaleService.LocaleString.of("notification.ar.download.complete.text"));
+                            } catch (final IOException | URISyntaxException e) {
                                 log.error("error downloading OCR languagedata", e);
-                                NotificationService.showError(NotificationType.ERROR, "Download failed", "Failed downloading OCR languagedata");
+                                NotificationService.showError(NotificationType.ERROR, LocaleService.LocaleString.of("notification.ar.download.failed.title"), LocaleService.LocaleString.of("notification.ar.download.failed.text"));
                             }
                         }
 
@@ -162,13 +186,14 @@ public class AugmentedReality extends DestroyableVBox implements DestroyableTemp
 
     }
 
-    private HBox createARColorSetting(final String preferenceName, final String localizationKey, final Color defaultColor) {
-        this.arOverlayLabel = LabelBuilder.builder().withStyleClass(SETTINGS_LABEL_CLASS).withText(LocaleService.getStringBinding(localizationKey)).build();
-        final ColorPicker colorPicker = new ColorPicker();
+    private DestroyableHBox createARColorSetting(final String preferenceName, final String localizationKey, final Color defaultColor) {
+        this.arOverlayLabel = LabelBuilder.builder()
+                .withStyleClass(SETTINGS_LABEL_CLASS)
+                .withText(LocaleService.getStringBinding(localizationKey))
+                .build();
+        final DestroyableColorPicker colorPicker = new DestroyableColorPicker();
         colorPicker.setValue(Color.valueOf(PreferencesService.getPreference(preferenceName, defaultColor.toString())));
-        colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            PreferencesService.setPreference(preferenceName, newValue.toString());
-        });
+        colorPicker.addChangeListener(colorPicker.valueProperty(), (_, _, newValue) -> PreferencesService.setPreference(preferenceName, newValue.toString()));
         return BoxBuilder.builder()
                 .withStyleClasses(SETTINGS_JOURNAL_LINE_STYLE_CLASS, SETTINGS_SPACING_10_CLASS)
                 .withNodes(this.arOverlayLabel, colorPicker)

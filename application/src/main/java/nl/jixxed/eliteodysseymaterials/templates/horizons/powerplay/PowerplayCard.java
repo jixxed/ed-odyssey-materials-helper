@@ -1,24 +1,14 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
 
 import javafx.geometry.Orientation;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import lombok.Getter;
-import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
-import nl.jixxed.eliteodysseymaterials.builder.ResizableImageViewBuilder;
+import nl.jixxed.eliteodysseymaterials.builder.*;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.ModuleSize;
 import nl.jixxed.eliteodysseymaterials.enums.HorizonsBlueprintName;
 import nl.jixxed.eliteodysseymaterials.enums.NotificationType;
 import nl.jixxed.eliteodysseymaterials.enums.Power;
+import nl.jixxed.eliteodysseymaterials.helper.ClipboardHelper;
 import nl.jixxed.eliteodysseymaterials.helper.Formatters;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
@@ -28,7 +18,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.LocationChangedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,44 +27,86 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class PowerplayCard extends VBox {
+public class PowerplayCard extends DestroyableVBox implements DestroyableEventTemplate {
     @Getter
     private final Power power;
 
 
     protected DestroyableResizableImageView image;
 
-    protected Label name;
-    protected Label rankLabel;
-    protected Label meritsLabel;
-    private Label engineerLocation;
-    private Label engineerDistance;
-    private DestroyableResizableImageView copyIcon;
-    protected FlowPane location;
+    protected DestroyableLabel name;
+    protected DestroyableLabel rankLabel;
+    protected DestroyableLabel meritsLabel;
+    private DestroyableLabel powerLocation;
+    private DestroyableLabel powerDistance;
+    protected DestroyableFlowPane location;
 
-    private Label unlockablesTitle;
+    private DestroyableLabel unlockablesTitle;
     private List<PowerplayUnlockableModule> unlockablesLabels;
-    private Separator unlockablesSeparator;
+    private DestroyableSeparator unlockablesSeparator;
     private Long merits;
     private Long rank;
-    private HBox rankAndMeritsBox;
+    private DestroyableHBox rankAndMeritsBox;
 
     public PowerplayCard(Power power) {
         this.power = power;
         initComponents();
-        initEventHandling(power);
+        initEventHandling();
     }
 
-    private void initEventHandling(final Power engineer) {
+    @Override
+    public void initComponents() {
+        this.image = getEngineerImageView();
+        this.name = getEngineerName();
+        rankLabel = LabelBuilder.builder()
+                .withStyleClass("power-current-rank")
+                .withText("tab.powerplay.rank", ApplicationState.getInstance().getPowerRank())
+                .build();
+        meritsLabel = LabelBuilder.builder()
+                .withStyleClass("power-current-merits")
+                .withText("tab.powerplay.merits", ApplicationState.getInstance().getPowerMerits(), Power.getMeritsRequiredForRank(ApplicationState.getInstance().getPowerRank() + 1))
+                .build();
+        rankAndMeritsBox = BoxBuilder.builder()
+                .withNodes(rankLabel, new GrowingRegion(), meritsLabel)
+                .buildHBox();
+        this.getNodes().addAll(
+                this.image,
+                this.name
+        );
+        if (!Power.ALL.equals(this.power)) {
+            this.location = getPowerLocation();
+            this.getNodes().add(this.location);
+        }
+        final List<PowerplayPerk> powerplayPerks = this.power.getPerks().entrySet().stream()
+                .map(entry -> new PowerplayPerk(this.power, entry.getKey(), entry.getValue()))
+                .sorted(Comparator.comparing(powerplayPerk -> LocaleService.getLocalizedStringForCurrentLocale(powerplayPerk.getPerk().getLocalizationTitleKey())))
+                .toList();
+        this.getNodes().addAll(powerplayPerks);
+        if (!Power.ALL.equals(this.power)) {
+            this.unlockablesTitle = getUnlockablesTitle();
+            this.unlockablesLabels = getUnlockables();
+            this.unlockablesSeparator = new DestroyableSeparator(Orientation.HORIZONTAL);
+            this.getNodes().addAll(
+                    this.unlockablesSeparator,
+                    new GrowingRegion(),
+                    this.unlockablesTitle
+            );
+            this.getNodes().addAll(this.unlockablesLabels);
+        }
+        this.getStyleClass().add("power-card");
+        this.update(ApplicationState.getInstance().getPower(), ApplicationState.getInstance().getPowerMerits(), ApplicationState.getInstance().getPowerRank());
+    }
+
+    @Override
+    public void initEventHandling() {
         register(EventService.addListener(true, this, LocationChangedEvent.class, locationChangedEvent -> {
             if (!Power.ALL.equals(this.power)) {
-                this.engineerDistance.setText("(" + Formatters.NUMBER_FORMAT_2.format(
-                        engineer.getDistance(
-                                locationChangedEvent.getCurrentStarSystem().getX(),
-                                locationChangedEvent.getCurrentStarSystem().getY(),
-                                locationChangedEvent.getCurrentStarSystem().getZ()
-                        )
-                ) + "Ly)");
+                final Double powerDistanceValue = this.power.getDistance(
+                        locationChangedEvent.getCurrentStarSystem().getX(),
+                        locationChangedEvent.getCurrentStarSystem().getY(),
+                        locationChangedEvent.getCurrentStarSystem().getZ()
+                );
+                this.powerDistance.addBinding(this.powerDistance.textProperty(), LocaleService.getStringBinding("tab.powerplay.distance", Formatters.NUMBER_FORMAT_2.format(powerDistanceValue)));
             }
         }));
         register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
@@ -85,52 +117,12 @@ public class PowerplayCard extends VBox {
         this.merits = merits;
         this.rank = rank;
 
-        this.getChildren().remove(rankAndMeritsBox);
+        this.getNodes().remove(rankAndMeritsBox);
         if (this.power.equals(power)) {
-            rankLabel.textProperty().bind(LocaleService.getStringBinding("tab.powerplay.rank", this.rank));
-            meritsLabel.textProperty().bind(LocaleService.getStringBinding("tab.powerplay.merits", this.merits, Power.getMeritsRequiredForRank(this.rank + 1)));
-            this.getChildren().add(3, rankAndMeritsBox);
+            rankLabel.addBinding(rankLabel.textProperty(), LocaleService.getStringBinding("tab.powerplay.rank", this.rank));
+            meritsLabel.addBinding(meritsLabel.textProperty(), LocaleService.getStringBinding("tab.powerplay.merits", this.merits, Power.getMeritsRequiredForRank(this.rank + 1)));
+            this.getNodes().add(3, rankAndMeritsBox);
         }
-    }
-
-    private void initComponents() {
-        this.image = getEngineerImageView();
-        this.name = getEngineerName();
-        rankLabel = LabelBuilder.builder()
-                .withStyleClass("power-current-rank")
-                .withText(LocaleService.getStringBinding("tab.powerplay.rank", ApplicationState.getInstance().getPowerRank()))
-                .build();
-        meritsLabel = LabelBuilder.builder()
-                .withStyleClass("power-current-merits")
-                .withText(LocaleService.getStringBinding("tab.powerplay.merits", ApplicationState.getInstance().getPowerMerits(), Power.getMeritsRequiredForRank(ApplicationState.getInstance().getPowerRank() + 1)))
-                .build();
-        rankAndMeritsBox = BoxBuilder.builder().withNodes(rankLabel, new GrowingRegion(), meritsLabel).buildHBox();
-        this.getChildren().addAll(
-                this.image,
-                this.name
-        );
-        if (!Power.ALL.equals(this.power)) {
-            this.location = getEngineerLocation();
-            this.getChildren().add(this.location);
-        }
-        final List<PowerplayPerk> powerplayPerks = this.power.getPerks().entrySet().stream()
-                .map(entry -> new PowerplayPerk(this.power, entry.getKey(), entry.getValue()))
-                .sorted(Comparator.comparing(powerplayPerk -> LocaleService.getLocalizedStringForCurrentLocale(powerplayPerk.getPerk().getLocalizationTitleKey())))
-                .toList();
-        this.getChildren().addAll(powerplayPerks);
-        if (!Power.ALL.equals(this.power)) {
-            this.unlockablesTitle = getUnlockablesTitle();
-            this.unlockablesLabels = getUnlockables();
-            this.unlockablesSeparator = new Separator(Orientation.HORIZONTAL);
-            this.getChildren().addAll(
-                    this.unlockablesSeparator,
-                    new GrowingRegion(),
-                    this.unlockablesTitle
-            );
-            this.getChildren().addAll(this.unlockablesLabels);
-        }
-        this.getStyleClass().add("power-card");
-        this.update(ApplicationState.getInstance().getPower(), ApplicationState.getInstance().getPowerMerits(), ApplicationState.getInstance().getPowerRank());
     }
 
 
@@ -144,16 +136,16 @@ public class PowerplayCard extends VBox {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private Label getUnlockablesTitle() {
+    private DestroyableLabel getUnlockablesTitle() {
         return LabelBuilder.builder()
                 .withStyleClass("power-category")
-                .withText(LocaleService.getStringBinding("tab.powerplay.unlockables"))
+                .withText("tab.powerplay.unlockables")
                 .build();
     }
 
 
-    private FlowPane getEngineerLocation() {
-        this.engineerLocation = LabelBuilder.builder()
+    private DestroyableFlowPane getPowerLocation() {
+        this.powerLocation = LabelBuilder.builder()
                 .withStyleClass("power-location")
                 .withNonLocalizedText(this.power.getStarSystem().getName())
                 .build();
@@ -164,38 +156,40 @@ public class PowerplayCard extends VBox {
                         LocationService.getCurrentStarSystem().getZ()
                 )
         ) + "Ly)";
-        this.engineerDistance = LabelBuilder.builder()
+        this.powerDistance = LabelBuilder.builder()
                 .withStyleClass("power-distance")
-                .withNonLocalizedText(distance)
+                .withText("tab.powerplay.distance", distance)
                 .build();
 
-        this.copyIcon = ResizableImageViewBuilder.builder()
+        final DestroyableResizableImageView copyIcon = ResizableImageViewBuilder.builder()
                 .withStyleClass("power-copy-icon")
                 .withImage("/images/other/copy.png")
                 .build();
 
-        return FlowPaneBuilder.builder().withStyleClass("power-location-line")
+        final DestroyableStackPane copyIconStackPane = StackPaneBuilder.builder()
+                .withNodes(copyIcon)
+                .build();
+
+        return FlowPaneBuilder.builder()
+                .withStyleClass("power-location-line")
                 .withOnMouseClicked(event -> {
                     copyLocationToClipboard();
-                    NotificationService.showInformation(NotificationType.COPY, "Clipboard", "System name copied.");
+                    NotificationService.showInformation(NotificationType.COPY, LocaleService.LocaleString.of("notification.clipboard.title"), LocaleService.LocaleString.of("notification.clipboard.system.copied.text"));
                 })
-                .withNodes(this.engineerLocation, new StackPane(this.copyIcon), this.engineerDistance)
+                .withNodes(this.powerLocation, copyIconStackPane, this.powerDistance)
                 .build();
 
     }
 
     private void copyLocationToClipboard() {
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        final ClipboardContent content = new ClipboardContent();
-        content.putString(this.power.getStarSystem().getName());
-        clipboard.setContent(content);
+        ClipboardHelper.copyToClipboard(this.power.getStarSystem().getName());
     }
 
 
-    private Label getEngineerName() {
+    private DestroyableLabel getEngineerName() {
         return LabelBuilder.builder()
                 .withStyleClass("power-name")
-                .withText(LocaleService.getStringBinding(this.power.getLocalizationKey()))
+                .withText(this.power.getLocalizationKey())
                 .build();
     }
 

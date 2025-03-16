@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.powerplay;
 
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
@@ -11,15 +9,17 @@ import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerSearchEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class PowerplayTab extends HorizonsTab {
-    private ScrollPane scrollPane;
-    private FlowPane flowPane;
+public class PowerplayTab extends HorizonsTab implements DestroyableEventTemplate {
+    private DestroyableFlowPane flowPane;
     private PowerplayCard[] powerplayCards;
 
     private String currentSearch = "";
@@ -29,8 +29,9 @@ public class PowerplayTab extends HorizonsTab {
         initEventHandling();
     }
 
-    private void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.powerplay"));
+    @Override
+    public void initComponents() {
+        this.addBinding(this.textProperty(),LocaleService.getStringBinding("tabs.powerplay"));
         this.powerplayCards = Arrays.stream(Power.values())
                 .filter(power -> power != Power.NONE)
                 .map(PowerplayCard::new)
@@ -42,25 +43,24 @@ public class PowerplayTab extends HorizonsTab {
                 .withStyleClass("power-grid")
                 .withNodes(this.powerplayCards)
                 .build();
-        this.scrollPane = ScrollPaneBuilder.builder()
+        DestroyableScrollPane scrollPane = register(ScrollPaneBuilder.builder()
                 .withContent(this.flowPane)
-                .build();
-        this.setContent(this.scrollPane);
+                .build());
+        this.setContent(scrollPane);
     }
 
-    private void initEventHandling() {
+    @Override
+    public void initEventHandling() {
         register(EventService.addListener(true, this, PowerSearchEvent.class, powerSearchEvent -> {
             currentSearch = powerSearchEvent.getSearch();
             update(powerSearchEvent.getSearch());
         }));
 
-        register(EventService.addListener(true, this, PowerplayEvent.class, event -> {
-            update(currentSearch);
-        }));
+        register(EventService.addListener(true, this, PowerplayEvent.class, _ -> update(currentSearch)));
     }
-
+    //TODO test with visible/managed state instead of recreate
     private void update(final String search) {
-        this.flowPane.getChildren().clear();
+        this.flowPane.getNodes().clear();
 
         final List<PowerplayCard> cards = Arrays.stream(this.powerplayCards)
                 .filter(powerplayCard -> search.isBlank()
@@ -74,7 +74,7 @@ public class PowerplayTab extends HorizonsTab {
                         .thenComparing(powerplayCard -> !powerplayCard.getPower().equals(ApplicationState.getInstance().getPower()))
                         .thenComparing(powerplayCard -> LocaleService.getLocalizedStringForCurrentLocale(powerplayCard.getPower().getLocalizationKey())))
                 .toList();
-        this.flowPane.getChildren().addAll(cards);
+        this.flowPane.getNodes().addAll(cards);
     }
 
     @Override

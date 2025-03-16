@@ -57,3 +57,5 @@ tab.colonisation.delete.confirm.content,Do you wish to continue?,,,¿Desea conti
 tab.colonisation.delete.confirm.header,You are about to delete your colonisation project,,,Estás a punto de borrar tu proyecto de colonización,,,Вы собираетесь удалить проект колонизации
 tab.colonisation.delete.confirm.title,Confirm deletion,,,Confirmar borrado,,,Подтвердить удаление
 tab.colonisation.delete,Delete colonisation project,,,Borrar proyecto de colonización,,,Удалить проект колонизации
+tab.wishlist.distance,{0}Ly,,,,,,
+tab.wishlist.distance.plus,+{0}Ly,,,,,,

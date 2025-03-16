@@ -4,6 +4,6 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 
 @Getter
-public class DestroyableVBox extends VBox implements DestroyableComponent {
+public class DestroyableVBox extends VBox implements DestroyableParent {
 
 }

@@ -1,19 +1,19 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.shipbuilder.stats;
 
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
 import nl.jixxed.eliteodysseymaterials.domain.ApplicationState;
 import nl.jixxed.eliteodysseymaterials.domain.ships.Ship;
-import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsShipSelectedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.ShipBuilderEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableVBox;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-public abstract class Stats extends VBox {
+public abstract class Stats extends DestroyableVBox implements DestroyableEventTemplate {
 
 
     protected Stats() {
@@ -22,31 +22,44 @@ public abstract class Stats extends VBox {
     }
 
     protected static DestroyableLabel createTitle(final String localeKey) {
-        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-title").withText(LocaleService.getStringBinding(localeKey)).build();
+        return LabelBuilder.builder()
+                .withStyleClass("shipbuilder-stats-title")
+                .withText(localeKey)
+                .build();
     }
 
     protected static DestroyableLabel createLabel(final String localeKey, final String... values) {
-        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-label").withText(LocaleService.getStringBinding(localeKey, Arrays.stream(values).toArray())).build();
+        return LabelBuilder.builder()
+                .withStyleClass("shipbuilder-stats-label")
+                .withText(localeKey, Arrays.stream(values).toArray())
+                .build();
     }
 
     protected DestroyableLabel createValueLabel(final String key, final String... values) {
-        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-value").withText(LocaleService.getStringBinding(key, Arrays.stream(values).toArray())).build();
+        return LabelBuilder.builder()
+                .withStyleClass("shipbuilder-stats-value")
+                .withText(key, Arrays.stream(values).toArray())
+                .build();
     }
+
     protected static DestroyableLabel createSmallLabel(final String localeKey, final String... values) {
-        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-label-small").withText(LocaleService.getStringBinding(localeKey, Arrays.stream(values).toArray())).build();
+        return LabelBuilder.builder()
+                .withStyleClass("shipbuilder-stats-label-small")
+                .withText(localeKey, Arrays.stream(values).toArray())
+                .build();
     }
+
     protected DestroyableLabel createValueSmallLabel(final String key, final String... values) {
-        return LabelBuilder.builder().withStyleClass("shipbuilder-stats-value-small").withText(LocaleService.getStringBinding(key, Arrays.stream(values).toArray())).build();
+        return LabelBuilder.builder()
+                .withStyleClass("shipbuilder-stats-value-small")
+                .withText(key, Arrays.stream(values).toArray())
+                .build();
     }
 
     public void initEventHandlingStats() {
-        register(EventService.addListener(true, this, ShipBuilderEvent.class, event -> update()));
-        register(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, horizonsShipSelectedEvent -> {
-            update();
-        }));
-    }
-
-    public void initEventHandling() {
+        register(EventService.addListener(true, this, ShipBuilderEvent.class, _ -> update()));
+        register(EventService.addListener(true, this, HorizonsShipSelectedEvent.class, _ ->
+                update()));
     }
 
     public Optional<Ship> getShip() {

@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.engineers;
 
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
 import nl.jixxed.eliteodysseymaterials.builder.FlowPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.ScrollPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.constants.HorizonsBlueprintConstants;
@@ -10,15 +8,17 @@ import nl.jixxed.eliteodysseymaterials.enums.HorizonsTabs;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.HorizonsEngineerSearchEvent;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableEventTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableFlowPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableScrollPane;
 import nl.jixxed.eliteodysseymaterials.templates.horizons.HorizonsTab;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class HorizonsEngineersTab extends HorizonsTab {
+public class HorizonsEngineersTab extends HorizonsTab implements DestroyableEventTemplate {
 
-    private ScrollPane scrollPane;
-    private FlowPane flowPane;
+    private DestroyableFlowPane flowPane;
     private HorizonsEngineerCard[] horizonsEngineerCards;
 
 
@@ -27,8 +27,8 @@ public class HorizonsEngineersTab extends HorizonsTab {
         initEventHandling();
     }
 
-    private void initComponents() {
-        this.textProperty().bind(LocaleService.getStringBinding("tabs.engineers"));
+    public void initComponents() {
+        this.addBinding(this.textProperty(),LocaleService.getStringBinding("tabs.engineers"));
         this.horizonsEngineerCards = Arrays.stream(Engineer.values())
                 .filter(Engineer::isHorizons)
                 .filter(engineer -> !Engineer.UNKNOWN.equals(engineer))
@@ -38,20 +38,20 @@ public class HorizonsEngineersTab extends HorizonsTab {
                 .withStyleClass("engineer-grid")
                 .withNodes(this.horizonsEngineerCards)
                 .build();
-        this.scrollPane = ScrollPaneBuilder.builder()
+        DestroyableScrollPane scrollPane = register(ScrollPaneBuilder.builder()
                 .withContent(this.flowPane)
-                .build();
-        this.setContent(this.scrollPane);
+                .build());
+        this.setContent(scrollPane);
     }
 
-    private void initEventHandling() {
+    public void initEventHandling() {
         register(EventService.addListener(true, this, HorizonsEngineerSearchEvent.class, horizonsEngineerSearchEvent -> {
             update(horizonsEngineerSearchEvent.getSearch());
         }));
     }
 
     private void update(final String search) {
-        this.flowPane.getChildren().clear();
+        this.flowPane.getNodes().clear();
 
         final List<HorizonsEngineerCard> engineerCards = Arrays.stream(this.horizonsEngineerCards)
                 .filter(horizonsEngineerCard -> search.isBlank()
@@ -61,7 +61,7 @@ public class HorizonsEngineersTab extends HorizonsTab {
                         || hasBlueprintLike(horizonsEngineerCard.getEngineer(), search)
                 )
                 .toList();
-        this.flowPane.getChildren().addAll(engineerCards);
+        this.flowPane.getNodes().addAll(engineerCards);
     }
 
     private boolean hasBlueprintLike(final Engineer engineer, final String search) {

@@ -4,6 +4,6 @@ import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 
 @Getter
-public class DestroyableAnchorPane extends AnchorPane implements DestroyableComponent {
+public class DestroyableAnchorPane extends AnchorPane implements DestroyableParent {
 
 }

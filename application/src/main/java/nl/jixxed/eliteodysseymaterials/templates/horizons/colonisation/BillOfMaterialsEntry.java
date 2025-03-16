@@ -1,7 +1,5 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.colonisation;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import nl.jixxed.eliteodysseymaterials.builder.BoxBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.IntFieldBuilder;
 import nl.jixxed.eliteodysseymaterials.builder.LabelBuilder;
@@ -12,19 +10,20 @@ import nl.jixxed.eliteodysseymaterials.domain.ColonisationItems;
 import nl.jixxed.eliteodysseymaterials.domain.MarketItem;
 import nl.jixxed.eliteodysseymaterials.enums.Commodity;
 import nl.jixxed.eliteodysseymaterials.enums.StoragePool;
-import nl.jixxed.eliteodysseymaterials.service.*;
+import nl.jixxed.eliteodysseymaterials.service.ColonisationService;
+import nl.jixxed.eliteodysseymaterials.service.MarketService;
+import nl.jixxed.eliteodysseymaterials.service.MaterialService;
+import nl.jixxed.eliteodysseymaterials.service.StorageService;
 import nl.jixxed.eliteodysseymaterials.service.event.EventService;
 import nl.jixxed.eliteodysseymaterials.service.event.MarketUpdatedEvent;
 import nl.jixxed.eliteodysseymaterials.service.event.StorageEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.components.IntField;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 
 import java.math.BigInteger;
 
-public class BillOfMaterialsEntry extends VBox implements DestroyableTemplate {
+public class BillOfMaterialsEntry extends DestroyableVBox implements DestroyableEventTemplate {
     private Commodity commodity;
     private Integer requiredAmount;
     private DestroyableLabel commodityLabel;
@@ -41,7 +40,7 @@ public class BillOfMaterialsEntry extends VBox implements DestroyableTemplate {
     private DestroyableResizableImageView commodityImage;
     private DestroyableResizableImageView bracket1Image;
     private DestroyableResizableImageView bracket3Image;
-    ColonisationItem colonisationItem ;
+    ColonisationItem colonisationItem;
 
 
     public BillOfMaterialsEntry(ColonisationItem colonisationItem, Commodity commodity, Integer requiredAmount) {
@@ -55,9 +54,20 @@ public class BillOfMaterialsEntry extends VBox implements DestroyableTemplate {
     @Override
     public void initComponents() {
         this.getStyleClass().add("horizons-colonisation-entry");
-        commodityLabel = LabelBuilder.builder().withStyleClass("horizons-colonisation-entry-commodity").withText(LocaleService.getStringBinding(commodity.getLocalizationKey())).build();
-        amountLabel = LabelBuilder.builder().withStyleClass("horizons-colonisation-entry-amount-left").withNonLocalizedText(requiredAmount.toString()).build();
-        amountField = IntFieldBuilder.builder().withStyleClass("horizons-colonisation-entry-amount-sum").withMinValue(0).withMaxValue(999999).withInitialValue(requiredAmount).build();
+        commodityLabel = LabelBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-commodity")
+                .withText(commodity.getLocalizationKey())
+                .build();
+        amountLabel = LabelBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-amount-left")
+                .withNonLocalizedText(requiredAmount.toString())
+                .build();
+        amountField = IntFieldBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-amount-sum")
+                .withMinValue(0)
+                .withMaxValue(999999)
+                .withInitialValue(requiredAmount)
+                .build();
         amountField.valueProperty().addListener((observable, oldValue, newValue) -> {
             ApplicationState.getInstance().getPreferredCommander().ifPresent(commander -> {
                 final ColonisationItems colonisationItems = ColonisationService.getColonisationItems(commander);
@@ -66,23 +76,63 @@ public class BillOfMaterialsEntry extends VBox implements DestroyableTemplate {
             });
             colonisationItem.updateAmount(commodity, newValue.intValue());
         });
-        fleetCarrierLabel = LabelBuilder.builder().withStyleClass("horizons-colonisation-entry-amount-right").withNonLocalizedText("0").build();
-        shipLabel = LabelBuilder.builder().withStyleClass("horizons-colonisation-entry-amount-left").withNonLocalizedText("0").build();
-        marketLabel = LabelBuilder.builder().withStyleClass("horizons-colonisation-entry-amount-right" ).withNonLocalizedText("0").build();
-        this.commodityImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage(commodity.getCommodityType().getImagePath()).build();
-        this.fleetCarrierImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage("/images/material/fleetcarrier.png").build();
-        this.shipImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage("/images/material/ship.png").build();
-        this.sumImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage("/images/material/sum.png").build();
-        this.coriolisImage = ResizableImageViewBuilder.builder().withStyleClass("horizons-materialcard-image").withImage("/images/material/coriolis.png").build();
-        this.bracket1Image = ResizableImageViewBuilder.builder().withStyleClasses("horizons-materialcard-image").withImage("/images/material/stock/bracket1.png").build();
-        this.bracket3Image = ResizableImageViewBuilder.builder().withStyleClasses("horizons-materialcard-image").withImage("/images/material/stock/bracket3.png").build();
-        this.bracket1Image.managedProperty().bind(this.bracket1Image.visibleProperty());
-        this.bracket3Image.managedProperty().bind(this.bracket3Image.visibleProperty());
-        final HBox title = BoxBuilder.builder().withStyleClass("horizons-colonisation-entry-values").withNodes(commodityImage, commodityLabel).buildHBox();
-        final HBox left = BoxBuilder.builder().withStyleClass("horizons-colonisation-entry-values-sub").withNodes(sumImage, colonisationItem == ColonisationItem.ALL ? amountLabel : amountField, new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
-        final HBox right = BoxBuilder.builder().withStyleClass("horizons-colonisation-entry-values-sub").withNodes(shipImage, shipLabel, new GrowingRegion(), bracket1Image, BoxBuilder.builder().withStyleClass("horizons-colonisation-entry-values-market").withNodes(bracket3Image, marketLabel).buildHBox(), coriolisImage).buildHBox();
-        final HBox values = BoxBuilder.builder().withStyleClass("horizons-colonisation-entry-values").withNodes(left, right).buildHBox();
-        this.getChildren().addAll(title, values);
+        fleetCarrierLabel = LabelBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-amount-right")
+                .withNonLocalizedText("0")
+                .build();
+        shipLabel = LabelBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-amount-left")
+                .withNonLocalizedText("0")
+                .build();
+        marketLabel = LabelBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-amount-right")
+                .withNonLocalizedText("0")
+                .build();
+        this.commodityImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("horizons-materialcard-image")
+                .withImage(commodity.getCommodityType().getImagePath())
+                .build();
+        this.fleetCarrierImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("horizons-materialcard-image")
+                .withImage("/images/material/fleetcarrier.png")
+                .build();
+        this.shipImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("horizons-materialcard-image")
+                .withImage("/images/material/ship.png")
+                .build();
+        this.sumImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("horizons-materialcard-image")
+                .withImage("/images/material/sum.png")
+                .build();
+        this.coriolisImage = ResizableImageViewBuilder.builder()
+                .withStyleClass("horizons-materialcard-image")
+                .withImage("/images/material/coriolis.png")
+                .build();
+        this.bracket1Image = ResizableImageViewBuilder.builder()
+                .withStyleClasses("horizons-materialcard-image")
+                .withImage("/images/material/stock/bracket1.png")
+                .build();
+        this.bracket3Image = ResizableImageViewBuilder.builder()
+                .withStyleClasses("horizons-materialcard-image")
+                .withImage("/images/material/stock/bracket3.png")
+                .build();
+        addBinding(this.bracket1Image.managedProperty(), this.bracket1Image.visibleProperty());
+        addBinding(this.bracket3Image.managedProperty(), this.bracket3Image.visibleProperty());
+        final DestroyableHBox title = BoxBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-values")
+                .withNodes(commodityImage, commodityLabel).buildHBox();
+        final DestroyableHBox left = BoxBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-values-sub")
+                .withNodes(sumImage, colonisationItem == ColonisationItem.ALL ? amountLabel : amountField, new GrowingRegion(), fleetCarrierLabel, fleetCarrierImage).buildHBox();
+        final DestroyableHBox right = BoxBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-values-sub")
+                .withNodes(shipImage, shipLabel, new GrowingRegion(), bracket1Image, BoxBuilder.builder()
+                        .withStyleClass("horizons-colonisation-entry-values-market")
+                        .withNodes(bracket3Image, marketLabel).buildHBox(), coriolisImage).buildHBox();
+        final DestroyableHBox values = BoxBuilder.builder()
+                .withStyleClass("horizons-colonisation-entry-values")
+                .withNodes(left, right).buildHBox();
+        this.getNodes().addAll(title, values);
         MaterialService.addMaterialInfoPopOver(this, this.commodity, false);
         update();
     }
@@ -118,9 +168,5 @@ public class BillOfMaterialsEntry extends VBox implements DestroyableTemplate {
             this.bracket1Image.setVisible(false);
             this.bracket3Image.setVisible(false);
         });
-    }
-
-    public void onDestroy() {
-        this.eventListeners.forEach(EventService::removeListener);
     }
 }

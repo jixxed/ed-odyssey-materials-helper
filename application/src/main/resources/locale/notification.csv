@@ -27,3 +27,15 @@ notification.capi.title,"Frontier API",,,,,,
 notification.capi.message.auth.fail,"Failed to authenticate. Try to re-authenticate to the API under Settings.",,,"Error al autenticar. Intente re-autenticar la API en Ajustes",,,"Не удалось аутентифицироваться. Попробуйте повторно аутентифицироваться в API в разделе Настройки."
 notification.capi.message.auth.success,"Account linked! You may close the browser window.",,,"Cuenta enlazada! Puedes cerrar la ventana del navegador.",,,"Аккаунт привязан! Вы можете закрыть окно браузера."
 notification.capi.message.400,"The API reports you do not own Elite: Dangerous. This is common for the Epic gamestore.",,,"La API reporta que no posees Elite: Dangerous. Este es común para la tienda de Epic Games.",,,"API сообщает, что у вас нет Elite: Dangerous. Это обычное дело для игрового магазина Epic."
+notification.clipboard.title,"Clipboard",,,,,,
+notification.clipboard.system.copied.text,"System name copied has been copied to your clipboard",,,,,,
+notification.clipboard.loadout.copied.text,"The loadout has been copied to your clipboard",,,,,,
+notification.clipboard.ship.copied.text,"The ship has been copied to your clipboard",,,,,,
+notification.clipboard.wishlist.copied.text,"The wishlist has been copied to your clipboard",,,,,,
+notification.clipboard.url.length.text,"Due to the length, the URL might not work in browsers and must be directly imported inside the app.",,,,,,
+notification.test.title,"Test",,,,,,
+notification.test.text,"This is a test notification",,,,,,
+notification.ar.download.complete.title,"Download complete",,,,,,
+notification.ar.download.complete.text,"Download of OCR languagedata complete",,,,,,
+notification.ar.download.failed.title,"Download failed",,,,,,
+notification.ar.download.failed.text,"Failed downloading OCR languagedata",,,,,,

@@ -1,13 +1,9 @@
 package nl.jixxed.eliteodysseymaterials.templates.horizons.wishlist;
 
 import javafx.animation.FadeTransition;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import lombok.Getter;
 import nl.jixxed.eliteodysseymaterials.builder.*;
@@ -17,11 +13,9 @@ import nl.jixxed.eliteodysseymaterials.enums.*;
 import nl.jixxed.eliteodysseymaterials.helper.AnchorPaneHelper;
 import nl.jixxed.eliteodysseymaterials.service.ImageService;
 import nl.jixxed.eliteodysseymaterials.service.LocaleService;
-import nl.jixxed.eliteodysseymaterials.service.event.EventListener;
 import nl.jixxed.eliteodysseymaterials.service.event.*;
 import nl.jixxed.eliteodysseymaterials.templates.components.CompletionSlider;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableLabel;
-import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.*;
 import nl.jixxed.eliteodysseymaterials.templates.generic.Ingredient;
 import nl.jixxed.eliteodysseymaterials.templates.generic.WishlistBlueprintTemplate;
 import org.controlsfx.control.PopOver;
@@ -29,9 +23,10 @@ import org.controlsfx.control.PopOver;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 
-public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements WishlistBlueprintTemplate<HorizonsBlueprintName> {
+public class HorizonsWishlistModuleBlueprintTemplate extends DestroyableHBox implements WishlistBlueprintTemplate<HorizonsBlueprintName>, DestroyableEventTemplate {
     private static final ApplicationState APPLICATION_STATE = ApplicationState.getInstance();
     private static final String VISIBLE_STYLE_CLASS = "visible";
     private static final String WISHLIST_VISIBLE_ICON_STYLE_CLASS = "wishlist-visible-icon";
@@ -45,15 +40,14 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     @Getter
     private final String wishlistUUID;
 
-    private Button visibilityButton;
+    private DestroyableButton visibilityButton;
     private DestroyableResizableImageView visibilityImage;
-    private Label wishlistRecipeName;
-    private Button removeBlueprint;
-    private Button toggleControls;
+    private DestroyableLabel wishlistRecipeName;
+    private DestroyableButton removeBlueprint;
+    private DestroyableButton toggleControls;
     private final Set<HorizonsWishlistIngredient> wishlistIngredients = new HashSet<>();
     private final Set<HorizonsWishlistIngredient> otherIngredients = new HashSet<>();
-    private EventListener<StorageEvent> storageEventEventListener;
-    private Tooltip tooltip;
+    private DestroyableTooltip tooltip;
 
     private Engineer engineer;
     private List<CompletionSlider> sliders = new ArrayList<>();
@@ -68,8 +62,9 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
         initEventHandling();
     }
 
-    private void initComponents() {
-        final HBox header = BoxBuilder.builder().buildHBox();
+    public void initComponents() {
+        final DestroyableHBox header = BoxBuilder.builder()
+                .buildHBox();
         if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
             this.visibilityImage = ResizableImageViewBuilder.builder()
                     .withStyleClass("wishlist-visible-image")
@@ -81,70 +76,73 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                     .withGraphic(this.visibilityImage)
                     .build();
             setVisibility(this.wishlistBlueprint.isVisible());
-            header.getChildren().addAll(this.visibilityButton);
+            header.getNodes().addAll(this.visibilityButton);
         } else {
             setVisibility(true);
         }
         final String gradeList = this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","));
         this.wishlistRecipeName = LabelBuilder.builder()
                 .withStyleClass("wishlist-label")
-                .withText(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
+                .withText("wishlist.blueprint.horizons.title.module",
                         LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
                         LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
-                        gradeList.isEmpty() ? "?" : gradeList))
+                        gradeList.isEmpty() ? "?" : gradeList)
                 .withOnMouseClicked(event -> EventService.publish(new HorizonsBlueprintClickEvent(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete().keySet().stream().findFirst().orElse(HorizonsBlueprintGrade.GRADE_1)))))
                 .withHoverProperty((observable, oldValue, newValue) -> {
 
 
                     this.wishlistIngredients.forEach(wishlistIngredient -> {
-                        Integer requiredAmount =  (this.blueprints.entrySet().stream().map(entry ->(int)Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), engineer))).reduce(0, Integer::sum));
-                        Integer minimumAmount =  (this.blueprints.entrySet().stream().map(entry -> (int)Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMinimumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
-                        Integer maximumAmount =  (this.blueprints.entrySet().stream().map(entry -> (int)Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMaximumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
+                        Integer requiredAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getRequiredAmount(wishlistIngredient.getHorizonsMaterial(), engineer))).reduce(0, Integer::sum));
+                        Integer minimumAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMinimumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
+                        Integer maximumAmount = (this.blueprints.entrySet().stream().map(entry -> (int) Math.ceil(entry.getValue() * ((HorizonsBlueprint) entry.getKey()).getMaximumAmount(wishlistIngredient.getHorizonsMaterial()))).reduce(0, Integer::sum));
                         wishlistIngredient.highlight(newValue, new WishlistMaterial(minimumAmount, requiredAmount, maximumAmount));
                     });
                     this.otherIngredients.forEach(wishlistIngredient -> wishlistIngredient.lowlight(newValue));
                     this.highlight(newValue);
                 })
                 .build();
-        final AnchorPane anchorPane = new AnchorPane(this.wishlistRecipeName);
+        final DestroyableAnchorPane anchorPane = AnchorPaneBuilder.builder().withNode(this.wishlistRecipeName).build();
         AnchorPaneHelper.setAnchor(this.wishlistRecipeName, 0D, 0D, 0D, 0D);
         HBox.setHgrow(anchorPane, Priority.ALWAYS);
-        header.getChildren().addAll(anchorPane);
+        header.getNodes().addAll(anchorPane);
 
         if (!this.wishlistUUID.equals(Wishlist.ALL.getUuid())) {
             this.removeBlueprint = ButtonBuilder.builder()
-                    .withStyleClass("wishlist-item-button").withNonLocalizedText("X")
-                    .withOnAction(event -> remove())
+                    .withStyleClass("wishlist-item-button")
+                    .withNonLocalizedText("X")
+                    .withOnAction(event -> destroyTemplate())
                     .build();
             final AtomicReference<PopOver> popOverRef = new AtomicReference<>();
             this.toggleControls = ButtonBuilder.builder()
-                    .withStyleClass("wishlist-item-button").withNonLocalizedText("\u25BC")
+                    .withStyleClass("wishlist-item-button")
+                    .withNonLocalizedText("\u25BC")
                     .withOnAction(event -> {
                         if (popOverRef.get() == null || !popOverRef.get().isShowing()) {
-                            final HBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
+                            final DestroyableHBox[] gradeControls = HorizonsBlueprintConstants.getBlueprintGrades(this.wishlistBlueprint.getRecipeName(), this.wishlistBlueprint.getBlueprintType()).stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(grade ->
                                     {
-                                        CompletionSlider completionSlider = new CompletionSlider(0D, 100D, this.wishlistBlueprint.getPercentageToComplete().getOrDefault(grade, 0D) * 100D);
-                                        sliders.add(completionSlider);
-                                        completionSlider.setChangeListener(percentage -> {
+                                        DoubleConsumer function = percentage -> {
                                             this.wishlistBlueprint.setBlueprintGradePercentageToComplete(grade, percentage / 100D);
                                             this.blueprints = this.wishlistBlueprint.getPercentageToComplete().entrySet().stream().map(gradePercentage -> Map.entry(HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradePercentage.getKey()), gradePercentage.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
                                             modify();
                                             EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
                                             final String gradeList2 = this.wishlistBlueprint.getPercentageToComplete().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","));
-                                            this.wishlistRecipeName.textProperty().bind(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
+                                            this.wishlistRecipeName.addBinding(this.wishlistRecipeName.textProperty(), LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
                                                     LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
                                                     LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
                                                     gradeList2.isEmpty() ? "?" : gradeList2));
                                             final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
                                             this.canCraft(craftability);
-                                        });
+                                        };
+                                        CompletionSlider completionSlider = new CompletionSlider(0D, 100D, this.wishlistBlueprint.getPercentageToComplete().getOrDefault(grade, 0D) * 100D, function);
+                                        sliders.add(completionSlider);
+
 //                                        final ButtonIntField buttonIntField = new ButtonIntField(0, 15, this.wishlistBlueprint.getBlueprintGradeRolls().getOrDefault(grade, 0));
 //                                        buttonIntField.addHandlerOnValidChange(rolls -> APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> {
 //                                            this.wishlistBlueprint.setBlueprintGradeRollsFor(grade, rolls);
 //                                            this.blueprints = this.wishlistBlueprint.getBlueprintGradeRolls().entrySet().stream().flatMap(gradeRolls -> IntStream.range(0, gradeRolls.getValue()).mapToObj(value -> HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), gradeRolls.getKey()))).toList();
 //                                            modify();
 //                                            EventService.publish(new HorizonsWishlistBlueprintAlteredEvent(this.wishlistUUID));
-//                                            this.wishlistRecipeName.textProperty().bind(LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
+//                                            this.wishlistRecipeName.addBinding(//                                            this.wishlistRecipeName.textProperty(),LocaleService.getStringBinding("wishlist.blueprint.horizons.title.module",
 //                                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getRecipeName().getLocalizationKey()),
 //                                                    LocaleService.LocalizationKey.of(this.wishlistBlueprint.getBlueprintType().getLocalizationKey()),
 //                                                    this.wishlistBlueprint.getBlueprintGradeRolls().keySet().stream().sorted(Comparator.comparing(HorizonsBlueprintGrade::getGrade)).map(HorizonsBlueprintGrade::getGrade).map(String::valueOf).collect(Collectors.joining(","))));
@@ -152,21 +150,35 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
 //                                            this.canCraft(craftability);
 //                                        }));
 //                                        buttonIntField.getStyleClass().add("wishlist-rolls-select");
-                                        final DestroyableLabel label = LabelBuilder.builder().withStyleClass("wishlist-rolls-label").withNonLocalizedText(String.valueOf(grade.getGrade())).build();
+                                        final DestroyableLabel label = LabelBuilder.builder()
+                                                .withStyleClass("wishlist-rolls-label")
+                                                .withNonLocalizedText(String.valueOf(grade.getGrade()))
+                                                .build();
 //                                        final AnchorPane anchorPane2 = new AnchorPane(label);
 //                                        AnchorPaneHelper.setAnchor(label, 0D, 0D, 0D, 0D);
-                                        return BoxBuilder.builder().withNodes(
-                                                label,
-                                                completionSlider
-                                        ).buildHBox();
+                                        return BoxBuilder.builder()
+                                                .withNodes(
+                                                        label,
+                                                        completionSlider
+                                                ).buildHBox();
                                     })
-                                    .toArray(HBox[]::new);
+                                    .toArray(DestroyableHBox[]::new);
 
-                            final VBox grades = BoxBuilder.builder().withStyleClasses("grade-selects").withNodes(gradeControls).buildVBox();
-                            final VBox gradePopOverContent = BoxBuilder.builder().withStyleClass("popover-menubutton-box").withNodes(
-                                    LabelBuilder.builder().withStyleClass("grade-selects-title").withText(LocaleService.getStringBinding("wishlist.percentage.per.grade")).build(),
-                                    LabelBuilder.builder().withStyleClass("grade-selects-explain").withText(LocaleService.getStringBinding("wishlist.percentage.per.grade.explain")).build(),
-                                    grades).buildVBox();
+                            final DestroyableVBox grades = BoxBuilder.builder()
+                                    .withStyleClasses("grade-selects")
+                                    .withNodes(gradeControls).buildVBox();
+                            final DestroyableVBox gradePopOverContent = BoxBuilder.builder()
+                                    .withStyleClass("popover-menubutton-box")
+                                    .withNodes(
+                                            LabelBuilder.builder()
+                                                    .withStyleClass("grade-selects-title")
+                                                    .withText("wishlist.percentage.per.grade")
+                                                    .build(),
+                                            LabelBuilder.builder()
+                                                    .withStyleClass("grade-selects-explain")
+                                                    .withText("wishlist.percentage.per.grade.explain")
+                                                    .build(),
+                                            grades).buildVBox();
                             final PopOver popOver = new PopOver(gradePopOverContent);
                             popOverRef.set(popOver);
                             popOver.setDetachable(false);
@@ -181,9 +193,9 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
                     })
                     .build();
 
-            header.getChildren().addAll(this.toggleControls, this.removeBlueprint);
+            header.getNodes().addAll(this.toggleControls, this.removeBlueprint);
         }
-        this.getChildren().addAll(header);
+        this.getNodes().addAll(header);
         this.getStyleClass().add("wishlist-item");
 
 
@@ -199,8 +211,7 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     }
 
     @Override
-    public void remove() {
-        EventService.removeListener(this.storageEventEventListener);
+    public void destroyInternal() {
         APPLICATION_STATE.getPreferredCommander().ifPresent(commander -> EventService.publish(new HorizonsWishlistBlueprintEvent(commander, this.wishlistUUID, List.of(this.wishlistBlueprint), Action.REMOVED)));
     }
 
@@ -216,11 +227,11 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
         fadeTransition.play();
     }
 
-    private void initEventHandling() {
-        this.storageEventEventListener = EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
+    public void initEventHandling() {
+        register(EventService.addListener(true, this, StorageEvent.class, storageEvent -> {
             final Craftability craftability = HorizonsBlueprintConstants.getCraftability(getRecipeName(), getBlueprintType(), this.wishlistBlueprint.getPercentageToComplete(), engineer);
             this.canCraft(craftability);
-        });
+        }));
     }
 
     private void highlight(final boolean enable) {
@@ -235,11 +246,11 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
         this.wishlistRecipeName.getStyleClass().removeAll("wishlist-craftable", "wishlist-craftable-with-trade");
         if (Craftability.CRAFTABLE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable");
-            this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip"));
+            this.tooltip.addBinding(this.tooltip.textProperty(), LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip"));
 
         } else if (Craftability.CRAFTABLE_WITH_TRADE.equals(craftability)) {
             this.wishlistRecipeName.getStyleClass().add("wishlist-craftable-with-trade");
-            this.tooltip.textProperty().bind(LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip.craftable"));
+            this.tooltip.addBinding(this.tooltip.textProperty(), LocaleService.getToolTipStringBinding((HorizonsEngineeringBlueprint) HorizonsBlueprintConstants.getRecipe(getRecipeName(), getBlueprintType(), HorizonsBlueprintGrade.GRADE_1), "tab.wishlist.blueprint.tooltip.craftable"));
         }
     }
 
@@ -303,12 +314,6 @@ public class HorizonsWishlistModuleBlueprintTemplate extends VBox implements Wis
     @Override
     public WishlistBlueprint<HorizonsBlueprintName> getWishlistRecipe() {
         return this.wishlistBlueprint;
-    }
-
-    @Override
-    public void onDestroy() {
-        EventService.removeListener(this.storageEventEventListener);
-        sliders.forEach(CompletionSlider::destroy);
     }
 
     @Override

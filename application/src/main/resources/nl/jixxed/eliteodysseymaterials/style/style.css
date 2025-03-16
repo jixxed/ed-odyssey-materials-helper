@@ -1133,9 +1133,13 @@
     -fx-min-height: 2em;
     -fx-pref-height: 2em;
     -fx-max-height: 2em;
-    /*-fx-min-width: 2em;*/
-    /*-fx-pref-width: 2em;*/
-    /*-fx-max-width: 2em;*/
+}
+
+
+.engineer-pinned-image {
+    -fx-min-height: 2em;
+    -fx-pref-height: 2em;
+    -fx-max-height: 2em;
 }
 
 .recipe-modifier-positive {
@@ -1594,14 +1598,27 @@
     -fx-background-color: #252525;
     -fx-text-fill: white;
 }
-
+.start-dialog-content{
+    -fx-wrap-text: true;
+}
 .start-dialog-title {
     -fx-font-size: 2em;
     -fx-padding: 4px;
 }
-
+.start-dialog-buttons{
+    -fx-spacing: 0.25em;
+}
+.version-dialog{
+    -fx-background-color: #0f0f0f;
+}
+.version-dialog-buttons{
+    -fx-spacing: 0.25em;
+}
 .urlscheme-dialog {
     -fx-background-color: #0f0f0f;
+}
+.urlscheme-dialog-buttons{
+    -fx-spacing: 0.25em;
 }
 
 .urlscheme-dialog-text {
@@ -2107,7 +2124,7 @@
 
 .shortest-path-item-label-big {
     -fx-font-size: 2em;
-    -fx-padding: 0em 0.1em 0em 0em;
+    -fx-padding: 0em 0.1em 0em 1em;
 }
 
 .shortest-path-item-label-blueprint:hover {
@@ -4437,4 +4454,16 @@
 
     -fx-pref-height: 100%;
     -fx-opacity: 0.3;
+}
+.completion-slider{
+    -fx-fit-to-width: true;
+    -fx-max-width: 15em;
+    -fx-pref-width: 15em;
+}
+.completion-slider-textfield{
+    -fx-max-width: 4.5em;
+    -fx-min-width: 4.5em;
+}
+.shortest-path-item-distance{
+    -fx-padding: 0 0 0 1em;
 }
