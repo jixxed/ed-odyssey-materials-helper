@@ -48,13 +48,14 @@ public class PowerplayUnlockableModule extends HBox implements Template {
     public void initEventHandling() {
 
         this.eventListeners.add(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
-                this.update(powerplayEvent.getPower(), powerplayEvent.getRank())));
+                powerplayEvent.getRank().ifPresent(rank ->
+                        this.update(powerplayEvent.getPower(), rank))));
     }
 
     public void update(Power power, long rank) {
         this.getChildren().forEach(node -> node.getStyleClass().remove("power-rank-unlocked"));
 
-        if (this.power.equals(power) &&  unlockRank <= rank) {
+        if (this.power.equals(power) && unlockRank <= rank) {
             this.getChildren().forEach(node -> node.getStyleClass().add("power-rank-unlocked"));
         }
 
