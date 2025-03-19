@@ -31,10 +31,7 @@ import nl.jixxed.eliteodysseymaterials.service.event.PowerplayEvent;
 import nl.jixxed.eliteodysseymaterials.templates.components.GrowingRegion;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableResizableImageView;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -82,9 +79,9 @@ public class PowerplayCard extends VBox {
                 this.update(powerplayEvent.getPower(), powerplayEvent.getMerits(), powerplayEvent.getRank())));
     }
 
-    private void update(Power power, Long merits, Long rank) {
-        this.merits = merits;
-        this.rank = rank;
+    private void update(Power power, Optional<Long> meritsOpt, Optional<Long> rankOpt) {
+        meritsOpt.ifPresent(merits -> this.merits = merits);
+        rankOpt.ifPresent(rank -> this.merits = rank);
 
         this.getChildren().remove(rankAndMeritsBox);
         if (this.power.equals(power)) {
@@ -131,7 +128,7 @@ public class PowerplayCard extends VBox {
             this.getChildren().addAll(this.unlockablesLabels);
         }
         this.getStyleClass().add("power-card");
-        this.update(ApplicationState.getInstance().getPower(), ApplicationState.getInstance().getPowerMerits(), ApplicationState.getInstance().getPowerRank());
+        this.update(ApplicationState.getInstance().getPower(), Optional.of(ApplicationState.getInstance().getPowerMerits()), Optional.of(ApplicationState.getInstance().getPowerRank()));
     }
 
 
