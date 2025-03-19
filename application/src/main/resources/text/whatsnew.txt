@@ -1,3 +1,8 @@
+Version 2.146
+-------------
+Add Trailblazer journal events
+Handle updates for powerplay merits and rank in the UI
+
 Version 2.145
 -------------
 Add StationName_Localised to Location and Docking related journal events
