@@ -15,10 +15,12 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import nl.jixxed.eliteodysseymaterials.builder.StackPaneBuilder;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.Destroyable;
 import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableStackPane;
+import nl.jixxed.eliteodysseymaterials.templates.destroyables.DestroyableTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +30,7 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
     private DestroyableStackPane fill = StackPaneBuilder.builder()
             .build();
 
-    private DestroyableStackPane thumb, track;
+    private StackPane thumb, track;
 
     private double trackToTickGap = 2;
 
@@ -41,7 +43,9 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
         super.dispose();
         popup = null;
         getChildren().forEach(child -> {
-            if (child instanceof Destroyable destroyable) {
+            if (child instanceof DestroyableTemplate template) {
+                template.destroyTemplate();
+            } else if (child instanceof Destroyable destroyable) {
                 destroyable.destroy();
             }
         });
@@ -50,23 +54,23 @@ public class SliderSkin extends javafx.scene.control.skin.SliderSkin {
     public SliderSkin(Slider control) {
         super(control);
 
-        track = (DestroyableStackPane) getSkinnable().lookup(".track");
-        thumb = (DestroyableStackPane) getSkinnable().lookup(".thumb");
+        track = (StackPane) getSkinnable().lookup(".track");
+        thumb = (StackPane) getSkinnable().lookup(".thumb");
 
         fill.getStyleClass().add("fill");
 
         // Add fill right above track
         getChildren().add(getChildren().indexOf(track) + 1, fill);
 
-        track.registerEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnTrack);
-        track.registerEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnTrack);
-        track.registerEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromTrack);
+        track.addEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnTrack);
+        track.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnTrack);
+        track.addEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromTrack);
 
         fill.setEventDispatcher(track.eventDispatcherProperty().get());
 
-        thumb.registerEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnThumb);
-        thumb.registerEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnThumb);
-        thumb.registerEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromThumb);
+        thumb.addEventHandler(MouseEvent.MOUSE_PRESSED, this::mousePressedOnThumb);
+        thumb.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::mouseDraggedOnThumb);
+        thumb.addEventHandler(MouseEvent.MOUSE_RELEASED, this::mouseReleasedFromThumb);
 
         registerChangeListener(control.showTickMarksProperty(), this::thickMarksChanged);
         registerChangeListener(control.showTickLabelsProperty(), this::thickMarksChanged);
