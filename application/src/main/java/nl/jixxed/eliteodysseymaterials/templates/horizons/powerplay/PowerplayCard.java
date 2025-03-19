@@ -81,7 +81,7 @@ public class PowerplayCard extends VBox {
 
     private void update(Power power, Optional<Long> meritsOpt, Optional<Long> rankOpt) {
         meritsOpt.ifPresent(merits -> this.merits = merits);
-        rankOpt.ifPresent(rank -> this.merits = rank);
+        rankOpt.ifPresent(rank -> this.rank = rank);
 
         this.getChildren().remove(rankAndMeritsBox);
         if (this.power.equals(power)) {

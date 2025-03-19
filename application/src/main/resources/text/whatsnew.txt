@@ -1,3 +1,7 @@
+Version 2.149
+-------------
+Nope, but now it is for realsies
+
 Version 2.148
 -------------
 now really the bugfix for handling of new events?
