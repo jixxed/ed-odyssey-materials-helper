@@ -1,3 +1,7 @@
+Version 2.148
+-------------
+now really the bugfix for handling of new events?
+
 Version 2.147
 -------------
 bugfix for handling of new events
