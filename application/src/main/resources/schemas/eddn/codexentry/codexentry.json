@@ -1,98 +1,111 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/codexentry/1#",
-    "description"           : "EDDN schema for CodexEntry Journal events.  Full documentation at https://github.com/EDCD/EDDN/tree/master/schemas/codexentry-README.md",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required": [ "$schemaRef", "header", "message" ],
-    "properties": {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/codexentry/1#",
+  "description": "EDDN schema for CodexEntry Journal events.  Full documentation at https://github.com/EDCD/EDDN/tree/master/schemas/codexentry-README.md",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "description": "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below as 'disallowed'",
+      "additionalProperties": false,
+      "required": [
+        "timestamp",
+        "event",
+        "System",
+        "StarPos",
+        "SystemAddress",
+        "EntryID"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "event": {
+          "type": "string"
         },
-        "message": {
-            "type"                  : "object",
-            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below as 'disallowed'",
-            "additionalProperties"  : false,
-            "required"              : [ "timestamp", "event", "System", "StarPos", "SystemAddress", "EntryID" ],
-            "properties"            : {
-                "timestamp": {
-                    "type"          : "string",
-                    "format"        : "date-time"
-                },
-                "event": {
-                    "type"          : "string"
-                },
-                "horizons": {
-                    "type"          : "boolean",
-                    "description"   : "Whether the sending Cmdr has a Horizons pass."
-                },
-                "odyssey": {
-                    "type"      : "boolean",
-                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
-                },
-                "System": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-                "StarPos": {
-                    "type"          : "array",
-                    "items"         : { "type": "number" },
-                    "minItems"      : 3,
-                    "maxItems"      : 3,
-                    "description"   : "Must be added by the sender if not present in the journal event"
-                },
-                "SystemAddress": {
-                    "type"          : "integer",
-                    "description"   : "Should be added by the sender if not present in the journal event"
-                },
-                "Name": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-                "Region": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-                "EntryID": {
-                    "type"          : "integer"
-                },
-                "Category": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-                "Latitude": {
-                    "type"          : "number"
-                },
-                "Longitude": {
-                    "type"          : "number"
-                },
-                "SubCategory": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-                "NearestDestination": {
-                    "type"          : "string"
-                },
-                "VoucherAmount": {
-                    "type"          : "integer"
-                },
-                "Traits": {
-                    "type"          : "array",
-                    "items"         : {
-                        "type"          : "string",
-                        "minLength"     : 1
-                    }
-                },
-                "BodyID": {
-                    "type"          : "integer"
-                },
-                "BodyName": {
-                    "type"          : "string"
-                }
-            }
+        "horizons": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has a Horizons pass."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has an Odyssey expansion."
+        },
+        "System": {
+          "type": "string",
+          "minLength": 1
+        },
+        "StarPos": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "Must be added by the sender if not present in the journal event"
+        },
+        "SystemAddress": {
+          "type": "integer",
+          "description": "Should be added by the sender if not present in the journal event"
+        },
+        "Name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Region": {
+          "type": "string",
+          "minLength": 1
+        },
+        "EntryID": {
+          "type": "integer"
+        },
+        "Category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Latitude": {
+          "type": "number"
+        },
+        "Longitude": {
+          "type": "number"
+        },
+        "SubCategory": {
+          "type": "string",
+          "minLength": 1
+        },
+        "NearestDestination": {
+          "type": "string"
+        },
+        "VoucherAmount": {
+          "type": "integer"
+        },
+        "Traits": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "BodyID": {
+          "type": "integer"
+        },
+        "BodyName": {
+          "type": "string"
         }
+      }
     }
+  }
 }

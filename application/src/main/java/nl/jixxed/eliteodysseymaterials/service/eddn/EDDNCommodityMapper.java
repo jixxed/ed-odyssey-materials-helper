@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class EDDNCommodityMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final Market market, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(market.getTimestamp())
@@ -40,24 +41,24 @@ public class EDDNCommodityMapper extends EDDNMapper {
     }
 
     static String cleanName(final String name) {
-        if(name.startsWith("$") && name.endsWith("_name;")){
-            return name.substring(1,name.length() - 6);
+        if (name.startsWith("$") && name.endsWith("_name;")) {
+            return name.substring(1, name.length() - 6);
         }
         return name;
     }
 
     private static Set<String> getStatusFlags(final nl.jixxed.eliteodysseymaterials.schemas.journal.Market.Item item) {
         final Set<String> flags = new HashSet<>();
-        if(Boolean.TRUE.equals(item.getConsumer())){
+        if (Boolean.TRUE.equals(item.getConsumer())) {
             flags.add("Consumer");
         }
-        if(Boolean.TRUE.equals(item.getProducer())){
+        if (Boolean.TRUE.equals(item.getProducer())) {
             flags.add("Producer");
         }
-        if(Boolean.TRUE.equals(item.getRare())){
+        if (Boolean.TRUE.equals(item.getRare())) {
             flags.add("rare");
         }
-        if(!flags.isEmpty()) {
+        if (!flags.isEmpty()) {
             return flags;
         }
 

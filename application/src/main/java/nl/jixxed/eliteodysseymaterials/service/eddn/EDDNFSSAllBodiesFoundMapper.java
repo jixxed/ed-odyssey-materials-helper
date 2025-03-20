@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSAllBodiesFound.FSSAllB
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 public class EDDNFSSAllBodiesFoundMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final FSSAllBodiesFound fssAllBodiesFound, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(fssAllBodiesFound.getTimestamp())

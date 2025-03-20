@@ -1,247 +1,365 @@
 {
-  "$schema"               : "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Definitions for EDDN messages",
   "definitions": {
     "header": {
-      "type"                  : "object",
+      "type": "object",
       "title": "Header",
       "description": "Header for EDDN messages",
-      "properties"            : {
+      "properties": {
         "uploaderID": {
-          "type"          : "string"
+          "type": "string"
         },
         "gameversion": {
-          "type"          : "string",
-          "description"   : "Fileheader->gameversion, else LoadGame->gameversion, else CAPI-market or CAPI-shipyard if CAPI, else blank."
+          "type": "string",
+          "description": "Fileheader->gameversion, else LoadGame->gameversion, else CAPI-market or CAPI-shipyard if CAPI, else blank."
         },
         "gamebuild": {
-          "type"          : "string",
-          "description"   : "Fileheader->build, else LoadGame->build, else CAPI-market or CAPI-shipyard if CAPI, else blank."
+          "type": "string",
+          "description": "Fileheader->build, else LoadGame->build, else CAPI-market or CAPI-shipyard if CAPI, else blank."
         },
         "softwareName": {
-          "type"          : "string"
+          "type": "string"
         },
         "softwareVersion": {
-          "type"          : "string"
+          "type": "string"
         }
       },
-      "additionalProperties"  : true,
-      "required"              : [ "uploaderID", "softwareName", "softwareVersion" ]
+      "additionalProperties": true,
+      "required": [
+        "uploaderID",
+        "softwareName",
+        "softwareVersion"
+      ]
     },
-    "SystemFaction" : {
-      "title" : "SystemFaction",
-      "type" : "object",
-      "properties" : {
-        "Name" : {
-          "title" : "Name",
-          "type" : "string",
-          "examples" : [ "Rook Platoon", "Corin Jet State Corporation", "Jaques" ]
+    "SystemFaction": {
+      "title": "SystemFaction",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "title": "Name",
+          "type": "string",
+          "examples": [
+            "Rook Platoon",
+            "Corin Jet State Corporation",
+            "Jaques"
+          ]
         },
-        "FactionState" : {
-          "title" : "FactionState",
-          "type" : "string",
-          "examples" : [ "Expansion", "Investment", "Boom" ]
+        "FactionState": {
+          "title": "FactionState",
+          "type": "string",
+          "examples": [
+            "Expansion",
+            "Investment",
+            "Boom"
+          ]
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "Name" ]
+      "additionalProperties": false,
+      "required": [
+        "Name"
+      ]
     },
-    "StationEconomy" : {
-      "title" : "StationEconomy",
-      "type" : "object",
-      "properties" : {
-        "Name" : {
-          "title" : "Name",
-          "type" : "string",
-          "examples" : [ "$economy_Carrier;" ]
+    "StationEconomy": {
+      "title": "StationEconomy",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "title": "Name",
+          "type": "string",
+          "examples": [
+            "$economy_Carrier;"
+          ]
         },
-        "Proportion" : {
-          "title" : "Proportion",
-          "type" : "number",
-          "examples" : [ 1.0 ]
+        "Proportion": {
+          "title": "Proportion",
+          "type": "number",
+          "examples": [
+            1.0
+          ]
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "Name", "Proportion" ]
+      "additionalProperties": false,
+      "required": [
+        "Name",
+        "Proportion"
+      ]
     },
-    "Faction" : {
-      "title" : "Faction",
-      "type" : "object",
-      "properties" : {
-        "Name" : {
-          "title" : "Name",
-          "type" : "string",
-          "examples" : [ "Allies of Foss", "Bureau of Apotanites Flag", "Co-operative of Apotanites" ]
+    "Faction": {
+      "title": "Faction",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "title": "Name",
+          "type": "string",
+          "examples": [
+            "Allies of Foss",
+            "Bureau of Apotanites Flag",
+            "Co-operative of Apotanites"
+          ]
         },
-        "FactionState" : {
-          "title" : "FactionState",
-          "type" : "string",
-          "examples" : [ "None", "CivilUnrest", "Expansion" ]
+        "FactionState": {
+          "title": "FactionState",
+          "type": "string",
+          "examples": [
+            "None",
+            "CivilUnrest",
+            "Expansion"
+          ]
         },
-        "Government" : {
-          "title" : "Government",
-          "type" : "string",
-          "examples" : [ "Cooperative", "Dictatorship", "Patronage" ]
+        "Government": {
+          "title": "Government",
+          "type": "string",
+          "examples": [
+            "Cooperative",
+            "Dictatorship",
+            "Patronage"
+          ]
         },
-        "Influence" : {
-          "title" : "Influence",
-          "type" : "number",
-          "examples" : [ 0.118, 0.075, 0.732 ]
+        "Influence": {
+          "title": "Influence",
+          "type": "number",
+          "examples": [
+            0.118,
+            0.075,
+            0.732
+          ]
         },
-        "Allegiance" : {
-          "title" : "Allegiance",
-          "type" : "string",
-          "examples" : [ "Independent", "Empire", "Federation" ]
+        "Allegiance": {
+          "title": "Allegiance",
+          "type": "string",
+          "examples": [
+            "Independent",
+            "Empire",
+            "Federation"
+          ]
         },
-        "Happiness" : {
-          "title" : "Happiness",
-          "type" : "string",
-          "examples" : [ "$Faction_HappinessBand2;", "$Faction_HappinessBand1;", "$Faction_HappinessBand3;" ]
+        "Happiness": {
+          "title": "Happiness",
+          "type": "string",
+          "examples": [
+            "$Faction_HappinessBand2;",
+            "$Faction_HappinessBand1;",
+            "$Faction_HappinessBand3;"
+          ]
         },
-        "PendingStates" : {
-          "title" : "PendingStates",
-          "type" : "array",
-          "items" : {
+        "PendingStates": {
+          "title": "PendingStates",
+          "type": "array",
+          "items": {
             "$ref": "./definitions.json#/definitions/PendingState"
           }
         },
-        "ActiveStates" : {
-          "title" : "ActiveStates",
-          "type" : "array",
-          "items" : {
+        "ActiveStates": {
+          "title": "ActiveStates",
+          "type": "array",
+          "items": {
             "$ref": "./definitions.json#/definitions/ActiveState"
           }
         },
-        "RecoveringStates" : {
-          "title" : "RecoveringStates",
-          "type" : "array",
-          "items" : {
+        "RecoveringStates": {
+          "title": "RecoveringStates",
+          "type": "array",
+          "items": {
             "$ref": "./definitions.json#/definitions/RecoveringState"
           }
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "Name", "FactionState", "Government", "Influence", "Allegiance", "Happiness"]
+      "additionalProperties": false,
+      "required": [
+        "Name",
+        "FactionState",
+        "Government",
+        "Influence",
+        "Allegiance",
+        "Happiness"
+      ]
     },
-    "PendingState" : {
-      "title" : "PendingState",
-      "type" : "object",
-      "properties" : {
-        "State" : {
-          "title" : "State",
-          "type" : "string",
-          "examples" : [ "CivilWar", "Boom", "Outbreak" ]
+    "PendingState": {
+      "title": "PendingState",
+      "type": "object",
+      "properties": {
+        "State": {
+          "title": "State",
+          "type": "string",
+          "examples": [
+            "CivilWar",
+            "Boom",
+            "Outbreak"
+          ]
         },
-        "Trend" : {
-          "title" : "Trend",
-          "type" : "integer",
-          "examples" : [ 0 ]
+        "Trend": {
+          "title": "Trend",
+          "type": "integer",
+          "examples": [
+            0
+          ]
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "State", "Trend" ]
+      "additionalProperties": false,
+      "required": [
+        "State",
+        "Trend"
+      ]
     },
-    "ActiveState" : {
-      "title" : "ActiveState",
-      "type" : "object",
-      "properties" : {
-        "State" : {
-          "title" : "State",
-          "type" : "string",
-          "examples" : [ "CivilUnrest", "PublicHoliday", "Expansion" ]
+    "ActiveState": {
+      "title": "ActiveState",
+      "type": "object",
+      "properties": {
+        "State": {
+          "title": "State",
+          "type": "string",
+          "examples": [
+            "CivilUnrest",
+            "PublicHoliday",
+            "Expansion"
+          ]
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "State" ]
+      "additionalProperties": false,
+      "required": [
+        "State"
+      ]
     },
-    "RecoveringState" : {
-      "title" : "RecoveringState",
-      "type" : "object",
-      "properties" : {
-        "State" : {
-          "title" : "State",
-          "type" : "string",
-          "examples" : [ "PublicHoliday", "Outbreak", "PirateAttack" ]
+    "RecoveringState": {
+      "title": "RecoveringState",
+      "type": "object",
+      "properties": {
+        "State": {
+          "title": "State",
+          "type": "string",
+          "examples": [
+            "PublicHoliday",
+            "Outbreak",
+            "PirateAttack"
+          ]
         },
-        "Trend" : {
-          "title" : "Trend",
-          "type" : "integer",
-          "examples" : [ 0 ]
+        "Trend": {
+          "title": "Trend",
+          "type": "integer",
+          "examples": [
+            0
+          ]
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "State", "Trend" ]
+      "additionalProperties": false,
+      "required": [
+        "State",
+        "Trend"
+      ]
     },
-    "Conflict" : {
-      "title" : "Conflict",
-      "type" : "object",
-      "properties" : {
-        "WarType" : {
-          "title" : "WarType",
-          "type" : "string",
-          "examples" : [ "civilwar", "election" ]
+    "Conflict": {
+      "title": "Conflict",
+      "type": "object",
+      "properties": {
+        "WarType": {
+          "title": "WarType",
+          "type": "string",
+          "examples": [
+            "civilwar",
+            "election"
+          ]
         },
-        "Status" : {
-          "title" : "Status",
-          "type" : "string",
-          "examples" : [ "pending", "active" ]
+        "Status": {
+          "title": "Status",
+          "type": "string",
+          "examples": [
+            "pending",
+            "active"
+          ]
         },
-        "Faction1" : {
-          "title" : "Faction1",
+        "Faction1": {
+          "title": "Faction1",
           "$ref": "./definitions.json#/definitions/ConflictFaction"
         },
-        "Faction2" : {
-          "title" : "Faction2",
+        "Faction2": {
+          "title": "Faction2",
           "$ref": "./definitions.json#/definitions/ConflictFaction"
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "WarType", "Status", "Faction1", "Faction2" ]
+      "additionalProperties": false,
+      "required": [
+        "WarType",
+        "Status",
+        "Faction1",
+        "Faction2"
+      ]
     },
-    "ConflictFaction" : {
-      "type" : "object",
-      "properties" : {
-        "Name" : {
-          "title" : "Name",
-          "type" : "string",
-          "examples" : [ "Bureau of Apotanites Flag", "Corin Empire Group", "People's LHS 6427 Free" ]
+    "ConflictFaction": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "title": "Name",
+          "type": "string",
+          "examples": [
+            "Bureau of Apotanites Flag",
+            "Corin Empire Group",
+            "People's LHS 6427 Free"
+          ]
         },
-        "Stake" : {
-          "title" : "Stake",
-          "type" : "string",
-          "examples" : [ "Rahman Nutrition Holdings", "Ing Point", "Brazier Prospecting Facility" ]
+        "Stake": {
+          "title": "Stake",
+          "type": "string",
+          "examples": [
+            "Rahman Nutrition Holdings",
+            "Ing Point",
+            "Brazier Prospecting Facility"
+          ]
         },
-        "WonDays" : {
-          "title" : "WonDays",
-          "type" : "integer",
-          "examples" : [ 0, 3 ]
+        "WonDays": {
+          "title": "WonDays",
+          "type": "integer",
+          "examples": [
+            0,
+            3
+          ]
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "Name", "Stake", "WonDays" ]
+      "additionalProperties": false,
+      "required": [
+        "Name",
+        "Stake",
+        "WonDays"
+      ]
     },
-    "LandingPads" : {
-      "title" : "LandingPads",
-      "type" : "object",
-      "properties" : {
-        "Small" : {
-          "title" : "Small",
-          "type" : "integer",
-          "examples" : [ 4, 17, 2 ]
+    "LandingPads": {
+      "title": "LandingPads",
+      "type": "object",
+      "properties": {
+        "Small": {
+          "title": "Small",
+          "type": "integer",
+          "examples": [
+            4,
+            17,
+            2
+          ]
         },
-        "Medium" : {
-          "title" : "Medium",
-          "type" : "integer",
-          "examples" : [ 4, 18, 1 ]
+        "Medium": {
+          "title": "Medium",
+          "type": "integer",
+          "examples": [
+            4,
+            18,
+            1
+          ]
         },
-        "Large" : {
-          "title" : "Large",
-          "type" : "integer",
-          "examples" : [ 8, 9, 2 ]
+        "Large": {
+          "title": "Large",
+          "type": "integer",
+          "examples": [
+            8,
+            9,
+            2
+          ]
         }
       },
-      "additionalProperties" : false,
-      "required" : [ "Small", "Medium", "Large" ]
+      "additionalProperties": false,
+      "required": [
+        "Small",
+        "Medium",
+        "Large"
+      ]
     },
     "ThargoidWar": {
       "title": "ThargoidWar",
@@ -252,28 +370,41 @@
           "title": "CurrentState",
           "type": "string",
           "examples": [
-            "Thargoid_Probing", "Thargoid_Harvest", "Thargoid_Controlled", "Thargoid_Stronghold", "Thargoid_Recovery"
+            "Thargoid_Probing",
+            "Thargoid_Harvest",
+            "Thargoid_Controlled",
+            "Thargoid_Stronghold",
+            "Thargoid_Recovery"
           ]
         },
         "NextStateSuccess": {
           "title": "NextStateSuccess",
           "type": "string",
           "examples": [
-            "Thargoid_Probing", "Thargoid_Harvest", "Thargoid_Controlled", "Thargoid_Stronghold", "Thargoid_Recovery"
+            "Thargoid_Probing",
+            "Thargoid_Harvest",
+            "Thargoid_Controlled",
+            "Thargoid_Stronghold",
+            "Thargoid_Recovery"
           ]
         },
         "NextStateFailure": {
           "title": "NextStateFailure",
           "type": "string",
           "examples": [
-            "Thargoid_Probing", "Thargoid_Harvest", "Thargoid_Controlled", "Thargoid_Stronghold", "Thargoid_Recovery"
+            "Thargoid_Probing",
+            "Thargoid_Harvest",
+            "Thargoid_Controlled",
+            "Thargoid_Stronghold",
+            "Thargoid_Recovery"
           ]
         },
         "SuccessStateReached": {
           "title": "SuccessStateReached",
           "type": "boolean",
           "examples": [
-            true, false
+            true,
+            false
           ]
         },
         "WarProgress": {
@@ -303,6 +434,39 @@
         "CurrentState",
         "SuccessStateReached"
       ]
+    },
+    "PowerplayConflictProgress": {
+      "title": "PowerplayConflictProgress",
+      "description": "When the system is unoccupied and 1 or more powers are fighting for control by reaching 120k merits.",
+      "type": "array",
+      "default": null,
+      "items": {
+        "type": "object",
+        "properties": {
+          "Power": {
+            "title": "Power",
+            "type": "string",
+            "examples": [
+              "Felicia Winters",
+              "Zemina Torval"
+            ]
+          },
+          "ConflictProgress": {
+            "title": "ConflictProgress",
+            "description": "Progress towards the control threshold of 120k merits. can exceed 100%(1.0).",
+            "type": "number",
+            "examples": [
+              0.047725,
+              4.1
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "Power",
+          "ConflictProgress"
+        ]
+      }
     }
   }
 }

@@ -1,60 +1,70 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/outfitting/2#",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required"              : [ "$schemaRef", "header", "message" ],
-    "properties"            : {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/outfitting/2#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "systemName",
+        "stationName",
+        "marketId",
+        "timestamp",
+        "modules"
+      ],
+      "properties": {
+        "systemName": {
+          "type": "string",
+          "renamed": "StarSystem",
+          "minLength": 1
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "stationName": {
+          "type": "string",
+          "renamed": "StationName",
+          "minLength": 1
         },
-        "message": {
-            "type"                  : "object",
-            "additionalProperties"  : false,
-            "required"              : [ "systemName", "stationName", "marketId", "timestamp", "modules" ],
-            "properties"            : {
-                "systemName": {
-                    "type"      : "string",
-                    "renamed"   : "StarSystem",
-                    "minLength" : 1
-                },
-                "stationName": {
-                    "type"      : "string",
-                    "renamed"   : "StationName",
-                    "minLength" : 1
-                },                
-                "marketId": {
-                    "type"      : "integer",
-                    "renamed"   : "MarketID"
-                },
-                "horizons": {
-                    "type"      : "boolean",
-                    "description" : "Whether the sending Cmdr has a Horizons pass."
-                },
-                "odyssey": {
-                    "type"      : "boolean",
-                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
-                },                 
-                "timestamp": {
-                    "type"      : "string",
-                    "format"    : "date-time"
-                },
-                "modules": {
-                    "type"          : "array",
-                    "renamed"       : "Items",
-                    "minItems"      : 1,
-                    "uniqueItems"   : true,
-                    "items"         : {
-                        "type"          : "string",
-                        "minLength"     : 1,
-                        "pattern"       : "(^Hpt_|^hpt_|^Int_|^int_|_Armour_|_armour_)",
-                        "description"   : "Module symbolic name. e.g. Hpt_ChaffLauncher_Tiny, Int_Engine_Size3_Class5_Fast, Independant_Trader_Armour_Grade1, etc. Modules that depend on the Cmdr's purchases (e.g. bobbleheads, paintjobs) or rank (e.g. decals and PowerPlay faction-specific modules) should be omitted."
-                    }
-                }
-            }
+        "marketId": {
+          "type": "integer",
+          "renamed": "MarketID"
+        },
+        "horizons": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has a Horizons pass."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has an Odyssey expansion."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modules": {
+          "type": "array",
+          "renamed": "Items",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(^Hpt_|^hpt_|^Int_|^int_|_Armour_|_armour_)",
+            "description": "Module symbolic name. e.g. Hpt_ChaffLauncher_Tiny, Int_Engine_Size3_Class5_Fast, Independant_Trader_Armour_Grade1, etc. Modules that depend on the Cmdr's purchases (e.g. bobbleheads, paintjobs) or rank (e.g. decals and PowerPlay faction-specific modules) should be omitted."
+          }
         }
+      }
     }
+  }
 }

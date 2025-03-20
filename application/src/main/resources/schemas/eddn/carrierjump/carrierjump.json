@@ -1,203 +1,328 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required": [ "$schemaRef", "header", "message" ],
-    "properties": {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/journal/1#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "description": "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
+      "additionalProperties": true,
+      "required": [
+        "timestamp",
+        "event",
+        "StarSystem",
+        "StarPos",
+        "SystemAddress"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "event": {
+          "type": "string"
         },
-        "message": {
-            "type"                  : "object",
-            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
-            "additionalProperties"  : true,
-            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress" ],
-            "properties"            : {
-                "timestamp": {
-                    "type"          : "string",
-                    "format"        : "date-time"
-                },
-                "event" : {
-                    "type"          : "string"
-                },
-                "horizons": {
-                    "type"          : "boolean",
-                    "description"   : "Whether the sending Cmdr has a Horizons pass."
-                },
-                "odyssey": {
-                    "type"      : "boolean",
-                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
-                },
-                "Docked" : {
-                    "title" : "Docked",
-                    "type" : "boolean",
-                    "examples" : [ true ]
-                },
-                "StationName" : {
-                    "title" : "StationName",
-                    "type" : "string",
-                    "examples" : [ "A1A-B2B" ]
-                },
-                "StationType" : {
-                    "title" : "StationType",
-                    "type" : "string",
-                    "examples" : [ "FleetCarrier" ]
-                },
-                "MarketID" : {
-                    "title" : "MarketID",
-                    "type" : "integer",
-                    "examples" : [ 3705689344, 3707430144, 3700382464 ]
-                },
-                "StationFaction" : {
-                    "$ref": "../definitions.json#/definitions/SystemFaction"
-                },
-                "StationGovernment" : {
-                    "title" : "StationGovernment",
-                    "type" : "string",
-                    "examples" : [ "$government_Carrier;" ]
-                },
-                "StationServices" : {
-                    "title" : "StationServices",
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "examples" : [ "dock", "autodock", "commodities" ]
-                    }
-                },
-                "StationEconomy" : {
-                    "title" : "StationEconomy",
-                    "type" : "string",
-                    "examples" : [ "$economy_Carrier;" ]
-                },
-                "StationEconomies" : {
-                    "title" : "StationEconomies",
-                    "type" : "array",
-                    "items" : {
-                        "$ref": "../definitions.json#/definitions/StationEconomy"
-                    }
-                },
-                "Taxi" : {
-                    "title" : "Taxi",
-                    "type" : "boolean",
-                    "examples" : [ false ]
-                },
-                "Multicrew" : {
-                    "title" : "Multicrew",
-                    "type" : "boolean",
-                    "examples" : [ false ]
-                },
-                "StarSystem" : {
-                    "title" : "StarSystem",
-                    "description": "Name of destination starsystem",
-                    "type" : "string",
-                    "examples" : [ "Apotanites", "Corin", "Colonia" ]
-                },
-                "SystemAddress" : {
-                    "title" : "SystemAddress",
-                    "type" : "integer",
-                    "examples" : [ 2793649703291, 3657466548970, 3238296097059 ]
-                },
-                "StarPos" : {
-                    "title" : "StarPos",
-                    "description": "star position, as a Json array [x, y, z], relative to Sol in Ly",
-                    "type" : "array",
-                    "minItems": 3,
-                    "maxItems": 3,
-                    "items" : {
-                        "type" : "number",
-                        "examples" : [ -81.09375, -148.3125, -337.09375 ]
-                    }
-                },
-                "SystemAllegiance" : {
-                    "title" : "SystemAllegiance",
-                    "type" : "string",
-                    "examples" : [ "Independent", "Empire", "" ]
-                },
-                "SystemEconomy" : {
-                    "title" : "SystemEconomy",
-                    "type" : "string",
-                    "examples" : [ "$economy_Agri;", "$economy_Tourism;", "$economy_None;" ]
-                },
-                "SystemSecondEconomy" : {
-                    "title" : "SystemSecondEconomy",
-                    "type" : "string",
-                    "examples" : [ "$economy_Colony;", "$economy_Refinery;", "$economy_HighTech;" ]
-                },
-                "SystemGovernment" : {
-                    "title" : "SystemGovernment",
-                    "type" : "string",
-                    "examples" : [ "$government_Cooperative;", "$government_Corporate;", "$government_None;" ]
-                },
-                "SystemSecurity" : {
-                    "title" : "SystemSecurity",
-                    "type" : "string",
-                    "examples" : [ "$SYSTEM_SECURITY_medium;", "$SYSTEM_SECURITY_low;", "$GAlAXY_MAP_INFO_state_anarchy;" ]
-                },
-                "Population" : {
-                    "title" : "Population",
-                    "type" : "integer",
-                    "examples" : [ 64279, 1524923468, 583869 ]
-                },
-                "Body" : {
-                    "title" : "Body",
-                    "type" : "string",
-                    "examples" : [ "Apotanites 1 e", "Corin 4", "Colonia 2 d" ]
-                },
-                "BodyID" : {
-                    "title" : "BodyID",
-                    "type" : "integer",
-                    "examples" : [ 20, 11, 13 ]
-                },
-                "BodyType" : {
-                    "title" : "BodyType",
-                    "type" : "string",
-                    "examples" : [ "Planet", "Star", "Null" ]
-                },
-                "Factions" : {
-                    "title" : "Factions",
-                    "type" : "array",
-                    "items" : {
-                        "$ref": "../definitions.json#/definitions/Faction"
-                    }
-                },
-                "SystemFaction" : {
-                    "$ref": "../definitions.json#/definitions/SystemFaction"
-                },
-                "Conflicts" : {
-                    "title" : "Conflicts",
-                    "type" : "array",
-                    "items" : {
-                        "$ref": "../definitions.json#/definitions/Conflict"
-                    }
-                },
-                "Powers" : {
-                    "title" : "Powers",
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "examples" : [ "A. Lavigny-Duval", "Zachary Hudson", "Li Yong-Rui" ]
-                    }
-                },
-                "ControllingPower" : {
-                    "title" : "ControllingPower",
-                    "description": "Controlling power for the system",
-                    "type" : "string",
-                    "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
-                },
-                "PowerplayState" : {
-                    "title" : "PowerplayState",
-                    "type" : "string",
-                    "examples" : [ "Exploited", "Controlled", "Contested" ]
-                },
-                "ThargoidWar": {
-                    "title": "ThargoidWar",
-                    "$ref": "../definitions.json#/definitions/ThargoidWar"
-                }
-            }
+        "horizons": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has a Horizons pass."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has an Odyssey expansion."
+        },
+        "Docked": {
+          "title": "Docked",
+          "type": "boolean",
+          "examples": [
+            true
+          ]
+        },
+        "StationName": {
+          "title": "StationName",
+          "type": "string",
+          "examples": [
+            "A1A-B2B"
+          ]
+        },
+        "StationType": {
+          "title": "StationType",
+          "type": "string",
+          "examples": [
+            "FleetCarrier"
+          ]
+        },
+        "MarketID": {
+          "title": "MarketID",
+          "type": "integer",
+          "examples": [
+            3705689344,
+            3707430144,
+            3700382464
+          ]
+        },
+        "StationFaction": {
+          "$ref": "../definitions.json#/definitions/SystemFaction"
+        },
+        "StationGovernment": {
+          "title": "StationGovernment",
+          "type": "string",
+          "examples": [
+            "$government_Carrier;"
+          ]
+        },
+        "StationServices": {
+          "title": "StationServices",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "examples": [
+              "dock",
+              "autodock",
+              "commodities"
+            ]
+          }
+        },
+        "StationEconomy": {
+          "title": "StationEconomy",
+          "type": "string",
+          "examples": [
+            "$economy_Carrier;"
+          ]
+        },
+        "StationEconomies": {
+          "title": "StationEconomies",
+          "type": "array",
+          "items": {
+            "$ref": "../definitions.json#/definitions/StationEconomy"
+          }
+        },
+        "Taxi": {
+          "title": "Taxi",
+          "type": "boolean",
+          "examples": [
+            false
+          ]
+        },
+        "Multicrew": {
+          "title": "Multicrew",
+          "type": "boolean",
+          "examples": [
+            false
+          ]
+        },
+        "StarSystem": {
+          "title": "StarSystem",
+          "description": "Name of destination starsystem",
+          "type": "string",
+          "examples": [
+            "Apotanites",
+            "Corin",
+            "Colonia"
+          ]
+        },
+        "SystemAddress": {
+          "title": "SystemAddress",
+          "type": "integer",
+          "examples": [
+            2793649703291,
+            3657466548970,
+            3238296097059
+          ]
+        },
+        "StarPos": {
+          "title": "StarPos",
+          "description": "star position, as a Json array [x, y, z], relative to Sol in Ly",
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "examples": [
+              -81.09375,
+              -148.3125,
+              -337.09375
+            ]
+          }
+        },
+        "SystemAllegiance": {
+          "title": "SystemAllegiance",
+          "type": "string",
+          "examples": [
+            "Independent",
+            "Empire",
+            ""
+          ]
+        },
+        "SystemEconomy": {
+          "title": "SystemEconomy",
+          "type": "string",
+          "examples": [
+            "$economy_Agri;",
+            "$economy_Tourism;",
+            "$economy_None;"
+          ]
+        },
+        "SystemSecondEconomy": {
+          "title": "SystemSecondEconomy",
+          "type": "string",
+          "examples": [
+            "$economy_Colony;",
+            "$economy_Refinery;",
+            "$economy_HighTech;"
+          ]
+        },
+        "SystemGovernment": {
+          "title": "SystemGovernment",
+          "type": "string",
+          "examples": [
+            "$government_Cooperative;",
+            "$government_Corporate;",
+            "$government_None;"
+          ]
+        },
+        "SystemSecurity": {
+          "title": "SystemSecurity",
+          "type": "string",
+          "examples": [
+            "$SYSTEM_SECURITY_medium;",
+            "$SYSTEM_SECURITY_low;",
+            "$GAlAXY_MAP_INFO_state_anarchy;"
+          ]
+        },
+        "Population": {
+          "title": "Population",
+          "type": "integer",
+          "examples": [
+            64279,
+            1524923468,
+            583869
+          ]
+        },
+        "Body": {
+          "title": "Body",
+          "type": "string",
+          "examples": [
+            "Apotanites 1 e",
+            "Corin 4",
+            "Colonia 2 d"
+          ]
+        },
+        "BodyID": {
+          "title": "BodyID",
+          "type": "integer",
+          "examples": [
+            20,
+            11,
+            13
+          ]
+        },
+        "BodyType": {
+          "title": "BodyType",
+          "type": "string",
+          "examples": [
+            "Planet",
+            "Star",
+            "Null"
+          ]
+        },
+        "Factions": {
+          "title": "Factions",
+          "type": "array",
+          "items": {
+            "$ref": "../definitions.json#/definitions/Faction"
+          }
+        },
+        "SystemFaction": {
+          "$ref": "../definitions.json#/definitions/SystemFaction"
+        },
+        "Conflicts": {
+          "title": "Conflicts",
+          "type": "array",
+          "items": {
+            "$ref": "../definitions.json#/definitions/Conflict"
+          }
+        },
+        "Powers": {
+          "title": "Powers",
+          "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
+          "type": "array",
+          "default": null,
+          "items": {
+            "type": "string",
+            "examples": [
+              "Zachary Hudson",
+              "Yuri Grom",
+              "Li Yong-Rui"
+            ]
+          }
+        },
+        "ControllingPower": {
+          "title": "ControllingPower",
+          "description": "Controlling power for the system",
+          "type": "string",
+          "examples": [
+            "Zachary Hudson",
+            "Yuri Grom",
+            "Li Yong-Rui"
+          ]
+        },
+        "PowerplayState": {
+          "title": "PowerplayState",
+          "description": "Powerplay state for the system.",
+          "type": "string",
+          "examples": [
+            "Unoccupied",
+            "Contested",
+            "Exploited",
+            "Fortified",
+            "Stronghold"
+          ]
+        },
+        "PowerplayStateControlProgress": {
+          "title": "PowerplayStateControlProgress",
+          "description": "The current amount of control within the specific powerplay state",
+          "type": "number",
+          "examples": [
+            0.753582
+          ]
+        },
+        "PowerplayStateReinforcement": {
+          "title": "PowerplayStateReinforcement",
+          "description": "Merits gained towards reinforcing the system and increasing the system strength",
+          "type": "integer",
+          "examples": [
+            296
+          ]
+        },
+        "PowerplayStateUndermining": {
+          "title": "PowerplayStateUndermining",
+          "description": "Merits gained towards undermining the system and decreasing the system strength",
+          "type": "integer",
+          "examples": [
+            1942
+          ]
+        },
+        "PowerplayConflictProgress": {
+          "title": "PowerplayConflictProgress",
+          "$ref": "../definitions.json#/definitions/PowerplayConflictProgress"
+        },
+        "ThargoidWar": {
+          "title": "ThargoidWar",
+          "$ref": "../definitions.json#/definitions/ThargoidWar"
         }
+      }
     }
+  }
 }

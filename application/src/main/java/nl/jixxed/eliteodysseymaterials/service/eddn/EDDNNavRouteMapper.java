@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.navroute.Route;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.NavRoute.NavRoute;
 
 public class EDDNNavRouteMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final NavRoute navRoute, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(navRoute.getTimestamp())

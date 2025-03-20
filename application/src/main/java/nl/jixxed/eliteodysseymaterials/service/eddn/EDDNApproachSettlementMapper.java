@@ -13,7 +13,8 @@ import nl.jixxed.eliteodysseymaterials.service.LocationService;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EDDNApproachSettlementMapper extends EDDNMapper {
 
-    public static Message mapToEDDN(final ApproachSettlement approachSettlement,final Expansion expansion) {
+    @SuppressWarnings("unchecked")
+    public static Message mapToEDDN(final ApproachSettlement approachSettlement, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(approachSettlement.getTimestamp())
                 .withEvent(approachSettlement.getEvent())
@@ -30,12 +31,12 @@ public class EDDNApproachSettlementMapper extends EDDNMapper {
                 .withName(approachSettlement.getName())
                 .withStationEconomies(mapToOptionalEmptyIfEmptyList(approachSettlement.getStationEconomies())
                         .map(stationEconomies -> stationEconomies.stream()
-                            .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
-                                    .withName(stationEconomy.getName())
-                                    .withProportion(stationEconomy.getProportion())
-                                    .build())
-                            .toList())
-                .orElse(null))
+                                .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
+                                        .withName(stationEconomy.getName())
+                                        .withProportion(stationEconomy.getProportion())
+                                        .build())
+                                .toList())
+                        .orElse(null))
                 .withStationEconomy(approachSettlement.getStationEconomy().orElse(null))
                 .withStationFaction(new SystemFaction.SystemFactionBuilder()
                         .withName(approachSettlement.getStationFaction().map(StationFaction::getName).orElse(null))

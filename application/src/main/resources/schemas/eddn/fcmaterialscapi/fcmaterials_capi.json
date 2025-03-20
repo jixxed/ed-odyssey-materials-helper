@@ -1,111 +1,128 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/fcmaterials_capi/1",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required": [ "$schemaRef", "header", "message" ],
-    "properties": {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/fcmaterials_capi/1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "description": "Contains all properties from the listed events in the client's journal minus the Localised strings and the properties marked below as 'disallowed'",
+      "additionalProperties": false,
+      "required": [
+        "timestamp",
+        "event",
+        "MarketID",
+        "CarrierID",
+        "Items"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "event": {
+          "type": "string"
         },
-        "message": {
-            "type"                  : "object",
-            "description"           : "Contains all properties from the listed events in the client's journal minus the Localised strings and the properties marked below as 'disallowed'",
-            "additionalProperties"  : false,
-            "required"              : [ "timestamp", "event", "MarketID", "CarrierID", "Items" ],
-            "properties"            : {
-                "timestamp": {
-                    "type"          : "string",
-                    "format"        : "date-time"
-                },
-                "event" : {
-                    "type"          : "string"
-                },
-                "horizons": {
-                    "type"          : "boolean",
-                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
-                },
-                "odyssey": {
-                    "type"          : "boolean",
-                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
-                },
-
-                "MarketID": {
-                    "type"          : "integer"
-                },
-
-                "CarrierID": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-
-                "Items": {
-                    "properties": {
-                        "purchases": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "required": [ "name", "price", "outstanding", "total" ],
-                                "additionalProperties": false,
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "minLength": 1
-                                    },
-                                    "outstanding": {
-                                        "type": "integer"
-                                    },
-                                    "price": {
-                                        "type": "integer"
-                                    },
-                                    "total": {
-                                        "type": "integer"
-                                    }
-                                }
-                            }
-                        },
-                        "sales": {
-                            "anyOf": [
-                                {
-                                    "type": "array",
-                                    "$comment": "If there are no items then sales is an empty array",
-                                    "minItems": 0,
-                                    "maxItems": 0
-                                },
-                                {
-                                    "type": "object",
-                                    "$comment": "If there ARE items then sales is an object, *NOT* an array",
-                                    "patternProperties": {
-                                        "^[0-9]+$": {
-                                            "type"      : "object",
-                                            "required"  : [ "id", "name", "price", "stock" ],
-                                            "additionalProperties": false,
-                                            "properties": {
-                                                "id"    : {
-                                                    "type"  : "integer"
-                                                },
-                                                "name"  : {
-                                                    "type"  : "string",
-                                                    "minLength": 1
-                                                },
-                                                "price" : {
-                                                    "type": "integer"
-                                                },
-                                                "stock": {
-                                                    "type": "integer"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
+        "horizons": {
+          "type": "boolean",
+          "description": "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "MarketID": {
+          "type": "integer"
+        },
+        "CarrierID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Items": {
+          "properties": {
+            "purchases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "price",
+                  "outstanding",
+                  "total"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "outstanding": {
+                    "type": "integer"
+                  },
+                  "price": {
+                    "type": "integer"
+                  },
+                  "total": {
+                    "type": "integer"
+                  }
                 }
+              }
+            },
+            "sales": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "$comment": "If there are no items then sales is an empty array",
+                  "minItems": 0,
+                  "maxItems": 0
+                },
+                {
+                  "type": "object",
+                  "$comment": "If there ARE items then sales is an object, *NOT* an array",
+                  "patternProperties": {
+                    "^[0-9]+$": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "name",
+                        "price",
+                        "stock"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "price": {
+                          "type": "integer"
+                        },
+                        "stock": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
             }
+          }
         }
+      }
     }
+  }
 }

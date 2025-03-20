@@ -13,6 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EDDNCodexEntryMapper extends EDDNMapper {
 
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final CodexEntry codexEntry, final Expansion expansion) {
         final String bodyName = LocationService.getStatusBodyName().orElse(null);
         final nl.jixxed.eliteodysseymaterials.domain.Location currentLocation = LocationService.getCurrentLocation();

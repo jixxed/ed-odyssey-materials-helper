@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.ScanBaryCentre.ScanBaryCe
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 public class EDDNScanBaryCentreMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final ScanBaryCentre scanBaryCentre, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(scanBaryCentre.getTimestamp())

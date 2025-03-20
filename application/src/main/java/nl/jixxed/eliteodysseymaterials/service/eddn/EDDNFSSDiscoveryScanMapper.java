@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSDiscoveryScan.FSSDisco
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 public class EDDNFSSDiscoveryScanMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final FSSDiscoveryScan fssDiscoveryScan, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(fssDiscoveryScan.getTimestamp())

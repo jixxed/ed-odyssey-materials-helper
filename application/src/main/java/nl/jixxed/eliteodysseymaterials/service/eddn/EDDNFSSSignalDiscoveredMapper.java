@@ -3,12 +3,14 @@ package nl.jixxed.eliteodysseymaterials.service.eddn;
 import nl.jixxed.eliteodysseymaterials.enums.Expansion;
 import nl.jixxed.eliteodysseymaterials.schemas.eddn.fsssignaldiscovered.Message;
 import nl.jixxed.eliteodysseymaterials.schemas.eddn.fsssignaldiscovered.Signal;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.Event;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSSignalDiscovered.FSSSignalDiscovered;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 import java.util.List;
 
 public class EDDNFSSSignalDiscoveredMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final List<FSSSignalDiscovered> fssSignalDiscoveredList, final Expansion expansion) {
         final List<Signal> signals = fssSignalDiscoveredList.stream()
                 .filter(fssSignalDiscovered -> fssSignalDiscovered.getSystemAddress().equals(LocationService.getCurrentSystemAddress()))
@@ -28,11 +30,11 @@ public class EDDNFSSSignalDiscoveredMapper extends EDDNMapper {
         return new Message.MessageBuilder()
                 .withTimestamp(signals.stream()
                         .findFirst()
-                        .map(signal -> signal.getTimestamp())
+                        .map(Signal::getTimestamp)
                         .orElse(null))
                 .withEvent(fssSignalDiscoveredList.stream()
                         .findFirst()
-                        .map(fssSignalDiscovered -> fssSignalDiscovered.getEvent())
+                        .map(Event::getEvent)
                         .orElse(null))
                 .withHorizons(expansion.equals(Expansion.HORIZONS) || expansion.equals(Expansion.ODYSSEY))
                 .withOdyssey(expansion.equals(Expansion.ODYSSEY))

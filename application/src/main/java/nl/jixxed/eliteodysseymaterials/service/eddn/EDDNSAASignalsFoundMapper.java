@@ -8,6 +8,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.SAASignalsFound.SAASignal
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 public class EDDNSAASignalsFoundMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final SAASignalsFound saaSignalsFound, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(saaSignalsFound.getTimestamp())

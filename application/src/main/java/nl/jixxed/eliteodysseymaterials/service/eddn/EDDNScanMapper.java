@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.Scan.Scan;
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 public class EDDNScanMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final Scan scan, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(scan.getTimestamp())
