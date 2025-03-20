@@ -42,7 +42,8 @@ public class PowerplayUnlockableModule extends DestroyableHBox implements Destro
     @Override
     public void initEventHandling() {
         register(EventService.addListener(true, this, PowerplayEvent.class, powerplayEvent ->
-                this.update(powerplayEvent.getPower(), powerplayEvent.getRank())));
+                powerplayEvent.getRank().ifPresent(rank ->
+                        this.update(powerplayEvent.getPower(), rank))));
     }
 
     public void update(Power power, long rank) {

@@ -72,6 +72,8 @@ public enum JournalEventType {
     DELIVERPOWERMICRORESOURCES("DeliverPowerMicroResources"),
     STARTJUMP("StartJump"),
     POWERPLAY("Powerplay"),
+    POWERPLAYRANK("PowerplayRank"),
+    POWERPLAYMERITS("PowerplayMerits"),
     SCIENTIFICRESEARCH("ScientificResearch");
     private final String name;
 

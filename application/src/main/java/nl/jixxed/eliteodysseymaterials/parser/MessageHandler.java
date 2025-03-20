@@ -109,6 +109,8 @@ class MessageHandler {
             Map.entry(JournalEventType.SHUTDOWN, new ShutdownMessageProcessor()),
             Map.entry(JournalEventType.STARTJUMP, new StartJumpMessageProcessor()),
             Map.entry(JournalEventType.POWERPLAY, new PowerplayMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAYRANK, new PowerplayRankMessageProcessor()),
+            Map.entry(JournalEventType.POWERPLAYMERITS, new PowerplayMeritsMessageProcessor()),
             Map.entry(JournalEventType.MUSIC, new MusicMessageProcessor()),
             Map.entry(JournalEventType.DELIVERPOWERMICRORESOURCES, new DeliverPowerMicroResourcesMessageProcessor()),
 
@@ -148,6 +150,7 @@ class MessageHandler {
 
     /**
      * Cargo/Shiplocker/Backpack state file
+     *
      * @param file
      * @param journalEventType
      */
@@ -155,9 +158,9 @@ class MessageHandler {
         try {
             final String message = Files.readString(file.toPath());
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
-            if(jsonNode.has(EVENT) && jsonNode.has(TIMESTAMP)) {
+            if (jsonNode.has(EVENT) && jsonNode.has(TIMESTAMP)) {
                 final String eventName = jsonNode.get(EVENT).asText();
-                log.info("event: " + eventName + "("+jsonNode.get(TIMESTAMP).asText()+")");
+                log.info("event: " + eventName + "(" + jsonNode.get(TIMESTAMP).asText() + ")");
                 final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
                 if (messageProcessor != null) {
                     final Class<? extends Event> messageClass = messageProcessor.getMessageClass();
@@ -179,9 +182,9 @@ class MessageHandler {
         try {
             final String message = Files.readString(file.toPath());
             final JsonNode jsonNode = OBJECT_MAPPER.readTree(message);
-            if(jsonNode.has(EVENT) && jsonNode.has(TIMESTAMP)) {
+            if (jsonNode.has(EVENT) && jsonNode.has(TIMESTAMP)) {
                 final String eventName = jsonNode.get(EVENT).asText();
-                log.info("event: " + eventName + "("+jsonNode.get(TIMESTAMP).asText()+")");
+                log.info("event: " + eventName + "(" + jsonNode.get(TIMESTAMP).asText() + ")");
                 final JournalEventType journalEventType = JournalEventType.forName(jsonNode.get(EVENT).asText());
                 final MessageProcessor<Event> messageProcessor = (MessageProcessor<Event>) messageProcessors.get(journalEventType);
                 if (messageProcessor != null) {

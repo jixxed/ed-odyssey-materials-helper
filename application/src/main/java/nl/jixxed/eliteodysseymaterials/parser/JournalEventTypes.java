@@ -34,6 +34,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierFinance.CarrierFin
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump.CarrierJump;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJumpCancelled.CarrierJumpCancelled;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJumpRequest.CarrierJumpRequest;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierLocation.CarrierLocation;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierModulePack.CarrierModulePack;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierNameChange.CarrierNameChange;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierShipPack.CarrierShipPack;
@@ -172,6 +173,8 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayDeliver.Powerpla
 import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayFastTrack.PowerplayFastTrack;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayJoin.PowerplayJoin;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayLeave.PowerplayLeave;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayMerits.PowerplayMerits;
+import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayRank.PowerplayRank;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplaySalary.PowerplaySalary;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayVote.PowerplayVote;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayVoucher.PowerplayVoucher;
@@ -264,7 +267,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.WingLeave.WingLeave;
 import java.util.Map;
 
 public class JournalEventTypes {
-    public static final Map<String, Class<? extends Event>> EVENT_TYPES = Map.ofEntries(
+    public static final Map<String, Class<? extends Event>> EVENT_TYPES = Map.<String, Class<? extends Event>>ofEntries(
             Map.entry("AfmuRepairs", AfmuRepairs.class),
             Map.entry("AppliedToSquadron", AppliedToSquadron.class),
             Map.entry("ApproachBody", ApproachBody.class),
@@ -299,6 +302,7 @@ public class JournalEventTypes {
             Map.entry("CarrierJump", CarrierJump.class),
             Map.entry("CarrierJumpCancelled", CarrierJumpCancelled.class),
             Map.entry("CarrierJumpRequest", CarrierJumpRequest.class),
+            Map.entry("CarrierLocation", CarrierLocation.class),
             Map.entry("CarrierModulePack", CarrierModulePack.class),
             Map.entry("CarrierNameChange", CarrierNameChange.class),
             Map.entry("CarrierShipPack", CarrierShipPack.class),
@@ -427,6 +431,8 @@ public class JournalEventTypes {
             Map.entry("PayBounties", PayBounties.class),
             Map.entry("PayFines", PayFines.class),
             Map.entry("Powerplay", Powerplay.class),
+            Map.entry("PowerplayRank", PowerplayRank.class),
+            Map.entry("PowerplayMerits", PowerplayMerits.class),
             Map.entry("PowerplayCollect", PowerplayCollect.class),
             Map.entry("PowerplayDefect", PowerplayDefect.class),
             Map.entry("PowerplayDeliver", PowerplayDeliver.class),

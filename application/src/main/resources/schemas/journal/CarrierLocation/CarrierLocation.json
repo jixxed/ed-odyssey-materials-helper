@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "Carrier Location. Written on startup and after a carrier jump.",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "CarrierID" : {
+      "title" : "CarrierID",
+      "type" : "integer",
+      "examples" : [ 3710009344, 3703777280, 3701272576 ]
+    },
+    "StarSystem" : {
+      "title" : "StarSystem",
+      "type" : "string",
+      "examples" : [ "Hebe" ]
+    },
+    "SystemAddress" : {
+      "title" : "SystemAddress",
+      "type" : "integer",
+      "examples" : [ 13866436208033, 2007662334698, 633742463690 ]
+    },
+    "BodyID" : {
+      "title" : "BodyID",
+      "type" : "integer",
+      "examples" : [ 0, 11, 7 ]
+    }
+    },
+  "additionalProperties" : false,
+  "required" : [ "CarrierID", "StarSystem", "SystemAddress", "BodyID" ]
+}

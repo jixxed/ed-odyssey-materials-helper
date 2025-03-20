@@ -126,6 +126,7 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJumpCancelled;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJumpRequest;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierLocation;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierModulePack;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierNameChange;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierShipPack;
@@ -254,6 +255,8 @@ module nl.jixxed.eliteodysseymaterials {
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.PayBounties;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.PayFines;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.Powerplay;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayRank;
+    exports nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayMerits;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayCollect;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayDefect;
     exports nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayDeliver;
@@ -381,6 +384,7 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJump to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJumpCancelled to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierJumpRequest to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierLocation to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierModulePack to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierNameChange to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.CarrierShipPack to com.fasterxml.jackson.databind;
@@ -509,6 +513,8 @@ module nl.jixxed.eliteodysseymaterials {
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.PayBounties to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.PayFines to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.Powerplay to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayRank to com.fasterxml.jackson.databind;
+    opens nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayMerits to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayCollect to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayDefect to com.fasterxml.jackson.databind;
     opens nl.jixxed.eliteodysseymaterials.schemas.journal.PowerplayDeliver to com.fasterxml.jackson.databind;

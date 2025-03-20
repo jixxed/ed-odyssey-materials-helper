@@ -445,18 +445,14 @@
         "Name"
       ]
     },
-    "Powers": {
-      "title": "Powers",
+    "Powers" : {
+      "title" : "Powers",
       "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
-      "type": "array",
+      "type" : "array",
       "default": null,
-      "items": {
-        "type": "string",
-        "examples": [
-          "Zachary Hudson",
-          "Yuri Grom",
-          "Li Yong-Rui"
-        ]
+      "items" : {
+        "type" : "string",
+        "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
       }
     },
     "ControllingPower" : {
@@ -465,15 +461,53 @@
       "type" : "string",
       "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
     },
-    "PowerplayState": {
-      "title": "PowerplayState",
-      "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
-      "type": "string",
-      "examples": [
-        "Contested",
-        "Exploited",
-        "Controlled"
-      ]
+    "PowerplayState" : {
+      "title" : "PowerplayState",
+      "description": "Powerplay state for the system.",
+      "type" : "string",
+      "examples" : [ "Unoccupied", "Contested", "Exploited", "Fortified", "Stronghold" ]
+    },
+    "PowerplayStateControlProgress" : {
+      "title" : "PowerplayStateControlProgress",
+      "description": "The current amount of control within the specific powerplay state",
+      "type" : "number",
+      "examples" : [ 0.753582 ]
+    },
+    "PowerplayStateReinforcement" : {
+      "title" : "PowerplayStateReinforcement",
+      "description": "Merits gained towards reinforcing the system and increasing the system strength",
+      "type" : "integer",
+      "examples" : [ 296 ]
+    },
+    "PowerplayStateUndermining" : {
+      "title" : "PowerplayStateUndermining",
+      "description": "Merits gained towards undermining the system and decreasing the system strength",
+      "type" : "integer",
+      "examples" : [ 1942 ]
+    },
+    "PowerplayConflictProgress" : {
+      "title" : "PowerplayConflictProgress",
+      "description": "When the system is unoccupied and 1 or more powers are fighting for control by reaching 120k merits.",
+      "type" : "array",
+      "default": null,
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "Power" : {
+            "title" : "Power",
+            "type" : "string",
+            "examples" : [ "Felicia Winters", "Zemina Torval" ]
+          },
+          "ConflictProgress" : {
+            "title" : "ConflictProgress",
+            "description": "Progress towards the control threshold of 120k merits. can exceed 100%(1.0).",
+            "type" : "number",
+            "examples" : [ 0.047725, 4.1 ]
+          }
+        },
+        "additionalProperties" : false,
+        "required" : [ "Power", "ConflictProgress" ]
+      }
     },
     "Conflicts": {
       "title": "Conflicts",
@@ -513,14 +547,15 @@
                   "Alliance of Wadjang"
                 ]
               },
-              "Stake": {
-                "title": "Stake",
-                "type": "string",
-                "examples": [
-                  "Saavedra Depot",
-                  "Sagan Landing",
-                  "Vespucci Installation"
-                ]
+              "Stake" : {
+                "title" : "Stake",
+                "type" : "string",
+                "examples" : [ "Saavedra Depot", "Sagan Landing", "$EXT_PANEL_ColonisationShip;" ]
+              },
+              "Stake_Localised" : {
+                "title" : "Stake_Localised",
+                "type" : "string",
+                "examples" : [ "System Colonisation Ship" ]
               },
               "WonDays": {
                 "title": "WonDays",

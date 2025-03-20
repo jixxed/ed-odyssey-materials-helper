@@ -115,9 +115,9 @@ if (arch == "aarch64") {
 ext {
     version_logback = "1.5.17"
     version_jackson = "2.18.3"
-    version_jna = "5.16.0"
-    version_junit_jupiter = "5.12.0"
-    version_junit_platform = "1.12.0"
+    version_jna = "5.17.0"
+    version_junit_jupiter = "5.12.1"
+    version_junit_platform = "1.12.1"
     version_javafx = "23.0.1"
     version_controlsfx = "11.2.1"
     version_scribejava = "8.3.3"
@@ -134,8 +134,8 @@ ext {
     version_mockito_inline = "5.2.0"
     version_guava = "33.4.0-jre"
     version_j2objc_annotations = "3.0.0"
-    version_mockito = "5.16.0"
-    version_sentry = "8.3.0"
+    version_mockito = "5.16.1"
+    version_sentry = "8.4.0"
 }
 allprojects {
     plugins.withType(JavaPlugin).whenPluginAdded {
