@@ -1,232 +1,378 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required": [ "$schemaRef", "header", "message" ],
-    "properties": {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/journal/1#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "description": "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
+      "additionalProperties": true,
+      "required": [
+        "timestamp",
+        "event",
+        "StarSystem",
+        "StarPos",
+        "SystemAddress"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "event": {
+          "type": "string"
         },
-        "message": {
-            "type"                  : "object",
-            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
-            "additionalProperties"  : true,
-            "required"              : [ "timestamp", "event", "StarSystem", "StarPos", "SystemAddress" ],
-            "properties"            : {
-                "timestamp": {
-                    "type"          : "string",
-                    "format"        : "date-time"
-                },
-                "event" : {
-                    "type"          : "string"
-                },
-                "horizons": {
-                    "type"          : "boolean",
-                    "description"   : "Whether the sending Cmdr has a Horizons pass."
-                },
-                "odyssey": {
-                    "type"      : "boolean",
-                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
-                },
-                "DistFromStarLS" : {
-                    "title" : "DistFromStarLS",
-                    "description": "If not close to main star",
-                    "type" : "number",
-                    "examples" : [ 99769.810159, 99769.806641, 11.433024 ]
-                },
-                "Docked" : {
-                    "title" : "Docked",
-                    "description": "True if ship is docked",
-                    "type" : "boolean",
-                    "examples" : [ false, true ]
-                },
-                "Taxi" : {
-                    "title" : "Taxi",
-                    "description": "True when inside a taxi transport ship",
-                    "type" : "boolean",
-                    "examples" : [ false, true ]
-                },
-                "Multicrew" : {
-                    "title" : "Multicrew",
-                    "description": "True when inside another player's ship",
-                    "type" : "boolean",
-                    "examples" : [ false, true ]
-                },
-                "StarSystem" : {
-                    "title" : "StarSystem",
-                    "description": "Name of starsystem",
-                    "type" : "string",
-                    "examples" : [ "Asterope", "HIP 20485", "Panoi" ]
-                },
-                "SystemAddress" : {
-                    "title" : "SystemAddress",
-                    "type" : "integer",
-                    "examples" : [ 216054883492, 3657265287866, 6955800204002 ]
-                },
-                "StarPos" : {
-                    "title" : "StarPos",
-                    "description": "star position, as a Json array [x, y, z], relative to Sol in Ly",
-                    "type" : "array",
-                    "minItems": 3,
-                    "maxItems": 3,
-                    "items" : {
-                        "type" : "number",
-                        "examples" : [ -81.09375, 148.3125, -337.09375 ]
-                    }
-                },
-                "SystemAllegiance" : {
-                    "title" : "SystemAllegiance",
-                    "type" : "string",
-                    "examples" : [ "Independent", "Federation", "" ]
-                },
-                "SystemEconomy" : {
-                    "title" : "SystemEconomy",
-                    "type" : "string",
-                    "examples" : [ "$economy_Military;", "$economy_Industrial;", "$economy_Refinery;" ]
-                },
-                "SystemSecondEconomy" : {
-                    "title" : "SystemSecondEconomy",
-                    "type" : "string",
-                    "examples" : [ "$economy_None;", "$economy_Extraction;", "$economy_Industrial;" ]
-                },
-                "SystemGovernment" : {
-                    "title" : "SystemGovernment",
-                    "type" : "string",
-                    "examples" : [ "$government_Patronage;", "$government_Corporate;", "$government_Feudal;" ]
-                },
-                "SystemSecurity" : {
-                    "title" : "SystemSecurity",
-                    "type" : "string",
-                    "examples" : [ "$SYSTEM_SECURITY_low;", "$SYSTEM_SECURITY_high;", "$SYSTEM_SECURITY_medium;" ]
-                },
-                "Population" : {
-                    "title" : "Population",
-                    "type" : "integer",
-                    "examples" : [ 1200000, 54893950, 2654856 ]
-                },
-                "Body" : {
-                    "title" : "Body",
-                    "type" : "string",
-                    "examples" : [ "Asterope BC", "HIP 20485 A 1", "Panoi" ]
-                },
-                "BodyID" : {
-                    "title" : "BodyID",
-                    "type" : "integer",
-                    "examples" : [ 2, 11, 0 ]
-                },
-                "BodyType" : {
-                    "title" : "BodyType",
-                    "type" : "string",
-                    "examples" : [ "Null", "Planet", "Star" ]
-                },
-                "Factions" : {
-                    "title" : "Factions",
-                    "type" : "array",
-                    "items" : {
-                        "$ref": "../definitions.json#/definitions/Faction"
-                    }
-                },
-                "SystemFaction" : {
-                    "$ref": "../definitions.json#/definitions/SystemFaction"
-                },
-                "Conflicts" : {
-                    "title" : "Conflicts",
-                    "type" : "array",
-                    "items" : {
-                        "$ref": "../definitions.json#/definitions/Conflict"
-                    }
-                },
-                "Powers" : {
-                    "title" : "Powers",
-                    "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
-                    }
-                },
-                "ControllingPower" : {
-                    "title" : "ControllingPower",
-                    "description": "Controlling power for the system",
-                    "type" : "string",
-                    "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
-                },
-                "PowerplayState" : {
-                    "title" : "PowerplayState",
-                    "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
-                    "type" : "string",
-                    "examples" : [ "Contested", "Exploited", "Controlled" ]
-                },
-                "OnFoot" : {
-                    "title" : "OnFoot",
-                    "type" : "boolean",
-                    "examples" : [ true ]
-                },
-                "StationName" : {
-                    "title" : "StationName",
-                    "type" : "string",
-                    "examples" : [ "A1A-B2B", "Penal Ship Y-32", "Marshall's Drift" ]
-                },
-                "StationType" : {
-                    "title" : "StationType",
-                    "type" : "string",
-                    "examples" : [ "FleetCarrier", "MegaShip", "CraterOutpost" ]
-                },
-                "MarketID" : {
-                    "title" : "MarketID",
-                    "type" : "integer",
-                    "examples" : [ 3705689344, 128831127, 128972903 ]
-                },
-                "StationFaction" : {
-                    "$ref": "../definitions.json#/definitions/SystemFaction"
-                },
-                "StationGovernment" : {
-                    "title" : "StationGovernment",
-                    "description": "If starting docked in a station",
-                    "type" : "string",
-                    "examples" : [ "$government_Carrier;", "$government_Prison;", "$government_Engineer;" ]
-                },
-                "StationServices" : {
-                    "title" : "StationServices",
-                    "description": "If starting docked in a station",
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "examples" : [ "dock", "autodock", "blackmarket" ]
-                    }
-                },
-                "StationEconomy" : {
-                    "title" : "StationEconomy",
-                    "description": "If starting docked in a station",
-                    "type" : "string",
-                    "examples" : [ "$economy_Carrier;", "$economy_Prison;", "$economy_Colony;" ]
-                },
-                "StationEconomies" : {
-                    "title" : "StationEconomies",
-                    "type" : "array",
-                    "items" : {
-                        "$ref": "../definitions.json#/definitions/StationEconomy"
-                    }
-                },
-                "InSRV" : {
-                    "title" : "InSRV",
-                    "type" : "boolean",
-                    "examples" : [ true ]
-                },
-                "StationAllegiance" : {
-                    "title" : "StationAllegiance",
-                    "type" : "string",
-                    "examples" : [ "Federation", "PilotsFederation", "Alliance" ]
-                },
-                "ThargoidWar": {
-                    "title": "ThargoidWar",
-                    "$ref": "../definitions.json#/definitions/ThargoidWar"
-                }
-            }
+        "horizons": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has a Horizons pass."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has an Odyssey expansion."
+        },
+        "DistFromStarLS": {
+          "title": "DistFromStarLS",
+          "description": "If not close to main star",
+          "type": "number",
+          "examples": [
+            99769.810159,
+            99769.806641,
+            11.433024
+          ]
+        },
+        "Docked": {
+          "title": "Docked",
+          "description": "True if ship is docked",
+          "type": "boolean",
+          "examples": [
+            false,
+            true
+          ]
+        },
+        "Taxi": {
+          "title": "Taxi",
+          "description": "True when inside a taxi transport ship",
+          "type": "boolean",
+          "examples": [
+            false,
+            true
+          ]
+        },
+        "Multicrew": {
+          "title": "Multicrew",
+          "description": "True when inside another player's ship",
+          "type": "boolean",
+          "examples": [
+            false,
+            true
+          ]
+        },
+        "StarSystem": {
+          "title": "StarSystem",
+          "description": "Name of starsystem",
+          "type": "string",
+          "examples": [
+            "Asterope",
+            "HIP 20485",
+            "Panoi"
+          ]
+        },
+        "SystemAddress": {
+          "title": "SystemAddress",
+          "type": "integer",
+          "examples": [
+            216054883492,
+            3657265287866,
+            6955800204002
+          ]
+        },
+        "StarPos": {
+          "title": "StarPos",
+          "description": "star position, as a Json array [x, y, z], relative to Sol in Ly",
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "examples": [
+              -81.09375,
+              148.3125,
+              -337.09375
+            ]
+          }
+        },
+        "SystemAllegiance": {
+          "title": "SystemAllegiance",
+          "type": "string",
+          "examples": [
+            "Independent",
+            "Federation",
+            ""
+          ]
+        },
+        "SystemEconomy": {
+          "title": "SystemEconomy",
+          "type": "string",
+          "examples": [
+            "$economy_Military;",
+            "$economy_Industrial;",
+            "$economy_Refinery;"
+          ]
+        },
+        "SystemSecondEconomy": {
+          "title": "SystemSecondEconomy",
+          "type": "string",
+          "examples": [
+            "$economy_None;",
+            "$economy_Extraction;",
+            "$economy_Industrial;"
+          ]
+        },
+        "SystemGovernment": {
+          "title": "SystemGovernment",
+          "type": "string",
+          "examples": [
+            "$government_Patronage;",
+            "$government_Corporate;",
+            "$government_Feudal;"
+          ]
+        },
+        "SystemSecurity": {
+          "title": "SystemSecurity",
+          "type": "string",
+          "examples": [
+            "$SYSTEM_SECURITY_low;",
+            "$SYSTEM_SECURITY_high;",
+            "$SYSTEM_SECURITY_medium;"
+          ]
+        },
+        "Population": {
+          "title": "Population",
+          "type": "integer",
+          "examples": [
+            1200000,
+            54893950,
+            2654856
+          ]
+        },
+        "Body": {
+          "title": "Body",
+          "type": "string",
+          "examples": [
+            "Asterope BC",
+            "HIP 20485 A 1",
+            "Panoi"
+          ]
+        },
+        "BodyID": {
+          "title": "BodyID",
+          "type": "integer",
+          "examples": [
+            2,
+            11,
+            0
+          ]
+        },
+        "BodyType": {
+          "title": "BodyType",
+          "type": "string",
+          "examples": [
+            "Null",
+            "Planet",
+            "Star"
+          ]
+        },
+        "Factions": {
+          "title": "Factions",
+          "type": "array",
+          "items": {
+            "$ref": "../definitions.json#/definitions/Faction"
+          }
+        },
+        "SystemFaction": {
+          "$ref": "../definitions.json#/definitions/SystemFaction"
+        },
+        "Conflicts": {
+          "title": "Conflicts",
+          "type": "array",
+          "items": {
+            "$ref": "../definitions.json#/definitions/Conflict"
+          }
+        },
+        "Powers": {
+          "title": "Powers",
+          "description": "If the player is pledged to a Power in Powerplay, and the star system is involved in powerplay",
+          "type": "array",
+          "default": null,
+          "items": {
+            "type": "string",
+            "examples": [
+              "Zachary Hudson",
+              "Yuri Grom",
+              "Li Yong-Rui"
+            ]
+          }
+        },
+        "ControllingPower": {
+          "title": "ControllingPower",
+          "description": "Controlling power for the system",
+          "type": "string",
+          "examples": [
+            "Zachary Hudson",
+            "Yuri Grom",
+            "Li Yong-Rui"
+          ]
+        },
+        "PowerplayState": {
+          "title": "PowerplayState",
+          "description": "Powerplay state for the system.",
+          "type": "string",
+          "examples": [
+            "Unoccupied",
+            "Contested",
+            "Exploited",
+            "Fortified",
+            "Stronghold"
+          ]
+        },
+        "PowerplayStateControlProgress": {
+          "title": "PowerplayStateControlProgress",
+          "description": "The current amount of control within the specific powerplay state",
+          "type": "number",
+          "examples": [
+            0.753582
+          ]
+        },
+        "PowerplayStateReinforcement": {
+          "title": "PowerplayStateReinforcement",
+          "description": "Merits gained towards reinforcing the system and increasing the system strength",
+          "type": "integer",
+          "examples": [
+            296
+          ]
+        },
+        "PowerplayStateUndermining": {
+          "title": "PowerplayStateUndermining",
+          "description": "Merits gained towards undermining the system and decreasing the system strength",
+          "type": "integer",
+          "examples": [
+            1942
+          ]
+        },
+        "PowerplayConflictProgress": {
+          "title": "PowerplayConflictProgress",
+          "$ref": "../definitions.json#/definitions/PowerplayConflictProgress"
+        },
+        "OnFoot": {
+          "title": "OnFoot",
+          "type": "boolean",
+          "examples": [
+            true
+          ]
+        },
+        "StationName": {
+          "title": "StationName",
+          "type": "string",
+          "examples": [
+            "A1A-B2B",
+            "Penal Ship Y-32",
+            "Marshall's Drift"
+          ]
+        },
+        "StationType": {
+          "title": "StationType",
+          "type": "string",
+          "examples": [
+            "FleetCarrier",
+            "MegaShip",
+            "CraterOutpost"
+          ]
+        },
+        "MarketID": {
+          "title": "MarketID",
+          "type": "integer",
+          "examples": [
+            3705689344,
+            128831127,
+            128972903
+          ]
+        },
+        "StationFaction": {
+          "$ref": "../definitions.json#/definitions/SystemFaction"
+        },
+        "StationGovernment": {
+          "title": "StationGovernment",
+          "description": "If starting docked in a station",
+          "type": "string",
+          "examples": [
+            "$government_Carrier;",
+            "$government_Prison;",
+            "$government_Engineer;"
+          ]
+        },
+        "StationServices": {
+          "title": "StationServices",
+          "description": "If starting docked in a station",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "examples": [
+              "dock",
+              "autodock",
+              "blackmarket"
+            ]
+          }
+        },
+        "StationEconomy": {
+          "title": "StationEconomy",
+          "description": "If starting docked in a station",
+          "type": "string",
+          "examples": [
+            "$economy_Carrier;",
+            "$economy_Prison;",
+            "$economy_Colony;"
+          ]
+        },
+        "StationEconomies": {
+          "title": "StationEconomies",
+          "type": "array",
+          "items": {
+            "$ref": "../definitions.json#/definitions/StationEconomy"
+          }
+        },
+        "InSRV": {
+          "title": "InSRV",
+          "type": "boolean",
+          "examples": [
+            true
+          ]
+        },
+        "StationAllegiance": {
+          "title": "StationAllegiance",
+          "type": "string",
+          "examples": [
+            "Federation",
+            "PilotsFederation",
+            "Alliance"
+          ]
+        },
+        "ThargoidWar": {
+          "title": "ThargoidWar",
+          "$ref": "../definitions.json#/definitions/ThargoidWar"
         }
+      }
     }
+  }
 }

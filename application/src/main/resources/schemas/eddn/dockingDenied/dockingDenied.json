@@ -1,53 +1,63 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/journal/1#",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required": [ "$schemaRef", "header", "message" ],
-    "properties": {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/journal/1#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "description": "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
+      "additionalProperties": true,
+      "required": [
+        "timestamp",
+        "event",
+        "MarketID",
+        "StationName",
+        "Reason"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "event": {
+          "type": "string"
         },
-        "message": {
-            "type"                  : "object",
-            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below",
-            "additionalProperties"  : true,
-            "required"              : [ "timestamp", "event", "MarketID", "StationName", "Reason" ],
-            "properties"            : {
-                "timestamp": {
-                    "type"          : "string",
-                    "format"        : "date-time"
-                },
-                "event" : {
-                    "type"          : "string"
-                },
-                "horizons": {
-                    "type"          : "boolean",
-                    "description"   : "Whether the sending Cmdr has a Horizons pass."
-                },
-                "odyssey": {
-                    "type"      : "boolean",
-                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
-                },
-                "MarketID": {
-                    "type"          : "integer"
-                },
-                "StationName": {
-                    "type"          : "string",
-                    "description"   : "Name of station"
-                },
-                "StationType": {
-                    "type"          : "string",
-                    "description"   : "Type of station"
-                },
-                "Reason": {
-                    "type"          : "string",
-                    "description"   : "Reason docking was denied"
-                }
-            }
+        "horizons": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has a Horizons pass."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has an Odyssey expansion."
+        },
+        "MarketID": {
+          "type": "integer"
+        },
+        "StationName": {
+          "type": "string",
+          "description": "Name of station"
+        },
+        "StationType": {
+          "type": "string",
+          "description": "Type of station"
+        },
+        "Reason": {
+          "type": "string",
+          "description": "Reason docking was denied"
         }
+      }
     }
+  }
 }

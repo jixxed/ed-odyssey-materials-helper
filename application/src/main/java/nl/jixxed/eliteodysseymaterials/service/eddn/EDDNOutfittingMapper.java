@@ -124,6 +124,7 @@ public class EDDNOutfittingMapper extends EDDNMapper {
             "hpt_plasmashockcannon_turret_large"
     );
 
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final Outfitting outfitting, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(outfitting.getTimestamp())

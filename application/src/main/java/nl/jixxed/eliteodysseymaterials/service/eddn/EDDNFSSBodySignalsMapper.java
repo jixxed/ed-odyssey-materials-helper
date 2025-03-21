@@ -7,6 +7,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.FSSBodySignals.FSSBodySig
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 public class EDDNFSSBodySignalsMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final FSSBodySignals fssBodySignals, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(fssBodySignals.getTimestamp())

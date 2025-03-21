@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class EDDNShipyardMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final Shipyard shipyard, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(shipyard.getTimestamp())

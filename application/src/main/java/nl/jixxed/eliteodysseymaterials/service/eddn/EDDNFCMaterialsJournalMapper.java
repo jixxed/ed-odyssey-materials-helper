@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.eddn.fcmaterialsjournal.Message;
 import nl.jixxed.eliteodysseymaterials.schemas.journal.FCMaterials.FCMaterials;
 
 public class EDDNFCMaterialsJournalMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final FCMaterials fcMaterials, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(fcMaterials.getTimestamp())

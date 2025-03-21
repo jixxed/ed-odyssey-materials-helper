@@ -1,3 +1,7 @@
+Version 2.150
+-------------
+Add sending new powerplay related data to EDDN
+
 Version 2.149
 -------------
 Nope, but now it is for realsies

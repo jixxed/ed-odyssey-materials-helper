@@ -1,58 +1,72 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/fssdiscoveryscan/1#",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required": [ "$schemaRef", "header", "message" ],
-    "properties": {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/fssdiscoveryscan/1#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "description": "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below as 'disallowed'",
+      "additionalProperties": false,
+      "required": [
+        "timestamp",
+        "event",
+        "SystemName",
+        "StarPos",
+        "SystemAddress",
+        "BodyCount",
+        "NonBodyCount"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "event": {
+          "type": "string"
         },
-        "message": {
-            "type"                  : "object",
-            "description"           : "Contains all properties from the listed events in the client's journal minus Localised strings and the properties marked below as 'disallowed'",
-            "additionalProperties"  : false,
-            "required"              : [ "timestamp", "event", "SystemName", "StarPos", "SystemAddress", "BodyCount", "NonBodyCount" ],
-            "properties"            : {
-                "timestamp": {
-                    "type"          : "string",
-                    "format"        : "date-time"
-                },
-                "event" : {
-                    "type"          : "string"
-                },
-                "horizons": {
-                    "type"          : "boolean",
-                    "description"   : "Whether the sending Cmdr has a Horizons pass."
-                },
-                "odyssey": {
-                    "type"      : "boolean",
-                    "description" : "Whether the sending Cmdr has an Odyssey expansion."
-                },
-                "SystemName": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-                "StarPos": {
-                    "type"          : "array",
-                    "items"         : { "type": "number" },
-                    "minItems"      : 3,
-                    "maxItems"      : 3,
-                    "description"   : "Must be added by the sender if not present in the journal event"
-                },
-                "SystemAddress": {
-                    "type"          : "integer"
-                },
-                "BodyCount"           : {
-                    "type"          : "integer"
-                },
-                "NonBodyCount"           : {
-                    "type"          : "integer"
-                }
-            }
+        "horizons": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has a Horizons pass."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Whether the sending Cmdr has an Odyssey expansion."
+        },
+        "SystemName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "StarPos": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "Must be added by the sender if not present in the journal event"
+        },
+        "SystemAddress": {
+          "type": "integer"
+        },
+        "BodyCount": {
+          "type": "integer"
+        },
+        "NonBodyCount": {
+          "type": "integer"
         }
+      }
     }
+  }
 }

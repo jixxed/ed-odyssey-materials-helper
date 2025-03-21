@@ -6,6 +6,7 @@ import nl.jixxed.eliteodysseymaterials.schemas.journal.NavBeaconScan.NavBeaconSc
 import nl.jixxed.eliteodysseymaterials.service.LocationService;
 
 public class EDDNNavBeaconScanMapper extends EDDNMapper {
+    @SuppressWarnings("unchecked")
     public static Message mapToEDDN(final NavBeaconScan navBeaconScan, final Expansion expansion) {
         return new Message.MessageBuilder()
                 .withTimestamp(navBeaconScan.getTimestamp())

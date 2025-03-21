@@ -1,81 +1,94 @@
 {
-    "$schema"               : "http://json-schema.org/draft-04/schema#",
-    "id"                    : "https://eddn.edcd.io/schemas/fcmaterials_journal/1",
-    "type"                  : "object",
-    "additionalProperties"  : false,
-    "required": [ "$schemaRef", "header", "message" ],
-    "properties": {
-        "$schemaRef": {
-            "type"                  : "string"
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "https://eddn.edcd.io/schemas/fcmaterials_journal/1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schemaRef",
+    "header",
+    "message"
+  ],
+  "properties": {
+    "$schemaRef": {
+      "type": "string"
+    },
+    "header": {
+      "$ref": "../definitions.json#/definitions/header"
+    },
+    "message": {
+      "type": "object",
+      "description": "Contains all properties from the listed events in the client's journal minus the Localised strings and the properties marked below as 'disallowed'",
+      "additionalProperties": false,
+      "required": [
+        "timestamp",
+        "event",
+        "MarketID",
+        "CarrierName",
+        "CarrierID",
+        "Items"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
         },
-        "header": {
-            "$ref": "../definitions.json#/definitions/header"
+        "event": {
+          "type": "string"
         },
-        "message": {
-            "type"                  : "object",
-            "description"           : "Contains all properties from the listed events in the client's journal minus the Localised strings and the properties marked below as 'disallowed'",
-            "additionalProperties"  : false,
-            "required"              : [ "timestamp", "event", "MarketID", "CarrierName", "CarrierID", "Items" ],
-            "properties"            : {
-                "timestamp": {
-                    "type"          : "string",
-                    "format"        : "date-time"
-                },
-                "event" : {
-                    "type"          : "string"
-                },
-                "horizons": {
-                    "type"          : "boolean",
-                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
-                },
-                "odyssey": {
-                    "type"          : "boolean",
-                    "description"   : "Boolean value copied from the Journal LoadGame event, when it is present there."
-                },
-
-                "MarketID": {
-                    "type"          : "integer"
-                },
-
-                "CarrierName": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-
-                "CarrierID": {
-                    "type"          : "string",
-                    "minLength"     : 1
-                },
-
-                "Items": {
-                    "title"         : "Items",
-                    "type"          : "array",
-                    "items": {
-                        "title"                 : "Item",
-                        "type"                  : "object",
-                        "additionalProperties"  : false,
-                        "required"              : [ "id", "Name", "Price", "Stock", "Demand" ],
-                        "properties"    : {
-                            "id" : {
-                                "type"  : "integer"
-                            },
-                            "Name": {
-                                "type"      : "string",
-                                "minLength" : 1
-                            },
-                            "Price": {
-                                "type"      : "integer"
-                            },
-                            "Stock": {
-                                "type"      : "integer"
-                            },
-                            "Demand": {
-                                "type"      : "integer"
-                            }
-                        }
-                    }
-                }
+        "horizons": {
+          "type": "boolean",
+          "description": "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "odyssey": {
+          "type": "boolean",
+          "description": "Boolean value copied from the Journal LoadGame event, when it is present there."
+        },
+        "MarketID": {
+          "type": "integer"
+        },
+        "CarrierName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "CarrierID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Items": {
+          "title": "Items",
+          "type": "array",
+          "items": {
+            "title": "Item",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "Name",
+              "Price",
+              "Stock",
+              "Demand"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "Name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "Price": {
+                "type": "integer"
+              },
+              "Stock": {
+                "type": "integer"
+              },
+              "Demand": {
+                "type": "integer"
+              }
             }
+          }
         }
+      }
     }
+  }
 }

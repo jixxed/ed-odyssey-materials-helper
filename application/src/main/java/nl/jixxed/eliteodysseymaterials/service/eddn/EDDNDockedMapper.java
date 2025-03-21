@@ -12,6 +12,7 @@ import nl.jixxed.eliteodysseymaterials.service.LocationService;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EDDNDockedMapper extends EDDNMapper {
 
+    @SuppressWarnings("unchecked")
     public static nl.jixxed.eliteodysseymaterials.schemas.eddn.docked.Message mapToEDDN(final Docked docked, final Expansion expansion) {
         return new nl.jixxed.eliteodysseymaterials.schemas.eddn.docked.Message.MessageBuilder()
                 .withTimestamp(docked.getTimestamp())
@@ -30,10 +31,10 @@ public class EDDNDockedMapper extends EDDNMapper {
                 .withMarketID(docked.getMarketID())
                 .withStationAllegiance(docked.getStationAllegiance().orElse(null))
                 .withStationEconomies(mapToOptionalEmptyIfEmptyList(docked.getStationEconomies()).map(stationEconomies -> stationEconomies.stream()
-                        .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
-                                .withName(stationEconomy.getName())
-                                .withProportion(stationEconomy.getProportion())
-                                .build()).toList())
+                                .map(stationEconomy -> new StationEconomy.StationEconomyBuilder()
+                                        .withName(stationEconomy.getName())
+                                        .withProportion(stationEconomy.getProportion())
+                                        .build()).toList())
                         .orElse(null))
                 .withStationEconomy(docked.getStationEconomy().orElse(null))
                 .withStationFaction(new SystemFaction.SystemFactionBuilder()
